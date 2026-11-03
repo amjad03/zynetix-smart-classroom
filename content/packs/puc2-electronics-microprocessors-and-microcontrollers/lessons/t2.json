@@ -1,0 +1,1083 @@
+{
+ "id": "puc2-electronics-10-microprocessors-and-microcontrollers.t2.lesson",
+ "chapterId": "puc2-electronics-10-microprocessors-and-microcontrollers",
+ "topicId": "puc2-electronics-10-microprocessors-and-microcontrollers.t2",
+ "title": {
+  "en": "8085 pin diagram, buses and timing",
+  "kn": "8085 ಪಿನ್ ರೇಖಾಚಿತ್ರ, ಬಸ್‌ಗಳು ಮತ್ತು ಸಮಯ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Forty pins that talk to the world",
+    "kn": "ಜಗತ್ತಿನೊಂದಿಗೆ ಮಾತನಾಡುವ ನಲವತ್ತು ಪಿನ್‌ಗಳು"
+   },
+   "hook": {
+    "en": "The 8085 needs 16 address lines, 8 data lines and many control signals, yet it has only 40 pins. A clever trick, sharing the same pins for address and data, makes it fit.",
+    "kn": "8085 ಗೆ 16 ವಿಳಾಸ ರೇಖೆಗಳು, 8 ದತ್ತಾಂಶ ರೇಖೆಗಳು ಮತ್ತು ಹಲವು ನಿಯಂತ್ರಣ ಸಂಕೇತಗಳು ಬೇಕು, ಆದರೂ ಅದಕ್ಕೆ ಕೇವಲ 40 ಪಿನ್‌ಗಳು. ವಿಳಾಸ ಮತ್ತು ದತ್ತಾಂಶಕ್ಕೆ ಅದೇ ಪಿನ್‌ಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳುವ ಉಪಾಯ ಇದನ್ನು ಸಾಧ್ಯವಾಗಿಸುತ್ತದೆ."
+   },
+   "objectives": [
+    {
+     "en": "Group the 40 pins of the 8085 by function"
+    },
+    {
+     "en": "Explain multiplexing of AD7–AD0 and the role of ALE"
+    },
+    {
+     "en": "Define T-state, machine cycle and instruction cycle"
+    }
+   ],
+   "narration": {
+    "en": "The 8085 needs 16 address lines, 8 data lines and many control signals, yet it has only 40 pins. A clever trick, sharing the same pins for address and data, makes it fit.",
+    "kn": "8085 ಗೆ 16 ವಿಳಾಸ ರೇಖೆಗಳು, 8 ದತ್ತಾಂಶ ರೇಖೆಗಳು ಮತ್ತು ಹಲವು ನಿಯಂತ್ರಣ ಸಂಕೇತಗಳು ಬೇಕು, ಆದರೂ ಅದಕ್ಕೆ ಕೇವಲ 40 ಪಿನ್‌ಗಳು. ವಿಳಾಸ ಮತ್ತು ದತ್ತಾಂಶಕ್ಕೆ ಅದೇ ಪಿನ್‌ಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳುವ ಉಪಾಯ ಇದನ್ನು ಸಾಧ್ಯವಾಗಿಸುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Pin groups of the 8085"
+   },
+   "body": {
+    "en": "The 8085 is a 40-pin IC working on a single +5 V supply. Pin groups: (1) address bus A15–A8 (higher-order address); (2) multiplexed address/data bus AD7–AD0, which carries the lower address byte at the start of a machine cycle and data later; (3) control and status signals: ALE, $\\overline{RD}$, $\\overline{WR}$, IO/$\\overline{M}$, S1, S0; (4) interrupts: TRAP, RST 7.5, RST 6.5, RST 5.5, INTR and the acknowledge $\\overline{INTA}$; (5) DMA: HOLD and HLDA; READY; (6) $\\overline{RESET\\,IN}$, RESET OUT; (7) clock: X1, X2 (crystal) and CLK OUT; (8) serial I/O: SID, SOD; (9) power: Vcc and Vss. ALE (address latch enable) goes high in the first clock state so that an external latch (74LS373) can hold A7–A0. TRAP is non-maskable and has the highest priority."
+   },
+   "points": [
+    {
+     "en": "A15–A8: high address; AD7–AD0: low address + data (multiplexed)"
+    },
+    {
+     "en": "ALE = 1 → AD lines carry the address; latched by 74LS373"
+    },
+    {
+     "en": "IO/M̄ = 0: memory; IO/M̄ = 1: I/O"
+    },
+    {
+     "en": "TRAP: non-maskable, highest priority"
+    }
+   ],
+   "narration": {
+    "en": "The low address byte and the data share pins AD seven to AD zero. When ALE is high those pins carry the address, which an external latch holds; then they carry data.",
+    "kn": "ಕಡಿಮೆ ವಿಳಾಸ ಬೈಟ್ ಮತ್ತು ದತ್ತಾಂಶ AD7–AD0 ಪಿನ್‌ಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳುತ್ತವೆ. ALE = 1 ಆದಾಗ ಅವು ವಿಳಾಸ ಹೊತ್ತಿರುತ್ತವೆ; ಹೊರಗಿನ ಲ್ಯಾಚ್ ಅದನ್ನು ಹಿಡಿದಿಡುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Pins, bus demultiplexing and T-states"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Group the forty pins. Left: clock, reset, interrupts, serial I/O, DMA and power. Right: address, address-data, and control signals."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        30,
+        4
+       ],
+       "to": [
+        70,
+        56
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        42,
+        26
+       ],
+       "text": {
+        "en": "8085"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        38,
+        34
+       ],
+       "text": {
+        "en": "40-pin DIP"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        25,
+        10
+       ],
+       "to": [
+        30,
+        10
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        8
+       ],
+       "text": {
+        "en": "X1 X2"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        25,
+        18
+       ],
+       "to": [
+        30,
+        18
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        16
+       ],
+       "text": {
+        "en": "RESET"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        25,
+        26
+       ],
+       "to": [
+        30,
+        26
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        24
+       ],
+       "text": {
+        "en": "Interrupts"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        25,
+        34
+       ],
+       "to": [
+        30,
+        34
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        32
+       ],
+       "text": {
+        "en": "SID SOD"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        25,
+        42
+       ],
+       "to": [
+        30,
+        42
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        40
+       ],
+       "text": {
+        "en": "HOLD HLDA"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        25,
+        50
+       ],
+       "to": [
+        30,
+        50
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        48
+       ],
+       "text": {
+        "en": "Vcc GND"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        70,
+        10
+       ],
+       "to": [
+        75,
+        10
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        77,
+        8
+       ],
+       "text": {
+        "en": "A15–A8"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        70,
+        18
+       ],
+       "to": [
+        75,
+        18
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        77,
+        16
+       ],
+       "text": {
+        "en": "AD7–AD0"
+       },
+       "size": 3.0,
+       "color": "green"
+      },
+      {
+       "kind": "line",
+       "from": [
+        70,
+        26
+       ],
+       "to": [
+        75,
+        26
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        77,
+        24
+       ],
+       "text": {
+        "en": "ALE"
+       },
+       "size": 3.0,
+       "color": "green"
+      },
+      {
+       "kind": "line",
+       "from": [
+        70,
+        34
+       ],
+       "to": [
+        75,
+        34
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        77,
+        32
+       ],
+       "text": {
+        "en": "RD' WR'"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        70,
+        42
+       ],
+       "to": [
+        75,
+        42
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        77,
+        40
+       ],
+       "text": {
+        "en": "IO/M'"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        70,
+        50
+       ],
+       "to": [
+        75,
+        50
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        77,
+        48
+       ],
+       "text": {
+        "en": "S1 S0"
+       },
+       "size": 3.0,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The lower address and the data share AD7 to AD0. ALE tells a latch to grab the address; after that the same lines carry data."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        12
+       ],
+       "to": [
+        24,
+        46
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        9.6,
+        26.7
+       ],
+       "text": {
+        "en": "8085"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        40,
+        24
+       ],
+       "to": [
+        64,
+        36
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        41.4,
+        28.3
+       ],
+       "text": {
+        "en": "Latch 74LS373"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        24,
+        18
+       ],
+       "to": [
+        90,
+        18
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        76,
+        13
+       ],
+       "text": {
+        "en": "A15–A8"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        24,
+        30
+       ],
+       "to": [
+        40,
+        30
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        26,
+        25.5
+       ],
+       "text": {
+        "en": "AD7–AD0"
+       },
+       "size": 2.6,
+       "color": "green"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         24,
+         41
+        ],
+        [
+         52,
+         41
+        ]
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        52,
+        41
+       ],
+       "to": [
+        52,
+        36
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        30,
+        42.5
+       ],
+       "text": {
+        "en": "ALE"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        64,
+        30
+       ],
+       "to": [
+        90,
+        30
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        76,
+        25.5
+       ],
+       "text": {
+        "en": "A7–A0"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        32,
+        30
+       ],
+       "r": 0.6,
+       "color": "green",
+       "fill": true
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         32,
+         30
+        ],
+        [
+         32,
+         52
+        ],
+        [
+         90,
+         52
+        ]
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        76,
+        47.5
+       ],
+       "text": {
+        "en": "D7–D0"
+       },
+       "size": 3.0,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        2
+       ],
+       "text": {
+        "en": "ALE = 1: AD lines carry the address"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "Timing: each clock period is one T-state. ALE pulses in T1. An opcode fetch takes four T-states."
+     },
+     "draw": [
+      {
+       "kind": "path",
+       "points": [
+        [
+         10,
+         12
+        ],
+        [
+         18,
+         12
+        ],
+        [
+         18,
+         18
+        ],
+        [
+         26,
+         18
+        ],
+        [
+         26,
+         12
+        ],
+        [
+         34,
+         12
+        ],
+        [
+         34,
+         18
+        ],
+        [
+         42,
+         18
+        ],
+        [
+         42,
+         12
+        ],
+        [
+         50,
+         12
+        ],
+        [
+         50,
+         18
+        ],
+        [
+         58,
+         18
+        ],
+        [
+         58,
+         12
+        ],
+        [
+         66,
+         12
+        ],
+        [
+         66,
+         18
+        ],
+        [
+         74,
+         18
+        ]
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        1,
+        12
+       ],
+       "text": {
+        "en": "CLK"
+       },
+       "size": 2.8,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        13,
+        21
+       ],
+       "text": {
+        "en": "T1"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        29,
+        21
+       ],
+       "text": {
+        "en": "T2"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        45,
+        21
+       ],
+       "text": {
+        "en": "T3"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        61,
+        21
+       ],
+       "text": {
+        "en": "T4"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         10,
+         32
+        ],
+        [
+         12,
+         32
+        ],
+        [
+         12,
+         28
+        ],
+        [
+         22,
+         28
+        ],
+        [
+         22,
+         32
+        ],
+        [
+         74,
+         32
+        ]
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        1,
+        28
+       ],
+       "text": {
+        "en": "ALE"
+       },
+       "size": 2.8,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10,
+        38
+       ],
+       "text": {
+        "en": "Opcode fetch: 4 T-states"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10,
+        44
+       ],
+       "text": {
+        "en": "Memory read/write: 3 T-states"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        10,
+        51
+       ],
+       "tex": "T = 1/f = 1/3\\ \\text{MHz} \\approx 0.33\\ \\mu s",
+       "size": 3.5,
+       "color": "green"
+      }
+     ],
+     "clear": true
+    }
+   ],
+   "narration": {
+    "en": "On the board: Pins, bus demultiplexing and T-states."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "T-state, machine cycle and instruction cycle"
+   },
+   "body": {
+    "en": "The crystal frequency is divided by 2 inside the 8085: a 6 MHz crystal gives a 3 MHz operating clock. One clock period is a T-state ($T = 1/f$). A machine cycle is the time for one bus operation: opcode fetch (usually 4 T-states), memory read (3), memory write (3), I/O read (3) and I/O write (3). An instruction cycle is the time to fetch and execute one instruction and contains one or more machine cycles. The status lines S1 S0 identify the cycle: 11 opcode fetch, 10 read, 01 write, 00 halt."
+   },
+   "points": [
+    {
+     "en": "f(operating) = f(crystal)/2"
+    },
+    {
+     "en": "T-state = 1/f"
+    },
+    {
+     "en": "Opcode fetch 4T; memory/I/O read or write 3T"
+    },
+    {
+     "en": "Instruction cycle = one or more machine cycles"
+    }
+   ],
+   "narration": {
+    "en": "One clock period is a T-state. A bus operation is a machine cycle, such as the four T-state opcode fetch, and an instruction cycle is made of one or more machine cycles.",
+    "kn": "ಒಂದು ಕ್ಲಾಕ್ ಅವಧಿ ಒಂದು T-ಸ್ಥಿತಿ. ಒಂದು ಬಸ್ ಕಾರ್ಯ ಒಂದು ಯಂತ್ರ ಚಕ್ರ, ಉದಾ. 4 T-ಸ್ಥಿತಿಗಳ ಆಪ್‌ಕೋಡ್ ಫೆಚ್; ಸೂಚನಾ ಚಕ್ರ ಒಂದು ಅಥವಾ ಹೆಚ್ಚು ಯಂತ್ರ ಚಕ್ರಗಳು."
+   },
+   "formula": "T = \\frac{1}{f}, \\qquad f = \\frac{f_{crystal}}{2}"
+  },
+  {
+   "kind": "function_plot",
+   "caption": {
+    "en": "The duration of a T-state and of an operation of k T-states, against the crystal frequency x (the 8085 runs at half the crystal frequency)."
+   },
+   "sliders": [
+    {
+     "name": "fx",
+     "label": {
+      "en": "Crystal frequency"
+     },
+     "min": 2,
+     "max": 12,
+     "step": 0.5,
+     "value": 6,
+     "unit": "MHz"
+    },
+    {
+     "name": "k",
+     "label": {
+      "en": "T-states in the operation"
+     },
+     "min": 3,
+     "max": 18,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "fns": [
+    {
+     "fn": "2/x",
+     "label": "T-state (µs)",
+     "color": "yellow"
+    },
+    {
+     "fn": "k*2/x",
+     "label": "k T-states (µs)",
+     "color": "green"
+    }
+   ],
+   "x": [
+    2,
+    12
+   ],
+   "y": [
+    0,
+    6
+   ],
+   "xLabel": "crystal frequency (MHz)",
+   "yLabel": "time (µs)",
+   "readouts": [
+    {
+     "label": {
+      "en": "Operating frequency"
+     },
+     "expr": "fx/2",
+     "unit": "MHz",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "One T-state"
+     },
+     "expr": "2/fx",
+     "unit": "µs",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Operation of k T-states"
+     },
+     "expr": "k*2/fx",
+     "unit": "µs",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With a 6 MHz crystal, how long is an opcode fetch (k = 4)?"
+    },
+    {
+     "en": "Double the crystal frequency. What happens to the T-state?"
+    },
+    {
+     "en": "Set k = 13 (the T-states of STA). How long does it take at 6 MHz?"
+    }
+   ],
+   "id": "int1",
+   "type": "interactive",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "The duration of a T-state and of an operation of k T-states, against the crystal frequency x (the 8085 runs at half the crystal frequency)."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "An 8085 uses a 6 MHz crystal. Find the operating frequency, the T-state time and the time for an opcode fetch machine cycle."
+   },
+   "steps": [
+    {
+     "en": "Operating frequency = 6/2 = 3 MHz."
+    },
+    {
+     "en": "T = 1/3 MHz ≈ 0.333 µs."
+    },
+    {
+     "en": "Opcode fetch = 4 T = 4 × 0.333 ≈ 1.33 µs."
+    }
+   ],
+   "answer": {
+    "en": "3 MHz, 0.333 µs, 1.33 µs"
+   },
+   "narration": {
+    "en": "Let us work this out together. An 8085 uses a 6 MHz crystal. Find the operating frequency, the T-state time and the time for an opcode fetch machine cycle."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "State the levels of IO/M̄, RD̄ and WR̄ during (a) a memory read and (b) an I/O write."
+   },
+   "steps": [
+    {
+     "en": "(a) Memory: IO/M̄ = 0. Read: RD̄ = 0 (active), WR̄ = 1."
+    },
+    {
+     "en": "(b) I/O: IO/M̄ = 1. Write: WR̄ = 0 (active), RD̄ = 1."
+    }
+   ],
+   "answer": {
+    "en": "(a) 0, 0, 1   (b) 1, 1, 0"
+   },
+   "narration": {
+    "en": "Let us work this out together. State the levels of IO/M̄, RD̄ and WR̄ during (a) a memory read and (b) an I/O write."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n10-q06",
+    "2n10-q07",
+    "2n10-q08"
+   ],
+   "mode": "roll_call",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Roll-call quiz. When your roll number is called, give your answer.",
+    "kn": "ಹಾಜರಾತಿ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ಹಾಜರಾತಿ ಸಂಖ್ಯೆ ಕರೆದಾಗ ನಿಮ್ಮ ಉತ್ತರ ಹೇಳಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n10-q09",
+    "2n10-q10"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the II PUC board exam pattern. Try them on your own first."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "The 8085 is a 40-pin IC on a single +5 V supply.",
+     "kn": "8085 ಒಂದೇ +5 V ಪೂರೈಕೆಯಲ್ಲಿ ಕೆಲಸ ಮಾಡುವ 40-ಪಿನ್ IC."
+    },
+    {
+     "en": "AD7–AD0 carry the low address and data; ALE separates them.",
+     "kn": "AD7–AD0 ಕಡಿಮೆ ವಿಳಾಸ ಮತ್ತು ದತ್ತಾಂಶ ಹೊರುತ್ತವೆ; ALE ಅವನ್ನು ಬೇರ್ಪಡಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "TRAP is the non-maskable, highest-priority interrupt.",
+     "kn": "TRAP ಮರೆಮಾಡಲಾಗದ, ಅತಿ ಹೆಚ್ಚು ಪ್ರಾಧಾನ್ಯದ ಅಡಚಣೆ (ಇಂಟರಪ್ಟ್)."
+    },
+    {
+     "en": "T-state = 1/f; opcode fetch takes 4 T-states.",
+     "kn": "T-ಸ್ಥಿತಿ = 1/f; ಆಪ್‌ಕೋಡ್ ಫೆಚ್‌ಗೆ 4 T-ಸ್ಥಿತಿಗಳು."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Draw the pin diagram of the 8085 and classify the pins into groups."
+    },
+    {
+     "en": "Explain the need for ALE with a neat diagram."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n10-q10"
+   ],
+   "narration": {
+    "en": "Recap. The 8085 is a 40-pin IC on a single +5 V supply. AD7–AD0 carry the low address and data; ALE separates them. TRAP is the non-maskable, highest-priority interrupt. T-state = 1/f; opcode fetch takes 4 T-states.",
+    "kn": "ಪುನರಾವರ್ತನೆ. 8085 ಒಂದೇ +5 V ಪೂರೈಕೆಯಲ್ಲಿ ಕೆಲಸ ಮಾಡುವ 40-ಪಿನ್ IC. AD7–AD0 ಕಡಿಮೆ ವಿಳಾಸ ಮತ್ತು ದತ್ತಾಂಶ ಹೊರುತ್ತವೆ; ALE ಅವನ್ನು ಬೇರ್ಪಡಿಸುತ್ತದೆ. TRAP ಮರೆಮಾಡಲಾಗದ, ಅತಿ ಹೆಚ್ಚು ಪ್ರಾಧಾನ್ಯದ ಅಡಚಣೆ (ಇಂಟರಪ್ಟ್). T-ಸ್ಥಿತಿ = 1/f; ಆಪ್‌ಕೋಡ್ ಫೆಚ್‌ಗೆ 4 T-ಸ್ಥಿತಿಗಳು."
+   }
+  }
+ ]
+}

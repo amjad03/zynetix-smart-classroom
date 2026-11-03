@@ -1,0 +1,1242 @@
+{
+ "id": "puc2-electronics-09-sequential-logic-circuits.t4.lesson",
+ "chapterId": "puc2-electronics-09-sequential-logic-circuits",
+ "topicId": "puc2-electronics-09-sequential-logic-circuits.t4",
+ "title": {
+  "en": "Asynchronous (ripple) counters",
+  "kn": "ಅಸಮಕಾಲಿಕ (ರಿಪಲ್) ಕೌಂಟರ್‌ಗಳು"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Counting pulses with flip-flops",
+    "kn": "ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳಿಂದ ಪಲ್ಸ್ ಎಣಿಕೆ"
+   },
+   "hook": {
+    "en": "A digital clock counts 32 768 crystal pulses to make one second. It does this with a chain of flip-flops, each one dividing the frequency by two.",
+    "kn": "ಡಿಜಿಟಲ್ ಗಡಿಯಾರ 32 768 ಸ್ಫಟಿಕ ಪಲ್ಸ್‌ಗಳನ್ನು ಎಣಿಸಿ ಒಂದು ಸೆಕೆಂಡ್ ಮಾಡುತ್ತದೆ. ಪ್ರತಿಯೊಂದೂ ಆವೃತ್ತಿಯನ್ನು ಅರ್ಧಗೊಳಿಸುವ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳ ಸರಪಳಿಯಿಂದ ಇದು ಸಾಧ್ಯ."
+   },
+   "objectives": [
+    {
+     "en": "Explain a 3-bit or 4-bit asynchronous up counter with its timing diagram"
+    },
+    {
+     "en": "Find the modulus and the number of flip-flops for a counter"
+    },
+    {
+     "en": "Explain the decade (MOD-10) counter and the limits of ripple counters"
+    }
+   ],
+   "narration": {
+    "en": "A digital clock counts 32 768 crystal pulses to make one second. It does this with a chain of flip-flops, each one dividing the frequency by two.",
+    "kn": "ಡಿಜಿಟಲ್ ಗಡಿಯಾರ 32 768 ಸ್ಫಟಿಕ ಪಲ್ಸ್‌ಗಳನ್ನು ಎಣಿಸಿ ಒಂದು ಸೆಕೆಂಡ್ ಮಾಡುತ್ತದೆ. ಪ್ರತಿಯೊಂದೂ ಆವೃತ್ತಿಯನ್ನು ಅರ್ಧಗೊಳಿಸುವ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳ ಸರಪಳಿಯಿಂದ ಇದು ಸಾಧ್ಯ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Ripple (asynchronous) binary counter"
+   },
+   "body": {
+    "en": "A counter counts clock pulses. In an asynchronous or ripple counter only the first flip-flop receives the external clock; each following flip-flop is clocked by the output of the previous one. With JK flip-flops (J = K = 1) or T flip-flops (T = 1) each stage toggles and divides the frequency by 2. With n flip-flops the counter has $2^n$ states, 0 to $2^n - 1$, and is called MOD-$2^n$. For negative-edge-triggered flip-flops, clocking each stage from Q of the previous one gives an up counter; clocking from $\\bar{Q}$ gives a down counter."
+   },
+   "points": [
+    {
+     "en": "n flip-flops → MOD 2ⁿ, counts 0 to 2ⁿ − 1"
+    },
+    {
+     "en": "Each stage divides the frequency by 2"
+    },
+    {
+     "en": "Q to next clock: up; Q̄ to next clock: down (negative edge)"
+    }
+   ],
+   "narration": {
+    "en": "In a ripple counter the clock drives only the first flip-flop, and each output clocks the next. n flip-flops count from zero to two to the n minus one.",
+    "kn": "ರಿಪಲ್ ಕೌಂಟರ್‌ನಲ್ಲಿ ಕ್ಲಾಕ್ ಮೊದಲ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್ ಅನ್ನು ಮಾತ್ರ ಚಾಲನೆ ಮಾಡುತ್ತದೆ; ಪ್ರತಿಯೊಂದರ ಔಟ್‌ಪುಟ್ ಮುಂದಿನದಕ್ಕೆ ಕ್ಲಾಕ್. n ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳು 0 ಯಿಂದ 2ⁿ − 1 ರವರೆಗೆ ಎಣಿಸುತ್ತವೆ."
+   },
+   "formula": "\\text{MOD} = 2^n, \\qquad f_{n} = \\frac{f_{clk}}{2^n}"
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "A 3-bit ripple counter and its waveforms"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Three JK flip-flops in toggle mode. The clock drives only the first; each output clocks the next."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        12,
+        10
+       ],
+       "to": [
+        28,
+        24
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        17.0,
+        14.9
+       ],
+       "text": {
+        "en": "FF0"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        13,
+        25.5
+       ],
+       "text": {
+        "en": "J = K = 1"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        42,
+        10
+       ],
+       "to": [
+        58,
+        24
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        47.0,
+        14.9
+       ],
+       "text": {
+        "en": "FF1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        25.5
+       ],
+       "text": {
+        "en": "J = K = 1"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        72,
+        10
+       ],
+       "to": [
+        88,
+        24
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        77.0,
+        14.9
+       ],
+       "text": {
+        "en": "FF2"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        73,
+        25.5
+       ],
+       "text": {
+        "en": "J = K = 1"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        3,
+        20
+       ],
+       "to": [
+        12,
+        20
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        1,
+        14
+       ],
+       "text": {
+        "en": "CLK"
+       },
+       "size": 2.8,
+       "color": "orange"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         28,
+         14
+        ],
+        [
+         35,
+         14
+        ],
+        [
+         35,
+         20
+        ],
+        [
+         42,
+         20
+        ]
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         58,
+         14
+        ],
+        [
+         65,
+         14
+        ],
+        [
+         65,
+         20
+        ],
+        [
+         72,
+         20
+        ]
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        29,
+        9
+       ],
+       "text": {
+        "en": "Q0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        59,
+        9
+       ],
+       "text": {
+        "en": "Q1"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        88,
+        14
+       ],
+       "to": [
+        95,
+        14
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        89,
+        9
+       ],
+       "text": {
+        "en": "Q2"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Q0 toggles on each falling clock edge, Q1 on each fall of Q0, and Q2 on each fall of Q1. Each stage halves the frequency."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        1,
+        33.5
+       ],
+       "text": {
+        "en": "CLK"
+       },
+       "size": 2.6,
+       "color": "orange"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         14,
+         37
+        ],
+        [
+         14,
+         37
+        ],
+        [
+         14,
+         34
+        ],
+        [
+         18,
+         34
+        ],
+        [
+         18,
+         37
+        ],
+        [
+         22,
+         37
+        ],
+        [
+         22,
+         34
+        ],
+        [
+         26,
+         34
+        ],
+        [
+         26,
+         37
+        ],
+        [
+         30,
+         37
+        ],
+        [
+         30,
+         34
+        ],
+        [
+         34,
+         34
+        ],
+        [
+         34,
+         37
+        ],
+        [
+         38,
+         37
+        ],
+        [
+         38,
+         34
+        ],
+        [
+         42,
+         34
+        ],
+        [
+         42,
+         37
+        ],
+        [
+         46,
+         37
+        ],
+        [
+         46,
+         34
+        ],
+        [
+         50,
+         34
+        ],
+        [
+         50,
+         37
+        ],
+        [
+         54,
+         37
+        ],
+        [
+         54,
+         34
+        ],
+        [
+         58,
+         34
+        ],
+        [
+         58,
+         37
+        ],
+        [
+         62,
+         37
+        ],
+        [
+         62,
+         34
+        ],
+        [
+         66,
+         34
+        ],
+        [
+         66,
+         37
+        ],
+        [
+         70,
+         37
+        ],
+        [
+         70,
+         34
+        ],
+        [
+         74,
+         34
+        ],
+        [
+         74,
+         37
+        ],
+        [
+         78,
+         37
+        ]
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        39.5
+       ],
+       "text": {
+        "en": "Q0"
+       },
+       "size": 2.8,
+       "color": "yellow"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         14,
+         43
+        ],
+        [
+         18,
+         43
+        ],
+        [
+         18,
+         40
+        ],
+        [
+         26,
+         40
+        ],
+        [
+         26,
+         43
+        ],
+        [
+         34,
+         43
+        ],
+        [
+         34,
+         40
+        ],
+        [
+         42,
+         40
+        ],
+        [
+         42,
+         43
+        ],
+        [
+         50,
+         43
+        ],
+        [
+         50,
+         40
+        ],
+        [
+         58,
+         40
+        ],
+        [
+         58,
+         43
+        ],
+        [
+         66,
+         43
+        ],
+        [
+         66,
+         40
+        ],
+        [
+         74,
+         40
+        ],
+        [
+         74,
+         43
+        ],
+        [
+         78,
+         43
+        ]
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        45.5
+       ],
+       "text": {
+        "en": "Q1"
+       },
+       "size": 2.8,
+       "color": "green"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         14,
+         49
+        ],
+        [
+         26,
+         49
+        ],
+        [
+         26,
+         46
+        ],
+        [
+         42,
+         46
+        ],
+        [
+         42,
+         49
+        ],
+        [
+         58,
+         49
+        ],
+        [
+         58,
+         46
+        ],
+        [
+         74,
+         46
+        ],
+        [
+         74,
+         49
+        ],
+        [
+         78,
+         49
+        ]
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        51.5
+       ],
+       "text": {
+        "en": "Q2"
+       },
+       "size": 2.8,
+       "color": "blue"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         14,
+         55
+        ],
+        [
+         42,
+         55
+        ],
+        [
+         42,
+         52
+        ],
+        [
+         74,
+         52
+        ],
+        [
+         74,
+         55
+        ],
+        [
+         78,
+         55
+        ]
+       ],
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        82,
+        39.5
+       ],
+       "text": {
+        "en": "f/2"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        82,
+        45.5
+       ],
+       "text": {
+        "en": "f/4"
+       },
+       "size": 3.0,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        82,
+        51.5
+       ],
+       "text": {
+        "en": "f/8"
+       },
+       "size": 3.0,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Reading Q2 Q1 Q0 after each pulse gives 000, 001, 010 up to 111, then back to 000. Three flip-flops, eight states."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        56
+       ],
+       "tex": "n = 3:\\ \\text{MOD}\\,2^3 = 8,\\ \\text{counts } 0\\text{–}7",
+       "size": 2.8,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "For a decade counter, four flip-flops count up and a NAND gate clears them all at 1010, that is when Q3 and Q1 are both 1."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        3
+       ],
+       "text": {
+        "en": "Decade counter (MOD-10)"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        6,
+        12
+       ],
+       "to": [
+        22,
+        22
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        11.0,
+        14.9
+       ],
+       "text": {
+        "en": "FF0"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        28,
+        12
+       ],
+       "to": [
+        44,
+        22
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        33.0,
+        14.9
+       ],
+       "text": {
+        "en": "FF1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        50,
+        12
+       ],
+       "to": [
+        66,
+        22
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55.0,
+        14.9
+       ],
+       "text": {
+        "en": "FF2"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        72,
+        12
+       ],
+       "to": [
+        88,
+        22
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        77.0,
+        14.9
+       ],
+       "text": {
+        "en": "FF3"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        40,
+        32
+       ],
+       "to": [
+        54,
+        41
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43.2,
+        34.5
+       ],
+       "text": {
+        "en": "NAND"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         36,
+         22
+        ],
+        [
+         36,
+         27
+        ],
+        [
+         44,
+         27
+        ]
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        44,
+        27
+       ],
+       "to": [
+        44,
+        32
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         80,
+         22
+        ],
+        [
+         80,
+         27
+        ],
+        [
+         50,
+         27
+        ]
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        50,
+        27
+       ],
+       "to": [
+        50,
+        32
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        30,
+        23.5
+       ],
+       "text": {
+        "en": "Q1"
+       },
+       "size": 2.8,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        82,
+        23.5
+       ],
+       "text": {
+        "en": "Q3"
+       },
+       "size": 2.8,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        47,
+        41
+       ],
+       "to": [
+        47,
+        47
+       ],
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        50,
+        44
+       ],
+       "text": {
+        "en": "CLR all"
+       },
+       "size": 3.0,
+       "color": "red"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        51
+       ],
+       "tex": "Q_3Q_2Q_1Q_0 = 1010 \\Rightarrow \\text{clear}",
+       "size": 3.2,
+       "color": "green"
+      }
+     ],
+     "clear": true
+    }
+   ],
+   "narration": {
+    "en": "On the board: A 3-bit ripple counter and its waveforms."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "MOD-N and decade counters"
+   },
+   "body": {
+    "en": "For a MOD-N counter choose the smallest n with $2^n \\ge N$, and clear all flip-flops the moment the count reaches N, using a NAND gate on the outputs that are 1 in N. A decade (MOD-10, BCD) counter uses 4 flip-flops and clears at 1010, so the NAND inputs are $Q_3$ and $Q_1$; it counts 0000 to 1001. IC 7490 is a decade counter. Because each flip-flop waits for the one before it, delays add up: with propagation delay $t_{pd}$ per stage the clock period must exceed $n\\,t_{pd}$."
+   },
+   "points": [
+    {
+     "en": "Flip-flops needed: smallest n with 2ⁿ ≥ N"
+    },
+    {
+     "en": "Decade counter: clear at 1010 via NAND(Q3, Q1); IC 7490"
+    },
+    {
+     "en": "Ripple delay: f_max ≈ 1/(n·t_pd)"
+    }
+   ],
+   "narration": {
+    "en": "A decade counter uses four flip-flops and a NAND gate that clears them when the count reaches ten, one zero one zero. Ripple counters are slow because the delays add up.",
+    "kn": "ದಶಕ ಕೌಂಟರ್ ನಾಲ್ಕು ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳು ಮತ್ತು ಎಣಿಕೆ 1010 ತಲುಪಿದಾಗ ಅವನ್ನು ಶೂನ್ಯಗೊಳಿಸುವ NAND ಗೇಟ್ ಬಳಸುತ್ತದೆ. ವಿಳಂಬಗಳು ಕೂಡುವುದರಿಂದ ರಿಪಲ್ ಕೌಂಟರ್ ನಿಧಾನ."
+   },
+   "formula": "f_{max} \\approx \\frac{1}{n\\,t_{pd}}"
+  },
+  {
+   "kind": "function_plot",
+   "caption": {
+    "en": "Output frequency at each stage of a ripple counter: every flip-flop halves it. Choose the clock and the number of flip-flops."
+   },
+   "sliders": [
+    {
+     "name": "f",
+     "label": {
+      "en": "Clock frequency"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 64,
+     "unit": "kHz"
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "Number of flip-flops n"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "fns": [
+    {
+     "fn": "f/2^x",
+     "label": "frequency after x stages",
+     "color": "yellow"
+    }
+   ],
+   "x": [
+    0,
+    8
+   ],
+   "y": [
+    0,
+    100
+   ],
+   "xLabel": "stage number",
+   "yLabel": "frequency (kHz)",
+   "readouts": [
+    {
+     "label": {
+      "en": "Modulus 2ⁿ"
+     },
+     "expr": "2^n",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Highest count 2ⁿ − 1"
+     },
+     "expr": "2^n - 1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Frequency at the last output"
+     },
+     "expr": "f/2^n",
+     "unit": "kHz",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With a 64 kHz clock, how many flip-flops bring the output down to 1 kHz?"
+    },
+    {
+     "en": "Add one flip-flop. How do the modulus and the last output frequency change?"
+    },
+    {
+     "en": "Why does the curve never reach zero?"
+    }
+   ],
+   "id": "int1",
+   "type": "interactive",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "Output frequency at each stage of a ripple counter: every flip-flop halves it. Choose the clock and the number of flip-flops."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A 4-bit ripple counter is driven by a 16 kHz clock. Find its modulus, its highest count and the frequency at the last flip-flop output."
+   },
+   "steps": [
+    {
+     "en": "MOD = 2⁴ = 16."
+    },
+    {
+     "en": "Highest count = 2⁴ − 1 = 15 (1111)."
+    },
+    {
+     "en": "Last output frequency = 16 kHz / 2⁴ = 1 kHz."
+    }
+   ],
+   "answer": {
+    "en": "MOD-16, counts 0–15, 1 kHz"
+   },
+   "narration": {
+    "en": "Let us work this out together. A 4-bit ripple counter is driven by a 16 kHz clock. Find its modulus, its highest count and the frequency at the last flip-flop output."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "How many flip-flops does a MOD-12 ripple counter need, and which outputs feed the clearing NAND gate?"
+   },
+   "steps": [
+    {
+     "en": "2³ = 8 < 12 ≤ 16 = 2⁴, so 4 flip-flops are needed."
+    },
+    {
+     "en": "12 = 1100 in binary: Q3 = 1 and Q2 = 1."
+    },
+    {
+     "en": "So NAND(Q3, Q2) clears the counter at 1100; it counts 0000 to 1011."
+    }
+   ],
+   "answer": {
+    "en": "4 flip-flops; NAND of Q3 and Q2"
+   },
+   "narration": {
+    "en": "Let us work this out together. How many flip-flops does a MOD-12 ripple counter need, and which outputs feed the clearing NAND gate?"
+   }
+  },
+  {
+   "id": "ex3",
+   "type": "example",
+   "problem": {
+    "en": "A 4-bit ripple counter uses flip-flops with a propagation delay of 25 ns each. Estimate its maximum clock frequency."
+   },
+   "steps": [
+    {
+     "en": "Total settling delay = n × tpd = 4 × 25 ns = 100 ns."
+    },
+    {
+     "en": "f_max ≈ 1/(100 ns) = 10 MHz."
+    }
+   ],
+   "answer": {
+    "en": "About 10 MHz"
+   },
+   "narration": {
+    "en": "Let us work this out together. A 4-bit ripple counter uses flip-flops with a propagation delay of 25 ns each. Estimate its maximum clock frequency."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n09-q16",
+    "2n09-q17",
+    "2n09-q18"
+   ],
+   "mode": "roll_call",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Roll-call quiz. When your roll number is called, give your answer.",
+    "kn": "ಹಾಜರಾತಿ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ಹಾಜರಾತಿ ಸಂಖ್ಯೆ ಕರೆದಾಗ ನಿಮ್ಮ ಉತ್ತರ ಹೇಳಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n09-q19",
+    "2n09-q20"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the II PUC board exam pattern. Try them on your own first."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC board exam practice"
+   },
+   "questionIds": [
+    "2n09-q27",
+    "2n09-q28"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Three more board-exam practice questions that bring the chapter together."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "In a ripple counter each flip-flop clocks the next one.",
+     "kn": "ರಿಪಲ್ ಕೌಂಟರ್‌ನಲ್ಲಿ ಪ್ರತಿ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್ ಮುಂದಿನದಕ್ಕೆ ಕ್ಲಾಕ್ ನೀಡುತ್ತದೆ."
+    },
+    {
+     "en": "n flip-flops give MOD 2ⁿ; each stage divides the frequency by 2.",
+     "kn": "n ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳು MOD 2ⁿ ನೀಡುತ್ತವೆ; ಪ್ರತಿ ಹಂತ ಆವೃತ್ತಿಯನ್ನು 2 ರಿಂದ ಭಾಗಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "A decade counter clears at 1010 using NAND(Q3, Q1); IC 7490.",
+     "kn": "ದಶಕ ಕೌಂಟರ್ NAND(Q3, Q1) ಬಳಸಿ 1010 ನಲ್ಲಿ ಶೂನ್ಯಗೊಳ್ಳುತ್ತದೆ; IC 7490."
+    },
+    {
+     "en": "Ripple delays add up, so these counters are slow.",
+     "kn": "ರಿಪಲ್ ವಿಳಂಬಗಳು ಕೂಡುವುದರಿಂದ ಈ ಕೌಂಟರ್‌ಗಳು ನಿಧಾನ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Draw a 3-bit asynchronous up counter with its timing diagram and count table."
+    },
+    {
+     "en": "Draw a decade counter using JK flip-flops and a NAND gate."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n09-q20"
+   ],
+   "narration": {
+    "en": "Recap. In a ripple counter each flip-flop clocks the next one. n flip-flops give MOD 2ⁿ; each stage divides the frequency by 2. A decade counter clears at 1010 using NAND(Q3, Q1); IC 7490. Ripple delays add up, so these counters are slow.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ರಿಪಲ್ ಕೌಂಟರ್‌ನಲ್ಲಿ ಪ್ರತಿ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್ ಮುಂದಿನದಕ್ಕೆ ಕ್ಲಾಕ್ ನೀಡುತ್ತದೆ. n ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳು MOD 2ⁿ ನೀಡುತ್ತವೆ; ಪ್ರತಿ ಹಂತ ಆವೃತ್ತಿಯನ್ನು 2 ರಿಂದ ಭಾಗಿಸುತ್ತದೆ. ದಶಕ ಕೌಂಟರ್ NAND(Q3, Q1) ಬಳಸಿ 1010 ನಲ್ಲಿ ಶೂನ್ಯಗೊಳ್ಳುತ್ತದೆ; IC 7490. ರಿಪಲ್ ವಿಳಂಬಗಳು ಕೂಡುವುದರಿಂದ ಈ ಕೌಂಟರ್‌ಗಳು ನಿಧಾನ."
+   }
+  }
+ ]
+}

@@ -553,3 +553,11 @@ No text is reproduced. Check these plot details against the texts:
 
 - **Book-keeping scope:** in introduction t1 the whiteboard groups identify, measure, record and classify under book-keeping, but the concept text says book-keeping is the recording part only. Align the two.
 - **GST credit (1a02-q34):** the answer assumes CGST/SGST input credit can be set off against IGST output tax.
+
+## Electronics 2nd PUC ch8-10 (Karnataka PU)
+
+- **Syllabus scope:** check against PUE that the magnitude comparator and the 8051 are in the syllabus. The section numbers 8.1-10.5 are my own.
+- **IC numbers:** 7483, 74151, 74138, 7447, 7485, 7490, 74194 and others; verify them.
+- **Timing conventions:** 8085 timing (JNZ 10/7, DCR 4, MVI 7; S1 S0 codes) and the 74-instruction figure.
+- **8051 interrupts:** 5 sources (reset not counted).
+- **Simplified f_max formulas:** ripple 1/(n tpd), synchronous 1/(tpd + tAND).

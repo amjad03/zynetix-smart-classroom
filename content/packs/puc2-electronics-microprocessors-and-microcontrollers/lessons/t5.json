@@ -1,0 +1,766 @@
+{
+ "id": "puc2-electronics-10-microprocessors-and-microcontrollers.t5.lesson",
+ "chapterId": "puc2-electronics-10-microprocessors-and-microcontrollers",
+ "topicId": "puc2-electronics-10-microprocessors-and-microcontrollers.t5",
+ "title": {
+  "en": "Microcontrollers: the 8051",
+  "kn": "ಮೈಕ್ರೋಕಂಟ್ರೋಲರ್‌ಗಳು: 8051"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "The hidden computer in your washing machine",
+    "kn": "ನಿಮ್ಮ ವಾಷಿಂಗ್ ಮೆಷಿನ್‌ನಲ್ಲಿ ಅಡಗಿರುವ ಕಂಪ್ಯೂಟರ್"
+   },
+   "hook": {
+    "en": "A washing machine, a microwave oven and a TV remote each contain a tiny computer with its own memory, timers and ports, all on one chip: a microcontroller.",
+    "kn": "ವಾಷಿಂಗ್ ಮೆಷಿನ್, ಮೈಕ್ರೋವೇವ್ ಓವನ್, ಟಿವಿ ರಿಮೋಟ್ ಪ್ರತಿಯೊಂದರಲ್ಲೂ ತನ್ನದೇ ಸ್ಮರಣೆ, ಟೈಮರ್ ಮತ್ತು ಪೋರ್ಟ್‌ಗಳಿರುವ ಪುಟ್ಟ ಕಂಪ್ಯೂಟರ್ ಒಂದೇ ಚಿಪ್‌ನಲ್ಲಿದೆ: ಅದೇ ಮೈಕ್ರೋಕಂಟ್ರೋಲರ್."
+   },
+   "objectives": [
+    {
+     "en": "Define a microcontroller and compare it with a microprocessor"
+    },
+    {
+     "en": "List the features of the 8051"
+    },
+    {
+     "en": "Calculate the machine cycle time and timer delays of the 8051"
+    }
+   ],
+   "narration": {
+    "en": "A washing machine, a microwave oven and a TV remote each contain a tiny computer with its own memory, timers and ports, all on one chip: a microcontroller.",
+    "kn": "ವಾಷಿಂಗ್ ಮೆಷಿನ್, ಮೈಕ್ರೋವೇವ್ ಓವನ್, ಟಿವಿ ರಿಮೋಟ್ ಪ್ರತಿಯೊಂದರಲ್ಲೂ ತನ್ನದೇ ಸ್ಮರಣೆ, ಟೈಮರ್ ಮತ್ತು ಪೋರ್ಟ್‌ಗಳಿರುವ ಪುಟ್ಟ ಕಂಪ್ಯೂಟರ್ ಒಂದೇ ಚಿಪ್‌ನಲ್ಲಿದೆ: ಅದೇ ಮೈಕ್ರೋಕಂಟ್ರೋಲರ್."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Microcontroller versus microprocessor"
+   },
+   "body": {
+    "en": "A microcontroller is a single chip that contains a CPU together with ROM, RAM, parallel I/O ports, timers/counters, a serial port and interrupt logic: a complete computer on a chip, designed for embedded control. A microprocessor contains only the CPU and needs external memory and I/O chips, which makes it flexible for general-purpose computing but larger and costlier. Microcontrollers are used in washing machines, microwave ovens, remote controls, automobiles, toys and instruments."
+   },
+   "points": [
+    {
+     "en": "Microcontroller = CPU + memory + I/O + timers on one chip"
+    },
+    {
+     "en": "Microprocessor = CPU only"
+    },
+    {
+     "en": "Microcontrollers suit embedded, dedicated tasks"
+    }
+   ],
+   "narration": {
+    "en": "A microcontroller puts the CPU, memory, ports and timers on one chip, ready for embedded control. A microprocessor is only the CPU and needs other chips around it.",
+    "kn": "ಮೈಕ್ರೋಕಂಟ್ರೋಲರ್ CPU, ಸ್ಮರಣೆ, ಪೋರ್ಟ್‌ಗಳು ಮತ್ತು ಟೈಮರ್‌ಗಳನ್ನು ಒಂದೇ ಚಿಪ್‌ನಲ್ಲಿ ಹೊಂದಿದೆ. ಮೈಕ್ರೋಪ್ರೊಸೆಸರ್ ಕೇವಲ CPU; ಅದಕ್ಕೆ ಬೇರೆ ಚಿಪ್‌ಗಳು ಬೇಕು."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "The 8051 on one chip"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Everything a small computer needs sits on one chip, joined by an internal bus: CPU, ROM, RAM, timers, serial port and ports."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        6,
+        2
+       ],
+       "text": {
+        "en": "8051: a computer on one chip"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "line",
+       "from": [
+        6,
+        30
+       ],
+       "to": [
+        94,
+        30
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        6,
+        10
+       ],
+       "to": [
+        30,
+        22
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        8.3,
+        14.2
+       ],
+       "text": {
+        "en": "CPU (8-bit)"
+       },
+       "size": 2.8,
+       "color": "orange"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        36,
+        10
+       ],
+       "to": [
+        62,
+        22
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        41.4,
+        14.0
+       ],
+       "text": {
+        "en": "4 KB ROM"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        68,
+        10
+       ],
+       "to": [
+        94,
+        22
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        72.5,
+        14.0
+       ],
+       "text": {
+        "en": "128 B RAM"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        6,
+        38
+       ],
+       "to": [
+        30,
+        50
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        8.5,
+        42.0
+       ],
+       "text": {
+        "en": "Two timers"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        36,
+        38
+       ],
+       "to": [
+        62,
+        50
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        38.6,
+        42.0
+       ],
+       "text": {
+        "en": "Serial UART"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        68,
+        38
+       ],
+       "to": [
+        94,
+        50
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        70.6,
+        42.0
+       ],
+       "text": {
+        "en": "Ports P0–P3"
+       },
+       "size": 3.0,
+       "color": "green"
+      },
+      {
+       "kind": "line",
+       "from": [
+        18,
+        22
+       ],
+       "to": [
+        18,
+        30
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        49,
+        22
+       ],
+       "to": [
+        49,
+        30
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        81,
+        22
+       ],
+       "to": [
+        81,
+        30
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        18,
+        30
+       ],
+       "to": [
+        18,
+        38
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        49,
+        30
+       ],
+       "to": [
+        49,
+        38
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        81,
+        30
+       ],
+       "to": [
+        81,
+        38
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        6,
+        54
+       ],
+       "text": {
+        "en": "+ 5 interrupt sources, 40 pins"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Compare the two side by side."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        3
+       ],
+       "text": {
+        "en": "Microprocessor"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        3
+       ],
+       "text": {
+        "en": "Microcontroller"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "line",
+       "from": [
+        48,
+        2
+       ],
+       "to": [
+        48,
+        40
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        9
+       ],
+       "to": [
+        96,
+        9
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        12
+       ],
+       "text": {
+        "en": "CPU only"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        12
+       ],
+       "text": {
+        "en": "CPU + RAM + ROM + I/O"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        18
+       ],
+       "text": {
+        "en": "External memory, I/O"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        18
+       ],
+       "text": {
+        "en": "On-chip memory, I/O"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        24
+       ],
+       "text": {
+        "en": "General computing"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        24
+       ],
+       "text": {
+        "en": "Embedded control"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        30
+       ],
+       "text": {
+        "en": "Many chips, costly"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        30
+       ],
+       "text": {
+        "en": "One chip, low cost"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        36
+       ],
+       "text": {
+        "en": "e.g. 8085"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        36
+       ],
+       "text": {
+        "en": "e.g. 8051"
+       },
+       "size": 3.2,
+       "color": "green"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "Timing: one machine cycle is twelve oscillator periods. With a 12 megahertz crystal that is exactly one microsecond."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        46
+       ],
+       "tex": "T_{mc} = \\frac{12}{f_{osc}} = \\frac{12}{12\\ \\text{MHz}} = 1\\ \\mu s",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        54
+       ],
+       "text": {
+        "en": "11.0592 MHz crystal → 1.085 µs"
+       },
+       "size": 3.0,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: The 8051 on one chip."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Features of the 8051"
+   },
+   "body": {
+    "en": "The Intel 8051 is an 8-bit microcontroller in a 40-pin package. It has 4 KB of on-chip ROM (program memory), 128 bytes of on-chip RAM, four 8-bit I/O ports P0–P3 (32 I/O lines), two 16-bit timers/counters T0 and T1, one full-duplex serial port (UART) and five interrupt sources (two external, two timer, one serial). It can address 64 KB of external program memory and 64 KB of external data memory (separate program and data spaces: Harvard architecture). Registers include A, B, R0–R7 (in four banks), the 16-bit DPTR and PC, SP and PSW. One machine cycle takes 12 oscillator periods, so a 12 MHz crystal gives a 1 µs machine cycle."
+   },
+   "points": [
+    {
+     "en": "8-bit CPU; 4 KB ROM; 128 B RAM"
+    },
+    {
+     "en": "4 ports, 32 I/O lines"
+    },
+    {
+     "en": "Two 16-bit timers, one UART, 5 interrupt sources"
+    },
+    {
+     "en": "Machine cycle = 12 oscillator periods"
+    }
+   ],
+   "narration": {
+    "en": "The 8051 has four kilobytes of ROM, one hundred and twenty-eight bytes of RAM, four I/O ports, two timers, a serial port and five interrupt sources. One machine cycle is twelve oscillator periods.",
+    "kn": "8051 ನಲ್ಲಿ 4 KB ROM, 128 ಬೈಟ್ RAM, ನಾಲ್ಕು I/O ಪೋರ್ಟ್‌ಗಳು, ಎರಡು ಟೈಮರ್‌ಗಳು, ಒಂದು ಸರಣಿ ಪೋರ್ಟ್ ಮತ್ತು ಐದು ಅಡಚಣೆ ಮೂಲಗಳಿವೆ. ಒಂದು ಯಂತ್ರ ಚಕ್ರ = 12 ಆಂದೋಲಕ ಅವಧಿಗಳು."
+   },
+   "formula": "T_{mc} = \\frac{12}{f_{osc}}"
+  },
+  {
+   "kind": "function_plot",
+   "caption": {
+    "en": "The 8051 machine cycle time against crystal frequency x. A 16-bit timer counts up to 65 536 machine cycles before it overflows."
+   },
+   "sliders": [
+    {
+     "name": "fo",
+     "label": {
+      "en": "Crystal frequency"
+     },
+     "min": 1,
+     "max": 24,
+     "step": 0.5,
+     "value": 12,
+     "unit": "MHz"
+    }
+   ],
+   "fns": [
+    {
+     "fn": "12/x",
+     "label": "machine cycle (µs)",
+     "color": "yellow"
+    }
+   ],
+   "x": [
+    1,
+    24
+   ],
+   "y": [
+    0,
+    12
+   ],
+   "xLabel": "crystal frequency (MHz)",
+   "yLabel": "machine cycle (µs)",
+   "readouts": [
+    {
+     "label": {
+      "en": "Machine cycle"
+     },
+     "expr": "12/fo",
+     "unit": "µs",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Longest 16-bit timer delay"
+     },
+     "expr": "65.536*12/fo",
+     "unit": "ms",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Single-cycle instructions per second"
+     },
+     "expr": "fo/12",
+     "unit": "million",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set 12 MHz. Is the machine cycle exactly 1 µs?"
+    },
+    {
+     "en": "Find the longest timer delay at 12 MHz."
+    },
+    {
+     "en": "Try 11.0592 MHz, the crystal used for standard serial baud rates."
+    }
+   ],
+   "id": "int1",
+   "type": "interactive",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "The 8051 machine cycle time against crystal frequency x. A 16-bit timer counts up to 65 536 machine cycles before it overflows."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "An 8051 uses an 11.0592 MHz crystal. Find the machine cycle time."
+   },
+   "steps": [
+    {
+     "en": "Machine cycle = 12 oscillator periods = 12 / f."
+    },
+    {
+     "en": "= 12 / 11.0592 MHz ≈ 1.085 µs."
+    }
+   ],
+   "answer": {
+    "en": "≈ 1.085 µs"
+   },
+   "narration": {
+    "en": "Let us work this out together. An 8051 uses an 11.0592 MHz crystal. Find the machine cycle time."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "A 12 MHz 8051 runs Timer 0 as a 16-bit timer from 0000H until it overflows. Find the time."
+   },
+   "steps": [
+    {
+     "en": "Machine cycle = 12/12 MHz = 1 µs; the timer counts one per machine cycle."
+    },
+    {
+     "en": "Counts from 0000H to overflow = 65 536."
+    },
+    {
+     "en": "Time = 65 536 × 1 µs = 65.536 ms."
+    }
+   ],
+   "answer": {
+    "en": "65.536 ms"
+   },
+   "narration": {
+    "en": "Let us work this out together. A 12 MHz 8051 runs Timer 0 as a 16-bit timer from 0000H until it overflows. Find the time."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n10-q21",
+    "2n10-q22",
+    "2n10-q23"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Discuss in your team and agree on one answer.",
+    "kn": "ತಂಡ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ತಂಡದಲ್ಲಿ ಚರ್ಚಿಸಿ ಒಂದು ಉತ್ತರವನ್ನು ಒಪ್ಪಿಕೊಳ್ಳಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n10-q24",
+    "2n10-q25"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the II PUC board exam pattern. Try them on your own first."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A microcontroller is a computer on a chip; a microprocessor is only a CPU.",
+     "kn": "ಮೈಕ್ರೋಕಂಟ್ರೋಲರ್ ಒಂದು ಚಿಪ್‌ನಲ್ಲಿನ ಕಂಪ್ಯೂಟರ್; ಮೈಕ್ರೋಪ್ರೊಸೆಸರ್ ಕೇವಲ CPU."
+    },
+    {
+     "en": "8051: 8-bit, 4 KB ROM, 128 B RAM, 4 ports (32 lines).",
+     "kn": "8051: 8-ಬಿಟ್, 4 KB ROM, 128 B RAM, 4 ಪೋರ್ಟ್‌ಗಳು (32 ರೇಖೆಗಳು)."
+    },
+    {
+     "en": "Two 16-bit timers, one serial port, five interrupt sources.",
+     "kn": "ಎರಡು 16-ಬಿಟ್ ಟೈಮರ್‌ಗಳು, ಒಂದು ಸರಣಿ ಪೋರ್ಟ್, ಐದು ಅಡಚಣೆ ಮೂಲಗಳು."
+    },
+    {
+     "en": "Machine cycle = 12 oscillator periods: 1 µs at 12 MHz.",
+     "kn": "ಯಂತ್ರ ಚಕ್ರ = 12 ಆಂದೋಲಕ ಅವಧಿಗಳು: 12 MHz ನಲ್ಲಿ 1 µs."
+    }
+   ],
+   "homework": [
+    {
+     "en": "List the features of the 8051 microcontroller."
+    },
+    {
+     "en": "Give four differences between a microprocessor and a microcontroller."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n10-q25"
+   ],
+   "narration": {
+    "en": "Recap. A microcontroller is a computer on a chip; a microprocessor is only a CPU. 8051: 8-bit, 4 KB ROM, 128 B RAM, 4 ports (32 lines). Two 16-bit timers, one serial port, five interrupt sources. Machine cycle = 12 oscillator periods: 1 µs at 12 MHz.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಮೈಕ್ರೋಕಂಟ್ರೋಲರ್ ಒಂದು ಚಿಪ್‌ನಲ್ಲಿನ ಕಂಪ್ಯೂಟರ್; ಮೈಕ್ರೋಪ್ರೊಸೆಸರ್ ಕೇವಲ CPU. 8051: 8-ಬಿಟ್, 4 KB ROM, 128 B RAM, 4 ಪೋರ್ಟ್‌ಗಳು (32 ರೇಖೆಗಳು). ಎರಡು 16-ಬಿಟ್ ಟೈಮರ್‌ಗಳು, ಒಂದು ಸರಣಿ ಪೋರ್ಟ್, ಐದು ಅಡಚಣೆ ಮೂಲಗಳು. ಯಂತ್ರ ಚಕ್ರ = 12 ಆಂದೋಲಕ ಅವಧಿಗಳು: 12 MHz ನಲ್ಲಿ 1 µs."
+   }
+  }
+ ]
+}

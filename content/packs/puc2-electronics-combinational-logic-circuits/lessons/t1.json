@@ -1,0 +1,1146 @@
+{
+ "id": "puc2-electronics-08-combinational-logic-circuits.t1.lesson",
+ "chapterId": "puc2-electronics-08-combinational-logic-circuits",
+ "topicId": "puc2-electronics-08-combinational-logic-circuits.t1",
+ "title": {
+  "en": "Half adder and full adder",
+  "kn": "ಅರ್ಧ ಸಂಕಲಕ ಮತ್ತು ಪೂರ್ಣ ಸಂಕಲಕ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "How does a chip add 1 + 1?",
+    "kn": "ಚಿಪ್ 1 + 1 ಅನ್ನು ಹೇಗೆ ಕೂಡಿಸುತ್ತದೆ?"
+   },
+   "hook": {
+    "en": "Every calculator and computer adds numbers with a few logic gates. In binary, 1 + 1 = 10: a sum bit and a carry bit. Today we build the circuit that does it.",
+    "kn": "ಪ್ರತಿಯೊಂದು ಕ್ಯಾಲ್ಕುಲೇಟರ್ ಮತ್ತು ಕಂಪ್ಯೂಟರ್ ಕೆಲವೇ ಲಾಜಿಕ್ ಗೇಟ್‌ಗಳಿಂದ ಸಂಖ್ಯೆಗಳನ್ನು ಕೂಡಿಸುತ್ತದೆ. ದ್ವಿಮಾನದಲ್ಲಿ 1 + 1 = 10: ಒಂದು ಮೊತ್ತ ಬಿಟ್ ಮತ್ತು ಒಂದು ಕ್ಯಾರಿ ಬಿಟ್. ಇಂದು ಅದನ್ನು ಮಾಡುವ ಮಂಡಲವನ್ನು ಕಟ್ಟೋಣ."
+   },
+   "objectives": [
+    {
+     "en": "Define a combinational logic circuit"
+    },
+    {
+     "en": "Design a half adder from its truth table"
+    },
+    {
+     "en": "Build a full adder from two half adders and an OR gate"
+    }
+   ],
+   "narration": {
+    "en": "Every calculator and computer adds numbers with a few logic gates. In binary, 1 + 1 = 10: a sum bit and a carry bit. Today we build the circuit that does it.",
+    "kn": "ಪ್ರತಿಯೊಂದು ಕ್ಯಾಲ್ಕುಲೇಟರ್ ಮತ್ತು ಕಂಪ್ಯೂಟರ್ ಕೆಲವೇ ಲಾಜಿಕ್ ಗೇಟ್‌ಗಳಿಂದ ಸಂಖ್ಯೆಗಳನ್ನು ಕೂಡಿಸುತ್ತದೆ. ದ್ವಿಮಾನದಲ್ಲಿ 1 + 1 = 10: ಒಂದು ಮೊತ್ತ ಬಿಟ್ ಮತ್ತು ಒಂದು ಕ್ಯಾರಿ ಬಿಟ್. ಇಂದು ಅದನ್ನು ಮಾಡುವ ಮಂಡಲವನ್ನು ಕಟ್ಟೋಣ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Combinational circuits and the half adder"
+   },
+   "body": {
+    "en": "In a combinational circuit the output at any instant depends only on the present inputs; it has no memory. A half adder adds two bits A and B and gives a sum S and a carry C. From its truth table, $S = \\bar{A}B + A\\bar{B} = A\\oplus B$ and $C = AB$, so it needs one XOR gate and one AND gate."
+   },
+   "points": [
+    {
+     "en": "Combinational: output = f(present inputs), no memory"
+    },
+    {
+     "en": "Half adder: S = A ⊕ B (XOR), C = A·B (AND)"
+    },
+    {
+     "en": "It cannot accept a carry from a previous stage"
+    }
+   ],
+   "narration": {
+    "en": "A half adder adds two bits. The sum is A XOR B and the carry is A AND B, so one XOR gate and one AND gate are enough.",
+    "kn": "ಅರ್ಧ ಸಂಕಲಕ ಎರಡು ಬಿಟ್‌ಗಳನ್ನು ಕೂಡಿಸುತ್ತದೆ. ಮೊತ್ತ A XOR B, ಕ್ಯಾರಿ A AND B. ಆದ್ದರಿಂದ ಒಂದು XOR ಮತ್ತು ಒಂದು AND ಗೇಟ್ ಸಾಕು."
+   },
+   "formula": "S = A\\oplus B, \\qquad C = A\\cdot B"
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Building adders from gates"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Adding two bits has only four cases. Write the truth table: 1 plus 1 gives sum 0 and carry 1."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        4,
+        8.9
+       ],
+       "to": [
+        32,
+        8.9
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        4.3
+       ],
+       "text": {
+        "en": "A"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        12,
+        4.3
+       ],
+       "text": {
+        "en": "B"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        4.3
+       ],
+       "text": {
+        "en": "S"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        26,
+        4.3
+       ],
+       "text": {
+        "en": "C"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        9.200000000000001
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        12,
+        9.200000000000001
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        9.200000000000001
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        26,
+        9.200000000000001
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.100000000000001
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        12,
+        14.100000000000001
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        14.100000000000001
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        26,
+        14.100000000000001
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.000000000000004
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        12,
+        19.000000000000004
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        19.000000000000004
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        26,
+        19.000000000000004
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.900000000000002
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        12,
+        23.900000000000002
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        23.900000000000002
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        26,
+        23.900000000000002
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The sum is 1 when the inputs differ, which is XOR. The carry is 1 only when both are 1, which is AND."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        40,
+        6
+       ],
+       "tex": "S = \\bar{A}B + A\\bar{B} = A\\oplus B",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        40,
+        14
+       ],
+       "tex": "C = A\\cdot B",
+       "size": 3.5,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "So the half adder is just an XOR gate and an AND gate fed by the same two inputs."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        32
+       ],
+       "text": {
+        "en": "A"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37
+       ],
+       "text": {
+        "en": "B"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        7,
+        34
+       ],
+       "to": [
+        30,
+        34
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        7,
+        39
+       ],
+       "to": [
+        30,
+        39
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         13,
+         34
+        ],
+        [
+         13,
+         48
+        ],
+        [
+         30,
+         48
+        ]
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         19,
+         39
+        ],
+        [
+         19,
+         53
+        ],
+        [
+         30,
+         53
+        ]
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        13,
+        34
+       ],
+       "r": 0.6,
+       "color": "white",
+       "fill": true
+      },
+      {
+       "kind": "circle",
+       "at": [
+        19,
+        39
+       ],
+       "r": 0.6,
+       "color": "white",
+       "fill": true
+      },
+      {
+       "kind": "rect",
+       "from": [
+        30,
+        31
+       ],
+       "to": [
+        44,
+        42
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        34.0,
+        34.4
+       ],
+       "text": {
+        "en": "XOR"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        30,
+        45
+       ],
+       "to": [
+        44,
+        56
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        34.0,
+        48.4
+       ],
+       "text": {
+        "en": "AND"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        44,
+        36.5
+       ],
+       "to": [
+        54,
+        36.5
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55,
+        34.5
+       ],
+       "text": {
+        "en": "S"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        44,
+        50.5
+       ],
+       "to": [
+        54,
+        50.5
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55,
+        48.5
+       ],
+       "text": {
+        "en": "C"
+       },
+       "size": 3.5,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A full adder adds a third bit, the carry-in. Two half adders do the adding and an OR gate joins their carries."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        3
+       ],
+       "tex": "S = A\\oplus B\\oplus C_{in}",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        10
+       ],
+       "tex": "C_{out} = AB + C_{in}(A\\oplus B)",
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        19
+       ],
+       "text": {
+        "en": "A"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        26
+       ],
+       "text": {
+        "en": "B"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        8,
+        21
+       ],
+       "to": [
+        20,
+        21
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        8,
+        28
+       ],
+       "to": [
+        20,
+        28
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        2,
+        35
+       ],
+       "text": {
+        "en": "Cin"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         9,
+         37
+        ],
+        [
+         40,
+         37
+        ],
+        [
+         40,
+         29
+        ],
+        [
+         46,
+         29
+        ]
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        32,
+        21
+       ],
+       "to": [
+        46,
+        21
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         32,
+         29
+        ],
+        [
+         36,
+         29
+        ],
+        [
+         36,
+         47
+        ],
+        [
+         64,
+         47
+        ]
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         58,
+         29
+        ],
+        [
+         61,
+         29
+        ],
+        [
+         61,
+         43
+        ],
+        [
+         64,
+         43
+        ]
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        58,
+        21
+       ],
+       "to": [
+        80,
+        21
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        82,
+        19
+       ],
+       "text": {
+        "en": "S"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        74,
+        45
+       ],
+       "to": [
+        84,
+        45
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        85,
+        43
+       ],
+       "text": {
+        "en": "Cout"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        20,
+        18
+       ],
+       "to": [
+        32,
+        32
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        23.0,
+        22.9
+       ],
+       "text": {
+        "en": "HA1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        46,
+        18
+       ],
+       "to": [
+        58,
+        32
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        49.0,
+        22.9
+       ],
+       "text": {
+        "en": "HA2"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        64,
+        40
+       ],
+       "to": [
+        74,
+        50
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67.1,
+        43.0
+       ],
+       "text": {
+        "en": "OR"
+       },
+       "size": 3.0,
+       "color": "orange"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "Check one row: 1 plus 1 plus 1 is 3, which is 11 in binary. The circuit gives sum 1 and carry 1."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        51
+       ],
+       "text": {
+        "en": "Check: 1 + 1 + 1 = 11 (binary)"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        56
+       ],
+       "text": {
+        "en": "S = 1, Cout = 1"
+       },
+       "size": 3.0,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: Building adders from gates."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Full adder"
+   },
+   "body": {
+    "en": "A full adder adds three bits: A, B and the carry-in $C_{in}$ from the previous stage. Its outputs are $S = A\\oplus B\\oplus C_{in}$ and $C_{out} = AB + BC_{in} + AC_{in} = AB + C_{in}(A\\oplus B)$. It can be built from two half adders and one OR gate: the first half adder adds A and B, the second adds its sum to $C_{in}$, and the OR gate combines the two carries."
+   },
+   "points": [
+    {
+     "en": "Inputs A, B, Cin; outputs S, Cout"
+    },
+    {
+     "en": "S = A ⊕ B ⊕ Cin"
+    },
+    {
+     "en": "Cout = AB + Cin(A ⊕ B)"
+    },
+    {
+     "en": "Full adder = 2 half adders + 1 OR gate"
+    }
+   ],
+   "narration": {
+    "en": "A full adder also takes the carry-in. Its sum is the XOR of all three inputs, and its carry is AB plus Cin times A XOR B.",
+    "kn": "ಪೂರ್ಣ ಸಂಕಲಕ ಕ್ಯಾರಿ-ಇನ್ ಅನ್ನೂ ತೆಗೆದುಕೊಳ್ಳುತ್ತದೆ. ಮೊತ್ತ ಮೂರೂ ಇನ್‌ಪುಟ್‌ಗಳ XOR; ಕ್ಯಾರಿ AB + Cin(A⊕B)."
+   },
+   "formula": "S = A\\oplus B\\oplus C_{in}, \\qquad C_{out} = AB + C_{in}(A\\oplus B)"
+  },
+  {
+   "id": "lab-logic-gates",
+   "type": "virtual_lab",
+   "labId": "logic-gates",
+   "aim": {
+    "en": "Verify the truth tables of the XOR and AND gates, the two gates that make a half adder."
+   },
+   "narration": {
+    "en": "In the lab, verify the XOR and AND truth tables. Put them side by side and you have the sum and carry of a half adder."
+   },
+   "seconds": 150,
+   "optional": true
+  },
+  {
+   "kind": "readouts",
+   "caption": {
+    "en": "Set the three input bits of a full adder. With Cin = 0 it behaves as a half adder."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "A"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "B"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "Carry-in Cin"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 1,
+     "value": 0
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Sum S = A ⊕ B ⊕ Cin"
+     },
+     "expr": "A + B + C - 2*floor((A + B + C)/2)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Carry out Cout"
+     },
+     "expr": "floor((A + B + C)/2)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Decimal total A + B + Cin"
+     },
+     "expr": "A + B + C",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Keep Cin = 0 and run through all four A, B cases: compare with the half adder table."
+    },
+    {
+     "en": "Find every input that gives Cout = 1. How many inputs are 1 each time?"
+    },
+    {
+     "en": "Check that 2 × Cout + S always equals the decimal total."
+    }
+   ],
+   "id": "int1",
+   "type": "interactive",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "Set the three input bits of a full adder. With Cin = 0 it behaves as a half adder."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Sum is odd, carry is majority"
+   },
+   "body": {
+    "en": "For any adder, the sum bit is 1 when an odd number of inputs are 1 (that is XOR), and the carry is 1 when at least two inputs are 1 (a majority vote)."
+   },
+   "narration": {
+    "en": "Sum is odd, carry is majority. For any adder, the sum bit is 1 when an odd number of inputs are 1 (that is XOR), and the carry is 1 when at least two inputs are 1 (a majority vote)."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Sum = Odd, Carry = Majority"
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A full adder has A = 1, B = 0 and Cin = 1. Find S and Cout using the equations."
+   },
+   "steps": [
+    {
+     "en": "A ⊕ B = 1 ⊕ 0 = 1."
+    },
+    {
+     "en": "S = (A ⊕ B) ⊕ Cin = 1 ⊕ 1 = 0."
+    },
+    {
+     "en": "Cout = AB + Cin(A ⊕ B) = 0 + 1·1 = 1."
+    },
+    {
+     "en": "Check: 1 + 0 + 1 = 2 = 10 in binary, so S = 0 and Cout = 1."
+    }
+   ],
+   "answer": {
+    "en": "S = 0, Cout = 1"
+   },
+   "narration": {
+    "en": "Let us work this out together. A full adder has A = 1, B = 0 and Cin = 1. Find S and Cout using the equations."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "From the half adder truth table, write the sum-of-products expression for S and simplify it."
+   },
+   "steps": [
+    {
+     "en": "S = 1 in rows A B = 0 1 and 1 0."
+    },
+    {
+     "en": "So S = ĀB + AB̄."
+    },
+    {
+     "en": "ĀB + AB̄ is the definition of A ⊕ B."
+    }
+   ],
+   "answer": {
+    "en": "S = ĀB + AB̄ = A ⊕ B"
+   },
+   "narration": {
+    "en": "Let us work this out together. From the half adder truth table, write the sum-of-products expression for S and simplify it."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n08-q01",
+    "2n08-q02",
+    "2n08-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Monitor quiz. The class monitor enters the answer the class agrees on.",
+    "kn": "ಮಾನಿಟರ್ ರಸಪ್ರಶ್ನೆ. ತರಗತಿ ಒಪ್ಪಿದ ಉತ್ತರವನ್ನು ಮಾನಿಟರ್ ನಮೂದಿಸುತ್ತಾರೆ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n08-q04",
+    "2n08-q05"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the II PUC board exam pattern. Try them on your own first."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A combinational circuit has no memory: outputs depend only on present inputs.",
+     "kn": "ಸಂಯೋಜಿತ (ಕಾಂಬಿನೇಶನಲ್) ಮಂಡಲಕ್ಕೆ ಸ್ಮರಣೆ ಇಲ್ಲ: ಔಟ್‌ಪುಟ್ ಪ್ರಸ್ತುತ ಇನ್‌ಪುಟ್‌ಗಳನ್ನು ಮಾತ್ರ ಅವಲಂಬಿಸಿದೆ."
+    },
+    {
+     "en": "Half adder: S = A ⊕ B and C = AB.",
+     "kn": "ಅರ್ಧ ಸಂಕಲಕ: S = A ⊕ B ಮತ್ತು C = AB."
+    },
+    {
+     "en": "Full adder: S = A ⊕ B ⊕ Cin and Cout = AB + Cin(A ⊕ B).",
+     "kn": "ಪೂರ್ಣ ಸಂಕಲಕ: S = A ⊕ B ⊕ Cin ಮತ್ತು Cout = AB + Cin(A ⊕ B)."
+    },
+    {
+     "en": "Two half adders and one OR gate make a full adder.",
+     "kn": "ಎರಡು ಅರ್ಧ ಸಂಕಲಕಗಳು ಮತ್ತು ಒಂದು OR ಗೇಟ್ ಸೇರಿ ಪೂರ್ಣ ಸಂಕಲಕವಾಗುತ್ತದೆ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Draw a full adder using two half adders and an OR gate, and verify its truth table for all eight input combinations."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n08-q05"
+   ],
+   "narration": {
+    "en": "Recap. A combinational circuit has no memory: outputs depend only on present inputs. Half adder: S = A ⊕ B and C = AB. Full adder: S = A ⊕ B ⊕ Cin and Cout = AB + Cin(A ⊕ B). Two half adders and one OR gate make a full adder.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಸಂಯೋಜಿತ (ಕಾಂಬಿನೇಶನಲ್) ಮಂಡಲಕ್ಕೆ ಸ್ಮರಣೆ ಇಲ್ಲ: ಔಟ್‌ಪುಟ್ ಪ್ರಸ್ತುತ ಇನ್‌ಪುಟ್‌ಗಳನ್ನು ಮಾತ್ರ ಅವಲಂಬಿಸಿದೆ. ಅರ್ಧ ಸಂಕಲಕ: S = A ⊕ B ಮತ್ತು C = AB. ಪೂರ್ಣ ಸಂಕಲಕ: S = A ⊕ B ⊕ Cin ಮತ್ತು Cout = AB + Cin(A ⊕ B). ಎರಡು ಅರ್ಧ ಸಂಕಲಕಗಳು ಮತ್ತು ಒಂದು OR ಗೇಟ್ ಸೇರಿ ಪೂರ್ಣ ಸಂಕಲಕವಾಗುತ್ತದೆ."
+   }
+  }
+ ]
+}

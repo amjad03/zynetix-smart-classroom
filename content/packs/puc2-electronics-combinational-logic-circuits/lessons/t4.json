@@ -1,0 +1,907 @@
+{
+ "id": "puc2-electronics-08-combinational-logic-circuits.t4.lesson",
+ "chapterId": "puc2-electronics-08-combinational-logic-circuits",
+ "topicId": "puc2-electronics-08-combinational-logic-circuits.t4",
+ "title": {
+  "en": "Decoders and encoders",
+  "kn": "ಡಿಕೋಡರ್ ಮತ್ತು ಎನ್‌ಕೋಡರ್"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "From a code to a lamp, from a key to a code",
+    "kn": "ಸಂಕೇತದಿಂದ ದೀಪಕ್ಕೆ, ಕೀಲಿಯಿಂದ ಸಂಕೇತಕ್ಕೆ"
+   },
+   "hook": {
+    "en": "When you press 7 on a calculator, a circuit turns the key into a binary code; another turns that code into the shape of 7 on the display. These are the encoder and the decoder.",
+    "kn": "ಕ್ಯಾಲ್ಕುಲೇಟರ್‌ನಲ್ಲಿ 7 ಒತ್ತಿದಾಗ ಒಂದು ಮಂಡಲ ಕೀಲಿಯನ್ನು ದ್ವಿಮಾನ ಸಂಕೇತವಾಗಿಸುತ್ತದೆ; ಇನ್ನೊಂದು ಆ ಸಂಕೇತವನ್ನು ಪ್ರದರ್ಶಕದಲ್ಲಿ 7 ರ ಆಕಾರವಾಗಿಸುತ್ತದೆ. ಅವೇ ಎನ್‌ಕೋಡರ್ ಮತ್ತು ಡಿಕೋಡರ್."
+   },
+   "objectives": [
+    {
+     "en": "Explain a 2:4 and 3:8 decoder"
+    },
+    {
+     "en": "Explain the BCD to 7-segment decoder"
+    },
+    {
+     "en": "Design an 8:3 (octal to binary) encoder and state the need for a priority encoder"
+    }
+   ],
+   "narration": {
+    "en": "When you press 7 on a calculator, a circuit turns the key into a binary code; another turns that code into the shape of 7 on the display. These are the encoder and the decoder.",
+    "kn": "ಕ್ಯಾಲ್ಕುಲೇಟರ್‌ನಲ್ಲಿ 7 ಒತ್ತಿದಾಗ ಒಂದು ಮಂಡಲ ಕೀಲಿಯನ್ನು ದ್ವಿಮಾನ ಸಂಕೇತವಾಗಿಸುತ್ತದೆ; ಇನ್ನೊಂದು ಆ ಸಂಕೇತವನ್ನು ಪ್ರದರ್ಶಕದಲ್ಲಿ 7 ರ ಆಕಾರವಾಗಿಸುತ್ತದೆ. ಅವೇ ಎನ್‌ಕೋಡರ್ ಮತ್ತು ಡಿಕೋಡರ್."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Decoder"
+   },
+   "body": {
+    "en": "A decoder converts an n-bit binary input into one active line out of at most $2^n$ outputs. In a 2:4 decoder with inputs A (MSB) and B, $D_0 = \\bar{A}\\bar{B}$, $D_1 = \\bar{A}B$, $D_2 = A\\bar{B}$, $D_3 = AB$: one AND gate per output. Common ICs: 74138 (3:8, active-low outputs), 7442 (BCD to decimal), 7447 (BCD to 7-segment, active-low, for common-anode displays) and 7448 (for common-cathode displays). A decoder with an enable input can be used as a demultiplexer."
+   },
+   "points": [
+    {
+     "en": "n inputs → 2ⁿ outputs, only one active"
+    },
+    {
+     "en": "Each output is one minterm of the inputs"
+    },
+    {
+     "en": "7447: BCD to 7-segment decoder/driver"
+    }
+   ],
+   "narration": {
+    "en": "A decoder turns an n-bit code into one active output out of two to the power n. Each output is an AND of the inputs or their complements.",
+    "kn": "ಡಿಕೋಡರ್ n-ಬಿಟ್ ಸಂಕೇತವನ್ನು 2ⁿ ಔಟ್‌ಪುಟ್‌ಗಳಲ್ಲಿ ಒಂದು ಸಕ್ರಿಯ ಔಟ್‌ಪುಟ್ ಆಗಿ ಪರಿವರ್ತಿಸುತ್ತದೆ."
+   },
+   "formula": "D_0 = \\bar A\\bar B,\\; D_1 = \\bar A B,\\; D_2 = A\\bar B,\\; D_3 = AB"
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Decoder, 7-segment display and encoder"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A 2-to-4 decoder: two inputs, four outputs. Only one output is high for each input code."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        30,
+        12
+       ],
+       "to": [
+        48,
+        48
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        32.4,
+        28.0
+       ],
+       "text": {
+        "en": "2:4 DEC"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        16,
+        22
+       ],
+       "to": [
+        30,
+        22
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10,
+        19.8
+       ],
+       "text": {
+        "en": "A"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        16,
+        38
+       ],
+       "to": [
+        30,
+        38
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10,
+        35.8
+       ],
+       "text": {
+        "en": "B"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        48,
+        16
+       ],
+       "to": [
+        62,
+        16
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        48,
+        25
+       ],
+       "to": [
+        62,
+        25
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        48,
+        34
+       ],
+       "to": [
+        62,
+        34
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        48,
+        43
+       ],
+       "to": [
+        62,
+        43
+       ],
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Each output is one AND term. With A as the MSB, D0 is A-bar B-bar and D3 is A B."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        64,
+        13.5
+       ],
+       "tex": "D_0 = \\bar A\\,\\bar B",
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        64,
+        22.5
+       ],
+       "tex": "D_1 = \\bar A B",
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        64,
+        31.5
+       ],
+       "tex": "D_2 = A\\bar B",
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "math",
+       "at": [
+        64,
+        40.5
+       ],
+       "tex": "D_3 = AB",
+       "size": 3.2,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "For the input A B equal to 1 0, only D2 goes high."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        52
+       ],
+       "text": {
+        "en": "AB = 10 → only D2 = 1"
+       },
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A seven-segment display has segments a to g. The 7447 decoder lights the right segments for each BCD digit."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        20,
+        8
+       ],
+       "to": [
+        32,
+        8
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        32,
+        8
+       ],
+       "to": [
+        32,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        32,
+        20
+       ],
+       "to": [
+        32,
+        32
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        20,
+        32
+       ],
+       "to": [
+        32,
+        32
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        20,
+        20
+       ],
+       "to": [
+        20,
+        32
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        20,
+        8
+       ],
+       "to": [
+        20,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        20,
+        20
+       ],
+       "to": [
+        32,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        25,
+        3.5
+       ],
+       "text": {
+        "en": "a"
+       },
+       "size": 2.8,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        33.5,
+        12
+       ],
+       "text": {
+        "en": "b"
+       },
+       "size": 2.8,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        33.5,
+        24
+       ],
+       "text": {
+        "en": "c"
+       },
+       "size": 2.8,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        25,
+        33
+       ],
+       "text": {
+        "en": "d"
+       },
+       "size": 2.8,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        16.5,
+        24
+       ],
+       "text": {
+        "en": "e"
+       },
+       "size": 2.8,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        16.5,
+        12
+       ],
+       "text": {
+        "en": "f"
+       },
+       "size": 2.8,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        25,
+        16
+       ],
+       "text": {
+        "en": "g"
+       },
+       "size": 2.8,
+       "color": "orange"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        44,
+        14
+       ],
+       "to": [
+        58,
+        26
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        47.0,
+        17.9
+       ],
+       "text": {
+        "en": "7447"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        44,
+        20
+       ],
+       "to": [
+        37,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        74,
+        20
+       ],
+       "to": [
+        58,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        66,
+        13
+       ],
+       "text": {
+        "en": "BCD 0101"
+       },
+       "size": 3.0,
+       "color": "white"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "For the digit 5, segments a, f, g, c and d glow."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        20,
+        8
+       ],
+       "to": [
+        32,
+        8
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "line",
+       "from": [
+        20,
+        8
+       ],
+       "to": [
+        20,
+        20
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "line",
+       "from": [
+        20,
+        20
+       ],
+       "to": [
+        32,
+        20
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "line",
+       "from": [
+        32,
+        20
+       ],
+       "to": [
+        32,
+        32
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "line",
+       "from": [
+        20,
+        32
+       ],
+       "to": [
+        32,
+        32
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        40
+       ],
+       "text": {
+        "en": "5 → segments a f g c d"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        46
+       ],
+       "text": {
+        "en": "7447: active-low outputs"
+       },
+       "size": 3.2,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "An encoder goes the other way. For octal to binary, each output bit is just an OR of four inputs."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        54,
+        34
+       ],
+       "text": {
+        "en": "8:3 encoder (OR gates)"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        54,
+        40
+       ],
+       "tex": "A_2 = D_4+D_5+D_6+D_7",
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        54,
+        46
+       ],
+       "tex": "A_1 = D_2+D_3+D_6+D_7",
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        54,
+        52
+       ],
+       "tex": "A_0 = D_1+D_3+D_5+D_7",
+       "size": 3.0,
+       "color": "white"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: Decoder, 7-segment display and encoder."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Encoder and priority encoder"
+   },
+   "body": {
+    "en": "An encoder does the reverse: $2^n$ input lines, only one active at a time, give an n-bit code. In an 8:3 (octal to binary) encoder, $A_2 = D_4 + D_5 + D_6 + D_7$, $A_1 = D_2 + D_3 + D_6 + D_7$, $A_0 = D_1 + D_3 + D_5 + D_7$: just three OR gates. A decimal to BCD encoder has 10 inputs and 4 outputs. If two inputs are active together a simple encoder gives a wrong code; a priority encoder (e.g. 74148, 8:3; 74147, decimal to BCD) outputs the code of the highest-priority input."
+   },
+   "points": [
+    {
+     "en": "2ⁿ inputs → n outputs"
+    },
+    {
+     "en": "Octal to binary: three OR gates"
+    },
+    {
+     "en": "Priority encoder: highest-numbered active input wins"
+    }
+   ],
+   "narration": {
+    "en": "An encoder converts one active input line into its binary code. If two keys are pressed together, a priority encoder gives the code of the higher-priority one.",
+    "kn": "ಎನ್‌ಕೋಡರ್ ಒಂದು ಸಕ್ರಿಯ ಇನ್‌ಪುಟ್ ರೇಖೆಯನ್ನು ಅದರ ದ್ವಿಮಾನ ಸಂಕೇತವಾಗಿಸುತ್ತದೆ. ಎರಡು ಕೀಲಿಗಳನ್ನು ಒಟ್ಟಿಗೆ ಒತ್ತಿದರೆ ಪ್ರಾಧಾನ್ಯ ಎನ್‌ಕೋಡರ್ ಹೆಚ್ಚಿನ ಪ್ರಾಧಾನ್ಯದ ಸಂಕೇತ ನೀಡುತ್ತದೆ."
+   }
+  },
+  {
+   "kind": "readouts",
+   "caption": {
+    "en": "A decoder with n inputs has 2ⁿ outputs. Set the two inputs of a 2:4 decoder and see which output goes high."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Input A (MSB)"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "Input B (LSB)"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 1,
+     "value": 0
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "Decoder inputs n"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "2:4 decoder: active output D…"
+     },
+     "expr": "2*A + B",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Outputs of an n-input decoder"
+     },
+     "expr": "2^n",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Output lines of an encoder with 2ⁿ inputs"
+     },
+     "expr": "n",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Step A B through 00 to 11 and name the output that goes high."
+    },
+    {
+     "en": "Set n = 3: this is the 3:8 decoder (74138). How many outputs?"
+    },
+    {
+     "en": "An encoder has 16 inputs. How many output bits does it need?"
+    }
+   ],
+   "id": "int1",
+   "type": "interactive",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "A decoder with n inputs has 2ⁿ outputs. Set the two inputs of a 2:4 decoder and see which output goes high."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Decoder expands, encoder squeezes"
+   },
+   "body": {
+    "en": "A decoder expands n bits into 2ⁿ lines; an encoder squeezes 2ⁿ lines into n bits. To write an encoder output bit Ak, OR together every input whose number has a 1 in bit k."
+   },
+   "narration": {
+    "en": "Decoder expands, encoder squeezes. A decoder expands n bits into 2ⁿ lines; an encoder squeezes 2ⁿ lines into n bits. To write an encoder output bit Ak, OR together every input whose number has a 1 in bit k."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "DEcoder: n → 2ⁿ; ENcoder: 2ⁿ → n"
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "The inputs of a 3:8 decoder are A B C = 1 1 0 (A is the MSB). Which output is active? If the decoder is a 74138 with active-low outputs, what is the level on that output?"
+   },
+   "steps": [
+    {
+     "en": "110 in binary = 6 in decimal."
+    },
+    {
+     "en": "So output 6 is selected; all others are inactive."
+    },
+    {
+     "en": "In the 74138 the outputs are active-low, so Y6 = 0 and the other seven outputs are 1."
+    }
+   ],
+   "answer": {
+    "en": "Output 6; for 74138, Y6 = 0 (low)"
+   },
+   "narration": {
+    "en": "Let us work this out together. The inputs of a 3:8 decoder are A B C = 1 1 0 (A is the MSB). Which output is active? If the decoder is a 74138 with active-low outputs, what is the level on that output?"
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "In an 8:3 octal-to-binary encoder, input D5 alone is high. Find A2 A1 A0."
+   },
+   "steps": [
+    {
+     "en": "A2 = D4 + D5 + D6 + D7 = 1 (D5 = 1)."
+    },
+    {
+     "en": "A1 = D2 + D3 + D6 + D7 = 0."
+    },
+    {
+     "en": "A0 = D1 + D3 + D5 + D7 = 1."
+    },
+    {
+     "en": "A2 A1 A0 = 101 = 5. ✓"
+    }
+   ],
+   "answer": {
+    "en": "A2 A1 A0 = 101"
+   },
+   "narration": {
+    "en": "Let us work this out together. In an 8:3 octal-to-binary encoder, input D5 alone is high. Find A2 A1 A0."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n08-q16",
+    "2n08-q17",
+    "2n08-q18"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Monitor quiz. The class monitor enters the answer the class agrees on.",
+    "kn": "ಮಾನಿಟರ್ ರಸಪ್ರಶ್ನೆ. ತರಗತಿ ಒಪ್ಪಿದ ಉತ್ತರವನ್ನು ಮಾನಿಟರ್ ನಮೂದಿಸುತ್ತಾರೆ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n08-q19",
+    "2n08-q20"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the II PUC board exam pattern. Try them on your own first."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC board exam practice"
+   },
+   "questionIds": [
+    "2n08-q28"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Three more board-exam practice questions that bring the chapter together."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A decoder converts n input bits to one active output out of 2ⁿ.",
+     "kn": "ಡಿಕೋಡರ್ n ಇನ್‌ಪುಟ್ ಬಿಟ್‌ಗಳನ್ನು 2ⁿ ರಲ್ಲಿ ಒಂದು ಸಕ್ರಿಯ ಔಟ್‌ಪುಟ್ ಆಗಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "The 7447 decodes BCD to drive a common-anode 7-segment display.",
+     "kn": "7447 BCD ಅನ್ನು ಡಿಕೋಡ್ ಮಾಡಿ ಕಾಮನ್-ಆನೋಡ್ 7-ಸೆಗ್ಮೆಂಟ್ ಪ್ರದರ್ಶಕವನ್ನು ಚಾಲನೆ ಮಾಡುತ್ತದೆ."
+    },
+    {
+     "en": "An encoder converts one of 2ⁿ inputs to an n-bit code.",
+     "kn": "ಎನ್‌ಕೋಡರ್ 2ⁿ ಇನ್‌ಪುಟ್‌ಗಳಲ್ಲಿ ಒಂದನ್ನು n-ಬಿಟ್ ಸಂಕೇತವಾಗಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "A priority encoder gives the code of the highest-priority active input.",
+     "kn": "ಪ್ರಾಧಾನ್ಯ ಎನ್‌ಕೋಡರ್ ಅತಿ ಹೆಚ್ಚು ಪ್ರಾಧಾನ್ಯದ ಸಕ್ರಿಯ ಇನ್‌ಪುಟ್‌ನ ಸಂಕೇತ ನೀಡುತ್ತದೆ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Draw a 2:4 decoder using AND and NOT gates and write its truth table."
+    },
+    {
+     "en": "List the segments that glow for the digits 0 to 9 on a 7-segment display."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n08-q20"
+   ],
+   "narration": {
+    "en": "Recap. A decoder converts n input bits to one active output out of 2ⁿ. The 7447 decodes BCD to drive a common-anode 7-segment display. An encoder converts one of 2ⁿ inputs to an n-bit code. A priority encoder gives the code of the highest-priority active input.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಡಿಕೋಡರ್ n ಇನ್‌ಪುಟ್ ಬಿಟ್‌ಗಳನ್ನು 2ⁿ ರಲ್ಲಿ ಒಂದು ಸಕ್ರಿಯ ಔಟ್‌ಪುಟ್ ಆಗಿಸುತ್ತದೆ. 7447 BCD ಅನ್ನು ಡಿಕೋಡ್ ಮಾಡಿ ಕಾಮನ್-ಆನೋಡ್ 7-ಸೆಗ್ಮೆಂಟ್ ಪ್ರದರ್ಶಕವನ್ನು ಚಾಲನೆ ಮಾಡುತ್ತದೆ. ಎನ್‌ಕೋಡರ್ 2ⁿ ಇನ್‌ಪುಟ್‌ಗಳಲ್ಲಿ ಒಂದನ್ನು n-ಬಿಟ್ ಸಂಕೇತವಾಗಿಸುತ್ತದೆ. ಪ್ರಾಧಾನ್ಯ ಎನ್‌ಕೋಡರ್ ಅತಿ ಹೆಚ್ಚು ಪ್ರಾಧಾನ್ಯದ ಸಕ್ರಿಯ ಇನ್‌ಪುಟ್‌ನ ಸಂಕೇತ ನೀಡುತ್ತದೆ."
+   }
+  }
+ ]
+}

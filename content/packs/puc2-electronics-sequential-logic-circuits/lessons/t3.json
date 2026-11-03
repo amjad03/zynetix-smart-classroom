@@ -1,0 +1,1117 @@
+{
+ "id": "puc2-electronics-09-sequential-logic-circuits.t3.lesson",
+ "chapterId": "puc2-electronics-09-sequential-logic-circuits",
+ "topicId": "puc2-electronics-09-sequential-logic-circuits.t3",
+ "title": {
+  "en": "Shift registers",
+  "kn": "ಶಿಫ್ಟ್ ರಿಜಿಸ್ಟರ್‌ಗಳು"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Bits marching in a line",
+    "kn": "ಸಾಲಾಗಿ ಸಾಗುವ ಬಿಟ್‌ಗಳು"
+   },
+   "hook": {
+    "en": "A USB cable sends a byte one bit at a time, but the computer needs all eight bits together. A row of flip-flops that passes bits along on each clock turns serial data into parallel and back.",
+    "kn": "USB ಕೇಬಲ್ ಒಂದು ಬೈಟ್ ಅನ್ನು ಒಂದೊಂದೇ ಬಿಟ್ ಆಗಿ ಕಳುಹಿಸುತ್ತದೆ, ಆದರೆ ಕಂಪ್ಯೂಟರ್‌ಗೆ ಎಂಟೂ ಬಿಟ್‌ಗಳು ಒಟ್ಟಿಗೆ ಬೇಕು. ಪ್ರತಿ ಕ್ಲಾಕ್‌ಗೆ ಬಿಟ್‌ಗಳನ್ನು ಮುಂದೆ ಸಾಗಿಸುವ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳ ಸಾಲು ಸರಣಿ ದತ್ತಾಂಶವನ್ನು ಸಮಾಂತರವಾಗಿಸುತ್ತದೆ."
+   },
+   "objectives": [
+    {
+     "en": "Define a register and a shift register"
+    },
+    {
+     "en": "Explain SISO, SIPO, PISO and PIPO registers"
+    },
+    {
+     "en": "Describe ring and Johnson counters and shifting as ×2 and ÷2"
+    }
+   ],
+   "narration": {
+    "en": "A USB cable sends a byte one bit at a time, but the computer needs all eight bits together. A row of flip-flops that passes bits along on each clock turns serial data into parallel and back.",
+    "kn": "USB ಕೇಬಲ್ ಒಂದು ಬೈಟ್ ಅನ್ನು ಒಂದೊಂದೇ ಬಿಟ್ ಆಗಿ ಕಳುಹಿಸುತ್ತದೆ, ಆದರೆ ಕಂಪ್ಯೂಟರ್‌ಗೆ ಎಂಟೂ ಬಿಟ್‌ಗಳು ಒಟ್ಟಿಗೆ ಬೇಕು. ಪ್ರತಿ ಕ್ಲಾಕ್‌ಗೆ ಬಿಟ್‌ಗಳನ್ನು ಮುಂದೆ ಸಾಗಿಸುವ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳ ಸಾಲು ಸರಣಿ ದತ್ತಾಂಶವನ್ನು ಸಮಾಂತರವಾಗಿಸುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Registers and shift registers"
+   },
+   "body": {
+    "en": "A register is a group of flip-flops that stores a binary word, one bit per flip-flop. In a shift register, D flip-flops are connected in cascade with a common clock: the output of each feeds the D input of the next, so on every clock pulse the stored bits move one place. By the way data enter and leave, there are four types: serial-in serial-out (SISO), serial-in parallel-out (SIPO), parallel-in serial-out (PISO) and parallel-in parallel-out (PIPO). Loading n bits serially needs n clock pulses."
+   },
+   "points": [
+    {
+     "en": "n-bit register = n flip-flops"
+    },
+    {
+     "en": "SISO, SIPO, PISO, PIPO"
+    },
+    {
+     "en": "Serial loading of n bits needs n clock pulses"
+    },
+    {
+     "en": "Universal shift register (IC 74194): shift left/right, parallel load"
+    }
+   ],
+   "narration": {
+    "en": "A shift register is a chain of D flip-flops with a common clock. On each clock pulse every bit moves one place, so n bits enter serially in n clock pulses.",
+    "kn": "ಶಿಫ್ಟ್ ರಿಜಿಸ್ಟರ್ ಸಾಮಾನ್ಯ ಕ್ಲಾಕ್ ಇರುವ D ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳ ಸರಪಳಿ. ಪ್ರತಿ ಕ್ಲಾಕ್ ಪಲ್ಸ್‌ಗೆ ಪ್ರತಿಯೊಂದು ಬಿಟ್ ಒಂದು ಸ್ಥಾನ ಸರಿಯುತ್ತದೆ; n ಬಿಟ್‌ಗಳಿಗೆ n ಪಲ್ಸ್‌ಗಳು."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "A 4-bit serial-in shift register"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Four D flip-flops in a chain, all on one clock. Each Q feeds the next D."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        10,
+        12
+       ],
+       "to": [
+        24,
+        24
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14.0,
+        15.9
+       ],
+       "text": {
+        "en": "FF0"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        17,
+        32
+       ],
+       "to": [
+        17,
+        24
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        6.5
+       ],
+       "text": {
+        "en": "Q0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        32,
+        12
+       ],
+       "to": [
+        46,
+        24
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        36.0,
+        15.9
+       ],
+       "text": {
+        "en": "FF1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        39,
+        32
+       ],
+       "to": [
+        39,
+        24
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        41,
+        6.5
+       ],
+       "text": {
+        "en": "Q1"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        54,
+        12
+       ],
+       "to": [
+        68,
+        24
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        58.0,
+        15.9
+       ],
+       "text": {
+        "en": "FF2"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        61,
+        32
+       ],
+       "to": [
+        61,
+        24
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        63,
+        6.5
+       ],
+       "text": {
+        "en": "Q2"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        76,
+        12
+       ],
+       "to": [
+        90,
+        24
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        80.0,
+        15.9
+       ],
+       "text": {
+        "en": "FF3"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        83,
+        32
+       ],
+       "to": [
+        83,
+        24
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        85,
+        6.5
+       ],
+       "text": {
+        "en": "Q3"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        24,
+        18
+       ],
+       "to": [
+        32,
+        18
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        46,
+        18
+       ],
+       "to": [
+        54,
+        18
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        68,
+        18
+       ],
+       "to": [
+        76,
+        18
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        3,
+        18
+       ],
+       "to": [
+        10,
+        18
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        1,
+        12.5
+       ],
+       "text": {
+        "en": "Din"
+       },
+       "size": 2.8,
+       "color": "green"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        90,
+        18
+       ],
+       "to": [
+        98,
+        18
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        91,
+        20
+       ],
+       "text": {
+        "en": "Dout"
+       },
+       "size": 2.8,
+       "color": "green"
+      },
+      {
+       "kind": "line",
+       "from": [
+        10,
+        32
+       ],
+       "to": [
+        90,
+        32
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        1,
+        29.5
+       ],
+       "text": {
+        "en": "CLK"
+       },
+       "size": 2.8,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Enter 1011, least significant bit first: 1, 1, 0, 1. Watch each bit move one place per clock."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        10,
+        38.4
+       ],
+       "to": [
+        50,
+        38.4
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        11,
+        34.3
+       ],
+       "text": {
+        "en": "CLK"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        34.3
+       ],
+       "text": {
+        "en": "Q0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        34.3
+       ],
+       "text": {
+        "en": "Q1"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        35,
+        34.3
+       ],
+       "text": {
+        "en": "Q2"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        34.3
+       ],
+       "text": {
+        "en": "Q3"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        11,
+        38.699999999999996
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        38.699999999999996
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        38.699999999999996
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        35,
+        38.699999999999996
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        38.699999999999996
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        11,
+        43.099999999999994
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        43.099999999999994
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        43.099999999999994
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        35,
+        43.099999999999994
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        43.099999999999994
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        11,
+        47.5
+       ],
+       "text": {
+        "en": "2"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        47.5
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        47.5
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        35,
+        47.5
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        47.5
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        11,
+        51.9
+       ],
+       "text": {
+        "en": "3"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        51.9
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        51.9
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        35,
+        51.9
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        51.9
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        11,
+        56.3
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        56.3
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        56.3
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        35,
+        56.3
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        56.3
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "After four clocks the word is in place. Remember: n bits need n clocks, and shifting moves the place value."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        56,
+        36
+       ],
+       "text": {
+        "en": "4 bits need 4 clocks"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        56,
+        43
+       ],
+       "text": {
+        "en": "Shift left: × 2"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        56,
+        50
+       ],
+       "text": {
+        "en": "Shift right: ÷ 2"
+       },
+       "size": 3.2,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Feed the last output back to the first input and the register becomes a counter: a ring counter or a Johnson counter."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        6
+       ],
+       "text": {
+        "en": "Ring counter: Q3 → D0"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        13
+       ],
+       "tex": "1000\\to0100\\to0010\\to0001",
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        20
+       ],
+       "text": {
+        "en": "4 flip-flops: 4 states"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        30
+       ],
+       "text": {
+        "en": "Johnson counter: Q3' → D0"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        37
+       ],
+       "tex": "0000\\to1000\\to1100\\to1110\\to1111",
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        43
+       ],
+       "tex": "\\to0111\\to0011\\to0001",
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        50
+       ],
+       "text": {
+        "en": "4 flip-flops: 8 states"
+       },
+       "size": 3.2,
+       "color": "green"
+      }
+     ],
+     "clear": true
+    }
+   ],
+   "narration": {
+    "en": "On the board: A 4-bit serial-in shift register."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Uses: conversion, arithmetic and ring counters"
+   },
+   "body": {
+    "en": "SIPO converts serial data to parallel and PISO converts parallel to serial (used in serial communication). Shifting a binary number one place left multiplies it by 2; shifting right divides it by 2. Feeding the last output back to the first input makes a ring counter: with n flip-flops it circulates a single 1 through n states (MOD-n). Feeding back the complement $\\bar{Q}$ of the last stage gives a Johnson (twisted-ring) counter with 2n states (MOD-2n)."
+   },
+   "points": [
+    {
+     "en": "SIPO: serial → parallel; PISO: parallel → serial"
+    },
+    {
+     "en": "Shift left = ×2, shift right = ÷2"
+    },
+    {
+     "en": "Ring counter: n states; Johnson counter: 2n states"
+    }
+   ],
+   "narration": {
+    "en": "Shift registers convert serial data to parallel and back. Shifting left doubles a number. A ring counter with n flip-flops has n states and a Johnson counter has two n states.",
+    "kn": "ಶಿಫ್ಟ್ ರಿಜಿಸ್ಟರ್ ಸರಣಿ-ಸಮಾಂತರ ಪರಿವರ್ತನೆ ಮಾಡುತ್ತದೆ. ಎಡಕ್ಕೆ ಸರಿಸಿದರೆ ಸಂಖ್ಯೆ ದ್ವಿಗುಣ. n ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳ ರಿಂಗ್ ಕೌಂಟರ್‌ಗೆ n ಸ್ಥಿತಿಗಳು, ಜಾನ್ಸನ್ ಕೌಂಟರ್‌ಗೆ 2n."
+   }
+  },
+  {
+   "kind": "readouts",
+   "caption": {
+    "en": "An n-bit shift register clocked at f kHz. See the loading time and the states of the ring and Johnson counters made from it."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Number of flip-flops n"
+     },
+     "min": 1,
+     "max": 16,
+     "step": 1,
+     "value": 8
+    },
+    {
+     "name": "f",
+     "label": {
+      "en": "Clock frequency"
+     },
+     "min": 1,
+     "max": 1000,
+     "step": 1,
+     "value": 100,
+     "unit": "kHz"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Clock pulses to load n bits serially"
+     },
+     "expr": "n",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Time to load serially"
+     },
+     "expr": "1000*n/f",
+     "unit": "µs",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Ring counter states"
+     },
+     "expr": "n",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Johnson counter states"
+     },
+     "expr": "2*n",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "How long does it take to load a byte (n = 8) at 100 kHz?"
+    },
+    {
+     "en": "How many flip-flops make a Johnson counter with 10 states?"
+    },
+    {
+     "en": "Double the clock frequency. What happens to the loading time?"
+    }
+   ],
+   "id": "int1",
+   "type": "interactive",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "An n-bit shift register clocked at f kHz. See the loading time and the states of the ring and Johnson counters made from it."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A 4-bit SISO register is cleared to 0000. The data 1101 are entered MSB first (1, 1, 0, 1). Find Q0 Q1 Q2 Q3 after each clock pulse."
+   },
+   "steps": [
+    {
+     "en": "Clock 1: 1 enters → 1000."
+    },
+    {
+     "en": "Clock 2: 1 enters → 1100."
+    },
+    {
+     "en": "Clock 3: 0 enters → 0110."
+    },
+    {
+     "en": "Clock 4: 1 enters → 1011."
+    }
+   ],
+   "answer": {
+    "en": "Q0Q1Q2Q3 = 1000, 1100, 0110, 1011"
+   },
+   "narration": {
+    "en": "Let us work this out together. A 4-bit SISO register is cleared to 0000. The data 1101 are entered MSB first (1, 1, 0, 1). Find Q0 Q1 Q2 Q3 after each clock pulse."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "An 8-bit register holds 00001010 (10). It is shifted left twice. What does it hold now?"
+   },
+   "steps": [
+    {
+     "en": "Shift left once: 00010100 = 20 (× 2)."
+    },
+    {
+     "en": "Shift left again: 00101000 = 40 (× 2)."
+    },
+    {
+     "en": "No 1 has been lost from the left end, so the result is exact."
+    }
+   ],
+   "answer": {
+    "en": "00101000 = 40"
+   },
+   "narration": {
+    "en": "Let us work this out together. An 8-bit register holds 00001010 (10). It is shifted left twice. What does it hold now?"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n09-q11",
+    "2n09-q12",
+    "2n09-q13"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Monitor quiz. The class monitor enters the answer the class agrees on.",
+    "kn": "ಮಾನಿಟರ್ ರಸಪ್ರಶ್ನೆ. ತರಗತಿ ಒಪ್ಪಿದ ಉತ್ತರವನ್ನು ಮಾನಿಟರ್ ನಮೂದಿಸುತ್ತಾರೆ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n09-q14",
+    "2n09-q15"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the II PUC board exam pattern. Try them on your own first."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A register stores a binary word; a shift register moves it one place per clock.",
+     "kn": "ರಿಜಿಸ್ಟರ್ ದ್ವಿಮಾನ ಪದವನ್ನು ಸಂಗ್ರಹಿಸುತ್ತದೆ; ಶಿಫ್ಟ್ ರಿಜಿಸ್ಟರ್ ಅದನ್ನು ಪ್ರತಿ ಕ್ಲಾಕ್‌ಗೆ ಒಂದು ಸ್ಥಾನ ಸರಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "Four types: SISO, SIPO, PISO, PIPO.",
+     "kn": "ನಾಲ್ಕು ವಿಧಗಳು: SISO, SIPO, PISO, PIPO."
+    },
+    {
+     "en": "Shift left multiplies by 2; shift right divides by 2.",
+     "kn": "ಎಡಕ್ಕೆ ಸರಿಸಿದರೆ 2 ರಿಂದ ಗುಣಾಕಾರ; ಬಲಕ್ಕೆ ಸರಿಸಿದರೆ 2 ರಿಂದ ಭಾಗಾಕಾರ."
+    },
+    {
+     "en": "Ring counter: n states; Johnson counter: 2n states.",
+     "kn": "ರಿಂಗ್ ಕೌಂಟರ್: n ಸ್ಥಿತಿಗಳು; ಜಾನ್ಸನ್ ಕೌಂಟರ್: 2n ಸ್ಥಿತಿಗಳು."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Draw a 4-bit SIPO shift register and tabulate its outputs while 1010 is entered serially."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n09-q15"
+   ],
+   "narration": {
+    "en": "Recap. A register stores a binary word; a shift register moves it one place per clock. Four types: SISO, SIPO, PISO, PIPO. Shift left multiplies by 2; shift right divides by 2. Ring counter: n states; Johnson counter: 2n states.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ರಿಜಿಸ್ಟರ್ ದ್ವಿಮಾನ ಪದವನ್ನು ಸಂಗ್ರಹಿಸುತ್ತದೆ; ಶಿಫ್ಟ್ ರಿಜಿಸ್ಟರ್ ಅದನ್ನು ಪ್ರತಿ ಕ್ಲಾಕ್‌ಗೆ ಒಂದು ಸ್ಥಾನ ಸರಿಸುತ್ತದೆ. ನಾಲ್ಕು ವಿಧಗಳು: SISO, SIPO, PISO, PIPO. ಎಡಕ್ಕೆ ಸರಿಸಿದರೆ 2 ರಿಂದ ಗುಣಾಕಾರ; ಬಲಕ್ಕೆ ಸರಿಸಿದರೆ 2 ರಿಂದ ಭಾಗಾಕಾರ. ರಿಂಗ್ ಕೌಂಟರ್: n ಸ್ಥಿತಿಗಳು; ಜಾನ್ಸನ್ ಕೌಂಟರ್: 2n ಸ್ಥಿತಿಗಳು."
+   }
+  }
+ ]
+}

@@ -1,0 +1,1197 @@
+{
+ "id": "puc2-electronics-09-sequential-logic-circuits.t2.lesson",
+ "chapterId": "puc2-electronics-09-sequential-logic-circuits",
+ "topicId": "puc2-electronics-09-sequential-logic-circuits.t2",
+ "title": {
+  "en": "Flip-flops: clocked SR, D, JK and T",
+  "kn": "ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳು: ಕ್ಲಾಕ್ಡ್ SR, D, JK ಮತ್ತು T"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Change only when the clock says so",
+    "kn": "ಕ್ಲಾಕ್ ಹೇಳಿದಾಗ ಮಾತ್ರ ಬದಲಾಗು"
+   },
+   "hook": {
+    "en": "In a computer, millions of bits must change together, in step. A clock pulse is the drumbeat; flip-flops are latches that change only on that beat.",
+    "kn": "ಕಂಪ್ಯೂಟರ್‌ನಲ್ಲಿ ಲಕ್ಷಾಂತರ ಬಿಟ್‌ಗಳು ಒಟ್ಟಿಗೆ, ಹೆಜ್ಜೆಯೊಂದಿಗೆ ಬದಲಾಗಬೇಕು. ಕ್ಲಾಕ್ ಪಲ್ಸ್ ಡೋಲಿನ ಬಡಿತ; ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳು ಆ ಬಡಿತಕ್ಕೆ ಮಾತ್ರ ಬದಲಾಗುವ ಲ್ಯಾಚ್‌ಗಳು."
+   },
+   "objectives": [
+    {
+     "en": "Explain the clocked SR and D flip-flops"
+    },
+    {
+     "en": "Write the truth table and characteristic equation of the JK flip-flop"
+    },
+    {
+     "en": "Explain race-around, the master–slave JK and the T flip-flop"
+    }
+   ],
+   "narration": {
+    "en": "In a computer, millions of bits must change together, in step. A clock pulse is the drumbeat; flip-flops are latches that change only on that beat.",
+    "kn": "ಕಂಪ್ಯೂಟರ್‌ನಲ್ಲಿ ಲಕ್ಷಾಂತರ ಬಿಟ್‌ಗಳು ಒಟ್ಟಿಗೆ, ಹೆಜ್ಜೆಯೊಂದಿಗೆ ಬದಲಾಗಬೇಕು. ಕ್ಲಾಕ್ ಪಲ್ಸ್ ಡೋಲಿನ ಬಡಿತ; ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳು ಆ ಬಡಿತಕ್ಕೆ ಮಾತ್ರ ಬದಲಾಗುವ ಲ್ಯಾಚ್‌ಗಳು."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Clocked SR and D flip-flops"
+   },
+   "body": {
+    "en": "Adding two AND (or NAND) steering gates and a clock (enable) input to an SR latch gives a clocked SR flip-flop: S and R act only while CLK = 1; when CLK = 0 the output holds. The invalid S = R = 1 case still exists. Connecting R = $\\bar{S}$ through an inverter gives the D (data) flip-flop: on the clock, Q takes the value of D. It has no invalid state and is used to store data and to build registers (IC 7474: dual positive-edge-triggered D flip-flop)."
+   },
+   "points": [
+    {
+     "en": "Clocked SR: inputs effective only when CLK = 1"
+    },
+    {
+     "en": "D flip-flop: Qn+1 = D, no invalid state"
+    },
+    {
+     "en": "D flip-flop = data latch / delay element"
+    }
+   ],
+   "narration": {
+    "en": "A clock input makes the latch respond only when the clock is active. Tie R to the complement of S and you get the D flip-flop, whose output simply copies D on the clock.",
+    "kn": "ಕ್ಲಾಕ್ ಇನ್‌ಪುಟ್ ಸೇರಿಸಿದರೆ ಕ್ಲಾಕ್ ಸಕ್ರಿಯವಾಗಿದ್ದಾಗ ಮಾತ್ರ ಲ್ಯಾಚ್ ಪ್ರತಿಕ್ರಿಯಿಸುತ್ತದೆ. R ಅನ್ನು S ನ ಪೂರಕಕ್ಕೆ ಜೋಡಿಸಿದರೆ D ಫ್ಲಿಪ್-ಫ್ಲಾಪ್: ಕ್ಲಾಕ್‌ನಲ್ಲಿ Q = D."
+   },
+   "formula": "Q_{n+1} = D"
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "JK truth table, toggling and master–slave"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "The JK table: hold, reset, set, and the new case, toggle."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        4,
+        8.6
+       ],
+       "to": [
+        40,
+        8.6
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        4.3
+       ],
+       "text": {
+        "en": "J"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        4.3
+       ],
+       "text": {
+        "en": "K"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        23,
+        4.3
+       ],
+       "text": {
+        "en": "Qn+1"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        32,
+        4.3
+       ],
+       "text": {
+        "en": "action"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        8.9
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        8.9
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        23,
+        8.9
+       ],
+       "text": {
+        "en": "Qn"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        32,
+        8.9
+       ],
+       "text": {
+        "en": "hold"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        13.5
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        13.5
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        23,
+        13.5
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        32,
+        13.5
+       ],
+       "text": {
+        "en": "reset"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        18.099999999999998
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        18.099999999999998
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        23,
+        18.099999999999998
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        32,
+        18.099999999999998
+       ],
+       "text": {
+        "en": "set"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        22.7
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        22.7
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        23,
+        22.7
+       ],
+       "text": {
+        "en": "Qn'"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        32,
+        22.7
+       ],
+       "text": {
+        "en": "toggle"
+       },
+       "size": 3.2,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "One line equations: JK, D, and T flip-flops."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        52,
+        6
+       ],
+       "tex": "JK: Q_{n+1} = J\\bar Q_n + \\bar K Q_n",
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        52,
+        14
+       ],
+       "tex": "D: Q_{n+1} = D",
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        52,
+        22
+       ],
+       "tex": "T: Q_{n+1} = T\\oplus Q_n",
+       "size": 3.2,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "With T equal to 1, Q toggles on every falling clock edge. Two clock cycles make one Q cycle: the frequency is halved."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        1,
+        35.5
+       ],
+       "text": {
+        "en": "CLK"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         10,
+         40
+        ],
+        [
+         14,
+         40
+        ],
+        [
+         14,
+         36
+        ],
+        [
+         18,
+         36
+        ],
+        [
+         18,
+         40
+        ],
+        [
+         22,
+         40
+        ],
+        [
+         22,
+         36
+        ],
+        [
+         26,
+         36
+        ],
+        [
+         26,
+         40
+        ],
+        [
+         30,
+         40
+        ],
+        [
+         30,
+         36
+        ],
+        [
+         34,
+         36
+        ],
+        [
+         34,
+         40
+        ],
+        [
+         38,
+         40
+        ],
+        [
+         38,
+         36
+        ],
+        [
+         42,
+         36
+        ],
+        [
+         42,
+         40
+        ],
+        [
+         46,
+         40
+        ],
+        [
+         46,
+         36
+        ],
+        [
+         50,
+         36
+        ],
+        [
+         50,
+         40
+        ],
+        [
+         54,
+         40
+        ],
+        [
+         54,
+         36
+        ],
+        [
+         58,
+         36
+        ],
+        [
+         58,
+         40
+        ],
+        [
+         62,
+         40
+        ],
+        [
+         62,
+         36
+        ],
+        [
+         66,
+         36
+        ],
+        [
+         66,
+         40
+        ],
+        [
+         70,
+         40
+        ],
+        [
+         70,
+         36
+        ],
+        [
+         74,
+         36
+        ],
+        [
+         74,
+         40
+        ],
+        [
+         78,
+         40
+        ],
+        [
+         78,
+         36
+        ],
+        [
+         82,
+         36
+        ],
+        [
+         82,
+         40
+        ],
+        [
+         88,
+         40
+        ]
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        45.5
+       ],
+       "text": {
+        "en": "Q"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         10,
+         50
+        ],
+        [
+         18,
+         50
+        ],
+        [
+         18,
+         46
+        ],
+        [
+         26,
+         46
+        ],
+        [
+         26,
+         50
+        ],
+        [
+         34,
+         50
+        ],
+        [
+         34,
+         46
+        ],
+        [
+         42,
+         46
+        ],
+        [
+         42,
+         50
+        ],
+        [
+         50,
+         50
+        ],
+        [
+         50,
+         46
+        ],
+        [
+         58,
+         46
+        ],
+        [
+         58,
+         50
+        ],
+        [
+         66,
+         50
+        ],
+        [
+         66,
+         46
+        ],
+        [
+         74,
+         46
+        ],
+        [
+         74,
+         50
+        ],
+        [
+         82,
+         50
+        ],
+        [
+         82,
+         46
+        ],
+        [
+         88,
+         46
+        ]
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        54
+       ],
+       "text": {
+        "en": "T = 1: Q toggles, f becomes f/2"
+       },
+       "size": 3.2,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Race-around is cured by the master–slave flip-flop. The master listens while the clock is high; the slave copies it when the clock falls."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        14,
+        10
+       ],
+       "to": [
+        36,
+        30
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19.0,
+        17.9
+       ],
+       "text": {
+        "en": "Master"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        54,
+        10
+       ],
+       "to": [
+        76,
+        30
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        60.0,
+        17.9
+       ],
+       "text": {
+        "en": "Slave"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        48,
+        36
+       ],
+       "to": [
+        58,
+        44
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        50.2,
+        38.0
+       ],
+       "text": {
+        "en": "NOT"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        36,
+        20
+       ],
+       "to": [
+        54,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        13
+       ],
+       "text": {
+        "en": "J"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        9,
+        15
+       ],
+       "to": [
+        14,
+        15
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23
+       ],
+       "text": {
+        "en": "K"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        9,
+        25
+       ],
+       "to": [
+        14,
+        25
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        2,
+        37
+       ],
+       "text": {
+        "en": "CLK"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "line",
+       "from": [
+        10,
+        40
+       ],
+       "to": [
+        48,
+        40
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        25,
+        40
+       ],
+       "to": [
+        25,
+        30
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        25,
+        40
+       ],
+       "r": 0.6,
+       "color": "orange",
+       "fill": true
+      },
+      {
+       "kind": "line",
+       "from": [
+        58,
+        40
+       ],
+       "to": [
+        65,
+        40
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        65,
+        40
+       ],
+       "to": [
+        65,
+        30
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        76,
+        15
+       ],
+       "to": [
+        86,
+        15
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        88,
+        13
+       ],
+       "text": {
+        "en": "Q"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        76,
+        25
+       ],
+       "to": [
+        86,
+        25
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        88,
+        23
+       ],
+       "text": {
+        "en": "Q'"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        48
+       ],
+       "text": {
+        "en": "CLK = 1: master follows J, K"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        54
+       ],
+       "text": {
+        "en": "CLK = 0: slave copies master"
+       },
+       "size": 3.2,
+       "color": "green"
+      }
+     ],
+     "clear": true
+    }
+   ],
+   "narration": {
+    "en": "On the board: JK truth table, toggling and master–slave."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "JK, master–slave JK and T flip-flops"
+   },
+   "body": {
+    "en": "The JK flip-flop feeds Q and $\\bar{Q}$ back to the input gates so that J = K = 1 is useful: the output toggles. J = K = 0 holds, J = 1, K = 0 sets and J = 0, K = 1 resets; $Q_{n+1} = J\\bar{Q}_n + \\bar{K}Q_n$. In a level-triggered JK with J = K = 1, if the clock pulse lasts longer than the propagation delay, the output toggles again and again: the race-around condition. It is removed by edge-triggering or by the master–slave JK (IC 7476), in which the master responds while CLK = 1 and the slave copies it when CLK goes to 0. Joining J and K as one input T gives the T (toggle) flip-flop: $Q_{n+1} = T\\oplus Q_n$; with T = 1 it divides the clock frequency by 2."
+   },
+   "points": [
+    {
+     "en": "JK: 00 hold, 01 reset, 10 set, 11 toggle"
+    },
+    {
+     "en": "Race-around: clock pulse width > propagation delay"
+    },
+    {
+     "en": "Cure: master–slave or edge-triggered JK"
+    },
+    {
+     "en": "T flip-flop: J = K = T; T = 1 → divide by 2"
+    }
+   ],
+   "narration": {
+    "en": "The JK flip-flop removes the invalid state: J equal to K equal to 1 makes it toggle. The master-slave design stops the race-around problem, and joining J and K gives the T flip-flop that divides frequency by two.",
+    "kn": "JK ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ನಲ್ಲಿ J = K = 1 ಆದರೆ ಔಟ್‌ಪುಟ್ ಟಾಗಲ್ ಆಗುತ್ತದೆ. ಮಾಸ್ಟರ್-ಸ್ಲೇವ್ ವಿನ್ಯಾಸ ರೇಸ್-ಅರೌಂಡ್ ತಡೆಯುತ್ತದೆ; J, K ಜೋಡಿಸಿದರೆ ಆವೃತ್ತಿಯನ್ನು ಅರ್ಧಗೊಳಿಸುವ T ಫ್ಲಿಪ್-ಫ್ಲಾಪ್."
+   },
+   "formula": "Q_{n+1} = J\\bar{Q}_n + \\bar{K}Q_n, \\qquad Q_{n+1} = T\\oplus Q_n"
+  },
+  {
+   "kind": "readouts",
+   "caption": {
+    "en": "A JK flip-flop. Set J, K and the present state, and read the state after the next clock edge."
+   },
+   "sliders": [
+    {
+     "name": "J",
+     "label": {
+      "en": "J"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "K",
+     "label": {
+      "en": "K"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "Q",
+     "label": {
+      "en": "Present state Qn"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 1,
+     "value": 0
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Next state Qn+1 = JQ̄n + K̄Qn"
+     },
+     "expr": "J*(1 - Q) + (1 - K)*Q",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Toggle mode? (J = K = 1)"
+     },
+     "expr": "J*K",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With J = K = 1, flip Q between 0 and 1. What does the next state always do?"
+    },
+    {
+     "en": "Set J = 1, K = 0. Does the present state matter?"
+    },
+    {
+     "en": "Which setting makes the JK behave like a D flip-flop with D = J?"
+    }
+   ],
+   "id": "int1",
+   "type": "interactive",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "A JK flip-flop. Set J, K and the present state, and read the state after the next clock edge."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "J jumps, K kills"
+   },
+   "body": {
+    "en": "J = 1 makes Q jump to 1 (set), K = 1 kills Q to 0 (reset), both together flip it (toggle), and neither keeps it (hold)."
+   },
+   "narration": {
+    "en": "J jumps, K kills. J = 1 makes Q jump to 1 (set), K = 1 kills Q to 0 (reset), both together flip it (toggle), and neither keeps it (hold)."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "J sets, K kills, both flip, none keeps"
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A negative-edge-triggered JK flip-flop starts with Q = 0. For five clock pulses, (J, K) = (1, 0), (1, 1), (1, 1), (0, 1), (0, 0). Find Q after each pulse."
+   },
+   "steps": [
+    {
+     "en": "(1, 0): set → Q = 1."
+    },
+    {
+     "en": "(1, 1): toggle → Q = 0."
+    },
+    {
+     "en": "(1, 1): toggle → Q = 1."
+    },
+    {
+     "en": "(0, 1): reset → Q = 0; (0, 0): hold → Q = 0."
+    }
+   ],
+   "answer": {
+    "en": "Q = 1, 0, 1, 0, 0"
+   },
+   "narration": {
+    "en": "Let us work this out together. A negative-edge-triggered JK flip-flop starts with Q = 0. For five clock pulses, (J, K) = (1, 0), (1, 1), (1, 1), (0, 1), (0, 0). Find Q after each pulse."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "A 1 kHz square wave drives a T flip-flop with T = 1. Its output drives a second and then a third T flip-flop (T = 1). Find the output frequency of each."
+   },
+   "steps": [
+    {
+     "en": "Each T flip-flop with T = 1 toggles once per clock cycle, so it halves the frequency."
+    },
+    {
+     "en": "First: 1 kHz / 2 = 500 Hz."
+    },
+    {
+     "en": "Second: 250 Hz; third: 125 Hz."
+    }
+   ],
+   "answer": {
+    "en": "500 Hz, 250 Hz, 125 Hz"
+   },
+   "narration": {
+    "en": "Let us work this out together. A 1 kHz square wave drives a T flip-flop with T = 1. Its output drives a second and then a third T flip-flop (T = 1). Find the output frequency of each."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n09-q06",
+    "2n09-q07",
+    "2n09-q08"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Discuss in your team and agree on one answer.",
+    "kn": "ತಂಡ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ತಂಡದಲ್ಲಿ ಚರ್ಚಿಸಿ ಒಂದು ಉತ್ತರವನ್ನು ಒಪ್ಪಿಕೊಳ್ಳಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n09-q09",
+    "2n09-q10"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the II PUC board exam pattern. Try them on your own first."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC board exam practice"
+   },
+   "questionIds": [
+    "2n09-q26"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Three more board-exam practice questions that bring the chapter together."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A clocked flip-flop changes state only on the clock.",
+     "kn": "ಕ್ಲಾಕ್ಡ್ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್ ಕ್ಲಾಕ್‌ನಲ್ಲಿ ಮಾತ್ರ ಸ್ಥಿತಿ ಬದಲಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "D flip-flop: Qn+1 = D; it has no invalid state.",
+     "kn": "D ಫ್ಲಿಪ್-ಫ್ಲಾಪ್: Qn+1 = D; ಅಮಾನ್ಯ ಸ್ಥಿತಿ ಇಲ್ಲ."
+    },
+    {
+     "en": "JK: 00 hold, 01 reset, 10 set, 11 toggle; master–slave removes race-around.",
+     "kn": "JK: 00 ಹಿಂದಿನ ಸ್ಥಿತಿ, 01 ರೀಸೆಟ್, 10 ಸೆಟ್, 11 ಟಾಗಲ್; ಮಾಸ್ಟರ್-ಸ್ಲೇವ್ ರೇಸ್-ಅರೌಂಡ್ ತಡೆಯುತ್ತದೆ."
+    },
+    {
+     "en": "T flip-flop (J = K = T) with T = 1 divides the frequency by 2.",
+     "kn": "T ಫ್ಲಿಪ್-ಫ್ಲಾಪ್ (J = K = T), T = 1 ಆದಾಗ ಆವೃತ್ತಿಯನ್ನು 2 ರಿಂದ ಭಾಗಿಸುತ್ತದೆ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Draw the master–slave JK flip-flop and explain how it avoids the race-around condition."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n09-q10"
+   ],
+   "narration": {
+    "en": "Recap. A clocked flip-flop changes state only on the clock. D flip-flop: Qn+1 = D; it has no invalid state. JK: 00 hold, 01 reset, 10 set, 11 toggle; master–slave removes race-around. T flip-flop (J = K = T) with T = 1 divides the frequency by 2.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಕ್ಲಾಕ್ಡ್ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್ ಕ್ಲಾಕ್‌ನಲ್ಲಿ ಮಾತ್ರ ಸ್ಥಿತಿ ಬದಲಿಸುತ್ತದೆ. D ಫ್ಲಿಪ್-ಫ್ಲಾಪ್: Qn+1 = D; ಅಮಾನ್ಯ ಸ್ಥಿತಿ ಇಲ್ಲ. JK: 00 ಹಿಂದಿನ ಸ್ಥಿತಿ, 01 ರೀಸೆಟ್, 10 ಸೆಟ್, 11 ಟಾಗಲ್; ಮಾಸ್ಟರ್-ಸ್ಲೇವ್ ರೇಸ್-ಅರೌಂಡ್ ತಡೆಯುತ್ತದೆ. T ಫ್ಲಿಪ್-ಫ್ಲಾಪ್ (J = K = T), T = 1 ಆದಾಗ ಆವೃತ್ತಿಯನ್ನು 2 ರಿಂದ ಭಾಗಿಸುತ್ತದೆ."
+   }
+  }
+ ]
+}

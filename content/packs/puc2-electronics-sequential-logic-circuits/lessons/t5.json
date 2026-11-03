@@ -1,0 +1,773 @@
+{
+ "id": "puc2-electronics-09-sequential-logic-circuits.t5.lesson",
+ "chapterId": "puc2-electronics-09-sequential-logic-circuits",
+ "topicId": "puc2-electronics-09-sequential-logic-circuits.t5",
+ "title": {
+  "en": "Synchronous counters",
+  "kn": "ಸಮಕಾಲಿಕ ಕೌಂಟರ್‌ಗಳು"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Everyone moves on the same beat",
+    "kn": "ಎಲ್ಲರೂ ಒಂದೇ ಬಡಿತಕ್ಕೆ ಚಲಿಸುತ್ತಾರೆ"
+   },
+   "hook": {
+    "en": "In a ripple counter the flip-flops change one after another, like dominoes falling. In a synchronous counter all of them hear the same clock and change together, like soldiers marching.",
+    "kn": "ರಿಪಲ್ ಕೌಂಟರ್‌ನಲ್ಲಿ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳು ಡೊಮಿನೋಗಳಂತೆ ಒಂದರ ನಂತರ ಒಂದು ಬದಲಾಗುತ್ತವೆ. ಸಮಕಾಲಿಕ ಕೌಂಟರ್‌ನಲ್ಲಿ ಎಲ್ಲವೂ ಒಂದೇ ಕ್ಲಾಕ್‌ಗೆ ಸೈನಿಕರಂತೆ ಒಟ್ಟಿಗೆ ಬದಲಾಗುತ್ತವೆ."
+   },
+   "objectives": [
+    {
+     "en": "Explain a 3-bit and 4-bit synchronous binary counter"
+    },
+    {
+     "en": "Write the J and K input conditions for each stage"
+    },
+    {
+     "en": "Compare synchronous and asynchronous counters"
+    }
+   ],
+   "narration": {
+    "en": "In a ripple counter the flip-flops change one after another, like dominoes falling. In a synchronous counter all of them hear the same clock and change together, like soldiers marching.",
+    "kn": "ರಿಪಲ್ ಕೌಂಟರ್‌ನಲ್ಲಿ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳು ಡೊಮಿನೋಗಳಂತೆ ಒಂದರ ನಂತರ ಒಂದು ಬದಲಾಗುತ್ತವೆ. ಸಮಕಾಲಿಕ ಕೌಂಟರ್‌ನಲ್ಲಿ ಎಲ್ಲವೂ ಒಂದೇ ಕ್ಲಾಕ್‌ಗೆ ಸೈನಿಕರಂತೆ ಒಟ್ಟಿಗೆ ಬದಲಾಗುತ್ತವೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Synchronous binary counter"
+   },
+   "body": {
+    "en": "In a synchronous counter every flip-flop receives the same clock, so all of them change at the same instant. Gates decide which flip-flops toggle. In binary counting a bit toggles when all the lower bits are 1, so with JK flip-flops: $J_0 = K_0 = 1$, $J_1 = K_1 = Q_0$, $J_2 = K_2 = Q_0Q_1$ and $J_3 = K_3 = Q_0Q_1Q_2$. Synchronous counter ICs include 74160–74163 and the up/down counters 74190–74193."
+   },
+   "points": [
+    {
+     "en": "Common clock to all flip-flops"
+    },
+    {
+     "en": "A bit toggles when all lower bits are 1"
+    },
+    {
+     "en": "J1 = K1 = Q0; J2 = K2 = Q0Q1; J3 = K3 = Q0Q1Q2"
+    }
+   ],
+   "narration": {
+    "en": "In a synchronous counter all flip-flops share one clock. A stage toggles only when all the lower bits are one, so its J and K come from an AND of those outputs.",
+    "kn": "ಸಮಕಾಲಿಕ ಕೌಂಟರ್‌ನಲ್ಲಿ ಎಲ್ಲ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳಿಗೆ ಒಂದೇ ಕ್ಲಾಕ್. ಕೆಳಗಿನ ಎಲ್ಲ ಬಿಟ್‌ಗಳು 1 ಆದಾಗ ಮಾತ್ರ ಒಂದು ಹಂತ ಟಾಗಲ್ ಆಗುತ್ತದೆ; ಅದರ J, K ಆ ಔಟ್‌ಪುಟ್‌ಗಳ AND."
+   },
+   "formula": "J_k = K_k = Q_0Q_1\\cdots Q_{k-1}"
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Designing a 3-bit synchronous counter"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Three JK flip-flops on one common clock line. The first always toggles; the others toggle only when the bits below them are all 1."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        10,
+        12
+       ],
+       "to": [
+        26,
+        26
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        15.0,
+        16.9
+       ],
+       "text": {
+        "en": "FF0"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        18,
+        34
+       ],
+       "to": [
+        18,
+        26
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        42,
+        12
+       ],
+       "to": [
+        58,
+        26
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        47.0,
+        16.9
+       ],
+       "text": {
+        "en": "FF1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        50,
+        34
+       ],
+       "to": [
+        50,
+        26
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        74,
+        12
+       ],
+       "to": [
+        90,
+        26
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        79.0,
+        16.9
+       ],
+       "text": {
+        "en": "FF2"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        82,
+        34
+       ],
+       "to": [
+        82,
+        26
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        34
+       ],
+       "to": [
+        82,
+        34
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        1,
+        36
+       ],
+       "text": {
+        "en": "CLK"
+       },
+       "size": 2.8,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10,
+        6
+       ],
+       "text": {
+        "en": "J0 = K0 = 1"
+       },
+       "size": 2.8,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        40,
+        6
+       ],
+       "text": {
+        "en": "J1 = K1 = Q0"
+       },
+       "size": 2.8,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        72,
+        6
+       ],
+       "text": {
+        "en": "J2 = K2 = Q0Q1"
+       },
+       "size": 2.8,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        58,
+        40
+       ],
+       "to": [
+        70,
+        49
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        61.2,
+        42.5
+       ],
+       "text": {
+        "en": "AND"
+       },
+       "size": 3.0,
+       "color": "green"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         26,
+         16
+        ],
+        [
+         34,
+         16
+        ],
+        [
+         34,
+         44
+        ],
+        [
+         58,
+         44
+        ]
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        34,
+        16
+       ],
+       "to": [
+        42,
+        16
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         58,
+         16
+        ],
+        [
+         62,
+         16
+        ],
+        [
+         62,
+         30
+        ],
+        [
+         56,
+         30
+        ],
+        [
+         56,
+         47
+        ],
+        [
+         58,
+         47
+        ]
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         70,
+         44.5
+        ],
+        [
+         72,
+         44.5
+        ],
+        [
+         72,
+         18
+        ],
+        [
+         74,
+         18
+        ]
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        11.5
+       ],
+       "text": {
+        "en": "Q0"
+       },
+       "size": 2.8,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        59,
+        11.5
+       ],
+       "text": {
+        "en": "Q1"
+       },
+       "size": 2.8,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        52
+       ],
+       "text": {
+        "en": "All flip-flops share one clock"
+       },
+       "size": 3.2,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Check with the count table. A bit toggles exactly when every bit to its right is 1."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        78,
+        38
+       ],
+       "text": {
+        "en": "now → next"
+       },
+       "size": 2.8,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        78,
+        42.5
+       ],
+       "text": {
+        "en": "000 → 001"
+       },
+       "size": 2.8,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        78,
+        47
+       ],
+       "text": {
+        "en": "001 → 010"
+       },
+       "size": 2.8,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        78,
+        51.5
+       ],
+       "text": {
+        "en": "011 → 100"
+       },
+       "size": 2.8,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        78,
+        56
+       ],
+       "text": {
+        "en": "111 → 000"
+       },
+       "size": 2.8,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Compare speeds. In a ripple counter delays add for every stage; in a synchronous counter it is one flip-flop delay plus one gate."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        6
+       ],
+       "tex": "f_{max}(\\text{ripple}) \\approx \\frac{1}{n\\,t_{pd}}",
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        18
+       ],
+       "tex": "f_{max}(\\text{sync}) \\approx \\frac{1}{t_{pd}+t_{AND}}",
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        32
+       ],
+       "text": {
+        "en": "Example: n = 4, tpd = 20 ns, AND = 10 ns"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        39
+       ],
+       "text": {
+        "en": "Ripple: 1/80 ns = 12.5 MHz"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        46
+       ],
+       "text": {
+        "en": "Sync: 1/30 ns ≈ 33.3 MHz"
+       },
+       "size": 3.2,
+       "color": "green"
+      }
+     ],
+     "clear": true
+    }
+   ],
+   "narration": {
+    "en": "On the board: Designing a 3-bit synchronous counter."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Synchronous versus asynchronous"
+   },
+   "body": {
+    "en": "A ripple counter is simple (no extra gates) but slow: the delays of all stages add, $f_{max} \\approx 1/(n\\,t_{pd})$, and false intermediate states (glitches) appear while the carry ripples. A synchronous counter needs extra AND gates but all outputs settle after one flip-flop delay plus one gate delay, so $f_{max} \\approx 1/(t_{pd} + t_{AND})$, independent of n, with no ripple glitches. Synchronous counters are used in fast digital systems, frequency counters and digital clocks."
+   },
+   "points": [
+    {
+     "en": "Ripple: simple, slow, glitches"
+    },
+    {
+     "en": "Synchronous: extra gates, fast, no ripple glitches"
+    },
+    {
+     "en": "Sync f_max does not fall as bits are added"
+    }
+   ],
+   "narration": {
+    "en": "Synchronous counters need a few extra gates, but they are much faster, because their speed does not depend on the number of flip-flops.",
+    "kn": "ಸಮಕಾಲಿಕ ಕೌಂಟರ್‌ಗಳಿಗೆ ಕೆಲವು ಹೆಚ್ಚುವರಿ ಗೇಟ್‌ಗಳು ಬೇಕು, ಆದರೆ ಅವುಗಳ ವೇಗ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳ ಸಂಖ್ಯೆಯನ್ನು ಅವಲಂಬಿಸದ ಕಾರಣ ಅವು ಹೆಚ್ಚು ವೇಗವಾಗಿವೆ."
+   },
+   "formula": "f_{max,\\,sync} \\approx \\frac{1}{t_{pd} + t_{AND}}"
+  },
+  {
+   "kind": "function_plot",
+   "caption": {
+    "en": "Maximum clock frequency against the number of flip-flops x. The ripple counter slows down as bits are added; the synchronous counter does not."
+   },
+   "sliders": [
+    {
+     "name": "tpd",
+     "label": {
+      "en": "Flip-flop delay tpd"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 1,
+     "value": 20,
+     "unit": "ns"
+    },
+    {
+     "name": "tg",
+     "label": {
+      "en": "AND gate delay"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "ns"
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "Number of flip-flops n"
+     },
+     "min": 1,
+     "max": 16,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "fns": [
+    {
+     "fn": "1000/(x*tpd)",
+     "label": "ripple f_max (MHz)",
+     "color": "orange"
+    },
+    {
+     "fn": "1000/(tpd + tg) + 0*x",
+     "label": "synchronous f_max (MHz)",
+     "color": "green"
+    }
+   ],
+   "x": [
+    1,
+    16
+   ],
+   "y": [
+    0,
+    100
+   ],
+   "xLabel": "number of flip-flops",
+   "yLabel": "f_max (MHz)",
+   "readouts": [
+    {
+     "label": {
+      "en": "Ripple counter f_max"
+     },
+     "expr": "1000/(n*tpd)",
+     "unit": "MHz",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Synchronous counter f_max"
+     },
+     "expr": "1000/(tpd + tg)",
+     "unit": "MHz",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At how many flip-flops does the ripple counter become slower than the synchronous one?"
+    },
+    {
+     "en": "Make the AND gate delay zero. How much faster is the synchronous counter?"
+    },
+    {
+     "en": "Set n = 8. Compare the two maximum frequencies."
+    }
+   ],
+   "id": "int1",
+   "type": "interactive",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "Maximum clock frequency against the number of flip-flops x. The ripple counter slows down as bits are added; the synchronous counter does not."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A 4-bit synchronous up counter is in state Q3Q2Q1Q0 = 0111. Which flip-flops toggle on the next clock, and what is the next state?"
+   },
+   "steps": [
+    {
+     "en": "J0 = K0 = 1 → Q0 toggles."
+    },
+    {
+     "en": "Q0 = 1 → Q1 toggles; Q0Q1 = 1 → Q2 toggles."
+    },
+    {
+     "en": "Q0Q1Q2 = 1 → Q3 toggles."
+    },
+    {
+     "en": "All four toggle: 0111 → 1000."
+    }
+   ],
+   "answer": {
+    "en": "All four toggle; next state 1000"
+   },
+   "narration": {
+    "en": "Let us work this out together. A 4-bit synchronous up counter is in state Q3Q2Q1Q0 = 0111. Which flip-flops toggle on the next clock, and what is the next state?"
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "Flip-flops have tpd = 20 ns and AND gates 10 ns. Compare the maximum clock frequency of 4-bit ripple and synchronous counters."
+   },
+   "steps": [
+    {
+     "en": "Ripple: n × tpd = 4 × 20 = 80 ns → f_max = 1/80 ns = 12.5 MHz."
+    },
+    {
+     "en": "Synchronous: tpd + tAND = 20 + 10 = 30 ns → f_max = 1/30 ns ≈ 33.3 MHz."
+    }
+   ],
+   "answer": {
+    "en": "Ripple 12.5 MHz; synchronous ≈ 33.3 MHz"
+   },
+   "narration": {
+    "en": "Let us work this out together. Flip-flops have tpd = 20 ns and AND gates 10 ns. Compare the maximum clock frequency of 4-bit ripple and synchronous counters."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n09-q21",
+    "2n09-q22",
+    "2n09-q23"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Monitor quiz. The class monitor enters the answer the class agrees on.",
+    "kn": "ಮಾನಿಟರ್ ರಸಪ್ರಶ್ನೆ. ತರಗತಿ ಒಪ್ಪಿದ ಉತ್ತರವನ್ನು ಮಾನಿಟರ್ ನಮೂದಿಸುತ್ತಾರೆ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n09-q24",
+    "2n09-q25"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the II PUC board exam pattern. Try them on your own first."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "In a synchronous counter all flip-flops get the same clock.",
+     "kn": "ಸಮಕಾಲಿಕ ಕೌಂಟರ್‌ನಲ್ಲಿ ಎಲ್ಲ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳಿಗೆ ಒಂದೇ ಕ್ಲಾಕ್."
+    },
+    {
+     "en": "A stage toggles when all lower bits are 1: Jk = Kk = Q0…Qk−1.",
+     "kn": "ಕೆಳಗಿನ ಎಲ್ಲ ಬಿಟ್‌ಗಳು 1 ಆದಾಗ ಹಂತ ಟಾಗಲ್: Jk = Kk = Q0…Qk−1."
+    },
+    {
+     "en": "Synchronous counters are faster and glitch-free but need extra gates.",
+     "kn": "ಸಮಕಾಲಿಕ ಕೌಂಟರ್‌ಗಳು ವೇಗ ಮತ್ತು ಗ್ಲಿಚ್-ರಹಿತ, ಆದರೆ ಹೆಚ್ಚುವರಿ ಗೇಟ್‌ಗಳು ಬೇಕು."
+    },
+    {
+     "en": "Ripple f_max ≈ 1/(n·tpd); synchronous f_max ≈ 1/(tpd + tAND).",
+     "kn": "ರಿಪಲ್ f_max ≈ 1/(n·tpd); ಸಮಕಾಲಿಕ f_max ≈ 1/(tpd + tAND)."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Draw a 3-bit synchronous up counter using JK flip-flops and AND gates, and list its states."
+    },
+    {
+     "en": "Tabulate three differences between synchronous and asynchronous counters."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n09-q25"
+   ],
+   "narration": {
+    "en": "Recap. In a synchronous counter all flip-flops get the same clock. A stage toggles when all lower bits are 1: Jk = Kk = Q0…Qk−1. Synchronous counters are faster and glitch-free but need extra gates. Ripple f_max ≈ 1/(n·tpd); synchronous f_max ≈ 1/(tpd + tAND).",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಸಮಕಾಲಿಕ ಕೌಂಟರ್‌ನಲ್ಲಿ ಎಲ್ಲ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳಿಗೆ ಒಂದೇ ಕ್ಲಾಕ್. ಕೆಳಗಿನ ಎಲ್ಲ ಬಿಟ್‌ಗಳು 1 ಆದಾಗ ಹಂತ ಟಾಗಲ್: Jk = Kk = Q0…Qk−1. ಸಮಕಾಲಿಕ ಕೌಂಟರ್‌ಗಳು ವೇಗ ಮತ್ತು ಗ್ಲಿಚ್-ರಹಿತ, ಆದರೆ ಹೆಚ್ಚುವರಿ ಗೇಟ್‌ಗಳು ಬೇಕು. ರಿಪಲ್ f_max ≈ 1/(n·tpd); ಸಮಕಾಲಿಕ f_max ≈ 1/(tpd + tAND)."
+   }
+  }
+ ]
+}

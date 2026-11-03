@@ -1,0 +1,760 @@
+{
+ "id": "puc2-electronics-08-combinational-logic-circuits.t5.lesson",
+ "chapterId": "puc2-electronics-08-combinational-logic-circuits",
+ "topicId": "puc2-electronics-08-combinational-logic-circuits.t5",
+ "title": {
+  "en": "Magnitude comparator",
+  "kn": "ಪರಿಮಾಣ ಹೋಲಿಕೆಗಾರ (ಮ್ಯಾಗ್ನಿಟ್ಯೂಡ್ ಕಂಪ್ಯಾರೇಟರ್)"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Which number is bigger?",
+    "kn": "ಯಾವ ಸಂಖ್ಯೆ ದೊಡ್ಡದು?"
+   },
+   "hook": {
+    "en": "A digital thermostat compares the room temperature with the set value; a lift compares the floor it is on with the floor you pressed. The circuit behind it is a magnitude comparator.",
+    "kn": "ಡಿಜಿಟಲ್ ಥರ್ಮೋಸ್ಟಾಟ್ ಕೋಣೆಯ ಉಷ್ಣತೆಯನ್ನು ನಿಗದಿತ ಮೌಲ್ಯದೊಂದಿಗೆ ಹೋಲಿಸುತ್ತದೆ; ಲಿಫ್ಟ್ ತಾನಿರುವ ಮಹಡಿಯನ್ನು ನೀವು ಒತ್ತಿದ ಮಹಡಿಯೊಂದಿಗೆ ಹೋಲಿಸುತ್ತದೆ. ಅದರ ಹಿಂದಿನ ಮಂಡಲವೇ ಪರಿಮಾಣ ಹೋಲಿಕೆಗಾರ."
+   },
+   "objectives": [
+    {
+     "en": "Design a 1-bit comparator from its truth table"
+    },
+    {
+     "en": "Compare multi-bit numbers starting from the MSB"
+    },
+    {
+     "en": "Know the 4-bit comparator IC 7485"
+    }
+   ],
+   "narration": {
+    "en": "A digital thermostat compares the room temperature with the set value; a lift compares the floor it is on with the floor you pressed. The circuit behind it is a magnitude comparator.",
+    "kn": "ಡಿಜಿಟಲ್ ಥರ್ಮೋಸ್ಟಾಟ್ ಕೋಣೆಯ ಉಷ್ಣತೆಯನ್ನು ನಿಗದಿತ ಮೌಲ್ಯದೊಂದಿಗೆ ಹೋಲಿಸುತ್ತದೆ; ಲಿಫ್ಟ್ ತಾನಿರುವ ಮಹಡಿಯನ್ನು ನೀವು ಒತ್ತಿದ ಮಹಡಿಯೊಂದಿಗೆ ಹೋಲಿಸುತ್ತದೆ. ಅದರ ಹಿಂದಿನ ಮಂಡಲವೇ ಪರಿಮಾಣ ಹೋಲಿಕೆಗಾರ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "1-bit magnitude comparator"
+   },
+   "body": {
+    "en": "A magnitude comparator compares two binary numbers A and B and gives three outputs: A > B, A = B and A < B; exactly one is 1. For single bits: $(A>B) = A\\bar{B}$, $(A<B) = \\bar{A}B$ and $(A=B) = \\overline{A\\oplus B} = AB + \\bar{A}\\bar{B}$ (an XNOR gate). It is a combinational circuit: two AND gates with inverters and one XNOR gate."
+   },
+   "points": [
+    {
+     "en": "A > B: AB̄"
+    },
+    {
+     "en": "A < B: ĀB"
+    },
+    {
+     "en": "A = B: XNOR of A and B"
+    }
+   ],
+   "narration": {
+    "en": "A one-bit comparator gives A greater than B as A B-bar, A less than B as A-bar B, and A equal to B as the XNOR of A and B.",
+    "kn": "ಒಂದು-ಬಿಟ್ ಹೋಲಿಕೆಗಾರದಲ್ಲಿ A > B = AB̄, A < B = ĀB, ಮತ್ತು A = B ಎಂಬುದು A, B ಗಳ XNOR."
+   },
+   "formula": "(A>B) = A\\bar B,\\quad (A=B) = \\overline{A\\oplus B},\\quad (A<B) = \\bar A B"
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Comparing bits and numbers"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Write all four cases of two bits and mark which output is 1."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        4,
+        8.6
+       ],
+       "to": [
+        49,
+        8.6
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        4.3
+       ],
+       "text": {
+        "en": "A"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        4.3
+       ],
+       "text": {
+        "en": "B"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        23,
+        4.3
+       ],
+       "text": {
+        "en": "A>B"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        32,
+        4.3
+       ],
+       "text": {
+        "en": "A=B"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        41,
+        4.3
+       ],
+       "text": {
+        "en": "A<B"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        8.9
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        8.9
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        23,
+        8.9
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        32,
+        8.9
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        41,
+        8.9
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        13.5
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        13.5
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        23,
+        13.5
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        32,
+        13.5
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        41,
+        13.5
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        18.099999999999998
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        18.099999999999998
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        23,
+        18.099999999999998
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        32,
+        18.099999999999998
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        41,
+        18.099999999999998
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        22.7
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        22.7
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        23,
+        22.7
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        32,
+        22.7
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        41,
+        22.7
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Read the equations from the table: greater is A B-bar, less is A-bar B, and equal is XNOR."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        56,
+        6
+       ],
+       "tex": "(A>B) = A\\bar B",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        56,
+        13
+       ],
+       "tex": "(A=B) = \\overline{A\\oplus B}",
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "math",
+       "at": [
+        56,
+        21
+       ],
+       "tex": "(A<B) = \\bar A B",
+       "size": 3.5,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Now compare 1011 with 1001. Start at the MSB: bits 3 and 2 are equal, bit 1 is 1 against 0."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        32
+       ],
+       "text": {
+        "en": "A = 1011, B = 1001"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        38
+       ],
+       "text": {
+        "en": "bit 3: 1 = 1  equal"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        43
+       ],
+       "text": {
+        "en": "bit 2: 0 = 0  equal"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        48
+       ],
+       "text": {
+        "en": "bit 1: 1 > 0  so A > B"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        2,
+        47
+       ],
+       "to": [
+        50,
+        52.5
+       ],
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "In general, bit i is equal when x i is 1. All four x’s must be 1 for A equal to B. The 7485 IC does all this."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        56,
+        34
+       ],
+       "tex": "x_i = \\overline{A_i\\oplus B_i}",
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        56,
+        41
+       ],
+       "tex": "(A=B) = x_3x_2x_1x_0",
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        56,
+        49
+       ],
+       "text": {
+        "en": "IC 7485 does 4 bits"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: Comparing bits and numbers."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "4-bit comparator"
+   },
+   "body": {
+    "en": "For 4-bit numbers, define $x_i = \\overline{A_i\\oplus B_i}$ (1 when bit i is equal). Then $(A=B) = x_3x_2x_1x_0$. The numbers are compared from the MSB: $(A>B) = A_3\\bar{B_3} + x_3A_2\\bar{B_2} + x_3x_2A_1\\bar{B_1} + x_3x_2x_1A_0\\bar{B_0}$, and $(A<B)$ similarly with $\\bar{A_i}B_i$. The first unequal bit from the left decides. IC 7485 is a 4-bit magnitude comparator with cascading inputs for longer numbers."
+   },
+   "points": [
+    {
+     "en": "Start at the MSB; the first unequal bit decides"
+    },
+    {
+     "en": "A = B only when every bit is equal"
+    },
+    {
+     "en": "IC 7485: 4-bit comparator, cascadable"
+    }
+   ],
+   "narration": {
+    "en": "To compare four-bit numbers, start from the most significant bit. The first bit position where they differ decides which number is bigger.",
+    "kn": "ನಾಲ್ಕು-ಬಿಟ್ ಸಂಖ್ಯೆಗಳನ್ನು ಹೋಲಿಸಲು MSB ಯಿಂದ ಆರಂಭಿಸಿ. ಮೊದಲು ಬೇರೆಯಾಗುವ ಬಿಟ್ ಯಾವ ಸಂಖ್ಯೆ ದೊಡ್ಡದು ಎಂದು ನಿರ್ಧರಿಸುತ್ತದೆ."
+   }
+  },
+  {
+   "kind": "readouts",
+   "caption": {
+    "en": "Choose two 4-bit numbers. Exactly one of the three comparator outputs is 1."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "A (0–15)"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 11
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "B (0–15)"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 9
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "A > B output"
+     },
+     "expr": "floor((A - B + 15)/16)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "A = B output"
+     },
+     "expr": "1 - floor((A - B + 15)/16) - floor((B - A + 15)/16)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "A < B output"
+     },
+     "expr": "floor((B - A + 15)/16)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "A − B"
+     },
+     "expr": "A - B",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make A = B. Which output is 1?"
+    },
+    {
+     "en": "Set A = 8 and B = 7. Which bit position decides the result?"
+    },
+    {
+     "en": "Can two outputs ever be 1 together? Try to find a case."
+    }
+   ],
+   "id": "int1",
+   "type": "interactive",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "Choose two 4-bit numbers. Exactly one of the three comparator outputs is 1."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A 1-bit comparator has A = 0 and B = 1. Find the three outputs."
+   },
+   "steps": [
+    {
+     "en": "A > B = AB̄ = 0 · 0 = 0."
+    },
+    {
+     "en": "A = B = XNOR(0, 1) = 0."
+    },
+    {
+     "en": "A < B = ĀB = 1 · 1 = 1."
+    }
+   ],
+   "answer": {
+    "en": "A>B = 0, A=B = 0, A<B = 1"
+   },
+   "narration": {
+    "en": "Let us work this out together. A 1-bit comparator has A = 0 and B = 1. Find the three outputs."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "Compare A = 0110 and B = 0101 with a 4-bit comparator. Which output is high and which bit decides?"
+   },
+   "steps": [
+    {
+     "en": "Bit 3: 0 and 0 → equal (x3 = 1)."
+    },
+    {
+     "en": "Bit 2: 1 and 1 → equal (x2 = 1)."
+    },
+    {
+     "en": "Bit 1: A1 = 1, B1 = 0 → the term x3x2A1B̄1 = 1."
+    },
+    {
+     "en": "So A > B (6 > 5), decided at bit 1."
+    }
+   ],
+   "answer": {
+    "en": "A > B output = 1, decided at bit 1"
+   },
+   "narration": {
+    "en": "Let us work this out together. Compare A = 0110 and B = 0101 with a 4-bit comparator. Which output is high and which bit decides?"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n08-q21",
+    "2n08-q22",
+    "2n08-q23"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Discuss in your team and agree on one answer.",
+    "kn": "ತಂಡ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ತಂಡದಲ್ಲಿ ಚರ್ಚಿಸಿ ಒಂದು ಉತ್ತರವನ್ನು ಒಪ್ಪಿಕೊಳ್ಳಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n08-q24",
+    "2n08-q25"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the II PUC board exam pattern. Try them on your own first."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A comparator gives A > B, A = B and A < B; only one is 1.",
+     "kn": "ಹೋಲಿಕೆಗಾರ A > B, A = B, A < B ನೀಡುತ್ತದೆ; ಒಂದೇ ಒಂದು 1 ಆಗಿರುತ್ತದೆ."
+    },
+    {
+     "en": "1-bit: A > B = AB̄, A < B = ĀB, A = B = XNOR.",
+     "kn": "1-ಬಿಟ್: A > B = AB̄, A < B = ĀB, A = B = XNOR."
+    },
+    {
+     "en": "Multi-bit numbers are compared from the MSB.",
+     "kn": "ಬಹು-ಬಿಟ್ ಸಂಖ್ಯೆಗಳನ್ನು MSB ಯಿಂದ ಹೋಲಿಸಲಾಗುತ್ತದೆ."
+    },
+    {
+     "en": "IC 7485 is a 4-bit magnitude comparator.",
+     "kn": "IC 7485 ಒಂದು 4-ಬಿಟ್ ಪರಿಮಾಣ ಹೋಲಿಕೆಗಾರ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Draw the logic diagram of a 1-bit magnitude comparator and write its truth table."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n08-q25"
+   ],
+   "narration": {
+    "en": "Recap. A comparator gives A > B, A = B and A < B; only one is 1. 1-bit: A > B = AB̄, A < B = ĀB, A = B = XNOR. Multi-bit numbers are compared from the MSB. IC 7485 is a 4-bit magnitude comparator.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಹೋಲಿಕೆಗಾರ A > B, A = B, A < B ನೀಡುತ್ತದೆ; ಒಂದೇ ಒಂದು 1 ಆಗಿರುತ್ತದೆ. 1-ಬಿಟ್: A > B = AB̄, A < B = ĀB, A = B = XNOR. ಬಹು-ಬಿಟ್ ಸಂಖ್ಯೆಗಳನ್ನು MSB ಯಿಂದ ಹೋಲಿಸಲಾಗುತ್ತದೆ. IC 7485 ಒಂದು 4-ಬಿಟ್ ಪರಿಮಾಣ ಹೋಲಿಕೆಗಾರ."
+   }
+  }
+ ]
+}

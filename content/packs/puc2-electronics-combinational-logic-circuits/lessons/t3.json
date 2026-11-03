@@ -1,0 +1,1181 @@
+{
+ "id": "puc2-electronics-08-combinational-logic-circuits.t3.lesson",
+ "chapterId": "puc2-electronics-08-combinational-logic-circuits",
+ "topicId": "puc2-electronics-08-combinational-logic-circuits.t3",
+ "title": {
+  "en": "Multiplexers and demultiplexers",
+  "kn": "ಮಲ್ಟಿಪ್ಲೆಕ್ಸರ್ ಮತ್ತು ಡಿಮಲ್ಟಿಪ್ಲೆಕ್ಸರ್"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Many signals, one wire",
+    "kn": "ಹಲವು ಸಂಕೇತಗಳು, ಒಂದೇ ತಂತಿ"
+   },
+   "hook": {
+    "en": "A TV remote has one infrared beam but dozens of buttons; a telephone line carries many calls. A multiplexer picks one of many inputs, and a demultiplexer sends one input to the right output.",
+    "kn": "ಟಿವಿ ರಿಮೋಟ್‌ಗೆ ಒಂದೇ ಇನ್‌ಫ್ರಾರೆಡ್ ಕಿರಣ, ಆದರೆ ಹಲವು ಗುಂಡಿಗಳು. ಮಲ್ಟಿಪ್ಲೆಕ್ಸರ್ ಹಲವು ಇನ್‌ಪುಟ್‌ಗಳಲ್ಲಿ ಒಂದನ್ನು ಆರಿಸುತ್ತದೆ; ಡಿಮಲ್ಟಿಪ್ಲೆಕ್ಸರ್ ಒಂದು ಇನ್‌ಪುಟ್ ಅನ್ನು ಸರಿಯಾದ ಔಟ್‌ಪುಟ್‌ಗೆ ಕಳುಹಿಸುತ್ತದೆ."
+   },
+   "objectives": [
+    {
+     "en": "Explain a 4:1 multiplexer and write its output expression"
+    },
+    {
+     "en": "Explain a 1:4 demultiplexer"
+    },
+    {
+     "en": "Relate select lines to the number of inputs or outputs"
+    }
+   ],
+   "narration": {
+    "en": "A TV remote has one infrared beam but dozens of buttons; a telephone line carries many calls. A multiplexer picks one of many inputs, and a demultiplexer sends one input to the right output.",
+    "kn": "ಟಿವಿ ರಿಮೋಟ್‌ಗೆ ಒಂದೇ ಇನ್‌ಫ್ರಾರೆಡ್ ಕಿರಣ, ಆದರೆ ಹಲವು ಗುಂಡಿಗಳು. ಮಲ್ಟಿಪ್ಲೆಕ್ಸರ್ ಹಲವು ಇನ್‌ಪುಟ್‌ಗಳಲ್ಲಿ ಒಂದನ್ನು ಆರಿಸುತ್ತದೆ; ಡಿಮಲ್ಟಿಪ್ಲೆಕ್ಸರ್ ಒಂದು ಇನ್‌ಪುಟ್ ಅನ್ನು ಸರಿಯಾದ ಔಟ್‌ಪುಟ್‌ಗೆ ಕಳುಹಿಸುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Multiplexer (data selector)"
+   },
+   "body": {
+    "en": "A multiplexer (MUX) has $2^n$ data inputs, $n$ select lines and one output. The binary number on the select lines decides which input is connected to the output. For a 4:1 MUX, $Y = \\bar{S_1}\\bar{S_0}I_0 + \\bar{S_1}S_0I_1 + S_1\\bar{S_0}I_2 + S_1S_0I_3$. It is built from AND gates (one per input, enabled by one select combination) feeding an OR gate. ICs: 74151 (8:1), 74153 (dual 4:1). Uses: data selection, parallel-to-serial conversion, realising Boolean functions."
+   },
+   "points": [
+    {
+     "en": "2ⁿ inputs, n select lines, 1 output"
+    },
+    {
+     "en": "Many-to-one: also called a data selector"
+    },
+    {
+     "en": "IC 74151 is an 8:1 MUX"
+    }
+   ],
+   "narration": {
+    "en": "A multiplexer is a data selector. With n select lines it chooses one of two to the power n inputs and connects it to the single output.",
+    "kn": "ಮಲ್ಟಿಪ್ಲೆಕ್ಸರ್ ಒಂದು ದತ್ತಾಂಶ ಆಯ್ಕೆಗಾರ. n ಆಯ್ಕೆ ರೇಖೆಗಳಿಂದ 2ⁿ ಇನ್‌ಪುಟ್‌ಗಳಲ್ಲಿ ಒಂದನ್ನು ಆರಿಸಿ ಏಕೈಕ ಔಟ್‌ಪುಟ್‌ಗೆ ಜೋಡಿಸುತ್ತದೆ."
+   },
+   "formula": "Y = \\bar{S_1}\\bar{S_0}I_0 + \\bar{S_1}S_0I_1 + S_1\\bar{S_0}I_2 + S_1S_0I_3"
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "MUX and DEMUX symbols and select tables"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "The multiplexer symbol is a trapezium. Four data inputs enter on the left and one output leaves on the right."
+     },
+     "draw": [
+      {
+       "kind": "path",
+       "points": [
+        [
+         40,
+         10
+        ],
+        [
+         56,
+         16
+        ],
+        [
+         56,
+         44
+        ],
+        [
+         40,
+         50
+        ]
+       ],
+       "color": "white",
+       "closed": true
+      },
+      {
+       "kind": "text",
+       "at": [
+        41.5,
+        27.5
+       ],
+       "text": {
+        "en": "4:1 MUX"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        26,
+        16
+       ],
+       "to": [
+        40,
+        16
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        13.8
+       ],
+       "text": {
+        "en": "I0"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        26,
+        24
+       ],
+       "to": [
+        40,
+        24
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        21.8
+       ],
+       "text": {
+        "en": "I1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        26,
+        32
+       ],
+       "to": [
+        40,
+        32
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        29.8
+       ],
+       "text": {
+        "en": "I2"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        26,
+        40
+       ],
+       "to": [
+        40,
+        40
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        37.8
+       ],
+       "text": {
+        "en": "I3"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        45,
+        58
+       ],
+       "to": [
+        45,
+        48.2
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        51,
+        58
+       ],
+       "to": [
+        51,
+        46.3
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        39.5,
+        53
+       ],
+       "text": {
+        "en": "S1"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52.5,
+        53
+       ],
+       "text": {
+        "en": "S0"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        56,
+        30
+       ],
+       "to": [
+        70,
+        30
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        62,
+        25
+       ],
+       "text": {
+        "en": "Y"
+       },
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The select lines S1 S0 form a 2-bit number. That number names the input that reaches Y."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        72,
+        10.6
+       ],
+       "to": [
+        93,
+        10.6
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        73,
+        6.3
+       ],
+       "text": {
+        "en": "S1"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        80,
+        6.3
+       ],
+       "text": {
+        "en": "S0"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        87,
+        6.3
+       ],
+       "text": {
+        "en": "Y"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        73,
+        10.9
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        80,
+        10.9
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        87,
+        10.9
+       ],
+       "text": {
+        "en": "I0"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        73,
+        15.5
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        80,
+        15.5
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        87,
+        15.5
+       ],
+       "text": {
+        "en": "I1"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        73,
+        20.099999999999998
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        80,
+        20.099999999999998
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        87,
+        20.099999999999998
+       ],
+       "text": {
+        "en": "I2"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        73,
+        24.7
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        80,
+        24.7
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        87,
+        24.7
+       ],
+       "text": {
+        "en": "I3"
+       },
+       "size": 3.2,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Each term of the output equation is one input ANDed with its select code."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        2,
+        2
+       ],
+       "tex": "Y = \\bar S_1\\bar S_0I_0 + \\bar S_1S_0I_1 + S_1\\bar S_0I_2 + S_1S_0I_3",
+       "size": 2.8,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The demultiplexer is the mirror image: one input D, four outputs, and the same select lines."
+     },
+     "draw": [
+      {
+       "kind": "path",
+       "points": [
+        [
+         30,
+         16
+        ],
+        [
+         46,
+         10
+        ],
+        [
+         46,
+         50
+        ],
+        [
+         30,
+         44
+        ]
+       ],
+       "color": "white",
+       "closed": true
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        27.5
+       ],
+       "text": {
+        "en": "1:4 DEMUX"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        14,
+        30
+       ],
+       "to": [
+        30,
+        30
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        8,
+        27.8
+       ],
+       "text": {
+        "en": "D"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        46,
+        16
+       ],
+       "to": [
+        58,
+        16
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        59,
+        13.8
+       ],
+       "text": {
+        "en": "Y0"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        46,
+        24
+       ],
+       "to": [
+        58,
+        24
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        59,
+        21.8
+       ],
+       "text": {
+        "en": "Y1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        46,
+        32
+       ],
+       "to": [
+        58,
+        32
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        59,
+        29.8
+       ],
+       "text": {
+        "en": "Y2"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        46,
+        40
+       ],
+       "to": [
+        58,
+        40
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        59,
+        37.8
+       ],
+       "text": {
+        "en": "Y3"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        35,
+        58
+       ],
+       "to": [
+        35,
+        46.6
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        41,
+        58
+       ],
+       "to": [
+        41,
+        48.8
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        30,
+        53
+       ],
+       "text": {
+        "en": "S1"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        42.5,
+        53
+       ],
+       "text": {
+        "en": "S0"
+       },
+       "size": 3.0,
+       "color": "orange"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "For select code 1 0, only Y2 carries the data; the other outputs stay at 0."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        66,
+        14.6
+       ],
+       "to": [
+        87,
+        14.6
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        10.3
+       ],
+       "text": {
+        "en": "S1"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        74,
+        10.3
+       ],
+       "text": {
+        "en": "S0"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        81,
+        10.3
+       ],
+       "text": {
+        "en": "D goes to"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        14.9
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        74,
+        14.9
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        81,
+        14.9
+       ],
+       "text": {
+        "en": "Y0"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        19.5
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        74,
+        19.5
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        81,
+        19.5
+       ],
+       "text": {
+        "en": "Y1"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        24.099999999999998
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        74,
+        24.099999999999998
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        81,
+        24.099999999999998
+       ],
+       "text": {
+        "en": "Y2"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        28.7
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        74,
+        28.7
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        81,
+        28.7
+       ],
+       "text": {
+        "en": "Y3"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "math",
+       "at": [
+        66,
+        42
+       ],
+       "tex": "Y_2 = D\\,S_1\\bar S_0",
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: MUX and DEMUX symbols and select tables."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Demultiplexer (data distributor)"
+   },
+   "body": {
+    "en": "A demultiplexer (DEMUX) does the reverse: one data input D, $n$ select lines and $2^n$ outputs. The select code decides which output receives D; all others stay 0. For a 1:4 DEMUX, $Y_0 = D\\bar{S_1}\\bar{S_0}$, $Y_1 = D\\bar{S_1}S_0$, $Y_2 = DS_1\\bar{S_0}$, $Y_3 = DS_1S_0$. A decoder with an enable input works as a demultiplexer (e.g. IC 74155). Uses: serial-to-parallel conversion, sending data to one of many destinations."
+   },
+   "points": [
+    {
+     "en": "1 input, n select lines, 2ⁿ outputs"
+    },
+    {
+     "en": "One-to-many: also called a data distributor"
+    },
+    {
+     "en": "MUX at the sender + DEMUX at the receiver share one line"
+    }
+   ],
+   "narration": {
+    "en": "A demultiplexer is a data distributor. One input goes to one of two to the power n outputs, chosen by the select lines.",
+    "kn": "ಡಿಮಲ್ಟಿಪ್ಲೆಕ್ಸರ್ ಒಂದು ದತ್ತಾಂಶ ವಿತರಕ. ಆಯ್ಕೆ ರೇಖೆಗಳು ಆರಿಸಿದ 2ⁿ ಔಟ್‌ಪುಟ್‌ಗಳಲ್ಲಿ ಒಂದಕ್ಕೆ ಇನ್‌ಪುಟ್ ಹೋಗುತ್ತದೆ."
+   }
+  },
+  {
+   "kind": "readouts",
+   "caption": {
+    "en": "Set the select lines and the data bit. The readouts show which line is selected and how many lines n select bits can address."
+   },
+   "sliders": [
+    {
+     "name": "S1",
+     "label": {
+      "en": "Select S1"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "S0",
+     "label": {
+      "en": "Select S0"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 1,
+     "value": 0
+    },
+    {
+     "name": "D",
+     "label": {
+      "en": "DEMUX data bit D"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "Number of select lines n"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 2
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "MUX connects input I…"
+     },
+     "expr": "2*S1 + S0",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "DEMUX sends D to output Y…"
+     },
+     "expr": "2*S1 + S0",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Value on that DEMUX output"
+     },
+     "expr": "D",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Inputs (MUX) or outputs (DEMUX) for n select lines"
+     },
+     "expr": "2^n",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Step S1 S0 through 00, 01, 10, 11 and say the selected input each time."
+    },
+    {
+     "en": "How many select lines does a 16:1 MUX need? Move n until the last readout shows 16."
+    },
+    {
+     "en": "Set D = 0. Does the chosen DEMUX output change?"
+    }
+   ],
+   "id": "int1",
+   "type": "interactive",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "Set the select lines and the data bit. The readouts show which line is selected and how many lines n select bits can address."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "An 8:1 multiplexer has select inputs S2 S1 S0 = 1 0 1. Which input appears at the output? How many select lines does it have?"
+   },
+   "steps": [
+    {
+     "en": "An 8:1 MUX has 8 = 2³ inputs, so it needs 3 select lines."
+    },
+    {
+     "en": "S2 S1 S0 = 101 in binary = 5 in decimal."
+    },
+    {
+     "en": "So input I5 is connected to the output Y."
+    }
+   ],
+   "answer": {
+    "en": "Y = I5; 3 select lines"
+   },
+   "narration": {
+    "en": "Let us work this out together. An 8:1 multiplexer has select inputs S2 S1 S0 = 1 0 1. Which input appears at the output? How many select lines does it have?"
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "Use a 4:1 MUX to realise Y = A ⊕ B, with A on S1 and B on S0. What must be connected to I0–I3?"
+   },
+   "steps": [
+    {
+     "en": "With A B as the select code, input Ik appears when AB = k."
+    },
+    {
+     "en": "A ⊕ B = 0, 1, 1, 0 for AB = 00, 01, 10, 11."
+    },
+    {
+     "en": "So connect I0 = 0, I1 = 1, I2 = 1, I3 = 0."
+    }
+   ],
+   "answer": {
+    "en": "I0 = 0, I1 = 1, I2 = 1, I3 = 0"
+   },
+   "narration": {
+    "en": "Let us work this out together. Use a 4:1 MUX to realise Y = A ⊕ B, with A on S1 and B on S0. What must be connected to I0–I3?"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n08-q11",
+    "2n08-q12",
+    "2n08-q13"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Discuss in your team and agree on one answer.",
+    "kn": "ತಂಡ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ತಂಡದಲ್ಲಿ ಚರ್ಚಿಸಿ ಒಂದು ಉತ್ತರವನ್ನು ಒಪ್ಪಿಕೊಳ್ಳಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n08-q14",
+    "2n08-q15"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the II PUC board exam pattern. Try them on your own first."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC board exam practice"
+   },
+   "questionIds": [
+    "2n08-q26",
+    "2n08-q27"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Three more board-exam practice questions that bring the chapter together."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A MUX selects one of 2ⁿ inputs using n select lines.",
+     "kn": "MUX n ಆಯ್ಕೆ ರೇಖೆಗಳಿಂದ 2ⁿ ಇನ್‌ಪುಟ್‌ಗಳಲ್ಲಿ ಒಂದನ್ನು ಆರಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "A DEMUX sends one input to one of 2ⁿ outputs.",
+     "kn": "DEMUX ಒಂದು ಇನ್‌ಪುಟ್ ಅನ್ನು 2ⁿ ಔಟ್‌ಪುಟ್‌ಗಳಲ್ಲಿ ಒಂದಕ್ಕೆ ಕಳುಹಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "MUX = data selector (many to one); DEMUX = data distributor (one to many).",
+     "kn": "MUX = ದತ್ತಾಂಶ ಆಯ್ಕೆಗಾರ (ಹಲವು → ಒಂದು); DEMUX = ದತ್ತಾಂಶ ವಿತರಕ (ಒಂದು → ಹಲವು)."
+    },
+    {
+     "en": "A MUX can realise any Boolean function of its select variables.",
+     "kn": "MUX ತನ್ನ ಆಯ್ಕೆ ಚರಗಳ ಯಾವುದೇ ಬೂಲಿಯನ್ ಫಲನವನ್ನು ರೂಪಿಸಬಲ್ಲದು."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Draw the logic diagram of a 4:1 multiplexer using AND, OR and NOT gates."
+    },
+    {
+     "en": "Write the output equations of a 1:4 demultiplexer."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n08-q15"
+   ],
+   "narration": {
+    "en": "Recap. A MUX selects one of 2ⁿ inputs using n select lines. A DEMUX sends one input to one of 2ⁿ outputs. MUX = data selector (many to one); DEMUX = data distributor (one to many). A MUX can realise any Boolean function of its select variables.",
+    "kn": "ಪುನರಾವರ್ತನೆ. MUX n ಆಯ್ಕೆ ರೇಖೆಗಳಿಂದ 2ⁿ ಇನ್‌ಪುಟ್‌ಗಳಲ್ಲಿ ಒಂದನ್ನು ಆರಿಸುತ್ತದೆ. DEMUX ಒಂದು ಇನ್‌ಪುಟ್ ಅನ್ನು 2ⁿ ಔಟ್‌ಪುಟ್‌ಗಳಲ್ಲಿ ಒಂದಕ್ಕೆ ಕಳುಹಿಸುತ್ತದೆ. MUX = ದತ್ತಾಂಶ ಆಯ್ಕೆಗಾರ (ಹಲವು → ಒಂದು); DEMUX = ದತ್ತಾಂಶ ವಿತರಕ (ಒಂದು → ಹಲವು). MUX ತನ್ನ ಆಯ್ಕೆ ಚರಗಳ ಯಾವುದೇ ಬೂಲಿಯನ್ ಫಲನವನ್ನು ರೂಪಿಸಬಲ್ಲದು."
+   }
+  }
+ ]
+}

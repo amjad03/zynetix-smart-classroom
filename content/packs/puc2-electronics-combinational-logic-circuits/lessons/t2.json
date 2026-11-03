@@ -1,0 +1,1236 @@
+{
+ "id": "puc2-electronics-08-combinational-logic-circuits.t2.lesson",
+ "chapterId": "puc2-electronics-08-combinational-logic-circuits",
+ "topicId": "puc2-electronics-08-combinational-logic-circuits.t2",
+ "title": {
+  "en": "Parallel binary adder and subtractors",
+  "kn": "ಸಮಾಂತರ ದ್ವಿಮಾನ ಸಂಕಲಕ ಮತ್ತು ವ್ಯವಕಲಕಗಳು"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "From one bit to a whole number",
+    "kn": "ಒಂದು ಬಿಟ್‌ನಿಂದ ಪೂರ್ಣ ಸಂಖ್ಯೆಯವರೆಗೆ"
+   },
+   "hook": {
+    "en": "A full adder adds one column. Line up four of them and the carry passes from column to column, just like when you add on paper. The same adder can even subtract.",
+    "kn": "ಪೂರ್ಣ ಸಂಕಲಕ ಒಂದು ಕಾಲಮ್ ಅನ್ನು ಕೂಡಿಸುತ್ತದೆ. ನಾಲ್ಕನ್ನು ಸಾಲಾಗಿ ಜೋಡಿಸಿದರೆ ಕಾಗದದ ಮೇಲೆ ಕೂಡಿಸುವಂತೆ ಕ್ಯಾರಿ ಒಂದು ಕಾಲಮ್‌ನಿಂದ ಇನ್ನೊಂದಕ್ಕೆ ಸಾಗುತ್ತದೆ. ಅದೇ ಸಂಕಲಕ ಕಳೆಯಲೂ ಬಲ್ಲದು."
+   },
+   "objectives": [
+    {
+     "en": "Explain a 4-bit parallel (ripple-carry) adder"
+    },
+    {
+     "en": "Design the half and full subtractor"
+    },
+    {
+     "en": "Subtract using 2’s complement addition"
+    }
+   ],
+   "narration": {
+    "en": "A full adder adds one column. Line up four of them and the carry passes from column to column, just like when you add on paper. The same adder can even subtract.",
+    "kn": "ಪೂರ್ಣ ಸಂಕಲಕ ಒಂದು ಕಾಲಮ್ ಅನ್ನು ಕೂಡಿಸುತ್ತದೆ. ನಾಲ್ಕನ್ನು ಸಾಲಾಗಿ ಜೋಡಿಸಿದರೆ ಕಾಗದದ ಮೇಲೆ ಕೂಡಿಸುವಂತೆ ಕ್ಯಾರಿ ಒಂದು ಕಾಲಮ್‌ನಿಂದ ಇನ್ನೊಂದಕ್ಕೆ ಸಾಗುತ್ತದೆ. ಅದೇ ಸಂಕಲಕ ಕಳೆಯಲೂ ಬಲ್ಲದು."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "4-bit parallel binary adder"
+   },
+   "body": {
+    "en": "To add two 4-bit numbers $A_3A_2A_1A_0$ and $B_3B_2B_1B_0$, four full adders are connected side by side. The carry-out of each stage is the carry-in of the next, so the carry \"ripples\" from the LSB to the MSB; this is a ripple-carry adder. The final carry $C_4$ is the fifth bit of the sum. IC 7483 is a 4-bit binary parallel adder. Its drawback is speed: the last sum is correct only after the carry has passed through every stage."
+   },
+   "points": [
+    {
+     "en": "n-bit adder = n full adders (LSB stage may be a half adder)"
+    },
+    {
+     "en": "Carry ripples from LSB to MSB"
+    },
+    {
+     "en": "IC 7483: 4-bit parallel adder"
+    },
+    {
+     "en": "Delay grows with the number of bits"
+    }
+   ],
+   "narration": {
+    "en": "Four full adders in a row make a 4-bit adder. Each carry-out feeds the next carry-in, so the carry ripples from the least significant bit to the most significant bit.",
+    "kn": "ನಾಲ್ಕು ಪೂರ್ಣ ಸಂಕಲಕಗಳನ್ನು ಸಾಲಾಗಿ ಜೋಡಿಸಿದರೆ 4-ಬಿಟ್ ಸಂಕಲಕವಾಗುತ್ತದೆ. ಪ್ರತಿಯೊಂದರ ಕ್ಯಾರಿ-ಔಟ್ ಮುಂದಿನದರ ಕ್ಯಾರಿ-ಇನ್ ಆಗುತ್ತದೆ; ಕ್ಯಾರಿ LSB ಯಿಂದ MSB ಕಡೆಗೆ ಹರಿಯುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Ripple-carry adder and 2’s complement subtraction"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Four full adders side by side. The A and B bits come in from the top and the sums come out below."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        8,
+        18
+       ],
+       "to": [
+        22,
+        30
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        12.0,
+        21.9
+       ],
+       "text": {
+        "en": "FA3"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        9,
+        8
+       ],
+       "text": {
+        "en": "A3 B3"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        15,
+        13
+       ],
+       "to": [
+        15,
+        18
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        15,
+        30
+       ],
+       "to": [
+        15,
+        35
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        13,
+        36
+       ],
+       "text": {
+        "en": "S3"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        30,
+        18
+       ],
+       "to": [
+        44,
+        30
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        34.0,
+        21.9
+       ],
+       "text": {
+        "en": "FA2"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        8
+       ],
+       "text": {
+        "en": "A2 B2"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        37,
+        13
+       ],
+       "to": [
+        37,
+        18
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        37,
+        30
+       ],
+       "to": [
+        37,
+        35
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        35,
+        36
+       ],
+       "text": {
+        "en": "S2"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        52,
+        18
+       ],
+       "to": [
+        66,
+        30
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        56.0,
+        21.9
+       ],
+       "text": {
+        "en": "FA1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        53,
+        8
+       ],
+       "text": {
+        "en": "A1 B1"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        59,
+        13
+       ],
+       "to": [
+        59,
+        18
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        59,
+        30
+       ],
+       "to": [
+        59,
+        35
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        57,
+        36
+       ],
+       "text": {
+        "en": "S1"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        74,
+        18
+       ],
+       "to": [
+        88,
+        30
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        78.0,
+        21.9
+       ],
+       "text": {
+        "en": "FA0"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        75,
+        8
+       ],
+       "text": {
+        "en": "A0 B0"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        81,
+        13
+       ],
+       "to": [
+        81,
+        18
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        81,
+        30
+       ],
+       "to": [
+        81,
+        35
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        79,
+        36
+       ],
+       "text": {
+        "en": "S0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The carry enters at the right, at the least significant bit, and ripples left. C4 is the extra fifth bit."
+     },
+     "draw": [
+      {
+       "kind": "arrow",
+       "from": [
+        74,
+        24
+       ],
+       "to": [
+        66,
+        24
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        52,
+        24
+       ],
+       "to": [
+        44,
+        24
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        30,
+        24
+       ],
+       "to": [
+        22,
+        24
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        96,
+        24
+       ],
+       "to": [
+        88,
+        24
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        93,
+        18.5
+       ],
+       "text": {
+        "en": "C0"
+       },
+       "size": 2.8,
+       "color": "orange"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        8,
+        24
+       ],
+       "to": [
+        2,
+        24
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        1,
+        26.5
+       ],
+       "text": {
+        "en": "C4"
+       },
+       "size": 2.8,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        44
+       ],
+       "text": {
+        "en": "Carry ripples right to left"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        51
+       ],
+       "tex": "1011 + 0110 = 1\\,0001\\;(11 + 6 = 17)",
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Now subtraction. A half subtractor: difference is XOR and a borrow is needed only for 0 minus 1."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        4,
+        8.9
+       ],
+       "to": [
+        32,
+        8.9
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        4.3
+       ],
+       "text": {
+        "en": "A"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        12,
+        4.3
+       ],
+       "text": {
+        "en": "B"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        4.3
+       ],
+       "text": {
+        "en": "D"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        26,
+        4.3
+       ],
+       "text": {
+        "en": "Bo"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        9.200000000000001
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        12,
+        9.200000000000001
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        9.200000000000001
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        26,
+        9.200000000000001
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.100000000000001
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        12,
+        14.100000000000001
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        14.100000000000001
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        26,
+        14.100000000000001
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.000000000000004
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        12,
+        19.000000000000004
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        19.000000000000004
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        26,
+        19.000000000000004
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.900000000000002
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        12,
+        23.900000000000002
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        23.900000000000002
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        26,
+        23.900000000000002
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "math",
+       "at": [
+        40,
+        6
+       ],
+       "tex": "D = A\\oplus B",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        40,
+        14
+       ],
+       "tex": "B_o = \\bar{A}B",
+       "size": 3.5,
+       "color": "orange"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "Nine minus five by two’s complement: invert 0101 to get 1010, add one to get 1011, then add it to 1001."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        31
+       ],
+       "text": {
+        "en": "9 − 5 by 2’s complement"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        37
+       ],
+       "tex": "0101 \\to 1010 + 1 = 1011",
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        43
+       ],
+       "tex": "1001 + 1011 = 1\\,0100",
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        50
+       ],
+       "text": {
+        "en": "Drop end carry: 0100 = 4"
+       },
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "One XOR gate per B line makes the adder a subtractor. M equal to 0 adds; M equal to 1 inverts B and sets the carry-in to 1."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        59,
+        31
+       ],
+       "text": {
+        "en": "B"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        62,
+        33.5
+       ],
+       "to": [
+        66,
+        33.5
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        59,
+        37
+       ],
+       "text": {
+        "en": "M"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        62,
+        39.5
+       ],
+       "to": [
+        66,
+        39.5
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        66,
+        30
+       ],
+       "to": [
+        78,
+        42
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        69.0,
+        33.9
+       ],
+       "text": {
+        "en": "XOR"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        78,
+        36
+       ],
+       "to": [
+        84,
+        36
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        84,
+        30
+       ],
+       "to": [
+        96,
+        42
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        88.0,
+        33.9
+       ],
+       "text": {
+        "en": "FA"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        58,
+        46
+       ],
+       "text": {
+        "en": "M = 0: A + B"
+       },
+       "size": 3.0,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        58,
+        51
+       ],
+       "text": {
+        "en": "M = 1: A − B, C0 = 1"
+       },
+       "size": 3.0,
+       "color": "orange"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: Ripple-carry adder and 2’s complement subtraction."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Half subtractor and full subtractor"
+   },
+   "body": {
+    "en": "A half subtractor finds $A - B$ for two bits: difference $D = A\\oplus B$ and borrow $B_o = \\bar{A}B$ (a borrow is needed only for 0 − 1). A full subtractor also takes a borrow-in: $D = A\\oplus B\\oplus B_{in}$ and $B_o = \\bar{A}B + B_{in}\\,\\overline{(A\\oplus B)}$."
+   },
+   "points": [
+    {
+     "en": "Half subtractor: D = A ⊕ B, Bo = ĀB"
+    },
+    {
+     "en": "Full subtractor: D = A ⊕ B ⊕ Bin"
+    },
+    {
+     "en": "Bo = ĀB + Bin·(A ⊕ B)′"
+    }
+   ],
+   "narration": {
+    "en": "The difference bit of a subtractor is again an XOR. A borrow is needed only when we take 1 from 0, so the half subtractor borrow is A-bar B.",
+    "kn": "ವ್ಯವಕಲಕದ ವ್ಯತ್ಯಾಸ ಬಿಟ್ ಕೂಡ XOR. 0 ಯಿಂದ 1 ಕಳೆಯುವಾಗ ಮಾತ್ರ ಎರವಲು (ಬಾರೋ) ಬೇಕು; ಅರ್ಧ ವ್ಯವಕಲಕದ ಬಾರೋ = ĀB."
+   },
+   "formula": "D = A\\oplus B, \\qquad B_o = \\bar{A}B"
+  },
+  {
+   "id": "concept3",
+   "type": "concept",
+   "title": {
+    "en": "Subtraction with 2’s complement"
+   },
+   "body": {
+    "en": "Digital systems subtract by adding: $A - B = A + (\\bar{B} + 1)$, where $\\bar{B} + 1$ is the 2’s complement of B. In a 4-bit adder–subtractor each B bit passes through an XOR gate whose other input is a control line M. When M = 0 the XORs pass B and $C_0 = 0$: the circuit adds. When M = 1 the XORs invert B and $C_0 = 1$: the circuit adds the 2’s complement, i.e. subtracts. If an end carry appears, it is discarded and the result is positive."
+   },
+   "points": [
+    {
+     "en": "2’s complement = invert all bits, then add 1"
+    },
+    {
+     "en": "M = 0: A + B; M = 1: A − B"
+    },
+    {
+     "en": "End carry 1 → discard it; result is positive"
+    }
+   ],
+   "narration": {
+    "en": "To subtract, we add the two’s complement: invert B and add one. An XOR gate on each B line, controlled by M, turns one adder into an adder-subtractor.",
+    "kn": "ಕಳೆಯಲು 2ರ ಪೂರಕವನ್ನು ಕೂಡಿಸುತ್ತೇವೆ: B ಯ ಬಿಟ್‌ಗಳನ್ನು ತಿರುಗಿಸಿ 1 ಸೇರಿಸಿ. M ನಿಯಂತ್ರಿತ XOR ಗೇಟ್‌ಗಳು ಸಂಕಲಕವನ್ನು ಸಂಕಲಕ-ವ್ಯವಕಲಕವಾಗಿಸುತ್ತವೆ."
+   },
+   "formula": "A - B = A + \\bar{B} + 1"
+  },
+  {
+   "id": "sim-sim.numbers",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "sim.numbers",
+   "caption": {
+    "en": "Convert numbers between decimal and binary to check the sums and differences worked by the adder."
+   },
+   "tryThis": [
+    {
+     "en": "Convert 11 and 6 to binary, add them by hand and check that the answer is 10001."
+    },
+    {
+     "en": "Find the binary of 9 and 5 and check 9 − 5 = 0100."
+    }
+   ],
+   "narration": {
+    "en": "Use the number converter to check binary sums and differences before trusting the adder."
+   },
+   "seconds": 120,
+   "optional": true
+  },
+  {
+   "kind": "readouts",
+   "caption": {
+    "en": "A 4-bit adder–subtractor. Choose A, B and the control M (0 = add, 1 = subtract with 2’s complement)."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "A (4-bit)"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 9
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "B (4-bit)"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "M",
+     "label": {
+      "en": "Control M"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 1,
+     "value": 1
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "4-bit output S3..S0 (decimal)"
+     },
+     "expr": "A + B + M*(16 - 2*B) - 16*floor((A + B + M*(16 - 2*B))/16)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "End carry C4"
+     },
+     "expr": "floor((A + B + M*(16 - 2*B))/16)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "True answer (A + B or A − B)"
+     },
+     "expr": "A + B - 2*M*B",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With M = 1, make A bigger than B. What is the end carry each time?"
+    },
+    {
+     "en": "With M = 1, make A smaller than B. The end carry is 0 and the output is the 2’s complement of the answer."
+    },
+    {
+     "en": "With M = 0, find two numbers whose sum needs C4 = 1."
+    }
+   ],
+   "id": "int1",
+   "type": "interactive",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "A 4-bit adder–subtractor. Choose A, B and the control M (0 = add, 1 = subtract with 2’s complement)."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Add A = 1011 and B = 0110 with a 4-bit parallel adder (C0 = 0). Show the carry at each stage."
+   },
+   "steps": [
+    {
+     "en": "Stage 0: 1 + 0 + 0 = 1 → S0 = 1, C1 = 0."
+    },
+    {
+     "en": "Stage 1: 1 + 1 + 0 = 10 → S1 = 0, C2 = 1."
+    },
+    {
+     "en": "Stage 2: 0 + 1 + 1 = 10 → S2 = 0, C3 = 1."
+    },
+    {
+     "en": "Stage 3: 1 + 0 + 1 = 10 → S3 = 0, C4 = 1. Result 10001 = 17 = 11 + 6."
+    }
+   ],
+   "answer": {
+    "en": "C4 S3 S2 S1 S0 = 1 0001 (17)"
+   },
+   "narration": {
+    "en": "Let us work this out together. Add A = 1011 and B = 0110 with a 4-bit parallel adder (C0 = 0). Show the carry at each stage."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "A full subtractor has A = 0, B = 1 and Bin = 1. Find D and Bo."
+   },
+   "steps": [
+    {
+     "en": "D = A ⊕ B ⊕ Bin = 0 ⊕ 1 ⊕ 1 = 0."
+    },
+    {
+     "en": "A ⊕ B = 1, so (A ⊕ B)′ = 0."
+    },
+    {
+     "en": "Bo = ĀB + Bin(A ⊕ B)′ = 1·1 + 1·0 = 1."
+    },
+    {
+     "en": "Check: 0 − 1 − 1 = −2: borrow 1 (worth 2) and difference 0."
+    }
+   ],
+   "answer": {
+    "en": "D = 0, Bo = 1"
+   },
+   "narration": {
+    "en": "Let us work this out together. A full subtractor has A = 0, B = 1 and Bin = 1. Find D and Bo."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n08-q06",
+    "2n08-q07",
+    "2n08-q08"
+   ],
+   "mode": "roll_call",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Roll-call quiz. When your roll number is called, give your answer.",
+    "kn": "ಹಾಜರಾತಿ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ಹಾಜರಾತಿ ಸಂಖ್ಯೆ ಕರೆದಾಗ ನಿಮ್ಮ ಉತ್ತರ ಹೇಳಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n08-q09",
+    "2n08-q10"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the II PUC board exam pattern. Try them on your own first."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A 4-bit parallel adder uses four full adders; the carry ripples from LSB to MSB.",
+     "kn": "4-ಬಿಟ್ ಸಮಾಂತರ ಸಂಕಲಕದಲ್ಲಿ ನಾಲ್ಕು ಪೂರ್ಣ ಸಂಕಲಕಗಳು; ಕ್ಯಾರಿ LSB ಯಿಂದ MSB ಕಡೆಗೆ ಹರಿಯುತ್ತದೆ."
+    },
+    {
+     "en": "Half subtractor: D = A ⊕ B, Bo = ĀB.",
+     "kn": "ಅರ್ಧ ವ್ಯವಕಲಕ: D = A ⊕ B, Bo = ĀB."
+    },
+    {
+     "en": "A − B = A + 2’s complement of B; discard the end carry.",
+     "kn": "A − B = A + B ಯ 2ರ ಪೂರಕ; ಕೊನೆಯ ಕ್ಯಾರಿಯನ್ನು ಬಿಡಿ."
+    },
+    {
+     "en": "XOR gates with control M turn an adder into an adder–subtractor.",
+     "kn": "M ನಿಯಂತ್ರಿತ XOR ಗೇಟ್‌ಗಳು ಸಂಕಲಕವನ್ನು ಸಂಕಲಕ-ವ್ಯವಕಲಕವಾಗಿಸುತ್ತವೆ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Subtract 0011 from 1100 using 2’s complement and check your answer in decimal."
+    },
+    {
+     "en": "Draw the logic diagram of a half subtractor."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n08-q10"
+   ],
+   "narration": {
+    "en": "Recap. A 4-bit parallel adder uses four full adders; the carry ripples from LSB to MSB. Half subtractor: D = A ⊕ B, Bo = ĀB. A − B = A + 2’s complement of B; discard the end carry. XOR gates with control M turn an adder into an adder–subtractor.",
+    "kn": "ಪುನರಾವರ್ತನೆ. 4-ಬಿಟ್ ಸಮಾಂತರ ಸಂಕಲಕದಲ್ಲಿ ನಾಲ್ಕು ಪೂರ್ಣ ಸಂಕಲಕಗಳು; ಕ್ಯಾರಿ LSB ಯಿಂದ MSB ಕಡೆಗೆ ಹರಿಯುತ್ತದೆ. ಅರ್ಧ ವ್ಯವಕಲಕ: D = A ⊕ B, Bo = ĀB. A − B = A + B ಯ 2ರ ಪೂರಕ; ಕೊನೆಯ ಕ್ಯಾರಿಯನ್ನು ಬಿಡಿ. M ನಿಯಂತ್ರಿತ XOR ಗೇಟ್‌ಗಳು ಸಂಕಲಕವನ್ನು ಸಂಕಲಕ-ವ್ಯವಕಲಕವಾಗಿಸುತ್ತವೆ."
+   }
+  }
+ ]
+}

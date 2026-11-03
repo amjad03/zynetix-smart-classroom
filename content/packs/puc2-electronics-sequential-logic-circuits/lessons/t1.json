@@ -1,0 +1,1137 @@
+{
+ "id": "puc2-electronics-09-sequential-logic-circuits.t1.lesson",
+ "chapterId": "puc2-electronics-09-sequential-logic-circuits",
+ "topicId": "puc2-electronics-09-sequential-logic-circuits.t1",
+ "title": {
+  "en": "Latches: the SR latch",
+  "kn": "ಲ್ಯಾಚ್‌ಗಳು: SR ಲ್ಯಾಚ್"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "A circuit that remembers",
+    "kn": "ನೆನಪಿಟ್ಟುಕೊಳ್ಳುವ ಮಂಡಲ"
+   },
+   "hook": {
+    "en": "Press a doorbell and the sound stops when you let go: no memory. Press a light switch and the light stays on: it remembers. Digital memory starts with two gates that feed each other.",
+    "kn": "ಡೋರ್‌ಬೆಲ್ ಒತ್ತಿ ಬಿಟ್ಟರೆ ಶಬ್ದ ನಿಲ್ಲುತ್ತದೆ: ಸ್ಮರಣೆ ಇಲ್ಲ. ದೀಪದ ಸ್ವಿಚ್ ಒತ್ತಿದರೆ ದೀಪ ಉರಿಯುತ್ತಲೇ ಇರುತ್ತದೆ: ಅದು ನೆನಪಿಡುತ್ತದೆ. ಡಿಜಿಟಲ್ ಸ್ಮರಣೆ ಪರಸ್ಪರ ಉಣಿಸುವ ಎರಡು ಗೇಟ್‌ಗಳಿಂದ ಆರಂಭವಾಗುತ್ತದೆ."
+   },
+   "objectives": [
+    {
+     "en": "Distinguish sequential from combinational circuits"
+    },
+    {
+     "en": "Explain the SR latch built with NOR gates"
+    },
+    {
+     "en": "Explain the active-low SR latch built with NAND gates"
+    }
+   ],
+   "narration": {
+    "en": "Press a doorbell and the sound stops when you let go: no memory. Press a light switch and the light stays on: it remembers. Digital memory starts with two gates that feed each other.",
+    "kn": "ಡೋರ್‌ಬೆಲ್ ಒತ್ತಿ ಬಿಟ್ಟರೆ ಶಬ್ದ ನಿಲ್ಲುತ್ತದೆ: ಸ್ಮರಣೆ ಇಲ್ಲ. ದೀಪದ ಸ್ವಿಚ್ ಒತ್ತಿದರೆ ದೀಪ ಉರಿಯುತ್ತಲೇ ಇರುತ್ತದೆ: ಅದು ನೆನಪಿಡುತ್ತದೆ. ಡಿಜಿಟಲ್ ಸ್ಮರಣೆ ಪರಸ್ಪರ ಉಣಿಸುವ ಎರಡು ಗೇಟ್‌ಗಳಿಂದ ಆರಂಭವಾಗುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Sequential circuits and the NOR SR latch"
+   },
+   "body": {
+    "en": "In a sequential circuit the output depends on the present inputs and on the past state, so it needs memory. The basic memory element is the latch, a bistable circuit that stores one bit. Two cross-coupled NOR gates form an SR latch: S = 1 sets Q to 1, R = 1 resets Q to 0, S = R = 0 keeps (holds) the previous Q, and S = R = 1 is not allowed because it forces Q = $\\bar{Q}$ = 0 and the state after it is unpredictable."
+   },
+   "points": [
+    {
+     "en": "Sequential output = f(inputs, previous state)"
+    },
+    {
+     "en": "Latch: bistable, stores 1 bit"
+    },
+    {
+     "en": "NOR latch: S = 1 sets, R = 1 resets, 00 holds, 11 invalid"
+    }
+   ],
+   "narration": {
+    "en": "A sequential circuit remembers its past state. Two cross-coupled NOR gates form an S R latch: set makes Q one, reset makes Q zero, both zero holds, and both one is forbidden.",
+    "kn": "ಅನುಕ್ರಮ (ಸೀಕ್ವೆನ್ಶಿಯಲ್) ಮಂಡಲ ಹಿಂದಿನ ಸ್ಥಿತಿಯನ್ನು ನೆನಪಿಡುತ್ತದೆ. ಎರಡು NOR ಗೇಟ್‌ಗಳಿಂದ SR ಲ್ಯಾಚ್: S = 1 ಸೆಟ್, R = 1 ರೀಸೆಟ್, ಎರಡೂ 0 ಆದರೆ ಹಿಂದಿನ ಸ್ಥಿತಿ, ಎರಡೂ 1 ನಿಷಿದ್ಧ."
+   },
+   "formula": "Q_{n+1} = S + \\bar{R}\\,Q_n \\quad (S\\cdot R = 0)"
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "The cross-coupled NOR latch"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Two NOR gates, each output fed back to an input of the other gate. That feedback is the memory."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        30,
+        9
+       ],
+       "to": [
+        44,
+        22
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        33.0,
+        13.4
+       ],
+       "text": {
+        "en": "NOR1"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        30,
+        37
+       ],
+       "to": [
+        44,
+        50
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        33.0,
+        41.4
+       ],
+       "text": {
+        "en": "NOR2"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        12,
+        12
+       ],
+       "to": [
+        30,
+        12
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        7,
+        9.8
+       ],
+       "text": {
+        "en": "R"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        12,
+        47
+       ],
+       "to": [
+        30,
+        47
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        7,
+        44.8
+       ],
+       "text": {
+        "en": "S"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        44,
+        15.5
+       ],
+       "to": [
+        60,
+        15.5
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        61,
+        13.5
+       ],
+       "text": {
+        "en": "Q"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        44,
+        43.5
+       ],
+       "to": [
+        60,
+        43.5
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        61,
+        41.5
+       ],
+       "text": {
+        "en": "Q'"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         52,
+         15.5
+        ],
+        [
+         52,
+         27
+        ],
+        [
+         24,
+         33
+        ],
+        [
+         24,
+         40
+        ],
+        [
+         30,
+         40
+        ]
+       ],
+       "color": "blue"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         52,
+         43.5
+        ],
+        [
+         52,
+         32
+        ],
+        [
+         20,
+         26
+        ],
+        [
+         20,
+         19
+        ],
+        [
+         30,
+         19
+        ]
+       ],
+       "color": "blue"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        52,
+        15.5
+       ],
+       "r": 0.6,
+       "color": "yellow",
+       "fill": true
+      },
+      {
+       "kind": "circle",
+       "at": [
+        52,
+        43.5
+       ],
+       "r": 0.6,
+       "color": "yellow",
+       "fill": true
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Fill the table. S sets Q to 1, R resets it to 0, and with both at 0 the latch keeps what it had."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        66,
+        5.6
+       ],
+       "to": [
+        90,
+        5.6
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        1.3
+       ],
+       "text": {
+        "en": "S"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        73,
+        1.3
+       ],
+       "text": {
+        "en": "R"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        79,
+        1.3
+       ],
+       "text": {
+        "en": "Q"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        85,
+        1.3
+       ],
+       "text": {
+        "en": "state"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        5.8999999999999995
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        73,
+        5.8999999999999995
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        79,
+        5.8999999999999995
+       ],
+       "text": {
+        "en": "Q"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        85,
+        5.8999999999999995
+       ],
+       "text": {
+        "en": "hold"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        10.5
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        73,
+        10.5
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        79,
+        10.5
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        85,
+        10.5
+       ],
+       "text": {
+        "en": "reset"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        15.1
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.0,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        73,
+        15.1
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        79,
+        15.1
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        85,
+        15.1
+       ],
+       "text": {
+        "en": "set"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        19.7
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.0,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        73,
+        19.7
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.0,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        79,
+        19.7
+       ],
+       "text": {
+        "en": "?"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        85,
+        19.7
+       ],
+       "text": {
+        "en": "invalid"
+       },
+       "size": 3.0,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "With S equal to R equal to 1 both outputs become 0, so Q and Q-bar are no longer complements. That is why it is forbidden."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        53
+       ],
+       "text": {
+        "en": "S = R = 0 holds the last state"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55,
+        27
+       ],
+       "text": {
+        "en": "S = R = 1: Q = Q' = 0"
+       },
+       "size": 2.8,
+       "color": "red"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A NAND latch works the same way with active-low inputs: a zero on S-bar sets, a zero on R-bar resets."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        4,
+        8.9
+       ],
+       "to": [
+        36,
+        8.9
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        4.3
+       ],
+       "text": {
+        "en": "S'"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        13,
+        4.3
+       ],
+       "text": {
+        "en": "R'"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        21,
+        4.3
+       ],
+       "text": {
+        "en": "Q"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        29,
+        4.3
+       ],
+       "text": {
+        "en": "state"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        9.200000000000001
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        13,
+        9.200000000000001
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        21,
+        9.200000000000001
+       ],
+       "text": {
+        "en": "Q"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        29,
+        9.200000000000001
+       ],
+       "text": {
+        "en": "hold"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.100000000000001
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        13,
+        14.100000000000001
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        21,
+        14.100000000000001
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        29,
+        14.100000000000001
+       ],
+       "text": {
+        "en": "reset"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.000000000000004
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        13,
+        19.000000000000004
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        21,
+        19.000000000000004
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        29,
+        19.000000000000004
+       ],
+       "text": {
+        "en": "set"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.900000000000002
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        13,
+        23.900000000000002
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        21,
+        23.900000000000002
+       ],
+       "text": {
+        "en": "?"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        29,
+        23.900000000000002
+       ],
+       "text": {
+        "en": "invalid"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        50,
+        8
+       ],
+       "text": {
+        "en": "NAND latch"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        50,
+        15
+       ],
+       "text": {
+        "en": "Inputs are active-low"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        50,
+        21
+       ],
+       "text": {
+        "en": "S' = R' = 0: invalid"
+       },
+       "size": 3.2,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        50,
+        27
+       ],
+       "text": {
+        "en": "Use: switch debouncer"
+       },
+       "size": 3.2,
+       "color": "green"
+      }
+     ],
+     "clear": true
+    }
+   ],
+   "narration": {
+    "en": "On the board: The cross-coupled NOR latch."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "NAND (active-low) SR latch"
+   },
+   "body": {
+    "en": "Two cross-coupled NAND gates also make a latch, but its inputs are active-low ($\\bar{S}$ and $\\bar{R}$). $\\bar{S}$ = 0 sets Q = 1, $\\bar{R}$ = 0 resets Q = 0, $\\bar{S} = \\bar{R}$ = 1 holds, and $\\bar{S} = \\bar{R}$ = 0 is invalid (it forces Q = $\\bar{Q}$ = 1). A common use of the latch is a switch debouncer, which removes the extra pulses produced when a mechanical switch bounces."
+   },
+   "points": [
+    {
+     "en": "NAND latch inputs are active-low"
+    },
+    {
+     "en": "S̄ = R̄ = 1: hold; S̄ = R̄ = 0: invalid"
+    },
+    {
+     "en": "Use: switch debouncing"
+    }
+   ],
+   "narration": {
+    "en": "With NAND gates the inputs are active low: a zero sets or resets. Both inputs high hold the state, and both low is the forbidden case.",
+    "kn": "NAND ಲ್ಯಾಚ್‌ನಲ್ಲಿ ಇನ್‌ಪುಟ್‌ಗಳು ಸಕ್ರಿಯ-ಕಡಿಮೆ: 0 ಸೆಟ್ ಅಥವಾ ರೀಸೆಟ್ ಮಾಡುತ್ತದೆ. ಎರಡೂ 1 ಹಿಂದಿನ ಸ್ಥಿತಿ ಉಳಿಸುತ್ತದೆ; ಎರಡೂ 0 ನಿಷಿದ್ಧ."
+   }
+  },
+  {
+   "id": "sim-sim.logic",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "sim.logic",
+   "caption": {
+    "en": "Check the NOR and NAND truth tables: a NOR output is 1 only when both inputs are 0, a NAND output is 0 only when both inputs are 1."
+   },
+   "tryThis": [
+    {
+     "en": "In the NOR gate, set one input to 1. Can the other input change the output now?"
+    },
+    {
+     "en": "Use this to explain why S = 1 forces the other NOR output to 0."
+    }
+   ],
+   "narration": {
+    "en": "Look again at NOR and NAND truth tables. One input at 1 decides a NOR output; that is what lets S and R control the latch."
+   },
+   "seconds": 120,
+   "optional": true
+  },
+  {
+   "kind": "readouts",
+   "caption": {
+    "en": "A NOR SR latch. Choose S, R and the present state Q, and read the next state."
+   },
+   "sliders": [
+    {
+     "name": "S",
+     "label": {
+      "en": "S (set)"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "R",
+     "label": {
+      "en": "R (reset)"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 1,
+     "value": 0
+    },
+    {
+     "name": "Q",
+     "label": {
+      "en": "Present state Qn"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 1,
+     "value": 0
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Next state Qn+1 = S + R̄Qn"
+     },
+     "expr": "S + (1 - R)*Q - S*(1 - R)*Q",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Forbidden input? (1 = yes)"
+     },
+     "expr": "S*R",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set S = R = 0 and change Q. Does the next state follow Q?"
+    },
+    {
+     "en": "Apply S = 1, then return S to 0. What does the latch remember?"
+    },
+    {
+     "en": "Set S = R = 1. Why does the readout warn you?"
+    }
+   ],
+   "id": "int1",
+   "type": "interactive",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "A NOR SR latch. Choose S, R and the present state Q, and read the next state."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A NOR SR latch starts with Q = 0. The inputs (S, R) are applied in order: (1, 0), (0, 0), (0, 1), (0, 0). Find Q after each."
+   },
+   "steps": [
+    {
+     "en": "(1, 0): set → Q = 1."
+    },
+    {
+     "en": "(0, 0): hold → Q stays 1."
+    },
+    {
+     "en": "(0, 1): reset → Q = 0."
+    },
+    {
+     "en": "(0, 0): hold → Q stays 0."
+    }
+   ],
+   "answer": {
+    "en": "Q = 1, 1, 0, 0"
+   },
+   "narration": {
+    "en": "Let us work this out together. A NOR SR latch starts with Q = 0. The inputs (S, R) are applied in order: (1, 0), (0, 0), (0, 1), (0, 0). Find Q after each."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "Explain why S = R = 1 is not allowed in a NOR SR latch."
+   },
+   "steps": [
+    {
+     "en": "A NOR output is 0 if any input is 1."
+    },
+    {
+     "en": "With S = R = 1 both NOR outputs are 0, so Q = Q′ = 0: they are no longer complements."
+    },
+    {
+     "en": "If S and R then return to 0 together, the final state depends on which gate is faster: it is unpredictable."
+    }
+   ],
+   "answer": {
+    "en": "Q = Q′ = 0, and the next state is unpredictable"
+   },
+   "narration": {
+    "en": "Let us work this out together. Explain why S = R = 1 is not allowed in a NOR SR latch."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n09-q01",
+    "2n09-q02",
+    "2n09-q03"
+   ],
+   "mode": "roll_call",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Roll-call quiz. When your roll number is called, give your answer.",
+    "kn": "ಹಾಜರಾತಿ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ಹಾಜರಾತಿ ಸಂಖ್ಯೆ ಕರೆದಾಗ ನಿಮ್ಮ ಉತ್ತರ ಹೇಳಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n09-q04",
+    "2n09-q05"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the II PUC board exam pattern. Try them on your own first."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Sequential circuits depend on inputs and on the previous state.",
+     "kn": "ಅನುಕ್ರಮ ಮಂಡಲಗಳು ಇನ್‌ಪುಟ್‌ಗಳು ಮತ್ತು ಹಿಂದಿನ ಸ್ಥಿತಿ ಎರಡನ್ನೂ ಅವಲಂಬಿಸಿವೆ."
+    },
+    {
+     "en": "A latch is a bistable circuit that stores one bit.",
+     "kn": "ಲ್ಯಾಚ್ ಒಂದು ಬಿಟ್ ಸಂಗ್ರಹಿಸುವ ದ್ವಿಸ್ಥಿರ ಮಂಡಲ."
+    },
+    {
+     "en": "NOR latch: S = 1 sets, R = 1 resets, 00 holds, 11 is invalid.",
+     "kn": "NOR ಲ್ಯಾಚ್: S = 1 ಸೆಟ್, R = 1 ರೀಸೆಟ್, 00 ಹಿಂದಿನ ಸ್ಥಿತಿ, 11 ಅಮಾನ್ಯ."
+    },
+    {
+     "en": "NAND latch has active-low inputs; 00 is invalid.",
+     "kn": "NAND ಲ್ಯಾಚ್‌ನ ಇನ್‌ಪುಟ್‌ಗಳು ಸಕ್ರಿಯ-ಕಡಿಮೆ; 00 ಅಮಾನ್ಯ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Draw an SR latch using NAND gates and write its truth table."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n09-q05"
+   ],
+   "narration": {
+    "en": "Recap. Sequential circuits depend on inputs and on the previous state. A latch is a bistable circuit that stores one bit. NOR latch: S = 1 sets, R = 1 resets, 00 holds, 11 is invalid. NAND latch has active-low inputs; 00 is invalid.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಅನುಕ್ರಮ ಮಂಡಲಗಳು ಇನ್‌ಪುಟ್‌ಗಳು ಮತ್ತು ಹಿಂದಿನ ಸ್ಥಿತಿ ಎರಡನ್ನೂ ಅವಲಂಬಿಸಿವೆ. ಲ್ಯಾಚ್ ಒಂದು ಬಿಟ್ ಸಂಗ್ರಹಿಸುವ ದ್ವಿಸ್ಥಿರ ಮಂಡಲ. NOR ಲ್ಯಾಚ್: S = 1 ಸೆಟ್, R = 1 ರೀಸೆಟ್, 00 ಹಿಂದಿನ ಸ್ಥಿತಿ, 11 ಅಮಾನ್ಯ. NAND ಲ್ಯಾಚ್‌ನ ಇನ್‌ಪುಟ್‌ಗಳು ಸಕ್ರಿಯ-ಕಡಿಮೆ; 00 ಅಮಾನ್ಯ."
+   }
+  }
+ ]
+}

@@ -1,0 +1,795 @@
+{
+ "id": "puc2-electronics-10-microprocessors-and-microcontrollers.t3.lesson",
+ "chapterId": "puc2-electronics-10-microprocessors-and-microcontrollers",
+ "topicId": "puc2-electronics-10-microprocessors-and-microcontrollers.t3",
+ "title": {
+  "en": "8085 instruction set and addressing modes",
+  "kn": "8085 ಸೂಚನಾ ಸಮೂಹ ಮತ್ತು ವಿಳಾಸ ವಿಧಾನಗಳು"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "The words a microprocessor understands",
+    "kn": "ಮೈಕ್ರೋಪ್ರೊಸೆಸರ್ ಅರ್ಥಮಾಡಿಕೊಳ್ಳುವ ಪದಗಳು"
+   },
+   "hook": {
+    "en": "The 8085 understands a vocabulary of 74 instructions, written as short mnemonics like MOV, ADD and JMP. Every program, however clever, is built from these words.",
+    "kn": "8085 MOV, ADD, JMP ಮುಂತಾದ ಚಿಕ್ಕ ಸ್ಮರಣಾಕ್ಷರಗಳ (ನೆಮೋನಿಕ್) 74 ಸೂಚನೆಗಳ ಶಬ್ದಕೋಶವನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳುತ್ತದೆ. ಪ್ರತಿಯೊಂದು ಪ್ರೋಗ್ರಾಂ ಈ ಪದಗಳಿಂದಲೇ ರಚನೆಯಾಗುತ್ತದೆ."
+   },
+   "objectives": [
+    {
+     "en": "Classify 8085 instructions by size: 1, 2 and 3 bytes"
+    },
+    {
+     "en": "Classify instructions into five functional groups"
+    },
+    {
+     "en": "Identify the five addressing modes"
+    }
+   ],
+   "narration": {
+    "en": "The 8085 understands a vocabulary of 74 instructions, written as short mnemonics like MOV, ADD and JMP. Every program, however clever, is built from these words.",
+    "kn": "8085 MOV, ADD, JMP ಮುಂತಾದ ಚಿಕ್ಕ ಸ್ಮರಣಾಕ್ಷರಗಳ (ನೆಮೋನಿಕ್) 74 ಸೂಚನೆಗಳ ಶಬ್ದಕೋಶವನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳುತ್ತದೆ. ಪ್ರತಿಯೊಂದು ಪ್ರೋಗ್ರಾಂ ಈ ಪದಗಳಿಂದಲೇ ರಚನೆಯಾಗುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Instruction format and groups"
+   },
+   "body": {
+    "en": "An instruction has an opcode (what to do) and an operand (on what). By size, 8085 instructions are 1-byte (opcode only, e.g. MOV A, B; ADD B), 2-byte (opcode + 8-bit data or port address, e.g. MVI A, 32H; IN 01H) or 3-byte (opcode + 16-bit address or data stored low byte first, e.g. LDA 2050H; JMP 2000H; LXI H, 2050H). By function there are five groups: data transfer (MOV, MVI, LDA, STA, LXI, IN, OUT), arithmetic (ADD, ADI, SUB, INR, DCR, INX), logical (ANA, ORA, XRA, CMA, CMP, RLC), branching (JMP, JZ, JNZ, JC, CALL, RET) and machine control (HLT, NOP, EI, DI)."
+   },
+   "points": [
+    {
+     "en": "1-byte, 2-byte and 3-byte instructions"
+    },
+    {
+     "en": "16-bit operands are stored low byte first"
+    },
+    {
+     "en": "Groups: data transfer, arithmetic, logical, branching, machine control"
+    }
+   ],
+   "narration": {
+    "en": "An instruction is an opcode plus an operand, one, two or three bytes long. By function they fall into five groups: data transfer, arithmetic, logical, branching and machine control.",
+    "kn": "ಸೂಚನೆ = ಆಪ್‌ಕೋಡ್ + ಆಪರೆಂಡ್; ಉದ್ದ 1, 2 ಅಥವಾ 3 ಬೈಟ್. ಕಾರ್ಯದ ಪ್ರಕಾರ ಐದು ಗುಂಪುಗಳು: ದತ್ತಾಂಶ ವರ್ಗಾವಣೆ, ಅಂಕಗಣಿತ, ತಾರ್ಕಿಕ, ಶಾಖಾ (ಬ್ರ್ಯಾಂಚಿಂಗ್) ಮತ್ತು ಯಂತ್ರ ನಿಯಂತ್ರಣ."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Instruction sizes and addressing modes"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "An instruction can be one, two or three bytes. In a three-byte instruction the address is stored low byte first."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        3
+       ],
+       "text": {
+        "en": "Instruction = opcode + operand"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        10
+       ],
+       "to": [
+        18,
+        17
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5.7,
+        11.7
+       ],
+       "text": {
+        "en": "Opcode"
+       },
+       "size": 2.8,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        11
+       ],
+       "text": {
+        "en": "1 byte: MOV A, B"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        19
+       ],
+       "to": [
+        18,
+        26
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5.7,
+        20.7
+       ],
+       "text": {
+        "en": "Opcode"
+       },
+       "size": 2.8,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        18,
+        19
+       ],
+       "to": [
+        32,
+        26
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        21.5,
+        20.7
+       ],
+       "text": {
+        "en": "Data"
+       },
+       "size": 2.8,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        20
+       ],
+       "text": {
+        "en": "2 bytes: MVI A, 32H"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        28
+       ],
+       "to": [
+        18,
+        35
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5.7,
+        29.7
+       ],
+       "text": {
+        "en": "Opcode"
+       },
+       "size": 2.8,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        18,
+        28
+       ],
+       "to": [
+        32,
+        35
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        22.4,
+        29.7
+       ],
+       "text": {
+        "en": "Low"
+       },
+       "size": 2.8,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        32,
+        28
+       ],
+       "to": [
+        46,
+        35
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        35.5,
+        29.7
+       ],
+       "text": {
+        "en": "High"
+       },
+       "size": 2.8,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        29
+       ],
+       "text": {
+        "en": "3 bytes: LDA 2050H"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        35
+       ],
+       "text": {
+        "en": "stored as 3A 50 20"
+       },
+       "size": 3.0,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Five addressing modes, one example each."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        3
+       ],
+       "text": {
+        "en": "Addressing modes"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        10
+       ],
+       "text": {
+        "en": "Immediate: MVI B, 45H"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        16
+       ],
+       "text": {
+        "en": "Register: MOV A, B"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        22
+       ],
+       "text": {
+        "en": "Direct: LDA 2050H"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        28
+       ],
+       "text": {
+        "en": "Register indirect: MOV A, M"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        34
+       ],
+       "text": {
+        "en": "Implied: CMA"
+       },
+       "size": 3.2,
+       "color": "white"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "Register indirect: H L holds the address 2050H; M means the memory location it points to. MOV A, M copies that byte into A."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        66,
+        8
+       ],
+       "to": [
+        86,
+        16
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67.2,
+        10.2
+       ],
+       "text": {
+        "en": "HL = 2050H"
+       },
+       "size": 2.8,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        76,
+        16
+       ],
+       "to": [
+        76,
+        24
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        66,
+        24
+       ],
+       "to": [
+        86,
+        32
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67.2,
+        26.2
+       ],
+       "text": {
+        "en": "2050H: 3AH"
+       },
+       "size": 2.8,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        76,
+        32
+       ],
+       "to": [
+        76,
+        40
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        66,
+        40
+       ],
+       "to": [
+        86,
+        48
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        69.8,
+        42.2
+       ],
+       "text": {
+        "en": "A = 3AH"
+       },
+       "size": 2.8,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        66,
+        51
+       ],
+       "text": {
+        "en": "MOV A, M"
+       },
+       "size": 3.2,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A quick check of an addition: 9AH plus 89H gives 123H. The accumulator keeps 23H and the carry flag is set."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        42
+       ],
+       "tex": "9AH + 89H = 123H",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        49
+       ],
+       "text": {
+        "en": "A = 23H, CY = 1, AC = 1"
+       },
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        54
+       ],
+       "text": {
+        "en": "S = 0, Z = 0, P = 0"
+       },
+       "size": 3.2,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: Instruction sizes and addressing modes."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Addressing modes"
+   },
+   "body": {
+    "en": "The addressing mode is the way an instruction specifies its operand. Immediate: the data are in the instruction (MVI B, 45H; ADI 05H). Register: the operand is in a register (MOV A, B; ADD C). Direct: the instruction gives the 16-bit memory address (LDA 2050H; STA 3000H). Register indirect: a register pair holds the memory address (MOV A, M uses HL; LDAX B uses BC). Implied (implicit): the operand is understood, usually the accumulator (CMA, RLC, STC)."
+   },
+   "points": [
+    {
+     "en": "Immediate: MVI, ADI"
+    },
+    {
+     "en": "Register: MOV A, B"
+    },
+    {
+     "en": "Direct: LDA, STA"
+    },
+    {
+     "en": "Register indirect: MOV A, M; LDAX B"
+    },
+    {
+     "en": "Implied: CMA, RLC"
+    }
+   ],
+   "narration": {
+    "en": "There are five addressing modes: immediate, register, direct, register indirect and implied. In register indirect, the H L pair points to the memory location M.",
+    "kn": "ಐದು ವಿಳಾಸ ವಿಧಾನಗಳು: ತತ್‌ಕ್ಷಣ (ಇಮ್ಮೀಡಿಯಟ್), ರಿಜಿಸ್ಟರ್, ನೇರ, ರಿಜಿಸ್ಟರ್ ಪರೋಕ್ಷ ಮತ್ತು ಸೂಚ್ಯ (ಇಂಪ್ಲೈಡ್). ರಿಜಿಸ್ಟರ್ ಪರೋಕ್ಷದಲ್ಲಿ HL ಜೋಡಿ ಸ್ಮರಣ ಸ್ಥಾನ M ಅನ್ನು ತೋರಿಸುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "sim-sim.numbers",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "sim.numbers",
+   "caption": {
+    "en": "Machine code and data are written in hexadecimal. Convert between hex and binary to check flags such as parity and sign."
+   },
+   "tryThis": [
+    {
+     "en": "Convert 23H to binary and count its 1s. Is the parity flag set?"
+    },
+    {
+     "en": "Convert 9AH and 89H to decimal and check that their sum is 291 = 123H."
+    }
+   ],
+   "narration": {
+    "en": "Use the converter to move between hexadecimal and binary, which is how we check the flags by hand."
+   },
+   "seconds": 120,
+   "optional": true
+  },
+  {
+   "kind": "readouts",
+   "caption": {
+    "en": "ADD B in the 8085: choose the accumulator and B (0–255) and read the 8-bit result and the flags."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Accumulator A (decimal)"
+     },
+     "min": 0,
+     "max": 255,
+     "step": 1,
+     "value": 154
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "Register B (decimal)"
+     },
+     "min": 0,
+     "max": 255,
+     "step": 1,
+     "value": 137
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Result in A (decimal)"
+     },
+     "expr": "a + b - 256*floor((a + b)/256)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Carry flag CY"
+     },
+     "expr": "floor((a + b)/256)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Zero flag Z"
+     },
+     "expr": "1 - floor((a + b - 256*floor((a + b)/256) + 255)/256)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Sign flag S"
+     },
+     "expr": "floor((a + b - 256*floor((a + b)/256))/128)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "The defaults are 9AH (154) and 89H (137). Check A = 23H = 35 and CY = 1."
+    },
+    {
+     "en": "Find values that make A = 0 with CY = 1. Which flags are set?"
+    },
+    {
+     "en": "When is the sign flag 1? Look at the result range."
+    }
+   ],
+   "id": "int1",
+   "type": "interactive",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "ADD B in the 8085: choose the accumulator and B (0–255) and read the 8-bit result and the flags."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Give the addressing mode and the size in bytes of: (a) MVI A, 32H (b) MOV A, M (c) LDA 2050H (d) CMA."
+   },
+   "steps": [
+    {
+     "en": "(a) Data in the instruction: immediate, 2 bytes."
+    },
+    {
+     "en": "(b) HL holds the address: register indirect, 1 byte."
+    },
+    {
+     "en": "(c) 16-bit address given: direct, 3 bytes."
+    },
+    {
+     "en": "(d) Operand (A) understood: implied, 1 byte."
+    }
+   ],
+   "answer": {
+    "en": "Immediate 2; register indirect 1; direct 3; implied 1"
+   },
+   "narration": {
+    "en": "Let us work this out together. Give the addressing mode and the size in bytes of: (a) MVI A, 32H (b) MOV A, M (c) LDA 2050H (d) CMA."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "The program MVI A, 9AH; MVI B, 89H; ADD B is executed. Find A and the flags."
+   },
+   "steps": [
+    {
+     "en": "9AH + 89H = 123H: A = 23H, CY = 1."
+    },
+    {
+     "en": "Lower nibbles: AH + 9H = 13H > FH, so AC = 1."
+    },
+    {
+     "en": "23H = 0010 0011: D7 = 0 → S = 0; not zero → Z = 0."
+    },
+    {
+     "en": "Three 1s (odd) → P = 0."
+    }
+   ],
+   "answer": {
+    "en": "A = 23H; CY = 1, AC = 1, S = 0, Z = 0, P = 0"
+   },
+   "narration": {
+    "en": "Let us work this out together. The program MVI A, 9AH; MVI B, 89H; ADD B is executed. Find A and the flags."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n10-q11",
+    "2n10-q12",
+    "2n10-q13"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Discuss in your team and agree on one answer.",
+    "kn": "ತಂಡ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ತಂಡದಲ್ಲಿ ಚರ್ಚಿಸಿ ಒಂದು ಉತ್ತರವನ್ನು ಒಪ್ಪಿಕೊಳ್ಳಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n10-q14",
+    "2n10-q15"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the II PUC board exam pattern. Try them on your own first."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC board exam practice"
+   },
+   "questionIds": [
+    "2n10-q26",
+    "2n10-q27"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Three more board-exam practice questions that bring the chapter together."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Instructions are 1, 2 or 3 bytes; 16-bit operands are stored low byte first.",
+     "kn": "ಸೂಚನೆಗಳು 1, 2 ಅಥವಾ 3 ಬೈಟ್; 16-ಬಿಟ್ ಆಪರೆಂಡ್ ಕಡಿಮೆ ಬೈಟ್ ಮೊದಲು ಸಂಗ್ರಹವಾಗುತ್ತದೆ."
+    },
+    {
+     "en": "Five groups: data transfer, arithmetic, logical, branching, machine control.",
+     "kn": "ಐದು ಗುಂಪುಗಳು: ದತ್ತಾಂಶ ವರ್ಗಾವಣೆ, ಅಂಕಗಣಿತ, ತಾರ್ಕಿಕ, ಶಾಖಾ, ಯಂತ್ರ ನಿಯಂತ್ರಣ."
+    },
+    {
+     "en": "Five addressing modes: immediate, register, direct, register indirect, implied.",
+     "kn": "ಐದು ವಿಳಾಸ ವಿಧಾನಗಳು: ತತ್‌ಕ್ಷಣ, ರಿಜಿಸ್ಟರ್, ನೇರ, ರಿಜಿಸ್ಟರ್ ಪರೋಕ್ಷ, ಸೂಚ್ಯ."
+    },
+    {
+     "en": "M is the memory location whose address is in HL.",
+     "kn": "M ಎಂದರೆ HL ನಲ್ಲಿರುವ ವಿಳಾಸದ ಸ್ಮರಣ ಸ್ಥಾನ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Give two examples of each addressing mode of the 8085."
+    },
+    {
+     "en": "Classify ten instructions of your choice into the five groups."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n10-q15"
+   ],
+   "narration": {
+    "en": "Recap. Instructions are 1, 2 or 3 bytes; 16-bit operands are stored low byte first. Five groups: data transfer, arithmetic, logical, branching, machine control. Five addressing modes: immediate, register, direct, register indirect, implied. M is the memory location whose address is in HL.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಸೂಚನೆಗಳು 1, 2 ಅಥವಾ 3 ಬೈಟ್; 16-ಬಿಟ್ ಆಪರೆಂಡ್ ಕಡಿಮೆ ಬೈಟ್ ಮೊದಲು ಸಂಗ್ರಹವಾಗುತ್ತದೆ. ಐದು ಗುಂಪುಗಳು: ದತ್ತಾಂಶ ವರ್ಗಾವಣೆ, ಅಂಕಗಣಿತ, ತಾರ್ಕಿಕ, ಶಾಖಾ, ಯಂತ್ರ ನಿಯಂತ್ರಣ. ಐದು ವಿಳಾಸ ವಿಧಾನಗಳು: ತತ್‌ಕ್ಷಣ, ರಿಜಿಸ್ಟರ್, ನೇರ, ರಿಜಿಸ್ಟರ್ ಪರೋಕ್ಷ, ಸೂಚ್ಯ. M ಎಂದರೆ HL ನಲ್ಲಿರುವ ವಿಳಾಸದ ಸ್ಮರಣ ಸ್ಥಾನ."
+   }
+  }
+ ]
+}

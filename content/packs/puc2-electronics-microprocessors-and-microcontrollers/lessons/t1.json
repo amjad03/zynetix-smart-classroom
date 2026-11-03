@@ -1,0 +1,968 @@
+{
+ "id": "puc2-electronics-10-microprocessors-and-microcontrollers.t1.lesson",
+ "chapterId": "puc2-electronics-10-microprocessors-and-microcontrollers",
+ "topicId": "puc2-electronics-10-microprocessors-and-microcontrollers.t1",
+ "title": {
+  "en": "Microprocessor basics and 8085 architecture",
+  "kn": "ಮೈಕ್ರೋಪ್ರೊಸೆಸರ್ ಮೂಲಗಳು ಮತ್ತು 8085 ರಚನೆ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "A whole CPU on one chip",
+    "kn": "ಒಂದೇ ಚಿಪ್‌ನಲ್ಲಿ ಸಂಪೂರ್ಣ CPU"
+   },
+   "hook": {
+    "en": "The first electronic computers filled whole rooms. In the 1970s the entire processing unit shrank onto one fingernail-sized chip: the microprocessor. The Intel 8085 is the one we study.",
+    "kn": "ಮೊದಲ ಎಲೆಕ್ಟ್ರಾನಿಕ್ ಕಂಪ್ಯೂಟರ್‌ಗಳು ಇಡೀ ಕೋಣೆಗಳನ್ನು ತುಂಬುತ್ತಿದ್ದವು. 1970 ರ ದಶಕದಲ್ಲಿ ಇಡೀ ಸಂಸ್ಕರಣಾ ಘಟಕ ಉಗುರಿನಷ್ಟು ಚಿಕ್ಕ ಚಿಪ್‌ಗೆ ಇಳಿಯಿತು: ಅದೇ ಮೈಕ್ರೋಪ್ರೊಸೆಸರ್. ನಾವು ಇಂಟೆಲ್ 8085 ಅನ್ನು ಅಧ್ಯಯನ ಮಾಡುತ್ತೇವೆ."
+   },
+   "objectives": [
+    {
+     "en": "Define microprocessor and microcomputer and the three buses"
+    },
+    {
+     "en": "Describe the functional blocks of the 8085"
+    },
+    {
+     "en": "State the registers and the five flags of the 8085"
+    }
+   ],
+   "narration": {
+    "en": "The first electronic computers filled whole rooms. In the 1970s the entire processing unit shrank onto one fingernail-sized chip: the microprocessor. The Intel 8085 is the one we study.",
+    "kn": "ಮೊದಲ ಎಲೆಕ್ಟ್ರಾನಿಕ್ ಕಂಪ್ಯೂಟರ್‌ಗಳು ಇಡೀ ಕೋಣೆಗಳನ್ನು ತುಂಬುತ್ತಿದ್ದವು. 1970 ರ ದಶಕದಲ್ಲಿ ಇಡೀ ಸಂಸ್ಕರಣಾ ಘಟಕ ಉಗುರಿನಷ್ಟು ಚಿಕ್ಕ ಚಿಪ್‌ಗೆ ಇಳಿಯಿತು: ಅದೇ ಮೈಕ್ರೋಪ್ರೊಸೆಸರ್. ನಾವು ಇಂಟೆಲ್ 8085 ಅನ್ನು ಅಧ್ಯಯನ ಮಾಡುತ್ತೇವೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Microprocessor, microcomputer and buses"
+   },
+   "body": {
+    "en": "A microprocessor is a programmable, clock-driven integrated circuit that contains the central processing unit (ALU, registers, control) on a single chip. Together with memory (ROM, RAM) and input/output devices it forms a microcomputer. The parts are connected by three buses: the address bus (unidirectional, from the microprocessor, selects a memory location or I/O port), the data bus (bidirectional, carries data) and the control bus (read, write and other timing signals). The 8085 is an 8-bit microprocessor: its data bus and ALU handle 8 bits, and its 16-bit address bus addresses $2^{16}$ = 65 536 locations (64 KB)."
+   },
+   "points": [
+    {
+     "en": "Microprocessor = CPU on one chip"
+    },
+    {
+     "en": "Microcomputer = microprocessor + memory + I/O"
+    },
+    {
+     "en": "Address bus: unidirectional; data bus: bidirectional"
+    },
+    {
+     "en": "8085: 8-bit data, 16-bit address → 64 KB"
+    }
+   ],
+   "narration": {
+    "en": "A microprocessor is a CPU on a single chip. With memory and input-output it becomes a microcomputer, joined by the address, data and control buses. The 8085 has an 8-bit data bus and a 16-bit address bus.",
+    "kn": "ಮೈಕ್ರೋಪ್ರೊಸೆಸರ್ ಒಂದೇ ಚಿಪ್‌ನಲ್ಲಿರುವ CPU. ಸ್ಮರಣೆ ಮತ್ತು I/O ಸೇರಿದರೆ ಮೈಕ್ರೋಕಂಪ್ಯೂಟರ್. 8085 ಗೆ 8-ಬಿಟ್ ದತ್ತಾಂಶ ಬಸ್ ಮತ್ತು 16-ಬಿಟ್ ವಿಳಾಸ ಬಸ್."
+   },
+   "formula": "\\text{Memory locations} = 2^{n}, \\quad 2^{16} = 65\\,536 = 64\\ \\text{KB}"
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Inside the 8085"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Draw the internal bus first. Every block hangs from it: accumulator, flags, ALU and the register array."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        4,
+        8
+       ],
+       "to": [
+        96,
+        8
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        30,
+        2
+       ],
+       "text": {
+        "en": "8-bit internal data bus"
+       },
+       "size": 3.0,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        13
+       ],
+       "to": [
+        28,
+        21
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        2.9,
+        14.9
+       ],
+       "text": {
+        "en": "Accumulator A"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        24
+       ],
+       "to": [
+        28,
+        32
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        2.9,
+        25.9
+       ],
+       "text": {
+        "en": "Flag register"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        32,
+        13
+       ],
+       "to": [
+        48,
+        32
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        36.7,
+        20.2
+       ],
+       "text": {
+        "en": "ALU"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        52,
+        13
+       ],
+       "to": [
+        96,
+        32
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55,
+        15
+       ],
+       "text": {
+        "en": "B C   D E   H L"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55,
+        21
+       ],
+       "text": {
+        "en": "SP (16-bit)"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55,
+        26.5
+       ],
+       "text": {
+        "en": "PC (16-bit)"
+       },
+       "size": 3.0,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The instruction register and decoder tell the timing and control unit what to do. Externally the 8085 has a 16-bit address bus and an 8-bit data bus."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        40
+       ],
+       "to": [
+        46,
+        49
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        0.4,
+        42.8
+       ],
+       "text": {
+        "en": "Instruction register + decoder"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        52,
+        40
+       ],
+       "to": [
+        96,
+        49
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        53.7,
+        42.7
+       ],
+       "text": {
+        "en": "Timing and control unit"
+       },
+       "size": 2.8,
+       "color": "green"
+      },
+      {
+       "kind": "line",
+       "from": [
+        16,
+        8
+       ],
+       "to": [
+        16,
+        13
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        40,
+        8
+       ],
+       "to": [
+        40,
+        13
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        74,
+        8
+       ],
+       "to": [
+        74,
+        13
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        25,
+        8
+       ],
+       "to": [
+        25,
+        40
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        28,
+        28
+       ],
+       "to": [
+        32,
+        28
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        53
+       ],
+       "text": {
+        "en": "Address bus 16-bit, data bus 8-bit"
+       },
+       "size": 3.2,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Now the flag register: eight bits, but only five are used. Learn their positions."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        10,
+        10
+       ],
+       "to": [
+        20,
+        18
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        13.992,
+        12
+       ],
+       "text": {
+        "en": "S"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        12.5,
+        4.5
+       ],
+       "text": {
+        "en": "D7"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        20,
+        10
+       ],
+       "to": [
+        30,
+        18
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        23.992,
+        12
+       ],
+       "text": {
+        "en": "Z"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        22.5,
+        4.5
+       ],
+       "text": {
+        "en": "D6"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        30,
+        10
+       ],
+       "to": [
+        40,
+        18
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        33.992,
+        12
+       ],
+       "text": {
+        "en": "–"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        32.5,
+        4.5
+       ],
+       "text": {
+        "en": "D5"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        40,
+        10
+       ],
+       "to": [
+        50,
+        18
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        42.984,
+        12
+       ],
+       "text": {
+        "en": "AC"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        42.5,
+        4.5
+       ],
+       "text": {
+        "en": "D4"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        50,
+        10
+       ],
+       "to": [
+        60,
+        18
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        53.992,
+        12
+       ],
+       "text": {
+        "en": "–"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52.5,
+        4.5
+       ],
+       "text": {
+        "en": "D3"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        60,
+        10
+       ],
+       "to": [
+        70,
+        18
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        63.992,
+        12
+       ],
+       "text": {
+        "en": "P"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        62.5,
+        4.5
+       ],
+       "text": {
+        "en": "D2"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        70,
+        10
+       ],
+       "to": [
+        80,
+        18
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        73.992,
+        12
+       ],
+       "text": {
+        "en": "–"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        72.5,
+        4.5
+       ],
+       "text": {
+        "en": "D1"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        80,
+        10
+       ],
+       "to": [
+        90,
+        18
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        82.984,
+        12
+       ],
+       "text": {
+        "en": "CY"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        82.5,
+        4.5
+       ],
+       "text": {
+        "en": "D0"
+       },
+       "size": 2.6,
+       "color": "white"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "Each flag is set by the result of the last arithmetic or logical operation."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        10,
+        22
+       ],
+       "text": {
+        "en": "S = 1: result negative (D7 = 1)"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10,
+        28
+       ],
+       "text": {
+        "en": "Z = 1: result is zero"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10,
+        34
+       ],
+       "text": {
+        "en": "AC = 1: carry from bit 3 to 4"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10,
+        40
+       ],
+       "text": {
+        "en": "P = 1: even number of 1s"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10,
+        46
+       ],
+       "text": {
+        "en": "CY = 1: carry out of D7"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        10,
+        53
+       ],
+       "tex": "2^{16} = 65\\,536 = 64\\ \\text{KB memory}",
+       "size": 3.2,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: Inside the 8085."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Architecture of the 8085"
+   },
+   "body": {
+    "en": "The 8085 contains: an ALU with the accumulator (A), a temporary register and the flag register; six 8-bit general-purpose registers B, C, D, E, H, L that can be paired as BC, DE and HL; two 16-bit registers, the stack pointer (SP) and the program counter (PC, which holds the address of the next instruction); the instruction register and decoder; the timing and control unit; interrupt control; serial I/O control; and address and address/data buffers. The flag register has five flags: Sign (S, D7), Zero (Z, D6), Auxiliary carry (AC, D4), Parity (P, D2) and Carry (CY, D0)."
+   },
+   "points": [
+    {
+     "en": "Accumulator A: one operand and the result of ALU operations"
+    },
+    {
+     "en": "B, C, D, E, H, L → pairs BC, DE, HL"
+    },
+    {
+     "en": "PC: next instruction address; SP: top of stack"
+    },
+    {
+     "en": "Flags: S, Z, AC, P, CY"
+    }
+   ],
+   "narration": {
+    "en": "Inside the 8085 are the ALU with the accumulator and flags, six general registers that pair up as B C, D E and H L, the sixteen-bit program counter and stack pointer, and the timing and control unit.",
+    "kn": "8085 ಒಳಗೆ ಅಕ್ಯುಮ್ಯುಲೇಟರ್ ಮತ್ತು ಫ್ಲ್ಯಾಗ್‌ಗಳಿರುವ ALU, BC, DE, HL ಜೋಡಿಗಳಾಗುವ ಆರು ರಿಜಿಸ್ಟರ್‌ಗಳು, 16-ಬಿಟ್ PC ಮತ್ತು SP, ಹಾಗೂ ಸಮಯ ಮತ್ತು ನಿಯಂತ್ರಣ ಘಟಕ ಇವೆ."
+   }
+  },
+  {
+   "kind": "readouts",
+   "caption": {
+    "en": "Bus widths decide the size of the memory and of the numbers a processor handles."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Address lines n"
+     },
+     "min": 8,
+     "max": 20,
+     "step": 1,
+     "value": 16
+    },
+    {
+     "name": "w",
+     "label": {
+      "en": "Data bus width"
+     },
+     "min": 4,
+     "max": 32,
+     "step": 4,
+     "value": 8,
+     "unit": "bits"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Memory locations 2ⁿ"
+     },
+     "expr": "2^n",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Memory size"
+     },
+     "expr": "2^n/1024",
+     "unit": "KB",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Largest unsigned number on the data bus"
+     },
+     "expr": "2^w - 1",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set n = 16. Do you get the 64 KB of the 8085?"
+    },
+    {
+     "en": "How many address lines are needed for 1 MB (1024 KB)?"
+    },
+    {
+     "en": "What is the largest number an 8-bit data bus can carry?"
+    }
+   ],
+   "id": "int1",
+   "type": "interactive",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "Bus widths decide the size of the memory and of the numbers a processor handles."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Flags in order: S Z AC P CY"
+   },
+   "body": {
+    "en": "From D7 down: Sign (D7), Zero (D6), Auxiliary carry (D4), Parity (D2), Carry (D0). The used bits are 7, 6, 4, 2, 0."
+   },
+   "narration": {
+    "en": "Flags in order: S Z AC P CY. From D7 down: Sign (D7), Zero (D6), Auxiliary carry (D4), Parity (D2), Carry (D0). The used bits are 7, 6, 4, 2, 0."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Some Zebras Always Play Cricket (7-6-4-2-0)"
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "How many memory locations can the 8085 address, and what is the address range in hexadecimal?"
+   },
+   "steps": [
+    {
+     "en": "The address bus has 16 lines."
+    },
+    {
+     "en": "Locations = 2¹⁶ = 65 536 = 64 KB."
+    },
+    {
+     "en": "Addresses run from 0000H to FFFFH."
+    }
+   ],
+   "answer": {
+    "en": "65 536 locations (64 KB), 0000H to FFFFH"
+   },
+   "narration": {
+    "en": "Let us work this out together. How many memory locations can the 8085 address, and what is the address range in hexadecimal?"
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "The 8085 adds 80H and 80H. Find the result in the accumulator and the S, Z, AC, P and CY flags."
+   },
+   "steps": [
+    {
+     "en": "80H + 80H = 100H; the accumulator keeps 8 bits: 00H, and the ninth bit goes to CY = 1."
+    },
+    {
+     "en": "Result 00H: Z = 1, S = 0 (D7 = 0)."
+    },
+    {
+     "en": "Lower nibbles 0 + 0 give no carry from bit 3: AC = 0."
+    },
+    {
+     "en": "00H has zero 1s, an even number: P = 1."
+    }
+   ],
+   "answer": {
+    "en": "A = 00H; S = 0, Z = 1, AC = 0, P = 1, CY = 1"
+   },
+   "narration": {
+    "en": "Let us work this out together. The 8085 adds 80H and 80H. Find the result in the accumulator and the S, Z, AC, P and CY flags."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n10-q01",
+    "2n10-q02",
+    "2n10-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Monitor quiz. The class monitor enters the answer the class agrees on.",
+    "kn": "ಮಾನಿಟರ್ ರಸಪ್ರಶ್ನೆ. ತರಗತಿ ಒಪ್ಪಿದ ಉತ್ತರವನ್ನು ಮಾನಿಟರ್ ನಮೂದಿಸುತ್ತಾರೆ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n10-q04",
+    "2n10-q05"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the II PUC board exam pattern. Try them on your own first."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A microprocessor is a CPU on a single chip.",
+     "kn": "ಮೈಕ್ರೋಪ್ರೊಸೆಸರ್ ಒಂದೇ ಚಿಪ್‌ನಲ್ಲಿರುವ CPU."
+    },
+    {
+     "en": "8085: 8-bit data bus, 16-bit address bus, 64 KB memory.",
+     "kn": "8085: 8-ಬಿಟ್ ದತ್ತಾಂಶ ಬಸ್, 16-ಬಿಟ್ ವಿಳಾಸ ಬಸ್, 64 KB ಸ್ಮರಣೆ."
+    },
+    {
+     "en": "Registers: A, B, C, D, E, H, L, and 16-bit PC and SP.",
+     "kn": "ರಿಜಿಸ್ಟರ್‌ಗಳು: A, B, C, D, E, H, L ಮತ್ತು 16-ಬಿಟ್ PC, SP."
+    },
+    {
+     "en": "Five flags: S, Z, AC, P, CY.",
+     "kn": "ಐದು ಫ್ಲ್ಯಾಗ್‌ಗಳು: S, Z, AC, P, CY."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Draw the block diagram of the 8085 microprocessor and explain the function of each block."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n10-q05"
+   ],
+   "narration": {
+    "en": "Recap. A microprocessor is a CPU on a single chip. 8085: 8-bit data bus, 16-bit address bus, 64 KB memory. Registers: A, B, C, D, E, H, L, and 16-bit PC and SP. Five flags: S, Z, AC, P, CY.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಮೈಕ್ರೋಪ್ರೊಸೆಸರ್ ಒಂದೇ ಚಿಪ್‌ನಲ್ಲಿರುವ CPU. 8085: 8-ಬಿಟ್ ದತ್ತಾಂಶ ಬಸ್, 16-ಬಿಟ್ ವಿಳಾಸ ಬಸ್, 64 KB ಸ್ಮರಣೆ. ರಿಜಿಸ್ಟರ್‌ಗಳು: A, B, C, D, E, H, L ಮತ್ತು 16-ಬಿಟ್ PC, SP. ಐದು ಫ್ಲ್ಯಾಗ್‌ಗಳು: S, Z, AC, P, CY."
+   }
+  }
+ ]
+}

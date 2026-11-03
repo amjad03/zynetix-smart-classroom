@@ -1,0 +1,696 @@
+{
+ "id": "puc2-electronics-10-microprocessors-and-microcontrollers.t4.lesson",
+ "chapterId": "puc2-electronics-10-microprocessors-and-microcontrollers",
+ "topicId": "puc2-electronics-10-microprocessors-and-microcontrollers.t4",
+ "title": {
+  "en": "Simple 8085 assembly language programs",
+  "kn": "ಸರಳ 8085 ಅಸೆಂಬ್ಲಿ ಭಾಷಾ ಪ್ರೋಗ್ರಾಂಗಳು"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Telling the chip what to do",
+    "kn": "ಚಿಪ್‌ಗೆ ಏನು ಮಾಡಬೇಕೆಂದು ಹೇಳುವುದು"
+   },
+   "hook": {
+    "en": "A program is a recipe: fetch this, add that, store the answer, stop. Today we write real 8085 programs, trace them byte by byte and even make the processor wait for an exact time.",
+    "kn": "ಪ್ರೋಗ್ರಾಂ ಒಂದು ಅಡುಗೆ ವಿಧಾನ: ಇದನ್ನು ತೆಗೆದುಕೊ, ಅದನ್ನು ಕೂಡಿಸು, ಉತ್ತರ ಸಂಗ್ರಹಿಸು, ನಿಲ್ಲಿಸು. ಇಂದು ನಿಜವಾದ 8085 ಪ್ರೋಗ್ರಾಂಗಳನ್ನು ಬರೆದು, ಬೈಟ್‌ನಿಂದ ಬೈಟ್ ಅನುಸರಿಸಿ, ನಿಖರ ಸಮಯ ಕಾಯಿಸುವುದನ್ನೂ ಕಲಿಯೋಣ."
+   },
+   "objectives": [
+    {
+     "en": "Write programs to add and subtract 8-bit numbers stored in memory"
+    },
+    {
+     "en": "Handle the carry with conditional jumps"
+    },
+    {
+     "en": "Calculate the delay produced by a counter loop"
+    }
+   ],
+   "narration": {
+    "en": "A program is a recipe: fetch this, add that, store the answer, stop. Today we write real 8085 programs, trace them byte by byte and even make the processor wait for an exact time.",
+    "kn": "ಪ್ರೋಗ್ರಾಂ ಒಂದು ಅಡುಗೆ ವಿಧಾನ: ಇದನ್ನು ತೆಗೆದುಕೊ, ಅದನ್ನು ಕೂಡಿಸು, ಉತ್ತರ ಸಂಗ್ರಹಿಸು, ನಿಲ್ಲಿಸು. ಇಂದು ನಿಜವಾದ 8085 ಪ್ರೋಗ್ರಾಂಗಳನ್ನು ಬರೆದು, ಬೈಟ್‌ನಿಂದ ಬೈಟ್ ಅನುಸರಿಸಿ, ನಿಖರ ಸಮಯ ಕಾಯಿಸುವುದನ್ನೂ ಕಲಿಯೋಣ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Writing an 8085 program"
+   },
+   "body": {
+    "en": "Steps: state the problem, draw a flowchart, write the mnemonics, then hand-assemble them into hexadecimal opcodes at chosen memory addresses. Example: add two 8-bit numbers at 2050H and 2051H and store the sum at 2052H: LXI H, 2050H; MOV A, M; INX H; ADD M; STA 2052H; HLT. To keep the carry, clear a register (MVI C, 00H) before the addition and use JNC to skip INR C when there is no carry. Subtraction uses SUB M in the same way; the carry flag then shows a borrow."
+   },
+   "points": [
+    {
+     "en": "Problem → flowchart → mnemonics → hex codes"
+    },
+    {
+     "en": "LXI H loads a 16-bit address into HL"
+    },
+    {
+     "en": "JNC / JC test the carry flag"
+    },
+    {
+     "en": "HLT ends the program"
+    }
+   ],
+   "narration": {
+    "en": "To add two numbers in memory, point H L at the first, move it to A, step H L to the next and add M, then store the sum and halt.",
+    "kn": "ಸ್ಮರಣೆಯಲ್ಲಿರುವ ಎರಡು ಸಂಖ್ಯೆಗಳನ್ನು ಕೂಡಿಸಲು HL ಅನ್ನು ಮೊದಲನೆಯದಕ್ಕೆ ತೋರಿಸಿ, ಅದನ್ನು A ಗೆ ತಂದು, HL ಅನ್ನು ಮುಂದಕ್ಕೆ ಸರಿಸಿ M ಕೂಡಿಸಿ, ಮೊತ್ತವನ್ನು ಸಂಗ್ರಹಿಸಿ ನಿಲ್ಲಿಸಿ."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Adding two numbers, and a delay loop"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "First the flowchart: point to the data, load, add, store, stop."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        2
+       ],
+       "to": [
+        34,
+        9
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14.6,
+        3.7
+       ],
+       "text": {
+        "en": "Start"
+       },
+       "size": 2.8,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        19,
+        9
+       ],
+       "to": [
+        19,
+        12
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        12
+       ],
+       "to": [
+        34,
+        19
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10.2,
+        13.7
+       ],
+       "text": {
+        "en": "HL ← 2050H"
+       },
+       "size": 2.8,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        19,
+        19
+       ],
+       "to": [
+        19,
+        22
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        22
+       ],
+       "to": [
+        34,
+        29
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        7.5,
+        23.7
+       ],
+       "text": {
+        "en": "A ← M; HL + 1"
+       },
+       "size": 2.8,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        19,
+        29
+       ],
+       "to": [
+        19,
+        32
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        32
+       ],
+       "to": [
+        34,
+        39
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        11.1,
+        33.7
+       ],
+       "text": {
+        "en": "A ← A + M"
+       },
+       "size": 2.8,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        19,
+        39
+       ],
+       "to": [
+        19,
+        42
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        42
+       ],
+       "to": [
+        34,
+        49
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        7.5,
+        43.7
+       ],
+       "text": {
+        "en": "Store A; Stop"
+       },
+       "size": 2.8,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Now the program, one instruction per line, with a comment for each."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        40,
+        2
+       ],
+       "text": {
+        "en": "LXI H, 2050H  ; HL → 1st no."
+       },
+       "size": 2.8,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        40,
+        8
+       ],
+       "text": {
+        "en": "MOV A, M      ; A = 1st no."
+       },
+       "size": 2.8,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        40,
+        14
+       ],
+       "text": {
+        "en": "INX H         ; HL = 2051H"
+       },
+       "size": 2.8,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        40,
+        20
+       ],
+       "text": {
+        "en": "ADD M         ; A = A + 2nd"
+       },
+       "size": 2.8,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        40,
+        26
+       ],
+       "text": {
+        "en": "STA 2052H     ; store sum"
+       },
+       "size": 2.8,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        40,
+        32
+       ],
+       "text": {
+        "en": "HLT           ; stop"
+       },
+       "size": 2.8,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Trace it with data 25H and 34H. The sum 59H is stored at 2052H."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        40,
+        40
+       ],
+       "text": {
+        "en": "Data: 2050H = 25H, 2051H = 34H"
+       },
+       "size": 2.8,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        40,
+        46
+       ],
+       "text": {
+        "en": "Result: 2052H = 59H"
+       },
+       "size": 3.2,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A delay loop. MVI runs once, DCR runs N times, and JNZ jumps N minus one times and falls through once. Add up the T-states."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        3
+       ],
+       "text": {
+        "en": "Delay loop"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        10
+       ],
+       "text": {
+        "en": "      MVI C, N    7 T (once)"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        16
+       ],
+       "text": {
+        "en": "LOOP: DCR C      4 T (N times)"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        22
+       ],
+       "text": {
+        "en": "      JNZ LOOP   10 T / 7 T"
+       },
+       "size": 3.0,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        30
+       ],
+       "tex": "T = 7 + 4N + 10(N-1) + 7 = 14N + 4",
+       "size": 3.2,
+       "color": "green"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        38
+       ],
+       "tex": "N = 255:\\ 14(255)+4 = 3574\\ T",
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        46
+       ],
+       "tex": "3574 \\times 0.333\\ \\mu s \\approx 1.19\\ ms",
+       "size": 3.2,
+       "color": "green"
+      }
+     ],
+     "clear": true
+    }
+   ],
+   "narration": {
+    "en": "On the board: Adding two numbers, and a delay loop."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Loops and time delays"
+   },
+   "body": {
+    "en": "A loop repeats instructions using a counter register and a conditional jump. A delay loop wastes a known time: MVI C, N (7 T-states); LOOP: DCR C (4 T); JNZ LOOP (10 T when it jumps, 7 T when it does not). The total is $T = 7 + 4N + 10(N - 1) + 7 = 14N + 4$ T-states, and the delay is this number multiplied by the T-state time. With N = FFH = 255 at 3 MHz, 3574 × 0.333 µs ≈ 1.19 ms."
+   },
+   "points": [
+    {
+     "en": "DCR C sets Z = 1 when C reaches 0"
+    },
+    {
+     "en": "JNZ: 10 T if it jumps, 7 T if not"
+    },
+    {
+     "en": "Delay = (14N + 4) × T"
+    }
+   ],
+   "narration": {
+    "en": "A delay loop counts a register down to zero. Each pass costs fourteen T-states, so the delay is fourteen N plus four T-states times the clock period.",
+    "kn": "ವಿಳಂಬ ಲೂಪ್ ಒಂದು ರಿಜಿಸ್ಟರ್ ಅನ್ನು ಶೂನ್ಯದವರೆಗೆ ಇಳಿಸುತ್ತದೆ. ಪ್ರತಿ ಸುತ್ತಿಗೆ 14 T-ಸ್ಥಿತಿಗಳು; ಒಟ್ಟು ವಿಳಂಬ (14N + 4) × ಕ್ಲಾಕ್ ಅವಧಿ."
+   },
+   "formula": "T_{delay} = (14N + 4)\\times\\frac{1}{f}"
+  },
+  {
+   "kind": "function_plot",
+   "caption": {
+    "en": "Delay of the loop MVI C, N / DCR C / JNZ against the count N, for an 8085 operating frequency f."
+   },
+   "sliders": [
+    {
+     "name": "f",
+     "label": {
+      "en": "Operating frequency"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 0.5,
+     "value": 3,
+     "unit": "MHz"
+    },
+    {
+     "name": "N",
+     "label": {
+      "en": "Count N"
+     },
+     "min": 1,
+     "max": 255,
+     "step": 1,
+     "value": 255
+    }
+   ],
+   "fns": [
+    {
+     "fn": "(14*x + 4)/(f*1000)",
+     "label": "delay (ms)",
+     "color": "yellow"
+    }
+   ],
+   "x": [
+    1,
+    255
+   ],
+   "y": [
+    0,
+    4
+   ],
+   "xLabel": "count N",
+   "yLabel": "delay (ms)",
+   "readouts": [
+    {
+     "label": {
+      "en": "T-states 14N + 4"
+     },
+     "expr": "14*N + 4",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Delay"
+     },
+     "expr": "(14*N + 4)/f",
+     "unit": "µs",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At 3 MHz, which N gives a delay of about 0.5 ms?"
+    },
+    {
+     "en": "Halve the frequency. What happens to the delay for the same N?"
+    },
+    {
+     "en": "What is the longest delay one 8-bit counter can give at 3 MHz?"
+    }
+   ],
+   "id": "int1",
+   "type": "interactive",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "Delay of the loop MVI C, N / DCR C / JNZ against the count N, for an 8085 operating frequency f."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Write a program to add the numbers at 2050H and 2051H, store the sum at 2052H and the carry at 2053H. Trace it for 9AH and 89H."
+   },
+   "steps": [
+    {
+     "en": "LDA 2050H; MOV B, A; LDA 2051H; MVI C, 00H"
+    },
+    {
+     "en": "ADD B; JNC SKIP; INR C"
+    },
+    {
+     "en": "SKIP: STA 2052H; MOV A, C; STA 2053H; HLT"
+    },
+    {
+     "en": "Trace: 9AH + 89H = 123H → 2052H = 23H; CY = 1 so C = 01H → 2053H = 01H."
+    }
+   ],
+   "answer": {
+    "en": "2052H = 23H, 2053H = 01H"
+   },
+   "narration": {
+    "en": "Let us work this out together. Write a program to add the numbers at 2050H and 2051H, store the sum at 2052H and the carry at 2053H. Trace it for 9AH and 89H."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "A delay loop uses MVI C, 64H (N = 100) with DCR C and JNZ at an operating frequency of 3 MHz. Find the delay."
+   },
+   "steps": [
+    {
+     "en": "T-states = 14N + 4 = 14 × 100 + 4 = 1404."
+    },
+    {
+     "en": "T-state time = 1/3 MHz ≈ 0.333 µs."
+    },
+    {
+     "en": "Delay = 1404 / 3 µs = 468 µs."
+    }
+   ],
+   "answer": {
+    "en": "468 µs"
+   },
+   "narration": {
+    "en": "Let us work this out together. A delay loop uses MVI C, 64H (N = 100) with DCR C and JNZ at an operating frequency of 3 MHz. Find the delay."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n10-q16",
+    "2n10-q17",
+    "2n10-q18"
+   ],
+   "mode": "roll_call",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Roll-call quiz. When your roll number is called, give your answer.",
+    "kn": "ಹಾಜರಾತಿ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ಹಾಜರಾತಿ ಸಂಖ್ಯೆ ಕರೆದಾಗ ನಿಮ್ಮ ಉತ್ತರ ಹೇಳಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n10-q19",
+    "2n10-q20"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the II PUC board exam pattern. Try them on your own first."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC board exam practice"
+   },
+   "questionIds": [
+    "2n10-q28"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Three more board-exam practice questions that bring the chapter together."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Plan a program with a flowchart, then write mnemonics and hex codes.",
+     "kn": "ಪ್ರೋಗ್ರಾಂ ಅನ್ನು ಹರಿವು ಚಿತ್ರದಿಂದ ಯೋಜಿಸಿ, ನಂತರ ನೆಮೋನಿಕ್ ಮತ್ತು ಹೆಕ್ಸ್ ಸಂಕೇತಗಳನ್ನು ಬರೆಯಿರಿ."
+    },
+    {
+     "en": "LXI H, MOV A, M, INX H, ADD M and STA add numbers in memory.",
+     "kn": "LXI H, MOV A, M, INX H, ADD M ಮತ್ತು STA ಸ್ಮರಣೆಯಲ್ಲಿನ ಸಂಖ್ಯೆಗಳನ್ನು ಕೂಡಿಸುತ್ತವೆ."
+    },
+    {
+     "en": "JNC or JC tests the carry; JNZ repeats a loop until a count is zero.",
+     "kn": "JNC ಅಥವಾ JC ಕ್ಯಾರಿ ಪರೀಕ್ಷಿಸುತ್ತದೆ; ಎಣಿಕೆ ಶೂನ್ಯವಾಗುವವರೆಗೆ JNZ ಲೂಪ್ ಪುನರಾವರ್ತಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "Delay loop: (14N + 4) T-states.",
+     "kn": "ವಿಳಂಬ ಲೂಪ್: (14N + 4) T-ಸ್ಥಿತಿಗಳು."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write an 8085 program to subtract the number at 2051H from the number at 2050H and store the result at 2052H."
+    },
+    {
+     "en": "Find the delay of the loop for N = 50 at 3 MHz."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n10-q20"
+   ],
+   "narration": {
+    "en": "Recap. Plan a program with a flowchart, then write mnemonics and hex codes. LXI H, MOV A, M, INX H, ADD M and STA add numbers in memory. JNC or JC tests the carry; JNZ repeats a loop until a count is zero. Delay loop: (14N + 4) T-states.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಪ್ರೋಗ್ರಾಂ ಅನ್ನು ಹರಿವು ಚಿತ್ರದಿಂದ ಯೋಜಿಸಿ, ನಂತರ ನೆಮೋನಿಕ್ ಮತ್ತು ಹೆಕ್ಸ್ ಸಂಕೇತಗಳನ್ನು ಬರೆಯಿರಿ. LXI H, MOV A, M, INX H, ADD M ಮತ್ತು STA ಸ್ಮರಣೆಯಲ್ಲಿನ ಸಂಖ್ಯೆಗಳನ್ನು ಕೂಡಿಸುತ್ತವೆ. JNC ಅಥವಾ JC ಕ್ಯಾರಿ ಪರೀಕ್ಷಿಸುತ್ತದೆ; ಎಣಿಕೆ ಶೂನ್ಯವಾಗುವವರೆಗೆ JNZ ಲೂಪ್ ಪುನರಾವರ್ತಿಸುತ್ತದೆ. ವಿಳಂಬ ಲೂಪ್: (14N + 4) T-ಸ್ಥಿತಿಗಳು."
+   }
+  }
+ ]
+}
