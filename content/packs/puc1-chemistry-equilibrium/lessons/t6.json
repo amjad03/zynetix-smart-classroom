@@ -63,6 +63,167 @@
    "formula": "K_{sp} = x^x\\,y^y\\,s^{\\,x+y}"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Solubility product"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "In a saturated solution of silver chloride, the solid is in equilibrium with its ions. If s moles dissolve per litre, Ksp equals s squared."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        3,
+        3
+       ],
+       "tex": "\\text{AgCl}(s) \\rightleftharpoons \\text{Ag}^+ + \\text{Cl}^-",
+       "size": 4.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        48,
+        12
+       ],
+       "text": {
+        "en": "s"
+       },
+       "size": 4,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        66,
+        12
+       ],
+       "text": {
+        "en": "s"
+       },
+       "size": 4,
+       "color": "green"
+      },
+      {
+       "kind": "math",
+       "at": [
+        3,
+        20
+       ],
+       "tex": "K_{sp} = s^2 = 1.8\\times10^{-10} \\Rightarrow s = 1.34\\times10^{-5}\\ \\text{M}",
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "For a salt Mx Xy, Ksp is x to the x, y to the y, s to the x plus y. Silver chromate gives 4 s cubed; calcium phosphate 108 s to the fifth."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        3,
+        33
+       ],
+       "tex": "K_{sp} = x^x\\,y^y\\,s^{x+y}",
+       "size": 4.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        3,
+        44
+       ],
+       "tex": "\\text{Ag}_2\\text{CrO}_4: 4s^3",
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        50,
+        44
+       ],
+       "tex": "\\text{Ca}_3(\\text{PO}_4)_2: 108s^5",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Common ion effect: in 0.1 molar sodium chloride, the chloride is already there, so silver chloride's solubility falls to 1.8 times 10 to the minus 9 molar, about 7500 times less."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        3,
+        3
+       ],
+       "tex": "s(0.1) = 1.8\\times10^{-10} \\Rightarrow s = 1.8\\times10^{-9}\\ \\text{M}",
+       "size": 4,
+       "color": "orange"
+      },
+      {
+       "kind": "axes",
+       "from": [
+        12,
+        16
+       ],
+       "to": [
+        90,
+        50
+       ],
+       "x": [
+        0,
+        10
+       ],
+       "y": [
+        0,
+        1.5
+       ],
+       "color": "white",
+       "xLabel": "[Cl⁻] added",
+       "yLabel": "s"
+      },
+      {
+       "kind": "plot",
+       "fn": "(-x + sqrt(x^2 + 7.2))/2",
+       "color": "orange"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "If the ionic product Q is bigger than Ksp, a precipitate forms. If it is smaller, more solid can dissolve."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        53
+       ],
+       "text": {
+        "en": "Q > Ksp: precipitate;  Q < Ksp: dissolves"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -100,6 +261,95 @@
    },
    "seconds": 180,
    "optional": true
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "title": {
+    "en": "Common ion effect"
+   },
+   "caption": {
+    "en": "Silver chloride dissolving in a solution that already has chloride ions. Solubility s and added [Cl⁻] are in units of 10⁻⁵ mol/L, and Ksp in units of 10⁻¹⁰."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Ksp (× 10⁻¹⁰)"
+     },
+     "min": 0.1,
+     "max": 10,
+     "step": 0.1,
+     "value": 1.8
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "Added [Cl⁻] (× 10⁻⁵ M)"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 0.1,
+     "value": 0
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Solubility in pure water (× 10⁻⁵ M)"
+     },
+     "expr": "sqrt(k)",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Solubility with added Cl⁻ (× 10⁻⁵ M)"
+     },
+     "expr": "(-c + sqrt(c^2 + 4*k))/2",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Times less soluble"
+     },
+     "expr": "sqrt(k)/((-c + sqrt(c^2 + 4*k))/2)",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Add chloride step by step: the solubility keeps falling."
+    },
+    {
+     "en": "Why does the curve never reach zero?"
+    },
+    {
+     "en": "Raise Ksp tenfold: by how much does the pure-water solubility rise?"
+    }
+   ],
+   "optional": true,
+   "seconds": 120,
+   "narration": {
+    "en": "Silver chloride dissolving in a solution that already has chloride ions. Solubility s and added [Cl⁻] are in units of 10⁻⁵ mol/L, and Ksp in units of 10⁻¹⁰. Add chloride step by step: the solubility keeps falling."
+   },
+   "fns": [
+    {
+     "fn": "(-x + sqrt(x^2 + 4*k))/2",
+     "label": "s",
+     "color": "orange"
+    }
+   ],
+   "x": [
+    0,
+    10
+   ],
+   "y": [
+    0,
+    3
+   ],
+   "xLabel": "[Cl⁻] added",
+   "yLabel": "s"
   },
   {
    "id": "ex1",

@@ -427,3 +427,9 @@ Every topic has a whiteboard explanation, and an interactive where something var
 ## Recovered new-subject packs (CS, Accountancy, Business Studies, Economics, Electronics)
 
 These 43 chapters were written by writers that stopped before reporting back, so they have no per-chapter fact list. Review them with extra care against the NCERT and Dept. of PUE books: figures, syllabus scope and Kannada terms.
+
+## Enrichment: 1st PUC Chemistry
+
+- **Models labelled as models:** the hydrogen-like radius/IE model and the Pauling ionic character with χ(H) = 2.1; the ethane torsion uses a cosine model.
+- **Values:** chloroacetic acid pKa values rounded to one decimal (4.8/2.9/1.3/0.7).
+- **Formula to check:** the Kjeldahl form on the board.
