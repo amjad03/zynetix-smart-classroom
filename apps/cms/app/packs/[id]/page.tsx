@@ -27,7 +27,6 @@ export default function PackEditor({ params }: { params: Promise<{ id: string }>
     setTopicId(t);
     const topic = chapter.topics.find((x) => x.id === t)!;
     setLesson(structuredClone(lessons.find((l) => l.topicId === t)) ?? { id: `${t}.lesson`, chapterId: chapter.id, topicId: t, title: topic.title, minutes: 40, blocks: [] });
-    setMsg('');
   }, [chapter, lessons, topicId]);
 
   const setBlock = (i: number, b: Block) => setLesson((l) => l && { ...l, blocks: l.blocks.map((x, j) => (j === i ? b : x)) });
@@ -42,7 +41,7 @@ export default function PackEditor({ params }: { params: Promise<{ id: string }>
     <Shell product="Content CMS" nav={NAV}>
       <h1>{chapter?.title.en ?? id}</h1>
       <div className="row">
-        <label style={{ flex: 1 }}>Topic<select value={topicId ?? ''} onChange={(e) => setTopicId(e.target.value)}>
+        <label style={{ flex: 1 }}>Topic<select value={topicId ?? ''} onChange={(e) => { setTopicId(e.target.value); setMsg(''); }}>
           {chapter?.topics.map((t) => <option key={t.id} value={t.id}>{t.title.en}{lessons?.some((l) => l.topicId === t.id) ? '' : ' (no lesson yet)'}</option>)}
         </select></label>
       </div>

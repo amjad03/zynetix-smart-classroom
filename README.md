@@ -25,3 +25,32 @@ dependencies.
 - Big tap targets, readable from the back bench.
 - At most 3 taps to start a lesson.
 - No student personal data: roll numbers only.
+
+## Run it
+
+```bash
+pnpm install && pnpm build          # schema, pack builder, API, web apps
+pnpm packs                          # validate + sign content packs into the board app
+
+# API (PostgreSQL 16 on localhost; see services/api/README.md)
+cd services/api && pnpm db:migrate && pnpm db:seed && pnpm start:dev     # :4000
+
+# College Admin (:3001, admin@demo-pu.in) and Content CMS (:3002, editor@zynetix.in), password zynetix123
+cd apps/admin && pnpm dev
+cd apps/cms && pnpm dev
+
+# Board (Flutter 3.47+, Android SDK for the APK)
+cd apps/board && flutter test && flutter run
+```
+
+Tests:
+
+| Package | Tests |
+|---|---|
+| lesson-schema | 4 (vitest) |
+| pack-builder | 5 (vitest) |
+| api | 9 end-to-end tests against PostgreSQL (jest) |
+| cms | 4 (vitest) |
+| board | 18 (flutter test) |
+
+The Admin and CMS apps were also smoke-tested end to end in Chromium against the seeded API.
