@@ -440,3 +440,16 @@ These 43 chapters were written by writers that stopped before reporting back, so
 - **1p… q30 (electric charges):** "charge at a cube corner gives flux q/8ε₀" is marked correct (standard JEE idealisation).
 - **Resistivity ranges:** order-of-magnitude values.
 - **PhET added:** balloons, charges-and-fields, magnet-and-compass, faradays-law.
+
+## English Class 11, ch 8–14 (CBSE)
+
+Plot details are recalled from memory; an English teacher should check them against the NCERT texts. The writer flagged:
+
+- **Silk Road:** the route order (a CUET question depends on it), Norbu and the ending.
+- **The Address:** "Number 46", the objects and the daughter's age.
+- **Mother's Day:** the sequence of events.
+- **Birth:** "midwife" or "nurse"; white asphyxia.
+- **The Tale of Melon City:** the chain of blame.
+- **White horse:** the order of the Byro scenes.
+
+No text is reproduced; only titles and phrases of 12 words or fewer.
