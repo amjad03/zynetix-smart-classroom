@@ -1,0 +1,470 @@
+{
+ "id": "puc2-statistics-03-time-series-analysis.t1.lesson",
+ "chapterId": "puc2-statistics-03-time-series-analysis",
+ "topicId": "puc2-statistics-03-time-series-analysis.t1",
+ "title": {
+  "en": "Time series: meaning, components and models",
+  "kn": "ಕಾಲ ಶ್ರೇಣಿ: ಅರ್ಥ, ಘಟಕಗಳು ಮತ್ತು ಮಾದರಿಗಳು"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Data that moves with time",
+    "kn": "ಕಾಲದೊಂದಿಗೆ ಚಲಿಸುವ ದತ್ತಾಂಶ"
+   },
+   "hook": {
+    "en": "Look at the monthly electricity bill of a home: higher every summer, slowly rising over the years, with an odd spike when guests stayed. That is a time series with all its parts.",
+    "kn": "ಮನೆಯ ತಿಂಗಳ ವಿದ್ಯುತ್ ಬಿಲ್ ನೋಡಿ: ಪ್ರತಿ ಬೇಸಿಗೆಯಲ್ಲಿ ಹೆಚ್ಚು, ವರ್ಷಗಳಲ್ಲಿ ನಿಧಾನವಾಗಿ ಏರಿಕೆ, ಅತಿಥಿಗಳು ಬಂದಾಗ ಒಮ್ಮೆ ಏರಿಕೆ. ಇದೇ ಎಲ್ಲ ಘಟಕಗಳಿರುವ ಕಾಲ ಶ್ರೇಣಿ."
+   },
+   "objectives": [
+    {
+     "en": "Define a time series and state its uses"
+    },
+    {
+     "en": "Identify the four components of a time series"
+    },
+    {
+     "en": "Write the additive and multiplicative models"
+    }
+   ],
+   "narration": {
+    "en": "Look at the monthly electricity bill of a home: higher every summer, slowly rising over the years, with an odd spike when guests stayed. That is a time series with all its parts.",
+    "kn": "ಮನೆಯ ತಿಂಗಳ ವಿದ್ಯುತ್ ಬಿಲ್ ನೋಡಿ: ಪ್ರತಿ ಬೇಸಿಗೆಯಲ್ಲಿ ಹೆಚ್ಚು, ವರ್ಷಗಳಲ್ಲಿ ನಿಧಾನವಾಗಿ ಏರಿಕೆ, ಅತಿಥಿಗಳು ಬಂದಾಗ ಒಮ್ಮೆ ಏರಿಕೆ. ಇದೇ ಎಲ್ಲ ಘಟಕಗಳಿರುವ ಕಾಲ ಶ್ರೇಣಿ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Components of a time series"
+   },
+   "body": {
+    "en": "A time series is a set of observations on a variable arranged in chronological order. Its four components: secular trend (T), the long-term smooth tendency to rise, fall or stay constant; seasonal variation (S), regular fluctuations within a year due to seasons, festivals and customs; cyclical variation (C), oscillations with a period of more than a year, such as business cycles; irregular variation (I), unpredictable effects of floods, strikes, wars."
+   },
+   "points": [
+    {
+     "en": "Trend: long-term direction"
+    },
+    {
+     "en": "Seasonal: period less than a year"
+    },
+    {
+     "en": "Cyclical: period more than a year"
+    },
+    {
+     "en": "Irregular: random, unpredictable"
+    }
+   ],
+   "narration": {
+    "en": "A time series has four components: the long-term trend, seasonal variations within a year, cyclical variations over several years, and irregular variations.",
+    "kn": "ಕಾಲ ಶ್ರೇಣಿಗೆ ನಾಲ್ಕು ಘಟಕಗಳಿವೆ: ದೀರ್ಘಕಾಲೀನ ಪ್ರವೃತ್ತಿ, ವರ್ಷದೊಳಗಿನ ಋತುಮಾನ ವ್ಯತ್ಯಾಸ, ಹಲವು ವರ್ಷಗಳ ಚಕ್ರೀಯ ವ್ಯತ್ಯಾಸ ಮತ್ತು ಅನಿಯಮಿತ ವ್ಯತ್ಯಾಸ."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Taking a time series apart"
+   },
+   "narration": {
+    "en": "The board draws a trend, adds a seasonal wave, names the four components and writes the two models."
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "First the trend: a steady rise over the years."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        8,
+        4
+       ],
+       "to": [
+        60,
+        34
+       ],
+       "x": [
+        0,
+        6
+       ],
+       "y": [
+        0,
+        30
+       ],
+       "color": "white",
+       "xLabel": "years",
+       "yLabel": "Y"
+      },
+      {
+       "kind": "plot",
+       "fn": "8 + 2.5*x",
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        63,
+        6
+       ],
+       "text": {
+        "en": "T: trend"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Add a seasonal wave that repeats every year."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        8,
+        4
+       ],
+       "to": [
+        60,
+        34
+       ],
+       "x": [
+        0,
+        6
+       ],
+       "y": [
+        0,
+        30
+       ],
+       "color": "white",
+       "xLabel": "years",
+       "yLabel": "Y"
+      },
+      {
+       "kind": "plot",
+       "fn": "8 + 2.5*x",
+       "color": "yellow"
+      },
+      {
+       "kind": "plot",
+       "fn": "8 + 2.5*x + 3*sin(2*pi*x)",
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        63,
+        12
+       ],
+       "text": {
+        "en": "S: within a year"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Business cycles add a slower wave of several years; random shocks are the irregular part."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        63,
+        18
+       ],
+       "text": {
+        "en": "C: over many years"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        63,
+        24
+       ],
+       "text": {
+        "en": "I: random shocks"
+       },
+       "size": 3,
+       "color": "red"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Two ways to put them together: add them, or multiply them."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        8,
+        42
+       ],
+       "tex": "Y = T + S + C + I",
+       "size": 4.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        64,
+        43
+       ],
+       "text": {
+        "en": "additive"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        8,
+        51
+       ],
+       "tex": "Y = T \\times S \\times C \\times I",
+       "size": 4.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        64,
+        52
+       ],
+       "text": {
+        "en": "multiplicative"
+       },
+       "size": 3.5,
+       "color": "orange"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Models and uses"
+   },
+   "body": {
+    "en": "Additive model: $Y = T + S + C + I$, used when the components are independent. Multiplicative model: $Y = T \\times S \\times C \\times I$, used when the components depend on each other (for example, seasonal swings that grow with the trend). Uses of time series analysis: understanding past behaviour, forecasting, comparing series, and planning production, stocks and policy."
+   },
+   "points": [
+    {
+     "en": "Additive: Y = T + S + C + I"
+    },
+    {
+     "en": "Multiplicative: Y = T × S × C × I"
+    },
+    {
+     "en": "Main use: forecasting"
+    }
+   ],
+   "narration": {
+    "en": "In the additive model the components add; in the multiplicative model they multiply. Time series analysis helps us understand the past and forecast the future.",
+    "kn": "ಸಂಕಲನ ಮಾದರಿಯಲ್ಲಿ ಘಟಕಗಳು ಕೂಡುತ್ತವೆ; ಗುಣಾಕಾರ ಮಾದರಿಯಲ್ಲಿ ಗುಣಿಸುತ್ತವೆ. ಕಾಲ ಶ್ರೇಣಿ ವಿಶ್ಲೇಷಣೆ ಭೂತಕಾಲ ಅರಿಯಲು ಮತ್ತು ಭವಿಷ್ಯ ಮುನ್ಸೂಚಿಸಲು ನೆರವಾಗುತ್ತದೆ."
+   },
+   "formula": "Y = T + S + C + I \\quad \\text{or} \\quad Y = T \\times S \\times C \\times I"
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "title": {
+    "en": "Try it yourself"
+   },
+   "caption": {
+    "en": "Build a time series from its parts. Change the trend slope, the seasonal swing and the cyclical swing (a 4-year cycle)."
+   },
+   "sliders": [
+    {
+     "name": "b",
+     "label": {
+      "en": "Trend slope per year"
+     },
+     "min": -2,
+     "max": 4,
+     "step": 0.1,
+     "value": 2
+    },
+    {
+     "name": "s",
+     "label": {
+      "en": "Seasonal amplitude"
+     },
+     "min": 0,
+     "max": 5,
+     "step": 0.1,
+     "value": 2
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "Cyclical amplitude"
+     },
+     "min": 0,
+     "max": 6,
+     "step": 0.1,
+     "value": 3
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Trend value after 10 years"
+     },
+     "expr": "20 + 10*b",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Peak-to-trough seasonal swing"
+     },
+     "expr": "2*s",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set both amplitudes to 0. What is left?"
+    },
+    {
+     "en": "Make the trend slope 0 and the seasonal amplitude 0. Can you see the business cycle?"
+    },
+    {
+     "en": "Which component would a 3-year moving average remove?"
+    }
+   ],
+   "narration": {
+    "en": "Every time series is a mixture of trend, seasonal, cyclical and irregular parts. Mix your own."
+   },
+   "seconds": 120,
+   "optional": true,
+   "fns": [
+    {
+     "fn": "20 + b*x + s*sin(2*pi*x) + c*sin(2*pi*x/4)",
+     "label": "Y",
+     "color": "yellow"
+    },
+    {
+     "fn": "20 + b*x",
+     "label": "trend",
+     "color": "green"
+    }
+   ],
+   "x": [
+    0,
+    10
+   ],
+   "y": [
+    0,
+    70
+   ],
+   "xLabel": "years",
+   "yLabel": "Y"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Classify each movement: (a) rise in the population of India over 50 years; (b) increase in sales of sweets during Deepavali; (c) fall in production due to a strike; (d) boom and slump in business every 7–8 years."
+   },
+   "steps": [
+    {
+     "en": "(a) Long-term steady rise: secular trend."
+    },
+    {
+     "en": "(b) Repeats every year at the festival: seasonal variation."
+    },
+    {
+     "en": "(c) Unpredictable event: irregular variation."
+    },
+    {
+     "en": "(d) Period of several years: cyclical variation."
+    }
+   ],
+   "answer": {
+    "en": "(a) T, (b) S, (c) I, (d) C"
+   },
+   "narration": {
+    "en": "Let us work this out together. Classify each movement: (a) rise in the population of India over 50 years; (b) increase in sales of sweets during Deepavali; (c) fall in production due to a strike; (d) boom and slump in business every 7–8 years."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2t03-q01",
+    "2t03-q02",
+    "2t03-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Discuss with your neighbour, raise hands, and the monitor taps the class answer.",
+    "kn": "ತರಗತಿ ರಸಪ್ರಶ್ನೆ. ಪಕ್ಕದವರೊಂದಿಗೆ ಚರ್ಚಿಸಿ, ಕೈ ಎತ್ತಿ; ಮಾನಿಟರ್ ತರಗತಿಯ ಉತ್ತರವನ್ನು ಒತ್ತಲಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC board exam pattern"
+   },
+   "questionIds": [
+    "2t03-q04",
+    "2t03-q05"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now some questions in the pattern of the II PUC annual examination. Try them before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Time series: observations in chronological order.",
+     "kn": "ಕಾಲ ಶ್ರೇಣಿ: ಕಾಲಾನುಕ್ರಮದಲ್ಲಿರುವ ವೀಕ್ಷಣೆಗಳು."
+    },
+    {
+     "en": "Components: trend, seasonal, cyclical, irregular.",
+     "kn": "ಘಟಕಗಳು: ಪ್ರವೃತ್ತಿ, ಋತುಮಾನ, ಚಕ್ರೀಯ, ಅನಿಯಮಿತ."
+    },
+    {
+     "en": "Models: Y = T + S + C + I or Y = T × S × C × I.",
+     "kn": "ಮಾದರಿಗಳು: Y = T + S + C + I ಅಥವಾ Y = T × S × C × I."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Give one example each of the four components from daily life."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2t03-q05"
+   ],
+   "narration": {
+    "en": "Recap. Time series: observations in chronological order. Components: trend, seasonal, cyclical, irregular. Models: Y = T + S + C + I or Y = T × S × C × I.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಕಾಲ ಶ್ರೇಣಿ: ಕಾಲಾನುಕ್ರಮದಲ್ಲಿರುವ ವೀಕ್ಷಣೆಗಳು. ಘಟಕಗಳು: ಪ್ರವೃತ್ತಿ, ಋತುಮಾನ, ಚಕ್ರೀಯ, ಅನಿಯಮಿತ. ಮಾದರಿಗಳು: Y = T + S + C + I ಅಥವಾ Y = T × S × C × I."
+   }
+  }
+ ]
+}

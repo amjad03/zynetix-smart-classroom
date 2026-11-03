@@ -594,3 +594,11 @@ No text is reproduced. Check these plot details against the texts:
 - **Notation:** geometric distribution counts failures before the first success; s^2 uses divisor n-1, stated in every question (the PUE book may use divisor n); AOQ is approximately p*Pa.
 - **Critical values:** computed with scipy; textbook tables may round differently.
 - **Kannada:** terms need a native-speaker review.
+
+## Statistics 2nd PUC ch1-5 (Karnataka PU)
+
+- **Syllabus scope:** check against PUE whether semi-averages, the exponential trend, continuous random variables / pdf and moments (ch5 t5) are in the syllabus.
+- **Conventions:** TFR and GRR per 1000 women; Lx = (lx + lx+1)/2.
+- **Life table data:** a toy cohort (rats).
+- **Facts:** Kelly index and the time-reversal test; the RBD Act 1969.
+- **Kannada:** terms need a native-speaker review.

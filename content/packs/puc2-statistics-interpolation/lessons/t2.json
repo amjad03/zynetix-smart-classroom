@@ -1,0 +1,616 @@
+{
+ "id": "puc2-statistics-04-interpolation.t2.lesson",
+ "chapterId": "puc2-statistics-04-interpolation",
+ "topicId": "puc2-statistics-04-interpolation.t2",
+ "title": {
+  "en": "Finite differences",
+  "kn": "ಪರಿಮಿತ ವ್ಯತ್ಯಾಸಗಳು"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Differences reveal the pattern",
+    "kn": "ವ್ಯತ್ಯಾಸಗಳು ಮಾದರಿಯನ್ನು ತೋರಿಸುತ್ತವೆ"
+   },
+   "hook": {
+    "en": "Take 1, 2, 9, 28, 65. The numbers jump around, but subtract neighbours again and again and something constant appears.",
+    "kn": "1, 2, 9, 28, 65 ತೆಗೆದುಕೊಳ್ಳಿ. ಸಂಖ್ಯೆಗಳು ಏರುಪೇರಾಗಿವೆ, ಆದರೆ ನೆರೆಯವುಗಳನ್ನು ಮತ್ತೆ ಮತ್ತೆ ಕಳೆದರೆ ಸ್ಥಿರವಾದದ್ದು ಕಾಣುತ್ತದೆ."
+   },
+   "objectives": [
+    {
+     "en": "Define forward differences of different orders"
+    },
+    {
+     "en": "Construct a forward difference table"
+    },
+    {
+     "en": "Express differences in terms of y values"
+    }
+   ],
+   "narration": {
+    "en": "Take 1, 2, 9, 28, 65. The numbers jump around, but subtract neighbours again and again and something constant appears.",
+    "kn": "1, 2, 9, 28, 65 ತೆಗೆದುಕೊಳ್ಳಿ. ಸಂಖ್ಯೆಗಳು ಏರುಪೇರಾಗಿವೆ, ಆದರೆ ನೆರೆಯವುಗಳನ್ನು ಮತ್ತೆ ಮತ್ತೆ ಕಳೆದರೆ ಸ್ಥಿರವಾದದ್ದು ಕಾಣುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Forward differences"
+   },
+   "body": {
+    "en": "For equally spaced arguments $x_0, x_0 + h, x_0 + 2h, \\dots$ with entries $y_0, y_1, y_2, \\dots$, the first forward differences are $\\Delta y_x = y_{x+1} - y_x$. Second differences: $\\Delta^2 y_x = \\Delta y_{x+1} - \\Delta y_x$, and so on. In terms of y: $\\Delta^2 y_0 = y_2 - 2y_1 + y_0$, $\\Delta^3 y_0 = y_3 - 3y_2 + 3y_1 - y_0$ (binomial coefficients with alternating signs). For a polynomial of degree n, the n-th differences are constant and higher differences are zero."
+   },
+   "points": [
+    {
+     "en": "Δyₓ = yₓ₊₁ − yₓ"
+    },
+    {
+     "en": "Δ²y₀ = y₂ − 2y₁ + y₀"
+    },
+    {
+     "en": "Degree n polynomial: Δⁿ constant, Δⁿ⁺¹ = 0"
+    }
+   ],
+   "narration": {
+    "en": "The first difference is the next value minus this value. Differences of differences give second and third differences. For a polynomial of degree n, the n-th differences are constant.",
+    "kn": "ಮೊದಲ ವ್ಯತ್ಯಾಸ = ಮುಂದಿನ ಮೌಲ್ಯ − ಈ ಮೌಲ್ಯ. ವ್ಯತ್ಯಾಸಗಳ ವ್ಯತ್ಯಾಸಗಳು ಎರಡನೇ, ಮೂರನೇ ವ್ಯತ್ಯಾಸಗಳು. n ಡಿಗ್ರಿಯ ಬಹುಪದಕ್ಕೆ n ನೇ ವ್ಯತ್ಯಾಸಗಳು ಸ್ಥಿರ."
+   },
+   "formula": "\\Delta^n y_0 = \\sum_{k=0}^{n} (-1)^k \\binom{n}{k} y_{n-k}"
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "A forward difference table"
+   },
+   "narration": {
+    "en": "The board builds a forward difference table and finds that the third differences are constant."
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Write x and y in the first two columns."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        3
+       ],
+       "text": {
+        "en": "x"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        3
+       ],
+       "text": {
+        "en": "y"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        9
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        18
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        27
+       ],
+       "text": {
+        "en": "2"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        36
+       ],
+       "text": {
+        "en": "3"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        45
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        9
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        18
+       ],
+       "text": {
+        "en": "2"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        27
+       ],
+       "text": {
+        "en": "9"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        36
+       ],
+       "text": {
+        "en": "28"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        14,
+        45
+       ],
+       "text": {
+        "en": "65"
+       },
+       "size": 3.5,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "First differences go in between the rows: next minus this."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        30,
+        3
+       ],
+       "text": {
+        "en": "Δy"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        30,
+        13.5
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        30,
+        22.5
+       ],
+       "text": {
+        "en": "7"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        30,
+        31.5
+       ],
+       "text": {
+        "en": "19"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        30,
+        40.5
+       ],
+       "text": {
+        "en": "37"
+       },
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Differences of those give the second differences."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        48,
+        3
+       ],
+       "text": {
+        "en": "Δ²y"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        48,
+        18
+       ],
+       "text": {
+        "en": "6"
+       },
+       "size": 3.5,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        48,
+        27
+       ],
+       "text": {
+        "en": "12"
+       },
+       "size": 3.5,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        48,
+        36
+       ],
+       "text": {
+        "en": "18"
+       },
+       "size": 3.5,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Third differences are constant: six and six. So y is a cubic, and the fourth difference is zero."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        66,
+        3
+       ],
+       "text": {
+        "en": "Δ³y"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        66,
+        22.5
+       ],
+       "text": {
+        "en": "6"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        66,
+        31.5
+       ],
+       "text": {
+        "en": "6"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        82,
+        3
+       ],
+       "text": {
+        "en": "Δ⁴y"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        82,
+        27
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "red"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "readouts",
+   "title": {
+    "en": "Try it yourself"
+   },
+   "caption": {
+    "en": "Enter four equally spaced values. The readouts give the leading differences Δy₀, Δ²y₀ and Δ³y₀."
+   },
+   "sliders": [
+    {
+     "name": "p",
+     "label": {
+      "en": "y₀"
+     },
+     "min": 0,
+     "max": 50,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "q",
+     "label": {
+      "en": "y₁"
+     },
+     "min": 0,
+     "max": 50,
+     "step": 1,
+     "value": 2
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "y₂"
+     },
+     "min": 0,
+     "max": 50,
+     "step": 1,
+     "value": 9
+    },
+    {
+     "name": "s",
+     "label": {
+      "en": "y₃"
+     },
+     "min": 0,
+     "max": 50,
+     "step": 1,
+     "value": 28
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Δy₀ = y₁ − y₀"
+     },
+     "expr": "q - p",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Δ²y₀ = y₂ − 2y₁ + y₀"
+     },
+     "expr": "r - 2*q + p",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Δ³y₀ = y₃ − 3y₂ + 3y₁ − y₀"
+     },
+     "expr": "s - 3*r + 3*q - p",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Enter 2, 5, 8, 11. Which difference becomes zero, and why?"
+    },
+    {
+     "en": "Enter squares 1, 4, 9, 16. What is the second difference?"
+    },
+    {
+     "en": "Find four values whose third difference is 0 but second difference is not."
+    }
+   ],
+   "narration": {
+    "en": "Try values from straight lines, squares and cubes, and watch which difference becomes constant."
+   },
+   "seconds": 120,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Construct the forward difference table for x = 0, 1, 2, 3, 4 and y = 1, 2, 9, 28, 65. What is the degree of the polynomial?"
+   },
+   "steps": [
+    {
+     "en": "Δy = 1, 7, 19, 37."
+    },
+    {
+     "en": "Δ²y = 6, 12, 18."
+    },
+    {
+     "en": "Δ³y = 6, 6; Δ⁴y = 0."
+    },
+    {
+     "en": "Third differences are constant, so y is a polynomial of degree 3 (in fact y = x³ + 1)."
+    }
+   ],
+   "answer": {
+    "en": "Degree 3 (Δ³y = 6 constant)"
+   },
+   "narration": {
+    "en": "Let us work this out together. Construct the forward difference table for x = 0, 1, 2, 3, 4 and y = 1, 2, 9, 28, 65. What is the degree of the polynomial?"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Pascal with signs"
+   },
+   "body": {
+    "en": "Δⁿy₀ uses the n-th row of Pascal's triangle with alternating signs, starting from yₙ: Δ² → 1, −2, 1; Δ³ → 1, −3, 3, −1; Δ⁴ → 1, −4, 6, −4, 1."
+   },
+   "narration": {
+    "en": "Pascal with signs. Δⁿy₀ uses the n-th row of Pascal's triangle with alternating signs, starting from yₙ: Δ² → 1, −2, 1; Δ³ → 1, −3, 3, −1; Δ⁴ → 1, −4, 6, −4, 1."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Pascal row, plus–minus–plus"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2t04-q05",
+    "2t04-q06",
+    "2t04-q08"
+   ],
+   "mode": "roll_call",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Roll-call quiz. When your roll number is called, give your answer.",
+    "kn": "ಹಾಜರಾತಿ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ಕ್ರಮಸಂಖ್ಯೆ ಕರೆದಾಗ ನಿಮ್ಮ ಉತ್ತರ ನೀಡಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC board exam pattern"
+   },
+   "questionIds": [
+    "2t04-q07",
+    "2t04-q21"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now some questions in the pattern of the II PUC annual examination. Try them before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Δyₓ = yₓ₊₁ − yₓ; higher differences are differences of differences.",
+     "kn": "Δyₓ = yₓ₊₁ − yₓ; ಉನ್ನತ ವ್ಯತ್ಯಾಸಗಳು ವ್ಯತ್ಯಾಸಗಳ ವ್ಯತ್ಯಾಸಗಳು."
+    },
+    {
+     "en": "Δⁿy₀ uses binomial coefficients with alternating signs.",
+     "kn": "Δⁿy₀ ದ್ವಿಪದ ಗುಣಾಂಕಗಳನ್ನು ಪರ್ಯಾಯ ಚಿಹ್ನೆಗಳೊಂದಿಗೆ ಬಳಸುತ್ತದೆ."
+    },
+    {
+     "en": "Degree n polynomial: n-th differences constant.",
+     "kn": "n ಡಿಗ್ರಿ ಬಹುಪದ: n ನೇ ವ್ಯತ್ಯಾಸಗಳು ಸ್ಥಿರ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Construct the difference table of y = x² + 3 for x = 0 … 5."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2t04-q21"
+   ],
+   "narration": {
+    "en": "Recap. Δyₓ = yₓ₊₁ − yₓ; higher differences are differences of differences. Δⁿy₀ uses binomial coefficients with alternating signs. Degree n polynomial: n-th differences constant.",
+    "kn": "ಪುನರಾವರ್ತನೆ. Δyₓ = yₓ₊₁ − yₓ; ಉನ್ನತ ವ್ಯತ್ಯಾಸಗಳು ವ್ಯತ್ಯಾಸಗಳ ವ್ಯತ್ಯಾಸಗಳು. Δⁿy₀ ದ್ವಿಪದ ಗುಣಾಂಕಗಳನ್ನು ಪರ್ಯಾಯ ಚಿಹ್ನೆಗಳೊಂದಿಗೆ ಬಳಸುತ್ತದೆ. n ಡಿಗ್ರಿ ಬಹುಪದ: n ನೇ ವ್ಯತ್ಯಾಸಗಳು ಸ್ಥಿರ."
+   }
+  }
+ ]
+}

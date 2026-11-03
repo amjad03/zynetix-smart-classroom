@@ -1,0 +1,517 @@
+{
+ "id": "puc2-statistics-04-interpolation.t5.lesson",
+ "chapterId": "puc2-statistics-04-interpolation",
+ "topicId": "puc2-statistics-04-interpolation.t5",
+ "title": {
+  "en": "Lagrange's interpolation formula",
+  "kn": "ಲಗ್ರಾಂಜ್‌ರ ಅಂತರ್ವೇಶನ ಸೂತ್ರ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "When the steps are uneven",
+    "kn": "ಹೆಜ್ಜೆಗಳು ಅಸಮವಾಗಿದ್ದಾಗ"
+   },
+   "hook": {
+    "en": "An insurance chart gives premiums at ages 20, 25 and 35, but not 30. The ages are not equally spaced, so Newton's formula cannot be used. Lagrange's can.",
+    "kn": "ವಿಮಾ ಪಟ್ಟಿ 20, 25, 35 ವಯಸ್ಸಿನ ಕಂತುಗಳನ್ನು ಕೊಡುತ್ತದೆ, 30 ರದ್ದಲ್ಲ. ವಯಸ್ಸುಗಳು ಸಮಾಂತರವಾಗಿಲ್ಲ, ಆದ್ದರಿಂದ ನ್ಯೂಟನ್ ಸೂತ್ರ ಬಳಸಲಾಗದು. ಲಗ್ರಾಂಜ್ ಸೂತ್ರ ಬಳಸಬಹುದು."
+   },
+   "objectives": [
+    {
+     "en": "Write Lagrange's interpolation formula"
+    },
+    {
+     "en": "Apply it to unequally spaced data"
+    },
+    {
+     "en": "Check the formula at the given points"
+    }
+   ],
+   "narration": {
+    "en": "An insurance chart gives premiums at ages 20, 25 and 35, but not 30. The ages are not equally spaced, so Newton's formula cannot be used. Lagrange's can.",
+    "kn": "ವಿಮಾ ಪಟ್ಟಿ 20, 25, 35 ವಯಸ್ಸಿನ ಕಂತುಗಳನ್ನು ಕೊಡುತ್ತದೆ, 30 ರದ್ದಲ್ಲ. ವಯಸ್ಸುಗಳು ಸಮಾಂತರವಾಗಿಲ್ಲ, ಆದ್ದರಿಂದ ನ್ಯೂಟನ್ ಸೂತ್ರ ಬಳಸಲಾಗದು. ಲಗ್ರಾಂಜ್ ಸೂತ್ರ ಬಳಸಬಹುದು."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Lagrange's interpolation formula"
+   },
+   "body": {
+    "en": "For arguments $x_0, x_1, \\dots, x_n$ (equal or unequal spacing) with entries $y_0, \\dots, y_n$: $y = \\sum_i L_i(x)\\, y_i$, where $L_i(x) = \\prod_{j \\ne i} \\frac{x - x_j}{x_i - x_j}$. Each $L_i$ is 1 at $x_i$ and 0 at every other given point, so the polynomial passes through all the data. The coefficients always add up to 1."
+   },
+   "points": [
+    {
+     "en": "Works for unequal intervals"
+    },
+    {
+     "en": "Lᵢ(xᵢ) = 1, Lᵢ(xⱼ) = 0"
+    },
+    {
+     "en": "ΣLᵢ(x) = 1 (a useful check)"
+    }
+   ],
+   "narration": {
+    "en": "Lagrange's formula writes the answer as a weighted sum of the known values. Each weight is one at its own point and zero at the others, and the weights add up to one.",
+    "kn": "ಲಗ್ರಾಂಜ್ ಸೂತ್ರವು ಉತ್ತರವನ್ನು ತಿಳಿದ ಮೌಲ್ಯಗಳ ತೂಕಿತ ಮೊತ್ತವಾಗಿ ಬರೆಯುತ್ತದೆ. ಪ್ರತಿ ತೂಕ ತನ್ನ ಬಿಂದುವಿನಲ್ಲಿ 1, ಉಳಿದವುಗಳಲ್ಲಿ 0; ತೂಕಗಳ ಮೊತ್ತ 1."
+   },
+   "formula": "y = \\frac{(x-x_1)(x-x_2)}{(x_0-x_1)(x_0-x_2)}y_0 + \\frac{(x-x_0)(x-x_2)}{(x_1-x_0)(x_1-x_2)}y_1 + \\frac{(x-x_0)(x-x_1)}{(x_2-x_0)(x_2-x_1)}y_2"
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Lagrange's formula step by step"
+   },
+   "narration": {
+    "en": "The board computes the three Lagrange coefficients for age 30, checks they add to 1, and finds the premium."
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Ages twenty, twenty-five and thirty-five, with premiums. We want age thirty."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        2,
+        2
+       ],
+       "to": [
+        54,
+        13.0
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        2,
+        7.5
+       ],
+       "to": [
+        54,
+        7.5
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        18,
+        2
+       ],
+       "to": [
+        18,
+        13.0
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        30,
+        2
+       ],
+       "to": [
+        30,
+        13.0
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        42,
+        2
+       ],
+       "to": [
+        42,
+        13.0
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2.67
+       ],
+       "text": {
+        "en": "Age x"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        2.67
+       ],
+       "text": {
+        "en": "20"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        2.67
+       ],
+       "text": {
+        "en": "25"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        2.67
+       ],
+       "text": {
+        "en": "35"
+       },
+       "size": 3.2,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        8.17
+       ],
+       "text": {
+        "en": "Premium"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        8.17
+       ],
+       "text": {
+        "en": "230"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        8.17
+       ],
+       "text": {
+        "en": "260"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        8.17
+       ],
+       "text": {
+        "en": "345"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        60,
+        4
+       ],
+       "text": {
+        "en": "x = 30"
+       },
+       "size": 4,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The first coefficient: zero at twenty-five and thirty-five, one at twenty."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        17
+       ],
+       "tex": "L_0 = \\frac{(30-25)(30-35)}{(20-25)(20-35)} = -\\frac{1}{3}",
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The second and third coefficients the same way."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        29
+       ],
+       "tex": "L_1 = \\frac{(30-20)(30-35)}{(25-20)(25-35)} = 1",
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        41
+       ],
+       "tex": "L_2 = \\frac{(30-20)(30-25)}{(35-20)(35-25)} = \\frac{1}{3}",
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Check: minus one third plus one plus one third is one. Now multiply and add."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        64,
+        30
+       ],
+       "tex": "\\sum L_i = 1",
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        52,
+        50
+       ],
+       "tex": "y = 298.33",
+       "size": 4.2,
+       "color": "orange"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "title": {
+    "en": "Try it yourself"
+   },
+   "caption": {
+    "en": "The curve is the Lagrange polynomial through (20, 230), (25, m) and (35, 345). Change the middle premium m and read the estimate at age 30."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Premium at age 25 (₹)"
+     },
+     "min": 200,
+     "max": 330,
+     "step": 1,
+     "value": 260
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Estimate at age 30 (₹)"
+     },
+     "expr": "(230)*(30 - 25)*(30 - 35)/((20 - 25)*(20 - 35)) + m*(30 - 20)*(30 - 35)/((25 - 20)*(25 - 35)) + (345)*(30 - 20)*(30 - 25)/((35 - 20)*(35 - 25))",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Coefficient sum L₀ + L₁ + L₂ at 30"
+     },
+     "expr": "(30 - 25)*(30 - 35)/((20 - 25)*(20 - 35)) + (30 - 20)*(30 - 35)/((25 - 20)*(25 - 35)) + (30 - 20)*(30 - 25)/((35 - 20)*(35 - 25))",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find m for which the three points lie on a straight line. What is the estimate then?"
+    },
+    {
+     "en": "Does changing m move the curve at ages 20 and 35?"
+    }
+   ],
+   "narration": {
+    "en": "Lagrange's polynomial always passes through the given points. Move the middle point and watch."
+   },
+   "seconds": 120,
+   "optional": true,
+   "fns": [
+    {
+     "fn": "(230)*(x - 25)*(x - 35)/((20 - 25)*(20 - 35)) + m*(x - 20)*(x - 35)/((25 - 20)*(25 - 35)) + (345)*(x - 20)*(x - 25)/((35 - 20)*(35 - 25))",
+     "label": "Lagrange polynomial",
+     "color": "yellow"
+    }
+   ],
+   "x": [
+    18,
+    37
+   ],
+   "y": [
+    180,
+    380
+   ],
+   "xLabel": "age",
+   "yLabel": "premium (₹)"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Premiums: age 20 → ₹230, age 25 → ₹260, age 35 → ₹345. Using Lagrange's formula, estimate the premium at age 30."
+   },
+   "steps": [
+    {
+     "en": "L₀ = (30 − 25)(30 − 35)/[(20 − 25)(20 − 35)] = −25/75 = −1/3."
+    },
+    {
+     "en": "L₁ = (30 − 20)(30 − 35)/[(25 − 20)(25 − 35)] = −50/−50 = 1."
+    },
+    {
+     "en": "L₂ = (30 − 20)(30 − 25)/[(35 − 20)(35 − 25)] = 50/150 = 1/3. Check: −1/3 + 1 + 1/3 = 1."
+    },
+    {
+     "en": "y = −230/3 + 260 + 345/3 = 298.33."
+    }
+   ],
+   "answer": {
+    "en": "₹298.33"
+   },
+   "narration": {
+    "en": "Let us work this out together. Premiums: age 20 → ₹230, age 25 → ₹260, age 35 → ₹345. Using Lagrange's formula, estimate the premium at age 30."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Leave yourself out"
+   },
+   "body": {
+    "en": "In Lᵢ, the numerator is (x minus every OTHER point) and the denominator is (xᵢ minus every OTHER point). Same pattern on top and bottom, with x replaced by xᵢ below."
+   },
+   "narration": {
+    "en": "Leave yourself out. In Lᵢ, the numerator is (x minus every OTHER point) and the denominator is (xᵢ minus every OTHER point). Same pattern on top and bottom, with x replaced by xᵢ below."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Top: x − others; Bottom: xᵢ − others"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2t04-q17",
+    "2t04-q18",
+    "2t04-q20"
+   ],
+   "mode": "roll_call",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Roll-call quiz. When your roll number is called, give your answer.",
+    "kn": "ಹಾಜರಾತಿ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ಕ್ರಮಸಂಖ್ಯೆ ಕರೆದಾಗ ನಿಮ್ಮ ಉತ್ತರ ನೀಡಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC board exam pattern"
+   },
+   "questionIds": [
+    "2t04-q19",
+    "2t04-q23"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now some questions in the pattern of the II PUC annual examination. Try them before we discuss."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "Exam practice (II PUC board pattern)"
+   },
+   "questionIds": [
+    "2t04-q21",
+    "2t04-q22",
+    "2t04-q23"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Exam practice. These questions mix ideas from the whole chapter, in the II PUC board pattern."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Lagrange's formula works for unequal intervals.",
+     "kn": "ಲಗ್ರಾಂಜ್ ಸೂತ್ರ ಅಸಮ ಅಂತರಗಳಿಗೂ ಅನ್ವಯಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "y = Σ Lᵢ(x) yᵢ with Lᵢ = Π (x − xⱼ)/(xᵢ − xⱼ).",
+     "kn": "y = Σ Lᵢ(x) yᵢ, Lᵢ = Π (x − xⱼ)/(xᵢ − xⱼ)."
+    },
+    {
+     "en": "The coefficients add up to 1: a quick check.",
+     "kn": "ಗುಣಾಂಕಗಳ ಮೊತ್ತ 1: ತ್ವರಿತ ಪರಿಶೀಲನೆ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Use Lagrange's formula to find f(2) given f(0) = 2, f(1) = 3, f(3) = 11."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2t04-q19"
+   ],
+   "narration": {
+    "en": "Recap. Lagrange's formula works for unequal intervals. y = Σ Lᵢ(x) yᵢ with Lᵢ = Π (x − xⱼ)/(xᵢ − xⱼ). The coefficients add up to 1: a quick check.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಲಗ್ರಾಂಜ್ ಸೂತ್ರ ಅಸಮ ಅಂತರಗಳಿಗೂ ಅನ್ವಯಿಸುತ್ತದೆ. y = Σ Lᵢ(x) yᵢ, Lᵢ = Π (x − xⱼ)/(xᵢ − xⱼ). ಗುಣಾಂಕಗಳ ಮೊತ್ತ 1: ತ್ವರಿತ ಪರಿಶೀಲನೆ."
+   }
+  }
+ ]
+}
