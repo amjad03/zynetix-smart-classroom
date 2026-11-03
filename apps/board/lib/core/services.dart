@@ -7,6 +7,7 @@ import '../engine/model.dart';
 import '../engine/narrator.dart';
 import '../engine/pack_store.dart';
 import '../engine/session_log.dart';
+import '../engine/sync.dart';
 import 'config.dart';
 
 /// Everything the screens need, created once at start-up (main.dart) or by a test.
@@ -22,6 +23,7 @@ class Services {
   final Map<String, Map<String, List<Chapter>>> syllabus;
   final Embeds embeds;
   final DateTime Function() clock;
+  late final SyncClient sync = SyncClient(config: config, store: store, outbox: outbox);
 
   /// The topic to continue with in this section: the first untaught topic of the first chapter
   /// (in syllabus order, this section's year first) that has a lesson installed.

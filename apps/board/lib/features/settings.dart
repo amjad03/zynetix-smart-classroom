@@ -31,9 +31,49 @@ Future<void> openSettings(BuildContext context) async {
           Text('Packs: ${s.store.packs.map((p) => '${p.id} ${p.version}').join(', ')}', style: const TextStyle(fontSize: 22)),
           Text('Logs waiting to sync: ${s.outbox.pending().length}', style: const TextStyle(fontSize: 22)),
           const SizedBox(height: 24),
-          BigButton(icon: Icons.close, label: 'Close', filled: false, onPressed: () => Navigator.pop(ctx)),
+          Wrap(spacing: 24, runSpacing: 16, children: [
+            if (!s.config.activated) BigButton(icon: Icons.qr_code_2, label: 'Activate board', onPressed: () => _activate(ctx, s)),
+            if (s.config.activated)
+              BigButton(icon: Icons.sync, label: 'Sync now', onPressed: () async {
+                final msg = await s.sync.sync().then((n) => 'Synced. $n new pack(s).', onError: (Object e) => 'Offline or failed: $e');
+                if (ctx.mounted) ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(content: Text(msg, style: const TextStyle(fontSize: 26))));
+              }),
+            BigButton(icon: Icons.close, label: 'Close', filled: false, onPressed: () => Navigator.pop(ctx)),
+          ]),
         ]),
       ),
     ),
   );
+}
+
+/// First set-up by IT: server, the code from Admin → Boards, a name, and the teacher PIN.
+Future<void> _activate(BuildContext context, Services s) async {
+  final api = TextEditingController(text: s.config.apiBase), code = TextEditingController(), name = TextEditingController(text: 'Board'), pin = TextEditingController();
+  const style = TextStyle(fontSize: 30);
+  final ok = await showDialog<bool>(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: const Text('Activate board', style: TextStyle(fontSize: 40)),
+      content: SizedBox(
+        width: 700,
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          TextField(controller: api, style: style, decoration: const InputDecoration(labelText: 'Server')),
+          TextField(controller: code, style: style, decoration: const InputDecoration(labelText: 'Activation code')),
+          TextField(controller: name, style: style, decoration: const InputDecoration(labelText: 'Board name (room)')),
+          TextField(controller: pin, style: style, obscureText: true, keyboardType: TextInputType.number, decoration: const InputDecoration(labelText: 'New teacher PIN (4–6 digits)')),
+        ]),
+      ),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel', style: style)),
+        FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Activate', style: style)),
+      ],
+    ),
+  );
+  if (ok != true) return;
+  try {
+    await s.sync.activate(apiBase: api.text.trim(), code: code.text, name: name.text, pin: pin.text);
+    await s.sync.sync();
+  } catch (e) {
+    if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$e', style: style)));
+  }
 }

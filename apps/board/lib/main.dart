@@ -54,6 +54,16 @@ class _ZynetixBoardAppState extends State<ZynetixBoardApp> {
     super.initState();
     // A scheduled Self-Learning period starts by itself when the board is on Home.
     _watch = Timer.periodic(const Duration(seconds: 30), (_) => _checkSchedule());
+    // Sync whenever there is a connection; failures are normal (offline) and silent.
+    _sync = Timer.periodic(const Duration(minutes: 15), (_) => _trySync());
+    _trySync();
+  }
+
+  Timer? _sync;
+  Future<void> _trySync() async {
+    try {
+      await widget.services.sync.sync();
+    } catch (_) {}
   }
 
   void _checkSchedule() {
@@ -68,6 +78,7 @@ class _ZynetixBoardAppState extends State<ZynetixBoardApp> {
   @override
   void dispose() {
     _watch?.cancel();
+    _sync?.cancel();
     super.dispose();
   }
 
