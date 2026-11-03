@@ -342,3 +342,18 @@ Each chapter has 4 or more CBSE-pattern questions: assertion–reason and case-b
   - WTO started 1 Jan 1995
 - **Beyond the Class 11 text:** the CSR 2% rule (s.135) and the EPS example.
 - **Kannada terms to check:** ವ್ಯವಹಾರ ನೈತಿಕತೆ, ಸಾಲಪತ್ರ, ಆದ್ಯತಾ/ಸಾಮಾನ್ಯ ಷೇರು, and the transliterations.
+
+## 1st PUC Business Studies, ch 1–5
+
+- **Syllabus scope:** check whether these sections were cut: the 1991 policy (disinvestment, MoU, sick units; Ch 3 t3), postal and telecom services (Ch 4 t4), and outsourcing/BPO (Ch 5 t5). Section numbers are approximate.
+- **Ch 2:**
+  - at most 50 partners; private company 2–200 members; public company at least 7
+  - common seal is optional
+  - cooperative needs at least 10 members (1912 Act)
+  - Joint Hindu Family business under the Hindu Succession Act 1956
+  - Dayabhaga system, which allows both male and female coparceners
+  - legal points: not registering a firm, and equal profit sharing when there is no deed
+- **Ch 3:** CAG appoints the auditors of a government company.
+- **Ch 4:** RTGS minimum ₹2 lakh.
+- **Ch 1:** hundi described as similar to a bill of exchange.
+- **Kannada terms to check:** ಏಕಮಾಲೀಕತ್ವ, ಜಂಟಿ ಬಂಡವಾಳ ಕಂಪನಿ, ಉಗ್ರಾಣ, ಬಂಧಿತ ಉಗ್ರಾಣ, ಹೊರಗುತ್ತಿಗೆ.
