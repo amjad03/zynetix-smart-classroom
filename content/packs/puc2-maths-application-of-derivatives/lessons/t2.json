@@ -60,6 +60,213 @@
    "formula": "f'(x) > 0 \\Rightarrow f \\uparrow,\\qquad f'(x) < 0 \\Rightarrow f \\downarrow"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Read the sign of f′"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "f of x equals x cubed minus 3 x, in yellow. Its derivative, 3 x squared minus 3, is green. Where green is above the axis, yellow climbs."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        4,
+        4
+       ],
+       "to": [
+        60,
+        40
+       ],
+       "x": [
+        -2.5,
+        2.5
+       ],
+       "y": [
+        -4,
+        6
+       ],
+       "color": "white",
+       "xLabel": "x",
+       "yLabel": "y"
+      },
+      {
+       "kind": "plot",
+       "fn": "x^3 - 3*x",
+       "color": "yellow"
+      },
+      {
+       "kind": "plot",
+       "fn": "3*x^2 - 3",
+       "color": "green"
+      },
+      {
+       "kind": "math",
+       "at": [
+        64,
+        6
+       ],
+       "tex": "f'(x) = 3(x - 1)(x + 1)",
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        64,
+        16
+       ],
+       "text": {
+        "en": "Zero at x = ±1"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Mark the zeros of f dash on a number line and test the sign in each piece."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        6,
+        52
+       ],
+       "to": [
+        94,
+        52
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        35,
+        50
+       ],
+       "to": [
+        35,
+        54
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        33,
+        55
+       ],
+       "text": {
+        "en": "−1"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        65,
+        50
+       ],
+       "to": [
+        65,
+        54
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        63,
+        55
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19.0,
+        45
+       ],
+       "text": {
+        "en": "+"
+       },
+       "size": 5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        48.5,
+        45
+       ],
+       "text": {
+        "en": "−"
+       },
+       "size": 5,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        78.0,
+        45
+       ],
+       "text": {
+        "en": "+"
+       },
+       "size": 5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "So f increases up to minus 1, decreases from minus 1 to 1, and increases again after 1."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        64,
+        24
+       ],
+       "text": {
+        "en": "↑: x ≤ −1 or x ≥ 1"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        64,
+        31
+       ],
+       "text": {
+        "en": "↓: −1 ≤ x ≤ 1"
+       },
+       "size": 3,
+       "color": "red"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: Read the sign of f′."
+   }
+  },
+  {
    "id": "sim-lab.graph-plotter",
    "type": "simulation",
    "source": "kinetix_sim",
@@ -81,6 +288,87 @@
    "seconds": 120,
    "optional": true,
    "preset": "quadratic"
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Where does x³ − a x turn?"
+   },
+   "kind": "function_plot",
+   "caption": {
+    "en": "Yellow: f(x) = x³ − ax. Green: f′(x) = 3x² − a. f decreases exactly where the green curve is below the axis."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "a"
+     },
+     "min": 0,
+     "max": 12,
+     "step": 0.5,
+     "value": 3
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Turning points ±√(a/3)"
+     },
+     "expr": "sqrt(a/3)",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "f′(0) = −a"
+     },
+     "expr": "-a",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Width of decreasing interval"
+     },
+     "expr": "2*sqrt(a/3)",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set a = 3: check f decreases on [−1, 1]."
+    },
+    {
+     "en": "Set a = 0. Is f strictly increasing even though f′(0) = 0?"
+    }
+   ],
+   "narration": {
+    "en": "Move a. For a positive, f decreases between minus and plus root a over 3. For a equal to zero, f is increasing everywhere."
+   },
+   "seconds": 120,
+   "optional": true,
+   "fns": [
+    {
+     "fn": "x^3 - a*x",
+     "color": "yellow",
+     "label": "f"
+    },
+    {
+     "fn": "3*x^2 - a",
+     "color": "green",
+     "label": "f′"
+    }
+   ],
+   "x": [
+    -4,
+    4
+   ],
+   "y": [
+    -15,
+    15
+   ],
+   "xLabel": "x",
+   "yLabel": "y"
   },
   {
    "id": "ex1",

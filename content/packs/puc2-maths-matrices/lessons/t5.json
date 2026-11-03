@@ -66,6 +66,223 @@
    "formula": "AA^{-1} = A^{-1}A = I"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "The 2 × 2 inverse in three moves"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "B is the inverse of A if A B and B A are both the identity."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        4
+       ],
+       "tex": "AB = BA = I \\Rightarrow B = A^{-1}",
+       "size": 5,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "For a 2 by 2 matrix: swap the diagonal, change the signs of the other two, and divide by a d minus b c."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        18
+       ],
+       "tex": "\\begin{bmatrix}a&b\\\\c&d\\end{bmatrix}^{-1} = \\frac{1}{ad - bc}\\begin{bmatrix}d&-b\\\\-c&a\\end{bmatrix}",
+       "size": 5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Example: A is 2 1 5 3. a d minus b c is 6 minus 5, which is 1, so the inverse is 3, minus 1, minus 5, 2."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        4
+       ],
+       "tex": "A = \\begin{bmatrix}2&1\\\\5&3\\end{bmatrix}",
+       "size": 4,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        40,
+        6
+       ],
+       "tex": "ad - bc = 6 - 5 = 1",
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        22
+       ],
+       "tex": "A^{-1} = \\begin{bmatrix}3&-1\\\\-5&2\\end{bmatrix}",
+       "size": 4,
+       "color": "green"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "Check by multiplying: you get the identity. And for a product, the inverses come in reverse order, like socks and shoes."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        40
+       ],
+       "tex": "\\begin{bmatrix}2&1\\\\5&3\\end{bmatrix}\\begin{bmatrix}3&-1\\\\-5&2\\end{bmatrix}=\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}",
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        60,
+        40
+       ],
+       "tex": "(AB)^{-1} = B^{-1}A^{-1}",
+       "size": 4,
+       "color": "red"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: The 2 × 2 inverse in three moves."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "When does A have an inverse?"
+   },
+   "kind": "vectors",
+   "caption": {
+    "en": "The columns of A = [a b; c d] are drawn as arrows. ad − bc is the signed area they span; A is invertible only when it is not 0."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "a"
+     },
+     "min": -4,
+     "max": 4,
+     "step": 0.5,
+     "value": 2
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "b"
+     },
+     "min": -4,
+     "max": 4,
+     "step": 0.5,
+     "value": 1
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "c"
+     },
+     "min": -6,
+     "max": 6,
+     "step": 0.5,
+     "value": 5
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "d"
+     },
+     "min": -4,
+     "max": 4,
+     "step": 0.5,
+     "value": 3
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "ad − bc"
+     },
+     "expr": "a*d - b*c",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "(A⁻¹)₁₁ = d/(ad − bc)"
+     },
+     "expr": "d/(a*d - b*c)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "(A⁻¹)₁₂ = −b/(ad − bc)"
+     },
+     "expr": "-b/(a*d - b*c)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "(A⁻¹)₂₂ = a/(ad − bc)"
+     },
+     "expr": "a/(a*d - b*c)",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make the second column twice the first. What happens to ad − bc?"
+    },
+    {
+     "en": "Set A = [2 1; 5 3] and check the inverse on the board."
+    }
+   ],
+   "narration": {
+    "en": "Move the entries. When the two column arrows fall on one line, a d minus b c becomes zero and the inverse does not exist."
+   },
+   "seconds": 120,
+   "optional": true,
+   "vectors": [
+    [
+     "a",
+     "c"
+    ],
+    [
+     "b",
+     "d"
+    ]
+   ]
+  },
+  {
    "id": "ex1",
    "type": "example",
    "problem": {
@@ -160,6 +377,27 @@
    ],
    "narration": {
     "en": "Now two competitive-exam pattern questions. Try them before we reveal the answers."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "Competitive exam practice"
+   },
+   "questionIds": [
+    "2m03-q29",
+    "2m03-q30",
+    "2m03-q31"
+   ],
+   "exams": [
+    "JEE",
+    "JEE_ADV",
+    "KCET",
+    "COMEDK"
+   ],
+   "narration": {
+    "en": "Competitive exam practice: JEE, KCET and COMEDK pattern questions. Some have more than one correct option, some need a number. Work them out before the answers are shown."
    }
   },
   {

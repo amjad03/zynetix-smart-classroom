@@ -391,3 +391,35 @@ Each chapter has 4 or more CBSE-pattern questions: assertion–reason and case-b
 - **Probability:** binomial wording is avoided (believed dropped from the book).
 - **Numeric tolerance:** 2m13-q28 and 2m10-q32 accept answers within ±0.01.
 - **Media:** PhET plinko-probability (3.7 MB) added.
+
+## Enrichment: Physics, Chemistry, Maths and Biology (whiteboards, interactives, exam questions)
+
+Every topic has a whiteboard explanation, and an interactive where something varies. Every chapter has 7 JEE Main/Advanced, KCET and COMEDK questions (PCM) or 5 NEET/KCET questions (Biology).
+
+- **Layout:** whiteboard placement was checked with a size estimator, not on a real board. Look at a sample on the board before release.
+- **Model curves are labelled "model" and are illustrative:**
+  - nuclear potential and binding-energy fit (nuclei)
+  - pigment spectra, C₃/C₄ curves
+  - O₂ dissociation (P50 26)
+  - hormone, antibody and selection curves
+  - dipole and inversion approximations
+- **Values from handbooks, not NCERT:**
+  - boiling points of the carbonyl and haloalkane series
+  - 3d melting points
+  - cardiac timings 0.1/0.3/0.4 s
+  - sarcomere filament lengths
+  - C₄ ATP cost of 30
+  - insulin chain lengths
+  - PCR temperatures
+  - ¹⁴C half-life
+  - biogas heat value
+- **Possibly beyond the rationalised syllabus:**
+  - Kirchhoff's radiation law (1p10-q36)
+  - pendulum in a lift (1p13-q33)
+  - capacitor filter and rectifier averages (semiconductors t5)
+  - Michaelis–Menten (biomolecules, both books)
+  - arithmetico-geometric series (1m08-q35)
+  - Turner's syndrome (inheritance t5)
+- **MTP Act:** questions say "as described in NCERT" (2017 amendment wording).
+- **Rounding:** geostationary height is given as about 36,000 km.
+- **Kannada:** the new whiteboards, interactives and exam questions are English only.

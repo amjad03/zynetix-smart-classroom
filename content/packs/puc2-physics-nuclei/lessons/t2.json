@@ -57,6 +57,152 @@
    "formula": "R = R_0 A^{1/3}"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Board: how big is a nucleus?"
+   },
+   "narration": {
+    "en": "Let us see how nuclear size grows with mass number and why all nuclei have the same density."
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "The radius grows as the cube root of A, with R₀ about 1.2 femtometre."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        3,
+        4
+       ],
+       "tex": "R=R_0A^{1/3},\\quad R_0\\approx1.2\\ \\text{fm}",
+       "size": 4.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "axes",
+       "from": [
+        45,
+        16
+       ],
+       "to": [
+        97,
+        56
+       ],
+       "x": [
+        0,
+        240
+       ],
+       "y": [
+        0,
+        8
+       ],
+       "color": "white",
+       "xLabel": "A",
+       "yLabel": "R (fm)"
+      },
+      {
+       "kind": "plot",
+       "fn": "1.2*x^(1/3)",
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Aluminium-27: cube root of 27 is 3, so R = 3.6 fm. Eight times the nucleons gives only twice the radius."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        18
+       ],
+       "text": {
+        "en": "Al-27: R = 3.6 fm"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        25
+       ],
+       "text": {
+        "en": "A × 8 → R × 2"
+       },
+       "size": 3.5,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Mass is A times m and volume is four-thirds π R₀³ A, so A cancels in the density."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        3,
+        4
+       ],
+       "tex": "\\rho=\\frac{A\\,m}{\\tfrac43\\pi R_0^3A}=\\frac{3m}{4\\pi R_0^3}",
+       "size": 4.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        22
+       ],
+       "text": {
+        "en": "A cancels: same for all nuclei"
+       },
+       "size": 3.5,
+       "color": "white"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "The density is about 2.3 × 10¹⁷ kg per cubic metre, some 10¹⁴ times that of water."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        3,
+        30
+       ],
+       "tex": "\\rho\\approx2.3\\times10^{17}\\ \\text{kg/m}^3",
+       "size": 4.5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        44
+       ],
+       "text": {
+        "en": "≈ 10¹⁴ times water!"
+       },
+       "size": 3.5,
+       "color": "red"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -78,6 +224,88 @@
     "en": "The mass of a nucleus is about A u and its volume is \\tfrac43\\pi R_0^3A, so the density does not depend on A. It is about 2.3\\times10^{17} kg/m³, roughly 10^{14} times the density of water. Neutron stars are made of matter this dense.",
     "kn": "ನ್ಯೂಕ್ಲಿಯಸ್‌ನ ದ್ರವ್ಯರಾಶಿ ಮತ್ತು ಘನಫಲ ಎರಡೂ A ಗೆ ಅನುಪಾತೀಯ; ಆದ್ದರಿಂದ ಸಾಂದ್ರತೆ ಸ್ಥಿರ, ಸುಮಾರು 2.3 × 10¹⁷ kg/m³."
    }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Try it: nuclear radius and density"
+   },
+   "narration": {
+    "en": "Slide the mass number from light to heavy nuclei; watch the radius and the density."
+   },
+   "seconds": 120,
+   "optional": true,
+   "kind": "function_plot",
+   "caption": {
+    "en": "R = 1.2 A^(1/3) fm. The radius grows slowly with A, but the density stays the same."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Mass number A"
+     },
+     "min": 1,
+     "max": 240,
+     "step": 1,
+     "value": 27
+    }
+   ],
+   "fns": [
+    {
+     "fn": "1.2*x^(1/3)",
+     "color": "yellow",
+     "label": "R (fm)"
+    }
+   ],
+   "x": [
+    0,
+    240
+   ],
+   "y": [
+    0,
+    8
+   ],
+   "xLabel": "A",
+   "yLabel": "R (fm)",
+   "readouts": [
+    {
+     "label": {
+      "en": "Radius R"
+     },
+     "expr": "1.2*A^(1/3)",
+     "digits": 2,
+     "unit": "fm"
+    },
+    {
+     "label": {
+      "en": "Volume"
+     },
+     "expr": "4/3*pi*(1.2*A^(1/3))^3",
+     "digits": 0,
+     "unit": "fm³"
+    },
+    {
+     "label": {
+      "en": "Density"
+     },
+     "expr": "A*1.66e-27/(4/3*pi*(1.2e-15*A^(1/3))^3)/1e17",
+     "digits": 2,
+     "unit": "×10¹⁷ kg/m³"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Compare A = 27 and A = 216. What is the ratio of radii?"
+    },
+    {
+     "en": "Does the density change from hydrogen to uranium?"
+    },
+    {
+     "en": "Which A gives a radius of 6 fm?"
+    }
+   ]
   },
   {
    "id": "ex1",

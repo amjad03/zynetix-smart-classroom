@@ -63,6 +63,148 @@
    "formula": "\\int_0^a f(x)\\,dx = \\int_0^a f(a - x)\\,dx"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Add the integral to its mirror image"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Replacing x by a minus x reflects the interval, so the integral does not change."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        4
+       ],
+       "tex": "\\int_0^a f(x)\\,dx = \\int_0^a f(a - x)\\,dx",
+       "size": 4,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Take I equals the integral of sin over sin plus cos, from 0 to pi by 2. Replacing x by pi by 2 minus x swaps sin and cos."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        18
+       ],
+       "tex": "I = \\int_0^{\\pi/2}\\frac{\\sin x}{\\sin x + \\cos x}dx = \\int_0^{\\pi/2}\\frac{\\cos x}{\\cos x + \\sin x}dx",
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Add the two forms: the integrand becomes 1. So 2 I equals pi by 2, and I equals pi by 4."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        34
+       ],
+       "tex": "2I = \\int_0^{\\pi/2}1\\,dx = \\frac{\\pi}{2}",
+       "size": 4,
+       "color": "green"
+      },
+      {
+       "kind": "math",
+       "at": [
+        46,
+        34
+       ],
+       "tex": "I = \\frac{\\pi}{4}",
+       "size": 5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "On a symmetric interval an odd function cancels itself out: the area above equals the area below."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        4,
+        4
+       ],
+       "to": [
+        50,
+        56
+       ],
+       "x": [
+        -1.5,
+        1.5
+       ],
+       "y": [
+        -3,
+        3
+       ],
+       "color": "white",
+       "xLabel": "x",
+       "yLabel": "y"
+      },
+      {
+       "kind": "plot",
+       "fn": "x^3",
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        54,
+        6
+       ],
+       "tex": "\\int_{-1}^{1}x^3dx = 0",
+       "size": 4,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        54,
+        20
+       ],
+       "text": {
+        "en": "Odd f: integral 0"
+       },
+       "size": 3,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        54,
+        27
+       ],
+       "text": {
+        "en": "Even f: twice 0 to a"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ],
+     "clear": true
+    }
+   ],
+   "narration": {
+    "en": "On the board: Add the integral to its mirror image."
+   }
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -88,6 +230,113 @@
     "kn": "f ಸಮ ಫಲನವಾದರೆ ∫₋ₐᵃ f = 2∫₀ᵃ f; ಬೆಸ ಫಲನವಾದರೆ ∫₋ₐᵃ f = 0."
    },
    "formula": "\\int_{-a}^{a} f(x)\\,dx = \\begin{cases} 2\\int_0^a f(x)\\,dx & f \\text{ even} \\\\ 0 & f \\text{ odd} \\end{cases}"
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Odd part cancels, even part doubles"
+   },
+   "kind": "function_plot",
+   "caption": {
+    "en": "Yellow: y = x³ + kx². On [−a, a] the odd part x³ contributes 0; only the even part kx² is left."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "k"
+     },
+     "min": -3,
+     "max": 3,
+     "step": 0.5,
+     "value": 1
+    },
+    {
+     "name": "a",
+     "label": {
+      "en": "a"
+     },
+     "min": 0,
+     "max": 2,
+     "step": 0.1,
+     "value": 1.5
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "∫ x³ from −a to a"
+     },
+     "expr": "0",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "∫ kx² from −a to a = 2ka³/3"
+     },
+     "expr": "2*k*a^3/3",
+     "digits": 4
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set k = 0. Why is the area under x³ from −a to a zero?"
+    },
+    {
+     "en": "Set k = 3, a = 1. Check the value 2."
+    }
+   ],
+   "narration": {
+    "en": "Move k and a. The integral from minus a to a is always 2 k a cubed over 3, whatever the x cubed term does."
+   },
+   "seconds": 120,
+   "optional": true,
+   "fns": [
+    {
+     "fn": "x^3 + k*x^2",
+     "color": "yellow",
+     "label": "y"
+    },
+    {
+     "fn": "x^3",
+     "color": "white",
+     "label": "odd part"
+    }
+   ],
+   "x": [
+    -2,
+    2
+   ],
+   "y": [
+    -8,
+    12
+   ],
+   "xLabel": "x",
+   "yLabel": "y"
+  },
+  {
+   "id": "media1",
+   "type": "simulation",
+   "source": "kinetix_sim",
+   "simId": "lab.graph-plotter",
+   "caption": {
+    "en": "y = sin x is odd: on any interval [−a, a] the area above the axis cancels the area below."
+   },
+   "tryThis": [
+    {
+     "en": "Look at sin x from −π to π: compare the two humps."
+    },
+    {
+     "en": "Switch to cos x, an even function. Do the areas cancel now?"
+    }
+   ],
+   "narration": {
+    "en": "Sine is an odd function, so its integral over any interval symmetric about zero is zero. Cosine is even, and its two halves add up."
+   },
+   "seconds": 120,
+   "optional": true,
+   "preset": "sine"
   },
   {
    "id": "ex1",
@@ -198,6 +447,25 @@
    ],
    "narration": {
     "en": "Now some CBSE board-pattern assertion–reason questions. Read each one carefully, decide your answer, and then check it."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "Competitive exam practice"
+   },
+   "questionIds": [
+    "2m07-q33",
+    "2m07-q34",
+    "2m07-q35"
+   ],
+   "exams": [
+    "JEE",
+    "JEE_ADV"
+   ],
+   "narration": {
+    "en": "Competitive exam practice: JEE, KCET and COMEDK pattern questions. Some have more than one correct option, some need a number. Work them out before the answers are shown."
    }
   },
   {

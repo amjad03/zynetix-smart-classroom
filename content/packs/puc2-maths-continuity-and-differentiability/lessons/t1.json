@@ -60,6 +60,169 @@
    "formula": "\\lim_{x \\to c^-} f(x) = \\lim_{x \\to c^+} f(x) = f(c)"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Three numbers must agree"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Here the graph jumps at x equals 1. Coming from the left it heads to 2; from the right it heads to 4. You cannot draw it without lifting the chalk."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        4,
+        6
+       ],
+       "to": [
+        52,
+        56
+       ],
+       "x": [
+        -2,
+        4
+       ],
+       "y": [
+        -2,
+        8
+       ],
+       "color": "white",
+       "xLabel": "x",
+       "yLabel": "y"
+      },
+      {
+       "kind": "plot",
+       "fn": "x + 1 + 0*sqrt(1 - x)",
+       "color": "yellow"
+      },
+      {
+       "kind": "plot",
+       "fn": "x + 3 + 0*sqrt(x - 1)",
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        56,
+        8
+       ],
+       "text": {
+        "en": "LHL at 1 = 2"
+       },
+       "size": 4,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        56,
+        16
+       ],
+       "text": {
+        "en": "RHL at 1 = 4"
+       },
+       "size": 4,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        56,
+        24
+       ],
+       "text": {
+        "en": "Jump: discontinuous"
+       },
+       "size": 3,
+       "color": "red"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Continuity at c needs three things to be equal: the left-hand limit, the right-hand limit and the value of f at c."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        56,
+        36
+       ],
+       "tex": "\\lim_{x\\to c^-} f = \\lim_{x\\to c^+} f = f(c)",
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Find k so that f equals k x plus 1 up to 2, and 3 x minus 1 after 2, is continuous. Left limit 2 k plus 1, right limit 5."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        4
+       ],
+       "tex": "f(x) = \\begin{cases} kx + 1, & x \\le 2 \\\\ 3x - 1, & x > 2 \\end{cases}",
+       "size": 4,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        24
+       ],
+       "tex": "2k + 1 = 5 \\Rightarrow k = 2",
+       "size": 5,
+       "color": "green"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "Polynomials, sine, cosine, e to the x and mod x are continuous everywhere; sums, products and quotients of continuous functions stay continuous."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        42
+       ],
+       "text": {
+        "en": "Sum, product, quotient: still continuous"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        49
+       ],
+       "text": {
+        "en": "(quotient: denominator ≠ 0)"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: Three numbers must agree."
+   }
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -87,6 +250,87 @@
     "en": "Polynomials, sine, cosine, exponential and modulus are continuous everywhere. Adding, multiplying, dividing where allowed, or composing continuous functions keeps them continuous.",
     "kn": "ಬಹುಪದಗಳು, sin x, cos x, eˣ, |x| ಎಲ್ಲೆಡೆ ಸಂತತ. ಸಂತತ ಫಲನಗಳ ಮೊತ್ತ, ವ್ಯತ್ಯಾಸ, ಗುಣಲಬ್ಧ, ಭಾಗಲಬ್ಧ (ಛೇದ ≠ 0) ಮತ್ತು ಸಂಯೋಜನೆ ಸಂತತ."
    }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Close the gap"
+   },
+   "kind": "function_plot",
+   "caption": {
+    "en": "f(x) = kx + 1 for x ≤ 2 (yellow) and 3x − 1 for x > 2 (green). Move k until the two pieces meet."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "k"
+     },
+     "min": -2,
+     "max": 5,
+     "step": 0.25,
+     "value": 1
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "LHL = 2k + 1"
+     },
+     "expr": "2*k + 1",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "RHL = 5"
+     },
+     "expr": "5",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Jump = RHL − LHL"
+     },
+     "expr": "5 - (2*k + 1)",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the k that makes the jump zero."
+    },
+    {
+     "en": "With that k, is there a corner at x = 2? Is f differentiable there?"
+    }
+   ],
+   "narration": {
+    "en": "Move k. The jump at x equals 2 is 5 minus the quantity 2 k plus 1. When the jump is zero, f is continuous."
+   },
+   "seconds": 120,
+   "optional": true,
+   "fns": [
+    {
+     "fn": "k*x + 1 + 0*sqrt(2 - x)",
+     "color": "yellow",
+     "label": "x ≤ 2"
+    },
+    {
+     "fn": "3*x - 1 + 0*sqrt(x - 2)",
+     "color": "green",
+     "label": "x > 2"
+    }
+   ],
+   "x": [
+    -2,
+    5
+   ],
+   "y": [
+    -6,
+    15
+   ],
+   "xLabel": "x",
+   "yLabel": "y"
   },
   {
    "id": "ex1",

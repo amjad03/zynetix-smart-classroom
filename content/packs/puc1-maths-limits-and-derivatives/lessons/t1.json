@@ -57,6 +57,225 @@
    "formula": "v(2) = \\lim_{h\\to 0}\\frac{s(2+h)-s(2)}{h} = 19.6\\ \\text{m/s}"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "From average to instantaneous speed"
+   },
+   "narration": {
+    "en": "A stone falls from rest: in t seconds it falls 4.9 t squared metres. Here is that curve."
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A stone falls from rest: in t seconds it falls 4.9 t squared metres. Here is that curve."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        5,
+        5
+       ],
+       "to": [
+        47,
+        54
+       ],
+       "x": [
+        0,
+        3
+       ],
+       "y": [
+        0,
+        45
+       ],
+       "color": "white",
+       "xLabel": "t (s)",
+       "yLabel": "s (m)"
+      },
+      {
+       "kind": "plot",
+       "fn": "4.9*x^2",
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        52,
+        4
+       ],
+       "tex": "s = 4.9\\,t^2",
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        11
+       ],
+       "text": {
+        "en": "A stone falling from rest"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Between t equal to 2 and t equal to 3 it falls from 19.6 to 44.1 metres. The average speed is the slope of this chord: 24.5 metres per second."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        5,
+        5
+       ],
+       "to": [
+        47,
+        54
+       ],
+       "x": [
+        0,
+        3
+       ],
+       "y": [
+        0,
+        45
+       ],
+       "color": "white",
+       "xLabel": "t (s)",
+       "yLabel": "s (m)"
+      },
+      {
+       "kind": "plot",
+       "fn": "19.6+24.5*(x-2)",
+       "color": "orange"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        33.0,
+        32.66
+       ],
+       "r": 0.8,
+       "color": "yellow",
+       "fill": true
+      },
+      {
+       "kind": "circle",
+       "at": [
+        47.0,
+        5.98
+       ],
+       "r": 0.8,
+       "color": "yellow",
+       "fill": true
+      },
+      {
+       "kind": "math",
+       "at": [
+        52,
+        18
+       ],
+       "tex": "\\bar v = \\frac{44.1-19.6}{1} = 24.5",
+       "size": 3.5,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Shrink the interval to h seconds. The average speed is 19.6 plus 4.9 h, so it creeps down towards 19.6 as h gets smaller."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        52,
+        30
+       ],
+       "text": {
+        "en": "h = 1: 24.5 m/s"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        35
+       ],
+       "text": {
+        "en": "h = 0.1: 20.09 m/s"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        40
+       ],
+       "text": {
+        "en": "h = 0.01: 19.649 m/s"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The limit, 19.6 metres per second, is the speed at the instant t equal to 2: the slope of the tangent. That limit is the derivative."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        5,
+        5
+       ],
+       "to": [
+        47,
+        54
+       ],
+       "x": [
+        0,
+        3
+       ],
+       "y": [
+        0,
+        45
+       ],
+       "color": "white",
+       "xLabel": "t (s)",
+       "yLabel": "s (m)"
+      },
+      {
+       "kind": "plot",
+       "fn": "19.6+19.6*(x-2)",
+       "color": "green"
+      },
+      {
+       "kind": "math",
+       "at": [
+        52,
+        47
+       ],
+       "tex": "v(2) = \\lim_{h\\to0}(19.6+4.9h) = 19.6",
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "sim-lab.graph-plotter",
    "type": "simulation",
    "source": "kinetix_sim",
@@ -78,6 +297,91 @@
    },
    "seconds": 120,
    "optional": true
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "title": {
+    "en": "Chord becomes tangent"
+   },
+   "caption": {
+    "en": "The orange chord joins t = 2 and t = 2 + h on s = 4.9t². Shrink h and watch the chord turn into the green tangent."
+   },
+   "narration": {
+    "en": "The orange chord joins t = 2 and t = 2 + h on s = 4.9t². Shrink h and watch the chord turn into the green tangent. Halve h again and again: the average speed drops by 4.9 × (the change in h)."
+   },
+   "seconds": 120,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "h",
+     "label": {
+      "en": "interval h"
+     },
+     "min": 0.05,
+     "max": 1,
+     "step": 0.05,
+     "value": 1,
+     "unit": "s"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "average speed over [2, 2 + h]"
+     },
+     "expr": "(4.9*(2+h)^2-19.6)/h",
+     "digits": 3,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "instantaneous speed at t = 2"
+     },
+     "expr": "19.6",
+     "digits": 1,
+     "unit": "m/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Halve h again and again: the average speed drops by 4.9 × (the change in h)."
+    },
+    {
+     "en": "At h = 0.05 the chord and the tangent almost coincide."
+    },
+    {
+     "en": "Why can we not simply put h = 0 in the average?"
+    }
+   ],
+   "fns": [
+    {
+     "fn": "4.9*x^2",
+     "label": "s = 4.9t²",
+     "color": "yellow"
+    },
+    {
+     "fn": "19.6+(19.6+4.9*h)*(x-2)",
+     "label": "chord",
+     "color": "orange"
+    },
+    {
+     "fn": "19.6+19.6*(x-2)",
+     "label": "tangent",
+     "color": "green"
+    }
+   ],
+   "x": [
+    0,
+    3.5
+   ],
+   "y": [
+    0,
+    60
+   ],
+   "xLabel": "t (s)",
+   "yLabel": "s (m)"
   },
   {
    "id": "ex1",

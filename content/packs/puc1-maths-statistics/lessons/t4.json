@@ -50,6 +50,134 @@
    "formula": "\\sigma^2 = \\frac{1}{n}\\sum (x_i-\\bar x)^2"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Variance and standard deviation"
+   },
+   "narration": {
+    "en": "Instead of ignoring signs, square each deviation from the mean. The average of the squares is the variance; its square root is the standard deviation."
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Instead of ignoring signs, square each deviation from the mean. The average of the squares is the variance; its square root is the standard deviation."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        3
+       ],
+       "tex": "\\sigma^2 = \\frac1n\\sum (x_i-\\bar x)^2",
+       "size": 4,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        16
+       ],
+       "text": {
+        "en": "Squaring stops signs cancelling"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "For 6, 8, 10 up to 24, ten values with mean 15, the squared deviations add to 330. The variance is 33 and the standard deviation about 5.74."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        24
+       ],
+       "text": {
+        "en": "6, 8, 10, ..., 24 (n = 10)"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        5,
+        29
+       ],
+       "tex": "\\bar x = 15,\\ \\sum (x_i-15)^2 = 330",
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        5,
+        39.5
+       ],
+       "tex": "\\sigma^2 = 33,\\ \\sigma = \\sqrt{33} \\approx 5.74",
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A quicker form: the mean of the squares minus the square of the mean. Here 2580 over 10 is 258, minus 225 gives 33 again."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        47
+       ],
+       "tex": "\\sigma^2 = \\frac1n\\sum x_i^2 - \\bar x^2 = 258 - 225",
+       "size": 3.5,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Adding the same number to every value shifts the data but does not change the spread. Multiplying every value by k multiplies sigma by mod k."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        57,
+        3
+       ],
+       "text": {
+        "en": "Add k to all: σ same"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        57,
+        9
+       ],
+       "text": {
+        "en": "Multiply by k: σ × |k|"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -65,6 +193,89 @@
     "kn": "ವ್ಯತ್ಯಾಸಾಂಕ = ವರ್ಗಗಳ ಸರಾಸರಿ − ಸರಾಸರಿಯ ವರ್ಗ. ಎಲ್ಲ ಬೆಲೆಗಳಿಗೆ ಸ್ಥಿರಾಂಕ ಕೂಡಿಸಿದರೆ σ ಬದಲಾಗುವುದಿಲ್ಲ; k ಇಂದ ಗುಣಿಸಿದರೆ σ ಯು |k| ಪಟ್ಟು ಆಗುತ್ತದೆ."
    },
    "formula": "\\sigma^2 = \\frac{1}{n}\\sum x_i^2 - \\bar{x}^2"
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "number_line",
+   "title": {
+    "en": "Shift and stretch the data"
+   },
+   "caption": {
+    "en": "The base data are 1, 2, 3, 4, 5 (σ = √2). Each value becomes k·x + a. See which change moves the data and which spreads it."
+   },
+   "narration": {
+    "en": "The base data are 1, 2, 3, 4, 5 (σ = √2). Each value becomes k·x + a. See which change moves the data and which spreads it. Change a only: the points slide, σ stays 1.41."
+   },
+   "seconds": 120,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "add a"
+     },
+     "min": -10,
+     "max": 10,
+     "step": 1,
+     "value": 0
+    },
+    {
+     "name": "k",
+     "label": {
+      "en": "multiply by k"
+     },
+     "min": -3,
+     "max": 3,
+     "step": 0.5,
+     "value": 1
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "mean = 3k + a"
+     },
+     "expr": "3*k+a",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "variance = 2k²"
+     },
+     "expr": "2*k^2",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "σ = |k|·√2"
+     },
+     "expr": "abs(k)*sqrt(2)",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Change a only: the points slide, σ stays 1.41."
+    },
+    {
+     "en": "Set k = 2: σ doubles to 2.83 and the variance becomes 4 times as big."
+    },
+    {
+     "en": "Set k = −1: the order flips but σ is unchanged."
+    }
+   ],
+   "x": [
+    -25,
+    25
+   ],
+   "points": [
+    "1*k+a",
+    "2*k+a",
+    "3*k+a",
+    "4*k+a",
+    "5*k+a"
+   ]
   },
   {
    "id": "ex1",
@@ -181,6 +392,28 @@
    ],
    "narration": {
     "en": "Now 3 CBSE board-pattern questions: assertion–reason and case-based. For assertion–reason, judge A and R separately before asking whether R explains A. For the case, read the situation and apply today's idea step by step."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "Competitive exam practice"
+   },
+   "questionIds": [
+    "1m13-q33",
+    "1m13-q35",
+    "1m13-q38",
+    "1m13-q39"
+   ],
+   "exams": [
+    "JEE",
+    "JEE_ADV",
+    "KCET",
+    "COMEDK"
+   ],
+   "narration": {
+    "en": "Competitive exam practice: questions in the JEE, KCET and COMEDK pattern. Try each one before we discuss it."
    }
   },
   {

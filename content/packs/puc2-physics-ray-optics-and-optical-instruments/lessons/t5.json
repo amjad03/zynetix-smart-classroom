@@ -62,6 +62,240 @@
    }
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Board: path through a prism"
+   },
+   "narration": {
+    "en": "Let us trace a ray through a prism and find the refractive index from the minimum deviation."
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A ray enters one face of the prism, bends towards the normal, and leaves the other face bending away. The total turn is the deviation δ."
+     },
+     "draw": [
+      {
+       "kind": "path",
+       "points": [
+        [
+         50,
+         8
+        ],
+        [
+         25,
+         50
+        ],
+        [
+         75,
+         50
+        ]
+       ],
+       "color": "blue",
+       "closed": true
+      },
+      {
+       "kind": "text",
+       "at": [
+        47.5,
+        15
+       ],
+       "text": {
+        "en": "A"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        5,
+        36
+       ],
+       "to": [
+        37.5,
+        29
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "line",
+       "from": [
+        37.5,
+        29
+       ],
+       "to": [
+        62.5,
+        29
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        62.5,
+        29
+       ],
+       "to": [
+        95,
+        36
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "line",
+       "from": [
+        37.5,
+        29
+       ],
+       "to": [
+        70,
+        22
+       ],
+       "color": "white",
+       "dashed": true
+      },
+      {
+       "kind": "text",
+       "at": [
+        73,
+        24
+       ],
+       "text": {
+        "en": "δ"
+       },
+       "size": 4,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Geometry gives r₁ + r₂ = A and δ = i + e − A. At minimum deviation the ray passes symmetrically: i = e and r = A/2."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        3,
+        4
+       ],
+       "tex": "r_1+r_2=A,\\quad \\delta=i+e-A",
+       "size": 4,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        16
+       ],
+       "text": {
+        "en": "Minimum deviation: i = e, r = A/2"
+       },
+       "size": 3.5,
+       "color": "white"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "That gives the prism formula for the refractive index."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        3,
+        24
+       ],
+       "tex": "n=\\frac{\\sin\\frac{A+D_m}{2}}{\\sin\\frac A2}",
+       "size": 4.5,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "For A = 60° and D_m = 30°, n = sin 45° over sin 30°, about 1.41."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        42
+       ],
+       "text": {
+        "en": "A = 60°, Dm = 30°:"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        3,
+        49
+       ],
+       "tex": "n=\\frac{\\sin45^\\circ}{\\sin30^\\circ}=1.41",
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "As i increases, δ first falls and then rises. The lowest point is the minimum deviation, about 37° for n = 1.5."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        10,
+        4
+       ],
+       "to": [
+        95,
+        50
+       ],
+       "x": [
+        30,
+        90
+       ],
+       "y": [
+        30,
+        60
+       ],
+       "color": "white",
+       "xLabel": "i (deg)",
+       "yLabel": "δ (deg)"
+      },
+      {
+       "kind": "plot",
+       "fn": "x + asin(1.5*sin(pi/3 - asin(sin(x*pi/180)/1.5)))*180/pi - 60",
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        30,
+        54
+       ],
+       "text": {
+        "en": "n = 1.5: Dm ≈ 37°"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ],
+     "clear": true
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -97,6 +331,102 @@
    },
    "optional": true,
    "seconds": 150
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Try it: deviation curve"
+   },
+   "narration": {
+    "en": "Change n and A and find the minimum of the curve; then check it against the formula."
+   },
+   "seconds": 120,
+   "optional": true,
+   "kind": "function_plot",
+   "caption": {
+    "en": "Deviation δ against angle of incidence i for a prism of angle A and refractive index n."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Refractive index n"
+     },
+     "min": 1.3,
+     "max": 1.8,
+     "step": 0.01,
+     "value": 1.5
+    },
+    {
+     "name": "A",
+     "label": {
+      "en": "Prism angle A"
+     },
+     "min": 30,
+     "max": 70,
+     "step": 1,
+     "value": 60,
+     "unit": "°"
+    },
+    {
+     "name": "i",
+     "label": {
+      "en": "Angle of incidence i"
+     },
+     "min": 30,
+     "max": 90,
+     "step": 1,
+     "value": 50,
+     "unit": "°"
+    }
+   ],
+   "fns": [
+    {
+     "fn": "x + asin(n*sin(A*pi/180 - asin(sin(x*pi/180)/n)))*180/pi - A",
+     "color": "yellow",
+     "label": "δ (°)"
+    }
+   ],
+   "x": [
+    20,
+    90
+   ],
+   "y": [
+    20,
+    80
+   ],
+   "xLabel": "i (°)",
+   "yLabel": "δ (°)",
+   "readouts": [
+    {
+     "label": {
+      "en": "Minimum deviation Dm"
+     },
+     "expr": "2*asin(n*sin(A*pi/360))*180/pi - A",
+     "digits": 1,
+     "unit": "°"
+    },
+    {
+     "label": {
+      "en": "Deviation at this i"
+     },
+     "expr": "i + asin(n*sin(A*pi/180 - asin(sin(i*pi/180)/n)))*180/pi - A",
+     "digits": 1,
+     "unit": "°"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find i at which δ is least. Is it close to (A + Dm)/2?"
+    },
+    {
+     "en": "Increase n. Does Dm grow or shrink?"
+    },
+    {
+     "en": "Why does the curve stop at small i? (Hint: total internal reflection at the second face.)"
+    }
+   ]
   },
   {
    "id": "ex1",
@@ -172,6 +502,25 @@
    "narration": {
     "en": "Now two competitive-exam pattern questions. Try them before we discuss."
    }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "Competitive exam practice"
+   },
+   "questionIds": [
+    "2p09-q31",
+    "2p09-q34",
+    "2p09-q36"
+   ],
+   "exams": [
+    "JEE",
+    "JEE_ADV",
+    "KCET",
+    "COMEDK",
+    "NEET"
+   ]
   },
   {
    "id": "recap",

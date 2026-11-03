@@ -63,6 +63,139 @@
    "formula": "A(\\operatorname{adj} A) = (\\operatorname{adj} A)A = |A|\\,I"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Cofactors, transpose, divide"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "The adjoint is the transpose of the matrix of cofactors. For a 2 by 2: swap the diagonal and change the signs of the others."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        4
+       ],
+       "tex": "\\operatorname{adj}A = [A_{ij}]^{T}",
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        18
+       ],
+       "tex": "\\operatorname{adj}\\begin{bmatrix}a&b\\\\c&d\\end{bmatrix}=\\begin{bmatrix}d&-b\\\\-c&a\\end{bmatrix}",
+       "size": 4,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The key identity: A times adj A equals the determinant times the identity. So divide adj A by the determinant to get the inverse."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        36
+       ],
+       "tex": "A(\\operatorname{adj}A) = |A|\\,I",
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        46
+       ],
+       "tex": "A^{-1} = \\tfrac{1}{|A|}\\operatorname{adj}A",
+       "size": 5,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Example: this matrix has determinant 1, so its inverse is just its adjoint."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        4
+       ],
+       "tex": "A = \\begin{bmatrix}1&2&3\\\\0&1&4\\\\5&6&0\\end{bmatrix}",
+       "size": 4,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        26
+       ],
+       "tex": "|A| = -24 + 40 - 15 = 1",
+       "size": 4,
+       "color": "white"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "Cofactors transposed give minus 24, 18, 5 in the first row; that is the inverse."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        48,
+        4
+       ],
+       "tex": "A^{-1} = \\begin{bmatrix}-24&18&5\\\\20&-15&-4\\\\-5&4&1\\end{bmatrix}",
+       "size": 4,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        48,
+        30
+       ],
+       "text": {
+        "en": "If |A| = 0: no inverse"
+       },
+       "size": 3,
+       "color": "red"
+      },
+      {
+       "kind": "math",
+       "at": [
+        48,
+        40
+       ],
+       "tex": "|\\operatorname{adj}A| = |A|^{n-1}",
+       "size": 4,
+       "color": "orange"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: Cofactors, transpose, divide."
+   }
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -91,6 +224,95 @@
     "kn": "|A| = 0 ಆದರೆ A ಏಕವಚನ (singular). |A| ≠ 0 ಆದಾಗ ಮಾತ್ರ A ವಿಲೋಮೀಯ, ಮತ್ತು A⁻¹ = adj A / |A|."
    },
    "formula": "A^{-1} = \\frac{1}{|A|}\\operatorname{adj} A"
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Determinant rules for n × n"
+   },
+   "kind": "readouts",
+   "caption": {
+    "en": "Set the order n, the determinant |A| and a scalar k. Read the determinants of kA, adj A, A⁻¹ and adj(adj A)."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "order n"
+     },
+     "min": 2,
+     "max": 4,
+     "step": 1,
+     "value": 3
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "|A|"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 1,
+     "value": 4
+    },
+    {
+     "name": "k",
+     "label": {
+      "en": "k"
+     },
+     "min": -3,
+     "max": 3,
+     "step": 1,
+     "value": 2
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "|kA| = kⁿ|A|"
+     },
+     "expr": "k^n*d",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "|adj A| = |A|ⁿ⁻¹"
+     },
+     "expr": "d^(n - 1)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "|A⁻¹| = 1/|A|"
+     },
+     "expr": "1/d",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "|adj(adj A)| = |A|^((n−1)²)"
+     },
+     "expr": "d^((n - 1)^2)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "n = 3, |A| = 4: check |adj A| = 16."
+    },
+    {
+     "en": "Set |A| = 0. Which read-outs break, and why?"
+    },
+    {
+     "en": "Set k = −1 and n = 3. Why is |−A| = −|A|?"
+    }
+   ],
+   "narration": {
+    "en": "Move n, the determinant and k. Scaling multiplies the determinant by k to the power n; the adjoint raises it to the power n minus 1."
+   },
+   "seconds": 120,
+   "optional": true
   },
   {
    "id": "ex1",
@@ -184,6 +406,28 @@
    ],
    "narration": {
     "en": "Now two competitive-exam pattern questions. Try them before we reveal the answers."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "Competitive exam practice"
+   },
+   "questionIds": [
+    "2m04-q25",
+    "2m04-q26",
+    "2m04-q27",
+    "2m04-q28"
+   ],
+   "exams": [
+    "JEE",
+    "JEE_ADV",
+    "KCET",
+    "COMEDK"
+   ],
+   "narration": {
+    "en": "Competitive exam practice: JEE, KCET and COMEDK pattern questions. Some have more than one correct option, some need a number. Work them out before the answers are shown."
    }
   },
   {

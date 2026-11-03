@@ -59,6 +59,197 @@
    }
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Board: anatomy of an EM wave"
+   },
+   "narration": {
+    "en": "Let us build an electromagnetic wave on the board, from the charge that makes it to its speed."
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "An oscillating, that is accelerated, charge makes oscillating electric and magnetic fields that spread outward."
+     },
+     "draw": [
+      {
+       "kind": "circle",
+       "at": [
+        16,
+        26
+       ],
+       "r": 2,
+       "color": "red",
+       "fill": true
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        16,
+        20
+       ],
+       "to": [
+        16,
+        32
+       ],
+       "color": "red"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        16,
+        26
+       ],
+       "r": 6,
+       "color": "blue"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        16,
+        26
+       ],
+       "r": 11,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        40
+       ],
+       "text": {
+        "en": "oscillating charge"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Along the direction of travel, E and B vary as sine waves, in phase, in perpendicular planes."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        34,
+        8
+       ],
+       "to": [
+        97,
+        50
+       ],
+       "x": [
+        0,
+        12.6
+       ],
+       "y": [
+        -1.5,
+        1.5
+       ],
+       "color": "white",
+       "xLabel": "x",
+       "yLabel": "field"
+      },
+      {
+       "kind": "plot",
+       "fn": "sin(x)",
+       "color": "yellow"
+      },
+      {
+       "kind": "plot",
+       "fn": "0.6*sin(x)",
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        35,
+        52
+       ],
+       "text": {
+        "en": "E (yellow) and B (blue) in phase"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Maxwell found that the speed of these waves is one over root mu-nought epsilon-nought, which is exactly the speed of light."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        4
+       ],
+       "tex": "c=\\frac{1}{\\sqrt{\\mu_0\\varepsilon_0}}=3\\times10^8\\ \\text{m/s}",
+       "size": 4.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        5,
+        19
+       ],
+       "tex": "\\frac{E_0}{B_0}=c",
+       "size": 4.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        32
+       ],
+       "text": {
+        "en": "E, B and travel: mutually perpendicular"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        38
+       ],
+       "text": {
+        "en": "Needs no medium: transverse wave"
+       },
+       "size": 3.5,
+       "color": "white"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "If the electric field amplitude is 30 volt per metre, the magnetic field amplitude is only 10 to the minus 7 tesla."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        46
+       ],
+       "tex": "B_0=\\frac{E_0}{c}=\\frac{30}{3\\times10^8}=10^{-7}\\ \\text{T}",
+       "size": 4,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -106,6 +297,105 @@
    },
    "optional": true,
    "seconds": 150
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Try it: E and B together"
+   },
+   "narration": {
+    "en": "Change the amplitude and wavelength. B always follows E, and their ratio stays equal to c."
+   },
+   "seconds": 120,
+   "optional": true,
+   "kind": "function_plot",
+   "caption": {
+    "en": "The electric and magnetic fields of a wave in vacuum. B is plotted in units of 10⁻⁸ T so both fit on one graph."
+   },
+   "sliders": [
+    {
+     "name": "E0",
+     "label": {
+      "en": "E₀"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 30,
+     "unit": "V/m"
+    },
+    {
+     "name": "lam",
+     "label": {
+      "en": "Wavelength λ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 4,
+     "unit": "m"
+    }
+   ],
+   "fns": [
+    {
+     "fn": "E0*sin(2*pi*x/lam)",
+     "color": "yellow",
+     "label": "E (V/m)"
+    },
+    {
+     "fn": "E0/3*sin(2*pi*x/lam)",
+     "color": "blue",
+     "label": "B (×10⁻⁸ T)"
+    }
+   ],
+   "x": [
+    0,
+    10
+   ],
+   "y": [
+    -110,
+    110
+   ],
+   "xLabel": "x (m)",
+   "yLabel": "field",
+   "readouts": [
+    {
+     "label": {
+      "en": "B₀"
+     },
+     "expr": "E0/3",
+     "digits": 2,
+     "unit": "×10⁻⁸ T"
+    },
+    {
+     "label": {
+      "en": "Frequency ν = c/λ"
+     },
+     "expr": "300/lam",
+     "digits": 2,
+     "unit": "MHz"
+    },
+    {
+     "label": {
+      "en": "E₀/B₀"
+     },
+     "expr": "E0/(E0/3*1e-8)",
+     "digits": 0,
+     "unit": "m/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double E₀. What happens to B₀?"
+    },
+    {
+     "en": "Halve λ. How does the frequency change?"
+    },
+    {
+     "en": "Does E₀/B₀ ever change? Why not?"
+    }
+   ]
   },
   {
    "id": "ex1",

@@ -63,6 +63,298 @@
    "formula": "\\frac{dy}{dt} = \\frac{dy}{dx}\\cdot\\frac{dx}{dt}"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "A ripple: radius steady, area racing"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A stone falls in a pond. The radius grows by 3 centimetres every second, so the circles are evenly spaced."
+     },
+     "draw": [
+      {
+       "kind": "circle",
+       "at": [
+        20,
+        30
+       ],
+       "r": 5,
+       "color": "white"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        20,
+        30
+       ],
+       "r": 10,
+       "color": "white"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        20,
+        30
+       ],
+       "r": 15,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        20,
+        30
+       ],
+       "to": [
+        35,
+        30
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        24,
+        25
+       ],
+       "text": {
+        "en": "r"
+       },
+       "size": 4,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        40,
+        6
+       ],
+       "tex": "\\frac{dr}{dt} = 3\\ \\text{cm/s}",
+       "size": 4,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Area is pi r squared. Differentiate with respect to time using the chain rule."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        40,
+        22
+       ],
+       "tex": "\\frac{dA}{dt} = \\frac{dA}{dr}\\cdot\\frac{dr}{dt} = 2\\pi r\\cdot 3",
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        40,
+        40
+       ],
+       "tex": "r = 10:\\ \\frac{dA}{dt} = 60\\pi\\ \\text{cm}^2/\\text{s}",
+       "size": 4,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "On the graph of A against r, d A by d r is the slope of the tangent. The curve gets steeper, so equal steps in r add more and more area."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        4,
+        6
+       ],
+       "to": [
+        56,
+        56
+       ],
+       "x": [
+        0,
+        12
+       ],
+       "y": [
+        0,
+        450
+       ],
+       "color": "white",
+       "xLabel": "r",
+       "yLabel": "A"
+      },
+      {
+       "kind": "plot",
+       "fn": "pi*x^2",
+       "color": "yellow"
+      },
+      {
+       "kind": "plot",
+       "fn": "100*pi + 20*pi*(x - 10)",
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        60,
+        10
+       ],
+       "text": {
+        "en": "slope at r = 10: 20π"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "In economics the same derivative is called marginal. Marginal cost is d C by d x: the cost of one more unit."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        60,
+        22
+       ],
+       "tex": "MC = \\frac{dC}{dx}",
+       "size": 4,
+       "color": "orange"
+      },
+      {
+       "kind": "math",
+       "at": [
+        60,
+        34
+       ],
+       "tex": "C' = 0.015x^2 - 0.04x + 30",
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        60,
+        44
+       ],
+       "tex": "MC(3) = 30.015",
+       "size": 4,
+       "color": "orange"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: A ripple: radius steady, area racing."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "How fast is the area growing?"
+   },
+   "kind": "function_plot",
+   "caption": {
+    "en": "Yellow: A = πr². Green: the tangent at the current radius r; its slope is dA/dr = 2πr."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "radius r"
+     },
+     "min": 1,
+     "max": 12,
+     "step": 0.5,
+     "value": 10,
+     "unit": "cm"
+    },
+    {
+     "name": "k",
+     "label": {
+      "en": "dr/dt"
+     },
+     "min": 0.5,
+     "max": 5,
+     "step": 0.5,
+     "value": 3,
+     "unit": "cm/s"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Area πr²"
+     },
+     "expr": "pi*r^2",
+     "digits": 1,
+     "unit": "cm²"
+    },
+    {
+     "label": {
+      "en": "dA/dr = 2πr"
+     },
+     "expr": "2*pi*r",
+     "digits": 2,
+     "unit": "cm"
+    },
+    {
+     "label": {
+      "en": "dA/dt = 2πr · dr/dt"
+     },
+     "expr": "2*pi*r*k",
+     "digits": 2,
+     "unit": "cm²/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Keep dr/dt = 3 and double r. What happens to dA/dt?"
+    },
+    {
+     "en": "Check r = 10, dr/dt = 3 gives 60π ≈ 188.5 cm²/s."
+    }
+   ],
+   "narration": {
+    "en": "Move r and the speed d r by d t. The rate of change of area is 2 pi r times d r by d t, so it grows with the radius even at a steady speed."
+   },
+   "seconds": 120,
+   "optional": true,
+   "fns": [
+    {
+     "fn": "pi*x^2",
+     "color": "yellow",
+     "label": "A = πr²"
+    },
+    {
+     "fn": "pi*r^2 + 2*pi*r*(x - r)",
+     "color": "green",
+     "label": "tangent"
+    }
+   ],
+   "x": [
+    0,
+    13
+   ],
+   "y": [
+    0,
+    550
+   ],
+   "xLabel": "r",
+   "yLabel": "A"
+  },
+  {
    "id": "ex1",
    "type": "example",
    "problem": {
@@ -133,6 +425,27 @@
    ],
    "narration": {
     "en": "Now two competitive-exam pattern questions. Try them before we reveal the answers."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "Competitive exam practice"
+   },
+   "questionIds": [
+    "2m06-q25",
+    "2m06-q26",
+    "2m06-q27"
+   ],
+   "exams": [
+    "JEE",
+    "JEE_ADV",
+    "KCET",
+    "COMEDK"
+   ],
+   "narration": {
+    "en": "Competitive exam practice: JEE, KCET and COMEDK pattern questions. Some have more than one correct option, some need a number. Work them out before the answers are shown."
    }
   },
   {

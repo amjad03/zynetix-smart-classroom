@@ -59,6 +59,185 @@
    }
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Pressure from molecular collisions"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A cube of side l holds the gas. Follow one molecule of mass m with velocity component v_x towards the right wall."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        6,
+        10
+       ],
+       "to": [
+        40,
+        44
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        18,
+        27
+       ],
+       "r": 1.5,
+       "color": "yellow",
+       "fill": true
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        19.5,
+        27
+       ],
+       "to": [
+        36,
+        27
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        24,
+        22
+       ],
+       "text": {
+        "en": "vₓ"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        20,
+        46
+       ],
+       "text": {
+        "en": "l"
+       },
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        42,
+        24
+       ],
+       "text": {
+        "en": "wall"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "It bounces back with minus v_x, so it gives the wall a momentum 2 m v_x. It returns after a time 2 l over v_x."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        52,
+        4
+       ],
+       "tex": "\\Delta p = 2mv_x",
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        52,
+        13
+       ],
+       "tex": "\\Delta t = \\frac{2l}{v_x}",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Force from one molecule is m v_x squared over l. Add over all N molecules; random motion gives an average v_x squared of one third of v squared."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        52,
+        25
+       ],
+       "tex": "F = \\frac{m}{l}\\sum v_x^2 = \\frac{Nm\\overline{v^2}}{3l}",
+       "size": 3.2,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Divide by the wall area l squared: P is one third n m v-bar-squared, or one third rho v_rms squared."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        52,
+        38
+       ],
+       "tex": "P = \\tfrac13 nm\\overline{v^2} = \\tfrac13\\rho v_{rms}^2",
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "For air at 1 atmosphere with density 1.29, the root mean square speed is about 485 metres per second, faster than sound."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        52,
+        47
+       ],
+       "tex": "v_{rms} = \\sqrt{\\frac{3P}{\\rho}} = \\sqrt{\\frac{3\\times1.013\\times10^5}{1.29}}",
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        56
+       ],
+       "text": {
+        "en": "≈ 485 m/s"
+       },
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "A cube of side l holds the gas. Follow one molecule of mass m with velocity component v_x towards the right wall. It bounces back with minus v_x, so it gives the wall a momentum 2 m v_x. It returns after a time 2 l over v_x. Force from one molecule is m v_x squared over l. Add over all N molecules; random motion gives an average v_x squared of one third of v squared. Divide by the wall area l squared: P is one third n m v-bar-squared, or one third rho v_rms squared. For air at 1 atmosphere with density 1.29, the root mean square speed is about 485 metres per second, faster than sound."
+   }
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -97,6 +276,92 @@
    ],
    "narration": {
     "en": "In a gas the particles fly freely and bounce off the walls; each bounce is a tiny push, and together they make the pressure. Heat the gas and watch the particles hit the walls harder and more often."
+   },
+   "seconds": 120,
+   "optional": true
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Pressure and molecular speed"
+   },
+   "kind": "function_plot",
+   "caption": {
+    "en": "From P = ⅓ρv²rms, the rms speed is √(3P/ρ). The curve shows v_rms against density at a fixed pressure."
+   },
+   "sliders": [
+    {
+     "name": "P",
+     "label": {
+      "en": "Pressure P"
+     },
+     "min": 10,
+     "max": 500,
+     "step": 10,
+     "value": 101,
+     "unit": "kPa"
+    },
+    {
+     "name": "rho",
+     "label": {
+      "en": "Density ρ"
+     },
+     "min": 0.1,
+     "max": 5,
+     "step": 0.01,
+     "value": 1.29,
+     "unit": "kg/m³"
+    }
+   ],
+   "fns": [
+    {
+     "fn": "sqrt(3*P*1000/x)",
+     "color": "yellow",
+     "label": "v_rms"
+    }
+   ],
+   "x": [
+    0.1,
+    5
+   ],
+   "y": [
+    0,
+    3000
+   ],
+   "xLabel": "ρ (kg/m³)",
+   "yLabel": "v_rms (m/s)",
+   "readouts": [
+    {
+     "label": {
+      "en": "rms speed √(3P/ρ)"
+     },
+     "expr": "sqrt(3*P*1000/rho)",
+     "digits": 0,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Kinetic energy per m³ = 3P/2"
+     },
+     "expr": "1.5*P",
+     "digits": 1,
+     "unit": "kJ/m³"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Hydrogen at 1 atm has ρ ≈ 0.09 kg/m³. How fast are its molecules?"
+    },
+    {
+     "en": "Double P at the same ρ. By what factor does v_rms grow?"
+    },
+    {
+     "en": "Why is the kinetic energy per unit volume fixed by P alone?"
+    }
+   ],
+   "narration": {
+    "en": "From P = ⅓ρv²rms, the rms speed is √(3P/ρ). The curve shows v_rms against density at a fixed pressure. Hydrogen at 1 atm has ρ ≈ 0.09 kg/m³. How fast are its molecules? Double P at the same ρ. By what factor does v_rms grow? Why is the kinetic energy per unit volume fixed by P alone?"
    },
    "seconds": 120,
    "optional": true

@@ -49,6 +49,167 @@
    "formula": "V(r) = -\\frac{G M_E m}{r}"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Potential energy and escape speed"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Far from the earth, mgh fails. Taking zero at infinity, the potential energy is minus G M m over r: negative because gravity attracts."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        8,
+        6
+       ],
+       "to": [
+        60,
+        54
+       ],
+       "x": [
+        1,
+        6
+       ],
+       "y": [
+        -1.1,
+        0
+       ],
+       "color": "white",
+       "xLabel": "r / R",
+       "yLabel": "V"
+      },
+      {
+       "kind": "plot",
+       "fn": "-1/x",
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        63,
+        10
+       ],
+       "text": {
+        "en": "V = 0 at infinity"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        63,
+        18
+       ],
+       "tex": "V(r) = -\\frac{GMm}{r}",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        63,
+        30
+       ],
+       "text": {
+        "en": "negative: bound"
+       },
+       "size": 3.5,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "To escape, the kinetic energy at launch must at least cancel the negative potential energy at the surface."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "Escape speed"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        3,
+        11
+       ],
+       "tex": "\\tfrac12 mv_e^{2} - \\frac{GM_Em}{R_E} = 0",
+       "size": 4.5,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        3,
+        25
+       ],
+       "tex": "v_e = \\sqrt{\\frac{2GM_E}{R_E}} = \\sqrt{2gR_E}",
+       "size": 4.5,
+       "color": "yellow"
+      }
+     ],
+     "clear": true
+    },
+    {
+     "say": {
+      "en": "For the earth, the escape speed is about 11.2 kilometres per second, whatever the mass or the direction of launch."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        3,
+        40
+       ],
+       "tex": "\\sqrt{2 \\times 9.8 \\times 6.4\\times10^{6}} \\approx 11.2\\,km/s",
+       "size": 4,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        49
+       ],
+       "text": {
+        "en": "Independent of mass and direction"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        55
+       ],
+       "text": {
+        "en": "Moon: about 2.3 km/s, no air"
+       },
+       "size": 3.2,
+       "color": "white"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: Potential energy and escape speed."
+   }
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -71,6 +232,100 @@
     "kn": "ಮೇಲ್ಮೈಯಿಂದ ಎಸೆದ ಕಾಯ ಅನಂತವನ್ನು ತಲುಪಲು ಬೇಕಾದ ಕನಿಷ್ಠ ವೇಗವೇ ವಿಮೋಚನಾ ವೇಗ: v_e = √(2gR) ≈ 11.2 km/s. ಇದು ಕಾಯದ ದ್ರವ್ಯರಾಶಿ ಅಥವಾ ಎಸೆಯುವ ದಿಕ್ಕನ್ನು ಅವಲಂಬಿಸುವುದಿಲ್ಲ. ಚಂದ್ರನ ಮೇಲೆ ಅದು ಸುಮಾರು 2.3 km/s; ಆದ್ದರಿಂದ ಚಂದ್ರನಿಗೆ ವಾತಾವರಣವಿಲ್ಲ."
    },
    "formula": "v_e = \\sqrt{\\frac{2GM_E}{R_E}} = \\sqrt{2gR_E}"
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "caption": {
+    "en": "Escape speed of a planet, v = 11.2 √(M/R) km/s, with M and R in Earth units."
+   },
+   "sliders": [
+    {
+     "name": "Mp",
+     "label": {
+      "en": "Planet mass M"
+     },
+     "min": 0.01,
+     "max": 400,
+     "step": 0.01,
+     "value": 1,
+     "unit": "× Earth"
+    },
+    {
+     "name": "Rp",
+     "label": {
+      "en": "Planet radius R"
+     },
+     "min": 0.1,
+     "max": 15,
+     "step": 0.1,
+     "value": 1,
+     "unit": "× Earth"
+    }
+   ],
+   "fns": [
+    {
+     "fn": "11.2*sqrt(Mp/x)",
+     "label": "vₑ(R)",
+     "color": "yellow"
+    }
+   ],
+   "x": [
+    0.1,
+    15
+   ],
+   "y": [
+    0,
+    70
+   ],
+   "xLabel": "R (× Earth)",
+   "yLabel": "vₑ (km/s)",
+   "readouts": [
+    {
+     "label": {
+      "en": "Escape speed"
+     },
+     "expr": "11.2*sqrt(Mp/Rp)",
+     "digits": 1,
+     "unit": "km/s"
+    },
+    {
+     "label": {
+      "en": "Surface gravity g"
+     },
+     "expr": "9.8*Mp/Rp^2",
+     "digits": 2,
+     "unit": "m/s²"
+    },
+    {
+     "label": {
+      "en": "Orbital speed near surface"
+     },
+     "expr": "11.2*sqrt(Mp/Rp)/sqrt(2)",
+     "digits": 1,
+     "unit": "km/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Try the Moon: M = 0.012, R = 0.27. Why has the Moon lost its air?"
+    },
+    {
+     "en": "Try Jupiter: M = 318, R = 11.2. Compare with the earth."
+    },
+    {
+     "en": "Keep M fixed and shrink R. What happens to the escape speed?"
+    }
+   ],
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "Escape speed of a planet, v = 11.2 √(M/R) km/s, with M and R in Earth units."
+   },
+   "seconds": 120,
+   "optional": true
   },
   {
    "id": "ex1",

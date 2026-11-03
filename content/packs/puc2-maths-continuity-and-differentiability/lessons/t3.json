@@ -59,6 +59,139 @@
    }
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Differentiate y as a function of x"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "The circle x squared plus y squared equals 25 is not one function, but near the point 3 4 it is. We want the slope there."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        4,
+        6
+       ],
+       "to": [
+        46,
+        56
+       ],
+       "x": [
+        -6,
+        6
+       ],
+       "y": [
+        -6,
+        6
+       ],
+       "color": "white",
+       "xLabel": "x",
+       "yLabel": "y"
+      },
+      {
+       "kind": "plot",
+       "fn": "sqrt(25 - x^2)",
+       "color": "yellow"
+      },
+      {
+       "kind": "plot",
+       "fn": "-sqrt(25 - x^2)",
+       "color": "yellow"
+      },
+      {
+       "kind": "plot",
+       "fn": "4 - 0.75*(x - 3)",
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        50,
+        6
+       ],
+       "text": {
+        "en": "x² + y² = 25"
+       },
+       "size": 4,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Differentiate every term with respect to x. The y squared term gives 2 y times d y by d x."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        50,
+        16
+       ],
+       "tex": "2x + 2y\\frac{dy}{dx} = 0",
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        50,
+        30
+       ],
+       "tex": "\\frac{dy}{dx} = -\\frac{x}{y} = -\\frac{3}{4}",
+       "size": 4,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "For inverse trig, a substitution often simplifies first. With x equal to tan theta, this becomes 2 tan inverse x."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        4
+       ],
+       "tex": "y = \\tan^{-1}\\frac{2x}{1 - x^2},\\ |x| < 1",
+       "size": 4,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        20
+       ],
+       "tex": "x = \\tan\\theta \\Rightarrow y = 2\\theta = 2\\tan^{-1}x",
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        36
+       ],
+       "tex": "\\frac{dy}{dx} = \\frac{2}{1 + x^2}",
+       "size": 5,
+       "color": "green"
+      }
+     ],
+     "clear": true
+    }
+   ],
+   "narration": {
+    "en": "On the board: Differentiate y as a function of x."
+   }
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -84,6 +217,102 @@
     "kn": "sin⁻¹x ನ ಅವಕಲಜ 1/√(1 − x²), cos⁻¹x ನದು −1/√(1 − x²), tan⁻¹x ನದು 1/(1 + x²)."
    },
    "formula": "\\frac{d}{dx}\\tan^{-1}x = \\frac{1}{1 + x^2}"
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Tangent to a circle"
+   },
+   "kind": "function_plot",
+   "caption": {
+    "en": "The circle x² + y² = r². Move the point by its angle θ; the green line is the tangent with slope −x/y."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "radius r"
+     },
+     "min": 2,
+     "max": 5,
+     "step": 0.5,
+     "value": 5
+    },
+    {
+     "name": "t",
+     "label": {
+      "en": "θ (degrees)"
+     },
+     "min": 10,
+     "max": 170,
+     "step": 1,
+     "value": 53
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "x₀ = r cos θ"
+     },
+     "expr": "r*cos(t*pi/180)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "y₀ = r sin θ"
+     },
+     "expr": "r*sin(t*pi/180)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "dy/dx = −x₀/y₀"
+     },
+     "expr": "-cos(t*pi/180)/sin(t*pi/180)",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Where is the slope zero? Where is it very steep?"
+    },
+    {
+     "en": "Set θ = 53° and r = 5: you are at about (3, 4). Check the slope −3/4."
+    }
+   ],
+   "narration": {
+    "en": "Move theta and r. The slope from implicit differentiation, minus x over y, always gives the tangent line."
+   },
+   "seconds": 120,
+   "optional": true,
+   "fns": [
+    {
+     "fn": "sqrt(r^2 - x^2)",
+     "color": "yellow",
+     "label": "upper"
+    },
+    {
+     "fn": "-sqrt(r^2 - x^2)",
+     "color": "yellow",
+     "label": "lower"
+    },
+    {
+     "fn": "r*sin(t*pi/180) - (cos(t*pi/180)/sin(t*pi/180))*(x - r*cos(t*pi/180))",
+     "color": "green",
+     "label": "tangent"
+    }
+   ],
+   "x": [
+    -6,
+    6
+   ],
+   "y": [
+    -6,
+    6
+   ],
+   "xLabel": "x",
+   "yLabel": "y"
   },
   {
    "id": "ex1",
