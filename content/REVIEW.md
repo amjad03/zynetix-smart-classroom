@@ -368,3 +368,13 @@ Each chapter has 4 or more CBSE-pattern questions: assertion–reason and case-b
 - **Questions to check:** 2a01-q05 (mutual agency).
 - **Tricks:** the "E-0-0-0-6" mnemonic is invented.
 - **Kannada terms to check:** ಸುನಾಮ, ವಸೂಲಾತಿ ಖಾತೆ, ಗಳಿಕೆಯ ಅನುಪಾತ, ಮುಟ್ಟುಗೋಲು.
+
+## 2nd PUC Business Studies, ch 7–12
+
+- **Consumer Commission limits:** these use the NCERT/2019 Act figures (₹1 cr / ₹10 cr), but the 2021 Jurisdiction Rules changed them to ₹50 lakh / ₹2 crore. Update the example and the two questions that depend on them.
+- **CBSE scope:** principles of directing, supervision, leadership qualities, floatation methods and parts of SEBI may be cut for CBSE; kept for all boards for now.
+- **Values:**
+  - appeal periods 45/30/30 days
+  - T-bill minimum ₹25,000; commercial paper 15 days–1 yr; call money 1–15 days
+  - settlement cycle (T+) left out deliberately
+- **Section numbers:** best guesses.
