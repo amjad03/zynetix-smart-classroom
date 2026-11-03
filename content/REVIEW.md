@@ -540,3 +540,11 @@ No text is reproduced. Check these plot details against the texts:
 - **Break-even lab:** lab.break-even is a cost-volume-profit chart used as an optional block for the shut-down/break-even topic. Drop it if it does not fit.
 - **Model cost function:** TC = 36 + 10q - 2q^2 + 0.25q^3 (min AVC 6 at q=4, min AC 13 at q=6); question 2e04-q36 depends on it.
 - **Kannada:** terms need review (indifference curve, budget line, MRS).
+
+## Statistics 1st PUC ch6-10 (Karnataka PU)
+
+- **Topic split:** based on recollection of the PUE textbook; no section numbers.
+- **Bayes theorem:** probability t5 may belong to 2nd PUC.
+- **Conventions used:** quartiles at the (n+1)/4-th value; the tie correction m(m^2-1)/12.
+- **Board curves:** the skewness and kurtosis curves are illustrative.
+- **Kannada:** statistics terms need a native-speaker review.

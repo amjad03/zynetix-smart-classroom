@@ -1,0 +1,532 @@
+{
+ "id": "puc1-statistics-08-correlation-and-regression.t4.lesson",
+ "chapterId": "puc1-statistics-08-correlation-and-regression",
+ "topicId": "puc1-statistics-08-correlation-and-regression.t4",
+ "title": {
+  "en": "Regression lines and regression coefficients",
+  "kn": "ಪ್ರತಿಗಮನ ರೇಖೆಗಳು ಮತ್ತು ಪ್ರತಿಗಮನ ಗುಣಾಂಕಗಳು"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "From relation to prediction",
+    "kn": "ಸಂಬಂಧದಿಂದ ಮುನ್ಸೂಚನೆಗೆ"
+   },
+   "hook": {
+    "en": "Correlation tells us that rainfall and yield are related. Regression goes further: given 80 cm of rain, what yield should we expect?",
+    "kn": "ಮಳೆ ಮತ್ತು ಇಳುವರಿಗೆ ಸಂಬಂಧವಿದೆ ಎಂದು ಸಹಸಂಬಂಧ ಹೇಳುತ್ತದೆ. ಪ್ರತಿಗಮನ ಮುಂದೆ ಹೋಗುತ್ತದೆ: 80 ಸೆಂ.ಮೀ. ಮಳೆಯಾದರೆ ಎಷ್ಟು ಇಳುವರಿ ನಿರೀಕ್ಷಿಸಬಹುದು?"
+   },
+   "objectives": [
+    {
+     "en": "Write the two lines of regression"
+    },
+    {
+     "en": "Compute the regression coefficients"
+    },
+    {
+     "en": "Estimate one variable from the other"
+    }
+   ],
+   "narration": {
+    "en": "Correlation tells us that rainfall and yield are related. Regression goes further: given 80 cm of rain, what yield should we expect?",
+    "kn": "ಮಳೆ ಮತ್ತು ಇಳುವರಿಗೆ ಸಂಬಂಧವಿದೆ ಎಂದು ಸಹಸಂಬಂಧ ಹೇಳುತ್ತದೆ. ಪ್ರತಿಗಮನ ಮುಂದೆ ಹೋಗುತ್ತದೆ: 80 ಸೆಂ.ಮೀ. ಮಳೆಯಾದರೆ ಎಷ್ಟು ಇಳುವರಿ ನಿರೀಕ್ಷಿಸಬಹುದು?"
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Two lines of regression"
+   },
+   "body": {
+    "en": "Regression is the estimation of one variable from another using the average relationship between them. The line of Y on X is $y - \\bar{y} = b_{yx}(x - \\bar{x})$ with $b_{yx} = r\\sigma_y/\\sigma_x = Cov(x, y)/\\sigma_x^2$; it estimates Y from X. The line of X on Y is $x - \\bar{x} = b_{xy}(y - \\bar{y})$ with $b_{xy} = r\\sigma_x/\\sigma_y$. Both are fitted by least squares.",
+    "kn": "ಒಂದು ಚರಾಂಶದಿಂದ ಇನ್ನೊಂದರ ಅಂದಾಜು ಪ್ರತಿಗಮನ. X ಮೇಲೆ Y ರೇಖೆ: y − ȳ = b_yx(x − x̄), b_yx = rσᵧ/σₓ. Y ಮೇಲೆ X ರೇಖೆ: x − x̄ = b_xy(y − ȳ), b_xy = rσₓ/σᵧ. ಎರಡನ್ನೂ ಕನಿಷ್ಠ ವರ್ಗಗಳ ವಿಧಾನದಿಂದ ಹೊಂದಿಸುತ್ತಾರೆ."
+   },
+   "points": [
+    {
+     "en": "Y on X: estimate Y"
+    },
+    {
+     "en": "X on Y: estimate X"
+    },
+    {
+     "en": "Both pass through (x̄, ȳ)"
+    }
+   ],
+   "formula": "y - \\bar{y} = r\\frac{\\sigma_y}{\\sigma_x}(x - \\bar{x}), \\qquad x - \\bar{x} = r\\frac{\\sigma_x}{\\sigma_y}(y - \\bar{y})",
+   "narration": {
+    "en": "Regression is the estimation of one variable from another using the average relationship between them. The line of Y on X is y - \\bar{y} = b_{yx}(x - \\bar{x}) with b_{yx} = r\\sigma_y/\\sigma_x = Cov(x, y)/\\sigma_x^2; it estimates Y from X. The line of X on Y is x - \\bar{x} = b_{xy}(y - \\bar{y}) with b_{xy} = r\\sigma_x/\\sigma_y. Both are fitted by least squares.",
+    "kn": "ಒಂದು ಚರಾಂಶದಿಂದ ಇನ್ನೊಂದರ ಅಂದಾಜು ಪ್ರತಿಗಮನ. X ಮೇಲೆ Y ರೇಖೆ: y − ȳ = b_yx(x − x̄), b_yx = rσᵧ/σₓ. Y ಮೇಲೆ X ರೇಖೆ: x − x̄ = b_xy(y − ȳ), b_xy = rσₓ/σᵧ. ಎರಡನ್ನೂ ಕನಿಷ್ಠ ವರ್ಗಗಳ ವಿಧಾನದಿಂದ ಹೊಂದಿಸುತ್ತಾರೆ."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Two lines through the means"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Plot our five points. The means are three and four."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        8,
+        6
+       ],
+       "to": [
+        58,
+        54
+       ],
+       "x": [
+        0,
+        7
+       ],
+       "y": [
+        0,
+        8
+       ],
+       "color": "white",
+       "xLabel": "x",
+       "yLabel": "y"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        15.14,
+        42.0
+       ],
+       "r": 0.9,
+       "color": "white",
+       "fill": true
+      },
+      {
+       "kind": "circle",
+       "at": [
+        22.29,
+        30.0
+       ],
+       "r": 0.9,
+       "color": "white",
+       "fill": true
+      },
+      {
+       "kind": "circle",
+       "at": [
+        29.43,
+        24.0
+       ],
+       "r": 0.9,
+       "color": "white",
+       "fill": true
+      },
+      {
+       "kind": "circle",
+       "at": [
+        36.57,
+        30.0
+       ],
+       "r": 0.9,
+       "color": "white",
+       "fill": true
+      },
+      {
+       "kind": "circle",
+       "at": [
+        43.71,
+        24.0
+       ],
+       "r": 0.9,
+       "color": "white",
+       "fill": true
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "b y x is six by ten, 0.6. The line of Y on X is y equals 0.6 x plus 2.2."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        8,
+        6
+       ],
+       "to": [
+        58,
+        54
+       ],
+       "x": [
+        0,
+        7
+       ],
+       "y": [
+        0,
+        8
+       ],
+       "color": "white",
+       "xLabel": "x",
+       "yLabel": "y"
+      },
+      {
+       "kind": "plot",
+       "fn": "0.6*x + 2.2",
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        62,
+        10
+       ],
+       "tex": "b_{yx} = \\frac{6}{10} = 0.6",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        62,
+        18
+       ],
+       "text": {
+        "en": "Y on X: y = 0.6x + 2.2"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "b x y is six by six, one. The line of X on Y is x equals y minus one."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        8,
+        6
+       ],
+       "to": [
+        58,
+        54
+       ],
+       "x": [
+        0,
+        7
+       ],
+       "y": [
+        0,
+        8
+       ],
+       "color": "white",
+       "xLabel": "x",
+       "yLabel": "y"
+      },
+      {
+       "kind": "plot",
+       "fn": "0.6*x + 2.2",
+       "color": "yellow"
+      },
+      {
+       "kind": "plot",
+       "fn": "x + 1",
+       "color": "orange"
+      },
+      {
+       "kind": "math",
+       "at": [
+        62,
+        27
+       ],
+       "tex": "b_{xy} = \\frac{6}{6} = 1",
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        62,
+        35
+       ],
+       "text": {
+        "en": "X on Y: x = y − 1"
+       },
+       "size": 3.5,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Both lines cross at the point of means, three, four."
+     },
+     "draw": [
+      {
+       "kind": "circle",
+       "at": [
+        29.43,
+        30.0
+       ],
+       "r": 1.4,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        62,
+        44
+       ],
+       "text": {
+        "en": "meet at (x̄, ȳ) = (3, 4)"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "math",
+       "at": [
+        62,
+        53
+       ],
+       "tex": "r = \\sqrt{0.6\\times 1} = 0.77",
+       "size": 3.5,
+       "color": "white"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: Two lines through the means."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Try it yourself"
+   },
+   "kind": "function_plot",
+   "caption": {
+    "en": "Both regression lines through the means (5, 5). Change r and the two standard deviations; the lines close up as |r| grows."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Correlation r"
+     },
+     "min": 0.1,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.6
+    },
+    {
+     "name": "sx",
+     "label": {
+      "en": "σₓ"
+     },
+     "min": 1,
+     "max": 4,
+     "step": 0.5,
+     "value": 2
+    },
+    {
+     "name": "sy",
+     "label": {
+      "en": "σᵧ"
+     },
+     "min": 1,
+     "max": 4,
+     "step": 0.5,
+     "value": 2
+    }
+   ],
+   "fns": [
+    {
+     "fn": "5 + r*sy/sx*(x - 5)",
+     "label": "Y on X",
+     "color": "yellow"
+    },
+    {
+     "fn": "5 + sy/(r*sx)*(x - 5)",
+     "label": "X on Y",
+     "color": "orange"
+    }
+   ],
+   "x": [
+    0,
+    10
+   ],
+   "y": [
+    0,
+    10
+   ],
+   "xLabel": "x",
+   "yLabel": "y",
+   "readouts": [
+    {
+     "label": {
+      "en": "b_yx = r σᵧ/σₓ"
+     },
+     "expr": "r*sy/sx",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "b_xy = r σₓ/σᵧ"
+     },
+     "expr": "r*sx/sy",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "√(b_yx · b_xy)"
+     },
+     "expr": "sqrt(r*sy/sx*r*sx/sy)",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set r = 1. What happens to the two lines?"
+    },
+    {
+     "en": "Bring r down towards 0.1. Which way does each line turn?"
+    },
+    {
+     "en": "Check that the last readout always equals r."
+    }
+   ],
+   "narration": {
+    "en": "Both regression lines through the means (5, 5). Change r and the two standard deviations; the lines close up as |r| grows. Set r = 1. What happens to the two lines?"
+   },
+   "seconds": 120,
+   "optional": true
+  },
+  {
+   "id": "sim-lab.graph-plotter",
+   "type": "simulation",
+   "source": "kinetix_sim",
+   "simId": "lab.graph-plotter",
+   "preset": "linear",
+   "caption": {
+    "en": "A regression line is a straight line y = a + bx. Set the slope to b_yx = 0.6 and the intercept to 2.2."
+   },
+   "tryThis": [
+    {
+     "en": "Read off y at x = 6 from the graph."
+    },
+    {
+     "en": "Change the slope to 1 and the intercept to 1: this is the line x = y − 1."
+    }
+   ],
+   "narration": {
+    "en": "Draw our regression line y = 2.2 + 0.6x on the graph plotter and read an estimate from it."
+   },
+   "seconds": 120,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "For x = 1, 2, 3, 4, 5 and y = 2, 4, 5, 4, 5, find both regression lines."
+   },
+   "steps": [
+    {
+     "en": "x̄ = 3, ȳ = 4; Σdx·dy = 6, Σdx² = 10, Σdy² = 6."
+    },
+    {
+     "en": "b_yx = 6/10 = 0.6: y − 4 = 0.6(x − 3), i.e. y = 0.6x + 2.2."
+    },
+    {
+     "en": "b_xy = 6/6 = 1: x − 3 = 1(y − 4), i.e. x = y − 1."
+    }
+   ],
+   "answer": {
+    "en": "Y on X: y = 0.6x + 2.2; X on Y: x = y − 1"
+   },
+   "narration": {
+    "en": "Let us work this out together. For x = 1, 2, 3, 4, 5 and y = 2, 4, 5, 4, 5, find both regression lines."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "x̄ = 20, ȳ = 30, σₓ = 4, σᵧ = 6, r = 0.8. Estimate y when x = 25."
+   },
+   "steps": [
+    {
+     "en": "b_yx = 0.8 × 6/4 = 1.2."
+    },
+    {
+     "en": "y − 30 = 1.2(x − 20)."
+    },
+    {
+     "en": "At x = 25: y = 30 + 1.2 × 5 = 36."
+    }
+   ],
+   "answer": {
+    "en": "y ≈ 36"
+   },
+   "narration": {
+    "en": "Let us work this out together. x̄ = 20, ȳ = 30, σₓ = 4, σᵧ = 6, r = 0.8. Estimate y when x = 25."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1t08-q13",
+    "1t08-q14",
+    "1t08-q15"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer.",
+    "kn": "ತರಗತಿ ರಸಪ್ರಶ್ನೆ. ಚರ್ಚಿಸಿ, ಕೈ ಎತ್ತಿ, ಮಾನಿಟರ್ ತರಗತಿಯ ಉತ್ತರವನ್ನು ಒತ್ತಲಿ."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Y on X: y − ȳ = b_yx(x − x̄), b_yx = rσᵧ/σₓ.",
+     "kn": "X ಮೇಲೆ Y: y − ȳ = b_yx(x − x̄), b_yx = rσᵧ/σₓ."
+    },
+    {
+     "en": "X on Y: x − x̄ = b_xy(y − ȳ), b_xy = rσₓ/σᵧ.",
+     "kn": "Y ಮೇಲೆ X: x − x̄ = b_xy(y − ȳ), b_xy = rσₓ/σᵧ."
+    },
+    {
+     "en": "Use Y on X to estimate Y, X on Y to estimate X.",
+     "kn": "Y ಅಂದಾಜಿಗೆ X ಮೇಲೆ Y ರೇಖೆ, X ಅಂದಾಜಿಗೆ Y ಮೇಲೆ X ರೇಖೆ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "x̄ = 10, ȳ = 15, σₓ = 2, σᵧ = 3, r = 0.5: estimate x when y = 21."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1t08-q16"
+   ],
+   "narration": {
+    "en": "Recap. Y on X: y − ȳ = b_yx(x − x̄), b_yx = rσᵧ/σₓ. X on Y: x − x̄ = b_xy(y − ȳ), b_xy = rσₓ/σᵧ. Use Y on X to estimate Y, X on Y to estimate X.",
+    "kn": "ಪುನರಾವರ್ತನೆ. X ಮೇಲೆ Y: y − ȳ = b_yx(x − x̄), b_yx = rσᵧ/σₓ. Y ಮೇಲೆ X: x − x̄ = b_xy(y − ȳ), b_xy = rσₓ/σᵧ. Y ಅಂದಾಜಿಗೆ X ಮೇಲೆ Y ರೇಖೆ, X ಅಂದಾಜಿಗೆ Y ಮೇಲೆ X ರೇಖೆ."
+   }
+  }
+ ]
+}

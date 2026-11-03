@@ -1,0 +1,857 @@
+{
+ "id": "puc1-statistics-08-correlation-and-regression.t3.lesson",
+ "chapterId": "puc1-statistics-08-correlation-and-regression",
+ "topicId": "puc1-statistics-08-correlation-and-regression.t3",
+ "title": {
+  "en": "Spearman's rank correlation",
+  "kn": "ಸ್ಪಿಯರ್‌ಮನ್‌ನ ಶ್ರೇಣಿ ಸಹಸಂಬಂಧ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Judging a rangoli contest",
+    "kn": "ರಂಗೋಲಿ ಸ್ಪರ್ಧೆಯ ತೀರ್ಪು"
+   },
+   "hook": {
+    "en": "Two judges rank six rangolis. Beauty cannot be measured in centimetres, but the ranks can still tell us whether the judges agree.",
+    "kn": "ಇಬ್ಬರು ತೀರ್ಪುಗಾರರು ಆರು ರಂಗೋಲಿಗಳಿಗೆ ಶ್ರೇಣಿ ಕೊಡುತ್ತಾರೆ. ಸೌಂದರ್ಯವನ್ನು ಸೆಂಟಿಮೀಟರ್‌ನಲ್ಲಿ ಅಳೆಯಲಾಗದು, ಆದರೆ ಶ್ರೇಣಿಗಳಿಂದ ತೀರ್ಪುಗಾರರು ಒಪ್ಪುತ್ತಾರೆಯೆ ಎಂದು ತಿಳಿಯಬಹುದು."
+   },
+   "objectives": [
+    {
+     "en": "Compute Spearman's rank correlation"
+    },
+    {
+     "en": "Handle tied (repeated) ranks"
+    }
+   ],
+   "narration": {
+    "en": "Two judges rank six rangolis. Beauty cannot be measured in centimetres, but the ranks can still tell us whether the judges agree.",
+    "kn": "ಇಬ್ಬರು ತೀರ್ಪುಗಾರರು ಆರು ರಂಗೋಲಿಗಳಿಗೆ ಶ್ರೇಣಿ ಕೊಡುತ್ತಾರೆ. ಸೌಂದರ್ಯವನ್ನು ಸೆಂಟಿಮೀಟರ್‌ನಲ್ಲಿ ಅಳೆಯಲಾಗದು, ಆದರೆ ಶ್ರೇಣಿಗಳಿಂದ ತೀರ್ಪುಗಾರರು ಒಪ್ಪುತ್ತಾರೆಯೆ ಎಂದು ತಿಳಿಯಬಹುದು."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Spearman's rank correlation"
+   },
+   "body": {
+    "en": "When the data are ranks, Spearman's coefficient is $\\rho = 1 - 6\\sum D^2/[n(n^2 - 1)]$, where D is the difference between the two ranks of each item. It lies between −1 and +1. For tied values give each the average of the ranks they share, and add a correction $m(m^2 - 1)/12$ to $\\sum D^2$ for each group of m ties.",
+    "kn": "ಶ್ರೇಣಿ ದತ್ತಾಂಶಕ್ಕೆ ಸ್ಪಿಯರ್‌ಮನ್ ಗುಣಾಂಕ ρ = 1 − 6ΣD²/[n(n² − 1)]; D ಎರಡು ಶ್ರೇಣಿಗಳ ವ್ಯತ್ಯಾಸ. ಇದು −1 ಮತ್ತು +1 ನಡುವೆ. ಸಮ ಬೆಲೆಗಳಿಗೆ ಸರಾಸರಿ ಶ್ರೇಣಿ ಕೊಟ್ಟು, ಪ್ರತಿ m ಸಮ ಬೆಲೆಗಳ ಗುಂಪಿಗೆ m(m² − 1)/12 ತಿದ್ದುಪಡಿಯನ್ನು ΣD² ಗೆ ಕೂಡಿಸಿ."
+   },
+   "points": [
+    {
+     "en": "ΣD = 0 always (a check)"
+    },
+    {
+     "en": "Tied ranks: average rank + correction"
+    },
+    {
+     "en": "Works for qualitative data"
+    }
+   ],
+   "formula": "\\rho = 1 - \\frac{6\\left[\\sum D^2 + \\sum \\frac{m(m^2-1)}{12}\\right]}{n(n^2-1)}",
+   "narration": {
+    "en": "When the data are ranks, Spearman's coefficient is \\rho = 1 - 6\\sum D^2/[n(n^2 - 1)], where D is the difference between the two ranks of each item. It lies between −1 and +1. For tied values give each the average of the ranks they share, and add a correction m(m^2 - 1)/12 to \\sum D^2 for each group of m ties.",
+    "kn": "ಶ್ರೇಣಿ ದತ್ತಾಂಶಕ್ಕೆ ಸ್ಪಿಯರ್‌ಮನ್ ಗುಣಾಂಕ ρ = 1 − 6ΣD²/[n(n² − 1)]; D ಎರಡು ಶ್ರೇಣಿಗಳ ವ್ಯತ್ಯಾಸ. ಇದು −1 ಮತ್ತು +1 ನಡುವೆ. ಸಮ ಬೆಲೆಗಳಿಗೆ ಸರಾಸರಿ ಶ್ರೇಣಿ ಕೊಟ್ಟು, ಪ್ರತಿ m ಸಮ ಬೆಲೆಗಳ ಗುಂಪಿಗೆ m(m² − 1)/12 ತಿದ್ದುಪಡಿಯನ್ನು ΣD² ಗೆ ಕೂಡಿಸಿ."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Two judges, six rangolis"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Write both judges' ranks side by side, then the difference D and its square."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        6,
+        3
+       ],
+       "to": [
+        62,
+        55.0
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        6,
+        9.5
+       ],
+       "to": [
+        62,
+        9.5
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        18,
+        3
+       ],
+       "to": [
+        18,
+        55.0
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        30,
+        3
+       ],
+       "to": [
+        30,
+        55.0
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        42,
+        3
+       ],
+       "to": [
+        42,
+        55.0
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        52,
+        3
+       ],
+       "to": [
+        52,
+        55.0
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        7,
+        7.68
+       ],
+       "text": {
+        "en": "Item"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        7.68
+       ],
+       "text": {
+        "en": "R₁"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        7.68
+       ],
+       "text": {
+        "en": "R₂"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        7.68
+       ],
+       "text": {
+        "en": "D"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        53,
+        7.68
+       ],
+       "text": {
+        "en": "D²"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        7,
+        14.18
+       ],
+       "text": {
+        "en": "A"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        14.18
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        14.18
+       ],
+       "text": {
+        "en": "2"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        14.18
+       ],
+       "text": {
+        "en": "−1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        53,
+        14.18
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        7,
+        20.68
+       ],
+       "text": {
+        "en": "B"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        20.68
+       ],
+       "text": {
+        "en": "2"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        20.68
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        20.68
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        53,
+        20.68
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        7,
+        27.18
+       ],
+       "text": {
+        "en": "C"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        27.18
+       ],
+       "text": {
+        "en": "3"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        27.18
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        27.18
+       ],
+       "text": {
+        "en": "−1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        53,
+        27.18
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        7,
+        33.68
+       ],
+       "text": {
+        "en": "D"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        33.68
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        33.68
+       ],
+       "text": {
+        "en": "3"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        33.68
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        53,
+        33.68
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        7,
+        40.18
+       ],
+       "text": {
+        "en": "E"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        40.18
+       ],
+       "text": {
+        "en": "5"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        40.18
+       ],
+       "text": {
+        "en": "6"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        40.18
+       ],
+       "text": {
+        "en": "−1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        53,
+        40.18
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        7,
+        46.68
+       ],
+       "text": {
+        "en": "F"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        46.68
+       ],
+       "text": {
+        "en": "6"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        46.68
+       ],
+       "text": {
+        "en": "5"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        46.68
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        53,
+        46.68
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        7,
+        53.18
+       ],
+       "text": {
+        "en": "Σ"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        53.18
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        53,
+        53.18
+       ],
+       "text": {
+        "en": "6"
+       },
+       "size": 3.5,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Check: the D column must add to zero. The squares add to six."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        64,
+        8
+       ],
+       "text": {
+        "en": "ΣD = 0 ✓"
+       },
+       "size": 4,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        64,
+        15
+       ],
+       "text": {
+        "en": "ΣD² = 6"
+       },
+       "size": 4,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Put n equal to six into Spearman's formula. Rho is 1 minus 36 by 210, about 0.83: the judges agree closely."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        62,
+        27
+       ],
+       "tex": "\\rho = 1 - \\frac{6\\times 6}{6(36-1)}",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        62,
+        39
+       ],
+       "tex": "= 1 - \\frac{36}{210}",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        62,
+        50
+       ],
+       "tex": "= 0.83",
+       "size": 4.5,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "On the board: Two judges, six rangolis."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Try it yourself"
+   },
+   "kind": "readouts",
+   "caption": {
+    "en": "Choose the number of items n and the total ΣD². The rank correlation updates."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Number of items n"
+     },
+     "min": 3,
+     "max": 15,
+     "step": 1,
+     "value": 6
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "ΣD²"
+     },
+     "min": 0,
+     "max": 600,
+     "step": 1,
+     "value": 6
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "ρ = 1 − 6ΣD²/[n(n² − 1)]"
+     },
+     "expr": "1 - 6*d/(n*(n^2 - 1))",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "ΣD² for complete disagreement (ρ = −1)"
+     },
+     "expr": "n*(n^2 - 1)/3",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With n = 6, what ΣD² gives ρ = 0?"
+    },
+    {
+     "en": "Set ΣD² to the \"complete disagreement\" value. Is ρ exactly −1?"
+    },
+    {
+     "en": "For a fixed ΣD², does a larger n raise or lower ρ?"
+    }
+   ],
+   "narration": {
+    "en": "Choose the number of items n and the total ΣD². The rank correlation updates. With n = 6, what ΣD² gives ρ = 0?"
+   },
+   "seconds": 120,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Two judges rank six items: R₁ = 1, 2, 3, 4, 5, 6 and R₂ = 2, 1, 4, 3, 6, 5. Find ρ."
+   },
+   "steps": [
+    {
+     "en": "D = −1, 1, −1, 1, −1, 1; ΣD² = 6."
+    },
+    {
+     "en": "ρ = 1 − 6 × 6/[6(36 − 1)] = 1 − 36/210."
+    },
+    {
+     "en": "ρ = 0.8286."
+    }
+   ],
+   "answer": {
+    "en": "ρ = 0.83, high agreement"
+   },
+   "narration": {
+    "en": "Let us work this out together. Two judges rank six items: R₁ = 1, 2, 3, 4, 5, 6 and R₂ = 2, 1, 4, 3, 6, 5. Find ρ."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "x = 50, 60, 60, 70, 80 and y = 30, 40, 50, 45, 60. Find the rank correlation (rank from the smallest)."
+   },
+   "steps": [
+    {
+     "en": "Ranks of x: 1, 2.5, 2.5, 4, 5 (60 is tied for ranks 2 and 3). Ranks of y: 1, 2, 4, 3, 5."
+    },
+    {
+     "en": "D = 0, 0.5, −1.5, 1, 0; ΣD² = 3.5."
+    },
+    {
+     "en": "One tie of m = 2: correction = 2(4 − 1)/12 = 0.5."
+    },
+    {
+     "en": "ρ = 1 − 6(3.5 + 0.5)/[5(25 − 1)] = 1 − 24/120 = 0.8."
+    }
+   ],
+   "answer": {
+    "en": "ρ = 0.8"
+   },
+   "narration": {
+    "en": "Let us work this out together. x = 50, 60, 60, 70, 80 and y = 30, 40, 50, 45, 60. Find the rank correlation (rank from the smallest)."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Six, D-squared, n-cubed minus n"
+   },
+   "body": {
+    "en": "The denominator n(n² − 1) is just n³ − n. For n = 5 it is 120, n = 6 gives 210, n = 7 gives 336, n = 10 gives 990. Keep these in mind."
+   },
+   "mnemonic": {
+    "en": "1 − 6ΣD² over n³ − n"
+   },
+   "narration": {
+    "en": "Six, D-squared, n-cubed minus n. The denominator n(n² − 1) is just n³ − n. For n = 5 it is 120, n = 6 gives 210, n = 7 gives 336, n = 10 gives 990. Keep these in mind."
+   },
+   "optional": true,
+   "seconds": 90
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1t08-q09",
+    "1t08-q10",
+    "1t08-q11"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team discusses and gives one answer.",
+    "kn": "ತಂಡ ರಸಪ್ರಶ್ನೆ. ಪ್ರತಿ ತಂಡ ಚರ್ಚಿಸಿ ಒಂದು ಉತ್ತರ ನೀಡಲಿ."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "ρ = 1 − 6ΣD²/[n(n² − 1)].",
+     "kn": "ρ = 1 − 6ΣD²/[n(n² − 1)]."
+    },
+    {
+     "en": "ΣD is always 0: use it to check.",
+     "kn": "ΣD ಯಾವಾಗಲೂ 0: ಪರಿಶೀಲನೆಗೆ ಬಳಸಿ."
+    },
+    {
+     "en": "Ties: average ranks and add m(m² − 1)/12 for each tie.",
+     "kn": "ಸಮ ಶ್ರೇಣಿ: ಸರಾಸರಿ ಶ್ರೇಣಿ ಕೊಟ್ಟು ಪ್ರತಿ ಗುಂಪಿಗೆ m(m² − 1)/12 ಕೂಡಿಸಿ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Ranks by two judges: 3, 1, 4, 2, 5 and 2, 3, 5, 1, 4. Find ρ."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1t08-q12"
+   ],
+   "narration": {
+    "en": "Recap. ρ = 1 − 6ΣD²/[n(n² − 1)]. ΣD is always 0: use it to check. Ties: average ranks and add m(m² − 1)/12 for each tie.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ρ = 1 − 6ΣD²/[n(n² − 1)]. ΣD ಯಾವಾಗಲೂ 0: ಪರಿಶೀಲನೆಗೆ ಬಳಸಿ. ಸಮ ಶ್ರೇಣಿ: ಸರಾಸರಿ ಶ್ರೇಣಿ ಕೊಟ್ಟು ಪ್ರತಿ ಗುಂಪಿಗೆ m(m² − 1)/12 ಕೂಡಿಸಿ."
+   }
+  }
+ ]
+}
