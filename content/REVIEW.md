@@ -569,3 +569,21 @@ No text is reproduced. Check these plot details against the texts:
 - **Formula forms:** capacitor and choke ripple; CRT deflection; varactor C; Lissajous ratio.
 - **Real-board check:** the 7805 and DMM whiteboards are tight on space.
 - **Kannada:** terms need a native-speaker review.
+
+## Statistics 1st PUC ch1-5; Accountancy 2nd PUC enrichment; Business Studies 2nd PUC enrichment
+
+### Statistics 1st PUC ch1-5
+
+- **Sections:** self-assigned.
+- **Facts:** NSO 2019; ISI 1931 and 1959; Statistics Day 29 June; Achenwall 1749; the Disraeli quote.
+- **Ogive question:** uses linear interpolation; the book may expect graph reading.
+
+### Accountancy 2nd PUC enrichment
+
+- **DRR/DRI:** whiteboards follow the old rules; the 2019 exemptions are not mentioned.
+- **Calls in arrears / in advance:** 10% and 12% (Table F).
+
+### Business Studies 2nd PUC enrichment
+
+- **Consumer Protection claim limits:** the pack shows 1 cr / 10 cr, but the 2021 Jurisdiction Rules changed them to 50 lakh / 2 cr. Decide which to teach.
+- **Payout pie:** uses a 100-d data expression; check it on a board.
