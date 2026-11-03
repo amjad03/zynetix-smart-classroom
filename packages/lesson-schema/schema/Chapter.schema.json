@@ -1,0 +1,110 @@
+{
+  "$ref": "#/definitions/Chapter",
+  "definitions": {
+    "Chapter": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "subject": {
+          "type": "string",
+          "enum": [
+            "physics",
+            "chemistry",
+            "maths",
+            "biology"
+          ]
+        },
+        "year": {
+          "type": "string",
+          "enum": [
+            "puc1",
+            "puc2"
+          ]
+        },
+        "number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "title": {
+          "type": "object",
+          "properties": {
+            "en": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kn": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "en"
+          ],
+          "additionalProperties": false
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9._-]*$"
+              },
+              "title": {
+                "type": "object",
+                "properties": {
+                  "en": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "kn": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "en"
+                ],
+                "additionalProperties": false
+              },
+              "ncert": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "title"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "exams": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PUC",
+              "KCET",
+              "COMEDK",
+              "NEET",
+              "JEE"
+            ]
+          },
+          "default": []
+        }
+      },
+      "required": [
+        "id",
+        "subject",
+        "year",
+        "number",
+        "title"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

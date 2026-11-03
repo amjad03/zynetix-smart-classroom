@@ -1,0 +1,134 @@
+{
+  "$ref": "#/definitions/SessionLog",
+  "definitions": {
+    "SessionLog": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "sectionId": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "teacher",
+            "self_learning"
+          ]
+        },
+        "chapterId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "topicId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "lessonId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "packVersion": {
+          "type": "string"
+        },
+        "startedAt": {
+          "type": "string"
+        },
+        "endedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "blocksShown": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "completed": {
+          "type": "boolean"
+        },
+        "answers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "questionId": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9._-]*$"
+              },
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "monitor",
+                  "roll_call",
+                  "team"
+                ]
+              },
+              "roll": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 300
+              },
+              "team": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 7
+              },
+              "chosen": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 3
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "correct": {
+                "type": "boolean"
+              },
+              "at": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "questionId",
+              "mode",
+              "chosen",
+              "correct",
+              "at"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "present": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 300
+        }
+      },
+      "required": [
+        "id",
+        "sectionId",
+        "mode",
+        "chapterId",
+        "topicId",
+        "lessonId",
+        "packVersion",
+        "startedAt",
+        "endedAt",
+        "blocksShown",
+        "completed"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

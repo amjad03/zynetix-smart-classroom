@@ -1,0 +1,149 @@
+{
+  "$ref": "#/definitions/Question",
+  "definitions": {
+    "Question": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "chapterId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "topicId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "stem": {
+          "type": "object",
+          "properties": {
+            "en": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kn": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "en"
+          ],
+          "additionalProperties": false
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kn": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "en"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "answer": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "explanation": {
+          "type": "object",
+          "properties": {
+            "en": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kn": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "en"
+          ],
+          "additionalProperties": false
+        },
+        "exams": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PUC",
+              "KCET",
+              "COMEDK",
+              "NEET",
+              "JEE"
+            ]
+          },
+          "minItems": 1
+        },
+        "difficulty": {
+          "type": "string",
+          "enum": [
+            "easy",
+            "medium",
+            "hard"
+          ]
+        },
+        "pyq": {
+          "type": "object",
+          "properties": {
+            "exam": {
+              "type": "string",
+              "enum": [
+                "PUC",
+                "KCET",
+                "COMEDK",
+                "NEET",
+                "JEE"
+              ]
+            },
+            "year": {
+              "type": "integer",
+              "minimum": 1990,
+              "maximum": 2100
+            },
+            "verified": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "exam",
+            "year",
+            "verified"
+          ],
+          "additionalProperties": false
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      },
+      "required": [
+        "id",
+        "chapterId",
+        "stem",
+        "options",
+        "answer",
+        "exams",
+        "difficulty"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
