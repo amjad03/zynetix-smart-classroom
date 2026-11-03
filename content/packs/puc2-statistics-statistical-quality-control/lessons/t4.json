@@ -1,0 +1,624 @@
+{
+ "id": "puc2-statistics-09-statistical-quality-control.t4.lesson",
+ "chapterId": "puc2-statistics-09-statistical-quality-control",
+ "topicId": "puc2-statistics-09-statistical-quality-control.t4",
+ "title": {
+  "en": "Product control: acceptance sampling",
+  "kn": "ಉತ್ಪನ್ನ ನಿಯಂತ್ರಣ: ಸ್ವೀಕಾರ ಮಾದರಿ ಆಯ್ಕೆ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Accept the lot or send it back?",
+    "kn": "ಸರಕು ಸ್ವೀಕರಿಸಬೇಕೇ, ಹಿಂತಿರುಗಿಸಬೇಕೇ?"
+   },
+   "hook": {
+    "en": "A hospital receives 1000 syringes. Testing every one is costly, and some tests destroy the item. Instead it checks a sample of 50 and accepts the lot only if at most one is faulty. That is an acceptance sampling plan.",
+    "kn": "ಆಸ್ಪತ್ರೆಗೆ 1000 ಸಿರಿಂಜ್‌ಗಳು ಬರುತ್ತವೆ. ಪ್ರತಿಯೊಂದನ್ನೂ ಪರೀಕ್ಷಿಸುವುದು ದುಬಾರಿ, ಕೆಲವು ಪರೀಕ್ಷೆಗಳು ವಸ್ತುವನ್ನೇ ನಾಶಮಾಡುತ್ತವೆ. ಬದಲಾಗಿ 50 ರ ಮಾದರಿ ಪರಿಶೀಲಿಸಿ, ಹೆಚ್ಚೆಂದರೆ ಒಂದು ದೋಷಯುಕ್ತವಿದ್ದರೆ ಸ್ವೀಕರಿಸುತ್ತದೆ. ಇದೇ ಸ್ವೀಕಾರ ಮಾದರಿ ಯೋಜನೆ."
+   },
+   "objectives": [
+    {
+     "en": "Describe single and double sampling plans"
+    },
+    {
+     "en": "Define AQL, LTPD, producer's risk and consumer's risk"
+    },
+    {
+     "en": "Read an OC curve; compute Pa and ATI"
+    }
+   ],
+   "narration": {
+    "en": "A hospital receives 1000 syringes. Testing every one is costly, and some tests destroy the item. Instead it checks a sample of 50 and accepts the lot only if at most one is faulty. That is an acceptance sampling plan.",
+    "kn": "ಆಸ್ಪತ್ರೆಗೆ 1000 ಸಿರಿಂಜ್‌ಗಳು ಬರುತ್ತವೆ. ಪ್ರತಿಯೊಂದನ್ನೂ ಪರೀಕ್ಷಿಸುವುದು ದುಬಾರಿ, ಕೆಲವು ಪರೀಕ್ಷೆಗಳು ವಸ್ತುವನ್ನೇ ನಾಶಮಾಡುತ್ತವೆ. ಬದಲಾಗಿ 50 ರ ಮಾದರಿ ಪರಿಶೀಲಿಸಿ, ಹೆಚ್ಚೆಂದರೆ ಒಂದು ದೋಷಯುಕ್ತವಿದ್ದರೆ ಸ್ವೀಕರಿಸುತ್ತದೆ. ಇದೇ ಸ್ವೀಕಾರ ಮಾದರಿ ಯೋಜನೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Sampling plans"
+   },
+   "body": {
+    "en": "Product control decides whether to accept or reject a lot by inspecting a sample. Single sampling plan $(N, n, c)$: inspect $n$ items; accept the lot if the number of defectives $d \\le c$ (acceptance number), else reject. Double sampling plan $(n_1, c_1; n_2, c_2)$: accept if $d_1 \\le c_1$, reject if $d_1 > c_2$; otherwise take a second sample and accept if $d_1 + d_2 \\le c_2$.",
+    "kn": "ಏಕ ಮಾದರಿ ಯೋಜನೆ (N, n, c): n ವಸ್ತು ಪರಿಶೀಲಿಸಿ, d ≤ c ಆದರೆ ಸ್ವೀಕರಿಸಿ. ದ್ವಿ ಮಾದರಿ ಯೋಜನೆ: d₁ ≤ c₁ ಸ್ವೀಕಾರ, d₁ > c₂ ತಿರಸ್ಕಾರ, ಇಲ್ಲದಿದ್ದರೆ ಎರಡನೇ ಮಾದರಿ; d₁ + d₂ ≤ c₂ ಆದರೆ ಸ್ವೀಕಾರ."
+   },
+   "points": [
+    {
+     "en": "Single: one sample, acceptance number c"
+    },
+    {
+     "en": "Double: a second chance when d₁ is in between"
+    },
+    {
+     "en": "Rejected lots may be fully inspected (rectifying)"
+    }
+   ],
+   "narration": {
+    "en": "Product control decides whether to accept or reject a lot by inspecting a sample. Single sampling plan (N, n, c): inspect n items; accept the lot if the number of defectives d ≤ c (acceptance number), else reject. Double sampling plan (n_1, c_1; n_2, c_2): accept if d_1 ≤ c_1, reject if d_1 > c_2; otherwise take a second sample and accept if d_1 + d_2 ≤ c_2.",
+    "kn": "ಏಕ ಮಾದರಿ ಯೋಜನೆ (N, n, c): n ವಸ್ತು ಪರಿಶೀಲಿಸಿ, d ≤ c ಆದರೆ ಸ್ವೀಕರಿಸಿ. ದ್ವಿ ಮಾದರಿ ಯೋಜನೆ: d₁ ≤ c₁ ಸ್ವೀಕಾರ, d₁ > c₂ ತಿರಸ್ಕಾರ, ಇಲ್ಲದಿದ್ದರೆ ಎರಡನೇ ಮಾದರಿ; d₁ + d₂ ≤ c₂ ಆದರೆ ಸ್ವೀಕಾರ."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Single sampling plan and OC curve"
+   },
+   "narration": {
+    "en": "The teacher draws the decision flowchart of a single sampling plan, then the ideal and actual OC curves with the two risks."
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "From a lot of N, draw a sample of n and count the defectives d."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        2,
+        4
+       ],
+       "to": [
+        26,
+        12
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        6
+       ],
+       "text": {
+        "en": "Lot N = 1000"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        26,
+        8
+       ],
+       "to": [
+        34,
+        8
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        34,
+        4
+       ],
+       "to": [
+        60,
+        12
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        36,
+        6
+       ],
+       "text": {
+        "en": "Sample n = 50"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        47,
+        12
+       ],
+       "to": [
+        47,
+        18
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        34,
+        18
+       ],
+       "to": [
+        60,
+        26
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        37,
+        20
+       ],
+       "text": {
+        "en": "Is d ≤ c = 1?"
+       },
+       "size": 3.2,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "If d is at most c, accept the lot. If not, reject it, or inspect the whole lot."
+     },
+     "draw": [
+      {
+       "kind": "arrow",
+       "from": [
+        60,
+        22
+       ],
+       "to": [
+        70,
+        16
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        71,
+        13
+       ],
+       "text": {
+        "en": "Yes: accept"
+       },
+       "size": 3.4,
+       "color": "green"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        60,
+        22
+       ],
+       "to": [
+        70,
+        28
+       ],
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        71,
+        27
+       ],
+       "text": {
+        "en": "No: reject"
+       },
+       "size": 3.4,
+       "color": "red"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The OC curve shows the chance of acceptance for each lot quality p. It falls as the lot gets worse."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        10,
+        32
+       ],
+       "to": [
+        60,
+        58
+       ],
+       "x": [
+        0,
+        0.1
+       ],
+       "y": [
+        0,
+        1
+       ],
+       "color": "white",
+       "xLabel": "p",
+       "yLabel": "Pa"
+      },
+      {
+       "kind": "plot",
+       "fn": "exp(-50*x)*(1+50*x)",
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "At the AQL, good lots should be accepted; the small gap below 1 is the producer's risk. At the LTPD, the height left is the consumer's risk."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        64,
+        36
+       ],
+       "text": {
+        "en": "α: producer's risk at AQL"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        64,
+        43
+       ],
+       "text": {
+        "en": "β: consumer's risk at LTPD"
+       },
+       "size": 3.2,
+       "color": "orange"
+      },
+      {
+       "kind": "line",
+       "from": [
+        15,
+        32
+       ],
+       "to": [
+        15,
+        58
+       ],
+       "color": "green",
+       "dashed": true
+      },
+      {
+       "kind": "line",
+       "from": [
+        50,
+        32
+       ],
+       "to": [
+        50,
+        58
+       ],
+       "color": "red",
+       "dashed": true
+      },
+      {
+       "kind": "text",
+       "at": [
+        13,
+        59
+       ],
+       "text": {
+        "en": "AQL"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        48,
+        59
+       ],
+       "text": {
+        "en": "LTPD"
+       },
+       "size": 3,
+       "color": "red"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "For this plan, Pa at AQL 1 percent is 0.910, so alpha is 0.090. At LTPD 8 percent, beta is 0.092."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        64,
+        50
+       ],
+       "tex": "\\alpha=0.090,\\ \\beta=0.092",
+       "size": 3.4,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "OC curve, risks, AOQ and ATI"
+   },
+   "body": {
+    "en": "The OC curve plots the probability of acceptance $P_a$ against the lot fraction defective $p$. Acceptable quality level (AQL) $p_1$: a quality the consumer is happy with; producer's risk $\\alpha = 1 - P_a(p_1)$. Lot tolerance percent defective (LTPD) $p_2$: a quality the consumer wants rejected; consumer's risk $\\beta = P_a(p_2)$. With rectifying inspection, average outgoing quality $AOQ \\approx p\\,P_a$ and average total inspection $ATI = n + (1 - P_a)(N - n)$. For $n$ large and $p$ small, $P_a \\approx \\sum_{d=0}^{c} e^{-np}(np)^d/d!$.",
+    "kn": "OC ವಕ್ರರೇಖೆ Pa ಅನ್ನು p ವಿರುದ್ಧ ತೋರಿಸುತ್ತದೆ. AQL ನಲ್ಲಿ ಉತ್ಪಾದಕನ ಅಪಾಯ α = 1 − Pa; LTPD ನಲ್ಲಿ ಗ್ರಾಹಕನ ಅಪಾಯ β = Pa. AOQ ≈ p·Pa, ATI = n + (1 − Pa)(N − n)."
+   },
+   "points": [
+    {
+     "en": "Producer's risk α at AQL"
+    },
+    {
+     "en": "Consumer's risk β at LTPD"
+    },
+    {
+     "en": "ATI = n + (1 − Pa)(N − n)"
+    }
+   ],
+   "narration": {
+    "en": "The OC curve plots the probability of acceptance P_a against the lot fraction defective p. Acceptable quality level (AQL) p_1: a quality the consumer is happy with; producer's risk alpha = 1 - P_a(p_1). Lot tolerance percent defective (LTPD) p_2: a quality the consumer wants rejected; consumer's risk beta = P_a(p_2). With rectifying inspection, average outgoing quality AOQ approx p,P_a and average total inspection ATI = n + (1 - P_a)(N - n). For n large and p small, P_a approx sum_d=0^c e^-np(np)^d/d!.",
+    "kn": "OC ವಕ್ರರೇಖೆ Pa ಅನ್ನು p ವಿರುದ್ಧ ತೋರಿಸುತ್ತದೆ. AQL ನಲ್ಲಿ ಉತ್ಪಾದಕನ ಅಪಾಯ α = 1 − Pa; LTPD ನಲ್ಲಿ ಗ್ರಾಹಕನ ಅಪಾಯ β = Pa. AOQ ≈ p·Pa, ATI = n + (1 − Pa)(N − n)."
+   },
+   "formula": "ATI=n+(1-P_a)(N-n),\\qquad AOQ\\approx p\\,P_a"
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Try it yourself"
+   },
+   "kind": "function_plot",
+   "caption": {
+    "en": "OC curves of single sampling plans with c = 1 (yellow) and c = 2 (blue), Poisson approximation. Slide the sample size n and the lot quality p."
+   },
+   "narration": {
+    "en": "Increase the sample size and the OC curve becomes steeper: the plan separates good lots from bad lots more sharply."
+   },
+   "seconds": 120,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Sample size n"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 5,
+     "value": 50
+    },
+    {
+     "name": "p",
+     "label": {
+      "en": "Lot fraction defective p"
+     },
+     "min": 0,
+     "max": 0.15,
+     "step": 0.005,
+     "value": 0.02
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Pa (c = 1)"
+     },
+     "expr": "exp(-n*p)*(1+n*p)",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "Pa (c = 2)"
+     },
+     "expr": "exp(-n*p)*(1+n*p+(n*p)^2/2)",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "AOQ ≈ p·Pa (c = 1)"
+     },
+     "expr": "p*exp(-n*p)*(1+n*p)",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "ATI (N = 1000, c = 1)"
+     },
+     "expr": "n+(1-exp(-n*p)*(1+n*p))*(1000-n)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set p = 0.02, n = 50: is Pa about 0.736 for c = 1?"
+    },
+    {
+     "en": "Double n. What happens to the curve near p = 0.05?"
+    },
+    {
+     "en": "For which p is the AOQ (c = 1) largest? That is the AOQL."
+    }
+   ],
+   "fns": [
+    {
+     "fn": "exp(-n*x)*(1+n*x)",
+     "label": "c = 1",
+     "color": "yellow"
+    },
+    {
+     "fn": "exp(-n*x)*(1+n*x+(n*x)^2/2)",
+     "label": "c = 2",
+     "color": "blue"
+    }
+   ],
+   "x": [
+    0,
+    0.15
+   ],
+   "y": [
+    0,
+    1
+   ],
+   "xLabel": "p",
+   "yLabel": "Pa"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "For the plan N = 1000, n = 50, c = 1, find the producer's risk at AQL = 1% and the consumer's risk at LTPD = 8% (Poisson approximation)."
+   },
+   "steps": [
+    {
+     "en": "AQL: m = 50 × 0.01 = 0.5; Pa = e^(−0.5)(1 + 0.5) = 0.9098."
+    },
+    {
+     "en": "Producer's risk α = 1 − 0.9098 = 0.0902."
+    },
+    {
+     "en": "LTPD: m = 50 × 0.08 = 4; Pa = e^(−4)(1 + 4) = 0.0916."
+    },
+    {
+     "en": "Consumer's risk β = 0.0916."
+    }
+   ],
+   "answer": {
+    "en": "α ≈ 0.090, β ≈ 0.092"
+   },
+   "narration": {
+    "en": "Let us work this out together. For the plan N = 1000, n = 50, c = 1, find the producer's risk at AQL = 1% and the consumer's risk at LTPD = 8% (Poisson approximation)."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Whose risk is it?"
+   },
+   "body": {
+    "en": "The Producer fears Rejection of good lots (P–R); the Consumer fears Acceptance of bad lots (C–A). AQL belongs to the producer's side, LTPD to the consumer's side."
+   },
+   "narration": {
+    "en": "Whose risk is it?. The Producer fears Rejection of good lots (P–R); the Consumer fears Acceptance of bad lots (C–A). AQL belongs to the producer's side, LTPD to the consumer's side."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Producer–Rejection, Consumer–Acceptance"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2t09-q16",
+    "2t09-q17",
+    "2t09-q18"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Work it out in your team and agree on one answer.",
+    "kn": "ತಂಡ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ತಂಡದಲ್ಲಿ ಲೆಕ್ಕ ಮಾಡಿ ಒಂದೇ ಉತ್ತರಕ್ಕೆ ಬನ್ನಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC board exam pattern"
+   },
+   "questionIds": [
+    "2t09-q19",
+    "2t09-q20"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the pattern of the II PUC Statistics board exam. Try them on your own first, then check."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "Exam practice: II PUC board pattern"
+   },
+   "questionIds": [
+    "2t09-q21",
+    "2t09-q22",
+    "2t09-q23"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Exam practice. These board-pattern questions bring together the whole chapter. Show every step in your rough work."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Single plan (N, n, c): accept if d ≤ c.",
+     "kn": "ಏಕ ಯೋಜನೆ (N, n, c): d ≤ c ಆದರೆ ಸ್ವೀಕಾರ."
+    },
+    {
+     "en": "Double plan gives a second sample when c₁ < d₁ ≤ c₂.",
+     "kn": "ದ್ವಿ ಯೋಜನೆ c₁ < d₁ ≤ c₂ ಆದಾಗ ಎರಡನೇ ಮಾದರಿ."
+    },
+    {
+     "en": "OC curve: Pa against p; α at AQL, β at LTPD.",
+     "kn": "OC ವಕ್ರರೇಖೆ: Pa vs p; AQL ನಲ್ಲಿ α, LTPD ನಲ್ಲಿ β."
+    },
+    {
+     "en": "ATI = n + (1 − Pa)(N − n); AOQ ≈ p·Pa.",
+     "kn": "ATI = n + (1 − Pa)(N − n); AOQ ≈ p·Pa."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Explain single and double sampling plans with flowcharts."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2t09-q23"
+   ],
+   "narration": {
+    "en": "Recap. Single plan (N, n, c): accept if d ≤ c. Double plan gives a second sample when c₁ < d₁ ≤ c₂. OC curve: Pa against p; α at AQL, β at LTPD. ATI = n + (1 − Pa)(N − n); AOQ ≈ p·Pa.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಏಕ ಯೋಜನೆ (N, n, c): d ≤ c ಆದರೆ ಸ್ವೀಕಾರ. ದ್ವಿ ಯೋಜನೆ c₁ < d₁ ≤ c₂ ಆದಾಗ ಎರಡನೇ ಮಾದರಿ. OC ವಕ್ರರೇಖೆ: Pa vs p; AQL ನಲ್ಲಿ α, LTPD ನಲ್ಲಿ β. ATI = n + (1 − Pa)(N − n); AOQ ≈ p·Pa."
+   }
+  }
+ ]
+}

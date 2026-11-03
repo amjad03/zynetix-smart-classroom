@@ -587,3 +587,10 @@ No text is reproduced. Check these plot details against the texts:
 
 - **Consumer Protection claim limits:** the pack shows 1 cr / 10 cr, but the 2021 Jurisdiction Rules changed them to 50 lakh / 2 cr. Decide which to teach.
 - **Payout pie:** uses a 100-d data expression; check it on a board.
+
+## Statistics 2nd PUC ch6-10 (Karnataka PU)
+
+- **Topic split:** reconstructed, not taken from the PUE textbook. Check: hypergeometric and geometric in ch6; AOQ/ATI depth in ch9; ch10 stops at dominance.
+- **Notation:** geometric distribution counts failures before the first success; s^2 uses divisor n-1, stated in every question (the PUE book may use divisor n); AOQ is approximately p*Pa.
+- **Critical values:** computed with scipy; textbook tables may round differently.
+- **Kannada:** terms need a native-speaker review.

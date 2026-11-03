@@ -1,0 +1,633 @@
+{
+ "id": "puc2-statistics-08-statistical-inference-testing-of-hypothesis.t1.lesson",
+ "chapterId": "puc2-statistics-08-statistical-inference-testing-of-hypothesis",
+ "topicId": "puc2-statistics-08-statistical-inference-testing-of-hypothesis.t1",
+ "title": {
+  "en": "Basic concepts of testing of hypothesis",
+  "kn": "ಪರಿಕಲ್ಪನಾ ಪರೀಕ್ಷೆಯ ಮೂಲ ಪರಿಕಲ್ಪನೆಗಳು"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Innocent until proven guilty",
+    "kn": "ಅಪರಾಧ ಸಾಬೀತಾಗುವವರೆಗೆ ನಿರಪರಾಧಿ"
+   },
+   "hook": {
+    "en": "A court starts by assuming the accused is innocent and convicts only on strong evidence. A statistical test works the same way: we assume a null hypothesis and reject it only if the sample gives strong evidence against it.",
+    "kn": "ನ್ಯಾಯಾಲಯ ಆರೋಪಿಯನ್ನು ನಿರಪರಾಧಿ ಎಂದು ಭಾವಿಸಿ, ಬಲವಾದ ಸಾಕ್ಷ್ಯವಿದ್ದರೆ ಮಾತ್ರ ಶಿಕ್ಷೆ ನೀಡುತ್ತದೆ. ಸಂಖ್ಯಾಶಾಸ್ತ್ರೀಯ ಪರೀಕ್ಷೆಯೂ ಹಾಗೆಯೇ: ಶೂನ್ಯ ಪರಿಕಲ್ಪನೆಯನ್ನು ಊಹಿಸಿ, ಮಾದರಿ ಬಲವಾದ ವಿರುದ್ಧ ಸಾಕ್ಷ್ಯ ನೀಡಿದರೆ ಮಾತ್ರ ತಿರಸ್ಕರಿಸುತ್ತೇವೆ."
+   },
+   "objectives": [
+    {
+     "en": "Define null and alternative hypotheses, test statistic and critical region"
+    },
+    {
+     "en": "Explain Type I and Type II errors, level of significance and power"
+    },
+    {
+     "en": "Follow the steps of a test; one- and two-tailed tests"
+    }
+   ],
+   "narration": {
+    "en": "A court starts by assuming the accused is innocent and convicts only on strong evidence. A statistical test works the same way: we assume a null hypothesis and reject it only if the sample gives strong evidence against it.",
+    "kn": "ನ್ಯಾಯಾಲಯ ಆರೋಪಿಯನ್ನು ನಿರಪರಾಧಿ ಎಂದು ಭಾವಿಸಿ, ಬಲವಾದ ಸಾಕ್ಷ್ಯವಿದ್ದರೆ ಮಾತ್ರ ಶಿಕ್ಷೆ ನೀಡುತ್ತದೆ. ಸಂಖ್ಯಾಶಾಸ್ತ್ರೀಯ ಪರೀಕ್ಷೆಯೂ ಹಾಗೆಯೇ: ಶೂನ್ಯ ಪರಿಕಲ್ಪನೆಯನ್ನು ಊಹಿಸಿ, ಮಾದರಿ ಬಲವಾದ ವಿರುದ್ಧ ಸಾಕ್ಷ್ಯ ನೀಡಿದರೆ ಮಾತ್ರ ತಿರಸ್ಕರಿಸುತ್ತೇವೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Hypotheses and errors"
+   },
+   "body": {
+    "en": "A statistical hypothesis is a statement about a population parameter. The null hypothesis $H_0$ is the hypothesis of no difference that is tested, e.g. $H_0: \\mu = \\mu_0$. The alternative $H_1$ is accepted when $H_0$ is rejected: $\\mu \\ne \\mu_0$ (two-tailed), $\\mu > \\mu_0$ (right-tailed) or $\\mu < \\mu_0$ (left-tailed). Type I error: rejecting a true $H_0$, probability $\\alpha$ (the level of significance). Type II error: accepting a false $H_0$, probability $\\beta$. Power $= 1 - \\beta$.",
+    "kn": "ಶೂನ್ಯ ಪರಿಕಲ್ಪನೆ H₀ ವ್ಯತ್ಯಾಸವಿಲ್ಲ ಎನ್ನುತ್ತದೆ; H₀ ತಿರಸ್ಕೃತವಾದಾಗ ಪರ್ಯಾಯ H₁ ಸ್ವೀಕಾರ. ಮೊದಲ ಬಗೆಯ ದೋಷ: ಸತ್ಯ H₀ ತಿರಸ್ಕಾರ (α, ಮಹತ್ವದ ಮಟ್ಟ). ಎರಡನೇ ಬಗೆಯ ದೋಷ: ಸುಳ್ಳು H₀ ಸ್ವೀಕಾರ (β). ಸಾಮರ್ಥ್ಯ 1 − β."
+   },
+   "points": [
+    {
+     "en": "α = P(reject H₀ | H₀ true)"
+    },
+    {
+     "en": "β = P(accept H₀ | H₀ false)"
+    },
+    {
+     "en": "Power = 1 − β"
+    }
+   ],
+   "narration": {
+    "en": "The null hypothesis says there is no difference. If we reject a true null hypothesis we make a Type I error, with probability alpha, the level of significance. If we accept a false one we make a Type II error, with probability beta. One minus beta is the power of the test.",
+    "kn": "ಶೂನ್ಯ ಪರಿಕಲ್ಪನೆ H₀ ವ್ಯತ್ಯಾಸವಿಲ್ಲ ಎನ್ನುತ್ತದೆ; H₀ ತಿರಸ್ಕೃತವಾದಾಗ ಪರ್ಯಾಯ H₁ ಸ್ವೀಕಾರ. ಮೊದಲ ಬಗೆಯ ದೋಷ: ಸತ್ಯ H₀ ತಿರಸ್ಕಾರ (α, ಮಹತ್ವದ ಮಟ್ಟ). ಎರಡನೇ ಬಗೆಯ ದೋಷ: ಸುಳ್ಳು H₀ ಸ್ವೀಕಾರ (β). ಸಾಮರ್ಥ್ಯ 1 − β."
+   },
+   "formula": "\\alpha=P(\\text{reject }H_0\\mid H_0),\\quad \\beta=P(\\text{accept }H_0\\mid H_1)"
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "The testing procedure"
+   },
+   "narration": {
+    "en": "The teacher draws the five steps of a test as a flowchart and marks the two-tailed critical region on a normal curve."
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Every test follows the same five steps. Let us draw them as a flowchart."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        2,
+        3
+       ],
+       "to": [
+        40,
+        10
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        5
+       ],
+       "text": {
+        "en": "1. Set H₀ and H₁"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        2,
+        14
+       ],
+       "to": [
+        40,
+        21
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        16
+       ],
+       "text": {
+        "en": "2. Choose α (5% or 1%)"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        2,
+        25
+       ],
+       "to": [
+        40,
+        32
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        27
+       ],
+       "text": {
+        "en": "3. Compute test statistic"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        2,
+        36
+       ],
+       "to": [
+        40,
+        43
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        38
+       ],
+       "text": {
+        "en": "4. Find critical value"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        2,
+        47
+       ],
+       "to": [
+        40,
+        54
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        49
+       ],
+       "text": {
+        "en": "5. Reject or accept H₀"
+       },
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        21,
+        10
+       ],
+       "to": [
+        21,
+        14
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        21,
+        21
+       ],
+       "to": [
+        21,
+        25
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        21,
+        32
+       ],
+       "to": [
+        21,
+        36
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        21,
+        43
+       ],
+       "to": [
+        21,
+        47
+       ],
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "For a two-tailed test at 5 percent, the critical region is both tails beyond plus and minus 1.96."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        50,
+        8
+       ],
+       "to": [
+        96,
+        40
+       ],
+       "x": [
+        -3.5,
+        3.5
+       ],
+       "y": [
+        0,
+        0.45
+       ],
+       "color": "white",
+       "xLabel": "z"
+      },
+      {
+       "kind": "plot",
+       "fn": "exp(-x^2/2)/sqrt(2*pi)",
+       "color": "yellow"
+      },
+      {
+       "kind": "line",
+       "from": [
+        60.12,
+        30
+       ],
+       "to": [
+        60.12,
+        40
+       ],
+       "color": "red"
+      },
+      {
+       "kind": "line",
+       "from": [
+        85.88,
+        30
+       ],
+       "to": [
+        85.88,
+        40
+       ],
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        51,
+        44
+       ],
+       "text": {
+        "en": "−1.96"
+       },
+       "size": 3.2,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        85,
+        44
+       ],
+       "text": {
+        "en": "1.96"
+       },
+       "size": 3.2,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        66,
+        44
+       ],
+       "text": {
+        "en": "accept H₀"
+       },
+       "size": 3.2,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "If the calculated value falls in a tail, reject H nought. Otherwise there is no evidence against it."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        52,
+        50
+       ],
+       "text": {
+        "en": "|Z| > 1.96: reject H₀"
+       },
+       "size": 3.5,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        56
+       ],
+       "text": {
+        "en": "|Z| ≤ 1.96: do not reject"
+       },
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Remember the four critical values for large samples."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        52,
+        2
+       ],
+       "text": {
+        "en": "5%: 1.96 (two), 1.645 (one)"
+       },
+       "size": 3.2,
+       "color": "orange"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Critical region and tails"
+   },
+   "body": {
+    "en": "The test statistic (e.g. $Z = \\dfrac{t - E(t)}{SE(t)}$) is computed from the sample. The critical (rejection) region is the set of values of the test statistic for which $H_0$ is rejected; its boundary is the critical value. For large samples: two-tailed $|Z| > 1.96$ at 5% and $|Z| > 2.58$ at 1%; right-tailed $Z > 1.645$ (5%) or $Z > 2.33$ (1%); left-tailed $Z < -1.645$ or $Z < -2.33$.",
+    "kn": "ಪರೀಕ್ಷಾ ಸಂಖ್ಯಾಸೂಚಿ Z = (t − E(t))/SE(t). H₀ ತಿರಸ್ಕರಿಸುವ ಬೆಲೆಗಳ ಪ್ರದೇಶ ವಿಮರ್ಶಾತ್ಮಕ ಪ್ರದೇಶ. ದ್ವಿಪಾರ್ಶ್ವ: 5% ಗೆ 1.96, 1% ಗೆ 2.58; ಏಕಪಾರ್ಶ್ವ: 1.645, 2.33."
+   },
+   "points": [
+    {
+     "en": "Two-tailed: 1.96 (5%), 2.58 (1%)"
+    },
+    {
+     "en": "One-tailed: 1.645 (5%), 2.33 (1%)"
+    },
+    {
+     "en": "H₁ decides the tail"
+    }
+   ],
+   "narration": {
+    "en": "The test statistic (e.g. Z = dfract - E(t)SE(t)) is computed from the sample. The critical (rejection) region is the set of values of the test statistic for which H_0 is rejected; its boundary is the critical value. For large samples: two-tailed |Z| > 1.96 at 5% and |Z| > 2.58 at 1%; right-tailed Z > 1.645 (5%) or Z > 2.33 (1%); left-tailed Z < -1.645 or Z < -2.33.",
+    "kn": "ಪರೀಕ್ಷಾ ಸಂಖ್ಯಾಸೂಚಿ Z = (t − E(t))/SE(t). H₀ ತಿರಸ್ಕರಿಸುವ ಬೆಲೆಗಳ ಪ್ರದೇಶ ವಿಮರ್ಶಾತ್ಮಕ ಪ್ರದೇಶ. ದ್ವಿಪಾರ್ಶ್ವ: 5% ಗೆ 1.96, 1% ಗೆ 2.58; ಏಕಪಾರ್ಶ್ವ: 1.645, 2.33."
+   },
+   "formula": "Z=\\frac{t-E(t)}{SE(t)}"
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Try it yourself"
+   },
+   "kind": "function_plot",
+   "caption": {
+    "en": "Sampling distribution of Z under H₀ (yellow) and under H₁ (blue). Move the critical value c and the true shift d."
+   },
+   "narration": {
+    "en": "The yellow curve is the test statistic when the null hypothesis is true; the blue one is when the true mean has shifted. Move the cut-off: alpha and beta change in opposite directions."
+   },
+   "seconds": 120,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "c",
+     "label": {
+      "en": "Critical value c (right-tailed)"
+     },
+     "min": 0.5,
+     "max": 3,
+     "step": 0.05,
+     "value": 1.65
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "True shift under H₁"
+     },
+     "min": 0,
+     "max": 4,
+     "step": 0.1,
+     "value": 2.5
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "α = P(Z > c | H₀)"
+     },
+     "expr": "0.5-((0.5-exp(-(c)^2/2)/sqrt(2*pi)*((1/(1+0.2316419*abs(c)))*(0.319381530+(1/(1+0.2316419*abs(c)))*(-0.356563782+(1/(1+0.2316419*abs(c)))*(1.781477937+(1/(1+0.2316419*abs(c)))*(-1.821255978+(1/(1+0.2316419*abs(c)))*1.330274429))))))*(c)/(abs(c)+0.000000001))",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "β = P(Z < c | H₁)"
+     },
+     "expr": "0.5+((0.5-exp(-((c-d))^2/2)/sqrt(2*pi)*((1/(1+0.2316419*abs((c-d))))*(0.319381530+(1/(1+0.2316419*abs((c-d))))*(-0.356563782+(1/(1+0.2316419*abs((c-d))))*(1.781477937+(1/(1+0.2316419*abs((c-d))))*(-1.821255978+(1/(1+0.2316419*abs((c-d))))*1.330274429))))))*((c-d))/(abs((c-d))+0.000000001))",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "Power 1 − β"
+     },
+     "expr": "0.5-((0.5-exp(-((c-d))^2/2)/sqrt(2*pi)*((1/(1+0.2316419*abs((c-d))))*(0.319381530+(1/(1+0.2316419*abs((c-d))))*(-0.356563782+(1/(1+0.2316419*abs((c-d))))*(1.781477937+(1/(1+0.2316419*abs((c-d))))*(-1.821255978+(1/(1+0.2316419*abs((c-d))))*1.330274429))))))*((c-d))/(abs((c-d))+0.000000001))",
+     "digits": 4
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise c: α falls, but what happens to β?"
+    },
+    {
+     "en": "Keep c = 1.65 and increase d. Does the power rise?"
+    },
+    {
+     "en": "Find c that gives α ≈ 0.01."
+    }
+   ],
+   "fns": [
+    {
+     "fn": "exp(-x^2/2)/sqrt(2*pi)",
+     "label": "H₀",
+     "color": "yellow"
+    },
+    {
+     "fn": "exp(-(x-d)^2/2)/sqrt(2*pi)",
+     "label": "H₁",
+     "color": "blue"
+    },
+    {
+     "fn": "20*(x-c)",
+     "label": "cut-off c",
+     "color": "red"
+    }
+   ],
+   "x": [
+    -4,
+    7
+   ],
+   "y": [
+    0,
+    0.45
+   ],
+   "xLabel": "z",
+   "yLabel": "f"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A coin is tossed 4 times to test H₀: p = ½ against H₁: p = ¾. H₀ is rejected if 4 heads appear. Find α, β and the power."
+   },
+   "steps": [
+    {
+     "en": "α = P(4 heads | p = ½) = (½)⁴ = 1/16 = 0.0625."
+    },
+    {
+     "en": "P(4 heads | p = ¾) = (¾)⁴ = 81/256."
+    },
+    {
+     "en": "β = 1 − 81/256 = 175/256 ≈ 0.684."
+    },
+    {
+     "en": "Power = 1 − β = 81/256 ≈ 0.316."
+    }
+   ],
+   "answer": {
+    "en": "α = 1/16, β = 175/256, power = 81/256"
+   },
+   "narration": {
+    "en": "Let us work this out together. A coin is tossed 4 times to test H₀: p = ½ against H₁: p = ¾. H₀ is rejected if 4 heads appear. Find α, β and the power."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Type I vs Type II"
+   },
+   "body": {
+    "en": "Type I is a false alarm (crying wolf when there is no wolf); Type II is a missed alarm (no cry when the wolf comes). α is the false-alarm rate."
+   },
+   "narration": {
+    "en": "Type I vs Type II. Type I is a false alarm (crying wolf when there is no wolf); Type II is a missed alarm (no cry when the wolf comes). α is the false-alarm rate."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "I = false alarm, II = missed alarm"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2t08-q01",
+    "2t08-q02",
+    "2t08-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss with your neighbour, then the monitor taps the class answer.",
+    "kn": "ತರಗತಿ ರಸಪ್ರಶ್ನೆ. ಪಕ್ಕದವರೊಂದಿಗೆ ಚರ್ಚಿಸಿ, ನಂತರ ಮಾನಿಟರ್ ತರಗತಿಯ ಉತ್ತರವನ್ನು ಒತ್ತಲಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC board exam pattern"
+   },
+   "questionIds": [
+    "2t08-q04",
+    "2t08-q05"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the pattern of the II PUC Statistics board exam. Try them on your own first, then check."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "H₀: no difference; H₁: what we accept if H₀ is rejected.",
+     "kn": "H₀: ವ್ಯತ್ಯಾಸವಿಲ್ಲ; H₀ ತಿರಸ್ಕೃತವಾದರೆ H₁ ಸ್ವೀಕಾರ."
+    },
+    {
+     "en": "Type I error: reject a true H₀ (α); Type II: accept a false H₀ (β).",
+     "kn": "ಮೊದಲ ದೋಷ: ಸತ್ಯ H₀ ತಿರಸ್ಕಾರ (α); ಎರಡನೇ ದೋಷ: ಸುಳ್ಳು H₀ ಸ್ವೀಕಾರ (β)."
+    },
+    {
+     "en": "Power = 1 − β.",
+     "kn": "ಸಾಮರ್ಥ್ಯ = 1 − β."
+    },
+    {
+     "en": "Critical Z: 1.96 / 2.58 two-tailed; 1.645 / 2.33 one-tailed.",
+     "kn": "ವಿಮರ್ಶಾತ್ಮಕ Z: ದ್ವಿಪಾರ್ಶ್ವ 1.96 / 2.58; ಏಕಪಾರ್ಶ್ವ 1.645 / 2.33."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write the general procedure for testing a hypothesis."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2t08-q05"
+   ],
+   "narration": {
+    "en": "Recap. H₀: no difference; H₁: what we accept if H₀ is rejected. Type I error: reject a true H₀ (α); Type II: accept a false H₀ (β). Power = 1 − β. Critical Z: 1.96 / 2.58 two-tailed; 1.645 / 2.33 one-tailed.",
+    "kn": "ಪುನರಾವರ್ತನೆ. H₀: ವ್ಯತ್ಯಾಸವಿಲ್ಲ; H₀ ತಿರಸ್ಕೃತವಾದರೆ H₁ ಸ್ವೀಕಾರ. ಮೊದಲ ದೋಷ: ಸತ್ಯ H₀ ತಿರಸ್ಕಾರ (α); ಎರಡನೇ ದೋಷ: ಸುಳ್ಳು H₀ ಸ್ವೀಕಾರ (β). ಸಾಮರ್ಥ್ಯ = 1 − β. ವಿಮರ್ಶಾತ್ಮಕ Z: ದ್ವಿಪಾರ್ಶ್ವ 1.96 / 2.58; ಏಕಪಾರ್ಶ್ವ 1.645 / 2.33."
+   }
+  }
+ ]
+}
