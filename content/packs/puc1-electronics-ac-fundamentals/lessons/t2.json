@@ -63,6 +63,229 @@
    "formula": "V_{av} = \\frac{2V_m}{\\pi} = 0.637\\,V_m"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Peak, average and RMS"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Take one cycle of a sine wave with peak Vm. Over the whole cycle the average is zero, so we look at a half cycle."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Three values of one wave"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "axes",
+       "from": [
+        5,
+        11
+       ],
+       "to": [
+        55,
+        41
+       ],
+       "x": [
+        0,
+        20
+       ],
+       "y": [
+        -1.2,
+        1.2
+       ],
+       "color": "white",
+       "xLabel": "t (ms)",
+       "yLabel": "v / Vm"
+      },
+      {
+       "kind": "plot",
+       "fn": "sin(pi*x/10)",
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        60,
+        9
+       ],
+       "text": {
+        "en": "Peak = Vm"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The average over a half cycle is 2Vm over pi, about 0.637 Vm."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        5,
+        11
+       ],
+       "to": [
+        55,
+        41
+       ],
+       "x": [
+        0,
+        20
+       ],
+       "y": [
+        -1.2,
+        1.2
+       ],
+       "color": "white",
+       "xLabel": "t (ms)",
+       "yLabel": "v / Vm"
+      },
+      {
+       "kind": "plot",
+       "fn": "0.637",
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        60,
+        16
+       ],
+       "text": {
+        "en": "Average = 0.637 Vm"
+       },
+       "size": 3.5,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The RMS value, which gives the same heat as DC, is Vm over root 2, about 0.707 Vm. It is a little above the average."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        5,
+        11
+       ],
+       "to": [
+        55,
+        41
+       ],
+       "x": [
+        0,
+        20
+       ],
+       "y": [
+        -1.2,
+        1.2
+       ],
+       "color": "white",
+       "xLabel": "t (ms)",
+       "yLabel": "v / Vm"
+      },
+      {
+       "kind": "plot",
+       "fn": "0.707",
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        60,
+        23
+       ],
+       "text": {
+        "en": "RMS = 0.707 Vm"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "math",
+       "at": [
+        60,
+        30
+       ],
+       "tex": "V_{rms} = V_m/\\sqrt{2}",
+       "size": 4,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Our meters show 230 volts RMS. So the peak is 230 times 1.414, that is 325 volts, and the average is 207 volts."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        47
+       ],
+       "tex": "V_m = 230 \\times 1.414 = 325\\,V",
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        5,
+        54
+       ],
+       "tex": "V_{av} = 0.637 \\times 325 = 207\\,V",
+       "size": 3.5,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Two shape factors: form factor is RMS over average, 1.11; peak factor is peak over RMS, 1.414."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        60,
+        41
+       ],
+       "tex": "k_f = V_{rms}/V_{av} = 1.11",
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "math",
+       "at": [
+        60,
+        48
+       ],
+       "tex": "k_p = V_m/V_{rms} = 1.414",
+       "size": 3.5,
+       "color": "orange"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -130,6 +353,100 @@
    "mnemonic": {
     "en": "0.637 → 0.707 → 1"
    }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "caption": {
+    "en": "Move the peak value. The green line is the RMS value and the blue line the half-cycle average."
+   },
+   "sliders": [
+    {
+     "name": "Vm",
+     "label": {
+      "en": "Peak value Vm"
+     },
+     "min": 10,
+     "max": 400,
+     "step": 5,
+     "value": 325,
+     "unit": "V"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "RMS value"
+     },
+     "expr": "Vm/sqrt(2)",
+     "digits": 1,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Average (half cycle)"
+     },
+     "expr": "2*Vm/pi",
+     "digits": 1,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Peak-to-peak"
+     },
+     "expr": "2*Vm",
+     "digits": 0,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Form factor"
+     },
+     "expr": "(Vm/sqrt(2))/(2*Vm/pi)",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set Vm = 325 V: the RMS reads about 230 V, our mains."
+    },
+    {
+     "en": "Change Vm: the form factor stays 1.11 because it depends only on the shape."
+    }
+   ],
+   "optional": true,
+   "seconds": 120,
+   "narration": {
+    "en": "Move the peak value. The green line is the RMS value and the blue line the half-cycle average. Set Vm = 325 V: the RMS reads about 230 V, our mains. Change Vm: the form factor stays 1.11 because it depends only on the shape."
+   },
+   "fns": [
+    {
+     "fn": "Vm*sin(2*pi*50*x/1000)",
+     "color": "yellow",
+     "label": "v"
+    },
+    {
+     "fn": "Vm/sqrt(2)",
+     "color": "green",
+     "label": "RMS"
+    },
+    {
+     "fn": "2*Vm/pi",
+     "color": "blue",
+     "label": "average"
+    }
+   ],
+   "x": [
+    0,
+    20
+   ],
+   "y": [
+    -400,
+    400
+   ],
+   "xLabel": "t (ms)",
+   "yLabel": "v (V)"
   },
   {
    "id": "ex1",

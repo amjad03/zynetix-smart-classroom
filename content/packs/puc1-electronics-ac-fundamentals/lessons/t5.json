@@ -63,6 +63,188 @@
    "formula": "f_0 = \\frac{1}{2\\pi\\sqrt{LC}}"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Series resonance"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "In a series RLC circuit fed with 10 volts, plot the current as we sweep the frequency. It rises to a sharp peak."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        8,
+        6
+       ],
+       "to": [
+        58,
+        42
+       ],
+       "x": [
+        0,
+        1000
+       ],
+       "y": [
+        0,
+        2.2
+       ],
+       "color": "white",
+       "xLabel": "f (Hz)",
+       "yLabel": "I (A)"
+      },
+      {
+       "kind": "plot",
+       "fn": "10/sqrt(5^2+(2*pi*x*0.01-1/(2*pi*x*0.00001))^2)",
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        63,
+        6
+       ],
+       "text": {
+        "en": "At f0: XL = XC"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "At the peak, XL equals XC and they cancel. That gives the resonant frequency, 1 over 2 pi root LC."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        63,
+        13
+       ],
+       "tex": "f_0 = \\frac{1}{2\\pi\\sqrt{LC}}",
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        63,
+        25
+       ],
+       "tex": "Z = R,\\ I_{max} = V/R",
+       "size": 3.5,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "With a bigger resistance, the same circuit gives a lower and flatter peak at the same frequency."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        8,
+        6
+       ],
+       "to": [
+        58,
+        42
+       ],
+       "x": [
+        0,
+        1000
+       ],
+       "y": [
+        0,
+        2.2
+       ],
+       "color": "white",
+       "xLabel": "f (Hz)",
+       "yLabel": "I (A)"
+      },
+      {
+       "kind": "plot",
+       "fn": "10/sqrt(10^2+(2*pi*x*0.01-1/(2*pi*x*0.00001))^2)",
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        63,
+        32
+       ],
+       "text": {
+        "en": "Bigger R: flatter peak"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Sharpness is measured by the quality factor Q. The bandwidth between the half-power points is f0 over Q."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        63,
+        39
+       ],
+       "tex": "Q = \\frac{1}{R}\\sqrt{L/C}",
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "math",
+       "at": [
+        72,
+        50
+       ],
+       "tex": "BW = f_0/Q",
+       "size": 3.5,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Example: 10 millihenry and 10 microfarad resonate at 503 hertz. With 5 ohms, Q is 6.3 and the bandwidth is 80 hertz."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        49
+       ],
+       "tex": "L=10\\,mH,\\ C=10\\,\\mu F:\\ f_0=503\\,Hz",
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        55
+       ],
+       "tex": "R=5\\,\\Omega:\\ Q=6.3,\\ BW=80\\,Hz",
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -124,6 +306,115 @@
    },
    "optional": true,
    "seconds": 180
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "caption": {
+    "en": "Sweep R, L and C of a series circuit on a 10 V supply and watch the resonance curve move and sharpen."
+   },
+   "sliders": [
+    {
+     "name": "R",
+     "label": {
+      "en": "Resistance R"
+     },
+     "min": 1,
+     "max": 50,
+     "step": 1,
+     "value": 5,
+     "unit": "Ω"
+    },
+    {
+     "name": "L",
+     "label": {
+      "en": "Inductance L"
+     },
+     "min": 1,
+     "max": 50,
+     "step": 1,
+     "value": 10,
+     "unit": "mH"
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "Capacitance C"
+     },
+     "min": 1,
+     "max": 50,
+     "step": 1,
+     "value": 10,
+     "unit": "µF"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Resonant frequency f0"
+     },
+     "expr": "1/(2*pi*sqrt(L/1000*C/1000000))",
+     "digits": 0,
+     "unit": "Hz"
+    },
+    {
+     "label": {
+      "en": "Peak current V/R"
+     },
+     "expr": "10/R",
+     "digits": 2,
+     "unit": "A"
+    },
+    {
+     "label": {
+      "en": "Quality factor Q"
+     },
+     "expr": "sqrt(L/1000/(C/1000000))/R",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Bandwidth f0/Q"
+     },
+     "expr": "1/(2*pi*sqrt(L/1000*C/1000000))*R/sqrt(L/1000/(C/1000000))",
+     "digits": 1,
+     "unit": "Hz"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise R: the peak drops and widens, but f0 does not move."
+    },
+    {
+     "en": "Make C four times bigger: f0 halves."
+    },
+    {
+     "en": "Find settings that give Q above 10: a sharply tuned circuit."
+    }
+   ],
+   "optional": true,
+   "seconds": 120,
+   "narration": {
+    "en": "Sweep R, L and C of a series circuit on a 10 V supply and watch the resonance curve move and sharpen. Raise R: the peak drops and widens, but f0 does not move. Make C four times bigger: f0 halves. Find settings that give Q above 10: a sharply tuned circuit."
+   },
+   "fns": [
+    {
+     "fn": "10/sqrt(R^2+(2*pi*x*L/1000-1/(2*pi*x*C/1000000))^2)",
+     "color": "yellow",
+     "label": "I"
+    }
+   ],
+   "x": [
+    1,
+    2000
+   ],
+   "y": [
+    0,
+    10.5
+   ],
+   "xLabel": "f (Hz)",
+   "yLabel": "I (A)"
   },
   {
    "id": "ex1",

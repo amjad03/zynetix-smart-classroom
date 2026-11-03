@@ -624,3 +624,10 @@ No text is reproduced. Check these plot details against the texts:
 - **Illustrative figures:** survey costs and response rates, production techniques, the skewed-curve example; all are labelled as examples.
 - **M4 definition:** 2e08-q28 follows the pack text.
 - **National income estimators:** a subset of the NCERT list (Naoroji, Digby, VKRV Rao).
+
+## Electronics enrichment (9 recovered chapters)
+
+- **TV channel:** picture carrier 1.25 MHz above the lower channel edge (CCIR-B).
+- **Pre-emphasis:** India value (50 or 75 us) not stated.
+- **NTC curve:** B = 3950 K is illustrative.
+- **CE output curves:** the shapes are illustrative, not datasheet values.

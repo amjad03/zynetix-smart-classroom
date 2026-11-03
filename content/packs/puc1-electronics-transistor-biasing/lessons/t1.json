@@ -58,6 +58,251 @@
    }
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: DC load line and Q-point"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "In the collector circuit, the supply voltage is shared between the drop across RC and the transistor’s VCE."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        0.5
+       ],
+       "text": {
+        "en": "The DC load line"
+       },
+       "size": 4.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        48,
+        1
+       ],
+       "tex": "V_{CC} = I_C R_C + V_{CE}",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Take VCC = 12 volts and RC = 2 kilo-ohms. This equation is a straight line on the output characteristics: the DC load line."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        8,
+        16
+       ],
+       "to": [
+        56,
+        52
+       ],
+       "x": [
+        0,
+        14
+       ],
+       "y": [
+        0,
+        7
+       ],
+       "color": "white",
+       "xLabel": "VCE (V)",
+       "yLabel": "IC (mA)"
+      },
+      {
+       "kind": "plot",
+       "fn": "(12-x)/2",
+       "color": "yellow"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        8.0,
+        21.14
+       ],
+       "r": 1,
+       "color": "red",
+       "fill": true
+      },
+      {
+       "kind": "circle",
+       "at": [
+        49.14,
+        52.0
+       ],
+       "r": 1,
+       "color": "blue",
+       "fill": true
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "When VCE is zero, IC is VCC over RC, 6 milliamperes: the saturation point. When IC is zero, VCE is 12 volts: the cut-off point."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        62,
+        14
+       ],
+       "text": {
+        "en": "Saturation point"
+       },
+       "size": 3.5,
+       "color": "red"
+      },
+      {
+       "kind": "math",
+       "at": [
+        62,
+        19
+       ],
+       "tex": "I_C = 12/2 = 6\\,mA",
+       "size": 3.5,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        62,
+        27
+       ],
+       "text": {
+        "en": "Cut-off point"
+       },
+       "size": 3.5,
+       "color": "blue"
+      },
+      {
+       "kind": "math",
+       "at": [
+        62,
+        32
+       ],
+       "tex": "V_{CE} = 12\\,V",
+       "size": 3.5,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Now draw the output curves. With IB = 30 microamperes and beta 100, IC is 3 milliamperes, and the line gives VCE = 6 volts. That is the Q-point."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        8,
+        16
+       ],
+       "to": [
+        56,
+        52
+       ],
+       "x": [
+        0,
+        14
+       ],
+       "y": [
+        0,
+        7
+       ],
+       "color": "white",
+       "xLabel": "VCE (V)",
+       "yLabel": "IC (mA)"
+      },
+      {
+       "kind": "plot",
+       "fn": "2*(1-exp(-x/0.3))",
+       "color": "green"
+      },
+      {
+       "kind": "plot",
+       "fn": "3*(1-exp(-x/0.3))",
+       "color": "green"
+      },
+      {
+       "kind": "plot",
+       "fn": "4*(1-exp(-x/0.3))",
+       "color": "green"
+      },
+      {
+       "kind": "plot",
+       "fn": "(12-x)/2",
+       "color": "yellow"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        28.57,
+        36.57
+       ],
+       "r": 1.1,
+       "color": "orange",
+       "fill": true
+      },
+      {
+       "kind": "text",
+       "at": [
+        30.07,
+        30.57
+       ],
+       "text": {
+        "en": "Q"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        62,
+        41
+       ],
+       "text": {
+        "en": "Q: 6 V, 3 mA"
+       },
+       "size": 3.5,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A Q-point near the middle of the line lets the signal swing both ways without clipping."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        62,
+        48
+       ],
+       "text": {
+        "en": "Middle: no clipping"
+       },
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -105,6 +350,144 @@
    "optional": true,
    "seconds": 120,
    "preset": "linear"
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "caption": {
+    "en": "Set VCC, RC, the base current and beta. Yellow is the load line, green the output curve; they meet at the Q-point."
+   },
+   "sliders": [
+    {
+     "name": "VCC",
+     "label": {
+      "en": "Supply VCC"
+     },
+     "min": 5,
+     "max": 20,
+     "step": 1,
+     "value": 12,
+     "unit": "V"
+    },
+    {
+     "name": "RC",
+     "label": {
+      "en": "Collector resistor RC"
+     },
+     "min": 0.5,
+     "max": 5,
+     "step": 0.1,
+     "value": 2,
+     "unit": "kΩ"
+    },
+    {
+     "name": "IB",
+     "label": {
+      "en": "Base current IB"
+     },
+     "min": 0,
+     "max": 80,
+     "step": 1,
+     "value": 30,
+     "unit": "µA"
+    },
+    {
+     "name": "beta",
+     "label": {
+      "en": "Current gain β"
+     },
+     "min": 50,
+     "max": 300,
+     "step": 10,
+     "value": 100
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Saturation current VCC/RC"
+     },
+     "expr": "VCC/RC",
+     "digits": 2,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "IC = βIB"
+     },
+     "expr": "beta*IB/1000",
+     "digits": 2,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "VCE at Q"
+     },
+     "expr": "VCC-beta*IB/1000*RC",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Cut-off VCE"
+     },
+     "expr": "VCC",
+     "digits": 1,
+     "unit": "V"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise IB until VCE nearly reaches zero: the Q-point has slid into saturation."
+    },
+    {
+     "en": "Change RC: the line pivots about the cut-off point at VCC."
+    },
+    {
+     "en": "Aim for VCE ≈ VCC/2: the middle of the line."
+    }
+   ],
+   "optional": true,
+   "seconds": 120,
+   "narration": {
+    "en": "Set VCC, RC, the base current and beta. Yellow is the load line, green the output curve; they meet at the Q-point. Raise IB until VCE nearly reaches zero: the Q-point has slid into saturation. Change RC: the line pivots about the cut-off point at VCC. Aim for VCE ≈ VCC/2: the middle of the line."
+   },
+   "fns": [
+    {
+     "fn": "(VCC-x)/RC",
+     "color": "yellow",
+     "label": "load line"
+    },
+    {
+     "fn": "beta*IB/1000*(1-exp(-x/0.3))",
+     "color": "green",
+     "label": "IB curve"
+    }
+   ],
+   "x": [
+    0,
+    20
+   ],
+   "y": [
+    0,
+    12
+   ],
+   "xLabel": "VCE (V)",
+   "yLabel": "IC (mA)"
+  },
+  {
+   "id": "lab-transistor-ce",
+   "type": "virtual_lab",
+   "labId": "transistor-ce",
+   "aim": {
+    "en": "Plot the output characteristics of an NPN transistor in CE mode, then draw the DC load line for your VCC and RC on them and mark the Q-point."
+   },
+   "narration": {
+    "en": "Plot the output characteristics of an NPN transistor in CE mode, then draw the DC load line for your VCC and RC on them and mark the Q-point."
+   },
+   "optional": true,
+   "seconds": 150
   },
   {
    "id": "ex1",

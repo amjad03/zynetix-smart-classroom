@@ -63,6 +63,193 @@
    "formula": "v = V_m \\sin \\omega t, \\qquad \\omega = 2\\pi f = \\frac{2\\pi}{T}"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: The sine wave"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "An AC voltage rises, falls and reverses again and again. Its graph is a sine wave."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "AC: a sine wave"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "axes",
+       "from": [
+        5,
+        11
+       ],
+       "to": [
+        58,
+        42
+       ],
+       "x": [
+        0,
+        40
+       ],
+       "y": [
+        -400,
+        400
+       ],
+       "color": "white",
+       "xLabel": "t (ms)",
+       "yLabel": "v (V)"
+      },
+      {
+       "kind": "plot",
+       "fn": "325*sin(0.1*pi*x)",
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The highest point is the peak value, Vm. For our mains it is 325 volts."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        5,
+        13.9
+       ],
+       "to": [
+        11.6,
+        13.9
+       ],
+       "color": "orange",
+       "dashed": true
+      },
+      {
+       "kind": "text",
+       "at": [
+        63,
+        9
+       ],
+       "text": {
+        "en": "Peak Vm = 325 V"
+       },
+       "size": 3.5,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "One full cycle takes the time period T. At 50 hertz, T is one-fiftieth of a second, 20 milliseconds."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        63,
+        16
+       ],
+       "tex": "T = 1/f = 20\\,ms",
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        63,
+        23
+       ],
+       "tex": "\\omega = 2\\pi f = 314\\,rad/s",
+       "size": 3.5,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A second wave of the same frequency, shifted earlier by 60 degrees, is said to lead the first by 60 degrees."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        5,
+        11
+       ],
+       "to": [
+        58,
+        42
+       ],
+       "x": [
+        0,
+        40
+       ],
+       "y": [
+        -400,
+        400
+       ],
+       "color": "white",
+       "xLabel": "t (ms)",
+       "yLabel": "v (V)"
+      },
+      {
+       "kind": "plot",
+       "fn": "325*sin(0.1*pi*x+pi/3)",
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        63,
+        31
+       ],
+       "text": {
+        "en": "Green leads by 60°"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "math",
+       "at": [
+        63,
+        38
+       ],
+       "tex": "v_2 = V_m\\sin(\\omega t+\\phi)",
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "So if you are given v = 325 sin 314t, read off Vm = 325 V, omega = 314, and f = 50 hertz."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        49
+       ],
+       "tex": "v = 325\\sin 314t \\Rightarrow V_m = 325\\,V,\\ f = 50\\,Hz",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -121,6 +308,113 @@
    "optional": true,
    "seconds": 120,
    "preset": "sine"
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "caption": {
+    "en": "Change the peak, the frequency and the phase of a second wave. Watch the period and the lead or lag."
+   },
+   "sliders": [
+    {
+     "name": "Vm",
+     "label": {
+      "en": "Peak value Vm"
+     },
+     "min": 50,
+     "max": 400,
+     "step": 5,
+     "value": 325,
+     "unit": "V"
+    },
+    {
+     "name": "f",
+     "label": {
+      "en": "Frequency f"
+     },
+     "min": 25,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "Hz"
+    },
+    {
+     "name": "phi",
+     "label": {
+      "en": "Phase of wave 2"
+     },
+     "min": -180,
+     "max": 180,
+     "step": 15,
+     "value": 60,
+     "unit": "°"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Time period T"
+     },
+     "expr": "1000/f",
+     "digits": 2,
+     "unit": "ms"
+    },
+    {
+     "label": {
+      "en": "Angular frequency ω"
+     },
+     "expr": "2*pi*f",
+     "digits": 1,
+     "unit": "rad/s"
+    },
+    {
+     "label": {
+      "en": "Phase shift in time"
+     },
+     "expr": "phi/360*1000/f",
+     "digits": 2,
+     "unit": "ms"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set f = 100 Hz: twice as many cycles fit in 40 ms and T halves to 10 ms."
+    },
+    {
+     "en": "Set phi = 90°: the green wave peaks a quarter cycle earlier, so it leads."
+    },
+    {
+     "en": "Set phi = −90°: now it lags."
+    }
+   ],
+   "optional": true,
+   "seconds": 120,
+   "narration": {
+    "en": "Change the peak, the frequency and the phase of a second wave. Watch the period and the lead or lag. Set f = 100 Hz: twice as many cycles fit in 40 ms and T halves to 10 ms. Set phi = 90°: the green wave peaks a quarter cycle earlier, so it leads. Set phi = −90°: now it lags."
+   },
+   "fns": [
+    {
+     "fn": "Vm*sin(2*pi*f*x/1000)",
+     "color": "yellow",
+     "label": "v1"
+    },
+    {
+     "fn": "Vm*sin(2*pi*f*x/1000+phi*pi/180)",
+     "color": "green",
+     "label": "v2"
+    }
+   ],
+   "x": [
+    0,
+    40
+   ],
+   "y": [
+    -400,
+    400
+   ],
+   "xLabel": "t (ms)",
+   "yLabel": "v (V)"
   },
   {
    "id": "ex1",

@@ -62,6 +62,225 @@
    "formula": "\\beta_{ac} = \\left.\\frac{\\Delta I_C}{\\Delta I_B}\\right|_{V_{CE}}"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Reading CE characteristics"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Input characteristic: base current against base-emitter voltage. Nothing flows until about 0.7 volt, then it rises steeply, like a diode."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Input"
+       },
+       "size": 4.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "axes",
+       "from": [
+        6,
+        10
+       ],
+       "to": [
+        44,
+        40
+       ],
+       "x": [
+        0,
+        1
+       ],
+       "y": [
+        0,
+        100
+       ],
+       "color": "white",
+       "xLabel": "VBE (V)",
+       "yLabel": "IB (µA)"
+      },
+      {
+       "kind": "plot",
+       "fn": "2*exp((x-0.6)/0.05)",
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        9,
+        13
+       ],
+       "text": {
+        "en": "Knee ≈ 0.7 V (Si)"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Output characteristics: collector current against VCE, one curve for each base current. Beyond a fraction of a volt they are almost flat."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        54,
+        1
+       ],
+       "text": {
+        "en": "Output"
+       },
+       "size": 4.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "axes",
+       "from": [
+        56,
+        10
+       ],
+       "to": [
+        97,
+        40
+       ],
+       "x": [
+        0,
+        10
+       ],
+       "y": [
+        0,
+        8
+       ],
+       "color": "white",
+       "xLabel": "VCE (V)",
+       "yLabel": "IC (mA)"
+      },
+      {
+       "kind": "plot",
+       "fn": "2*(1-exp(-x/0.3))+0.05*x",
+       "color": "green"
+      },
+      {
+       "kind": "plot",
+       "fn": "4*(1-exp(-x/0.3))+0.05*x",
+       "color": "green"
+      },
+      {
+       "kind": "plot",
+       "fn": "6*(1-exp(-x/0.3))+0.05*x",
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        86,
+        26.5
+       ],
+       "text": {
+        "en": "20 µA"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        86,
+        19.3
+       ],
+       "text": {
+        "en": "40 µA"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        86,
+        11.5
+       ],
+       "text": {
+        "en": "60 µA"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The flat part is the active region, where IC is beta times IB. Near the axis on the left is saturation, and the line IB = 0 is cut-off."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        60,
+        44
+       ],
+       "text": {
+        "en": "Active: IC = β IB"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        60,
+        49
+       ],
+       "text": {
+        "en": "Saturation: VCE ≈ 0.2 V"
+       },
+       "size": 3.5,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        60,
+        54
+       ],
+       "text": {
+        "en": "Cut-off: IB = 0"
+       },
+       "size": 3.5,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Read beta from the curves: going from 20 to 40 microamperes raises IC by 2 milliamperes, so beta is 100."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        2,
+        46
+       ],
+       "tex": "\\beta_{ac} = \\frac{\\Delta I_C}{\\Delta I_B} = \\frac{2\\,mA}{20\\,\\mu A} = 100",
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -98,6 +317,111 @@
    },
    "optional": true,
    "seconds": 150
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "caption": {
+    "en": "Output characteristics of a CE transistor. Move IB and beta and see where the flat part of the orange curve settles."
+   },
+   "sliders": [
+    {
+     "name": "IB",
+     "label": {
+      "en": "Base current IB"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 40,
+     "unit": "µA"
+    },
+    {
+     "name": "beta",
+     "label": {
+      "en": "Current gain β"
+     },
+     "min": 50,
+     "max": 300,
+     "step": 10,
+     "value": 100
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "IC in the active region"
+     },
+     "expr": "beta*IB/1000",
+     "digits": 2,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "IE = IC + IB"
+     },
+     "expr": "(1+beta)*IB/1000",
+     "digits": 2,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "ΔIC between 20 µA curves"
+     },
+     "expr": "beta*20/1000",
+     "digits": 2,
+     "unit": "mA"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set IB = 0: the curve lies on the axis; this is cut-off."
+    },
+    {
+     "en": "Double β: the curves spread twice as far apart."
+    },
+    {
+     "en": "Note that below about 0.3 V every curve crowds together: saturation."
+    }
+   ],
+   "optional": true,
+   "seconds": 120,
+   "narration": {
+    "en": "Output characteristics of a CE transistor. Move IB and beta and see where the flat part of the orange curve settles. Set IB = 0: the curve lies on the axis; this is cut-off. Double β: the curves spread twice as far apart. Note that below about 0.3 V every curve crowds together: saturation."
+   },
+   "fns": [
+    {
+     "fn": "beta*20/1000*(1-exp(-x/0.3))",
+     "color": "green",
+     "label": "20 µA"
+    },
+    {
+     "fn": "beta*40/1000*(1-exp(-x/0.3))",
+     "color": "green",
+     "label": "40 µA"
+    },
+    {
+     "fn": "beta*60/1000*(1-exp(-x/0.3))",
+     "color": "green",
+     "label": "60 µA"
+    },
+    {
+     "fn": "beta*IB/1000*(1-exp(-x/0.3))",
+     "color": "orange",
+     "label": "IB"
+    }
+   ],
+   "x": [
+    0,
+    10
+   ],
+   "y": [
+    0,
+    30
+   ],
+   "xLabel": "VCE (V)",
+   "yLabel": "IC (mA)"
   },
   {
    "id": "ex1",
