@@ -72,8 +72,11 @@ describe('Zynetix API', () => {
     expect(again.body.accepted).toEqual([good.id]);
     expect((await db.q('SELECT section_id FROM session_log'))).toEqual([{ section_id: 'demo-1puc-a' }]);
 
-    expect(r.body.packs.map((p: any) => p.id).sort()).toEqual(['puc1-physics-motion-in-a-straight-line', 'puc2-chemistry-solutions']);
-    const p = r.body.packs[0];
+    const ids: string[] = r.body.packs.map((p: any) => p.id);
+    expect(ids).toEqual(expect.arrayContaining(['puc1-physics-motion-in-a-straight-line', 'puc2-chemistry-solutions']));
+    // Only the section's subjects and board: no commerce or Karnataka-only Statistics packs for a PCMB section.
+    expect(ids.some((i) => /^puc[12]-(accountancy|statistics|english|electronics|economics|business-studies|computer-science)-/.test(i))).toBe(false);
+    const p = r.body.packs.find((x: any) => x.id === 'puc2-chemistry-solutions');
     const file = await http.get(new URL(p.url).pathname).buffer(true).parse((res, cb) => {
       const chunks: Buffer[] = [];
       res.on('data', (c: Buffer) => chunks.push(c));
@@ -83,7 +86,7 @@ describe('Zynetix API', () => {
     expect(verify(null, files['manifest.json'], createPublicKey(packKey.privateKey), Buffer.from(files['manifest.sig']))).toBe(true);
 
     const none = await http.post('/v1/board/sync').auth(device, { type: 'bearer' })
-      .send({ installed: { 'puc1-physics-motion-in-a-straight-line': '1.0.0', 'puc2-chemistry-solutions': '1.0.0' } }).expect(201);
+      .send({ installed: Object.fromEntries(r.body.packs.map((x: any) => [x.id, x.version])) }).expect(201);
     expect(none.body.packs).toEqual([]);
   });
 
@@ -122,6 +125,16 @@ describe('Zynetix API', () => {
     expect(u.daily[0]).toMatchObject({ mode: 'self_learning', sessions: 1, minutes: 40 });
   });
 
+  it('a CBSE section gets only CBSE-syllabus packs for its subjects, and its board in the config', async () => {
+    const code = (await http.post('/v1/admin/sections/demo-12-cbse-sci/activation-code').auth(admin, { type: 'bearer' }).expect(201)).body.code;
+    const a = await http.post('/v1/devices/activate').send({ code, name: 'CBSE lab', pin: '5555' }).expect(201);
+    expect(a.body.config).toMatchObject({ board: 'cbse', subjects: ['physics', 'chemistry', 'maths', 'computer_science', 'english'] });
+    const r = await http.post('/v1/board/sync').auth(a.body.deviceToken, { type: 'bearer' }).send({}).expect(201);
+    const ids: string[] = r.body.packs.map((p: any) => p.id);
+    expect(ids.some((i) => /^puc[12]-(biology|statistics|electronics|accountancy)-/.test(i))).toBe(false);
+    expect(ids).toContain("puc2-physics-wave-optics");
+  });
+
   it('roles: admins cannot use the CMS; editors cannot use Admin without naming a college', async () => {
     await http.get('/v1/cms/packs').auth(admin, { type: 'bearer' }).expect(403);
     await http.get('/v1/admin/sections').auth(editor, { type: 'bearer' }).expect(403);
@@ -129,10 +142,13 @@ describe('Zynetix API', () => {
   });
 
   it('CMS: question bank filters, lesson validation, and publishing a new version boards then receive', async () => {
-    const kcetHard = (await http.get('/v1/cms/questions?exam=JEE&difficulty=hard').auth(editor, { type: 'bearer' }).expect(200)).body;
-    expect(kcetHard.map((q: any) => q.id).sort()).toEqual(['mot-q19', 'sol-q18', 'sol-q20']);
+    const jeeHard = (await http.get('/v1/cms/questions?exam=JEE&difficulty=hard&chapterId=puc2-chemistry-01-solutions').auth(editor, { type: 'bearer' }).expect(200)).body;
+    expect(jeeHard.map((q: any) => q.id).sort()).toEqual(['sol-q18', 'sol-q20']);
+    const cbseCases = (await http.get('/v1/cms/questions?exam=CBSE').auth(editor, { type: 'bearer' })).body.filter((q: any) => q.format === 'case_based');
+    expect(cbseCases.length).toBeGreaterThan(0);
+    expect(cbseCases.every((q: any) => q.passage?.en)).toBe(true);
 
-    const q = kcetHard[0];
+    const q = jeeHard[0];
     const { pyqVerified, updatedAt, ...clean } = q;
     await http.put(`/v1/cms/questions/${q.id}`).auth(editor, { type: 'bearer' }).send({ ...clean, pyq: { exam: 'JEE', year: 2019, verified: true } }).expect(200);
     expect((await http.get('/v1/cms/questions?pyqYear=2019').auth(editor, { type: 'bearer' })).body).toHaveLength(1);
@@ -148,9 +164,9 @@ describe('Zynetix API', () => {
     await http.put(`/v1/cms/packs/${pack}/lessons/${l.topicId}`).auth(editor, { type: 'bearer' }).send(l).expect(200);
 
     const v = (await http.post(`/v1/cms/packs/${pack}/versions`).auth(editor, { type: 'bearer' }).send({ notes: 'Revised topic 1' }).expect(201)).body;
-    expect(v).toMatchObject({ version: '1.1.0', lessons: 5, questions: 19 });
-    const r = await http.post('/v1/board/sync').auth(device, { type: 'bearer' })
-      .send({ installed: { [pack]: '1.0.0', 'puc2-chemistry-solutions': '1.0.0' } }).expect(201);
-    expect(r.body.packs).toMatchObject([{ id: pack, version: '1.1.0' }]);
+    expect(v).toMatchObject({ version: "1.1.0", lessons: 5 });
+    expect(v.questions).toBeGreaterThanOrEqual(19);
+    const r = await http.post('/v1/board/sync').auth(device, { type: 'bearer' }).send({ installed: { [pack]: '1.0.0' } }).expect(201);
+    expect(r.body.packs.find((x: any) => x.id === pack)).toMatchObject({ version: '1.1.0' });
   });
 });

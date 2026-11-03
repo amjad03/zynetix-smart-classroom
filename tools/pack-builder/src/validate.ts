@@ -54,6 +54,8 @@ export function check(dir: string): string[] {
     if (new Set(q.options.map((o) => o.en.trim())).size !== 4) problems.push(`${q.id}: duplicate options`);
     if (q.format === 'assertion_reason' && !/assertion/i.test(q.stem.en)) problems.push(`${q.id}: assertion_reason stem must state the Assertion (A) and Reason (R)`);
     if (q.format === 'assertion_reason' && !q.options.some((o) => /correct explanation/i.test(o.en))) problems.push(`${q.id}: assertion_reason needs the standard four A–R options`);
+    const qt = src.chapter.topics.find((t) => t.id === q.topicId);
+    if (q.exams.includes('CBSE') && qt?.boards && !qt.boards.includes('cbse')) problems.push(`${q.id}: tagged CBSE but its topic is not in the CBSE syllabus`);
     if (q.exams.includes('CBSE') && !src.chapter.boards.includes('cbse')) problems.push(`${q.id}: tagged CBSE but the chapter is not in the CBSE syllabus`);
   }
   const ids = src.questions.map((q) => q.id);

@@ -89,7 +89,7 @@ export class BoardController {
     const rows = await this.db.q(
       `SELECT DISTINCT ON (v.pack_id) v.pack_id AS id, v.version, v.sha256, v.bytes, v.storage_key
        FROM pack_version v JOIN pack p ON p.id = v.pack_id JOIN chapter c ON c.id = p.chapter_id JOIN section s ON s.id = $1
-       WHERE c.subject = ANY(s.subjects)
+       WHERE c.subject = ANY(s.subjects) AND s.board = ANY(c.boards)
        ORDER BY v.pack_id, string_to_array(v.version, '.')::int[] DESC`, [d.sectionId]);
     const out = [];
     for (const r of rows) {
@@ -101,11 +101,11 @@ export class BoardController {
 
   private async config(d: Pick<Device, 'id' | 'collegeId' | 'sectionId'>) {
     const r = await this.db.one(
-      `SELECT s.id, s.label, s.year, s.roll_count, s.period_minutes, c.name AS college, d.pin_hash, d.pin_salt, to_char(l.valid_until,'YYYY-MM-DD') AS valid_until
+      `SELECT s.id, s.label, s.year, s.board, s.subjects, s.roll_count, s.period_minutes, c.name AS college, d.pin_hash, d.pin_salt, to_char(l.valid_until,'YYYY-MM-DD') AS valid_until
        FROM section s JOIN college c ON c.id = s.college_id JOIN device d ON d.id = $2 LEFT JOIN licence l ON l.college_id = c.id WHERE s.id = $1`, [d.sectionId, d.id]);
     const body = { deviceId: d.id, collegeId: d.collegeId, sectionId: d.sectionId, validUntil: r.valid_until ?? '1970-01-01', graceDays: GRACE_DAYS };
     return {
-      sectionId: r.id, sectionLabel: r.label, year: r.year, rollCount: r.roll_count, periodMinutes: r.period_minutes, collegeName: r.college,
+      sectionId: r.id, sectionLabel: r.label, year: r.year, board: r.board, subjects: r.subjects, rollCount: r.roll_count, periodMinutes: r.period_minutes, collegeName: r.college,
       pinHash: r.pin_hash, pinSalt: r.pin_salt, licence: body, licenceToken: signLicence(this.keys.licence, body),
     };
   }

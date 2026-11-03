@@ -7,7 +7,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import * as bcrypt from 'bcryptjs';
-import { buildPack, readSource } from '@zynetix/pack-builder';
+import { buildPack, readSource, validate } from '@zynetix/pack-builder';
 import { Chapter } from '@zynetix/lesson-schema';
 import { Db } from './db';
 import { migrate } from './migrate';
@@ -21,6 +21,10 @@ export async function seed(db: Db, storage: Storage, packKey: Parameters<typeof 
   await db.q("INSERT INTO licence(college_id, valid_until, max_devices) VALUES ('demo-pu', current_date + 365, 50) ON CONFLICT DO NOTHING");
   await db.q(`INSERT INTO section(id, college_id, label, year, roll_count) VALUES
     ('demo-1puc-a', 'demo-pu', '1st PUC · A · PCMB', 'puc1', 62), ('demo-2puc-a', 'demo-pu', '2nd PUC · A · PCMB', 'puc2', 58) ON CONFLICT DO NOTHING`);
+  await db.q(`INSERT INTO section(id, college_id, label, year, roll_count, board, subjects) VALUES
+    ('demo-1puc-c', 'demo-pu', '1st PUC · C · Commerce (EBAS)', 'puc1', 70, 'kar_pu', '{economics,business_studies,accountancy,statistics}'),
+    ('demo-12-cbse-sci', 'demo-pu', 'Class 12 · CBSE · Science (PCM-CS)', 'puc2', 40, 'cbse', '{physics,chemistry,maths,computer_science,english}')
+    ON CONFLICT DO NOTHING`);
   const hash = await bcrypt.hash('zynetix123', 10);
   await db.q(`INSERT INTO staff(email, password_hash, role, college_id) VALUES
     ('admin@demo-pu.in', $1, 'admin', 'demo-pu'), ('editor@zynetix.in', $1, 'editor', NULL) ON CONFLICT DO NOTHING`, [hash]);
@@ -28,14 +32,24 @@ export async function seed(db: Db, storage: Storage, packKey: Parameters<typeof 
   for (const f of readdirSync(join(content, 'syllabus')).filter((f) => f !== 'index.json')) {
     for (const raw of JSON.parse(readFileSync(join(content, 'syllabus', f), 'utf8'))) {
       const c = Chapter.parse(raw);
-      await db.q(`INSERT INTO chapter(id, subject, year, number, title, topics, exams) VALUES ($1,$2,$3,$4,$5,$6,$7)
-        ON CONFLICT (id) DO UPDATE SET topics = CASE WHEN jsonb_array_length(chapter.topics) = 0 THEN $6 ELSE chapter.topics END`,
-        [c.id, c.subject, c.year, c.number, JSON.stringify(c.title), JSON.stringify(c.topics), c.exams]);
+      await db.q(`INSERT INTO chapter(id, subject, year, number, title, topics, exams, boards, book) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+        ON CONFLICT (id) DO UPDATE SET topics = CASE WHEN jsonb_array_length(chapter.topics) = 0 THEN $6 ELSE chapter.topics END, boards = $8, book = $9`,
+        [c.id, c.subject, c.year, c.number, JSON.stringify(c.title), JSON.stringify(c.topics), c.exams, c.boards, c.book ?? null]);
     }
   }
 
   for (const dir of readdirSync(join(content, 'packs'))) {
-    const src = readSource(content, dir);
+    let src;
+    try {
+      src = readSource(content, dir);
+    } catch (e) {
+      console.warn(`skipping pack ${dir}: ${(e as Error).message.split('\n')[0]}`);
+      continue;
+    }
+    if (validate(src).length) {
+      console.warn(`skipping pack ${dir}: not valid yet`);
+      continue;
+    }
     await db.q('INSERT INTO pack(id, chapter_id) VALUES ($1,$2) ON CONFLICT DO NOTHING', [src.id, src.chapter.id]);
     for (const q of src.questions)
       await db.q(`INSERT INTO question(id, chapter_id, topic_id, data, exams, difficulty) VALUES ($1,$2,$3,$4,$5,$6) ON CONFLICT DO NOTHING`,

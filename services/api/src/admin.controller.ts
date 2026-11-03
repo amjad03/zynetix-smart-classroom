@@ -1,11 +1,12 @@
 import { Body, Controller, Delete, Get, Inject, NotFoundException, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { z } from 'zod';
+import { Board, Subject } from '@zynetix/lesson-schema';
 import { CurrentStaff, Roles, Staff, StaffGuard, collegeOf } from './auth';
 import { DB, Db } from './db/db';
 import { Zod, sha256, token } from './infra';
 
 const hm = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/);
-const Section = z.object({ id: z.string().regex(/^[a-z0-9-]+$/), label: z.string().min(1), year: z.enum(['puc1', 'puc2']), rollCount: z.number().int().min(1).max(300), periodMinutes: z.number().int().min(20).max(90).default(40), subjects: z.array(z.enum(['physics', 'chemistry', 'maths', 'biology'])).min(1).default(['physics', 'chemistry', 'maths', 'biology']) }).strict();
+const Section = z.object({ id: z.string().regex(/^[a-z0-9-]+$/), label: z.string().min(1), year: z.enum(['puc1', 'puc2']), rollCount: z.number().int().min(1).max(300), periodMinutes: z.number().int().min(20).max(90).default(40), board: Board.default('kar_pu'), subjects: z.array(Subject).min(1).default(['physics', 'chemistry', 'maths', 'biology']) }).strict();
 const Slot = z.object({ day: z.number().int().min(1).max(6), period: z.number().int().min(1).max(12), start: hm, end: hm, subject: z.string(), teacher: z.string().max(80).optional() }).strict();
 const Booking = z.object({ sectionId: z.string(), date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), start: hm, end: hm, topicId: z.string(), reason: z.string().max(200).optional() }).strict()
   .refine((b) => b.start < b.end, 'end must be after start');
@@ -27,12 +28,12 @@ export class AdminController {
 
   @Get('sections')
   sections(@CurrentStaff() s: Staff, @Query('college') college?: string) {
-    return this.db.q('SELECT id, label, year, roll_count AS "rollCount", period_minutes AS "periodMinutes", subjects FROM section WHERE college_id = $1 ORDER BY year, label', [collegeOf(s, college)]);
+    return this.db.q('SELECT id, label, year, board, roll_count AS "rollCount", period_minutes AS "periodMinutes", subjects FROM section WHERE college_id = $1 ORDER BY year, label', [collegeOf(s, college)]);
   }
 
   @Post('sections')
   async addSection(@CurrentStaff() s: Staff, @Body(new Zod(Section)) b: z.infer<typeof Section>, @Query('college') college?: string) {
-    await this.db.q('INSERT INTO section(id, college_id, label, year, roll_count, period_minutes, subjects) VALUES ($1,$2,$3,$4,$5,$6,$7)', [b.id, collegeOf(s, college), b.label, b.year, b.rollCount, b.periodMinutes, b.subjects]);
+    await this.db.q('INSERT INTO section(id, college_id, label, year, board, roll_count, period_minutes, subjects) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)', [b.id, collegeOf(s, college), b.label, b.year, b.board, b.rollCount, b.periodMinutes, b.subjects]);
     return b;
   }
 
@@ -104,15 +105,15 @@ export class AdminController {
   @Get('reports/syllabus')
   async syllabus(@CurrentStaff() s: Staff, @Query('college') college?: string) {
     const c = collegeOf(s, college);
-    const sections = await this.db.q('SELECT id, label, year, subjects FROM section WHERE college_id = $1 ORDER BY year, label', [c]);
-    const chapters = await this.db.q("SELECT id, subject, year, number, title->>'en' AS title, jsonb_array_length(topics) AS topics FROM chapter ORDER BY subject, year, number");
+    const sections = await this.db.q('SELECT id, label, year, board, subjects FROM section WHERE college_id = $1 ORDER BY year, label', [c]);
+    const chapters = await this.db.q("SELECT id, subject, year, number, title->>'en' AS title, jsonb_array_length(topics) AS topics, boards FROM chapter ORDER BY subject, year, number");
     const taught = await this.db.q(`SELECT l.section_id AS "sectionId", l.chapter_id AS "chapterId", count(DISTINCT l.topic_id)::int AS taught
       FROM session_log l JOIN section s ON s.id = l.section_id WHERE s.college_id = $1 AND l.completed GROUP BY 1, 2`, [c]);
     const t = new Map(taught.map((r) => [`${r.sectionId}|${r.chapterId}`, r.taught]));
     return {
-      sections: sections.map((x) => ({ id: x.id, label: x.label, year: x.year })),
+      sections: sections.map((x) => ({ id: x.id, label: x.label, year: x.year, board: x.board, subjects: x.subjects })),
       chapters,
-      cells: sections.flatMap((sec) => chapters.filter((ch) => ch.year === sec.year && sec.subjects.includes(ch.subject)).map((ch) => ({
+      cells: sections.flatMap((sec) => chapters.filter((ch) => ch.year === sec.year && sec.subjects.includes(ch.subject) && ch.boards.includes(sec.board)).map((ch) => ({
         sectionId: sec.id, chapterId: ch.id, taught: t.get(`${sec.id}|${ch.id}`) ?? 0, topics: ch.topics,
         share: ch.topics ? Math.min(1, (t.get(`${sec.id}|${ch.id}`) ?? 0) / ch.topics) : null,
       }))),
@@ -139,6 +140,6 @@ export class AdminController {
   /** Chapters (with topics) for pickers in the Admin app. */
   @Get('syllabus')
   chapters() {
-    return this.db.q("SELECT id, subject, year, number, title, topics, EXISTS (SELECT 1 FROM pack_version v JOIN pack p ON p.id = v.pack_id WHERE p.chapter_id = chapter.id) AS \"hasPack\" FROM chapter ORDER BY subject, year, number");
+    return this.db.q("SELECT id, subject, year, number, title, topics, boards, EXISTS (SELECT 1 FROM pack_version v JOIN pack p ON p.id = v.pack_id WHERE p.chapter_id = chapter.id) AS \"hasPack\" FROM chapter ORDER BY subject, year, number");
   }
 }
