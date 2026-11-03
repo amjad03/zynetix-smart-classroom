@@ -60,6 +60,153 @@
    "formula": "\\int \\frac{dy}{h(y)} = \\int g(x)\\,dx + C"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Separate, then integrate"
+   },
+   "narration": {
+    "en": "The teacher separates the variables step by step, uses the initial value, and then shows growth and decay curves."
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Solve d y by d x = x y. Put all the y terms on one side and all the x terms on the other."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        6,
+        5
+       ],
+       "tex": "\\frac{dy}{dx}=xy\\;\\Rightarrow\\;\\frac{dy}{y}=x\\,dx",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Integrate both sides. log of y equals x squared by 2 plus C."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        6,
+        17
+       ],
+       "tex": "\\ln|y|=\\frac{x^2}{2}+C",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "So y = A e to the x squared by 2. With y of 0 = 2, A is 2."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        6,
+        29
+       ],
+       "tex": "y=Ae^{x^2/2},\\;y(0)=2\\Rightarrow A=2",
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        6,
+        40
+       ],
+       "tex": "y=2e^{x^2/2}",
+       "size": 4.5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The same method gives growth and decay: d y by d t = k y has solution y = y nought e to the k t."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        5,
+        8
+       ],
+       "to": [
+        55,
+        54
+       ],
+       "x": [
+        0,
+        10
+       ],
+       "y": [
+        0,
+        10
+       ],
+       "xLabel": "t",
+       "yLabel": "y",
+       "color": "white"
+      },
+      {
+       "kind": "plot",
+       "fn": "2*exp(0.2*x)",
+       "color": "green"
+      },
+      {
+       "kind": "plot",
+       "fn": "8*exp(-0.3*x)",
+       "color": "red"
+      },
+      {
+       "kind": "math",
+       "at": [
+        60,
+        8
+       ],
+       "tex": "\\frac{dy}{dt}=ky\\Rightarrow y=y_0e^{kt}",
+       "size": 3.2,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        60,
+        22
+       ],
+       "text": {
+        "en": "k > 0: growth"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        60,
+        30
+       ],
+       "text": {
+        "en": "k < 0: decay"
+       },
+       "size": 3.5,
+       "color": "red"
+      }
+     ],
+     "clear": true
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -82,6 +229,95 @@
     "kn": "ಒಂದು ಪರಿಮಾಣ ತನಗೆ ಅನುಪಾತೀಯ ದರದಲ್ಲಿ ಬದಲಾದರೆ dy/dt = ky, ಪರಿಹಾರ y = y₀e^{kt}. k > 0 ಬೆಳವಣಿಗೆ, k < 0 ಕ್ಷಯ."
    },
    "formula": "y = y_0\\,e^{kt}"
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Try it yourself"
+   },
+   "kind": "function_plot",
+   "caption": {
+    "en": "y = y₀e^{kt} solves dy/dt = ky. Change the starting value and the rate k."
+   },
+   "narration": {
+    "en": "Change the starting amount and the rate. A positive k grows, a negative k decays. Read the doubling time or half-life."
+   },
+   "seconds": 120,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "y0",
+     "label": {
+      "en": "Starting value y₀"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 2
+    },
+    {
+     "name": "k",
+     "label": {
+      "en": "Rate k"
+     },
+     "min": -1,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.3
+    }
+   ],
+   "fns": [
+    {
+     "fn": "y0*exp(k*x)",
+     "label": "y = y₀ e^{kt}",
+     "color": "yellow"
+    }
+   ],
+   "x": [
+    0,
+    10
+   ],
+   "y": [
+    0,
+    40
+   ],
+   "xLabel": "t",
+   "readouts": [
+    {
+     "label": {
+      "en": "y at t = 5"
+     },
+     "expr": "y0*exp(5*k)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Doubling time or half-life ln2/|k|"
+     },
+     "expr": "ln(2)/abs(k)",
+     "unit": "time units",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "dy/dt at t = 0"
+     },
+     "expr": "k*y0",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set k = 0.35: the amount doubles in about 2 time units."
+    },
+    {
+     "en": "Make k = −0.35: now it halves in the same time."
+    },
+    {
+     "en": "Does the doubling time depend on y₀?"
+    }
+   ]
   },
   {
    "id": "ex1",

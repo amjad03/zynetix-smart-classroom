@@ -384,3 +384,10 @@ Each chapter has 4 or more CBSE-pattern questions: assertion–reason and case-b
 - **Whiteboard layout:** fitting on the board was estimated, not seen; check the boards on a real screen.
 - **Interactive workarounds:** some readouts use workarounds because the expression language has no factorial or comparisons, for example nC3 as a fixed product.
 - **Signum graph:** plotted as x/abs(x).
+
+## Enrichment: 2nd PUC Maths, ch 8–13
+
+- **Whiteboard layout:** not checked on a real board.
+- **Probability:** binomial wording is avoided (believed dropped from the book).
+- **Numeric tolerance:** 2m13-q28 and 2m10-q32 accept answers within ±0.01.
+- **Media:** PhET plinko-probability (3.7 MB) added.
