@@ -53,6 +53,8 @@ export function check(dir: string): string[] {
       if (b.type === 'interactive') {
         const names = ['x', ...b.sliders.map((sl) => sl.name)];
         const vars = Object.fromEntries(b.sliders.map((sl) => [sl.name, sl.value]));
+        const reserved = new Set(['x', 'e', 'pi', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'sqrt', 'exp', 'ln', 'log', 'abs', 'floor']);
+        for (const sl of b.sliders) if (reserved.has(sl.name)) problems.push(`${l.id}/${b.id}: slider name "${sl.name}" clashes with a built-in name`);
         for (const sl of b.sliders) if (!(sl.min <= sl.value && sl.value <= sl.max)) problems.push(`${l.id}/${b.id}: slider ${sl.name} value outside min..max`);
         const exprs = [...(b.fns ?? []).map((f) => f.fn), ...b.readouts.map((r) => r.expr),
           ...[...(b.vectors ?? []).flat(), ...Object.values(b.data ?? {}), ...(b.points ?? [])].filter((v): v is string => typeof v === 'string')];
