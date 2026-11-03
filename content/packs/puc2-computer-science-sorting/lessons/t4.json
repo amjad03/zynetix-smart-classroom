@@ -65,6 +65,215 @@
    "formula": "1 < n < n^2"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Counting loops to find time complexity"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Count how the number of steps grows with the input size n. Code with no loop takes the same time for any n: constant."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "Time complexity"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        12
+       ],
+       "text": {
+        "en": "x = a + b"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55,
+        12
+       ],
+       "text": {
+        "en": "constant: 1"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "One loop from 1 to n runs n times: linear."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19
+       ],
+       "text": {
+        "en": "for i in range(n): ..."
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55,
+        19
+       ],
+       "text": {
+        "en": "linear: n"
+       },
+       "size": 3,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A loop inside a loop runs n times n: quadratic. Bubble, selection and insertion sort all have nested loops."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        26
+       ],
+       "text": {
+        "en": "for i ...: for j ...: ..."
+       },
+       "size": 3,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55,
+        26
+       ],
+       "text": {
+        "en": "quadratic: n²"
+       },
+       "size": 3,
+       "color": "red"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "On a graph, n squared shoots up much faster than n. Doubling n doubles a linear algorithm’s time but makes a quadratic one four times slower."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        8,
+        33
+       ],
+       "to": [
+        62,
+        58
+       ],
+       "x": [
+        0,
+        10
+       ],
+       "y": [
+        0,
+        100
+       ],
+       "color": "white",
+       "xLabel": "n",
+       "yLabel": "steps"
+      },
+      {
+       "kind": "plot",
+       "fn": "1",
+       "color": "green"
+      },
+      {
+       "kind": "plot",
+       "fn": "10*x",
+       "color": "blue"
+      },
+      {
+       "kind": "plot",
+       "fn": "x^2",
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        66,
+        36
+       ],
+       "text": {
+        "en": "n²: ×4"
+       },
+       "size": 3,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        66,
+        42
+       ],
+       "text": {
+        "en": "n: ×2"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        66,
+        48
+       ],
+       "text": {
+        "en": "1: same"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        66,
+        54
+       ],
+       "text": {
+        "en": "when n doubles"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "We find the time complexity of code from its loops and compare constant, linear and quadratic growth on a graph."
+   }
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -89,6 +298,95 @@
     "kn": "ಬಬಲ್, ಸೆಲೆಕ್ಷನ್, ಇನ್‌ಸರ್ಶನ್ ಮೂರೂ ನೆಸ್ಟೆಡ್ ಲೂಪ್ ಬಳಸುತ್ತವೆ, ಆದ್ದರಿಂದ ಸಮಯ ಸಂಕೀರ್ಣತೆ n². n ದ್ವಿಗುಣವಾದರೆ ಸಮಯ ಸುಮಾರು ನಾಲ್ಕು ಪಟ್ಟು."
    },
    "formula": "(n-1)+(n-2)+\\dots+1 = \\frac{n(n-1)}{2}"
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "title": {
+    "en": "Linear versus quadratic"
+   },
+   "caption": {
+    "en": "Move n and compare the steps of a constant, a linear and a quadratic algorithm."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Input size n"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 10
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Linear: n"
+     },
+     "expr": "n",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Quadratic: n²"
+     },
+     "expr": "n^2",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "n² ÷ n"
+     },
+     "expr": "n",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Go from n = 10 to n = 20: how do n and n² change?"
+    },
+    {
+     "en": "At n = 100, how many times more work is n² than n?"
+    },
+    {
+     "en": "Which grows slowest: 1, n or n²?"
+    }
+   ],
+   "fns": [
+    {
+     "fn": "x",
+     "label": "n",
+     "color": "blue"
+    },
+    {
+     "fn": "x^2",
+     "label": "n²",
+     "color": "red"
+    },
+    {
+     "fn": "1",
+     "label": "1",
+     "color": "green"
+    }
+   ],
+   "x": [
+    0,
+    100
+   ],
+   "y": [
+    0,
+    2000
+   ],
+   "xLabel": "n",
+   "yLabel": "steps",
+   "narration": {
+    "en": "Move n and compare the steps of a constant, a linear and a quadratic algorithm. Go from n = 10 to n = 20: how do n and n² change?"
+   },
+   "seconds": 100,
+   "optional": true
   },
   {
    "id": "ex1",
@@ -176,6 +474,22 @@
    ],
    "narration": {
     "en": "Now two board and CUET pattern questions. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "Competitive exam practice"
+   },
+   "questionIds": [
+    "2k05-q21"
+   ],
+   "exams": [
+    "CUET"
+   ],
+   "narration": {
+    "en": "CUET practice. These questions test the same ideas in the entrance-exam style; work them out on paper first."
    }
   },
   {

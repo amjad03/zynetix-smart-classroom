@@ -631,3 +631,9 @@ No text is reproduced. Check these plot details against the texts:
 - **Pre-emphasis:** India value (50 or 75 us) not stated.
 - **NTC curve:** B = 3950 K is illustrative.
 - **CE output curves:** the shapes are illustrative, not datasheet values.
+
+## Computer Science enrichment (20 chapters)
+
+- **IT Act:** the Cyber Appellate Tribunal is named as in NCERT (merged into TDSAT in 2017).
+- **Mobile generations and MAN range:** approximate, from the pack text.
+- **Refraction animation:** used in the optical-fibre lesson; check that it fits.
