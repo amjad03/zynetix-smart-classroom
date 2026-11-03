@@ -113,7 +113,7 @@ class _StatusBarState extends State<StatusBar> {
       ),
       const SizedBox(width: 24),
       SegmentedButton<Lang>(
-        style: SegmentedButton.styleFrom(minimumSize: const Size(140, Z.tap), textStyle: const TextStyle(fontSize: 30)),
+        style: SegmentedButton.styleFrom(minimumSize: const Size(140, Z.tap), textStyle: zText(30)),
         segments: const [ButtonSegment(value: Lang.en, label: Text('EN')), ButtonSegment(value: Lang.kn, label: Text('ಕನ್ನಡ'))],
         selected: {widget.lang},
         showSelectedIcon: false,

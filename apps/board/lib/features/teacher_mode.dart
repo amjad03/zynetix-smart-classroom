@@ -32,7 +32,7 @@ class _TeacherModeScreenState extends State<TeacherModeScreen> {
           title: Text(tr('teacherMode', l), style: Theme.of(context).textTheme.headlineLarge),
           actions: [
             SegmentedButton<String>(
-              style: SegmentedButton.styleFrom(minimumSize: const Size(180, Z.tap - 16), textStyle: const TextStyle(fontSize: 28)),
+              style: SegmentedButton.styleFrom(minimumSize: const Size(180, Z.tap - 16), textStyle: zText(28)),
               segments: const [ButtonSegment(value: 'puc1', label: Text('1st PUC')), ButtonSegment(value: 'puc2', label: Text('2nd PUC'))],
               selected: {year},
               showSelectedIcon: false,
@@ -41,8 +41,8 @@ class _TeacherModeScreenState extends State<TeacherModeScreen> {
             const SizedBox(width: 24),
           ],
           bottom: TabBar(
-            labelStyle: const TextStyle(fontSize: 34, fontWeight: FontWeight.w700),
-            unselectedLabelStyle: const TextStyle(fontSize: 32),
+            labelStyle: zText(34, FontWeight.w700),
+            unselectedLabelStyle: zText(32, FontWeight.w500),
             tabs: [for (final sub in subjects) Tab(height: Z.tap, text: subjectName(sub, l))],
           ),
         ),

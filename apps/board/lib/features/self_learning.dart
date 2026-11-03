@@ -179,11 +179,14 @@ class _PhaseStrip extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 6),
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
-                  color: p == phase ? const Color(0xFF6A1B9A) : (p.index < phase.index ? Z.correct.withValues(alpha: 0.5) : Colors.white10),
+                  color: p == phase ? const Color(0xFF6A1B9A) : (p.index < phase.index ? Z.correct : Theme.of(context).colorScheme.surfaceContainerHighest),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 alignment: Alignment.center,
-                child: Text(p == Phase.lesson ? (lang == Lang.kn ? 'ಪಾಠ' : 'Lesson') : tr(_labels[p]!, lang), style: const TextStyle(fontSize: 28, color: Colors.white)),
+                child: Text(
+                  p == Phase.lesson ? (lang == Lang.kn ? 'ಪಾಠ' : 'Lesson') : tr(_labels[p]!, lang),
+                  style: TextStyle(fontSize: 28, fontWeight: p == phase ? FontWeight.w700 : FontWeight.w500, color: p.index <= phase.index ? Colors.white : Theme.of(context).colorScheme.onSurfaceVariant),
+                ),
               ),
             ),
         ]),

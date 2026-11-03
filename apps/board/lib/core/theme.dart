@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:kinetix_ui/kinetix_ui.dart';
 
 /// Back-bench sizes: a 75" board read from 8–10 m. Every tap target is at least [tap] high.
+/// A text style in the board font (button, tab and segment styles do not inherit the theme's family).
+TextStyle zText(double size, [FontWeight weight = FontWeight.w600]) =>
+    TextStyle(fontSize: size, fontWeight: weight, fontFamily: KxFonts.family, fontFamilyFallback: KxFonts.fallback);
+
 abstract final class Z {
   static const double body = 34, small = 26, title = 48, display = 68, tap = 96, gap = 24, radius = 28;
   static const correct = Color(0xFF1B8A3A), wrong = Color(0xFFC62828), accent = Color(0xFFFFB300);
@@ -22,10 +26,10 @@ ThemeData zynetixTheme() {
       labelLarge: t.labelLarge?.copyWith(fontSize: 30, fontWeight: FontWeight.w600),
     ),
     filledButtonTheme: FilledButtonThemeData(
-      style: FilledButton.styleFrom(minimumSize: const Size(Z.tap * 1.6, Z.tap), textStyle: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Z.radius))),
+      style: FilledButton.styleFrom(minimumSize: const Size(Z.tap * 1.6, Z.tap), textStyle: zText(30), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Z.radius))),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(minimumSize: const Size(Z.tap * 1.6, Z.tap), textStyle: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Z.radius))),
+      style: OutlinedButton.styleFrom(minimumSize: const Size(Z.tap * 1.6, Z.tap), textStyle: zText(30), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Z.radius))),
     ),
   );
 }

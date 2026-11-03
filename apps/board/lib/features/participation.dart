@@ -177,14 +177,17 @@ class QuizRunnerState extends State<QuizRunner> {
       Text(question.stem.t(l), style: text.headlineMedium),
       const SizedBox(height: Z.gap),
       Expanded(
-        child: GridView.count(
-          crossAxisCount: 2,
-          childAspectRatio: 4.2,
-          mainAxisSpacing: 16,
-          crossAxisSpacing: 16,
-          physics: const NeverScrollableScrollPhysics(),
-          children: [for (var i = 0; i < 4; i++) _OptionTile(index: i, state: this)],
-        ),
+        // Two rows that share the height left, so all four options stay visible with an explanation.
+        child: Column(children: [
+          for (final row in const [[0, 1], [2, 3]]) ...[
+            Expanded(child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+              Expanded(child: _OptionTile(index: row[0], state: this)),
+              const SizedBox(width: 16),
+              Expanded(child: _OptionTile(index: row[1], state: this)),
+            ])),
+            if (row[0] == 0) const SizedBox(height: 16),
+          ],
+        ]),
       ),
       if (revealed) ...[
         if (question.explanation != null) Text(question.explanation!.t(l), style: text.bodyLarge),
