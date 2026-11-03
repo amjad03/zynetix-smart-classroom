@@ -59,6 +59,264 @@
    }
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Board work"
+   },
+   "narration": {
+    "en": "First question: does order matter?"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "First question: does order matter?"
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        30,
+        2
+       ],
+       "to": [
+        70,
+        10
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        32,
+        3.5
+       ],
+       "text": {
+        "en": "Does order matter?"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Yes: arrangements, numbers, seating, so use permutations. No: teams and committees, so use combinations."
+     },
+     "draw": [
+      {
+       "kind": "arrow",
+       "from": [
+        40,
+        10
+       ],
+       "to": [
+        20,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        60,
+        10
+       ],
+       "to": [
+        80,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        23,
+        12
+       ],
+       "text": {
+        "en": "Yes"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        71,
+        12
+       ],
+       "text": {
+        "en": "No"
+       },
+       "size": 3.5,
+       "color": "red"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        3,
+        20
+       ],
+       "to": [
+        40,
+        28
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        21.5
+       ],
+       "text": {
+        "en": "Permutation nPr"
+       },
+       "size": 3.5,
+       "color": "green"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        60,
+        20
+       ],
+       "to": [
+        97,
+        28
+       ],
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        62,
+        21.5
+       ],
+       "text": {
+        "en": "Combination nCr"
+       },
+       "size": 3.5,
+       "color": "red"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A committee of 2 men from 5 and 3 women from 4: multiply the choices."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        3,
+        35
+       ],
+       "tex": "{}^5C_2 \\times {}^4C_3 = 10 \\times 4 = 40",
+       "size": 4,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "At least one woman in a team of 3 from 5 men and 4 women: total minus all-men teams."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        3,
+        47
+       ],
+       "tex": "{}^9C_3 - {}^5C_3 = 84 - 10 = 74",
+       "size": 4,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Try it yourself"
+   },
+   "narration": {
+    "en": "A team of 3 from m men and w women. The slices show teams with 0, 1, 2 and 3 women."
+   },
+   "seconds": 120,
+   "optional": true,
+   "kind": "pie_chart",
+   "caption": {
+    "en": "A team of 3 from m men and w women. The slices show teams with 0, 1, 2 and 3 women."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "men m"
+     },
+     "min": 3,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "w",
+     "label": {
+      "en": "women w"
+     },
+     "min": 3,
+     "max": 10,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "data": {
+    "0 women": "m*(m - 1)*(m - 2)/6",
+    "1 woman": "w*m*(m - 1)/2",
+    "2 women": "m*w*(w - 1)/2",
+    "3 women": "w*(w - 1)*(w - 2)/6"
+   },
+   "readouts": [
+    {
+     "label": {
+      "en": "all teams ⁽ᵐ⁺ʷ⁾C₃"
+     },
+     "expr": "(m + w)*(m + w - 1)*(m + w - 2)/6",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "all-men teams ᵐC₃"
+     },
+     "expr": "m*(m - 1)*(m - 2)/6",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "at least one woman"
+     },
+     "expr": "(m + w)*(m + w - 1)*(m + w - 2)/6 - m*(m - 1)*(m - 2)/6",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "m = 5, w = 4: 84 teams, 74 with at least one woman."
+    },
+    {
+     "en": "Add the four slices. Do they make the total?"
+    },
+    {
+     "en": "Which slice is largest when m = w?"
+    }
+   ]
+  },
+  {
    "id": "ex1",
    "type": "example",
    "problem": {
@@ -155,6 +413,28 @@
    "narration": {
     "en": "Now 2 CBSE board-pattern case-based questions. Read the situation carefully, pick out the numbers you need, and apply today's idea to answer each question."
    }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "Competitive exam practice"
+   },
+   "narration": {
+    "en": "Competitive exam practice: JEE and KCET pattern questions. Some have more than one correct option, and some need a number as the answer."
+   },
+   "questionIds": [
+    "1m06-q36",
+    "1m06-q37",
+    "1m06-q35",
+    "1m06-q40"
+   ],
+   "exams": [
+    "KCET",
+    "COMEDK",
+    "JEE",
+    "JEE_ADV"
+   ]
   },
   {
    "id": "recap",

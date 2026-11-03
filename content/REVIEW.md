@@ -378,3 +378,9 @@ Each chapter has 4 or more CBSE-pattern questions: assertion–reason and case-b
   - T-bill minimum ₹25,000; commercial paper 15 days–1 yr; call money 1–15 days
   - settlement cycle (T+) left out deliberately
 - **Section numbers:** best guesses.
+
+## Enrichment: 1st PUC Maths, ch 1–7
+
+- **Whiteboard layout:** fitting on the board was estimated, not seen; check the boards on a real screen.
+- **Interactive workarounds:** some readouts use workarounds because the expression language has no factorial or comparisons, for example nC3 as a fixed product.
+- **Signum graph:** plotted as x/abs(x).
