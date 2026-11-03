@@ -1,0 +1,834 @@
+{
+ "id": "puc1-economics-06-correlation.t5.lesson",
+ "chapterId": "puc1-economics-06-correlation",
+ "topicId": "puc1-economics-06-correlation.t5",
+ "title": {
+  "en": "Spearman's rank correlation",
+  "kn": "ಸ್ಪಿಯರ್‌ಮನ್ ಅವರ ಶ್ರೇಣಿ ಸಹಸಂಬಂಧ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Ranking beauty and honesty",
+    "kn": "ಸೌಂದರ್ಯ ಮತ್ತು ಪ್ರಾಮಾಣಿಕತೆಗೆ ಶ್ರೇಣಿ"
+   },
+   "hook": {
+    "en": "Two judges at a college fest rank ten dancers. Nobody can measure grace in centimetres, but we can still ask: do the two judges agree?",
+    "kn": "ಕಾಲೇಜು ಉತ್ಸವದಲ್ಲಿ ಇಬ್ಬರು ತೀರ್ಪುಗಾರರು ಹತ್ತು ನೃತ್ಯಗಾರರಿಗೆ ಶ್ರೇಣಿ ನೀಡುತ್ತಾರೆ. ನೃತ್ಯದ ಸೊಬಗನ್ನು ಅಳೆಯಲಾಗದು, ಆದರೂ ಇಬ್ಬರು ತೀರ್ಪುಗಾರರು ಒಪ್ಪುತ್ತಾರೆಯೇ ಎಂದು ಕೇಳಬಹುದು."
+   },
+   "objectives": [
+    {
+     "en": "Compute Spearman's rank correlation"
+    },
+    {
+     "en": "Handle tied ranks"
+    },
+    {
+     "en": "Know when to prefer ranks over Pearson's r"
+    }
+   ],
+   "narration": {
+    "en": "Two judges at a college fest rank ten dancers. Nobody can measure grace in centimetres, but we can still ask: do the two judges agree?",
+    "kn": "ಕಾಲೇಜು ಉತ್ಸವದಲ್ಲಿ ಇಬ್ಬರು ತೀರ್ಪುಗಾರರು ಹತ್ತು ನೃತ್ಯಗಾರರಿಗೆ ಶ್ರೇಣಿ ನೀಡುತ್ತಾರೆ. ನೃತ್ಯದ ಸೊಬಗನ್ನು ಅಳೆಯಲಾಗದು, ಆದರೂ ಇಬ್ಬರು ತೀರ್ಪುಗಾರರು ಒಪ್ಪುತ್ತಾರೆಯೇ ಎಂದು ಕೇಳಬಹುದು."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Spearman's rank correlation"
+   },
+   "body": {
+    "en": "When variables can only be ranked (beauty, honesty, intelligence), or when extreme values make $r$ unreliable, we use Spearman's rank correlation: $r_s = 1 - \\frac{6\\sum D^2}{n^3 - n}$, where $D$ is the difference between the two ranks of each item and $n$ is the number of pairs. Like $r$, it lies between $-1$ and $+1$.",
+    "kn": "ಸ್ಪಿಯರ್‌ಮನ್ ಶ್ರೇಣಿ ಸಹಸಂಬಂಧ ಮೌಲ್ಯಗಳ ಬದಲು ಶ್ರೇಣಿಗಳನ್ನು ಬಳಸುತ್ತದೆ. ಪ್ರತಿ ವಸ್ತುವಿನ ಎರಡು ಶ್ರೇಣಿಗಳ ವ್ಯತ್ಯಾಸ D ಕಂಡು, ವರ್ಗ ಮಾಡಿ ಕೂಡಿಸಿ, rs = 1 − 6ΣD² ÷ (n³ − n) ಬಳಸಿ."
+   },
+   "points": [
+    {
+     "en": "Rank each series (1 for the highest or lowest, consistently)"
+    },
+    {
+     "en": "D = R1 − R2; ΣD = 0 always"
+    },
+    {
+     "en": "Identical ranks: rs = +1; exactly reversed ranks: rs = −1"
+    }
+   ],
+   "narration": {
+    "en": "Spearman's rank correlation uses ranks instead of values. Find the difference D between the two ranks of each item, square and add, and use rs equals one minus six sigma D squared over n cubed minus n.",
+    "kn": "ಸ್ಪಿಯರ್‌ಮನ್ ಶ್ರೇಣಿ ಸಹಸಂಬಂಧ ಮೌಲ್ಯಗಳ ಬದಲು ಶ್ರೇಣಿಗಳನ್ನು ಬಳಸುತ್ತದೆ. ಪ್ರತಿ ವಸ್ತುವಿನ ಎರಡು ಶ್ರೇಣಿಗಳ ವ್ಯತ್ಯಾಸ D ಕಂಡು, ವರ್ಗ ಮಾಡಿ ಕೂಡಿಸಿ, rs = 1 − 6ΣD² ÷ (n³ − n) ಬಳಸಿ."
+   },
+   "formula": "r_s = 1 - \\frac{6\\sum D^2}{n^3 - n}"
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Ranks, differences and ties"
+   },
+   "narration": {
+    "en": "The teacher tabulates two judges' ranks, computes Spearman's coefficient and shows the correction for ties."
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "The formula: D is the difference between the two ranks."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        3
+       ],
+       "tex": "r_s=1-\\frac{6\\sum D^2}{n^3-n}",
+       "size": 4.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        62,
+        6
+       ],
+       "text": {
+        "en": "D = R1 − R2"
+       },
+       "size": 3.5,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Two judges rank five dancers A to E."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        6,
+        16
+       ],
+       "text": {
+        "en": "Dancer"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        24,
+        16
+       ],
+       "text": {
+        "en": "R1"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        34,
+        16
+       ],
+       "text": {
+        "en": "R2"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        44,
+        16
+       ],
+       "text": {
+        "en": "D"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        54,
+        16
+       ],
+       "text": {
+        "en": "D²"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        20.5
+       ],
+       "to": [
+        62,
+        20.5
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        8,
+        22
+       ],
+       "text": {
+        "en": "A"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        8,
+        27
+       ],
+       "text": {
+        "en": "B"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        8,
+        32
+       ],
+       "text": {
+        "en": "C"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        8,
+        37
+       ],
+       "text": {
+        "en": "D"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        8,
+        42
+       ],
+       "text": {
+        "en": "E"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        24,
+        22
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        24,
+        27
+       ],
+       "text": {
+        "en": "2"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        24,
+        32
+       ],
+       "text": {
+        "en": "3"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        24,
+        37
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        24,
+        42
+       ],
+       "text": {
+        "en": "5"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        34,
+        22
+       ],
+       "text": {
+        "en": "2"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        34,
+        27
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        34,
+        32
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        34,
+        37
+       ],
+       "text": {
+        "en": "3"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        34,
+        42
+       ],
+       "text": {
+        "en": "5"
+       },
+       "size": 3.5,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Differences are minus 1, 1, minus 1, 1 and 0. Squares add up to 4."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        44,
+        22
+       ],
+       "text": {
+        "en": "−1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        44,
+        27
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        44,
+        32
+       ],
+       "text": {
+        "en": "−1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        44,
+        37
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        44,
+        42
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        54,
+        22
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        54,
+        27
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        54,
+        32
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        54,
+        37
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        54,
+        42
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        46.5
+       ],
+       "to": [
+        62,
+        46.5
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        48
+       ],
+       "text": {
+        "en": "Σ"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        44,
+        48
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        54,
+        48
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "So rs is one minus 24 over 120, which is 0.8. The judges largely agree."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        54
+       ],
+       "tex": "r_s=1-\\frac{6\\times 4}{125-5}=1-0.2=0.8",
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "If two items tie, give each the average of the ranks they share, and add m cubed minus m over 12 to sigma D squared for each tie."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        68,
+        16
+       ],
+       "text": {
+        "en": "Tied ranks?"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        68,
+        22
+       ],
+       "text": {
+        "en": "Use average rank"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        68,
+        29
+       ],
+       "tex": "+\\frac{m^3-m}{12}",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        68,
+        38
+       ],
+       "text": {
+        "en": "added to ΣD²"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        68,
+        43
+       ],
+       "text": {
+        "en": "for each tie"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "title": {
+    "en": "Try it yourself"
+   },
+   "kind": "function_plot",
+   "caption": {
+    "en": "rs = 1 − 6ΣD² ÷ (n³ − n). Choose the number of pairs n; the line shows rs for each value of ΣD²."
+   },
+   "narration": {
+    "en": "Raise sigma D squared and the agreement falls. For a given n, the largest possible sigma D squared gives minus one."
+   },
+   "seconds": 120,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "number of pairs n"
+     },
+     "min": 3,
+     "max": 12,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "ΣD²"
+     },
+     "min": 0,
+     "max": 300,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "fns": [
+    {
+     "fn": "1-6*x/(n^3-n)",
+     "label": "rs against ΣD²",
+     "color": "yellow"
+    }
+   ],
+   "x": [
+    0,
+    300
+   ],
+   "y": [
+    -1,
+    1
+   ],
+   "xLabel": "ΣD²",
+   "yLabel": "rs",
+   "readouts": [
+    {
+     "label": {
+      "en": "rs"
+     },
+     "expr": "1-6*d/(n^3-n)",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "ΣD² for rs = −1"
+     },
+     "expr": "(n^3-n)/3",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With n = 5, what ΣD² gives rs = 0?"
+    },
+    {
+     "en": "With n = 5 and fully reversed ranks, ΣD² = 40. Check rs."
+    },
+    {
+     "en": "Set n = 10 and ΣD² = 33: do you get 0.8?"
+    }
+   ]
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Marks of 5 students in Economics are 85, 60, 73, 40, 90 and in Statistics 93, 75, 65, 50, 80. Find Spearman's rank correlation."
+   },
+   "steps": [
+    {
+     "en": "Ranks in Economics (highest = 1): 2, 4, 3, 5, 1. Ranks in Statistics: 1, 3, 4, 5, 2."
+    },
+    {
+     "en": "D = 1, 1, −1, 0, −1; D² = 1, 1, 1, 0, 1; ΣD² = 4."
+    },
+    {
+     "en": "rs = 1 − (6 × 4) ÷ (125 − 5) = 1 − 24 ÷ 120 = 1 − 0.2 = 0.8."
+    }
+   ],
+   "answer": {
+    "en": "rs = 0.8 (high positive agreement)"
+   },
+   "narration": {
+    "en": "Let us work this out together. Marks of 5 students in Economics are 85, 60, 73, 40, 90 and in Statistics 93, 75, 65, 50, 80. Find Spearman's rank correlation."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Spearman's six"
+   },
+   "body": {
+    "en": "The only number to remember in the formula is 6. Check ΣD = 0 before squaring: if it is not zero, a rank is wrong."
+   },
+   "narration": {
+    "en": "Spearman's six. The only number to remember in the formula is 6. Check ΣD = 0 before squaring: if it is not zero, a rank is wrong."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Six, sigma D squared, over n cubed minus n"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1e06-q21",
+    "1e06-q22",
+    "1e06-q23"
+   ],
+   "mode": "roll_call",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Roll-call quiz. When your roll number is called, give your answer.",
+    "kn": "ಹಾಜರಾತಿ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ಕ್ರಮಸಂಖ್ಯೆ ಕರೆದಾಗ ನಿಮ್ಮ ಉತ್ತರ ಹೇಳಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "questionIds": [
+    "1e06-q24",
+    "1e06-q25"
+   ],
+   "exams": [
+    "PUC",
+    "CBSE",
+    "CUET"
+   ],
+   "title": {
+    "en": "Exam-pattern questions"
+   },
+   "narration": {
+    "en": "Now two exam-pattern questions of the kind asked in the PUC board, CBSE board and CUET."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "questionIds": [
+    "1e06-q30",
+    "1e06-q31",
+    "1e06-q32"
+   ],
+   "exams": [
+    "CUET"
+   ],
+   "title": {
+    "en": "Competitive exam practice"
+   },
+   "narration": {
+    "en": "Competitive exam practice in the CUET pattern. Work each one out before you look at the options."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Spearman's rs = 1 − 6ΣD² ÷ (n³ − n).",
+     "kn": "ಸ್ಪಿಯರ್‌ಮನ್ rs = 1 − 6ΣD² ÷ (n³ − n)."
+    },
+    {
+     "en": "It works with ranks, so it suits qualitative data.",
+     "kn": "ಇದು ಶ್ರೇಣಿಗಳನ್ನು ಬಳಸುವುದರಿಂದ ಗುಣಾತ್ಮಕ ದತ್ತಾಂಶಕ್ಕೆ ಸೂಕ್ತ."
+    },
+    {
+     "en": "Identical ranks give +1 and reversed ranks give −1.",
+     "kn": "ಒಂದೇ ಶ್ರೇಣಿಗಳು +1, ವಿರುದ್ಧ ಶ್ರೇಣಿಗಳು −1 ನೀಡುತ್ತವೆ."
+    },
+    {
+     "en": "For ties, use average ranks and add (m³ − m)/12 to ΣD².",
+     "kn": "ಸಮ ಶ್ರೇಣಿಗಳಿಗೆ ಸರಾಸರಿ ಶ್ರೇಣಿ ನೀಡಿ, ΣD² ಗೆ (m³ − m)/12 ಸೇರಿಸಿ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Rank your five favourite films yourself and ask a friend to rank them. Find the rank correlation."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1e06-q24",
+    "1e06-q25"
+   ],
+   "narration": {
+    "en": "Recap. Spearman's rs = 1 − 6ΣD² ÷ (n³ − n). It works with ranks, so it suits qualitative data. Identical ranks give +1 and reversed ranks give −1. For ties, use average ranks and add (m³ − m)/12 to ΣD².",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಸ್ಪಿಯರ್‌ಮನ್ rs = 1 − 6ΣD² ÷ (n³ − n). ಇದು ಶ್ರೇಣಿಗಳನ್ನು ಬಳಸುವುದರಿಂದ ಗುಣಾತ್ಮಕ ದತ್ತಾಂಶಕ್ಕೆ ಸೂಕ್ತ. ಒಂದೇ ಶ್ರೇಣಿಗಳು +1, ವಿರುದ್ಧ ಶ್ರೇಣಿಗಳು −1 ನೀಡುತ್ತವೆ. ಸಮ ಶ್ರೇಣಿಗಳಿಗೆ ಸರಾಸರಿ ಶ್ರೇಣಿ ನೀಡಿ, ΣD² ಗೆ (m³ − m)/12 ಸೇರಿಸಿ."
+   }
+  }
+ ]
+}

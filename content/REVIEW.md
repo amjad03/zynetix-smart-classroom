@@ -491,3 +491,13 @@ Check plot and date details against the texts:
 - **Memories of Childhood:** the hair customs; Bama in the third standard.
 
 No text is reproduced.
+
+## Economics 1st PUC: Correlation, Index Numbers, Rural Development
+
+- **NCERT section numbers:** these assume the rationalised numbering. In Correlation, topics t2–t5 are all labelled "6.3".
+- **Base years:** WPI and IIP 2011-12; Sensex 1978-79 = 100. NABARD 1982; RRBs 1975; Sikkim fully organic 2016; Golden Revolution 1991-2003.
+- **Direct-market names:** Rythu Bazars, Uzhavar Sandies, Apni Mandis, Hadaspar.
+- **Post-1991 claim:** that agricultural growth slowed after 1991 (1e12-q05) is paraphrased from memory of NCERT.
+- **Spearman ties:** the correction (m^3-m)/12 is included; check it is in the current syllabus.
+- **Illustrative numbers:** the dairy, poultry and moneylender figures are made up and labelled as such.
+- **Kannada:** statistics terms need a native-speaker review.
