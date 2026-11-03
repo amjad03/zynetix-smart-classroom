@@ -523,3 +523,13 @@ No text is reproduced.
 - **Budget chapter t5:** debt trap, crowding out and FRBM may be deleted from the rationalised syllabus.
 - **Article 112:** the Annual Financial Statement. RBI-managed float since 1993. Budget and BoP figures are illustrative.
 - **Kannada:** terms need a native-speaker review.
+
+## English Class 11 ch1-7 (CBSE)
+
+No text is reproduced. Check these plot details against the texts:
+
+- **The Adventure:** the truck collision and how it ends; the Azad Maidan chair.
+- **Discovering Tut:** about 1,700 scan images; the fan failure; heated knives and the sand tray.
+- **We are not afraid to die:** the 2 January storm; the precautions; the crew nationalities; the pumps.
+- **A Photograph:** the uncle took it; the 12 years.
+- **Portrait of a Lady:** the paraphrased details.
