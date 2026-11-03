@@ -243,3 +243,19 @@ Where the correct option was moved to balance answers across A–D, numeric opti
 - **Media fit:** `gears` (power) and the `simple_machines` ramp (work) are loose fits.
 - **Values:** Moon's escape speed about 2.3 km/s; 1 hp = 746 W; banked-track speed 38.1 m/s; sheet volume 0.0856 m³.
 - **Kannada terms to check:** ಉತ್ಕ್ಷೇಪಕ ಚಲನೆ, ಸಂಘಟ್ಟನೆಗಳು, ಬಲಭ್ರಾಮಕ, ಜಡತ್ವ ಭ್ರಾಮಕ, ಭ್ರಮಣ ತ್ರಿಜ್ಯ, ಗತಿಶಾಸ್ತ್ರ/ಚಲನಶಾಸ್ತ್ರ, ಯುಗ್ಮ, ಸಾಮರ್ಥ್ಯ, ವಿಮೋಚನಾ ವೇಗ, ಆವೇಗ.
+
+## 2nd PUC Physics, ch 1–7
+
+- **Section numbers:** recalled from the rationalised book; check them.
+- **Syllabus scope:**
+  - series/parallel resistors appear in examples although the section may have been dropped
+  - the RC time-constant lab goes beyond NCERT
+  - the ampere uses the pre-2019 definition (as NCERT does), with a note on the 2019 redefinition
+  - hard/soft ferromagnets and hysteresis loss may be beyond the text
+  - Earth's magnetism is left out
+- **Conventions:**
+  - R = R₀(1 + αT) with T in °C (the question states this)
+  - tan φ = (X_C − X_L)/R, as in NCERT
+  - cutting a magnet along its length halves the pole strength
+- **Short topics:** Magnetism t3 and t4 have 4 questions each; in t3 the quiz and pyq block share one question.
+- **Kannada terms to check:** ವಿದ್ಯುಚ್ಚಾಲಕ ಬಲ, ಅಲೆತದ ವೇಗ, ಪ್ರತಿಬಾಧೆ, ಪ್ರತಿಘಾತ, ಸಾಮರ್ಥ್ಯ ಅಂಶ, ಕಾಂತೀಯ ಗ್ರಾಹ್ಯತೆ, ಪಾರಗಮ್ಯತೆ, ಸುಳಿ ಪ್ರವಾಹ, ಪರಾವಿದ್ಯುತ್.
