@@ -293,3 +293,6 @@ Each chapter has 4 or more CBSE-pattern questions: assertion–reason and case-b
   - 2b01-q26: coconut endosperm treated as not entirely cellular.
   - 2b10-q28: cry genes.
   - Assumes the book still has ZIFT (up to 8 blastomeres), species–area Z of 0.6–1.2, and the Abingdon tortoise.
+- **Biology 1st PUC:**
+  - Plant Kingdom t6 (Angiosperms) is set to Karnataka PU only, assuming CBSE excludes it; its questions are no longer tagged CBSE. Check this against the 2025-26 CBSE circular.
+  - 1b16-q24 (ANF, answer "R is not the correct explanation") is arguable.
