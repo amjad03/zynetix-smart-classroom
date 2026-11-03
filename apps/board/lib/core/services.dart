@@ -30,21 +30,24 @@ class Services {
   final DateTime Function() clock;
   late final SyncClient sync = SyncClient(config: config, store: store, outbox: outbox);
 
-  /// The topic to continue with in this section: the first untaught topic of the first chapter
-  /// (in syllabus order, this section's year first) that has a lesson installed.
+  /// The topic to continue with in this section: the next untaught topic in the chapter taught
+  /// most recently, then the following chapters in syllabus order (this section's year first).
   ({InstalledPack pack, Lesson lesson})? nextTopic() {
     final taught = config.taught.toSet();
     final years = [config.year, config.year == 'puc1' ? 'puc2' : 'puc1'];
-    for (final y in years) {
-      for (final s in syllabus.keys) {
-        for (final ch in syllabus[s]?[y] ?? const <Chapter>[]) {
-          final p = store.byChapter(ch.id);
-          if (p == null) continue;
-          for (final t in p.chapter.topics) {
-            final l = p.lessons[t.id];
-            if (l != null && !taught.contains(t.id)) return (pack: p, lesson: l);
-          }
-        }
+    final order = <Chapter>[for (final y in years) for (final s in syllabus.keys) ...?syllabus[s]?[y]];
+    var start = 0;
+    if (config.taught.isNotEmpty) {
+      final last = config.taught.last;
+      final i = order.indexWhere((c) => last.startsWith('${c.id}.'));
+      if (i >= 0) start = i;
+    }
+    for (final ch in [...order.skip(start), ...order.take(start)]) {
+      final p = store.byChapter(ch.id);
+      if (p == null) continue;
+      for (final t in p.chapter.topics) {
+        final l = p.lessons[t.id];
+        if (l != null && !taught.contains(t.id)) return (pack: p, lesson: l);
       }
     }
     return null;

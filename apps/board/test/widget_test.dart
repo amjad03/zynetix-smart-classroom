@@ -54,8 +54,11 @@ void main() {
     await t.pumpAndSettle();
     await t.tap(find.text('Physics'));
     await t.pumpAndSettle();
-    await t.scrollUntilVisible(find.byKey(ValueKey('start:${p.chapter.id}.t3')), 200, scrollable: find.byType(Scrollable).last);
-    await t.tap(find.byKey(ValueKey('start:${p.chapter.id}.t3')));
+    final start = find.byKey(ValueKey('start:${p.chapter.id}.t3'));
+    await t.scrollUntilVisible(start, 200, scrollable: find.byType(Scrollable).last);
+    await t.ensureVisible(start);
+    await t.pumpAndSettle();
+    await t.tap(start);
     await t.pumpAndSettle();
     while (find.text('Pick a roll number').evaluate().isEmpty) {
       await t.tap(find.byKey(const ValueKey('next')));
