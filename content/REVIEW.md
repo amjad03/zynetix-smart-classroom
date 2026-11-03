@@ -477,3 +477,17 @@ No text is reproduced.
   - grey-hat hackers
   - the WannaCry example
   - the SYN-flood/DoS link
+
+## English Class 12, Flamingo poems and Going Places, plus Vistas (CBSE)
+
+Check plot and date details against the texts:
+
+- **Going Places:** Sophie had no proof of meeting Casey (2g08-q10).
+- **Poet dates and prizes:** Das, Neruda, Keats, Frost, Rich.
+- **Interpretive device labels:** "trusting sorrow", "trees sprinting".
+- **The Tiger King:** the numbers (70 tigers, 50 rings).
+- **Journey to the End of the Earth:** Gondwana dates; 90% of the ice.
+- **The Enemy:** how Sadao identifies the American.
+- **Memories of Childhood:** the hair customs; Bama in the third standard.
+
+No text is reproduced.
