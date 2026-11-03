@@ -24,3 +24,14 @@ Where the correct option was moved to balance answers across A–D, numeric opti
   - F₂ does not disproportionate
   - carbanions are sp³ and pyramidal
 - **Long concepts:** the English narration reads only the first three sentences of long concept bodies (19 of 44); the full text is on screen.
+
+## 2nd PUC Maths, ch 1–7
+
+- **Syllabus scope:** the following are treated as deleted and left out: binary operations, properties of determinants, elementary row operations, mean value theorem, tangents/normals/approximations, and the definite integral as a limit of a sum. Inverse-trig 2.3 keeps only the basic properties; check how much the current book keeps.
+- **Outside the textbook:**
+  - the 3.7 lesson previews the 2×2 inverse formula, which NCERT gives in Ch 4
+  - the Ch 4 trick uses adj(adj A) = |A|ⁿ⁻²A, common in KCET/JEE
+- **Notation:**
+  - matrices in quiz options are written as "[a b; c d]" in plain text; check this reads well on the board
+  - cot⁻¹(−√3) = 5π/6 uses NCERT's (0, π) range
+- **Kannada terms to check:** ಸ್ವವಾಚಕ, ಸಂಕ್ರಾಮಕ, ಏಕೈಕ/ಮೇಲ್ಮುಖ/ದ್ವಿಮುಖ, ಮಾತೃಕೆ, ನಿರ್ಧಾರಕ, ಉಪನಿರ್ಧಾರಕ, ಸಹಗುಣಕ, ಸಹಜ (adjoint), ಸಂತತತೆ, ಅವಕಲನೀಯತೆ, ಸಮಾಕಲನ, ಪ್ರಾಚಲ.
