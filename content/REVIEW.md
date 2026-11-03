@@ -465,3 +465,15 @@ Check these details against the texts:
 - **The Rattrap:** the assertion–reason item assumes the ironmaster and the peddler never met.
 
 No text is reproduced.
+
+## Computer Science: flow of control, searching, security aspects
+
+- **Section numbers:** from memory.
+- **Searching:**
+  - `linear_search` returns a position (index + 1); `binary_search` returns the index. Align with the NCERT programs.
+  - Worst case uses ⌊log₂n⌋ + 1 comparisons.
+- **Security, possibly beyond NCERT:**
+  - antivirus methods
+  - grey-hat hackers
+  - the WannaCry example
+  - the SYN-flood/DoS link

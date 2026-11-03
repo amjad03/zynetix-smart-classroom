@@ -1,0 +1,556 @@
+{
+ "id": "puc2-computer-science-12-security-aspects.t4.lesson",
+ "chapterId": "puc2-computer-science-12-security-aspects",
+ "topicId": "puc2-computer-science-12-security-aspects.t4",
+ "title": {
+  "en": "HTTP vs HTTPS, firewalls and cookies",
+  "kn": "HTTP ಮತ್ತು HTTPS, ಫೈರ್‌ವಾಲ್ ಮತ್ತು ಕುಕೀಗಳು"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Postcard or sealed envelope?",
+    "kn": "ಅಂಚೆ ಕಾರ್ಡ್ ಅಥವಾ ಮುಚ್ಚಿದ ಲಕೋಟೆ?"
+   },
+   "hook": {
+    "en": "A postcard can be read by every postman who handles it; a sealed envelope cannot. HTTP is the postcard of the web, HTTPS the sealed envelope.",
+    "kn": "ಅಂಚೆ ಕಾರ್ಡ್ ಅನ್ನು ಅದನ್ನು ಹಿಡಿಯುವ ಪ್ರತಿ ಅಂಚೆಯವನೂ ಓದಬಹುದು; ಮುಚ್ಚಿದ ಲಕೋಟೆಯನ್ನು ಅಲ್ಲ. HTTP ವೆಬ್‌ನ ಅಂಚೆ ಕಾರ್ಡ್, HTTPS ಮುಚ್ಚಿದ ಲಕೋಟೆ."
+   },
+   "objectives": [
+    {
+     "en": "Compare HTTP and HTTPS"
+    },
+    {
+     "en": "Explain what a firewall does"
+    },
+    {
+     "en": "Explain cookies and their privacy risks"
+    }
+   ],
+   "narration": {
+    "en": "A postcard can be read by every postman who handles it; a sealed envelope cannot. HTTP is the postcard of the web, HTTPS the sealed envelope.",
+    "kn": "ಅಂಚೆ ಕಾರ್ಡ್ ಅನ್ನು ಅದನ್ನು ಹಿಡಿಯುವ ಪ್ರತಿ ಅಂಚೆಯವನೂ ಓದಬಹುದು; ಮುಚ್ಚಿದ ಲಕೋಟೆಯನ್ನು ಅಲ್ಲ. HTTP ವೆಬ್‌ನ ಅಂಚೆ ಕಾರ್ಡ್, HTTPS ಮುಚ್ಚಿದ ಲಕೋಟೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "HTTP and HTTPS"
+   },
+   "body": {
+    "en": "HTTP (HyperText Transfer Protocol) carries web pages between a browser and a web server as plain text, so anyone who intercepts the traffic can read it. HTTPS (HTTP Secure) sends the same data encrypted using SSL/TLS, so an interceptor sees only scrambled data; the browser shows a padlock and the address begins with https://. Websites that handle logins, payments or personal data should always use HTTPS. HTTPS protects data in transit; it does not guarantee that the website itself is honest or malware-free."
+   },
+   "points": [
+    {
+     "en": "HTTP: plain text, readable if intercepted"
+    },
+    {
+     "en": "HTTPS: encrypted with SSL/TLS, padlock icon"
+    },
+    {
+     "en": "Use HTTPS for logins and payments"
+    }
+   ],
+   "narration": {
+    "en": "HTTP (HyperText Transfer Protocol) carries web pages between a browser and a web server as plain text, so anyone who intercepts the traffic can read it. HTTPS (HTTP Secure) sends the same data encrypted using SSL/TLS, so an interceptor sees only scrambled data; the browser shows a padlock and the address begins with https://. Websites that handle logins, payments or personal data should always use HTTPS. HTTPS protects data in transit; it does not guarantee that the website itself is honest or malware-free.",
+    "kn": "HTTP ದತ್ತಾಂಶವನ್ನು ಸಾದಾ ಪಠ್ಯವಾಗಿ ಕಳುಹಿಸುತ್ತದೆ; HTTPS ಅದನ್ನು SSL/TLS ಮೂಲಕ ಗೂಢಲಿಪೀಕರಿಸುತ್ತದೆ. ಲಾಗಿನ್, ಪಾವತಿಗಳಿಗೆ ಯಾವಾಗಲೂ HTTPS ಬೇಕು."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: HTTP, HTTPS and a firewall"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "With HTTP, the password travels as plain text. An eavesdropper in between can read it."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        1
+       ],
+       "text": {
+        "en": "HTTP vs HTTPS"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        3,
+        10
+       ],
+       "to": [
+        18,
+        17
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        12
+       ],
+       "text": {
+        "en": "Browser"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        82,
+        10
+       ],
+       "to": [
+        97,
+        17
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        84,
+        12
+       ],
+       "text": {
+        "en": "Server"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        18,
+        13.5
+       ],
+       "to": [
+        82,
+        13.5
+       ],
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        30,
+        9
+       ],
+       "text": {
+        "en": "pwd=rahul123"
+       },
+       "size": 3,
+       "color": "red"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        50,
+        21
+       ],
+       "r": 2,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        54,
+        19
+       ],
+       "text": {
+        "en": "eavesdropper reads"
+       },
+       "size": 3,
+       "color": "red"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "With HTTPS the same data is encrypted. The eavesdropper sees only gibberish."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        3,
+        28
+       ],
+       "to": [
+        18,
+        35
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        30
+       ],
+       "text": {
+        "en": "Browser"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        82,
+        28
+       ],
+       "to": [
+        97,
+        35
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        84,
+        30
+       ],
+       "text": {
+        "en": "Server"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        18,
+        31.5
+       ],
+       "to": [
+        82,
+        31.5
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        30,
+        27
+       ],
+       "text": {
+        "en": "x9#Qa!7Lp2"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        50,
+        39
+       ],
+       "r": 2,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        54,
+        37
+       ],
+       "text": {
+        "en": "sees gibberish"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A firewall stands between the internet and our network and checks every packet against rules."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        44
+       ],
+       "text": {
+        "en": "Internet"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        16,
+        48
+       ],
+       "to": [
+        40,
+        48
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        40,
+        42
+       ],
+       "to": [
+        46,
+        58
+       ],
+       "color": "orange",
+       "fill": true
+      },
+      {
+       "kind": "text",
+       "at": [
+        48,
+        43
+       ],
+       "text": {
+        "en": "Firewall"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        46,
+        46
+       ],
+       "to": [
+        70,
+        46
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        72,
+        44
+       ],
+       "text": {
+        "en": "allowed"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        40,
+        54
+       ],
+       "to": [
+        28,
+        54
+       ],
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        52
+       ],
+       "text": {
+        "en": "blocked"
+       },
+       "size": 3,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        72,
+        52
+       ],
+       "text": {
+        "en": "college LAN"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "We compare a plain-text and an encrypted connection, and then put a firewall at the gate."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Firewalls and cookies"
+   },
+   "body": {
+    "en": "A firewall is a network security system, in hardware or software, that monitors incoming and outgoing traffic and allows or blocks it according to predefined security rules. A network firewall protects a whole network at its gateway; a host-based (software) firewall protects one computer. Cookies are small text files that a website stores in the browser to remember the user, for example a login, language choice or shopping cart. Cookies are not programs and cannot run, but third-party cookies can be used to track a user across many sites, which is a privacy concern; browsers let users block or delete them."
+   },
+   "points": [
+    {
+     "en": "Firewall: filters traffic by rules (network or host-based)"
+    },
+    {
+     "en": "Cookies: small text files that remember the user"
+    },
+    {
+     "en": "Third-party cookies can track you; clear or block them"
+    }
+   ],
+   "narration": {
+    "en": "A firewall is a network security system, in hardware or software, that monitors incoming and outgoing traffic and allows or blocks it according to predefined security rules. A network firewall protects a whole network at its gateway; a host-based (software) firewall protects one computer. Cookies are small text files that a website stores in the browser to remember the user, for example a login, language choice or shopping cart. Cookies are not programs and cannot run, but third-party cookies can be used to track a user across many sites, which is a privacy concern; browsers let users block or delete them.",
+    "kn": "ಫೈರ್‌ವಾಲ್ ನಿಯಮಗಳ ಆಧಾರದಲ್ಲಿ ಜಾಲ ಸಂಚಾರವನ್ನು ಅನುಮತಿಸುತ್ತದೆ ಅಥವಾ ತಡೆಯುತ್ತದೆ. ಕುಕೀಗಳು ಬಳಕೆದಾರರನ್ನು ನೆನಪಿಡಲು ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಇಡುವ ಸಣ್ಣ ಪಠ್ಯ ಕಡತಗಳು; ಮೂರನೇ ಪಕ್ಷದ ಕುಕೀಗಳು ಹಿಂಬಾಲಿಸಬಹುದು."
+   }
+  },
+  {
+   "id": "sim-packet-switching",
+   "type": "simulation",
+   "source": "animation",
+   "simId": "packet-switching",
+   "caption": {
+    "en": "Data crosses the internet as packets that pass through many routers. Over plain HTTP, any of these hops could read a packet; HTTPS keeps the contents encrypted."
+   },
+   "tryThis": [
+    {
+     "en": "Count how many routers one packet passes through."
+    },
+    {
+     "en": "Imagine one router is controlled by an attacker: what can it read over HTTP, and over HTTPS?"
+    }
+   ],
+   "narration": {
+    "en": "Data crosses the internet as packets that pass through many routers. Over plain HTTP, any of these hops could read a packet; HTTPS keeps the contents encrypted. Count how many routers one packet passes through. Imagine one router is controlled by an attacker: what can it read over HTTP, and over HTTPS?"
+   },
+   "seconds": 120,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "For each situation say whether it is safe and why: (a) Entering card details on http://shop-deals.example (no padlock). (b) Logging in to https://netbanking of your bank with the padlock shown. (c) Clicking \"Accept all cookies\" on every website you visit."
+   },
+   "steps": [
+    {
+     "en": "(a) Unsafe: HTTP sends the card number as plain text, readable if intercepted"
+    },
+    {
+     "en": "(b) Safer: HTTPS encrypts the login data in transit (still check the address is the real bank)"
+    },
+    {
+     "en": "(c) Privacy risk: third-party cookies may track you across sites; accept only necessary cookies and clear them regularly"
+    }
+   ],
+   "answer": {
+    "en": "(a) Unsafe  (b) Safe in transit  (c) Privacy risk"
+   },
+   "narration": {
+    "en": "Look for the padlock and https, and be choosy about cookies."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k12-q16",
+    "2k12-q17",
+    "2k12-q18"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Discuss with your neighbour, raise hands, and the monitor taps the class answer.",
+    "kn": "ತರಗತಿ ರಸಪ್ರಶ್ನೆ. ಪಕ್ಕದವರೊಂದಿಗೆ ಚರ್ಚಿಸಿ, ಕೈ ಎತ್ತಿ, ಮಾನಿಟರ್ ತರಗತಿಯ ಉತ್ತರವನ್ನು ಒತ್ತಲಿ."
+   }
+  },
+  {
+   "id": "cbse",
+   "type": "pyq",
+   "title": {
+    "en": "CBSE board pattern"
+   },
+   "boards": [
+    "cbse"
+   ],
+   "questionIds": [
+    "2k12-q26"
+   ],
+   "exams": [
+    "CBSE"
+   ],
+   "narration": {
+    "en": "CBSE pattern: assertion–reason and case-based questions. Read the case carefully before you answer."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "Competitive exam practice"
+   },
+   "questionIds": [
+    "2k12-q29",
+    "2k12-q30"
+   ],
+   "exams": [
+    "CUET"
+   ],
+   "narration": {
+    "en": "CUET practice. These questions test the same ideas in the entrance-exam style; work them out on paper first."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "HTTP sends plain text; HTTPS encrypts with SSL/TLS.",
+     "kn": "HTTP ಸಾದಾ ಪಠ್ಯ ಕಳುಹಿಸುತ್ತದೆ; HTTPS SSL/TLS ಮೂಲಕ ಗೂಢಲಿಪೀಕರಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "A firewall allows or blocks traffic according to rules.",
+     "kn": "ಫೈರ್‌ವಾಲ್ ನಿಯಮಗಳ ಪ್ರಕಾರ ಸಂಚಾರವನ್ನು ಅನುಮತಿಸುತ್ತದೆ ಅಥವಾ ತಡೆಯುತ್ತದೆ."
+    },
+    {
+     "en": "Cookies are small text files that remember you; third-party cookies can track you.",
+     "kn": "ಕುಕೀಗಳು ನಿಮ್ಮನ್ನು ನೆನಪಿಡುವ ಸಣ್ಣ ಪಠ್ಯ ಕಡತಗಳು; ಮೂರನೇ ಪಕ್ಷದವು ಹಿಂಬಾಲಿಸಬಹುದು."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Open your browser settings and find where cookies can be blocked or cleared. Note the steps."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k12-q19"
+   ],
+   "narration": {
+    "en": "Recap. HTTP sends plain text; HTTPS encrypts with SSL/TLS. A firewall allows or blocks traffic according to rules. Cookies are small text files that remember you; third-party cookies can track you.",
+    "kn": "ಪುನರಾವಲೋಕನ. HTTP ಸಾದಾ ಪಠ್ಯ ಕಳುಹಿಸುತ್ತದೆ; HTTPS SSL/TLS ಮೂಲಕ ಗೂಢಲಿಪೀಕರಿಸುತ್ತದೆ. ಫೈರ್‌ವಾಲ್ ನಿಯಮಗಳ ಪ್ರಕಾರ ಸಂಚಾರವನ್ನು ಅನುಮತಿಸುತ್ತದೆ ಅಥವಾ ತಡೆಯುತ್ತದೆ. ಕುಕೀಗಳು ನಿಮ್ಮನ್ನು ನೆನಪಿಡುವ ಸಣ್ಣ ಪಠ್ಯ ಕಡತಗಳು; ಮೂರನೇ ಪಕ್ಷದವು ಹಿಂಬಾಲಿಸಬಹುದು."
+   }
+  }
+ ]
+}

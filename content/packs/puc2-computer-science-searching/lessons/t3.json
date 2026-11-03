@@ -1,0 +1,513 @@
+{
+ "id": "puc2-computer-science-06-searching.t3.lesson",
+ "chapterId": "puc2-computer-science-06-searching",
+ "topicId": "puc2-computer-science-06-searching.t3",
+ "title": {
+  "en": "Linear versus binary search",
+  "kn": "ರೇಖೀಯ ಮತ್ತು ಬೈನರಿ ಹುಡುಕಾಟಗಳ ಹೋಲಿಕೆ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Which search should I use?",
+    "kn": "ಯಾವ ಹುಡುಕಾಟ ಬಳಸಬೇಕು?"
+   },
+   "hook": {
+    "en": "A phone book with a lakh names: linear search might need a lakh comparisons, binary search only seventeen. But binary search needs the names sorted. Today we weigh the two.",
+    "kn": "ಒಂದು ಲಕ್ಷ ಹೆಸರುಗಳ ದೂರವಾಣಿ ಪುಸ್ತಕ: ರೇಖೀಯ ಹುಡುಕಾಟಕ್ಕೆ ಲಕ್ಷ ಹೋಲಿಕೆಗಳು ಬೇಕಾಗಬಹುದು, ಬೈನರಿಗೆ ಕೇವಲ ಹದಿನೇಳು. ಆದರೆ ಬೈನರಿಗೆ ಹೆಸರುಗಳು ವಿಂಗಡಿತವಾಗಿರಬೇಕು."
+   },
+   "objectives": [
+    {
+     "en": "Compare the number of comparisons of the two methods"
+    },
+    {
+     "en": "Explain the logarithmic growth of binary search"
+    },
+    {
+     "en": "Choose the right method for a situation"
+    }
+   ],
+   "narration": {
+    "en": "A phone book with a lakh names: linear search might need a lakh comparisons, binary search only seventeen. But binary search needs the names sorted. Today we weigh the two.",
+    "kn": "ಒಂದು ಲಕ್ಷ ಹೆಸರುಗಳ ದೂರವಾಣಿ ಪುಸ್ತಕ: ರೇಖೀಯ ಹುಡುಕಾಟಕ್ಕೆ ಲಕ್ಷ ಹೋಲಿಕೆಗಳು ಬೇಕಾಗಬಹುದು, ಬೈನರಿಗೆ ಕೇವಲ ಹದಿನೇಳು. ಆದರೆ ಬೈನರಿಗೆ ಹೆಸರುಗಳು ವಿಂಗಡಿತವಾಗಿರಬೇಕು."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Counting comparisons"
+   },
+   "body": {
+    "en": "The efficiency of a search is judged by the number of comparisons it needs. For n elements, linear search needs up to n comparisons, so the work grows in direct proportion to n. Binary search halves the list at each step, so it needs at most ⌊log₂ n⌋ + 1 comparisons: about 7 for 100 elements, 10 for 1,000 and 20 for a million. Doubling n adds only one step to binary search but doubles the worst case of linear search."
+   },
+   "points": [
+    {
+     "en": "Linear: up to n comparisons"
+    },
+    {
+     "en": "Binary: at most ⌊log₂ n⌋ + 1"
+    },
+    {
+     "en": "Doubling n: linear doubles, binary adds one"
+    }
+   ],
+   "formula": "C_{linear} \\le n, \\qquad C_{binary} \\le \\lfloor \\log_2 n \\rfloor + 1",
+   "narration": {
+    "en": "The efficiency of a search is judged by the number of comparisons it needs. For n elements, linear search needs up to n comparisons, so the work grows in direct proportion to n. Binary search halves the list at each step, so it needs at most ⌊log₂ n⌋ + 1 comparisons: about 7 for 100 elements, 10 for 1,000 and 20 for a million. Doubling n adds only one step to binary search but doubles the worst case of linear search.",
+    "kn": "ಹುಡುಕಾಟದ ದಕ್ಷತೆಯನ್ನು ಹೋಲಿಕೆಗಳ ಸಂಖ್ಯೆಯಿಂದ ಅಳೆಯುತ್ತೇವೆ. ರೇಖೀಯಕ್ಕೆ n ವರೆಗೆ, ಬೈನರಿಗೆ ಸುಮಾರು log₂ n ಹೋಲಿಕೆಗಳು ಸಾಕು."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: n versus comparisons"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Let us plot the worst-case comparisons against the number of elements n."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        1
+       ],
+       "text": {
+        "en": "Worst-case comparisons"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "axes",
+       "from": [
+        8,
+        8
+       ],
+       "to": [
+        62,
+        56
+       ],
+       "x": [
+        1,
+        64
+       ],
+       "y": [
+        0,
+        64
+       ],
+       "color": "white",
+       "xLabel": "n",
+       "yLabel": "comparisons"
+      },
+      {
+       "kind": "plot",
+       "fn": "x",
+       "color": "red"
+      },
+      {
+       "kind": "plot",
+       "fn": "log(x)/log(2)+1",
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The red line is linear search: it climbs straight up with n."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        66,
+        12
+       ],
+       "text": {
+        "en": "linear: n"
+       },
+       "size": 4,
+       "color": "red"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The green curve is binary search. It rises very slowly: 64 elements need only 7 comparisons."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        66,
+        22
+       ],
+       "text": {
+        "en": "binary: log2 n + 1"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        66,
+        30
+       ],
+       "text": {
+        "en": "n = 64 → 64 vs 7"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "In numbers: for 1000 elements, 1000 against 10. For a million, a million against 20."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        66,
+        38
+       ],
+       "text": {
+        "en": "1000 → 1000 vs 10"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        66,
+        44
+       ],
+       "text": {
+        "en": "10^6 → 10^6 vs 20"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        66,
+        52
+       ],
+       "text": {
+        "en": "binary needs sorting"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "We draw the two growth curves side by side."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Choosing a method"
+   },
+   "body": {
+    "en": "Linear search is simple, needs no sorting and suits small lists, unsorted data or a list searched only once. Binary search is far faster on large lists, but the list must be sorted and kept sorted when elements are added, which has its own cost. Binary search is used wherever large sorted data is searched often: dictionaries, telephone directories, sorted database indexes and roll-number lists."
+   },
+   "points": [
+    {
+     "en": "Small / unsorted / one-off → linear"
+    },
+    {
+     "en": "Large, sorted, searched often → binary"
+    },
+    {
+     "en": "Keeping data sorted has a cost"
+    }
+   ],
+   "narration": {
+    "en": "Linear search is simple, needs no sorting and suits small lists, unsorted data or a list searched only once. Binary search is far faster on large lists, but the list must be sorted and kept sorted when elements are added, which has its own cost. Binary search is used wherever large sorted data is searched often: dictionaries, telephone directories, sorted database indexes and roll-number lists.",
+    "kn": "ಚಿಕ್ಕ ಅಥವಾ ವಿಂಗಡಿಸದ ಪಟ್ಟಿಗೆ ರೇಖೀಯ ಹುಡುಕಾಟ ಸಾಕು. ದೊಡ್ಡ, ವಿಂಗಡಿಸಿದ, ಆಗಾಗ ಹುಡುಕುವ ದತ್ತಾಂಶಕ್ಕೆ ಬೈನರಿ ಹುಡುಕಾಟ ಉತ್ತಮ."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "title": {
+    "en": "Linear against binary"
+   },
+   "caption": {
+    "en": "The yellow line is the worst case of linear search (n comparisons); the green curve is binary search (⌊log₂ n⌋ + 1). Slide n and compare."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Number of elements n"
+     },
+     "min": 1,
+     "max": 1000,
+     "step": 1,
+     "value": 100
+    }
+   ],
+   "fns": [
+    {
+     "fn": "x",
+     "label": "linear",
+     "color": "yellow"
+    },
+    {
+     "fn": "floor(log(x)/log(2)+0.000001)+1",
+     "label": "binary",
+     "color": "green"
+    }
+   ],
+   "x": [
+    1,
+    1000
+   ],
+   "y": [
+    0,
+    1000
+   ],
+   "xLabel": "n",
+   "yLabel": "comparisons",
+   "readouts": [
+    {
+     "label": {
+      "en": "Linear search, worst case"
+     },
+     "expr": "n",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Binary search, worst case"
+     },
+     "expr": "floor(log(n)/log(2)+0.000001)+1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "How many times fewer for binary"
+     },
+     "expr": "n/(floor(log(n)/log(2)+0.000001)+1)",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the smallest n for which binary search needs 8 comparisons."
+    },
+    {
+     "en": "At n = 1000, how many times faster is binary search in the worst case?"
+    },
+    {
+     "en": "For n = 3, is binary search really much better?"
+    }
+   ],
+   "narration": {
+    "en": "The yellow line is the worst case of linear search (n comparisons); the green curve is binary search (⌊log₂ n⌋ + 1). Slide n and compare. Find the smallest n for which binary search needs 8 comparisons."
+   },
+   "seconds": 120,
+   "optional": true
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Powers of two"
+   },
+   "body": {
+    "en": "Remember 2¹⁰ ≈ 1,000 and 2²⁰ ≈ 1,000,000. So binary search needs about 10 comparisons for a thousand elements and about 20 for a million."
+   },
+   "mnemonic": {
+    "en": "1 thousand → 10, 1 million → 20, 1 billion → 30"
+   },
+   "narration": {
+    "en": "Ten doublings make a thousand, so binary search finds one item in a thousand in about ten steps."
+   },
+   "seconds": 90,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Count the comparisons of linear and binary search for the key 91 (the last element) in [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]."
+   },
+   "steps": [
+    {
+     "en": "nums = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]"
+    },
+    {
+     "en": "key = 91"
+    },
+    {
+     "en": "lin = nums.index(key) + 1"
+    },
+    {
+     "en": "first, last, binc = 0, len(nums) - 1, 0"
+    },
+    {
+     "en": "while first <= last:"
+    },
+    {
+     "en": "    mid = (first + last) // 2"
+    },
+    {
+     "en": "    binc = binc + 1"
+    },
+    {
+     "en": "    if nums[mid] == key:"
+    },
+    {
+     "en": "        break"
+    },
+    {
+     "en": "    elif key < nums[mid]:"
+    },
+    {
+     "en": "        last = mid - 1"
+    },
+    {
+     "en": "    else:"
+    },
+    {
+     "en": "        first = mid + 1"
+    },
+    {
+     "en": "print(\"Linear:\", lin, \"Binary:\", binc)"
+    }
+   ],
+   "answer": {
+    "en": "Linear: 10 Binary: 4"
+   },
+   "narration": {
+    "en": "Linear search walks all ten elements; binary search probes 16, 56, 72 and 91."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "A sorted list has 5,000 roll numbers. Find the worst-case number of comparisons for each method."
+   },
+   "steps": [
+    {
+     "en": "Linear search: the key may be last or absent → 5,000 comparisons"
+    },
+    {
+     "en": "2¹² = 4,096 ≤ 5,000 < 8,192 = 2¹³, so ⌊log₂ 5000⌋ = 12"
+    },
+    {
+     "en": "Binary search: 12 + 1 = 13 comparisons"
+    }
+   ],
+   "answer": {
+    "en": "Linear 5,000; binary 13"
+   },
+   "narration": {
+    "en": "Find the power of two just below five thousand, then add one."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k06-q11",
+    "2k06-q12",
+    "2k06-q13"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out.",
+    "kn": "ತಂಡ ರಸಪ್ರಶ್ನೆ. ಸಮಯ ಮುಗಿಯುವ ಮುನ್ನ ಪ್ರತಿ ತಂಡ ಒಂದು ಉತ್ತರವನ್ನು ಒಪ್ಪಿಕೊಳ್ಳಲಿ."
+   }
+  },
+  {
+   "id": "cbse",
+   "type": "pyq",
+   "title": {
+    "en": "CBSE board pattern"
+   },
+   "boards": [
+    "cbse"
+   ],
+   "questionIds": [
+    "2k06-q23",
+    "2k06-q24"
+   ],
+   "exams": [
+    "CBSE"
+   ],
+   "narration": {
+    "en": "CBSE pattern: assertion–reason and case-based questions. Read the case carefully before you answer."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "Board exam pattern"
+   },
+   "questionIds": [
+    "2k06-q14",
+    "2k06-q15"
+   ],
+   "exams": [
+    "PUC",
+    "CBSE",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Board exam pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Linear search may need n comparisons; binary search at most ⌊log₂ n⌋ + 1.",
+     "kn": "ರೇಖೀಯಕ್ಕೆ n ವರೆಗೆ; ಬೈನರಿಗೆ ಗರಿಷ್ಠ ⌊log₂ n⌋ + 1 ಹೋಲಿಕೆಗಳು."
+    },
+    {
+     "en": "Doubling the list adds just one step to binary search.",
+     "kn": "ಪಟ್ಟಿ ದ್ವಿಗುಣವಾದರೆ ಬೈನರಿಗೆ ಒಂದೇ ಹೆಜ್ಜೆ ಹೆಚ್ಚು."
+    },
+    {
+     "en": "Binary search needs sorted data; linear search does not.",
+     "kn": "ಬೈನರಿಗೆ ವಿಂಗಡಿಸಿದ ದತ್ತಾಂಶ ಬೇಕು; ರೇಖೀಯಕ್ಕೆ ಬೇಡ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Make a table of the worst-case comparisons of both methods for n = 10, 100, 1,000 and 10,000."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k06-q15"
+   ],
+   "narration": {
+    "en": "Recap. Linear search may need n comparisons; binary search at most ⌊log₂ n⌋ + 1. Doubling the list adds just one step to binary search. Binary search needs sorted data; linear search does not.",
+    "kn": "ಪುನರಾವಲೋಕನ. ರೇಖೀಯಕ್ಕೆ n ವರೆಗೆ; ಬೈನರಿಗೆ ಗರಿಷ್ಠ ⌊log₂ n⌋ + 1 ಹೋಲಿಕೆಗಳು. ಪಟ್ಟಿ ದ್ವಿಗುಣವಾದರೆ ಬೈನರಿಗೆ ಒಂದೇ ಹೆಜ್ಜೆ ಹೆಚ್ಚು. ಬೈನರಿಗೆ ವಿಂಗಡಿಸಿದ ದತ್ತಾಂಶ ಬೇಕು; ರೇಖೀಯಕ್ಕೆ ಬೇಡ."
+   }
+  }
+ ]
+}

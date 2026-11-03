@@ -1,0 +1,891 @@
+{
+ "id": "puc2-computer-science-06-searching.t2.lesson",
+ "chapterId": "puc2-computer-science-06-searching",
+ "topicId": "puc2-computer-science-06-searching.t2",
+ "title": {
+  "en": "Binary search",
+  "kn": "ಬೈನರಿ ಹುಡುಕಾಟ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Halve it, again and again",
+    "kn": "ಮತ್ತೆ ಮತ್ತೆ ಅರ್ಧ ಮಾಡಿ"
+   },
+   "hook": {
+    "en": "To find a word in a dictionary you open it near the middle, see whether your word comes before or after, and throw away half the book. Repeat, and you reach the word in a few steps. That is binary search.",
+    "kn": "ಪದಕೋಶದಲ್ಲಿ ಪದ ಹುಡುಕಲು ಮಧ್ಯದಲ್ಲಿ ತೆರೆದು, ಪದ ಹಿಂದೆಯೋ ಮುಂದೆಯೋ ನೋಡಿ, ಅರ್ಧ ಪುಸ್ತಕ ಬಿಡುತ್ತೀರಿ. ಹೀಗೆ ಮಾಡಿದರೆ ಕೆಲವೇ ಹೆಜ್ಜೆಗಳಲ್ಲಿ ಪದ ಸಿಗುತ್ತದೆ. ಇದೇ ಬೈನರಿ ಹುಡುಕಾಟ."
+   },
+   "objectives": [
+    {
+     "en": "State the condition for binary search"
+    },
+    {
+     "en": "Trace first, mid and last step by step"
+    },
+    {
+     "en": "Write binary search in Python"
+    }
+   ],
+   "narration": {
+    "en": "To find a word in a dictionary you open it near the middle, see whether your word comes before or after, and throw away half the book. Repeat, and you reach the word in a few steps. That is binary search.",
+    "kn": "ಪದಕೋಶದಲ್ಲಿ ಪದ ಹುಡುಕಲು ಮಧ್ಯದಲ್ಲಿ ತೆರೆದು, ಪದ ಹಿಂದೆಯೋ ಮುಂದೆಯೋ ನೋಡಿ, ಅರ್ಧ ಪುಸ್ತಕ ಬಿಡುತ್ತೀರಿ. ಹೀಗೆ ಮಾಡಿದರೆ ಕೆಲವೇ ಹೆಜ್ಜೆಗಳಲ್ಲಿ ಪದ ಸಿಗುತ್ತದೆ. ಇದೇ ಬೈನರಿ ಹುಡುಕಾಟ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "How binary search works"
+   },
+   "body": {
+    "en": "Binary search works only on a sorted list. It compares the key with the middle element, mid = (first + last) // 2. If they are equal, the search succeeds. If the key is smaller (for an ascending list), the key can only be in the left half, so last = mid − 1; if it is larger, first = mid + 1. The search interval halves at every step, and the search fails when first becomes greater than last."
+   },
+   "points": [
+    {
+     "en": "List must be sorted"
+    },
+    {
+     "en": "mid = (first + last) // 2"
+    },
+    {
+     "en": "key < middle → last = mid − 1; key > middle → first = mid + 1"
+    },
+    {
+     "en": "Stop when found or first > last"
+    }
+   ],
+   "formula": "mid = \\left\\lfloor \\frac{first + last}{2} \\right\\rfloor",
+   "narration": {
+    "en": "Binary search works only on a sorted list. It compares the key with the middle element, mid = (first + last) // 2. If they are equal, the search succeeds. If the key is smaller (for an ascending list), the key can only be in the left half, so last = mid − 1; if it is larger, first = mid + 1. The search interval halves at every step, and the search fails when first becomes greater than last.",
+    "kn": "ಬೈನರಿ ಹುಡುಕಾಟ ವಿಂಗಡಿಸಿದ ಪಟ್ಟಿಯಲ್ಲಿ ಮಾತ್ರ ಕೆಲಸ ಮಾಡುತ್ತದೆ. ಕೀಯನ್ನು ಮಧ್ಯದ ಅಂಶದೊಂದಿಗೆ ಹೋಲಿಸಿ, ಕೀ ಚಿಕ್ಕದಾದರೆ ಎಡ ಅರ್ಧದಲ್ಲಿ, ದೊಡ್ಡದಾದರೆ ಬಲ ಅರ್ಧದಲ್ಲಿ ಹುಡುಕುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Binary search for key = 23"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A sorted list of ten numbers. first is 0, last is 9."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "Binary search: key = 23"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        11,
+        9
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        20,
+        9
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        29,
+        9
+       ],
+       "text": {
+        "en": "2"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        38,
+        9
+       ],
+       "text": {
+        "en": "3"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        47,
+        9
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        56,
+        9
+       ],
+       "text": {
+        "en": "5"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        65,
+        9
+       ],
+       "text": {
+        "en": "6"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        74,
+        9
+       ],
+       "text": {
+        "en": "7"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        83,
+        9
+       ],
+       "text": {
+        "en": "8"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        92,
+        9
+       ],
+       "text": {
+        "en": "9"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        8,
+        13
+       ],
+       "to": [
+        16,
+        19
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        17,
+        13
+       ],
+       "to": [
+        25,
+        19
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        26,
+        13
+       ],
+       "to": [
+        34,
+        19
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        35,
+        13
+       ],
+       "to": [
+        43,
+        19
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        44,
+        13
+       ],
+       "to": [
+        52,
+        19
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        53,
+        13
+       ],
+       "to": [
+        61,
+        19
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        62,
+        13
+       ],
+       "to": [
+        70,
+        19
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        71,
+        13
+       ],
+       "to": [
+        79,
+        19
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        80,
+        13
+       ],
+       "to": [
+        88,
+        19
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        89,
+        13
+       ],
+       "to": [
+        97,
+        19
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10,
+        14
+       ],
+       "text": {
+        "en": "2"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        14
+       ],
+       "text": {
+        "en": "5"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        28,
+        14
+       ],
+       "text": {
+        "en": "8"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        37,
+        14
+       ],
+       "text": {
+        "en": "12"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        46,
+        14
+       ],
+       "text": {
+        "en": "16"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55,
+        14
+       ],
+       "text": {
+        "en": "23"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        64,
+        14
+       ],
+       "text": {
+        "en": "38"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        73,
+        14
+       ],
+       "text": {
+        "en": "56"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        82,
+        14
+       ],
+       "text": {
+        "en": "72"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        91,
+        14
+       ],
+       "text": {
+        "en": "91"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "mid is 9 floor-divided by 2, which is 4. The middle element is 16. 23 is bigger, so discard the left half: first becomes 5."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        44,
+        12
+       ],
+       "to": [
+        53,
+        20
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        23
+       ],
+       "text": {
+        "en": "mid=4: 16 < 23, first=5"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "line",
+       "from": [
+        8,
+        16
+       ],
+       "to": [
+        52,
+        16
+       ],
+       "color": "red"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Now first is 5, last is 9, so mid is 7. The element is 56. 23 is smaller, so last becomes 6."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        71,
+        12
+       ],
+       "to": [
+        80,
+        20
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        30
+       ],
+       "text": {
+        "en": "mid=7: 56 > 23, last=6"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "line",
+       "from": [
+        71,
+        16
+       ],
+       "to": [
+        97,
+        16
+       ],
+       "color": "red"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "first 5, last 6, mid 5. The element is 23: found at index 5 after three comparisons."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        53,
+        12
+       ],
+       "to": [
+        62,
+        20
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37
+       ],
+       "text": {
+        "en": "mid=5: 23 = key, found"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        45
+       ],
+       "text": {
+        "en": "3 comparisons instead of 6"
+       },
+       "size": 4,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Each step throws away half. Ten, then five, then two, then one element left to look at."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        3,
+        52
+       ],
+       "tex": "10 \\to 5 \\to 2 \\to 1",
+       "size": 4,
+       "color": "blue"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us trace first, mid and last on the board."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Binary search in Python"
+   },
+   "body": {
+    "en": "The function binary_search(lst, key) keeps two indices, first and last. Inside while first <= last it computes mid, returns mid if lst[mid] == key, and otherwise moves last or first past mid. If the loop ends without a match it returns −1. Because each pass halves the remaining part, even a list of a million sorted elements needs only about 20 passes."
+   },
+   "points": [
+    {
+     "en": "while first <= last:"
+    },
+    {
+     "en": "return mid on a match"
+    },
+    {
+     "en": "return −1 when the key is absent"
+    }
+   ],
+   "narration": {
+    "en": "The function binary_search(lst, key) keeps two indices, first and last. Inside while first <= last it computes mid, returns mid if lst[mid] == key, and otherwise moves last or first past mid. If the loop ends without a match it returns −1. Because each pass halves the remaining part, even a list of a million sorted elements needs only about 20 passes.",
+    "kn": "binary_search ಕಾರ್ಯ first ಮತ್ತು last ಸೂಚಿಗಳನ್ನು ಇಟ್ಟುಕೊಂಡು first <= last ಇರುವವರೆಗೆ mid ಲೆಕ್ಕಹಾಕುತ್ತದೆ; ಕೀ ಸಿಗದಿದ್ದರೆ −1 ಹಿಂತಿರುಗಿಸುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "readouts",
+   "title": {
+    "en": "How fast does binary search shrink the list?"
+   },
+   "caption": {
+    "en": "After k comparisons, about n ÷ 2ᵏ elements are left to search. The worst case needs ⌊log₂ n⌋ + 1 comparisons."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Number of sorted elements n"
+     },
+     "min": 1,
+     "max": 100000,
+     "step": 1,
+     "value": 1000
+    },
+    {
+     "name": "k",
+     "label": {
+      "en": "Comparisons made so far k"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Elements still left (about)"
+     },
+     "expr": "n/2^k",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Worst-case comparisons"
+     },
+     "expr": "floor(log(n)/log(2)+0.000001)+1",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With n = 1000, how many steps until fewer than 2 elements remain?"
+    },
+    {
+     "en": "Set n = 100000. Is the worst case still small?"
+    },
+    {
+     "en": "Change n from 1000 to 2000. How much does the worst case grow?"
+    }
+   ],
+   "narration": {
+    "en": "After k comparisons, about n ÷ 2ᵏ elements are left to search. The worst case needs ⌊log₂ n⌋ + 1 comparisons. With n = 1000, how many steps until fewer than 2 elements remain?"
+   },
+   "seconds": 120,
+   "optional": true
+  },
+  {
+   "id": "sim-algo.binary",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "algo.binary",
+   "caption": {
+    "en": "Watch first, mid and last move as binary search halves the list."
+   },
+   "tryThis": [
+    {
+     "en": "Search for the first element of the list and count the steps."
+    },
+    {
+     "en": "Search for a value that is not present and watch first pass last."
+    }
+   ],
+   "narration": {
+    "en": "Watch first, mid and last move as binary search halves the list. Search for the first element of the list and count the steps. Search for a value that is not present and watch first pass last."
+   },
+   "seconds": 150,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Find 23 in [2, 5, 8, 12, 16, 23, 38, 56, 72, 91] with binary search and print the index."
+   },
+   "steps": [
+    {
+     "en": "def binary_search(lst, key):"
+    },
+    {
+     "en": "    first = 0"
+    },
+    {
+     "en": "    last = len(lst) - 1"
+    },
+    {
+     "en": "    while first <= last:"
+    },
+    {
+     "en": "        mid = (first + last) // 2"
+    },
+    {
+     "en": "        if lst[mid] == key:"
+    },
+    {
+     "en": "            return mid"
+    },
+    {
+     "en": "        elif key < lst[mid]:"
+    },
+    {
+     "en": "            last = mid - 1"
+    },
+    {
+     "en": "        else:"
+    },
+    {
+     "en": "            first = mid + 1"
+    },
+    {
+     "en": "    return -1"
+    },
+    {
+     "en": "numList = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]"
+    },
+    {
+     "en": "pos = binary_search(numList, 23)"
+    },
+    {
+     "en": "print(\"Found at index\", pos)"
+    }
+   ],
+   "answer": {
+    "en": "Found at index 5"
+   },
+   "narration": {
+    "en": "This is the same search we traced on the board: 16, then 56, then 23."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "Search the same list for 50, which is absent. Trace first and last."
+   },
+   "steps": [
+    {
+     "en": "first = 0, last = 9, mid = 4: 16 < 50 → first = 5"
+    },
+    {
+     "en": "first = 5, last = 9, mid = 7: 56 > 50 → last = 6"
+    },
+    {
+     "en": "first = 5, last = 6, mid = 5: 23 < 50 → first = 6"
+    },
+    {
+     "en": "first = 6, last = 6, mid = 6: 38 < 50 → first = 7"
+    },
+    {
+     "en": "first = 7 > last = 6 → loop ends, return −1"
+    }
+   ],
+   "answer": {
+    "en": "-1 (not found) after 4 comparisons"
+   },
+   "narration": {
+    "en": "When the key is absent, first and last cross over and the function returns minus one."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k06-q06",
+    "2k06-q07",
+    "2k06-q08"
+   ],
+   "mode": "roll_call",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Roll-call quiz. When your roll number is called, give your answer.",
+    "kn": "ಹಾಜರಿ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ಹಾಜರಿ ಸಂಖ್ಯೆ ಕರೆದಾಗ ನಿಮ್ಮ ಉತ್ತರ ಹೇಳಿ."
+   }
+  },
+  {
+   "id": "cbse",
+   "type": "pyq",
+   "title": {
+    "en": "CBSE board pattern"
+   },
+   "boards": [
+    "cbse"
+   ],
+   "questionIds": [
+    "2k06-q21",
+    "2k06-q22"
+   ],
+   "exams": [
+    "CBSE"
+   ],
+   "narration": {
+    "en": "CBSE pattern: assertion–reason and case-based questions. Read the case carefully before you answer."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "Board exam pattern"
+   },
+   "questionIds": [
+    "2k06-q09",
+    "2k06-q10"
+   ],
+   "exams": [
+    "PUC",
+    "CBSE",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Board exam pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Binary search needs a sorted list.",
+     "kn": "ಬೈನರಿ ಹುಡುಕಾಟಕ್ಕೆ ವಿಂಗಡಿಸಿದ ಪಟ್ಟಿ ಬೇಕು."
+    },
+    {
+     "en": "Compare with the middle element and discard half of the list.",
+     "kn": "ಮಧ್ಯದ ಅಂಶದೊಂದಿಗೆ ಹೋಲಿಸಿ ಅರ್ಧ ಪಟ್ಟಿಯನ್ನು ಬಿಡಿ."
+    },
+    {
+     "en": "mid = (first + last) // 2; stop when found or first > last.",
+     "kn": "mid = (first + last) // 2; ಸಿಕ್ಕಾಗ ಅಥವಾ first > last ಆದಾಗ ನಿಲ್ಲಿಸಿ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Modify binary_search so that it works on a list sorted in descending order."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k06-q10"
+   ],
+   "narration": {
+    "en": "Recap. Binary search needs a sorted list. Compare with the middle element and discard half of the list. mid = (first + last) // 2; stop when found or first > last.",
+    "kn": "ಪುನರಾವಲೋಕನ. ಬೈನರಿ ಹುಡುಕಾಟಕ್ಕೆ ವಿಂಗಡಿಸಿದ ಪಟ್ಟಿ ಬೇಕು. ಮಧ್ಯದ ಅಂಶದೊಂದಿಗೆ ಹೋಲಿಸಿ ಅರ್ಧ ಪಟ್ಟಿಯನ್ನು ಬಿಡಿ. mid = (first + last) // 2; ಸಿಕ್ಕಾಗ ಅಥವಾ first > last ಆದಾಗ ನಿಲ್ಲಿಸಿ."
+   }
+  }
+ ]
+}

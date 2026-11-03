@@ -1,0 +1,820 @@
+{
+ "id": "puc2-computer-science-06-searching.t4.lesson",
+ "chapterId": "puc2-computer-science-06-searching",
+ "topicId": "puc2-computer-science-06-searching.t4",
+ "title": {
+  "en": "Search by hashing",
+  "kn": "ಹ್ಯಾಶಿಂಗ್ ಮೂಲಕ ಹುಡುಕಾಟ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Search in one step",
+    "kn": "ಒಂದೇ ಹೆಜ್ಜೆಯಲ್ಲಿ ಹುಡುಕಾಟ"
+   },
+   "hook": {
+    "en": "In a hostel, room numbers tell you exactly where a student lives. You walk straight to room 204; you do not knock on every door. Hashing gives every element such an address.",
+    "kn": "ವಸತಿ ನಿಲಯದಲ್ಲಿ ಕೊಠಡಿ ಸಂಖ್ಯೆ ವಿದ್ಯಾರ್ಥಿ ಎಲ್ಲಿದ್ದಾನೆ ಎಂದು ನೇರವಾಗಿ ತಿಳಿಸುತ್ತದೆ; ಪ್ರತಿ ಬಾಗಿಲು ತಟ್ಟಬೇಕಿಲ್ಲ. ಹ್ಯಾಶಿಂಗ್ ಪ್ರತಿ ಅಂಶಕ್ಕೆ ಇಂಥ ವಿಳಾಸ ಕೊಡುತ್ತದೆ."
+   },
+   "objectives": [
+    {
+     "en": "Explain hash function and hash table"
+    },
+    {
+     "en": "Store and search elements with the remainder method"
+    },
+    {
+     "en": "Explain collisions"
+    }
+   ],
+   "narration": {
+    "en": "In a hostel, room numbers tell you exactly where a student lives. You walk straight to room 204; you do not knock on every door. Hashing gives every element such an address.",
+    "kn": "ವಸತಿ ನಿಲಯದಲ್ಲಿ ಕೊಠಡಿ ಸಂಖ್ಯೆ ವಿದ್ಯಾರ್ಥಿ ಎಲ್ಲಿದ್ದಾನೆ ಎಂದು ನೇರವಾಗಿ ತಿಳಿಸುತ್ತದೆ; ಪ್ರತಿ ಬಾಗಿಲು ತಟ್ಟಬೇಕಿಲ್ಲ. ಹ್ಯಾಶಿಂಗ್ ಪ್ರತಿ ಅಂಶಕ್ಕೆ ಇಂಥ ವಿಳಾಸ ಕೊಡುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Hash function and hash table"
+   },
+   "body": {
+    "en": "Hashing finds an element with a single comparison. A hash function computes, from the element itself, the index at which it is stored. A common one is the remainder method: h(element) = element % size of the hash table. The hash table is a list in which each element is stored at the index its hash value gives. To search, compute the hash value of the key and compare the key with the element at that index: one comparison, whatever the size of the list."
+   },
+   "points": [
+    {
+     "en": "Hash function: element → index"
+    },
+    {
+     "en": "Remainder method: h(x) = x % size"
+    },
+    {
+     "en": "Search: compute h(key), compare once"
+    }
+   ],
+   "formula": "h(x) = x \\bmod \\text{size}",
+   "narration": {
+    "en": "Hashing finds an element with a single comparison. A hash function computes, from the element itself, the index at which it is stored. A common one is the remainder method: h(element) = element % size of the hash table. The hash table is a list in which each element is stored at the index its hash value gives. To search, compute the hash value of the key and compare the key with the element at that index: one comparison, whatever the size of the list.",
+    "kn": "ಹ್ಯಾಶ್ ಕಾರ್ಯವು ಅಂಶದಿಂದಲೇ ಅದನ್ನು ಸಂಗ್ರಹಿಸುವ ಸೂಚಿಯನ್ನು ಲೆಕ್ಕಹಾಕುತ್ತದೆ, ಉದಾ. h(x) = x % ಕೋಷ್ಟಕದ ಗಾತ್ರ. ಹುಡುಕುವಾಗ h(key) ಲೆಕ್ಕಹಾಕಿ ಒಂದೇ ಬಾರಿ ಹೋಲಿಸುತ್ತೇವೆ."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Building a hash table of size 10"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "An empty hash table with ten slots, numbered 0 to 9."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "h(x) = x % 10"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        11,
+        10
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        20,
+        10
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        29,
+        10
+       ],
+       "text": {
+        "en": "2"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        38,
+        10
+       ],
+       "text": {
+        "en": "3"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        47,
+        10
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        56,
+        10
+       ],
+       "text": {
+        "en": "5"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        65,
+        10
+       ],
+       "text": {
+        "en": "6"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        74,
+        10
+       ],
+       "text": {
+        "en": "7"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        83,
+        10
+       ],
+       "text": {
+        "en": "8"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        92,
+        10
+       ],
+       "text": {
+        "en": "9"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        8,
+        14
+       ],
+       "to": [
+        16,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        17,
+        14
+       ],
+       "to": [
+        25,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        26,
+        14
+       ],
+       "to": [
+        34,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        35,
+        14
+       ],
+       "to": [
+        43,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        44,
+        14
+       ],
+       "to": [
+        52,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        53,
+        14
+       ],
+       "to": [
+        61,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        62,
+        14
+       ],
+       "to": [
+        70,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        71,
+        14
+       ],
+       "to": [
+        79,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        80,
+        14
+       ],
+       "to": [
+        88,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        89,
+        14
+       ],
+       "to": [
+        97,
+        20
+       ],
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Insert 34: 34 mod 10 is 4, so 34 goes to slot 4. 16 goes to slot 6, and 2 to slot 2."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        28
+       ],
+       "text": {
+        "en": "34 % 10 = 4"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        20,
+        27
+       ],
+       "to": [
+        46,
+        21
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        45,
+        15
+       ],
+       "text": {
+        "en": "34"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        34
+       ],
+       "text": {
+        "en": "16 % 10 = 6"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        63,
+        15
+       ],
+       "text": {
+        "en": "16"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        28,
+        15
+       ],
+       "text": {
+        "en": "2"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Insert 93 into slot 3, 80 into slot 0, 77 into slot 7 and 51 into slot 1."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        36,
+        15
+       ],
+       "text": {
+        "en": "93"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        9,
+        15
+       ],
+       "text": {
+        "en": "80"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        72,
+        15
+       ],
+       "text": {
+        "en": "77"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        18,
+        15
+       ],
+       "text": {
+        "en": "51"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "To search 77, compute 77 mod 10, which is 7, and look only in slot 7. One comparison, found."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        70,
+        13
+       ],
+       "to": [
+        79,
+        21
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55,
+        28
+       ],
+       "text": {
+        "en": "search 77 → slot 7"
+       },
+       "size": 3,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55,
+        34
+       ],
+       "text": {
+        "en": "1 comparison"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Now insert 44. 44 mod 10 is 4, but 34 is already there. Two elements, one slot: a collision."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        42
+       ],
+       "text": {
+        "en": "insert 44 → 44 % 10 = 4"
+       },
+       "size": 4,
+       "color": "red"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        40,
+        41
+       ],
+       "to": [
+        47,
+        22
+       ],
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        50
+       ],
+       "text": {
+        "en": "slot 4 taken: COLLISION"
+       },
+       "size": 4,
+       "color": "red"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "We fill a hash table of size ten using the remainder method."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Collisions"
+   },
+   "body": {
+    "en": "A collision happens when two or more different elements give the same hash value, for example 34 and 44 with h(x) = x % 10. The second element cannot go into the occupied slot, so a collision resolution technique must decide where it goes. A hash function that maps every element of the list to a unique index is called a perfect hash function; with it, every search takes exactly one comparison."
+   },
+   "points": [
+    {
+     "en": "Collision: h(a) = h(b) for a ≠ b"
+    },
+    {
+     "en": "Needs collision resolution"
+    },
+    {
+     "en": "Perfect hash function: no collisions"
+    }
+   ],
+   "narration": {
+    "en": "A collision happens when two or more different elements give the same hash value, for example 34 and 44 with h(x) = x % 10. The second element cannot go into the occupied slot, so a collision resolution technique must decide where it goes. A hash function that maps every element of the list to a unique index is called a perfect hash function; with it, every search takes exactly one comparison.",
+    "kn": "ಎರಡು ಬೇರೆ ಅಂಶಗಳಿಗೆ ಒಂದೇ ಹ್ಯಾಶ್ ಮೌಲ್ಯ ಬಂದರೆ ಅದು ಘರ್ಷಣೆ (collision). ಪ್ರತಿ ಅಂಶಕ್ಕೂ ಬೇರೆ ಸೂಚಿ ನೀಡುವ ಕಾರ್ಯವನ್ನು ಪರಿಪೂರ್ಣ ಹ್ಯಾಶ್ ಕಾರ್ಯ ಎನ್ನುತ್ತಾರೆ."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "readouts",
+   "title": {
+    "en": "Where does the element go?"
+   },
+   "caption": {
+    "en": "With the remainder method, an element x is stored at index x % size. Change x and the table size and predict the slot."
+   },
+   "sliders": [
+    {
+     "name": "x",
+     "label": {
+      "en": "Element x"
+     },
+     "min": 0,
+     "max": 200,
+     "step": 1,
+     "value": 77
+    },
+    {
+     "name": "size",
+     "label": {
+      "en": "Hash table size"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 10
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Index h(x) = x % size"
+     },
+     "expr": "x-size*floor(x/size)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Another element with the same index"
+     },
+     "expr": "x-size*floor(x/size)+size",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With size 10, find two elements between 0 and 100 that collide with 77."
+    },
+    {
+     "en": "Change the size to 7. Does 34 still collide with 44?"
+    },
+    {
+     "en": "Why is a prime table size often a good choice?"
+    }
+   ],
+   "narration": {
+    "en": "With the remainder method, an element x is stored at index x % size. Change x and the table size and predict the slot. With size 10, find two elements between 0 and 100 that collide with 77."
+   },
+   "seconds": 120,
+   "optional": true
+  },
+  {
+   "id": "sim-algo.hash",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "algo.hash",
+   "caption": {
+    "en": "Insert keys into the hash table and see where collisions happen."
+   },
+   "tryThis": [
+    {
+     "en": "Insert 34 and 44 into a table of size 10."
+    },
+    {
+     "en": "Try a different table size and insert the same keys."
+    }
+   ],
+   "narration": {
+    "en": "Insert keys into the hash table and see where collisions happen. Insert 34 and 44 into a table of size 10. Try a different table size and insert the same keys."
+   },
+   "seconds": 150,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Store [34, 16, 2, 93, 80, 77, 51] in a hash table of size 10 and search for 16 and 61."
+   },
+   "steps": [
+    {
+     "en": "def h(element, size):"
+    },
+    {
+     "en": "    return element % size"
+    },
+    {
+     "en": "hashTable = [None] * 10"
+    },
+    {
+     "en": "for x in [34, 16, 2, 93, 80, 77, 51]:"
+    },
+    {
+     "en": "    hashTable[h(x, 10)] = x"
+    },
+    {
+     "en": "for key in [16, 61]:"
+    },
+    {
+     "en": "    pos = h(key, 10)"
+    },
+    {
+     "en": "    if hashTable[pos] == key:"
+    },
+    {
+     "en": "        print(key, \"found at index\", pos)"
+    },
+    {
+     "en": "    else:"
+    },
+    {
+     "en": "        print(key, \"not found\")"
+    }
+   ],
+   "answer": {
+    "en": "16 found at index 6\n61 not found"
+   },
+   "narration": {
+    "en": "16 mod 10 is 6 and slot 6 holds 16: found. 61 mod 10 is 1, but slot 1 holds 51, so 61 is not in the list."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "Which elements of [12, 25, 47, 35, 60, 72] collide in a table of size 10?"
+   },
+   "steps": [
+    {
+     "en": "lst = [12, 25, 47, 35, 60, 72]"
+    },
+    {
+     "en": "slots = {}"
+    },
+    {
+     "en": "for x in lst:"
+    },
+    {
+     "en": "    slots.setdefault(x % 10, []).append(x)"
+    },
+    {
+     "en": "for k in sorted(slots):"
+    },
+    {
+     "en": "    if len(slots[k]) > 1:"
+    },
+    {
+     "en": "        print(\"slot\", k, \":\", slots[k])"
+    }
+   ],
+   "answer": {
+    "en": "slot 2 : [12, 72]\nslot 5 : [25, 35]"
+   },
+   "narration": {
+    "en": "12 and 72 both leave remainder 2, and 25 and 35 both leave remainder 5: two collisions."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k06-q16",
+    "2k06-q17",
+    "2k06-q18"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Discuss with your neighbour, raise hands, and the monitor taps the class answer.",
+    "kn": "ತರಗತಿ ರಸಪ್ರಶ್ನೆ. ಪಕ್ಕದವರೊಂದಿಗೆ ಚರ್ಚಿಸಿ, ಕೈ ಎತ್ತಿ, ಮಾನಿಟರ್ ತರಗತಿಯ ಉತ್ತರವನ್ನು ಒತ್ತಲಿ."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "Competitive exam practice"
+   },
+   "questionIds": [
+    "2k06-q25",
+    "2k06-q26",
+    "2k06-q27"
+   ],
+   "exams": [
+    "CUET"
+   ],
+   "narration": {
+    "en": "CUET practice. These questions test the same ideas in the entrance-exam style; work them out on paper first."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A hash function computes the storage index from the element.",
+     "kn": "ಹ್ಯಾಶ್ ಕಾರ್ಯ ಅಂಶದಿಂದಲೇ ಸಂಗ್ರಹ ಸೂಚಿಯನ್ನು ಲೆಕ್ಕಹಾಕುತ್ತದೆ."
+    },
+    {
+     "en": "Remainder method: h(x) = x % table size.",
+     "kn": "ಶೇಷ ವಿಧಾನ: h(x) = x % ಕೋಷ್ಟಕದ ಗಾತ್ರ."
+    },
+    {
+     "en": "Search by hashing needs one comparison.",
+     "kn": "ಹ್ಯಾಶಿಂಗ್ ಹುಡುಕಾಟಕ್ಕೆ ಒಂದೇ ಹೋಲಿಕೆ ಸಾಕು."
+    },
+    {
+     "en": "Two elements with the same hash value cause a collision.",
+     "kn": "ಒಂದೇ ಹ್ಯಾಶ್ ಮೌಲ್ಯದ ಎರಡು ಅಂಶಗಳು ಘರ್ಷಣೆ ಉಂಟುಮಾಡುತ್ತವೆ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Insert 23, 43, 13, 27 into a hash table of size 10. Which collide? Suggest a table size that avoids all collisions."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k06-q19",
+    "2k06-q20"
+   ],
+   "narration": {
+    "en": "Recap. A hash function computes the storage index from the element. Remainder method: h(x) = x % table size. Search by hashing needs one comparison. Two elements with the same hash value cause a collision.",
+    "kn": "ಪುನರಾವಲೋಕನ. ಹ್ಯಾಶ್ ಕಾರ್ಯ ಅಂಶದಿಂದಲೇ ಸಂಗ್ರಹ ಸೂಚಿಯನ್ನು ಲೆಕ್ಕಹಾಕುತ್ತದೆ. ಶೇಷ ವಿಧಾನ: h(x) = x % ಕೋಷ್ಟಕದ ಗಾತ್ರ. ಹ್ಯಾಶಿಂಗ್ ಹುಡುಕಾಟಕ್ಕೆ ಒಂದೇ ಹೋಲಿಕೆ ಸಾಕು. ಒಂದೇ ಹ್ಯಾಶ್ ಮೌಲ್ಯದ ಎರಡು ಅಂಶಗಳು ಘರ್ಷಣೆ ಉಂಟುಮಾಡುತ್ತವೆ."
+   }
+  }
+ ]
+}

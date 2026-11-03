@@ -1,0 +1,754 @@
+{
+ "id": "puc2-computer-science-06-searching.t1.lesson",
+ "chapterId": "puc2-computer-science-06-searching",
+ "topicId": "puc2-computer-science-06-searching.t1",
+ "title": {
+  "en": "Searching and linear search",
+  "kn": "ಹುಡುಕಾಟ ಮತ್ತು ರೇಖೀಯ ಹುಡುಕಾಟ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Finding a needle in a list",
+    "kn": "ಪಟ್ಟಿಯಲ್ಲಿ ಸೂಜಿ ಹುಡುಕುವುದು"
+   },
+   "hook": {
+    "en": "Your name is somewhere on a long admission list pinned to the notice board. If the list is not in any order, the only way is to read it from the top, one name at a time. That is linear search.",
+    "kn": "ನೋಟಿಸ್ ಬೋರ್ಡ್‌ನ ಉದ್ದದ ಪ್ರವೇಶ ಪಟ್ಟಿಯಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರು ಎಲ್ಲೋ ಇದೆ. ಪಟ್ಟಿ ಕ್ರಮದಲ್ಲಿಲ್ಲದಿದ್ದರೆ ಮೇಲಿನಿಂದ ಒಂದೊಂದೇ ಹೆಸರು ಓದಬೇಕು. ಅದೇ ರೇಖೀಯ ಹುಡುಕಾಟ."
+   },
+   "objectives": [
+    {
+     "en": "Define searching and the key"
+    },
+    {
+     "en": "Trace linear search on a list"
+    },
+    {
+     "en": "Count comparisons in the best and worst case"
+    }
+   ],
+   "narration": {
+    "en": "Your name is somewhere on a long admission list pinned to the notice board. If the list is not in any order, the only way is to read it from the top, one name at a time. That is linear search.",
+    "kn": "ನೋಟಿಸ್ ಬೋರ್ಡ್‌ನ ಉದ್ದದ ಪ್ರವೇಶ ಪಟ್ಟಿಯಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರು ಎಲ್ಲೋ ಇದೆ. ಪಟ್ಟಿ ಕ್ರಮದಲ್ಲಿಲ್ಲದಿದ್ದರೆ ಮೇಲಿನಿಂದ ಒಂದೊಂದೇ ಹೆಸರು ಓದಬೇಕು. ಅದೇ ರೇಖೀಯ ಹುಡುಕಾಟ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Searching and linear search"
+   },
+   "body": {
+    "en": "Searching means locating a particular element, called the key, in a collection of elements; the search is successful if the key is found and unsuccessful otherwise. Linear (sequential) search compares the key with each element of the list in turn, starting from the first. It stops as soon as a match is found and reports the position; if the end of the list is reached without a match, the key is not present. Linear search works on both sorted and unsorted lists."
+   },
+   "points": [
+    {
+     "en": "Key = the element we look for"
+    },
+    {
+     "en": "Compare with each element, left to right"
+    },
+    {
+     "en": "Works on unsorted lists too"
+    }
+   ],
+   "narration": {
+    "en": "Searching means locating a particular element, called the key, in a collection of elements; the search is successful if the key is found and unsuccessful otherwise. Linear (sequential) search compares the key with each element of the list in turn, starting from the first. It stops as soon as a match is found and reports the position; if the end of the list is reached without a match, the key is not present. Linear search works on both sorted and unsorted lists.",
+    "kn": "ಸಂಗ್ರಹದಲ್ಲಿ ಕೀ ಎಂಬ ನಿರ್ದಿಷ್ಟ ಅಂಶವನ್ನು ಪತ್ತೆಮಾಡುವುದೇ ಹುಡುಕಾಟ. ರೇಖೀಯ ಹುಡುಕಾಟ ಕೀಯನ್ನು ಮೊದಲ ಅಂಶದಿಂದ ಆರಂಭಿಸಿ ಪ್ರತಿ ಅಂಶದೊಂದಿಗೆ ಹೋಲಿಸುತ್ತದೆ; ಹೊಂದಿಕೆಯಾದ ತಕ್ಷಣ ನಿಲ್ಲುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Linear search for key = 12"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Here is an unsorted list with its indices. We look for the key 12."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "Linear search: key = 12"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        11,
+        10
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        20,
+        10
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        29,
+        10
+       ],
+       "text": {
+        "en": "2"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        38,
+        10
+       ],
+       "text": {
+        "en": "3"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        47,
+        10
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        56,
+        10
+       ],
+       "text": {
+        "en": "5"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        65,
+        10
+       ],
+       "text": {
+        "en": "6"
+       },
+       "size": 2,
+       "color": "blue"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        8,
+        14
+       ],
+       "to": [
+        16,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        17,
+        14
+       ],
+       "to": [
+        25,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        26,
+        14
+       ],
+       "to": [
+        34,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        35,
+        14
+       ],
+       "to": [
+        43,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        44,
+        14
+       ],
+       "to": [
+        52,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        53,
+        14
+       ],
+       "to": [
+        61,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        62,
+        14
+       ],
+       "to": [
+        70,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10,
+        15
+       ],
+       "text": {
+        "en": "7"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        15
+       ],
+       "text": {
+        "en": "3"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        28,
+        15
+       ],
+       "text": {
+        "en": "15"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        37,
+        15
+       ],
+       "text": {
+        "en": "12"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        46,
+        15
+       ],
+       "text": {
+        "en": "9"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55,
+        15
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        64,
+        15
+       ],
+       "text": {
+        "en": "20"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Compare 12 with 7: no. With 3: no. With 15: no. Each check is one comparison."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        10,
+        24
+       ],
+       "text": {
+        "en": "x"
+       },
+       "size": 4,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        19,
+        24
+       ],
+       "text": {
+        "en": "x"
+       },
+       "size": 4,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        28,
+        24
+       ],
+       "text": {
+        "en": "x"
+       },
+       "size": 4,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        31
+       ],
+       "text": {
+        "en": "comparisons: 1, 2, 3"
+       },
+       "size": 3,
+       "color": "red"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The fourth comparison matches. Index 3, so position 4. We stop here; the rest is never looked at."
+     },
+     "draw": [
+      {
+       "kind": "rect",
+       "from": [
+        35,
+        13
+       ],
+       "to": [
+        44,
+        21
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        37,
+        24
+       ],
+       "text": {
+        "en": "found"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37
+       ],
+       "text": {
+        "en": "position = index + 1 = 4"
+       },
+       "size": 4,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Best case: the key is first, one comparison. Worst case: last or absent, n comparisons."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        45
+       ],
+       "text": {
+        "en": "best: 1"
+       },
+       "size": 4,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        40,
+        45
+       ],
+       "text": {
+        "en": "worst: n"
+       },
+       "size": 4,
+       "color": "red"
+      },
+      {
+       "kind": "math",
+       "at": [
+        3,
+        52
+       ],
+       "tex": "\\text{average (found)} = \\frac{n+1}{2}",
+       "size": 4,
+       "color": "orange"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "We trace linear search for the key 12, counting each comparison."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Linear search in Python"
+   },
+   "body": {
+    "en": "A function linear_search(lst, key) uses a for loop over the indices of the list. If lst[index] == key it returns index + 1, the position; after the loop it returns None to show that the key was not found. For a list of n elements the number of comparisons is 1 in the best case (key first) and n in the worst case (key last or absent)."
+   },
+   "points": [
+    {
+     "en": "for index in range(len(lst))"
+    },
+    {
+     "en": "return index + 1 on a match"
+    },
+    {
+     "en": "Best case 1, worst case n comparisons"
+    }
+   ],
+   "narration": {
+    "en": "A function linear_search(lst, key) uses a for loop over the indices of the list. If lst[index] == key it returns index + 1, the position; after the loop it returns None to show that the key was not found. For a list of n elements the number of comparisons is 1 in the best case (key first) and n in the worst case (key last or absent).",
+    "kn": "linear_search ಕಾರ್ಯವು for ಲೂಪ್‌ನಲ್ಲಿ ಪ್ರತಿ ಅಂಶವನ್ನು ಕೀಯೊಂದಿಗೆ ಹೋಲಿಸಿ, ಹೊಂದಿಕೆಯಾದರೆ ಸ್ಥಾನವನ್ನು ಹಿಂತಿರುಗಿಸುತ್ತದೆ; ಇಲ್ಲದಿದ್ದರೆ None."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "readouts",
+   "title": {
+    "en": "Comparisons in linear search"
+   },
+   "caption": {
+    "en": "A list has n elements and the key is at position p. Linear search makes p comparisons if the key is found there, and n comparisons if the key is absent."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Number of elements n"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 20
+    },
+    {
+     "name": "p",
+     "label": {
+      "en": "Position of the key p"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 8
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Comparisons if found at position p (p ≤ n)"
+     },
+     "expr": "(p+n-abs(p-n))/2",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Comparisons if the key is absent"
+     },
+     "expr": "n",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Average comparisons for a successful search"
+     },
+     "expr": "(n+1)/2",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Put the key first (p = 1). This is the best case."
+    },
+    {
+     "en": "Put the key last (p = n). How does it compare with an absent key?"
+    },
+    {
+     "en": "Double n. What happens to the average?"
+    }
+   ],
+   "narration": {
+    "en": "A list has n elements and the key is at position p. Linear search makes p comparisons if the key is found there, and n comparisons if the key is absent. Put the key first (p = 1). This is the best case."
+   },
+   "seconds": 120,
+   "optional": true
+  },
+  {
+   "id": "sim-algo.linear",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "algo.linear",
+   "caption": {
+    "en": "Watch linear search check the elements one at a time."
+   },
+   "tryThis": [
+    {
+     "en": "Search for an element near the end and count the comparisons."
+    },
+    {
+     "en": "Search for a value that is not in the list."
+    }
+   ],
+   "narration": {
+    "en": "Watch linear search check the elements one at a time. Search for an element near the end and count the comparisons. Search for a value that is not in the list."
+   },
+   "seconds": 150,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Use linear_search to find the position of 12 in [7, 3, 15, 12, 9, 4, 20]."
+   },
+   "steps": [
+    {
+     "en": "def linear_search(lst, key):"
+    },
+    {
+     "en": "    for index in range(len(lst)):"
+    },
+    {
+     "en": "        if lst[index] == key:"
+    },
+    {
+     "en": "            return index + 1"
+    },
+    {
+     "en": "    return None"
+    },
+    {
+     "en": "numList = [7, 3, 15, 12, 9, 4, 20]"
+    },
+    {
+     "en": "pos = linear_search(numList, 12)"
+    },
+    {
+     "en": "print(\"Found at position\", pos)"
+    }
+   ],
+   "answer": {
+    "en": "Found at position 4"
+   },
+   "narration": {
+    "en": "The function compares 12 with 7, 3, 15 and then 12, so it returns index 3 plus 1, position 4."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "Modify linear search to count the comparisons for key 20 and for key 8 in the same list."
+   },
+   "steps": [
+    {
+     "en": "def count_comparisons(lst, key):"
+    },
+    {
+     "en": "    count = 0"
+    },
+    {
+     "en": "    for x in lst:"
+    },
+    {
+     "en": "        count = count + 1"
+    },
+    {
+     "en": "        if x == key:"
+    },
+    {
+     "en": "            return count"
+    },
+    {
+     "en": "    return count"
+    },
+    {
+     "en": "numList = [7, 3, 15, 12, 9, 4, 20]"
+    },
+    {
+     "en": "print(count_comparisons(numList, 20), count_comparisons(numList, 8))"
+    }
+   ],
+   "answer": {
+    "en": "7 7"
+   },
+   "narration": {
+    "en": "20 is the last element and 8 is absent: both are worst cases, with 7 comparisons for 7 elements."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k06-q01",
+    "2k06-q02",
+    "2k06-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Discuss with your neighbour, raise hands, and the monitor taps the class answer.",
+    "kn": "ತರಗತಿ ರಸಪ್ರಶ್ನೆ. ಪಕ್ಕದವರೊಂದಿಗೆ ಚರ್ಚಿಸಿ, ಕೈ ಎತ್ತಿ, ಮಾನಿಟರ್ ತರಗತಿಯ ಉತ್ತರವನ್ನು ಒತ್ತಲಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "Board exam pattern"
+   },
+   "questionIds": [
+    "2k06-q04",
+    "2k06-q05"
+   ],
+   "exams": [
+    "PUC",
+    "CBSE",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Board exam pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Searching finds the position of a key in a collection.",
+     "kn": "ಹುಡುಕಾಟ ಸಂಗ್ರಹದಲ್ಲಿ ಕೀಯ ಸ್ಥಾನವನ್ನು ಕಂಡುಹಿಡಿಯುತ್ತದೆ."
+    },
+    {
+     "en": "Linear search compares the key with each element in turn.",
+     "kn": "ರೇಖೀಯ ಹುಡುಕಾಟ ಕೀಯನ್ನು ಒಂದೊಂದೇ ಅಂಶದೊಂದಿಗೆ ಹೋಲಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "Best case 1 comparison, worst case n comparisons.",
+     "kn": "ಅತ್ಯುತ್ತಮ ಸಂದರ್ಭ 1 ಹೋಲಿಕೆ, ಕೆಟ್ಟ ಸಂದರ್ಭ n ಹೋಲಿಕೆಗಳು."
+    },
+    {
+     "en": "It works on unsorted lists as well as sorted ones.",
+     "kn": "ಇದು ವಿಂಗಡಿಸದ ಪಟ್ಟಿಗಳಲ್ಲೂ ಕೆಲಸ ಮಾಡುತ್ತದೆ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write a program that reads a list of names and a name to search, and prints every position at which the name occurs (not just the first)."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k06-q05"
+   ],
+   "narration": {
+    "en": "Recap. Searching finds the position of a key in a collection. Linear search compares the key with each element in turn. Best case 1 comparison, worst case n comparisons. It works on unsorted lists as well as sorted ones.",
+    "kn": "ಪುನರಾವಲೋಕನ. ಹುಡುಕಾಟ ಸಂಗ್ರಹದಲ್ಲಿ ಕೀಯ ಸ್ಥಾನವನ್ನು ಕಂಡುಹಿಡಿಯುತ್ತದೆ. ರೇಖೀಯ ಹುಡುಕಾಟ ಕೀಯನ್ನು ಒಂದೊಂದೇ ಅಂಶದೊಂದಿಗೆ ಹೋಲಿಸುತ್ತದೆ. ಅತ್ಯುತ್ತಮ ಸಂದರ್ಭ 1 ಹೋಲಿಕೆ, ಕೆಟ್ಟ ಸಂದರ್ಭ n ಹೋಲಿಕೆಗಳು. ಇದು ವಿಂಗಡಿಸದ ಪಟ್ಟಿಗಳಲ್ಲೂ ಕೆಲಸ ಮಾಡುತ್ತದೆ."
+   }
+  }
+ ]
+}
