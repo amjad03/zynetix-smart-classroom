@@ -28,6 +28,7 @@ class BoardConfig extends ChangeNotifier {
   int get rollCount => _p.getInt('rollCount') ?? 60;
   int get periodMinutes => _p.getInt('periodMinutes') ?? 40;
   Lang get lang => _p.getString('lang') == 'kn' ? Lang.kn : Lang.en;
+  String? get licenceToken => _p.getString('licenceToken');
   bool get kioskOn => _p.getBool('kiosk') ?? false;
 
   /// Before activation the PIN is 1234 (printed on the setup card); activation replaces it.

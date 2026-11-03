@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../core/services.dart';
 import '../core/strings.dart';
 import '../core/theme.dart';
+import '../engine/licence.dart';
 import '../engine/model.dart';
 import 'player.dart';
 import 'self_learning.dart';
@@ -29,6 +30,7 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(40),
               child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                 StatusBar(lang: l),
+                _LicenceBanner(services: s),
                 const Spacer(),
                 if (next != null)
                   _ContinueCard(
@@ -186,5 +188,33 @@ class _ModeButton extends StatelessWidget {
             ]),
           ),
         ),
+      );
+}
+
+/// Shown only when something needs the college's attention. Teaching never stops.
+class _LicenceBanner extends StatelessWidget {
+  const _LicenceBanner({required this.services});
+  final Services services;
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<LicenceStatus>(
+        future: services.licence(),
+        builder: (context, snap) {
+          final st = snap.data;
+          final String? msg = switch (st?.state) {
+            LicenceState.grace => 'Licence expired. ${st!.daysLeft} days left to renew; lessons keep working.',
+            LicenceState.lapsed => 'Licence expired. Lessons keep working, but new content is paused until the college renews.',
+            LicenceState.invalid => 'This board\'s licence could not be verified. Please contact Zynetix support.',
+            _ => null,
+          };
+          if (msg == null) return const SizedBox.shrink();
+          return Container(
+            key: const ValueKey('licenceBanner'),
+            margin: const EdgeInsets.only(top: 16),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(color: Z.accent.withValues(alpha: 0.2), border: Border.all(color: Z.accent, width: 3), borderRadius: BorderRadius.circular(Z.radius)),
+            child: Row(children: [const Icon(Icons.warning_amber_rounded, size: 48, color: Z.accent), const SizedBox(width: 16), Expanded(child: Text(msg, style: const TextStyle(fontSize: 30)))]),
+          );
+        },
       );
 }

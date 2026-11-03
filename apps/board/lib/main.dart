@@ -32,6 +32,7 @@ Future<void> main() async {
     narrator: DeviceNarrator(),
     syllabus: await Services.loadSyllabus(rootBundle),
     embeds: KinetixEmbeds(),
+    licenceKey: parseTrustedKey(await rootBundle.loadString('assets/keys/licence-key.json')).value,
   );
   if (config.kioskOn) unawaited(Kiosk.enter());
   runApp(ZynetixBoardApp(services: services));

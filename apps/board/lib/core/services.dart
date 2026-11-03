@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/widgets.dart';
 
 import '../blocks/embeds.dart';
+import '../engine/licence.dart';
 import '../engine/model.dart';
 import '../engine/narrator.dart';
 import '../engine/pack_store.dart';
@@ -12,7 +13,7 @@ import 'config.dart';
 
 /// Everything the screens need, created once at start-up (main.dart) or by a test.
 class Services {
-  Services({required this.config, required this.store, required this.outbox, required this.narrator, required this.syllabus, required this.embeds, DateTime Function()? clock})
+  Services({required this.config, required this.store, required this.outbox, required this.narrator, required this.syllabus, required this.embeds, this.licenceKey = const [], DateTime Function()? clock})
       : clock = clock ?? DateTime.now;
 
   final BoardConfig config;
@@ -22,6 +23,10 @@ class Services {
   /// subject → year → chapters (the whole NCERT tree, including chapters with no pack yet).
   final Map<String, Map<String, List<Chapter>>> syllabus;
   final Embeds embeds;
+  /// Ed25519 public key that signs licences (assets/keys/licence-key.json).
+  final List<int> licenceKey;
+
+  Future<LicenceStatus> licence() => Licence.check(token: config.licenceToken, publicKey: licenceKey, now: clock());
   final DateTime Function() clock;
   late final SyncClient sync = SyncClient(config: config, store: store, outbox: outbox);
 
