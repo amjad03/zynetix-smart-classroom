@@ -602,3 +602,11 @@ No text is reproduced. Check these plot details against the texts:
 - **Life table data:** a toy cohort (rats).
 - **Facts:** Kelly index and the time-reversal test; the RBD Act 1969.
 - **Kannada:** terms need a native-speaker review.
+
+## Business Studies 1st PUC enrichment
+
+- **MSME limits:** 2020 limits, with the 2025 limits shown separately.
+- **1991 policy:** public-sector reserved industries cut from 17 to 8.
+- **Founding years:** NSIC 1955, DIC 1978, NABARD 1982, SIDBI 1990 (used in a sequencing question).
+- **Company members:** a private company needs 2 members and a public company 7.
+- **JHF systems:** Dayabhaga (West Bengal) and Mitakshara (elsewhere).
