@@ -561,3 +561,11 @@ No text is reproduced. Check these plot details against the texts:
 - **Timing conventions:** 8085 timing (JNZ 10/7, DCR 4, MVI 7; S1 S0 codes) and the 74-instruction figure.
 - **8051 interrupts:** 5 sources (reset not counted).
 - **Simplified f_max formulas:** ripple 1/(n tpd), synchronous 1/(tpd + tAND).
+
+## Electronics 1st PUC ch4-6, 11 (Karnataka PU)
+
+- **Syllabus scope:** check the topic split against PUE, especially whether the special diodes and the function generator are in the syllabus.
+- **Constants:** Ge gap 0.7 eV; Si ni 1.5e10; mobilities 1350/480; eta 1 (Ge) and 2 (Si); utilisation factors 0.287/0.693/0.812; 7805 dropout 2 V.
+- **Formula forms:** capacitor and choke ripple; CRT deflection; varactor C; Lissajous ratio.
+- **Real-board check:** the 7805 and DMM whiteboards are tight on space.
+- **Kannada:** terms need a native-speaker review.
