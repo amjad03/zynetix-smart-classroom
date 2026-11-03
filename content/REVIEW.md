@@ -35,3 +35,13 @@ Where the correct option was moved to balance answers across A–D, numeric opti
   - matrices in quiz options are written as "[a b; c d]" in plain text; check this reads well on the board
   - cot⁻¹(−√3) = 5π/6 uses NCERT's (0, π) range
 - **Kannada terms to check:** ಸ್ವವಾಚಕ, ಸಂಕ್ರಾಮಕ, ಏಕೈಕ/ಮೇಲ್ಮುಖ/ದ್ವಿಮುಖ, ಮಾತೃಕೆ, ನಿರ್ಧಾರಕ, ಉಪನಿರ್ಧಾರಕ, ಸಹಗುಣಕ, ಸಹಜ (adjoint), ಸಂತತತೆ, ಅವಕಲನೀಯತೆ, ಸಮಾಕಲನ, ಪ್ರಾಚಲ.
+
+## 1st PUC Maths, ch 1–7
+
+- **Syllabus scope (believed removed in the rationalised book), with where it now appears:**
+  - Sets: power set and n(A∪B) problems appear only as exam notes.
+  - Linear inequalities: two-variable inequalities are left out.
+  - Binomial theorem: general term, middle term and the term independent of x are topics t4 and t5, labelled "Exam layer".
+  - Trigonometric equations are left out.
+- **Kept although it may have been dropped:** polar form of complex numbers (topic t4), because KCET and JEE use the argument.
+- **Kannada terms to check:** ಫಲನ, ವ್ಯಾಪ್ತಿ/ಸಹಪ್ರದೇಶ, ವಿಕಲ್ಪಗಳು (ಸಂಯೋಜನೆಗಳು), ಕ್ರಮಯೋಜನೆ, ಸಂಯುಗ್ಮ, ಮಹತ್ತಮ ಪೂರ್ಣಾಂಕ ಫಲನ, ಚತುರ್ಥಕ.
