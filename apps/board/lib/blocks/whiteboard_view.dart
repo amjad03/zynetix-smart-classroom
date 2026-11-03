@@ -384,6 +384,7 @@ void paintFunction(Canvas canvas, Rect box, List<double> xr, List<double> yr, do
   canvas.clipRect(box.inflate(paint.strokeWidth));
   final path = Path();
   var pen = false;
+  double? prevY;
   final last = (samples * t).round();
   final span = yr[1] - yr[0];
   for (var i = 0; i <= last; i++) {
@@ -391,8 +392,13 @@ void paintFunction(Canvas canvas, Rect box, List<double> xr, List<double> yr, do
     final y = f(x);
     if (!y.isFinite || y < yr[0] - span * 2 || y > yr[1] + span * 2) {
       pen = false;
+      prevY = null;
       continue;
     }
+    // A jump of more than half the y range between neighbouring samples is a discontinuity
+    // (sgn x, [x], tan x): lift the pen instead of drawing a vertical joining line.
+    if (prevY != null && (y - prevY).abs() > span * 0.5) pen = false;
+    prevY = y;
     final o = Offset(box.left + (x - xr[0]) / (xr[1] - xr[0]) * box.width, box.bottom - (y - yr[0]) / span * box.height);
     pen ? path.lineTo(o.dx, o.dy) : path.moveTo(o.dx, o.dy);
     pen = true;
