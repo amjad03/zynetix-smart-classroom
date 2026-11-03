@@ -26,6 +26,28 @@ dependencies.
 - At most 3 taps to start a lesson.
 - No student personal data: roll numbers only.
 
+## Screenshots
+
+Board screens are 1920×1080 and rendered with the app's own fonts (`apps/board/screenshots/`). In these renders, 3D models and PhET pages show a labelled card, because they run in a WebView on the board.
+
+| Board | |
+|---|---|
+| ![Home](apps/board/screenshots/png/01-home.png) | ![Home in Kannada](apps/board/screenshots/png/02-home-kannada.png) |
+| ![Teacher Mode](apps/board/screenshots/png/03-teacher-mode.png) | ![Lesson intro](apps/board/screenshots/png/04-player-intro.png) |
+| ![Concept with formula](apps/board/screenshots/png/05-player-concept-formula.png) | ![Kinetix virtual lab](apps/board/screenshots/png/06-player-virtual-lab.png) |
+| ![Worked example](apps/board/screenshots/png/07-player-example.png) | ![Roll-call quiz](apps/board/screenshots/png/08-quiz-roll-call.png) |
+| ![Team challenge](apps/board/screenshots/png/09-quiz-team-challenge.png) | ![Pen over a lesson](apps/board/screenshots/png/10-player-pen.png) |
+| ![Self-Learning period](apps/board/screenshots/png/11-self-learning.png) | ![Teacher PIN](apps/board/screenshots/png/12-teacher-pin.png) |
+
+| College Admin | Content CMS |
+|---|---|
+| ![Usage](docs/screenshots/admin-01-usage.png) | ![Packs](docs/screenshots/cms-01-packs.png) |
+| ![Self-learning scheduler](docs/screenshots/admin-02-self-learning-scheduler.png) | ![Block editor](docs/screenshots/cms-02-block-editor.png) |
+| ![Syllabus heatmap](docs/screenshots/admin-04-syllabus-heatmap.png) | ![Question bank](docs/screenshots/cms-03-question-bank.png) |
+| ![Timetable](docs/screenshots/admin-03-timetable.png) | ![Boards](docs/screenshots/admin-05-boards.png) |
+
+The Admin usage and heatmap screens show demo lesson logs generated for the screenshots.
+
 ## Run it
 
 ```bash
@@ -51,6 +73,6 @@ Tests:
 | pack-builder | 5 (vitest) |
 | api | 9 end-to-end tests against PostgreSQL (jest) |
 | cms | 4 (vitest) |
-| board | 18 (flutter test) |
+| board | 23 (flutter test) |
 
 The Admin and CMS apps were also smoke-tested end to end in Chromium against the seeded API.
