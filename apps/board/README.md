@@ -18,7 +18,7 @@ flutter build apk --release  # needs the Android SDK
 Kiosk, as device owner:
 
 ```bash
-adb shell dpm set-device-owner in.zynetix.zynetix_board/.KioskAdminReceiver
+adb shell dpm set-device-owner app.zynetix.board/.KioskAdminReceiver
 ```
 
 Default PIN before activation: `1234`. Activation replaces it.

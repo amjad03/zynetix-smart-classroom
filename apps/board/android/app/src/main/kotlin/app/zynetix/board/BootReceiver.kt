@@ -1,4 +1,4 @@
-package `in`.zynetix.zynetix_board
+package app.zynetix.board
 
 import android.content.BroadcastReceiver
 import android.content.Context

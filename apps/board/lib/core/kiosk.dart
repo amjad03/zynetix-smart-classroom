@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 
 /// Android lock-task kiosk, ported from the Kinetix board (android/…/Kiosk.kt). As device owner
-/// (`adb shell dpm set-device-owner in.zynetix.zynetix_board/.KioskAdminReceiver`) the board
+/// (`adb shell dpm set-device-owner app.zynetix.board/.KioskAdminReceiver`) the board
 /// locks fully and becomes the home app; otherwise Android falls back to screen pinning.
 abstract final class Kiosk {
   static const _ch = MethodChannel('zynetix/kiosk');

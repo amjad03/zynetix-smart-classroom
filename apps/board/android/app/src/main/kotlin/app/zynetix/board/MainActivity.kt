@@ -1,4 +1,4 @@
-package `in`.zynetix.zynetix_board
+package app.zynetix.board
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine

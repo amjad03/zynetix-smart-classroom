@@ -1,4 +1,4 @@
-package `in`.zynetix.zynetix_board
+package app.zynetix.board
 
 import android.app.Activity
 import android.app.ActivityManager
@@ -15,7 +15,7 @@ import android.view.WindowManager
 /**
  * Kiosk mode, ported from the Zynetix Board (amjad03/Kinetix) Kiosk.kt.
  *
- * As device owner (`adb shell dpm set-device-owner in.zynetix.zynetix_board/.KioskAdminReceiver`)
+ * As device owner (`adb shell dpm set-device-owner app.zynetix.board/.KioskAdminReceiver`)
  * the board allows itself in lock task mode and locks fully, with no system prompt; it also turns
  * off the lock screen and status bar, becomes the home app and stays awake while plugged in.
  * Allowed by an MDM instead (its DPC put us in the lock task packages), it locks fully too. Otherwise
@@ -27,7 +27,7 @@ class Kiosk(private val activity: Activity) {
     private val admin = ComponentName(activity, KioskAdminReceiver::class.java)
 
     /** The HOME entry point (an activity-alias, disabled unless kiosk mode is on). */
-    private val homeAlias = ComponentName(activity, "in.zynetix.zynetix_board.KioskHome")
+    private val homeAlias = ComponentName(activity, "app.zynetix.board.KioskHome")
 
     private fun setHomeAlias(enabled: Boolean) {
         val state = if (enabled) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED
