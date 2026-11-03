@@ -17,12 +17,26 @@ final seedIndex = jsonDecode(File('assets/packs/index.json').readAsStringSync())
 final trusted = parseTrustedKey(File('assets/packs/trusted-key.json').readAsStringSync());
 List<int> seedBytes(int i) => File('assets/packs/${seedIndex[i]['file']}').readAsBytesSync();
 
+/// All seed packs installed once per test file (installing 270 packs per test was slow and left
+/// ~80 MB behind each time). Each file uses its own folder, keyed by process id, and folders left
+/// by earlier runs whose process has ended are removed.
+PackStore? _seeded;
+
 Future<PackStore> seededStore() async {
-  final store = PackStore(Directory.systemTemp.createTempSync('packs'), trustedKeys: {trusted.key: trusted.value});
+  if (_seeded != null) return _seeded!;
+  final root = Directory.systemTemp;
+  for (final d in root.listSync().whereType<Directory>()) {
+    final m = RegExp(r'zx-board-test-(\d+)$').firstMatch(d.path);
+    if (m != null && int.parse(m[1]!) != pid && !Directory('/proc/${m[1]}').existsSync()) d.deleteSync(recursive: true);
+  }
+  final dir = Directory('${root.path}/zx-board-test-$pid');
+  if (dir.existsSync()) dir.deleteSync(recursive: true);
+  dir.createSync();
+  final store = PackStore(dir, trustedKeys: {trusted.key: trusted.value});
   for (var i = 0; i < seedIndex.length; i++) {
     await store.install(seedBytes(i) as dynamic);
   }
-  return store;
+  return _seeded = store;
 }
 
 Map<String, Map<String, List<Chapter>>> fileSyllabus() {
@@ -56,4 +70,13 @@ Future<void> pumpBoard(WidgetTester t, Services s, {Widget? home}) async {
   addTearDown(t.view.reset);
   await t.pumpWidget(home == null ? ZynetixBoardApp(services: s) : ZynetixBoardApp(services: s, home: home));
   await t.pump();
+}
+
+/// A temporary folder that is deleted when the current test ends.
+Directory tmpDir(String prefix) {
+  final d = Directory.systemTemp.createTempSync(prefix);
+  addTearDown(() {
+    if (d.existsSync()) d.deleteSync(recursive: true);
+  });
+  return d;
 }

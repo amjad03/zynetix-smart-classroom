@@ -16,8 +16,8 @@ void main() {
   test('activate, then sync: logs leave the outbox, PIN/schedule apply, newer packs install', () async {
     SharedPreferences.setMockInitialValues({});
     final config = await BoardConfig.load();
-    final store = PackStore(Directory.systemTemp.createTempSync('p'), trustedKeys: {trusted.key: trusted.value});
-    final outbox = Outbox(File('${Directory.systemTemp.createTempSync('o').path}/o.jsonl'))..add({'id': 'a'})..add({'id': 'b'})..add({'id': 'c'});
+    final store = PackStore(tmpDir('p'), trustedKeys: {trusted.key: trusted.value});
+    final outbox = Outbox(File('${tmpDir('o').path}/o.jsonl'))..add({'id': 'a'})..add({'id': 'b'})..add({'id': 'c'});
     final salt = 'x1', cfg = {'sectionId': 's9', 'sectionLabel': '2nd PUC · B', 'year': 'puc2', 'rollCount': 48, 'pinHash': BoardConfig.hashPin('2468', salt), 'pinSalt': salt, 'licence': {'validUntil': '2027-06-30'}};
     final mock = MockClient((req) async {
       if (req.url.path == '/v1/devices/activate') return http.Response(jsonEncode({'deviceToken': 'tok', 'config': cfg}), 201);

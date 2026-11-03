@@ -33,7 +33,7 @@ void main() {
     });
 
     test('rejects a pack whose manifest was tampered with', () async {
-      final store = PackStore(Directory.systemTemp.createTempSync('p'), trustedKeys: {trusted.key: trusted.value});
+      final store = PackStore(tmpDir('p'), trustedKeys: {trusted.key: trusted.value});
       // Re-zip the pack with the manifest's version bumped: the signature no longer matches.
       final zip = ZipDecoder().decodeBytes(seedBytes(1));
       final out = Archive();
@@ -47,7 +47,7 @@ void main() {
     });
 
     test('rejects a pack signed with an unknown key', () async {
-      final store = PackStore(Directory.systemTemp.createTempSync('p'), trustedKeys: {'other': List.filled(32, 1)});
+      final store = PackStore(tmpDir('p'), trustedKeys: {'other': List.filled(32, 1)});
       await expectLater(store.install(Uint8List.fromList(seedBytes(0))), throwsA(isA<PackError>()));
     });
 
@@ -85,7 +85,7 @@ void main() {
       final store = await seededStore();
       final pack = store.byChapter('puc1-physics-02-motion-in-a-straight-line')!;
       final lesson = pack.lessons.values.first;
-      final outbox = Outbox(File('${Directory.systemTemp.createTempSync('o').path}/o.jsonl'));
+      final outbox = Outbox(File('${tmpDir('o').path}/o.jsonl'));
       final plan = PeriodPlanner.plan(lesson, periodMinutes: 40);
       final c = LessonController(pack: pack, lesson: lesson, blocks: plan.blocks, narrator: TimedNarrator(perWord: Duration.zero), lang: Lang.en,
           recorder: SessionRecorder(outbox: outbox, sectionId: 's1', mode: 'self_learning', pack: pack, lesson: lesson));
@@ -112,7 +112,7 @@ void main() {
       final lesson = pack.lessons.values.first;
       final plan = PeriodPlanner.plan(lesson, periodMinutes: 40);
       final c = LessonController(pack: pack, lesson: lesson, blocks: plan.blocks, narrator: TimedNarrator(perWord: Duration.zero), lang: Lang.en,
-          recorder: SessionRecorder(outbox: Outbox(File('${Directory.systemTemp.createTempSync('o').path}/o')), sectionId: 's', mode: 'self_learning', pack: pack, lesson: lesson));
+          recorder: SessionRecorder(outbox: Outbox(File('${tmpDir('o').path}/o')), sectionId: 's', mode: 'self_learning', pack: pack, lesson: lesson));
       final r = PeriodRunner(c: c, plan: plan, periodSeconds: 2400, autoTick: false)..start();
       r.setPaused(true);
       for (var i = 0; i < 100; i++) {

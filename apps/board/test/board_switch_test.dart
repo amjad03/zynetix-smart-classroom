@@ -35,7 +35,7 @@ void main() {
     final s = await testServices();
     final q = Question(id: 'q', topicId: 't', stem: const L10n('Which is correct?'), options: const [L10n('a'), L10n('b'), L10n('c'), L10n('d')], answer: 1, exams: const ['CBSE'], difficulty: 'easy', format: 'case_based', passage: const L10n('A shopkeeper buys 20 pens at ₹10 each.'));
     final pack = s.store.packs.first;
-    final rec = SessionRecorder(outbox: Outbox(File('${Directory.systemTemp.createTempSync('o').path}/o')), sectionId: 's', mode: 'teacher', pack: pack, lesson: pack.lessons.values.first);
+    final rec = SessionRecorder(outbox: Outbox(File('${tmpDir('o').path}/o')), sectionId: 's', mode: 'teacher', pack: pack, lesson: pack.lessons.values.first);
     await pumpBoard(t, s, home: Scaffold(body: Padding(padding: const EdgeInsets.all(40), child: QuizRunner(questions: [q], mode: QuizMode.monitor, lang: Lang.en, recorder: rec, room: ClassRoom(rollCount: 40)))));
     expect(find.byKey(const ValueKey('passage')), findsOneWidget);
     expect(find.text('A shopkeeper buys 20 pens at ₹10 each.'), findsOneWidget);
