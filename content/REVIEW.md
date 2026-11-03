@@ -303,3 +303,16 @@ Each chapter has 4 or more CBSE-pattern questions: assertion–reason and case-b
 - **Tricks:** "DEAD CLIC" is a classroom mnemonic, not NCERT text.
 - **Section numbers:** best match, not checked against the book.
 - **Kannada terms to check:** ತಾಳೆಪಟ್ಟಿ, ತೂಗು ಖಾತೆ, ಸ್ಥಿರ ಕಂತು/ಇಳಿಮುಖ ಬಾಕಿ ವಿಧಾನ, ಅವಕಾಶ, ಮೀಸಲು ನಿಧಿ, ಆಢಾವೆ ಪತ್ರ, ಬರಬೇಕಾದ ಆದಾಯ.
+
+## 1st PUC Computer Science, ch 7–11
+
+- **Ch 11 scope:** uses the NCERT 2023 contents (11.2–11.7) and leaves out e-waste. Check against the Karnataka PU syllabus.
+- **Ch 11 facts to check:**
+  - a patent usually lasts 20 years
+  - IT Act 2000, amended 2008; Cyber Appellate Tribunal
+  - the netiquette groupings
+  - the 20-20-20 eye rule (not NCERT)
+  - mention of the national cyber crime reporting portal
+- **Python slightly beyond the book:** LEGB (in a trick), `copy.copy` (one option), `sep=""`, and `for … else` (1k09-q24).
+- **Homework reference:** check that "NCERT Table 9.1" is the right table.
+- **Kannada:** uses transliterated technical terms; check ದಕ್ಷತಾಶಾಸ್ತ್ರ, ಕೃತಿಚೌರ್ಯ, ಹಕ್ಕುಸ್ವಾಮ್ಯ.

@@ -1,0 +1,227 @@
+{
+ "id": "puc1-computer-science-09-lists.t2.lesson",
+ "chapterId": "puc1-computer-science-09-lists",
+ "topicId": "puc1-computer-science-09-lists.t2",
+ "title": {
+  "en": "List operations and traversing a list",
+  "kn": "ಲಿಸ್ಟ್ ಕಾರ್ಯಾಚರಣೆಗಳು ಮತ್ತು ಲಿಸ್ಟ್ ಸಂಚರಣೆ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Joining, slicing and walking through lists",
+    "kn": "ಲಿಸ್ಟ್‌ಗಳನ್ನು ಜೋಡಿಸುವುದು, ಕತ್ತರಿಸುವುದು ಮತ್ತು ಸಂಚರಿಸುವುದು"
+   },
+   "hook": {
+    "en": "Two sections merge for a lab session. Joining their attendance lists, picking the first ten students, checking if a roll number is present — all are list operations.",
+    "kn": "ಎರಡು ವಿಭಾಗಗಳು ಪ್ರಯೋಗಾಲಯಕ್ಕೆ ಸೇರುತ್ತವೆ. ಹಾಜರಿ ಲಿಸ್ಟ್ ಜೋಡಿಸುವುದು, ಮೊದಲ ಹತ್ತು ವಿದ್ಯಾರ್ಥಿಗಳನ್ನು ಆರಿಸುವುದು, ಒಂದು ಸಂಖ್ಯೆ ಇದೆಯೇ ನೋಡುವುದು — ಇವೆಲ್ಲ ಲಿಸ್ಟ್ ಕಾರ್ಯಾಚರಣೆಗಳು."
+   },
+   "objectives": [
+    {
+     "en": "Concatenate, repeat and slice lists"
+    },
+    {
+     "en": "Test membership"
+    },
+    {
+     "en": "Traverse lists with for and while"
+    }
+   ],
+   "narration": {
+    "en": "Two sections merge for a lab session. Joining their attendance lists, picking the first ten students, checking if a roll number is present — all are list operations.",
+    "kn": "ಎರಡು ವಿಭಾಗಗಳು ಪ್ರಯೋಗಾಲಯಕ್ಕೆ ಸೇರುತ್ತವೆ. ಹಾಜರಿ ಲಿಸ್ಟ್ ಜೋಡಿಸುವುದು, ಮೊದಲ ಹತ್ತು ವಿದ್ಯಾರ್ಥಿಗಳನ್ನು ಆರಿಸುವುದು, ಒಂದು ಸಂಖ್ಯೆ ಇದೆಯೇ ನೋಡುವುದು — ಇವೆಲ್ಲ ಲಿಸ್ಟ್ ಕಾರ್ಯಾಚರಣೆಗಳು."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Operations on lists"
+   },
+   "body": {
+    "en": "Concatenation (+) joins two lists into a new list; both operands must be lists. Repetition (*) repeats the elements. in and not in test whether an element is present. Slicing L[n:m:k] works as for strings and returns a new list; assigning to a slice can replace several elements at once.",
+    "kn": "+ ಎರಡು ಲಿಸ್ಟ್‌ಗಳನ್ನು ಜೋಡಿಸಿ ಹೊಸ ಲಿಸ್ಟ್ ಕೊಡುತ್ತದೆ. * ಅಂಶಗಳನ್ನು ಪುನರಾವರ್ತಿಸುತ್ತದೆ. in ಮತ್ತು not in ಸದಸ್ಯತ್ವ ಪರೀಕ್ಷಿಸುತ್ತವೆ. ಸ್ಲೈಸಿಂಗ್ ಹೊಸ ಲಿಸ್ಟ್ ಕೊಡುತ್ತದೆ."
+   },
+   "points": [
+    {
+     "en": "[1, 2] + 3 → TypeError (3 is not a list)"
+    },
+    {
+     "en": "L[::-1] gives the list reversed"
+    }
+   ],
+   "narration": {
+    "en": "Concatenation (+) joins two lists into a new list; both operands must be lists. Repetition (*) repeats the elements. in and not in test whether an element is present. Slicing L[n:m:k] works as for strings and returns a new list; assigning to a slice can replace several elements at once.",
+    "kn": "+ ಎರಡು ಲಿಸ್ಟ್‌ಗಳನ್ನು ಜೋಡಿಸಿ ಹೊಸ ಲಿಸ್ಟ್ ಕೊಡುತ್ತದೆ. * ಅಂಶಗಳನ್ನು ಪುನರಾವರ್ತಿಸುತ್ತದೆ. in ಮತ್ತು not in ಸದಸ್ಯತ್ವ ಪರೀಕ್ಷಿಸುತ್ತವೆ. ಸ್ಲೈಸಿಂಗ್ ಹೊಸ ಲಿಸ್ಟ್ ಕೊಡುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Traversing a list"
+   },
+   "body": {
+    "en": "We can visit each element with for item in L, or use the index with for i in range(len(L)) or a while loop with i < len(L). The index form is needed when we want to change elements in place.",
+    "kn": "for item in L ಮೂಲಕ ಪ್ರತಿ ಅಂಶವನ್ನು ಭೇಟಿ ಮಾಡಬಹುದು, ಅಥವಾ range(len(L)) ಅಥವಾ while ಲೂಪ್ ಮೂಲಕ ಇಂಡೆಕ್ಸ್ ಬಳಸಬಹುದು. ಅಂಶಗಳನ್ನು ಬದಲಿಸಲು ಇಂಡೆಕ್ಸ್ ರೂಪ ಬೇಕು."
+   },
+   "points": [
+    {
+     "en": "for i in range(len(L)): L[i] = L[i] * 2 doubles every element"
+    }
+   ],
+   "narration": {
+    "en": "We can visit each element with for item in L, or use the index with for i in range(len(L)) or a while loop with i < len(L). The index form is needed when we want to change elements in place.",
+    "kn": "for item in L ಮೂಲಕ ಪ್ರತಿ ಅಂಶವನ್ನು ಭೇಟಿ ಮಾಡಬಹುದು, ಅಥವಾ range(len(L)) ಅಥವಾ while ಲೂಪ್ ಮೂಲಕ ಇಂಡೆಕ್ಸ್ ಬಳಸಬಹುದು. ಅಂಶಗಳನ್ನು ಬದಲಿಸಲು ಇಂಡೆಕ್ಸ್ ರೂಪ ಬೇಕು."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Merge two sections, take the first three roll numbers and check membership."
+   },
+   "steps": [
+    {
+     "en": "secA = [101, 102, 103]"
+    },
+    {
+     "en": "secB = [201, 202]"
+    },
+    {
+     "en": "lab = secA + secB"
+    },
+    {
+     "en": "print(lab)"
+    },
+    {
+     "en": "print(lab[:3])"
+    },
+    {
+     "en": "print(202 in lab, 104 in lab)"
+    },
+    {
+     "en": "secA + secB gives a NEW list; secA and secB are unchanged."
+    }
+   ],
+   "answer": {
+    "en": "[101, 102, 103, 201, 202]\n[101, 102, 103]\nTrue False"
+   },
+   "narration": {
+    "en": "Let us trace this code together. Merge two sections, take the first three roll numbers and check membership. Predict the output before we run it."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "Double every element of a list in place using its index."
+   },
+   "steps": [
+    {
+     "en": "L = [3, 7, 1]"
+    },
+    {
+     "en": "for i in range(len(L)):"
+    },
+    {
+     "en": "    L[i] = L[i] * 2"
+    },
+    {
+     "en": "print(L)"
+    },
+    {
+     "en": "i takes 0, 1, 2; each L[i] is replaced by twice its value."
+    }
+   ],
+   "answer": {
+    "en": "[6, 14, 2]"
+   },
+   "narration": {
+    "en": "Let us trace this code together. Double every element of a list in place using its index. Predict the output before we run it."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Slice assignment can grow or shrink a list"
+   },
+   "body": {
+    "en": "L[a:b] = new_list replaces the slice by however many elements new_list has, so the length may change."
+   },
+   "narration": {
+    "en": "Slice assignment can grow or shrink a list. L[a:b] = new_list replaces the slice by however many elements new_list has, so the length may change."
+   },
+   "seconds": 90,
+   "optional": true,
+   "mnemonic": {
+    "en": "Slice in, slice out"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1k09-q06",
+    "1k09-q07",
+    "1k09-q08"
+   ],
+   "mode": "roll_call",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Roll call quiz. When your roll number appears on the board, give your answer.",
+    "kn": "ಹಾಜರಿ ಸಂಖ್ಯೆ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ಹಾಜರಿ ಸಂಖ್ಯೆ ಬೋರ್ಡ್‌ನಲ್ಲಿ ಬಂದಾಗ ನಿಮ್ಮ ಉತ್ತರ ನೀಡಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "questionIds": [
+    "1k09-q10",
+    "1k09-q09"
+   ],
+   "exams": [
+    "PUC",
+    "CBSE",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Now two exam-pattern questions of the kind asked in the PUC board, CBSE board and CUET."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "+ concatenates and * repeats lists; in tests membership of whole elements.",
+     "kn": "+ ಜೋಡಿಸುತ್ತದೆ, * ಪುನರಾವರ್ತಿಸುತ್ತದೆ; in ಸಂಪೂರ್ಣ ಅಂಶದ ಸದಸ್ಯತ್ವ ಪರೀಕ್ಷಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "Slicing gives a new list; slice assignment replaces part of a list.",
+     "kn": "ಸ್ಲೈಸಿಂಗ್ ಹೊಸ ಲಿಸ್ಟ್ ಕೊಡುತ್ತದೆ; ಸ್ಲೈಸ್‌ಗೆ ಮೌಲ್ಯ ಕೊಟ್ಟರೆ ಭಾಗ ಬದಲಾಗುತ್ತದೆ."
+    },
+    {
+     "en": "Use for item in L to read, and for i in range(len(L)) to change elements.",
+     "kn": "ಓದಲು for item in L, ಬದಲಿಸಲು for i in range(len(L))."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write a program that prints only the even numbers from a list of 10 numbers."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1k09-q11"
+   ],
+   "narration": {
+    "en": "Recap. + concatenates and * repeats lists; in tests membership of whole elements. Slicing gives a new list; slice assignment replaces part of a list. Use for item in L to read, and for i in range(len(L)) to change elements.",
+    "kn": "ಪುನರಾವರ್ತನೆ. + ಜೋಡಿಸುತ್ತದೆ, * ಪುನರಾವರ್ತಿಸುತ್ತದೆ; in ಸಂಪೂರ್ಣ ಅಂಶದ ಸದಸ್ಯತ್ವ ಪರೀಕ್ಷಿಸುತ್ತದೆ. ಸ್ಲೈಸಿಂಗ್ ಹೊಸ ಲಿಸ್ಟ್ ಕೊಡುತ್ತದೆ; ಸ್ಲೈಸ್‌ಗೆ ಮೌಲ್ಯ ಕೊಟ್ಟರೆ ಭಾಗ ಬದಲಾಗುತ್ತದೆ. ಓದಲು for item in L, ಬದಲಿಸಲು for i in range(len(L))."
+   }
+  }
+ ]
+}
