@@ -316,3 +316,17 @@ Each chapter has 4 or more CBSE-pattern questions: assertion–reason and case-b
 - **Python slightly beyond the book:** LEGB (in a trick), `copy.copy` (one option), `sep=""`, and `for … else` (1k09-q24).
 - **Homework reference:** check that "NCERT Table 9.1" is the right table.
 - **Kannada:** uses transliterated technical terms; check ದಕ್ಷತಾಶಾಸ್ತ್ರ, ಕೃತಿಚೌರ್ಯ, ಹಕ್ಕುಸ್ವಾಮ್ಯ.
+
+## 1st PUC Accountancy, ch 1–5
+
+- **Syllabus scope:** the three-column cash book (Ch 4) and the amended cash book (Ch 5) are left out as believed dropped. Section numbers are approximate.
+- **Ch 2 facts:**
+  - the Accounting Standards Board was set up in April 1977
+  - Ind AS were notified in 2015
+  - IASB replaced IASC in 2001
+  - GST started on 1 July 2017
+  - accrual basis is compulsory under the Companies Act 2013
+  - input tax credit is shown as a simple set-off
+- **Ch 3:** voucher types (cash, transfer, compound); NCERT's wording may differ.
+- **Tricks:** the 13-concepts mnemonic is invented.
+- **Kannada terms to check:** ಸೆಳೆತ, ಋಣಿ/ಧನಿ, ಜರ್ನಲ್ ಪ್ರಾಪರ್, ಬ್ಯಾಂಕ್ ಹೊಂದಾಣಿಕೆ ಪಟ್ಟಿ.
