@@ -433,3 +433,10 @@ These 43 chapters were written by writers that stopped before reporting back, so
 - **Models labelled as models:** the hydrogen-like radius/IE model and the Pauling ionic character with χ(H) = 2.1; the ethane torsion uses a cosine model.
 - **Values:** chloroacetic acid pKa values rounded to one decimal (4.8/2.9/1.3/0.7).
 - **Formula to check:** the Kjeldahl form on the board.
+
+## Enrichment: 2nd PUC Physics, ch 1–7
+
+- **AC t3 whiteboard:** tan φ = (X_C − X_L)/R, but the phasor drawing has V_L > V_C, so φ comes out negative. Make the sign convention consistent.
+- **1p… q30 (electric charges):** "charge at a cube corner gives flux q/8ε₀" is marked correct (standard JEE idealisation).
+- **Resistivity ranges:** order-of-magnitude values.
+- **PhET added:** balloons, charges-and-fields, magnet-and-compass, faradays-law.
