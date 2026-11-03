@@ -202,3 +202,17 @@ Where the correct option was moved to balance answers across A–D, numeric opti
   - invert sugar ≈ −20° is a simple average
 - **Tricks:** the mnemonics are invented ("All Doctors Eat Kheer", …).
 - **Kannada terms to check:** ನ್ಯೂಕ್ಲಿಯೋಫಿಲಿಕ್ ಆದೇಶ ಕ್ರಿಯೆ, ಪ್ರತ್ಯಾಮ್ಲೀಯತೆ, ಅಪಕರ್ಷಕ ಸಕ್ಕರೆ, and the transliterated names.
+
+## 1st PUC Maths, ch 8–14
+
+- **Syllabus scope (kept although possibly dropped):**
+  - sum to infinity of a G.P. (Ch 8 t4)
+  - step-deviation shortcut for SD (Ch 13 t5)
+  - general-form slope −A/B (Ch 9)
+  - a 3D mid-point question (Ch 11 t4)
+- **Section numbers:** Ch 14 numbering is uncertain; Ch 12 t5 (12.5.1) and Ch 13 t1 (13.2) are approximate.
+- **Kannada:**
+  - "function" is given as **ಉತ್ಪನ್ನ** in this batch, but the other Maths batches use **ಫಲನ**. Make it consistent; ಉತ್ಪನ್ನ is likely wrong.
+  - Also check: ವ್ಯತ್ಯಾಸಾಂಕ, ಮಾನಕ ವಿಚಲನೆ, ಪ್ರಸರಣ, ಮಾದರಿ ಅವಕಾಶ, ಪರಸ್ಪರ ವರ್ಜಿತ, ಸಮಗ್ರ, ಅಷ್ಟಕ, ನಿಯತರೇಖೆ, ನಾಭಿಲಂಬ, ಅಡ್ಡ ಅಕ್ಷ, ಅವಕಲಜ.
+- **Answer positions:** uneven in places (only one A in Statistics).
+- **Analogies:** the lampshade hyperbola and the DTH dish focus are loose real-world hooks.
