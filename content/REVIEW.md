@@ -216,3 +216,30 @@ Where the correct option was moved to balance answers across A–D, numeric opti
   - Also check: ವ್ಯತ್ಯಾಸಾಂಕ, ಮಾನಕ ವಿಚಲನೆ, ಪ್ರಸರಣ, ಮಾದರಿ ಅವಕಾಶ, ಪರಸ್ಪರ ವರ್ಜಿತ, ಸಮಗ್ರ, ಅಷ್ಟಕ, ನಿಯತರೇಖೆ, ನಾಭಿಲಂಬ, ಅಡ್ಡ ಅಕ್ಷ, ಅವಕಲಜ.
 - **Answer positions:** uneven in places (only one A in Statistics).
 - **Analogies:** the lampshade hyperbola and the DTH dish focus are loose real-world hooks.
+
+## 1st PUC Biology, ch 1–7
+
+- **Syllabus scope:**
+  - Assumed dropped: "What is living?" and taxonomical aids (Ch 1), alternation of generations (Ch 3), secondary growth (Ch 6), and earthworm and cockroach (Ch 7 covers frog only).
+  - Assumed kept: Ch 5 families (topic t6) and Ch 2 Plantae/Animalia.
+- **Floral formula:** the Solanaceae formula is simplified (no bisexual symbol or epipetalous arc).
+- **3D model:** the `heart` model is human, and its caption explains which animals share four chambers.
+- **Facts to check:**
+  - chlorophyll d in red algae
+  - bacteriophages are usually dsDNA
+  - ctenophores have external fertilisation
+  - phloem fibres are the only dead phloem element
+  - a frog lays 2500–3000 ova
+  - frog has 10 pairs of cranial nerves and 10–12 vasa efferentia
+- **Narration:** long concepts are only partly read aloud (for example placentation).
+- **Kannada terms to check:** ವಂಶ (phylum), ಜಾತಿ (genus), ದಾರು/ಅನ್ನನಾಳ (xylem/phloem), ಗ್ರೀಷ್ಮನಿದ್ರೆ/ಶಿಶಿರನಿದ್ರೆ, ಪೃಷ್ಠಾಧರ, and the placentation terms.
+
+## 1st PUC Physics, ch 1 and 3–7
+
+- **Syllabus scope:** left out as believed dropped: errors in measurement (Ch 1), relative velocity (Ch 3), the parallel/perpendicular axis theorems and rolling (Ch 6), and geostationary satellites and weightlessness (Ch 7). Add them if KCET still examines these.
+- **Topic split:**
+  - Ch 5: the work-energy theorem is folded into the kinetic-energy lesson, and spring potential energy into the potential-energy lesson.
+  - Ch 4: the Atwood machine goes a little beyond the text.
+- **Media fit:** `gears` (power) and the `simple_machines` ramp (work) are loose fits.
+- **Values:** Moon's escape speed about 2.3 km/s; 1 hp = 746 W; banked-track speed 38.1 m/s; sheet volume 0.0856 m³.
+- **Kannada terms to check:** ಉತ್ಕ್ಷೇಪಕ ಚಲನೆ, ಸಂಘಟ್ಟನೆಗಳು, ಬಲಭ್ರಾಮಕ, ಜಡತ್ವ ಭ್ರಾಮಕ, ಭ್ರಮಣ ತ್ರಿಜ್ಯ, ಗತಿಶಾಸ್ತ್ರ/ಚಲನಶಾಸ್ತ್ರ, ಯುಗ್ಮ, ಸಾಮರ್ಥ್ಯ, ವಿಮೋಚನಾ ವೇಗ, ಆವೇಗ.
