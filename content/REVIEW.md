@@ -115,3 +115,26 @@ Where the correct option was moved to balance answers across A–D, numeric opti
   - MO bond order (n − 8)/2 for 10–14 electrons and (20 − n)/2 for 14–20
   - λ(nm) ≈ 1240/E(eV)
 - **Kannada terms to check:** ಅನುಕಾಂತೀಯ, ಸಂಕರೀಕರಣ, ಎಲೆಕ್ಟ್ರಾನ್ ಗ್ರಾಹಕ ಎಂಥಾಲ್ಪಿ, ಉಭಯಧರ್ಮಿ, ಸ್ವಯಂಪ್ರೇರಿತ, ಉತ್ಪತನ.
+
+## 1st PUC Biology, ch 8–13
+
+- **38 ATP per glucose:** follows NCERT; one question has 36 as a wrong option, and some coaching material uses 36.
+- **RQ of organic acids:** malic acid 1.33 and oxalic acid 4 are standard but not in the NCERT text.
+- **Chromatography Rf values:** 0.95 and 0.45 are illustrative teaching numbers, not measurements.
+- **Syllabus scope:** dynamic state/metabolism (Biomolecules) and photoperiodism, vernalisation and seed dormancy (Plant Growth) are treated as removed.
+- **Minor NCERT-wording facts:**
+  - recombinase acts in pachytene
+  - pyruvate dehydrogenase needs Mg²⁺
+  - 2 H⁺ pass through F₀ per ATP
+  - C₄ saturates near 360 μL/L and C₃ beyond 450 μL/L
+  - sugarcane yields up to 20 t/acre
+  - diplotene can last months or years in oocytes
+- **Kannada terms to check:** ಸಮಸೂತ್ರ/ಅರ್ಧಸೂತ್ರ ವಿಭಜನೆ, ವರ್ಧನಾ/ದೀರ್ಘೀಕರಣ/ಪಕ್ವತೆ, ವಿಭೇದನ/ನಿರ್ವಿಭೇದನ/ಪುನರ್ವಿಭೇದನ, ಉಭಯಚಯಾಪಚಯ ಪಥ, ವಿಷಮಪರ್ಣತೆ, ಅಂತರ ಚಲನಾವಸ್ಥೆ.
+
+## 1st PUC Physics, ch 8–14
+
+- **Syllabus scope:** left out as believed dropped: Poisson's ratio and elastic potential energy, Reynolds number, heat engines and refrigerators as separate sections, damped/forced oscillations, and the Doppler effect.
+- **Check still in scope:** Stefan–Boltzmann law and the series-slab formula K = 2K₁K₂/(K₁+K₂).
+- **Possibly beyond the syllabus:** the pendulum in an accelerating lift (1p13 t5) and S-waves and the liquid core (1p14 t1).
+- **Approximate values:** mean free path at STP about 10⁻⁷ m; crane-rope example with yield strength 3×10⁸ Pa and a safety factor of 10.
+- **Kannada terms to check:** ಶಿಯರ್ ಗುಣಾಂಕ, ಸ್ಥಿರೋಷ್ಣೀಯ, ಸಮಗಾತ್ರ/ಸಮಒತ್ತಡ, ನಿಸ್ಪಂದ/ಪ್ರಸ್ಪಂದ, ಸ್ಪಂದನಗಳು, ತನ್ಯ/ಭಂಗುರ, ಸ್ವಾತಂತ್ರ್ಯದ ಮಾತ್ರೆಗಳು, ಸರಾಸರಿ ಮುಕ್ತ ಪಥ, ಸಂಪೀಡ್ಯತೆ.
