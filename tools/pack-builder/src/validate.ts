@@ -14,6 +14,7 @@ const catalogue = readFileSync(join(repo, 'docs/content-assets.md'), 'utf8');
 const section = (title: string) => catalogue.split('## ').find((s) => s.startsWith(title)) ?? '';
 const tableIds = (title: string) => new Set([...section(title).matchAll(/^\| ([a-z0-9._-]+) \|/gm)].map((m) => m[1]).filter((x) => x !== 'modelId' && x !== 'labId' && x !== 'simId'));
 const models = tableIds('3d_model'), labs = tableIds('virtual_lab'), sims = tableIds('simulation, source `kinetix_sim`'), phet = tableIds('simulation, source `phet`');
+const csSims = tableIds('simulation, source `kinetix_cs`');
 const anims = new Set([...section('simulation, source `animation`').matchAll(/`([a-z0-9-]+)`/g)].map((m) => m[1]));
 const REQUIRED = ['intro', 'concept', 'example', 'class_quiz', 'recap'];
 
@@ -34,11 +35,14 @@ export function check(dir: string): string[] {
     for (const r of REQUIRED) if (!l.blocks.some((b) => b.type === r)) problems.push(`${l.id}: no ${r} block`);
     const n = src.questions.filter((q) => q.topicId === t.id).length;
     if (n < 3) problems.push(`topic ${t.id}: ${n} questions (need ≥ 3)`);
+    const topicBoards = t.boards ?? src.chapter.boards;
+    for (const bd of topicBoards) if (!src.chapter.boards.includes(bd)) problems.push(`topic ${t.id}: board ${bd} not in the chapter's boards`);
     for (const b of l.blocks) {
+      for (const bd of b.boards ?? []) if (!topicBoards.includes(bd)) problems.push(`${l.id}/${b.id}: board ${bd} not taught in this topic`);
       if (b.type === '3d_model' && !models.has(b.modelId)) problems.push(`${l.id}/${b.id}: unknown 3D model ${b.modelId}`);
       if (b.type === 'virtual_lab' && !labs.has(b.labId)) problems.push(`${l.id}/${b.id}: unknown lab ${b.labId}`);
       if (b.type === 'simulation') {
-        const ok = b.source === 'phet' ? phet.has(b.simId) : b.source === 'animation' ? anims.has(b.simId) : sims.has(b.simId) || labs.has(b.simId);
+        const ok = b.source === 'phet' ? phet.has(b.simId) : b.source === 'animation' ? anims.has(b.simId) : b.source === 'kinetix_cs' ? csSims.has(b.simId) : sims.has(b.simId) || labs.has(b.simId);
         if (!ok) problems.push(`${l.id}/${b.id}: unknown ${b.source} sim ${b.simId}`);
       }
     }
@@ -48,6 +52,9 @@ export function check(dir: string): string[] {
     if (q.topicId && !src.chapter.topics.some((t) => t.id === q.topicId)) problems.push(`${q.id}: unknown topic ${q.topicId}`);
     if (q.pyq) problems.push(`${q.id}: do not label PYQ years (unverified)`);
     if (new Set(q.options.map((o) => o.en.trim())).size !== 4) problems.push(`${q.id}: duplicate options`);
+    if (q.format === 'assertion_reason' && !/assertion/i.test(q.stem.en)) problems.push(`${q.id}: assertion_reason stem must state the Assertion (A) and Reason (R)`);
+    if (q.format === 'assertion_reason' && !q.options.some((o) => /correct explanation/i.test(o.en))) problems.push(`${q.id}: assertion_reason needs the standard four A–R options`);
+    if (q.exams.includes('CBSE') && !src.chapter.boards.includes('cbse')) problems.push(`${q.id}: tagged CBSE but the chapter is not in the CBSE syllabus`);
   }
   const ids = src.questions.map((q) => q.id);
   if (new Set(ids).size !== ids.length) problems.push('duplicate question ids');

@@ -224,3 +224,36 @@ Bundled offline PhET sims (CC BY 4.0). File: `/home/user/amjad03/kinetix/apps/bo
 | vector-addition | Vector Addition | 2.5 |
 | wave-on-a-string | Wave on a String | 2.5 |
 | waves-intro | Waves Intro | 3.4 |
+
+## simulation, source `kinetix_cs` → `simId` (Computer Science, from Kinetix `kinetix_cs`)
+
+| simId | what it shows |
+|---|---|
+| algo.bubble | Bubble sort, step by step |
+| algo.insertion | Insertion sort |
+| algo.selection | Selection sort |
+| algo.merge | Merge sort |
+| algo.quick | Quick sort |
+| algo.heap | Heap sort |
+| algo.linear | Linear search |
+| algo.binary | Binary search |
+| algo.stack | Stack push/pop |
+| algo.queue | Queue enqueue/dequeue |
+| algo.list | Linked list |
+| algo.hash | Hash table |
+| algo.bst | Binary search tree |
+| algo.bfs | Breadth-first search |
+| algo.dfs | Depth-first search |
+| algo.dijkstra | Dijkstra's shortest path |
+| sim.numbers | Number systems and conversions (binary, octal, hex) |
+| sim.logic | Logic gates and truth tables |
+| sim.osi | OSI model layers |
+| sim.tcp | TCP connection and data transfer |
+| sim.subnet | IP addressing and subnets |
+| sim.cpu | CPU scheduling |
+| sim.paging | Memory paging |
+| sim.banker | Banker's algorithm (deadlock avoidance) |
+| sim.normal | Database normalisation |
+| code.sql | SQL runner on sample databases (offline) |
+| code.python | Python code lab (needs the on-device Python runtime) |
+| code.javascript | JavaScript code lab (offline) |

@@ -18,14 +18,27 @@ export const SCHEMA_VERSION = 1;
 export const L10n = z.object({ en: z.string().min(1), kn: z.string().optional() }).strict();
 export type L10n = z.infer<typeof L10n>;
 
-export const Subject = z.enum(['physics', 'chemistry', 'maths', 'biology']);
+export const Subject = z.enum([
+  // Science
+  'physics', 'chemistry', 'maths', 'biology', 'computer_science', 'electronics', 'statistics',
+  // Commerce
+  'accountancy', 'business_studies', 'economics',
+  // Language
+  'english',
+]);
 export type Subject = z.infer<typeof Subject>;
 
 /** 1st PUC (NCERT Class 11) and 2nd PUC (NCERT Class 12). */
 export const Year = z.enum(['puc1', 'puc2']);
 export type Year = z.infer<typeof Year>;
 
-export const Exam = z.enum(['PUC', 'KCET', 'COMEDK', 'NEET', 'JEE']);
+/** Board exams (PUC = Karnataka II PUC, CBSE = CBSE Class 12) and entrance exams. */
+export const Exam = z.enum(['PUC', 'CBSE', 'KCET', 'COMEDK', 'NEET', 'JEE', 'CUET']);
+
+/** The curriculum a college follows. Both use NCERT books for most subjects; scope and exam pattern differ. */
+export const Board = z.enum(['kar_pu', 'cbse']);
+export type Board = z.infer<typeof Board>;
+const boards = z.array(Board).min(1).optional();
 export type Exam = z.infer<typeof Exam>;
 
 export const Difficulty = z.enum(['easy', 'medium', 'hard']);
@@ -52,9 +65,14 @@ export const Question = z
     exams: z.array(Exam).min(1),
     difficulty: Difficulty,
     pyq: PyqRef.optional(),
+    /** mcq (default); assertion_reason (options are the 4 standard A–R choices); case_based (needs `passage`). */
+    format: z.enum(['mcq', 'assertion_reason', 'case_based']).default('mcq'),
+    /** The case or source text a case_based question is about, shown above the stem. */
+    passage: L10n.optional(),
     tags: z.array(z.string()).default([]),
   })
-  .strict();
+  .strict()
+  .refine((q) => q.format !== 'case_based' || !!q.passage, { message: 'case_based questions need a passage' });
 export type Question = z.infer<typeof Question>;
 
 // ---------------------------------------------------------------- blocks
@@ -71,6 +89,8 @@ const base = {
   seconds: z.number().int().min(5).max(1800).optional(),
   /** Self-Learning skips optional blocks first when the period is short. */
   optional: z.boolean().optional(),
+  /** Shown only on boards following these curricula (e.g. a CBSE-pattern block); all when absent. */
+  boards,
 };
 
 export const IntroBlock = z.object({ ...base, type: z.literal('intro'), heading: L10n, hook: L10n, objectives: z.array(L10n).default([]) }).strict();
@@ -88,13 +108,14 @@ export const Model3dBlock = z
 /**
  * A simulation. `phet`: a PhET HTML5 sim bundled in the pack's media (CC-BY 4.0);
  * `animation`: a Kinetix procedural animation (packages/kinetix_animations);
- * `kinetix_sim`: a Kinetix simulation widget (lab.graph-plotter, lab.pendulum…).
+ * `kinetix_sim`: a Kinetix simulation widget (lab.graph-plotter, lab.pendulum…);
+ * `kinetix_cs`: a Kinetix computer-science player (algo.bubble, sim.logic, code.sql…).
  */
 export const SimulationBlock = z
   .object({
     ...base,
     type: z.literal('simulation'),
-    source: z.enum(['phet', 'animation', 'kinetix_sim']),
+    source: z.enum(['phet', 'animation', 'kinetix_sim', 'kinetix_cs']),
     simId: z.string().min(1),
     preset: z.string().optional(),
     caption: L10n,
@@ -144,9 +165,16 @@ export const BLOCK_TYPES = ['intro', 'concept', '3d_model', 'simulation', 'virtu
 
 // ---------------------------------------------------------------- syllabus & lessons
 
-export const Topic = z.object({ id, title: L10n, ncert: z.string().optional() }).strict();
+/** `boards` narrows a topic to some curricula (a section one board dropped); the chapter's boards otherwise. */
+export const Topic = z.object({ id, title: L10n, ncert: z.string().optional(), boards }).strict();
 export const Chapter = z
-  .object({ id, subject: Subject, year: Year, number: z.number().int().min(1), title: L10n, topics: z.array(Topic).default([]), exams: z.array(Exam).default([]) })
+  .object({
+    id, subject: Subject, year: Year, number: z.number().int().min(1), title: L10n, topics: z.array(Topic).default([]), exams: z.array(Exam).default([]),
+    /** Curricula that teach this chapter. */
+    boards: z.array(Board).min(1).default(['kar_pu', 'cbse']),
+    /** The NCERT (or Department of PUE) book the chapter is from, when a subject has several. */
+    book: z.string().optional(),
+  })
   .strict();
 export type Chapter = z.infer<typeof Chapter>;
 
