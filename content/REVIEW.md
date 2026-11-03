@@ -138,3 +138,18 @@ Where the correct option was moved to balance answers across A–D, numeric opti
 - **Possibly beyond the syllabus:** the pendulum in an accelerating lift (1p13 t5) and S-waves and the liquid core (1p14 t1).
 - **Approximate values:** mean free path at STP about 10⁻⁷ m; crane-rope example with yield strength 3×10⁸ Pa and a safety factor of 10.
 - **Kannada terms to check:** ಶಿಯರ್ ಗುಣಾಂಕ, ಸ್ಥಿರೋಷ್ಣೀಯ, ಸಮಗಾತ್ರ/ಸಮಒತ್ತಡ, ನಿಸ್ಪಂದ/ಪ್ರಸ್ಪಂದ, ಸ್ಪಂದನಗಳು, ತನ್ಯ/ಭಂಗುರ, ಸ್ವಾತಂತ್ರ್ಯದ ಮಾತ್ರೆಗಳು, ಸರಾಸರಿ ಮುಕ್ತ ಪಥ, ಸಂಪೀಡ್ಯತೆ.
+
+## 1st PUC Biology, ch 14–19
+
+- **Syllabus scope:** Ch 18 assumes reflex action and sensory reception (eye, ear) were removed.
+- **Beyond the NCERT text:**
+  - tonicity of the filtrate along the nephron (Ch 16 t3)
+  - adrenal cortex zones mapped to their hormones (Ch 19 t4 trick)
+  - illustrative sarcomere lengths: A-band 1.6 µm, sarcomere 2.6 µm (Ch 17 t2)
+- **Values:**
+  - lung volumes: TV 500, IRV 2500–3000, ERV 1000–1100, RV 1100–1200 mL
+  - O₂ transport 97/3%; CO₂ transport 20–25/70/7%
+  - lungs remove about 200 mL CO₂ per minute
+  - 99.17% of filtrate reabsorbed (GFR 120 mL/min, 1.44 L urine a day)
+  - the 80-bone axial skeleton counts the hyoid and the ear ossicles
+- **Kannada terms to check:** ಅಭಿವಾಹಿ/ಅಪವಾಹಿ, ಅನುವೇದನಾ/ಪರಾನುವೇದನಾ, ಹೃತ್ಕರ್ಣ/ಹೃತ್ಕುಕ್ಷಿ, ಉಬ್ಬರ ಗಾತ್ರ.
