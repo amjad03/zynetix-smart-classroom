@@ -33,7 +33,8 @@ export const Year = z.enum(['puc1', 'puc2']);
 export type Year = z.infer<typeof Year>;
 
 /** Board exams (PUC = Karnataka II PUC, CBSE = CBSE Class 12) and entrance exams. */
-export const Exam = z.enum(['PUC', 'CBSE', 'KCET', 'COMEDK', 'NEET', 'JEE', 'CUET']);
+/** JEE = JEE Main; JEE_ADV = JEE Advanced. */
+export const Exam = z.enum(['PUC', 'CBSE', 'KCET', 'COMEDK', 'NEET', 'JEE', 'JEE_ADV', 'CUET']);
 
 /** The curriculum a college follows. Both use NCERT books for most subjects; scope and exam pattern differ. */
 export const Board = z.enum(['kar_pu', 'cbse']);
@@ -57,22 +58,29 @@ export const Question = z
     chapterId: id,
     topicId: id.optional(),
     stem: L10n,
-    /** Exactly four options, labelled A–D on the board. */
-    options: z.array(L10n).length(4),
-    /** Index into options (0 = A). */
+    /** Four options, labelled A–D on the board (none for numeric questions). */
+    options: z.array(L10n).max(4),
+    /** Index into options (0 = A). For multi_correct, the first correct option; see `answers`. */
     answer: z.number().int().min(0).max(3),
+    /** multi_correct (JEE Advanced): every correct option index. */
+    answers: z.array(z.number().int().min(0).max(3)).min(1).max(4).optional(),
+    /** numeric (JEE Main/Advanced integer or decimal type): the value and the accepted ± tolerance. */
+    numericAnswer: z.number().optional(),
+    tolerance: z.number().min(0).optional(),
     explanation: L10n.optional(),
     exams: z.array(Exam).min(1),
     difficulty: Difficulty,
     pyq: PyqRef.optional(),
     /** mcq (default); assertion_reason (options are the 4 standard A–R choices); case_based (needs `passage`). */
-    format: z.enum(['mcq', 'assertion_reason', 'case_based']).default('mcq'),
+    format: z.enum(['mcq', 'assertion_reason', 'case_based', 'multi_correct', 'numeric']).default('mcq'),
     /** The case or source text a case_based question is about, shown above the stem. */
     passage: L10n.optional(),
     tags: z.array(z.string()).default([]),
   })
   .strict()
-  .refine((q) => q.format !== 'case_based' || !!q.passage, { message: 'case_based questions need a passage' });
+  .refine((q) => q.format !== 'case_based' || !!q.passage, { message: 'case_based questions need a passage' })
+  .refine((q) => (q.format === 'numeric' ? q.numericAnswer !== undefined && q.options.length === 0 : q.options.length === 4), { message: 'numeric questions have numericAnswer and no options; others have 4 options' })
+  .refine((q) => q.format !== 'multi_correct' || (!!q.answers && q.answers.includes(q.answer)), { message: 'multi_correct needs answers, including answer' });
 export type Question = z.infer<typeof Question>;
 
 // ---------------------------------------------------------------- blocks
@@ -147,6 +155,60 @@ export const RecapBlock = z
   .object({ ...base, type: z.literal('recap'), points: z.array(L10n).min(1), homework: z.array(L10n).default([]), homeworkQuestionIds: z.array(id).default([]) })
   .strict();
 
+// ---------------------------------------------------------------- whiteboard & interactives
+
+/** Coordinates are on a 100 × 60 board grid (x right, y down). Colours are board ink names. */
+const ink = z.enum(['white', 'yellow', 'red', 'green', 'blue', 'orange']).default('white');
+const pt = z.tuple([z.number().min(0).max(100), z.number().min(0).max(60)]);
+export const Draw = z.discriminatedUnion('kind', [
+  z.object({ kind: z.literal('text'), at: pt, text: L10n, size: z.number().min(1).max(8).default(3), color: ink }).strict(),
+  z.object({ kind: z.literal('math'), at: pt, tex: z.string(), size: z.number().min(1).max(8).default(3), color: ink }).strict(),
+  z.object({ kind: z.enum(['line', 'arrow']), from: pt, to: pt, color: ink, dashed: z.boolean().optional() }).strict(),
+  z.object({ kind: z.literal('rect'), from: pt, to: pt, color: ink, fill: z.boolean().optional() }).strict(),
+  z.object({ kind: z.literal('circle'), at: pt, r: z.number().min(0.5).max(30), color: ink, fill: z.boolean().optional() }).strict(),
+  z.object({ kind: z.literal('path'), points: z.array(pt).min(2), color: ink, closed: z.boolean().optional() }).strict(),
+  /** Axes in a box; `plot` items inside the same step use the same box and ranges. */
+  z.object({ kind: z.literal('axes'), from: pt, to: pt, x: z.tuple([z.number(), z.number()]), y: z.tuple([z.number(), z.number()]), xLabel: z.string().optional(), yLabel: z.string().optional(), color: ink }).strict(),
+  /** y = f(x), e.g. "x^2 - 3*x", "sin(x)", "2*exp(-x/3)"; drawn in the step's axes box. */
+  z.object({ kind: z.literal('plot'), fn: z.string().min(1), color: ink }).strict(),
+]);
+export type Draw = z.infer<typeof Draw>;
+/** One board step: what appears (drawn in order), and what is said while it appears. */
+export const BoardStep = z.object({ say: L10n.optional(), draw: z.array(Draw).min(1), clear: z.boolean().optional() }).strict();
+
+export const WhiteboardBlock = z.object({ ...base, type: z.literal('whiteboard'), steps: z.array(BoardStep).min(1).max(20) }).strict();
+
+/** A slider the class (or monitor) moves; `name` is used in expressions. */
+export const Slider = z.object({ name: z.string().regex(/^[a-zA-Z]\w*$/), label: L10n, min: z.number(), max: z.number(), step: z.number().positive(), value: z.number(), unit: z.string().optional() }).strict();
+/**
+ * Generic, data-driven interactives (no code per topic):
+ * - function_plot: `fns` y = f(x, sliders…) on `x`/`y` ranges (graphs, demand/supply, waves, decay…)
+ * - vectors: `vectors` [[x,y]…] where entries may be slider names; shows resultant
+ * - bar_chart / pie_chart: `data` {label: value or slider name}
+ * - unit_circle: angle slider `theta` (degrees) with sin/cos/tan read-outs
+ * - number_line: `points` (values or slider names) on `x` range
+ * - readouts: just computed values; `readouts` [{label, expr, unit}] work for every kind
+ */
+export const InteractiveBlock = z
+  .object({
+    ...base,
+    type: z.literal('interactive'),
+    kind: z.enum(['function_plot', 'vectors', 'bar_chart', 'pie_chart', 'unit_circle', 'number_line', 'readouts']),
+    caption: L10n,
+    sliders: z.array(Slider).max(4).default([]),
+    fns: z.array(z.object({ fn: z.string().min(1), label: z.string().optional(), color: ink }).strict()).max(4).optional(),
+    x: z.tuple([z.number(), z.number()]).optional(),
+    y: z.tuple([z.number(), z.number()]).optional(),
+    xLabel: z.string().optional(),
+    yLabel: z.string().optional(),
+    vectors: z.array(z.tuple([z.union([z.number(), z.string()]), z.union([z.number(), z.string()])])).max(4).optional(),
+    data: z.record(z.union([z.number(), z.string()])).optional(),
+    points: z.array(z.union([z.number(), z.string()])).max(8).optional(),
+    readouts: z.array(z.object({ label: L10n, expr: z.string(), unit: z.string().optional(), digits: z.number().int().min(0).max(6).default(2) }).strict()).max(4).default([]),
+    tryThis: z.array(L10n).default([]),
+  })
+  .strict();
+
 export const Block = z.discriminatedUnion('type', [
   IntroBlock,
   ConceptBlock,
@@ -158,10 +220,12 @@ export const Block = z.discriminatedUnion('type', [
   PyqBlock,
   TrickBlock,
   RecapBlock,
+  WhiteboardBlock,
+  InteractiveBlock,
 ]);
 export type Block = z.infer<typeof Block>;
 export type BlockType = Block['type'];
-export const BLOCK_TYPES = ['intro', 'concept', '3d_model', 'simulation', 'virtual_lab', 'example', 'class_quiz', 'pyq', 'trick', 'recap'] as const satisfies readonly BlockType[];
+export const BLOCK_TYPES = ['intro', 'concept', '3d_model', 'simulation', 'virtual_lab', 'example', 'class_quiz', 'pyq', 'trick', 'recap', 'whiteboard', 'interactive'] as const satisfies readonly BlockType[];
 
 // ---------------------------------------------------------------- syllabus & lessons
 

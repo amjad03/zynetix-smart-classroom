@@ -7,6 +7,7 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { readSource, validate } from './build';
+import { compile } from './expr';
 
 const repo = resolve(__dirname, '../../..');
 const content = join(repo, 'content');
@@ -39,6 +40,32 @@ export function check(dir: string): string[] {
     for (const bd of topicBoards) if (!src.chapter.boards.includes(bd)) problems.push(`topic ${t.id}: board ${bd} not in the chapter's boards`);
     for (const b of l.blocks) {
       for (const bd of b.boards ?? []) if (!topicBoards.includes(bd)) problems.push(`${l.id}/${b.id}: board ${bd} not taught in this topic`);
+      if (b.type === 'whiteboard') {
+        for (const [si, st] of b.steps.entries()) {
+          const hasAxes = st.draw.some((d) => d.kind === 'axes');
+          for (const d of st.draw) {
+            if (d.kind !== 'plot') continue;
+            if (!hasAxes) problems.push(`${l.id}/${b.id} step ${si + 1}: plot needs axes in the same step`);
+            try { compile(d.fn, ['x']); } catch (e) { problems.push(`${l.id}/${b.id} step ${si + 1}: ${(e as Error).message}`); }
+          }
+        }
+      }
+      if (b.type === 'interactive') {
+        const names = ['x', ...b.sliders.map((sl) => sl.name)];
+        const vars = Object.fromEntries(b.sliders.map((sl) => [sl.name, sl.value]));
+        for (const sl of b.sliders) if (!(sl.min <= sl.value && sl.value <= sl.max)) problems.push(`${l.id}/${b.id}: slider ${sl.name} value outside min..max`);
+        const exprs = [...(b.fns ?? []).map((f) => f.fn), ...b.readouts.map((r) => r.expr),
+          ...[...(b.vectors ?? []).flat(), ...Object.values(b.data ?? {}), ...(b.points ?? [])].filter((v): v is string => typeof v === 'string')];
+        for (const ex of exprs) {
+          try {
+            const f = compile(ex, names);
+            const xs = b.x ? [b.x[0], (b.x[0] + b.x[1]) / 2, b.x[1]] : [1];
+            if (xs.every((x) => !Number.isFinite(f({ ...vars, x })))) problems.push(`${l.id}/${b.id}: "${ex}" is not a number at the default slider values`);
+          } catch (e) { problems.push(`${l.id}/${b.id}: ${(e as Error).message}`); }
+        }
+        const need: Record<string, boolean> = { function_plot: !!b.fns?.length && !!b.x && !!b.y, vectors: !!b.vectors?.length, bar_chart: !!b.data, pie_chart: !!b.data, unit_circle: b.sliders.some((sl) => sl.name === 'theta'), number_line: !!b.points?.length && !!b.x, readouts: b.readouts.length > 0 };
+        if (!need[b.kind]) problems.push(`${l.id}/${b.id}: ${b.kind} is missing its fields (see lesson-schema InteractiveBlock)`);
+      }
       if (b.type === '3d_model' && !models.has(b.modelId)) problems.push(`${l.id}/${b.id}: unknown 3D model ${b.modelId}`);
       if (b.type === 'virtual_lab' && !labs.has(b.labId)) problems.push(`${l.id}/${b.id}: unknown lab ${b.labId}`);
       if (b.type === 'simulation') {
@@ -51,7 +78,8 @@ export function check(dir: string): string[] {
     if (q.chapterId !== src.chapter.id) problems.push(`${q.id}: chapterId ${q.chapterId}`);
     if (q.topicId && !src.chapter.topics.some((t) => t.id === q.topicId)) problems.push(`${q.id}: unknown topic ${q.topicId}`);
     if (q.pyq) problems.push(`${q.id}: do not label PYQ years (unverified)`);
-    if (new Set(q.options.map((o) => o.en.trim())).size !== 4) problems.push(`${q.id}: duplicate options`);
+    if (q.format !== 'numeric' && new Set(q.options.map((o) => o.en.trim())).size !== 4) problems.push(`${q.id}: duplicate options`);
+    if (q.exams.includes('JEE_ADV') && q.difficulty === 'easy') problems.push(`${q.id}: JEE Advanced questions should not be easy`);
     if (q.format === 'assertion_reason' && !/assertion/i.test(q.stem.en)) problems.push(`${q.id}: assertion_reason stem must state the Assertion (A) and Reason (R)`);
     if (q.format === 'assertion_reason' && !q.options.some((o) => /correct explanation/i.test(o.en))) problems.push(`${q.id}: assertion_reason needs the standard four A–R options`);
     const qt = src.chapter.topics.find((t) => t.id === q.topicId);
