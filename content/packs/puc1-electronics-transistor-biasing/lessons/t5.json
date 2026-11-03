@@ -1,0 +1,178 @@
+{
+ "id": "puc1-electronics-08-transistor-biasing.t5.lesson",
+ "chapterId": "puc1-electronics-08-transistor-biasing",
+ "topicId": "puc1-electronics-08-transistor-biasing.t5",
+ "title": {
+  "en": "Voltage divider bias",
+  "kn": "ವೋಲ್ಟೇಜ್ ವಿಭಾಜಕ ಬಯಾಸ್"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "The workhorse of amplifier bias",
+    "kn": "ವರ್ಧಕ ಬಯಾಸ್‌ನ ಪ್ರಮುಖ ವಿಧಾನ"
+   },
+   "hook": {
+    "en": "Open almost any discrete transistor amplifier and you will find four resistors around the transistor. This is voltage divider bias, and it barely cares what β is.",
+    "kn": "ಯಾವುದೇ ಟ್ರಾನ್ಸಿಸ್ಟರ್ ವರ್ಧಕವನ್ನು ತೆರೆದರೂ ಟ್ರಾನ್ಸಿಸ್ಟರ್ ಸುತ್ತ ನಾಲ್ಕು ರೆಸಿಸ್ಟರ್‌ಗಳು ಕಾಣುತ್ತವೆ. ಇದೇ ವೋಲ್ಟೇಜ್ ವಿಭಾಜಕ ಬಯಾಸ್; ಇದು ಬೀಟಾದ ಬಗ್ಗೆ ಹೆಚ್ಚು ಚಿಂತಿಸುವುದಿಲ್ಲ."
+   },
+   "objectives": [
+    {
+     "en": "Analyse the voltage divider bias circuit"
+    },
+    {
+     "en": "Explain the role of the emitter resistor"
+    }
+   ],
+   "narration": {
+    "en": "Open almost any discrete transistor amplifier and you will find four resistors around the transistor. This is voltage divider bias, and it barely cares what β is.",
+    "kn": "ಯಾವುದೇ ಟ್ರಾನ್ಸಿಸ್ಟರ್ ವರ್ಧಕವನ್ನು ತೆರೆದರೂ ಟ್ರಾನ್ಸಿಸ್ಟರ್ ಸುತ್ತ ನಾಲ್ಕು ರೆಸಿಸ್ಟರ್‌ಗಳು ಕಾಣುತ್ತವೆ. ಇದೇ ವೋಲ್ಟೇಜ್ ವಿಭಾಜಕ ಬಯಾಸ್; ಇದು ಬೀಟಾದ ಬಗ್ಗೆ ಹೆಚ್ಚು ಚಿಂತಿಸುವುದಿಲ್ಲ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Circuit and analysis"
+   },
+   "body": {
+    "en": "Resistors $R_1$ and $R_2$ form a divider across $V_{CC}$ and fix the base voltage $V_B = V_{CC} R_2/(R_1+R_2)$ (when the divider current is much larger than $I_B$). The emitter voltage is $V_E = V_B - V_{BE}$, so $I_E = V_E/R_E$ and $I_C \\approx I_E$. Finally $V_{CE} \\approx V_{CC} - I_C (R_C + R_E)$."
+   },
+   "points": [
+    {
+     "en": "V_B = V_CC R2/(R1 + R2)"
+    },
+    {
+     "en": "I_E = (V_B − V_BE)/R_E ≈ I_C"
+    },
+    {
+     "en": "V_CE ≈ V_CC − I_C (R_C + R_E)"
+    }
+   ],
+   "narration": {
+    "en": "The divider fixes the base voltage. Subtract V B E to get the emitter voltage, divide by R E for the current, and beta does not appear anywhere.",
+    "kn": "ವಿಭಾಜಕವು ಬೇಸ್ ವೋಲ್ಟೇಜ್ ಅನ್ನು ಸ್ಥಿರಗೊಳಿಸುತ್ತದೆ. Vbe ಕಳೆದರೆ ಎಮಿಟರ್ ವೋಲ್ಟೇಜ್; Re ಯಿಂದ ಭಾಗಿಸಿದರೆ ಪ್ರವಾಹ. ಬೀಟಾ ಎಲ್ಲಿಯೂ ಬರುವುದಿಲ್ಲ."
+   },
+   "formula": "V_B = \\frac{R_2}{R_1+R_2}V_{CC},\\quad I_C \\approx I_E = \\frac{V_B - V_{BE}}{R_E}"
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Role of the emitter resistor"
+   },
+   "body": {
+    "en": "If $I_C$ tends to rise, $V_E = I_E R_E$ rises. Since $V_B$ is fixed by the divider, $V_{BE} = V_B - V_E$ falls, reducing $I_B$ and pulling $I_C$ back. This emitter (negative) feedback gives a stability factor close to 1. A bypass capacitor across $R_E$ removes this feedback for ac signals so that the gain is not lost."
+   },
+   "points": [
+    {
+     "en": "I_C ↑ → V_E ↑ → V_BE ↓ → I_B ↓ → I_C ↓"
+    },
+    {
+     "en": "S close to 1: best stability"
+    },
+    {
+     "en": "Bypass capacitor C_E keeps ac gain high"
+    }
+   ],
+   "narration": {
+    "en": "The emitter resistor gives negative feedback: a rise in current raises V E, which lowers V B E and brings the current back down.",
+    "kn": "ಎಮಿಟರ್ ರೆಸಿಸ್ಟರ್ ಋಣಾತ್ಮಕ ಪ್ರತಿಪೋಷಣೆ ನೀಡುತ್ತದೆ: ಪ್ರವಾಹ ಏರಿದರೆ Ve ಏರುತ್ತದೆ, Vbe ಇಳಿಯುತ್ತದೆ ಮತ್ತು ಪ್ರವಾಹ ಮತ್ತೆ ಕಡಿಮೆಯಾಗುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Voltage divider bias: V_CC = 15 V, R1 = 40 kΩ, R2 = 10 kΩ, R_C = 3 kΩ, R_E = 1 kΩ, V_BE = 0.7 V. Find the Q-point."
+   },
+   "steps": [
+    {
+     "en": "V_B = 15 × 10/(40 + 10) = 3 V."
+    },
+    {
+     "en": "V_E = 3 − 0.7 = 2.3 V; I_E = 2.3 V/1 kΩ = 2.3 mA ≈ I_C."
+    },
+    {
+     "en": "V_CE = 15 − 2.3 mA × (3 + 1) kΩ = 15 − 9.2 = 5.8 V."
+    }
+   ],
+   "answer": {
+    "en": "Q-point = (5.8 V, 2.3 mA), independent of β"
+   },
+   "narration": {
+    "en": "Let us work this out together. Voltage divider bias: V_CC = 15 V, R1 = 40 kΩ, R2 = 10 kΩ, R_C = 3 kΩ, R_E = 1 kΩ, V_BE = 0.7 V. Find the Q-point."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Order of stability"
+   },
+   "body": {
+    "en": "Rank the three bias circuits by how many \"helpers\" they have: fixed bias has none, collector-to-base has one feedback path through R_B, voltage divider has a divider plus emitter feedback. More helpers, smaller S."
+   },
+   "narration": {
+    "en": "Order of stability. Rank the three bias circuits by how many \"helpers\" they have: fixed bias has none, collector-to-base has one feedback path through R_B, voltage divider has a divider plus emitter feedback. More helpers, smaller S."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Fixed < Feedback < Divider"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1n08-q19",
+    "1n08-q20",
+    "1n08-q21"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Talk it over in your team and agree on one answer.",
+    "kn": "ತಂಡ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ತಂಡದಲ್ಲಿ ಚರ್ಚಿಸಿ ಒಂದೇ ಉತ್ತರವನ್ನು ಒಪ್ಪಿಕೊಳ್ಳಿ."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "V_B is fixed by the divider R1–R2.",
+     "kn": "R1–R2 ವಿಭಾಜಕ Vb ಅನ್ನು ಸ್ಥಿರಗೊಳಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "I_C ≈ (V_B − V_BE)/R_E: nearly independent of β.",
+     "kn": "Ic ≈ (Vb − Vbe)/Re: ಬೀಟಾದಿಂದ ಬಹುತೇಕ ಸ್ವತಂತ್ರ."
+    },
+    {
+     "en": "Emitter resistor feedback gives S close to 1.",
+     "kn": "ಎಮಿಟರ್ ರೆಸಿಸ್ಟರ್ ಪ್ರತಿಪೋಷಣೆಯಿಂದ S ಸುಮಾರು 1."
+    },
+    {
+     "en": "It is the most widely used bias circuit.",
+     "kn": "ಇದು ಅತಿ ಹೆಚ್ಚು ಬಳಸುವ ಬಯಾಸ್ ಸರ್ಕ್ಯೂಟ್."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Compare fixed bias, collector-to-base bias and voltage divider bias in a table (circuit, I_B expression, stability)."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1n08-q22"
+   ],
+   "narration": {
+    "en": "Recap. V_B is fixed by the divider R1–R2. I_C ≈ (V_B − V_BE)/R_E: nearly independent of β. Emitter resistor feedback gives S close to 1. It is the most widely used bias circuit.",
+    "kn": "ಪುನರಾವರ್ತನೆ. R1–R2 ವಿಭಾಜಕ Vb ಅನ್ನು ಸ್ಥಿರಗೊಳಿಸುತ್ತದೆ. Ic ≈ (Vb − Vbe)/Re: ಬೀಟಾದಿಂದ ಬಹುತೇಕ ಸ್ವತಂತ್ರ. ಎಮಿಟರ್ ರೆಸಿಸ್ಟರ್ ಪ್ರತಿಪೋಷಣೆಯಿಂದ S ಸುಮಾರು 1. ಇದು ಅತಿ ಹೆಚ್ಚು ಬಳಸುವ ಬಯಾಸ್ ಸರ್ಕ್ಯೂಟ್."
+   }
+  }
+ ]
+}

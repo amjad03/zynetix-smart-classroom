@@ -1,0 +1,210 @@
+{
+ "id": "puc2-computer-science-03-stack.t2.lesson",
+ "chapterId": "puc2-computer-science-03-stack",
+ "topicId": "puc2-computer-science-03-stack.t2",
+ "title": {
+  "en": "Operations on a stack",
+  "kn": "ಸ್ಟ್ಯಾಕ್ ಕಾರ್ಯಾಚರಣೆಗಳು"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Only two moves",
+    "kn": "ಕೇವಲ ಎರಡು ಚಲನೆಗಳು"
+   },
+   "hook": {
+    "en": "With a stack you can only put something on top or take the top thing off. Those two moves are PUSH and POP.",
+    "kn": "ಸ್ಟ್ಯಾಕ್‌ನಲ್ಲಿ ಮೇಲೆ ಇಡುವುದು ಅಥವಾ ಮೇಲಿನದನ್ನು ತೆಗೆಯುವುದು ಮಾತ್ರ ಸಾಧ್ಯ. ಅವೇ PUSH ಮತ್ತು POP."
+   },
+   "objectives": [
+    {
+     "en": "Perform PUSH and POP"
+    },
+    {
+     "en": "Explain overflow and underflow"
+    },
+    {
+     "en": "Trace a sequence of stack operations"
+    }
+   ],
+   "narration": {
+    "en": "With a stack you can only put something on top or take the top thing off. Those two moves are PUSH and POP.",
+    "kn": "ಸ್ಟ್ಯಾಕ್‌ನಲ್ಲಿ ಮೇಲೆ ಇಡುವುದು ಅಥವಾ ಮೇಲಿನದನ್ನು ತೆಗೆಯುವುದು ಮಾತ್ರ ಸಾಧ್ಯ. ಅವೇ PUSH ಮತ್ತು POP."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "PUSH and POP"
+   },
+   "body": {
+    "en": "PUSH adds a new element at the TOP of the stack; it is an insertion. Adding to a stack that is already full is an exception called overflow. POP removes the topmost element; it is a deletion. Removing from an empty stack is called underflow. Other helpful operations are isEmpty, top (peek at the top element) and size."
+   },
+   "points": [
+    {
+     "en": "PUSH: insert at TOP; full stack → overflow"
+    },
+    {
+     "en": "POP: delete from TOP; empty stack → underflow"
+    },
+    {
+     "en": "isEmpty, top (peek), size help to use a stack safely"
+    }
+   ],
+   "narration": {
+    "en": "PUSH adds a new element at the TOP of the stack; it is an insertion. Adding to a stack that is already full is an exception called overflow. POP removes the topmost element; it is a deletion. Removing from an empty stack is called underflow. Other helpful operations are isEmpty, top (peek at the top element) and size.",
+    "kn": "PUSH ಹೊಸ ಅಂಶವನ್ನು TOP ನಲ್ಲಿ ಸೇರಿಸುತ್ತದೆ; ತುಂಬಿದ ಸ್ಟ್ಯಾಕ್‌ಗೆ ಸೇರಿಸಿದರೆ ಓವರ್‌ಫ್ಲೋ. POP ಮೇಲಿನ ಅಂಶ ತೆಗೆಯುತ್ತದೆ; ಖಾಲಿ ಸ್ಟ್ಯಾಕ್‌ನಿಂದ ತೆಗೆಯಲು ಯತ್ನಿಸಿದರೆ ಅಂಡರ್‌ಫ್ಲೋ."
+   }
+  },
+  {
+   "id": "sim-algo.stack",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "algo.stack",
+   "caption": {
+    "en": "Watch PUSH and POP change the TOP of a stack."
+   },
+   "tryThis": [
+    {
+     "en": "Push 5, 8, 3 and watch the TOP move up."
+    },
+    {
+     "en": "Pop until the stack is empty, then pop once more: what message appears?"
+    }
+   ],
+   "narration": {
+    "en": "Watch PUSH and POP change the TOP of a stack. Push 5, 8, 3 and watch the TOP move up. Pop until the stack is empty, then pop once more: what message appears?"
+   },
+   "seconds": 150,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Glasses are stacked one by one: PUSH glass1, PUSH glass2, POP, PUSH glass3, PUSH glass4, POP. Show the stack after each step."
+   },
+   "steps": [
+    {
+     "en": "PUSH glass1 → [glass1]"
+    },
+    {
+     "en": "PUSH glass2 → [glass1, glass2]"
+    },
+    {
+     "en": "POP → removes glass2 → [glass1]"
+    },
+    {
+     "en": "PUSH glass3, PUSH glass4 → [glass1, glass3, glass4]; POP removes glass4 → [glass1, glass3]"
+    }
+   ],
+   "answer": {
+    "en": "Final stack (bottom to top): glass1, glass3; TOP = glass3"
+   },
+   "narration": {
+    "en": "Trace the stack after every operation. Remember that POP always takes the top element."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Stack permutations"
+   },
+   "body": {
+    "en": "To check whether a pop order is possible, simulate it: push the inputs in order until the wanted element is on top, then pop it. If the wanted element is buried below the top, that order is impossible."
+   },
+   "narration": {
+    "en": "Stack permutations. To check whether a pop order is possible, simulate it: push the inputs in order until the wanted element is on top, then pop it. If the wanted element is buried below the top, that order is impossible."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Wanted on top? Pop. Buried? Impossible."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k03-q05",
+    "2k03-q06",
+    "2k03-q07"
+   ],
+   "mode": "roll_call",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Roll-call quiz. When your roll number is called, give your answer.",
+    "kn": "ಹಾಜರಿ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ಹಾಜರಿ ಸಂಖ್ಯೆ ಕರೆದಾಗ ನಿಮ್ಮ ಉತ್ತರ ಹೇಳಿ."
+   }
+  },
+  {
+   "id": "cbse",
+   "type": "pyq",
+   "title": {
+    "en": "CBSE board pattern"
+   },
+   "boards": [
+    "cbse"
+   ],
+   "questionIds": [
+    "2k03-q21"
+   ],
+   "exams": [
+    "CBSE"
+   ],
+   "narration": {
+    "en": "CBSE pattern: assertion–reason and case-based questions. Read the case carefully before you answer."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "questionIds": [
+    "2k03-q08",
+    "2k03-q07"
+   ],
+   "exams": [
+    "PUC",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Now two board and CUET pattern questions. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "PUSH inserts at the TOP; POP deletes from the TOP.",
+     "kn": "PUSH TOP ನಲ್ಲಿ ಸೇರಿಸುತ್ತದೆ; POP TOP ನಿಂದ ತೆಗೆಯುತ್ತದೆ."
+    },
+    {
+     "en": "Overflow: push on a full stack. Underflow: pop on an empty stack.",
+     "kn": "ಓವರ್‌ಫ್ಲೋ: ತುಂಬಿದ ಸ್ಟ್ಯಾಕ್‌ಗೆ PUSH. ಅಂಡರ್‌ಫ್ಲೋ: ಖಾಲಿ ಸ್ಟ್ಯಾಕ್‌ನಿಂದ POP."
+    },
+    {
+     "en": "Always check isEmpty before POP.",
+     "kn": "POP ಮೊದಲು isEmpty ಪರಿಶೀಲಿಸಿ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Trace PUSH 10, PUSH 20, POP, PUSH 30, POP, POP, POP and mark where underflow occurs."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k03-q08"
+   ],
+   "narration": {
+    "en": "Recap. PUSH inserts at the TOP; POP deletes from the TOP. Overflow: push on a full stack. Underflow: pop on an empty stack. Always check isEmpty before POP.",
+    "kn": "ಪುನರಾವರ್ತನೆ. PUSH TOP ನಲ್ಲಿ ಸೇರಿಸುತ್ತದೆ; POP TOP ನಿಂದ ತೆಗೆಯುತ್ತದೆ. ಓವರ್‌ಫ್ಲೋ: ತುಂಬಿದ ಸ್ಟ್ಯಾಕ್‌ಗೆ PUSH. ಅಂಡರ್‌ಫ್ಲೋ: ಖಾಲಿ ಸ್ಟ್ಯಾಕ್‌ನಿಂದ POP. POP ಮೊದಲು isEmpty ಪರಿಶೀಲಿಸಿ."
+   }
+  }
+ ]
+}

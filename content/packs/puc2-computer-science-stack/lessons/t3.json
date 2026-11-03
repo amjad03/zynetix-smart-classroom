@@ -1,0 +1,224 @@
+{
+ "id": "puc2-computer-science-03-stack.t3.lesson",
+ "chapterId": "puc2-computer-science-03-stack",
+ "topicId": "puc2-computer-science-03-stack.t3",
+ "title": {
+  "en": "Implementation of stack in Python",
+  "kn": "ಪೈಥಾನ್‌ನಲ್ಲಿ ಸ್ಟ್ಯಾಕ್ ಅನುಷ್ಠಾನ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "A list is already almost a stack",
+    "kn": "ಪಟ್ಟಿ ಈಗಾಗಲೇ ಬಹುತೇಕ ಸ್ಟ್ಯಾಕ್"
+   },
+   "hook": {
+    "en": "Python has no separate stack type, but a list with append() and pop() behaves exactly like one. We just agree that the end of the list is the TOP.",
+    "kn": "ಪೈಥಾನ್‌ನಲ್ಲಿ ಪ್ರತ್ಯೇಕ ಸ್ಟ್ಯಾಕ್ ಪ್ರಕಾರ ಇಲ್ಲ, ಆದರೆ append() ಮತ್ತು pop() ಇರುವ ಪಟ್ಟಿ ಸ್ಟ್ಯಾಕ್‌ನಂತೆಯೇ ವರ್ತಿಸುತ್ತದೆ. ಪಟ್ಟಿಯ ಕೊನೆ TOP."
+   },
+   "objectives": [
+    {
+     "en": "Write isEmpty, opPush, opPop, top, size and display"
+    },
+    {
+     "en": "Handle underflow in code"
+    },
+    {
+     "en": "Use a stack inside a program"
+    }
+   ],
+   "narration": {
+    "en": "Python has no separate stack type, but a list with append() and pop() behaves exactly like one. We just agree that the end of the list is the TOP.",
+    "kn": "ಪೈಥಾನ್‌ನಲ್ಲಿ ಪ್ರತ್ಯೇಕ ಸ್ಟ್ಯಾಕ್ ಪ್ರಕಾರ ಇಲ್ಲ, ಆದರೆ append() ಮತ್ತು pop() ಇರುವ ಪಟ್ಟಿ ಸ್ಟ್ಯಾಕ್‌ನಂತೆಯೇ ವರ್ತಿಸುತ್ತದೆ. ಪಟ್ಟಿಯ ಕೊನೆ TOP."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Stack functions using a list"
+   },
+   "body": {
+    "en": "Create an empty list, glassStack = list(). isEmpty returns True when len(glassStack) == 0. opPush(glassStack, element) uses append(). size returns len(glassStack). top returns glassStack[len(glassStack) − 1] if the stack is not empty. opPop returns glassStack.pop() and reports underflow when the stack is empty. display prints from the last index down to 0, so the TOP is shown first. Overflow need not be checked because a Python list grows as needed."
+   },
+   "points": [
+    {
+     "en": "opPush → append(element)"
+    },
+    {
+     "en": "opPop → pop() after checking isEmpty"
+    },
+    {
+     "en": "top → stack[len(stack) − 1]"
+    },
+    {
+     "en": "display → for i in range(len(stack) − 1, −1, −1)"
+    }
+   ],
+   "narration": {
+    "en": "Create an empty list, glassStack = list(). isEmpty returns True when len(glassStack) == 0. opPush(glassStack, element) uses append(). size returns len(glassStack). top returns glassStack[len(glassStack) − 1] if the stack is not empty. opPop returns glassStack.pop() and reports underflow when the stack is empty. display prints from the last index down to 0, so the TOP is shown first. Overflow need not be checked because a Python list grows as needed.",
+    "kn": "glassStack = list() ಖಾಲಿ ಸ್ಟ್ಯಾಕ್. isEmpty, opPush (append), size (len), top (ಕೊನೆಯ ಅಂಶ), opPop (pop) ಮತ್ತು display ಕಾರ್ಯಗಳನ್ನು ಬರೆಯುತ್ತೇವೆ. ಪೈಥಾನ್ ಪಟ್ಟಿ ಬೆಳೆಯುವುದರಿಂದ ಓವರ್‌ಫ್ಲೋ ಪರಿಶೀಲನೆ ಬೇಕಿಲ್ಲ."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Run this stack program and give the exact output."
+   },
+   "steps": [
+    {
+     "en": "def isEmpty(stack):"
+    },
+    {
+     "en": "    return len(stack) == 0"
+    },
+    {
+     "en": "def opPush(stack, element):"
+    },
+    {
+     "en": "    stack.append(element)"
+    },
+    {
+     "en": "def opPop(stack):"
+    },
+    {
+     "en": "    if isEmpty(stack):"
+    },
+    {
+     "en": "        print(\"underflow\")"
+    },
+    {
+     "en": "        return None"
+    },
+    {
+     "en": "    return stack.pop()"
+    },
+    {
+     "en": "def top(stack):"
+    },
+    {
+     "en": "    if isEmpty(stack):"
+    },
+    {
+     "en": "        return None"
+    },
+    {
+     "en": "    return stack[len(stack) - 1]"
+    },
+    {
+     "en": "glassStack = list()"
+    },
+    {
+     "en": "opPush(glassStack, \"glass1\")"
+    },
+    {
+     "en": "opPush(glassStack, \"glass2\")"
+    },
+    {
+     "en": "print(top(glassStack), len(glassStack))"
+    },
+    {
+     "en": "print(opPop(glassStack))"
+    },
+    {
+     "en": "print(opPop(glassStack))"
+    },
+    {
+     "en": "print(opPop(glassStack))"
+    }
+   ],
+   "answer": {
+    "en": "glass2 2\nglass2\nglass1\nunderflow\nNone"
+   },
+   "narration": {
+    "en": "Here is a list-based stack with the NCERT function names. Follow each call and note when underflow is printed."
+   }
+  },
+  {
+   "id": "sim-code.python",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "code.python",
+   "caption": {
+    "en": "Type and run the stack functions in the Python code lab."
+   },
+   "tryThis": [
+    {
+     "en": "Add a display() function that prints the TOP first."
+    },
+    {
+     "en": "Push five names and pop three. Which two remain?"
+    }
+   ],
+   "narration": {
+    "en": "Type and run the stack functions in the Python code lab. Add a display() function that prints the TOP first. Push five names and pop three. Which two remain?"
+   },
+   "seconds": 150,
+   "optional": true
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k03-q09",
+    "2k03-q10",
+    "2k03-q11"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Discuss in your team and agree on one answer.",
+    "kn": "ತಂಡ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ತಂಡದಲ್ಲಿ ಚರ್ಚಿಸಿ ಒಂದು ಉತ್ತರವನ್ನು ಒಪ್ಪಿಕೊಳ್ಳಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "questionIds": [
+    "2k03-q12",
+    "2k03-q11"
+   ],
+   "exams": [
+    "PUC",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Now two board and CUET pattern questions. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A Python list works as a stack: end of the list = TOP.",
+     "kn": "ಪೈಥಾನ್ ಪಟ್ಟಿ ಸ್ಟ್ಯಾಕ್ ಆಗಿ: ಪಟ್ಟಿಯ ಕೊನೆ = TOP."
+    },
+    {
+     "en": "append() pushes, pop() pops, stack[-1] peeks.",
+     "kn": "append() PUSH, pop() POP, stack[-1] ಮೇಲಿನ ಅಂಶ."
+    },
+    {
+     "en": "Check isEmpty before POP to avoid underflow.",
+     "kn": "ಅಂಡರ್‌ಫ್ಲೋ ತಪ್ಪಿಸಲು POP ಮೊದಲು isEmpty ಪರಿಶೀಲಿಸಿ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write a program that uses a stack to check whether a string of brackets like (()()) is balanced."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k03-q12"
+   ],
+   "narration": {
+    "en": "Recap. A Python list works as a stack: end of the list = TOP. append() pushes, pop() pops, stack[-1] peeks. Check isEmpty before POP to avoid underflow.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಪೈಥಾನ್ ಪಟ್ಟಿ ಸ್ಟ್ಯಾಕ್ ಆಗಿ: ಪಟ್ಟಿಯ ಕೊನೆ = TOP. append() PUSH, pop() POP, stack[-1] ಮೇಲಿನ ಅಂಶ. ಅಂಡರ್‌ಫ್ಲೋ ತಪ್ಪಿಸಲು POP ಮೊದಲು isEmpty ಪರಿಶೀಲಿಸಿ."
+   }
+  }
+ ]
+}

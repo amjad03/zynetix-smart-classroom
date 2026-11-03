@@ -1,0 +1,175 @@
+{
+ "id": "puc2-computer-science-09-structured-query-language-sql.t2.lesson",
+ "chapterId": "puc2-computer-science-09-structured-query-language-sql",
+ "topicId": "puc2-computer-science-09-structured-query-language-sql.t2",
+ "title": {
+  "en": "SQL for data definition: CREATE, ALTER, DROP",
+  "kn": "ದತ್ತಾಂಶ ವ್ಯಾಖ್ಯಾನಕ್ಕೆ SQL: CREATE, ALTER, DROP"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Building the table before filling it",
+    "kn": "ತುಂಬುವ ಮೊದಲು ಕೋಷ್ಟಕ ನಿರ್ಮಾಣ"
+   },
+   "hook": {
+    "en": "Before you write marks in a register, someone has to draw the columns. In SQL, drawing the columns is data definition.",
+    "kn": "ರಿಜಿಸ್ಟರ್‌ನಲ್ಲಿ ಅಂಕ ಬರೆಯುವ ಮೊದಲು ಯಾರಾದರೂ ಕಾಲಂಗಳನ್ನು ಎಳೆಯಬೇಕು. SQL ನಲ್ಲಿ ಕಾಲಂ ಎಳೆಯುವುದೇ ದತ್ತಾಂಶ ವ್ಯಾಖ್ಯಾನ."
+   },
+   "objectives": [
+    {
+     "en": "Create a database and a table"
+    },
+    {
+     "en": "Change a table with ALTER"
+    },
+    {
+     "en": "Remove tables and databases with DROP"
+    }
+   ],
+   "narration": {
+    "en": "Before you write marks in a register, someone has to draw the columns. In SQL, drawing the columns is data definition.",
+    "kn": "ರಿಜಿಸ್ಟರ್‌ನಲ್ಲಿ ಅಂಕ ಬರೆಯುವ ಮೊದಲು ಯಾರಾದರೂ ಕಾಲಂಗಳನ್ನು ಎಳೆಯಬೇಕು. SQL ನಲ್ಲಿ ಕಾಲಂ ಎಳೆಯುವುದೇ ದತ್ತಾಂಶ ವ್ಯಾಖ್ಯಾನ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "CREATE, ALTER and DROP"
+   },
+   "body": {
+    "en": "CREATE DATABASE name; creates a database and USE name; selects it. CREATE TABLE defines columns, data types and constraints; DESCRIBE table; shows its structure and SHOW TABLES; lists tables. ALTER TABLE changes structure: ADD a column, DROP a column, MODIFY a column's type, ADD PRIMARY KEY or ADD FOREIGN KEY. DROP TABLE removes a table with all its data; DROP DATABASE removes the whole database."
+   },
+   "points": [
+    {
+     "en": "CREATE DATABASE, USE, SHOW TABLES, DESCRIBE"
+    },
+    {
+     "en": "ALTER TABLE ... ADD / DROP / MODIFY"
+    },
+    {
+     "en": "DROP TABLE / DROP DATABASE: permanent"
+    }
+   ],
+   "narration": {
+    "en": "CREATE builds a database or table, ALTER changes a table's structure, and DROP removes it permanently, data and all.",
+    "kn": "CREATE ದತ್ತಸಂಚಯ ಅಥವಾ ಕೋಷ್ಟಕ ನಿರ್ಮಿಸುತ್ತದೆ, ALTER ಕೋಷ್ಟಕದ ರಚನೆ ಬದಲಿಸುತ್ತದೆ, DROP ದತ್ತಾಂಶ ಸಹಿತ ಶಾಶ್ವತವಾಗಿ ತೆಗೆದುಹಾಕುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Write SQL to create STUDENT, add a Phone column, and then remove it."
+   },
+   "steps": [
+    {
+     "en": "CREATE TABLE STUDENT (RollNo INT PRIMARY KEY, SName VARCHAR(20) NOT NULL, Gender CHAR(1), City VARCHAR(20), Marks INT);"
+    },
+    {
+     "en": "ALTER TABLE STUDENT ADD Phone CHAR(10);"
+    },
+    {
+     "en": "ALTER TABLE STUDENT DROP COLUMN Phone;"
+    },
+    {
+     "en": "In MySQL, DESCRIBE STUDENT; after each step shows the changed structure."
+    }
+   ],
+   "answer": {
+    "en": "The table is created with 5 columns, gets a 6th column Phone, and is back to 5 columns."
+   },
+   "narration": {
+    "en": "Let us work through this together. Write SQL to create STUDENT, add a Phone column, and then remove it."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "A FEES table must only accept roll numbers that exist in STUDENT. Write its CREATE TABLE statement."
+   },
+   "steps": [
+    {
+     "en": "CREATE TABLE FEES (RollNo INT, Term INT, Amount INT, PRIMARY KEY (RollNo, Term), FOREIGN KEY (RollNo) REFERENCES STUDENT(RollNo));"
+    },
+    {
+     "en": "{RollNo, Term} is a composite primary key: one fee row per student per term."
+    },
+    {
+     "en": "FOREIGN KEY ... REFERENCES links FEES.RollNo to STUDENT.RollNo."
+    }
+   ],
+   "answer": {
+    "en": "FEES with composite primary key (RollNo, Term) and foreign key RollNo → STUDENT."
+   },
+   "narration": {
+    "en": "Let us work through this together. A FEES table must only accept roll numbers that exist in STUDENT. Write its CREATE TABLE statement."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k09-q06",
+    "2k09-q07",
+    "2k09-q08"
+   ],
+   "mode": "roll_call",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Roll call quiz. When your roll number is called, give your answer.",
+    "kn": "ಹಾಜರಾತಿ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ಕ್ರಮಸಂಖ್ಯೆ ಕರೆದಾಗ ನಿಮ್ಮ ಉತ್ತರ ಹೇಳಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "questionIds": [
+    "2k09-q09",
+    "2k09-q10"
+   ],
+   "exams": [
+    "PUC",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Now two board and CUET pattern questions. Read each one carefully before you answer."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "CREATE TABLE defines columns, types and constraints.",
+     "kn": "CREATE TABLE ಕಾಲಂ, ಪ್ರಕಾರ, ನಿರ್ಬಂಧಗಳನ್ನು ವ್ಯಾಖ್ಯಾನಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "ALTER TABLE adds, drops or modifies columns and keys.",
+     "kn": "ALTER TABLE ಕಾಲಂ ಮತ್ತು ಕೀಲಿಗಳನ್ನು ಸೇರಿಸುತ್ತದೆ, ತೆಗೆಯುತ್ತದೆ, ಬದಲಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "DROP removes the table or database permanently.",
+     "kn": "DROP ಕೋಷ್ಟಕ ಅಥವಾ ದತ್ತಸಂಚಯವನ್ನು ಶಾಶ್ವತವಾಗಿ ತೆಗೆದುಹಾಕುತ್ತದೆ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write CREATE TABLE statements for BOOK and ISSUE with suitable keys."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k09-q10"
+   ],
+   "narration": {
+    "en": "Recap. CREATE TABLE defines columns, types and constraints. ALTER TABLE adds, drops or modifies columns and keys. DROP removes the table or database permanently.",
+    "kn": "ಪುನರಾವರ್ತನೆ. CREATE TABLE ಕಾಲಂ, ಪ್ರಕಾರ, ನಿರ್ಬಂಧಗಳನ್ನು ವ್ಯಾಖ್ಯಾನಿಸುತ್ತದೆ. ALTER TABLE ಕಾಲಂ ಮತ್ತು ಕೀಲಿಗಳನ್ನು ಸೇರಿಸುತ್ತದೆ, ತೆಗೆಯುತ್ತದೆ, ಬದಲಿಸುತ್ತದೆ. DROP ಕೋಷ್ಟಕ ಅಥವಾ ದತ್ತಸಂಚಯವನ್ನು ಶಾಶ್ವತವಾಗಿ ತೆಗೆದುಹಾಕುತ್ತದೆ."
+   }
+  }
+ ]
+}

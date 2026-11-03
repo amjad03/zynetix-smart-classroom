@@ -1,0 +1,228 @@
+{
+ "id": "puc2-computer-science-09-structured-query-language-sql.t5.lesson",
+ "chapterId": "puc2-computer-science-09-structured-query-language-sql",
+ "topicId": "puc2-computer-science-09-structured-query-language-sql.t5",
+ "title": {
+  "en": "Functions in SQL and GROUP BY",
+  "kn": "SQL ನಲ್ಲಿ ಫಂಕ್ಷನ್‌ಗಳು ಮತ್ತು GROUP BY"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Summaries in one line",
+    "kn": "ಒಂದೇ ಸಾಲಿನಲ್ಲಿ ಸಾರಾಂಶ"
+   },
+   "hook": {
+    "en": "The principal does not want 600 rows. She wants the class average, the topper's marks, and how many students came from each city. SQL functions and GROUP BY give these in one query.",
+    "kn": "ಪ್ರಾಂಶುಪಾಲರಿಗೆ 600 ಸಾಲುಗಳು ಬೇಡ. ತರಗತಿ ಸರಾಸರಿ, ಅತ್ಯಧಿಕ ಅಂಕ, ಪ್ರತಿ ನಗರದಿಂದ ಎಷ್ಟು ವಿದ್ಯಾರ್ಥಿಗಳು ಎಂಬುದು ಬೇಕು. SQL ಫಂಕ್ಷನ್‌ಗಳು ಮತ್ತು GROUP BY ಇದನ್ನು ಒಂದೇ ಪ್ರಶ್ನೆಯಲ್ಲಿ ನೀಡುತ್ತವೆ."
+   },
+   "objectives": [
+    {
+     "en": "Use single-row (math, string, date) functions"
+    },
+    {
+     "en": "Use aggregate functions"
+    },
+    {
+     "en": "Group rows with GROUP BY and filter groups with HAVING"
+    }
+   ],
+   "narration": {
+    "en": "The principal does not want 600 rows. She wants the class average, the topper's marks, and how many students came from each city. SQL functions and GROUP BY give these in one query.",
+    "kn": "ಪ್ರಾಂಶುಪಾಲರಿಗೆ 600 ಸಾಲುಗಳು ಬೇಡ. ತರಗತಿ ಸರಾಸರಿ, ಅತ್ಯಧಿಕ ಅಂಕ, ಪ್ರತಿ ನಗರದಿಂದ ಎಷ್ಟು ವಿದ್ಯಾರ್ಥಿಗಳು ಎಂಬುದು ಬೇಕು. SQL ಫಂಕ್ಷನ್‌ಗಳು ಮತ್ತು GROUP BY ಇದನ್ನು ಒಂದೇ ಪ್ರಶ್ನೆಯಲ್ಲಿ ನೀಡುತ್ತವೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Single-row functions"
+   },
+   "body": {
+    "en": "Single-row functions work on each row and return one value per row. Math: POWER(x, y), ROUND(n, d), MOD(a, b). String: UCASE/UPPER, LCASE/LOWER, LENGTH, LEFT, RIGHT, MID/SUBSTRING (SUBSTR in SQLite), INSTR, LTRIM, RTRIM, TRIM. Date (MySQL): NOW(), DATE(), MONTH(), MONTHNAME(), YEAR(), DAY(), DAYNAME()."
+   },
+   "points": [
+    {
+     "en": "Math: POWER, ROUND, MOD"
+    },
+    {
+     "en": "String: UPPER, LOWER, LENGTH, LEFT, RIGHT, MID, INSTR, TRIM"
+    },
+    {
+     "en": "Date: NOW, DATE, MONTH, YEAR, DAY, DAYNAME"
+    }
+   ],
+   "narration": {
+    "en": "Single-row functions give one answer for every row: math functions like ROUND, string functions like UPPER and LENGTH, and date functions like YEAR.",
+    "kn": "ಏಕ-ಸಾಲು ಫಂಕ್ಷನ್‌ಗಳು ಪ್ರತಿ ಸಾಲಿಗೆ ಒಂದು ಉತ್ತರ ನೀಡುತ್ತವೆ: ROUND ನಂತಹ ಗಣಿತ, UPPER, LENGTH ನಂತಹ ಸ್ಟ್ರಿಂಗ್, YEAR ನಂತಹ ದಿನಾಂಕ ಫಂಕ್ಷನ್‌ಗಳು."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Aggregate functions and GROUP BY"
+   },
+   "body": {
+    "en": "Aggregate (multiple-row) functions work on a set of rows and return one value: MAX, MIN, AVG, SUM, COUNT. They ignore NULL values, except COUNT(*), which counts all rows. GROUP BY column forms groups of rows with the same value, and the aggregate is computed for each group. HAVING filters groups; WHERE filters rows before grouping."
+   },
+   "points": [
+    {
+     "en": "MAX, MIN, AVG, SUM, COUNT"
+    },
+    {
+     "en": "COUNT(*) counts all rows; COUNT(col) skips NULL"
+    },
+    {
+     "en": "WHERE filters rows; HAVING filters groups"
+    }
+   ],
+   "narration": {
+    "en": "Aggregate functions like SUM, AVG and COUNT summarise many rows into one value. GROUP BY makes groups, and HAVING filters those groups.",
+    "kn": "SUM, AVG, COUNT ನಂತಹ ಸಮೂಹ ಫಂಕ್ಷನ್‌ಗಳು ಹಲವು ಸಾಲುಗಳನ್ನು ಒಂದು ಮೌಲ್ಯಕ್ಕೆ ಸಂಕ್ಷೇಪಿಸುತ್ತವೆ. GROUP BY ಗುಂಪು ಮಾಡುತ್ತದೆ, HAVING ಗುಂಪುಗಳನ್ನು ಸೋಸುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Table STUDENT(RollNo, SName, Gender, City, Marks) has 6 rows: (1, Asha, F, Mysuru, 85), (2, Ravi, M, Hubballi, 72), (3, Meena, F, Mysuru, 91), (4, Kiran, M, Mangaluru, NULL), (5, Arjun, M, Mysuru, 64), (6, Divya, F, Hubballi, 78). Find COUNT(*), COUNT(Marks), AVG(Marks), MAX(Marks) and SUM(Marks)."
+   },
+   "steps": [
+    {
+     "en": "SELECT COUNT(*), COUNT(Marks), AVG(Marks), MAX(Marks), SUM(Marks) FROM STUDENT;"
+    },
+    {
+     "en": "COUNT(*) = 6 rows; COUNT(Marks) = 5 because Kiran's marks are NULL."
+    },
+    {
+     "en": "SUM = 85 + 72 + 91 + 64 + 78 = 390; AVG = 390 / 5 = 78."
+    },
+    {
+     "en": "MAX = 91."
+    }
+   ],
+   "answer": {
+    "en": "6, 5, 78, 91, 390"
+   },
+   "narration": {
+    "en": "Let us work through this together. Table STUDENT(RollNo, SName, Gender, City, Marks) has 6 rows: (1, Asha, F, Mysuru, 85), (2, Ravi, M, Hubballi, 72), (3, Meena, F, Mysuru, 91), (4, Kiran, M, Mangaluru, NULL), (5, Arjun, M, Mysuru, 64), (6, Divya, F, Hubballi, 78). Find COUNT(*), COUNT(Marks), AVG(Marks), MAX(Marks) and SUM(Marks)."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "Using the same table, find the number of students and average marks city-wise, showing only cities with more than one student."
+   },
+   "steps": [
+    {
+     "en": "SELECT City, COUNT(*), AVG(Marks) FROM STUDENT GROUP BY City HAVING COUNT(*) > 1;"
+    },
+    {
+     "en": "Mysuru: Asha 85, Meena 91, Arjun 64 → 3 students, average 240 / 3 = 80."
+    },
+    {
+     "en": "Hubballi: Ravi 72, Divya 78 → 2 students, average 75."
+    },
+    {
+     "en": "Mangaluru has only 1 student, so HAVING removes it."
+    }
+   ],
+   "answer": {
+    "en": "Hubballi 2 75; Mysuru 3 80"
+   },
+   "narration": {
+    "en": "Let us work through this together. Using the same table, find the number of students and average marks city-wise, showing only cities with more than one student."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k09-q21",
+    "2k09-q22",
+    "2k09-q23"
+   ],
+   "mode": "roll_call",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Roll call quiz. When your roll number is called, give your answer.",
+    "kn": "ಹಾಜರಾತಿ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ಕ್ರಮಸಂಖ್ಯೆ ಕರೆದಾಗ ನಿಮ್ಮ ಉತ್ತರ ಹೇಳಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "questionIds": [
+    "2k09-q24",
+    "2k09-q25"
+   ],
+   "exams": [
+    "PUC",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Now two board and CUET pattern questions. Read each one carefully before you answer."
+   }
+  },
+  {
+   "id": "cbse",
+   "type": "pyq",
+   "title": {
+    "en": "CBSE board pattern"
+   },
+   "questionIds": [
+    "2k09-q31",
+    "2k09-q33",
+    "2k09-q34"
+   ],
+   "exams": [
+    "CBSE"
+   ],
+   "boards": [
+    "cbse"
+   ],
+   "narration": {
+    "en": "These are CBSE board pattern questions: assertion–reason and case-based. Read the passage or both statements before choosing."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Single-row functions return one value per row.",
+     "kn": "ಏಕ-ಸಾಲು ಫಂಕ್ಷನ್‌ಗಳು ಪ್ರತಿ ಸಾಲಿಗೆ ಒಂದು ಮೌಲ್ಯ ನೀಡುತ್ತವೆ."
+    },
+    {
+     "en": "Aggregates (MAX, MIN, AVG, SUM, COUNT) return one value for many rows.",
+     "kn": "ಸಮೂಹ ಫಂಕ್ಷನ್‌ಗಳು ಹಲವು ಸಾಲುಗಳಿಗೆ ಒಂದು ಮೌಲ್ಯ ನೀಡುತ್ತವೆ."
+    },
+    {
+     "en": "Aggregates ignore NULL, except COUNT(*).",
+     "kn": "COUNT(*) ಹೊರತು ಸಮೂಹ ಫಂಕ್ಷನ್‌ಗಳು NULL ಅನ್ನು ನಿರ್ಲಕ್ಷಿಸುತ್ತವೆ."
+    },
+    {
+     "en": "GROUP BY makes groups; HAVING filters groups.",
+     "kn": "GROUP BY ಗುಂಪು ಮಾಡುತ್ತದೆ; HAVING ಗುಂಪುಗಳನ್ನು ಸೋಸುತ್ತದೆ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write a query to show the highest marks for each gender in STUDENT and predict its output."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k09-q25"
+   ],
+   "narration": {
+    "en": "Recap. Single-row functions return one value per row. Aggregates (MAX, MIN, AVG, SUM, COUNT) return one value for many rows. Aggregates ignore NULL, except COUNT(*). GROUP BY makes groups; HAVING filters groups.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಏಕ-ಸಾಲು ಫಂಕ್ಷನ್‌ಗಳು ಪ್ರತಿ ಸಾಲಿಗೆ ಒಂದು ಮೌಲ್ಯ ನೀಡುತ್ತವೆ. ಸಮೂಹ ಫಂಕ್ಷನ್‌ಗಳು ಹಲವು ಸಾಲುಗಳಿಗೆ ಒಂದು ಮೌಲ್ಯ ನೀಡುತ್ತವೆ. COUNT(*) ಹೊರತು ಸಮೂಹ ಫಂಕ್ಷನ್‌ಗಳು NULL ಅನ್ನು ನಿರ್ಲಕ್ಷಿಸುತ್ತವೆ. GROUP BY ಗುಂಪು ಮಾಡುತ್ತದೆ; HAVING ಗುಂಪುಗಳನ್ನು ಸೋಸುತ್ತದೆ."
+   }
+  }
+ ]
+}

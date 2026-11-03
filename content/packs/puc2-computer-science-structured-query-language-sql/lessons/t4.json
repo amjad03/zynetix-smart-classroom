@@ -1,0 +1,247 @@
+{
+ "id": "puc2-computer-science-09-structured-query-language-sql.t4.lesson",
+ "chapterId": "puc2-computer-science-09-structured-query-language-sql",
+ "topicId": "puc2-computer-science-09-structured-query-language-sql.t4",
+ "title": {
+  "en": "SQL for data query: SELECT",
+  "kn": "ದತ್ತಾಂಶ ಪ್ರಶ್ನೆಗೆ SQL: SELECT"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Asking questions of the data",
+    "kn": "ದತ್ತಾಂಶಕ್ಕೆ ಪ್ರಶ್ನೆ ಕೇಳುವುದು"
+   },
+   "hook": {
+    "en": "Who scored above 75? Which students are from Mysuru? Whose marks are missing? One command, SELECT, answers all of these.",
+    "kn": "75 ಕ್ಕಿಂತ ಹೆಚ್ಚು ಅಂಕ ಯಾರು ಪಡೆದರು? ಮೈಸೂರಿನವರು ಯಾರು? ಯಾರ ಅಂಕ ಇಲ್ಲ? SELECT ಎಂಬ ಒಂದೇ ಆಜ್ಞೆ ಇವೆಲ್ಲಕ್ಕೂ ಉತ್ತರಿಸುತ್ತದೆ."
+   },
+   "objectives": [
+    {
+     "en": "Write SELECT with WHERE, relational and logical operators"
+    },
+    {
+     "en": "Use DISTINCT, BETWEEN, IN, LIKE, IS NULL"
+    },
+    {
+     "en": "Sort with ORDER BY"
+    }
+   ],
+   "narration": {
+    "en": "Who scored above 75? Which students are from Mysuru? Whose marks are missing? One command, SELECT, answers all of these.",
+    "kn": "75 ಕ್ಕಿಂತ ಹೆಚ್ಚು ಅಂಕ ಯಾರು ಪಡೆದರು? ಮೈಸೂರಿನವರು ಯಾರು? ಯಾರ ಅಂಕ ಇಲ್ಲ? SELECT ಎಂಬ ಒಂದೇ ಆಜ್ಞೆ ಇವೆಲ್ಲಕ್ಕೂ ಉತ್ತರಿಸುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "SELECT ... FROM ... WHERE"
+   },
+   "body": {
+    "en": "SELECT columns FROM table WHERE condition; returns matching rows; SELECT * returns all columns. Conditions use relational operators (=, <, >, <=, >=, <> or !=) and logical operators (AND, OR, NOT). DISTINCT removes duplicate rows. A column alias renames a column in the output: SELECT SName AS Name."
+   },
+   "points": [
+    {
+     "en": "* = all columns"
+    },
+    {
+     "en": "Relational: = < > <= >= <>"
+    },
+    {
+     "en": "Logical: AND, OR, NOT"
+    },
+    {
+     "en": "DISTINCT removes duplicates; AS gives an alias"
+    }
+   ],
+   "narration": {
+    "en": "SELECT picks columns, FROM names the table, and WHERE keeps only rows that satisfy the condition.",
+    "kn": "SELECT ಕಾಲಂಗಳನ್ನು ಆರಿಸುತ್ತದೆ, FROM ಕೋಷ್ಟಕ ಹೆಸರಿಸುತ್ತದೆ, WHERE ಷರತ್ತು ಪೂರೈಸುವ ಸಾಲುಗಳನ್ನು ಮಾತ್ರ ಉಳಿಸುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "BETWEEN, IN, LIKE, NULL and ORDER BY"
+   },
+   "body": {
+    "en": "BETWEEN a AND b includes both ends. IN (list) matches any value in the list. LIKE matches patterns: % stands for zero or more characters, _ for exactly one character. NULL is tested with IS NULL or IS NOT NULL, never with =. ORDER BY column sorts the result, ascending by default; add DESC for descending."
+   },
+   "points": [
+    {
+     "en": "BETWEEN is inclusive"
+    },
+    {
+     "en": "LIKE: % = any number of chars, _ = one char"
+    },
+    {
+     "en": "IS NULL / IS NOT NULL"
+    },
+    {
+     "en": "ORDER BY ... ASC | DESC"
+    }
+   ],
+   "narration": {
+    "en": "BETWEEN includes both ends, IN matches a list, LIKE matches patterns with percent and underscore, NULL needs IS NULL, and ORDER BY sorts.",
+    "kn": "BETWEEN ಎರಡೂ ತುದಿಗಳನ್ನು ಒಳಗೊಳ್ಳುತ್ತದೆ, IN ಪಟ್ಟಿಗೆ ಹೊಂದಿಸುತ್ತದೆ, LIKE % ಮತ್ತು _ ಬಳಸಿ ಮಾದರಿ ಹುಡುಕುತ್ತದೆ, NULL ಗೆ IS NULL ಬೇಕು, ORDER BY ವಿಂಗಡಿಸುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "sim-code.sql",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "code.sql",
+   "caption": {
+    "en": "Run SELECT queries on a sample table and watch the rows change as you edit the WHERE clause."
+   },
+   "tryThis": [
+    {
+     "en": "Change > 75 to >= 78 and see whether a row appears or disappears."
+    },
+    {
+     "en": "Try LIKE 'A%' and then LIKE '%a' on the name column."
+    }
+   ],
+   "narration": {
+    "en": "Run SELECT queries on a sample table and watch the rows change as you edit the WHERE clause. Change > 75 to >= 78 and see whether a row appears or disappears. Try LIKE 'A%' and then LIKE '%a' on the name column."
+   },
+   "seconds": 150,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Table STUDENT(RollNo, SName, Gender, City, Marks) has 6 rows: (1, Asha, F, Mysuru, 85), (2, Ravi, M, Hubballi, 72), (3, Meena, F, Mysuru, 91), (4, Kiran, M, Mangaluru, NULL), (5, Arjun, M, Mysuru, 64), (6, Divya, F, Hubballi, 78). Write queries for: (a) students with marks above 75, highest first; (b) names starting with A; (c) students whose marks are missing."
+   },
+   "steps": [
+    {
+     "en": "(a) SELECT SName, Marks FROM STUDENT WHERE Marks > 75 ORDER BY Marks DESC;  → Meena 91, Asha 85, Divya 78"
+    },
+    {
+     "en": "(b) SELECT SName FROM STUDENT WHERE SName LIKE 'A%';  → Asha, Arjun"
+    },
+    {
+     "en": "(c) SELECT SName FROM STUDENT WHERE Marks IS NULL;  → Kiran"
+    }
+   ],
+   "answer": {
+    "en": "(a) Meena 91, Asha 85, Divya 78; (b) Asha, Arjun; (c) Kiran"
+   },
+   "narration": {
+    "en": "Let us work through this together. Table STUDENT(RollNo, SName, Gender, City, Marks) has 6 rows: (1, Asha, F, Mysuru, 85), (2, Ravi, M, Hubballi, 72), (3, Meena, F, Mysuru, 91), (4, Kiran, M, Mangaluru, NULL), (5, Arjun, M, Mysuru, 64), (6, Divya, F, Hubballi, 78). Write queries for: (a) students with marks above 75, highest first; (b) names starting with A; (c) students whose marks are missing."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "Using the same table: (a) SELECT DISTINCT City FROM STUDENT; (b) SELECT SName FROM STUDENT WHERE City IN ('Hubballi', 'Mangaluru');"
+   },
+   "steps": [
+    {
+     "en": "(a) City values are Mysuru, Hubballi, Mysuru, Mangaluru, Mysuru, Hubballi."
+    },
+    {
+     "en": "DISTINCT keeps each once → Mysuru, Hubballi, Mangaluru."
+    },
+    {
+     "en": "(b) Rows from Hubballi or Mangaluru → Ravi, Kiran, Divya."
+    }
+   ],
+   "answer": {
+    "en": "(a) Mysuru, Hubballi, Mangaluru; (b) Ravi, Kiran, Divya"
+   },
+   "narration": {
+    "en": "Let us work through this together. Using the same table: (a) SELECT DISTINCT City FROM STUDENT; (b) SELECT SName FROM STUDENT WHERE City IN ('Hubballi', 'Mangaluru');"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Wildcards in LIKE"
+   },
+   "body": {
+    "en": "Percent is greedy and eats any number of letters, even none. Underscore is polite and takes exactly one seat."
+   },
+   "optional": true,
+   "seconds": 90,
+   "narration": {
+    "en": "Percent is greedy and eats any number of letters, even none. Underscore is polite and takes exactly one seat."
+   },
+   "mnemonic": {
+    "en": "% = many (or none), _ = exactly one"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k09-q16",
+    "2k09-q17",
+    "2k09-q18"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer.",
+    "kn": "ತರಗತಿ ರಸಪ್ರಶ್ನೆ. ಚರ್ಚಿಸಿ, ಕೈ ಎತ್ತಿ, ಮಾನಿಟರ್ ತರಗತಿಯ ಉತ್ತರವನ್ನು ಒತ್ತಲಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "questionIds": [
+    "2k09-q19",
+    "2k09-q20"
+   ],
+   "exams": [
+    "PUC",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Now two board and CUET pattern questions. Read each one carefully before you answer."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "SELECT ... FROM ... WHERE retrieves matching rows.",
+     "kn": "SELECT ... FROM ... WHERE ಹೊಂದುವ ಸಾಲುಗಳನ್ನು ಪಡೆಯುತ್ತದೆ."
+    },
+    {
+     "en": "DISTINCT removes duplicates; BETWEEN is inclusive; IN matches a list.",
+     "kn": "DISTINCT ನಕಲು ತೆಗೆಯುತ್ತದೆ; BETWEEN ಎರಡೂ ತುದಿ ಒಳಗೊಳ್ಳುತ್ತದೆ; IN ಪಟ್ಟಿಗೆ ಹೊಂದಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "LIKE uses % and _; NULL is tested with IS NULL.",
+     "kn": "LIKE % ಮತ್ತು _ ಬಳಸುತ್ತದೆ; NULL ಅನ್ನು IS NULL ನಿಂದ ಪರೀಕ್ಷಿಸಿ."
+    },
+    {
+     "en": "ORDER BY sorts, ascending by default.",
+     "kn": "ORDER BY ವಿಂಗಡಿಸುತ್ತದೆ, ಪೂರ್ವನಿಯೋಜಿತವಾಗಿ ಆರೋಹಣ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write a query to list names ending with 'a' from STUDENT and predict the output."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k09-q20"
+   ],
+   "narration": {
+    "en": "Recap. SELECT ... FROM ... WHERE retrieves matching rows. DISTINCT removes duplicates; BETWEEN is inclusive; IN matches a list. LIKE uses % and _; NULL is tested with IS NULL. ORDER BY sorts, ascending by default.",
+    "kn": "ಪುನರಾವರ್ತನೆ. SELECT ... FROM ... WHERE ಹೊಂದುವ ಸಾಲುಗಳನ್ನು ಪಡೆಯುತ್ತದೆ. DISTINCT ನಕಲು ತೆಗೆಯುತ್ತದೆ; BETWEEN ಎರಡೂ ತುದಿ ಒಳಗೊಳ್ಳುತ್ತದೆ; IN ಪಟ್ಟಿಗೆ ಹೊಂದಿಸುತ್ತದೆ. LIKE % ಮತ್ತು _ ಬಳಸುತ್ತದೆ; NULL ಅನ್ನು IS NULL ನಿಂದ ಪರೀಕ್ಷಿಸಿ. ORDER BY ವಿಂಗಡಿಸುತ್ತದೆ, ಪೂರ್ವನಿಯೋಜಿತವಾಗಿ ಆರೋಹಣ."
+   }
+  }
+ ]
+}

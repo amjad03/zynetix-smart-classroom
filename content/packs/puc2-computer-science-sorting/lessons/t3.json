@@ -1,0 +1,245 @@
+{
+ "id": "puc2-computer-science-05-sorting.t3.lesson",
+ "chapterId": "puc2-computer-science-05-sorting",
+ "topicId": "puc2-computer-science-05-sorting.t3",
+ "title": {
+  "en": "Insertion sort",
+  "kn": "ಇನ್‌ಸರ್ಶನ್ ಸಾರ್ಟ್"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Like sorting cards in your hand",
+    "kn": "ಕೈಯಲ್ಲಿನ ಇಸ್ಪೀಟು ಎಲೆಗಳಂತೆ"
+   },
+   "hook": {
+    "en": "When you pick up cards one at a time, you slide each new card into its right place among the cards you already hold. That is insertion sort.",
+    "kn": "ಎಲೆಗಳನ್ನು ಒಂದೊಂದಾಗಿ ಎತ್ತಿಕೊಳ್ಳುವಾಗ ಪ್ರತಿ ಹೊಸ ಎಲೆಯನ್ನು ಈಗಾಗಲೇ ಹಿಡಿದಿರುವ ಎಲೆಗಳ ನಡುವೆ ಸರಿಯಾದ ಸ್ಥಳಕ್ಕೆ ಸೇರಿಸುತ್ತೇವೆ. ಇದೇ ಇನ್‌ಸರ್ಶನ್ ಸಾರ್ಟ್."
+   },
+   "objectives": [
+    {
+     "en": "Explain how insertion sort grows the sorted part"
+    },
+    {
+     "en": "Trace insertion sort pass by pass"
+    },
+    {
+     "en": "Write insertion sort in Python"
+    }
+   ],
+   "narration": {
+    "en": "When you pick up cards one at a time, you slide each new card into its right place among the cards you already hold. That is insertion sort.",
+    "kn": "ಎಲೆಗಳನ್ನು ಒಂದೊಂದಾಗಿ ಎತ್ತಿಕೊಳ್ಳುವಾಗ ಪ್ರತಿ ಹೊಸ ಎಲೆಯನ್ನು ಈಗಾಗಲೇ ಹಿಡಿದಿರುವ ಎಲೆಗಳ ನಡುವೆ ಸರಿಯಾದ ಸ್ಥಳಕ್ಕೆ ಸೇರಿಸುತ್ತೇವೆ. ಇದೇ ಇನ್‌ಸರ್ಶನ್ ಸಾರ್ಟ್."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Insertion sort"
+   },
+   "body": {
+    "en": "The first element alone forms the sorted part. In each pass, the next element of the unsorted part is taken out (temp) and compared with the elements of the sorted part from right to left; every larger element is shifted one place right, and temp is inserted into the gap. After n − 1 passes the list is sorted. If the list is already sorted, each pass needs only one comparison."
+   },
+   "points": [
+    {
+     "en": "Take the next unsorted element as temp"
+    },
+    {
+     "en": "Shift larger sorted elements one place right"
+    },
+    {
+     "en": "Insert temp into the gap"
+    },
+    {
+     "en": "n − 1 passes"
+    }
+   ],
+   "narration": {
+    "en": "The first element alone forms the sorted part. In each pass, the next element of the unsorted part is taken out (temp) and compared with the elements of the sorted part from right to left; every larger element is shifted one place right, and temp is inserted into the gap. After n − 1 passes the list is sorted. If the list is already sorted, each pass needs only one comparison.",
+    "kn": "ಮೊದಲ ಅಂಶ ವಿಂಗಡಿತ ಭಾಗ. ಪ್ರತಿ ಸುತ್ತಿನಲ್ಲಿ ಮುಂದಿನ ಅಂಶವನ್ನು (temp) ತೆಗೆದು, ವಿಂಗಡಿತ ಭಾಗದಲ್ಲಿ ಬಲದಿಂದ ಎಡಕ್ಕೆ ಹೋಲಿಸಿ, ದೊಡ್ಡವುಗಳನ್ನು ಬಲಕ್ಕೆ ಸರಿಸಿ, ಸರಿಯಾದ ಸ್ಥಳದಲ್ಲಿ ಸೇರಿಸುತ್ತೇವೆ."
+   }
+  },
+  {
+   "id": "sim-algo.insertion",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "algo.insertion",
+   "caption": {
+    "en": "Watch each new element slide left into its correct place."
+   },
+   "tryThis": [
+    {
+     "en": "Try a list sorted in reverse order: how far does each element move?"
+    },
+    {
+     "en": "Try an already sorted list."
+    }
+   ],
+   "narration": {
+    "en": "Watch each new element slide left into its correct place. Try a list sorted in reverse order: how far does each element move? Try an already sorted list."
+   },
+   "seconds": 150,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Sort numList = [8, 7, 13, 1, -9, 4] using insertion sort. Show the list after each pass."
+   },
+   "steps": [
+    {
+     "en": "Pass 1: insert 7 before 8 → [7, 8, 13, 1, -9, 4]"
+    },
+    {
+     "en": "Pass 2: 13 stays → [7, 8, 13, 1, -9, 4]"
+    },
+    {
+     "en": "Pass 3: insert 1 at the front → [1, 7, 8, 13, -9, 4]"
+    },
+    {
+     "en": "Pass 4: insert −9 at the front → [-9, 1, 7, 8, 13, 4]; Pass 5: insert 4 after 1 → [-9, 1, 4, 7, 8, 13]"
+    }
+   ],
+   "answer": {
+    "en": "[-9, 1, 4, 7, 8, 13]"
+   },
+   "narration": {
+    "en": "Take the next element and slide it left past every larger element."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "Run this insertion sort program and give the exact output."
+   },
+   "steps": [
+    {
+     "en": "def insertion_Sort(list3):"
+    },
+    {
+     "en": "    n = len(list3)"
+    },
+    {
+     "en": "    for i in range(1, n):"
+    },
+    {
+     "en": "        temp = list3[i]"
+    },
+    {
+     "en": "        j = i - 1"
+    },
+    {
+     "en": "        while j >= 0 and temp < list3[j]:"
+    },
+    {
+     "en": "            list3[j + 1] = list3[j]"
+    },
+    {
+     "en": "            j = j - 1"
+    },
+    {
+     "en": "        list3[j + 1] = temp"
+    },
+    {
+     "en": "numList = [8, 7, 13, 1, -9, 4]"
+    },
+    {
+     "en": "insertion_Sort(numList)"
+    },
+    {
+     "en": "print(\"The sorted list is:\", numList)"
+    }
+   ],
+   "answer": {
+    "en": "The sorted list is: [-9, 1, 4, 7, 8, 13]"
+   },
+   "narration": {
+    "en": "The while loop shifts larger elements to the right; when it stops, j + 1 is the gap for temp."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Which sort is it?"
+   },
+   "body": {
+    "en": "Bubble sort: neighbours swap, biggest goes to the END. Selection sort: one swap per pass, smallest comes to the FRONT. Insertion sort: next element slides LEFT into the sorted part."
+   },
+   "narration": {
+    "en": "Which sort is it?. Bubble sort: neighbours swap, biggest goes to the END. Selection sort: one swap per pass, smallest comes to the FRONT. Insertion sort: next element slides LEFT into the sorted part."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Bubble = Big to the end, Selection = Smallest to the front, Insertion = Insert into place"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k05-q09",
+    "2k05-q10",
+    "2k05-q12"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Discuss in your team and agree on one answer.",
+    "kn": "ತಂಡ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ತಂಡದಲ್ಲಿ ಚರ್ಚಿಸಿ ಒಂದು ಉತ್ತರವನ್ನು ಒಪ್ಪಿಕೊಳ್ಳಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "questionIds": [
+    "2k05-q11",
+    "2k05-q10"
+   ],
+   "exams": [
+    "PUC",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Now two board and CUET pattern questions. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Insertion sort grows a sorted part from the left.",
+     "kn": "ಇನ್‌ಸರ್ಶನ್ ಸಾರ್ಟ್ ಎಡದಿಂದ ವಿಂಗಡಿತ ಭಾಗವನ್ನು ಬೆಳೆಸುತ್ತದೆ."
+    },
+    {
+     "en": "Each new element is inserted after shifting larger ones right.",
+     "kn": "ದೊಡ್ಡವುಗಳನ್ನು ಬಲಕ್ಕೆ ಸರಿಸಿ ಹೊಸ ಅಂಶ ಸೇರಿಸಲಾಗುತ್ತದೆ."
+    },
+    {
+     "en": "On an already sorted list it needs only n − 1 comparisons.",
+     "kn": "ಈಗಾಗಲೇ ವಿಂಗಡಿತ ಪಟ್ಟಿಗೆ n − 1 ಹೋಲಿಕೆ ಸಾಕು."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Sort [15, 3, 9, 1, 12] by insertion sort, showing each pass. Then modify the program to sort in descending order."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k05-q11"
+   ],
+   "narration": {
+    "en": "Recap. Insertion sort grows a sorted part from the left. Each new element is inserted after shifting larger ones right. On an already sorted list it needs only n − 1 comparisons.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಇನ್‌ಸರ್ಶನ್ ಸಾರ್ಟ್ ಎಡದಿಂದ ವಿಂಗಡಿತ ಭಾಗವನ್ನು ಬೆಳೆಸುತ್ತದೆ. ದೊಡ್ಡವುಗಳನ್ನು ಬಲಕ್ಕೆ ಸರಿಸಿ ಹೊಸ ಅಂಶ ಸೇರಿಸಲಾಗುತ್ತದೆ. ಈಗಾಗಲೇ ವಿಂಗಡಿತ ಪಟ್ಟಿಗೆ n − 1 ಹೋಲಿಕೆ ಸಾಕು."
+   }
+  }
+ ]
+}

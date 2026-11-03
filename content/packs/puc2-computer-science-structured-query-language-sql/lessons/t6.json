@@ -1,0 +1,248 @@
+{
+ "id": "puc2-computer-science-09-structured-query-language-sql.t6.lesson",
+ "chapterId": "puc2-computer-science-09-structured-query-language-sql",
+ "topicId": "puc2-computer-science-09-structured-query-language-sql.t6",
+ "title": {
+  "en": "Operations on relations and joins",
+  "kn": "ಸಂಬಂಧಗಳ ಮೇಲಿನ ಕ್ರಿಯೆಗಳು ಮತ್ತು ಜೋಡಣೆ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "When the answer is in two tables",
+    "kn": "ಉತ್ತರ ಎರಡು ಕೋಷ್ಟಕಗಳಲ್ಲಿದ್ದಾಗ"
+   },
+   "hook": {
+    "en": "Names are in STUDENT and fee payments are in FEES. To print 'Meena paid ₹27,000', SQL has to look at both tables together.",
+    "kn": "ಹೆಸರುಗಳು STUDENT ನಲ್ಲಿ, ಶುಲ್ಕ ಪಾವತಿ FEES ನಲ್ಲಿ ಇವೆ. 'ಮೀನಾ ₹27,000 ಪಾವತಿಸಿದರು' ಎಂದು ಮುದ್ರಿಸಲು SQL ಎರಡೂ ಕೋಷ್ಟಕಗಳನ್ನು ಒಟ್ಟಿಗೆ ನೋಡಬೇಕು."
+   },
+   "objectives": [
+    {
+     "en": "Apply UNION, INTERSECT, MINUS"
+    },
+    {
+     "en": "Find degree and cardinality of a Cartesian product"
+    },
+    {
+     "en": "Join two tables on a common attribute"
+    }
+   ],
+   "narration": {
+    "en": "Names are in STUDENT and fee payments are in FEES. To print 'Meena paid ₹27,000', SQL has to look at both tables together.",
+    "kn": "ಹೆಸರುಗಳು STUDENT ನಲ್ಲಿ, ಶುಲ್ಕ ಪಾವತಿ FEES ನಲ್ಲಿ ಇವೆ. 'ಮೀನಾ ₹27,000 ಪಾವತಿಸಿದರು' ಎಂದು ಮುದ್ರಿಸಲು SQL ಎರಡೂ ಕೋಷ್ಟಕಗಳನ್ನು ಒಟ್ಟಿಗೆ ನೋಡಬೇಕು."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "UNION, INTERSECT, MINUS and Cartesian product"
+   },
+   "body": {
+    "en": "Set operations need union-compatible relations (same number of attributes, matching domains). UNION gives tuples in either relation, without duplicates. INTERSECT gives tuples common to both. MINUS (EXCEPT in standard SQL) gives tuples in the first but not in the second. The Cartesian product pairs every tuple of one relation with every tuple of the other: its degree is the sum and its cardinality is the product."
+   },
+   "points": [
+    {
+     "en": "UNION: in A or B"
+    },
+    {
+     "en": "INTERSECT: in both"
+    },
+    {
+     "en": "MINUS / EXCEPT: in A, not in B"
+    },
+    {
+     "en": "A × B: degree = d₁ + d₂, cardinality = n₁ × n₂"
+    }
+   ],
+   "narration": {
+    "en": "UNION combines, INTERSECT keeps common tuples, MINUS keeps tuples only in the first. A Cartesian product adds degrees and multiplies cardinalities.",
+    "kn": "UNION ಸಂಯೋಜಿಸುತ್ತದೆ, INTERSECT ಸಾಮಾನ್ಯ ಟ್ಯೂಪಲ್ ಉಳಿಸುತ್ತದೆ, MINUS ಮೊದಲದರಲ್ಲಿ ಮಾತ್ರ ಇರುವವು. ಕಾರ್ಟೀಸಿಯನ್ ಗುಣಲಬ್ಧದಲ್ಲಿ ಡಿಗ್ರಿ ಕೂಡುತ್ತವೆ, ಕಾರ್ಡಿನಾಲಿಟಿ ಗುಣಿಸುತ್ತವೆ."
+   },
+   "formula": "\\text{degree}(A\\times B)=d_A+d_B,\\quad \\text{cardinality}(A\\times B)=n_A\\times n_B"
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Using two relations: JOIN"
+   },
+   "body": {
+    "en": "A JOIN combines tuples of two relations that satisfy a condition, usually equality of a common attribute (an equi-join). It can be written as a Cartesian product with a WHERE condition, or with JOIN ... ON. Table aliases (STUDENT S) keep the query short; columns with the same name are written as S.RollNo and F.RollNo."
+   },
+   "points": [
+    {
+     "en": "Equi-join: WHERE S.RollNo = F.RollNo"
+    },
+    {
+     "en": "Or: STUDENT S JOIN FEES F ON S.RollNo = F.RollNo"
+    },
+    {
+     "en": "Without a join condition you get the full Cartesian product"
+    }
+   ],
+   "narration": {
+    "en": "A join matches rows of two tables on a common column, such as roll number. Without the join condition, you get every possible pair of rows.",
+    "kn": "ಜೋಡಣೆ ಎರಡು ಕೋಷ್ಟಕಗಳ ಸಾಲುಗಳನ್ನು ಕ್ರಮಸಂಖ್ಯೆಯಂತಹ ಸಾಮಾನ್ಯ ಕಾಲಂ ಮೇಲೆ ಹೊಂದಿಸುತ್ತದೆ. ಷರತ್ತು ಇಲ್ಲದಿದ್ದರೆ ಎಲ್ಲ ಸಾಧ್ಯ ಜೋಡಿಗಳು ಬರುತ್ತವೆ."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "DANCE(SNo, Name, Class) has (1, Aastha, 7A), (2, Mahira, 6A), (3, Mohit, 7B), (4, Sanjay, 7A). MUSIC has (1, Mehak, 8A), (2, Mahira, 6A), (3, Lavanya, 7A), (4, Sanjay, 7A), (5, Abhay, 8A). Find who is in both clubs, and the size of DANCE × MUSIC."
+   },
+   "steps": [
+    {
+     "en": "SELECT Name, Class FROM DANCE INTERSECT SELECT Name, Class FROM MUSIC;"
+    },
+    {
+     "en": "Common (Name, Class) pairs: (Mahira, 6A) and (Sanjay, 7A)."
+    },
+    {
+     "en": "SELECT Name, Class FROM DANCE EXCEPT SELECT Name, Class FROM MUSIC; gives Aastha 7A and Mohit 7B (MINUS in the textbook)."
+    },
+    {
+     "en": "DANCE × MUSIC: degree 3 + 3 = 6, cardinality 4 × 5 = 20."
+    }
+   ],
+   "answer": {
+    "en": "Both clubs: Mahira, Sanjay. DANCE × MUSIC has degree 6 and 20 tuples."
+   },
+   "narration": {
+    "en": "Let us work through this together. DANCE(SNo, Name, Class) has (1, Aastha, 7A), (2, Mahira, 6A), (3, Mohit, 7B), (4, Sanjay, 7A). MUSIC has (1, Mehak, 8A), (2, Mahira, 6A), (3, Lavanya, 7A), (4, Sanjay, 7A), (5, Abhay, 8A). Find who is in both clubs, and the size of DANCE × MUSIC."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "STUDENT as before and FEES(RollNo, Term, Amount) = (1, 1, 15000), (3, 1, 15000), (3, 2, 12000), (6, 1, 15000). Show each payer's name and total fee paid."
+   },
+   "steps": [
+    {
+     "en": "SELECT S.SName, SUM(F.Amount) FROM STUDENT S JOIN FEES F ON S.RollNo = F.RollNo GROUP BY S.SName;"
+    },
+    {
+     "en": "Roll 1 → Asha 15000."
+    },
+    {
+     "en": "Roll 3 → Meena 15000 + 12000 = 27000."
+    },
+    {
+     "en": "Roll 6 → Divya 15000."
+    }
+   ],
+   "answer": {
+    "en": "Asha 15000, Divya 15000, Meena 27000"
+   },
+   "narration": {
+    "en": "Let us work through this together. STUDENT as before and FEES(RollNo, Term, Amount) = (1, 1, 15000), (3, 1, 15000), (3, 2, 12000), (6, 1, 15000). Show each payer's name and total fee paid."
+   }
+  },
+  {
+   "id": "sim-code.sql",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "code.sql",
+   "caption": {
+    "en": "Join two sample tables, first without and then with the join condition."
+   },
+   "tryThis": [
+    {
+     "en": "Count the rows of the plain Cartesian product."
+    },
+    {
+     "en": "Add the WHERE condition on the common column and count again."
+    }
+   ],
+   "narration": {
+    "en": "Join two sample tables, first without and then with the join condition. Count the rows of the plain Cartesian product. Add the WHERE condition on the common column and count again."
+   },
+   "seconds": 150,
+   "optional": true
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k09-q26",
+    "2k09-q27",
+    "2k09-q28"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team discusses and gives one answer.",
+    "kn": "ತಂಡ ರಸಪ್ರಶ್ನೆ. ಪ್ರತಿ ತಂಡ ಚರ್ಚಿಸಿ ಒಂದು ಉತ್ತರ ನೀಡಲಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "questionIds": [
+    "2k09-q29",
+    "2k09-q30"
+   ],
+   "exams": [
+    "PUC",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Now two board and CUET pattern questions. Read each one carefully before you answer."
+   }
+  },
+  {
+   "id": "cbse",
+   "type": "pyq",
+   "title": {
+    "en": "CBSE board pattern"
+   },
+   "questionIds": [
+    "2k09-q32"
+   ],
+   "exams": [
+    "CBSE"
+   ],
+   "boards": [
+    "cbse"
+   ],
+   "narration": {
+    "en": "These are CBSE board pattern questions: assertion–reason and case-based. Read the passage or both statements before choosing."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "UNION, INTERSECT and MINUS need union-compatible relations.",
+     "kn": "UNION, INTERSECT, MINUS ಗೆ ಹೊಂದಾಣಿಕೆಯ ಸಂಬಂಧಗಳು ಬೇಕು."
+    },
+    {
+     "en": "Cartesian product: degrees add, cardinalities multiply.",
+     "kn": "ಕಾರ್ಟೀಸಿಯನ್ ಗುಣಲಬ್ಧ: ಡಿಗ್ರಿ ಕೂಡುತ್ತವೆ, ಕಾರ್ಡಿನಾಲಿಟಿ ಗುಣಿಸುತ್ತವೆ."
+    },
+    {
+     "en": "A join matches rows on a common attribute.",
+     "kn": "ಜೋಡಣೆ ಸಾಮಾನ್ಯ ಗುಣಲಕ್ಷಣದ ಮೇಲೆ ಸಾಲುಗಳನ್ನು ಹೊಂದಿಸುತ್ತದೆ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write a query to list the names of students who have NOT paid any fee."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k09-q30"
+   ],
+   "narration": {
+    "en": "Recap. UNION, INTERSECT and MINUS need union-compatible relations. Cartesian product: degrees add, cardinalities multiply. A join matches rows on a common attribute.",
+    "kn": "ಪುನರಾವರ್ತನೆ. UNION, INTERSECT, MINUS ಗೆ ಹೊಂದಾಣಿಕೆಯ ಸಂಬಂಧಗಳು ಬೇಕು. ಕಾರ್ಟೀಸಿಯನ್ ಗುಣಲಬ್ಧ: ಡಿಗ್ರಿ ಕೂಡುತ್ತವೆ, ಕಾರ್ಡಿನಾಲಿಟಿ ಗುಣಿಸುತ್ತವೆ. ಜೋಡಣೆ ಸಾಮಾನ್ಯ ಗುಣಲಕ್ಷಣದ ಮೇಲೆ ಸಾಲುಗಳನ್ನು ಹೊಂದಿಸುತ್ತದೆ."
+   }
+  }
+ ]
+}

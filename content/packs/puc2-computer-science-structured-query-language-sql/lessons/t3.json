@@ -1,0 +1,182 @@
+{
+ "id": "puc2-computer-science-09-structured-query-language-sql.t3.lesson",
+ "chapterId": "puc2-computer-science-09-structured-query-language-sql",
+ "topicId": "puc2-computer-science-09-structured-query-language-sql.t3",
+ "title": {
+  "en": "Data manipulation: INSERT, UPDATE, DELETE",
+  "kn": "ದತ್ತಾಂಶ ನಿರ್ವಹಣೆ: INSERT, UPDATE, DELETE"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Adding, correcting and removing rows",
+    "kn": "ಸಾಲುಗಳನ್ನು ಸೇರಿಸುವುದು, ತಿದ್ದುವುದು, ತೆಗೆಯುವುದು"
+   },
+   "hook": {
+    "en": "New students join, marks get re-totalled, and some students leave. Three SQL commands handle all of this: INSERT, UPDATE and DELETE.",
+    "kn": "ಹೊಸ ವಿದ್ಯಾರ್ಥಿಗಳು ಸೇರುತ್ತಾರೆ, ಅಂಕಗಳು ಮರುಎಣಿಕೆಯಾಗುತ್ತವೆ, ಕೆಲವರು ಬಿಡುತ್ತಾರೆ. INSERT, UPDATE, DELETE ಎಂಬ ಮೂರು SQL ಆಜ್ಞೆಗಳು ಇವನ್ನೆಲ್ಲ ನಿರ್ವಹಿಸುತ್ತವೆ."
+   },
+   "objectives": [
+    {
+     "en": "Insert rows with and without a column list"
+    },
+    {
+     "en": "Update selected rows"
+    },
+    {
+     "en": "Delete selected rows safely"
+    }
+   ],
+   "narration": {
+    "en": "New students join, marks get re-totalled, and some students leave. Three SQL commands handle all of this: INSERT, UPDATE and DELETE.",
+    "kn": "ಹೊಸ ವಿದ್ಯಾರ್ಥಿಗಳು ಸೇರುತ್ತಾರೆ, ಅಂಕಗಳು ಮರುಎಣಿಕೆಯಾಗುತ್ತವೆ, ಕೆಲವರು ಬಿಡುತ್ತಾರೆ. INSERT, UPDATE, DELETE ಎಂಬ ಮೂರು SQL ಆಜ್ಞೆಗಳು ಇವನ್ನೆಲ್ಲ ನಿರ್ವಹಿಸುತ್ತವೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "INSERT, UPDATE, DELETE"
+   },
+   "body": {
+    "en": "INSERT INTO table VALUES (...); adds a row with values in column order; INSERT INTO table (col1, col2) VALUES (...); fills only the listed columns, and the rest get NULL or their DEFAULT. UPDATE table SET col = value WHERE condition; changes matching rows. DELETE FROM table WHERE condition; removes matching rows. Without WHERE, UPDATE and DELETE affect every row, so always check the condition."
+   },
+   "points": [
+    {
+     "en": "INSERT INTO ... VALUES ..."
+    },
+    {
+     "en": "UPDATE ... SET ... WHERE ..."
+    },
+    {
+     "en": "DELETE FROM ... WHERE ..."
+    },
+    {
+     "en": "No WHERE → all rows affected"
+    }
+   ],
+   "narration": {
+    "en": "INSERT adds rows, UPDATE changes values in rows that match a condition, and DELETE removes matching rows. Forgetting WHERE affects every row.",
+    "kn": "INSERT ಸಾಲು ಸೇರಿಸುತ್ತದೆ, UPDATE ಷರತ್ತಿಗೆ ಹೊಂದುವ ಸಾಲುಗಳ ಮೌಲ್ಯ ಬದಲಿಸುತ್ತದೆ, DELETE ಅವನ್ನು ತೆಗೆಯುತ್ತದೆ. WHERE ಮರೆತರೆ ಎಲ್ಲಾ ಸಾಲುಗಳ ಮೇಲೆ ಪರಿಣಾಮ."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Insert two students, correct one student's marks, and delete students with marks below 65."
+   },
+   "steps": [
+    {
+     "en": "INSERT INTO STUDENT VALUES (4, 'Kiran', 'M', 'Mangaluru', NULL);"
+    },
+    {
+     "en": "INSERT INTO STUDENT VALUES (5, 'Arjun', 'M', 'Mysuru', 64);"
+    },
+    {
+     "en": "UPDATE STUDENT SET Marks = 70 WHERE RollNo = 4;"
+    },
+    {
+     "en": "DELETE FROM STUDENT WHERE Marks < 65;"
+    }
+   ],
+   "answer": {
+    "en": "Kiran's marks become 70; Arjun (64) is deleted; Kiran stays."
+   },
+   "narration": {
+    "en": "Let us work through this together. Insert two students, correct one student's marks, and delete students with marks below 65."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "Table T(ID INT PRIMARY KEY, Name VARCHAR(20) NOT NULL, Fee INT DEFAULT 1000). Predict the result of each statement."
+   },
+   "steps": [
+    {
+     "en": "INSERT INTO T (ID, Name) VALUES (1, 'X');  → row (1, 'X', 1000): Fee takes its DEFAULT."
+    },
+    {
+     "en": "INSERT INTO T (ID) VALUES (2);  → error: Name violates NOT NULL."
+    },
+    {
+     "en": "INSERT INTO T VALUES (1, 'Y', 500);  → error: duplicate primary key 1."
+    }
+   ],
+   "answer": {
+    "en": "Only the first insert succeeds; T has one row (1, 'X', 1000)."
+   },
+   "narration": {
+    "en": "Let us work through this together. Table T(ID INT PRIMARY KEY, Name VARCHAR(20) NOT NULL, Fee INT DEFAULT 1000). Predict the result of each statement."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k09-q11",
+    "2k09-q12",
+    "2k09-q13"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team discusses and gives one answer.",
+    "kn": "ತಂಡ ರಸಪ್ರಶ್ನೆ. ಪ್ರತಿ ತಂಡ ಚರ್ಚಿಸಿ ಒಂದು ಉತ್ತರ ನೀಡಲಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "questionIds": [
+    "2k09-q14",
+    "2k09-q15"
+   ],
+   "exams": [
+    "PUC",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Now two board and CUET pattern questions. Read each one carefully before you answer."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "INSERT adds rows; listed columns only, others get NULL or DEFAULT.",
+     "kn": "INSERT ಸಾಲು ಸೇರಿಸುತ್ತದೆ; ಪಟ್ಟಿ ಮಾಡದ ಕಾಲಂಗಳಿಗೆ NULL ಅಥವಾ DEFAULT."
+    },
+    {
+     "en": "UPDATE ... SET ... WHERE changes existing rows.",
+     "kn": "UPDATE ... SET ... WHERE ಇರುವ ಸಾಲುಗಳನ್ನು ಬದಲಿಸುತ್ತದೆ."
+    },
+    {
+     "en": "DELETE removes rows but keeps the table.",
+     "kn": "DELETE ಸಾಲುಗಳನ್ನು ತೆಗೆಯುತ್ತದೆ, ಕೋಷ್ಟಕ ಉಳಿಯುತ್ತದೆ."
+    },
+    {
+     "en": "Always check the WHERE clause before running UPDATE or DELETE.",
+     "kn": "UPDATE ಅಥವಾ DELETE ಮೊದಲು WHERE ಪರಿಶೀಲಿಸಿ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write SQL to increase every Hubballi student's marks by 5."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k09-q14"
+   ],
+   "narration": {
+    "en": "Recap. INSERT adds rows; listed columns only, others get NULL or DEFAULT. UPDATE ... SET ... WHERE changes existing rows. DELETE removes rows but keeps the table. Always check the WHERE clause before running UPDATE or DELETE.",
+    "kn": "ಪುನರಾವರ್ತನೆ. INSERT ಸಾಲು ಸೇರಿಸುತ್ತದೆ; ಪಟ್ಟಿ ಮಾಡದ ಕಾಲಂಗಳಿಗೆ NULL ಅಥವಾ DEFAULT. UPDATE ... SET ... WHERE ಇರುವ ಸಾಲುಗಳನ್ನು ಬದಲಿಸುತ್ತದೆ. DELETE ಸಾಲುಗಳನ್ನು ತೆಗೆಯುತ್ತದೆ, ಕೋಷ್ಟಕ ಉಳಿಯುತ್ತದೆ. UPDATE ಅಥವಾ DELETE ಮೊದಲು WHERE ಪರಿಶೀಲಿಸಿ."
+   }
+  }
+ ]
+}

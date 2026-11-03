@@ -423,3 +423,7 @@ Every topic has a whiteboard explanation, and an interactive where something var
 - **MTP Act:** questions say "as described in NCERT" (2017 amendment wording).
 - **Rounding:** geostationary height is given as about 36,000 km.
 - **Kannada:** the new whiteboards, interactives and exam questions are English only.
+
+## Recovered new-subject packs (CS, Accountancy, Business Studies, Economics, Electronics)
+
+These 43 chapters were written by writers that stopped before reporting back, so they have no per-chapter fact list. Review them with extra care against the NCERT and Dept. of PUE books: figures, syllabus scope and Kannada terms.

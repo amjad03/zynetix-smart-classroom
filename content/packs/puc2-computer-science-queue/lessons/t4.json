@@ -1,0 +1,237 @@
+{
+ "id": "puc2-computer-science-04-queue.t4.lesson",
+ "chapterId": "puc2-computer-science-04-queue",
+ "topicId": "puc2-computer-science-04-queue.t4",
+ "title": {
+  "en": "Deque and its implementation",
+  "kn": "ಡೆಕ್ ಮತ್ತು ಅದರ ಅನುಷ್ಠಾನ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "A queue with two doors",
+    "kn": "ಎರಡು ಬಾಗಿಲಿನ ಕ್ಯೂ"
+   },
+   "hook": {
+    "en": "Someone who just bought a ticket asks one quick question and rejoins at the front of the line. A queue that allows entry and exit at both ends is a deque.",
+    "kn": "ಟಿಕೆಟ್ ಪಡೆದವರು ಒಂದು ಪ್ರಶ್ನೆ ಕೇಳಲು ಮತ್ತೆ ಮುಂದೆಯೇ ಸೇರುತ್ತಾರೆ. ಎರಡೂ ತುದಿಗಳಲ್ಲಿ ಸೇರುವ ಮತ್ತು ಹೊರಡುವ ಕ್ಯೂ ಡೆಕ್."
+   },
+   "objectives": [
+    {
+     "en": "Define a deque"
+    },
+    {
+     "en": "Use a deque as a stack or a queue"
+    },
+    {
+     "en": "Implement deque operations and check a palindrome"
+    }
+   ],
+   "narration": {
+    "en": "Someone who just bought a ticket asks one quick question and rejoins at the front of the line. A queue that allows entry and exit at both ends is a deque.",
+    "kn": "ಟಿಕೆಟ್ ಪಡೆದವರು ಒಂದು ಪ್ರಶ್ನೆ ಕೇಳಲು ಮತ್ತೆ ಮುಂದೆಯೇ ಸೇರುತ್ತಾರೆ. ಎರಡೂ ತುದಿಗಳಲ್ಲಿ ಸೇರುವ ಮತ್ತು ಹೊರಡುವ ಕ್ಯೂ ಡೆಕ್."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "What is a deque?"
+   },
+   "body": {
+    "en": "A deque (pronounced deck), or double-ended queue, is an ordered linear list in which elements can be inserted and deleted at either end, FRONT or REAR. If insertion and deletion are done at the same end it behaves like a stack; if they are done at opposite ends it behaves like a queue. Applications include re-joining a queue at the front, vehicles moving to the rear of another lane at a toll booth, keeping a browser history or undo list of limited size, and checking whether a string is a palindrome."
+   },
+   "points": [
+    {
+     "en": "Insert and delete at both ends"
+    },
+    {
+     "en": "Same end → stack (LIFO)"
+    },
+    {
+     "en": "Opposite ends → queue (FIFO)"
+    },
+    {
+     "en": "Uses: limited history, undo, palindrome check"
+    }
+   ],
+   "narration": {
+    "en": "A deque (pronounced deck), or double-ended queue, is an ordered linear list in which elements can be inserted and deleted at either end, FRONT or REAR. If insertion and deletion are done at the same end it behaves like a stack; if they are done at opposite ends it behaves like a queue. Applications include re-joining a queue at the front, vehicles moving to the rear of another lane at a toll booth, keeping a browser history or undo list of limited size, and checking whether a string is a palindrome.",
+    "kn": "ಡೆಕ್ ಅಥವಾ ಎರಡು ತುದಿಯ ಕ್ಯೂನಲ್ಲಿ FRONT ಮತ್ತು REAR ಎರಡೂ ತುದಿಗಳಲ್ಲಿ ಸೇರಿಸಬಹುದು ಮತ್ತು ತೆಗೆಯಬಹುದು. ಒಂದೇ ತುದಿ ಬಳಸಿದರೆ ಸ್ಟ್ಯಾಕ್, ಬೇರೆ ತುದಿಗಳು ಬಳಸಿದರೆ ಕ್ಯೂ."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Deque operations in Python"
+   },
+   "body": {
+    "en": "With a list myDeque: insertFront uses myDeque.insert(0, element); insertRear uses append(element); deletionFront uses pop(0); deletionRear uses pop(). getFront returns myDeque[0] and getRear returns myDeque[len(myDeque) − 1]. Each deletion must first check that the deque is not empty."
+   },
+   "points": [
+    {
+     "en": "insertFront → insert(0, x)"
+    },
+    {
+     "en": "insertRear → append(x)"
+    },
+    {
+     "en": "deletionFront → pop(0)"
+    },
+    {
+     "en": "deletionRear → pop()"
+    }
+   ],
+   "narration": {
+    "en": "With a list myDeque: insertFront uses myDeque.insert(0, element); insertRear uses append(element); deletionFront uses pop(0); deletionRear uses pop(). getFront returns myDeque[0] and getRear returns myDeque[len(myDeque) − 1]. Each deletion must first check that the deque is not empty.",
+    "kn": "insertFront: insert(0, element); insertRear: append(); deletionFront: pop(0); deletionRear: pop(). getFront: [0]; getRear: ಕೊನೆಯ ಅಂಶ. ತೆಗೆಯುವ ಮೊದಲು ಖಾಲಿಯೇ ಎಂದು ಪರಿಶೀಲಿಸಿ."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Check whether a word is a palindrome using a deque. Give the exact output."
+   },
+   "steps": [
+    {
+     "en": "def isPalindrome(word):"
+    },
+    {
+     "en": "    dq = []"
+    },
+    {
+     "en": "    for ch in word:"
+    },
+    {
+     "en": "        dq.append(ch)"
+    },
+    {
+     "en": "    while len(dq) > 1:"
+    },
+    {
+     "en": "        if dq.pop(0) != dq.pop():"
+    },
+    {
+     "en": "            return False"
+    },
+    {
+     "en": "    return True"
+    },
+    {
+     "en": "for w in [\"MALAYALAM\", \"KANNADA\", \"NOON\"]:"
+    },
+    {
+     "en": "    print(w, isPalindrome(w))"
+    }
+   ],
+   "answer": {
+    "en": "MALAYALAM True\nKANNADA False\nNOON True"
+   },
+   "narration": {
+    "en": "Insert every letter at the rear, then remove one from each end and compare. Any mismatch means it is not a palindrome."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Which end, which method?"
+   },
+   "body": {
+    "en": "Front means index 0: insert(0, x) and pop(0). Rear means the end of the list: append(x) and pop(). Stack = one end; queue = both ends used separately."
+   },
+   "narration": {
+    "en": "Which end, which method?. Front means index 0: insert(0, x) and pop(0). Rear means the end of the list: append(x) and pop(). Stack = one end; queue = both ends used separately."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Front → 0; Rear → append/pop()"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k04-q14",
+    "2k04-q15",
+    "2k04-q16"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer.",
+    "kn": "ತರಗತಿ ರಸಪ್ರಶ್ನೆ. ಚರ್ಚಿಸಿ, ಕೈ ಎತ್ತಿ, ಮಾನಿಟರ್ ತರಗತಿಯ ಉತ್ತರವನ್ನು ಒತ್ತಲಿ."
+   }
+  },
+  {
+   "id": "cbse",
+   "type": "pyq",
+   "title": {
+    "en": "CBSE board pattern"
+   },
+   "boards": [
+    "cbse"
+   ],
+   "questionIds": [
+    "2k04-q20"
+   ],
+   "exams": [
+    "CBSE"
+   ],
+   "narration": {
+    "en": "CBSE pattern: assertion–reason and case-based questions. Read the case carefully before you answer."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "questionIds": [
+    "2k04-q17",
+    "2k04-q18"
+   ],
+   "exams": [
+    "PUC",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Now two board and CUET pattern questions. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A deque allows insertion and deletion at both ends.",
+     "kn": "ಡೆಕ್ ಎರಡೂ ತುದಿಗಳಲ್ಲಿ ಸೇರಿಸಲು ಮತ್ತು ತೆಗೆಯಲು ಬಿಡುತ್ತದೆ."
+    },
+    {
+     "en": "Same end gives a stack; opposite ends give a queue.",
+     "kn": "ಒಂದೇ ತುದಿ: ಸ್ಟ್ಯಾಕ್; ವಿರುದ್ಧ ತುದಿಗಳು: ಕ್ಯೂ."
+    },
+    {
+     "en": "In Python: insert(0, x), append(x), pop(0), pop().",
+     "kn": "ಪೈಥಾನ್‌ನಲ್ಲಿ: insert(0, x), append(x), pop(0), pop()."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write a menu-driven program for a deque with all four insertion and deletion operations."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k04-q18"
+   ],
+   "narration": {
+    "en": "Recap. A deque allows insertion and deletion at both ends. Same end gives a stack; opposite ends give a queue. In Python: insert(0, x), append(x), pop(0), pop().",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಡೆಕ್ ಎರಡೂ ತುದಿಗಳಲ್ಲಿ ಸೇರಿಸಲು ಮತ್ತು ತೆಗೆಯಲು ಬಿಡುತ್ತದೆ. ಒಂದೇ ತುದಿ: ಸ್ಟ್ಯಾಕ್; ವಿರುದ್ಧ ತುದಿಗಳು: ಕ್ಯೂ. ಪೈಥಾನ್‌ನಲ್ಲಿ: insert(0, x), append(x), pop(0), pop()."
+   }
+  }
+ ]
+}

@@ -1,0 +1,194 @@
+{
+ "id": "puc2-computer-science-02-file-handling-in-python.t5.lesson",
+ "chapterId": "puc2-computer-science-02-file-handling-in-python",
+ "topicId": "puc2-computer-science-02-file-handling-in-python.t5",
+ "title": {
+  "en": "The pickle module",
+  "kn": "pickle ಮಾಡ್ಯೂಲ್"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Store a whole list in one go",
+    "kn": "ಇಡೀ ಪಟ್ಟಿಯನ್ನು ಒಮ್ಮೆಗೇ ಉಳಿಸಿ"
+   },
+   "hook": {
+    "en": "A text file stores only strings. What if you want to save a list like [1, \"Asha\", 30000] and get back a list, not text? pickle does that.",
+    "kn": "ಪಠ್ಯ ಕಡತ ಸ್ಟ್ರಿಂಗ್‌ಗಳನ್ನು ಮಾತ್ರ ಉಳಿಸುತ್ತದೆ. [1, \"Asha\", 30000] ಎಂಬ ಪಟ್ಟಿಯನ್ನು ಉಳಿಸಿ ಮತ್ತೆ ಪಟ್ಟಿಯಾಗಿಯೇ ಪಡೆಯಲು pickle ಬಳಸುತ್ತೇವೆ."
+   },
+   "objectives": [
+    {
+     "en": "Explain serialization and deserialization"
+    },
+    {
+     "en": "Use pickle.dump() and pickle.load()"
+    },
+    {
+     "en": "Read all records from a binary file"
+    }
+   ],
+   "narration": {
+    "en": "A text file stores only strings. What if you want to save a list like [1, \"Asha\", 30000] and get back a list, not text? pickle does that.",
+    "kn": "ಪಠ್ಯ ಕಡತ ಸ್ಟ್ರಿಂಗ್‌ಗಳನ್ನು ಮಾತ್ರ ಉಳಿಸುತ್ತದೆ. [1, \"Asha\", 30000] ಎಂಬ ಪಟ್ಟಿಯನ್ನು ಉಳಿಸಿ ಮತ್ತೆ ಪಟ್ಟಿಯಾಗಿಯೇ ಪಡೆಯಲು pickle ಬಳಸುತ್ತೇವೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Pickling and unpickling"
+   },
+   "body": {
+    "en": "The pickle module converts a Python object (list, dictionary, tuple…) into a byte stream that can be stored in a binary file; this is pickling or serialization. Converting the byte stream back into the same object is unpickling or deserialization. dump(data_object, file_object) writes an object to a file opened in binary write mode, and load(file_object) reads the next object from a file opened in binary read mode."
+   },
+   "points": [
+    {
+     "en": "import pickle"
+    },
+    {
+     "en": "pickle.dump(obj, f) with f opened in 'wb' or 'ab'"
+    },
+    {
+     "en": "obj = pickle.load(f) with f opened in 'rb'"
+    },
+    {
+     "en": "load() raises EOFError at the end of the file"
+    }
+   ],
+   "narration": {
+    "en": "The pickle module converts a Python object (list, dictionary, tuple…) into a byte stream that can be stored in a binary file; this is pickling or serialization. Converting the byte stream back into the same object is unpickling or deserialization. dump(data_object, file_object) writes an object to a file opened in binary write mode, and load(file_object) reads the next object from a file opened in binary read mode.",
+    "kn": "pickle ಮಾಡ್ಯೂಲ್ ಪೈಥಾನ್ ಆಬ್ಜೆಕ್ಟ್ ಅನ್ನು ಬೈಟ್ ಸ್ಟ್ರೀಮ್ ಆಗಿ ಪರಿವರ್ತಿಸುತ್ತದೆ (ಸೀರಿಯಲೈಸೇಶನ್). ಮತ್ತೆ ಆಬ್ಜೆಕ್ಟ್ ಆಗಿ ಪಡೆಯುವುದು ಡೀಸೀರಿಯಲೈಸೇಶನ್. dump() ಬರೆಯುತ್ತದೆ, load() ಓದುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Store two employee records in a binary file and display them. Give the exact output."
+   },
+   "steps": [
+    {
+     "en": "import pickle"
+    },
+    {
+     "en": "records = [[1, \"Asha\", 30000], [2, \"Ravi\", 25000]]"
+    },
+    {
+     "en": "with open(\"emp.dat\", \"wb\") as f:"
+    },
+    {
+     "en": "    for rec in records:"
+    },
+    {
+     "en": "        pickle.dump(rec, f)"
+    },
+    {
+     "en": "with open(\"emp.dat\", \"rb\") as f:"
+    },
+    {
+     "en": "    try:"
+    },
+    {
+     "en": "        while True:"
+    },
+    {
+     "en": "            print(pickle.load(f))"
+    },
+    {
+     "en": "    except EOFError:"
+    },
+    {
+     "en": "        print(\"End of file\")"
+    }
+   ],
+   "answer": {
+    "en": "[1, 'Asha', 30000]\n[2, 'Ravi', 25000]\nEnd of file"
+   },
+   "narration": {
+    "en": "Each dump writes one record. The loop keeps loading until load() raises EOFError, which we catch to stop cleanly."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k02-q19",
+    "2k02-q20",
+    "2k02-q21"
+   ],
+   "mode": "roll_call",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Roll-call quiz. When your roll number is called, give your answer.",
+    "kn": "ಹಾಜರಿ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ಹಾಜರಿ ಸಂಖ್ಯೆ ಕರೆದಾಗ ನಿಮ್ಮ ಉತ್ತರ ಹೇಳಿ."
+   }
+  },
+  {
+   "id": "cbse",
+   "type": "pyq",
+   "title": {
+    "en": "CBSE board pattern"
+   },
+   "boards": [
+    "cbse"
+   ],
+   "questionIds": [
+    "2k02-q25"
+   ],
+   "exams": [
+    "CBSE"
+   ],
+   "narration": {
+    "en": "CBSE pattern: assertion–reason and case-based questions. Read the case carefully before you answer."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "questionIds": [
+    "2k02-q22",
+    "2k02-q23"
+   ],
+   "exams": [
+    "PUC",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Now two board and CUET pattern questions. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Pickling converts an object to a byte stream; unpickling converts it back.",
+     "kn": "ಪಿಕ್ಲಿಂಗ್: ಆಬ್ಜೆಕ್ಟ್ → ಬೈಟ್ ಸ್ಟ್ರೀಮ್; ಅನ್‌ಪಿಕ್ಲಿಂಗ್: ಹಿಮ್ಮುಖ."
+    },
+    {
+     "en": "dump() needs a file opened in 'wb' or 'ab'; load() needs 'rb'.",
+     "kn": "dump() ಗೆ 'wb' ಅಥವಾ 'ab'; load() ಗೆ 'rb'."
+    },
+    {
+     "en": "Read all objects in a loop and stop on EOFError.",
+     "kn": "ಲೂಪ್‌ನಲ್ಲಿ ಓದಿ, EOFError ಬಂದಾಗ ನಿಲ್ಲಿಸಿ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write a program to store student records [roll, name, marks] with pickle and display those who scored above 80."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k02-q23"
+   ],
+   "narration": {
+    "en": "Recap. Pickling converts an object to a byte stream; unpickling converts it back. dump() needs a file opened in 'wb' or 'ab'; load() needs 'rb'. Read all objects in a loop and stop on EOFError.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಪಿಕ್ಲಿಂಗ್: ಆಬ್ಜೆಕ್ಟ್ → ಬೈಟ್ ಸ್ಟ್ರೀಮ್; ಅನ್‌ಪಿಕ್ಲಿಂಗ್: ಹಿಮ್ಮುಖ. dump() ಗೆ 'wb' ಅಥವಾ 'ab'; load() ಗೆ 'rb'. ಲೂಪ್‌ನಲ್ಲಿ ಓದಿ, EOFError ಬಂದಾಗ ನಿಲ್ಲಿಸಿ."
+   }
+  }
+ ]
+}

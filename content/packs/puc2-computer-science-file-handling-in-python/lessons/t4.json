@@ -1,0 +1,192 @@
+{
+ "id": "puc2-computer-science-02-file-handling-in-python.t4.lesson",
+ "chapterId": "puc2-computer-science-02-file-handling-in-python",
+ "topicId": "puc2-computer-science-02-file-handling-in-python.t4",
+ "title": {
+  "en": "Setting offsets and traversing a file",
+  "kn": "ಆಫ್‌ಸೆಟ್ ಮತ್ತು ಕಡತ ಸಂಚಾರ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Jump to any position",
+    "kn": "ಯಾವುದೇ ಸ್ಥಾನಕ್ಕೆ ಜಿಗಿಯಿರಿ"
+   },
+   "hook": {
+    "en": "A video player lets you skip to minute 10 without watching the first nine. tell() and seek() let a program jump around inside a file.",
+    "kn": "ವಿಡಿಯೋ ಪ್ಲೇಯರ್ ನೇರವಾಗಿ 10ನೇ ನಿಮಿಷಕ್ಕೆ ಹೋಗಲು ಬಿಡುತ್ತದೆ. tell() ಮತ್ತು seek() ಕಡತದೊಳಗೆ ಹೀಗೆ ಜಿಗಿಯಲು ಸಹಾಯ ಮಾಡುತ್ತವೆ."
+   },
+   "objectives": [
+    {
+     "en": "Find the position with tell()"
+    },
+    {
+     "en": "Move the offset with seek()"
+    },
+    {
+     "en": "Create a file and traverse it line by line"
+    }
+   ],
+   "narration": {
+    "en": "A video player lets you skip to minute 10 without watching the first nine. tell() and seek() let a program jump around inside a file.",
+    "kn": "ವಿಡಿಯೋ ಪ್ಲೇಯರ್ ನೇರವಾಗಿ 10ನೇ ನಿಮಿಷಕ್ಕೆ ಹೋಗಲು ಬಿಡುತ್ತದೆ. tell() ಮತ್ತು seek() ಕಡತದೊಳಗೆ ಹೀಗೆ ಜಿಗಿಯಲು ಸಹಾಯ ಮಾಡುತ್ತವೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "tell() and seek()"
+   },
+   "body": {
+    "en": "Every read or write moves the file offset forward. tell() returns the current position as the number of bytes from the beginning. seek(offset, reference_point) moves it: reference_point 0 is the beginning (default), 1 the current position and 2 the end. In text mode Python 3 allows offsets only from the beginning (plus seek(0, 2) for the end); non-zero offsets from 1 or 2 need binary mode."
+   },
+   "points": [
+    {
+     "en": "f.tell() → int"
+    },
+    {
+     "en": "f.seek(0) → back to the beginning"
+    },
+    {
+     "en": "reference_point: 0 beginning, 1 current, 2 end"
+    }
+   ],
+   "narration": {
+    "en": "Every read or write moves the file offset forward. tell() returns the current position as the number of bytes from the beginning. seek(offset, reference_point) moves it: reference_point 0 is the beginning (default), 1 the current position and 2 the end. In text mode Python 3 allows offsets only from the beginning (plus seek(0, 2) for the end); non-zero offsets from 1 or 2 need binary mode.",
+    "kn": "tell() ಪ್ರಸ್ತುತ ಸ್ಥಾನವನ್ನು ಆರಂಭದಿಂದ ಬೈಟ್‌ಗಳಲ್ಲಿ ನೀಡುತ್ತದೆ. seek(offset, reference_point) ಆಫ್‌ಸೆಟ್ ಸರಿಸುತ್ತದೆ: 0 ಆರಂಭ, 1 ಪ್ರಸ್ತುತ ಸ್ಥಾನ, 2 ಕೊನೆ."
+   },
+   "formula": "\\texttt{file\\_object.seek(offset[, reference\\_point])}"
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Creating and traversing a text file"
+   },
+   "body": {
+    "en": "To create a file, open it in 'w' mode and write lines taken from the user. To traverse it, open it in 'r' mode and loop over the lines with for line in f: or with readline() until it returns an empty string. Opening in 'w+' lets the same file object write, seek(0) back, and read."
+   },
+   "points": [
+    {
+     "en": "for line in f: print(line, end=\"\")"
+    },
+    {
+     "en": "readline() returns \"\" at the end"
+    },
+    {
+     "en": "'w+': write, seek(0), then read"
+    }
+   ],
+   "narration": {
+    "en": "To create a file, open it in 'w' mode and write lines taken from the user. To traverse it, open it in 'r' mode and loop over the lines with for line in f: or with readline() until it returns an empty string. Opening in 'w+' lets the same file object write, seek(0) back, and read.",
+    "kn": "ಕಡತ ರಚಿಸಲು 'w' ಮೋಡ್‌ನಲ್ಲಿ ತೆರೆದು ಬರೆಯಿರಿ. ಸಂಚರಿಸಲು 'r' ಮೋಡ್‌ನಲ್ಲಿ ತೆರೆದು ಪ್ರತಿ ಸಾಲಿನ ಮೇಲೆ for ಲೂಪ್ ಬಳಸಿ. 'w+' ಮೋಡ್‌ನಲ್ಲಿ ಬರೆದು seek(0) ಮಾಡಿ ಓದಬಹುದು."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Use one file object in 'w+' mode to write and then read back. Give the exact output."
+   },
+   "steps": [
+    {
+     "en": "f = open(\"report.txt\", \"w+\")"
+    },
+    {
+     "en": "n = f.write(\"Line one\\nLine two\\n\")"
+    },
+    {
+     "en": "print(n)"
+    },
+    {
+     "en": "f.seek(0)"
+    },
+    {
+     "en": "for line in f:"
+    },
+    {
+     "en": "    print(line.upper(), end=\"\")"
+    },
+    {
+     "en": "f.seek(5)"
+    },
+    {
+     "en": "print(f.read(3))"
+    },
+    {
+     "en": "f.close()"
+    }
+   ],
+   "answer": {
+    "en": "18\nLINE ONE\nLINE TWO\none"
+   },
+   "narration": {
+    "en": "write() returns 18 characters, and the offset is now at the end. seek(0) brings it back so the loop can read each line."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k02-q15",
+    "2k02-q16",
+    "2k02-q17"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer.",
+    "kn": "ತರಗತಿ ರಸಪ್ರಶ್ನೆ. ಚರ್ಚಿಸಿ, ಕೈ ಎತ್ತಿ, ಮಾನಿಟರ್ ತರಗತಿಯ ಉತ್ತರವನ್ನು ಒತ್ತಲಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "questionIds": [
+    "2k02-q18",
+    "2k02-q17"
+   ],
+   "exams": [
+    "PUC",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Now two board and CUET pattern questions. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "tell() gives the offset in bytes from the beginning.",
+     "kn": "tell() ಆರಂಭದಿಂದ ಬೈಟ್‌ಗಳಲ್ಲಿ ಆಫ್‌ಸೆಟ್ ನೀಡುತ್ತದೆ."
+    },
+    {
+     "en": "seek(offset, ref): 0 beginning, 1 current, 2 end.",
+     "kn": "seek(offset, ref): 0 ಆರಂಭ, 1 ಪ್ರಸ್ತುತ, 2 ಕೊನೆ."
+    },
+    {
+     "en": "Traverse a file with a for loop; use 'w+' and seek(0) to read back what you wrote.",
+     "kn": "for ಲೂಪ್‌ನಿಂದ ಸಂಚರಿಸಿ; 'w+' ಮತ್ತು seek(0) ಬಳಸಿ ಬರೆದುದನ್ನು ಓದಿ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write a program that takes five lines from the user, stores them in a file and then displays only the lines that start with a vowel."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k02-q18"
+   ],
+   "narration": {
+    "en": "Recap. tell() gives the offset in bytes from the beginning. seek(offset, ref): 0 beginning, 1 current, 2 end. Traverse a file with a for loop; use 'w+' and seek(0) to read back what you wrote.",
+    "kn": "ಪುನರಾವರ್ತನೆ. tell() ಆರಂಭದಿಂದ ಬೈಟ್‌ಗಳಲ್ಲಿ ಆಫ್‌ಸೆಟ್ ನೀಡುತ್ತದೆ. seek(offset, ref): 0 ಆರಂಭ, 1 ಪ್ರಸ್ತುತ, 2 ಕೊನೆ. for ಲೂಪ್‌ನಿಂದ ಸಂಚರಿಸಿ; 'w+' ಮತ್ತು seek(0) ಬಳಸಿ ಬರೆದುದನ್ನು ಓದಿ."
+   }
+  }
+ ]
+}

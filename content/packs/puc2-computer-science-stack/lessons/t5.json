@@ -1,0 +1,232 @@
+{
+ "id": "puc2-computer-science-03-stack.t5.lesson",
+ "chapterId": "puc2-computer-science-03-stack",
+ "topicId": "puc2-computer-science-03-stack.t5",
+ "title": {
+  "en": "Evaluation of postfix expression",
+  "kn": "ಪೋಸ್ಟ್‌ಫಿಕ್ಸ್ ಮೌಲ್ಯಮಾಪನ"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Let the stack do the arithmetic",
+    "kn": "ಗಣಿತವನ್ನು ಸ್ಟ್ಯಾಕ್ ಮಾಡಲಿ"
+   },
+   "hook": {
+    "en": "Give a stack the postfix expression 7 8 2 * 4 / + and it finds the answer in one left-to-right pass, with no brackets and no precedence rules.",
+    "kn": "7 8 2 * 4 / + ಎಂಬ ಪೋಸ್ಟ್‌ಫಿಕ್ಸ್ ಅಭಿವ್ಯಕ್ತಿಯನ್ನು ಸ್ಟ್ಯಾಕ್ ಒಂದೇ ಸುತ್ತಿನಲ್ಲಿ, ಆವರಣ ಮತ್ತು ಆದ್ಯತೆ ನಿಯಮಗಳಿಲ್ಲದೆ ಲೆಕ್ಕ ಹಾಕುತ್ತದೆ."
+   },
+   "objectives": [
+    {
+     "en": "Evaluate a postfix expression with a stack"
+    },
+    {
+     "en": "Keep the operand order right for − and /"
+    },
+    {
+     "en": "Detect an invalid expression"
+    }
+   ],
+   "narration": {
+    "en": "Give a stack the postfix expression 7 8 2 * 4 / + and it finds the answer in one left-to-right pass, with no brackets and no precedence rules.",
+    "kn": "7 8 2 * 4 / + ಎಂಬ ಪೋಸ್ಟ್‌ಫಿಕ್ಸ್ ಅಭಿವ್ಯಕ್ತಿಯನ್ನು ಸ್ಟ್ಯಾಕ್ ಒಂದೇ ಸುತ್ತಿನಲ್ಲಿ, ಆವರಣ ಮತ್ತು ಆದ್ಯತೆ ನಿಯಮಗಳಿಲ್ಲದೆ ಲೆಕ್ಕ ಹಾಕುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Algorithm: evaluating postfix"
+   },
+   "body": {
+    "en": "Read the expression from left to right. Push every operand onto the stack. When an operator comes, pop the top element as B and the next as A, compute A operator B, and push the result. At the end, if exactly one element remains on the stack, it is the value of the expression; otherwise the expression is invalid."
+   },
+   "points": [
+    {
+     "en": "Operand → push"
+    },
+    {
+     "en": "Operator → B = pop, A = pop, push A op B"
+    },
+    {
+     "en": "End: one element = result; otherwise invalid"
+    }
+   ],
+   "narration": {
+    "en": "Read the expression from left to right. Push every operand onto the stack. When an operator comes, pop the top element as B and the next as A, compute A operator B, and push the result. At the end, if exactly one element remains on the stack, it is the value of the expression; otherwise the expression is invalid.",
+    "kn": "ಎಡದಿಂದ ಬಲಕ್ಕೆ ಓದಿ. ಆಪರಾಂಡ್ PUSH. ಆಪರೇಟರ್ ಬಂದಾಗ ಮೇಲಿನದು B, ಮುಂದಿನದು A ಎಂದು POP ಮಾಡಿ A op B ಲೆಕ್ಕಹಾಕಿ PUSH. ಕೊನೆಗೆ ಒಂದೇ ಅಂಶ ಉಳಿದರೆ ಅದೇ ಉತ್ತರ."
+   },
+   "formula": "\\text{result} = A \\;\\text{op}\\; B,\\quad B = \\text{first pop},\\; A = \\text{second pop}"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Evaluate the postfix expression 7 8 2 * 4 / + using a stack."
+   },
+   "steps": [
+    {
+     "en": "Push 7, 8, 2 → stack [7, 8, 2]"
+    },
+    {
+     "en": "* → B = 2, A = 8, push 16 → [7, 16]; push 4 → [7, 16, 4]"
+    },
+    {
+     "en": "/ → B = 4, A = 16, push 4 → [7, 4]"
+    },
+    {
+     "en": "+ → B = 4, A = 7, push 11 → [11]; one element remains"
+    }
+   ],
+   "answer": {
+    "en": "11"
+   },
+   "narration": {
+    "en": "Follow the stack carefully. Each operator uses the two most recent values."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "This program evaluates a postfix expression whose tokens are separated by spaces. Give the exact output."
+   },
+   "steps": [
+    {
+     "en": "def evaluate(expr):"
+    },
+    {
+     "en": "    stack = []"
+    },
+    {
+     "en": "    for tok in expr.split():"
+    },
+    {
+     "en": "        if tok in \"+-*/\":"
+    },
+    {
+     "en": "            b = stack.pop()"
+    },
+    {
+     "en": "            a = stack.pop()"
+    },
+    {
+     "en": "            if tok == \"+\": stack.append(a + b)"
+    },
+    {
+     "en": "            elif tok == \"-\": stack.append(a - b)"
+    },
+    {
+     "en": "            elif tok == \"*\": stack.append(a * b)"
+    },
+    {
+     "en": "            else: stack.append(a / b)"
+    },
+    {
+     "en": "        else:"
+    },
+    {
+     "en": "            stack.append(int(tok))"
+    },
+    {
+     "en": "    return stack.pop()"
+    },
+    {
+     "en": "print(evaluate(\"2 3 4 * + 5 -\"))"
+    },
+    {
+     "en": "print(evaluate(\"6 2 / 3 - 4 2 * +\"))"
+    }
+   ],
+   "answer": {
+    "en": "9\n8.0"
+   },
+   "narration": {
+    "en": "Now the same algorithm in Python. Note that / gives a float, so the second answer is printed as 8.0."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k03-q17",
+    "2k03-q18",
+    "2k03-q19"
+   ],
+   "mode": "roll_call",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Roll-call quiz. When your roll number is called, give your answer.",
+    "kn": "ಹಾಜರಿ ರಸಪ್ರಶ್ನೆ. ನಿಮ್ಮ ಹಾಜರಿ ಸಂಖ್ಯೆ ಕರೆದಾಗ ನಿಮ್ಮ ಉತ್ತರ ಹೇಳಿ."
+   }
+  },
+  {
+   "id": "cbse",
+   "type": "pyq",
+   "title": {
+    "en": "CBSE board pattern"
+   },
+   "boards": [
+    "cbse"
+   ],
+   "questionIds": [
+    "2k03-q23",
+    "2k03-q24"
+   ],
+   "exams": [
+    "CBSE"
+   ],
+   "narration": {
+    "en": "CBSE pattern: assertion–reason and case-based questions. Read the case carefully before you answer."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "questionIds": [
+    "2k03-q20",
+    "2k03-q17"
+   ],
+   "exams": [
+    "PUC",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Now two board and CUET pattern questions. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Operands are pushed; an operator pops two values and pushes the result.",
+     "kn": "ಆಪರಾಂಡ್ PUSH; ಆಪರೇಟರ್ ಎರಡು ಮೌಲ್ಯ POP ಮಾಡಿ ಫಲಿತಾಂಶ PUSH."
+    },
+    {
+     "en": "The first value popped is the right operand B.",
+     "kn": "ಮೊದಲು POP ಆದದ್ದು ಬಲ ಆಪರಾಂಡ್ B."
+    },
+    {
+     "en": "A valid expression leaves exactly one value on the stack.",
+     "kn": "ಸರಿಯಾದ ಅಭಿವ್ಯಕ್ತಿ ಸ್ಟ್ಯಾಕ್‌ನಲ್ಲಿ ಒಂದೇ ಮೌಲ್ಯ ಬಿಡುತ್ತದೆ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Evaluate with a stack trace: 5 6 2 + * 12 4 / − and 3 4 * 2 5 * +."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k03-q20"
+   ],
+   "narration": {
+    "en": "Recap. Operands are pushed; an operator pops two values and pushes the result. The first value popped is the right operand B. A valid expression leaves exactly one value on the stack.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಆಪರಾಂಡ್ PUSH; ಆಪರೇಟರ್ ಎರಡು ಮೌಲ್ಯ POP ಮಾಡಿ ಫಲಿತಾಂಶ PUSH. ಮೊದಲು POP ಆದದ್ದು ಬಲ ಆಪರಾಂಡ್ B. ಸರಿಯಾದ ಅಭಿವ್ಯಕ್ತಿ ಸ್ಟ್ಯಾಕ್‌ನಲ್ಲಿ ಒಂದೇ ಮೌಲ್ಯ ಬಿಡುತ್ತದೆ."
+   }
+  }
+ ]
+}

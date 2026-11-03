@@ -1,0 +1,222 @@
+{
+ "id": "puc2-computer-science-03-stack.t4.lesson",
+ "chapterId": "puc2-computer-science-03-stack",
+ "topicId": "puc2-computer-science-03-stack.t4",
+ "title": {
+  "en": "Notations and conversion from infix to postfix",
+  "kn": "ಸಂಕೇತಗಳು ಮತ್ತು ಇನ್‌ಫಿಕ್ಸ್‌ನಿಂದ ಪೋಸ್ಟ್‌ಫಿಕ್ಸ್"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Where does the operator go?",
+    "kn": "ಆಪರೇಟರ್ ಎಲ್ಲಿ ಬರುತ್ತದೆ?"
+   },
+   "hook": {
+    "en": "We write 3 + 4, but a calculator finds 3 4 + easier. Without brackets or precedence rules it knows exactly what to do next.",
+    "kn": "ನಾವು 3 + 4 ಎಂದು ಬರೆಯುತ್ತೇವೆ, ಆದರೆ ಕ್ಯಾಲ್ಕುಲೇಟರ್‌ಗೆ 3 4 + ಸುಲಭ. ಆವರಣ ಅಥವಾ ಆದ್ಯತೆ ನಿಯಮಗಳಿಲ್ಲದೆ ಮುಂದೇನು ಎಂದು ಅದಕ್ಕೆ ತಿಳಿಯುತ್ತದೆ."
+   },
+   "objectives": [
+    {
+     "en": "Write expressions in infix, prefix and postfix"
+    },
+    {
+     "en": "Convert infix to postfix using a stack"
+    },
+    {
+     "en": "Apply operator precedence during conversion"
+    }
+   ],
+   "narration": {
+    "en": "We write 3 + 4, but a calculator finds 3 4 + easier. Without brackets or precedence rules it knows exactly what to do next.",
+    "kn": "ನಾವು 3 + 4 ಎಂದು ಬರೆಯುತ್ತೇವೆ, ಆದರೆ ಕ್ಯಾಲ್ಕುಲೇಟರ್‌ಗೆ 3 4 + ಸುಲಭ. ಆವರಣ ಅಥವಾ ಆದ್ಯತೆ ನಿಯಮಗಳಿಲ್ಲದೆ ಮುಂದೇನು ಎಂದು ಅದಕ್ಕೆ ತಿಳಿಯುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Infix, prefix and postfix"
+   },
+   "body": {
+    "en": "In infix notation the operator is placed between the operands (x + y). In prefix notation, also called Polish notation after the mathematician Jan Łukasiewicz, the operator comes before the operands (+xy). In postfix notation, or reverse Polish notation, it comes after them (xy+). Prefix and postfix need no parentheses, because the position of the operators fixes the order of evaluation."
+   },
+   "points": [
+    {
+     "en": "Infix: (x + y) * z"
+    },
+    {
+     "en": "Prefix: * + x y z"
+    },
+    {
+     "en": "Postfix: x y + z *"
+    },
+    {
+     "en": "Precedence: * and / before + and −"
+    }
+   ],
+   "narration": {
+    "en": "In infix notation the operator is placed between the operands (x + y). In prefix notation, also called Polish notation after the mathematician Jan Łukasiewicz, the operator comes before the operands (+xy). In postfix notation, or reverse Polish notation, it comes after them (xy+). Prefix and postfix need no parentheses, because the position of the operators fixes the order of evaluation.",
+    "kn": "ಇನ್‌ಫಿಕ್ಸ್: ಆಪರೇಟರ್ ಆಪರಾಂಡ್‌ಗಳ ನಡುವೆ (x + y). ಪ್ರಿಫಿಕ್ಸ್ (ಪೋಲಿಶ್): ಮೊದಲು (+xy). ಪೋಸ್ಟ್‌ಫಿಕ್ಸ್ (ರಿವರ್ಸ್ ಪೋಲಿಶ್): ನಂತರ (xy+). ಪ್ರಿಫಿಕ್ಸ್ ಮತ್ತು ಪೋಸ್ಟ್‌ಫಿಕ್ಸ್‌ಗೆ ಆವರಣ ಬೇಕಿಲ್ಲ."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Algorithm: infix to postfix"
+   },
+   "body": {
+    "en": "Scan the infix expression from left to right with an empty stack and an empty output string. An operand goes straight to the output. A left parenthesis is pushed. On a right parenthesis, pop operators to the output until the matching left parenthesis, which is discarded. On an operator, pop to the output every operator on top that has higher or equal precedence (stopping at a left parenthesis), then push the new operator. At the end, pop all remaining operators to the output."
+   },
+   "points": [
+    {
+     "en": "Operand → output"
+    },
+    {
+     "en": "( → push; ) → pop until ("
+    },
+    {
+     "en": "Operator → pop higher/equal precedence, then push"
+    },
+    {
+     "en": "End → pop everything"
+    }
+   ],
+   "narration": {
+    "en": "Scan the infix expression from left to right with an empty stack and an empty output string. An operand goes straight to the output. A left parenthesis is pushed. On a right parenthesis, pop operators to the output until the matching left parenthesis, which is discarded. On an operator, pop to the output every operator on top that has higher or equal precedence (stopping at a left parenthesis), then push the new operator. At the end, pop all remaining operators to the output.",
+    "kn": "ಎಡದಿಂದ ಬಲಕ್ಕೆ ಓದಿ. ಆಪರಾಂಡ್ ನೇರವಾಗಿ ಔಟ್‌ಪುಟ್‌ಗೆ. ( ಅನ್ನು PUSH. ) ಬಂದಾಗ ( ವರೆಗೆ POP. ಆಪರೇಟರ್ ಬಂದಾಗ ಹೆಚ್ಚು ಅಥವಾ ಸಮಾನ ಆದ್ಯತೆಯವನ್ನು POP ಮಾಡಿ ನಂತರ PUSH. ಕೊನೆಗೆ ಉಳಿದುದೆಲ್ಲ POP."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Convert A * (B + C) − D / E to postfix, showing the stack."
+   },
+   "steps": [
+    {
+     "en": "A → output A; * → push: stack [*]; ( → push: [*, (]"
+    },
+    {
+     "en": "B → AB; + → push (top is \"(\"): [*, (, +]; C → ABC"
+    },
+    {
+     "en": ") → pop + until (: output ABC+, stack [*]"
+    },
+    {
+     "en": "− → * has higher precedence, pop it: ABC+*; push −: [−]; D → ABC+*D"
+    },
+    {
+     "en": "/ → higher than −, push: [−, /]; E → ABC+*DE; end → pop / and −"
+    }
+   ],
+   "answer": {
+    "en": "ABC+*DE/-"
+   },
+   "narration": {
+    "en": "Let us convert step by step and write the stack after every symbol."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Bracket-and-move check"
+   },
+   "body": {
+    "en": "To check an answer quickly, fully bracket the infix expression by precedence, then move each operator just after its closing bracket and erase the brackets: ((A*(B+C))−(D/E)) → ABC+*DE/−."
+   },
+   "narration": {
+    "en": "Bracket-and-move check. To check an answer quickly, fully bracket the infix expression by precedence, then move each operator just after its closing bracket and erase the brackets: ((A*(B+C))−(D/E)) → ABC+*DE/−."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Bracket fully, move operators right, erase brackets"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2k03-q13",
+    "2k03-q14",
+    "2k03-q15"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer.",
+    "kn": "ತರಗತಿ ರಸಪ್ರಶ್ನೆ. ಚರ್ಚಿಸಿ, ಕೈ ಎತ್ತಿ, ಮಾನಿಟರ್ ತರಗತಿಯ ಉತ್ತರವನ್ನು ಒತ್ತಲಿ."
+   }
+  },
+  {
+   "id": "cbse",
+   "type": "pyq",
+   "title": {
+    "en": "CBSE board pattern"
+   },
+   "boards": [
+    "cbse"
+   ],
+   "questionIds": [
+    "2k03-q22"
+   ],
+   "exams": [
+    "CBSE"
+   ],
+   "narration": {
+    "en": "CBSE pattern: assertion–reason and case-based questions. Read the case carefully before you answer."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "questionIds": [
+    "2k03-q16",
+    "2k03-q13"
+   ],
+   "exams": [
+    "PUC",
+    "CUET"
+   ],
+   "narration": {
+    "en": "Now two board and CUET pattern questions. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Infix: operator between; prefix: before; postfix: after the operands.",
+     "kn": "ಇನ್‌ಫಿಕ್ಸ್: ನಡುವೆ; ಪ್ರಿಫಿಕ್ಸ್: ಮೊದಲು; ಪೋಸ್ಟ್‌ಫಿಕ್ಸ್: ನಂತರ."
+    },
+    {
+     "en": "Prefix and postfix need no parentheses.",
+     "kn": "ಪ್ರಿಫಿಕ್ಸ್ ಮತ್ತು ಪೋಸ್ಟ್‌ಫಿಕ್ಸ್‌ಗೆ ಆವರಣ ಬೇಕಿಲ್ಲ."
+    },
+    {
+     "en": "In conversion the stack holds operators and left parentheses.",
+     "kn": "ಪರಿವರ್ತನೆಯಲ್ಲಿ ಸ್ಟ್ಯಾಕ್ ಆಪರೇಟರ್‌ಗಳು ಮತ್ತು ( ಅನ್ನು ಹಿಡಿದಿಡುತ್ತದೆ."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Convert to postfix with a stack trace: (A + B) * (C − D) and A + B * C − D."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2k03-q16"
+   ],
+   "narration": {
+    "en": "Recap. Infix: operator between; prefix: before; postfix: after the operands. Prefix and postfix need no parentheses. In conversion the stack holds operators and left parentheses.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಇನ್‌ಫಿಕ್ಸ್: ನಡುವೆ; ಪ್ರಿಫಿಕ್ಸ್: ಮೊದಲು; ಪೋಸ್ಟ್‌ಫಿಕ್ಸ್: ನಂತರ. ಪ್ರಿಫಿಕ್ಸ್ ಮತ್ತು ಪೋಸ್ಟ್‌ಫಿಕ್ಸ್‌ಗೆ ಆವರಣ ಬೇಕಿಲ್ಲ. ಪರಿವರ್ತನೆಯಲ್ಲಿ ಸ್ಟ್ಯಾಕ್ ಆಪರೇಟರ್‌ಗಳು ಮತ್ತು ( ಅನ್ನು ಹಿಡಿದಿಡುತ್ತದೆ."
+   }
+  }
+ ]
+}
