@@ -38,7 +38,7 @@ class SelfLearningStartScreen extends StatelessWidget {
             : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(scheduled != null ? tr('scheduled', l) : tr('nextTopic', l), style: text.headlineMedium?.copyWith(color: Z.accent)),
                 const SizedBox(height: 16),
-                Text('${subjectName(next.pack.chapter.subject, l)} · ${next.pack.chapter.title.t(l)}', style: text.bodyLarge),
+                Text('${yearLabel(next.pack.chapter.year, s.config.board, l)} · ${subjectName(next.pack.chapter.subject, l)} · ${next.pack.chapter.title.t(l)}', style: text.bodyLarge),
                 Text(next.lesson.title.t(l), style: text.displayLarge),
                 const SizedBox(height: 32),
                 Text('${tr('nowPlaying', l)}: ${s.config.periodMinutes} min · ${tr('periodEnds', l)} …', style: text.bodyMedium),
@@ -75,10 +75,11 @@ class SelfLearningScreen extends StatefulWidget {
 
 class SelfLearningScreenState extends State<SelfLearningScreen> {
   late final Services s = ServicesScope.of(context);
-  late final PeriodPlan plan = PeriodPlanner.plan(widget.lesson, periodMinutes: (widget.periodSeconds / 60).ceil());
+  late final Lesson lesson = widget.pack.lessonFor(widget.lesson, s.config.board);
+  late final PeriodPlan plan = PeriodPlanner.plan(lesson, periodMinutes: (widget.periodSeconds / 60).ceil());
   late final LessonController c = LessonController(
     pack: widget.pack,
-    lesson: widget.lesson,
+    lesson: lesson,
     blocks: plan.blocks,
     narrator: s.narrator,
     lang: s.config.lang,

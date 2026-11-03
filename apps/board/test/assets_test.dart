@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
@@ -16,6 +17,9 @@ void main() {
     await Services.installSeedPacks(store, rootBundle);
     expect(store.packs.length, 106);
     final syllabus = await Services.loadSyllabus(rootBundle);
-    expect(syllabus.values.expand((y) => y.values).expand((c) => c).length, 106);
+    final index = jsonDecode(await rootBundle.loadString('assets/syllabus/index.json')) as Map<String, dynamic>;
+    final expected = (index['subjects'] as List).fold<int>(0, (a, s) => a + (s['chapters'] as int));
+    expect(syllabus.values.expand((y) => y.values).expand((c) => c).length, expected);
+    expect(syllabus.keys, containsAll(['physics', 'computer_science', 'accountancy', 'english']));
   });
 }

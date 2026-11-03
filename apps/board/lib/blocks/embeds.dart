@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:kinetix_3d/kinetix_3d.dart';
 import 'package:kinetix_animations/kinetix_animations.dart';
+import 'package:kinetix_cs/kinetix_cs.dart';
 import 'package:kinetix_labs/kinetix_labs.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -27,8 +28,27 @@ class KinetixEmbeds implements Embeds {
             final a? => AnimationPlayer(animation: a, lang: lang == Lang.kn ? AnimLang.kn : AnimLang.en),
             null => _missing(b.s('simId')!),
           },
+        'kinetix_cs' => csSim(b.s('simId')!),
         _ => lab(b.s('simId')!, b.s('preset'), lang),
       };
+
+  /// Computer Science players from Kinetix: `algo.<kind>`, `sim.<kind>`, `code.<language>`.
+  static Widget csSim(String id) {
+    final (kind, name) = switch (id.split('.')) { [final k, final n] => (k, n), _ => ('', '') };
+    void noInsert(Object _) {}
+    switch (kind) {
+      case 'algo':
+        final a = AlgoKind.values.where((v) => v.name == name).firstOrNull;
+        if (a != null) return AlgoPlayer(kind: a, onInsert: noInsert);
+      case 'sim':
+        final k = SimKind.values.where((v) => v.name == name).firstOrNull;
+        if (k != null) return SimPanel(kind: k, onInsert: noInsert);
+      case 'code':
+        final l = CodeLanguage.values.where((v) => v.name == name).firstOrNull;
+        if (l != null) return CodeLab(initialLanguage: l);
+    }
+    return _missing(id);
+  }
 
   @override
   Widget lab(String labId, String? preset, Lang lang) => LabCatalogue.byId(labId) == null

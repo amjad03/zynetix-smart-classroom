@@ -25,6 +25,11 @@ class BoardConfig extends ChangeNotifier {
   String get sectionLabel => _p.getString('sectionLabel') ?? '1st PUC · A · PCMB';
   /// puc1 / puc2: which year's chapters to list first.
   String get year => _p.getString('year') ?? 'puc1';
+  /// The curriculum this section follows: kar_pu (Karnataka PU) or cbse.
+  String get board => _p.getString('board') ?? 'kar_pu';
+  bool get isCbse => board == 'cbse';
+  /// Subjects taught in this section, in tab order (from Admin → Sections).
+  List<String> get subjects => _p.getStringList('subjects') ?? const ['physics', 'chemistry', 'maths', 'biology'];
   int get rollCount => _p.getInt('rollCount') ?? 60;
   int get periodMinutes => _p.getInt('periodMinutes') ?? 40;
   Lang get lang => _p.getString('lang') == 'kn' ? Lang.kn : Lang.en;
@@ -52,6 +57,7 @@ class BoardConfig extends ChangeNotifier {
   Future<void> apply(Map<String, dynamic> j) async {
     for (final e in j.entries) {
       final v = e.value;
+      if (v is List) await _p.setStringList(e.key, v.cast<String>());
       if (v is String) await _p.setString(e.key, v);
       if (v is int) await _p.setInt(e.key, v);
       if (v is bool) await _p.setBool(e.key, v);

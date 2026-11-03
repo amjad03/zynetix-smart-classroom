@@ -26,7 +26,7 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
   late final Services s = ServicesScope.of(context);
   late final LessonController c = LessonController(
     pack: widget.pack,
-    lesson: widget.lesson,
+    lesson: widget.pack.lessonFor(widget.lesson, s.config.board),
     narrator: s.narrator,
     lang: s.config.lang,
     recorder: SessionRecorder(outbox: s.outbox, sectionId: s.config.sectionId, mode: 'teacher', pack: widget.pack, lesson: widget.lesson, now: s.clock),

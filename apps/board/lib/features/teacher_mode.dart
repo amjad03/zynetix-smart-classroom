@@ -21,7 +21,7 @@ class _TeacherModeScreenState extends State<TeacherModeScreen> {
   Widget build(BuildContext context) {
     final s = ServicesScope.of(context), l = s.config.lang;
     final year = _year ?? s.config.year;
-    final subjects = s.syllabus.keys.toList();
+    final subjects = s.subjects;
     final taught = s.config.taught.toSet();
     return DefaultTabController(
       length: subjects.length,
@@ -33,7 +33,7 @@ class _TeacherModeScreenState extends State<TeacherModeScreen> {
           actions: [
             SegmentedButton<String>(
               style: SegmentedButton.styleFrom(minimumSize: const Size(180, Z.tap - 16), textStyle: zText(28)),
-              segments: const [ButtonSegment(value: 'puc1', label: Text('1st PUC')), ButtonSegment(value: 'puc2', label: Text('2nd PUC'))],
+              segments: [for (final y in const ['puc1', 'puc2']) ButtonSegment(value: y, label: Text(yearLabel(y, s.config.board, l)))],
               selected: {year},
               showSelectedIcon: false,
               onSelectionChanged: (v) => setState(() => _year = v.first),
@@ -41,6 +41,8 @@ class _TeacherModeScreenState extends State<TeacherModeScreen> {
             const SizedBox(width: 24),
           ],
           bottom: TabBar(
+            isScrollable: subjects.length > 5,
+            tabAlignment: subjects.length > 5 ? TabAlignment.start : null,
             labelStyle: zText(34, FontWeight.w700),
             unselectedLabelStyle: zText(32, FontWeight.w500),
             tabs: [for (final sub in subjects) Tab(height: Z.tap, text: subjectName(sub, l))],
@@ -51,7 +53,7 @@ class _TeacherModeScreenState extends State<TeacherModeScreen> {
             ListView(
               padding: const EdgeInsets.all(32),
               children: [
-                for (final ch in s.syllabus[sub]?[year] ?? const <Chapter>[]) _ChapterTile(chapter: ch, lang: l, taught: taught),
+                for (final ch in s.chapters(sub, year)) _ChapterTile(chapter: ch, lang: l, taught: taught),
               ],
             ),
         ]),
@@ -81,7 +83,7 @@ class _ChapterTile extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           head,
           const SizedBox(height: 12),
-          for (final t in pack.chapter.topics)
+          for (final t in pack.chapter.topicsFor(s.config.board))
             if (pack.lessons[t.id] case final lesson?)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),

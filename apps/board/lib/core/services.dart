@@ -30,12 +30,18 @@ class Services {
   final DateTime Function() clock;
   late final SyncClient sync = SyncClient(config: config, store: store, outbox: outbox);
 
+  /// Subjects shown on this board: the section's subjects that have a syllabus, in its order.
+  List<String> get subjects => [for (final s in config.subjects) if (syllabus.containsKey(s)) s];
+
+  /// The section's chapters for [subject] and [year], as its curriculum (board) teaches them.
+  List<Chapter> chapters(String subject, String year) => [for (final c in syllabus[subject]?[year] ?? const <Chapter>[]) if (c.forBoard(config.board)) c];
+
   /// The topic to continue with in this section: the next untaught topic in the chapter taught
   /// most recently, then the following chapters in syllabus order (this section's year first).
   ({InstalledPack pack, Lesson lesson})? nextTopic() {
     final taught = config.taught.toSet();
     final years = [config.year, config.year == 'puc1' ? 'puc2' : 'puc1'];
-    final order = <Chapter>[for (final y in years) for (final s in syllabus.keys) ...?syllabus[s]?[y]];
+    final order = <Chapter>[for (final y in years) for (final s in subjects) ...chapters(s, y)];
     var start = 0;
     if (config.taught.isNotEmpty) {
       final last = config.taught.last;
@@ -45,7 +51,7 @@ class Services {
     for (final ch in [...order.skip(start), ...order.take(start)]) {
       final p = store.byChapter(ch.id);
       if (p == null) continue;
-      for (final t in p.chapter.topics) {
+      for (final t in p.chapter.topicsFor(config.board)) {
         final l = p.lessons[t.id];
         if (l != null && !taught.contains(t.id)) return (pack: p, lesson: l);
       }

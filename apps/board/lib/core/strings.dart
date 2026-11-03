@@ -56,6 +56,8 @@ const _s = <String, (String, String)>{
   'scheduled': ('Scheduled by the college', 'ಕಾಲೇಜು ನಿಗದಿಪಡಿಸಿದೆ'),
   'periodOver': ('Period over. Well done, class!', 'ಅವಧಿ ಮುಗಿಯಿತು. ಚೆನ್ನಾಗಿದೆ!'),
   'offlineOk': ('Works offline', 'ಆಫ್‌ಲೈನ್‌ನಲ್ಲೂ ಕೆಲಸ ಮಾಡುತ್ತದೆ'),
+  'readCase': ('Read the case', 'ಪ್ರಕರಣವನ್ನು ಓದಿ'),
+  'cbsePattern': ('CBSE board pattern', 'ಸಿಬಿಎಸ್‌ಇ ಮಾದರಿ'),
 };
 
 String tr(String key, Lang lang) {
@@ -69,6 +71,18 @@ const subjectNames = <String, (String, String)>{
   'chemistry': ('Chemistry', 'ರಸಾಯನಶಾಸ್ತ್ರ'),
   'maths': ('Maths', 'ಗಣಿತ'),
   'biology': ('Biology', 'ಜೀವಶಾಸ್ತ್ರ'),
+  'computer_science': ('Computer Science', 'ಗಣಕ ವಿಜ್ಞಾನ'),
+  'electronics': ('Electronics', 'ಎಲೆಕ್ಟ್ರಾನಿಕ್ಸ್'),
+  'statistics': ('Statistics', 'ಸಂಖ್ಯಾಶಾಸ್ತ್ರ'),
+  'accountancy': ('Accountancy', 'ಲೆಕ್ಕಶಾಸ್ತ್ರ'),
+  'business_studies': ('Business Studies', 'ವ್ಯವಹಾರ ಅಧ್ಯಯನ'),
+  'economics': ('Economics', 'ಅರ್ಥಶಾಸ್ತ್ರ'),
+  'english': ('English', 'ಇಂಗ್ಲಿಷ್'),
 };
+
+/// "1st PUC" on Karnataka PU boards, "Class 11" on CBSE boards.
+String yearLabel(String year, String board, Lang l) => board == 'cbse'
+    ? (year == 'puc1' ? (l == Lang.kn ? '11ನೇ ತರಗತಿ' : 'Class 11') : (l == Lang.kn ? '12ನೇ ತರಗತಿ' : 'Class 12'))
+    : (year == 'puc1' ? (l == Lang.kn ? 'ಪ್ರಥಮ ಪಿಯುಸಿ' : '1st PUC') : (l == Lang.kn ? 'ದ್ವಿತೀಯ ಪಿಯುಸಿ' : '2nd PUC'));
 
 String subjectName(String s, Lang l) => l == Lang.kn ? (subjectNames[s]?.$2 ?? s) : (subjectNames[s]?.$1 ?? s);

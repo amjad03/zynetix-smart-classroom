@@ -174,7 +174,16 @@ class QuizRunnerState extends State<QuizRunner> {
       const SizedBox(height: 12),
       _ModeBar(state: this),
       const SizedBox(height: 12),
-      Text(question.stem.t(l), style: text.headlineMedium),
+      if (question.passage != null)
+        Container(
+          key: const ValueKey('passage'),
+          constraints: const BoxConstraints(maxHeight: 240),
+          margin: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerHighest, borderRadius: BorderRadius.circular(Z.radius), border: Border(left: BorderSide(color: Z.accent, width: 8))),
+          child: SingleChildScrollView(child: Text(question.passage!.t(l), style: text.bodyLarge?.copyWith(fontSize: 28))),
+        ),
+      Text(question.stem.t(l), style: question.format == 'mcq' ? text.headlineMedium : text.headlineMedium?.copyWith(fontSize: 34)),
       const SizedBox(height: Z.gap),
       Expanded(
         // Two rows that share the height left, so all four options stay visible with an explanation.
@@ -231,7 +240,7 @@ class _OptionTile extends StatelessWidget {
           child: Row(children: [
             CircleAvatar(radius: 34, backgroundColor: fg.withValues(alpha: 0.15), child: Text('ABCD'[index], style: TextStyle(fontSize: 34, fontWeight: FontWeight.w700, color: fg))),
             const SizedBox(width: 20),
-            Expanded(child: Text(q.options[index].t(state.widget.lang), style: TextStyle(fontSize: 32, color: fg), maxLines: 2, overflow: TextOverflow.ellipsis)),
+            Expanded(child: Text(q.options[index].t(state.widget.lang), style: TextStyle(fontSize: q.format == 'assertion_reason' ? 26 : 32, color: fg), maxLines: 3, overflow: TextOverflow.ellipsis)),
             if (state.revealed && isAnswer) const Icon(Icons.check_circle, color: Colors.white, size: 48),
           ]),
         ),
