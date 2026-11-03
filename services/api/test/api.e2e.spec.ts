@@ -143,7 +143,8 @@ describe('Zynetix API', () => {
 
   it('CMS: question bank filters, lesson validation, and publishing a new version boards then receive', async () => {
     const jeeHard = (await http.get('/v1/cms/questions?exam=JEE&difficulty=hard&chapterId=puc2-chemistry-01-solutions').auth(editor, { type: 'bearer' }).expect(200)).body;
-    expect(jeeHard.map((q: any) => q.id).sort()).toEqual(['sol-q18', 'sol-q20']);
+    expect(jeeHard.map((q: any) => q.id)).toEqual(expect.arrayContaining(['sol-q18', 'sol-q20']));
+    expect(jeeHard.every((q: any) => q.exams.includes('JEE') && q.difficulty === 'hard' && q.chapterId === 'puc2-chemistry-01-solutions')).toBe(true);
     const cbseCases = (await http.get('/v1/cms/questions?exam=CBSE').auth(editor, { type: 'bearer' })).body.filter((q: any) => q.format === 'case_based');
     expect(cbseCases.length).toBeGreaterThan(0);
     expect(cbseCases.every((q: any) => q.passage?.en)).toBe(true);

@@ -15,7 +15,7 @@ void main() {
     final key = parseTrustedKey(await rootBundle.loadString('assets/packs/trusted-key.json'));
     final store = PackStore(Directory.systemTemp.createTempSync('p'), trustedKeys: {key.key: key.value});
     await Services.installSeedPacks(store, rootBundle);
-    expect(store.packs.length, 106);
+    expect(store.packs.length, 270); // every chapter of every subject, both years
     final syllabus = await Services.loadSyllabus(rootBundle);
     final index = jsonDecode(await rootBundle.loadString('assets/syllabus/index.json')) as Map<String, dynamic>;
     final expected = (index['subjects'] as List).fold<int>(0, (a, s) => a + (s['chapters'] as int));
