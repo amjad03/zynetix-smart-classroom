@@ -96,6 +96,9 @@ export function readSource(contentRoot: string, dir: string): PackSource {
     if (found) chapter = found;
   }
   if (!chapter) throw new Error(`${dir}: chapter ${meta.chapterId} is not in content/syllabus`);
+  // A pack may bring its chapter's topics (topics.json) before they are merged into the syllabus.
+  const topicsFile = join(root, 'topics.json');
+  if (existsSync(topicsFile)) chapter = Chapter.parse({ ...chapter, topics: JSON.parse(readFileSync(topicsFile, 'utf8')) });
   const lessons = readdirSync(join(root, 'lessons')).sort().map((f) => Lesson.parse(JSON.parse(readFileSync(join(root, 'lessons', f), 'utf8'))));
   const questions = (JSON.parse(readFileSync(join(root, 'questions.json'), 'utf8')) as unknown[]).map((q) => Question.parse(q));
   const media: Record<string, Uint8Array> = {};
