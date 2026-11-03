@@ -79,3 +79,39 @@ Where the correct option was moved to balance answers across A–D, numeric opti
   - Probability includes the variance of a random variable; check it is still in the book
 - **Section labels:** LPP t2–t4 are all labelled 12.2.1; Probability t2 is "13.3, 13.4"; Vectors t1 is labelled 10.2 but also covers 10.3.
 - **Kannada terms to check:** ಸಹ-ಆರಂಭಿಕ, ಓರೆ ರೇಖೆಗಳು, ಉದ್ದೇಶ ಫಲನ, ಕಾರ್ಯಸಾಧ್ಯ ಪ್ರದೇಶ, ಚದುರಿಕೆ, ಅವಕಲಜ, ನಾಭಿಲಂಬ.
+
+## 2nd PUC Chemistry, ch 2–5
+
+- **Syllabus scope:** d-block §4.4 (K₂Cr₂O₇/KMnO₄) is kept as topic t5 because KCET/PUC still ask it; if it was removed, the lanthanoids topic becomes 4.4. Also check that collision theory is still §3.5 and carbonyls §5.6.
+- **Values:**
+  - IE₃: Mn 3248, Cr 2987, Fe 2957, V 2828 kJ/mol
+  - IE₂: Cu 1958, Ni 1753, Zn 1734, Fe 1561 kJ/mol
+  - E°: Ce⁴⁺/Ce³⁺ 1.74 V, Cr₂O₇²⁻ 1.33 V; M³⁺/M²⁺ Mn +1.57, Co +1.97, Cr −0.41, Fe +0.77 V
+  - [Ti(H₂O)₆]³⁺ absorbs at 498 nm, so Δo ≈ 240 kJ/mol
+  - actinoid oxidation states peak at +7 at Np
+  - misch metal is about 95% lanthanoids and 5% Fe
+  - lead storage battery uses 38% H₂SO₄
+- **Tricks:** the spectrochemical-series mnemonic is invented.
+- **Kannada terms to check:** ಅಣ್ವಿಕತೆ, ಸಮಾಕಲಿತ, ಸಮಾಂಗತೆ, ಅಂತರಾಳೀಯ.
+
+## 1st PUC Chemistry, ch 1–5
+
+- **Values:**
+  - STP volume 22.7 L (1 bar)
+  - lattice enthalpy of NaCl 788 kJ/mol
+  - electron gain enthalpies Cl −349, F −328, Br −325, I −295, O −141, S −200 kJ/mol
+  - Mg ionisation enthalpies 738 / 1451 / 7733 kJ/mol
+  - ΔfH: C₂H₄ +52.3, C₂H₆ −84.7 kJ/mol
+  - ice: fusion 6.01, vaporisation 45.07 kJ/mol
+  - neutralisation about −57 kJ/mol
+  - eka-silicon 72 / 5.5 against Ge 72.6 / 5.36
+- **3D captions to match against the models:**
+  - Na with 12 neutrons
+  - K as 2, 8, 8, 1
+  - Cl as 2, 8, 7
+  - the `nacl` variant should show a lattice
+- **Tricks (exam shortcuts, not NCERT text):**
+  - steric number ½(V + M − c + a)
+  - MO bond order (n − 8)/2 for 10–14 electrons and (20 − n)/2 for 14–20
+  - λ(nm) ≈ 1240/E(eV)
+- **Kannada terms to check:** ಅನುಕಾಂತೀಯ, ಸಂಕರೀಕರಣ, ಎಲೆಕ್ಟ್ರಾನ್ ಗ್ರಾಹಕ ಎಂಥಾಲ್ಪಿ, ಉಭಯಧರ್ಮಿ, ಸ್ವಯಂಪ್ರೇರಿತ, ಉತ್ಪತನ.
