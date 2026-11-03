@@ -453,3 +453,15 @@ Plot details are recalled from memory; an English teacher should check them agai
 - **White horse:** the order of the Byro scenes.
 
 No text is reproduced; only titles and phrases of 12 words or fewer.
+
+## English Class 12, Flamingo prose ch 1–7 (CBSE)
+
+Check these details against the texts:
+
+- **Deep Water:** the ages (3–4 and 10–11).
+- **Poets and Pancakes:** the 1950s dates and the MRA staging claim.
+- **The Interview:** the Kipling diary note and Silvester's comparison.
+- **Indigo:** Kripalani at Muzaffarpur; schools in six villages.
+- **The Rattrap:** the assertion–reason item assumes the ironmaster and the peddler never met.
+
+No text is reproduced.
