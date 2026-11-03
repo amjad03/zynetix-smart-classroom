@@ -153,3 +153,52 @@ Where the correct option was moved to balance answers across A–D, numeric opti
   - 99.17% of filtrate reabsorbed (GFR 120 mL/min, 1.44 L urine a day)
   - the 80-bone axial skeleton counts the hyoid and the ear ossicles
 - **Kannada terms to check:** ಅಭಿವಾಹಿ/ಅಪವಾಹಿ, ಅನುವೇದನಾ/ಪರಾನುವೇದನಾ, ಹೃತ್ಕರ್ಣ/ಹೃತ್ಕುಕ್ಷಿ, ಉಬ್ಬರ ಗಾತ್ರ.
+
+## 2nd PUC Physics, ch 8–14
+
+- **Syllabus scope:**
+  - Ch 13: radioactivity is left out; fission/fusion is labelled 13.6.
+  - Ch 9: instruments are labelled 9.7, assuming dispersion and natural phenomena were removed.
+  - Ch 10: Brewster's law and polarisation by scattering and reflection may have been cut (2p10-q21, q22).
+  - Ch 14: covers diodes and rectifiers only (no transistors, Zener diodes or logic gates).
+- **Homework references:** exercise numbers ("NCERT Exercise 13.3–13.5") may not match the rationalised book.
+- **Values:**
+  - spectrum ranges: UV down to 0.6 nm; X-rays from 10 nm to 10⁻⁴ nm
+  - Geiger–Marsden: 5.5 MeV alphas, 2.1×10⁻⁷ m foil, 0.14% beyond 1°, 1 in 8000 beyond 90°
+  - chlorine isotopes 75.4/24.6%
+  - barrier potentials 0.7 V (Si) and 0.2 V (Ge)
+  - band gaps Ge 0.71, Si 1.1, diamond 5.4 eV
+- **Kannada terms to check:** ಸ್ಥಾನಪಲ್ಲಟ ಪ್ರವಾಹ, ಕಾರ್ಯಫಲನ, ದಿಷ್ಟಕಾರಿ, ಮುಮ್ಮುಖ/ಹಿಮ್ಮುಖ ಬಯಾಸ್, ಕ್ಷೀಣ ವಲಯ, ಸಮಭಾರಿ, ಸಮನ್ಯೂಟ್ರಾನಿ.
+
+## 2nd PUC Biology, ch 8–13
+
+- **Syllabus scope:**
+  - Ch 11 covers only "Populations"; add a topic if Karnataka PU still teaches "Organism and its environment".
+  - Ch 12 leaves out succession, nutrient cycling and ecosystem services.
+- **Values:**
+  - 14 biosphere reserves, 90 national parks and 448 sanctuaries (concept text only)
+  - 27 basmati varieties (answer to hard question 2b10-q26)
+  - Red List: 784 extinctions (338/359/87), more than 15,500 threatened; 12/23/32/31% of birds/mammals/amphibians/gymnosperms
+  - Amazon: about 20% of O₂, 40,000 plants, 427 mammals, 427 amphibians
+  - grassland pyramid of numbers 5,842,424 / 708,624 / 354,904 / 3
+- **Beyond the NCERT text:**
+  - HindIII from H. influenzae Rd and BamHI from strain H
+  - a circular plasmid with n cuts gives n fragments
+  - the intro hook claims Bengaluru produces over a billion litres of sewage a day
+- **Kannada terms to check:** ಸಮಷ್ಟಿ, ಸಹೋಪಕಾರ, ಸಹಭೋಜನ, ದುಷ್ಟ ಚತುಷ್ಟಯ, ಸ್ವಸ್ಥಾನ/ಪರಸ್ಥಾನ, ದೇವರಕಾಡು.
+
+## 2nd PUC Chemistry, ch 6–10
+
+- **Syllabus scope:** Biomolecules leaves out hormones; add them if they're still in the book. Section ranges within chapters are best matches and haven't been checked against the book.
+- **Values:**
+  - C–X bond lengths; dipole moments CH₃Cl 1.860 > CH₃F 1.847 D
+  - p-dichlorobenzene melts at 323 K; C₄H₉Br isomers boil at 375/364/346 K
+  - pKa values of nitrophenols, cresol, picric acid, the chloroacetic and chlorobutanoic acids
+  - amine pKb values; about 47% meta product in nitration of aniline
+  - specific rotations of the sugars; amylose 15–20% with 200–1000 units
+- **Basicity order in water:** ethylamines 2° > 3° > 1° > NH₃; methylamines 2° > 1° > 3° > NH₃.
+- **Illustrative numbers:**
+  - the enzyme example's activation energies (50 → 40 kJ/mol) are invented
+  - invert sugar ≈ −20° is a simple average
+- **Tricks:** the mnemonics are invented ("All Doctors Eat Kheer", …).
+- **Kannada terms to check:** ನ್ಯೂಕ್ಲಿಯೋಫಿಲಿಕ್ ಆದೇಶ ಕ್ರಿಯೆ, ಪ್ರತ್ಯಾಮ್ಲೀಯತೆ, ಅಪಕರ್ಷಕ ಸಕ್ಕರೆ, and the transliterated names.
