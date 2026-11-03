@@ -259,3 +259,37 @@ Where the correct option was moved to balance answers across A–D, numeric opti
   - cutting a magnet along its length halves the pole strength
 - **Short topics:** Magnetism t3 and t4 have 4 questions each; in t3 the quiz and pyq block share one question.
 - **Kannada terms to check:** ವಿದ್ಯುಚ್ಚಾಲಕ ಬಲ, ಅಲೆತದ ವೇಗ, ಪ್ರತಿಬಾಧೆ, ಪ್ರತಿಘಾತ, ಸಾಮರ್ಥ್ಯ ಅಂಶ, ಕಾಂತೀಯ ಗ್ರಾಹ್ಯತೆ, ಪಾರಗಮ್ಯತೆ, ಸುಳಿ ಪ್ರವಾಹ, ಪರಾವಿದ್ಯುತ್.
+
+## CBSE layer (CBSE-pattern questions on the existing 106 chapters)
+
+Each chapter has 4 or more CBSE-pattern questions: assertion–reason and case-based, tagged CBSE. They sit in a `cbse` block that only CBSE boards show. All existing PUC board-exam questions are also tagged CBSE.
+
+- **Physics 2nd PUC:**
+  - Wave optics polarisation (t5) is set to Karnataka PU only, assuming CBSE 2025-26 ends wave optics at single-slit diffraction.
+  - Not changed but worth checking for CBSE: Magnetism t3 and t4, EM waves energy and momentum (t3), and de Broglie's explanation of Bohr's second postulate (Atoms t5).
+- **Physics 1st PUC:**
+  - No scope changes.
+  - The new questions are tagged CBSE only; many would also suit PUC/KCET/NEET.
+  - 1p01-q23 rounds the perimeter to 33.3 cm, treating 2 as exact.
+- **Chemistry 1st PUC:**
+  - No scope changes.
+  - Data from memory: Mg successive IEs 738/1451/7733/10540; haloacetic acid pKa values; group-16 hydride boiling points; CaCO₃ ΔH +178 kJ, ΔS +160 J/K.
+  - 1c09-q29 applies Hückel's rule to ions, beyond the lesson.
+- **Chemistry 2nd PUC:**
+  - No scope changes.
+  - E°(Mn³⁺/Mn²⁺) = +1.57 V; [Ti(H₂O)₆]³⁺ at 498 nm.
+  - NaI/acetone precipitate times are illustrative.
+  - New questions cover only two topics per chapter.
+- **Maths 1st PUC:**
+  - No scope changes.
+  - Binomial t5 CBSE questions (middle term, term independent of x) may be beyond the CBSE scope.
+  - Octant II is (−, +, +); principal argument in (−π, π].
+- **Maths 2nd PUC:**
+  - No scope changes.
+  - Disputable answers: 2m12-q24 (unbounded region, answer B) and 2m02-q20 (tan⁻¹2 + tan⁻¹3, answer B).
+  - The assertion–reason answers lean to A/D.
+- **Biology 2nd PUC:**
+  - No scope changes.
+  - 2b01-q26: coconut endosperm treated as not entirely cellular.
+  - 2b10-q28: cry genes.
+  - Assumes the book still has ZIFT (up to 8 blastomeres), species–area Z of 0.6–1.2, and the Abingdon tortoise.
