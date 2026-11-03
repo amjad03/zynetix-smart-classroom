@@ -26,6 +26,9 @@ class Kiosk(private val activity: Activity) {
     private val am = activity.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
     private val admin = ComponentName(activity, KioskAdminReceiver::class.java)
 
+    /** The full Zynetix Board app may also run inside the lock (Smartboard → Open Zynetix Board app). */
+    private val kinetixBoard = "in.kinetix.board"
+
     /** The HOME entry point (an activity-alias, disabled unless kiosk mode is on). */
     private val homeAlias = ComponentName(activity, "app.zynetix.board.KioskHome")
 
@@ -48,7 +51,7 @@ class Kiosk(private val activity: Activity) {
     fun enter(): Map<String, Any> {
         val owner = deviceOwner
         if (owner) {
-            dpm.setLockTaskPackages(admin, arrayOf(activity.packageName))
+            dpm.setLockTaskPackages(admin, arrayOf(activity.packageName, kinetixBoard))
             dpm.setKeyguardDisabled(admin, true)
             dpm.setStatusBarDisabled(admin, true)
             val home = IntentFilter(Intent.ACTION_MAIN).apply {

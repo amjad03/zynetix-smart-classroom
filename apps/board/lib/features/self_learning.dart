@@ -13,6 +13,7 @@ import '../engine/session_log.dart';
 import 'home.dart';
 import 'participation.dart';
 import 'pin.dart';
+import 'smartboard.dart';
 
 /// Self-Learning: start the next topic for this class (two taps from Home), or the topic the
 /// college scheduled for this period.
@@ -30,6 +31,8 @@ class SelfLearningStartScreen extends StatelessWidget {
         toolbarHeight: Z.tap + 16,
         leading: IconButton(iconSize: 56, icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
         title: Text(tr('selfLearning', l), style: text.headlineLarge),
+        // Before the period starts only: a running period has no way out but the PIN.
+        actions: const [SmartboardButton(), SizedBox(width: 24)],
       ),
       body: Padding(
         padding: const EdgeInsets.all(48),

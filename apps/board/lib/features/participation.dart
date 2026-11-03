@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart' show setEquals;
 import 'package:flutter/material.dart';
 
 import '../core/strings.dart';
@@ -14,6 +15,19 @@ int? pickRoll(Random rnd, int rollCount, Set<int> exclude) {
   final left = [for (var r = 1; r <= rollCount; r++) if (!exclude.contains(r)) r];
   return left.isEmpty ? null : left[rnd.nextInt(left.length)];
 }
+
+/// multi_correct: right only when the class picked exactly the correct options.
+bool multiCorrect(Question q, Set<int> picked) => setEquals(picked, q.correctSet);
+
+/// numeric: right when the value is within ± tolerance (exact when there is none).
+bool numericCorrect(Question q, double? value) =>
+    value != null && q.numericAnswer != null && (value - q.numericAnswer!).abs() <= (q.tolerance ?? 0) + 1e-9;
+
+/// The keypad's text as a number ("−" is the minus key); null while it is not a number yet.
+double? parseTyped(String typed) => double.tryParse(typed.replaceAll('−', '-'));
+
+/// A number for the board: no trailing zeros.
+String formatNumber(double v) => v == v.roundToDouble() && v.abs() < 1e15 ? v.round().toString() : v.toString();
 
 /// Team of a roll number when the class is split into [teams] teams: 1, 1+n, 1+2n… in team 0.
 int teamOf(int roll, int teams) => (roll - 1) % teams;
@@ -74,7 +88,11 @@ class QuizRunner extends StatefulWidget {
 class QuizRunnerState extends State<QuizRunner> {
   int q = 0;
   int? chosen;
-  bool revealed = false;
+  /// multi_correct: the options tapped so far, in tap order.
+  final picked = <int>{};
+  /// numeric: what the monitor typed on the keypad.
+  String typed = '';
+  bool revealed = false, lastCorrect = false;
   int? roll;
   int left = 0;
   Timer? _tick;
@@ -97,6 +115,8 @@ class QuizRunnerState extends State<QuizRunner> {
 
   void _startQuestion() {
     chosen = null;
+    picked.clear();
+    typed = '';
     revealed = false;
     roll = widget.mode == QuizMode.rollCall && widget.auto ? widget.room.nextRoll() : null;
     left = widget.secondsPerQuestion;
@@ -112,21 +132,51 @@ class QuizRunnerState extends State<QuizRunner> {
   }
 
   /// The monitor tapped the class's (or the roll number's, or the team's) answer.
+  /// multi_correct: a tap toggles the option; Check reveals.
   void choose(int i) {
     if (revealed) return;
+    if (question.isMulti) {
+      setState(() => picked.contains(i) ? picked.remove(i) : picked.add(i));
+      return;
+    }
     setState(() => chosen = i);
     reveal();
   }
 
+  /// numeric: a keypad key (digits, ".", "−", "⌫").
+  void key(String k) {
+    if (revealed) return;
+    setState(() {
+      if (k == '⌫') {
+        if (typed.isNotEmpty) typed = typed.substring(0, typed.length - 1);
+      } else if (k == '−') {
+        typed = typed.startsWith('−') ? typed.substring(1) : '−$typed';
+      } else if (k == '.') {
+        if (!typed.contains('.')) typed = '${typed.isEmpty || typed == '−' ? '${typed}0' : typed}.';
+      } else if (typed.replaceAll(RegExp(r'[−.]'), '').length < 9) {
+        typed += k;
+      }
+    });
+  }
+
+  /// The big Check button (multi_correct and numeric).
+  bool get canCheck => question.isMulti ? picked.isNotEmpty : parseTyped(typed) != null;
+  void check() {
+    if (canCheck) reveal();
+  }
+
   void reveal() {
     if (revealed) return;
-    final correct = chosen == question.answer;
+    final q = question;
+    if (q.isMulti) chosen = picked.isEmpty ? null : picked.first;
+    final correct = q.isNumeric ? numericCorrect(q, parseTyped(typed)) : q.isMulti ? multiCorrect(q, picked) : chosen == q.answer;
+    lastCorrect = correct;
     widget.recorder.answer(
       questionId: question.id,
       mode: widget.mode,
       roll: widget.mode == QuizMode.rollCall ? roll : null,
       team: widget.mode == QuizMode.team ? team : null,
-      chosen: chosen,
+      chosen: q.isNumeric ? null : chosen,
       correct: correct,
     );
     if (widget.mode == QuizMode.team && correct) widget.room.scores[team]++;
@@ -185,6 +235,9 @@ class QuizRunnerState extends State<QuizRunner> {
         ),
       Text(question.stem.t(l), style: question.format == 'mcq' ? text.headlineMedium : text.headlineMedium?.copyWith(fontSize: 34)),
       const SizedBox(height: Z.gap),
+      if (question.isNumeric)
+        Expanded(child: _NumericPad(state: this))
+      else
       Expanded(
         // Two rows that share the height left, so all four options stay visible with an explanation.
         child: Column(children: [
@@ -202,7 +255,15 @@ class QuizRunnerState extends State<QuizRunner> {
         if (question.explanation != null) Text(question.explanation!.t(l), style: text.bodyLarge),
         const SizedBox(height: 12),
         Align(alignment: Alignment.centerRight, child: BigButton(icon: Icons.arrow_forward, label: tr('nextQuestion', l), onPressed: nextQuestion)),
-      ] else
+      ] else if (question.isMulti)
+        Padding(
+          padding: const EdgeInsets.only(top: 16),
+          child: Row(children: [
+            Expanded(child: Text(tr('pickAll', l), style: text.bodyMedium)),
+            BigButton(key: const ValueKey('check'), icon: Icons.fact_check_outlined, label: tr('check', l), color: Z.correct, onPressed: canCheck ? check : null),
+          ]),
+        )
+      else if (!question.isNumeric)
         Text(tr('monitorTaps', l), style: text.bodyMedium, textAlign: TextAlign.center),
     ]);
   }
@@ -216,10 +277,10 @@ class _OptionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final q = state.question;
-    final isAnswer = index == q.answer, isChosen = index == state.chosen;
+    final isAnswer = q.correctSet.contains(index), isChosen = q.isMulti ? state.picked.contains(index) : index == state.chosen;
     final scheme = Theme.of(context).colorScheme;
     final bg = !state.revealed
-        ? scheme.surfaceContainerHighest
+        ? (isChosen ? Z.accent.withValues(alpha: 0.35) : scheme.surfaceContainerHighest)
         : isAnswer
             ? Z.correct
             : isChosen
@@ -230,7 +291,7 @@ class _OptionTile extends StatelessWidget {
     final enabled = !state.revealed && (state.widget.mode != QuizMode.rollCall || state.roll != null);
     return Material(
       color: bg,
-      borderRadius: BorderRadius.circular(Z.radius),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Z.radius), side: !state.revealed && isChosen ? const BorderSide(color: Z.accent, width: 5) : BorderSide.none),
       child: InkWell(
         key: ValueKey('option-$index'),
         borderRadius: BorderRadius.circular(Z.radius),
@@ -242,6 +303,7 @@ class _OptionTile extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(child: Text(q.options[index].t(state.widget.lang), style: TextStyle(fontSize: q.format == 'assertion_reason' ? 26 : 32, color: fg), maxLines: 3, overflow: TextOverflow.ellipsis)),
             if (state.revealed && isAnswer) const Icon(Icons.check_circle, color: Colors.white, size: 48),
+            if (!state.revealed && q.isMulti) Icon(isChosen ? Icons.check_box : Icons.check_box_outline_blank, size: 52, color: isChosen ? Z.accent : fg.withValues(alpha: 0.6)),
           ]),
         ),
       ),
@@ -303,4 +365,128 @@ class _Countdown extends StatelessWidget {
         const SizedBox(width: 8),
         Text('${max(left, 0)}s', style: TextStyle(fontSize: 44, fontWeight: FontWeight.w700, color: left <= 10 ? Z.wrong : null)),
       ]);
+}
+
+/// numeric: the class answer in big type and an on-screen keypad (digits, ., −, ⌫) with Check.
+/// After Check: right or wrong, and the correct value.
+class _NumericPad extends StatelessWidget {
+  const _NumericPad({required this.state});
+  final QuizRunnerState state;
+  static const rows = [
+    ['7', '8', '9', '⌫'],
+    ['4', '5', '6', '−'],
+    ['1', '2', '3', '.'],
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final l = state.widget.lang, q = state.question, scheme = Theme.of(context).colorScheme;
+    final shown = state.typed.isEmpty ? '—' : state.typed;
+    final tol = q.tolerance ?? 0;
+    final answer = '${formatNumber(q.numericAnswer ?? double.nan)}${tol > 0 ? ' ± ${formatNumber(tol)}' : ''}';
+    Widget key(String k, {Color? color, Widget? child, VoidCallback? onTap}) => Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(6),
+        child: Material(
+          color: color ?? scheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(20),
+          child: InkWell(
+            key: ValueKey('key-$k'),
+            borderRadius: BorderRadius.circular(20),
+            onTap: state.revealed ? null : (onTap ?? () => state.key(k)),
+            child: Center(
+              child: child ?? Text(k, style: const TextStyle(fontSize: 48, fontWeight: FontWeight.w700)),
+            ),
+          ),
+        ),
+      ),
+    );
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(tr('yourAnswer', l), style: Theme.of(context).textTheme.bodyLarge),
+              const SizedBox(height: 8),
+              Container(
+                key: const ValueKey('typed'),
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                decoration: BoxDecoration(
+                  color: !state.revealed ? scheme.surfaceContainerHighest : (state.lastCorrect ? Z.correct : Z.wrong),
+                  borderRadius: BorderRadius.circular(Z.radius),
+                  border: Border.all(color: Z.accent, width: state.revealed ? 0 : 4),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        shown,
+                        style: const TextStyle(fontSize: 80, fontWeight: FontWeight.w800),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    if (state.revealed) Icon(state.lastCorrect ? Icons.check_circle : Icons.cancel, size: 72, color: Colors.white),
+                  ],
+                ),
+              ),
+              if (state.revealed) ...[
+                const SizedBox(height: 20),
+                Text(
+                  '${tr('correctAnswer', l)}: $answer',
+                  key: const ValueKey('numericAnswer'),
+                  style: const TextStyle(fontSize: 48, fontWeight: FontWeight.w800, color: Z.correct),
+                ),
+              ] else ...[
+                const SizedBox(height: 20),
+                Text(tr('typeAnswer', l), style: Theme.of(context).textTheme.bodyMedium),
+              ],
+            ],
+          ),
+        ),
+        const SizedBox(width: Z.gap),
+        SizedBox(
+          width: 560,
+          child: Column(
+            children: [
+              for (final r in rows)
+                Expanded(
+                  child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [for (final k in r) key(k)]),
+                ),
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    key('0'),
+                    Expanded(
+                      flex: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: FilledButton.icon(
+                          key: const ValueKey('check'),
+                          style: FilledButton.styleFrom(
+                            backgroundColor: Z.correct,
+                            foregroundColor: Colors.white,
+                            textStyle: zText(36, FontWeight.w700),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          ),
+                          onPressed: !state.revealed && state.canCheck ? state.check : null,
+                          icon: const Icon(Icons.fact_check_outlined, size: 44),
+                          label: Text(tr('check', l)),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 }

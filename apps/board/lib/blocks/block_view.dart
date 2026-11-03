@@ -8,7 +8,9 @@ import '../engine/lesson_controller.dart';
 import '../engine/model.dart';
 import '../features/participation.dart';
 import 'embeds.dart';
+import 'interactive_view.dart';
 import 'math_text.dart';
+import 'whiteboard_view.dart';
 
 /// Draws one lesson block. [auto] is Self-Learning: example steps reveal themselves and quizzes
 /// run on a timer. [onFinished] is called by blocks that end on their own (quizzes).
@@ -90,6 +92,8 @@ class BlockView extends StatelessWidget {
             ]),
           ),
         ),
+      BlockType.whiteboard => WhiteboardView(key: ValueKey('wb:${b.id}'), c: c, block: b, auto: auto),
+      BlockType.interactive => InteractiveView(key: ValueKey('ia:${b.id}'), block: b, lang: l),
       BlockType.recap => SingleChildScrollView(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             heading(tr('recap', l), icon: Icons.replay),

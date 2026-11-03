@@ -43,9 +43,14 @@ abstract final class PeriodPlanner {
       BlockType.example => max(read, b.list('steps').length * 8 + 14),
       BlockType.classQuiz || BlockType.pyq => read + b.ids('questionIds').length * (b.secondsPerQuestion + 8),
       BlockType.model3d || BlockType.simulation || BlockType.virtualLab => max(read, b.seconds ?? 90),
+      BlockType.whiteboard => readingSeconds(b.narration) + whiteboardSeconds(b),
+      BlockType.interactive => max(read, b.seconds ?? 60),
       _ => max(read, b.seconds ?? 0),
     };
   }
+
+  /// A whiteboard block's steps: each step's line read aloud (at least 3 s of drawing) + 3 s to look.
+  static int whiteboardSeconds(Block b) => [for (final st in b.boardSteps) max(readingSeconds(st.say), 3) + 3].fold(0, (a, s) => a + s);
 
   static Phase phaseOf(Block b) => switch (b.type) {
         BlockType.example => Phase.examples,
@@ -121,7 +126,7 @@ class PeriodRunner extends ChangeNotifier {
   Future<void> _speak() async {
     final token = ++_narrationToken;
     final n = current.block.narration;
-    if (n != null && !paused) await c.narrator.speak(n.t(c.lang), c.lang);
+    if (n != null && !paused) await c.speak(n);
     if (token == _narrationToken) narrationDone = true;
   }
 
@@ -159,9 +164,10 @@ class PeriodRunner extends ChangeNotifier {
 
   void setPaused(bool p) {
     paused = p;
+    c.setPaused(p); // blocks that run on their own (whiteboard steps) wait too
     if (p) {
       _narrationToken++;
-      c.narrator.stop();
+      c.stopSpeech();
       narrationDone = true; // on resume the block finishes its time without re-reading
     }
     notifyListeners();
@@ -171,7 +177,7 @@ class PeriodRunner extends ChangeNotifier {
     over = true;
     homework = true;
     _timer?.cancel();
-    c.narrator.stop();
+    c.stopSpeech();
     c.recorder.close(completed: step >= plan.steps.length - 1);
     notifyListeners();
   }
@@ -179,7 +185,7 @@ class PeriodRunner extends ChangeNotifier {
   /// Teacher entered the PIN and left early.
   void stop() {
     _timer?.cancel();
-    c.narrator.stop();
+    c.stopSpeech();
     c.recorder.close(completed: homework);
   }
 

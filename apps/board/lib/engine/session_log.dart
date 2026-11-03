@@ -8,16 +8,20 @@ import 'model.dart';
 /// A teaching session (one topic, one section), logged with roll numbers only, never names.
 /// Mirrors SessionLog in packages/lesson-schema.
 class SessionRecorder {
-  SessionRecorder({required this.outbox, required this.sectionId, required this.mode, required InstalledPack pack, required Lesson lesson, DateTime Function()? now})
+  SessionRecorder({required Outbox outbox, required String sectionId, required String mode, required InstalledPack pack, required Lesson lesson, DateTime Function()? now})
+      : this.raw(outbox: outbox, sectionId: sectionId, mode: mode, chapterId: lesson.chapterId, topicId: lesson.topicId, lessonId: lesson.id, packVersion: pack.version, now: now);
+
+  /// A session that is not one lesson (Exam Practice): the caller names the chapter and topic.
+  SessionRecorder.raw({required this.outbox, required this.sectionId, required this.mode, required String chapterId, required String topicId, required String lessonId, required String packVersion, DateTime Function()? now})
       : _now = now ?? DateTime.now,
         _log = {
           'id': const Uuid().v4(),
           'sectionId': sectionId,
           'mode': mode,
-          'chapterId': lesson.chapterId,
-          'topicId': lesson.topicId,
-          'lessonId': lesson.id,
-          'packVersion': pack.version,
+          'chapterId': chapterId,
+          'topicId': topicId,
+          'lessonId': lessonId,
+          'packVersion': packVersion,
           'startedAt': (now ?? DateTime.now)().toUtc().toIso8601String(),
           'endedAt': null,
           'blocksShown': <String>[],

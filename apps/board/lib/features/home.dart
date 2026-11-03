@@ -7,12 +7,14 @@ import '../core/strings.dart';
 import '../core/theme.dart';
 import '../engine/licence.dart';
 import '../engine/model.dart';
+import 'exam_practice.dart';
 import 'player.dart';
 import 'self_learning.dart';
 import 'settings.dart';
+import 'smartboard.dart';
 import 'teacher_mode.dart';
 
-/// Home: two big buttons and a one-tap Continue card.
+/// Home: three big buttons (Teacher Mode, Self-Learning, Exam Practice) and a one-tap Continue card.
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -53,7 +55,7 @@ class HomeScreen extends StatelessWidget {
                         onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const TeacherModeScreen())),
                       ),
                     ),
-                    const SizedBox(width: 40),
+                    const SizedBox(width: 32),
                     Expanded(
                       child: _ModeButton(
                         key: const ValueKey('selfLearning'),
@@ -62,6 +64,17 @@ class HomeScreen extends StatelessWidget {
                         sub: tr('selfLearningSub', l),
                         color: const Color(0xFF6A1B9A),
                         onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SelfLearningStartScreen())),
+                      ),
+                    ),
+                    const SizedBox(width: 32),
+                    Expanded(
+                      child: _ModeButton(
+                        key: const ValueKey('examPractice'),
+                        icon: Icons.emoji_events_outlined,
+                        title: tr('examPractice', l),
+                        sub: tr('examPracticeSub', l),
+                        color: const Color(0xFFC62828),
+                        onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ExamPracticeScreen())),
                       ),
                     ),
                   ]),
@@ -81,7 +94,7 @@ class HomeScreen extends StatelessWidget {
 void openLesson(BuildContext context, InstalledPack pack, Lesson lesson) =>
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => LessonPlayerScreen(pack: pack, lesson: lesson)));
 
-/// Section, clock and the EN / ಕನ್ನಡ switch, at the top of every screen outside a lesson.
+/// Section, Smartboard, clock and the EN / ಕನ್ನಡ switch, at the top of Home.
 class StatusBar extends StatefulWidget {
   const StatusBar({super.key, required this.lang});
   final Lang lang;
@@ -104,8 +117,9 @@ class _StatusBarState extends State<StatusBar> {
     return Row(children: [
       Text('Zynetix', style: text.headlineLarge?.copyWith(color: Z.accent)),
       const SizedBox(width: 24),
-      Text(s.config.sectionLabel, style: text.headlineMedium),
-      const Spacer(),
+      Expanded(child: Text(s.config.sectionLabel, style: text.headlineMedium, maxLines: 1, overflow: TextOverflow.ellipsis)),
+      const SmartboardButton(),
+      const SizedBox(width: 24),
       // Long press (IT / teacher only, behind the PIN): settings.
       GestureDetector(
         onLongPress: () => openSettings(context),

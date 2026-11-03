@@ -3,7 +3,7 @@ import { use, useEffect, useState } from 'react';
 import { BLOCK_TYPES, type BlockType } from '@zynetix/lesson-schema';
 import { L10nInput, Shell, api, errorText, useApi, type L10n } from '@zynetix/web-ui';
 import { NAV } from '../../../lib/nav';
-import { clean, fieldsFor, newBlock, type Field } from '../../../lib/blocks';
+import { clean, fieldsFor, newBlock, parseJsonField, type Field } from '../../../lib/blocks';
 
 type Block = Record<string, any> & { id: string; type: BlockType };
 type Lesson = { id: string; chapterId: string; topicId: string; title: L10n; minutes: number; blocks: Block[] };
@@ -127,9 +127,49 @@ function FieldInput({ f, value, set }: { f: Field; value: any; set: (v: unknown)
       return <label>{f.label}<input type="number" value={value ?? ''} onChange={(e) => set(e.target.value === '' ? undefined : Number(e.target.value))} /></label>;
     case 'bool':
       return <label style={{ flexDirection: 'row', alignItems: 'center' }}><input type="checkbox" checked={!!value} onChange={(e) => set(e.target.checked || undefined)} /> {f.label}</label>;
+    case 'json':
+      return <JsonInput f={f} value={value} set={set} />;
+    case 'range': {
+      const r: (number | undefined)[] = value ?? [undefined, undefined];
+      const put = (i: number, t: string) => {
+        const next = [...r];
+        next[i] = t === '' ? undefined : Number(t);
+        set(next[0] === undefined && next[1] === undefined ? undefined : next);
+      };
+      return (
+        <div className="row">
+          <label>{f.label} from<input type="number" value={r[0] ?? ''} onChange={(e) => put(0, e.target.value)} /></label>
+          <label>to<input type="number" value={r[1] ?? ''} onChange={(e) => put(1, e.target.value)} /></label>
+        </div>
+      );
+    }
     case 'select':
       return <label>{f.label}<select value={value ?? ''} onChange={(e) => set(e.target.value)}>{f.options!.map((o) => <option key={o}>{o}</option>)}</select></label>;
     default:
       return <label>{f.label}<input value={value ?? ''} onChange={(e) => set(e.target.value)} /></label>;
   }
+}
+
+/** A JSON value edited as text: parsed when the field loses focus; bad JSON is shown, not saved. */
+function JsonInput({ f, value, set }: { f: Field; value: unknown; set: (v: unknown) => void }) {
+  const [text, setText] = useState(value === undefined ? '' : JSON.stringify(value, null, 2));
+  const [err, setErr] = useState('');
+  return (
+    <label>
+      {f.label}
+      <textarea
+        rows={Math.min(16, Math.max(4, text.split('\n').length))}
+        style={{ fontFamily: 'monospace' }}
+        placeholder={f.example}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        onBlur={() => {
+          const r = parseJsonField(text);
+          setErr(r.error ?? '');
+          if (!r.error) set(r.value);
+        }}
+      />
+      {err && <span className="error">{err}</span>}
+    </label>
+  );
 }

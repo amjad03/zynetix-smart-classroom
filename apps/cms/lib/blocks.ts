@@ -4,8 +4,19 @@
  */
 import type { BlockType } from '@zynetix/lesson-schema';
 
-export type FieldKind = 'l10n' | 'l10nLong' | 'l10nList' | 'text' | 'number' | 'bool' | 'ids' | 'select';
-export interface Field { key: string; label: string; kind: FieldKind; options?: string[] }
+export type FieldKind = 'l10n' | 'l10nLong' | 'l10nList' | 'text' | 'number' | 'bool' | 'ids' | 'select' | 'json' | 'range';
+/** `json`: a JSON textarea, parsed on blur (`example` is shown as the placeholder). `range`: [min, max]. */
+export interface Field { key: string; label: string; kind: FieldKind; options?: string[]; example?: string }
+
+/** Parses a `json` field's text; empty text means "not set". Returns an error message instead of throwing. */
+export function parseJsonField(text: string): { value?: unknown; error?: string } {
+  if (!text.trim()) return { value: undefined };
+  try {
+    return { value: JSON.parse(text) };
+  } catch (e) {
+    return { error: `Not valid JSON: ${(e as Error).message}` };
+  }
+}
 
 const common: Field[] = [
   { key: 'title', label: 'Title', kind: 'l10n' },
@@ -36,6 +47,29 @@ export const BLOCK_FIELDS: Record<BlockType, Field[]> = {
   pyq: [{ key: 'questionIds', label: 'Question ids', kind: 'ids' }, { key: 'exams', label: 'Exams shown (PUC, KCET…)', kind: 'ids' }],
   trick: [{ key: 'heading', label: 'Heading', kind: 'l10n' }, { key: 'body', label: 'Trick', kind: 'l10nLong' }, { key: 'mnemonic', label: 'Mnemonic', kind: 'l10n' }],
   recap: [{ key: 'points', label: 'Recap points', kind: 'l10nList' }, { key: 'homework', label: 'Homework', kind: 'l10nList' }, { key: 'homeworkQuestionIds', label: 'Homework question ids', kind: 'ids' }],
+  whiteboard: [
+    {
+      key: 'steps',
+      label: 'Board steps (JSON): each {say?, draw: [...], clear?}; draw kinds text, math, line, arrow, rect, circle, path, axes, plot on a 100 × 60 grid',
+      kind: 'json',
+      example: '[{"say":{"en":"Draw the axes"},"draw":[{"kind":"axes","from":[10,5],"to":[90,55],"x":[-3,3],"y":[-1,9],"xLabel":"x","yLabel":"y"},{"kind":"plot","fn":"x^2","color":"yellow"}]}]',
+    },
+  ],
+  interactive: [
+    { key: 'kind', label: 'Kind', kind: 'select', options: ['function_plot', 'vectors', 'bar_chart', 'pie_chart', 'unit_circle', 'number_line', 'readouts'] },
+    { key: 'caption', label: 'Caption', kind: 'l10nLong' },
+    { key: 'sliders', label: 'Sliders (JSON, up to 4)', kind: 'json', example: '[{"name":"a","label":{"en":"a"},"min":-3,"max":3,"step":0.1,"value":1}]' },
+    { key: 'fns', label: 'Functions y = f(x, sliders) (JSON, function_plot)', kind: 'json', example: '[{"fn":"a*x^2","label":"y = ax²","color":"yellow"}]' },
+    { key: 'x', label: 'x range', kind: 'range' },
+    { key: 'y', label: 'y range', kind: 'range' },
+    { key: 'xLabel', label: 'x-axis label', kind: 'text' },
+    { key: 'yLabel', label: 'y-axis label', kind: 'text' },
+    { key: 'readouts', label: 'Read-outs (JSON)', kind: 'json', example: '[{"label":{"en":"Area"},"expr":"a*b","unit":"m²","digits":2}]' },
+    { key: 'vectors', label: 'Vectors [[x, y]…] (JSON; entries may be slider names)', kind: 'json', example: '[[3,"b"],[-1,2]]' },
+    { key: 'data', label: 'Chart data {label: value or slider name} (JSON)', kind: 'json', example: '{"Rent":"r","Food":40}' },
+    { key: 'points', label: 'Number-line points (JSON; values or slider names)', kind: 'json', example: '[-2,"a",3.5]' },
+    { key: 'tryThis', label: 'Try this', kind: 'l10nList' },
+  ],
 };
 
 export const fieldsFor = (t: BlockType) => [...BLOCK_FIELDS[t], ...common];
@@ -57,6 +91,8 @@ export function newBlock(type: BlockType, existing: string[]): Record<string, un
     pyq: { questionIds: [] },
     trick: { heading: L(), body: L() },
     recap: { points: [L()] },
+    whiteboard: { steps: [{ draw: [{ kind: 'text', at: [10, 10], text: L('Title') }] }] },
+    interactive: { kind: 'function_plot', caption: L(), sliders: [{ name: 'a', label: L('a'), min: -3, max: 3, step: 0.1, value: 1 }], fns: [{ fn: 'a*x^2', color: 'yellow' }], x: [-5, 5], y: [-5, 5] },
   };
   return { id, type, ...t[type] };
 }

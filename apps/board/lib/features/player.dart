@@ -11,6 +11,7 @@ import '../engine/lesson_controller.dart';
 import '../engine/model.dart';
 import '../engine/session_log.dart';
 import 'participation.dart';
+import 'smartboard.dart';
 
 /// Teacher Mode lesson player: the block, and one row of big controls —
 /// Back · Pause · Next · Pen · Quiz (plus Read aloud).
@@ -68,6 +69,17 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
     if (mounted) Navigator.pop(context);
   }
 
+  // The Smartboard pauses the lesson; closing it comes back to the same block, as it was.
+  bool _pausedBeforeBoard = false;
+  void _boardOpened() {
+    _pausedBeforeBoard = c.paused;
+    c.setPaused(true);
+  }
+
+  void _boardClosed() {
+    if (mounted && !_pausedBeforeBoard) c.setPaused(false);
+  }
+
   /// Quiz button: three questions on this topic, any time, answered by the class.
   void _quickQuiz() {
     final qs = widget.pack.topicQuestions(widget.lesson.topicId)..shuffle(Random());
@@ -106,6 +118,8 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
                 child: Row(children: [
                   Expanded(child: Text(widget.lesson.title.t(l), style: text.headlineMedium, overflow: TextOverflow.ellipsis)),
                   Text('${c.index + 1} / ${c.blocks.length}', style: text.headlineMedium),
+                  const SizedBox(width: 16),
+                  SmartboardButton(onOpen: _boardOpened, onClose: _boardClosed),
                   const SizedBox(width: 16),
                   TextButton(onPressed: () => c.setLang(l == Lang.en ? Lang.kn : Lang.en), child: Text(l == Lang.en ? 'ಕನ್ನಡ' : 'EN', style: const TextStyle(fontSize: 32))),
                   IconButton(key: const ValueKey('close'), iconSize: 64, icon: const Icon(Icons.close), onPressed: () => Navigator.pop(context)),
@@ -166,7 +180,7 @@ class _Controls extends StatelessWidget {
         const SizedBox(width: 20),
         BigButton(key: const ValueKey('quiz'), icon: Icons.quiz_outlined, label: tr('quiz', l), filled: false, onPressed: onQuiz),
         const SizedBox(width: 20),
-        if (c.current.narration != null)
+        if (c.canReadAloud)
           BigButton(key: const ValueKey('read'), icon: c.speaking ? Icons.volume_up : Icons.record_voice_over_outlined, label: tr('readAloud', l), filled: false, onPressed: c.speaking ? null : c.readAloud),
         const Spacer(),
         c.isLast

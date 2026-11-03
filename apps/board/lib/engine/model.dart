@@ -26,7 +26,9 @@ enum BlockType {
   classQuiz('class_quiz'),
   pyq('pyq'),
   trick('trick'),
-  recap('recap');
+  recap('recap'),
+  whiteboard('whiteboard'),
+  interactive('interactive');
 
   const BlockType(this.wire);
   final String wire;
@@ -59,12 +61,30 @@ class Block {
   List<String> ids(String key) => [for (final e in (raw[key] as List?) ?? const []) e as String];
   QuizMode get quizMode => _mode(raw['mode']);
   int get secondsPerQuestion => raw['secondsPerQuestion'] as int? ?? 45;
+  /// Whiteboard steps, in order.
+  List<BoardStep> get boardSteps => [for (final s in (raw['steps'] as List?) ?? const []) if (s is Map) BoardStep.fromJson(s.cast<String, dynamic>())];
 
   /// Blocks the board does not know (from a newer schema) are skipped, never fatal.
   static Block? fromJson(Map<String, dynamic> j) {
     final t = BlockType.parse(j['type'] as String? ?? '');
     return t == null ? null : Block(t, j);
   }
+}
+
+/// One whiteboard step: what is drawn (on a 100 × 60 grid), and the line read while it appears.
+class BoardStep {
+  BoardStep({this.say, required this.draw, this.clear = false});
+  final L10n? say;
+  /// Draw items as in the schema (`kind` text, math, line, arrow, rect, circle, path, axes, plot).
+  final List<Map<String, dynamic>> draw;
+  /// Wipe the board before this step.
+  final bool clear;
+
+  factory BoardStep.fromJson(Map<String, dynamic> j) => BoardStep(
+        say: L10n.maybe(j['say']),
+        draw: [for (final d in (j['draw'] as List?) ?? const []) if (d is Map) d.cast<String, dynamic>()],
+        clear: j['clear'] == true,
+      );
 }
 
 class Lesson {
@@ -85,20 +105,30 @@ class Lesson {
 }
 
 class Question {
-  Question({required this.id, required this.topicId, required this.stem, required this.options, required this.answer, this.explanation, required this.exams, required this.difficulty, this.pyqExam, this.pyqYear, this.pyqVerified = false, this.format = 'mcq', this.passage});
+  Question({required this.id, this.chapterId, required this.topicId, required this.stem, required this.options, required this.answer, this.answers, this.numericAnswer, this.tolerance, this.explanation, required this.exams, required this.difficulty, this.pyqExam, this.pyqYear, this.pyqVerified = false, this.format = 'mcq', this.passage});
   final String id;
+  final String? chapterId;
   final String? topicId;
   final L10n stem;
   final List<L10n> options;
   final int answer;
+  /// multi_correct: every correct option (the set the class must pick exactly).
+  final List<int>? answers;
+  /// numeric: the value, accepted within ± [tolerance] (0 when absent).
+  final double? numericAnswer;
+  final double? tolerance;
   final L10n? explanation;
   final List<String> exams;
   final String difficulty;
   final String? pyqExam;
   final int? pyqYear;
   final bool pyqVerified;
-  /// mcq, assertion_reason or case_based.
+  /// mcq, assertion_reason, case_based, multi_correct or numeric.
   final String format;
+  bool get isMulti => format == 'multi_correct';
+  bool get isNumeric => format == 'numeric';
+  /// The correct options of a multi_correct question (just [answer] for the others).
+  Set<int> get correctSet => {...?answers, if (answers == null) answer};
   /// The case a case_based question is about.
   final L10n? passage;
 
@@ -106,10 +136,14 @@ class Question {
     final p = j['pyq'] as Map<String, dynamic>?;
     return Question(
       id: j['id'] as String,
+      chapterId: j['chapterId'] as String?,
       topicId: j['topicId'] as String?,
       stem: L10n.of(j['stem']),
       options: L10n.list(j['options']),
-      answer: j['answer'] as int,
+      answer: j['answer'] as int? ?? 0,
+      answers: (j['answers'] as List?)?.cast<int>(),
+      numericAnswer: (j['numericAnswer'] as num?)?.toDouble(),
+      tolerance: (j['tolerance'] as num?)?.toDouble(),
       explanation: L10n.maybe(j['explanation']),
       exams: [for (final e in (j['exams'] as List?) ?? const []) e as String],
       difficulty: j['difficulty'] as String? ?? 'medium',

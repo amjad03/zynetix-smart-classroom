@@ -5,6 +5,7 @@ import '../core/strings.dart';
 import '../core/theme.dart';
 import '../engine/model.dart';
 import 'home.dart';
+import 'smartboard.dart';
 
 /// Subject tabs; under each, the section's chapters with their topics already open, so a lesson
 /// is three taps from Home: Teacher Mode → subject → Start.
@@ -38,6 +39,8 @@ class _TeacherModeScreenState extends State<TeacherModeScreen> {
               showSelectedIcon: false,
               onSelectionChanged: (v) => setState(() => _year = v.first),
             ),
+            const SizedBox(width: 24),
+            const SmartboardButton(),
             const SizedBox(width: 24),
           ],
           bottom: TabBar(

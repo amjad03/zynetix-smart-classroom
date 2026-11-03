@@ -3,7 +3,17 @@ import { useState } from 'react';
 import { EXAMS, L10nInput, Shell, api, errorText, useApi, type L10n } from '@zynetix/web-ui';
 import { NAV } from '../../lib/nav';
 
-type Q = { id: string; chapterId: string; topicId?: string; format?: 'mcq' | 'assertion_reason' | 'case_based'; passage?: L10n; stem: L10n; options: L10n[]; answer: number; explanation?: L10n; exams: string[]; difficulty: string; pyq?: { exam: string; year: number; verified: boolean }; tags: string[] };
+type Q = { id: string; chapterId: string; topicId?: string; format?: 'mcq' | 'assertion_reason' | 'case_based' | 'multi_correct' | 'numeric'; passage?: L10n; stem: L10n; options: L10n[]; answer: number; answers?: number[]; numericAnswer?: number; tolerance?: number; explanation?: L10n; exams: string[]; difficulty: string; pyq?: { exam: string; year: number; verified: boolean }; tags: string[] };
+
+const FORMAT_TAG: Record<string, string> = { case_based: 'Case', assertion_reason: 'A–R', multi_correct: 'Multi', numeric: 'Numeric' };
+const blankOptions = () => [{ en: '' }, { en: '' }, { en: '' }, { en: '' }];
+
+/** The correct answer as listed in the table. */
+function answerText(q: Q): string {
+  if (q.format === 'numeric') return `${q.numericAnswer ?? '?'}${q.tolerance ? ` ± ${q.tolerance}` : ''}`;
+  if (q.format === 'multi_correct') return (q.answers ?? [q.answer]).map((i) => 'ABCD'[i]).join(', ');
+  return `${'ABCD'[q.answer]}. ${q.options[q.answer]?.en ?? ''}`;
+}
 
 const AR = [
   'Both A and R are true, and R is the correct explanation of A.',
@@ -42,7 +52,7 @@ export default function Questions() {
             {data?.map((q) => (
               <tr key={q.id}>
                 <td>{q.id}</td>
-                <td>{q.format && q.format !== 'mcq' && <span className="tag">{q.format === 'case_based' ? 'Case' : 'A–R'}</span>}{q.stem.en}<div className="muted">✔ {'ABCD'[q.answer]}. {q.options[q.answer]?.en}</div></td>
+                <td>{q.format && q.format !== 'mcq' && <span className="tag">{FORMAT_TAG[q.format]}</span>}{q.stem.en}<div className="muted">✔ {answerText(q)}</div></td>
                 <td>{q.exams.map((e) => <span key={e} className="tag">{e}</span>)}</td>
                 <td>{q.difficulty}</td>
                 <td>{q.pyq ? `${q.pyq.exam} ${q.pyq.year}${q.pyq.verified ? ' ✔' : ' (unverified)'}` : '—'}</td>
@@ -71,18 +81,36 @@ function Editor({ q: initial, chapters, onDone }: { q: Q; chapters: { id: string
       <div className="row">
         <label>Format<select value={q.format ?? 'mcq'} onChange={(e) => {
           const format = e.target.value as Q['format'];
+          // Only the chosen format's fields are kept, so the strict schema accepts the save.
+          const base: Q = { ...q, format, answers: undefined, numericAnswer: undefined, tolerance: undefined, options: q.options.length === 4 ? q.options : blankOptions() };
           setQ(format === 'assertion_reason'
-            ? { ...q, format, stem: q.stem.en ? q.stem : { en: 'Assertion (A): \nReason (R): ' }, options: AR.map((en) => ({ en })) }
-            : { ...q, format, passage: format === 'case_based' ? q.passage ?? { en: '' } : undefined });
+            ? { ...base, stem: q.stem.en ? q.stem : { en: 'Assertion (A): \nReason (R): ' }, options: AR.map((en) => ({ en })) }
+            : format === 'numeric'
+              ? { ...base, options: [], answer: 0, numericAnswer: q.numericAnswer ?? 0, tolerance: q.tolerance }
+              : format === 'multi_correct'
+                ? { ...base, answers: q.answers ?? [q.answer] }
+                : { ...base, passage: format === 'case_based' ? q.passage ?? { en: '' } : undefined });
         }}>
           <option value="mcq">Multiple choice</option><option value="assertion_reason">Assertion–Reason (CBSE)</option><option value="case_based">Case-based (CBSE)</option>
+          <option value="multi_correct">More than one correct (JEE Advanced)</option><option value="numeric">Numeric answer (JEE)</option>
         </select></label>
       </div>
       {q.format === 'case_based' && <L10nInput label="Case / passage (shown above the question)" value={q.passage} onChange={(passage) => setQ({ ...q, passage })} multiline />}
       <L10nInput label="Question" value={q.stem} onChange={(stem) => setQ({ ...q, stem })} multiline />
-      {q.options.map((o, i) => (
+      {q.format === 'numeric' && (
+        <div className="row">
+          <label>Answer (number)<input type="number" step="any" value={q.numericAnswer ?? ''} onChange={(e) => setQ({ ...q, numericAnswer: e.target.value === '' ? undefined : Number(e.target.value) })} /></label>
+          <label>Tolerance ± (0 = exact)<input type="number" step="any" min={0} value={q.tolerance ?? ''} onChange={(e) => setQ({ ...q, tolerance: e.target.value === '' ? undefined : Number(e.target.value) })} /></label>
+        </div>
+      )}
+      {q.format !== 'numeric' && q.options.map((o, i) => (
         <div className="row" key={i}>
-          <label style={{ flexDirection: 'row', alignItems: 'center' }}><input type="radio" checked={q.answer === i} onChange={() => setQ({ ...q, answer: i })} /> {'ABCD'[i]}</label>
+          {q.format === 'multi_correct'
+            ? <label style={{ flexDirection: 'row', alignItems: 'center' }}><input type="checkbox" checked={(q.answers ?? []).includes(i)} onChange={(e) => {
+                const answers = (e.target.checked ? [...(q.answers ?? []), i] : (q.answers ?? []).filter((x) => x !== i)).sort();
+                setQ({ ...q, answers, answer: answers[0] ?? 0 });
+              }} /> {'ABCD'[i]}</label>
+            : <label style={{ flexDirection: 'row', alignItems: 'center' }}><input type="radio" checked={q.answer === i} onChange={() => setQ({ ...q, answer: i })} /> {'ABCD'[i]}</label>}
           <div style={{ flex: 1 }}><L10nInput label={`Option ${'ABCD'[i]}`} value={o} onChange={(v) => setQ({ ...q, options: q.options.map((x, j) => (j === i ? v : x)) })} /></div>
         </div>
       ))}

@@ -38,6 +38,9 @@ Board screens are 1920×1080 and rendered with the app's own fonts (`apps/board/
 | ![Worked example](apps/board/screenshots/png/07-player-example.png) | ![Roll-call quiz](apps/board/screenshots/png/08-quiz-roll-call.png) |
 | ![Team challenge](apps/board/screenshots/png/09-quiz-team-challenge.png) | ![Pen over a lesson](apps/board/screenshots/png/10-player-pen.png) |
 | ![Self-Learning period](apps/board/screenshots/png/11-self-learning.png) | ![Teacher PIN](apps/board/screenshots/png/12-teacher-pin.png) |
+| ![Smartboard with the Insert panel](apps/board/screenshots/png/13-smartboard-insert.png) | ![Whiteboard block, step by step](apps/board/screenshots/png/14-player-whiteboard.png) |
+| ![Function-plot interactive](apps/board/screenshots/png/15-player-interactive-plot.png) | ![Exam Practice](apps/board/screenshots/png/16-exam-practice.png) |
+| ![Numeric question with keypad](apps/board/screenshots/png/17-quiz-numeric-keypad.png) | |
 
 | College Admin | Content CMS |
 |---|---|
@@ -72,7 +75,7 @@ Tests:
 | lesson-schema | 4 (vitest) |
 | pack-builder | 5 (vitest) |
 | api | 9 end-to-end tests against PostgreSQL (jest) |
-| cms | 4 (vitest) |
-| board | 23 (flutter test) |
+| cms | 6 (vitest) |
+| board | 45 (flutter test) |
 
 The Admin and CMS apps were also smoke-tested end to end in Chromium against the seeded API.

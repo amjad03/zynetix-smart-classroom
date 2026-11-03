@@ -12,14 +12,21 @@ import 'package:kinetix_ui/kinetix_ui.dart';
 import 'package:zynetix_board/blocks/embeds.dart';
 import 'package:zynetix_board/core/services.dart';
 import 'package:zynetix_board/engine/model.dart';
+import 'package:zynetix_board/engine/session_log.dart';
+import 'package:zynetix_board/features/exam_practice.dart';
+import 'package:zynetix_board/features/participation.dart';
 import 'package:zynetix_board/features/pin.dart';
 import 'package:zynetix_board/features/player.dart';
 import 'package:zynetix_board/features/self_learning.dart';
+import 'package:zynetix_board/features/smartboard.dart';
 import 'package:zynetix_board/features/teacher_mode.dart';
 
+import '../test/fixtures.dart';
 import '../test/helpers.dart';
 
 const kx = '/root/.pub-cache/git/Kinetix-6db5f65a84c0b30f227fa9d5929db3e169ad2ffb/packages/kinetix_ui/fonts';
+
+const katexDir = '/root/.pub-cache/hosted/pub.dev/flutter_math_fork-0.7.4/lib/katex_fonts/fonts';
 
 Future<void> loadFonts() async {
   Future<void> family(String name, List<String> files) async {
@@ -37,6 +44,11 @@ Future<void> loadFonts() async {
     if (files.isNotEmpty) await family(n, files);
   }
   await family('MaterialIcons', ['/home/user/sdk/flutter/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf']);
+  // flutter_math_fork's KaTeX fonts, so formulas render as on the board.
+  final katex = Directory(katexDir).listSync().whereType<File>().map((f) => f.path).toList();
+  for (final fam in {for (final p in katex) base(p).split('-').first}) {
+    await family('packages/flutter_math_fork/$fam', katex.where((p) => base(p).startsWith('$fam-')).toList());
+  }
 }
 
 /// Real labs; a labelled card for WebView content.
@@ -145,6 +157,70 @@ void main() {
       await t.tap(find.byKey(ValueKey('pin-$k')));
     }
     await shot(t, '12-teacher-pin');
+  });
+
+  testWidgets('13 smartboard with insert panel', (t) async {
+    final s = await shotServices();
+    await pumpBoard(t, s, home: SmartboardScreen(controller: SmartboardScreen.newBoard()));
+    await t.pump();
+    final st = t.state<SmartboardScreenState>(find.byType(SmartboardScreen));
+    // A little teaching on the board: a parabola sketch, its equation, and a highlighted root.
+    Future<void> stroke(List<Offset> pts) async {
+      final g = await t.startGesture(pts.first, kind: PointerDeviceKind.stylus);
+      for (final p in pts.skip(1)) {
+        await g.moveTo(p);
+      }
+      await g.up();
+      await t.pump();
+    }
+
+    await stroke([for (var i = 0; i <= 40; i++) Offset(160 + i * 16.0, 300 + 0.9 * (i - 20) * (i - 20))]);
+    await stroke([const Offset(120, 660), const Offset(860, 660)]);
+    await stroke([const Offset(480, 820), const Offset(480, 180)]);
+    st.insertMath(r'y = x^2 - 4');
+    await t.tap(find.byKey(const ValueKey('insert')));
+    await t.pump();
+    await t.pump(const Duration(seconds: 1));
+    await shot(t, '13-smartboard-insert');
+  });
+
+  testWidgets('14 whiteboard block', (t) async {
+    final s = await shotServices();
+    final p = s.store.byChapter('puc1-maths-05-complex-numbers-and-quadratic-equations') ?? s.store.byChapter(motion)!;
+    await pumpBoard(t, s, home: LessonPlayerScreen(pack: p, lesson: lessonWith(p, [whiteboardBlock()])));
+    await t.pump(const Duration(seconds: 3));
+    await t.tap(find.byKey(const ValueKey('wbNext')));
+    await t.pump(const Duration(seconds: 3));
+    await t.tap(find.byKey(const ValueKey('wbNext')));
+    await t.pump(const Duration(milliseconds: 500)); // mid-way through drawing step 3
+    await shot(t, '14-player-whiteboard');
+  });
+
+  testWidgets('15 function plot interactive', (t) async {
+    final s = await shotServices();
+    final p = s.store.byChapter(motion)!;
+    await pumpBoard(t, s, home: LessonPlayerScreen(pack: p, lesson: lessonWith(p, [interactiveBlock('function_plot')])));
+    await t.drag(find.byKey(const ValueKey('slider-a')), const Offset(-120, 0));
+    await shot(t, '15-player-interactive-plot');
+  });
+
+  testWidgets('16 exam practice', (t) async {
+    await pumpBoard(t, await shotServices(), home: const ExamPracticeScreen());
+    await shot(t, '16-exam-practice');
+  });
+
+  testWidgets('17 numeric question', (t) async {
+    final s = await shotServices();
+    final rec = SessionRecorder.raw(outbox: s.outbox, sectionId: 's', mode: 'teacher', chapterId: 'c', topicId: 't', lessonId: 'l', packVersion: '1');
+    await pumpBoard(t, s, home: Scaffold(
+      appBar: AppBar(toolbarHeight: 112, title: const Text('JEE Main · Mock test', style: TextStyle(fontSize: 48, fontWeight: FontWeight.w700))),
+      body: Padding(padding: const EdgeInsets.all(40), child: QuizRunner(questions: [numericQuestion(), multiQuestion()], mode: QuizMode.monitor, lang: Lang.en, recorder: rec, room: ClassRoom(rollCount: 60), showExams: true)),
+    ));
+    for (final k in ['2', '.', '5']) {
+      await t.tap(find.byKey(ValueKey('key-$k')));
+    }
+    await t.pump(const Duration(seconds: 1));
+    await shot(t, '17-quiz-numeric-keypad');
   });
 }
 

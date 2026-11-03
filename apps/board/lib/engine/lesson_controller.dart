@@ -35,9 +35,10 @@ class LessonController extends ChangeNotifier {
 
   void goTo(int i) {
     if (i < 0 || i >= blocks.length || i == _index) return;
-    narrator.stop();
+    stopSpeech();
     _speaking = false;
     _index = i;
+    stepLine = null;
     _pen = false; // ink belongs to one block
     recorder.shown(current.id);
     notifyListeners();
@@ -50,11 +51,37 @@ class LessonController extends ChangeNotifier {
     if (p == _paused) return;
     _paused = p;
     if (p) {
-      narrator.stop();
+      stopSpeech();
       _speaking = false;
     }
     notifyListeners();
   }
+
+  // Speech is queued, so a block's narration and its whiteboard steps' lines never talk over
+  // each other; stopping drops everything queued.
+  Future<void> _speech = Future.value();
+  int _speechGen = 0;
+
+  /// Reads [text] aloud after whatever is being read now. Completes when it has been read
+  /// (or dropped by [stopSpeech]).
+  Future<void> speak(L10n text) {
+    final gen = _speechGen;
+    final f = _speech.then((_) async {
+      if (gen == _speechGen) await narrator.speak(text.t(_lang), _lang);
+    });
+    _speech = f.catchError((Object _) {});
+    return _speech;
+  }
+
+  void stopSpeech() {
+    _speechGen++;
+    narrator.stop();
+  }
+
+  /// Teacher Mode: once the teacher has asked for Read aloud, whiteboard steps read their lines
+  /// as they appear. A step's line is what the 🔊 button reads on a block with no narration.
+  bool readAloudOn = false;
+  L10n? stepLine;
 
   void togglePen() {
     _pen = !_pen;
@@ -68,17 +95,23 @@ class LessonController extends ChangeNotifier {
 
   /// Reads the current block's narration aloud (the 🔊 button in Teacher Mode).
   Future<void> readAloud() async {
-    final n = current.narration;
-    if (n == null) return;
+    readAloudOn = true;
+    final lines = [?current.narration, if (current.type == BlockType.whiteboard) ?stepLine];
+    if (lines.isEmpty) return;
     _speaking = true;
     notifyListeners();
-    await narrator.speak(n.t(_lang), _lang);
+    for (final n in lines) {
+      await speak(n);
+    }
     _speaking = false;
     notifyListeners();
   }
 
+  /// Whether the 🔊 button applies to this block.
+  bool get canReadAloud => current.narration != null || current.type == BlockType.whiteboard;
+
   void finish({required bool completed}) {
-    narrator.stop();
+    stopSpeech();
     recorder.close(completed: completed);
   }
 }
