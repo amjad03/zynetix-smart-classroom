@@ -14,7 +14,7 @@ void main() {
     final key = parseTrustedKey(await rootBundle.loadString('assets/packs/trusted-key.json'));
     final store = PackStore(Directory.systemTemp.createTempSync('p'), trustedKeys: {key.key: key.value});
     await Services.installSeedPacks(store, rootBundle);
-    expect(store.packs.length, 2);
+    expect(store.packs.length, 106);
     final syllabus = await Services.loadSyllabus(rootBundle);
     expect(syllabus.values.expand((y) => y.values).expand((c) => c).length, 106);
   });

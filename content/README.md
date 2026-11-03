@@ -8,14 +8,13 @@
   - `media/` (PhET sims, CC BY 4.0: see `PHET-LICENSE.txt`)
 - `pnpm packs` validates the packs and builds signed `.zpack` files into `content/dist/` and `apps/board/assets/packs/`.
 
-Seeded:
+All 106 chapters have packs: 539 topics, 539 lessons and 2,625 exam-pattern questions.
 
-| Pack | Topics | Questions | Reuses from Kinetix |
-|---|---|---|---|
-| 1st PUC Physics, Motion in a Straight Line | 5 | 19 | graph-plotter sim, inclined-plane lab, PhET projectile-motion |
-| 2nd PUC Chemistry, Solutions | 5 | 20 | molecules and crystal-lattices 3D models, PhET molarity, osmosis animation, titration and osmosis labs |
+- Every topic has a lesson with an intro, concepts, a worked example, a class quiz and a recap, plus pyq, trick, 3D, simulation and lab blocks where they fit.
+- The packs reuse 3D models, labs, animations and sims from Zynetix Board (Kinetix), plus 13 offline PhET sims.
+- `content/REVIEW.md` lists, chapter by chapter, the facts, syllabus-scope assumptions and Kannada terms a subject teacher should check.
 
 ## Before classroom use
 
-- **Kannada:** titles, headings, narration and recaps have Kannada text. It needs a native-speaker review; Kinetix tracks its own review in `docs/i18n`. Examples and questions are in English only.
+- **Kannada:** titles, headings, narration and recaps have Kannada text, which needs a Kannada-medium teacher's review (see REVIEW.md). Examples and questions are in English only.
 - **PYQ years:** none of the seeded questions has a PYQ year. They are written in the KCET/NEET/JEE pattern and tagged by exam. Verified paper years should be added in the CMS (`pyq: {exam, year, verified: true}`). We must not label a question as a past paper question until that is checked.
