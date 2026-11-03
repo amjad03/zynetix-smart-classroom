@@ -65,6 +65,144 @@
    "formula": "D = \\frac{\\text{Cost} - \\text{Residual value}}{\\text{Useful life (years)}}, \\qquad r = \\frac{D}{\\text{Cost}}\\times 100"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Straight line method"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Cost 2 lakh, residual value 10 thousand, life 5 years. The same depreciation every year."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "SLM: equal yearly charge"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        9
+       ],
+       "tex": "D = \\frac{2{,}00{,}000 - 10{,}000}{5} = 38{,}000",
+       "size": 3.5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The rate is depreciation as a percentage of the original cost."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        20
+       ],
+       "tex": "r = \\frac{38{,}000}{2{,}00{,}000}\\times 100 = 19\\%",
+       "size": 3.5,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Book value falls by the same 38 thousand each year: a straight line."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        66,
+        10
+       ],
+       "to": [
+        98,
+        48
+       ],
+       "x": [
+        0,
+        5
+       ],
+       "y": [
+        0,
+        220
+       ],
+       "color": "white",
+       "xLabel": "years",
+       "yLabel": "₹ thousand"
+      },
+      {
+       "kind": "plot",
+       "fn": "200 - 38*x",
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        60,
+        51.5
+       ],
+       "text": {
+        "en": "Ends at residual 10"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "After three years: 2 lakh minus 1,14,000 leaves a book value of 86,000."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        33
+       ],
+       "tex": "3 \\times 38{,}000 = 1{,}14{,}000",
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        41
+       ],
+       "tex": "\\text{BV} = 2{,}00{,}000 - 1{,}14{,}000",
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        49
+       ],
+       "tex": "= 86{,}000",
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "sim-lab.graph-plotter",
    "type": "simulation",
    "source": "kinetix_sim",
@@ -86,6 +224,108 @@
    },
    "seconds": 120,
    "optional": true
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Book value under SLM"
+   },
+   "caption": {
+    "en": "Book value after x years = C − D·x, where D = (C − S) ÷ n. The graph is a straight line ending at the residual value."
+   },
+   "narration": {
+    "en": "Move the sliders and watch the straight line of book value."
+   },
+   "sliders": [
+    {
+     "name": "C",
+     "label": {
+      "en": "Cost (₹ thousand)"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 5,
+     "value": 200
+    },
+    {
+     "name": "S",
+     "label": {
+      "en": "Residual value (₹ thousand)"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 1,
+     "value": 10
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "Useful life (years)"
+     },
+     "min": 1,
+     "max": 15,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "fns": [
+    {
+     "fn": "C - (C-S)/n*x",
+     "label": "book value",
+     "color": "yellow"
+    }
+   ],
+   "x": [
+    0,
+    15
+   ],
+   "y": [
+    0,
+    500
+   ],
+   "xLabel": "years",
+   "yLabel": "book value (₹ thousand)",
+   "readouts": [
+    {
+     "label": {
+      "en": "Annual depreciation"
+     },
+     "expr": "(C-S)/n*1000",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Rate on cost"
+     },
+     "expr": "(C-S)/n/C*100",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Book value after 3 years"
+     },
+     "expr": "(C-3*(C-S)/n)*1000",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Default values: check D = ₹38,000 and the rate 19%."
+    },
+    {
+     "en": "Make the life longer. What happens to the slope?"
+    },
+    {
+     "en": "Set the residual value to zero. Where does the line end?"
+    }
+   ]
   },
   {
    "id": "ex1",

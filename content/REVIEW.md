@@ -548,3 +548,8 @@ No text is reproduced. Check these plot details against the texts:
 - **Conventions used:** quartiles at the (n+1)/4-th value; the tie correction m(m^2-1)/12.
 - **Board curves:** the skewness and kurtosis curves are illustrative.
 - **Kannada:** statistics terms need a native-speaker review.
+
+## Accountancy 1st PUC enrichment
+
+- **Book-keeping scope:** in introduction t1 the whiteboard groups identify, measure, record and classify under book-keeping, but the concept text says book-keeping is the recording part only. Align the two.
+- **GST credit (1a02-q34):** the answer assumes CGST/SGST input credit can be set off against IGST output tax.
