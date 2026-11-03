@@ -501,3 +501,25 @@ No text is reproduced.
 - **Spearman ties:** the correction (m^3-m)/12 is included; check it is in the current syllabus.
 - **Illustrative numbers:** the dairy, poultry and moneylender figures are made up and labelled as such.
 - **Kannada:** statistics terms need a native-speaker review.
+
+## Business Studies 2nd PUC ch2-6; Economics 1st PUC ch13-15; Economics 2nd PUC ch9-11
+
+### Business Studies
+
+- **LPG topic:** business-environment t4 is kar_pu only, assuming CBSE dropped LPG. If CBSE still teaches it, untag it and tag 2s03-q13..16 CBSE/CUET.
+- **Demonetisation:** the 86% share and Rs 18 lakh crore are approximate. The mnemonics are original, not NCERT.
+
+### Economics 1st PUC
+
+- **Workers by status:** about 52/25/23 (2017-18).
+- **Environment figures:** 17% of world population and 20% of livestock on 2.5% of world area; 0.08 ha forest per person against 0.47 ha needed; 5.3 bn t soil erosion a year; 20% of world iron ore; CPCB 17 categories.
+- **Table 8.2 growth rates:** China 10.3, Pakistan 6.3, India 5.7 (1980-90).
+- **China:** 26,000 communes; 30 million drought deaths.
+- **Not NCERT:** the rule-of-70 trick (1e15-q22).
+
+### Economics 2nd PUC
+
+- **NCERT section numbers:** approximate.
+- **Budget chapter t5:** debt trap, crowding out and FRBM may be deleted from the rationalised syllabus.
+- **Article 112:** the Annual Financial Statement. RBI-managed float since 1993. Budget and BoP figures are illustrative.
+- **Kannada:** terms need a native-speaker review.
