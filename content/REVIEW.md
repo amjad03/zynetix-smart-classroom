@@ -330,3 +330,15 @@ Each chapter has 4 or more CBSE-pattern questions: assertion–reason and case-b
 - **Ch 3:** voucher types (cash, transfer, compound); NCERT's wording may differ.
 - **Tricks:** the 13-concepts mnemonic is invented.
 - **Kannada terms to check:** ಸೆಳೆತ, ಋಣಿ/ಧನಿ, ಜರ್ನಲ್ ಪ್ರಾಪರ್, ಬ್ಯಾಂಕ್ ಹೊಂದಾಣಿಕೆ ಪಟ್ಟಿ.
+
+## 1st PUC Business Studies, ch 6–10
+
+- **Syllabus scope:** check whether export–import procedure, trade promotion and the WTO (Ch 10 t4–t5) and environmental protection (Ch 6 t4) are still in the book. Section numbers are best guesses.
+- **MSME limits:** both the 2020 limits and the April 2025 revision (₹2.5/10, ₹25/100, ₹125/500 cr) are given; the 2025 figures are from memory and need checking. The questions give the same answer under either set.
+- **Facts:**
+  - Startup India launched 16 Jan 2016
+  - founding years: NSIC 1955, DIC 1978, NABARD 1982, SIDBI 1990, SFURTI 2005, ASPIRE 2015
+  - GST started 1 July 2017 (101st Amendment); GSTIN has 15 digits
+  - WTO started 1 Jan 1995
+- **Beyond the Class 11 text:** the CSR 2% rule (s.135) and the EPS example.
+- **Kannada terms to check:** ವ್ಯವಹಾರ ನೈತಿಕತೆ, ಸಾಲಪತ್ರ, ಆದ್ಯತಾ/ಸಾಮಾನ್ಯ ಷೇರು, and the transliterations.
