@@ -357,3 +357,14 @@ Each chapter has 4 or more CBSE-pattern questions: assertion–reason and case-b
 - **Ch 4:** RTGS minimum ₹2 lakh.
 - **Ch 1:** hundi described as similar to a bill of exchange.
 - **Kannada terms to check:** ಏಕಮಾಲೀಕತ್ವ, ಜಂಟಿ ಬಂಡವಾಳ ಕಂಪನಿ, ಉಗ್ರಾಣ, ಬಂಧಿತ ಉಗ್ರಾಣ, ಹೊರಗುತ್ತಿಗೆ.
+
+## 2nd PUC Accountancy, ch 1–5
+
+- **Statutory figures:**
+  - at most 50 partners
+  - Table F interest: arrears 10%, advance 12%
+  - calls in advance under "Other current liabilities"
+  - s.53 allows a discount only for sweat equity
+- **Questions to check:** 2a01-q05 (mutual agency).
+- **Tricks:** the "E-0-0-0-6" mnemonic is invented.
+- **Kannada terms to check:** ಸುನಾಮ, ವಸೂಲಾತಿ ಖಾತೆ, ಗಳಿಕೆಯ ಅನುಪಾತ, ಮುಟ್ಟುಗೋಲು.
