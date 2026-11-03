@@ -1,0 +1,936 @@
+{
+ "id": "puc2-electronics-04-operational-amplifiers.t5.lesson",
+ "chapterId": "puc2-electronics-04-operational-amplifiers",
+ "topicId": "puc2-electronics-04-operational-amplifiers.t5",
+ "title": {
+  "en": "Integrator, differentiator and comparator",
+  "kn": "ಇಂಟಿಗ್ರೇಟರ್, ಡಿಫರೆನ್ಷಿಯೇಟರ್ ಮತ್ತು ಕಂಪೇರೇಟರ್"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Calculus with a capacitor",
+    "kn": "ಧಾರಕದಿಂದ ಕಲನಶಾಸ್ತ್ರ"
+   },
+   "hook": {
+    "en": "Swap a resistor for a capacitor and the op-amp starts doing calculus: it integrates or differentiates the input. Remove the feedback and it simply compares two voltages.",
+    "kn": "ಒಂದು ರೋಧಕದ ಬದಲು ಧಾರಕ ಇಟ್ಟರೆ ಆಪ್-ಆಂಪ್ ಕಲನಶಾಸ್ತ್ರ ಮಾಡುತ್ತದೆ: ಇನ್‌ಪುಟ್ ಅನ್ನು ಸಮಾಕಲನ ಅಥವಾ ಅವಕಲನ ಮಾಡುತ್ತದೆ. ಪ್ರತಿಪೋಷಣೆ ತೆಗೆದರೆ ಎರಡು ವೋಲ್ಟೇಜ್‌ಗಳನ್ನು ಹೋಲಿಸುತ್ತದೆ."
+   },
+   "objectives": [
+    {
+     "en": "Derive the output of an op-amp integrator"
+    },
+    {
+     "en": "Derive the output of an op-amp differentiator"
+    },
+    {
+     "en": "Explain the comparator and zero-crossing detector"
+    }
+   ],
+   "narration": {
+    "en": "Swap a resistor for a capacitor and the op-amp starts doing calculus: it integrates or differentiates the input. Remove the feedback and it simply compares two voltages.",
+    "kn": "ಒಂದು ರೋಧಕದ ಬದಲು ಧಾರಕ ಇಟ್ಟರೆ ಆಪ್-ಆಂಪ್ ಕಲನಶಾಸ್ತ್ರ ಮಾಡುತ್ತದೆ: ಇನ್‌ಪುಟ್ ಅನ್ನು ಸಮಾಕಲನ ಅಥವಾ ಅವಕಲನ ಮಾಡುತ್ತದೆ. ಪ್ರತಿಪೋಷಣೆ ತೆಗೆದರೆ ಎರಡು ವೋಲ್ಟೇಜ್‌ಗಳನ್ನು ಹೋಲಿಸುತ್ತದೆ."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Integrator"
+   },
+   "body": {
+    "en": "In the integrator, the input is applied through R and a capacitor C is the feedback element. At the virtual ground the input current $V_i/R$ charges C: $V_i/R = -C\\,dV_o/dt$, so $V_o = -\\dfrac{1}{RC}\\int V_i\\,dt$. A constant input gives a linear ramp of slope $-V_i/RC$; a square wave becomes a triangular wave. In practice a large resistor is placed across C to stop the output drifting into saturation at very low frequencies."
+   },
+   "points": [
+    {
+     "en": "Vo = −(1/RC)∫Vi dt"
+    },
+    {
+     "en": "Constant input → ramp of slope −Vi/RC"
+    },
+    {
+     "en": "Square wave → triangular wave"
+    }
+   ],
+   "narration": {
+    "en": "The integrator has R at the input and C in the feedback. Its output is minus one over RC times the integral of the input, so a square wave becomes a triangle.",
+    "kn": "ಇಂಟಿಗ್ರೇಟರ್‌ನಲ್ಲಿ ಇನ್‌ಪುಟ್‌ನಲ್ಲಿ R, ಪ್ರತಿಪೋಷಣೆಯಲ್ಲಿ C. ಔಟ್‌ಪುಟ್ = −(1/RC)∫Vi dt; ಚೌಕ ತರಂಗ ತ್ರಿಕೋನ ತರಂಗವಾಗುತ್ತದೆ."
+   },
+   "formula": "V_o = -\\frac{1}{RC}\\int V_i\\,dt"
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Integrator, differentiator and comparator"
+   },
+   "narration": {
+    "en": "On the board: integrator, differentiator and comparator."
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Put a capacitor in the feedback path and a resistor at the input. The output becomes minus one over RC times the integral of the input."
+     },
+     "draw": [
+      {
+       "kind": "path",
+       "points": [
+        [
+         42,
+         15.0
+        ],
+        [
+         42,
+         29.0
+        ],
+        [
+         56,
+         22
+        ]
+       ],
+       "color": "white",
+       "closed": true
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        16.3
+       ],
+       "text": {
+        "en": "−"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        43,
+        23.3
+       ],
+       "text": {
+        "en": "+"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        6,
+        18.5
+       ],
+       "r": 0.8,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        6.8,
+        18.5
+       ],
+       "to": [
+        12,
+        18.5
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         12,
+         18.5
+        ],
+        [
+         13.0,
+         18.5
+        ],
+        [
+         14.17,
+         17.3
+        ],
+        [
+         15.33,
+         19.7
+        ],
+        [
+         16.5,
+         17.3
+        ],
+        [
+         17.67,
+         19.7
+        ],
+        [
+         18.83,
+         17.3
+        ],
+        [
+         20.0,
+         19.7
+        ],
+        [
+         21.17,
+         17.3
+        ],
+        [
+         22.33,
+         19.7
+        ],
+        [
+         23.5,
+         17.3
+        ],
+        [
+         24.67,
+         19.7
+        ],
+        [
+         25.83,
+         17.3
+        ],
+        [
+         27.0,
+         18.5
+        ],
+        [
+         28,
+         18.5
+        ]
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "line",
+       "from": [
+        28,
+        18.5
+       ],
+       "to": [
+        42,
+        18.5
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        17,
+        12.5
+       ],
+       "text": {
+        "en": "R"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        2,
+        12.5
+       ],
+       "text": {
+        "en": "Vi"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "line",
+       "from": [
+        34,
+        18.5
+       ],
+       "to": [
+        34,
+        6
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        34,
+        6
+       ],
+       "to": [
+        49.3,
+        6
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        49.3,
+        4.0
+       ],
+       "to": [
+        49.3,
+        8.0
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "line",
+       "from": [
+        50.7,
+        4.0
+       ],
+       "to": [
+        50.7,
+        8.0
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "line",
+       "from": [
+        50.7,
+        6
+       ],
+       "to": [
+        62,
+        6
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        62,
+        6
+       ],
+       "to": [
+        62,
+        22
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        56,
+        22
+       ],
+       "to": [
+        72,
+        22
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        74,
+        20
+       ],
+       "text": {
+        "en": "Vo"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        53,
+        0.5
+       ],
+       "text": {
+        "en": "C"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "line",
+       "from": [
+        42,
+        25.5
+       ],
+       "to": [
+        38,
+        25.5
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        38,
+        25.5
+       ],
+       "to": [
+        38,
+        32
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        36,
+        32
+       ],
+       "to": [
+        40,
+        32
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        36.7,
+        32.8
+       ],
+       "to": [
+        39.3,
+        32.8
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        37.4,
+        33.6
+       ],
+       "to": [
+        38.6,
+        33.6
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        2,
+        29
+       ],
+       "tex": "V_o = -\\frac{1}{RC}\\int V_i\\,dt",
+       "size": 4,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A steady input gives a steady ramp, so a square wave becomes a triangular wave."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        41
+       ],
+       "text": {
+        "en": "square in"
+       },
+       "size": 3,
+       "color": "yellow"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         4,
+         54
+        ],
+        [
+         4,
+         46
+        ],
+        [
+         14,
+         46
+        ],
+        [
+         14,
+         54
+        ],
+        [
+         24,
+         54
+        ],
+        [
+         24,
+         46
+        ],
+        [
+         34,
+         46
+        ],
+        [
+         34,
+         54
+        ],
+        [
+         44,
+         54
+        ]
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        44,
+        50
+       ],
+       "to": [
+        51,
+        50
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        54,
+        40.5
+       ],
+       "text": {
+        "en": "triangle out"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         54,
+         46
+        ],
+        [
+         64,
+         54
+        ],
+        [
+         74,
+         46
+        ],
+        [
+         84,
+         54
+        ],
+        [
+         94,
+         46
+        ]
+       ],
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Swap R and C and you get a differentiator. Remove the feedback altogether and the op-amp becomes a comparator."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "Differentiator: C in, R in feedback"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        3,
+        10
+       ],
+       "tex": "V_o = -RC\\,\\frac{dV_i}{dt}",
+       "size": 4.5,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        22
+       ],
+       "text": {
+        "en": "triangle in → square out"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        29
+       ],
+       "text": {
+        "en": "sine in → cosine out"
+       },
+       "size": 3.5,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        39
+       ],
+       "text": {
+        "en": "Comparator: no feedback"
+       },
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        46
+       ],
+       "text": {
+        "en": "V+ > V−: Vo = +Vsat"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        53
+       ],
+       "text": {
+        "en": "V+ < V−: Vo = −Vsat"
+       },
+       "size": 3.5,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55,
+        46
+       ],
+       "text": {
+        "en": "zero-crossing detector:"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        55,
+        52
+       ],
+       "text": {
+        "en": "sine in, square out"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ],
+     "clear": true
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Differentiator and comparator"
+   },
+   "body": {
+    "en": "In the differentiator the positions are swapped: C at the input and R in the feedback. The capacitor current $C\\,dV_i/dt$ flows through R, so $V_o = -RC\\,dV_i/dt$. A triangular wave becomes a square wave and a sine becomes a (negative) cosine whose amplitude grows with frequency, $2\\pi f RC V_m$. A comparator uses the op-amp without feedback: because the gain is huge, the output goes to $+V_{sat}$ when $V_+ > V_-$ and to $-V_{sat}$ when $V_+ < V_-$. With one input grounded it is a zero-crossing detector that turns a sine wave into a square wave."
+   },
+   "points": [
+    {
+     "en": "Differentiator: Vo = −RC dVi/dt"
+    },
+    {
+     "en": "Triangle → square; sine → cosine"
+    },
+    {
+     "en": "Comparator: no feedback, output ±Vsat"
+    },
+    {
+     "en": "Zero-crossing detector: sine → square"
+    }
+   ],
+   "narration": {
+    "en": "The differentiator has C at the input and R in the feedback, so its output is minus RC times the rate of change of the input. A comparator has no feedback and swings to plus or minus saturation.",
+    "kn": "ಡಿಫರೆನ್ಷಿಯೇಟರ್‌ನಲ್ಲಿ ಇನ್‌ಪುಟ್‌ನಲ್ಲಿ C, ಪ್ರತಿಪೋಷಣೆಯಲ್ಲಿ R: Vo = −RC dVi/dt. ಕಂಪೇರೇಟರ್‌ಗೆ ಪ್ರತಿಪೋಷಣೆ ಇಲ್ಲ; ಔಟ್‌ಪುಟ್ +Vsat ಅಥವಾ −Vsat."
+   },
+   "formula": "V_o = -RC\\,\\frac{dV_i}{dt}"
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "title": {
+    "en": "Try it yourself"
+   },
+   "caption": {
+    "en": "Op-amp integrator with a steady input Vi: the output ramps at −Vi/RC until it saturates at ±Vsat. Time is in ms (R in kΩ × C in µF gives RC in ms)."
+   },
+   "sliders": [
+    {
+     "name": "V",
+     "label": {
+      "en": "Input Vi"
+     },
+     "min": -2,
+     "max": 2,
+     "step": 0.1,
+     "value": 1,
+     "unit": "V"
+    },
+    {
+     "name": "R",
+     "label": {
+      "en": "Resistor R"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 10,
+     "unit": "kΩ"
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "Capacitor C"
+     },
+     "min": 0.1,
+     "max": 10,
+     "step": 0.1,
+     "value": 1,
+     "unit": "µF"
+    },
+    {
+     "name": "S",
+     "label": {
+      "en": "Saturation Vsat"
+     },
+     "min": 10,
+     "max": 15,
+     "step": 0.5,
+     "value": 13,
+     "unit": "V"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "RC"
+     },
+     "expr": "R*C",
+     "digits": 2,
+     "unit": "ms"
+    },
+    {
+     "label": {
+      "en": "Slope of output"
+     },
+     "expr": "-V/(R*C)",
+     "digits": 3,
+     "unit": "V/ms"
+    },
+    {
+     "label": {
+      "en": "Time to saturate"
+     },
+     "expr": "S*R*C/abs(V)",
+     "digits": 1,
+     "unit": "ms"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make Vi negative. Which way does the ramp go now?"
+    },
+    {
+     "en": "Double RC. What happens to the slope?"
+    },
+    {
+     "en": "Find R and C so that the output takes exactly 100 ms to reach −10 V with Vi = 1 V."
+    }
+   ],
+   "narration": {
+    "en": "Op-amp integrator with a steady input Vi: the output ramps at −Vi/RC until it saturates at ±Vsat. Time is in ms (R in kΩ × C in µF gives RC in ms). Make Vi negative. Which way does the ramp go now?"
+   },
+   "seconds": 120,
+   "optional": true,
+   "fns": [
+    {
+     "fn": "(abs(-V*x/(R*C)+S)-abs(-V*x/(R*C)-S))/2",
+     "label": "Vo",
+     "color": "orange"
+    },
+    {
+     "fn": "V",
+     "label": "Vi",
+     "color": "yellow"
+    }
+   ],
+   "x": [
+    0,
+    200
+   ],
+   "y": [
+    -15,
+    15
+   ],
+   "xLabel": "t (ms)",
+   "yLabel": "V"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "An integrator has R = 10 kΩ and C = 1 µF. A steady +1 V is applied at t = 0 with the output at 0 V. Find Vo after 50 ms, and when it saturates (Vsat = ±13 V)."
+   },
+   "steps": [
+    {
+     "en": "RC = 10⁴ × 10⁻⁶ = 0.01 s = 10 ms."
+    },
+    {
+     "en": "Slope = −Vi/RC = −1/0.01 = −100 V/s."
+    },
+    {
+     "en": "After 50 ms: Vo = −100 × 0.05 = −5 V."
+    },
+    {
+     "en": "It reaches −13 V at t = 13/100 = 0.13 s = 130 ms."
+    }
+   ],
+   "answer": {
+    "en": "−5 V; saturates after 130 ms"
+   },
+   "narration": {
+    "en": "Let us work this out together. An integrator has R = 10 kΩ and C = 1 µF. A steady +1 V is applied at t = 0 with the output at 0 V. Find Vo after 50 ms, and when it saturates (Vsat = ±13 V)."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "A differentiator has R = 10 kΩ and C = 0.1 µF. Find the output amplitude for a 1 V peak, 1 kHz sine input."
+   },
+   "steps": [
+    {
+     "en": "RC = 10⁴ × 10⁻⁷ = 10⁻³ s."
+    },
+    {
+     "en": "Vo = −RC × d(sin 2πft)/dt has amplitude 2πf RC Vm."
+    },
+    {
+     "en": "Amplitude = 2π × 1000 × 10⁻³ × 1 = 6.28 V (a negative cosine)."
+    }
+   ],
+   "answer": {
+    "en": "About 6.28 V peak"
+   },
+   "narration": {
+    "en": "Let us work this out together. A differentiator has R = 10 kΩ and C = 0.1 µF. Find the output amplitude for a 1 V peak, 1 kHz sine input."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2n04-q21",
+    "2n04-q22",
+    "2n04-q23"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer ends.",
+    "kn": "ತಂಡ ರಸಪ್ರಶ್ನೆ. ಸಮಯ ಮುಗಿಯುವ ಮೊದಲು ಪ್ರತಿ ತಂಡವೂ ಒಂದೇ ಉತ್ತರವನ್ನು ಒಪ್ಪಿಕೊಳ್ಳಲಿ."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "II PUC exam pattern"
+   },
+   "questionIds": [
+    "2n04-q24",
+    "2n04-q25"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "Now two questions in the Karnataka II PUC board exam pattern. Try them on your own before we check."
+   }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "Extra II PUC board practice"
+   },
+   "questionIds": [
+    "2n04-q28"
+   ],
+   "exams": [
+    "PUC"
+   ],
+   "narration": {
+    "en": "A few more board-pattern questions from this chapter for extra practice."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Integrator: R in, C in feedback; Vo = −(1/RC)∫Vi dt.",
+     "kn": "ಇಂಟಿಗ್ರೇಟರ್: ಇನ್‌ಪುಟ್ R, ಪ್ರತಿಪೋಷಣೆ C; Vo = −(1/RC)∫Vi dt."
+    },
+    {
+     "en": "Differentiator: C in, R in feedback; Vo = −RC dVi/dt.",
+     "kn": "ಡಿಫರೆನ್ಷಿಯೇಟರ್: ಇನ್‌ಪುಟ್ C, ಪ್ರತಿಪೋಷಣೆ R; Vo = −RC dVi/dt."
+    },
+    {
+     "en": "Square → triangle (integrator); triangle → square (differentiator).",
+     "kn": "ಚೌಕ → ತ್ರಿಕೋನ (ಇಂಟಿಗ್ರೇಟರ್); ತ್ರಿಕೋನ → ಚೌಕ (ಡಿಫರೆನ್ಷಿಯೇಟರ್)."
+    },
+    {
+     "en": "Comparator: no feedback, output ±Vsat.",
+     "kn": "ಕಂಪೇರೇಟರ್: ಪ್ರತಿಪೋಷಣೆ ಇಲ್ಲ, ಔಟ್‌ಪುಟ್ ±Vsat."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Derive the output of an op-amp integrator and sketch its output for a square-wave input."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2n04-q25"
+   ],
+   "narration": {
+    "en": "Recap. Integrator: R in, C in feedback; Vo = −(1/RC)∫Vi dt. Differentiator: C in, R in feedback; Vo = −RC dVi/dt. Square → triangle (integrator); triangle → square (differentiator). Comparator: no feedback, output ±Vsat.",
+    "kn": "ಪುನರಾವರ್ತನೆ. ಇಂಟಿಗ್ರೇಟರ್: ಇನ್‌ಪುಟ್ R, ಪ್ರತಿಪೋಷಣೆ C; Vo = −(1/RC)∫Vi dt. ಡಿಫರೆನ್ಷಿಯೇಟರ್: ಇನ್‌ಪುಟ್ C, ಪ್ರತಿಪೋಷಣೆ R; Vo = −RC dVi/dt. ಚೌಕ → ತ್ರಿಕೋನ (ಇಂಟಿಗ್ರೇಟರ್); ತ್ರಿಕೋನ → ಚೌಕ (ಡಿಫರೆನ್ಷಿಯೇಟರ್). ಕಂಪೇರೇಟರ್: ಪ್ರತಿಪೋಷಣೆ ಇಲ್ಲ, ಔಟ್‌ಪುಟ್ ±Vsat."
+   }
+  }
+ ]
+}

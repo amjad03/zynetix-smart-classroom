@@ -610,3 +610,10 @@ No text is reproduced. Check these plot details against the texts:
 - **Founding years:** NSIC 1955, DIC 1978, NABARD 1982, SIDBI 1990 (used in a sequencing question).
 - **Company members:** a private company needs 2 members and a public company 7.
 - **JHF systems:** Dayabhaga (West Bengal) and Mitakshara (elsewhere).
+
+## Electronics 2nd PUC ch1-5 (Karnataka PU)
+
+- **Topic split:** made up, not from the PUE book; clippers/clampers, the crystal oscillator and the emitter follower may sit elsewhere.
+- **Formula conventions:** Av = -beta rL/rin; astable T = 0.69(R1C1 + R2C2); RC phase shift f = 1/(2 pi RC sqrt6); 555 constants 0.693, 1.44 and 1.1.
+- **741 figures:** typical data-sheet values.
+- **Kannada:** terms need a native-speaker review.
