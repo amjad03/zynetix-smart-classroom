@@ -22,3 +22,6 @@ for (const dir of readdirSync(join(content, 'packs'))) {
 }
 writeFileSync(join(seed, 'index.json'), JSON.stringify(index, null, 2) + '\n');
 copyFileSync(join(__dirname, `../keys/${key.keyId}.public.json`), join(seed, 'trusted-key.json'));
+const syl = join(repo, 'apps/board/assets/syllabus');
+mkdirSync(syl, { recursive: true });
+for (const f of readdirSync(join(content, 'syllabus'))) copyFileSync(join(content, 'syllabus', f), join(syl, f));
