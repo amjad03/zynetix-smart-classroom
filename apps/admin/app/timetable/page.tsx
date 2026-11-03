@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { SUBJECTS, Shell, api, errorText, useApi } from '@zynetix/web-ui';
+import { SUBJECT_NAMES, Shell, api, errorText, useApi } from '@zynetix/web-ui';
 import { DAYS, NAV, Section } from '../../lib/nav';
 
 type Slot = { day: number; period: number; start: string; end: string; subject: string; teacher?: string };
@@ -51,7 +51,7 @@ export default function Timetable() {
                   <td key={d}>
                     <select value={at(d + 1, p)?.subject ?? ''} onChange={(e) => setCell(d + 1, p, e.target.value)}>
                       <option value="">—</option>
-                      {SUBJECTS.map((s) => <option key={s}>{s}</option>)}
+                      {(sections?.find((x) => x.id === sectionId)?.subjects ?? []).map((s) => <option key={s} value={s}>{SUBJECT_NAMES[s] ?? s}</option>)}
                       <option value="other">other</option>
                     </select>
                   </td>

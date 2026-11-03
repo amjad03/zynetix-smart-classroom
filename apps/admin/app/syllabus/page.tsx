@@ -1,10 +1,10 @@
 'use client';
 import { useState } from 'react';
-import { SUBJECTS, Shell, useApi } from '@zynetix/web-ui';
+import { BOARD_NAMES, SUBJECTS, SUBJECT_NAMES, Shell, useApi } from '@zynetix/web-ui';
 import { NAV } from '../../lib/nav';
 
 type Heat = {
-  sections: { id: string; label: string; year: string }[];
+  sections: { id: string; label: string; year: string; board: string; subjects: string[] }[];
   chapters: { id: string; subject: string; year: string; number: number; title: string; topics: number }[];
   cells: { sectionId: string; chapterId: string; taught: number; topics: number; share: number | null }[];
 };
@@ -18,14 +18,14 @@ export default function Syllabus() {
     <Shell product="College Admin" nav={NAV}>
       <h1>Syllabus progress</h1>
       <div className="row" style={{ marginBottom: 12 }}>
-        {SUBJECTS.map((s) => <button key={s} className={s === subject ? '' : 'secondary'} onClick={() => setSubject(s)}>{s}</button>)}
+        {SUBJECTS.filter((s) => data?.sections.some((x) => x.subjects.includes(s))).map((s) => <button key={s} className={s === subject ? '' : 'secondary'} onClick={() => setSubject(s)}>{SUBJECT_NAMES[s]}</button>)}
       </div>
       {error && <p className="error">{error}</p>}
-      {data?.sections.map((sec) => {
-        const chs = data.chapters.filter((c) => c.subject === subject && c.year === sec.year);
+      {data?.sections.filter((sec) => sec.subjects.includes(subject)).map((sec) => {
+        const chs = data.chapters.filter((c) => c.subject === subject && c.year === sec.year && data.cells.some((x) => x.sectionId === sec.id && x.chapterId === c.id));
         return (
           <div className="card" key={sec.id}>
-            <h2>{sec.label}</h2>
+            <h2>{sec.label} <span className="tag">{BOARD_NAMES[sec.board]}</span></h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: 6 }}>
               {chs.map((c) => {
                 const x = cell(sec.id, c.id);

@@ -22,7 +22,7 @@ export default function Scheduler() {
   const section = sections?.find((s) => s.id === sectionId);
   const day = new Date(`${date}T00:00`).getDay(); // 0 = Sunday
   const slots = timetable?.filter((s) => s.day === day) ?? [];
-  const topics = (chapters ?? []).filter((c) => c.hasPack && c.year === section?.year && (!slot || c.subject === slot.subject))
+  const topics = (chapters ?? []).filter((c) => c.hasPack && c.year === section?.year && section && c.boards.includes(section.board) && section.subjects.includes(c.subject) && (!slot || c.subject === slot.subject))
     .flatMap((c) => c.topics.map((t) => ({ id: t.id, label: `${c.subject} · ${c.title.en} · ${t.title.en}` })));
   const titleOf = (id: string) => chapters?.flatMap((c) => c.topics.map((t) => [t.id, `${c.title.en} · ${t.title.en}`] as const)).find(([i]) => i === id)?.[1] ?? id;
 

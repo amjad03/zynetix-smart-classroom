@@ -12,6 +12,7 @@ const common: Field[] = [
   { key: 'narration', label: 'Narration (read aloud in Self-Learning)', kind: 'l10nLong' },
   { key: 'seconds', label: 'Seconds on screen (Self-Learning)', kind: 'number' },
   { key: 'optional', label: 'Optional (dropped first in a short period)', kind: 'bool' },
+  { key: 'boards', label: 'Only for boards (kar_pu, cbse); empty = all', kind: 'ids' },
 ];
 
 export const BLOCK_FIELDS: Record<BlockType, Field[]> = {
@@ -19,8 +20,8 @@ export const BLOCK_FIELDS: Record<BlockType, Field[]> = {
   concept: [{ key: 'body', label: 'Body ($…$ for LaTeX)', kind: 'l10nLong' }, { key: 'formula', label: 'Display formula (LaTeX)', kind: 'text' }, { key: 'points', label: 'Key points', kind: 'l10nList' }],
   '3d_model': [{ key: 'modelId', label: 'Kinetix 3D model id (heart, molecules, atoms…)', kind: 'text' }, { key: 'variant', label: 'Variant (h2o, nacl…)', kind: 'text' }, { key: 'caption', label: 'Caption', kind: 'l10nLong' }],
   simulation: [
-    { key: 'source', label: 'Source', kind: 'select', options: ['phet', 'animation', 'kinetix_sim'] },
-    { key: 'simId', label: 'Sim id (PhET file in media/phet, animation id, or lab.graph-plotter…)', kind: 'text' },
+    { key: 'source', label: 'Source', kind: 'select', options: ['phet', 'animation', 'kinetix_sim', 'kinetix_cs'] },
+    { key: 'simId', label: 'Sim id (PhET file in media/phet, animation id, lab.graph-plotter…, or algo.bubble / sim.logic / code.sql for kinetix_cs)', kind: 'text' },
     { key: 'preset', label: 'Preset', kind: 'text' },
     { key: 'caption', label: 'Caption', kind: 'l10nLong' },
     { key: 'tryThis', label: 'Try this', kind: 'l10nList' },
@@ -65,6 +66,7 @@ export function clean(b: Record<string, unknown>): Record<string, unknown> {
   const out: Record<string, unknown> = {};
   for (const [k, v] of Object.entries(b)) {
     if (v === '' || v === undefined || v === null) continue;
+    if (k === 'boards' && Array.isArray(v) && v.length === 0) continue; // empty = every board
     if (typeof v === 'object' && !Array.isArray(v) && 'en' in (v as object)) {
       const l = v as { en: string; kn?: string };
       if (!l.en && !l.kn && !['heading', 'hook', 'body', 'caption', 'aim', 'problem', 'answer'].includes(k)) continue;

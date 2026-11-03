@@ -3,7 +3,14 @@ import { useState } from 'react';
 import { EXAMS, L10nInput, Shell, api, errorText, useApi, type L10n } from '@zynetix/web-ui';
 import { NAV } from '../../lib/nav';
 
-type Q = { id: string; chapterId: string; topicId?: string; stem: L10n; options: L10n[]; answer: number; explanation?: L10n; exams: string[]; difficulty: string; pyq?: { exam: string; year: number; verified: boolean }; tags: string[] };
+type Q = { id: string; chapterId: string; topicId?: string; format?: 'mcq' | 'assertion_reason' | 'case_based'; passage?: L10n; stem: L10n; options: L10n[]; answer: number; explanation?: L10n; exams: string[]; difficulty: string; pyq?: { exam: string; year: number; verified: boolean }; tags: string[] };
+
+const AR = [
+  'Both A and R are true, and R is the correct explanation of A.',
+  'Both A and R are true, but R is not the correct explanation of A.',
+  'A is true, but R is false.',
+  'A is false, but R is true.',
+];
 
 /** Question bank, tagged by exam, difficulty and PYQ year. */
 export default function Questions() {
@@ -35,7 +42,7 @@ export default function Questions() {
             {data?.map((q) => (
               <tr key={q.id}>
                 <td>{q.id}</td>
-                <td>{q.stem.en}<div className="muted">✔ {'ABCD'[q.answer]}. {q.options[q.answer]?.en}</div></td>
+                <td>{q.format && q.format !== 'mcq' && <span className="tag">{q.format === 'case_based' ? 'Case' : 'A–R'}</span>}{q.stem.en}<div className="muted">✔ {'ABCD'[q.answer]}. {q.options[q.answer]?.en}</div></td>
                 <td>{q.exams.map((e) => <span key={e} className="tag">{e}</span>)}</td>
                 <td>{q.difficulty}</td>
                 <td>{q.pyq ? `${q.pyq.exam} ${q.pyq.year}${q.pyq.verified ? ' ✔' : ' (unverified)'}` : '—'}</td>
@@ -61,6 +68,17 @@ function Editor({ q: initial, chapters, onDone }: { q: Q; chapters: { id: string
         <label style={{ flex: 1 }}>Chapter<select value={q.chapterId} onChange={(e) => setQ({ ...q, chapterId: e.target.value })}><option value="">Choose…</option>{chapters.map((c) => <option key={c.id} value={c.id}>{c.title.en}</option>)}</select></label>
         <label>Topic id<input value={q.topicId ?? ''} onChange={(e) => setQ({ ...q, topicId: e.target.value || undefined })} /></label>
       </div>
+      <div className="row">
+        <label>Format<select value={q.format ?? 'mcq'} onChange={(e) => {
+          const format = e.target.value as Q['format'];
+          setQ(format === 'assertion_reason'
+            ? { ...q, format, stem: q.stem.en ? q.stem : { en: 'Assertion (A): \nReason (R): ' }, options: AR.map((en) => ({ en })) }
+            : { ...q, format, passage: format === 'case_based' ? q.passage ?? { en: '' } : undefined });
+        }}>
+          <option value="mcq">Multiple choice</option><option value="assertion_reason">Assertion–Reason (CBSE)</option><option value="case_based">Case-based (CBSE)</option>
+        </select></label>
+      </div>
+      {q.format === 'case_based' && <L10nInput label="Case / passage (shown above the question)" value={q.passage} onChange={(passage) => setQ({ ...q, passage })} multiline />}
       <L10nInput label="Question" value={q.stem} onChange={(stem) => setQ({ ...q, stem })} multiline />
       {q.options.map((o, i) => (
         <div className="row" key={i}>

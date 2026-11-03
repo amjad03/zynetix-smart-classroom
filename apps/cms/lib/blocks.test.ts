@@ -19,6 +19,10 @@ describe('block editor model', () => {
   it('clean drops empty optional text and empty Kannada', () => {
     expect(clean({ id: 'a', type: 'trick', heading: { en: 'h', kn: '' }, body: { en: 'b' }, mnemonic: { en: '' }, seconds: '' })).toEqual({ id: 'a', type: 'trick', heading: { en: 'h' }, body: { en: 'b' } });
   });
+  it('drops an empty boards list (meaning every board)', () => {
+    expect(clean({ id: 'a', type: 'recap', points: [{ en: 'p' }], boards: [] })).toEqual({ id: 'a', type: 'recap', points: [{ en: 'p' }] });
+    expect(Block.safeParse(clean({ id: 'a', type: 'recap', points: [{ en: 'p' }], boards: ['cbse'] })).success).toBe(true);
+  });
   it('new block ids do not clash', () => {
     expect(newBlock('concept', ['concept1']).id).toBe('concept2');
   });

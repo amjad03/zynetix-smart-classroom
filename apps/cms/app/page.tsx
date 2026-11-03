@@ -66,7 +66,7 @@ function NewPack({ onCreated }: { onCreated: () => void }) {
       <div className="row">
         <label style={{ flex: 1 }}>Chapter<select value={chapterId} onChange={(e) => setChapterId(e.target.value)}>
           <option value="">Choose…</option>
-          {free.map((c) => <option key={c.id} value={c.id}>{c.year === 'puc1' ? '1st' : '2nd'} PUC · {c.subject} · {c.title.en}</option>)}
+          {free.map((c) => <option key={c.id} value={c.id}>{c.year === 'puc1' ? '1st PUC/11' : '2nd PUC/12'} · {c.subject} · {c.title.en}</option>)}
         </select></label>
         <button disabled={!chapterId} onClick={async () => {
           try {
