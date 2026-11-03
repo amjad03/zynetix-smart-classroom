@@ -533,3 +533,10 @@ No text is reproduced. Check these plot details against the texts:
 - **We are not afraid to die:** the 2 January storm; the precautions; the crew nationalities; the pumps.
 - **A Photograph:** the uncle took it; the 12 years.
 - **Portrait of a Lady:** the paraphrased details.
+
+## Economics 2nd PUC ch2-5 (Microeconomics)
+
+- **Syllabus coverage:** confirm that cardinal utility and the equi-marginal rule (ch2) and free entry and exit (ch5) are in the current rationalised syllabus.
+- **Break-even lab:** lab.break-even is a cost-volume-profit chart used as an optional block for the shut-down/break-even topic. Drop it if it does not fit.
+- **Model cost function:** TC = 36 + 10q - 2q^2 + 0.25q^3 (min AVC 6 at q=4, min AC 13 at q=6); question 2e04-q36 depends on it.
+- **Kannada:** terms need review (indifference curve, budget line, MRS).
