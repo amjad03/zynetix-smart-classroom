@@ -617,3 +617,10 @@ No text is reproduced. Check these plot details against the texts:
 - **Formula conventions:** Av = -beta rL/rin; astable T = 0.69(R1C1 + R2C2); RC phase shift f = 1/(2 pi RC sqrt6); 555 constants 0.693, 1.44 and 1.1.
 - **741 figures:** typical data-sheet values.
 - **Kannada:** terms need a native-speaker review.
+
+## Economics enrichment (13 recovered chapters)
+
+- **Eve-of-independence timeline:** the "1850s" and "1945+" dates are approximate.
+- **Illustrative figures:** survey costs and response rates, production techniques, the skewed-curve example; all are labelled as examples.
+- **M4 definition:** 2e08-q28 follows the pack text.
+- **National income estimators:** a subset of the NCERT list (Naoroji, Digby, VKRV Rao).

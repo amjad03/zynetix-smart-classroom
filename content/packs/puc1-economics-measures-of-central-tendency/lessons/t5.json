@@ -60,6 +60,182 @@
    "formula": "\\text{Mode} = 3\\,\\text{Median} - 2\\,\\text{Mean}"
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Where the three averages sit"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "In a symmetric distribution mean, median and mode are equal."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Mean, median, mode"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "axes",
+       "from": [
+        5,
+        12
+       ],
+       "to": [
+        45,
+        45
+       ],
+       "x": [
+        0,
+        6
+       ],
+       "y": [
+        0,
+        1.2
+       ],
+       "color": "white",
+       "xLabel": "x",
+       "yLabel": "f"
+      },
+      {
+       "kind": "plot",
+       "fn": "exp(-(x - 3)^2/2)",
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10,
+        50
+       ],
+       "text": {
+        "en": "Mean = Median = Mode"
+       },
+       "size": 3,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "With a long tail to the right, the distribution is positively skewed."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        55,
+        12
+       ],
+       "to": [
+        97,
+        45
+       ],
+       "x": [
+        0,
+        10
+       ],
+       "y": [
+        0,
+        1.2
+       ],
+       "color": "white",
+       "xLabel": "x",
+       "yLabel": "f"
+      },
+      {
+       "kind": "plot",
+       "fn": "(x/2)^2*exp(2 - x)",
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The mean is pulled furthest into the tail, the mode stays at the peak, the median sits between."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        63.4,
+        45
+       ],
+       "to": [
+        63.4,
+        13.5
+       ],
+       "color": "green",
+       "dashed": true
+      },
+      {
+       "kind": "line",
+       "from": [
+        67.6,
+        45
+       ],
+       "to": [
+        67.6,
+        20
+       ],
+       "color": "red",
+       "dashed": true
+      },
+      {
+       "kind": "line",
+       "from": [
+        66.2308,
+        45
+       ],
+       "to": [
+        66.2308,
+        18
+       ],
+       "color": "yellow",
+       "dashed": true
+      },
+      {
+       "kind": "text",
+       "at": [
+        57,
+        50
+       ],
+       "text": {
+        "en": "Mode < Median < Mean"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "For moderate skew: mode equals three medians minus two means."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        30,
+        54.5
+       ],
+       "tex": "Mo = 3\\,Md - 2\\,\\bar{X}",
+       "size": 4,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -84,6 +260,92 @@
     "en": "The mean uses all values and suits further calculation but is pulled by extremes. The median suits skewed data like incomes and open-ended classes. The mode suits the most common item, like a size, and qualitative data.",
     "kn": "ಸರಾಸರಿ ಎಲ್ಲ ಮೌಲ್ಯಗಳನ್ನು ಬಳಸುತ್ತದೆ ಆದರೆ ತೀವ್ರ ಮೌಲ್ಯಗಳಿಂದ ಪ್ರಭಾವಿತ. ಆದಾಯದಂತಹ ಓರೆಯ ದತ್ತಾಂಶಕ್ಕೆ ಮಧ್ಯಾಂಕ. ಸಾಮಾನ್ಯ ಗಾತ್ರಕ್ಕೆ ಬಹುಲಕ."
    }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Skewness and the three averages"
+   },
+   "caption": {
+    "en": "A positively skewed distribution whose peak is at k. Its mean is k + 1 and its median about k + 2/3. Move k."
+   },
+   "narration": {
+    "en": "Mode, median and mean spread out in a skewed distribution."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Peak position k"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 2
+    }
+   ],
+   "fns": [
+    {
+     "fn": "(x/k)^k*exp(k - x)",
+     "label": "frequency curve",
+     "color": "yellow"
+    }
+   ],
+   "x": [
+    0,
+    25
+   ],
+   "y": [
+    0,
+    1.2
+   ],
+   "xLabel": "x",
+   "yLabel": "relative f",
+   "readouts": [
+    {
+     "label": {
+      "en": "Mode"
+     },
+     "expr": "k",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Median (approx.)"
+     },
+     "expr": "k + 2/3",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Mean"
+     },
+     "expr": "k + 1",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "3 Md − 2 Mean"
+     },
+     "expr": "3*(k + 2/3) - 2*(k + 1)",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Check that 3 Md − 2 Mean gives back the mode."
+    },
+    {
+     "en": "Raise k. Does the curve look more symmetric?"
+    },
+    {
+     "en": "Which average would you report for incomes like this?"
+    }
+   ]
   },
   {
    "id": "ex1",
@@ -180,6 +442,23 @@
    "narration": {
     "en": "These are CBSE board pattern questions: assertion and reason, and a case study. Read carefully before you choose."
    }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "Competitive exam practice"
+   },
+   "narration": {
+    "en": "Competitive exam practice: CUET-pattern questions. Read every option before you choose."
+   },
+   "questionIds": [
+    "1e05-q29",
+    "1e05-q30"
+   ],
+   "exams": [
+    "CUET"
+   ]
   },
   {
    "id": "recap",

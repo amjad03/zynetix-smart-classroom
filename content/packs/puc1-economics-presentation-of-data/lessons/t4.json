@@ -62,6 +62,176 @@
    }
   },
   {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Two ogives meet at the median"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Cumulative frequencies: less than 20 is 3, less than 30 is 8, then 15 and 20."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Ogives"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "axes",
+       "from": [
+        10,
+        12
+       ],
+       "to": [
+        90,
+        50
+       ],
+       "x": [
+        10,
+        55
+       ],
+       "y": [
+        0,
+        22
+       ],
+       "color": "white",
+       "xLabel": "marks",
+       "yLabel": "c.f."
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Plot them against the upper limits and join: the less than ogive rises."
+     },
+     "draw": [
+      {
+       "kind": "path",
+       "points": [
+        [
+         10.0,
+         50.0
+        ],
+        [
+         27.78,
+         44.82
+        ],
+        [
+         45.56,
+         36.18
+        ],
+        [
+         63.33,
+         24.09
+        ],
+        [
+         81.11,
+         15.45
+        ]
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        68,
+        12
+       ],
+       "text": {
+        "en": "Less than"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "More than ogive: 20, 17, 12, 5 against the lower limits. It falls."
+     },
+     "draw": [
+      {
+       "kind": "path",
+       "points": [
+        [
+         10.0,
+         15.45
+        ],
+        [
+         27.78,
+         20.64
+        ],
+        [
+         45.56,
+         29.27
+        ],
+        [
+         63.33,
+         41.36
+        ],
+        [
+         81.11,
+         50.0
+        ]
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        30,
+        12
+       ],
+       "text": {
+        "en": "More than"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "They cross where c.f. is N over 2, that is 10. Drop a line: the median is about 32.9."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        50.63,
+        32.73
+       ],
+       "to": [
+        50.63,
+        50.0
+       ],
+       "color": "yellow",
+       "dashed": true
+      },
+      {
+       "kind": "math",
+       "at": [
+        30,
+        54.5
+       ],
+       "tex": "\\text{Median} = 30 + \\frac{10 - 8}{7}\\times 10 \\approx 32.9",
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
@@ -86,6 +256,104 @@
     "en": "An arithmetic line graph or time series graph shows how a variable changes over time. Time goes on the x-axis and the value on the y-axis; the points are joined by straight lines. Two or more series, like exports and imports, can be shown on one graph.",
     "kn": "ಅಂಕಗಣಿತ ರೇಖಾ ನಕ್ಷೆ ಕಾಲದೊಂದಿಗೆ ಚರಾಂಶದ ಬದಲಾವಣೆ ತೋರಿಸುತ್ತದೆ. x-ಅಕ್ಷದಲ್ಲಿ ಕಾಲ, y-ಅಕ್ಷದಲ್ಲಿ ಮೌಲ್ಯ."
    }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "bar_chart",
+   "optional": true,
+   "seconds": 120,
+   "title": {
+    "en": "Less than cumulative frequencies"
+   },
+   "caption": {
+    "en": "Frequencies of the classes 10–20 to 40–50. The bars show \"less than\" cumulative frequencies, the heights of the less than ogive."
+   },
+   "narration": {
+    "en": "Build the less than ogive one class at a time."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "f of 10–20"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 3
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "f of 20–30"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "f of 30–40"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 7
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "f of 40–50"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "data": {
+    "<20": "a",
+    "<30": "a + b",
+    "<40": "a + b + c",
+    "<50": "a + b + c + d"
+   },
+   "readouts": [
+    {
+     "label": {
+      "en": "N/2"
+     },
+     "expr": "(a + b + c + d)/2",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "More than 30"
+     },
+     "expr": "c + d",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "More than 40"
+     },
+     "expr": "d",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Can a less than bar ever be shorter than the one before it?"
+    },
+    {
+     "en": "Find the class where c.f. first passes N/2: that is the median class."
+    },
+    {
+     "en": "Make 20–30 the biggest class. Where does the median class move?"
+    }
+   ]
   },
   {
    "id": "ex1",
@@ -162,6 +430,23 @@
    "narration": {
     "en": "Now two exam-pattern questions of the kind asked in the PUC board, CBSE board and CUET."
    }
+  },
+  {
+   "id": "exam",
+   "type": "pyq",
+   "title": {
+    "en": "Competitive exam practice"
+   },
+   "narration": {
+    "en": "Competitive exam practice: CUET-pattern questions. Read every option before you choose."
+   },
+   "questionIds": [
+    "1e04-q26",
+    "1e04-q27"
+   ],
+   "exams": [
+    "CUET"
+   ]
   },
   {
    "id": "recap",
