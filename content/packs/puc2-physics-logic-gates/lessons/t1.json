@@ -1,0 +1,650 @@
+{
+ "id": "puc2-physics-18-logic-gates.t1.lesson",
+ "chapterId": "puc2-physics-18-logic-gates",
+ "topicId": "puc2-physics-18-logic-gates.t1",
+ "title": {
+  "en": "Digital signals and the basic gates: OR, AND, NOT"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Yes or no, 1 or 0"
+   },
+   "hook": {
+    "en": "Every photo, message and game on a phone is stored and processed as long strings of 0s and 1s. The decisions are made by billions of tiny switches called logic gates."
+   },
+   "objectives": [
+    {
+     "en": "Tell analogue from digital signals"
+    },
+    {
+     "en": "Give the symbol, Boolean expression and truth table of OR, AND and NOT"
+    },
+    {
+     "en": "Read a truth table"
+    }
+   ],
+   "narration": {
+    "en": "Every photo, message and game on a phone is stored and processed as long strings of 0s and 1s. The decisions are made by billions of tiny switches called logic gates."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Analogue and digital, and the basic gates"
+   },
+   "body": {
+    "en": "An analogue signal varies continuously; a digital signal has only two levels, called 0 (low, e.g. 0 V) and 1 (high, e.g. 5 V). A logic gate is a circuit whose output depends on its inputs by a fixed logical rule, shown in a truth table. OR: $Y = A + B$, 1 if at least one input is 1. AND: $Y = A\\cdot B$, 1 only if both are 1. NOT: $Y = \\bar A$, the opposite of the single input."
+   },
+   "points": [
+    {
+     "en": "Digital: two levels, 0 and 1"
+    },
+    {
+     "en": "OR: Y = A + B; AND: Y = A·B"
+    },
+    {
+     "en": "NOT: Y = Ā (one input)"
+    }
+   ],
+   "narration": {
+    "en": "An analogue signal varies continuously; a digital signal has only two levels, called 0 (low, e.g. 0 V) and 1 (high, e.g. 5 V). A logic gate is a circuit whose output depends on its inputs by a fixed logical rule, shown in a truth table. OR: $Y = A + B$, 1 if at least one input is 1. AND: $Y = A\\cdot B$, 1 only if both are 1. NOT: $Y = \\bar A$, the opposite of the single input."
+   }
+  },
+  {
+   "id": "scene-gate",
+   "type": "interactive",
+   "title": {
+    "en": "Try every gate"
+   },
+   "narration": {
+    "en": "Pick a gate and try the four combinations of A and B. The bulb lights when the output is one."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Choose a gate and set the switches A and B (closed = 1). The bulb shows the output Y. Work through all four input combinations to build the truth table."
+   },
+   "toggles": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Input A"
+     },
+     "value": true
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "Input B"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "g",
+     "label": {
+      "en": "Gate"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "AND"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "OR"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "NOT (A)"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "NAND"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "NOR"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "XOR"
+       },
+       "value": 6
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "Y",
+     "expr": "if(g == 1, A && B, if(g == 2, A || B, if(g == 3, !A, if(g == 4, !(A && B), if(g == 5, !(A || B), A != B)))))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     12
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 11.2,
+     "text": {
+      "en": "A = {A:0}   B = {B:0}"
+     },
+     "size": 28,
+     "align": "center",
+     "color": "yellow"
+    },
+    {
+     "shape": "icon",
+     "icon": "switch",
+     "x": 2,
+     "y": 7,
+     "size": 2.4,
+     "on": "A"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 5.5,
+     "text": {
+      "en": "A"
+     },
+     "size": 26,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "icon",
+     "icon": "switch",
+     "x": 2,
+     "y": 3,
+     "size": 2.4,
+     "on": "B",
+     "visibleIf": "g != 3"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 1.5,
+     "text": {
+      "en": "B"
+     },
+     "size": 26,
+     "align": "center",
+     "color": "white",
+     "visibleIf": "g != 3"
+    },
+    {
+     "shape": "line",
+     "x1": 3.2,
+     "y1": 7,
+     "x2": 7,
+     "y2": 6,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 3.2,
+     "y1": 3,
+     "x2": 7,
+     "y2": 4,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "g != 3"
+    },
+    {
+     "shape": "rect",
+     "x": 7,
+     "y": 3,
+     "w": 5,
+     "h": 4,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "g == 3 || g == 4 || g == 5",
+     "x": 12.4,
+     "y": 5,
+     "r": 0.4,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 12.8,
+     "y1": 5,
+     "x2": 16,
+     "y2": 5,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "icon",
+     "icon": "bulb",
+     "x": 17.5,
+     "y": 5,
+     "size": 2.2,
+     "on": "Y"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 2.4,
+     "text": {
+      "en": "Y = {Y:0}"
+     },
+     "size": 28,
+     "align": "center",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 9.5,
+     "y": 5,
+     "text": {
+      "en": "gate"
+     },
+     "size": 26,
+     "align": "center",
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Output Y"
+     },
+     "expr": "Y",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "For AND, which combination lights the bulb?"
+    },
+    {
+     "en": "For OR, which combination keeps it dark?"
+    },
+    {
+     "en": "Compare NAND with AND for all four inputs."
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Truth tables of the basic gates"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "List all input combinations: 0 0, 0 1, 1 0, 1 1."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Truth tables"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        8,
+        12
+       ],
+       "text": {
+        "en": "A  B   OR   AND"
+       },
+       "size": 4,
+       "color": "blue"
+      },
+      {
+       "kind": "line",
+       "from": [
+        6,
+        16
+       ],
+       "to": [
+        60,
+        16
+       ],
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "OR is 0 only for 0 0. AND is 1 only for 1 1."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        8,
+        22
+       ],
+       "text": {
+        "en": "0  0    0      0"
+       },
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        8,
+        29
+       ],
+       "text": {
+        "en": "0  1    1      0"
+       },
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        8,
+        36
+       ],
+       "text": {
+        "en": "1  0    1      0"
+       },
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        8,
+        43
+       ],
+       "text": {
+        "en": "1  1    1      1"
+       },
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "NOT has one input: it turns 0 into 1 and 1 into 0."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        66,
+        12
+       ],
+       "text": {
+        "en": "A   NOT"
+       },
+       "size": 4,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        66,
+        22
+       ],
+       "text": {
+        "en": "0     1"
+       },
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        66,
+        29
+       ],
+       "text": {
+        "en": "1     0"
+       },
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        8,
+        53
+       ],
+       "tex": "Y_{OR} = A + B,\\quad Y_{AND} = A\\cdot B,\\quad Y_{NOT} = \\bar A",
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sim-sim-logic",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "sim.logic",
+   "caption": {
+    "en": "Optional: the logic-gate player. Wire gates together and watch the truth table fill in."
+   },
+   "tryThis": [],
+   "narration": {
+    "en": "Optional: the logic-gate player. Wire gates together and watch the truth table fill in."
+   },
+   "seconds": 150,
+   "optional": true
+  },
+  {
+   "id": "lab-logic-gates",
+   "type": "virtual_lab",
+   "labId": "logic-gates",
+   "aim": {
+    "en": "To verify the truth tables of the basic and universal logic gates."
+   },
+   "narration": {
+    "en": "Virtual lab: apply 0 and 1 to the inputs of each gate IC and record the output with an LED."
+   },
+   "seconds": 180,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Write the truth table of Y = A·B + Ā (inputs A and B)."
+   },
+   "steps": [
+    {
+     "en": "A = 0, B = 0: 0 + 1 = 1."
+    },
+    {
+     "en": "A = 0, B = 1: 0 + 1 = 1."
+    },
+    {
+     "en": "A = 1, B = 0: 0 + 0 = 0."
+    },
+    {
+     "en": "A = 1, B = 1: 1 + 0 = 1."
+    }
+   ],
+   "answer": {
+    "en": "Y = 1, 1, 0, 1"
+   },
+   "narration": {
+    "en": "Let us solve this together. Write the truth table of Y = A·B + Ā (inputs A and B)."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "AND is strict, OR is generous"
+   },
+   "body": {
+    "en": "AND needs everybody (all inputs 1). OR needs anybody (any input 1). NOT disagrees with everything."
+   },
+   "narration": {
+    "en": "AND is strict, OR is generous. AND needs everybody (all inputs 1). OR needs anybody (any input 1). NOT disagrees with everything."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "AND: all; OR: any; NOT: opposite."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Match each gate with its rule."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "OR"
+     },
+     "right": {
+      "en": "Y = A + B"
+     }
+    },
+    {
+     "left": {
+      "en": "AND"
+     },
+     "right": {
+      "en": "Y = A·B"
+     }
+    },
+    {
+     "left": {
+      "en": "NOT"
+     },
+     "right": {
+      "en": "Y = Ā"
+     }
+    },
+    {
+     "left": {
+      "en": "NAND"
+     },
+     "right": {
+      "en": "Y = (A·B)‾"
+     }
+    },
+    {
+     "left": {
+      "en": "NOR"
+     },
+     "right": {
+      "en": "Y = (A + B)‾"
+     }
+    }
+   ],
+   "narration": {
+    "en": "Match each gate with its rule."
+   },
+   "questionId": "act.isc-gates-match"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2p18-q01",
+    "2p18-q02",
+    "2p18-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "2p18-q04",
+    "2p18-q05"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Digital signals have two levels, 0 and 1."
+    },
+    {
+     "en": "OR: Y = A + B; AND: Y = A·B; NOT: Y = Ā."
+    },
+    {
+     "en": "A truth table lists the output for every input combination."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write the truth table for Y = (A + B)·Ā."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2p18-q04"
+   ],
+   "narration": {
+    "en": "Recap. Digital signals have two levels, 0 and 1. OR: Y = A + B; AND: Y = A·B; NOT: Y = Ā. A truth table lists the output for every input combination."
+   }
+  }
+ ]
+}

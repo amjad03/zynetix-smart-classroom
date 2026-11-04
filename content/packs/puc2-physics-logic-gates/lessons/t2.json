@@ -1,0 +1,602 @@
+{
+ "id": "puc2-physics-18-logic-gates.t2.lesson",
+ "chapterId": "puc2-physics-18-logic-gates",
+ "topicId": "puc2-physics-18-logic-gates.t2",
+ "title": {
+  "en": "Universal gates: NAND and NOR, and combinations of gates"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "One brick for every wall"
+   },
+   "hook": {
+    "en": "Chip makers can build an entire processor out of just one kind of gate, the NAND. Every other gate can be made from it."
+   },
+   "objectives": [
+    {
+     "en": "Give the truth tables of NAND and NOR"
+    },
+    {
+     "en": "Build NOT, AND and OR from NAND gates (and from NOR gates)"
+    },
+    {
+     "en": "Find the output of a combination of gates"
+    }
+   ],
+   "narration": {
+    "en": "Chip makers can build an entire processor out of just one kind of gate, the NAND. Every other gate can be made from it."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "NAND and NOR"
+   },
+   "body": {
+    "en": "NAND is AND followed by NOT: $Y = \\overline{A\\cdot B}$, 0 only when both inputs are 1. NOR is OR followed by NOT: $Y = \\overline{A + B}$, 1 only when both inputs are 0. They are universal: NOT = NAND with inputs joined; AND = NAND followed by a NAND-NOT; OR = NAND of the inverted inputs, since $\\overline{\\bar A\\cdot\\bar B} = A + B$ (De Morgan). The same can be done with NOR gates."
+   },
+   "points": [
+    {
+     "en": "NAND = NOT(AND); NOR = NOT(OR)"
+    },
+    {
+     "en": "Joined inputs make a NOT"
+    },
+    {
+     "en": "De Morgan: (Ā·B̄)‾ = A + B, (Ā + B̄)‾ = A·B"
+    }
+   ],
+   "narration": {
+    "en": "NAND is AND followed by NOT: $Y = \\overline{A\\cdot B}$, 0 only when both inputs are 1. NOR is OR followed by NOT: $Y = \\overline{A + B}$, 1 only when both inputs are 0. They are universal: NOT = NAND with inputs joined; AND = NAND followed by a NAND-NOT; OR = NAND of the inverted inputs, since $\\overline{\\bar A\\cdot\\bar B} = A + B$ (De Morgan). The same can be done with NOR gates."
+   },
+   "formula": "\\overline{A\\cdot B} = \\bar A + \\bar B"
+  },
+  {
+   "id": "scene-nand-build",
+   "type": "interactive",
+   "title": {
+    "en": "Build gates from NAND"
+   },
+   "narration": {
+    "en": "Each stage is a NAND gate. Set A and B and check that the NAND-only circuit always gives the same output as the gate it copies."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Choose what to build from NAND gates only. The panel shows each NAND stage and the final output for your inputs; compare it with the real gate."
+   },
+   "toggles": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Input A"
+     },
+     "value": true
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "Input B"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Build"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "NOT from NAND"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "AND from NAND"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "OR from NAND"
+       },
+       "value": 3
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "vars": [
+    {
+     "name": "n1",
+     "expr": "if(m == 3, !(A && A), !(A && if(m == 1, A, B)))"
+    },
+    {
+     "name": "n2",
+     "expr": "if(m == 3, !(B && B), !(n1 && n1))"
+    },
+    {
+     "name": "Y",
+     "expr": "if(m == 1, n1, if(m == 2, n2, !(n1 && n2)))"
+    },
+    {
+     "name": "target",
+     "expr": "if(m == 1, !A, if(m == 2, A && B, A || B))"
+    },
+    {
+     "name": "gates",
+     "expr": "if(m == 1, 1, if(m == 2, 2, 3))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     12
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 11.2,
+     "text": {
+      "en": "A = {A:0}   B = {B:0}"
+     },
+     "size": 28,
+     "align": "center",
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 4,
+     "y": 6,
+     "w": 4,
+     "h": 3,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 7.5,
+     "text": {
+      "en": "NAND 1"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 5.3,
+     "text": {
+      "en": "out {n1:0}"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "m > 1",
+     "x": 4,
+     "y": 1.5,
+     "w": 4,
+     "h": 3,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 3,
+     "text": {
+      "en": "NAND 2"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white",
+     "visibleIf": "m > 1"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 0.8,
+     "text": {
+      "en": "out {n2:0}"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white",
+     "visibleIf": "m > 1"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "m == 3",
+     "x": 11,
+     "y": 4,
+     "w": 4,
+     "h": 3,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 5.5,
+     "text": {
+      "en": "NAND 3"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white",
+     "visibleIf": "m == 3"
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 7.5,
+     "x2": 11,
+     "y2": 6.5,
+     "color": "white",
+     "width": 2,
+     "visibleIf": "m == 3"
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 3,
+     "x2": 11,
+     "y2": 4.5,
+     "color": "white",
+     "width": 2,
+     "visibleIf": "m == 3"
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 7.5,
+     "x2": 8.8,
+     "y2": 7.5,
+     "color": "white",
+     "width": 2,
+     "visibleIf": "m == 1"
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 6,
+     "x2": 6,
+     "y2": 4.5,
+     "color": "white",
+     "width": 2,
+     "visibleIf": "m == 2"
+    },
+    {
+     "shape": "icon",
+     "icon": "bulb",
+     "x": 17.5,
+     "y": 5.5,
+     "size": 2.2,
+     "on": "Y"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 3,
+     "text": {
+      "en": "Y = {Y:0}"
+     },
+     "size": 28,
+     "align": "center",
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 17.5,
+     "y": 1.2,
+     "text": {
+      "en": "real gate: {target:0}"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "NAND-only output"
+     },
+     "expr": "Y",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Real gate output"
+     },
+     "expr": "target",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "NAND gates used"
+     },
+     "expr": "gates",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Build NOT. Why does B not matter?"
+    },
+    {
+     "en": "Build OR and check all four input pairs."
+    },
+    {
+     "en": "How many NAND gates does each circuit need?"
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "OR from NAND, by De Morgan"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Invert each input with a NAND whose inputs are joined."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "OR from three NANDs"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        8,
+        14
+       ],
+       "text": {
+        "en": "NAND(A, A) = Ā,   NAND(B, B) = B̄"
+       },
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "NAND the two inverted inputs."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        8,
+        26
+       ],
+       "tex": "Y = \\overline{\\bar A\\cdot \\bar B}",
+       "size": 5,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "De Morgan turns the bar over a product into a sum of barred terms; double bars cancel."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        8,
+        40
+       ],
+       "tex": "= \\bar{\\bar A} + \\bar{\\bar B} = A + B",
+       "size": 5,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "The output of an OR gate is fed to a NOT gate, and that output and input A are fed to an AND gate. Find Y for all inputs."
+   },
+   "steps": [
+    {
+     "en": "First stage: (A + B)‾, which is 1 only for A = B = 0."
+    },
+    {
+     "en": "Y = A·(A + B)‾."
+    },
+    {
+     "en": "When A = 1, (A + B)‾ = 0, so Y = 0; when A = 0, Y = 0."
+    }
+   ],
+   "answer": {
+    "en": "Y = 0 for every input"
+   },
+   "narration": {
+    "en": "Let us solve this together. The output of an OR gate is fed to a NOT gate, and that output and input A are fed to an AND gate. Find Y for all inputs."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Bubble rule"
+   },
+   "body": {
+    "en": "A small circle (bubble) on a gate symbol means NOT. NAND = AND with a bubble; NOR = OR with a bubble. Two bubbles in a row cancel."
+   },
+   "narration": {
+    "en": "Bubble rule. A small circle (bubble) on a gate symbol means NOT. NAND = AND with a bubble; NOR = OR with a bubble. Two bubbles in a row cancel."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Bubble means NOT; two bubbles cancel."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "fill",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Complete the statements about universal gates."
+   },
+   "passage": {
+    "en": "A NAND gate gives 0 only when __1__ inputs are 1. Joining the two inputs of a NOR gate makes a __2__ gate. A NAND gate followed by a NOT gate acts as an __3__ gate. NAND and NOR are called __4__ gates."
+   },
+   "blanks": [
+    {
+     "options": [
+      {
+       "en": "both"
+      },
+      {
+       "en": "no"
+      }
+     ],
+     "answer": 0
+    },
+    {
+     "options": [
+      {
+       "en": "NOT"
+      },
+      {
+       "en": "OR"
+      },
+      {
+       "en": "AND"
+      }
+     ],
+     "answer": 0
+    },
+    {
+     "options": [
+      {
+       "en": "AND"
+      },
+      {
+       "en": "OR"
+      },
+      {
+       "en": "XOR"
+      }
+     ],
+     "answer": 0
+    },
+    {
+     "options": [
+      {
+       "en": "universal"
+      },
+      {
+       "en": "basic"
+      },
+      {
+       "en": "analogue"
+      }
+     ],
+     "answer": 0
+    }
+   ],
+   "narration": {
+    "en": "Complete the statements about universal gates."
+   },
+   "questionId": "act.isc-universal-fill"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2p18-q06",
+    "2p18-q07",
+    "2p18-q08"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "2p18-q09",
+    "2p18-q10"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "NAND = NOT(AND) is 0 only for 1, 1; NOR = NOT(OR) is 1 only for 0, 0."
+    },
+    {
+     "en": "NAND and NOR are universal: NOT, AND and OR can be built from either."
+    },
+    {
+     "en": "De Morgan: (A·B)‾ = Ā + B̄ and (A + B)‾ = Ā·B̄."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Show how to make an AND gate from NOR gates only."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2p18-q10"
+   ],
+   "narration": {
+    "en": "Recap. NAND = NOT(AND) is 0 only for 1, 1; NOR = NOT(OR) is 1 only for 0, 0. NAND and NOR are universal: NOT, AND and OR can be built from either. De Morgan: (A·B)‾ = Ā + B̄ and (A + B)‾ = Ā·B̄."
+   }
+  }
+ ]
+}

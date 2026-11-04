@@ -1,0 +1,481 @@
+{
+ "id": "puc1-biology-21-mineral-nutrition.t2.lesson",
+ "chapterId": "puc1-biology-21-mineral-nutrition",
+ "topicId": "puc1-biology-21-mineral-nutrition.t2",
+ "title": {
+  "en": "Metabolism of nitrogen: the nitrogen cycle and nitrogen fixation"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Air full of nitrogen, plants starving for it"
+   },
+   "hook": {
+    "en": "Air is 78% nitrogen, yet nitrogen is the element crops most often lack. Its triple bond is so strong that only a few microbes, lightning and factories can break it."
+   },
+   "objectives": [
+    {
+     "en": "Describe the nitrogen cycle"
+    },
+    {
+     "en": "Explain biological nitrogen fixation and root nodule formation"
+    },
+    {
+     "en": "Describe how plants make amino acids from ammonia"
+    }
+   ],
+   "narration": {
+    "en": "Air is 78% nitrogen, yet nitrogen is the element crops most often lack. Its triple bond is so strong that only a few microbes, lightning and factories can break it."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "The nitrogen cycle"
+   },
+   "body": {
+    "en": "Nitrogen fixation turns N₂ into ammonia (by microbes, lightning and industry). Ammonification releases ammonia from dead matter. Nitrification oxidises ammonia to nitrite (Nitrosomonas, Nitrococcus) and then nitrate (Nitrobacter). Plants absorb nitrate and ammonium. Denitrification by bacteria such as Pseudomonas and Thiobacillus returns N₂ to the air. Free-living fixers include Azotobacter and Beijernickia (aerobic), Rhodospirillum (anaerobic) and cyanobacteria such as Anabaena and Nostoc; Rhizobium fixes nitrogen in legume root nodules."
+   },
+   "points": [
+    {
+     "en": "Fixation → ammonification → nitrification → uptake"
+    },
+    {
+     "en": "Denitrification returns N₂"
+    },
+    {
+     "en": "Nitrogenase is found only in prokaryotes"
+    }
+   ],
+   "narration": {
+    "en": "Nitrogen fixation turns N₂ into ammonia (by microbes, lightning and industry). Ammonification releases ammonia from dead matter. Nitrification oxidises ammonia to nitrite (Nitrosomonas, Nitrococcus) and then nitrate (Nitrobacter). Plants absorb nitrate and ammonium. Denitrification by bacteria such as Pseudomonas and Thiobacillus returns N₂ to the air. Free-living fixers include Azotobacter and Beijernickia (aerobic), Rhodospirillum (anaerobic) and cyanobacteria such as Anabaena and Nostoc; Rhizobium fixes nitrogen in legume root nodules."
+   }
+  },
+  {
+   "id": "scene-nodule",
+   "type": "interactive",
+   "title": {
+    "en": "Inside a root nodule"
+   },
+   "narration": {
+    "en": "Raise the oxygen level and nitrogenase is poisoned. Leghaemoglobin mops up the free oxygen, so fixation can continue while respiration still gets the oxygen it needs."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Nitrogenase works only with very little oxygen, yet needs lots of ATP from respiration. Set the oxygen inside the nodule and switch leghaemoglobin on or off."
+   },
+   "sliders": [
+    {
+     "name": "o2",
+     "label": {
+      "en": "Oxygen in the nodule"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "lhb",
+     "label": {
+      "en": "Leghaemoglobin"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "free",
+     "expr": "if(lhb, o2*0.1, o2)"
+    },
+    {
+     "name": "atp",
+     "expr": "o2/(o2 + 1)"
+    },
+    {
+     "name": "act",
+     "expr": "exp(-free/0.8)"
+    },
+    {
+     "name": "fix",
+     "expr": "100*atp*act"
+    }
+   ],
+   "view": {
+    "x": [
+     -6,
+     6
+    ],
+    "y": [
+     -4,
+     4
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 3.5,
+     "color": {
+      "by": "lhb",
+      "scale": [
+       "white",
+       "red"
+      ]
+     },
+     "opacity": 0.35
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "r": 0.12,
+     "color": "blue",
+     "visibleIf": "i < free*2",
+     "x": "-3 + 6*rand(i)",
+     "y": "-2.5 + 5*rand(i + 77)"
+    },
+    {
+     "shape": "particles",
+     "count": 30,
+     "r": 0.18,
+     "color": "green",
+     "visibleIf": "i < fix/3.3",
+     "x": "-2.5 + 5*rand(i + 300)",
+     "y": "-2.2 + 4.4*rand(i + 400)"
+    },
+    {
+     "shape": "label",
+     "x": -5.8,
+     "y": 3.6,
+     "text": {
+      "en": "blue: free O₂"
+     },
+     "size": 22,
+     "align": "left",
+     "color": "blue"
+    },
+    {
+     "shape": "label",
+     "x": 5.8,
+     "y": 3.6,
+     "text": {
+      "en": "green: NH₃ made"
+     },
+     "size": 22,
+     "align": "right",
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": -3.7,
+     "text": {
+      "en": "N₂ + 8e⁻ + 8H⁺ + 16 ATP → 2NH₃ + H₂ + 16 ADP + 16 Pi"
+     },
+     "size": 20,
+     "align": "center",
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Free O₂ (relative)"
+     },
+     "expr": "free",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Nitrogenase activity"
+     },
+     "expr": "act*100",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Fixation rate"
+     },
+     "expr": "fix",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Switch off leghaemoglobin. What happens to the fixation rate at normal oxygen?"
+    },
+    {
+     "en": "Lower oxygen to zero. Why does fixation fall again?"
+    },
+    {
+     "en": "Find the best oxygen level with leghaemoglobin on."
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Making amino acids"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Ammonia is toxic; plants turn it quickly into amino acids."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Fate of ammonia"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        13
+       ],
+       "text": {
+        "en": "Reductive amination:"
+       },
+       "size": 4,
+       "color": "green"
+      },
+      {
+       "kind": "math",
+       "at": [
+        5,
+        20
+       ],
+       "tex": "\\alpha\\text{-ketoglutaric acid} + NH_4^+ + NADPH \\to \\text{glutamate}",
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Transamination passes the amino group on to other keto acids."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        30
+       ],
+       "text": {
+        "en": "Transamination:"
+       },
+       "size": 4,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        36
+       ],
+       "text": {
+        "en": "glutamate + keto acid → new amino acid + α-ketoglutaric acid"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Amides such as asparagine and glutamine carry nitrogen in the xylem; soybean exports ureides."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        46
+       ],
+       "text": {
+        "en": "Amides: asparagine, glutamine (more N, transported in xylem)"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "anim-nitrogen-cycle",
+   "type": "simulation",
+   "source": "animation",
+   "simId": "nitrogen-cycle",
+   "caption": {
+    "en": "The nitrogen cycle: fixation, ammonification, nitrification, uptake and denitrification."
+   },
+   "tryThis": [
+    {
+     "en": "Follow one nitrogen atom from the air to a protein and back."
+    }
+   ],
+   "narration": {
+    "en": "The nitrogen cycle: fixation, ammonification, nitrification, uptake and denitrification."
+   },
+   "seconds": 90,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Why are root nodules of an actively fixing legume pink inside, and why does a pea crop enrich the soil?"
+   },
+   "steps": [
+    {
+     "en": "The pink colour is leghaemoglobin, which keeps oxygen low for nitrogenase."
+    },
+    {
+     "en": "Rhizobium in the nodules fixes N₂ into ammonia, part of which the plant uses."
+    },
+    {
+     "en": "When roots and nodules decay, the fixed nitrogen is added to the soil."
+    }
+   ],
+   "answer": {
+    "en": "Leghaemoglobin; nodules add fixed nitrogen to the soil"
+   },
+   "narration": {
+    "en": "Let us solve this together. Why are root nodules of an actively fixing legume pink inside, and why does a pea crop enrich the soil?"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Nitro-so before Nitro-bacter"
+   },
+   "body": {
+    "en": "Ammonia → nitrite (Nitrosomonas, Nitrococcus) → nitrate (Nitrobacter): \"so\" comes before \"bacter\" just as nitrite comes before nitrate."
+   },
+   "narration": {
+    "en": "Nitro-so before Nitro-bacter. Ammonia → nitrite (Nitrosomonas, Nitrococcus) → nitrate (Nitrobacter): \"so\" comes before \"bacter\" just as nitrite comes before nitrate."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "So, then bacter."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "order",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Put the steps of root nodule formation in order."
+   },
+   "steps": [
+    {
+     "en": "Roots secrete chemicals that attract Rhizobium."
+    },
+    {
+     "en": "Rhizobia multiply and attach to the root hair, which curls."
+    },
+    {
+     "en": "An infection thread carries the bacteria into the cortex."
+    },
+    {
+     "en": "Cortical and pericycle cells divide to form the nodule."
+    },
+    {
+     "en": "Bacteria are released, become bacteroids and fix nitrogen."
+    },
+    {
+     "en": "Vascular connections let the nodule exchange nutrients with the plant."
+    }
+   ],
+   "narration": {
+    "en": "Put the steps of root nodule formation in order."
+   },
+   "questionId": "act.isc-nodule-order"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1b21-q06",
+    "1b21-q07",
+    "1b21-q08"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "1b21-q09",
+    "1b21-q10"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Nitrogen cycle: fixation, ammonification, nitrification, uptake, denitrification."
+    },
+    {
+     "en": "Nitrogenase (prokaryotes only) needs ATP and an oxygen-free site; leghaemoglobin protects it in nodules."
+    },
+    {
+     "en": "Ammonia becomes amino acids by reductive amination and transamination; amides carry nitrogen."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Name two free-living and one symbiotic nitrogen-fixing organism."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1b21-q09"
+   ],
+   "narration": {
+    "en": "Recap. Nitrogen cycle: fixation, ammonification, nitrification, uptake, denitrification. Nitrogenase (prokaryotes only) needs ATP and an oxygen-free site; leghaemoglobin protects it in nodules. Ammonia becomes amino acids by reductive amination and transamination; amides carry nitrogen."
+   }
+  }
+ ]
+}

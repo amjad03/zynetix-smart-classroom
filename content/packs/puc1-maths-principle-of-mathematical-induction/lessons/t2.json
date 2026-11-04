@@ -1,0 +1,543 @@
+{
+ "id": "puc1-maths-18-principle-of-mathematical-induction.t2.lesson",
+ "chapterId": "puc1-maths-18-principle-of-mathematical-induction",
+ "topicId": "puc1-maths-18-principle-of-mathematical-induction.t2",
+ "title": {
+  "en": "Induction for divisibility and inequalities"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Always a multiple of 8?"
+   },
+   "hook": {
+    "en": "9 − 1 = 8, 81 − 1 = 80, 729 − 1 = 728: each is a multiple of 8. Is 9ⁿ − 1 always divisible by 8? Induction settles it for every n at once."
+   },
+   "objectives": [
+    {
+     "en": "Prove divisibility results by induction"
+    },
+    {
+     "en": "Prove inequalities by induction"
+    },
+    {
+     "en": "Choose the right base case"
+    }
+   ],
+   "narration": {
+    "en": "9 − 1 = 8, 81 − 1 = 80, 729 − 1 = 728: each is a multiple of 8. Is 9ⁿ − 1 always divisible by 8? Induction settles it for every n at once."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Divisibility and inequalities"
+   },
+   "body": {
+    "en": "For divisibility, write P(k) as \"f(k) = d·m for some integer m\", then express f(k + 1) in terms of f(k) plus a term that is clearly a multiple of d. For an inequality, use P(k) and a second simple inequality to reach P(k + 1); check where the statement first becomes true, because the base case may need to be larger than 1 (n! > 2ⁿ holds only from n = 4)."
+   },
+   "points": [
+    {
+     "en": "Divisibility: f(k + 1) = (multiple of f(k)) + (multiple of d)"
+    },
+    {
+     "en": "Inequality: P(k) plus a simple estimate"
+    },
+    {
+     "en": "Find the correct starting value"
+    }
+   ],
+   "narration": {
+    "en": "For divisibility, write P(k) as \"f(k) = d·m for some integer m\", then express f(k + 1) in terms of f(k) plus a term that is clearly a multiple of d. For an inequality, use P(k) and a second simple inequality to reach P(k + 1); check where the statement first becomes true, because the base case may need to be larger than 1 (n! > 2ⁿ holds only from n = 4)."
+   }
+  },
+  {
+   "id": "scene-divisibility",
+   "type": "interactive",
+   "title": {
+    "en": "Watch the step work"
+   },
+   "narration": {
+    "en": "Choose a. The quotient f(n) divided by a minus one is always a whole number, because each new term is a times the old one plus a minus one."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "For f(n) = aⁿ − 1 (here a is chosen), the bars show f(n) for n = 1 to 6 and the label shows f(n) ÷ (a − 1). Every value is a whole number: the step f(k + 1) = a·f(k) + (a − 1) keeps the divisibility."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Base a"
+     },
+     "min": 2,
+     "max": 10,
+     "step": 1,
+     "value": 9
+    },
+    {
+     "name": "nn",
+     "label": {
+      "en": "n"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "vars": [
+    {
+     "name": "f",
+     "expr": "a^nn - 1"
+    },
+    {
+     "name": "qn",
+     "expr": "(a^nn - 1)/(a - 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     8
+    ],
+    "y": [
+     0,
+     7
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "1 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "log(a^1)",
+     "color": "orange",
+     "opacity": "if(nn == 1, 1, 0.45)"
+    },
+    {
+     "shape": "rect",
+     "x": "2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "log(a^2)",
+     "color": "orange",
+     "opacity": "if(nn == 2, 1, 0.45)"
+    },
+    {
+     "shape": "rect",
+     "x": "3 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "log(a^3)",
+     "color": "orange",
+     "opacity": "if(nn == 3, 1, 0.45)"
+    },
+    {
+     "shape": "rect",
+     "x": "4 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "log(a^4)",
+     "color": "orange",
+     "opacity": "if(nn == 4, 1, 0.45)"
+    },
+    {
+     "shape": "rect",
+     "x": "5 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "log(a^5)",
+     "color": "orange",
+     "opacity": "if(nn == 5, 1, 0.45)"
+    },
+    {
+     "shape": "rect",
+     "x": "6 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "log(a^6)",
+     "color": "orange",
+     "opacity": "if(nn == 6, 1, 0.45)"
+    },
+    {
+     "shape": "text",
+     "x": "1",
+     "y": -0.4,
+     "text": {
+      "en": "n=1"
+     },
+     "size": 20,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": "2",
+     "y": -0.4,
+     "text": {
+      "en": "n=2"
+     },
+     "size": 20,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": "3",
+     "y": -0.4,
+     "text": {
+      "en": "n=3"
+     },
+     "size": 20,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": "4",
+     "y": -0.4,
+     "text": {
+      "en": "n=4"
+     },
+     "size": 20,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": "5",
+     "y": -0.4,
+     "text": {
+      "en": "n=5"
+     },
+     "size": 20,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": "6",
+     "y": -0.4,
+     "text": {
+      "en": "n=6"
+     },
+     "size": 20,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": 4,
+     "y": 6.6,
+     "text": {
+      "en": "f({nn:0}) = {f:0} = {a - 1:0} × {qn:0}"
+     },
+     "size": 26,
+     "align": "center",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 7.8,
+     "y": 6,
+     "text": {
+      "en": "bar height: log₁₀ aⁿ"
+     },
+     "size": 20,
+     "align": "right",
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "f(n) = aⁿ − 1"
+     },
+     "expr": "f",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "f(n) ÷ (a − 1)"
+     },
+     "expr": "qn",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Take a = 9. What is f(3) ÷ 8?"
+    },
+    {
+     "en": "Check the identity f(k + 1) = a·f(k) + (a − 1) for k = 2."
+    },
+    {
+     "en": "Try a = 2. What does the statement say then?"
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "9ⁿ − 1 is divisible by 8"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Base: 9 minus 1 is 8."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Divisibility by induction"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        5,
+        13
+       ],
+       "tex": "n = 1:\\; 9 - 1 = 8 \\;\\checkmark",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Assume 9 to the k minus 1 equals 8 m."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        24
+       ],
+       "tex": "9^k - 1 = 8m",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Then 9 to the k plus 1, minus 1, is 9 times 8 m plus 1, minus 1, which is 72 m plus 8."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        35
+       ],
+       "tex": "9^{k+1} - 1 = 9(8m + 1) - 1 = 8(9m + 1)",
+       "size": 4,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        48
+       ],
+       "text": {
+        "en": "divisible by 8, so P(k + 1) holds"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Prove that 2ⁿ ≥ n + 1 for all natural numbers n."
+   },
+   "steps": [
+    {
+     "en": "n = 1: 2 ≥ 2 ✓."
+    },
+    {
+     "en": "Assume 2ᵏ ≥ k + 1. Then 2ᵏ⁺¹ = 2·2ᵏ ≥ 2k + 2."
+    },
+    {
+     "en": "2k + 2 ≥ k + 2 since k ≥ 0, so 2ᵏ⁺¹ ≥ (k + 1) + 1: P(k + 1) holds."
+    }
+   ],
+   "answer": {
+    "en": "True for all n"
+   },
+   "narration": {
+    "en": "Let us solve this together. Prove that 2ⁿ ≥ n + 1 for all natural numbers n."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "Prove that n(n + 1)(n + 2) is divisible by 6 for all n ≥ 1."
+   },
+   "steps": [
+    {
+     "en": "n = 1: 6 ✓."
+    },
+    {
+     "en": "f(k + 1) − f(k) = (k + 1)(k + 2)(k + 3) − k(k + 1)(k + 2) = 3(k + 1)(k + 2)."
+    },
+    {
+     "en": "(k + 1)(k + 2) is even, so 3(k + 1)(k + 2) is a multiple of 6; with f(k) = 6m, f(k + 1) is a multiple of 6."
+    }
+   ],
+   "answer": {
+    "en": "Divisible by 6"
+   },
+   "narration": {
+    "en": "Let us solve this together. Prove that n(n + 1)(n + 2) is divisible by 6 for all n ≥ 1."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Split off the old term"
+   },
+   "body": {
+    "en": "For aⁿ − bⁿ type results write aᵏ⁺¹ = a·aᵏ and replace aᵏ using the hypothesis. The leftover must be a visible multiple of d."
+   },
+   "narration": {
+    "en": "Split off the old term. For aⁿ − bⁿ type results write aᵏ⁺¹ = a·aᵏ and replace aᵏ using the hypothesis. The leftover must be a visible multiple of d."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Use the hypothesis once, then factor out d."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Match each statement with the smallest n from which it is true for every larger n (the base case to use)."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "n! > 2ⁿ"
+     },
+     "right": {
+      "en": "n = 4"
+     }
+    },
+    {
+     "left": {
+      "en": "2ⁿ > n²"
+     },
+     "right": {
+      "en": "n = 5"
+     }
+    },
+    {
+     "left": {
+      "en": "3ⁿ > 2ⁿ"
+     },
+     "right": {
+      "en": "n = 1"
+     }
+    },
+    {
+     "left": {
+      "en": "n² > 2n + 1"
+     },
+     "right": {
+      "en": "n = 3"
+     }
+    }
+   ],
+   "narration": {
+    "en": "Match each statement with the smallest n from which it is true for every larger n (the base case to use)."
+   },
+   "questionId": "act.isc-induction-base"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1m18-q06",
+    "1m18-q07",
+    "1m18-q08"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "1m18-q09",
+    "1m18-q10"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Divisibility: write f(k + 1) as a combination of f(k) and a visible multiple of d."
+    },
+    {
+     "en": "Inequalities: combine P(k) with a simple estimate."
+    },
+    {
+     "en": "Start the induction where the statement first becomes true."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Prove that 5ⁿ − 1 is divisible by 4 for every natural number n."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1m18-q10"
+   ],
+   "narration": {
+    "en": "Recap. Divisibility: write f(k + 1) as a combination of f(k) and a visible multiple of d. Inequalities: combine P(k) with a simple estimate. Start the induction where the statement first becomes true."
+   }
+  }
+ ]
+}

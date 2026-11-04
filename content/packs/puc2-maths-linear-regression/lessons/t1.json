@@ -1,0 +1,477 @@
+{
+ "id": "puc2-maths-15-linear-regression.t1.lesson",
+ "chapterId": "puc2-maths-15-linear-regression",
+ "topicId": "puc2-maths-15-linear-regression.t1",
+ "title": {
+  "en": "Lines of regression"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Predicting a crop"
+   },
+   "hook": {
+    "en": "From rainfall in July, can a farmer estimate the yield in November? Regression fits the best straight line to past data and uses it to predict."
+   },
+   "objectives": [
+    {
+     "en": "Explain the method of least squares"
+    },
+    {
+     "en": "Write the regression lines of y on x and of x on y"
+    },
+    {
+     "en": "Use them to estimate"
+    }
+   ],
+   "narration": {
+    "en": "From rainfall in July, can a farmer estimate the yield in November? Regression fits the best straight line to past data and uses it to predict."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Two regression lines"
+   },
+   "body": {
+    "en": "The regression line of y on x minimises the sum of squared vertical distances of the points from the line (least squares): $y - \\bar y = b_{yx}(x - \\bar x)$ with $b_{yx} = \\dfrac{\\sum dx\\,dy}{\\sum dx^2} = r\\,\\dfrac{\\sigma_y}{\\sigma_x}$. The line of x on y minimises horizontal distances: $x - \\bar x = b_{xy}(y - \\bar y)$, $b_{xy} = r\\,\\sigma_x/\\sigma_y$. Use y on x to estimate y for a given x, and x on y to estimate x. Both pass through $(\\bar x, \\bar y)$."
+   },
+   "points": [
+    {
+     "en": "y on x: estimate y from x"
+    },
+    {
+     "en": "x on y: estimate x from y"
+    },
+    {
+     "en": "Both pass through the means"
+    }
+   ],
+   "narration": {
+    "en": "The regression line of y on x minimises the sum of squared vertical distances of the points from the line (least squares): $y - \\bar y = b_{yx}(x - \\bar x)$ with $b_{yx} = \\dfrac{\\sum dx\\,dy}{\\sum dx^2} = r\\,\\dfrac{\\sigma_y}{\\sigma_x}$. The line of x on y minimises horizontal distances: $x - \\bar x = b_{xy}(y - \\bar y)$, $b_{xy} = r\\,\\sigma_x/\\sigma_y$. Use y on x to estimate y for a given x, and x on y to estimate x. Both pass through $(\\bar x, \\bar y)$."
+   },
+   "formula": "y - \\bar y = b_{yx}(x - \\bar x)"
+  },
+  {
+   "id": "scene-regression-lines",
+   "type": "interactive",
+   "title": {
+    "en": "Two lines through the means"
+   },
+   "narration": {
+    "en": "Move the correlation from zero to one. The two regression lines swing together and meet when the correlation is perfect."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Set the correlation and the spreads. The blue line is y on x, the orange line x on y. Watch them close up as |r| grows and open to a right angle at r = 0."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Correlation r"
+     },
+     "min": -1,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.6
+    },
+    {
+     "name": "sy",
+     "label": {
+      "en": "σy"
+     },
+     "min": 0.5,
+     "max": 2,
+     "step": 0.1,
+     "value": 1
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New sample"
+     },
+     "icon": "next",
+     "set": {
+      "seed": "seed + 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "k",
+     "expr": "sqrt(max(1 - r^2, 0))"
+    },
+    {
+     "name": "byx",
+     "expr": "r*sy"
+    },
+    {
+     "name": "bxy",
+     "expr": "r/sy"
+    }
+   ],
+   "view": {
+    "x": [
+     -4,
+     4
+    ],
+    "y": [
+     -4,
+     4
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x − x̄ (σx = 1)",
+    "yLabel": "y − ȳ",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 50,
+     "r": 0.06,
+     "color": "yellow",
+     "x": "clamp(sqrt(-2*ln(1 - 0.97*rand(i + 100*seed)))*cos(2*pi*rand(i + 100*seed + 1000)), -3.8, 3.8)",
+     "y": "clamp(sy*(r*sqrt(-2*ln(1 - 0.97*rand(i + 100*seed)))*cos(2*pi*rand(i + 100*seed + 1000)) + k*sqrt(-2*ln(1 - 0.97*rand(i + 100*seed + 2000)))*cos(2*pi*rand(i + 100*seed + 3000))), -3.8, 3.8)"
+    },
+    {
+     "shape": "line",
+     "x1": -4,
+     "y1": "-4*byx",
+     "x2": 4,
+     "y2": "4*byx",
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "-4*bxy",
+     "y1": -4,
+     "x2": "4*bxy",
+     "y2": 4,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 0.12,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": 3.8,
+     "y": 3.6,
+     "text": {
+      "en": "y on x: blue   x on y: orange"
+     },
+     "size": 22,
+     "align": "right",
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "b_yx"
+     },
+     "expr": "byx",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "b_xy"
+     },
+     "expr": "bxy",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "r² = b_yx × b_xy"
+     },
+     "expr": "byx*bxy",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set r = 0. What are the two lines?"
+    },
+    {
+     "en": "Set r = 0.9. How far apart are they now?"
+    },
+    {
+     "en": "Change σy. Which line's slope changes more?"
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Fitting y on x"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Data: x 1 to 5, y 2, 4, 5, 4, 5. Means 3 and 4."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Regression of y on x"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        13
+       ],
+       "text": {
+        "en": "Σdx dy = 6,  Σdx² = 10"
+       },
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "b y x is 6 over 10, which is 0.6."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        24
+       ],
+       "tex": "b_{yx} = \\frac{\\sum dx\\,dy}{\\sum dx^2} = 0.6",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "So y minus 4 equals 0.6 times x minus 3, or y equals 0.6 x plus 2.2."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        36
+       ],
+       "tex": "y - 4 = 0.6(x - 3) \\Rightarrow y = 0.6x + 2.2",
+       "size": 4,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "phet-least-squares-regression",
+   "type": "simulation",
+   "source": "phet",
+   "simId": "least-squares-regression",
+   "caption": {
+    "en": "PhET: Least-Squares Regression. Place points, guess the best-fit line, then compare it with the least-squares line and its sum of squares."
+   },
+   "tryThis": [
+    {
+     "en": "Place 6 points roughly on a line and try to fit it by eye."
+    },
+    {
+     "en": "Show the residuals: which line makes the sum of squares smallest?"
+    }
+   ],
+   "narration": {
+    "en": "PhET: Least-Squares Regression. Place points, guess the best-fit line, then compare it with the least-squares line and its sum of squares."
+   },
+   "seconds": 180,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "For x: 1, 2, 3, 4, 5 and y: 2, 4, 5, 4, 5, find the line of y on x and estimate y when x = 6."
+   },
+   "steps": [
+    {
+     "en": "x̄ = 3, ȳ = 4, Σdx dy = 6, Σdx² = 10, so b_yx = 0.6."
+    },
+    {
+     "en": "y − 4 = 0.6(x − 3): y = 0.6x + 2.2."
+    },
+    {
+     "en": "x = 6: y = 3.6 + 2.2 = 5.8."
+    }
+   ],
+   "answer": {
+    "en": "y = 0.6x + 2.2; y(6) ≈ 5.8"
+   },
+   "narration": {
+    "en": "Let us solve this together. For x: 1, 2, 3, 4, 5 and y: 2, 4, 5, 4, 5, find the line of y on x and estimate y when x = 6."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Which line?"
+   },
+   "body": {
+    "en": "Predicting y? Use y on x (y is the subject). Predicting x? Use x on y. The dependent variable is the one on the left."
+   },
+   "narration": {
+    "en": "Which line?. Predicting y? Use y on x (y is the subject). Predicting x? Use x on y. The dependent variable is the one on the left."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Predict the one on the left."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Match each fact with its meaning."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "Line of y on x"
+     },
+     "right": {
+      "en": "Minimises vertical squared deviations"
+     }
+    },
+    {
+     "left": {
+      "en": "Line of x on y"
+     },
+     "right": {
+      "en": "Minimises horizontal squared deviations"
+     }
+    },
+    {
+     "left": {
+      "en": "Point common to both lines"
+     },
+     "right": {
+      "en": "(x̄, ȳ)"
+     }
+    },
+    {
+     "left": {
+      "en": "r = 0"
+     },
+     "right": {
+      "en": "Lines are perpendicular"
+     }
+    },
+    {
+     "left": {
+      "en": "r = ±1"
+     },
+     "right": {
+      "en": "Lines coincide"
+     }
+    }
+   ],
+   "narration": {
+    "en": "Match each fact with its meaning."
+   },
+   "questionId": "act.isc-regression-lines"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2m15-q01",
+    "2m15-q02",
+    "2m15-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "2m15-q04",
+    "2m15-q05"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Least squares: y on x minimises vertical, x on y horizontal squared deviations."
+    },
+    {
+     "en": "y − ȳ = b_yx(x − x̄); x − x̄ = b_xy(y − ȳ); both pass through the means."
+    },
+    {
+     "en": "r = 0: perpendicular lines; r = ±1: one line."
+    }
+   ],
+   "homework": [
+    {
+     "en": "x̄ = 5, ȳ = 12, b_xy = 0.4. Estimate x when y = 17. (Answer: 7)"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2m15-q05"
+   ],
+   "narration": {
+    "en": "Recap. Least squares: y on x minimises vertical, x on y horizontal squared deviations. y − ȳ = b_yx(x − x̄); x − x̄ = b_xy(y − ȳ); both pass through the means. r = 0: perpendicular lines; r = ±1: one line."
+   }
+  }
+ ]
+}

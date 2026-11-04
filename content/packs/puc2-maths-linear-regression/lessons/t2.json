@@ -1,0 +1,485 @@
+{
+ "id": "puc2-maths-15-linear-regression.t2.lesson",
+ "chapterId": "puc2-maths-15-linear-regression",
+ "topicId": "puc2-maths-15-linear-regression.t2",
+ "title": {
+  "en": "Regression coefficients and their properties"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Reading a relation in two numbers"
+   },
+   "hook": {
+    "en": "Two numbers, the regression coefficients, carry the slope of each line and, together, the correlation itself."
+   },
+   "objectives": [
+    {
+     "en": "Compute b_yx and b_xy"
+    },
+    {
+     "en": "Use r² = b_yx b_xy and the sign rule"
+    },
+    {
+     "en": "Identify which given line is y on x"
+    }
+   ],
+   "narration": {
+    "en": "Two numbers, the regression coefficients, carry the slope of each line and, together, the correlation itself."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Properties"
+   },
+   "body": {
+    "en": "$b_{yx} = r\\sigma_y/\\sigma_x$ and $b_{xy} = r\\sigma_x/\\sigma_y$. Hence $r^2 = b_{yx}b_{xy}$ and r is their geometric mean, with the same sign as both (they always share a sign). Since $r^2 \\le 1$, they cannot both exceed 1 in size. Regression coefficients are unaffected by a change of origin but not by a change of scale. Given two lines, write each in the form \"y = …\" and \"x = …\"; the choice is right only if the product of the slopes found is at most 1."
+   },
+   "points": [
+    {
+     "en": "r² = b_yx × b_xy; same sign"
+    },
+    {
+     "en": "Not both greater than 1"
+    },
+    {
+     "en": "Unaffected by change of origin only"
+    }
+   ],
+   "narration": {
+    "en": "$b_{yx} = r\\sigma_y/\\sigma_x$ and $b_{xy} = r\\sigma_x/\\sigma_y$. Hence $r^2 = b_{yx}b_{xy}$ and r is their geometric mean, with the same sign as both (they always share a sign). Since $r^2 \\le 1$, they cannot both exceed 1 in size. Regression coefficients are unaffected by a change of origin but not by a change of scale. Given two lines, write each in the form \"y = …\" and \"x = …\"; the choice is right only if the product of the slopes found is at most 1."
+   }
+  },
+  {
+   "id": "scene-coefficients",
+   "type": "interactive",
+   "title": {
+    "en": "From two coefficients to r"
+   },
+   "narration": {
+    "en": "Move the two coefficients. The correlation is the geometric mean, with their common sign. Try to make the product larger than one."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Set the two regression coefficients. If their product exceeds 1 or their signs differ, no data can give them; otherwise the readout gives r."
+   },
+   "sliders": [
+    {
+     "name": "b1",
+     "label": {
+      "en": "b_yx"
+     },
+     "min": -2,
+     "max": 2,
+     "step": 0.05,
+     "value": 0.8
+    },
+    {
+     "name": "b2",
+     "label": {
+      "en": "b_xy"
+     },
+     "min": -2,
+     "max": 2,
+     "step": 0.05,
+     "value": 0.45
+    }
+   ],
+   "vars": [
+    {
+     "name": "pr",
+     "expr": "b1*b2"
+    },
+    {
+     "name": "ok",
+     "expr": "pr >= 0 && pr <= 1"
+    },
+    {
+     "name": "rr",
+     "expr": "if(ok, sign(b1)*sqrt(pr), 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     -1.3,
+     1.3
+    ],
+    "y": [
+     -0.4,
+     1.3
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "sqrt(max(1 - x^2, 0))",
+     "from": -1,
+     "to": 1,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": -1,
+     "y": -0.15,
+     "text": {
+      "en": "−1"
+     },
+     "size": 24,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": -0.15,
+     "text": {
+      "en": "+1"
+     },
+     "size": 24,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 1.12,
+     "text": {
+      "en": "0"
+     },
+     "size": 24,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "visibleIf": "ok",
+     "x1": 0,
+     "y1": 0,
+     "x2": "sin(rad(90*rr))",
+     "y2": "cos(rad(90*rr))",
+     "color": {
+      "by": "(rr + 1)/2",
+      "scale": [
+       "red",
+       "yellow",
+       "green"
+      ]
+     },
+     "width": 6
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 0.45,
+     "text": {
+      "en": "r = {rr:3}"
+     },
+     "size": 28,
+     "align": "center",
+     "color": "yellow",
+     "visibleIf": "ok"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 0.45,
+     "text": {
+      "en": "impossible pair"
+     },
+     "size": 28,
+     "align": "center",
+     "color": "red",
+     "visibleIf": "!ok"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "b_yx × b_xy"
+     },
+     "expr": "pr",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "r"
+     },
+     "expr": "rr",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set b_yx = 0.8 and b_xy = 0.45. What is r?"
+    },
+    {
+     "en": "Try b_yx = 2 and b_xy = 0.8. Why is this impossible?"
+    },
+    {
+     "en": "Give them opposite signs. What happens?"
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Which line is which?"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Lines: 3x plus 2y equals 26 and 6x plus y equals 31. Suppose the first is y on x."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Identifying the regression lines"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        5,
+        13
+       ],
+       "tex": "y = 13 - 1.5x \\Rightarrow b_{yx} = -1.5",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Then the second is x on y."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        24
+       ],
+       "tex": "x = \\tfrac{31}{6} - \\tfrac{1}{6}y \\Rightarrow b_{xy} = -\\tfrac16",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The product is 0.25, which is at most 1, so the choice is valid and r is minus 0.5."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        36
+       ],
+       "tex": "r^2 = 0.25,\\; r = -0.5",
+       "size": 4,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        48
+       ],
+       "text": {
+        "en": "(The other choice gives r² = 4 > 1: impossible.)"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Given σx = 3, σy = 4 and r = 0.75, find b_yx and b_xy and check r² = b_yx b_xy."
+   },
+   "steps": [
+    {
+     "en": "b_yx = 0.75 × 4/3 = 1.0."
+    },
+    {
+     "en": "b_xy = 0.75 × 3/4 = 0.5625."
+    },
+    {
+     "en": "Product = 0.5625 = 0.75² ✓."
+    }
+   ],
+   "answer": {
+    "en": "b_yx = 1, b_xy = 0.5625"
+   },
+   "narration": {
+    "en": "Let us solve this together. Given σx = 3, σy = 4 and r = 0.75, find b_yx and b_xy and check r² = b_yx b_xy."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Product test"
+   },
+   "body": {
+    "en": "Multiply the two slopes: if the product is more than 1, you have swapped the lines. The correlation takes the shared sign of the coefficients."
+   },
+   "narration": {
+    "en": "Product test. Multiply the two slopes: if the product is more than 1, you have swapped the lines. The correlation takes the shared sign of the coefficients."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Product ≤ 1, same sign."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "sort",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Could these be the two regression coefficients?"
+   },
+   "buckets": [
+    {
+     "id": "yes",
+     "label": {
+      "en": "Possible"
+     }
+    },
+    {
+     "id": "no",
+     "label": {
+      "en": "Impossible"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "0.8 and 0.45"
+     },
+     "answer": "yes"
+    },
+    {
+     "text": {
+      "en": "−0.5 and −1.2"
+     },
+     "answer": "yes"
+    },
+    {
+     "text": {
+      "en": "1.5 and 0.9"
+     },
+     "answer": "no"
+    },
+    {
+     "text": {
+      "en": "0.6 and −0.3"
+     },
+     "answer": "no"
+    },
+    {
+     "text": {
+      "en": "2.0 and 0.4"
+     },
+     "answer": "yes"
+    },
+    {
+     "text": {
+      "en": "1.2 and 1.1"
+     },
+     "answer": "no"
+    }
+   ],
+   "narration": {
+    "en": "Could these be the two regression coefficients?"
+   },
+   "questionId": "act.isc-coefficient-pairs",
+   "explanation": {
+    "en": "They must share a sign and have a product of at most 1."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2m15-q06",
+    "2m15-q07",
+    "2m15-q08"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "2m15-q09",
+    "2m15-q10"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "b_yx = rσy/σx, b_xy = rσx/σy, r² = b_yx b_xy."
+    },
+    {
+     "en": "Both coefficients share a sign, which is the sign of r; their product is at most 1."
+    },
+    {
+     "en": "The means are where the two lines meet."
+    }
+   ],
+   "homework": [
+    {
+     "en": "b_yx = −0.9 and b_xy = −0.4. Find r. (Answer: −0.6)"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2m15-q10"
+   ],
+   "narration": {
+    "en": "Recap. b_yx = rσy/σx, b_xy = rσx/σy, r² = b_yx b_xy. Both coefficients share a sign, which is the sign of r; their product is at most 1. The means are where the two lines meet."
+   }
+  }
+ ]
+}

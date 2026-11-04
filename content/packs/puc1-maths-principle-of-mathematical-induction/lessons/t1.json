@@ -1,0 +1,564 @@
+{
+ "id": "puc1-maths-18-principle-of-mathematical-induction.t1.lesson",
+ "chapterId": "puc1-maths-18-principle-of-mathematical-induction",
+ "topicId": "puc1-maths-18-principle-of-mathematical-induction.t1",
+ "title": {
+  "en": "The principle of mathematical induction and sums of series"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "A line of dominoes"
+   },
+   "hook": {
+    "en": "Stand dominoes in a long line. If the first one falls, and each falling domino always knocks over the next, then every domino falls, however long the line."
+   },
+   "objectives": [
+    {
+     "en": "State the principle of mathematical induction"
+    },
+    {
+     "en": "Prove formulas for sums by induction"
+    },
+    {
+     "en": "Explain why both steps are needed"
+    }
+   ],
+   "narration": {
+    "en": "Stand dominoes in a long line. If the first one falls, and each falling domino always knocks over the next, then every domino falls, however long the line."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "The principle"
+   },
+   "body": {
+    "en": "Let P(n) be a statement about natural numbers. If (1) P(1) is true (the base case) and (2) whenever P(k) is true, P(k + 1) is also true (the inductive step), then P(n) is true for every natural number n. In the step we assume P(k) (the induction hypothesis) and use it to prove P(k + 1). The base may start at any n₀; then the result holds for all n ≥ n₀."
+   },
+   "points": [
+    {
+     "en": "Base case: P(1)"
+    },
+    {
+     "en": "Step: P(k) ⇒ P(k + 1)"
+    },
+    {
+     "en": "Both together ⇒ P(n) for all n"
+    }
+   ],
+   "narration": {
+    "en": "Let P(n) be a statement about natural numbers. If (1) P(1) is true (the base case) and (2) whenever P(k) is true, P(k + 1) is also true (the inductive step), then P(n) is true for every natural number n. In the step we assume P(k) (the induction hypothesis) and use it to prove P(k + 1). The base may start at any n₀; then the result holds for all n ≥ n₀."
+   }
+  },
+  {
+   "id": "scene-dominoes",
+   "type": "interactive",
+   "title": {
+    "en": "Induction as dominoes"
+   },
+   "narration": {
+    "en": "Press play with both switches on: every domino falls. Turn off the base case: nothing starts. Turn off the step: only the first falls."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Domino 1 is the base case; each push to the next is the inductive step. Switch either off and press Play to see why both are needed."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "n for the sum check"
+     },
+     "min": 1,
+     "max": 30,
+     "step": 1,
+     "value": 10
+    }
+   ],
+   "toggles": [
+    {
+     "name": "base",
+     "label": {
+      "en": "Base case P(1) true"
+     },
+     "value": true
+    },
+    {
+     "name": "stp",
+     "label": {
+      "en": "Step P(k) ⇒ P(k + 1)"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Push"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 7
+   },
+   "vars": [
+    {
+     "name": "fallen",
+     "expr": "if(base, if(stp, floor(t*2) + 1, 1), 0)*step(0.01, t)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     -2,
+     6
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 16,
+     "y2": 0,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 0,
+     "x2": "1 + if(0 < fallen, 1.8, 0)",
+     "y2": "if(0 < fallen, 0.6, 2.2)",
+     "color": "orange",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 0,
+     "x2": "2 + if(1 < fallen, 1.8, 0)",
+     "y2": "if(1 < fallen, 0.6, 2.2)",
+     "color": "yellow",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 0,
+     "x2": "3 + if(2 < fallen, 1.8, 0)",
+     "y2": "if(2 < fallen, 0.6, 2.2)",
+     "color": "yellow",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": 0,
+     "x2": "4 + if(3 < fallen, 1.8, 0)",
+     "y2": "if(3 < fallen, 0.6, 2.2)",
+     "color": "yellow",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 0,
+     "x2": "5 + if(4 < fallen, 1.8, 0)",
+     "y2": "if(4 < fallen, 0.6, 2.2)",
+     "color": "yellow",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 0,
+     "x2": "6 + if(5 < fallen, 1.8, 0)",
+     "y2": "if(5 < fallen, 0.6, 2.2)",
+     "color": "yellow",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 7,
+     "y1": 0,
+     "x2": "7 + if(6 < fallen, 1.8, 0)",
+     "y2": "if(6 < fallen, 0.6, 2.2)",
+     "color": "yellow",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 0,
+     "x2": "8 + if(7 < fallen, 1.8, 0)",
+     "y2": "if(7 < fallen, 0.6, 2.2)",
+     "color": "yellow",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 9,
+     "y1": 0,
+     "x2": "9 + if(8 < fallen, 1.8, 0)",
+     "y2": "if(8 < fallen, 0.6, 2.2)",
+     "color": "yellow",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 0,
+     "x2": "10 + if(9 < fallen, 1.8, 0)",
+     "y2": "if(9 < fallen, 0.6, 2.2)",
+     "color": "yellow",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 0,
+     "x2": "11 + if(10 < fallen, 1.8, 0)",
+     "y2": "if(10 < fallen, 0.6, 2.2)",
+     "color": "yellow",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 0,
+     "x2": "12 + if(11 < fallen, 1.8, 0)",
+     "y2": "if(11 < fallen, 0.6, 2.2)",
+     "color": "yellow",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 13,
+     "y1": 0,
+     "x2": "13 + if(12 < fallen, 1.8, 0)",
+     "y2": "if(12 < fallen, 0.6, 2.2)",
+     "color": "yellow",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 0,
+     "x2": "14 + if(13 < fallen, 1.8, 0)",
+     "y2": "if(13 < fallen, 0.6, 2.2)",
+     "color": "yellow",
+     "width": 8
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": -0.8,
+     "text": {
+      "en": "P(1)"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -0.8,
+     "text": {
+      "en": "P(k)"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": -0.8,
+     "text": {
+      "en": "P(k+1)"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": 5,
+     "text": {
+      "en": "1 + 2 + … + {n:0} = {n*(n + 1)/2:0} = n(n + 1)/2"
+     },
+     "size": 24,
+     "align": "center",
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Dominoes fallen"
+     },
+     "expr": "min(fallen, 14)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "n(n + 1)/2"
+     },
+     "expr": "n*(n + 1)/2",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn off the step. How many dominoes fall?"
+    },
+    {
+     "en": "Turn off the base case but keep the step. Why does nothing happen?"
+    },
+    {
+     "en": "Set n and compare 1 + 2 + … + n with n(n + 1)/2."
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Proving 1 + 3 + 5 + … + (2n − 1) = n²"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Base case: n equals 1. The left side is 1, the right side is 1 squared."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Sum of odd numbers"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        5,
+        13
+       ],
+       "tex": "P(1):\\; 1 = 1^2 \\;\\checkmark",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Assume P k: the sum of the first k odd numbers is k squared."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        24
+       ],
+       "tex": "1 + 3 + \\dots + (2k - 1) = k^2",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Add the next odd number, 2k plus 1, to both sides."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        35
+       ],
+       "tex": "1 + \\dots + (2k - 1) + (2k + 1) = k^2 + 2k + 1 = (k + 1)^2",
+       "size": 4,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "That is P k plus 1. By induction, P n holds for all n."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        48
+       ],
+       "text": {
+        "en": "P(k) ⇒ P(k + 1), so P(n) is true for all n ∈ N"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Prove by induction that 1² + 2² + … + n² = n(n + 1)(2n + 1)/6."
+   },
+   "steps": [
+    {
+     "en": "n = 1: 1 = 1 × 2 × 3/6 ✓."
+    },
+    {
+     "en": "Assume Σ to k = k(k + 1)(2k + 1)/6. Add (k + 1)²."
+    },
+    {
+     "en": "= (k + 1)[k(2k + 1) + 6(k + 1)]/6 = (k + 1)(2k² + 7k + 6)/6 = (k + 1)(k + 2)(2k + 3)/6, which is P(k + 1)."
+    }
+   ],
+   "answer": {
+    "en": "True for all natural numbers n"
+   },
+   "narration": {
+    "en": "Let us solve this together. Prove by induction that 1² + 2² + … + n² = n(n + 1)(2n + 1)/6."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Write P(k + 1) first"
+   },
+   "body": {
+    "en": "Before starting the step, write out exactly what P(k + 1) says. Then work from the left side of P(k + 1), use P(k) once, and steer towards that target."
+   },
+   "narration": {
+    "en": "Write P(k + 1) first. Before starting the step, write out exactly what P(k + 1) says. Then work from the left side of P(k + 1), use P(k) once, and steer towards that target."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Know the target before you shoot."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "order",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Put the steps of a proof by induction in order."
+   },
+   "steps": [
+    {
+     "en": "State P(n) clearly."
+    },
+    {
+     "en": "Check the base case P(1)."
+    },
+    {
+     "en": "Assume P(k) is true for some natural number k."
+    },
+    {
+     "en": "Write down what P(k + 1) states."
+    },
+    {
+     "en": "Use P(k) to prove P(k + 1)."
+    },
+    {
+     "en": "Conclude by the principle of induction that P(n) holds for all n."
+    }
+   ],
+   "narration": {
+    "en": "Put the steps of a proof by induction in order."
+   },
+   "questionId": "act.isc-induction-order"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1m18-q01",
+    "1m18-q02",
+    "1m18-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "1m18-q04",
+    "1m18-q05"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Induction: prove P(1), and prove P(k) ⇒ P(k + 1); then P(n) holds for all n."
+    },
+    {
+     "en": "Many examples are not a proof."
+    },
+    {
+     "en": "Σk = n(n + 1)/2, Σk² = n(n + 1)(2n + 1)/6, Σk³ = [n(n + 1)/2]²."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Prove by induction that 1³ + 2³ + … + n³ = [n(n + 1)/2]²."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1m18-q05"
+   ],
+   "narration": {
+    "en": "Recap. Induction: prove P(1), and prove P(k) ⇒ P(k + 1); then P(n) holds for all n. Many examples are not a proof. Σk = n(n + 1)/2, Σk² = n(n + 1)(2n + 1)/6, Σk³ = [n(n + 1)/2]²."
+   }
+  }
+ ]
+}

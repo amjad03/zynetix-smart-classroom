@@ -1,0 +1,401 @@
+{
+ "id": "puc1-maths-17-index-numbers-and-moving-averages.t2.lesson",
+ "chapterId": "puc1-maths-17-index-numbers-and-moving-averages",
+ "topicId": "puc1-maths-17-index-numbers-and-moving-averages.t2",
+ "title": {
+  "en": "Moving averages and the trend of a time series"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Ice cream sales through the year"
+   },
+   "hook": {
+    "en": "An ice-cream seller's sales rise every summer and fall every monsoon. Is the business growing? Smoothing the quarter-to-quarter ups and downs shows the trend."
+   },
+   "objectives": [
+    {
+     "en": "Compute odd-period moving averages"
+    },
+    {
+     "en": "Compute centred even-period moving averages"
+    },
+    {
+     "en": "Choose the period to match the cycle"
+    }
+   ],
+   "narration": {
+    "en": "An ice-cream seller's sales rise every summer and fall every monsoon. Is the business growing? Smoothing the quarter-to-quarter ups and downs shows the trend."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Moving averages"
+   },
+   "body": {
+    "en": "A time series often has a long-term trend plus regular (seasonal or cyclical) fluctuations. A k-period moving average replaces each value by the mean of k consecutive values, sliding one step at a time. For odd k the average is placed against the middle period. For even k (e.g. 4 quarters) the averages fall between periods, so they are centred by averaging successive pairs. Choosing k equal to the length of the cycle removes the regular fluctuation and shows the trend; values at the ends are lost."
+   },
+   "points": [
+    {
+     "en": "k-period average, sliding by one"
+    },
+    {
+     "en": "Odd k: placed at the middle period"
+    },
+    {
+     "en": "Even k: centre by averaging pairs"
+    }
+   ],
+   "narration": {
+    "en": "A time series often has a long-term trend plus regular (seasonal or cyclical) fluctuations. A k-period moving average replaces each value by the mean of k consecutive values, sliding one step at a time. For odd k the average is placed against the middle period. For even k (e.g. 4 quarters) the averages fall between periods, so they are centred by averaging successive pairs. Choosing k equal to the length of the cycle removes the regular fluctuation and shows the trend; values at the ends are lost."
+   }
+  },
+  {
+   "id": "scene-moving-average",
+   "type": "interactive",
+   "title": {
+    "en": "Smoothing a quarterly series"
+   },
+   "narration": {
+    "en": "Try periods three, four and five. Only the four-quarter centred average removes the seasonal ups and downs, leaving a straight rising trend."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Yellow dots are quarterly sales with a rising trend and a 4-quarter seasonal swing. Choose the period of the moving average (orange). Which period wipes out the seasonal swing?"
+   },
+   "choices": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Period"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "3 quarters"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "4 quarters (centred)"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "5 quarters"
+       },
+       "value": 5
+      }
+     ],
+     "value": 3
+    }
+   ],
+   "view": {
+    "x": [
+     -1,
+     21
+    ],
+    "y": [
+     20,
+     95
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "quarter",
+    "yLabel": "sales"
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 20,
+     "r": 0.25,
+     "color": "yellow",
+     "x": "i + 1",
+     "y": "(40 + 2*(i + 1) + 8*sin(pi*(i + 1)/2) + 4*(rand(i + 1) - 0.5))"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "r": 0.3,
+     "color": "orange",
+     "visibleIf": "k == 3 && i > 0 && i < 19",
+     "x": "i + 1",
+     "y": "((40 + 2*(i) + 8*sin(pi*(i)/2) + 4*(rand(i) - 0.5)) + (40 + 2*(i + 1) + 8*sin(pi*(i + 1)/2) + 4*(rand(i + 1) - 0.5)) + (40 + 2*(i + 2) + 8*sin(pi*(i + 2)/2) + 4*(rand(i + 2) - 0.5)))/3"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "r": 0.3,
+     "color": "orange",
+     "visibleIf": "k == 4 && i > 1 && i < 18",
+     "x": "i + 1",
+     "y": "(0.5*(40 + 2*(i - 1) + 8*sin(pi*(i - 1)/2) + 4*(rand(i - 1) - 0.5)) + (40 + 2*(i) + 8*sin(pi*(i)/2) + 4*(rand(i) - 0.5)) + (40 + 2*(i + 1) + 8*sin(pi*(i + 1)/2) + 4*(rand(i + 1) - 0.5)) + (40 + 2*(i + 2) + 8*sin(pi*(i + 2)/2) + 4*(rand(i + 2) - 0.5)) + 0.5*(40 + 2*(i + 3) + 8*sin(pi*(i + 3)/2) + 4*(rand(i + 3) - 0.5)))/4"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "r": 0.3,
+     "color": "orange",
+     "visibleIf": "k == 5 && i > 1 && i < 18",
+     "x": "i + 1",
+     "y": "((40 + 2*(i - 1) + 8*sin(pi*(i - 1)/2) + 4*(rand(i - 1) - 0.5)) + (40 + 2*(i) + 8*sin(pi*(i)/2) + 4*(rand(i) - 0.5)) + (40 + 2*(i + 1) + 8*sin(pi*(i + 1)/2) + 4*(rand(i + 1) - 0.5)) + (40 + 2*(i + 2) + 8*sin(pi*(i + 2)/2) + 4*(rand(i + 2) - 0.5)) + (40 + 2*(i + 3) + 8*sin(pi*(i + 3)/2) + 4*(rand(i + 3) - 0.5)))/5"
+    },
+    {
+     "shape": "path",
+     "fn": "40 + 2*x",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.5
+    },
+    {
+     "shape": "label",
+     "x": 20,
+     "y": 25,
+     "text": {
+      "en": "dashed: true trend 40 + 2t"
+     },
+     "size": 22,
+     "align": "right",
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Values lost at each end"
+     },
+     "expr": "floor(k/2)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Which period gives the smoothest orange curve?"
+    },
+    {
+     "en": "Why are some quarters at each end missing from the average?"
+    },
+    {
+     "en": "Read the trend: how much do sales grow per quarter?"
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "A centred 4-quarter average"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Sales: 30, 50, 42, 34, 40, 58. Add four at a time."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Centring a 4-period average"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        13
+       ],
+       "text": {
+        "en": "Data: 30  50  42  34  40  58"
+       },
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Four-quarter totals: 156, 166, 174. Averages: 39, 41.5, 43.5, which fall between quarters."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        22
+       ],
+       "text": {
+        "en": "4-q totals: 156  166  174   → averages 39  41.5  43.5"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Average each pair to centre them on quarters 3 and 4."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        32
+       ],
+       "text": {
+        "en": "centred: (39 + 41.5)/2 = 40.25 (Q3),  (41.5 + 43.5)/2 = 42.5 (Q4)"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Find the 3-yearly moving averages of 12, 15, 14, 18, 20, 19, 24."
+   },
+   "steps": [
+    {
+     "en": "(12 + 15 + 14)/3 = 13.67; (15 + 14 + 18)/3 = 15.67; (14 + 18 + 20)/3 = 17.33."
+    },
+    {
+     "en": "(18 + 20 + 19)/3 = 19; (20 + 19 + 24)/3 = 21."
+    },
+    {
+     "en": "Place them against years 2 to 6."
+    }
+   ],
+   "answer": {
+    "en": "13.67, 15.67, 17.33, 19, 21"
+   },
+   "narration": {
+    "en": "Let us solve this together. Find the 3-yearly moving averages of 12, 15, 14, 18, 20, 19, 24."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Slide, do not restart"
+   },
+   "body": {
+    "en": "For each next moving total, add the new value and drop the oldest: 41 → 41 − 12 + 18 = 47. Then divide by k."
+   },
+   "narration": {
+    "en": "Slide, do not restart. For each next moving total, add the new value and drop the oldest: 41 → 41 − 12 + 18 = 47. Then divide by k."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Add the new, drop the old."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "order",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Put the steps of a centred 4-quarter moving average in order."
+   },
+   "steps": [
+    {
+     "en": "Write the quarterly data in time order."
+    },
+    {
+     "en": "Add four consecutive values at a time, sliding by one."
+    },
+    {
+     "en": "Divide each 4-quarter total by 4 (these fall between quarters)."
+    },
+    {
+     "en": "Average each successive pair of these to centre them."
+    },
+    {
+     "en": "Place the centred averages against quarters 3, 4, … and plot the trend."
+    }
+   ],
+   "narration": {
+    "en": "Put the steps of a centred 4-quarter moving average in order."
+   },
+   "questionId": "act.isc-moving-average-order"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1m17-q06",
+    "1m17-q07",
+    "1m17-q08"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "1m17-q09",
+    "1m17-q10"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A k-period moving average smooths a series by averaging k consecutive values."
+    },
+    {
+     "en": "Choose k equal to the cycle; centre even-period averages."
+    },
+    {
+     "en": "The moving averages show the trend; some values at the ends are lost."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Find the 5-yearly moving averages of 3, 5, 7, 6, 9, 11, 10."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1m17-q10"
+   ],
+   "narration": {
+    "en": "Recap. A k-period moving average smooths a series by averaging k consecutive values. Choose k equal to the cycle; centre even-period averages. The moving averages show the trend; some values at the ends are lost."
+   }
+  }
+ ]
+}

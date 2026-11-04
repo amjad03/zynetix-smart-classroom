@@ -1,0 +1,514 @@
+{
+ "id": "puc1-maths-17-index-numbers-and-moving-averages.t1.lesson",
+ "chapterId": "puc1-maths-17-index-numbers-and-moving-averages",
+ "topicId": "puc1-maths-17-index-numbers-and-moving-averages.t1",
+ "title": {
+  "en": "Index numbers: simple and weighted price indices"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "How much dearer is life?"
+   },
+   "hook": {
+    "en": "A family that spent ₹20,000 a month in 2020 needs much more now for the same basket of food, fuel and fares. An index number puts that change in one figure."
+   },
+   "objectives": [
+    {
+     "en": "Compute simple and weighted aggregative price indices"
+    },
+    {
+     "en": "Use Laspeyres, Paasche and Fisher formulas"
+    },
+    {
+     "en": "Know the uses and limits of index numbers"
+    }
+   ],
+   "narration": {
+    "en": "A family that spent ₹20,000 a month in 2020 needs much more now for the same basket of food, fuel and fares. An index number puts that change in one figure."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Price index numbers"
+   },
+   "body": {
+    "en": "An index number measures the change in a group of related variables between a base year (index 100) and a current year. Simple aggregative: $P_{01} = \\dfrac{\\sum p_1}{\\sum p_0}\\times 100$. Weighted by quantities: Laspeyres (base quantities) $L = \\dfrac{\\sum p_1q_0}{\\sum p_0q_0}\\times 100$; Paasche (current quantities) $P = \\dfrac{\\sum p_1q_1}{\\sum p_0q_1}\\times 100$; Fisher $F = \\sqrt{L\\,P}$. A cost of living index uses the basket of a group of consumers."
+   },
+   "points": [
+    {
+     "en": "Base year = 100"
+    },
+    {
+     "en": "L uses q₀; P uses q₁"
+    },
+    {
+     "en": "Fisher = √(L × P), the \"ideal\" index"
+    }
+   ],
+   "narration": {
+    "en": "An index number measures the change in a group of related variables between a base year (index 100) and a current year. Simple aggregative: $P_{01} = \\dfrac{\\sum p_1}{\\sum p_0}\\times 100$. Weighted by quantities: Laspeyres (base quantities) $L = \\dfrac{\\sum p_1q_0}{\\sum p_0q_0}\\times 100$; Paasche (current quantities) $P = \\dfrac{\\sum p_1q_1}{\\sum p_0q_1}\\times 100$; Fisher $F = \\sqrt{L\\,P}$. A cost of living index uses the basket of a group of consumers."
+   },
+   "formula": "F = \\sqrt{L \\times P}"
+  },
+  {
+   "id": "scene-index",
+   "type": "interactive",
+   "title": {
+    "en": "A two-item price index"
+   },
+   "narration": {
+    "en": "Raise the price of fuel and lower the quantity bought now. Laspeyres keeps the old basket, Paasche uses the new one, and Fisher lies between them."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Rice: base price ₹40/kg, 10 kg; fuel: base price ₹100/L, 5 L. Set the current prices and quantities. The bars compare Laspeyres, Paasche and Fisher indices."
+   },
+   "sliders": [
+    {
+     "name": "pr",
+     "label": {
+      "en": "Rice price now"
+     },
+     "min": 30,
+     "max": 70,
+     "step": 1,
+     "value": 50,
+     "unit": "₹/kg"
+    },
+    {
+     "name": "pf",
+     "label": {
+      "en": "Fuel price now"
+     },
+     "min": 80,
+     "max": 160,
+     "step": 2,
+     "value": 120,
+     "unit": "₹/L"
+    },
+    {
+     "name": "qr",
+     "label": {
+      "en": "Rice bought now"
+     },
+     "min": 5,
+     "max": 15,
+     "step": 1,
+     "value": 10,
+     "unit": "kg"
+    },
+    {
+     "name": "qf",
+     "label": {
+      "en": "Fuel bought now"
+     },
+     "min": 2,
+     "max": 8,
+     "step": 1,
+     "value": 4,
+     "unit": "L"
+    }
+   ],
+   "vars": [
+    {
+     "name": "L",
+     "expr": "(pr*10 + pf*5)/(40*10 + 100*5)*100"
+    },
+    {
+     "name": "P",
+     "expr": "(pr*qr + pf*qf)/(40*qr + 100*qf)*100"
+    },
+    {
+     "name": "F",
+     "expr": "sqrt(L*P)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     200
+    ],
+    "axes": true,
+    "grid": true,
+    "yLabel": "index (base = 100)"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 100,
+     "x2": 10,
+     "y2": 100,
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 9.8,
+     "y": 106,
+     "text": {
+      "en": "base 100"
+     },
+     "size": 22,
+     "align": "right",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0,
+     "w": 2,
+     "h": "L",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": "L + 8",
+     "text": {
+      "en": "L {L:1}"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 4,
+     "y": 0,
+     "w": 2,
+     "h": "P",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": "P + 8",
+     "text": {
+      "en": "P {P:1}"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 7,
+     "y": 0,
+     "w": 2,
+     "h": "F",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": "F + 8",
+     "text": {
+      "en": "F {F:1}"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Laspeyres"
+     },
+     "expr": "L",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Paasche"
+     },
+     "expr": "P",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Fisher"
+     },
+     "expr": "F",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise only the rice price by 25%. What are the indices?"
+    },
+    {
+     "en": "Make people buy less of the item that got dearer. Which index is lower now?"
+    },
+    {
+     "en": "When are L and P equal?"
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Laspeyres and Paasche side by side"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Make columns p0 q0, p1 q0, p0 q1 and p1 q1."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Weighted price indices"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        13
+       ],
+       "text": {
+        "en": "Item  p₀  q₀  p₁  q₁   p₁q₀  p₀q₀  p₁q₁  p₀q₁"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Rice: 40, 10, 50, 10. Fuel: 100, 5, 120, 4."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        20
+       ],
+       "text": {
+        "en": "Rice   40  10  50  10    500   400   500   400"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        26
+       ],
+       "text": {
+        "en": "Fuel  100   5 120   4    600   500   480   400"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        32
+       ],
+       "text": {
+        "en": "Total                    1100   900   980   800"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "L is 1100 over 900; P is 980 over 800; F is the geometric mean."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        44
+       ],
+       "tex": "L = 122.2,\\; P = 122.5,\\; F = \\sqrt{L P} \\approx 122.4",
+       "size": 4,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Prices of three items in 2020 were ₹20, ₹50, ₹30 and in 2025 ₹25, ₹60, ₹45. Find the simple aggregative price index for 2025 (2020 = 100)."
+   },
+   "steps": [
+    {
+     "en": "Σp₀ = 100, Σp₁ = 130."
+    },
+    {
+     "en": "P₀₁ = 130/100 × 100 = 130."
+    }
+   ],
+   "answer": {
+    "en": "130: prices rose 30%"
+   },
+   "narration": {
+    "en": "Let us solve this together. Prices of three items in 2020 were ₹20, ₹50, ₹30 and in 2025 ₹25, ₹60, ₹45. Find the simple aggregative price index for 2025 (2020 = 100)."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "L for last time, P for present"
+   },
+   "body": {
+    "en": "Laspeyres weights by the base (old) basket, Paasche by the present basket. When people switch away from items that got dearer, L usually comes out above P; Fisher sits between."
+   },
+   "narration": {
+    "en": "L for last time, P for present. Laspeyres weights by the base (old) basket, Paasche by the present basket. When people switch away from items that got dearer, L usually comes out above P; Fisher sits between."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "L: last basket; P: present basket."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Match each index with its formula."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "Simple aggregative"
+     },
+     "right": {
+      "en": "Σp₁/Σp₀ × 100"
+     }
+    },
+    {
+     "left": {
+      "en": "Laspeyres"
+     },
+     "right": {
+      "en": "Σp₁q₀/Σp₀q₀ × 100"
+     }
+    },
+    {
+     "left": {
+      "en": "Paasche"
+     },
+     "right": {
+      "en": "Σp₁q₁/Σp₀q₁ × 100"
+     }
+    },
+    {
+     "left": {
+      "en": "Fisher"
+     },
+     "right": {
+      "en": "√(L × P)"
+     }
+    },
+    {
+     "left": {
+      "en": "Base year index"
+     },
+     "right": {
+      "en": "100"
+     }
+    }
+   ],
+   "narration": {
+    "en": "Match each index with its formula."
+   },
+   "questionId": "act.isc-index-match"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1m17-q01",
+    "1m17-q02",
+    "1m17-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "1m17-q04",
+    "1m17-q05"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "An index number compares a current year with a base year taken as 100."
+    },
+    {
+     "en": "L = Σp₁q₀/Σp₀q₀ × 100, P = Σp₁q₁/Σp₀q₁ × 100, F = √(LP)."
+    },
+    {
+     "en": "Index numbers measure inflation and cost of living and guide wage and policy decisions."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Σp₀q₀ = 200, Σp₁q₀ = 240. Find Laspeyres' index. (Answer: 120)"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1m17-q04"
+   ],
+   "narration": {
+    "en": "Recap. An index number compares a current year with a base year taken as 100. L = Σp₁q₀/Σp₀q₀ × 100, P = Σp₁q₁/Σp₀q₁ × 100, F = √(LP). Index numbers measure inflation and cost of living and guide wage and policy decisions."
+   }
+  }
+ ]
+}
