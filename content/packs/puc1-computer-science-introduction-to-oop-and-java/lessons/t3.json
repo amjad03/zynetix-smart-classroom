@@ -1,0 +1,450 @@
+{
+ "id": "puc1-computer-science-14-introduction-to-oop-and-java.t3.lesson",
+ "chapterId": "puc1-computer-science-14-introduction-to-oop-and-java",
+ "topicId": "puc1-computer-science-14-introduction-to-oop-and-java.t3",
+ "title": {
+  "en": "Primitive types, wrapper classes and type casting"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "How big is a number?"
+   },
+   "hook": {
+    "en": "A byte can count only up to 127; a long can count every human who ever lived. Java makes you choose the right size, and tells you what happens when you mix them."
+   },
+   "objectives": [
+    {
+     "en": "List the eight primitive types with their sizes"
+    },
+    {
+     "en": "Use wrapper classes for parsing and conversion"
+    },
+    {
+     "en": "Distinguish implicit (widening) and explicit (narrowing) casting"
+    }
+   ],
+   "narration": {
+    "en": "A byte can count only up to 127; a long can count every human who ever lived. Java makes you choose the right size, and tells you what happens when you mix them."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "The eight primitive types"
+   },
+   "body": {
+    "en": "Java has eight primitive data types. Integers: byte (8 bits), short (16), int (32) and long (64). Reals: float (32) and double (64). char (16 bits, a Unicode character) and boolean (true or false). Default type of an integer literal is int and of a real literal is double, so 3.5f is needed for a float and 10L for a long. Non-primitive (reference) types such as String, arrays and classes hold the address of an object."
+   },
+   "points": [
+    {
+     "en": "byte 8, short 16, int 32, long 64 bits"
+    },
+    {
+     "en": "float 32, double 64 bits"
+    },
+    {
+     "en": "char 16 bits (Unicode), boolean"
+    },
+    {
+     "en": "Literals: 10 is int, 10L long, 3.5 double, 3.5f float"
+    }
+   ],
+   "narration": {
+    "en": "Java has eight primitive data types. Integers: byte (8 bits), short (16), int (32) and long (64). Reals: float (32) and double (64). char (16 bits, a Unicode character) and boolean (true or false). Default type of an integer literal is int and of a real literal is double, so 3.5f is needed for a float and 10L for a long. Non-primitive (reference) types such as String, arrays and classes hold the address of an object."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: widening and narrowing"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Types can be lined up from small to large."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "widening and narrowing"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        10
+       ],
+       "text": {
+        "en": "byte → short → int → long → float → double"
+       },
+       "size": 3,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        14.5
+       ],
+       "text": {
+        "en": "(char → int also widens)"
+       },
+       "size": 3,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Widening (implicit): a smaller type goes into a larger one automatically. No information is lost."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "int i = 25;  double d = i;      // d = 25.0"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Narrowing (explicit): a larger type into a smaller one needs a cast, and data may be lost."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "double x = 9.87;  int n = (int) x;   // n = 9"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.0
+       ],
+       "text": {
+        "en": "int big = 300;  byte b = (byte) big; // b = 44"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        32.5
+       ],
+       "text": {
+        "en": "The fraction is truncated, and 300 wraps to 300 − 256 = 44"
+       },
+       "size": 3,
+       "color": "red"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up widening and narrowing on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "readouts",
+   "title": {
+    "en": "Casting a double"
+   },
+   "caption": {
+    "en": "Move the slider to choose a double value d and read what Java gives for each conversion. Notice that (int) truncates towards zero, while Math.round rounds to the nearest whole number."
+   },
+   "narration": {
+    "en": "Move the slider to choose a double value d and read what Java gives for each conversion. Notice that (int) truncates towards zero, while Math.round rounds to the nearest whole number."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "Set d = 7.6. Compare (int) d and Math.round(d)."
+    },
+    {
+     "en": "Set d = −7.6. Which way does (int) go now?"
+    },
+    {
+     "en": "Find a value where Math.floor and (int) differ."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "d",
+     "label": {
+      "en": "d (a double)"
+     },
+     "min": -9.9,
+     "max": 9.9,
+     "step": 0.1,
+     "value": 7.6
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "(int) d"
+     },
+     "expr": "sign(d)*floor(abs(d) + 0.0000001)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Math.round(d)"
+     },
+     "expr": "floor(d + 0.5)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Math.floor(d)"
+     },
+     "expr": "floor(d)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Math.ceil(d)"
+     },
+     "expr": "ceil(d)",
+     "digits": 0
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Wrapper classes and autoboxing"
+   },
+   "body": {
+    "en": "Each primitive type has a wrapper class in java.lang that stores the value as an object: Byte, Short, Integer, Long, Float, Double, Character and Boolean. Wrappers are needed where objects are required (for example in collections) and provide useful methods: Integer.parseInt(\"25\") turns a string into an int, Double.parseDouble, Integer.toString(25), Character.isDigit(ch), Character.toUpperCase(ch). Since Java 5, conversion between a primitive and its wrapper is automatic: autoboxing (int → Integer) and unboxing (Integer → int)."
+   },
+   "points": [
+    {
+     "en": "int ↔ Integer, char ↔ Character"
+    },
+    {
+     "en": "Integer.parseInt, Double.parseDouble"
+    },
+    {
+     "en": "Character.isLetter, isDigit, toUpperCase"
+    },
+    {
+     "en": "Autoboxing and unboxing are automatic"
+    }
+   ],
+   "narration": {
+    "en": "Each primitive type has a wrapper class in java.lang that stores the value as an object: Byte, Short, Integer, Long, Float, Double, Character and Boolean. Wrappers are needed where objects are required (for example in collections) and provide useful methods: Integer.parseInt(\"25\") turns a string into an int, Double.parseDouble, Integer.toString(25), Character.isDigit(ch), Character.toUpperCase(ch). Since Java 5, conversion between a primitive and its wrapper is automatic: autoboxing (int → Integer) and unboxing (Integer → int)."
+   }
+  },
+  {
+   "id": "activity-match",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Type and size"
+   },
+   "prompt": {
+    "en": "Match each primitive type with its size in bits."
+   },
+   "narration": {
+    "en": "Match each primitive type with its size in bits."
+   },
+   "seconds": 150,
+   "pairs": [
+    {
+     "left": {
+      "en": "byte"
+     },
+     "right": {
+      "en": "8 bits"
+     }
+    },
+    {
+     "left": {
+      "en": "short"
+     },
+     "right": {
+      "en": "16 bits (signed)"
+     }
+    },
+    {
+     "left": {
+      "en": "char"
+     },
+     "right": {
+      "en": "16 bits (Unicode)"
+     }
+    },
+    {
+     "left": {
+      "en": "int"
+     },
+     "right": {
+      "en": "32 bits"
+     }
+    },
+    {
+     "left": {
+      "en": "long"
+     },
+     "right": {
+      "en": "64 bits (integer)"
+     }
+    },
+    {
+     "left": {
+      "en": "double"
+     },
+     "right": {
+      "en": "64 bits (real)"
+     }
+    }
+   ],
+   "explanation": {
+    "en": "Integers grow 8, 16, 32, 64; char is 16-bit unsigned Unicode; double is a 64-bit floating-point type."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Find the output: int a = 7, b = 2; double c = a / b; double d = (double) a / b; char ch = (char) ('A' + 2); System.out.println(c + \" \" + d + \" \" + ch);"
+   },
+   "steps": [
+    {
+     "en": "a / b is int / int = 3 (integer division), then widened to 3.0."
+    },
+    {
+     "en": "(double) a / b: a becomes 7.0, so 7.0 / 2 = 3.5."
+    },
+    {
+     "en": "'A' is 65; 65 + 2 = 67; (char) 67 is 'C'."
+    }
+   ],
+   "answer": {
+    "en": "3.0 3.5 C"
+   },
+   "narration": {
+    "en": "Find the output: int a = 7, b = 2; double c = a / b; double d = (double) a / b; char ch = (char) ('A' + 2); System.out.println(c + \" \" + d + \" \" + ch);"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Small into big is free"
+   },
+   "body": {
+    "en": "Widening is like pouring a cup into a bucket: automatic and safe. Narrowing is pouring a bucket into a cup: you must say so with a cast, and some may spill."
+   },
+   "narration": {
+    "en": "Widening is like pouring a cup into a bucket: automatic and safe. Narrowing is pouring a bucket into a cup: you must say so with a cast, and some may spill."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Cup into bucket: free. Bucket into cup: cast."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i1cs14-q09",
+    "i1cs14-q10",
+    "i1cs14-q11"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i1cs14-q12"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Eight primitives: byte, short, int, long, float, double, char, boolean."
+    },
+    {
+     "en": "Widening is implicit; narrowing needs a cast and may lose data."
+    },
+    {
+     "en": "(int) truncates towards zero."
+    },
+    {
+     "en": "Wrapper classes box primitives and give parse and test methods."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Find the output of (int) 'a' + 1 and (char) 98."
+    },
+    {
+     "en": "Convert the string \"45.5\" to a double and add 0.5 to it."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i1cs14-q12"
+   ],
+   "narration": {
+    "en": "Recap. Eight primitives: byte, short, int, long, float, double, char, boolean. Widening is implicit; narrowing needs a cast and may lose data. (int) truncates towards zero. Wrapper classes box primitives and give parse and test methods."
+   }
+  }
+ ]
+}

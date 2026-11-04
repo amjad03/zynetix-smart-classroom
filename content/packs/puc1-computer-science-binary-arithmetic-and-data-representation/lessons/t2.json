@@ -1,0 +1,1019 @@
+{
+ "id": "puc1-computer-science-12-binary-arithmetic-and-data-representation.t2.lesson",
+ "chapterId": "puc1-computer-science-12-binary-arithmetic-and-data-representation",
+ "topicId": "puc1-computer-science-12-binary-arithmetic-and-data-representation.t2",
+ "title": {
+  "en": "Signed integers: sign-magnitude, 1's and 2's complement"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Storing negative numbers"
+   },
+   "hook": {
+    "en": "Memory holds only 0s and 1s; there is no minus sign. So how does an 8-bit byte hold −5? Three schemes have been used, and one of them won."
+   },
+   "objectives": [
+    {
+     "en": "Represent integers in sign-magnitude form"
+    },
+    {
+     "en": "Find the 1's and 2's complement of a binary number"
+    },
+    {
+     "en": "Subtract by adding the 2's complement and state the range of n-bit integers"
+    }
+   ],
+   "narration": {
+    "en": "Memory holds only 0s and 1s; there is no minus sign. So how does an 8-bit byte hold −5? Three schemes have been used, and one of them won."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Sign-magnitude and 1's complement"
+   },
+   "body": {
+    "en": "In sign-magnitude form the leftmost bit is the sign (0 for +, 1 for −) and the other bits hold the magnitude: +5 = 00000101, −5 = 10000101 in 8 bits. The 1's complement of a number flips every bit: −5 = 11111010. Both schemes have two zeros (+0 and −0), and adding a negative number needs special rules, so hardware uses neither for integers."
+   },
+   "points": [
+    {
+     "en": "Sign bit: 0 positive, 1 negative"
+    },
+    {
+     "en": "1's complement: invert every bit"
+    },
+    {
+     "en": "Both have +0 and −0"
+    }
+   ],
+   "narration": {
+    "en": "In sign-magnitude form the leftmost bit is the sign (0 for +, 1 for −) and the other bits hold the magnitude: +5 = 00000101, −5 = 10000101 in 8 bits. The 1's complement of a number flips every bit: −5 = 11111010. Both schemes have two zeros (+0 and −0), and adding a negative number needs special rules, so hardware uses neither for integers."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: 2's complement of 5 in 8 bits"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Write +5 in 8 bits."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "2's complement of 5 in 8 bits"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "  +5               = 0000 0101"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Invert every bit: this is the 1's complement."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "  1's complement   = 1111 1010"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Add 1: this is the 2's complement, which stands for −5."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "  + 1             = 1111 1011  = −5"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Check: 5 + (−5) in 8 bits. The carry out of the 8th bit is dropped, leaving 0."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "    0000 0101"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.0
+       ],
+       "text": {
+        "en": "  + 1111 1011"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        32.5
+       ],
+       "text": {
+        "en": "  = 1 0000 0000  → drop the carry → 0000 0000"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37.0
+       ],
+       "text": {
+        "en": "Range of n-bit 2's complement: −2^(n−1) to 2^(n−1) − 1"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        41.5
+       ],
+       "text": {
+        "en": "8 bits: −128 to +127"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up 2's complement of 5 in 8 bits on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "2's complement explorer"
+   },
+   "caption": {
+    "en": "Set a value between −128 and 127. The scene shows its 8-bit 2's complement pattern, the pattern read as an unsigned number, and the pattern of its negative."
+   },
+   "narration": {
+    "en": "Set a value between −128 and 127. The scene shows its 8-bit 2's complement pattern, the pattern read as an unsigned number, and the pattern of its negative."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "Set −1. Why is it all 1s?"
+    },
+    {
+     "en": "Set −128 and then 127. Why is there no +128?"
+    },
+    {
+     "en": "Compare n and −n: which bits stay the same from the right?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Value n"
+     },
+     "min": -128,
+     "max": 127,
+     "step": 1,
+     "value": -5
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Sign bit of n"
+     },
+     "expr": "if(n < 0, 1, 0)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Pattern of n read unsigned"
+     },
+     "expr": "mod(n, 256)",
+     "digits": 0
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 4.9,
+     "y": 9.4,
+     "text": {
+      "en": "128"
+     },
+     "size": 16,
+     "color": "blue",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 6.7,
+     "y": 9.4,
+     "text": {
+      "en": "64"
+     },
+     "size": 16,
+     "color": "blue",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 8.5,
+     "y": 9.4,
+     "text": {
+      "en": "32"
+     },
+     "size": 16,
+     "color": "blue",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 10.3,
+     "y": 9.4,
+     "text": {
+      "en": "16"
+     },
+     "size": 16,
+     "color": "blue",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 12.100000000000001,
+     "y": 9.4,
+     "text": {
+      "en": "8"
+     },
+     "size": 16,
+     "color": "blue",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 13.9,
+     "y": 9.4,
+     "text": {
+      "en": "4"
+     },
+     "size": 16,
+     "color": "blue",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 15.700000000000001,
+     "y": 9.4,
+     "text": {
+      "en": "2"
+     },
+     "size": 16,
+     "color": "blue",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 9.4,
+     "text": {
+      "en": "1"
+     },
+     "size": 16,
+     "color": "blue",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 0.2,
+     "y": 7.95,
+     "text": {
+      "en": "n"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 4.15,
+     "y": 7.2,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(n, 256))/128), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 4.9,
+     "y": 7.95,
+     "text": {
+      "en": "{mod(floor((mod(n, 256))/128), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 5.95,
+     "y": 7.2,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(n, 256))/64), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 6.7,
+     "y": 7.95,
+     "text": {
+      "en": "{mod(floor((mod(n, 256))/64), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 7.75,
+     "y": 7.2,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(n, 256))/32), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 8.5,
+     "y": 7.95,
+     "text": {
+      "en": "{mod(floor((mod(n, 256))/32), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 9.55,
+     "y": 7.2,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(n, 256))/16), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 10.3,
+     "y": 7.95,
+     "text": {
+      "en": "{mod(floor((mod(n, 256))/16), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 11.350000000000001,
+     "y": 7.2,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(n, 256))/8), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 12.100000000000001,
+     "y": 7.95,
+     "text": {
+      "en": "{mod(floor((mod(n, 256))/8), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 13.15,
+     "y": 7.2,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(n, 256))/4), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 13.9,
+     "y": 7.95,
+     "text": {
+      "en": "{mod(floor((mod(n, 256))/4), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 14.950000000000001,
+     "y": 7.2,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(n, 256))/2), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 15.700000000000001,
+     "y": 7.95,
+     "text": {
+      "en": "{mod(floor((mod(n, 256))/2), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 16.75,
+     "y": 7.2,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(n, 256))/1), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 7.95,
+     "text": {
+      "en": "{mod(floor((mod(n, 256))/1), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 19.8,
+     "y": 7.95,
+     "text": {
+      "en": "= {mod(n, 256):0}"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 0.2,
+     "y": 5.35,
+     "text": {
+      "en": "−n"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 4.15,
+     "y": 4.6,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(-n, 256))/128), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 4.9,
+     "y": 5.35,
+     "text": {
+      "en": "{mod(floor((mod(-n, 256))/128), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 5.95,
+     "y": 4.6,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(-n, 256))/64), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 6.7,
+     "y": 5.35,
+     "text": {
+      "en": "{mod(floor((mod(-n, 256))/64), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 7.75,
+     "y": 4.6,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(-n, 256))/32), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 8.5,
+     "y": 5.35,
+     "text": {
+      "en": "{mod(floor((mod(-n, 256))/32), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 9.55,
+     "y": 4.6,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(-n, 256))/16), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 10.3,
+     "y": 5.35,
+     "text": {
+      "en": "{mod(floor((mod(-n, 256))/16), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 11.350000000000001,
+     "y": 4.6,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(-n, 256))/8), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 12.100000000000001,
+     "y": 5.35,
+     "text": {
+      "en": "{mod(floor((mod(-n, 256))/8), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 13.15,
+     "y": 4.6,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(-n, 256))/4), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 13.9,
+     "y": 5.35,
+     "text": {
+      "en": "{mod(floor((mod(-n, 256))/4), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 14.950000000000001,
+     "y": 4.6,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(-n, 256))/2), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 15.700000000000001,
+     "y": 5.35,
+     "text": {
+      "en": "{mod(floor((mod(-n, 256))/2), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 16.75,
+     "y": 4.6,
+     "w": 1.5,
+     "h": 1.5,
+     "color": {
+      "by": "mod(floor((mod(-n, 256))/1), 2)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 5.35,
+     "text": {
+      "en": "{mod(floor((mod(-n, 256))/1), 2):0}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 19.8,
+     "y": 5.35,
+     "text": {
+      "en": "= {mod(-n, 256):0}"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "right"
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "2's complement and subtraction"
+   },
+   "body": {
+    "en": "The 2's complement of a number is its 1's complement plus 1. In n bits it represents the negative: −x is stored as 2^n − x. There is a single zero, the sign is still the leftmost bit, and ordinary binary addition just works: A − B is computed as A + (2's complement of B), dropping any carry out of the leftmost bit. An n-bit 2's complement integer ranges from −2^(n−1) to 2^(n−1) − 1, which is why Java's byte holds −128 to 127."
+   },
+   "points": [
+    {
+     "en": "2's complement = 1's complement + 1"
+    },
+    {
+     "en": "One zero; sign bit on the left"
+    },
+    {
+     "en": "A − B = A + (2's complement of B)"
+    },
+    {
+     "en": "Range: −2^(n−1) … 2^(n−1) − 1"
+    }
+   ],
+   "narration": {
+    "en": "The 2's complement of a number is its 1's complement plus 1. In n bits it represents the negative: −x is stored as 2^n − x. There is a single zero, the sign is still the leftmost bit, and ordinary binary addition just works: A − B is computed as A + (2's complement of B), dropping any carry out of the leftmost bit. An n-bit 2's complement integer ranges from −2^(n−1) to 2^(n−1) − 1, which is why Java's byte holds −128 to 127."
+   }
+  },
+  {
+   "id": "activity-match",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Match the 8-bit patterns"
+   },
+   "prompt": {
+    "en": "Match each value with its 8-bit 2's complement pattern."
+   },
+   "narration": {
+    "en": "Match each value with its 8-bit 2's complement pattern."
+   },
+   "seconds": 150,
+   "pairs": [
+    {
+     "left": {
+      "en": "+6"
+     },
+     "right": {
+      "en": "0000 0110"
+     }
+    },
+    {
+     "left": {
+      "en": "−6"
+     },
+     "right": {
+      "en": "1111 1010"
+     }
+    },
+    {
+     "left": {
+      "en": "−1"
+     },
+     "right": {
+      "en": "1111 1111"
+     }
+    },
+    {
+     "left": {
+      "en": "−128"
+     },
+     "right": {
+      "en": "1000 0000"
+     }
+    },
+    {
+     "left": {
+      "en": "+127"
+     },
+     "right": {
+      "en": "0111 1111"
+     }
+    }
+   ],
+   "explanation": {
+    "en": "−6: invert 00000110 to 11111001 and add 1 to get 11111010. −1 is all ones; −128 is the only pattern with just the sign bit set; +127 is the largest positive."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Compute 9 − 12 using 8-bit 2's complement arithmetic."
+   },
+   "steps": [
+    {
+     "en": "+9 = 0000 1001; +12 = 0000 1100."
+    },
+    {
+     "en": "2's complement of 12: invert → 1111 0011, add 1 → 1111 0100."
+    },
+    {
+     "en": "Add: 0000 1001 + 1111 0100 = 1111 1101."
+    },
+    {
+     "en": "The sign bit is 1, so the result is negative. Its 2's complement is 0000 0011 = 3."
+    }
+   ],
+   "answer": {
+    "en": "1111 1101, which is −3"
+   },
+   "narration": {
+    "en": "Compute 9 − 12 using 8-bit 2's complement arithmetic."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Copy, then flip"
+   },
+   "body": {
+    "en": "To negate in 2's complement by hand, copy bits from the right up to and including the first 1, then flip every bit to its left. 0000 1100 → copy '100', flip the rest → 1111 0100."
+   },
+   "narration": {
+    "en": "To negate in 2's complement by hand, copy bits from the right up to and including the first 1, then flip every bit to its left. 0000 1100 → copy '100', flip the rest → 1111 0100."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Copy up to the first 1, flip the rest."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i1cs12-q05",
+    "i1cs12-q06",
+    "i1cs12-q07"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i1cs12-q08"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Sign-magnitude and 1's complement both have two zeros."
+    },
+    {
+     "en": "2's complement = invert all bits and add 1."
+    },
+    {
+     "en": "Subtract by adding the 2's complement and dropping the final carry."
+    },
+    {
+     "en": "n bits hold −2^(n−1) to 2^(n−1) − 1."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Find the 8-bit 2's complement of 45 and of 100."
+    },
+    {
+     "en": "Compute 25 − 40 in 8-bit 2's complement."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i1cs12-q08"
+   ],
+   "narration": {
+    "en": "Recap. Sign-magnitude and 1's complement both have two zeros. 2's complement = invert all bits and add 1. Subtract by adding the 2's complement and dropping the final carry. n bits hold −2^(n−1) to 2^(n−1) − 1."
+   }
+  }
+ ]
+}

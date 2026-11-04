@@ -1,0 +1,705 @@
+{
+ "id": "puc2-computer-science-14-logic-circuits-and-computer-hardware.t2.lesson",
+ "chapterId": "puc2-computer-science-14-logic-circuits-and-computer-hardware",
+ "topicId": "puc2-computer-science-14-logic-circuits-and-computer-hardware.t2",
+ "title": {
+  "en": "Half adder and full adder"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Circuits that add"
+   },
+   "hook": {
+    "en": "Every sum your computer makes, down to adding 1 to a loop counter, is done by a chain of tiny circuits that add three bits at a time."
+   },
+   "objectives": [
+    {
+     "en": "Derive the truth table and expressions of a half adder"
+    },
+    {
+     "en": "Derive the expressions of a full adder and build it from half adders"
+    },
+    {
+     "en": "Explain how full adders chain into a ripple-carry adder"
+    }
+   ],
+   "narration": {
+    "en": "Every sum your computer makes, down to adding 1 to a loop counter, is done by a chain of tiny circuits that add three bits at a time."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "The half adder"
+   },
+   "body": {
+    "en": "A half adder adds two bits A and B and gives a sum S and a carry C. From the truth table: S is 1 when exactly one input is 1, so S = A'B + AB' = A ⊕ B; C is 1 only when both are 1, so C = A·B. It needs one XOR gate and one AND gate. It is called half because it cannot accept a carry from a previous column."
+   },
+   "points": [
+    {
+     "en": "S = A ⊕ B"
+    },
+    {
+     "en": "C = A·B"
+    },
+    {
+     "en": "XOR + AND gate"
+    },
+    {
+     "en": "No carry input"
+    }
+   ],
+   "narration": {
+    "en": "A half adder adds two bits A and B and gives a sum S and a carry C. From the truth table: S is 1 when exactly one input is 1, so S = A'B + AB' = A ⊕ B; C is 1 only when both are 1, so C = A·B. It needs one XOR gate and one AND gate. It is called half because it cannot accept a carry from a previous column."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: the full adder"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A full adder adds A, B and a carry in Cin."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "the full adder"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "A B Cin | S Cout"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "0 0 0   | 0 0      0 1 1 | 0 1"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "0 0 1   | 1 0      1 0 1 | 0 1"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "0 1 0   | 1 0      1 1 0 | 0 1"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.0
+       ],
+       "text": {
+        "en": "1 0 0   | 1 0      1 1 1 | 1 1"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "S is 1 when an odd number of inputs is 1; Cout when two or more are 1."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        32.5
+       ],
+       "text": {
+        "en": "S = A ⊕ B ⊕ Cin"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37.0
+       ],
+       "text": {
+        "en": "Cout = AB + BCin + ACin  = AB + Cin(A ⊕ B)"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Built from two half adders and an OR gate."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        41.5
+       ],
+       "text": {
+        "en": "HA1: A, B → S1 = A ⊕ B, C1 = AB"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        46.0
+       ],
+       "text": {
+        "en": "HA2: S1, Cin → S = S1 ⊕ Cin, C2 = S1·Cin"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        50.5
+       ],
+       "text": {
+        "en": "Cout = C1 + C2"
+       },
+       "size": 3,
+       "color": "blue"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up the full adder on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Half adder and full adder"
+   },
+   "caption": {
+    "en": "Switch the inputs. The adder shows the sum bit and the carry bit; the two together are the binary count of 1s at the input."
+   },
+   "narration": {
+    "en": "Switch the inputs. The adder shows the sum bit and the carry bit; the two together are the binary count of 1s at the input."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "With the half adder, set A = B = 1. Why is the sum 0?"
+    },
+    {
+     "en": "Turn on Full adder and set all three inputs to 1. Read the carry and the sum."
+    },
+    {
+     "en": "Which gate gives S of a half adder, and which gives the carry?"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "A",
+     "label": {
+      "en": "A"
+     },
+     "value": false
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "B"
+     },
+     "value": false
+    },
+    {
+     "name": "Cin",
+     "label": {
+      "en": "Carry in (full adder)"
+     },
+     "value": false
+    },
+    {
+     "name": "full",
+     "label": {
+      "en": "Full adder"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "Ci",
+     "expr": "Cin*full"
+    },
+    {
+     "name": "S",
+     "expr": "mod(A + B + Ci, 2)"
+    },
+    {
+     "name": "Co",
+     "expr": "floor((A + B + Ci)/2)"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Sum"
+     },
+     "expr": "S",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Carry out"
+     },
+     "expr": "Co",
+     "digits": 0
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     26
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 8,
+     "x2": 7,
+     "y2": 8,
+     "color": {
+      "by": "A",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 5.5,
+     "x2": 7,
+     "y2": 5.5,
+     "color": {
+      "by": "B",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 3,
+     "x2": 7,
+     "y2": 3,
+     "color": {
+      "by": "Ci",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "width": 5,
+     "visibleIf": "full"
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 8.6,
+     "text": {
+      "en": "A = {A:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 6.1,
+     "text": {
+      "en": "B = {B:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 3.6,
+     "text": {
+      "en": "Cin = {Ci:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "left",
+     "visibleIf": "full"
+    },
+    {
+     "shape": "rect",
+     "x": 7,
+     "y": 1.8,
+     "w": 5,
+     "h": 7.4,
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 9.5,
+     "y": 5.5,
+     "text": {
+      "en": "Half"
+     },
+     "size": 24,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "full == 0"
+    },
+    {
+     "shape": "text",
+     "x": 9.5,
+     "y": 5.5,
+     "text": {
+      "en": "Full"
+     },
+     "size": 24,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "full"
+    },
+    {
+     "shape": "text",
+     "x": 9.5,
+     "y": 4.3,
+     "text": {
+      "en": "adder"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 7,
+     "x2": 16,
+     "y2": 7,
+     "color": {
+      "by": "S",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 4,
+     "x2": 16,
+     "y2": 4,
+     "color": {
+      "by": "Co",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "width": 5
+    },
+    {
+     "shape": "icon",
+     "icon": "bulb",
+     "x": 17.2,
+     "y": 7,
+     "size": 1.8,
+     "on": "S"
+    },
+    {
+     "shape": "icon",
+     "icon": "bulb",
+     "x": 17.2,
+     "y": 4,
+     "size": 1.8,
+     "on": "Co"
+    },
+    {
+     "shape": "text",
+     "x": 19,
+     "y": 7,
+     "text": {
+      "en": "Sum S = {S:0}"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 19,
+     "y": 4,
+     "text": {
+      "en": "Carry = {Co:0}"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 0.8,
+     "text": {
+      "en": "A + B + Cin = {A + B + Ci:0} = binary {Co:0}{S:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center"
+    }
+   ],
+   "sliders": []
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Adding whole numbers"
+   },
+   "body": {
+    "en": "To add two n-bit numbers, n full adders are chained: the carry out of each column feeds the carry in of the next column to the left (a ripple-carry adder). The first column may use a half adder or a full adder with Cin = 0. The final carry out signals that the sum needs an extra bit (overflow for unsigned numbers). The sum S = A ⊕ B ⊕ C is the odd-parity function of the three inputs."
+   },
+   "points": [
+    {
+     "en": "n full adders add n-bit numbers"
+    },
+    {
+     "en": "Carry ripples from right to left"
+    },
+    {
+     "en": "Final carry = extra bit of the sum"
+    },
+    {
+     "en": "S is the odd-parity function"
+    }
+   ],
+   "narration": {
+    "en": "To add two n-bit numbers, n full adders are chained: the carry out of each column feeds the carry in of the next column to the left (a ripple-carry adder). The first column may use a half adder or a full adder with Cin = 0. The final carry out signals that the sum needs an extra bit (overflow for unsigned numbers). The sum S = A ⊕ B ⊕ C is the odd-parity function of the three inputs."
+   }
+  },
+  {
+   "id": "activity-order",
+   "type": "activity",
+   "kind": "order",
+   "title": {
+    "en": "Build a full adder from half adders"
+   },
+   "prompt": {
+    "en": "Put the steps in order."
+   },
+   "narration": {
+    "en": "Put the steps in order."
+   },
+   "seconds": 150,
+   "steps": [
+    {
+     "en": "Feed A and B into the first half adder"
+    },
+    {
+     "en": "Take its sum S1 = A ⊕ B and carry C1 = AB"
+    },
+    {
+     "en": "Feed S1 and Cin into the second half adder"
+    },
+    {
+     "en": "Its sum is the final S = A ⊕ B ⊕ Cin"
+    },
+    {
+     "en": "Its carry is C2 = (A ⊕ B)Cin"
+    },
+    {
+     "en": "OR C1 and C2 to give Cout"
+    }
+   ],
+   "explanation": {
+    "en": "Two half adders add the three bits in two stages, and an OR gate combines their carries (both can never be 1 together)."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Show that Cout = AB + BCin + ACin simplifies to AB + Cin(A ⊕ B)."
+   },
+   "steps": [
+    {
+     "en": "Write the minterms of Cout: A'BCin + AB'Cin + ABCin' + ABCin."
+    },
+    {
+     "en": "Group ABCin' + ABCin = AB."
+    },
+    {
+     "en": "The rest: Cin(A'B + AB') = Cin(A ⊕ B)."
+    },
+    {
+     "en": "Cout = AB + Cin(A ⊕ B), which is exactly the two half-adder carries ORed."
+    }
+   ],
+   "answer": {
+    "en": "Cout = AB + Cin(A ⊕ B)"
+   },
+   "narration": {
+    "en": "Show that Cout = AB + BCin + ACin simplifies to AB + Cin(A ⊕ B)."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Odd sum, majority carry"
+   },
+   "body": {
+    "en": "The sum bit of a full adder is 1 when an odd number of inputs are 1; the carry is 1 when the majority (two or three) are 1."
+   },
+   "narration": {
+    "en": "The sum bit of a full adder is 1 when an odd number of inputs are 1; the carry is 1 when the majority (two or three) are 1."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Sum: odd. Carry: majority."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i2cs14-q05",
+    "i2cs14-q06",
+    "i2cs14-q07"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i2cs14-q08"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Half adder: S = A ⊕ B, C = AB."
+    },
+    {
+     "en": "Full adder: S = A ⊕ B ⊕ Cin, Cout = AB + Cin(A ⊕ B)."
+    },
+    {
+     "en": "Two half adders and an OR gate make a full adder."
+    },
+    {
+     "en": "Chained full adders form a ripple-carry adder."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Draw a full adder using two half adders."
+    },
+    {
+     "en": "How many full adders are needed to add two 8-bit numbers?"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i2cs14-q08"
+   ],
+   "narration": {
+    "en": "Recap. Half adder: S = A ⊕ B, C = AB. Full adder: S = A ⊕ B ⊕ Cin, Cout = AB + Cin(A ⊕ B). Two half adders and an OR gate make a full adder. Chained full adders form a ripple-carry adder."
+   }
+  }
+ ]
+}

@@ -1,0 +1,467 @@
+{
+ "id": "puc1-computer-science-12-binary-arithmetic-and-data-representation.t3.lesson",
+ "chapterId": "puc1-computer-science-12-binary-arithmetic-and-data-representation",
+ "topicId": "puc1-computer-science-12-binary-arithmetic-and-data-representation.t3",
+ "title": {
+  "en": "Real numbers: fixed point and floating point"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Numbers with a point"
+   },
+   "hook": {
+    "en": "Your calculator shows 6.02 × 10^23 in a tiny display. Computers do the same with binary: a few bits for the digits and a few for where the point goes."
+   },
+   "objectives": [
+    {
+     "en": "Convert simple binary fractions to decimal and back"
+    },
+    {
+     "en": "Write a binary number in normalised mantissa–exponent form"
+    },
+    {
+     "en": "Explain the trade-off between range and precision"
+    }
+   ],
+   "narration": {
+    "en": "Your calculator shows 6.02 × 10^23 in a tiny display. Computers do the same with binary: a few bits for the digits and a few for where the point goes."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Binary fractions"
+   },
+   "body": {
+    "en": "Places after the binary point are worth 1/2, 1/4, 1/8 … So 101.11 = 4 + 1 + 0.5 + 0.25 = 5.75. To convert a decimal fraction to binary, multiply the fraction by 2 again and again; the integer parts, read top to bottom, are the bits after the point. Some decimal fractions (like 0.1) never end in binary, which is why computers store them only approximately."
+   },
+   "points": [
+    {
+     "en": "Places after the point: 2^−1, 2^−2, 2^−3 …"
+    },
+    {
+     "en": "Fraction → binary: repeated × 2"
+    },
+    {
+     "en": "0.1 has no exact binary form"
+    }
+   ],
+   "narration": {
+    "en": "Places after the binary point are worth 1/2, 1/4, 1/8 … So 101.11 = 4 + 1 + 0.5 + 0.25 = 5.75. To convert a decimal fraction to binary, multiply the fraction by 2 again and again; the integer parts, read top to bottom, are the bits after the point. Some decimal fractions (like 0.1) never end in binary, which is why computers store them only approximately."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: 0.625 to binary"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Multiply the fraction by 2 and note the integer part."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "0.625 to binary"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "  0.625 × 2 = 1.25   → 1"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "  0.25  × 2 = 0.5    → 0"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "  0.5   × 2 = 1.0    → 1   (fraction is 0: stop)"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Read the integer parts from top to bottom."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        23.5
+       ],
+       "text": {
+        "en": "0.625 = 0.101 in binary"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        28.0
+       ],
+       "text": {
+        "en": "check: 1/2 + 1/8 = 0.5 + 0.125 = 0.625"
+       },
+       "size": 3,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Now normalise 101.101 (5.625): move the point so the mantissa is 0.1xxx and count the places."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        32.5
+       ],
+       "text": {
+        "en": "  101.101 = 0.101101 × 2^3"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37.0
+       ],
+       "text": {
+        "en": "mantissa 0.101101, exponent 3 (stored in its own bits)"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up 0.625 to binary on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "readouts",
+   "title": {
+    "en": "Mantissa and exponent"
+   },
+   "caption": {
+    "en": "value = mantissa × 2^exponent. The mantissa holds the significant bits, the exponent moves the binary point. Move both sliders."
+   },
+   "narration": {
+    "en": "value = mantissa × 2^exponent. The mantissa holds the significant bits, the exponent moves the binary point. Move both sliders."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "Set mantissa 0.625 and exponent 3. Check the value 5."
+    },
+    {
+     "en": "Keep the mantissa and raise the exponent by 1. What happens to the value?"
+    },
+    {
+     "en": "With a 4-bit exponent (−8 … 7), what is the largest value you can reach?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Mantissa (0.5 to 0.9921875)"
+     },
+     "min": 0.5,
+     "max": 0.9921875,
+     "step": 0.0078125,
+     "value": 0.625
+    },
+    {
+     "name": "ex",
+     "label": {
+      "en": "Exponent"
+     },
+     "min": -8,
+     "max": 7,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Value"
+     },
+     "expr": "m*2^ex",
+     "digits": 6
+    },
+    {
+     "label": {
+      "en": "Mantissa × 128 (7 fraction bits as an integer)"
+     },
+     "expr": "m*128",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Gap to the next value"
+     },
+     "expr": "2^(ex - 7)",
+     "digits": 6
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Floating point: range versus precision"
+   },
+   "body": {
+    "en": "In floating-point form a real number is stored as a signed mantissa and a signed exponent: value = mantissa × 2^exponent. In normalised form the mantissa starts 0.1… (for a positive number), so no bits are wasted on leading zeros. With a fixed number of bits, more exponent bits give a bigger range and more mantissa bits give more precision. Fixed-point form, by contrast, keeps the point at a fixed place: simple, but with a small range. Java's float (32 bits) and double (64 bits) follow the IEEE 754 standard."
+   },
+   "points": [
+    {
+     "en": "value = mantissa × 2^exponent"
+    },
+    {
+     "en": "Normalised mantissa: 0.1xxx"
+    },
+    {
+     "en": "Exponent bits → range; mantissa bits → precision"
+    },
+    {
+     "en": "Java float 32-bit, double 64-bit (IEEE 754)"
+    }
+   ],
+   "narration": {
+    "en": "In floating-point form a real number is stored as a signed mantissa and a signed exponent: value = mantissa × 2^exponent. In normalised form the mantissa starts 0.1… (for a positive number), so no bits are wasted on leading zeros. With a fixed number of bits, more exponent bits give a bigger range and more mantissa bits give more precision. Fixed-point form, by contrast, keeps the point at a fixed place: simple, but with a small range. Java's float (32 bits) and double (64 bits) follow the IEEE 754 standard."
+   }
+  },
+  {
+   "id": "activity-sort",
+   "type": "activity",
+   "kind": "sort",
+   "title": {
+    "en": "Range or precision?"
+   },
+   "prompt": {
+    "en": "Sort each change by what it mainly improves."
+   },
+   "narration": {
+    "en": "Sort each change by what it mainly improves."
+   },
+   "seconds": 150,
+   "buckets": [
+    {
+     "id": "range",
+     "label": {
+      "en": "Range (bigger and smaller numbers)"
+     }
+    },
+    {
+     "id": "prec",
+     "label": {
+      "en": "Precision (more significant digits)"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "Add two bits to the exponent"
+     },
+     "answer": "range"
+    },
+    {
+     "text": {
+      "en": "Add two bits to the mantissa"
+     },
+     "answer": "prec"
+    },
+    {
+     "text": {
+      "en": "Use double instead of float for 0.1 + 0.2"
+     },
+     "answer": "prec"
+    },
+    {
+     "text": {
+      "en": "Store the distance to a far galaxy"
+     },
+     "answer": "range"
+    },
+    {
+     "text": {
+      "en": "Store the electron mass 9.1 × 10^−31 kg"
+     },
+     "answer": "range"
+    },
+    {
+     "text": {
+      "en": "Tell 1.0000001 from 1.0000002"
+     },
+     "answer": "prec"
+    }
+   ],
+   "explanation": {
+    "en": "The exponent sets how far the point can move (range); the mantissa sets how many significant bits are kept (precision)."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Express 13.25 in normalised binary floating-point form."
+   },
+   "steps": [
+    {
+     "en": "13 = 1101 and 0.25 = 0.01, so 13.25 = 1101.01."
+    },
+    {
+     "en": "Move the point 4 places left: 0.110101."
+    },
+    {
+     "en": "Each place left multiplies by 2 once, so the exponent is +4."
+    },
+    {
+     "en": "Mantissa 0.110101, exponent 4 (100 in binary)."
+    }
+   ],
+   "answer": {
+    "en": "13.25 = 0.110101 × 2^4"
+   },
+   "narration": {
+    "en": "Express 13.25 in normalised binary floating-point form."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Count the jumps"
+   },
+   "body": {
+    "en": "The exponent is just the number of places the binary point jumped: jumps to the left give a positive exponent, jumps to the right a negative one. 0.00101 = 0.101 × 2^−2."
+   },
+   "narration": {
+    "en": "The exponent is just the number of places the binary point jumped: jumps to the left give a positive exponent, jumps to the right a negative one. 0.00101 = 0.101 × 2^−2."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Left jump: plus. Right jump: minus."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i1cs12-q09",
+    "i1cs12-q10",
+    "i1cs12-q11"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i1cs12-q12"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Binary fraction places are 1/2, 1/4, 1/8 …"
+    },
+    {
+     "en": "Fraction to binary: multiply by 2 repeatedly."
+    },
+    {
+     "en": "Floating point: mantissa × 2^exponent, mantissa normalised to 0.1…."
+    },
+    {
+     "en": "Exponent bits give range; mantissa bits give precision."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Convert 0.375 and 0.8125 to binary."
+    },
+    {
+     "en": "Write 6.75 and 0.15625 in normalised mantissa–exponent form."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i1cs12-q12"
+   ],
+   "narration": {
+    "en": "Recap. Binary fraction places are 1/2, 1/4, 1/8 … Fraction to binary: multiply by 2 repeatedly. Floating point: mantissa × 2^exponent, mantissa normalised to 0.1…. Exponent bits give range; mantissa bits give precision."
+   }
+  }
+ ]
+}

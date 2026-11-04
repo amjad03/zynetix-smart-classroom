@@ -1,0 +1,494 @@
+{
+ "id": "puc2-computer-science-16-inheritance-interfaces-and-polymorphism.t2.lesson",
+ "chapterId": "puc2-computer-science-16-inheritance-interfaces-and-polymorphism",
+ "topicId": "puc2-computer-science-16-inheritance-interfaces-and-polymorphism.t2",
+ "title": {
+  "en": "Overriding and run-time polymorphism"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Same call, different behaviour"
+   },
+   "hook": {
+    "en": "Ask a dog, a cat and a cow to speak: one call, three different sounds. In Java, the object decides at run time which version of a method runs."
+   },
+   "objectives": [
+    {
+     "en": "Override methods and use @Override"
+    },
+    {
+     "en": "Explain dynamic method dispatch with a superclass reference"
+    },
+    {
+     "en": "Distinguish overloading (compile time) from overriding (run time)"
+    }
+   ],
+   "narration": {
+    "en": "Ask a dog, a cat and a cow to speak: one call, three different sounds. In Java, the object decides at run time which version of a method runs."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Method overriding"
+   },
+   "body": {
+    "en": "A subclass overrides a method of its superclass by defining a method with the same name, the same parameter list and a compatible return type. The overriding method may not reduce visibility (a public method stays public). static, final and private methods cannot be overridden. The annotation @Override asks the compiler to check that a method really overrides one; a spelling mistake then becomes a compile-time error instead of a silent new method."
+   },
+   "points": [
+    {
+     "en": "Same name, parameters and return type"
+    },
+    {
+     "en": "Cannot reduce visibility"
+    },
+    {
+     "en": "final, static, private methods are not overridden"
+    },
+    {
+     "en": "@Override makes the compiler check"
+    }
+   ],
+   "narration": {
+    "en": "A subclass overrides a method of its superclass by defining a method with the same name, the same parameter list and a compatible return type. The overriding method may not reduce visibility (a public method stays public). static, final and private methods cannot be overridden. The annotation @Override asks the compiler to check that a method really overrides one; a spelling mistake then becomes a compile-time error instead of a silent new method."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: dynamic method dispatch"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A superclass reference can refer to a subclass object."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "dynamic method dispatch"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "class Animal { void sound() { System.out.println(\"...\"); } }"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "class Dog extends Animal {"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "    void sound() { System.out.println(\"Woof\"); } }"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "class Cat extends Animal {"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.0
+       ],
+       "text": {
+        "en": "    void sound() { System.out.println(\"Meow\"); } }"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The version that runs depends on the object, not on the reference type."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        32.5
+       ],
+       "text": {
+        "en": "Animal a = new Dog();   a.sound();   // Woof"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        37.0
+       ],
+       "text": {
+        "en": "a = new Cat();          a.sound();   // Meow"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "This is run-time polymorphism. The compiler only checks that Animal has sound()."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        41.5
+       ],
+       "text": {
+        "en": "Decided at run time by the actual object"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        46.0
+       ],
+       "text": {
+        "en": "Overloading: chosen at compile time by the parameters"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up dynamic method dispatch on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "readouts",
+   "title": {
+    "en": "Which version runs?"
+   },
+   "caption": {
+    "en": "Animal a = new …(); a.sound(); Choose the object actually created (1 = Animal, 2 = Dog, 3 = Cat) and whether Dog overrides sound(). The readout gives the class whose sound() runs."
+   },
+   "narration": {
+    "en": "Animal a = new …(); a.sound(); Choose the object actually created (1 = Animal, 2 = Dog, 3 = Cat) and whether Dog overrides sound(). The readout gives the class whose sound() runs."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "Create a Dog with overriding on. Which version runs?"
+    },
+    {
+     "en": "Turn overriding off for Dog. Which version runs now?"
+    },
+    {
+     "en": "Does the reference type Animal ever decide the version?"
+    }
+   ],
+   "choices": [
+    {
+     "name": "obj",
+     "label": {
+      "en": "Object created"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "new Animal()"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "new Dog()"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "new Cat()"
+       },
+       "value": 3
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ov",
+     "label": {
+      "en": "Dog overrides sound()"
+     },
+     "value": true
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Class whose sound() runs (1 Animal, 2 Dog, 3 Cat)"
+     },
+     "expr": "if(obj == 2, if(ov, 2, 1), obj)",
+     "digits": 0
+    }
+   ],
+   "sliders": []
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Overloading versus overriding"
+   },
+   "body": {
+    "en": "Overloading: same name, different parameter lists, usually in the same class; the compiler picks the version from the arguments (compile-time or static polymorphism). Overriding: same signature in a subclass; the JVM picks the version from the actual object (run-time or dynamic polymorphism). A superclass reference can call only the methods declared in the superclass; to call a method that exists only in the subclass, the reference must be cast down: ((Dog) a).fetch()."
+   },
+   "points": [
+    {
+     "en": "Overloading: compile time, different parameters"
+    },
+    {
+     "en": "Overriding: run time, same signature"
+    },
+    {
+     "en": "Reference type limits which methods can be called"
+    },
+    {
+     "en": "Object type decides which version runs"
+    }
+   ],
+   "narration": {
+    "en": "Overloading: same name, different parameter lists, usually in the same class; the compiler picks the version from the arguments (compile-time or static polymorphism). Overriding: same signature in a subclass; the JVM picks the version from the actual object (run-time or dynamic polymorphism). A superclass reference can call only the methods declared in the superclass; to call a method that exists only in the subclass, the reference must be cast down: ((Dog) a).fetch()."
+   }
+  },
+  {
+   "id": "activity-sort",
+   "type": "activity",
+   "kind": "sort",
+   "title": {
+    "en": "Overloading or overriding?"
+   },
+   "prompt": {
+    "en": "Sort each statement."
+   },
+   "narration": {
+    "en": "Sort each statement."
+   },
+   "seconds": 150,
+   "buckets": [
+    {
+     "id": "ol",
+     "label": {
+      "en": "Overloading"
+     }
+    },
+    {
+     "id": "or",
+     "label": {
+      "en": "Overriding"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "Methods differ in their parameter lists"
+     },
+     "answer": "ol"
+    },
+    {
+     "text": {
+      "en": "Same signature in a subclass"
+     },
+     "answer": "or"
+    },
+    {
+     "text": {
+      "en": "Resolved at compile time"
+     },
+     "answer": "ol"
+    },
+    {
+     "text": {
+      "en": "Resolved at run time by the object"
+     },
+     "answer": "or"
+    },
+    {
+     "text": {
+      "en": "Needs inheritance"
+     },
+     "answer": "or"
+    },
+    {
+     "text": {
+      "en": "Can happen within one class"
+     },
+     "answer": "ol"
+    }
+   ],
+   "explanation": {
+    "en": "Overloading is static polymorphism by parameter lists; overriding is dynamic polymorphism through inheritance."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Find the output: class A { void show() { System.out.print(\"A\"); } void call() { show(); } } class B extends A { void show() { System.out.print(\"B\"); } } … A obj = new B(); obj.call();"
+   },
+   "steps": [
+    {
+     "en": "call() is inherited from A and runs."
+    },
+    {
+     "en": "Inside call(), show() means this.show(), and this is a B object."
+    },
+    {
+     "en": "So B's overriding show() runs."
+    }
+   ],
+   "answer": {
+    "en": "B"
+   },
+   "narration": {
+    "en": "Find the output: class A { void show() { System.out.print(\"A\"); } void call() { show(); } } class B extends A { void show() { System.out.print(\"B\"); } } … A obj = new B(); obj.call();"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Reference checks, object chooses"
+   },
+   "body": {
+    "en": "At compile time the reference type checks that the method exists; at run time the object chooses which version runs."
+   },
+   "narration": {
+    "en": "At compile time the reference type checks that the method exists; at run time the object chooses which version runs."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "The reference asks, the object answers."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i2cs16-q05",
+    "i2cs16-q06",
+    "i2cs16-q07"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i2cs16-q08"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Overriding redefines an inherited method with the same signature."
+    },
+    {
+     "en": "A superclass reference may refer to a subclass object."
+    },
+    {
+     "en": "The object decides the version at run time (dynamic dispatch)."
+    },
+    {
+     "en": "Overloading is compile-time; overriding is run-time polymorphism."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write classes Shape, Circle, Rectangle with an overridden area()."
+    },
+    {
+     "en": "Explain why a final method cannot be overridden."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i2cs16-q08"
+   ],
+   "narration": {
+    "en": "Recap. Overriding redefines an inherited method with the same signature. A superclass reference may refer to a subclass object. The object decides the version at run time (dynamic dispatch). Overloading is compile-time; overriding is run-time polymorphism."
+   }
+  }
+ ]
+}

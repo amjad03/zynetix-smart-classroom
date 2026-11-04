@@ -1,0 +1,509 @@
+{
+ "id": "puc2-computer-science-16-inheritance-interfaces-and-polymorphism.t1.lesson",
+ "chapterId": "puc2-computer-science-16-inheritance-interfaces-and-polymorphism",
+ "topicId": "puc2-computer-science-16-inheritance-interfaces-and-polymorphism.t1",
+ "title": {
+  "en": "Inheritance, extends and super"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Build on what exists"
+   },
+   "hook": {
+    "en": "A Car, a Bus and a Bike all have a speed and a number plate. Write those once in a Vehicle class and let each one inherit them."
+   },
+   "objectives": [
+    {
+     "en": "Create a subclass with extends"
+    },
+    {
+     "en": "Use super to call the superclass constructor and members"
+    },
+    {
+     "en": "Explain access specifiers and the types of inheritance Java supports"
+    }
+   ],
+   "narration": {
+    "en": "A Car, a Bus and a Bike all have a speed and a number plate. Write those once in a Vehicle class and let each one inherit them."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "extends"
+   },
+   "body": {
+    "en": "Inheritance lets a new class (subclass, derived or child class) acquire the fields and methods of an existing class (superclass, base or parent class): class Car extends Vehicle { … }. It models an is-a relationship: a Car is a Vehicle. The subclass can add new members and redefine (override) inherited methods. Java supports single, multilevel and hierarchical inheritance of classes, but not multiple inheritance of classes (one class cannot extend two classes); interfaces fill that gap."
+   },
+   "points": [
+    {
+     "en": "class Sub extends Super"
+    },
+    {
+     "en": "is-a relationship"
+    },
+    {
+     "en": "Single, multilevel, hierarchical"
+    },
+    {
+     "en": "No multiple inheritance of classes"
+    }
+   ],
+   "narration": {
+    "en": "Inheritance lets a new class (subclass, derived or child class) acquire the fields and methods of an existing class (superclass, base or parent class): class Car extends Vehicle { … }. It models an is-a relationship: a Car is a Vehicle. The subclass can add new members and redefine (override) inherited methods. Java supports single, multilevel and hierarchical inheritance of classes, but not multiple inheritance of classes (one class cannot extend two classes); interfaces fill that gap."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: a subclass with super"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "The superclass."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "a subclass with super"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "class Person {"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "    protected String name;"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "    Person(String n) { name = n; }"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "    void show() { System.out.println(\"Name: \" + name); }"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.0
+       ],
+       "text": {
+        "en": "}"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The subclass calls the superclass constructor with super(...), which must be its first statement."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        32.5
+       ],
+       "text": {
+        "en": "class Student extends Person {"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        37.0
+       ],
+       "text": {
+        "en": "    int roll;"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        41.5
+       ],
+       "text": {
+        "en": "    Student(String n, int r) { super(n); roll = r; }"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        46.0
+       ],
+       "text": {
+        "en": "    void show() { super.show();"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        50.5
+       ],
+       "text": {
+        "en": "        System.out.println(\"Roll: \" + roll); }"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        55.0
+       ],
+       "text": {
+        "en": "}"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "super.show() runs the parent version inside the overriding child version."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        4
+       ],
+       "text": {
+        "en": "new Student(\"Ravi\", 7).show() prints:"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        8.5
+       ],
+       "text": {
+        "en": "Name: Ravi"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        13.0
+       ],
+       "text": {
+        "en": "Roll: 7"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ],
+     "clear": true
+    }
+   ],
+   "narration": {
+    "en": "Let us build up a subclass with super on the board, one step at a time."
+   }
+  },
+  {
+   "id": "activity-order-ctor",
+   "type": "activity",
+   "kind": "order",
+   "title": {
+    "en": "Order of constructor calls"
+   },
+   "prompt": {
+    "en": "class A { A() { print(\"A\"); } } class B extends A { B() { print(\"B\"); } } class C extends B { C() { print(\"C\"); } }. Put the events of new C() in order."
+   },
+   "narration": {
+    "en": "class A { A() { print(\"A\"); } } class B extends A { B() { print(\"B\"); } } class C extends B { C() { print(\"C\"); } }. Put the events of new C() in order."
+   },
+   "seconds": 150,
+   "steps": [
+    {
+     "en": "new C() is evaluated"
+    },
+    {
+     "en": "C() first calls super(), that is B()"
+    },
+    {
+     "en": "B() first calls super(), that is A()"
+    },
+    {
+     "en": "A() runs and prints A"
+    },
+    {
+     "en": "B() continues and prints B"
+    },
+    {
+     "en": "C() continues and prints C"
+    }
+   ],
+   "explanation": {
+    "en": "Constructors run from the top of the hierarchy down: each first calls its superclass constructor (implicitly if super() is not written). The output is ABC."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Access specifiers"
+   },
+   "body": {
+    "en": "Access specifiers control who can see a member. private: only inside its own class (not inherited in a visible way). default (no keyword): any class in the same package. protected: the same package and subclasses, even in other packages. public: everywhere. A subclass cannot reach the private members of its superclass directly; it uses public or protected methods (getters and setters) instead. This keeps data encapsulated while allowing reuse."
+   },
+   "points": [
+    {
+     "en": "private: own class only"
+    },
+    {
+     "en": "default: same package"
+    },
+    {
+     "en": "protected: package + subclasses"
+    },
+    {
+     "en": "public: everywhere"
+    }
+   ],
+   "narration": {
+    "en": "Access specifiers control who can see a member. private: only inside its own class (not inherited in a visible way). default (no keyword): any class in the same package. protected: the same package and subclasses, even in other packages. public: everywhere. A subclass cannot reach the private members of its superclass directly; it uses public or protected methods (getters and setters) instead. This keeps data encapsulated while allowing reuse."
+   }
+  },
+  {
+   "id": "activity-sort",
+   "type": "activity",
+   "kind": "sort",
+   "title": {
+    "en": "Who can access it?"
+   },
+   "prompt": {
+    "en": "A member of class Person in package school. Can class Student extends Person in package exam access it?"
+   },
+   "narration": {
+    "en": "A member of class Person in package school. Can class Student extends Person in package exam access it?"
+   },
+   "seconds": 150,
+   "buckets": [
+    {
+     "id": "yes",
+     "label": {
+      "en": "Accessible in Student"
+     }
+    },
+    {
+     "id": "no",
+     "label": {
+      "en": "Not accessible in Student"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "public void show()"
+     },
+     "answer": "yes"
+    },
+    {
+     "text": {
+      "en": "protected String name"
+     },
+     "answer": "yes"
+    },
+    {
+     "text": {
+      "en": "private int age"
+     },
+     "answer": "no"
+    },
+    {
+     "text": {
+      "en": "int code (default access)"
+     },
+     "answer": "no"
+    },
+    {
+     "text": {
+      "en": "public static int count"
+     },
+     "answer": "yes"
+    }
+   ],
+   "explanation": {
+    "en": "Across packages a subclass sees public and protected members; default members are package-only and private members are class-only."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Find the output: class P { int x = 10; void m() { System.out.print(\"P\" + x + \" \"); } } class Q extends P { int x = 20; void m() { System.out.print(\"Q\" + x + \" \"); super.m(); } } … new Q().m();"
+   },
+   "steps": [
+    {
+     "en": "Q's m runs: x inside Q is Q's own x = 20, so it prints Q20."
+    },
+    {
+     "en": "super.m() runs P's m, where x is P's x = 10: prints P10."
+    }
+   ],
+   "answer": {
+    "en": "Q20 P10"
+   },
+   "narration": {
+    "en": "Find the output: class P { int x = 10; void m() { System.out.print(\"P\" + x + \" \"); } } class Q extends P { int x = 20; void m() { System.out.print(\"Q\" + x + \" \"); super.m(); } } … new Q().m();"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "super first"
+   },
+   "body": {
+    "en": "In a constructor, super(...) must be the very first statement. If you do not write it, Java quietly inserts super() with no arguments, which fails if the parent has no such constructor."
+   },
+   "narration": {
+    "en": "In a constructor, super(...) must be the very first statement. If you do not write it, Java quietly inserts super() with no arguments, which fails if the parent has no such constructor."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Parents are built before children."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i2cs16-q01",
+    "i2cs16-q02",
+    "i2cs16-q03"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i2cs16-q04"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "extends creates a subclass that inherits members."
+    },
+    {
+     "en": "Inheritance models an is-a relationship."
+    },
+    {
+     "en": "super(...) calls the parent constructor, first; super.m() calls the parent method."
+    },
+    {
+     "en": "private < default < protected < public."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Create class Shape and subclasses Circle and Square with an area method."
+    },
+    {
+     "en": "Explain why Java does not allow class C extends A, B."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i2cs16-q04"
+   ],
+   "narration": {
+    "en": "Recap. extends creates a subclass that inherits members. Inheritance models an is-a relationship. super(...) calls the parent constructor, first; super.m() calls the parent method. private < default < protected < public."
+   }
+  }
+ ]
+}

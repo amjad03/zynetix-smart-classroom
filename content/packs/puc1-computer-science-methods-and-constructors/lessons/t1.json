@@ -1,0 +1,476 @@
+{
+ "id": "puc1-computer-science-16-methods-and-constructors.t1.lesson",
+ "chapterId": "puc1-computer-science-16-methods-and-constructors",
+ "topicId": "puc1-computer-science-16-methods-and-constructors.t1",
+ "title": {
+  "en": "Methods: parameters, return values and overloading"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Write it once, call it often"
+   },
+   "hook": {
+    "en": "A method is a named block of code that does one job. Write isPrime once and call it a hundred times, from anywhere in the class."
+   },
+   "objectives": [
+    {
+     "en": "Define and call methods with parameters and return values"
+    },
+    {
+     "en": "Distinguish formal and actual parameters and explain pass by value"
+    },
+    {
+     "en": "Overload methods and identify pure and impure methods"
+    }
+   ],
+   "narration": {
+    "en": "A method is a named block of code that does one job. Write isPrime once and call it a hundred times, from anywhere in the class."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Defining a method"
+   },
+   "body": {
+    "en": "A method has a header and a body: access-specifier return-type name(parameter list) { body }. For example, int square(int x) { return x * x; }. The values passed in a call (actual parameters, or arguments) are copied into the formal parameters of the header. return sends a value back and ends the method; a void method returns nothing. The method signature is its name together with the number, types and order of its parameters."
+   },
+   "points": [
+    {
+     "en": "Header: access, return type, name, parameters"
+    },
+    {
+     "en": "return ends the method and sends a value"
+    },
+    {
+     "en": "Actual parameters are copied into formal parameters"
+    },
+    {
+     "en": "Signature = name + parameter types"
+    }
+   ],
+   "narration": {
+    "en": "A method has a header and a body: access-specifier return-type name(parameter list) { body }. For example, int square(int x) { return x * x; }. The values passed in a call (actual parameters, or arguments) are copied into the formal parameters of the header. return sends a value back and ends the method; a void method returns nothing. The method signature is its name together with the number, types and order of its parameters."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: pass by value"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Primitive arguments are passed by value: the method gets a copy."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "pass by value"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "static void change(int a) { a = a + 10; }"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "int x = 5;  change(x);  System.out.println(x);   // 5"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The copy a changed, not x. For an object, the copy is of the reference, so the method can change the object's contents."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "static void fill(int[] arr) { arr[0] = 99; }"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "int[] m = {1, 2};  fill(m);   // m[0] is now 99"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Pure and impure methods."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        28.0
+       ],
+       "text": {
+        "en": "Pure: returns a value, changes no state (e.g. square)"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        32.5
+       ],
+       "text": {
+        "en": "Impure: changes the state of an object or argument (e.g."
+       },
+       "size": 3,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37.0
+       ],
+       "text": {
+        "en": "fill)"
+       },
+       "size": 3,
+       "color": "red"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up pass by value on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "readouts",
+   "title": {
+    "en": "Pass by value"
+   },
+   "caption": {
+    "en": "x = 5; change(x) adds k to its own copy a. Move the sliders: the copy changes inside the method, but x in main does not."
+   },
+   "narration": {
+    "en": "x = 5; change(x) adds k to its own copy a. Move the sliders: the copy changes inside the method, but x in main does not."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "Set k = 10. What is a inside change, and x after the call?"
+    },
+    {
+     "en": "Which line of code would make x change? (Hint: return.)"
+    },
+    {
+     "en": "Would an array argument behave the same way?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "xm",
+     "label": {
+      "en": "x in main"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "k",
+     "label": {
+      "en": "k added inside the method"
+     },
+     "min": -10,
+     "max": 10,
+     "step": 1,
+     "value": 10
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "a inside change()"
+     },
+     "expr": "xm + k",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "x after the call"
+     },
+     "expr": "xm",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "x = change2(x) with return a + k"
+     },
+     "expr": "xm + k",
+     "digits": 0
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Method overloading"
+   },
+   "body": {
+    "en": "Two or more methods of a class may share a name if their parameter lists differ in number, type or order of parameters. This is overloading, a form of compile-time (static) polymorphism: the compiler picks the method whose parameters best match the call. The return type alone cannot distinguish overloaded methods. Example: int area(int s), double area(double r), int area(int l, int b)."
+   },
+   "points": [
+    {
+     "en": "Same name, different parameter lists"
+    },
+    {
+     "en": "Return type alone is not enough"
+    },
+    {
+     "en": "Chosen at compile time (static polymorphism)"
+    }
+   ],
+   "narration": {
+    "en": "Two or more methods of a class may share a name if their parameter lists differ in number, type or order of parameters. This is overloading, a form of compile-time (static) polymorphism: the compiler picks the method whose parameters best match the call. The return type alone cannot distinguish overloaded methods. Example: int area(int s), double area(double r), int area(int l, int b)."
+   }
+  },
+  {
+   "id": "activity-sort",
+   "type": "activity",
+   "kind": "sort",
+   "title": {
+    "en": "Valid overload?"
+   },
+   "prompt": {
+    "en": "Each method is added to a class that already has int sum(int a, int b). Is it a valid overload?"
+   },
+   "narration": {
+    "en": "Each method is added to a class that already has int sum(int a, int b). Is it a valid overload?"
+   },
+   "seconds": 150,
+   "buckets": [
+    {
+     "id": "ok",
+     "label": {
+      "en": "Valid overload"
+     }
+    },
+    {
+     "id": "no",
+     "label": {
+      "en": "Compile-time error"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "double sum(double a, double b)"
+     },
+     "answer": "ok"
+    },
+    {
+     "text": {
+      "en": "int sum(int a, int b, int c)"
+     },
+     "answer": "ok"
+    },
+    {
+     "text": {
+      "en": "long sum(int x, int y)"
+     },
+     "answer": "no"
+    },
+    {
+     "text": {
+      "en": "int sum(int p, int q)"
+     },
+     "answer": "no"
+    },
+    {
+     "text": {
+      "en": "double sum(int a, double b)"
+     },
+     "answer": "ok"
+    },
+    {
+     "text": {
+      "en": "double sum(double a, int b)"
+     },
+     "answer": "ok"
+    }
+   ],
+   "explanation": {
+    "en": "Only the parameter types, number and order count. Renaming parameters or changing only the return type does not create a new signature."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Write a method int reverse(int n) and use it to check whether a number is a palindrome."
+   },
+   "steps": [
+    {
+     "en": "static int reverse(int n) {"
+    },
+    {
+     "en": "    int r = 0;"
+    },
+    {
+     "en": "    while (n > 0) { r = r * 10 + n % 10; n /= 10; }"
+    },
+    {
+     "en": "    return r;"
+    },
+    {
+     "en": "}"
+    },
+    {
+     "en": "In main: if (reverse(num) == num) System.out.println(\"Palindrome\");"
+    },
+    {
+     "en": "reverse(1221) = 1221, so 1221 is a palindrome."
+    }
+   ],
+   "answer": {
+    "en": "1221 is a palindrome; 1231 is not (reverse 1321)."
+   },
+   "narration": {
+    "en": "Write a method int reverse(int n) and use it to check whether a number is a palindrome."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Signature = name + list"
+   },
+   "body": {
+    "en": "To decide if two methods clash, cover the return type and the parameter names with your hand. If what is left is identical, they clash."
+   },
+   "narration": {
+    "en": "To decide if two methods clash, cover the return type and the parameter names with your hand. If what is left is identical, they clash."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Hide return type and names; compare what is left."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i1cs16-q01",
+    "i1cs16-q02",
+    "i1cs16-q03"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i1cs16-q04"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A method has a header (return type, name, parameters) and a body."
+    },
+    {
+     "en": "Primitive arguments are passed by value."
+    },
+    {
+     "en": "Pure methods do not change state; impure methods do."
+    },
+    {
+     "en": "Overloading: same name, different parameter lists."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Overload a method volume for a cube, a cuboid and a sphere."
+    },
+    {
+     "en": "Write a method boolean isArmstrong(int n)."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i1cs16-q04"
+   ],
+   "narration": {
+    "en": "Recap. A method has a header (return type, name, parameters) and a body. Primitive arguments are passed by value. Pure methods do not change state; impure methods do. Overloading: same name, different parameter lists."
+   }
+  }
+ ]
+}

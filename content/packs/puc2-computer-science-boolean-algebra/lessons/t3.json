@@ -1,0 +1,1060 @@
+{
+ "id": "puc2-computer-science-13-boolean-algebra.t3.lesson",
+ "chapterId": "puc2-computer-science-13-boolean-algebra",
+ "topicId": "puc2-computer-science-13-boolean-algebra.t3",
+ "title": {
+  "en": "Karnaugh maps (up to four variables)"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Simplify by looking"
+   },
+   "hook": {
+    "en": "Algebra needs cleverness; a Karnaugh map needs only good eyes. Put the 1s of a truth table on a grid and circle neighbours: each circle is one simple term."
+   },
+   "objectives": [
+    {
+     "en": "Draw 2-, 3- and 4-variable K-maps with Gray-code labels"
+    },
+    {
+     "en": "Group 1s in pairs, quads and octets, including wrap-around groups"
+    },
+    {
+     "en": "Read the reduced SOP (and POS from the 0s)"
+    }
+   ],
+   "narration": {
+    "en": "Algebra needs cleverness; a Karnaugh map needs only good eyes. Put the 1s of a truth table on a grid and circle neighbours: each circle is one simple term."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Building the map"
+   },
+   "body": {
+    "en": "A Karnaugh map has one cell per row of the truth table: 4 cells for 2 variables, 8 for 3, 16 for 4. Rows and columns are labelled in Gray-code order (00, 01, 11, 10), so cells that touch, including across opposite edges, differ in exactly one variable. Enter a 1 in each cell whose minterm is in the function. For four variables with rows AB and columns CD, the cell numbers are 0 1 3 2 / 4 5 7 6 / 12 13 15 14 / 8 9 11 10."
+   },
+   "points": [
+    {
+     "en": "Cells: 2^n"
+    },
+    {
+     "en": "Gray order: 00, 01, 11, 10"
+    },
+    {
+     "en": "Neighbours differ in one variable"
+    },
+    {
+     "en": "Edges wrap round (the map is a torus)"
+    }
+   ],
+   "narration": {
+    "en": "A Karnaugh map has one cell per row of the truth table: 4 cells for 2 variables, 8 for 3, 16 for 4. Rows and columns are labelled in Gray-code order (00, 01, 11, 10), so cells that touch, including across opposite edges, differ in exactly one variable. Enter a 1 in each cell whose minterm is in the function. For four variables with rows AB and columns CD, the cell numbers are 0 1 3 2 / 4 5 7 6 / 12 13 15 14 / 8 9 11 10."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: grouping rules"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Group the 1s using rectangles whose size is a power of two."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "grouping rules"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        10
+       ],
+       "text": {
+        "en": "Groups of 1, 2, 4, 8 or 16 cells"
+       },
+       "size": 3,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        14.5
+       ],
+       "text": {
+        "en": "As large as possible, as few as possible"
+       },
+       "size": 3,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        19.0
+       ],
+       "text": {
+        "en": "Groups may overlap and may wrap round edges"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Each group gives one product term: keep only the variables that do not change inside the group."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        23.5
+       ],
+       "text": {
+        "en": "Pair (2 cells)  → removes 1 variable"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        28.0
+       ],
+       "text": {
+        "en": "Quad (4 cells)  → removes 2 variables"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        32.5
+       ],
+       "text": {
+        "en": "Octet (8 cells) → removes 3 variables"
+       },
+       "size": 3,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Example: F = Σ(0, 2, 5, 7, 8, 10, 13, 15)."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37.0
+       ],
+       "text": {
+        "en": "four corners (0, 2, 8, 10) → B'D'"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        41.5
+       ],
+       "text": {
+        "en": "centre quad (5, 7, 13, 15) → BD"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        46.0
+       ],
+       "text": {
+        "en": "F = B'D' + BD   (B XNOR D)"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up grouping rules on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A 4-variable K-map"
+   },
+   "caption": {
+    "en": "F(A,B,C,D) = Σ(0,2,5,7,8,10,13,15). Switch A, B, C, D to move the red cursor to a cell. The rows and columns are in Gray-code order (00, 01, 11, 10), so neighbours differ in one bit, and the map wraps round."
+   },
+   "narration": {
+    "en": "F(A,B,C,D) = Σ(0,2,5,7,8,10,13,15). Switch A, B, C, D to move the red cursor to a cell. The rows and columns are in Gray-code order (00, 01, 11, 10), so neighbours differ in one bit, and the map wraps round."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "Find the cell for A=1, B=0, C=1, D=0. Is it in the corner group?"
+    },
+    {
+     "en": "Why can the four corners form one group?"
+    },
+    {
+     "en": "Check that F = 1 exactly when B and D are equal."
+    }
+   ],
+   "toggles": [
+    {
+     "name": "A",
+     "label": {
+      "en": "A"
+     },
+     "value": false
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "B"
+     },
+     "value": false
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "C"
+     },
+     "value": false
+    },
+    {
+     "name": "D",
+     "label": {
+      "en": "D"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "row",
+     "expr": "if(A == 0, B, 3 - B)"
+    },
+    {
+     "name": "col",
+     "expr": "if(C == 0, D, 3 - D)"
+    },
+    {
+     "name": "F",
+     "expr": "1 - abs(B - D)"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Minterm number"
+     },
+     "expr": "8*A + 4*B + 2*C + D",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "F"
+     },
+     "expr": "F",
+     "digits": 0
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     27
+    ],
+    "y": [
+     -0.5,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 9.4,
+     "text": {
+      "en": "AB \\ CD"
+     },
+     "size": 18,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 9.4,
+     "text": {
+      "en": "00"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 9.4,
+     "text": {
+      "en": "01"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 9.4,
+     "text": {
+      "en": "11"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 9.4,
+     "text": {
+      "en": "10"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 7.5,
+     "text": {
+      "en": "00"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 3.6,
+     "y": 6.5,
+     "w": 2.8,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 7.5,
+     "text": {
+      "en": "m0: 1"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 6.6,
+     "y": 6.5,
+     "w": 2.8,
+     "h": 2,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 7.5,
+     "text": {
+      "en": "m1: 0"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 9.6,
+     "y": 6.5,
+     "w": 2.8,
+     "h": 2,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 7.5,
+     "text": {
+      "en": "m3: 0"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 12.6,
+     "y": 6.5,
+     "w": 2.8,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 7.5,
+     "text": {
+      "en": "m2: 1"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 5.3,
+     "text": {
+      "en": "01"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 3.6,
+     "y": 4.3,
+     "w": 2.8,
+     "h": 2,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 5.3,
+     "text": {
+      "en": "m4: 0"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 6.6,
+     "y": 4.3,
+     "w": 2.8,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 5.3,
+     "text": {
+      "en": "m5: 1"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 9.6,
+     "y": 4.3,
+     "w": 2.8,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 5.3,
+     "text": {
+      "en": "m7: 1"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 12.6,
+     "y": 4.3,
+     "w": 2.8,
+     "h": 2,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 5.3,
+     "text": {
+      "en": "m6: 0"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 3.0999999999999996,
+     "text": {
+      "en": "11"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 3.6,
+     "y": 2.0999999999999996,
+     "w": 2.8,
+     "h": 2,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 3.0999999999999996,
+     "text": {
+      "en": "m12: 0"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 6.6,
+     "y": 2.0999999999999996,
+     "w": 2.8,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 3.0999999999999996,
+     "text": {
+      "en": "m13: 1"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 9.6,
+     "y": 2.0999999999999996,
+     "w": 2.8,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 3.0999999999999996,
+     "text": {
+      "en": "m15: 1"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 12.6,
+     "y": 2.0999999999999996,
+     "w": 2.8,
+     "h": 2,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 3.0999999999999996,
+     "text": {
+      "en": "m14: 0"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 0.8999999999999995,
+     "text": {
+      "en": "10"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 3.6,
+     "y": -0.10000000000000053,
+     "w": 2.8,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 0.8999999999999995,
+     "text": {
+      "en": "m8: 1"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 6.6,
+     "y": -0.10000000000000053,
+     "w": 2.8,
+     "h": 2,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 0.8999999999999995,
+     "text": {
+      "en": "m9: 0"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 9.6,
+     "y": -0.10000000000000053,
+     "w": 2.8,
+     "h": 2,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 0.8999999999999995,
+     "text": {
+      "en": "m11: 0"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 12.6,
+     "y": -0.10000000000000053,
+     "w": 2.8,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 0.8999999999999995,
+     "text": {
+      "en": "m10: 1"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 6.4,
+     "y": 1.9,
+     "w": 6.2,
+     "h": 4.6,
+     "color": "yellow",
+     "opacity": 1,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 3.4,
+     "y": 6.3,
+     "w": 3.2,
+     "h": 2.4,
+     "color": "orange",
+     "opacity": 1,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 12.4,
+     "y": 6.3,
+     "w": 3.2,
+     "h": 2.4,
+     "color": "orange",
+     "opacity": 1,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 3.4,
+     "y": -0.3,
+     "w": 3.2,
+     "h": 2.4,
+     "color": "orange",
+     "opacity": 1,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 12.4,
+     "y": -0.3,
+     "w": 3.2,
+     "h": 2.4,
+     "color": "orange",
+     "opacity": 1,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": "3.6 + col*3",
+     "y": "6.5 - row*2.2",
+     "w": 2.8,
+     "h": 2,
+     "color": "red",
+     "opacity": 1,
+     "fill": false,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 21,
+     "y": 6,
+     "text": {
+      "en": "F = B'D' + BD"
+     },
+     "size": 22,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 21,
+     "y": 4.5,
+     "text": {
+      "en": "cell m{8*A + 4*B + 2*C + D:0}: F = {F:0}"
+     },
+     "size": 18,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 21,
+     "y": 3,
+     "text": {
+      "en": "yellow: BD (centre four)"
+     },
+     "size": 16,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 21,
+     "y": 2,
+     "text": {
+      "en": "orange: B'D' (corners)"
+     },
+     "size": 16,
+     "color": "orange",
+     "align": "center"
+    }
+   ],
+   "sliders": []
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Reading the result, and POS from 0s"
+   },
+   "body": {
+    "en": "Every 1 must be in at least one group. Start with 1s that can be grouped in only one way, then use the largest groups for the rest; a group whose 1s are all already covered is redundant. Each group gives a product term and the terms are ORed: the reduced SOP. Grouping the 0s instead gives the reduced POS: each group of 0s gives a sum term with each unchanging variable complemented if it is 1, and the terms are ANDed. Don't-care cells (X) may be used as 1s or 0s to make bigger groups."
+   },
+   "points": [
+    {
+     "en": "Cover every 1; largest groups first"
+    },
+    {
+     "en": "Drop redundant groups"
+    },
+    {
+     "en": "Group 0s → POS (complement the 1-valued variables)"
+    },
+    {
+     "en": "Don't-cares may be included when helpful"
+    }
+   ],
+   "narration": {
+    "en": "Every 1 must be in at least one group. Start with 1s that can be grouped in only one way, then use the largest groups for the rest; a group whose 1s are all already covered is redundant. Each group gives a product term and the terms are ORed: the reduced SOP. Grouping the 0s instead gives the reduced POS: each group of 0s gives a sum term with each unchanging variable complemented if it is 1, and the terms are ANDed. Don't-care cells (X) may be used as 1s or 0s to make bigger groups."
+   }
+  },
+  {
+   "id": "activity-fill",
+   "type": "activity",
+   "kind": "fill",
+   "title": {
+    "en": "Read the groups"
+   },
+   "prompt": {
+    "en": "Choose the term for each group of a 4-variable map (rows AB, columns CD)."
+   },
+   "narration": {
+    "en": "Choose the term for each group of a 4-variable map (rows AB, columns CD)."
+   },
+   "seconds": 150,
+   "passage": {
+    "en": "A quad covering the whole row AB = 01 gives __1__. A pair of cells 0 and 2 (AB = 00, CD = 00 and 10) gives __2__. An octet covering the two rows AB = 01 and 11 gives __3__. The single cell m15 alone gives __4__."
+   },
+   "blanks": [
+    {
+     "options": [
+      {
+       "en": "A'B"
+      },
+      {
+       "en": "A'"
+      },
+      {
+       "en": "B"
+      }
+     ],
+     "answer": 0
+    },
+    {
+     "options": [
+      {
+       "en": "A'B'D'"
+      },
+      {
+       "en": "A'B'"
+      },
+      {
+       "en": "D'"
+      }
+     ],
+     "answer": 0
+    },
+    {
+     "options": [
+      {
+       "en": "B"
+      },
+      {
+       "en": "AB"
+      },
+      {
+       "en": "A'B"
+      }
+     ],
+     "answer": 0
+    },
+    {
+     "options": [
+      {
+       "en": "ABCD"
+      },
+      {
+       "en": "AB"
+      },
+      {
+       "en": "CD"
+      }
+     ],
+     "answer": 0
+    }
+   ],
+   "explanation": {
+    "en": "Keep only the variables that stay the same across the group: the row AB = 01 fixes A'B; cells 0 and 2 differ only in C; rows 01 and 11 share only B = 1; a single cell keeps all four variables."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Minimise F(A, B, C, D) = Σ(0, 1, 2, 3, 5, 7, 13, 15) using a K-map."
+   },
+   "steps": [
+    {
+     "en": "Row AB = 00 has 1s in all four cells (0, 1, 3, 2): quad A'B'."
+    },
+    {
+     "en": "Column CD = 01 and 11 in rows AB = 01 and 11 (5, 7, 13, 15): quad BD."
+    },
+    {
+     "en": "Cells 1, 3, 5, 7 also form a quad A'D, but 1 and 3 are covered by A'B' and 5 and 7 by BD, so it is redundant."
+    },
+    {
+     "en": "F = A'B' + BD."
+    }
+   ],
+   "answer": {
+    "en": "F = A'B' + BD"
+   },
+   "narration": {
+    "en": "Minimise F(A, B, C, D) = Σ(0, 1, 2, 3, 5, 7, 13, 15) using a K-map."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Corners are neighbours"
+   },
+   "body": {
+    "en": "In a 4-variable map the four corner cells (0, 2, 8, 10) are all neighbours of one another; together they give B'D'. Also check the left and right edges and the top and bottom edges for wrap-round pairs."
+   },
+   "narration": {
+    "en": "In a 4-variable map the four corner cells (0, 2, 8, 10) are all neighbours of one another; together they give B'D'. Also check the left and right edges and the top and bottom edges for wrap-round pairs."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Fold the map: edges and corners touch."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i2cs13-q09",
+    "i2cs13-q10",
+    "i2cs13-q11"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i2cs13-q12"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "K-map cells are in Gray-code order; edges wrap round."
+    },
+    {
+     "en": "Groups have 1, 2, 4, 8 or 16 cells; larger is better."
+    },
+    {
+     "en": "Each group gives a term with only the unchanging variables."
+    },
+    {
+     "en": "Group 0s for POS; use don't-cares when they help."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Minimise F = Σ(1, 3, 4, 6, 9, 11, 12, 14) and draw the circuit."
+    },
+    {
+     "en": "Find the reduced POS of F = Π(0, 2, 8, 10)."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i2cs13-q12"
+   ],
+   "narration": {
+    "en": "Recap. K-map cells are in Gray-code order; edges wrap round. Groups have 1, 2, 4, 8 or 16 cells; larger is better. Each group gives a term with only the unchanging variables. Group 0s for POS; use don't-cares when they help."
+   }
+  }
+ ]
+}

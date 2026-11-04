@@ -1,0 +1,473 @@
+{
+ "id": "puc1-computer-science-15-java-expressions-and-statements.t1.lesson",
+ "chapterId": "puc1-computer-science-15-java-expressions-and-statements",
+ "topicId": "puc1-computer-science-15-java-expressions-and-statements.t1",
+ "title": {
+  "en": "Operators and expressions"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Java does the arithmetic"
+   },
+   "hook": {
+    "en": "7 / 2 in Java is 3, not 3.5. And −7 % 3 is −1. Knowing exactly how Java evaluates an expression is half of every ISC output question."
+   },
+   "objectives": [
+    {
+     "en": "Use arithmetic, relational, logical, assignment and conditional operators"
+    },
+    {
+     "en": "Apply precedence and associativity"
+    },
+    {
+     "en": "Trace prefix and postfix increment"
+    }
+   ],
+   "narration": {
+    "en": "7 / 2 in Java is 3, not 3.5. And −7 % 3 is −1. Knowing exactly how Java evaluates an expression is half of every ISC output question."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Kinds of operators"
+   },
+   "body": {
+    "en": "Arithmetic: + − * / % (on two ints, / is integer division and % gives the remainder, whose sign follows the dividend). Relational: < > <= >= == != give boolean results. Logical: && (and), || (or), ! (not); && and || are short-circuit: the right side is not evaluated if the left side already decides. Assignment: =, +=, −=, *=, /=, %=. Increment and decrement: ++ and −−. Ternary: condition ? a : b."
+   },
+   "points": [
+    {
+     "en": "int / int → integer division"
+    },
+    {
+     "en": "Remainder % takes the sign of the dividend"
+    },
+    {
+     "en": "&& and || short-circuit"
+    },
+    {
+     "en": "Ternary: c ? a : b"
+    }
+   ],
+   "narration": {
+    "en": "Arithmetic: + − * / % (on two ints, / is integer division and % gives the remainder, whose sign follows the dividend). Relational: < > <= >= == != give boolean results. Logical: && (and), || (or), ! (not); && and || are short-circuit: the right side is not evaluated if the left side already decides. Assignment: =, +=, −=, *=, /=, %=. Increment and decrement: ++ and −−. Ternary: condition ? a : b."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: prefix and postfix"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Prefix: change first, then use."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "prefix and postfix"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "int a = 5;  int b = ++a;   // a = 6, b = 6"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Postfix: use first, then change."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "int a = 5;  int b = a++;   // a = 6, b = 5"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A classic ISC trace: evaluate left to right, updating a as you go."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "int a = 5;"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "int s = a++ + ++a + a--;"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        28.0
+       ],
+       "text": {
+        "en": "a++ uses 5 (a→6); ++a makes 7 and uses 7; a-- uses 7 (a→6)"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        32.5
+       ],
+       "text": {
+        "en": "s = 5 + 7 + 7 = 19,  a = 6"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Precedence, highest first."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37.0
+       ],
+       "text": {
+        "en": "() → ++ -- ! (unary) → * / % → + - → < > <= >="
+       },
+       "size": 3,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        41.5
+       ],
+       "text": {
+        "en": "→ == != → && → || → ?: → = += …"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up prefix and postfix on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "readouts",
+   "title": {
+    "en": "Integer division and remainder"
+   },
+   "caption": {
+    "en": "Choose two integers. Java's / on two ints drops the fraction (towards zero) and % gives the remainder, whose sign follows a. The check line always holds: (a / b) * b + a % b == a."
+   },
+   "narration": {
+    "en": "Choose two integers. Java's / on two ints drops the fraction (towards zero) and % gives the remainder, whose sign follows a. The check line always holds: (a / b) * b + a % b == a."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "Set a = 17, b = 5. Check 3 and 2."
+    },
+    {
+     "en": "Set a = −17. What are a / b and a % b now?"
+    },
+    {
+     "en": "When is a % b equal to 0?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "a"
+     },
+     "min": -30,
+     "max": 30,
+     "step": 1,
+     "value": 17
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "b (non-zero)"
+     },
+     "min": 1,
+     "max": 9,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "a / b (int)"
+     },
+     "expr": "sign(a)*floor(abs(a)/b)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "a % b"
+     },
+     "expr": "a - b*sign(a)*floor(abs(a)/b)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "(double) a / b"
+     },
+     "expr": "a/b",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "(a / b) * b + a % b"
+     },
+     "expr": "b*sign(a)*floor(abs(a)/b) + a - b*sign(a)*floor(abs(a)/b)",
+     "digits": 0
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Expressions and type promotion"
+   },
+   "body": {
+    "en": "In a mixed expression Java promotes the smaller type to the larger before computing: int with double gives double, and byte, short and char are promoted to int in any arithmetic. So 5 / 2 is 2 but 5 / 2.0 is 2.5, and char + int is an int ('A' + 1 is 66). The + operator joins strings: \"Sum \" + 2 + 3 gives \"Sum 23\", but \"Sum \" + (2 + 3) gives \"Sum 5\", because + is evaluated left to right."
+   },
+   "points": [
+    {
+     "en": "Mixed int/double → double"
+    },
+    {
+     "en": "byte, short, char → int in arithmetic"
+    },
+    {
+     "en": "String + anything → String"
+    },
+    {
+     "en": "+ is left-associative"
+    }
+   ],
+   "narration": {
+    "en": "In a mixed expression Java promotes the smaller type to the larger before computing: int with double gives double, and byte, short and char are promoted to int in any arithmetic. So 5 / 2 is 2 but 5 / 2.0 is 2.5, and char + int is an int ('A' + 1 is 66). The + operator joins strings: \"Sum \" + 2 + 3 gives \"Sum 23\", but \"Sum \" + (2 + 3) gives \"Sum 5\", because + is evaluated left to right."
+   }
+  },
+  {
+   "id": "activity-order",
+   "type": "activity",
+   "kind": "order",
+   "title": {
+    "en": "Order of evaluation"
+   },
+   "prompt": {
+    "en": "Put the operators in order of precedence, highest first."
+   },
+   "narration": {
+    "en": "Put the operators in order of precedence, highest first."
+   },
+   "seconds": 150,
+   "steps": [
+    {
+     "en": "Parentheses ( )"
+    },
+    {
+     "en": "Unary ++ -- !"
+    },
+    {
+     "en": "Multiplicative * / %"
+    },
+    {
+     "en": "Additive + -"
+    },
+    {
+     "en": "Relational < > <= >="
+    },
+    {
+     "en": "Equality == !="
+    },
+    {
+     "en": "Logical AND &&"
+    },
+    {
+     "en": "Logical OR ||"
+    },
+    {
+     "en": "Assignment = +="
+    }
+   ],
+   "explanation": {
+    "en": "Unary operators bind tightest after brackets, then arithmetic, then comparisons, then logic, and assignment last."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Evaluate: int x = 10, y = 4; boolean r = x % y == 2 && ++y > 5 || x / y < 3; and give the final values."
+   },
+   "steps": [
+    {
+     "en": "x % y = 2, so x % y == 2 is true."
+    },
+    {
+     "en": "&& now evaluates ++y > 5: y becomes 5, and 5 > 5 is false. true && false = false."
+    },
+    {
+     "en": "|| evaluates x / y < 3 with y = 5: 10 / 5 = 2, and 2 < 3 is true."
+    },
+    {
+     "en": "false || true = true."
+    }
+   ],
+   "answer": {
+    "en": "r = true, x = 10, y = 5"
+   },
+   "narration": {
+    "en": "Evaluate: int x = 10, y = 4; boolean r = x % y == 2 && ++y > 5 || x / y < 3; and give the final values."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Pre: change, then use. Post: use, then change."
+   },
+   "body": {
+    "en": "For ++a the plus is before the a, so the change comes before the use. For a++ the use comes first."
+   },
+   "narration": {
+    "en": "For ++a the plus is before the a, so the change comes before the use. For a++ the use comes first."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "The side the ++ is on is when it happens."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i1cs15-q01",
+    "i1cs15-q02",
+    "i1cs15-q03"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i1cs15-q04"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "int / int truncates; % keeps the sign of the dividend."
+    },
+    {
+     "en": "&& and || short-circuit."
+    },
+    {
+     "en": "Prefix changes before use; postfix after."
+    },
+    {
+     "en": "Mixed types are promoted; String + makes a String."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Evaluate a += a++ * 2 + --a for a = 4."
+    },
+    {
+     "en": "Print the last digit and the number without its last digit for n = 4729."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i1cs15-q04"
+   ],
+   "narration": {
+    "en": "Recap. int / int truncates; % keeps the sign of the dividend. && and || short-circuit. Prefix changes before use; postfix after. Mixed types are promoted; String + makes a String."
+   }
+  }
+ ]
+}

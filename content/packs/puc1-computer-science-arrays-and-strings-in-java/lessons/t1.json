@@ -1,0 +1,395 @@
+{
+ "id": "puc1-computer-science-17-arrays-and-strings-in-java.t1.lesson",
+ "chapterId": "puc1-computer-science-17-arrays-and-strings-in-java",
+ "topicId": "puc1-computer-science-17-arrays-and-strings-in-java.t1",
+ "title": {
+  "en": "One-dimensional arrays, linear and binary search"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Fifty marks, one name"
+   },
+   "hook": {
+    "en": "Fifty variables m1, m2 … m50 would be a nightmare. An array keeps all fifty under one name, and an index picks out each one."
+   },
+   "objectives": [
+    {
+     "en": "Declare, create and initialise one-dimensional arrays"
+    },
+    {
+     "en": "Traverse an array with a loop using length"
+    },
+    {
+     "en": "Search an array with linear search and binary search"
+    }
+   ],
+   "narration": {
+    "en": "Fifty variables m1, m2 … m50 would be a nightmare. An array keeps all fifty under one name, and an index picks out each one."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Arrays in Java"
+   },
+   "body": {
+    "en": "An array is a fixed-size collection of elements of the same type stored in contiguous memory. int[] m = new int[5]; creates five ints, all 0; int[] p = {3, 8, 1}; creates and initialises. Elements are numbered from 0, so the last index is m.length − 1 (length is a field, not a method). Using an index outside 0 … length − 1 throws ArrayIndexOutOfBoundsException at run time. An array variable holds a reference to the array object."
+   },
+   "points": [
+    {
+     "en": "int[] a = new int[n]; or int[] a = {…};"
+    },
+    {
+     "en": "Indexes 0 … a.length − 1"
+    },
+    {
+     "en": "Default values: 0, 0.0, false, null"
+    },
+    {
+     "en": "Bad index → ArrayIndexOutOfBoundsException"
+    }
+   ],
+   "narration": {
+    "en": "An array is a fixed-size collection of elements of the same type stored in contiguous memory. int[] m = new int[5]; creates five ints, all 0; int[] p = {3, 8, 1}; creates and initialises. Elements are numbered from 0, so the last index is m.length − 1 (length is a field, not a method). Using an index outside 0 … length − 1 throws ArrayIndexOutOfBoundsException at run time. An array variable holds a reference to the array object."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: binary search for 23 in a sorted array"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Binary search needs the array sorted. Look at the middle and discard half."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "binary search for 23 in a sorted array"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "a = {4, 9, 13, 18, 23, 31, 40}    (indexes 0 … 6)"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Round 1."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        14.5
+       ],
+       "text": {
+        "en": "low = 0, high = 6, mid = 3 → a[3] = 18 < 23 → low = 4"
+       },
+       "size": 3,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Round 2."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        19.0
+       ],
+       "text": {
+        "en": "low = 4, high = 6, mid = 5 → a[5] = 31 > 23 → high = 4"
+       },
+       "size": 3,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Round 3."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        23.5
+       ],
+       "text": {
+        "en": "low = 4, high = 4, mid = 4 → a[4] = 23 → found at index 4"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        28.0
+       ],
+       "text": {
+        "en": "3 comparisons; linear search needs 5"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        32.5
+       ],
+       "text": {
+        "en": "loop while (low <= high); mid = (low + high) / 2"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up binary search for 23 in a sorted array on the board, one step at a time."
+   }
+  },
+  {
+   "id": "sim-algo-binary",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "algo.binary",
+   "caption": {
+    "en": "Binary search on a sorted array: each comparison halves the part of the array still to be searched."
+   },
+   "tryThis": [
+    {
+     "en": "Search for a value that is present and count the comparisons."
+    },
+    {
+     "en": "Search for a value that is absent. When does the search stop?"
+    },
+    {
+     "en": "How many comparisons at most for 1000 elements?"
+    }
+   ],
+   "narration": {
+    "en": "Binary search on a sorted array: each comparison halves the part of the array still to be searched. Search for a value that is present and count the comparisons. Search for a value that is absent. When does the search stop? How many comparisons at most for 1000 elements?"
+   },
+   "seconds": 150,
+   "optional": true,
+   "title": {
+    "en": "Binary search, step by step"
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Linear search versus binary search"
+   },
+   "body": {
+    "en": "Linear search checks the elements one by one from the start until the key is found or the array ends: it works on any array and needs up to n comparisons. Binary search works only on a sorted array: it compares the key with the middle element and continues in the left or right half, so it needs at most about log2 n + 1 comparisons (10 for 1000 elements, 20 for a million)."
+   },
+   "points": [
+    {
+     "en": "Linear: any order, up to n comparisons"
+    },
+    {
+     "en": "Binary: sorted only, about log2 n comparisons"
+    },
+    {
+     "en": "mid = (low + high) / 2"
+    },
+    {
+     "en": "Stop when low > high (not found)"
+    }
+   ],
+   "narration": {
+    "en": "Linear search checks the elements one by one from the start until the key is found or the array ends: it works on any array and needs up to n comparisons. Binary search works only on a sorted array: it compares the key with the middle element and continues in the left or right half, so it needs at most about log2 n + 1 comparisons (10 for 1000 elements, 20 for a million)."
+   }
+  },
+  {
+   "id": "activity-order",
+   "type": "activity",
+   "kind": "order",
+   "title": {
+    "en": "Binary search algorithm"
+   },
+   "prompt": {
+    "en": "Put the steps of binary search in order."
+   },
+   "narration": {
+    "en": "Put the steps of binary search in order."
+   },
+   "seconds": 150,
+   "steps": [
+    {
+     "en": "Set low = 0 and high = length − 1"
+    },
+    {
+     "en": "While low <= high, find mid = (low + high) / 2"
+    },
+    {
+     "en": "If a[mid] equals the key, report mid and stop"
+    },
+    {
+     "en": "If a[mid] is less than the key, set low = mid + 1"
+    },
+    {
+     "en": "Otherwise set high = mid − 1"
+    },
+    {
+     "en": "If the loop ends, report that the key is not found"
+    }
+   ],
+   "explanation": {
+    "en": "Each pass halves the range [low, high]; when the range becomes empty the key is absent."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Write a Java method that returns the index of key in arr using linear search, or −1 if absent."
+   },
+   "steps": [
+    {
+     "en": "static int linear(int[] arr, int key) {"
+    },
+    {
+     "en": "    for (int i = 0; i < arr.length; i++)"
+    },
+    {
+     "en": "        if (arr[i] == key) return i;"
+    },
+    {
+     "en": "    return -1;"
+    },
+    {
+     "en": "}"
+    },
+    {
+     "en": "linear(new int[]{7, 2, 9, 4}, 9) returns 2."
+    }
+   ],
+   "answer": {
+    "en": "Index of the first match, or −1"
+   },
+   "narration": {
+    "en": "Write a Java method that returns the index of key in arr using linear search, or −1 if absent."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Halve and halve"
+   },
+   "body": {
+    "en": "Binary search on n elements takes at most the number of times you can halve n before reaching 1, plus one: 1000 → 500 → 250 → 125 → 63 → 32 → 16 → 8 → 4 → 2 → 1 is 10 halvings."
+   },
+   "narration": {
+    "en": "Binary search on n elements takes at most the number of times you can halve n before reaching 1, plus one: 1000 → 500 → 250 → 125 → 63 → 32 → 16 → 8 → 4 → 2 → 1 is 10 halvings."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Comparisons ≈ number of halvings."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i1cs17-q01",
+    "i1cs17-q02",
+    "i1cs17-q03"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i1cs17-q04"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Arrays hold a fixed number of same-type elements, indexed from 0."
+    },
+    {
+     "en": "Use arr.length in loops."
+    },
+    {
+     "en": "Linear search: any array, up to n comparisons."
+    },
+    {
+     "en": "Binary search: sorted array only, about log2 n comparisons."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write binary search as a method returning the index."
+    },
+    {
+     "en": "Find the largest and smallest elements of an array in one loop."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i1cs17-q04"
+   ],
+   "narration": {
+    "en": "Recap. Arrays hold a fixed number of same-type elements, indexed from 0. Use arr.length in loops. Linear search: any array, up to n comparisons. Binary search: sorted array only, about log2 n comparisons."
+   }
+  }
+ ]
+}

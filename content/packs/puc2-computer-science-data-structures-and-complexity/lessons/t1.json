@@ -1,0 +1,432 @@
+{
+ "id": "puc2-computer-science-17-data-structures-and-complexity.t1.lesson",
+ "chapterId": "puc2-computer-science-17-data-structures-and-complexity",
+ "topicId": "puc2-computer-science-17-data-structures-and-complexity.t1",
+ "title": {
+  "en": "Stacks and queues in Java: circular queue and deque"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Plates and ticket lines"
+   },
+   "hook": {
+    "en": "Plates are taken from the top of a pile (stack); tickets are given to the front of a line (queue). Java programs build both with an array and a couple of index variables."
+   },
+   "objectives": [
+    {
+     "en": "Implement a stack with an array: push, pop, peek, overflow and underflow"
+    },
+    {
+     "en": "Implement a linear and a circular queue with front and rear"
+    },
+    {
+     "en": "Describe a deque and its operations"
+    }
+   ],
+   "narration": {
+    "en": "Plates are taken from the top of a pile (stack); tickets are given to the front of a line (queue). Java programs build both with an array and a couple of index variables."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Stack in an array"
+   },
+   "body": {
+    "en": "A stack is a LIFO (last in, first out) structure. With an array arr of size cap and an index top (−1 when empty): push(x) checks for overflow (top == cap − 1), then arr[++top] = x; pop() checks for underflow (top == −1), then returns arr[top−−]; peek() returns arr[top] without removing it. Stacks are used for undo, the call stack, reversing and evaluating postfix expressions."
+   },
+   "points": [
+    {
+     "en": "LIFO; top = −1 when empty"
+    },
+    {
+     "en": "Overflow: top == cap − 1"
+    },
+    {
+     "en": "Underflow: top == −1"
+    },
+    {
+     "en": "push: arr[++top] = x; pop: arr[top--]"
+    }
+   ],
+   "narration": {
+    "en": "A stack is a LIFO (last in, first out) structure. With an array arr of size cap and an index top (−1 when empty): push(x) checks for overflow (top == cap − 1), then arr[++top] = x; pop() checks for underflow (top == −1), then returns arr[top−−]; peek() returns arr[top] without removing it. Stacks are used for undo, the call stack, reversing and evaluating postfix expressions."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: a circular queue of size 5"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A linear queue wastes cells: after dequeues, front moves right and the freed cells cannot be reused. A circular queue wraps the indexes round."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "a circular queue of size 5"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "rear = (rear + 1) % cap;   arr[rear] = x;     // enqueue"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "x = arr[front];  front = (front + 1) % cap;  // dequeue"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Keep a count of elements to tell full from empty."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        19.0
+       ],
+       "text": {
+        "en": "empty: count == 0"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        23.5
+       ],
+       "text": {
+        "en": "full:  count == cap"
+       },
+       "size": 3,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Trace with cap = 5: enqueue 1..5, dequeue twice, enqueue 6."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        28.0
+       ],
+       "text": {
+        "en": "front = 2, rear = 0 → 6 goes into cell 0 (wrapped round)"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        32.5
+       ],
+       "text": {
+        "en": "queue order: 3, 4, 5, 6"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up a circular queue of size 5 on the board, one step at a time."
+   }
+  },
+  {
+   "id": "sim-algo-queue",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "algo.queue",
+   "caption": {
+    "en": "A queue: enqueue at the rear, dequeue from the front. Watch the front and rear move."
+   },
+   "tryThis": [
+    {
+     "en": "Enqueue three values and dequeue one. Where is the front now?"
+    },
+    {
+     "en": "In a circular queue of size 5, where does the sixth value go after two dequeues?"
+    },
+    {
+     "en": "Compare with the stack widget: which end is used for removal?"
+    }
+   ],
+   "narration": {
+    "en": "A queue: enqueue at the rear, dequeue from the front. Watch the front and rear move. Enqueue three values and dequeue one. Where is the front now? In a circular queue of size 5, where does the sixth value go after two dequeues? Compare with the stack widget: which end is used for removal?"
+   },
+   "seconds": 150,
+   "optional": true,
+   "title": {
+    "en": "Queue operations"
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Queues and deques"
+   },
+   "body": {
+    "en": "A queue is FIFO (first in, first out): elements are added at the rear and removed from the front. In a linear array queue, front and rear only move right, so space is wasted; a circular queue reuses cells with % cap. A deque (double-ended queue) allows insertion and deletion at both ends: addFront, addRear, deleteFront, deleteRear. An input-restricted deque allows insertion at one end only; an output-restricted deque allows deletion at one end only. A deque can act as both a stack and a queue."
+   },
+   "points": [
+    {
+     "en": "Queue: FIFO, rear in, front out"
+    },
+    {
+     "en": "Circular: (index + 1) % cap"
+    },
+    {
+     "en": "Deque: both ends"
+    },
+    {
+     "en": "Input- and output-restricted deques"
+    }
+   ],
+   "narration": {
+    "en": "A queue is FIFO (first in, first out): elements are added at the rear and removed from the front. In a linear array queue, front and rear only move right, so space is wasted; a circular queue reuses cells with % cap. A deque (double-ended queue) allows insertion and deletion at both ends: addFront, addRear, deleteFront, deleteRear. An input-restricted deque allows insertion at one end only; an output-restricted deque allows deletion at one end only. A deque can act as both a stack and a queue."
+   }
+  },
+  {
+   "id": "activity-sort",
+   "type": "activity",
+   "kind": "sort",
+   "title": {
+    "en": "Stack, queue or deque?"
+   },
+   "prompt": {
+    "en": "Sort each situation by the structure that fits it best."
+   },
+   "narration": {
+    "en": "Sort each situation by the structure that fits it best."
+   },
+   "seconds": 150,
+   "buckets": [
+    {
+     "id": "st",
+     "label": {
+      "en": "Stack (LIFO)"
+     }
+    },
+    {
+     "id": "qu",
+     "label": {
+      "en": "Queue (FIFO)"
+     }
+    },
+    {
+     "id": "dq",
+     "label": {
+      "en": "Deque"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "Undo in a text editor"
+     },
+     "answer": "st"
+    },
+    {
+     "text": {
+      "en": "Printer jobs waiting to print"
+     },
+     "answer": "qu"
+    },
+    {
+     "text": {
+      "en": "Checking balanced brackets"
+     },
+     "answer": "st"
+    },
+    {
+     "text": {
+      "en": "Customers at a ticket counter"
+     },
+     "answer": "qu"
+    },
+    {
+     "text": {
+      "en": "A browser history you can trim from either end"
+     },
+     "answer": "dq"
+    },
+    {
+     "text": {
+      "en": "A palindrome check removing from both ends"
+     },
+     "answer": "dq"
+    }
+   ],
+   "explanation": {
+    "en": "Reversal and nesting use stacks; fair waiting lines use queues; work at both ends needs a deque."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Write the push and pop methods of a class Stack with int[] arr, int top and int cap."
+   },
+   "steps": [
+    {
+     "en": "void push(int x) {"
+    },
+    {
+     "en": "    if (top == cap - 1) { System.out.println(\"Stack overflow\"); return; }"
+    },
+    {
+     "en": "    arr[++top] = x;"
+    },
+    {
+     "en": "}"
+    },
+    {
+     "en": "int pop() {"
+    },
+    {
+     "en": "    if (top == -1) { System.out.println(\"Stack underflow\"); return -9999; }"
+    },
+    {
+     "en": "    return arr[top--];"
+    },
+    {
+     "en": "}"
+    }
+   ],
+   "answer": {
+    "en": "push guards against overflow, pop against underflow (returning −9999 as a signal)."
+   },
+   "narration": {
+    "en": "Write the push and pop methods of a class Stack with int[] arr, int top and int cap."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Modulo makes the circle"
+   },
+   "body": {
+    "en": "In a circular queue, every index that moves forward is written (i + 1) % cap. When i is the last cell, the % brings it back to 0."
+   },
+   "narration": {
+    "en": "In a circular queue, every index that moves forward is written (i + 1) % cap. When i is the last cell, the % brings it back to 0."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Step forward, then mod by cap."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i2cs17-q01",
+    "i2cs17-q02",
+    "i2cs17-q03"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i2cs17-q04"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Stack: LIFO with top; check overflow and underflow."
+    },
+    {
+     "en": "Queue: FIFO with front and rear."
+    },
+    {
+     "en": "Circular queue reuses cells with % cap."
+    },
+    {
+     "en": "Deque: insert and delete at both ends."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write enqueue and dequeue for a circular queue."
+    },
+    {
+     "en": "Trace a stack for the postfix expression 5 3 + 2 *."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i2cs17-q04"
+   ],
+   "narration": {
+    "en": "Recap. Stack: LIFO with top; check overflow and underflow. Queue: FIFO with front and rear. Circular queue reuses cells with % cap. Deque: insert and delete at both ends."
+   }
+  }
+ ]
+}

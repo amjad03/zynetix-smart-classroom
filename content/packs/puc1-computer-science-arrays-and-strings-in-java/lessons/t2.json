@@ -1,0 +1,402 @@
+{
+ "id": "puc1-computer-science-17-arrays-and-strings-in-java.t2.lesson",
+ "chapterId": "puc1-computer-science-17-arrays-and-strings-in-java",
+ "topicId": "puc1-computer-science-17-arrays-and-strings-in-java.t2",
+ "title": {
+  "en": "Sorting arrays: bubble sort and selection sort"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Putting things in order"
+   },
+   "hook": {
+    "en": "Binary search needs a sorted array. Two simple algorithms from the ISC syllabus sort an array in place by comparing and swapping: bubble sort and selection sort."
+   },
+   "objectives": [
+    {
+     "en": "Trace bubble sort pass by pass"
+    },
+    {
+     "en": "Trace selection sort pass by pass"
+    },
+    {
+     "en": "Write both in Java and compare the number of swaps"
+    }
+   ],
+   "narration": {
+    "en": "Binary search needs a sorted array. Two simple algorithms from the ISC syllabus sort an array in place by comparing and swapping: bubble sort and selection sort."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Bubble sort"
+   },
+   "body": {
+    "en": "Bubble sort compares adjacent elements and swaps them if they are in the wrong order. After the first pass the largest element has bubbled to the last position; after pass k the last k elements are in place. An array of n elements needs at most n − 1 passes. If a pass makes no swap, the array is already sorted and we can stop early."
+   },
+   "points": [
+    {
+     "en": "Compare a[j] and a[j+1]; swap if out of order"
+    },
+    {
+     "en": "Each pass fixes the largest remaining element at the end"
+    },
+    {
+     "en": "At most n − 1 passes"
+    },
+    {
+     "en": "No swap in a pass → sorted"
+    }
+   ],
+   "narration": {
+    "en": "Bubble sort compares adjacent elements and swaps them if they are in the wrong order. After the first pass the largest element has bubbled to the last position; after pass k the last k elements are in place. An array of n elements needs at most n − 1 passes. If a pass makes no swap, the array is already sorted and we can stop early."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: bubble sort code"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Two nested loops: passes and comparisons."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "bubble sort code"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "for (int i = 0; i < n - 1; i++)"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "    for (int j = 0; j < n - 1 - i; j++)"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "        if (a[j] > a[j + 1]) {"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "            int t = a[j];  a[j] = a[j + 1];  a[j + 1] = t;"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.0
+       ],
+       "text": {
+        "en": "        }"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Trace pass 1 on {5, 1, 4, 2}."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        32.5
+       ],
+       "text": {
+        "en": "5>1 swap → 1 5 4 2;  5>4 swap → 1 4 5 2;  5>2 swap → 1 4 2"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37.0
+       ],
+       "text": {
+        "en": "5"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        41.5
+       ],
+       "text": {
+        "en": "After pass 1 the largest (5) is in place"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up bubble sort code on the board, one step at a time."
+   }
+  },
+  {
+   "id": "sim-algo-bubble",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "algo.bubble",
+   "caption": {
+    "en": "Bubble sort: adjacent pairs are compared and swapped; the largest value moves to the end in each pass."
+   },
+   "tryThis": [
+    {
+     "en": "Count the swaps in the first pass."
+    },
+    {
+     "en": "Give it an already sorted array. How many passes are really needed?"
+    },
+    {
+     "en": "Compare the number of swaps with selection sort on the same data."
+    }
+   ],
+   "narration": {
+    "en": "Bubble sort: adjacent pairs are compared and swapped; the largest value moves to the end in each pass. Count the swaps in the first pass. Give it an already sorted array. How many passes are really needed? Compare the number of swaps with selection sort on the same data."
+   },
+   "seconds": 150,
+   "optional": true,
+   "title": {
+    "en": "Bubble sort, step by step"
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Selection sort"
+   },
+   "body": {
+    "en": "Selection sort finds the smallest element of the unsorted part and swaps it into the first position of that part. Pass 1 puts the smallest element at index 0, pass 2 the next smallest at index 1, and so on: n − 1 passes in all. It makes at most one swap per pass (n − 1 swaps), while bubble sort may make many; both make about n²/2 comparisons."
+   },
+   "points": [
+    {
+     "en": "Find the minimum of the unsorted part"
+    },
+    {
+     "en": "Swap it to the front of that part"
+    },
+    {
+     "en": "At most one swap per pass"
+    },
+    {
+     "en": "Both sorts: about n²/2 comparisons"
+    }
+   ],
+   "narration": {
+    "en": "Selection sort finds the smallest element of the unsorted part and swaps it into the first position of that part. Pass 1 puts the smallest element at index 0, pass 2 the next smallest at index 1, and so on: n − 1 passes in all. It makes at most one swap per pass (n − 1 swaps), while bubble sort may make many; both make about n²/2 comparisons."
+   }
+  },
+  {
+   "id": "activity-order",
+   "type": "activity",
+   "kind": "order",
+   "title": {
+    "en": "Selection sort on {29, 10, 14, 37, 13}"
+   },
+   "prompt": {
+    "en": "Put the array states after each pass of selection sort in order."
+   },
+   "narration": {
+    "en": "Put the array states after each pass of selection sort in order."
+   },
+   "seconds": 150,
+   "steps": [
+    {
+     "en": "29 10 14 37 13 (start)"
+    },
+    {
+     "en": "10 29 14 37 13 (after pass 1)"
+    },
+    {
+     "en": "10 13 14 37 29 (after pass 2)"
+    },
+    {
+     "en": "10 13 14 37 29 (after pass 3)"
+    },
+    {
+     "en": "10 13 14 29 37 (after pass 4)"
+    }
+   ],
+   "explanation": {
+    "en": "Pass 1 swaps 10 to the front; pass 2 swaps 13 into index 1; pass 3 finds 14 already in place; pass 4 swaps 29 and 37."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Write selection sort in Java for an int array in ascending order."
+   },
+   "steps": [
+    {
+     "en": "for (int i = 0; i < a.length - 1; i++) {"
+    },
+    {
+     "en": "    int min = i;"
+    },
+    {
+     "en": "    for (int j = i + 1; j < a.length; j++)"
+    },
+    {
+     "en": "        if (a[j] < a[min]) min = j;"
+    },
+    {
+     "en": "    int t = a[i];  a[i] = a[min];  a[min] = t;"
+    },
+    {
+     "en": "}"
+    }
+   ],
+   "answer": {
+    "en": "After the loops a is in ascending order."
+   },
+   "narration": {
+    "en": "Write selection sort in Java for an int array in ascending order."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Bubble sinks big, selection picks small"
+   },
+   "body": {
+    "en": "Bubble sort pushes the biggest to the back each pass; selection sort picks the smallest for the front each pass."
+   },
+   "narration": {
+    "en": "Bubble sort pushes the biggest to the back each pass; selection sort picks the smallest for the front each pass."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Bubble: big to back. Selection: small to front."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i1cs17-q05",
+    "i1cs17-q06",
+    "i1cs17-q07"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i1cs17-q08"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Bubble sort swaps adjacent out-of-order pairs."
+    },
+    {
+     "en": "Selection sort swaps the minimum into place each pass."
+    },
+    {
+     "en": "Both need n − 1 passes and about n²/2 comparisons."
+    },
+    {
+     "en": "Selection sort makes at most n − 1 swaps."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Trace bubble sort on {6, 3, 8, 2, 7} and show each pass."
+    },
+    {
+     "en": "Modify bubble sort to sort in descending order."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i1cs17-q08"
+   ],
+   "narration": {
+    "en": "Recap. Bubble sort swaps adjacent out-of-order pairs. Selection sort swaps the minimum into place each pass. Both need n − 1 passes and about n²/2 comparisons. Selection sort makes at most n − 1 swaps."
+   }
+  }
+ ]
+}

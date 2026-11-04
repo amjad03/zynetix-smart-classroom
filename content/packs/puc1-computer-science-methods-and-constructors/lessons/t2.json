@@ -1,0 +1,850 @@
+{
+ "id": "puc1-computer-science-16-methods-and-constructors.t2.lesson",
+ "chapterId": "puc1-computer-science-16-methods-and-constructors",
+ "topicId": "puc1-computer-science-16-methods-and-constructors.t2",
+ "title": {
+  "en": "Constructors and the this keyword"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Born ready"
+   },
+   "hook": {
+    "en": "When a new Student object is made, it should already have a name and a roll number. A constructor is the special method that sets an object up the moment it is created."
+   },
+   "objectives": [
+    {
+     "en": "Write default and parameterised constructors"
+    },
+    {
+     "en": "Use this to refer to the current object"
+    },
+    {
+     "en": "Overload constructors and distinguish them from methods"
+    }
+   ],
+   "narration": {
+    "en": "When a new Student object is made, it should already have a name and a roll number. A constructor is the special method that sets an object up the moment it is created."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "What is a constructor?"
+   },
+   "body": {
+    "en": "A constructor is a member with the same name as its class and no return type (not even void). It is called automatically when an object is created with new, and it initialises the instance variables. If a class has no constructor, Java supplies a default constructor that sets numbers to 0, booleans to false and references to null. A parameterised constructor takes arguments: new Student(\"Asha\", 12). Constructors can be overloaded like methods."
+   },
+   "points": [
+    {
+     "en": "Same name as the class, no return type"
+    },
+    {
+     "en": "Called automatically by new"
+    },
+    {
+     "en": "Default constructor given only if you write none"
+    },
+    {
+     "en": "Constructors can be overloaded"
+    }
+   ],
+   "narration": {
+    "en": "A constructor is a member with the same name as its class and no return type (not even void). It is called automatically when an object is created with new, and it initialises the instance variables. If a class has no constructor, Java supplies a default constructor that sets numbers to 0, booleans to false and references to null. A parameterised constructor takes arguments: new Student(\"Asha\", 12). Constructors can be overloaded like methods."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: a class with two constructors"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "The class and its data."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "a class with two constructors"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "class Student {"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "    String name;  int roll;"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A non-parameterised constructor sets default values."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "    Student() { name = \"\";  roll = 0; }"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A parameterised constructor. this.name is the field; name alone is the parameter."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "    Student(String name, int roll) {"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.0
+       ],
+       "text": {
+        "en": "        this.name = name;  this.roll = roll;"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        32.5
+       ],
+       "text": {
+        "en": "    }"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        37.0
+       ],
+       "text": {
+        "en": "}"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Creating objects calls the matching constructor."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        41.5
+       ],
+       "text": {
+        "en": "Student s1 = new Student();"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        46.0
+       ],
+       "text": {
+        "en": "Student s2 = new Student(\"Asha\", 12);"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        50.5
+       ],
+       "text": {
+        "en": "s2.name = \"Asha\", s2.roll = 12"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up a class with two constructors on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Objects from one class"
+   },
+   "caption": {
+    "en": "Each press of new Student() creates an object with its own instance variable rollNo; the static variable count belongs to the class and there is only one copy of it."
+   },
+   "narration": {
+    "en": "Each press of new Student() creates an object with its own instance variable rollNo; the static variable count belongs to the class and there is only one copy of it."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "Create three objects. How many copies of rollNo exist? Of count?"
+    },
+    {
+     "en": "If s2 changes its rollNo, does s1 change?"
+    },
+    {
+     "en": "Why do we say a class is a blueprint and an object an instance?"
+    }
+   ],
+   "counters": [
+    {
+     "name": "n",
+     "value": 0,
+     "min": 0,
+     "max": 6
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "new Student()"
+     },
+     "icon": "add",
+     "set": {
+      "n": "n + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Clear"
+     },
+     "icon": "reset",
+     "set": {
+      "n": "0"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Objects created (count)"
+     },
+     "expr": "n",
+     "digits": 0
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     22
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 2,
+     "w": 6,
+     "h": 6,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 7.2,
+     "text": {
+      "en": "class Student"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 5.6,
+     "text": {
+      "en": "static int count"
+     },
+     "size": 18,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 4.4,
+     "text": {
+      "en": "= {n:0}"
+     },
+     "size": 24,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 2.8,
+     "text": {
+      "en": "(one copy, shared)"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 8.0,
+     "y": 5.6,
+     "w": 4.2,
+     "h": 3.4,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "0 < n"
+    },
+    {
+     "shape": "text",
+     "x": 10.1,
+     "y": 8.0,
+     "text": {
+      "en": "s1"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center",
+     "visibleIf": "0 < n"
+    },
+    {
+     "shape": "text",
+     "x": 10.1,
+     "y": 6.699999999999999,
+     "text": {
+      "en": "rollNo = 1"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "0 < n"
+    },
+    {
+     "shape": "line",
+     "x1": 6.5,
+     "y1": 5,
+     "x2": 8.0,
+     "y2": 7.3,
+     "color": "white",
+     "visibleIf": "0 < n",
+     "dashed": true
+    },
+    {
+     "shape": "rect",
+     "x": 12.6,
+     "y": 5.6,
+     "w": 4.2,
+     "h": 3.4,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "1 < n"
+    },
+    {
+     "shape": "text",
+     "x": 14.7,
+     "y": 8.0,
+     "text": {
+      "en": "s2"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center",
+     "visibleIf": "1 < n"
+    },
+    {
+     "shape": "text",
+     "x": 14.7,
+     "y": 6.699999999999999,
+     "text": {
+      "en": "rollNo = 2"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "1 < n"
+    },
+    {
+     "shape": "line",
+     "x1": 6.5,
+     "y1": 5,
+     "x2": 12.6,
+     "y2": 7.3,
+     "color": "white",
+     "visibleIf": "1 < n",
+     "dashed": true
+    },
+    {
+     "shape": "rect",
+     "x": 17.2,
+     "y": 5.6,
+     "w": 4.2,
+     "h": 3.4,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "2 < n"
+    },
+    {
+     "shape": "text",
+     "x": 19.3,
+     "y": 8.0,
+     "text": {
+      "en": "s3"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center",
+     "visibleIf": "2 < n"
+    },
+    {
+     "shape": "text",
+     "x": 19.3,
+     "y": 6.699999999999999,
+     "text": {
+      "en": "rollNo = 3"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "2 < n"
+    },
+    {
+     "shape": "line",
+     "x1": 6.5,
+     "y1": 5,
+     "x2": 17.2,
+     "y2": 7.3,
+     "color": "white",
+     "visibleIf": "2 < n",
+     "dashed": true
+    },
+    {
+     "shape": "rect",
+     "x": 8.0,
+     "y": 1.5999999999999996,
+     "w": 4.2,
+     "h": 3.4,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "3 < n"
+    },
+    {
+     "shape": "text",
+     "x": 10.1,
+     "y": 3.9999999999999996,
+     "text": {
+      "en": "s4"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center",
+     "visibleIf": "3 < n"
+    },
+    {
+     "shape": "text",
+     "x": 10.1,
+     "y": 2.6999999999999997,
+     "text": {
+      "en": "rollNo = 4"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "3 < n"
+    },
+    {
+     "shape": "line",
+     "x1": 6.5,
+     "y1": 5,
+     "x2": 8.0,
+     "y2": 3.3,
+     "color": "white",
+     "visibleIf": "3 < n",
+     "dashed": true
+    },
+    {
+     "shape": "rect",
+     "x": 12.6,
+     "y": 1.5999999999999996,
+     "w": 4.2,
+     "h": 3.4,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "4 < n"
+    },
+    {
+     "shape": "text",
+     "x": 14.7,
+     "y": 3.9999999999999996,
+     "text": {
+      "en": "s5"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center",
+     "visibleIf": "4 < n"
+    },
+    {
+     "shape": "text",
+     "x": 14.7,
+     "y": 2.6999999999999997,
+     "text": {
+      "en": "rollNo = 5"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "4 < n"
+    },
+    {
+     "shape": "line",
+     "x1": 6.5,
+     "y1": 5,
+     "x2": 12.6,
+     "y2": 3.3,
+     "color": "white",
+     "visibleIf": "4 < n",
+     "dashed": true
+    },
+    {
+     "shape": "rect",
+     "x": 17.2,
+     "y": 1.5999999999999996,
+     "w": 4.2,
+     "h": 3.4,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "5 < n"
+    },
+    {
+     "shape": "text",
+     "x": 19.3,
+     "y": 3.9999999999999996,
+     "text": {
+      "en": "s6"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center",
+     "visibleIf": "5 < n"
+    },
+    {
+     "shape": "text",
+     "x": 19.3,
+     "y": 2.6999999999999997,
+     "text": {
+      "en": "rollNo = 6"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "5 < n"
+    },
+    {
+     "shape": "line",
+     "x1": 6.5,
+     "y1": 5,
+     "x2": 17.2,
+     "y2": 3.3,
+     "color": "white",
+     "visibleIf": "5 < n",
+     "dashed": true
+    }
+   ],
+   "sliders": []
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "The this keyword"
+   },
+   "body": {
+    "en": "Inside an instance method or constructor, this is a reference to the current object, the object on which the method was called. It is used to tell a field from a parameter with the same name (this.roll = roll), to pass the current object to another method, and to call another constructor of the same class from the first line of a constructor: this(0, \"unknown\"). Static methods have no this, because they are not called on an object."
+   },
+   "points": [
+    {
+     "en": "this = the current object"
+    },
+    {
+     "en": "this.x = x separates field from parameter"
+    },
+    {
+     "en": "this(...) calls another constructor (first line only)"
+    },
+    {
+     "en": "No this in static methods"
+    }
+   ],
+   "narration": {
+    "en": "Inside an instance method or constructor, this is a reference to the current object, the object on which the method was called. It is used to tell a field from a parameter with the same name (this.roll = roll), to pass the current object to another method, and to call another constructor of the same class from the first line of a constructor: this(0, \"unknown\"). Static methods have no this, because they are not called on an object."
+   }
+  },
+  {
+   "id": "activity-sort",
+   "type": "activity",
+   "kind": "sort",
+   "title": {
+    "en": "Constructor or method?"
+   },
+   "prompt": {
+    "en": "Sort each feature."
+   },
+   "narration": {
+    "en": "Sort each feature."
+   },
+   "seconds": 150,
+   "buckets": [
+    {
+     "id": "con",
+     "label": {
+      "en": "Only constructors"
+     }
+    },
+    {
+     "id": "met",
+     "label": {
+      "en": "Only methods"
+     }
+    },
+    {
+     "id": "both",
+     "label": {
+      "en": "Both"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "Same name as the class"
+     },
+     "answer": "con"
+    },
+    {
+     "text": {
+      "en": "Has a return type (or void)"
+     },
+     "answer": "met"
+    },
+    {
+     "text": {
+      "en": "Called automatically by new"
+     },
+     "answer": "con"
+    },
+    {
+     "text": {
+      "en": "Can be overloaded"
+     },
+     "answer": "both"
+    },
+    {
+     "text": {
+      "en": "Can take parameters"
+     },
+     "answer": "both"
+    },
+    {
+     "text": {
+      "en": "Can be called again any number of times on an existing object"
+     },
+     "answer": "met"
+    }
+   ],
+   "explanation": {
+    "en": "A constructor runs once per object, when it is created; it has the class name and no return type. Methods are called whenever needed and must declare a return type."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Define a class Rectangle with fields length and breadth, a parameterised constructor, and a method area(). Create a 5 × 3 rectangle and print its area."
+   },
+   "steps": [
+    {
+     "en": "class Rectangle {"
+    },
+    {
+     "en": "    double length, breadth;"
+    },
+    {
+     "en": "    Rectangle(double l, double b) { length = l; breadth = b; }"
+    },
+    {
+     "en": "    double area() { return length * breadth; }"
+    },
+    {
+     "en": "}"
+    },
+    {
+     "en": "Rectangle r = new Rectangle(5, 3);"
+    },
+    {
+     "en": "System.out.println(r.area());"
+    }
+   ],
+   "answer": {
+    "en": "15.0"
+   },
+   "narration": {
+    "en": "Define a class Rectangle with fields length and breadth, a parameterised constructor, and a method area(). Create a 5 × 3 rectangle and print its area."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "No return, same name"
+   },
+   "body": {
+    "en": "If it has the class name and no return type, it is a constructor. Add void and it silently becomes an ordinary method that new never calls."
+   },
+   "narration": {
+    "en": "If it has the class name and no return type, it is a constructor. Add void and it silently becomes an ordinary method that new never calls."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Class name + no return type = constructor."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i1cs16-q05",
+    "i1cs16-q06",
+    "i1cs16-q07"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i1cs16-q08"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A constructor initialises a new object and has the class name."
+    },
+    {
+     "en": "It has no return type and is called by new."
+    },
+    {
+     "en": "Java gives a default constructor only if none is written."
+    },
+    {
+     "en": "this refers to the current object."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write a class Account with an overloaded constructor (with and without opening balance)."
+    },
+    {
+     "en": "Explain why this cannot be used in a static method."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i1cs16-q08"
+   ],
+   "narration": {
+    "en": "Recap. A constructor initialises a new object and has the class name. It has no return type and is called by new. Java gives a default constructor only if none is written. this refers to the current object."
+   }
+  }
+ ]
+}

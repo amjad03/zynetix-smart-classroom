@@ -1,0 +1,750 @@
+{
+ "id": "puc2-computer-science-15-recursion.t1.lesson",
+ "chapterId": "puc2-computer-science-15-recursion",
+ "topicId": "puc2-computer-science-15-recursion.t1",
+ "title": {
+  "en": "Recursive methods and the call stack"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "A method that calls itself"
+   },
+   "hook": {
+    "en": "To climb 10 stairs, climb one stair and then climb 9 stairs. That is recursion: a problem solved by a smaller copy of itself, until a stair count of 0 stops it."
+   },
+   "objectives": [
+    {
+     "en": "Define recursion, base case and recursive case"
+    },
+    {
+     "en": "Trace a recursive method using the call stack"
+    },
+    {
+     "en": "Compare recursion with iteration"
+    }
+   ],
+   "narration": {
+    "en": "To climb 10 stairs, climb one stair and then climb 9 stairs. That is recursion: a problem solved by a smaller copy of itself, until a stair count of 0 stops it."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Base case and recursive case"
+   },
+   "body": {
+    "en": "A recursive method calls itself. Every correct recursive method has a base case, which is answered directly without a further call, and a recursive case, which calls the method on a smaller problem that moves towards the base case. fact(n) = 1 if n <= 1 (base case), else n * fact(n − 1) (recursive case). Without a reachable base case the calls never end and the program fails with a StackOverflowError."
+   },
+   "points": [
+    {
+     "en": "Base case: answered directly"
+    },
+    {
+     "en": "Recursive case: smaller problem"
+    },
+    {
+     "en": "Each call moves towards the base case"
+    },
+    {
+     "en": "Missing base case → StackOverflowError"
+    }
+   ],
+   "narration": {
+    "en": "A recursive method calls itself. Every correct recursive method has a base case, which is answered directly without a further call, and a recursive case, which calls the method on a smaller problem that moves towards the base case. fact(n) = 1 if n <= 1 (base case), else n * fact(n − 1) (recursive case). Without a reachable base case the calls never end and the program fails with a StackOverflowError."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: tracing fact(4)"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "The method."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "tracing fact(4)"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "static int fact(int n) {"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "    if (n <= 1) return 1;          // base case"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "    return n * fact(n - 1);        // recursive case"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "}"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Winding: each call waits for the next."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        28.0
+       ],
+       "text": {
+        "en": "fact(4) = 4 * fact(3)"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        32.5
+       ],
+       "text": {
+        "en": "fact(3) = 3 * fact(2)"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37.0
+       ],
+       "text": {
+        "en": "fact(2) = 2 * fact(1)"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        41.5
+       ],
+       "text": {
+        "en": "fact(1) = 1   (base case)"
+       },
+       "size": 3,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Unwinding: the answers return in reverse order."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        46.0
+       ],
+       "text": {
+        "en": "fact(2) = 2 * 1 = 2, fact(3) = 3 * 2 = 6, fact(4) = 4 * 6"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        50.5
+       ],
+       "text": {
+        "en": "= 24"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up tracing fact(4) on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The call stack of fact(n)"
+   },
+   "caption": {
+    "en": "Press Run. Each call of fact pushes a new frame on the stack; the base case stops the calls; then each frame returns and is popped, multiplying on the way back."
+   },
+   "narration": {
+    "en": "Press Run. Each call of fact pushes a new frame on the stack; the base case stops the calls; then each frame returns and is popped, multiplying on the way back."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "Run fact(4). How many frames are on the stack at the deepest point?"
+    },
+    {
+     "en": "Which call returns first?"
+    },
+    {
+     "en": "What would happen to the stack if the base case were missing?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "n"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run"
+     },
+     "icon": "launch",
+     "set": {},
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 13,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "stopWhen": "t >= 2*n + 0.5"
+   },
+   "vars": [
+    {
+     "name": "s",
+     "expr": "floor(t)"
+    },
+    {
+     "name": "depth",
+     "expr": "if(s < n, s + 1, max(2*n - s, 0))"
+    },
+    {
+     "name": "ret",
+     "expr": "clamp(s - n + 1, 1, n)"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "fact(n)"
+     },
+     "expr": "if(n <= 1, 1, if(n == 2, 2, if(n == 3, 6, if(n == 4, 24, if(n == 5, 120, 720)))))",
+     "digits": 0
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     22
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 9.5,
+     "text": {
+      "en": "Call stack"
+     },
+     "size": 22,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": 0.4,
+     "x2": 7.5,
+     "y2": 0.4,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 0.8,
+     "y": 0.5,
+     "w": 6.4,
+     "h": 1.2,
+     "color": "blue",
+     "opacity": 0.6,
+     "visibleIf": "0 < depth"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 1.1,
+     "text": {
+      "en": "fact({n - 0:0})"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "0 < depth"
+    },
+    {
+     "shape": "rect",
+     "x": 0.8,
+     "y": 1.9,
+     "w": 6.4,
+     "h": 1.2,
+     "color": "green",
+     "opacity": 0.6,
+     "visibleIf": "1 < depth"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 2.5,
+     "text": {
+      "en": "fact({n - 1:0})"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "1 < depth"
+    },
+    {
+     "shape": "rect",
+     "x": 0.8,
+     "y": 3.3,
+     "w": 6.4,
+     "h": 1.2,
+     "color": "blue",
+     "opacity": 0.6,
+     "visibleIf": "2 < depth"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 3.9,
+     "text": {
+      "en": "fact({n - 2:0})"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "2 < depth"
+    },
+    {
+     "shape": "rect",
+     "x": 0.8,
+     "y": 4.699999999999999,
+     "w": 6.4,
+     "h": 1.2,
+     "color": "green",
+     "opacity": 0.6,
+     "visibleIf": "3 < depth"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 5.299999999999999,
+     "text": {
+      "en": "fact({n - 3:0})"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "3 < depth"
+    },
+    {
+     "shape": "rect",
+     "x": 0.8,
+     "y": 6.1,
+     "w": 6.4,
+     "h": 1.2,
+     "color": "blue",
+     "opacity": 0.6,
+     "visibleIf": "4 < depth"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 6.699999999999999,
+     "text": {
+      "en": "fact({n - 4:0})"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "4 < depth"
+    },
+    {
+     "shape": "rect",
+     "x": 0.8,
+     "y": 7.5,
+     "w": 6.4,
+     "h": 1.2,
+     "color": "green",
+     "opacity": 0.6,
+     "visibleIf": "5 < depth"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 8.1,
+     "text": {
+      "en": "fact({n - 5:0})"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "5 < depth"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 8,
+     "text": {
+      "en": "step {s:0}: "
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 6.5,
+     "text": {
+      "en": "calling fact({n - s:0})"
+     },
+     "size": 22,
+     "color": "yellow",
+     "align": "center",
+     "visibleIf": "s < n"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 6.5,
+     "text": {
+      "en": "fact({ret:0}) returns {if(ret <= 1, 1, if(ret == 2, 2, if(ret == 3, 6, if(ret == 4, 24, if(ret == 5, 120, 720))))):0}"
+     },
+     "size": 22,
+     "color": "green",
+     "align": "center",
+     "visibleIf": "s >= n && s < 2*n"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 6.5,
+     "text": {
+      "en": "done: fact({n:0}) = {if(n <= 1, 1, if(n == 2, 2, if(n == 3, 6, if(n == 4, 24, if(n == 5, 120, 720))))):0}"
+     },
+     "size": 22,
+     "color": "green",
+     "align": "center",
+     "visibleIf": "s >= 2*n"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 4.5,
+     "text": {
+      "en": "base case: n <= 1 returns 1"
+     },
+     "size": 18,
+     "color": "orange",
+     "align": "center",
+     "visibleIf": "s == n - 1 || s == n"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 2.5,
+     "text": {
+      "en": "depth of the stack = {depth:0}"
+     },
+     "size": 18,
+     "color": "white",
+     "align": "center"
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "The call stack, and recursion versus iteration"
+   },
+   "body": {
+    "en": "Each call gets its own stack frame holding its parameters, local variables and the place to return to. Frames are pushed as calls are made and popped as they return, so the last call made is the first to finish (LIFO). Recursion often gives shorter, clearer code for problems defined in terms of themselves (factorial, Fibonacci, GCD, tree traversal, Tower of Hanoi), but it uses more memory and time for the calls. Iteration (loops) uses a fixed amount of memory. Any recursive method can be rewritten iteratively."
+   },
+   "points": [
+    {
+     "en": "One stack frame per active call"
+    },
+    {
+     "en": "LIFO: last call returns first"
+    },
+    {
+     "en": "Recursion: clearer for self-similar problems"
+    },
+    {
+     "en": "Iteration: less memory and overhead"
+    }
+   ],
+   "narration": {
+    "en": "Each call gets its own stack frame holding its parameters, local variables and the place to return to. Frames are pushed as calls are made and popped as they return, so the last call made is the first to finish (LIFO). Recursion often gives shorter, clearer code for problems defined in terms of themselves (factorial, Fibonacci, GCD, tree traversal, Tower of Hanoi), but it uses more memory and time for the calls. Iteration (loops) uses a fixed amount of memory. Any recursive method can be rewritten iteratively."
+   }
+  },
+  {
+   "id": "activity-sort",
+   "type": "activity",
+   "kind": "sort",
+   "title": {
+    "en": "Recursion or iteration?"
+   },
+   "prompt": {
+    "en": "Sort each statement."
+   },
+   "narration": {
+    "en": "Sort each statement."
+   },
+   "seconds": 150,
+   "buckets": [
+    {
+     "id": "rec",
+     "label": {
+      "en": "True of recursion"
+     }
+    },
+    {
+     "id": "itr",
+     "label": {
+      "en": "True of iteration"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "Needs a base case to stop"
+     },
+     "answer": "rec"
+    },
+    {
+     "text": {
+      "en": "Uses a loop condition to stop"
+     },
+     "answer": "itr"
+    },
+    {
+     "text": {
+      "en": "Uses a new stack frame for each step"
+     },
+     "answer": "rec"
+    },
+    {
+     "text": {
+      "en": "Runs in a fixed amount of memory"
+     },
+     "answer": "itr"
+    },
+    {
+     "text": {
+      "en": "Can cause StackOverflowError"
+     },
+     "answer": "rec"
+    },
+    {
+     "text": {
+      "en": "Uses for, while or do-while"
+     },
+     "answer": "itr"
+    }
+   ],
+   "explanation": {
+    "en": "Recursion repeats by calling itself, needing a frame per call; iteration repeats with a loop in one frame."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "What does mystery(5) return? static int mystery(int n) { if (n == 0) return 0; return n % 2 + 10 * mystery(n / 2); }"
+   },
+   "steps": [
+    {
+     "en": "mystery(5) = 1 + 10 * mystery(2)"
+    },
+    {
+     "en": "mystery(2) = 0 + 10 * mystery(1)"
+    },
+    {
+     "en": "mystery(1) = 1 + 10 * mystery(0) = 1 + 0 = 1"
+    },
+    {
+     "en": "mystery(2) = 0 + 10 = 10; mystery(5) = 1 + 100 = 101."
+    }
+   ],
+   "answer": {
+    "en": "101: the method returns the binary form of n written as a decimal number."
+   },
+   "narration": {
+    "en": "What does mystery(5) return? static int mystery(int n) { if (n == 0) return 0; return n % 2 + 10 * mystery(n / 2); }"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Wind down, unwind up"
+   },
+   "body": {
+    "en": "Write each call on a new line going down until the base case; then write the returned values going back up. Work in a ladder, never in your head."
+   },
+   "narration": {
+    "en": "Write each call on a new line going down until the base case; then write the returned values going back up. Work in a ladder, never in your head."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Down the ladder to the base, back up with answers."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i2cs15-q01",
+    "i2cs15-q02",
+    "i2cs15-q03"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i2cs15-q04"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A recursive method calls itself."
+    },
+    {
+     "en": "It needs a base case and a recursive case that approaches it."
+    },
+    {
+     "en": "Calls are pushed on the stack and return in reverse order."
+    },
+    {
+     "en": "Recursion is clearer; iteration is cheaper."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Trace mystery(13) from the example."
+    },
+    {
+     "en": "Write a recursive method to find the sum of digits of n."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i2cs15-q04"
+   ],
+   "narration": {
+    "en": "Recap. A recursive method calls itself. It needs a base case and a recursive case that approaches it. Calls are pushed on the stack and return in reverse order. Recursion is clearer; iteration is cheaper."
+   }
+  }
+ ]
+}

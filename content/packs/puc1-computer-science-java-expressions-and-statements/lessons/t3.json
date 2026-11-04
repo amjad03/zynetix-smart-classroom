@@ -1,0 +1,918 @@
+{
+ "id": "puc1-computer-science-15-java-expressions-and-statements.t3.lesson",
+ "chapterId": "puc1-computer-science-15-java-expressions-and-statements",
+ "topicId": "puc1-computer-science-15-java-expressions-and-statements.t3",
+ "title": {
+  "en": "Iteration: for, while and do-while"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Doing it again"
+   },
+   "hook": {
+    "en": "Print 1 to 100, add the digits of a number, check for a prime: each needs a step repeated. Java has three loops, and choosing the right one is part of the skill."
+   },
+   "objectives": [
+    {
+     "en": "Write for, while and do-while loops"
+    },
+    {
+     "en": "Distinguish entry-controlled and exit-controlled loops"
+    },
+    {
+     "en": "Use break and continue, and trace nested loops"
+    }
+   ],
+   "narration": {
+    "en": "Print 1 to 100, add the digits of a number, check for a prime: each needs a step repeated. Java has three loops, and choosing the right one is part of the skill."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Three loops"
+   },
+   "body": {
+    "en": "for (init; test; update) { body } is used when the number of iterations is known. while (test) { body } tests first, so the body may run zero times. do { body } while (test); tests after the body, so the body always runs at least once. for and while are entry-controlled; do-while is exit-controlled. A loop whose test never becomes false is an infinite loop: for(;;) or while(true)."
+   },
+   "points": [
+    {
+     "en": "for: known count"
+    },
+    {
+     "en": "while: test first, may run 0 times"
+    },
+    {
+     "en": "do-while: runs at least once"
+    },
+    {
+     "en": "Infinite: for(;;), while(true)"
+    }
+   ],
+   "narration": {
+    "en": "for (init; test; update) { body } is used when the number of iterations is known. while (test) { body } tests first, so the body may run zero times. do { body } while (test); tests after the body, so the body always runs at least once. for and while are entry-controlled; do-while is exit-controlled. A loop whose test never becomes false is an infinite loop: for(;;) or while(true)."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: digit loop: sum of digits of 4729"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A while loop is natural when the count is not known in advance."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "digit loop: sum of digits of 4729"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "int n = 4729, s = 0;"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "while (n > 0) {"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "    s += n % 10;   // last digit"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "    n /= 10;       // drop it"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.0
+       ],
+       "text": {
+        "en": "}"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Trace the loop."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        32.5
+       ],
+       "text": {
+        "en": "n = 4729 → s = 9,  n = 472"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37.0
+       ],
+       "text": {
+        "en": "n = 472  → s = 11, n = 47"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        41.5
+       ],
+       "text": {
+        "en": "n = 47   → s = 18, n = 4"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        46.0
+       ],
+       "text": {
+        "en": "n = 4    → s = 22, n = 0  → stop"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        50.5
+       ],
+       "text": {
+        "en": "Sum of digits = 22"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up digit loop: sum of digits of 4729 on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Trace a loop"
+   },
+   "caption": {
+    "en": "int sum = 0; for (int i = a; i <= n; i++) sum += i; Set the start a and the limit n, pick the loop, then press Run and watch the iterations."
+   },
+   "narration": {
+    "en": "int sum = 0; for (int i = a; i <= n; i++) sum += i; Set the start a and the limit n, pick the loop, then press Run and watch the iterations."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "Set a = 1 and n = 10. Check that sum = 55."
+    },
+    {
+     "en": "Make a bigger than n. Compare the for loop and the do-while loop."
+    },
+    {
+     "en": "How many times does the body run in terms of a and n?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Start a"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "Limit n"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "choices": [
+    {
+     "name": "kind",
+     "label": {
+      "en": "Loop"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "for / while (entry-controlled)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "do-while (exit-controlled)"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run"
+     },
+     "icon": "launch",
+     "set": {},
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 11,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "total",
+     "expr": "if(kind == 2, max(n - a + 1, 1), max(n - a + 1, 0))"
+    },
+    {
+     "name": "done",
+     "expr": "min(floor(t), total)"
+    },
+    {
+     "name": "i",
+     "expr": "a + done"
+    },
+    {
+     "name": "sm",
+     "expr": "done*a + done*(done - 1)/2"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Iterations"
+     },
+     "expr": "total",
+     "digits": 0
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "i = {i:0}    sum = {sm:0}"
+     },
+     "size": 22,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 0.6,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.6,
+     "visibleIf": "0 < done"
+    },
+    {
+     "shape": "rect",
+     "x": 0.6,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "white",
+     "opacity": 0.15,
+     "visibleIf": "0 >= done && 0 < total"
+    },
+    {
+     "shape": "text",
+     "x": 1.4,
+     "y": 5,
+     "text": {
+      "en": "{a + 0:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "0 < total"
+    },
+    {
+     "shape": "rect",
+     "x": 2.5,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.6,
+     "visibleIf": "1 < done"
+    },
+    {
+     "shape": "rect",
+     "x": 2.5,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "white",
+     "opacity": 0.15,
+     "visibleIf": "1 >= done && 1 < total"
+    },
+    {
+     "shape": "text",
+     "x": 3.3,
+     "y": 5,
+     "text": {
+      "en": "{a + 1:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "1 < total"
+    },
+    {
+     "shape": "rect",
+     "x": 4.3999999999999995,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.6,
+     "visibleIf": "2 < done"
+    },
+    {
+     "shape": "rect",
+     "x": 4.3999999999999995,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "white",
+     "opacity": 0.15,
+     "visibleIf": "2 >= done && 2 < total"
+    },
+    {
+     "shape": "text",
+     "x": 5.199999999999999,
+     "y": 5,
+     "text": {
+      "en": "{a + 2:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "2 < total"
+    },
+    {
+     "shape": "rect",
+     "x": 6.299999999999999,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.6,
+     "visibleIf": "3 < done"
+    },
+    {
+     "shape": "rect",
+     "x": 6.299999999999999,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "white",
+     "opacity": 0.15,
+     "visibleIf": "3 >= done && 3 < total"
+    },
+    {
+     "shape": "text",
+     "x": 7.099999999999999,
+     "y": 5,
+     "text": {
+      "en": "{a + 3:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "3 < total"
+    },
+    {
+     "shape": "rect",
+     "x": 8.2,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.6,
+     "visibleIf": "4 < done"
+    },
+    {
+     "shape": "rect",
+     "x": 8.2,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "white",
+     "opacity": 0.15,
+     "visibleIf": "4 >= done && 4 < total"
+    },
+    {
+     "shape": "text",
+     "x": 9.0,
+     "y": 5,
+     "text": {
+      "en": "{a + 4:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "4 < total"
+    },
+    {
+     "shape": "rect",
+     "x": 10.1,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.6,
+     "visibleIf": "5 < done"
+    },
+    {
+     "shape": "rect",
+     "x": 10.1,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "white",
+     "opacity": 0.15,
+     "visibleIf": "5 >= done && 5 < total"
+    },
+    {
+     "shape": "text",
+     "x": 10.9,
+     "y": 5,
+     "text": {
+      "en": "{a + 5:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "5 < total"
+    },
+    {
+     "shape": "rect",
+     "x": 11.999999999999998,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.6,
+     "visibleIf": "6 < done"
+    },
+    {
+     "shape": "rect",
+     "x": 11.999999999999998,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "white",
+     "opacity": 0.15,
+     "visibleIf": "6 >= done && 6 < total"
+    },
+    {
+     "shape": "text",
+     "x": 12.799999999999999,
+     "y": 5,
+     "text": {
+      "en": "{a + 6:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "6 < total"
+    },
+    {
+     "shape": "rect",
+     "x": 13.899999999999999,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.6,
+     "visibleIf": "7 < done"
+    },
+    {
+     "shape": "rect",
+     "x": 13.899999999999999,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "white",
+     "opacity": 0.15,
+     "visibleIf": "7 >= done && 7 < total"
+    },
+    {
+     "shape": "text",
+     "x": 14.7,
+     "y": 5,
+     "text": {
+      "en": "{a + 7:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "7 < total"
+    },
+    {
+     "shape": "rect",
+     "x": 15.799999999999999,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.6,
+     "visibleIf": "8 < done"
+    },
+    {
+     "shape": "rect",
+     "x": 15.799999999999999,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "white",
+     "opacity": 0.15,
+     "visibleIf": "8 >= done && 8 < total"
+    },
+    {
+     "shape": "text",
+     "x": 16.599999999999998,
+     "y": 5,
+     "text": {
+      "en": "{a + 8:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "8 < total"
+    },
+    {
+     "shape": "rect",
+     "x": 17.7,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.6,
+     "visibleIf": "9 < done"
+    },
+    {
+     "shape": "rect",
+     "x": 17.7,
+     "y": 4,
+     "w": 1.6,
+     "h": 2,
+     "color": "white",
+     "opacity": 0.15,
+     "visibleIf": "9 >= done && 9 < total"
+    },
+    {
+     "shape": "text",
+     "x": 18.5,
+     "y": 5,
+     "text": {
+      "en": "{a + 9:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "9 < total"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.2,
+     "text": {
+      "en": "body ran {done:0} of {total:0} times"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.8,
+     "text": {
+      "en": "do-while ran once although a > n: the test comes after the body"
+     },
+     "size": 16,
+     "color": "orange",
+     "align": "center",
+     "visibleIf": "kind == 2 && a > n"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.8,
+     "text": {
+      "en": "for / while: a > n, so the body never runs"
+     },
+     "size": 16,
+     "color": "orange",
+     "align": "center",
+     "visibleIf": "kind == 1 && a > n"
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "break, continue and nested loops"
+   },
+   "body": {
+    "en": "break leaves the innermost loop at once; continue skips the rest of the current iteration and goes to the next test (in a for loop, after the update). In nested loops the inner loop runs completely for every iteration of the outer loop, so an outer loop of 4 and an inner loop of 3 run the inner body 12 times. Patterns of stars and numbers are printed with nested loops: the outer loop counts rows, the inner loop counts columns."
+   },
+   "points": [
+    {
+     "en": "break: leave the loop"
+    },
+    {
+     "en": "continue: skip to the next iteration"
+    },
+    {
+     "en": "Nested: inner runs fully for each outer pass"
+    },
+    {
+     "en": "Patterns: outer = rows, inner = columns"
+    }
+   ],
+   "narration": {
+    "en": "break leaves the innermost loop at once; continue skips the rest of the current iteration and goes to the next test (in a for loop, after the update). In nested loops the inner loop runs completely for every iteration of the outer loop, so an outer loop of 4 and an inner loop of 3 run the inner body 12 times. Patterns of stars and numbers are printed with nested loops: the outer loop counts rows, the inner loop counts columns."
+   }
+  },
+  {
+   "id": "activity-match",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Loop fact"
+   },
+   "prompt": {
+    "en": "Match each loop idea with what it means."
+   },
+   "narration": {
+    "en": "Match each loop idea with what it means."
+   },
+   "seconds": 150,
+   "pairs": [
+    {
+     "left": {
+      "en": "Entry-controlled"
+     },
+     "right": {
+      "en": "for and while"
+     }
+    },
+    {
+     "left": {
+      "en": "Exit-controlled"
+     },
+     "right": {
+      "en": "do-while"
+     }
+    },
+    {
+     "left": {
+      "en": "break"
+     },
+     "right": {
+      "en": "Leaves the innermost loop"
+     }
+    },
+    {
+     "left": {
+      "en": "continue"
+     },
+     "right": {
+      "en": "Skips to the next iteration"
+     }
+    },
+    {
+     "left": {
+      "en": "for(;;)"
+     },
+     "right": {
+      "en": "An infinite loop"
+     }
+    }
+   ],
+   "explanation": {
+    "en": "Where the test sits decides whether the body can run zero times; break and continue change the flow inside the loop."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Write a program segment to check whether n is prime, and trace it for n = 21."
+   },
+   "steps": [
+    {
+     "en": "boolean prime = n > 1;"
+    },
+    {
+     "en": "for (int i = 2; i * i <= n; i++)"
+    },
+    {
+     "en": "    if (n % i == 0) { prime = false; break; }"
+    },
+    {
+     "en": "System.out.println(prime ? \"Prime\" : \"Not prime\");"
+    },
+    {
+     "en": "Trace n = 21: i = 2 (21 % 2 = 1), i = 3 (21 % 3 = 0) → prime = false, break."
+    }
+   ],
+   "answer": {
+    "en": "For 21 it prints Not prime after only two iterations."
+   },
+   "narration": {
+    "en": "Write a program segment to check whether n is prime, and trace it for n = 21."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Count the runs"
+   },
+   "body": {
+    "en": "for (int i = a; i <= b; i++) runs b − a + 1 times; with i < b it runs b − a times. Nested loops multiply their counts."
+   },
+   "narration": {
+    "en": "for (int i = a; i <= b; i++) runs b − a + 1 times; with i < b it runs b − a times. Nested loops multiply their counts."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Closed range: b − a + 1. Nested: multiply."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i1cs15-q09",
+    "i1cs15-q10",
+    "i1cs15-q11"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i1cs15-q12"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "for when the count is known; while when it is not."
+    },
+    {
+     "en": "do-while always runs at least once."
+    },
+    {
+     "en": "break leaves the loop; continue skips one iteration."
+    },
+    {
+     "en": "Nested loops multiply the number of runs."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Print the reverse of a number using a while loop."
+    },
+    {
+     "en": "Print a right-angled triangle of stars with 5 rows."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i1cs15-q12"
+   ],
+   "narration": {
+    "en": "Recap. for when the count is known; while when it is not. do-while always runs at least once. break leaves the loop; continue skips one iteration. Nested loops multiply the number of runs."
+   }
+  }
+ ]
+}

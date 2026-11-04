@@ -1,0 +1,477 @@
+{
+ "id": "puc2-computer-science-17-data-structures-and-complexity.t4.lesson",
+ "chapterId": "puc2-computer-science-17-data-structures-and-complexity",
+ "topicId": "puc2-computer-science-17-data-structures-and-complexity.t4",
+ "title": {
+  "en": "Complexity and Big O notation"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "How does it grow?"
+   },
+   "hook": {
+    "en": "Two programs both sort 10 numbers in a blink. With a million numbers one takes a second and the other a week. Big O notation predicts this before you run anything."
+   },
+   "objectives": [
+    {
+     "en": "Define time complexity and Big O notation"
+    },
+    {
+     "en": "Find the Big O of loops, nested loops and halving loops"
+    },
+    {
+     "en": "Compare best, average and worst cases of searching and sorting"
+    }
+   ],
+   "narration": {
+    "en": "Two programs both sort 10 numbers in a blink. With a million numbers one takes a second and the other a week. Big O notation predicts this before you run anything."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Big O notation"
+   },
+   "body": {
+    "en": "The time complexity of an algorithm describes how the number of basic operations grows with the input size n. Big O notation gives an upper bound on this growth for large n, keeping only the dominant term and ignoring constant factors: 3n² + 5n + 2 is O(n²). Common classes, from fastest to slowest growth: O(1) constant, O(log n) logarithmic, O(n) linear, O(n log n), O(n²) quadratic, O(n³) cubic, O(2^n) exponential."
+   },
+   "points": [
+    {
+     "en": "Count basic operations as a function of n"
+    },
+    {
+     "en": "Keep the dominant term, drop constants"
+    },
+    {
+     "en": "O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2^n)"
+    }
+   ],
+   "narration": {
+    "en": "The time complexity of an algorithm describes how the number of basic operations grows with the input size n. Big O notation gives an upper bound on this growth for large n, keeping only the dominant term and ignoring constant factors: 3n² + 5n + 2 is O(n²). Common classes, from fastest to slowest growth: O(1) constant, O(log n) logarithmic, O(n) linear, O(n log n), O(n²) quadratic, O(n³) cubic, O(2^n) exponential."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: reading complexity from code"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A single loop over n elements."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "reading complexity from code"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "for (int i = 0; i < n; i++) sum += a[i];     // O(n)"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Two nested loops over n."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "for (i = 0; i < n; i++) for (j = 0; j < n; j++) …   // O(n²)"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A loop that halves its range."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "while (n > 1) n = n / 2;                    // O(log n)"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Loops one after another add; nested loops multiply."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        23.5
+       ],
+       "text": {
+        "en": "O(n) + O(n²) = O(n²)"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        28.0
+       ],
+       "text": {
+        "en": "Bubble and selection sort: O(n²); binary search: O(log n)"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up reading complexity from code on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "function_plot",
+   "title": {
+    "en": "Growth rates"
+   },
+   "caption": {
+    "en": "The curves show log2 n, n, n log2 n and n² operations. Move the slider to an input size and read the counts."
+   },
+   "narration": {
+    "en": "The curves show log2 n, n, n log2 n and n² operations. Move the slider to an input size and read the counts."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "At n = 32, how many times larger is n² than n log n?"
+    },
+    {
+     "en": "Where does n log n overtake n² — or does it?"
+    },
+    {
+     "en": "Why does a constant factor not matter for large n?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Input size n"
+     },
+     "min": 2,
+     "max": 60,
+     "step": 1,
+     "value": 32
+    }
+   ],
+   "fns": [
+    {
+     "fn": "log(x)/log(2)",
+     "label": "log n",
+     "color": "green"
+    },
+    {
+     "fn": "x",
+     "label": "n",
+     "color": "blue"
+    },
+    {
+     "fn": "x*log(x)/log(2)",
+     "label": "n log n",
+     "color": "yellow"
+    },
+    {
+     "fn": "x^2",
+     "label": "n²",
+     "color": "red"
+    }
+   ],
+   "x": [
+    1,
+    60
+   ],
+   "y": [
+    0,
+    400
+   ],
+   "xLabel": "n",
+   "yLabel": "operations",
+   "readouts": [
+    {
+     "label": {
+      "en": "log2 n"
+     },
+     "expr": "log(m)/log(2)",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "n log2 n"
+     },
+     "expr": "m*log(m)/log(2)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "n²"
+     },
+     "expr": "m^2",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "n² / (n log2 n)"
+     },
+     "expr": "m/(log(m)/log(2))",
+     "digits": 1
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Best, average and worst case"
+   },
+   "body": {
+    "en": "The running time can depend on the data, not only on n. Linear search: best case O(1) (the key is first), worst case O(n) (last or absent), average about n/2 comparisons, which is still O(n). Binary search: O(1) best, O(log n) worst. Bubble sort with the early-exit check: O(n) best (already sorted), O(n²) worst. Selection sort: O(n²) in every case. Big O is normally quoted for the worst case, which gives a guarantee."
+   },
+   "points": [
+    {
+     "en": "Best, average, worst case"
+    },
+    {
+     "en": "Linear search: O(n) worst"
+    },
+    {
+     "en": "Binary search: O(log n) worst"
+    },
+    {
+     "en": "Bubble/selection sort: O(n²) worst"
+    }
+   ],
+   "narration": {
+    "en": "The running time can depend on the data, not only on n. Linear search: best case O(1) (the key is first), worst case O(n) (last or absent), average about n/2 comparisons, which is still O(n). Binary search: O(1) best, O(log n) worst. Bubble sort with the early-exit check: O(n) best (already sorted), O(n²) worst. Selection sort: O(n²) in every case. Big O is normally quoted for the worst case, which gives a guarantee."
+   }
+  },
+  {
+   "id": "activity-match",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Algorithm and worst-case complexity"
+   },
+   "prompt": {
+    "en": "Match each algorithm with its worst-case time complexity."
+   },
+   "narration": {
+    "en": "Match each algorithm with its worst-case time complexity."
+   },
+   "seconds": 150,
+   "pairs": [
+    {
+     "left": {
+      "en": "Accessing a[i] in an array"
+     },
+     "right": {
+      "en": "O(1)"
+     }
+    },
+    {
+     "left": {
+      "en": "Binary search"
+     },
+     "right": {
+      "en": "O(log n)"
+     }
+    },
+    {
+     "left": {
+      "en": "Linear search"
+     },
+     "right": {
+      "en": "O(n)"
+     }
+    },
+    {
+     "left": {
+      "en": "Bubble sort"
+     },
+     "right": {
+      "en": "O(n²)"
+     }
+    },
+    {
+     "left": {
+      "en": "Printing all pairs (i, j) of n items"
+     },
+     "right": {
+      "en": "O(n²) as well, via nested loops"
+     }
+    },
+    {
+     "left": {
+      "en": "Merge sort"
+     },
+     "right": {
+      "en": "O(n log n)"
+     }
+    }
+   ],
+   "explanation": {
+    "en": "Direct access is constant; halving is logarithmic; one pass is linear; nested passes are quadratic; divide-and-merge is n log n."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Find the time complexity: for (int i = 1; i <= n; i++) for (int j = 1; j <= n; j = j * 2) count++;"
+   },
+   "steps": [
+    {
+     "en": "The outer loop runs n times."
+    },
+    {
+     "en": "The inner loop doubles j: it runs about log2 n + 1 times."
+    },
+    {
+     "en": "Nested loops multiply: n × (log2 n + 1)."
+    },
+    {
+     "en": "Dominant term n log2 n."
+    }
+   ],
+   "answer": {
+    "en": "O(n log n)"
+   },
+   "narration": {
+    "en": "Find the time complexity: for (int i = 1; i <= n; i++) for (int j = 1; j <= n; j = j * 2) count++;"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Add in sequence, multiply when nested"
+   },
+   "body": {
+    "en": "Statements one after another: add their complexities and keep the biggest. Loops inside loops: multiply. A loop that halves or doubles: log n."
+   },
+   "narration": {
+    "en": "Statements one after another: add their complexities and keep the biggest. Loops inside loops: multiply. A loop that halves or doubles: log n."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Sequence adds, nesting multiplies, halving logs."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i2cs17-q13",
+    "i2cs17-q14",
+    "i2cs17-q15"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i2cs17-q16"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Big O gives the growth rate for large n."
+    },
+    {
+     "en": "Keep the dominant term and drop constants."
+    },
+    {
+     "en": "Nested loops multiply; halving loops give log n."
+    },
+    {
+     "en": "Quote the worst case unless asked otherwise."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Find the Big O of 5n³ + 2n² log n + 100."
+    },
+    {
+     "en": "Give the best and worst cases of linear search with examples."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i2cs17-q16"
+   ],
+   "narration": {
+    "en": "Recap. Big O gives the growth rate for large n. Keep the dominant term and drop constants. Nested loops multiply; halving loops give log n. Quote the worst case unless asked otherwise."
+   }
+  }
+ ]
+}

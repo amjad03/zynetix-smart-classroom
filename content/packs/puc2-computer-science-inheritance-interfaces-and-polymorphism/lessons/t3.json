@@ -1,0 +1,549 @@
+{
+ "id": "puc2-computer-science-16-inheritance-interfaces-and-polymorphism.t3.lesson",
+ "chapterId": "puc2-computer-science-16-inheritance-interfaces-and-polymorphism",
+ "topicId": "puc2-computer-science-16-inheritance-interfaces-and-polymorphism.t3",
+ "title": {
+  "en": "Abstract classes and interfaces"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Promises without code"
+   },
+   "hook": {
+    "en": "Every Shape has an area, but there is no formula for \"a shape\". Java lets you promise a method without writing it: abstract classes and interfaces."
+   },
+   "objectives": [
+    {
+     "en": "Declare abstract classes and abstract methods"
+    },
+    {
+     "en": "Declare and implement interfaces"
+    },
+    {
+     "en": "Choose between an abstract class and an interface"
+    }
+   ],
+   "narration": {
+    "en": "Every Shape has an area, but there is no formula for \"a shape\". Java lets you promise a method without writing it: abstract classes and interfaces."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Abstract classes"
+   },
+   "body": {
+    "en": "An abstract class is declared with abstract and cannot be instantiated (no new Shape()). It may contain abstract methods, declared without a body (abstract double area();), as well as ordinary fields, constructors and methods. A concrete subclass must override every abstract method, or itself be declared abstract. Abstract classes capture what related classes share while leaving the details to each subclass."
+   },
+   "points": [
+    {
+     "en": "abstract class cannot be instantiated"
+    },
+    {
+     "en": "abstract method: no body"
+    },
+    {
+     "en": "Concrete subclasses must implement them"
+    },
+    {
+     "en": "May have fields, constructors, normal methods"
+    }
+   ],
+   "narration": {
+    "en": "An abstract class is declared with abstract and cannot be instantiated (no new Shape()). It may contain abstract methods, declared without a body (abstract double area();), as well as ordinary fields, constructors and methods. A concrete subclass must override every abstract method, or itself be declared abstract. Abstract classes capture what related classes share while leaving the details to each subclass."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: an interface and two classes"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "An interface lists what a class can do."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "an interface and two classes"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "interface Payable {"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "    double RATE = 0.18;            // public static final"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "    double amount();               // public abstract"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "}"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A class implements it and must give the bodies."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.0
+       ],
+       "text": {
+        "en": "class Bill implements Payable {"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        32.5
+       ],
+       "text": {
+        "en": "    double base;"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        37.0
+       ],
+       "text": {
+        "en": "    Bill(double b) { base = b; }"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        41.5
+       ],
+       "text": {
+        "en": "    public double amount() { return base * (1 + RATE); }"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        46.0
+       ],
+       "text": {
+        "en": "}"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A class can extend one class and implement many interfaces."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        50.5
+       ],
+       "text": {
+        "en": "class Fee extends Record implements Payable, Printable { … }"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        55.0
+       ],
+       "text": {
+        "en": "Interfaces give Java a form of multiple inheritance"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up an interface and two classes on the board, one step at a time."
+   }
+  },
+  {
+   "id": "activity-sort-abs",
+   "type": "activity",
+   "kind": "sort",
+   "title": {
+    "en": "Abstract class or interface?"
+   },
+   "prompt": {
+    "en": "Sort each feature (classic Java, as in the ISC syllabus)."
+   },
+   "narration": {
+    "en": "Sort each feature (classic Java, as in the ISC syllabus)."
+   },
+   "seconds": 150,
+   "buckets": [
+    {
+     "id": "abs",
+     "label": {
+      "en": "Abstract class"
+     }
+    },
+    {
+     "id": "int",
+     "label": {
+      "en": "Interface"
+     }
+    },
+    {
+     "id": "both",
+     "label": {
+      "en": "Both"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "Can have constructors"
+     },
+     "answer": "abs"
+    },
+    {
+     "text": {
+      "en": "Fields are public static final"
+     },
+     "answer": "int"
+    },
+    {
+     "text": {
+      "en": "A class can implement several of them"
+     },
+     "answer": "int"
+    },
+    {
+     "text": {
+      "en": "Cannot be instantiated"
+     },
+     "answer": "both"
+    },
+    {
+     "text": {
+      "en": "Can have instance variables"
+     },
+     "answer": "abs"
+    },
+    {
+     "text": {
+      "en": "Declared with the keyword extends by a class that uses it"
+     },
+     "answer": "abs"
+    }
+   ],
+   "explanation": {
+    "en": "An abstract class is a partial class: it has state and constructors and is extended once. An interface holds constants and method promises and may be implemented many times."
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Interfaces"
+   },
+   "body": {
+    "en": "An interface is a reference type containing constants and abstract methods (Java 8 also allows default and static methods with bodies). Its fields are automatically public static final, and its abstract methods public abstract. A class implements an interface with implements and must define all its abstract methods as public. A class may implement many interfaces, and an interface may extend other interfaces. A variable of an interface type can refer to any implementing object, which gives polymorphism."
+   },
+   "points": [
+    {
+     "en": "Fields: public static final"
+    },
+    {
+     "en": "Methods: public abstract (plus default/static)"
+    },
+    {
+     "en": "class X implements I1, I2"
+    },
+    {
+     "en": "Interface references allow polymorphism"
+    }
+   ],
+   "narration": {
+    "en": "An interface is a reference type containing constants and abstract methods (Java 8 also allows default and static methods with bodies). Its fields are automatically public static final, and its abstract methods public abstract. A class implements an interface with implements and must define all its abstract methods as public. A class may implement many interfaces, and an interface may extend other interfaces. A variable of an interface type can refer to any implementing object, which gives polymorphism."
+   }
+  },
+  {
+   "id": "activity-fill",
+   "type": "activity",
+   "kind": "fill",
+   "title": {
+    "en": "Complete the code"
+   },
+   "prompt": {
+    "en": "Choose the right keyword for each gap."
+   },
+   "narration": {
+    "en": "Choose the right keyword for each gap."
+   },
+   "seconds": 150,
+   "passage": {
+    "en": "__1__ class Shape { abstract double area(); } class Circle __2__ Shape { double r; double area() { return Math.PI * r * r; } } interface Drawable { void draw(); } class Square extends Shape __3__ Drawable { double s; double area() { return s * s; } public void draw() { … } } A Shape variable may hold a Circle, but new Shape() is __4__."
+   },
+   "blanks": [
+    {
+     "options": [
+      {
+       "en": "abstract"
+      },
+      {
+       "en": "final"
+      },
+      {
+       "en": "static"
+      }
+     ],
+     "answer": 0
+    },
+    {
+     "options": [
+      {
+       "en": "extends"
+      },
+      {
+       "en": "implements"
+      },
+      {
+       "en": "inherits"
+      }
+     ],
+     "answer": 0
+    },
+    {
+     "options": [
+      {
+       "en": "implements"
+      },
+      {
+       "en": "extends"
+      },
+      {
+       "en": "uses"
+      }
+     ],
+     "answer": 0
+    },
+    {
+     "options": [
+      {
+       "en": "a compile-time error"
+      },
+      {
+       "en": "allowed"
+      },
+      {
+       "en": "a run-time error"
+      }
+     ],
+     "answer": 0
+    }
+   ],
+   "explanation": {
+    "en": "Shape is abstract and extended; Drawable is an interface and implemented; abstract classes cannot be instantiated, which the compiler reports."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Write an abstract class Account with an abstract method double interest() and a subclass Savings that pays 4% on its balance."
+   },
+   "steps": [
+    {
+     "en": "abstract class Account {"
+    },
+    {
+     "en": "    double balance;"
+    },
+    {
+     "en": "    Account(double b) { balance = b; }"
+    },
+    {
+     "en": "    abstract double interest();"
+    },
+    {
+     "en": "}"
+    },
+    {
+     "en": "class Savings extends Account {"
+    },
+    {
+     "en": "    Savings(double b) { super(b); }"
+    },
+    {
+     "en": "    double interest() { return balance * 0.04; }"
+    },
+    {
+     "en": "}"
+    },
+    {
+     "en": "new Savings(5000).interest() returns 200.0."
+    }
+   ],
+   "answer": {
+    "en": "200.0"
+   },
+   "narration": {
+    "en": "Write an abstract class Account with an abstract method double interest() and a subclass Savings that pays 4% on its balance."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Is-a versus can-do"
+   },
+   "body": {
+    "en": "Use an abstract class for an is-a family that shares code and state (a Savings is an Account). Use an interface for a can-do ability shared by unrelated classes (a Bill and a Fee can both be Payable)."
+   },
+   "narration": {
+    "en": "Use an abstract class for an is-a family that shares code and state (a Savings is an Account). Use an interface for a can-do ability shared by unrelated classes (a Bill and a Fee can both be Payable)."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Abstract class: what you are. Interface: what you can do."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i2cs16-q09",
+    "i2cs16-q10",
+    "i2cs16-q11"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i2cs16-q12"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "abstract classes cannot be instantiated and may have abstract methods."
+    },
+    {
+     "en": "Concrete subclasses must implement every abstract method."
+    },
+    {
+     "en": "Interfaces hold constants and abstract methods; classes implement them."
+    },
+    {
+     "en": "A class extends one class but may implement many interfaces."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write an interface Shape with area() and implement it in Circle and Rectangle."
+    },
+    {
+     "en": "List three differences between an abstract class and an interface."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i2cs16-q12"
+   ],
+   "narration": {
+    "en": "Recap. abstract classes cannot be instantiated and may have abstract methods. Concrete subclasses must implement every abstract method. Interfaces hold constants and abstract methods; classes implement them. A class extends one class but may implement many interfaces."
+   }
+  }
+ ]
+}

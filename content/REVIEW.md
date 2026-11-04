@@ -744,3 +744,80 @@ No text is reproduced. Check these plot details against the texts:
 - **From the writer's own knowledge, please check:** IPR 1956 schedules; GATT 1948 with 23 countries; TISCO 1907; China and Pakistan dates; M1-M4 components; MGNREGA 100 days.
 - **Simplified model:** CO2 warming uses 3 C per doubling.
 - **Kannada:** needs a native-speaker review.
+
+## ISC Science
+
+Physics, Chemistry, Biology and Maths for CISCE ISC Classes XI and XII (`isc` board, `ISC` exam), mapped to the ISC 2026/2027 regulations (Physics 861, Chemistry 862, Biology 863, Mathematics 860).
+
+- **Source caveat:** cisce.org could not be opened from the authoring session (network policy), so the mapping rests on search extracts of the CISCE PDFs (`cisce.org/wp-content/uploads/2025/04/18.-ISC-Physics.pdf`, `19.-ISC-Chemistry-1.pdf`, `17.-ISC-Mathematics.pdf`, `25.-ISC-Physics-XI-Revised_2025.pdf`, `20.-ISC-Chemistry-XI-Revised_020424_ISC2026.pdf`, `17.-ISC-Mathematics-XI-Revised_020424_ISC2026.pdf`) and aggregator summaries. A subject teacher should check every item below against the current PDFs.
+- **Tagged `isc` (all 106 NCERT chapters):** every Physics, Chemistry, Maths and Biology chapter now has boards `kar_pu, cbse, isc` and `ISC` in its exams. Assumed taught in ISC with no topic dropped; please flag any ISC omissions so the topic `boards` can be narrowed.
+- **Topic-level additions:** `puc2-physics-10 t5` Polarisation and `puc1-biology-03 t6` Angiosperms were Karnataka-only; ISC is assumed to teach both (Brewster's law and Polaroids; angiosperm features in the plant kingdom). Check.
+- **Existing questions:** 2,520 board-pattern questions (MCQ and assertion–reason already tagged PUC or CBSE) in those chapters now also carry `ISC`. Case-based, numeric and multi-correct questions were left alone.
+- **New ISC-only chapters (boards `isc`, English only, pack 1.5.0; 10 confirmed chapters with 25 lessons and 125 questions, plus 7 scope-to-confirm chapters below with 15 lessons and 75 questions, all tagged `ISC`):**
+  - Physics XI: Relative Velocity (ch 15), Doppler Effect in Sound (ch 16), Accuracy, Precision and Errors in Measurement (ch 17). These sections are not in the rationalised NCERT books.
+  - Physics XII: Metre Bridge and Potentiometer (ch 15), Radioactivity (ch 16), Zener Diode and Optoelectronic Devices (ch 17).
+  - Biology XI: Transport in Plants (ch 20, five topics including mineral uptake and phloem pressure flow).
+  - Biology XII: Strategies for Enhancement in Food Production (ch 14: animal husbandry and breeding, plant breeding, SCP and tissue culture).
+  - Maths XI: Mathematical Reasoning (ch 15, ISC Section B) and Correlation Analysis (ch 16, ISC Section C, optional).
+- **Scope to confirm (written as ISC packs at the user's request, but not confirmed in the 2027 extracts; remove or narrow if the PDFs leave them out):**
+  - Physics XII: Digital Electronics and Logic Gates (`puc2-physics-logic-gates`, ch 18). Sources disagree on whether logic gates are in the 2027 theory syllabus.
+  - Maths XI: Index Numbers and Moving Averages (`puc1-maths-index-numbers-and-moving-averages`, ch 17, old Section C); Principle of Mathematical Induction (`puc1-maths-principle-of-mathematical-induction`, ch 18).
+  - Maths XII: Application of Calculus in Commerce and Economics (`puc2-maths-application-of-calculus-in-commerce`, ch 14) and Linear Regression (`puc2-maths-linear-regression`, ch 15). One guide says Section C was dropped for 2027.
+  - Biology XI: Mineral Nutrition (`puc1-biology-mineral-nutrition`, ch 21) and Digestion and Absorption (`puc1-biology-digestion-and-absorption`, ch 22).
+  - Chemistry needs no extra chapter: the ISC 2027 units match the NCERT set.
+- **Facts in the scope-to-confirm packs:** the nodule model (oxygen inhibition of nitrogenase, leghaemoglobin scavenging 90% of free O₂) and the "limiting nutrient" bars are illustrative; the 16 ATP nitrogenase equation; NH₃ oxidisers (Nitrosomonas, Nitrococcus) and Nitrobacter; pH optima used in the enzyme scene (amylase 6.8, pepsin 1.8, trypsin 8); the meal-journey times (stomach 3–4 h) are approximate; the villi area factors (×3, ×10, ×20) are illustrative; the commerce cost and demand functions; the moving-average series is synthetic (trend 40 + 2t with a 4-quarter swing).
+- **Facts and values to check:**
+  - Doppler: v = 340 m/s throughout; the echo formula f(v + u)/(v − u); the assertion that equal velocities give no shift in still air.
+  - Errors: the vernier zero-error example (20 VSD = 19 MSD); the error budget for g with 0.2 s stopwatch least count; n = 22 oscillations for 1%.
+  - Metre bridge and potentiometer: the scene's internal resistances (Leclanché 1.2 Ω, Daniell 0.6 Ω, emfs 1.5 V and 1.08 V) are illustrative; the 10 m, 20 Ω wire with a 2 V driver.
+  - Radioactivity: U-238 → Pb-206 by 8 α and 6 β⁻; Th-232 → Pb-208 by 6 α and 4 β⁻.
+  - Zener and optoelectronics: the solar-cell model (Isc 30 mA at 1000 W/m², I0 = 1 nA, Vt = 26 mV, best power about 10.5 mW at 0.38 V) is a toy model; LED colours from 1240/Eg.
+  - Transport in plants: the plasmolysis model (ψs = −0.8/v MPa, wall stiffness 4 MPa per unit volume) and the ascent model (0.01 MPa per metre plus friction) are illustrative; root pressure "about 0.1–0.2 MPa".
+  - Food production: Hisardale (Bikaneri ewes × Merino rams), Himgiri, Pusa Swarnim, Pusa Komal, Sonalika and Kalyan Sona; the heterozygosity factors per generation (0.5 close inbreeding, 0.8 mild) are simplified; breeder's equation R = h²S is an enrichment.
+  - Maths: the correlation scene draws a population correlation (random sample), not the sample r of the points shown.
+- **PYQ years:** none. The ISC questions are written in the ISC board pattern and must not be labelled as past papers until checked.
+
+## ISC Accountancy, Economics, Business Studies
+
+Sources: cisce.org was not reachable from the authoring session, so the ISC Class XI and XII Accounts, Economics and Business Studies syllabuses (2026-27 session, 2027 exam) were reconstructed from web search summaries of secondary sites (Shaalaa, Oswal, PW, Collegedunia, Shiksha) and from the writer's own knowledge. **Check every mapping against the official CISCE PDFs before release.**
+
+- **New ISC-only packs (boards `isc`, English only, version 1.5.0):** 16 packs, 49 lessons, 196 ISC-pattern questions.
+  - Accounts XI: Bills of Exchange; Accounts from Incomplete Records. Accounts XII: Computerised Accounting (CAS, spreadsheets, DBMS) (**scope to confirm**: written for the ISC XII computerised-accounting option; check that it is still offered and what it covers).
+  - Economics XI: Basic Concepts and Economic Systems ("Understanding Economics"); Measures of Dispersion; Poverty in India. Economics XII: Market Forms (monopoly, monopolistic competition, oligopoly).
+  - Business Studies XI: Business Environment (PESTLE, Porter, SWOT); Entrepreneurship, Intrapreneurship and Business Risks; Managers and Managerial Roles (Katz, Mintzberg); Automation at Workplaces. Business Studies XII: Human Resource Management; Business Communication and Correspondence; Business Size and Finance; Globalisation and Recent Trends; Business Regulators and Intermediaries.
+- **Existing NCERT chapters tagged `isc` (48; their packs bumped to 1.5.0; no lesson edited):**
+  - Accounts XI ch1-9 (all topics except Theory Base t6, GST) and Accounts XII ch1-10 (Redemption of debentures t5 now `kar_pu` + `isc`). Check whether ISC XI still covers provisions and reserves, petty cash book and the GST topic.
+  - Economics XI: ch1-5 (statistics basics to central tendency), ch9 (1950-1990, planning), ch10 (LPG), ch11 (human capital), ch12 (rural development), ch13 (employment). Also tagged for full coverage, **scope to confirm**: ch6 correlation, ch7 index numbers, ch8 eve of independence, ch14 environment and sustainable development, ch15 comparative development. Remove `isc` from any that the official syllabus leaves out.
+  - Economics XII: all 11 NCERT chapters, including every Consumer Behaviour topic. **Scope to confirm:** t1-t4 (cardinal utility, indifference curves, budget line, consumer's equilibrium) now carry `kar_pu`, `cbse` and `isc`; remove `isc` if ISC XII has dropped utility and indifference curve analysis. Confirm price ceilings/floors (Market Equilibrium t5) and elasticity of supply (Theory of the Firm t6) are in ISC.
+  - Business Studies XII: Staffing (all), Directing t4 leadership and t5 communication, Financial Markets t3 stock exchange and t4 SEBI. Directing t1-t3 (motivation, incentives) left out: confirm.
+  - Business Studies XI NCERT chapters were not tagged (the ISC XI course is covered by the four new packs).
+- **Facts from the writer's knowledge, please check:** NI Act sections and days of grace (3 days; public-holiday rule: preceding business day; emergency holiday: next business day); poverty calorie norms 2,400/2,100 kcal and the Tendulkar (2009) and Rangarajan (2014) committees; MGNREGA (2005, 100 days); RBI 1935/1949; SEBI 1988/1992; IRDA Act 1999; FSSA 2006; partnership limit 50 and private company limit 200 members; public company minimum 7; NBFC-P2P regulated by the RBI; GDR description.
+- **Illustrative models (labelled on screen):** PESTLE scores, Porter attractiveness percentage, risk matrix thresholds, Katz skill shares, manager's day, automation error rates and job effects, e-mail score, barrier strengths, crowdfunding demand curve, poverty-line village (log-normal model with an approximate head count), CRR/SLR values (exploratory, not current RBI rates), trade openness figures.
+- **Exam pattern:** questions are tagged exam `ISC` with no year; formats MCQ, assertion-reason and case-based. Check that the mix suits the ISC paper (which also has long-answer questions).
+- **Kannada:** none; ISC packs are English only.
+
+## ISC CS, English, Commerce
+
+Built from the CISCE ISC syllabuses for the 2026–27 session (2027 exams). cisce.org could not be reached from the authoring session, so the unit lists come from secondary copies of the CISCE documents and from recollection. Check every chapter list against the official regulations before classroom use. All new chapters have `boards: ['isc']` and English text only (no Kannada). Questions are tagged `exams: ['ISC']` and written in the ISC pattern. None is labelled as a past paper.
+
+### Computer Science (868; Java)
+
+- **Existing NCERT chapters now tagged `isc`:** 1st PUC ch 2 (all topics), ch 3 t1, t2, t4, ch 4 t1–t4 and ch 11 t1–t4; 2nd PUC ch 3 t1, t2, t4, t5, ch 4 t1–t2, ch 5 (all) and ch 6 t1–t3. The other topics in those chapters are narrowed to `kar_pu`/`cbse`. These lessons use Python examples. A teacher should decide whether ISC classes need Java versions. The packs for these chapters were not re-versioned; the chapter.json inside them changes at the next build.
+- **New Class XI chapters (12–17):** binary arithmetic and 2's complement, propositional logic and gates, OOP and Java basics (JVM, primitive and wrapper types, packages, Scanner), expressions and statements, methods and constructors, arrays and strings.
+- **New Class XII chapters (13–17):** Boolean algebra (laws, SOP/POS, K-maps up to 4 variables), logic circuits (universal gates, adders, encoders, decoders, MUX), recursion, inheritance, interfaces and polymorphism, data structures (array stack, circular queue, deque, linked list, binary tree, BST) and Big O.
+- **Please check:** whether Class XI really excludes recursion, which this pack set teaches in Class XII only. Check the depth expected for floating-point representation (the lesson uses a generic normalised mantissa–exponent form, not IEEE 754 bit layouts) and for deques and circular queues. The "classic Java" stance on interfaces (constants and abstract methods, with default/static methods mentioned only in passing) also needs checking. Check that the Java traces are exact: `(int)` truncation, `%` sign rule, `compareTo` values, the fall-through switch, the `a++ + ++a` style traces.
+- **Simplified scene models:** the floating-point readout uses a 7-bit fraction. The "gap to next value" is approximate. The Euclid scene unrolls 11 steps, which is enough for a, b ≤ 100.
+
+### English (801)
+
+- **Paper 1 skills (Class XI ch 15–18, Class XII ch 20):** composition, directed writing (article, speech, report, review), proposal with notice and email, comprehension and summary, and grammar (transformations, prepositions, phrasal verbs, agreement). Word limits and marks are left to "the limit stated in the paper". Check them against the current specimen paper. The 12/25/25/25/13% word budget is our own guide.
+- **Paper 2 study guides:** Macbeth Acts I–II (XI) and III–V (XII); Rhapsody (XI: Abhisara: The Tryst, Sonnet 116, Death of a Naturalist, Why I Like the Hospital, Strange Meeting; XII: Telephone Conversation, Small Towns and the River, Tithonus, Death be not Proud, Beethoven); Prism (XI: A Living God, Advice to Youth, The Paper Menagerie, The Great Automatic Grammatizator, Thank You, Ma'am; XII: Atithi, Indigo, The Cookie Lady, There Will Come Soft Rains, The Medicine Bag). Confirm these lists against Appendix I of the ISC 2027 regulations.
+- **Copyright:** no prescribed text is reproduced. Summaries, scene retellings, fill passages and plot-arc captions are original paraphrase. Owen's preface and the pararhyme word pairs in Strange Meeting (public domain) are referred to, not quoted at length. A reviewer should still confirm that no sentence is too close to the source.
+- **Facts written from the author's own knowledge (please check):** Why I Like the Hospital (posthumous collection; the hospital as a place where people can drop their pretence); Small Towns and the River (river, ritual and death in Arunachal); Beethoven (abusive father, deafness, triumph of art: kept general); Indigo (Aniruddha Bose, Dumka, Sukhanram, the indigo planter's last moments on the 100th anniversary, with the planter's name left out on purpose); A Living God (Hamaguchi burns his rice stacks); and the Medicine Bag details (great-grandfather, sage from the reservation).
+- **Scenes:** the plot-arc "tension" curve is illustrative. The rhyme schemes of Sonnet 116 (ABAB CDCD EFEF GG) and Death be not Proud (ABBAABBA CDDC EE) need checking.
+
+### Commerce (new subject; Class XI 8 units, Class XII 4 units)
+
+- **Units:** Class XI follows the reported 2027 weightage: Nature and Purpose of Business 10, Forms of Business Organisation 25, Social Responsibility and Ethics 5, Emerging Modes 5, Stock Exchange 5, Trade 10, Foreign Trade 10, Insurance 10. Class XII: Business Environment 7, Financing 20, Management 33, Marketing 20. Confirm the sub-topics against the official syllabus.
+- **Legal and factual points to check:** partnership limit of 50 (Companies Act, 2013 rules); private company 2–200 members, public company 7 or more, and OPC; cooperative minimum of 10 members under the 1912 Act or state acts; CSR thresholds (net worth ₹500 cr / turnover ₹1,000 cr / net profit ₹5 cr; 2% of average net profit of 3 years); SEBI 1988/1992; BSE 1875, NSE 1992; T+1 settlement (fully in place in 2023); IEC from DGFT; GST from 1 July 2017; demonetisation of 8 November 2016; RBI 1935; Consumer Protection Act, 2019 with the 2021 pecuniary limits (District ≤ ₹50 lakh, State ≤ ₹2 crore, National above that); and daughters as coparceners since 2005.
+- **Illustrative models (labelled in captions):** risk/reward expected value (fixed ₹5 lakh loss on failure), in-house versus BPO cost (₹5 per call in-house variable cost), share price discovery with linear demand and supply, trading on equity before tax, advertising sales-response curve, and cost-plus pricing.

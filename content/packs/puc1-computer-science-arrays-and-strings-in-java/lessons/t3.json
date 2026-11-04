@@ -1,0 +1,467 @@
+{
+ "id": "puc1-computer-science-17-arrays-and-strings-in-java.t3.lesson",
+ "chapterId": "puc1-computer-science-17-arrays-and-strings-in-java",
+ "topicId": "puc1-computer-science-17-arrays-and-strings-in-java.t3",
+ "title": {
+  "en": "Two-dimensional arrays"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Rows and columns"
+   },
+   "hook": {
+    "en": "A cinema seat chart, a timetable, marks of 40 students in 5 subjects: data in a grid. Java stores it as an array of arrays."
+   },
+   "objectives": [
+    {
+     "en": "Declare and initialise a two-dimensional array"
+    },
+    {
+     "en": "Traverse a 2-D array row-wise with nested loops"
+    },
+    {
+     "en": "Compute row sums, column sums and diagonals of a square matrix"
+    }
+   ],
+   "narration": {
+    "en": "A cinema seat chart, a timetable, marks of 40 students in 5 subjects: data in a grid. Java stores it as an array of arrays."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Declaring a 2-D array"
+   },
+   "body": {
+    "en": "int[][] m = new int[3][4]; creates 3 rows and 4 columns, all 0. int[][] m = {{1, 2}, {3, 4}, {5, 6}}; creates a 3 × 2 array. m[i][j] is the element in row i and column j, both from 0. m.length is the number of rows and m[i].length the number of columns of row i. A 2-D array is an array of row arrays."
+   },
+   "points": [
+    {
+     "en": "int[][] m = new int[rows][cols];"
+    },
+    {
+     "en": "m[i][j]: row i, column j"
+    },
+    {
+     "en": "m.length rows; m[i].length columns"
+    },
+    {
+     "en": "Array of arrays"
+    }
+   ],
+   "narration": {
+    "en": "int[][] m = new int[3][4]; creates 3 rows and 4 columns, all 0. int[][] m = {{1, 2}, {3, 4}, {5, 6}}; creates a 3 × 2 array. m[i][j] is the element in row i and column j, both from 0. m.length is the number of rows and m[i].length the number of columns of row i. A 2-D array is an array of row arrays."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: sums of a 3 × 3 matrix"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "The matrix."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "sums of a 3 × 3 matrix"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "int[][] m = {{2, 7, 6}, {9, 5, 1}, {4, 3, 8}};"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Row sums: the outer loop picks a row, the inner loop adds its columns."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "for (int i = 0; i < 3; i++) { int s = 0;"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "    for (int j = 0; j < 3; j++) s += m[i][j];"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "    System.out.println(s); }"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        28.0
+       ],
+       "text": {
+        "en": "15 15 15"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Diagonals."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        32.5
+       ],
+       "text": {
+        "en": "Left diagonal: i == j → 2 + 5 + 8 = 15"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37.0
+       ],
+       "text": {
+        "en": "Right diagonal: i + j == n − 1 → 6 + 5 + 4 = 15"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        41.5
+       ],
+       "text": {
+        "en": "All sums are 15: this is a magic square"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up sums of a 3 × 3 matrix on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "readouts",
+   "title": {
+    "en": "Locate an element"
+   },
+   "caption": {
+    "en": "A 4 × 5 array of int stored row by row. Choose a row and a column and read where the element sits in memory order, and which diagonal of a square matrix it would be on."
+   },
+   "narration": {
+    "en": "A 4 × 5 array of int stored row by row. Choose a row and a column and read where the element sits in memory order, and which diagonal of a square matrix it would be on."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "Find the position in memory order of m[2][3]."
+    },
+    {
+     "en": "For a square 4 × 4 matrix, which cells have i == j?"
+    },
+    {
+     "en": "Which cells satisfy i + j == 3 in a 4 × 4 matrix?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "i",
+     "label": {
+      "en": "Row i"
+     },
+     "min": 0,
+     "max": 3,
+     "step": 1,
+     "value": 2
+    },
+    {
+     "name": "j",
+     "label": {
+      "en": "Column j"
+     },
+     "min": 0,
+     "max": 4,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Position in row-major order (0-based)"
+     },
+     "expr": "i*5 + j",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "On the left diagonal (i == j)? 1 = yes"
+     },
+     "expr": "if(i == j, 1, 0)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "On the right diagonal of a 4 × 4 (i + j == 3)? 1 = yes"
+     },
+     "expr": "if(i + j == 3, 1, 0)",
+     "digits": 0
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Common matrix operations"
+   },
+   "body": {
+    "en": "Typical ISC programs: sum and print the boundary elements (i == 0, i == rows − 1, j == 0 or j == cols − 1); find the transpose (t[j][i] = m[i][j]); add two matrices of the same order; check whether a matrix is symmetric (m[i][j] == m[j][i] for all i, j); sort each row; and print the elements above or below the main diagonal (j > i or j < i)."
+   },
+   "points": [
+    {
+     "en": "Boundary: first/last row or column"
+    },
+    {
+     "en": "Transpose: t[j][i] = m[i][j]"
+    },
+    {
+     "en": "Symmetric: m equals its transpose"
+    },
+    {
+     "en": "Above diagonal: j > i"
+    }
+   ],
+   "narration": {
+    "en": "Typical ISC programs: sum and print the boundary elements (i == 0, i == rows − 1, j == 0 or j == cols − 1); find the transpose (t[j][i] = m[i][j]); add two matrices of the same order; check whether a matrix is symmetric (m[i][j] == m[j][i] for all i, j); sort each row; and print the elements above or below the main diagonal (j > i or j < i)."
+   }
+  },
+  {
+   "id": "activity-match",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Condition and cells"
+   },
+   "prompt": {
+    "en": "Match each condition on (i, j) in an n × n matrix with the cells it selects."
+   },
+   "narration": {
+    "en": "Match each condition on (i, j) in an n × n matrix with the cells it selects."
+   },
+   "seconds": 150,
+   "pairs": [
+    {
+     "left": {
+      "en": "i == j"
+     },
+     "right": {
+      "en": "Left (main) diagonal"
+     }
+    },
+    {
+     "left": {
+      "en": "i + j == n − 1"
+     },
+     "right": {
+      "en": "Right diagonal"
+     }
+    },
+    {
+     "left": {
+      "en": "j > i"
+     },
+     "right": {
+      "en": "Above the main diagonal"
+     }
+    },
+    {
+     "left": {
+      "en": "i == 0 || i == n − 1 || j == 0 || j == n − 1"
+     },
+     "right": {
+      "en": "Boundary elements"
+     }
+    }
+   ],
+   "explanation": {
+    "en": "Row equals column on the main diagonal; indexes add to n − 1 on the other diagonal; column bigger than row means above."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Write a program segment that prints the transpose of a 2 × 3 matrix a."
+   },
+   "steps": [
+    {
+     "en": "int[][] t = new int[3][2];"
+    },
+    {
+     "en": "for (int i = 0; i < 2; i++)"
+    },
+    {
+     "en": "    for (int j = 0; j < 3; j++)"
+    },
+    {
+     "en": "        t[j][i] = a[i][j];"
+    },
+    {
+     "en": "For a = {{1, 2, 3}, {4, 5, 6}}: t = {{1, 4}, {2, 5}, {3, 6}}."
+    }
+   ],
+   "answer": {
+    "en": "Transpose of {{1,2,3},{4,5,6}} is {{1,4},{2,5},{3,6}}"
+   },
+   "narration": {
+    "en": "Write a program segment that prints the transpose of a 2 × 3 matrix a."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Rows first"
+   },
+   "body": {
+    "en": "Always [row][column], like seat numbers \"row C, seat 7\". The outer loop walks the rows, the inner loop walks across a row."
+   },
+   "narration": {
+    "en": "Always [row][column], like seat numbers \"row C, seat 7\". The outer loop walks the rows, the inner loop walks across a row."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "R before C: row, column."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i1cs17-q09",
+    "i1cs17-q10",
+    "i1cs17-q11"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i1cs17-q12"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "int[][] m = new int[r][c]; m[i][j] is row i, column j."
+    },
+    {
+     "en": "m.length rows; m[i].length columns."
+    },
+    {
+     "en": "Nested loops: outer for rows, inner for columns."
+    },
+    {
+     "en": "Diagonals: i == j and i + j == n − 1."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Print the sum of the boundary elements of a 4 × 4 matrix."
+    },
+    {
+     "en": "Check whether a square matrix is symmetric."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i1cs17-q12"
+   ],
+   "narration": {
+    "en": "Recap. int[][] m = new int[r][c]; m[i][j] is row i, column j. m.length rows; m[i].length columns. Nested loops: outer for rows, inner for columns. Diagonals: i == j and i + j == n − 1."
+   }
+  }
+ ]
+}

@@ -1,0 +1,433 @@
+{
+ "id": "puc2-computer-science-17-data-structures-and-complexity.t2.lesson",
+ "chapterId": "puc2-computer-science-17-data-structures-and-complexity",
+ "topicId": "puc2-computer-science-17-data-structures-and-complexity.t2",
+ "title": {
+  "en": "Linked lists"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "A chain of nodes"
+   },
+   "hook": {
+    "en": "An array has a fixed size and inserting in the middle means shifting everything. A linked list grows one node at a time, and inserting means changing just one link."
+   },
+   "objectives": [
+    {
+     "en": "Describe a node and a singly linked list"
+    },
+    {
+     "en": "Write algorithms to traverse, insert and delete nodes"
+    },
+    {
+     "en": "Compare linked lists with arrays"
+    }
+   ],
+   "narration": {
+    "en": "An array has a fixed size and inserting in the middle means shifting everything. A linked list grows one node at a time, and inserting means changing just one link."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Nodes and links"
+   },
+   "body": {
+    "en": "A singly linked list is a chain of nodes. Each node holds data and a reference (link) to the next node; the last node's link is null. A reference called start (or head) points to the first node. In Java: class Node { int data; Node next; Node(int d) { data = d; next = null; } }. Because nodes are created with new as needed, the list grows and shrinks at run time (dynamic memory), and nodes need not be next to each other in memory."
+   },
+   "points": [
+    {
+     "en": "Node = data + next"
+    },
+    {
+     "en": "start points to the first node"
+    },
+    {
+     "en": "Last node: next = null"
+    },
+    {
+     "en": "Dynamic size, scattered memory"
+    }
+   ],
+   "narration": {
+    "en": "A singly linked list is a chain of nodes. Each node holds data and a reference (link) to the next node; the last node's link is null. A reference called start (or head) points to the first node. In Java: class Node { int data; Node next; Node(int d) { data = d; next = null; } }. Because nodes are created with new as needed, the list grows and shrinks at run time (dynamic memory), and nodes need not be next to each other in memory."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: traversal and insertion"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Traverse: follow the links until null."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "traversal and insertion"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "Node ptr = start;"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "while (ptr != null) {"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "    System.out.print(ptr.data + \" \");"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "    ptr = ptr.next;"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.0
+       ],
+       "text": {
+        "en": "}"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Insert at the beginning: two link changes."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        32.5
+       ],
+       "text": {
+        "en": "Node n = new Node(x);"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        37.0
+       ],
+       "text": {
+        "en": "n.next = start;   start = n;"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Insert after a node p, and delete the node after p."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        41.5
+       ],
+       "text": {
+        "en": "n.next = p.next;   p.next = n;      // insert"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        46.0
+       ],
+       "text": {
+        "en": "p.next = p.next.next;              // delete"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        50.5
+       ],
+       "text": {
+        "en": "Order matters: set n.next before changing p.next"
+       },
+       "size": 3,
+       "color": "red"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up traversal and insertion on the board, one step at a time."
+   }
+  },
+  {
+   "id": "sim-algo-list",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "algo.list",
+   "caption": {
+    "en": "A singly linked list: nodes linked by references. Insert and delete nodes and watch which links change."
+   },
+   "tryThis": [
+    {
+     "en": "Insert a node at the front. How many links changed?"
+    },
+    {
+     "en": "Delete a node from the middle. Which node's link is changed?"
+    },
+    {
+     "en": "Why can you not jump straight to the fifth node?"
+    }
+   ],
+   "narration": {
+    "en": "A singly linked list: nodes linked by references. Insert and delete nodes and watch which links change. Insert a node at the front. How many links changed? Delete a node from the middle. Which node's link is changed? Why can you not jump straight to the fifth node?"
+   },
+   "seconds": 150,
+   "optional": true,
+   "title": {
+    "en": "Linked list operations"
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Linked list versus array"
+   },
+   "body": {
+    "en": "Arrays give direct access by index in one step but have a fixed size, and inserting or deleting in the middle shifts elements. Linked lists grow and shrink freely and insert or delete with a few link changes once the position is found, but must be traversed from start to reach a node (no random access), and each node uses extra memory for its link. Variations: doubly linked lists (links both ways) and circular lists (last node links to the first)."
+   },
+   "points": [
+    {
+     "en": "Array: random access, fixed size"
+    },
+    {
+     "en": "List: dynamic size, cheap insert/delete"
+    },
+    {
+     "en": "List: sequential access only"
+    },
+    {
+     "en": "Doubly linked and circular variants"
+    }
+   ],
+   "narration": {
+    "en": "Arrays give direct access by index in one step but have a fixed size, and inserting or deleting in the middle shifts elements. Linked lists grow and shrink freely and insert or delete with a few link changes once the position is found, but must be traversed from start to reach a node (no random access), and each node uses extra memory for its link. Variations: doubly linked lists (links both ways) and circular lists (last node links to the first)."
+   }
+  },
+  {
+   "id": "activity-order",
+   "type": "activity",
+   "kind": "order",
+   "title": {
+    "en": "Delete the node with value x"
+   },
+   "prompt": {
+    "en": "Put the steps of deleting the first node whose data is x (not the first node) in order."
+   },
+   "narration": {
+    "en": "Put the steps of deleting the first node whose data is x (not the first node) in order."
+   },
+   "seconds": 150,
+   "steps": [
+    {
+     "en": "Set prev = start and ptr = start.next"
+    },
+    {
+     "en": "While ptr is not null and ptr.data is not x, move prev and ptr one node on"
+    },
+    {
+     "en": "If ptr is null, report that x is not found"
+    },
+    {
+     "en": "Otherwise set prev.next = ptr.next"
+    },
+    {
+     "en": "The node ptr is now unlinked and will be garbage collected"
+    }
+   ],
+   "explanation": {
+    "en": "Keep a reference to the node before the one to delete, because its link must be changed to skip the deleted node."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Write a method int count(Node start) that returns the number of nodes in a linked list."
+   },
+   "steps": [
+    {
+     "en": "int count(Node start) {"
+    },
+    {
+     "en": "    int c = 0;"
+    },
+    {
+     "en": "    for (Node p = start; p != null; p = p.next) c++;"
+    },
+    {
+     "en": "    return c;"
+    },
+    {
+     "en": "}"
+    },
+    {
+     "en": "For start → 4 → 9 → 2 → null it returns 3."
+    }
+   ],
+   "answer": {
+    "en": "The method returns the number of nodes (3 in the example)."
+   },
+   "narration": {
+    "en": "Write a method int count(Node start) that returns the number of nodes in a linked list."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Link the new one first"
+   },
+   "body": {
+    "en": "When inserting, always connect the new node to the rest of the list before you redirect the old link to it; otherwise you lose the rest of the list."
+   },
+   "narration": {
+    "en": "When inserting, always connect the new node to the rest of the list before you redirect the old link to it; otherwise you lose the rest of the list."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "New node grabs the chain first."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i2cs17-q05",
+    "i2cs17-q06",
+    "i2cs17-q07"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i2cs17-q08"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A node holds data and a link to the next node."
+    },
+    {
+     "en": "start points to the first node; the last links to null."
+    },
+    {
+     "en": "Insert: n.next = p.next; p.next = n."
+    },
+    {
+     "en": "Lists trade random access for dynamic size."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write an algorithm to insert a node at the end of a list."
+    },
+    {
+     "en": "Write a method to find the largest value in a linked list."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i2cs17-q08"
+   ],
+   "narration": {
+    "en": "Recap. A node holds data and a link to the next node. start points to the first node; the last links to null. Insert: n.next = p.next; p.next = n. Lists trade random access for dynamic size."
+   }
+  }
+ ]
+}

@@ -1,0 +1,791 @@
+{
+ "id": "puc1-computer-science-16-methods-and-constructors.t3.lesson",
+ "chapterId": "puc1-computer-science-16-methods-and-constructors",
+ "topicId": "puc1-computer-science-16-methods-and-constructors.t3",
+ "title": {
+  "en": "Static and instance members; scope of variables"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Mine or ours?"
+   },
+   "hook": {
+    "en": "Every student has a roll number of their own, but the school name is shared by all. Java marks shared members static; everything else belongs to each object."
+   },
+   "objectives": [
+    {
+     "en": "Distinguish class (static) variables from instance variables"
+    },
+    {
+     "en": "Call static and instance methods correctly"
+    },
+    {
+     "en": "State the scope and lifetime of local, instance and class variables"
+    }
+   ],
+   "narration": {
+    "en": "Every student has a roll number of their own, but the school name is shared by all. Java marks shared members static; everything else belongs to each object."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Static versus instance"
+   },
+   "body": {
+    "en": "An instance variable belongs to an object: each object has its own copy, created with the object. A static (class) variable belongs to the class: there is exactly one copy, shared by all objects, created when the class is loaded. Static methods are called on the class name (Math.sqrt) and can use only static members directly; instance methods are called on an object (s1.display()) and can use both."
+   },
+   "points": [
+    {
+     "en": "Instance: one copy per object"
+    },
+    {
+     "en": "Static: one copy per class, shared"
+    },
+    {
+     "en": "Static methods: no this, only static members directly"
+    },
+    {
+     "en": "Call static members as ClassName.member"
+    }
+   ],
+   "narration": {
+    "en": "An instance variable belongs to an object: each object has its own copy, created with the object. A static (class) variable belongs to the class: there is exactly one copy, shared by all objects, created when the class is loaded. Static methods are called on the class name (Math.sqrt) and can use only static members directly; instance methods are called on an object (s1.display()) and can use both."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: counting objects with a static variable"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A static counter is shared; an instance id is not."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "counting objects with a static variable"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "class Ticket {"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "    static int count = 0;   // class variable"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "    int id;                 // instance variable"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "    Ticket() { count++;  id = count; }"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.0
+       ],
+       "text": {
+        "en": "}"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Create three tickets."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        32.5
+       ],
+       "text": {
+        "en": "Ticket a = new Ticket(), b = new Ticket(), c = new Ticket();"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37.0
+       ],
+       "text": {
+        "en": "a.id = 1, b.id = 2, c.id = 3"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        41.5
+       ],
+       "text": {
+        "en": "Ticket.count = 3 (one copy, seen by all)"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up counting objects with a static variable on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Objects from one class"
+   },
+   "caption": {
+    "en": "Each press of new Student() creates an object with its own instance variable rollNo; the static variable count belongs to the class and there is only one copy of it."
+   },
+   "narration": {
+    "en": "Each press of new Student() creates an object with its own instance variable rollNo; the static variable count belongs to the class and there is only one copy of it."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "Create three objects. How many copies of rollNo exist? Of count?"
+    },
+    {
+     "en": "If s2 changes its rollNo, does s1 change?"
+    },
+    {
+     "en": "Why do we say a class is a blueprint and an object an instance?"
+    }
+   ],
+   "counters": [
+    {
+     "name": "n",
+     "value": 0,
+     "min": 0,
+     "max": 6
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "new Student()"
+     },
+     "icon": "add",
+     "set": {
+      "n": "n + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Clear"
+     },
+     "icon": "reset",
+     "set": {
+      "n": "0"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Objects created (count)"
+     },
+     "expr": "n",
+     "digits": 0
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     22
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 2,
+     "w": 6,
+     "h": 6,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 7.2,
+     "text": {
+      "en": "class Student"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 5.6,
+     "text": {
+      "en": "static int count"
+     },
+     "size": 18,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 4.4,
+     "text": {
+      "en": "= {n:0}"
+     },
+     "size": 24,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 2.8,
+     "text": {
+      "en": "(one copy, shared)"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 8.0,
+     "y": 5.6,
+     "w": 4.2,
+     "h": 3.4,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "0 < n"
+    },
+    {
+     "shape": "text",
+     "x": 10.1,
+     "y": 8.0,
+     "text": {
+      "en": "s1"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center",
+     "visibleIf": "0 < n"
+    },
+    {
+     "shape": "text",
+     "x": 10.1,
+     "y": 6.699999999999999,
+     "text": {
+      "en": "rollNo = 1"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "0 < n"
+    },
+    {
+     "shape": "line",
+     "x1": 6.5,
+     "y1": 5,
+     "x2": 8.0,
+     "y2": 7.3,
+     "color": "white",
+     "visibleIf": "0 < n",
+     "dashed": true
+    },
+    {
+     "shape": "rect",
+     "x": 12.6,
+     "y": 5.6,
+     "w": 4.2,
+     "h": 3.4,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "1 < n"
+    },
+    {
+     "shape": "text",
+     "x": 14.7,
+     "y": 8.0,
+     "text": {
+      "en": "s2"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center",
+     "visibleIf": "1 < n"
+    },
+    {
+     "shape": "text",
+     "x": 14.7,
+     "y": 6.699999999999999,
+     "text": {
+      "en": "rollNo = 2"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "1 < n"
+    },
+    {
+     "shape": "line",
+     "x1": 6.5,
+     "y1": 5,
+     "x2": 12.6,
+     "y2": 7.3,
+     "color": "white",
+     "visibleIf": "1 < n",
+     "dashed": true
+    },
+    {
+     "shape": "rect",
+     "x": 17.2,
+     "y": 5.6,
+     "w": 4.2,
+     "h": 3.4,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "2 < n"
+    },
+    {
+     "shape": "text",
+     "x": 19.3,
+     "y": 8.0,
+     "text": {
+      "en": "s3"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center",
+     "visibleIf": "2 < n"
+    },
+    {
+     "shape": "text",
+     "x": 19.3,
+     "y": 6.699999999999999,
+     "text": {
+      "en": "rollNo = 3"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "2 < n"
+    },
+    {
+     "shape": "line",
+     "x1": 6.5,
+     "y1": 5,
+     "x2": 17.2,
+     "y2": 7.3,
+     "color": "white",
+     "visibleIf": "2 < n",
+     "dashed": true
+    },
+    {
+     "shape": "rect",
+     "x": 8.0,
+     "y": 1.5999999999999996,
+     "w": 4.2,
+     "h": 3.4,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "3 < n"
+    },
+    {
+     "shape": "text",
+     "x": 10.1,
+     "y": 3.9999999999999996,
+     "text": {
+      "en": "s4"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center",
+     "visibleIf": "3 < n"
+    },
+    {
+     "shape": "text",
+     "x": 10.1,
+     "y": 2.6999999999999997,
+     "text": {
+      "en": "rollNo = 4"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "3 < n"
+    },
+    {
+     "shape": "line",
+     "x1": 6.5,
+     "y1": 5,
+     "x2": 8.0,
+     "y2": 3.3,
+     "color": "white",
+     "visibleIf": "3 < n",
+     "dashed": true
+    },
+    {
+     "shape": "rect",
+     "x": 12.6,
+     "y": 1.5999999999999996,
+     "w": 4.2,
+     "h": 3.4,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "4 < n"
+    },
+    {
+     "shape": "text",
+     "x": 14.7,
+     "y": 3.9999999999999996,
+     "text": {
+      "en": "s5"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center",
+     "visibleIf": "4 < n"
+    },
+    {
+     "shape": "text",
+     "x": 14.7,
+     "y": 2.6999999999999997,
+     "text": {
+      "en": "rollNo = 5"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "4 < n"
+    },
+    {
+     "shape": "line",
+     "x1": 6.5,
+     "y1": 5,
+     "x2": 12.6,
+     "y2": 3.3,
+     "color": "white",
+     "visibleIf": "4 < n",
+     "dashed": true
+    },
+    {
+     "shape": "rect",
+     "x": 17.2,
+     "y": 1.5999999999999996,
+     "w": 4.2,
+     "h": 3.4,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "5 < n"
+    },
+    {
+     "shape": "text",
+     "x": 19.3,
+     "y": 3.9999999999999996,
+     "text": {
+      "en": "s6"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center",
+     "visibleIf": "5 < n"
+    },
+    {
+     "shape": "text",
+     "x": 19.3,
+     "y": 2.6999999999999997,
+     "text": {
+      "en": "rollNo = 6"
+     },
+     "size": 16,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "5 < n"
+    },
+    {
+     "shape": "line",
+     "x1": 6.5,
+     "y1": 5,
+     "x2": 17.2,
+     "y2": 3.3,
+     "color": "white",
+     "visibleIf": "5 < n",
+     "dashed": true
+    }
+   ],
+   "sliders": []
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Scope and lifetime"
+   },
+   "body": {
+    "en": "The scope of a variable is the part of the program where it can be used. A local variable (declared inside a method or block, including parameters and loop variables) is visible only from its declaration to the end of that block and exists only while the block runs. An instance variable is visible in all instance methods of the class and lives as long as its object. A class variable is visible throughout the class and lives as long as the class is loaded. A local variable with the same name as a field hides (shadows) the field."
+   },
+   "points": [
+    {
+     "en": "Local: inside its block only"
+    },
+    {
+     "en": "Instance: lives with its object"
+    },
+    {
+     "en": "Class (static): lives with the class"
+    },
+    {
+     "en": "A local variable can shadow a field"
+    }
+   ],
+   "narration": {
+    "en": "The scope of a variable is the part of the program where it can be used. A local variable (declared inside a method or block, including parameters and loop variables) is visible only from its declaration to the end of that block and exists only while the block runs. An instance variable is visible in all instance methods of the class and lives as long as its object. A class variable is visible throughout the class and lives as long as the class is loaded. A local variable with the same name as a field hides (shadows) the field."
+   }
+  },
+  {
+   "id": "activity-sort",
+   "type": "activity",
+   "kind": "sort",
+   "title": {
+    "en": "Which kind of variable?"
+   },
+   "prompt": {
+    "en": "Sort the variables in this class: class Bank { static double rate; String holder; double balance; void addInterest(int years) { double i = balance * rate * years; … } }"
+   },
+   "narration": {
+    "en": "Sort the variables in this class: class Bank { static double rate; String holder; double balance; void addInterest(int years) { double i = balance * rate * years; … } }"
+   },
+   "seconds": 150,
+   "buckets": [
+    {
+     "id": "cls",
+     "label": {
+      "en": "Class (static) variable"
+     }
+    },
+    {
+     "id": "ins",
+     "label": {
+      "en": "Instance variable"
+     }
+    },
+    {
+     "id": "loc",
+     "label": {
+      "en": "Local variable or parameter"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "rate"
+     },
+     "answer": "cls"
+    },
+    {
+     "text": {
+      "en": "holder"
+     },
+     "answer": "ins"
+    },
+    {
+     "text": {
+      "en": "balance"
+     },
+     "answer": "ins"
+    },
+    {
+     "text": {
+      "en": "years"
+     },
+     "answer": "loc"
+    },
+    {
+     "text": {
+      "en": "i"
+     },
+     "answer": "loc"
+    }
+   ],
+   "explanation": {
+    "en": "rate is static and shared by all accounts; holder and balance belong to each account; years and i exist only while addInterest runs."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Find the output: class Demo { static int s = 0; int n = 0; Demo() { s++; n++; } } … Demo p = new Demo(); Demo q = new Demo(); System.out.println(p.s + \" \" + p.n + \" \" + q.s + \" \" + q.n);"
+   },
+   "steps": [
+    {
+     "en": "Each constructor call adds 1 to the shared s and 1 to its own n."
+    },
+    {
+     "en": "After two objects: s = 2 (shared); p.n = 1; q.n = 1."
+    }
+   ],
+   "answer": {
+    "en": "2 1 2 1"
+   },
+   "narration": {
+    "en": "Find the output: class Demo { static int s = 0; int n = 0; Demo() { s++; n++; } } … Demo p = new Demo(); Demo q = new Demo(); System.out.println(p.s + \" \" + p.n + \" \" + q.s + \" \" + q.n);"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Static = school, instance = student"
+   },
+   "body": {
+    "en": "If the value is the same for everyone (school name, interest rate, object count) it is static. If it differs per object (name, roll, balance) it is an instance variable."
+   },
+   "narration": {
+    "en": "If the value is the same for everyone (school name, interest rate, object count) it is static. If it differs per object (name, roll, balance) it is an instance variable."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Shared → static; personal → instance."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i1cs16-q09",
+    "i1cs16-q10",
+    "i1cs16-q11"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i1cs16-q12"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Instance variables: one copy per object."
+    },
+    {
+     "en": "Static variables: one copy per class."
+    },
+    {
+     "en": "Static methods have no this and use only static members directly."
+    },
+    {
+     "en": "Local variables live only inside their block."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Add a static method to Ticket that returns the count."
+    },
+    {
+     "en": "Explain shadowing with an example."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i1cs16-q12"
+   ],
+   "narration": {
+    "en": "Recap. Instance variables: one copy per object. Static variables: one copy per class. Static methods have no this and use only static members directly. Local variables live only inside their block."
+   }
+  }
+ ]
+}

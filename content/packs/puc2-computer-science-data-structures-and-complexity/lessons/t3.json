@@ -1,0 +1,451 @@
+{
+ "id": "puc2-computer-science-17-data-structures-and-complexity.t3.lesson",
+ "chapterId": "puc2-computer-science-17-data-structures-and-complexity",
+ "topicId": "puc2-computer-science-17-data-structures-and-complexity.t3",
+ "title": {
+  "en": "Binary trees"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Branching data"
+   },
+   "hook": {
+    "en": "A family tree, a file system, a tournament bracket: data that branches. A binary tree is the simplest branching structure: each node has at most two children."
+   },
+   "objectives": [
+    {
+     "en": "Use the terminology of binary trees"
+    },
+    {
+     "en": "Traverse a binary tree in preorder, inorder and postorder"
+    },
+    {
+     "en": "Build a binary search tree and explain why it speeds up searching"
+    }
+   ],
+   "narration": {
+    "en": "A family tree, a file system, a tournament bracket: data that branches. A binary tree is the simplest branching structure: each node has at most two children."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Terminology"
+   },
+   "body": {
+    "en": "A binary tree is a set of nodes in which each node has at most two children, called the left and right child. The top node is the root; a node with no children is a leaf (external node); other nodes are internal. Nodes with the same parent are siblings. The depth (level) of a node is the number of edges from the root (root at level 0); the height of the tree is the largest depth. The size is the number of nodes. A binary tree of height h has at most 2^(h+1) − 1 nodes, and level k has at most 2^k nodes."
+   },
+   "points": [
+    {
+     "en": "Root, parent, child, sibling, leaf"
+    },
+    {
+     "en": "Level of root = 0"
+    },
+    {
+     "en": "Height = longest root-to-leaf path (edges)"
+    },
+    {
+     "en": "At most 2^k nodes on level k"
+    }
+   ],
+   "narration": {
+    "en": "A binary tree is a set of nodes in which each node has at most two children, called the left and right child. The top node is the root; a node with no children is a leaf (external node); other nodes are internal. Nodes with the same parent are siblings. The depth (level) of a node is the number of edges from the root (root at level 0); the height of the tree is the largest depth. The size is the number of nodes. A binary tree of height h has at most 2^(h+1) − 1 nodes, and level k has at most 2^k nodes."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: traversals of a tree"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "The tree: root A; A has children B and C; B has D and E; C has F."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "traversals of a tree"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "        A"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "      /   \\"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "     B     C"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "    / \\   /"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.0
+       ],
+       "text": {
+        "en": "   D   E F"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Preorder: root, left, right."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        32.5
+       ],
+       "text": {
+        "en": "Preorder:  A B D E C F"
+       },
+       "size": 3,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Inorder: left, root, right."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37.0
+       ],
+       "text": {
+        "en": "Inorder:   D B E A F C"
+       },
+       "size": 3,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Postorder: left, right, root."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        41.5
+       ],
+       "text": {
+        "en": "Postorder: D E B F C A"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        46.0
+       ],
+       "text": {
+        "en": "The name tells where the root goes: pre = first, in ="
+       },
+       "size": 3,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        50.5
+       ],
+       "text": {
+        "en": "middle, post = last"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up traversals of a tree on the board, one step at a time."
+   }
+  },
+  {
+   "id": "sim-algo-bst",
+   "type": "simulation",
+   "source": "kinetix_cs",
+   "simId": "algo.bst",
+   "caption": {
+    "en": "A binary search tree: smaller keys go left, larger keys go right. Insert keys and search for them."
+   },
+   "tryThis": [
+    {
+     "en": "Insert 50, 30, 70, 20, 40, 60, 80. What is the height?"
+    },
+    {
+     "en": "Search for 60. How many nodes are visited?"
+    },
+    {
+     "en": "Insert 10, 20, 30, 40 in order. What shape do you get, and why is it bad?"
+    }
+   ],
+   "narration": {
+    "en": "A binary search tree: smaller keys go left, larger keys go right. Insert keys and search for them. Insert 50, 30, 70, 20, 40, 60, 80. What is the height? Search for 60. How many nodes are visited? Insert 10, 20, 30, 40 in order. What shape do you get, and why is it bad?"
+   },
+   "seconds": 150,
+   "optional": true,
+   "title": {
+    "en": "Binary search tree"
+   }
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Binary search trees"
+   },
+   "body": {
+    "en": "A binary search tree (BST) is a binary tree in which, for every node, all keys in the left subtree are smaller and all keys in the right subtree are larger. To search, start at the root and go left or right by comparing, so a balanced BST of n nodes is searched in about log2 n steps. An inorder traversal of a BST visits the keys in ascending order. Inserting keys in sorted order makes the tree degenerate into a chain, as slow as a list."
+   },
+   "points": [
+    {
+     "en": "Left < node < right"
+    },
+    {
+     "en": "Search: compare and go left or right"
+    },
+    {
+     "en": "Inorder traversal gives sorted order"
+    },
+    {
+     "en": "Sorted insertion → skewed (degenerate) tree"
+    }
+   ],
+   "narration": {
+    "en": "A binary search tree (BST) is a binary tree in which, for every node, all keys in the left subtree are smaller and all keys in the right subtree are larger. To search, start at the root and go left or right by comparing, so a balanced BST of n nodes is searched in about log2 n steps. An inorder traversal of a BST visits the keys in ascending order. Inserting keys in sorted order makes the tree degenerate into a chain, as slow as a list."
+   }
+  },
+  {
+   "id": "activity-match",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Traversal of the tree on the board"
+   },
+   "prompt": {
+    "en": "Match each traversal with its sequence for the tree with root A, children B and C, B's children D and E, and C's left child F."
+   },
+   "narration": {
+    "en": "Match each traversal with its sequence for the tree with root A, children B and C, B's children D and E, and C's left child F."
+   },
+   "seconds": 150,
+   "pairs": [
+    {
+     "left": {
+      "en": "Preorder"
+     },
+     "right": {
+      "en": "A B D E C F"
+     }
+    },
+    {
+     "left": {
+      "en": "Inorder"
+     },
+     "right": {
+      "en": "D B E A F C"
+     }
+    },
+    {
+     "left": {
+      "en": "Postorder"
+     },
+     "right": {
+      "en": "D E B F C A"
+     }
+    },
+    {
+     "left": {
+      "en": "Level order"
+     },
+     "right": {
+      "en": "A B C D E F"
+     }
+    }
+   ],
+   "explanation": {
+    "en": "Pre visits the root first, in visits it between the subtrees, post visits it last; level order goes level by level from the top."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Insert 45, 25, 65, 15, 35, 55 into an empty BST and give its inorder and preorder traversals."
+   },
+   "steps": [
+    {
+     "en": "45 is the root. 25 < 45 → left; 65 > 45 → right."
+    },
+    {
+     "en": "15 < 45, < 25 → left of 25; 35 < 45, > 25 → right of 25."
+    },
+    {
+     "en": "55 > 45, < 65 → left of 65."
+    },
+    {
+     "en": "Inorder: 15 25 35 45 55 65 (sorted). Preorder: 45 25 15 35 65 55."
+    }
+   ],
+   "answer": {
+    "en": "Inorder 15 25 35 45 55 65; preorder 45 25 15 35 65 55"
+   },
+   "narration": {
+    "en": "Insert 45, 25, 65, 15, 35, 55 into an empty BST and give its inorder and preorder traversals."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Where is the root?"
+   },
+   "body": {
+    "en": "In preorder the root is first; in postorder it is last; in inorder it splits the left subtree from the right. Given inorder and preorder, you can rebuild the tree."
+   },
+   "narration": {
+    "en": "In preorder the root is first; in postorder it is last; in inorder it splits the left subtree from the right. Given inorder and preorder, you can rebuild the tree."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Pre: root first. Post: root last. In: root in the middle."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i2cs17-q09",
+    "i2cs17-q10",
+    "i2cs17-q11"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i2cs17-q12"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Each node has at most two children; leaves have none."
+    },
+    {
+     "en": "Level k holds at most 2^k nodes."
+    },
+    {
+     "en": "Preorder NLR, inorder LNR, postorder LRN."
+    },
+    {
+     "en": "In a BST, inorder gives sorted order and search follows one path."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Draw the BST for 8, 3, 10, 1, 6, 14, 4, 7 and write its postorder."
+    },
+    {
+     "en": "What is the maximum number of nodes in a binary tree of height 3?"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i2cs17-q12"
+   ],
+   "narration": {
+    "en": "Recap. Each node has at most two children; leaves have none. Level k holds at most 2^k nodes. Preorder NLR, inorder LNR, postorder LRN. In a BST, inorder gives sorted order and search follows one path."
+   }
+  }
+ ]
+}

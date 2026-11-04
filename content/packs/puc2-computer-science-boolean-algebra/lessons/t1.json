@@ -1,0 +1,754 @@
+{
+ "id": "puc2-computer-science-13-boolean-algebra.t1.lesson",
+ "chapterId": "puc2-computer-science-13-boolean-algebra",
+ "topicId": "puc2-computer-science-13-boolean-algebra.t1",
+ "title": {
+  "en": "Laws and theorems of Boolean algebra"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Algebra with two values"
+   },
+   "hook": {
+    "en": "In Boolean algebra 1 + 1 = 1 and A + A = A. With a dozen laws you can shrink a long expression, and with it the circuit that has to be built."
+   },
+   "objectives": [
+    {
+     "en": "State and verify the laws of Boolean algebra"
+    },
+    {
+     "en": "Apply De Morgan's theorems and the principle of duality"
+    },
+    {
+     "en": "Simplify Boolean expressions algebraically"
+    }
+   ],
+   "narration": {
+    "en": "In Boolean algebra 1 + 1 = 1 and A + A = A. With a dozen laws you can shrink a long expression, and with it the circuit that has to be built."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Postulates and laws"
+   },
+   "body": {
+    "en": "Boolean algebra works on the values 0 and 1 with three operations: + (OR), · (AND) and ' (NOT). The laws: identity (A + 0 = A, A·1 = A), null or dominance (A + 1 = 1, A·0 = 0), idempotence (A + A = A, A·A = A), complement (A + A' = 1, A·A' = 0), involution ((A')' = A), commutative, associative, distributive (A·(B + C) = AB + AC and also A + BC = (A + B)(A + C)), absorption (A + AB = A, A(A + B) = A) and the useful A + A'B = A + B."
+   },
+   "points": [
+    {
+     "en": "A + 1 = 1, A·0 = 0"
+    },
+    {
+     "en": "A + A = A, A·A = A"
+    },
+    {
+     "en": "A + AB = A (absorption)"
+    },
+    {
+     "en": "A + A'B = A + B"
+    },
+    {
+     "en": "A + BC = (A + B)(A + C)"
+    }
+   ],
+   "narration": {
+    "en": "Boolean algebra works on the values 0 and 1 with three operations: + (OR), · (AND) and ' (NOT). The laws: identity (A + 0 = A, A·1 = A), null or dominance (A + 1 = 1, A·0 = 0), idempotence (A + A = A, A·A = A), complement (A + A' = 1, A·A' = 0), involution ((A')' = A), commutative, associative, distributive (A·(B + C) = AB + AC and also A + BC = (A + B)(A + C)), absorption (A + AB = A, A(A + B) = A) and the useful A + A'B = A + B."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: simplify F = AB + AB' + A'B"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Group the first two terms and factor out A."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "simplify F = AB + AB' + A'B"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10
+       ],
+       "text": {
+        "en": "F = AB + AB' + A'B"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        14.5
+       ],
+       "text": {
+        "en": "  = A(B + B')  + A'B        (distributive)"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "B + B' is 1 by the complement law."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19.0
+       ],
+       "text": {
+        "en": "  = A·1 + A'B = A + A'B     (complement, identity)"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A + A'B = A + B."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        23.5
+       ],
+       "text": {
+        "en": "  = A + B"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        28.0
+       ],
+       "text": {
+        "en": "3 terms with 6 literals became 2 literals: one OR gate"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Duality: swap + with ·, and 0 with 1, and the dual of a true law is also a true law."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        32.5
+       ],
+       "text": {
+        "en": "Dual of A + A'B = A + B  is  A·(A' + B) = A·B"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up simplify F = AB + AB' + A'B on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "De Morgan's theorems"
+   },
+   "caption": {
+    "en": "(A·B)' = A' + B' and (A + B)' = A'·B'. The NAND output is (A·B)'; the NOR output is (A + B)'. Check each row against A' + B' and A'·B'."
+   },
+   "narration": {
+    "en": "(A·B)' = A' + B' and (A + B)' = A'·B'. The NAND output is (A·B)'; the NOR output is (A + B)'. Check each row against A' + B' and A'·B'."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "Prove (A·B)' = A' + B' by checking all four rows."
+    },
+    {
+     "en": "For which inputs is NOR equal to 1?"
+    },
+    {
+     "en": "Is NAND the same as A' · B'? Find a row that shows it is not."
+    }
+   ],
+   "toggles": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Input A"
+     },
+     "value": false
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "Input B"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "g",
+     "label": {
+      "en": "Gate"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "AND"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "OR"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "NAND"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "NOR"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "XOR"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "XNOR"
+       },
+       "value": 6
+      }
+     ],
+     "value": 3
+    }
+   ],
+   "vars": [
+    {
+     "name": "Y",
+     "expr": "if(g == 1, A*B, if(g == 2, max(A, B), if(g == 3, 1 - A*B, if(g == 4, 1 - max(A, B), if(g == 5, abs(A - B), if(g == 6, 1 - abs(A - B), 1 - A))))))"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Output Y"
+     },
+     "expr": "Y",
+     "digits": 0
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     26
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 7,
+     "x2": 7,
+     "y2": 7,
+     "color": {
+      "by": "A",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 3,
+     "x2": 7,
+     "y2": 3,
+     "color": {
+      "by": "B",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "width": 5,
+     "visibleIf": "g != 7"
+    },
+    {
+     "shape": "text",
+     "x": 0.6,
+     "y": 7.6,
+     "text": {
+      "en": "A = {A:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0.6,
+     "y": 3.6,
+     "text": {
+      "en": "B = {B:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "left",
+     "visibleIf": "g != 7"
+    },
+    {
+     "shape": "rect",
+     "x": 7,
+     "y": 1.5,
+     "w": 4,
+     "h": 7,
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 5,
+     "x2": 15,
+     "y2": 5,
+     "color": {
+      "by": "Y",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "width": 5
+    },
+    {
+     "shape": "icon",
+     "icon": "bulb",
+     "x": 16.2,
+     "y": 5,
+     "size": 2,
+     "on": "Y"
+    },
+    {
+     "shape": "text",
+     "x": 16.2,
+     "y": 2.8,
+     "text": {
+      "en": "Y = {Y:0}"
+     },
+     "size": 22,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 5,
+     "text": {
+      "en": "AND"
+     },
+     "size": 24,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "g == 1"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 5,
+     "text": {
+      "en": "OR"
+     },
+     "size": 24,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "g == 2"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 5,
+     "text": {
+      "en": "NAND"
+     },
+     "size": 24,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "g == 3"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 5,
+     "text": {
+      "en": "NOR"
+     },
+     "size": 24,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "g == 4"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 5,
+     "text": {
+      "en": "XOR"
+     },
+     "size": 24,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "g == 5"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 5,
+     "text": {
+      "en": "XNOR"
+     },
+     "size": 24,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "g == 6"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 5,
+     "text": {
+      "en": "NOT"
+     },
+     "size": 24,
+     "color": "white",
+     "align": "center",
+     "visibleIf": "g == 7"
+    },
+    {
+     "shape": "text",
+     "x": 22,
+     "y": 9.2,
+     "text": {
+      "en": "A  B  |  Y"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 22,
+     "y": 7.8,
+     "text": {
+      "en": "0  0  |  {if(g == 1, 0*0, if(g == 2, max(0, 0), if(g == 3, 1 - 0*0, if(g == 4, 1 - max(0, 0), if(g == 5, abs(0 - 0), if(g == 6, 1 - abs(0 - 0), 1 - 0)))))):0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 22,
+     "y": 6.199999999999999,
+     "text": {
+      "en": "0  1  |  {if(g == 1, 0*1, if(g == 2, max(0, 1), if(g == 3, 1 - 0*1, if(g == 4, 1 - max(0, 1), if(g == 5, abs(0 - 1), if(g == 6, 1 - abs(0 - 1), 1 - 0)))))):0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 22,
+     "y": 4.6,
+     "text": {
+      "en": "1  0  |  {if(g == 1, 1*0, if(g == 2, max(1, 0), if(g == 3, 1 - 1*0, if(g == 4, 1 - max(1, 0), if(g == 5, abs(1 - 0), if(g == 6, 1 - abs(1 - 0), 1 - 1)))))):0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 22,
+     "y": 2.999999999999999,
+     "text": {
+      "en": "1  1  |  {if(g == 1, 1*1, if(g == 2, max(1, 1), if(g == 3, 1 - 1*1, if(g == 4, 1 - max(1, 1), if(g == 5, abs(1 - 1), if(g == 6, 1 - abs(1 - 1), 1 - 1)))))):0}"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 19.2,
+     "y": "7.1 - (2*A + B)*1.6",
+     "w": 5.6,
+     "h": 1.4,
+     "color": "yellow",
+     "opacity": 0.25
+    }
+   ],
+   "sliders": []
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "De Morgan's theorems and duality"
+   },
+   "body": {
+    "en": "De Morgan's first theorem: (A + B)' = A'·B'. The second: (A·B)' = A' + B'. They extend to any number of variables: (A + B + C)' = A'B'C'. To complement a whole expression, change every + to ·, every · to +, and complement each variable (keep brackets to preserve the order of operations). The principle of duality states that every Boolean identity remains true when + and · are interchanged and 0 and 1 are interchanged (the variables are not complemented)."
+   },
+   "points": [
+    {
+     "en": "(A + B)' = A'·B'"
+    },
+    {
+     "en": "(A·B)' = A' + B'"
+    },
+    {
+     "en": "Complement: swap + and ·, complement each variable"
+    },
+    {
+     "en": "Dual: swap + and ·, 0 and 1 only"
+    }
+   ],
+   "narration": {
+    "en": "De Morgan's first theorem: (A + B)' = A'·B'. The second: (A·B)' = A' + B'. They extend to any number of variables: (A + B + C)' = A'B'C'. To complement a whole expression, change every + to ·, every · to +, and complement each variable (keep brackets to preserve the order of operations). The principle of duality states that every Boolean identity remains true when + and · are interchanged and 0 and 1 are interchanged (the variables are not complemented)."
+   }
+  },
+  {
+   "id": "activity-match",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Name the law"
+   },
+   "prompt": {
+    "en": "Match each identity with its law."
+   },
+   "narration": {
+    "en": "Match each identity with its law."
+   },
+   "seconds": 150,
+   "pairs": [
+    {
+     "left": {
+      "en": "A + AB = A"
+     },
+     "right": {
+      "en": "Absorption"
+     }
+    },
+    {
+     "left": {
+      "en": "A + A' = 1"
+     },
+     "right": {
+      "en": "Complement"
+     }
+    },
+    {
+     "left": {
+      "en": "A + A = A"
+     },
+     "right": {
+      "en": "Idempotence"
+     }
+    },
+    {
+     "left": {
+      "en": "(A')' = A"
+     },
+     "right": {
+      "en": "Involution"
+     }
+    },
+    {
+     "left": {
+      "en": "(A + B)' = A'B'"
+     },
+     "right": {
+      "en": "De Morgan's theorem"
+     }
+    },
+    {
+     "left": {
+      "en": "A(B + C) = AB + AC"
+     },
+     "right": {
+      "en": "Distributive"
+     }
+    }
+   ],
+   "explanation": {
+    "en": "Absorption removes a term that contains another term; complement pairs a variable with its NOT; idempotence removes a repeat; involution cancels a double NOT."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Simplify F = (A + B)(A + B') and state the dual of the result."
+   },
+   "steps": [
+    {
+     "en": "(A + B)(A + B') = A + BB'   (distributive: A + BC = (A + B)(A + C))"
+    },
+    {
+     "en": "BB' = 0 (complement law), so F = A + 0 = A."
+    },
+    {
+     "en": "The dual of the identity is AB + AB' = A."
+    }
+   ],
+   "answer": {
+    "en": "F = A; dual: AB + AB' = A"
+   },
+   "narration": {
+    "en": "Simplify F = (A + B)(A + B') and state the dual of the result."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Break the bar, change the sign"
+   },
+   "body": {
+    "en": "When a long complement bar is broken, the sign beneath it changes: + becomes · and · becomes +."
+   },
+   "narration": {
+    "en": "When a long complement bar is broken, the sign beneath it changes: + becomes · and · becomes +."
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Break the line, change the sign."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i2cs13-q01",
+    "i2cs13-q02",
+    "i2cs13-q03"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i2cs13-q04"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Boolean algebra uses 0, 1 and +, ·, '."
+    },
+    {
+     "en": "Key laws: complement, absorption, A + A'B = A + B."
+    },
+    {
+     "en": "De Morgan: (A + B)' = A'B', (AB)' = A' + B'."
+    },
+    {
+     "en": "Duality: swap + and ·, 0 and 1."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Simplify A'B'C + A'BC + AB'C."
+    },
+    {
+     "en": "Find the complement of F = A(B' + C)."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i2cs13-q04"
+   ],
+   "narration": {
+    "en": "Recap. Boolean algebra uses 0, 1 and +, ·, '. Key laws: complement, absorption, A + A'B = A + B. De Morgan: (A + B)' = A'B', (AB)' = A' + B'. Duality: swap + and ·, 0 and 1."
+   }
+  }
+ ]
+}

@@ -1,0 +1,594 @@
+{
+ "id": "puc2-computer-science-15-recursion.t2.lesson",
+ "chapterId": "puc2-computer-science-15-recursion",
+ "topicId": "puc2-computer-science-15-recursion.t2",
+ "title": {
+  "en": "Recursive algorithms"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Recursion at work"
+   },
+   "hook": {
+    "en": "Euclid found the GCD by recursion 2300 years ago. Fibonacci numbers, binary search, reversing a string and converting to binary all have short recursive solutions."
+   },
+   "objectives": [
+    {
+     "en": "Write recursive methods for GCD, Fibonacci, power and digit problems"
+    },
+    {
+     "en": "Write recursive methods on strings and arrays"
+    },
+    {
+     "en": "Identify inefficient recursion such as naive Fibonacci"
+    }
+   ],
+   "narration": {
+    "en": "Euclid found the GCD by recursion 2300 years ago. Fibonacci numbers, binary search, reversing a string and converting to binary all have short recursive solutions."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Number problems"
+   },
+   "body": {
+    "en": "Many number problems reduce to a smaller one. GCD (Euclid): gcd(a, b) = a if b == 0, else gcd(b, a % b). Power: pow(x, n) = 1 if n == 0, else x * pow(x, n − 1). Sum of digits: sod(n) = 0 if n == 0, else n % 10 + sod(n / 10). Fibonacci: fib(n) = n if n <= 1, else fib(n − 1) + fib(n − 2). Decimal to binary: bin(n) prints bin(n / 2) and then n % 2."
+   },
+   "points": [
+    {
+     "en": "gcd(a, b) = gcd(b, a % b); gcd(a, 0) = a"
+    },
+    {
+     "en": "pow(x, n) = x * pow(x, n − 1)"
+    },
+    {
+     "en": "sod(n) = n % 10 + sod(n / 10)"
+    },
+    {
+     "en": "fib(n) = fib(n − 1) + fib(n − 2)"
+    }
+   ],
+   "narration": {
+    "en": "Many number problems reduce to a smaller one. GCD (Euclid): gcd(a, b) = a if b == 0, else gcd(b, a % b). Power: pow(x, n) = 1 if n == 0, else x * pow(x, n − 1). Sum of digits: sod(n) = 0 if n == 0, else n % 10 + sod(n / 10). Fibonacci: fib(n) = n if n <= 1, else fib(n − 1) + fib(n − 2). Decimal to binary: bin(n) prints bin(n / 2) and then n % 2."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: gcd(48, 18) by Euclid"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "static int gcd(int a, int b) { if (b == 0) return a; return gcd(b, a % b); }"
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        2
+       ],
+       "text": {
+        "en": "gcd(48, 18) by Euclid"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        10
+       ],
+       "text": {
+        "en": "gcd(48, 18) → gcd(18, 48 % 18 = 12)"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        14.5
+       ],
+       "text": {
+        "en": "gcd(18, 12) → gcd(12, 6)"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        19.0
+       ],
+       "text": {
+        "en": "gcd(12, 6)  → gcd(6, 0)"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        23.5
+       ],
+       "text": {
+        "en": "gcd(6, 0) = 6"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Fibonacci the naive way calls itself twice, so work repeats."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.0
+       ],
+       "text": {
+        "en": "fib(5) calls fib(4) and fib(3)"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        32.5
+       ],
+       "text": {
+        "en": "fib(4) calls fib(3) again …"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        37.0
+       ],
+       "text": {
+        "en": "fib(3) is computed twice, fib(2) three times"
+       },
+       "size": 3,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        3,
+        41.5
+       ],
+       "text": {
+        "en": "Calls grow roughly like 1.6^n"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    }
+   ],
+   "narration": {
+    "en": "Let us build up gcd(48, 18) by Euclid on the board, one step at a time."
+   }
+  },
+  {
+   "id": "int1",
+   "type": "interactive",
+   "kind": "readouts",
+   "title": {
+    "en": "Euclid and Fibonacci"
+   },
+   "caption": {
+    "en": "Choose a and b to see gcd(a, b) and how many recursive calls Euclid makes; choose n to see fib(n) and how many calls the naive recursive fib makes."
+   },
+   "narration": {
+    "en": "Choose a and b to see gcd(a, b) and how many recursive calls Euclid makes; choose n to see fib(n) and how many calls the naive recursive fib makes."
+   },
+   "seconds": 150,
+   "optional": true,
+   "tryThis": [
+    {
+     "en": "Try gcd(89, 55). Why so many calls?"
+    },
+    {
+     "en": "Compare the calls for fib(10) and fib(20)."
+    },
+    {
+     "en": "Why is Euclid fast but naive Fibonacci slow?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "n for fib(n)"
+     },
+     "min": 1,
+     "max": 25,
+     "step": 1,
+     "value": 10
+    },
+    {
+     "name": "ga",
+     "label": {
+      "en": "a"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 48
+    },
+    {
+     "name": "gb",
+     "label": {
+      "en": "b"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 18
+    }
+   ],
+   "vars": [
+    {
+     "name": "phi",
+     "expr": "(1 + sqrt(5))/2"
+    },
+    {
+     "name": "fb",
+     "expr": "round(phi^n/sqrt(5))"
+    },
+    {
+     "name": "p1",
+     "expr": "if(gb == 0, ga, gb)"
+    },
+    {
+     "name": "q1",
+     "expr": "if(gb == 0, 0, mod(ga, gb))"
+    },
+    {
+     "name": "p2",
+     "expr": "if(q1 == 0, p1, q1)"
+    },
+    {
+     "name": "q2",
+     "expr": "if(q1 == 0, 0, mod(p1, q1))"
+    },
+    {
+     "name": "p3",
+     "expr": "if(q2 == 0, p2, q2)"
+    },
+    {
+     "name": "q3",
+     "expr": "if(q2 == 0, 0, mod(p2, q2))"
+    },
+    {
+     "name": "p4",
+     "expr": "if(q3 == 0, p3, q3)"
+    },
+    {
+     "name": "q4",
+     "expr": "if(q3 == 0, 0, mod(p3, q3))"
+    },
+    {
+     "name": "p5",
+     "expr": "if(q4 == 0, p4, q4)"
+    },
+    {
+     "name": "q5",
+     "expr": "if(q4 == 0, 0, mod(p4, q4))"
+    },
+    {
+     "name": "p6",
+     "expr": "if(q5 == 0, p5, q5)"
+    },
+    {
+     "name": "q6",
+     "expr": "if(q5 == 0, 0, mod(p5, q5))"
+    },
+    {
+     "name": "p7",
+     "expr": "if(q6 == 0, p6, q6)"
+    },
+    {
+     "name": "q7",
+     "expr": "if(q6 == 0, 0, mod(p6, q6))"
+    },
+    {
+     "name": "p8",
+     "expr": "if(q7 == 0, p7, q7)"
+    },
+    {
+     "name": "q8",
+     "expr": "if(q7 == 0, 0, mod(p7, q7))"
+    },
+    {
+     "name": "p9",
+     "expr": "if(q8 == 0, p8, q8)"
+    },
+    {
+     "name": "q9",
+     "expr": "if(q8 == 0, 0, mod(p8, q8))"
+    },
+    {
+     "name": "p10",
+     "expr": "if(q9 == 0, p9, q9)"
+    },
+    {
+     "name": "q10",
+     "expr": "if(q9 == 0, 0, mod(p9, q9))"
+    },
+    {
+     "name": "p11",
+     "expr": "if(q10 == 0, p10, q10)"
+    },
+    {
+     "name": "q11",
+     "expr": "if(q10 == 0, 0, mod(p10, q10))"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "gcd(a, b)"
+     },
+     "expr": "p11",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Calls to gcd (including the base case)"
+     },
+     "expr": "1 + (gb != 0) + (q1 != 0) + (q2 != 0) + (q3 != 0) + (q4 != 0) + (q5 != 0) + (q6 != 0) + (q7 != 0) + (q8 != 0) + (q9 != 0) + (q10 != 0)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "fib(n)"
+     },
+     "expr": "fb",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Calls made by naive fib(n) = 2·fib(n+1) − 1"
+     },
+     "expr": "2*round(phi^(n + 1)/sqrt(5)) - 1",
+     "digits": 0
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Strings, arrays and binary search"
+   },
+   "body": {
+    "en": "Recursion also works on strings and arrays by shrinking an index range. Reverse a string: rev(s) = \"\" if s is empty, else rev(s.substring(1)) + s.charAt(0). Palindrome: check the first and last characters and recurse on the middle. Binary search: search(a, key, low, high) returns −1 if low > high; otherwise compares a[mid] and recurses on one half. Sum of an array: sum(a, i) = 0 if i == a.length, else a[i] + sum(a, i + 1)."
+   },
+   "points": [
+    {
+     "en": "Shrink the string: substring(1)"
+    },
+    {
+     "en": "Shrink the range: low, high"
+    },
+    {
+     "en": "Base case: empty string or empty range"
+    },
+    {
+     "en": "Binary search: recurse on one half"
+    }
+   ],
+   "narration": {
+    "en": "Recursion also works on strings and arrays by shrinking an index range. Reverse a string: rev(s) = \"\" if s is empty, else rev(s.substring(1)) + s.charAt(0). Palindrome: check the first and last characters and recurse on the middle. Binary search: search(a, key, low, high) returns −1 if low > high; otherwise compares a[mid] and recurses on one half. Sum of an array: sum(a, i) = 0 if i == a.length, else a[i] + sum(a, i + 1)."
+   }
+  },
+  {
+   "id": "activity-match",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Method and base case"
+   },
+   "prompt": {
+    "en": "Match each recursive method with its base case."
+   },
+   "narration": {
+    "en": "Match each recursive method with its base case."
+   },
+   "seconds": 150,
+   "pairs": [
+    {
+     "left": {
+      "en": "gcd(a, b)"
+     },
+     "right": {
+      "en": "b == 0 → return a"
+     }
+    },
+    {
+     "left": {
+      "en": "fact(n)"
+     },
+     "right": {
+      "en": "n <= 1 → return 1"
+     }
+    },
+    {
+     "left": {
+      "en": "fib(n)"
+     },
+     "right": {
+      "en": "n <= 1 → return n"
+     }
+    },
+    {
+     "left": {
+      "en": "reverse(s)"
+     },
+     "right": {
+      "en": "s is empty → return \"\""
+     }
+    },
+    {
+     "left": {
+      "en": "binarySearch(low, high)"
+     },
+     "right": {
+      "en": "low > high → return −1"
+     }
+    },
+    {
+     "left": {
+      "en": "power(x, n)"
+     },
+     "right": {
+      "en": "n == 0 → return 1"
+     }
+    }
+   ],
+   "explanation": {
+    "en": "Each base case is the smallest version of the problem, answered without another call."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "title": {
+    "en": "Worked example"
+   },
+   "problem": {
+    "en": "Write a recursive method boolean isPal(String s) that checks whether s is a palindrome."
+   },
+   "steps": [
+    {
+     "en": "static boolean isPal(String s) {"
+    },
+    {
+     "en": "    if (s.length() <= 1) return true;"
+    },
+    {
+     "en": "    if (s.charAt(0) != s.charAt(s.length() - 1)) return false;"
+    },
+    {
+     "en": "    return isPal(s.substring(1, s.length() - 1));"
+    },
+    {
+     "en": "}"
+    },
+    {
+     "en": "isPal(\"level\") → isPal(\"eve\") → isPal(\"v\") → true."
+    }
+   ],
+   "answer": {
+    "en": "isPal(\"level\") is true; isPal(\"lever\") is false."
+   },
+   "narration": {
+    "en": "Write a recursive method boolean isPal(String s) that checks whether s is a palindrome."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Trust the smaller call"
+   },
+   "body": {
+    "en": "When writing recursion, assume the method already works for the smaller input. Ask only: how do I build today's answer from the smaller answer, and what is the smallest case?"
+   },
+   "narration": {
+    "en": "When writing recursion, assume the method already works for the smaller input. Ask only: how do I build today's answer from the smaller answer, and what is the smallest case?"
+   },
+   "seconds": 60,
+   "optional": true,
+   "mnemonic": {
+    "en": "Trust the call, write the base."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "i2cs15-q05",
+    "i2cs15-q06",
+    "i2cs15-q07"
+   ],
+   "mode": "team",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Team quiz. Each team agrees on one answer before the timer runs out."
+   }
+  },
+  {
+   "id": "pyq",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "i2cs15-q08"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board-pattern questions. Read every option before you choose."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "GCD: gcd(b, a % b) until b is 0."
+    },
+    {
+     "en": "Fibonacci by naive recursion repeats work and is slow."
+    },
+    {
+     "en": "Strings shrink with substring; arrays with an index range."
+    },
+    {
+     "en": "Every method needs a base case for the smallest input."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write a recursive method to count the vowels of a string."
+    },
+    {
+     "en": "Write recursive binary search returning the index of key."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "i2cs15-q08"
+   ],
+   "narration": {
+    "en": "Recap. GCD: gcd(b, a % b) until b is 0. Fibonacci by naive recursion repeats work and is slow. Strings shrink with substring; arrays with an index range. Every method needs a base case for the smallest input."
+   }
+  }
+ ]
+}
