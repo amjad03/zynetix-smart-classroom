@@ -561,6 +561,258 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Union, intersection and difference",
+    "kn": "ಸಂಯೋಗ, ಛೇದನ ಮತ್ತು ವ್ಯತ್ಯಾಸ"
+   },
+   "narration": {
+    "en": "Each dot is an element of U. Choose an operation: the dots of the result light up. Drag the circles A and B.",
+    "kn": "ಪ್ರತಿ ಚುಕ್ಕೆ U ಯ ಒಂದು ಅಂಶ. ಒಂದು ಕ್ರಿಯೆ ಆರಿಸಿ: ಫಲಿತದ ಚುಕ್ಕೆಗಳು ಬೆಳಗುತ್ತವೆ. A ಮತ್ತು B ವೃತ್ತಗಳನ್ನು ಎಳೆಯಿರಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Each dot is an element of U. Choose an operation: the dots of the result light up. Drag the circles A and B.",
+    "kn": "ಪ್ರತಿ ಚುಕ್ಕೆ U ಯ ಒಂದು ಅಂಶ. ಒಂದು ಕ್ರಿಯೆ ಆರಿಸಿ: ಫಲಿತದ ಚುಕ್ಕೆಗಳು ಬೆಳಗುತ್ತವೆ. A ಮತ್ತು B ವೃತ್ತಗಳನ್ನು ಎಳೆಯಿರಿ."
+   },
+   "sliders": [
+    {
+     "name": "rA",
+     "label": {
+      "en": "Size of A",
+      "kn": "A ಯ ಗಾತ್ರ"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 0.25,
+     "value": 3
+    },
+    {
+     "name": "rB",
+     "label": {
+      "en": "Size of B",
+      "kn": "B ಯ ಗಾತ್ರ"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 0.25,
+     "value": 3
+    }
+   ],
+   "choices": [
+    {
+     "name": "op",
+     "label": {
+      "en": "Show",
+      "kn": "ತೋರಿಸು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "A ∪ B"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "A ∩ B"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "A − B"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "B − A"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "(A ∪ B)′"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "A′"
+       },
+       "value": 6
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "handles": [
+    {
+     "name": "A",
+     "x": -2,
+     "y": 0,
+     "label": "A",
+     "box": {
+      "x": [
+       -5,
+       5
+      ],
+      "y": [
+       -2,
+       2
+      ]
+     },
+     "snap": 0.5,
+     "color": "blue"
+    },
+    {
+     "name": "B",
+     "x": 2,
+     "y": 0,
+     "label": "B",
+     "box": {
+      "x": [
+       -5,
+       5
+      ],
+      "y": [
+       -2,
+       2
+      ]
+     },
+     "snap": 0.5,
+     "color": "green"
+    }
+   ],
+   "view": {
+    "x": [
+     -8.5,
+     8.5
+    ],
+    "y": [
+     -5.2,
+     5.2
+    ],
+    "axes": false,
+    "grid": false,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -8.2,
+     "y": -5,
+     "w": 16.4,
+     "h": 10,
+     "fill": false,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "A_x",
+     "y": "A_y",
+     "r": "rA",
+     "fill": false,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "B_x",
+     "y": "B_y",
+     "r": "rB",
+     "fill": false,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "particles",
+     "count": 240,
+     "x": "(-7.6 + 0.8*mod(i, 20))",
+     "y": "(-4.4 + 0.8*floor(i/20))",
+     "r": 0.12,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "particles",
+     "count": 240,
+     "x": "(-7.6 + 0.8*mod(i, 20))",
+     "y": "(-4.4 + 0.8*floor(i/20))",
+     "r": 0.2,
+     "color": "yellow",
+     "visibleIf": "if(op == 1, (hypot((-7.6 + 0.8*mod(i, 20)) - A_x, (-4.4 + 0.8*floor(i/20)) - A_y) < rA) || (hypot((-7.6 + 0.8*mod(i, 20)) - B_x, (-4.4 + 0.8*floor(i/20)) - B_y) < rB), if(op == 2, (hypot((-7.6 + 0.8*mod(i, 20)) - A_x, (-4.4 + 0.8*floor(i/20)) - A_y) < rA) && (hypot((-7.6 + 0.8*mod(i, 20)) - B_x, (-4.4 + 0.8*floor(i/20)) - B_y) < rB), if(op == 3, (hypot((-7.6 + 0.8*mod(i, 20)) - A_x, (-4.4 + 0.8*floor(i/20)) - A_y) < rA) && !(hypot((-7.6 + 0.8*mod(i, 20)) - B_x, (-4.4 + 0.8*floor(i/20)) - B_y) < rB), if(op == 4, (hypot((-7.6 + 0.8*mod(i, 20)) - B_x, (-4.4 + 0.8*floor(i/20)) - B_y) < rB) && !(hypot((-7.6 + 0.8*mod(i, 20)) - A_x, (-4.4 + 0.8*floor(i/20)) - A_y) < rA), if(op == 5, !((hypot((-7.6 + 0.8*mod(i, 20)) - A_x, (-4.4 + 0.8*floor(i/20)) - A_y) < rA) || (hypot((-7.6 + 0.8*mod(i, 20)) - B_x, (-4.4 + 0.8*floor(i/20)) - B_y) < rB)), !(hypot((-7.6 + 0.8*mod(i, 20)) - A_x, (-4.4 + 0.8*floor(i/20)) - A_y) < rA))))))"
+    },
+    {
+     "shape": "text",
+     "x": "A_x",
+     "y": "A_y + rA + 0.3",
+     "text": {
+      "en": "A"
+     },
+     "size": 30,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": "B_x",
+     "y": "B_y + rB + 0.3",
+     "text": {
+      "en": "B"
+     },
+     "size": 30,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": -7.9,
+     "y": 4.6,
+     "text": {
+      "en": "U"
+     },
+     "size": 30,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Distance between centres",
+      "kn": "ಕೇಂದ್ರಗಳ ನಡುವಿನ ದೂರ"
+     },
+     "expr": "hypot(A_x - B_x, A_y - B_y)",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Disjoint (1 = yes)",
+      "kn": "ವಿಯುಕ್ತ (1 = ಹೌದು)"
+     },
+     "expr": "hypot(A_x - B_x, A_y - B_y) >= rA + rB",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Pull B away from A. What happens to A ∩ B? The sets are now disjoint.",
+     "kn": "B ಯನ್ನು A ಯಿಂದ ದೂರ ಎಳೆಯಿರಿ. A ∩ B ಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Compare A − B with B − A. Are they the same set?",
+     "kn": "A − B ಮತ್ತು B − A ಹೋಲಿಸಿ. ಅವು ಒಂದೇ ಗಣವೇ?"
+    },
+    {
+     "en": "Look at (A ∪ B)′. Which dots are in neither set?",
+     "kn": "(A ∪ B)′ ನೋಡಿ. ಯಾವ ಚುಕ್ಕೆಗಳು ಎರಡರಲ್ಲೂ ಇಲ್ಲ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

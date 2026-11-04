@@ -230,6 +230,237 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Distance from a point to a line",
+    "kn": "ಬಿಂದುವಿನಿಂದ ರೇಖೆಗೆ ದೂರ"
+   },
+   "narration": {
+    "en": "Set the line Ax + By + C = 0 and drag the point P. The shortest path to the line is the perpendicular PF, of length |Ax₁ + By₁ + C| / √(A² + B²).",
+    "kn": "Ax + By + C = 0 ರೇಖೆ ಹೊಂದಿಸಿ P ಬಿಂದುವನ್ನು ಎಳೆಯಿರಿ. ರೇಖೆಗೆ ಕಡಿಮೆ ದಾರಿ ಲಂಬ PF, ಉದ್ದ |Ax₁ + By₁ + C| / √(A² + B²)."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Set the line Ax + By + C = 0 and drag the point P. The shortest path to the line is the perpendicular PF, of length |Ax₁ + By₁ + C| / √(A² + B²).",
+    "kn": "Ax + By + C = 0 ರೇಖೆ ಹೊಂದಿಸಿ P ಬಿಂದುವನ್ನು ಎಳೆಯಿರಿ. ರೇಖೆಗೆ ಕಡಿಮೆ ದಾರಿ ಲಂಬ PF, ಉದ್ದ |Ax₁ + By₁ + C| / √(A² + B²)."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "A"
+     },
+     "min": 0.5,
+     "max": 5,
+     "step": 0.5,
+     "value": 3
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "B"
+     },
+     "min": -4,
+     "max": 4,
+     "step": 0.5,
+     "value": 4
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "C"
+     },
+     "min": -10,
+     "max": 10,
+     "step": 1,
+     "value": -6
+    }
+   ],
+   "toggles": [
+    {
+     "name": "orig",
+     "label": {
+      "en": "Distance from the origin",
+      "kn": "ಮೂಲಬಿಂದುವಿನಿಂದ ದೂರ"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "x": 3,
+     "y": 3,
+     "label": "P",
+     "box": {
+      "x": [
+       -5.5,
+       5.5
+      ],
+      "y": [
+       -3.5,
+       3.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "orange"
+    }
+   ],
+   "vars": [
+    {
+     "name": "n2",
+     "expr": "A^2 + B^2"
+    },
+    {
+     "name": "val",
+     "expr": "A*P_x + B*P_y + C"
+    },
+    {
+     "name": "d",
+     "expr": "abs(val)/sqrt(n2)"
+    },
+    {
+     "name": "Fx",
+     "expr": "P_x - val*A/n2"
+    },
+    {
+     "name": "Fy",
+     "expr": "P_y - val*B/n2"
+    },
+    {
+     "name": "bx",
+     "expr": "-A*C/n2"
+    },
+    {
+     "name": "by",
+     "expr": "-B*C/n2"
+    },
+    {
+     "name": "vx",
+     "expr": "-B/sqrt(n2)"
+    },
+    {
+     "name": "vy",
+     "expr": "A/sqrt(n2)"
+    }
+   ],
+   "view": {
+    "x": [
+     -6,
+     6
+    ],
+    "y": [
+     -4,
+     4
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": "bx - 20*vx",
+     "y1": "by - 20*vy",
+     "x2": "bx + 20*vx",
+     "y2": "by + 20*vy",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "P_x",
+     "y1": "P_y",
+     "x2": "Fx",
+     "y2": "Fy",
+     "color": "orange",
+     "width": 4,
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "x": "Fx",
+     "y": "Fy",
+     "r": 0.15,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": "Fx + 0.35",
+     "y": "Fy - 0.35",
+     "text": {
+      "en": "F"
+     },
+     "size": 26,
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "bx",
+     "y2": "by",
+     "color": "green",
+     "width": 3,
+     "dashed": true,
+     "visibleIf": "orig"
+    },
+    {
+     "shape": "label",
+     "x": "(P_x + Fx)/2 + 0.5",
+     "y": "(P_y + Fy)/2",
+     "text": {
+      "en": "d = {d:2}"
+     },
+     "size": 24,
+     "color": "orange",
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Ax₁ + By₁ + C"
+     },
+     "expr": "val",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Distance d",
+      "kn": "ದೂರ d"
+     },
+     "expr": "d",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Distance of O: |C|/√(A² + B²)",
+      "kn": "O ಯ ದೂರ"
+     },
+     "expr": "abs(C)/sqrt(n2)",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Put P on the line. What is Ax₁ + By₁ + C, and the distance?",
+     "kn": "P ಅನ್ನು ರೇಖೆಯ ಮೇಲೆ ಇಡಿ. Ax₁ + By₁ + C ಮತ್ತು ದೂರ ಎಷ್ಟು?"
+    },
+    {
+     "en": "Move P to the other side of the line. Which sign changes?",
+     "kn": "P ಅನ್ನು ರೇಖೆಯ ಇನ್ನೊಂದು ಬದಿಗೆ ಸರಿಸಿ. ಯಾವ ಚಿಹ್ನೆ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Double A, B and C. Is it the same line? Is the distance the same?",
+     "kn": "A, B, C ದ್ವಿಗುಣಗೊಳಿಸಿ. ಅದೇ ರೇಖೆಯೇ? ದೂರ ಅದೇಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

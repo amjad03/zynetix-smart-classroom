@@ -337,6 +337,198 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Bounce heights form a G.P.",
+    "kn": "ಪುಟಿತದ ಎತ್ತರಗಳು ಗುಣೋತ್ತರ ಶ್ರೇಣಿ"
+   },
+   "narration": {
+    "en": "A ball dropped from height h rises after each bounce to r times its previous height. The peaks h r, h r², h r³, … form a G.P. with common ratio r.",
+    "kn": "h ಎತ್ತರದಿಂದ ಬೀಳಿಸಿದ ಚೆಂಡು ಪ್ರತಿ ಪುಟಿತದ ನಂತರ ಹಿಂದಿನ ಎತ್ತರದ r ಪಟ್ಟು ಏರುತ್ತದೆ. ಶಿಖರಗಳು h r, h r², h r³, … ಸಾಮಾನ್ಯ ಅನುಪಾತ r ಇರುವ ಗುಣೋತ್ತರ ಶ್ರೇಣಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A ball dropped from height h rises after each bounce to r times its previous height. The peaks h r, h r², h r³, … form a G.P. with common ratio r.",
+    "kn": "h ಎತ್ತರದಿಂದ ಬೀಳಿಸಿದ ಚೆಂಡು ಪ್ರತಿ ಪುಟಿತದ ನಂತರ ಹಿಂದಿನ ಎತ್ತರದ r ಪಟ್ಟು ಏರುತ್ತದೆ. ಶಿಖರಗಳು h r, h r², h r³, … ಸಾಮಾನ್ಯ ಅನುಪಾತ r ಇರುವ ಗುಣೋತ್ತರ ಶ್ರೇಣಿ."
+   },
+   "sliders": [
+    {
+     "name": "h",
+     "label": {
+      "en": "Drop height h",
+      "kn": "ಬೀಳಿಸುವ ಎತ್ತರ h"
+     },
+     "min": 2,
+     "max": 10,
+     "step": 0.5,
+     "value": 8,
+     "unit": "m"
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Ratio r",
+      "kn": "ಅನುಪಾತ r"
+     },
+     "min": 0.3,
+     "max": 0.9,
+     "step": 0.05,
+     "value": 0.5
+    },
+    {
+     "name": "nb",
+     "label": {
+      "en": "Peak number n",
+      "kn": "ಶಿಖರ ಸಂಖ್ಯೆ n"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Drop",
+      "kn": "ಬೀಳಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 25,
+    "speeds": [
+     0.25,
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "t0",
+     "expr": "sqrt(h/4.9)"
+    },
+    {
+     "name": "q",
+     "expr": "sqrt(r)"
+    },
+    {
+     "name": "u",
+     "expr": "max(0, (t - t0)*(1 - q)/(2*t0*q))"
+    },
+    {
+     "name": "j",
+     "expr": "if(u >= 0.999, 0, min(40, floor(ln(1 - u)/ln(q))))"
+    },
+    {
+     "name": "tau",
+     "expr": "t - (t0 + 2*t0*q*(1 - q^j)/(1 - q))"
+    },
+    {
+     "name": "y",
+     "expr": "if(t < t0, h - 4.9*t^2, if(u >= 0.999, 0, max(0, 9.8*t0*q^(j + 1)*tau - 4.9*tau^2)))"
+    },
+    {
+     "name": "hn",
+     "expr": "h*r^nb"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     15
+    ],
+    "y": [
+     0,
+     10.6
+    ],
+    "axes": true,
+    "grid": false,
+    "equal": false,
+    "yLabel": "height (m)"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "hn",
+     "x2": 15,
+     "y2": "hn",
+     "dashed": true,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "label",
+     "x": 12.5,
+     "y": "hn + 0.6",
+     "text": {
+      "en": "peak {nb:0}: {hn:2} m",
+      "kn": "ಶಿಖರ {nb:0}: {hn:2} m"
+     },
+     "size": 24,
+     "color": "green"
+    },
+    {
+     "shape": "trail",
+     "x": "0.5 + 0.55*t",
+     "y": "y + 0.25",
+     "length": 1500,
+     "color": "yellow",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "0.5 + 0.55*t",
+     "y": "y + 0.25",
+     "r": 0.25,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Peak n = h rⁿ",
+      "kn": "ಶಿಖರ n = h rⁿ"
+     },
+     "expr": "hn",
+     "digits": 2,
+     "unit": "m"
+    },
+    {
+     "label": {
+      "en": "First peak a = h r",
+      "kn": "ಮೊದಲ ಶಿಖರ a = h r"
+     },
+     "expr": "h*r",
+     "digits": 2,
+     "unit": "m"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With h = 8 m and r = 0.5, predict the third peak, then check it on the dashed line.",
+     "kn": "h = 8 m, r = 0.5 ಆದಾಗ ಮೂರನೇ ಶಿಖರ ಊಹಿಸಿ, ನಂತರ ಚುಕ್ಕೆ ರೇಖೆಯಲ್ಲಿ ಪರೀಕ್ಷಿಸಿ."
+    },
+    {
+     "en": "Which peak is the first one below 1 m when r = 0.6 and h = 10 m?",
+     "kn": "r = 0.6, h = 10 m ಆದಾಗ 1 m ಗಿಂತ ಕೆಳಗಿನ ಮೊದಲ ಶಿಖರ ಯಾವುದು?"
+    },
+    {
+     "en": "Why do the bounces also get quicker?",
+     "kn": "ಪುಟಿತಗಳು ಏಕೆ ವೇಗವಾಗುತ್ತವೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

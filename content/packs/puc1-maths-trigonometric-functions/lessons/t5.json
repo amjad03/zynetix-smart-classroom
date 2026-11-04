@@ -218,6 +218,181 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Sum to product: beats",
+    "kn": "ಮೊತ್ತದಿಂದ ಗುಣಲಬ್ಧ: ಬೀಟ್‌ಗಳು"
+   },
+   "narration": {
+    "en": "Top: two waves with angles A = px − t and B = qx − t. Bottom: their sum (or difference). It always equals a product: a fast wave at the average (A + B)/2 inside the dashed envelope ±2cos((A − B)/2).",
+    "kn": "ಮೇಲೆ: A = px − t, B = qx − t ಕೋನಗಳ ಎರಡು ಅಲೆಗಳು. ಕೆಳಗೆ: ಅವುಗಳ ಮೊತ್ತ (ಅಥವಾ ವ್ಯತ್ಯಾಸ). ಅದು ಯಾವಾಗಲೂ ಗುಣಲಬ್ಧ: ಸರಾಸರಿ (A + B)/2 ನ ವೇಗದ ಅಲೆ, ±2cos((A − B)/2) ಹೊದಿಕೆಯೊಳಗೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Top: two waves with angles A = px − t and B = qx − t. Bottom: their sum (or difference). It always equals a product: a fast wave at the average (A + B)/2 inside the dashed envelope ±2cos((A − B)/2).",
+    "kn": "ಮೇಲೆ: A = px − t, B = qx − t ಕೋನಗಳ ಎರಡು ಅಲೆಗಳು. ಕೆಳಗೆ: ಅವುಗಳ ಮೊತ್ತ (ಅಥವಾ ವ್ಯತ್ಯಾಸ). ಅದು ಯಾವಾಗಲೂ ಗುಣಲಬ್ಧ: ಸರಾಸರಿ (A + B)/2 ನ ವೇಗದ ಅಲೆ, ±2cos((A − B)/2) ಹೊದಿಕೆಯೊಳಗೆ."
+   },
+   "sliders": [
+    {
+     "name": "p",
+     "label": {
+      "en": "p"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 0.5,
+     "value": 6
+    },
+    {
+     "name": "q",
+     "label": {
+      "en": "q"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 0.5,
+     "value": 5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "envT",
+     "label": {
+      "en": "Envelope",
+      "kn": "ಹೊದಿಕೆ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "kind",
+     "label": {
+      "en": "Combine",
+      "kn": "ಸಂಯೋಜನೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "sin A + sin B"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "cos A + cos B"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "cos A − cos B"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 6.2832,
+    "loop": true,
+    "autoplay": true
+   },
+   "view": {
+    "x": [
+     0,
+     12.6
+    ],
+    "y": [
+     -3.4,
+     4.6
+    ],
+    "axes": false,
+    "grid": false,
+    "equal": false
+   },
+   "shapes": [
+    {
+     "shape": "wave",
+     "fn": "3 + 0.7*if(kind == 1, sin((p*x - t)), cos((p*x - t)))",
+     "color": "blue",
+     "width": 2
+    },
+    {
+     "shape": "wave",
+     "fn": "3 + 0.7*if(kind == 1, sin((q*x - t)), cos((q*x - t)))",
+     "color": "green",
+     "width": 2
+    },
+    {
+     "shape": "wave",
+     "fn": "if(kind == 3, cos((p*x - t)) - cos((q*x - t)), if(kind == 1, sin((p*x - t)), cos((p*x - t))) + if(kind == 1, sin((q*x - t)), cos((q*x - t))))",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "fn": "if(kind == 3, 2*sin((p - q)*x/2), 2*cos((p - q)*x/2))",
+     "color": "red",
+     "dashed": true,
+     "width": 2,
+     "visibleIf": "envT"
+    },
+    {
+     "shape": "path",
+     "fn": "-if(kind == 3, 2*sin((p - q)*x/2), 2*cos((p - q)*x/2))",
+     "color": "red",
+     "dashed": true,
+     "width": 2,
+     "visibleIf": "envT"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 12.6,
+     "y2": 0,
+     "color": "white",
+     "width": 1,
+     "opacity": 0.4
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "(A + B)/2 uses (p + q)/2"
+     },
+     "expr": "(p + q)/2",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "(A − B)/2 uses (p − q)/2"
+     },
+     "expr": "(p - q)/2",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make p and q close (say 6 and 5). What does the sum look like?",
+     "kn": "p ಮತ್ತು q ಹತ್ತಿರ ಮಾಡಿ (6 ಮತ್ತು 5). ಮೊತ್ತ ಹೇಗೆ ಕಾಣುತ್ತದೆ?"
+    },
+    {
+     "en": "Set p = q. What is sin A + sin A, and what does the envelope become?",
+     "kn": "p = q ಮಾಡಿ. sin A + sin A ಎಷ್ಟು, ಹೊದಿಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Choose cos A − cos B. Which factor is now the envelope?",
+     "kn": "cos A − cos B ಆರಿಸಿ. ಈಗ ಯಾವ ಅಪವರ್ತನ ಹೊದಿಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

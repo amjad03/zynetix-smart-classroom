@@ -178,6 +178,285 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Variance as an average square",
+    "kn": "ಸರಾಸರಿ ವರ್ಗವಾಗಿ ಪ್ರಸರಣ"
+   },
+   "narration": {
+    "en": "Drag the data points. Each coloured square has side |xᵢ − x̄|, so its area is the squared deviation. The variance is the mean of these areas, and the yellow square of side σ has exactly that area.",
+    "kn": "ದತ್ತಾಂಶ ಬಿಂದುಗಳನ್ನು ಎಳೆಯಿರಿ. ಪ್ರತಿ ಬಣ್ಣದ ಚೌಕದ ಬಾಹು |xᵢ − x̄|, ಆದ್ದರಿಂದ ವಿಸ್ತೀರ್ಣ ವಿಚಲನದ ವರ್ಗ. ಪ್ರಸರಣ ಈ ವಿಸ್ತೀರ್ಣಗಳ ಸರಾಸರಿ; σ ಬಾಹುವಿನ ಹಳದಿ ಚೌಕಕ್ಕೆ ಅಷ್ಟೇ ವಿಸ್ತೀರ್ಣ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the data points. Each coloured square has side |xᵢ − x̄|, so its area is the squared deviation. The variance is the mean of these areas, and the yellow square of side σ has exactly that area.",
+    "kn": "ದತ್ತಾಂಶ ಬಿಂದುಗಳನ್ನು ಎಳೆಯಿರಿ. ಪ್ರತಿ ಬಣ್ಣದ ಚೌಕದ ಬಾಹು |xᵢ − x̄|, ಆದ್ದರಿಂದ ವಿಸ್ತೀರ್ಣ ವಿಚಲನದ ವರ್ಗ. ಪ್ರಸರಣ ಈ ವಿಸ್ತೀರ್ಣಗಳ ಸರಾಸರಿ; σ ಬಾಹುವಿನ ಹಳದಿ ಚೌಕಕ್ಕೆ ಅಷ್ಟೇ ವಿಸ್ತೀರ್ಣ."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Data points n",
+      "kn": "ದತ್ತಾಂಶ ಬಿಂದುಗಳು n"
+     },
+     "min": 2,
+     "max": 4,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sq",
+     "label": {
+      "en": "Squares",
+      "kn": "ಚೌಕಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "A",
+     "x": 6,
+     "y": 1,
+     "label": "A",
+     "axis": "x",
+     "box": {
+      "x": [
+       1,
+       19
+      ],
+      "y": [
+       0.5,
+       1.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "blue"
+    },
+    {
+     "name": "B",
+     "x": 8,
+     "y": 1,
+     "label": "B",
+     "axis": "x",
+     "box": {
+      "x": [
+       1,
+       19
+      ],
+      "y": [
+       0.5,
+       1.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "green"
+    },
+    {
+     "name": "C",
+     "x": 11,
+     "y": 1,
+     "label": "C",
+     "axis": "x",
+     "box": {
+      "x": [
+       1,
+       19
+      ],
+      "y": [
+       0.5,
+       1.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "orange"
+    },
+    {
+     "name": "D",
+     "x": 15,
+     "y": 1,
+     "label": "D",
+     "axis": "x",
+     "box": {
+      "x": [
+       1,
+       19
+      ],
+      "y": [
+       0.5,
+       1.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "red"
+    }
+   ],
+   "vars": [
+    {
+     "name": "m",
+     "expr": "(A_x + B_x + if(n > 2, C_x, 0) + if(n > 3, D_x, 0))/n"
+    },
+    {
+     "name": "v2",
+     "expr": "((A_x - m)^2 + (B_x - m)^2 + if(n > 2, (C_x - m)^2, 0) + if(n > 3, (D_x - m)^2, 0))/n"
+    },
+    {
+     "name": "sd",
+     "expr": "sqrt(v2)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     12
+    ],
+    "axes": true,
+    "grid": false,
+    "equal": true,
+    "xLabel": "x"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 1,
+     "x2": 20,
+     "y2": 1,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "x": "min(A_x, m)",
+     "y": 1,
+     "w": "abs(A_x - m)",
+     "h": "abs(A_x - m)",
+     "color": "blue",
+     "opacity": 0.25,
+     "visibleIf": "sq"
+    },
+    {
+     "shape": "rect",
+     "x": "min(B_x, m)",
+     "y": 1,
+     "w": "abs(B_x - m)",
+     "h": "abs(B_x - m)",
+     "color": "green",
+     "opacity": 0.25,
+     "visibleIf": "sq"
+    },
+    {
+     "shape": "rect",
+     "x": "min(C_x, m)",
+     "y": 1,
+     "w": "abs(C_x - m)",
+     "h": "abs(C_x - m)",
+     "color": "orange",
+     "opacity": 0.25,
+     "visibleIf": "sq && n > 2"
+    },
+    {
+     "shape": "rect",
+     "x": "min(D_x, m)",
+     "y": 1,
+     "w": "abs(D_x - m)",
+     "h": "abs(D_x - m)",
+     "color": "red",
+     "opacity": 0.25,
+     "visibleIf": "sq && n > 3"
+    },
+    {
+     "shape": "rect",
+     "x": "m - sd/2",
+     "y": 1,
+     "w": "sd",
+     "h": "sd",
+     "fill": false,
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "sq"
+    },
+    {
+     "shape": "line",
+     "x1": "m",
+     "y1": 0.2,
+     "x2": "m",
+     "y2": 11,
+     "color": "white",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": "m",
+     "y": 11.4,
+     "text": {
+      "en": "x̄ = {m:2}"
+     },
+     "size": 26
+    },
+    {
+     "shape": "particles",
+     "count": 2,
+     "x": "if(i == 0, C_x, D_x)",
+     "y": 1,
+     "r": 0.18,
+     "color": "white",
+     "opacity": 0.4,
+     "visibleIf": "n <= i + 2"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mean x̄",
+      "kn": "ಸರಾಸರಿ x̄"
+     },
+     "expr": "m",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Variance σ²",
+      "kn": "ಪ್ರಸರಣ σ²"
+     },
+     "expr": "v2",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Standard deviation σ",
+      "kn": "ಪ್ರಮಾಣಿತ ವಿಚಲನ σ"
+     },
+     "expr": "sd",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Move every point by the same amount. Does σ change?",
+     "kn": "ಎಲ್ಲಾ ಬಿಂದುಗಳನ್ನು ಸಮ ಪ್ರಮಾಣದಲ್ಲಿ ಸರಿಸಿ. σ ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Drag one point far away. Why does σ grow so fast?",
+     "kn": "ಒಂದು ಬಿಂದುವನ್ನು ದೂರ ಎಳೆಯಿರಿ. σ ಏಕೆ ವೇಗವಾಗಿ ಬೆಳೆಯುತ್ತದೆ?"
+    },
+    {
+     "en": "Put all the points together. What are the variance and σ?",
+     "kn": "ಎಲ್ಲಾ ಬಿಂದುಗಳನ್ನು ಒಟ್ಟಿಗೆ ಇಡಿ. ಪ್ರಸರಣ ಮತ್ತು σ ಎಷ್ಟು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

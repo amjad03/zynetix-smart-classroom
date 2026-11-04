@@ -527,6 +527,523 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Tree of choices",
+    "kn": "ಆಯ್ಕೆಗಳ ವೃಕ್ಷ"
+   },
+   "narration": {
+    "en": "Choose a shirt, then trousers. Every shirt branch splits into the same number of trouser branches, so the outfits number m × n. Press Next outfit to walk through them.",
+    "kn": "ಮೊದಲು ಅಂಗಿ, ನಂತರ ಪ್ಯಾಂಟ್ ಆರಿಸಿ. ಪ್ರತಿ ಅಂಗಿ ಕವಲು ಅಷ್ಟೇ ಪ್ಯಾಂಟ್ ಕವಲುಗಳಾಗಿ ಒಡೆಯುತ್ತದೆ; ಉಡುಪುಗಳು m × n. ಮುಂದಿನ ಉಡುಪು ಒತ್ತಿ ನೋಡಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Choose a shirt, then trousers. Every shirt branch splits into the same number of trouser branches, so the outfits number m × n. Press Next outfit to walk through them.",
+    "kn": "ಮೊದಲು ಅಂಗಿ, ನಂತರ ಪ್ಯಾಂಟ್ ಆರಿಸಿ. ಪ್ರತಿ ಅಂಗಿ ಕವಲು ಅಷ್ಟೇ ಪ್ಯಾಂಟ್ ಕವಲುಗಳಾಗಿ ಒಡೆಯುತ್ತದೆ; ಉಡುಪುಗಳು m × n. ಮುಂದಿನ ಉಡುಪು ಒತ್ತಿ ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Shirts m",
+      "kn": "ಅಂಗಿಗಳು m"
+     },
+     "min": 1,
+     "max": 4,
+     "step": 1,
+     "value": 3
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "Trousers n",
+      "kn": "ಪ್ಯಾಂಟ್‌ಗಳು n"
+     },
+     "min": 1,
+     "max": 4,
+     "step": 1,
+     "value": 2
+    }
+   ],
+   "counters": [
+    {
+     "name": "k",
+     "value": 0,
+     "min": 0,
+     "max": 15
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Next outfit",
+      "kn": "ಮುಂದಿನ ಉಡುಪು"
+     },
+     "icon": "next",
+     "set": {
+      "k": "mod(k + 1, m*n)"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "kk",
+     "expr": "mod(k, m*n)"
+    },
+    {
+     "name": "js",
+     "expr": "floor(kk/n)"
+    },
+    {
+     "name": "qs",
+     "expr": "mod(kk, n)"
+    },
+    {
+     "name": "c",
+     "expr": "(m*n - 1)/2"
+    },
+    {
+     "name": "h",
+     "expr": "(n - 1)/2"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.6,
+     16
+    ],
+    "y": [
+     -5,
+     5.4
+    ],
+    "axes": false,
+    "grid": false,
+    "equal": false
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 0.25,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 4,
+     "y2": "(c - 0*n - h)*0.55",
+     "width": 3,
+     "visibleIf": "0 < m",
+     "color": {
+      "by": "0 == js",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 4,
+     "y2": "(c - 1*n - h)*0.55",
+     "width": 3,
+     "visibleIf": "1 < m",
+     "color": {
+      "by": "1 == js",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 4,
+     "y2": "(c - 2*n - h)*0.55",
+     "width": 3,
+     "visibleIf": "2 < m",
+     "color": {
+      "by": "2 == js",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 4,
+     "y2": "(c - 3*n - h)*0.55",
+     "width": 3,
+     "visibleIf": "3 < m",
+     "color": {
+      "by": "3 == js",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(0/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 0)*0.55",
+     "width": 2,
+     "visibleIf": "0 < m*n",
+     "color": {
+      "by": "0 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(1/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 1)*0.55",
+     "width": 2,
+     "visibleIf": "1 < m*n",
+     "color": {
+      "by": "1 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(2/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 2)*0.55",
+     "width": 2,
+     "visibleIf": "2 < m*n",
+     "color": {
+      "by": "2 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(3/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 3)*0.55",
+     "width": 2,
+     "visibleIf": "3 < m*n",
+     "color": {
+      "by": "3 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(4/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 4)*0.55",
+     "width": 2,
+     "visibleIf": "4 < m*n",
+     "color": {
+      "by": "4 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(5/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 5)*0.55",
+     "width": 2,
+     "visibleIf": "5 < m*n",
+     "color": {
+      "by": "5 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(6/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 6)*0.55",
+     "width": 2,
+     "visibleIf": "6 < m*n",
+     "color": {
+      "by": "6 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(7/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 7)*0.55",
+     "width": 2,
+     "visibleIf": "7 < m*n",
+     "color": {
+      "by": "7 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(8/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 8)*0.55",
+     "width": 2,
+     "visibleIf": "8 < m*n",
+     "color": {
+      "by": "8 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(9/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 9)*0.55",
+     "width": 2,
+     "visibleIf": "9 < m*n",
+     "color": {
+      "by": "9 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(10/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 10)*0.55",
+     "width": 2,
+     "visibleIf": "10 < m*n",
+     "color": {
+      "by": "10 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(11/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 11)*0.55",
+     "width": 2,
+     "visibleIf": "11 < m*n",
+     "color": {
+      "by": "11 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(12/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 12)*0.55",
+     "width": 2,
+     "visibleIf": "12 < m*n",
+     "color": {
+      "by": "12 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(13/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 13)*0.55",
+     "width": 2,
+     "visibleIf": "13 < m*n",
+     "color": {
+      "by": "13 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(14/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 14)*0.55",
+     "width": 2,
+     "visibleIf": "14 < m*n",
+     "color": {
+      "by": "14 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "(c - floor(15/n)*n - h)*0.55",
+     "x2": 8,
+     "y2": "(c - 15)*0.55",
+     "width": 2,
+     "visibleIf": "15 < m*n",
+     "color": {
+      "by": "15 == kk",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "particles",
+     "count": 4,
+     "x": 4,
+     "y": "(c - i*n - h)*0.55",
+     "r": 0.22,
+     "visibleIf": "i < m",
+     "color": "blue"
+    },
+    {
+     "shape": "particles",
+     "count": 16,
+     "x": 8,
+     "y": "(c - i)*0.55",
+     "r": 0.17,
+     "visibleIf": "i < m*n",
+     "color": {
+      "by": "i == kk",
+      "scale": [
+       "green",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 4.9,
+     "text": {
+      "en": "shirt",
+      "kn": "ಅಂಗಿ"
+     },
+     "size": 26,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 4.9,
+     "text": {
+      "en": "trousers",
+      "kn": "ಪ್ಯಾಂಟ್"
+     },
+     "size": 26,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 12.2,
+     "y": 0,
+     "text": {
+      "en": "Outcome {kk + 1}: shirt {js + 1}, trousers {qs + 1}",
+      "kn": "ಫಲಿತಾಂಶ {kk + 1}: ಅಂಗಿ {js + 1}, ಪ್ಯಾಂಟ್ {qs + 1}"
+     },
+     "size": 26
+    },
+    {
+     "shape": "label",
+     "x": 12.2,
+     "y": -1.6,
+     "text": {
+      "en": "{m:0} × {n:0} = {m*n:0}"
+     },
+     "size": 34,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Outfits m × n",
+      "kn": "ಉಡುಪುಗಳು m × n"
+     },
+     "expr": "m*n",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With 3 shirts and 2 trousers, count the leaves. Does the count match 3 × 2?",
+     "kn": "3 ಅಂಗಿ, 2 ಪ್ಯಾಂಟ್ ಇದ್ದಾಗ ಎಲೆಗಳನ್ನು ಎಣಿಸಿ. 3 × 2 ಕ್ಕೆ ಸರಿಯೇ?"
+    },
+    {
+     "en": "Swap the numbers (2 shirts, 3 trousers). The tree changes; does the total?",
+     "kn": "ಸಂಖ್ಯೆಗಳನ್ನು ಅದಲುಬದಲು ಮಾಡಿ. ವೃಕ್ಷ ಬದಲಾಗುತ್ತದೆ; ಒಟ್ಟು ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Press Next outfit and say which shirt and trousers each leaf stands for.",
+     "kn": "ಮುಂದಿನ ಉಡುಪು ಒತ್ತಿ, ಪ್ರತಿ ಎಲೆ ಯಾವ ಅಂಗಿ-ಪ್ಯಾಂಟ್ ಎಂದು ಹೇಳಿ."
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

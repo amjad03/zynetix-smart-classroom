@@ -486,6 +486,227 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Same mean, different spread",
+    "kn": "ಒಂದೇ ಸರಾಸರಿ, ಬೇರೆ ಹರಡುವಿಕೆ"
+   },
+   "narration": {
+    "en": "Two classes of ten marks, both with mean 50. Change how spread out each class is; the bar under each row is its range, largest minus smallest.",
+    "kn": "ಹತ್ತು ಅಂಕಗಳ ಎರಡು ತರಗತಿಗಳು, ಎರಡರ ಸರಾಸರಿ 50. ಪ್ರತಿ ತರಗತಿಯ ಹರಡುವಿಕೆ ಬದಲಿಸಿ; ಸಾಲಿನ ಕೆಳಗಿನ ಪಟ್ಟಿ ಅದರ ವ್ಯಾಪ್ತಿ, ಗರಿಷ್ಠ ಮೈನಸ್ ಕನಿಷ್ಠ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Two classes of ten marks, both with mean 50. Change how spread out each class is; the bar under each row is its range, largest minus smallest.",
+    "kn": "ಹತ್ತು ಅಂಕಗಳ ಎರಡು ತರಗತಿಗಳು, ಎರಡರ ಸರಾಸರಿ 50. ಪ್ರತಿ ತರಗತಿಯ ಹರಡುವಿಕೆ ಬದಲಿಸಿ; ಸಾಲಿನ ಕೆಳಗಿನ ಪಟ್ಟಿ ಅದರ ವ್ಯಾಪ್ತಿ, ಗರಿಷ್ಠ ಮೈನಸ್ ಕನಿಷ್ಠ."
+   },
+   "sliders": [
+    {
+     "name": "sA",
+     "label": {
+      "en": "Spread of class A",
+      "kn": "A ತರಗತಿ ಹರಡುವಿಕೆ"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 6
+    },
+    {
+     "name": "sB",
+     "label": {
+      "en": "Spread of class B",
+      "kn": "B ತರಗತಿ ಹರಡುವಿಕೆ"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 16
+    }
+   ],
+   "counters": [
+    {
+     "name": "s",
+     "value": 0,
+     "min": 0,
+     "max": 9999
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New data",
+      "kn": "ಹೊಸ ದತ್ತಾಂಶ"
+     },
+     "icon": "flip",
+     "set": {
+      "s": "s + 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "uA",
+     "expr": "(rand(0 + 97*s + 3) + rand(1 + 97*s + 3) + rand(2 + 97*s + 3) + rand(3 + 97*s + 3) + rand(4 + 97*s + 3) + rand(5 + 97*s + 3) + rand(6 + 97*s + 3) + rand(7 + 97*s + 3) + rand(8 + 97*s + 3) + rand(9 + 97*s + 3))/10"
+    },
+    {
+     "name": "uB",
+     "expr": "(rand(0 + 97*s + 41) + rand(1 + 97*s + 41) + rand(2 + 97*s + 41) + rand(3 + 97*s + 41) + rand(4 + 97*s + 41) + rand(5 + 97*s + 41) + rand(6 + 97*s + 41) + rand(7 + 97*s + 41) + rand(8 + 97*s + 41) + rand(9 + 97*s + 41))/10"
+    },
+    {
+     "name": "loA",
+     "expr": "50 + 2*sA*(min(rand(0 + 97*s + 3), rand(1 + 97*s + 3), rand(2 + 97*s + 3), rand(3 + 97*s + 3), rand(4 + 97*s + 3), rand(5 + 97*s + 3), rand(6 + 97*s + 3), rand(7 + 97*s + 3), rand(8 + 97*s + 3), rand(9 + 97*s + 3)) - uA)"
+    },
+    {
+     "name": "hiA",
+     "expr": "50 + 2*sA*(max(rand(0 + 97*s + 3), rand(1 + 97*s + 3), rand(2 + 97*s + 3), rand(3 + 97*s + 3), rand(4 + 97*s + 3), rand(5 + 97*s + 3), rand(6 + 97*s + 3), rand(7 + 97*s + 3), rand(8 + 97*s + 3), rand(9 + 97*s + 3)) - uA)"
+    },
+    {
+     "name": "loB",
+     "expr": "50 + 2*sB*(min(rand(0 + 97*s + 41), rand(1 + 97*s + 41), rand(2 + 97*s + 41), rand(3 + 97*s + 41), rand(4 + 97*s + 41), rand(5 + 97*s + 41), rand(6 + 97*s + 41), rand(7 + 97*s + 41), rand(8 + 97*s + 41), rand(9 + 97*s + 41)) - uB)"
+    },
+    {
+     "name": "hiB",
+     "expr": "50 + 2*sB*(max(rand(0 + 97*s + 41), rand(1 + 97*s + 41), rand(2 + 97*s + 41), rand(3 + 97*s + 41), rand(4 + 97*s + 41), rand(5 + 97*s + 41), rand(6 + 97*s + 41), rand(7 + 97*s + 41), rand(8 + 97*s + 41), rand(9 + 97*s + 41)) - uB)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     5
+    ],
+    "axes": true,
+    "grid": false,
+    "equal": false,
+    "xLabel": "marks"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 50,
+     "y1": 0.3,
+     "x2": 50,
+     "y2": 4.6,
+     "color": "white",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 4.75,
+     "text": {
+      "en": "mean 50",
+      "kn": "ಸರಾಸರಿ 50"
+     },
+     "size": 24
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "x": "50 + 2*sA*(rand(i + 97*s + 3) - uA)",
+     "y": 3.4,
+     "r": 0.9,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": "loA",
+     "y1": 2.8,
+     "x2": "hiA",
+     "y2": 2.8,
+     "color": "blue",
+     "width": 6
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "x": "50 + 2*sB*(rand(i + 97*s + 41) - uB)",
+     "y": 1.6,
+     "r": 0.9,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": "loB",
+     "y1": 1.0,
+     "x2": "hiB",
+     "y2": 1.0,
+     "color": "green",
+     "width": 6
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 3.3,
+     "text": {
+      "en": "A"
+     },
+     "size": 30,
+     "color": "blue",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 1.5,
+     "text": {
+      "en": "B"
+     },
+     "size": 30,
+     "color": "green",
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Range of A",
+      "kn": "A ಯ ವ್ಯಾಪ್ತಿ"
+     },
+     "expr": "hiA - loA",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Range of B",
+      "kn": "B ಯ ವ್ಯಾಪ್ತಿ"
+     },
+     "expr": "hiB - loB",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Mean of A",
+      "kn": "A ಯ ಸರಾಸರಿ"
+     },
+     "expr": "((50 + 2*sA*(rand(0 + 97*s + 3) - uA)) + (50 + 2*sA*(rand(1 + 97*s + 3) - uA)) + (50 + 2*sA*(rand(2 + 97*s + 3) - uA)) + (50 + 2*sA*(rand(3 + 97*s + 3) - uA)) + (50 + 2*sA*(rand(4 + 97*s + 3) - uA)) + (50 + 2*sA*(rand(5 + 97*s + 3) - uA)) + (50 + 2*sA*(rand(6 + 97*s + 3) - uA)) + (50 + 2*sA*(rand(7 + 97*s + 3) - uA)) + (50 + 2*sA*(rand(8 + 97*s + 3) - uA)) + (50 + 2*sA*(rand(9 + 97*s + 3) - uA)))/10",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make both spreads equal. Are the ranges equal too? Press New data a few times.",
+     "kn": "ಎರಡೂ ಹರಡುವಿಕೆ ಸಮ ಮಾಡಿ. ವ್ಯಾಪ್ತಿಗಳೂ ಸಮವೇ? ಹೊಸ ದತ್ತಾಂಶ ಕೆಲವು ಬಾರಿ ಒತ್ತಿ."
+    },
+    {
+     "en": "Why can the mean not tell the two classes apart?",
+     "kn": "ಸರಾಸರಿ ಎರಡು ತರಗತಿಗಳನ್ನು ಏಕೆ ಬೇರ್ಪಡಿಸಲಾರದು?"
+    },
+    {
+     "en": "The range uses only two values. Which marks does it ignore?",
+     "kn": "ವ್ಯಾಪ್ತಿ ಎರಡೇ ಮೌಲ್ಯಗಳನ್ನು ಬಳಸುತ್ತದೆ. ಯಾವ ಅಂಕಗಳನ್ನು ಕಡೆಗಣಿಸುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

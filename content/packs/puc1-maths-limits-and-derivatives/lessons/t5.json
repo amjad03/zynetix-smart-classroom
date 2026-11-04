@@ -285,6 +285,224 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The product rule as a growing rectangle",
+    "kn": "ಬೆಳೆಯುವ ಆಯತವಾಗಿ ಗುಣಲಬ್ಧ ನಿಯಮ"
+   },
+   "narration": {
+    "en": "The sides u and v grow at rates u′ and v′, so the area is uv. In a short time Δt the area gains a strip v·Δu, a strip u·Δv and a tiny corner Δu·Δv. Dividing by Δt and letting it shrink leaves (uv)′ = u′v + uv′.",
+    "kn": "ಬಾಹುಗಳು u, v ಗಳು u′, v′ ದರದಲ್ಲಿ ಬೆಳೆಯುತ್ತವೆ; ವಿಸ್ತೀರ್ಣ uv. ಸಣ್ಣ Δt ಯಲ್ಲಿ ವಿಸ್ತೀರ್ಣಕ್ಕೆ v·Δu ಪಟ್ಟಿ, u·Δv ಪಟ್ಟಿ ಮತ್ತು ಸಣ್ಣ ಮೂಲೆ Δu·Δv ಸೇರುತ್ತವೆ. Δt ಇಂದ ಭಾಗಿಸಿ ಚಿಕ್ಕದು ಮಾಡಿದರೆ (uv)′ = u′v + uv′."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The sides u and v grow at rates u′ and v′, so the area is uv. In a short time Δt the area gains a strip v·Δu, a strip u·Δv and a tiny corner Δu·Δv. Dividing by Δt and letting it shrink leaves (uv)′ = u′v + uv′.",
+    "kn": "ಬಾಹುಗಳು u, v ಗಳು u′, v′ ದರದಲ್ಲಿ ಬೆಳೆಯುತ್ತವೆ; ವಿಸ್ತೀರ್ಣ uv. ಸಣ್ಣ Δt ಯಲ್ಲಿ ವಿಸ್ತೀರ್ಣಕ್ಕೆ v·Δu ಪಟ್ಟಿ, u·Δv ಪಟ್ಟಿ ಮತ್ತು ಸಣ್ಣ ಮೂಲೆ Δu·Δv ಸೇರುತ್ತವೆ. Δt ಇಂದ ಭಾಗಿಸಿ ಚಿಕ್ಕದು ಮಾಡಿದರೆ (uv)′ = u′v + uv′."
+   },
+   "sliders": [
+    {
+     "name": "p",
+     "label": {
+      "en": "Rate u′",
+      "kn": "ದರ u′"
+     },
+     "min": 0,
+     "max": 2,
+     "step": 0.1,
+     "value": 1
+    },
+    {
+     "name": "q",
+     "label": {
+      "en": "Rate v′",
+      "kn": "ದರ v′"
+     },
+     "min": 0,
+     "max": 2,
+     "step": 0.1,
+     "value": 0.5
+    },
+    {
+     "name": "D",
+     "label": {
+      "en": "Δt"
+     },
+     "min": 0.05,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "strips",
+     "label": {
+      "en": "Show the strips",
+      "kn": "ಪಟ್ಟಿಗಳನ್ನು ತೋರಿಸು"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 3
+   },
+   "vars": [
+    {
+     "name": "u",
+     "expr": "2 + p*t"
+    },
+    {
+     "name": "v",
+     "expr": "1.5 + q*t"
+    },
+    {
+     "name": "ex",
+     "expr": "p*v + u*q"
+    },
+    {
+     "name": "dd",
+     "expr": "p*v + u*q + p*q*D"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     15
+    ],
+    "y": [
+     -0.5,
+     10.5
+    ],
+    "axes": false,
+    "grid": false,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": "u",
+     "h": "v",
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": "u",
+     "y": 0,
+     "w": "p*D",
+     "h": "v",
+     "color": "green",
+     "opacity": 0.8,
+     "visibleIf": "strips"
+    },
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": "v",
+     "w": "u",
+     "h": "q*D",
+     "color": "orange",
+     "opacity": 0.8,
+     "visibleIf": "strips"
+    },
+    {
+     "shape": "rect",
+     "x": "u",
+     "y": "v",
+     "w": "p*D",
+     "h": "q*D",
+     "color": "red",
+     "visibleIf": "strips"
+    },
+    {
+     "shape": "text",
+     "x": "u/2",
+     "y": "v/2",
+     "text": {
+      "en": "uv"
+     },
+     "size": 30
+    },
+    {
+     "shape": "label",
+     "x": 12.5,
+     "y": 9,
+     "text": {
+      "en": "u = {u:2}, v = {v:2}"
+     },
+     "size": 24
+    },
+    {
+     "shape": "label",
+     "x": 12.5,
+     "y": 7.8,
+     "text": {
+      "en": "v·Δu = {v*p*D:3}",
+      "kn": "v·Δu = {v*p*D:3}"
+     },
+     "size": 24,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 12.5,
+     "y": 6.8,
+     "text": {
+      "en": "u·Δv = {u*q*D:3}",
+      "kn": "u·Δv = {u*q*D:3}"
+     },
+     "size": 24,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 12.5,
+     "y": 5.8,
+     "text": {
+      "en": "Δu·Δv = {p*q*D^2:4}",
+      "kn": "Δu·Δv = {p*q*D^2:4}"
+     },
+     "size": 24,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "u′v + uv′"
+     },
+     "expr": "ex",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Δ(uv)/Δt"
+     },
+     "expr": "dd",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Shrink Δt. Which piece vanishes fastest?",
+     "kn": "Δt ಚಿಕ್ಕದು ಮಾಡಿ. ಯಾವ ತುಂಡು ಅತಿ ವೇಗವಾಗಿ ಮಾಯವಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Set v′ = 0. What is the rule now?",
+     "kn": "v′ = 0 ಮಾಡಿ. ಈಗ ನಿಯಮ ಏನು?"
+    },
+    {
+     "en": "Play and compare the two readouts as Δt gets small.",
+     "kn": "Play ಮಾಡಿ, Δt ಚಿಕ್ಕದಾದಂತೆ ಎರಡು ಮೌಲ್ಯಗಳನ್ನು ಹೋಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

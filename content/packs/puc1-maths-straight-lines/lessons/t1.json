@@ -295,6 +295,278 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Triangle: lengths, a dividing point and area",
+    "kn": "ತ್ರಿಭುಜ: ಉದ್ದಗಳು, ವಿಭಜಿಸುವ ಬಿಂದು, ವಿಸ್ತೀರ್ಣ"
+   },
+   "narration": {
+    "en": "Drag the vertices A, B and C. P divides AB in the ratio k : 1. The area comes from ½|x₁(y₂ − y₃) + x₂(y₃ − y₁) + x₃(y₁ − y₂)|.",
+    "kn": "A, B, C ಶೃಂಗಗಳನ್ನು ಎಳೆಯಿರಿ. P, AB ಯನ್ನು k : 1 ಅನುಪಾತದಲ್ಲಿ ವಿಭಜಿಸುತ್ತದೆ. ವಿಸ್ತೀರ್ಣ ½|x₁(y₂ − y₃) + x₂(y₃ − y₁) + x₃(y₁ − y₂)| ಇಂದ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the vertices A, B and C. P divides AB in the ratio k : 1. The area comes from ½|x₁(y₂ − y₃) + x₂(y₃ − y₁) + x₃(y₁ − y₂)|.",
+    "kn": "A, B, C ಶೃಂಗಗಳನ್ನು ಎಳೆಯಿರಿ. P, AB ಯನ್ನು k : 1 ಅನುಪಾತದಲ್ಲಿ ವಿಭಜಿಸುತ್ತದೆ. ವಿಸ್ತೀರ್ಣ ½|x₁(y₂ − y₃) + x₂(y₃ − y₁) + x₃(y₁ − y₂)| ಇಂದ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Ratio k : 1",
+      "kn": "ಅನುಪಾತ k : 1"
+     },
+     "min": 0.25,
+     "max": 4,
+     "step": 0.25,
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cen",
+     "label": {
+      "en": "Centroid and median",
+      "kn": "ಗುರುತ್ವ ಕೇಂದ್ರ ಮತ್ತು ಮಧ್ಯರೇಖೆ"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "A",
+     "x": 1,
+     "y": 1,
+     "label": "A",
+     "box": {
+      "x": [
+       -1,
+       11
+      ],
+      "y": [
+       -1,
+       7
+      ]
+     },
+     "snap": 0.5,
+     "color": "blue"
+    },
+    {
+     "name": "B",
+     "x": 9,
+     "y": 2,
+     "label": "B",
+     "box": {
+      "x": [
+       -1,
+       11
+      ],
+      "y": [
+       -1,
+       7
+      ]
+     },
+     "snap": 0.5,
+     "color": "green"
+    },
+    {
+     "name": "C",
+     "x": 4,
+     "y": 6,
+     "label": "C",
+     "box": {
+      "x": [
+       -1,
+       11
+      ],
+      "y": [
+       -1,
+       7
+      ]
+     },
+     "snap": 0.5,
+     "color": "orange"
+    }
+   ],
+   "vars": [
+    {
+     "name": "Px",
+     "expr": "(k*B_x + A_x)/(k + 1)"
+    },
+    {
+     "name": "Py",
+     "expr": "(k*B_y + A_y)/(k + 1)"
+    },
+    {
+     "name": "ar",
+     "expr": "abs(A_x*(B_y - C_y) + B_x*(C_y - A_y) + C_x*(A_y - B_y))/2"
+    }
+   ],
+   "view": {
+    "x": [
+     -1.5,
+     14
+    ],
+    "y": [
+     -1.5,
+     7.5
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       "A_x",
+       "A_y"
+      ],
+      [
+       "B_x",
+       "B_y"
+      ],
+      [
+       "C_x",
+       "C_y"
+      ]
+     ],
+     "color": "blue",
+     "opacity": 0.2
+    },
+    {
+     "shape": "line",
+     "x1": "A_x",
+     "y1": "A_y",
+     "x2": "B_x",
+     "y2": "B_y",
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "B_x",
+     "y1": "B_y",
+     "x2": "C_x",
+     "y2": "C_y",
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "C_x",
+     "y1": "C_y",
+     "x2": "A_x",
+     "y2": "A_y",
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "Px",
+     "y": "Py",
+     "r": 0.2,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": "Px",
+     "y": "Py - 0.6",
+     "text": {
+      "en": "P"
+     },
+     "size": 28,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": "C_x",
+     "y1": "C_y",
+     "x2": "(A_x + B_x)/2",
+     "y2": "(A_y + B_y)/2",
+     "color": "green",
+     "dashed": true,
+     "width": 2,
+     "visibleIf": "cen"
+    },
+    {
+     "shape": "circle",
+     "x": "(A_x + B_x + C_x)/3",
+     "y": "(A_y + B_y + C_y)/3",
+     "r": 0.18,
+     "color": "red",
+     "visibleIf": "cen"
+    },
+    {
+     "shape": "label",
+     "x": 12,
+     "y": 6.5,
+     "text": {
+      "en": "P({Px:2}, {Py:2})"
+     },
+     "size": 26,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 12,
+     "y": 5.3,
+     "text": {
+      "en": "area = {ar:2}",
+      "kn": "ವಿಸ್ತೀರ್ಣ = {ar:2}"
+     },
+     "size": 26
+    },
+    {
+     "shape": "label",
+     "x": 12,
+     "y": 4.1,
+     "text": {
+      "en": "A, B, C collinear",
+      "kn": "A, B, C ಏಕರೇಖೀಯ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "ar == 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "AB"
+     },
+     "expr": "hypot(B_x - A_x, B_y - A_y)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Area of ABC",
+      "kn": "ABC ವಿಸ್ತೀರ್ಣ"
+     },
+     "expr": "ar",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Put C on the line AB. What is the area? This is the test for collinear points.",
+     "kn": "C ಯನ್ನು AB ರೇಖೆಯ ಮೇಲೆ ಇಡಿ. ವಿಸ್ತೀರ್ಣ ಎಷ್ಟು? ಇದು ಏಕರೇಖೀಯ ಬಿಂದುಗಳ ಪರೀಕ್ಷೆ."
+    },
+    {
+     "en": "Set k = 1. Where is P?",
+     "kn": "k = 1 ಮಾಡಿ. P ಎಲ್ಲಿದೆ?"
+    },
+    {
+     "en": "Turn on the centroid. Check it divides the median from C in the ratio 2 : 1.",
+     "kn": "ಗುರುತ್ವ ಕೇಂದ್ರ ಆನ್ ಮಾಡಿ. ಅದು C ಯಿಂದ ಮಧ್ಯರೇಖೆಯನ್ನು 2 : 1 ರಲ್ಲಿ ವಿಭಜಿಸುತ್ತದೆ ಎಂದು ಪರೀಕ್ಷಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

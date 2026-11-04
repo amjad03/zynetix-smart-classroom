@@ -251,6 +251,209 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Trace the derivative",
+    "kn": "ಅವಕಲಜವನ್ನು ಗುರುತಿಸಿ"
+   },
+   "narration": {
+    "en": "As the point runs along the curve, the yellow trail plots the difference quotient (f(a + h) − f(a))/h against a. With small h the trail draws f′(x).",
+    "kn": "ಬಿಂದು ವಕ್ರದ ಮೇಲೆ ಓಡಿದಂತೆ, ಹಳದಿ ಜಾಡು (f(a + h) − f(a))/h ಅನ್ನು a ಗೆ ಎದುರಾಗಿ ಎಳೆಯುತ್ತದೆ. h ಚಿಕ್ಕದಾದಾಗ ಜಾಡು f′(x) ಆಗುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "As the point runs along the curve, the yellow trail plots the difference quotient (f(a + h) − f(a))/h against a. With small h the trail draws f′(x).",
+    "kn": "ಬಿಂದು ವಕ್ರದ ಮೇಲೆ ಓಡಿದಂತೆ, ಹಳದಿ ಜಾಡು (f(a + h) − f(a))/h ಅನ್ನು a ಗೆ ಎದುರಾಗಿ ಎಳೆಯುತ್ತದೆ. h ಚಿಕ್ಕದಾದಾಗ ಜಾಡು f′(x) ಆಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "h",
+     "label": {
+      "en": "h"
+     },
+     "min": 0.05,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "tru",
+     "label": {
+      "en": "True f′(x)",
+      "kn": "ನಿಜ f′(x)"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "fn",
+     "label": {
+      "en": "f(x)"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "x²"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "sin x"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "cos x"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "|x|"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run",
+      "kn": "ಓಡಿಸು"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 6
+   },
+   "vars": [
+    {
+     "name": "a",
+     "expr": "-3 + t"
+    },
+    {
+     "name": "fa",
+     "expr": "if(fn == 1, (a)^2, if(fn == 2, sin(a), if(fn == 3, cos(a), abs(a))))"
+    },
+    {
+     "name": "dq",
+     "expr": "(if(fn == 1, (a + h)^2, if(fn == 2, sin(a + h), if(fn == 3, cos(a + h), abs(a + h)))) - fa)/h"
+    }
+   ],
+   "view": {
+    "x": [
+     -3.3,
+     3.3
+    ],
+    "y": [
+     -6.5,
+     9.5
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": false,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "if(fn == 1, (x)^2, if(fn == 2, sin(x), if(fn == 3, cos(x), abs(x))))",
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "fn": "if(fn == 1, 2*x, if(fn == 2, cos(x), if(fn == 3, -sin(x), sign(x))))",
+     "color": "green",
+     "dashed": true,
+     "width": 2,
+     "visibleIf": "tru"
+    },
+    {
+     "shape": "line",
+     "x1": "a - 1.5",
+     "y1": "fa - 1.5*dq",
+     "x2": "a + h + 1.5",
+     "y2": "fa + (h + 1.5)*dq",
+     "color": "orange",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "a",
+     "y": "fa",
+     "r": 0.08,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": "a + h",
+     "y": "if(fn == 1, (a + h)^2, if(fn == 2, sin(a + h), if(fn == 3, cos(a + h), abs(a + h))))",
+     "r": 0.06,
+     "color": "orange"
+    },
+    {
+     "shape": "trail",
+     "x": "a",
+     "y": "dq",
+     "length": 700,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "a",
+     "y": "dq",
+     "r": 0.08,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "a"
+     },
+     "expr": "a",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "(f(a + h) − f(a))/h"
+     },
+     "expr": "dq",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "For x², play with h = 1 and then h = 0.05. Which straight line appears?",
+     "kn": "x² ಗೆ h = 1, ನಂತರ h = 0.05 ಜೊತೆ ಆಡಿ. ಯಾವ ಸರಳರೇಖೆ ಮೂಡುತ್ತದೆ?"
+    },
+    {
+     "en": "For sin x, which familiar graph does the trail make?",
+     "kn": "sin x ಗೆ ಜಾಡು ಯಾವ ಪರಿಚಿತ ನಕ್ಷೆ ಮಾಡುತ್ತದೆ?"
+    },
+    {
+     "en": "For |x|, what happens to the trail at x = 0? Is |x| differentiable there?",
+     "kn": "|x| ಗೆ x = 0 ನಲ್ಲಿ ಜಾಡಿಗೆ ಏನಾಗುತ್ತದೆ? ಅಲ್ಲಿ |x| ಅವಕಲನೀಯವೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

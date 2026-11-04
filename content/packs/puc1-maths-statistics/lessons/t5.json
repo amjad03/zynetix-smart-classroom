@@ -757,6 +757,303 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Histogram, mean and σ",
+    "kn": "ಆಯತಚಿತ್ರ, ಸರಾಸರಿ ಮತ್ತು σ"
+   },
+   "narration": {
+    "en": "The bars are the frequencies of the classes 0–10, 10–20, …, 90–100 for a bell-shaped set of marks. The mean and σ are worked out from the table, using the class mid-points.",
+    "kn": "ಪಟ್ಟಿಗಳು 0–10, 10–20, …, 90–100 ವರ್ಗಗಳ ಆವೃತ್ತಿಗಳು. ಸರಾಸರಿ ಮತ್ತು σ ಅನ್ನು ಕೋಷ್ಟಕದಿಂದ, ವರ್ಗ ಮಧ್ಯಬಿಂದುಗಳನ್ನು ಬಳಸಿ ಲೆಕ್ಕಿಸಲಾಗಿದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The bars are the frequencies of the classes 0–10, 10–20, …, 90–100 for a bell-shaped set of marks. The mean and σ are worked out from the table, using the class mid-points.",
+    "kn": "ಪಟ್ಟಿಗಳು 0–10, 10–20, …, 90–100 ವರ್ಗಗಳ ಆವೃತ್ತಿಗಳು. ಸರಾಸರಿ ಮತ್ತು σ ಅನ್ನು ಕೋಷ್ಟಕದಿಂದ, ವರ್ಗ ಮಧ್ಯಬಿಂದುಗಳನ್ನು ಬಳಸಿ ಲೆಕ್ಕಿಸಲಾಗಿದೆ."
+   },
+   "sliders": [
+    {
+     "name": "mu",
+     "label": {
+      "en": "Centre of the marks",
+      "kn": "ಅಂಕಗಳ ಕೇಂದ್ರ"
+     },
+     "min": 20,
+     "max": 80,
+     "step": 1,
+     "value": 50
+    },
+    {
+     "name": "sg",
+     "label": {
+      "en": "Spread",
+      "kn": "ಹರಡುವಿಕೆ"
+     },
+     "min": 6,
+     "max": 20,
+     "step": 0.5,
+     "value": 15
+    }
+   ],
+   "toggles": [
+    {
+     "name": "curve",
+     "label": {
+      "en": "Bell curve",
+      "kn": "ಘಂಟೆ ವಕ್ರ"
+     },
+     "value": true
+    },
+    {
+     "name": "band",
+     "label": {
+      "en": "Band x̄ ± σ",
+      "kn": "x̄ ± σ ಪಟ್ಟಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "f0",
+     "expr": "round(1000*exp(-(5 - mu)^2/(2*sg^2))/(sg*sqrt(2*pi)))"
+    },
+    {
+     "name": "f1",
+     "expr": "round(1000*exp(-(15 - mu)^2/(2*sg^2))/(sg*sqrt(2*pi)))"
+    },
+    {
+     "name": "f2",
+     "expr": "round(1000*exp(-(25 - mu)^2/(2*sg^2))/(sg*sqrt(2*pi)))"
+    },
+    {
+     "name": "f3",
+     "expr": "round(1000*exp(-(35 - mu)^2/(2*sg^2))/(sg*sqrt(2*pi)))"
+    },
+    {
+     "name": "f4",
+     "expr": "round(1000*exp(-(45 - mu)^2/(2*sg^2))/(sg*sqrt(2*pi)))"
+    },
+    {
+     "name": "f5",
+     "expr": "round(1000*exp(-(55 - mu)^2/(2*sg^2))/(sg*sqrt(2*pi)))"
+    },
+    {
+     "name": "f6",
+     "expr": "round(1000*exp(-(65 - mu)^2/(2*sg^2))/(sg*sqrt(2*pi)))"
+    },
+    {
+     "name": "f7",
+     "expr": "round(1000*exp(-(75 - mu)^2/(2*sg^2))/(sg*sqrt(2*pi)))"
+    },
+    {
+     "name": "f8",
+     "expr": "round(1000*exp(-(85 - mu)^2/(2*sg^2))/(sg*sqrt(2*pi)))"
+    },
+    {
+     "name": "f9",
+     "expr": "round(1000*exp(-(95 - mu)^2/(2*sg^2))/(sg*sqrt(2*pi)))"
+    },
+    {
+     "name": "N",
+     "expr": "(f0 + f1 + f2 + f3 + f4 + f5 + f6 + f7 + f8 + f9)"
+    },
+    {
+     "name": "xb",
+     "expr": "(5*f0 + 15*f1 + 25*f2 + 35*f3 + 45*f4 + 55*f5 + 65*f6 + 75*f7 + 85*f8 + 95*f9)/N"
+    },
+    {
+     "name": "sdv",
+     "expr": "sqrt((25*f0 + 225*f1 + 625*f2 + 1225*f3 + 2025*f4 + 3025*f5 + 4225*f6 + 5625*f7 + 7225*f8 + 9025*f9)/N - xb^2)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     95
+    ],
+    "axes": true,
+    "grid": false,
+    "equal": false,
+    "xLabel": "marks",
+    "yLabel": "frequency"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 0,
+     "w": 9,
+     "h": "f0",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 10.5,
+     "y": 0,
+     "w": 9,
+     "h": "f1",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 20.5,
+     "y": 0,
+     "w": 9,
+     "h": "f2",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 30.5,
+     "y": 0,
+     "w": 9,
+     "h": "f3",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 40.5,
+     "y": 0,
+     "w": 9,
+     "h": "f4",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 50.5,
+     "y": 0,
+     "w": 9,
+     "h": "f5",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 60.5,
+     "y": 0,
+     "w": 9,
+     "h": "f6",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 70.5,
+     "y": 0,
+     "w": 9,
+     "h": "f7",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 80.5,
+     "y": 0,
+     "w": 9,
+     "h": "f8",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 90.5,
+     "y": 0,
+     "w": 9,
+     "h": "f9",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "xb - sdv",
+     "y": 0,
+     "w": "2*sdv",
+     "h": 88,
+     "color": "green",
+     "opacity": 0.15,
+     "visibleIf": "band"
+    },
+    {
+     "shape": "path",
+     "fn": "1000*exp(-(x - mu)^2/(2*sg^2))/(sg*sqrt(2*pi))",
+     "color": "yellow",
+     "width": 3,
+     "visibleIf": "curve"
+    },
+    {
+     "shape": "line",
+     "x1": "xb",
+     "y1": 0,
+     "x2": "xb",
+     "y2": 88,
+     "color": "red",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "xb",
+     "y": 91,
+     "text": {
+      "en": "x̄ = {xb:1}"
+     },
+     "size": 24,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "N = Σf"
+     },
+     "expr": "N",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Mean x̄ from the table",
+      "kn": "ಕೋಷ್ಟಕದಿಂದ ಸರಾಸರಿ"
+     },
+     "expr": "xb",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "σ from the table",
+      "kn": "ಕೋಷ್ಟಕದಿಂದ σ"
+     },
+     "expr": "sdv",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Widen the spread. What happens to σ and to the height of the bars?",
+     "kn": "ಹರಡುವಿಕೆ ಹೆಚ್ಚಿಸಿ. σ ಮತ್ತು ಪಟ್ಟಿಗಳ ಎತ್ತರಕ್ಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on the band x̄ ± σ. Roughly what share of the marks lies inside it?",
+     "kn": "x̄ ± σ ಪಟ್ಟಿ ಆನ್ ಮಾಡಿ. ಸುಮಾರು ಎಷ್ಟು ಭಾಗ ಅಂಕಗಳು ಅದರೊಳಗಿವೆ?"
+    },
+    {
+     "en": "Move the centre near 20. Why does the table's mean stop matching it exactly?",
+     "kn": "ಕೇಂದ್ರವನ್ನು 20 ರ ಬಳಿ ಸರಿಸಿ. ಕೋಷ್ಟಕದ ಸರಾಸರಿ ಏಕೆ ನಿಖರವಾಗಿ ಹೊಂದುವುದಿಲ್ಲ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

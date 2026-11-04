@@ -340,6 +340,282 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Parabola: focus and directrix",
+    "kn": "ಪರವಲಯ: ನಾಭಿ ಮತ್ತು ನಿಯತ ರೇಖೆ"
+   },
+   "narration": {
+    "en": "P moves so that its distance PS to the focus S always equals its distance PM to the directrix. Change a and the orientation to get all four standard forms.",
+    "kn": "P ಯು ನಾಭಿ S ಗೆ ದೂರ PS ಯಾವಾಗಲೂ ನಿಯತ ರೇಖೆಗೆ ದೂರ PM ಗೆ ಸಮವಾಗುವಂತೆ ಚಲಿಸುತ್ತದೆ. ನಾಲ್ಕು ಪ್ರಮಾಣಿತ ರೂಪಗಳಿಗೆ a ಮತ್ತು ದಿಕ್ಕು ಬದಲಿಸಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "P moves so that its distance PS to the focus S always equals its distance PM to the directrix. Change a and the orientation to get all four standard forms.",
+    "kn": "P ಯು ನಾಭಿ S ಗೆ ದೂರ PS ಯಾವಾಗಲೂ ನಿಯತ ರೇಖೆಗೆ ದೂರ PM ಗೆ ಸಮವಾಗುವಂತೆ ಚಲಿಸುತ್ತದೆ. ನಾಲ್ಕು ಪ್ರಮಾಣಿತ ರೂಪಗಳಿಗೆ a ಮತ್ತು ದಿಕ್ಕು ಬದಲಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "a"
+     },
+     "min": 0.5,
+     "max": 2.5,
+     "step": 0.25,
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "lr",
+     "label": {
+      "en": "Latus rectum",
+      "kn": "ನಾಭಿ ಲಂಬ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "o",
+     "label": {
+      "en": "Form",
+      "kn": "ರೂಪ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "y² = 4ax"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "y² = −4ax"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "x² = 4ay"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "x² = −4ay"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 5,
+    "loop": true
+   },
+   "vars": [
+    {
+     "name": "s",
+     "expr": "t - 2.5"
+    },
+    {
+     "name": "px",
+     "expr": "if(o == 1, a*s^2, if(o == 2, -a*s^2, 2*a*s))"
+    },
+    {
+     "name": "py",
+     "expr": "if(o == 1 || o == 2, 2*a*s, if(o == 3, a*s^2, -a*s^2))"
+    },
+    {
+     "name": "fx",
+     "expr": "if(o == 1, a, if(o == 2, -a, 0))"
+    },
+    {
+     "name": "fy",
+     "expr": "if(o == 3, a, if(o == 4, -a, 0))"
+    },
+    {
+     "name": "mx",
+     "expr": "if(o <= 2, -fx, px)"
+    },
+    {
+     "name": "my",
+     "expr": "if(o <= 2, py, -fy)"
+    }
+   ],
+   "view": {
+    "x": [
+     -7,
+     7
+    ],
+    "y": [
+     -5,
+     5
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "sqrt(4*a*x*if(o == 1, 1, -1))",
+     "color": "white",
+     "width": 2,
+     "visibleIf": "o <= 2"
+    },
+    {
+     "shape": "path",
+     "fn": "-sqrt(4*a*x*if(o == 1, 1, -1))",
+     "color": "white",
+     "width": 2,
+     "visibleIf": "o <= 2"
+    },
+    {
+     "shape": "path",
+     "fn": "x^2/(4*a)*if(o == 3, 1, -1)",
+     "color": "white",
+     "width": 2,
+     "visibleIf": "o >= 3"
+    },
+    {
+     "shape": "line",
+     "x1": "-fx",
+     "y1": -5,
+     "x2": "-fx",
+     "y2": 5,
+     "color": "green",
+     "width": 3,
+     "visibleIf": "o <= 2"
+    },
+    {
+     "shape": "line",
+     "x1": -7,
+     "y1": "-fy",
+     "x2": 7,
+     "y2": "-fy",
+     "color": "green",
+     "width": 3,
+     "visibleIf": "o >= 3"
+    },
+    {
+     "shape": "line",
+     "x1": "fx - 2*a*(o >= 3)",
+     "y1": "fy - 2*a*(o <= 2)",
+     "x2": "fx + 2*a*(o >= 3)",
+     "y2": "fy + 2*a*(o <= 2)",
+     "color": "orange",
+     "width": 3,
+     "visibleIf": "lr"
+    },
+    {
+     "shape": "circle",
+     "x": "fx",
+     "y": "fy",
+     "r": 0.12,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": "fx + 0.3",
+     "y": "fy + 0.2",
+     "text": {
+      "en": "S"
+     },
+     "size": 24,
+     "color": "red",
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": "px",
+     "y1": "py",
+     "x2": "fx",
+     "y2": "fy",
+     "color": "red",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "px",
+     "y1": "py",
+     "x2": "mx",
+     "y2": "my",
+     "color": "green",
+     "width": 3,
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 0.13,
+     "color": "yellow"
+    },
+    {
+     "shape": "trail",
+     "x": "px",
+     "y": "py",
+     "length": 500,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "label",
+     "x": -4.5,
+     "y": 4.4,
+     "text": {
+      "en": "PS = {hypot(px - fx, py - fy):2}   PM = {hypot(px - mx, py - my):2}"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "PS"
+     },
+     "expr": "hypot(px - fx, py - fy)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "PM"
+     },
+     "expr": "hypot(px - mx, py - my)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Latus rectum 4a",
+      "kn": "ನಾಭಿ ಲಂಬ 4a"
+     },
+     "expr": "4*a",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Pause anywhere and compare PS with PM.",
+     "kn": "ಎಲ್ಲಾದರೂ ನಿಲ್ಲಿಸಿ PS ಮತ್ತು PM ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Make a larger. Does the parabola open wider or narrower?",
+     "kn": "a ದೊಡ್ಡದು ಮಾಡಿ. ಪರವಲಯ ಅಗಲವಾಗುತ್ತದೆಯೇ ಕಿರಿದಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Turn on the latus rectum. Check its length is 4a.",
+     "kn": "ನಾಭಿ ಲಂಬ ಆನ್ ಮಾಡಿ. ಉದ್ದ 4a ಎಂದು ಪರೀಕ್ಷಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

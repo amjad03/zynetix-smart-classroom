@@ -256,6 +256,373 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Arrangements with alike objects",
+    "kn": "ಸಮಾನ ವಸ್ತುಗಳ ಜೋಡಣೆಗಳು"
+   },
+   "narration": {
+    "en": "n tiles: p red ones alike, q blue ones alike, the rest numbered. Shuffle, then number the alike tiles: swapping two red tiles gives the same row, so n! is divided by p! and q!.",
+    "kn": "n ಹೆಂಚುಗಳು: p ಕೆಂಪು ಒಂದೇ ರೀತಿ, q ನೀಲಿ ಒಂದೇ ರೀತಿ, ಉಳಿದವು ಸಂಖ್ಯೆ ಹೊಂದಿವೆ. ಕಲಸಿ, ಸಮಾನ ಹೆಂಚುಗಳಿಗೆ ಸಂಖ್ಯೆ ಕೊಡಿ: ಎರಡು ಕೆಂಪು ಹೆಂಚುಗಳನ್ನು ಅದಲುಬದಲು ಮಾಡಿದರೆ ಅದೇ ಸಾಲು; ಆದ್ದರಿಂದ n! ಅನ್ನು p! ಮತ್ತು q! ಇಂದ ಭಾಗಿಸುತ್ತೇವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "n tiles: p red ones alike, q blue ones alike, the rest numbered. Shuffle, then number the alike tiles: swapping two red tiles gives the same row, so n! is divided by p! and q!.",
+    "kn": "n ಹೆಂಚುಗಳು: p ಕೆಂಪು ಒಂದೇ ರೀತಿ, q ನೀಲಿ ಒಂದೇ ರೀತಿ, ಉಳಿದವು ಸಂಖ್ಯೆ ಹೊಂದಿವೆ. ಕಲಸಿ, ಸಮಾನ ಹೆಂಚುಗಳಿಗೆ ಸಂಖ್ಯೆ ಕೊಡಿ: ಎರಡು ಕೆಂಪು ಹೆಂಚುಗಳನ್ನು ಅದಲುಬದಲು ಮಾಡಿದರೆ ಅದೇ ಸಾಲು; ಆದ್ದರಿಂದ n! ಅನ್ನು p! ಮತ್ತು q! ಇಂದ ಭಾಗಿಸುತ್ತೇವೆ."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Tiles n",
+      "kn": "ಹೆಂಚುಗಳು n"
+     },
+     "min": 2,
+     "max": 10,
+     "step": 1,
+     "value": 6
+    },
+    {
+     "name": "p",
+     "label": {
+      "en": "Red alike p",
+      "kn": "ಕೆಂಪು p"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 2
+    },
+    {
+     "name": "q",
+     "label": {
+      "en": "Blue alike q",
+      "kn": "ನೀಲಿ q"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "named",
+     "label": {
+      "en": "Number the alike tiles",
+      "kn": "ಸಮಾನ ಹೆಂಚುಗಳಿಗೆ ಸಂಖ್ಯೆ"
+     },
+     "value": false
+    }
+   ],
+   "counters": [
+    {
+     "name": "s",
+     "value": 0,
+     "min": 0,
+     "max": 9999
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Shuffle",
+      "kn": "ಕಲಸಿ"
+     },
+     "icon": "flip",
+     "set": {
+      "s": "s + 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "pp",
+     "expr": "min(p, n)"
+    },
+    {
+     "name": "qq",
+     "expr": "min(q, n - pp)"
+    },
+    {
+     "name": "a",
+     "expr": "if(n == 2, 1, if(n == 3, if(mod(s, 2) == 0, 1, 2), if(n == 4, if(mod(s, 2) == 0, 1, 3), if(n == 5, if(mod(s, 4) == 0, 1, if(mod(s, 4) == 1, 2, if(mod(s, 4) == 2, 3, 4))), if(n == 6, if(mod(s, 2) == 0, 1, 5), if(n == 7, if(mod(s, 6) == 0, 1, if(mod(s, 6) == 1, 2, if(mod(s, 6) == 2, 3, if(mod(s, 6) == 3, 4, if(mod(s, 6) == 4, 5, 6))))), if(n == 8, if(mod(s, 4) == 0, 1, if(mod(s, 4) == 1, 3, if(mod(s, 4) == 2, 5, 7))), if(n == 9, if(mod(s, 6) == 0, 1, if(mod(s, 6) == 1, 2, if(mod(s, 6) == 2, 4, if(mod(s, 6) == 3, 5, if(mod(s, 6) == 4, 7, 8))))), if(n == 10, if(mod(s, 4) == 0, 1, if(mod(s, 4) == 1, 3, if(mod(s, 4) == 2, 7, 9))), 1)))))))))"
+    },
+    {
+     "name": "b",
+     "expr": "mod(7*s, n)"
+    },
+    {
+     "name": "nf",
+     "expr": "((1 + 1*(2 <= n))*(1 + 2*(3 <= n))*(1 + 3*(4 <= n))*(1 + 4*(5 <= n))*(1 + 5*(6 <= n))*(1 + 6*(7 <= n))*(1 + 7*(8 <= n))*(1 + 8*(9 <= n))*(1 + 9*(10 <= n)))"
+    },
+    {
+     "name": "pf",
+     "expr": "((1 + 1*(2 <= pp))*(1 + 2*(3 <= pp))*(1 + 3*(4 <= pp))*(1 + 4*(5 <= pp))*(1 + 5*(6 <= pp))*(1 + 6*(7 <= pp))*(1 + 7*(8 <= pp))*(1 + 8*(9 <= pp))*(1 + 9*(10 <= pp)))"
+    },
+    {
+     "name": "qf",
+     "expr": "((1 + 1*(2 <= qq))*(1 + 2*(3 <= qq))*(1 + 3*(4 <= qq))*(1 + 4*(5 <= qq))*(1 + 5*(6 <= qq))*(1 + 6*(7 <= qq))*(1 + 7*(8 <= qq))*(1 + 8*(9 <= qq))*(1 + 9*(10 <= qq)))"
+    },
+    {
+     "name": "W",
+     "expr": "nf/(pf*qf)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     0,
+     5
+    ],
+    "axes": false,
+    "grid": false,
+    "equal": false
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 10,
+     "x": "1 + 1.5*mod(a*i + b, n)",
+     "y": 2,
+     "r": 0.62,
+     "visibleIf": "i < n",
+     "color": {
+      "by": "if(i < pp, 0, if(i < pp + qq, 0.5, 1))",
+      "scale": [
+       "red",
+       "blue",
+       "white"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": "1 + 1.5*mod(a*0 + b, n)",
+     "y": 1.75,
+     "text": {
+      "en": "{if(0 < pp, 1, if(0 < pp + qq, 0 - pp + 1, 0 - pp - qq + 1)):0}"
+     },
+     "size": 34,
+     "color": {
+      "by": "0 >= pp + qq",
+      "scale": [
+       "white",
+       "blue"
+      ]
+     },
+     "visibleIf": "0 < n && (0 >= pp + qq || named)"
+    },
+    {
+     "shape": "text",
+     "x": "1 + 1.5*mod(a*1 + b, n)",
+     "y": 1.75,
+     "text": {
+      "en": "{if(1 < pp, 2, if(1 < pp + qq, 1 - pp + 1, 1 - pp - qq + 1)):0}"
+     },
+     "size": 34,
+     "color": {
+      "by": "1 >= pp + qq",
+      "scale": [
+       "white",
+       "blue"
+      ]
+     },
+     "visibleIf": "1 < n && (1 >= pp + qq || named)"
+    },
+    {
+     "shape": "text",
+     "x": "1 + 1.5*mod(a*2 + b, n)",
+     "y": 1.75,
+     "text": {
+      "en": "{if(2 < pp, 3, if(2 < pp + qq, 2 - pp + 1, 2 - pp - qq + 1)):0}"
+     },
+     "size": 34,
+     "color": {
+      "by": "2 >= pp + qq",
+      "scale": [
+       "white",
+       "blue"
+      ]
+     },
+     "visibleIf": "2 < n && (2 >= pp + qq || named)"
+    },
+    {
+     "shape": "text",
+     "x": "1 + 1.5*mod(a*3 + b, n)",
+     "y": 1.75,
+     "text": {
+      "en": "{if(3 < pp, 4, if(3 < pp + qq, 3 - pp + 1, 3 - pp - qq + 1)):0}"
+     },
+     "size": 34,
+     "color": {
+      "by": "3 >= pp + qq",
+      "scale": [
+       "white",
+       "blue"
+      ]
+     },
+     "visibleIf": "3 < n && (3 >= pp + qq || named)"
+    },
+    {
+     "shape": "text",
+     "x": "1 + 1.5*mod(a*4 + b, n)",
+     "y": 1.75,
+     "text": {
+      "en": "{if(4 < pp, 5, if(4 < pp + qq, 4 - pp + 1, 4 - pp - qq + 1)):0}"
+     },
+     "size": 34,
+     "color": {
+      "by": "4 >= pp + qq",
+      "scale": [
+       "white",
+       "blue"
+      ]
+     },
+     "visibleIf": "4 < n && (4 >= pp + qq || named)"
+    },
+    {
+     "shape": "text",
+     "x": "1 + 1.5*mod(a*5 + b, n)",
+     "y": 1.75,
+     "text": {
+      "en": "{if(5 < pp, 6, if(5 < pp + qq, 5 - pp + 1, 5 - pp - qq + 1)):0}"
+     },
+     "size": 34,
+     "color": {
+      "by": "5 >= pp + qq",
+      "scale": [
+       "white",
+       "blue"
+      ]
+     },
+     "visibleIf": "5 < n && (5 >= pp + qq || named)"
+    },
+    {
+     "shape": "text",
+     "x": "1 + 1.5*mod(a*6 + b, n)",
+     "y": 1.75,
+     "text": {
+      "en": "{if(6 < pp, 7, if(6 < pp + qq, 6 - pp + 1, 6 - pp - qq + 1)):0}"
+     },
+     "size": 34,
+     "color": {
+      "by": "6 >= pp + qq",
+      "scale": [
+       "white",
+       "blue"
+      ]
+     },
+     "visibleIf": "6 < n && (6 >= pp + qq || named)"
+    },
+    {
+     "shape": "text",
+     "x": "1 + 1.5*mod(a*7 + b, n)",
+     "y": 1.75,
+     "text": {
+      "en": "{if(7 < pp, 8, if(7 < pp + qq, 7 - pp + 1, 7 - pp - qq + 1)):0}"
+     },
+     "size": 34,
+     "color": {
+      "by": "7 >= pp + qq",
+      "scale": [
+       "white",
+       "blue"
+      ]
+     },
+     "visibleIf": "7 < n && (7 >= pp + qq || named)"
+    },
+    {
+     "shape": "text",
+     "x": "1 + 1.5*mod(a*8 + b, n)",
+     "y": 1.75,
+     "text": {
+      "en": "{if(8 < pp, 9, if(8 < pp + qq, 8 - pp + 1, 8 - pp - qq + 1)):0}"
+     },
+     "size": 34,
+     "color": {
+      "by": "8 >= pp + qq",
+      "scale": [
+       "white",
+       "blue"
+      ]
+     },
+     "visibleIf": "8 < n && (8 >= pp + qq || named)"
+    },
+    {
+     "shape": "text",
+     "x": "1 + 1.5*mod(a*9 + b, n)",
+     "y": 1.75,
+     "text": {
+      "en": "{if(9 < pp, 10, if(9 < pp + qq, 9 - pp + 1, 9 - pp - qq + 1)):0}"
+     },
+     "size": 34,
+     "color": {
+      "by": "9 >= pp + qq",
+      "scale": [
+       "white",
+       "blue"
+      ]
+     },
+     "visibleIf": "9 < n && (9 >= pp + qq || named)"
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": 4.3,
+     "text": {
+      "en": "Red tiles look alike, blue tiles look alike",
+      "kn": "ಕೆಂಪು ಹೆಂಚುಗಳು ಒಂದೇ ರೀತಿ, ನೀಲಿ ಹೆಂಚುಗಳು ಒಂದೇ ರೀತಿ"
+     },
+     "size": 26
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "n!"
+     },
+     "expr": "nf",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "p! × q!"
+     },
+     "expr": "pf*qf",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Different rows n!/(p! q!)",
+      "kn": "ಬೇರೆ ಸಾಲುಗಳು"
+     },
+     "expr": "W",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make all tiles different (p = 0, q = 0). The count is n!.",
+     "kn": "ಎಲ್ಲಾ ಹೆಂಚುಗಳನ್ನು ಬೇರೆ ಮಾಡಿ (p = 0, q = 0). ಎಣಿಕೆ n!."
+    },
+    {
+     "en": "MISSISSIPPI has 11 letters, so try the smaller word ALLAHABAD: n = 9 with 4 A's (red) and 2 L's (blue). Check 9!/(4! 2!) = 7560.",
+     "kn": "ALLAHABAD: n = 9, 4 A (ಕೆಂಪು), 2 L (ನೀಲಿ). 9!/(4! 2!) = 7560 ಎಂದು ಪರೀಕ್ಷಿಸಿ."
+    },
+    {
+     "en": "Make every tile red. How many different rows are there now?",
+     "kn": "ಎಲ್ಲಾ ಹೆಂಚುಗಳನ್ನು ಕೆಂಪು ಮಾಡಿ. ಈಗ ಎಷ್ಟು ಬೇರೆ ಸಾಲುಗಳು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

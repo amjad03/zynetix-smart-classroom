@@ -228,6 +228,335 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Fill the places",
+    "kn": "ಸ್ಥಾನಗಳನ್ನು ತುಂಬಿ"
+   },
+   "narration": {
+    "en": "Arrange r of n different objects. The first place has n choices, the next one fewer, and so on. Press Fill to fill the places one by one.",
+    "kn": "n ಬೇರೆ ವಸ್ತುಗಳಲ್ಲಿ r ಅನ್ನು ಜೋಡಿಸಿ. ಮೊದಲ ಸ್ಥಾನಕ್ಕೆ n ಆಯ್ಕೆ, ಮುಂದಿನದಕ್ಕೆ ಒಂದು ಕಡಿಮೆ, ಹೀಗೆ. ಸ್ಥಾನಗಳನ್ನು ಒಂದೊಂದಾಗಿ ತುಂಬಲು ತುಂಬಿ ಒತ್ತಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Arrange r of n different objects. The first place has n choices, the next one fewer, and so on. Press Fill to fill the places one by one.",
+    "kn": "n ಬೇರೆ ವಸ್ತುಗಳಲ್ಲಿ r ಅನ್ನು ಜೋಡಿಸಿ. ಮೊದಲ ಸ್ಥಾನಕ್ಕೆ n ಆಯ್ಕೆ, ಮುಂದಿನದಕ್ಕೆ ಒಂದು ಕಡಿಮೆ, ಹೀಗೆ. ಸ್ಥಾನಗಳನ್ನು ಒಂದೊಂದಾಗಿ ತುಂಬಲು ತುಂಬಿ ಒತ್ತಿ."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Objects n",
+      "kn": "ವಸ್ತುಗಳು n"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Places r",
+      "kn": "ಸ್ಥಾನಗಳು r"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "toggles": [
+    {
+     "name": "rep",
+     "label": {
+      "en": "Repetition allowed",
+      "kn": "ಪುನರಾವರ್ತನೆ ಅನುಮತಿ"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Fill",
+      "kn": "ತುಂಬಿ"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 7
+   },
+   "vars": [
+    {
+     "name": "rr",
+     "expr": "if(rep, r, min(r, n))"
+    },
+    {
+     "name": "P",
+     "expr": "(if(0 < rr, if(rep, n, n - 0), 1)*if(1 < rr, if(rep, n, n - 1), 1)*if(2 < rr, if(rep, n, n - 2), 1)*if(3 < rr, if(rep, n, n - 3), 1)*if(4 < rr, if(rep, n, n - 4), 1)*if(5 < rr, if(rep, n, n - 5), 1)*if(6 < rr, if(rep, n, n - 6), 1)*if(7 < rr, if(rep, n, n - 7), 1))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     0,
+     6
+    ],
+    "axes": false,
+    "grid": false,
+    "equal": false
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.4,
+     "y": 2,
+     "w": 1.6,
+     "h": 1.6,
+     "fill": false,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "0 < rr"
+    },
+    {
+     "shape": "text",
+     "x": 1.2000000000000002,
+     "y": 2.55,
+     "text": {
+      "en": "{if(rep, n, n - 0):0}"
+     },
+     "size": 44,
+     "color": "yellow",
+     "visibleIf": "0 < rr && t > 0*0.8"
+    },
+    {
+     "shape": "rect",
+     "x": 2.4,
+     "y": 2,
+     "w": 1.6,
+     "h": 1.6,
+     "fill": false,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "1 < rr"
+    },
+    {
+     "shape": "text",
+     "x": 3.2,
+     "y": 2.55,
+     "text": {
+      "en": "{if(rep, n, n - 1):0}"
+     },
+     "size": 44,
+     "color": "yellow",
+     "visibleIf": "1 < rr && t > 1*0.8"
+    },
+    {
+     "shape": "rect",
+     "x": 4.4,
+     "y": 2,
+     "w": 1.6,
+     "h": 1.6,
+     "fill": false,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "2 < rr"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": 2.55,
+     "text": {
+      "en": "{if(rep, n, n - 2):0}"
+     },
+     "size": 44,
+     "color": "yellow",
+     "visibleIf": "2 < rr && t > 2*0.8"
+    },
+    {
+     "shape": "rect",
+     "x": 6.4,
+     "y": 2,
+     "w": 1.6,
+     "h": 1.6,
+     "fill": false,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "3 < rr"
+    },
+    {
+     "shape": "text",
+     "x": 7.2,
+     "y": 2.55,
+     "text": {
+      "en": "{if(rep, n, n - 3):0}"
+     },
+     "size": 44,
+     "color": "yellow",
+     "visibleIf": "3 < rr && t > 3*0.8"
+    },
+    {
+     "shape": "rect",
+     "x": 8.4,
+     "y": 2,
+     "w": 1.6,
+     "h": 1.6,
+     "fill": false,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "4 < rr"
+    },
+    {
+     "shape": "text",
+     "x": 9.200000000000001,
+     "y": 2.55,
+     "text": {
+      "en": "{if(rep, n, n - 4):0}"
+     },
+     "size": 44,
+     "color": "yellow",
+     "visibleIf": "4 < rr && t > 4*0.8"
+    },
+    {
+     "shape": "rect",
+     "x": 10.4,
+     "y": 2,
+     "w": 1.6,
+     "h": 1.6,
+     "fill": false,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "5 < rr"
+    },
+    {
+     "shape": "text",
+     "x": 11.200000000000001,
+     "y": 2.55,
+     "text": {
+      "en": "{if(rep, n, n - 5):0}"
+     },
+     "size": 44,
+     "color": "yellow",
+     "visibleIf": "5 < rr && t > 5*0.8"
+    },
+    {
+     "shape": "rect",
+     "x": 12.4,
+     "y": 2,
+     "w": 1.6,
+     "h": 1.6,
+     "fill": false,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "6 < rr"
+    },
+    {
+     "shape": "text",
+     "x": 13.200000000000001,
+     "y": 2.55,
+     "text": {
+      "en": "{if(rep, n, n - 6):0}"
+     },
+     "size": 44,
+     "color": "yellow",
+     "visibleIf": "6 < rr && t > 6*0.8"
+    },
+    {
+     "shape": "rect",
+     "x": 14.4,
+     "y": 2,
+     "w": 1.6,
+     "h": 1.6,
+     "fill": false,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "7 < rr"
+    },
+    {
+     "shape": "text",
+     "x": 15.200000000000001,
+     "y": 2.55,
+     "text": {
+      "en": "{if(rep, n, n - 7):0}"
+     },
+     "size": 44,
+     "color": "yellow",
+     "visibleIf": "7 < rr && t > 7*0.8"
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": 5.2,
+     "text": {
+      "en": "Choices for each place, filled left to right",
+      "kn": "ಪ್ರತಿ ಸ್ಥಾನಕ್ಕೆ ಆಯ್ಕೆಗಳು, ಎಡದಿಂದ ಬಲಕ್ಕೆ"
+     },
+     "size": 26
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": 0.6,
+     "text": {
+      "en": "Arrangements = {P:0}",
+      "kn": "ಜೋಡಣೆಗಳು = {P:0}"
+     },
+     "size": 34,
+     "color": "green",
+     "visibleIf": "t > (rr - 1)*0.8"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Places used",
+      "kn": "ಬಳಸಿದ ಸ್ಥಾನಗಳು"
+     },
+     "expr": "rr",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Arrangements",
+      "kn": "ಜೋಡಣೆಗಳು"
+     },
+     "expr": "P",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "n!"
+     },
+     "expr": "((1 + 1*(2 <= n))*(1 + 2*(3 <= n))*(1 + 3*(4 <= n))*(1 + 4*(5 <= n))*(1 + 5*(6 <= n))*(1 + 6*(7 <= n))*(1 + 7*(8 <= n))*(1 + 8*(9 <= n))*(1 + 9*(10 <= n)))",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Take n = 5, r = 3 and fill. Check that 5 × 4 × 3 = 5!/2!.",
+     "kn": "n = 5, r = 3 ತೆಗೆದು ತುಂಬಿ. 5 × 4 × 3 = 5!/2! ಎಂದು ಪರೀಕ್ಷಿಸಿ."
+    },
+    {
+     "en": "Turn on repetition. Why does every place now have n choices?",
+     "kn": "ಪುನರಾವರ್ತನೆ ಆನ್ ಮಾಡಿ. ಈಗ ಪ್ರತಿ ಸ್ಥಾನಕ್ಕೆ n ಆಯ್ಕೆ ಏಕೆ?"
+    },
+    {
+     "en": "Set r = n. The answer is n!, all the arrangements of n objects.",
+     "kn": "r = n ಮಾಡಿ. ಉತ್ತರ n!, n ವಸ್ತುಗಳ ಎಲ್ಲಾ ಜೋಡಣೆಗಳು."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

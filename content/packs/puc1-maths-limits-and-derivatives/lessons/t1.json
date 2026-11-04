@@ -276,6 +276,236 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Average speed to instantaneous speed",
+    "kn": "ಸರಾಸರಿ ವೇಗದಿಂದ ತಕ್ಷಣದ ವೇಗ"
+   },
+   "narration": {
+    "en": "A stone falls s = 4.9t² metres in t seconds. The orange chord gives the average velocity over [t₁, t₁ + h]; make h smaller and it turns into the green tangent, whose slope 9.8t₁ is the velocity at t₁.",
+    "kn": "ಕಲ್ಲು t ಸೆಕೆಂಡಿನಲ್ಲಿ s = 4.9t² ಮೀ ಬೀಳುತ್ತದೆ. ಕಿತ್ತಳೆ ಜ್ಯಾ [t₁, t₁ + h] ನಲ್ಲಿ ಸರಾಸರಿ ವೇಗ; h ಚಿಕ್ಕದು ಮಾಡಿದಂತೆ ಅದು ಹಸಿರು ಸ್ಪರ್ಶಕವಾಗುತ್ತದೆ, ಅದರ ಇಳಿಜಾರು 9.8t₁ = t₁ ನಲ್ಲಿ ವೇಗ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A stone falls s = 4.9t² metres in t seconds. The orange chord gives the average velocity over [t₁, t₁ + h]; make h smaller and it turns into the green tangent, whose slope 9.8t₁ is the velocity at t₁.",
+    "kn": "ಕಲ್ಲು t ಸೆಕೆಂಡಿನಲ್ಲಿ s = 4.9t² ಮೀ ಬೀಳುತ್ತದೆ. ಕಿತ್ತಳೆ ಜ್ಯಾ [t₁, t₁ + h] ನಲ್ಲಿ ಸರಾಸರಿ ವೇಗ; h ಚಿಕ್ಕದು ಮಾಡಿದಂತೆ ಅದು ಹಸಿರು ಸ್ಪರ್ಶಕವಾಗುತ್ತದೆ, ಅದರ ಇಳಿಜಾರು 9.8t₁ = t₁ ನಲ್ಲಿ ವೇಗ."
+   },
+   "sliders": [
+    {
+     "name": "t1",
+     "label": {
+      "en": "Instant t₁",
+      "kn": "ಕ್ಷಣ t₁"
+     },
+     "min": 0.5,
+     "max": 3,
+     "step": 0.1,
+     "value": 2,
+     "unit": "s"
+    }
+   ],
+   "choices": [
+    {
+     "name": "h",
+     "label": {
+      "en": "Interval h",
+      "kn": "ಅಂತರ h"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "1 s"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "0.5 s"
+       },
+       "value": 0.5
+      },
+      {
+       "label": {
+        "en": "0.1 s"
+       },
+       "value": 0.1
+      },
+      {
+       "label": {
+        "en": "0.01 s"
+       },
+       "value": 0.01
+      },
+      {
+       "label": {
+        "en": "0.001 s"
+       },
+       "value": 0.001
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Drop",
+      "kn": "ಬೀಳಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 3.5
+   },
+   "vars": [
+    {
+     "name": "s1",
+     "expr": "4.9*t1^2"
+    },
+    {
+     "name": "avg",
+     "expr": "4.9*(2*t1 + h)"
+    },
+    {
+     "name": "vi",
+     "expr": "9.8*t1"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.2,
+     4.6
+    ],
+    "y": [
+     -3,
+     64
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": false,
+    "xLabel": "t (s)",
+    "yLabel": "s (m)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "4.9*x^2",
+     "from": 0,
+     "to": 3.5,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "t1 - 1",
+     "y1": "s1 - avg",
+     "x2": "t1 + h + 1",
+     "y2": "s1 + avg*(h + 1)",
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "t1 - 1",
+     "y1": "s1 - vi",
+     "x2": "t1 + 1.5",
+     "y2": "s1 + 1.5*vi",
+     "color": "green",
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "x": "t1",
+     "y": "s1",
+     "r": 0.05,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": "t1 + h",
+     "y": "4.9*(t1 + h)^2",
+     "r": 0.05,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "4.9*t^2",
+     "r": 0.06,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 4.2,
+     "y1": 0,
+     "x2": 4.2,
+     "y2": 60,
+     "color": "white",
+     "width": 2,
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "x": 4.2,
+     "y": "max(60 - 4.9*t^2, 0.5)",
+     "r": 0.1,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 1.2,
+     "y": 55,
+     "text": {
+      "en": "speed now {9.8*t:1} m/s",
+      "kn": "ಈಗಿನ ವೇಗ {9.8*t:1} m/s"
+     },
+     "size": 24,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Average velocity over [t₁, t₁ + h]",
+      "kn": "ಸರಾಸರಿ ವೇಗ"
+     },
+     "expr": "avg",
+     "digits": 4,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Velocity at t₁ = 9.8t₁",
+      "kn": "t₁ ನಲ್ಲಿ ವೇಗ"
+     },
+     "expr": "vi",
+     "digits": 2,
+     "unit": "m/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At t₁ = 2 s, step h down from 1 to 0.001. Which number do the averages approach?",
+     "kn": "t₁ = 2 s ನಲ್ಲಿ h ಅನ್ನು 1 ರಿಂದ 0.001 ಕ್ಕೆ ಇಳಿಸಿ. ಸರಾಸರಿಗಳು ಯಾವ ಸಂಖ್ಯೆ ಸಮೀಪಿಸುತ್ತವೆ?"
+    },
+    {
+     "en": "Press Drop and watch the speed readout pass t₁.",
+     "kn": "ಬೀಳಿಸಿ ಒತ್ತಿ, ವೇಗ t₁ ದಾಟುವುದನ್ನು ನೋಡಿ."
+    },
+    {
+     "en": "Is the average over [2, 2 + h] above or below 19.6 m/s? Why?",
+     "kn": "[2, 2 + h] ಸರಾಸರಿ 19.6 m/s ಗಿಂತ ಹೆಚ್ಚೇ ಕಡಿಮೆಯೇ? ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "sim-lab.graph-plotter",
    "type": "simulation",
    "source": "kinetix_sim",

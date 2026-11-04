@@ -272,6 +272,252 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A circle as a locus",
+    "kn": "ಬಿಂದುಪಥವಾಗಿ ವೃತ್ತ"
+   },
+   "narration": {
+    "en": "Press Trace: a point that keeps its distance r from the centre C draws the circle (x − h)² + (y − k)² = r². Drag the test point P to see whether it is inside, on or outside.",
+    "kn": "ಗುರುತಿಸು ಒತ್ತಿ: ಕೇಂದ್ರ C ಯಿಂದ r ದೂರ ಕಾಯ್ದುಕೊಳ್ಳುವ ಬಿಂದು (x − h)² + (y − k)² = r² ವೃತ್ತ ಎಳೆಯುತ್ತದೆ. P ಪರೀಕ್ಷಾ ಬಿಂದುವನ್ನು ಎಳೆದು ಒಳಗೆ, ಮೇಲೆ ಅಥವಾ ಹೊರಗೆ ನೋಡಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Press Trace: a point that keeps its distance r from the centre C draws the circle (x − h)² + (y − k)² = r². Drag the test point P to see whether it is inside, on or outside.",
+    "kn": "ಗುರುತಿಸು ಒತ್ತಿ: ಕೇಂದ್ರ C ಯಿಂದ r ದೂರ ಕಾಯ್ದುಕೊಳ್ಳುವ ಬಿಂದು (x − h)² + (y − k)² = r² ವೃತ್ತ ಎಳೆಯುತ್ತದೆ. P ಪರೀಕ್ಷಾ ಬಿಂದುವನ್ನು ಎಳೆದು ಒಳಗೆ, ಮೇಲೆ ಅಥವಾ ಹೊರಗೆ ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Radius r",
+      "kn": "ತ್ರಿಜ್ಯ r"
+     },
+     "min": 0.5,
+     "max": 4,
+     "step": 0.5,
+     "value": 2.5
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Trace",
+      "kn": "ಗುರುತಿಸು"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "C",
+     "x": 1,
+     "y": 1,
+     "label": "C(h, k)",
+     "box": {
+      "x": [
+       -4,
+       4
+      ],
+      "y": [
+       -3,
+       3
+      ]
+     },
+     "snap": 0.5,
+     "color": "blue"
+    },
+    {
+     "name": "P",
+     "x": 4,
+     "y": 3,
+     "label": "P",
+     "box": {
+      "x": [
+       -6,
+       6
+      ],
+      "y": [
+       -4,
+       4
+      ]
+     },
+     "snap": 0.5,
+     "color": "orange"
+    }
+   ],
+   "time": {
+    "max": 6.3
+   },
+   "vars": [
+    {
+     "name": "qx",
+     "expr": "C_x + r*cos(t)"
+    },
+    {
+     "name": "qy",
+     "expr": "C_y + r*sin(t)"
+    },
+    {
+     "name": "SP",
+     "expr": "(P_x - C_x)^2 + (P_y - C_y)^2 - r^2"
+    }
+   ],
+   "view": {
+    "x": [
+     -6.5,
+     6.5
+    ],
+    "y": [
+     -4.5,
+     4.5
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "trail",
+     "x": "qx",
+     "y": "qy",
+     "length": 700,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "C_x",
+     "y1": "C_y",
+     "x2": "qx",
+     "y2": "qy",
+     "color": "yellow",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "qx",
+     "y": "qy",
+     "r": 0.12,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "C_x",
+     "y": "C_y",
+     "r": "r",
+     "fill": false,
+     "color": "white",
+     "width": 1,
+     "opacity": 0.3
+    },
+    {
+     "shape": "line",
+     "x1": "C_x",
+     "y1": "C_y",
+     "x2": "P_x",
+     "y2": "P_y",
+     "color": "orange",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "label",
+     "x": -3.6,
+     "y": 4,
+     "text": {
+      "en": "(x − {C_x:1})² + (y − {C_y:1})² = {r^2:2}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "label",
+     "x": 3.6,
+     "y": 4,
+     "text": {
+      "en": "P inside",
+      "kn": "P ಒಳಗೆ"
+     },
+     "size": 24,
+     "color": "green",
+     "visibleIf": "SP < 0"
+    },
+    {
+     "shape": "label",
+     "x": 3.6,
+     "y": 4,
+     "text": {
+      "en": "P on the circle",
+      "kn": "P ವೃತ್ತದ ಮೇಲೆ"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "SP == 0"
+    },
+    {
+     "shape": "label",
+     "x": 3.6,
+     "y": 4,
+     "text": {
+      "en": "P outside",
+      "kn": "P ಹೊರಗೆ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "SP > 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "g = −h"
+     },
+     "expr": "-C_x",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "f = −k"
+     },
+     "expr": "-C_y",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "c = h² + k² − r²"
+     },
+     "expr": "C_x^2 + C_y^2 - r^2",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "S(P)"
+     },
+     "expr": "SP",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Move C to (2, −1) with r = 3. Expand the equation and compare with g, f and c.",
+     "kn": "C ಅನ್ನು (2, −1), r = 3. ಸಮೀಕರಣ ವಿಸ್ತರಿಸಿ g, f, c ಜೊತೆ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Put P exactly on the circle. What is the value of S(P)?",
+     "kn": "P ಅನ್ನು ವೃತ್ತದ ಮೇಲೆ ಇಡಿ. S(P) ಮೌಲ್ಯ ಎಷ್ಟು?"
+    },
+    {
+     "en": "When is c in x² + y² + 2gx + 2fy + c = 0 negative?",
+     "kn": "x² + y² + 2gx + 2fy + c = 0 ನಲ್ಲಿ c ಯಾವಾಗ ಋಣ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

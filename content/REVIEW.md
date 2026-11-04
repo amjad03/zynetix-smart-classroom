@@ -684,3 +684,10 @@ No text is reproduced. Check these plot details against the texts:
 - **Wording to confirm:** gram as the diadelphous example; the cilium linker label; callus as dedifferentiation.
 - **Diagrams:** the heart, brain and frog are schematic.
 - **Kannada:** needs a native-speaker review.
+
+## Maths 1st PUC simulations (68 lessons)
+
+- **Conic sections:** classified with e = cos(beta)/cos(alpha).
+- **NCERT conventions:** octant numbering I-VIII.
+- **Sorts to confirm:** xy >= 1 and 1/x > 2 as not linear.
+- **Kannada:** needs a native-speaker review.

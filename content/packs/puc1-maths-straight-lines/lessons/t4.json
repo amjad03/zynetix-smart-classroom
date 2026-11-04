@@ -343,6 +343,235 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Point-slope and two-point forms",
+    "kn": "ಬಿಂದು-ಇಳಿಜಾರು ಮತ್ತು ಎರಡು-ಬಿಂದು ರೂಪಗಳು"
+   },
+   "narration": {
+    "en": "Point-slope: drag P and set the slope m. Two-point: drag P and Q and the slope comes from them. The equation is shown in both forms.",
+    "kn": "ಬಿಂದು-ಇಳಿಜಾರು: P ಎಳೆದು ಇಳಿಜಾರು m ಹೊಂದಿಸಿ. ಎರಡು-ಬಿಂದು: P, Q ಎಳೆಯಿರಿ, ಇಳಿಜಾರು ಅವುಗಳಿಂದ. ಸಮೀಕರಣ ಎರಡೂ ರೂಪಗಳಲ್ಲಿ ಕಾಣುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Point-slope: drag P and set the slope m. Two-point: drag P and Q and the slope comes from them. The equation is shown in both forms.",
+    "kn": "ಬಿಂದು-ಇಳಿಜಾರು: P ಎಳೆದು ಇಳಿಜಾರು m ಹೊಂದಿಸಿ. ಎರಡು-ಬಿಂದು: P, Q ಎಳೆಯಿರಿ, ಇಳಿಜಾರು ಅವುಗಳಿಂದ. ಸಮೀಕರಣ ಎರಡೂ ರೂಪಗಳಲ್ಲಿ ಕಾಣುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "m0",
+     "label": {
+      "en": "Slope m (point-slope)",
+      "kn": "ಇಳಿಜಾರು m"
+     },
+     "min": -4,
+     "max": 4,
+     "step": 0.25,
+     "value": 0.5
+    }
+   ],
+   "choices": [
+    {
+     "name": "form",
+     "label": {
+      "en": "Form",
+      "kn": "ರೂಪ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Point-slope",
+        "kn": "ಬಿಂದು-ಇಳಿಜಾರು"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Two-point",
+        "kn": "ಎರಡು-ಬಿಂದು"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "x": 1,
+     "y": 2,
+     "label": "P",
+     "box": {
+      "x": [
+       -5.5,
+       5.5
+      ],
+      "y": [
+       -3.5,
+       3.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "blue"
+    },
+    {
+     "name": "Q",
+     "x": 4,
+     "y": -1,
+     "label": "Q",
+     "box": {
+      "x": [
+       -5.5,
+       5.5
+      ],
+      "y": [
+       -3.5,
+       3.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "orange"
+    }
+   ],
+   "vars": [
+    {
+     "name": "dx",
+     "expr": "Q_x - P_x"
+    },
+    {
+     "name": "vert",
+     "expr": "form == 2 && dx == 0"
+    },
+    {
+     "name": "m",
+     "expr": "if(form == 1, m0, if(dx == 0, 0, (Q_y - P_y)/dx))"
+    },
+    {
+     "name": "c",
+     "expr": "P_y - m*P_x"
+    },
+    {
+     "name": "ux",
+     "expr": "if(vert, 0, 1/sqrt(1 + m^2))"
+    },
+    {
+     "name": "uy",
+     "expr": "if(vert, 1, m/sqrt(1 + m^2))"
+    }
+   ],
+   "view": {
+    "x": [
+     -6,
+     6
+    ],
+    "y": [
+     -4,
+     4
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": "P_x - 20*ux",
+     "y1": "P_y - 20*uy",
+     "x2": "P_x + 20*ux",
+     "y2": "P_y + 20*uy",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 3.4,
+     "text": {
+      "en": "y − ({P_y:1}) = {m:2}(x − ({P_x:1}))"
+     },
+     "size": 26,
+     "visibleIf": "!vert"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 2.5,
+     "text": {
+      "en": "y = {m:2}x + ({c:2})"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "!vert"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 3.4,
+     "text": {
+      "en": "x = {P_x:1}  (vertical line)",
+      "kn": "x = {P_x:1}  (ಲಂಬ ರೇಖೆ)"
+     },
+     "size": 26,
+     "visibleIf": "vert"
+    },
+    {
+     "shape": "circle",
+     "x": "Q_x",
+     "y": "Q_y",
+     "r": 0.3,
+     "fill": false,
+     "color": "orange",
+     "width": 3,
+     "visibleIf": "form == 1",
+     "opacity": 0.4
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Slope m",
+      "kn": "ಇಳಿಜಾರು m"
+     },
+     "expr": "m",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "y-intercept c",
+      "kn": "y-ಅಂತಃಖಂಡ c"
+     },
+     "expr": "if(vert, 0, c)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "x-intercept −c/m",
+      "kn": "x-ಅಂತಃಖಂಡ"
+     },
+     "expr": "if(vert, P_x, if(m == 0, 0, -c/m))",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Point-slope with P(1, 2) and m = −1: write the line in the form y = mx + c.",
+     "kn": "P(1, 2), m = −1: ರೇಖೆಯನ್ನು y = mx + c ರೂಪದಲ್ಲಿ ಬರೆಯಿರಿ."
+    },
+    {
+     "en": "Two-point: put Q directly above P. Why is the equation now x = constant?",
+     "kn": "ಎರಡು-ಬಿಂದು: Q ಅನ್ನು P ಯ ನೇರ ಮೇಲೆ ಇಡಿ. ಸಮೀಕರಣ x = ಸ್ಥಿರ ಏಕೆ?"
+    },
+    {
+     "en": "Set m = 0. Which kind of line is it?",
+     "kn": "m = 0 ಮಾಡಿ. ಇದು ಯಾವ ರೀತಿಯ ರೇಖೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

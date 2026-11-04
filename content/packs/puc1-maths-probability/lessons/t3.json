@@ -452,6 +452,324 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Events on a die: or, and, not",
+    "kn": "ದಾಳದ ಘಟನೆಗಳು: ಅಥವಾ, ಮತ್ತು, ಅಲ್ಲ"
+   },
+   "narration": {
+    "en": "Choose event A, set B = 'a number at least k' for one throw of a die, and pick an operation. The outcomes in the result light up; blue dots mark A, green dots mark B.",
+    "kn": "ದಾಳದ ಒಂದು ಎಸೆತಕ್ಕೆ ಘಟನೆ A ಆರಿಸಿ, B = 'ಕನಿಷ್ಠ k ಸಂಖ್ಯೆ' ಹೊಂದಿಸಿ, ಕ್ರಿಯೆ ಆರಿಸಿ. ಫಲಿತದ ಫಲಿತಾಂಶಗಳು ಬೆಳಗುತ್ತವೆ; ನೀಲಿ ಚುಕ್ಕೆ A, ಹಸಿರು ಚುಕ್ಕೆ B."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Choose event A, set B = 'a number at least k' for one throw of a die, and pick an operation. The outcomes in the result light up; blue dots mark A, green dots mark B.",
+    "kn": "ದಾಳದ ಒಂದು ಎಸೆತಕ್ಕೆ ಘಟನೆ A ಆರಿಸಿ, B = 'ಕನಿಷ್ಠ k ಸಂಖ್ಯೆ' ಹೊಂದಿಸಿ, ಕ್ರಿಯೆ ಆರಿಸಿ. ಫಲಿತದ ಫಲಿತಾಂಶಗಳು ಬೆಳಗುತ್ತವೆ; ನೀಲಿ ಚುಕ್ಕೆ A, ಹಸಿರು ಚುಕ್ಕೆ B."
+   },
+   "sliders": [
+    {
+     "name": "kb",
+     "label": {
+      "en": "B: a number at least k",
+      "kn": "B: ಕನಿಷ್ಠ k ಸಂಖ್ಯೆ"
+     },
+     "min": 1,
+     "max": 7,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "choices": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Event A",
+      "kn": "ಘಟನೆ A"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Even",
+        "kn": "ಸಮ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Odd",
+        "kn": "ಬೆಸ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Prime",
+        "kn": "ಅವಿಭಾಜ್ಯ"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "4 or more",
+        "kn": "4 ಅಥವಾ ಹೆಚ್ಚು"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    },
+    {
+     "name": "op",
+     "label": {
+      "en": "Show",
+      "kn": "ತೋರಿಸು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "A or B",
+        "kn": "A ಅಥವಾ B"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "A and B",
+        "kn": "A ಮತ್ತು B"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "A but not B",
+        "kn": "A ಆದರೆ B ಅಲ್ಲ"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "not A",
+        "kn": "A ಅಲ್ಲ"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "MA",
+     "expr": "if(A == 1, 42, if(A == 2, 21, if(A == 3, 22, 56)))"
+    },
+    {
+     "name": "MB",
+     "expr": "64 - 2^(kb - 1)"
+    },
+    {
+     "name": "nAB",
+     "expr": "(((mod(floor(MA/2^(1 - 1)), 2) == 1) && (mod(floor(MB/2^(1 - 1)), 2) == 1)) + ((mod(floor(MA/2^(2 - 1)), 2) == 1) && (mod(floor(MB/2^(2 - 1)), 2) == 1)) + ((mod(floor(MA/2^(3 - 1)), 2) == 1) && (mod(floor(MB/2^(3 - 1)), 2) == 1)) + ((mod(floor(MA/2^(4 - 1)), 2) == 1) && (mod(floor(MB/2^(4 - 1)), 2) == 1)) + ((mod(floor(MA/2^(5 - 1)), 2) == 1) && (mod(floor(MB/2^(5 - 1)), 2) == 1)) + ((mod(floor(MA/2^(6 - 1)), 2) == 1) && (mod(floor(MB/2^(6 - 1)), 2) == 1)))"
+    },
+    {
+     "name": "nU",
+     "expr": "(((mod(floor(MA/2^(1 - 1)), 2) == 1) || (mod(floor(MB/2^(1 - 1)), 2) == 1)) + ((mod(floor(MA/2^(2 - 1)), 2) == 1) || (mod(floor(MB/2^(2 - 1)), 2) == 1)) + ((mod(floor(MA/2^(3 - 1)), 2) == 1) || (mod(floor(MB/2^(3 - 1)), 2) == 1)) + ((mod(floor(MA/2^(4 - 1)), 2) == 1) || (mod(floor(MB/2^(4 - 1)), 2) == 1)) + ((mod(floor(MA/2^(5 - 1)), 2) == 1) || (mod(floor(MB/2^(5 - 1)), 2) == 1)) + ((mod(floor(MA/2^(6 - 1)), 2) == 1) || (mod(floor(MB/2^(6 - 1)), 2) == 1)))"
+    }
+   ],
+   "view": {
+    "x": [
+     -5.8,
+     5.8
+    ],
+    "y": [
+     -2.8,
+     2.8
+    ],
+    "axes": false,
+    "grid": false,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 6,
+     "x": "(1.5*i - 3.75)",
+     "y": 0,
+     "r": 0.55,
+     "color": "white",
+     "opacity": 0.25
+    },
+    {
+     "shape": "particles",
+     "count": 6,
+     "x": "(1.5*i - 3.75)",
+     "y": 0,
+     "r": 0.55,
+     "color": "yellow",
+     "visibleIf": "if(op == 1, (mod(floor(MA/2^((i + 1) - 1)), 2) == 1) || (mod(floor(MB/2^((i + 1) - 1)), 2) == 1), if(op == 2, (mod(floor(MA/2^((i + 1) - 1)), 2) == 1) && (mod(floor(MB/2^((i + 1) - 1)), 2) == 1), if(op == 3, (mod(floor(MA/2^((i + 1) - 1)), 2) == 1) && !(mod(floor(MB/2^((i + 1) - 1)), 2) == 1), !(mod(floor(MA/2^((i + 1) - 1)), 2) == 1))))"
+    },
+    {
+     "shape": "particles",
+     "count": 6,
+     "x": "(1.5*i - 3.75)",
+     "y": 0.95,
+     "r": 0.16,
+     "color": "blue",
+     "visibleIf": "mod(floor(MA/2^((i + 1) - 1)), 2) == 1"
+    },
+    {
+     "shape": "particles",
+     "count": 6,
+     "x": "(1.5*i - 3.75)",
+     "y": -0.95,
+     "r": 0.16,
+     "color": "green",
+     "visibleIf": "mod(floor(MB/2^((i + 1) - 1)), 2) == 1"
+    },
+    {
+     "shape": "text",
+     "x": -3.75,
+     "y": -0.15,
+     "text": {
+      "en": "1"
+     },
+     "size": 34
+    },
+    {
+     "shape": "text",
+     "x": -2.25,
+     "y": -0.15,
+     "text": {
+      "en": "2"
+     },
+     "size": 34
+    },
+    {
+     "shape": "text",
+     "x": -0.75,
+     "y": -0.15,
+     "text": {
+      "en": "3"
+     },
+     "size": 34
+    },
+    {
+     "shape": "text",
+     "x": 0.75,
+     "y": -0.15,
+     "text": {
+      "en": "4"
+     },
+     "size": 34
+    },
+    {
+     "shape": "text",
+     "x": 2.25,
+     "y": -0.15,
+     "text": {
+      "en": "5"
+     },
+     "size": 34
+    },
+    {
+     "shape": "text",
+     "x": 3.75,
+     "y": -0.15,
+     "text": {
+      "en": "6"
+     },
+     "size": 34
+    },
+    {
+     "shape": "text",
+     "x": -5.2,
+     "y": 0.95,
+     "text": {
+      "en": "A"
+     },
+     "size": 28,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": -5.2,
+     "y": -0.95,
+     "text": {
+      "en": "B"
+     },
+     "size": 28,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 2.1,
+     "text": {
+      "en": "A and B are mutually exclusive",
+      "kn": "A ಮತ್ತು B ಪರಸ್ಪರ ಹೊರತಾದವು"
+     },
+     "size": 28,
+     "color": "green",
+     "visibleIf": "nAB == 0"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 2.1,
+     "text": {
+      "en": "A and B can happen together",
+      "kn": "A ಮತ್ತು B ಒಟ್ಟಿಗೆ ಸಂಭವಿಸಬಹುದು"
+     },
+     "size": 28,
+     "color": "orange",
+     "visibleIf": "nAB > 0"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": -2.1,
+     "text": {
+      "en": "A and B are exhaustive: A ∪ B = S",
+      "kn": "A ಮತ್ತು B ಸಮಗ್ರ: A ∪ B = S"
+     },
+     "size": 26,
+     "visibleIf": "nU == 6"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "n(A ∩ B)"
+     },
+     "expr": "nAB",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "n(A ∪ B)"
+     },
+     "expr": "nU",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "A = even and k = 5, so B = {5, 6}. Which outcome is in A and B?",
+     "kn": "A = ಸಮ, k = 5, ಆದ್ದರಿಂದ B = {5, 6}. ಯಾವ ಫಲಿತಾಂಶ A ಮತ್ತು B ಎರಡರಲ್ಲೂ ಇದೆ?"
+    },
+    {
+     "en": "Set k = 1 and then k = 7. Which is the sure event and which the impossible one?",
+     "kn": "k = 1, ನಂತರ k = 7 ಮಾಡಿ. ಯಾವುದು ಖಚಿತ ಘಟನೆ, ಯಾವುದು ಅಸಾಧ್ಯ?"
+    },
+    {
+     "en": "Find A and k that make A and B mutually exclusive and exhaustive.",
+     "kn": "A ಮತ್ತು B ಪರಸ್ಪರ ಹೊರತಾದ ಮತ್ತು ಸಮಗ್ರ ಆಗುವ A, k ಹುಡುಕಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

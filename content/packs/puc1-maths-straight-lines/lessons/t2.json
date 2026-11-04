@@ -404,6 +404,268 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Slope from two points",
+    "kn": "ಎರಡು ಬಿಂದುಗಳಿಂದ ಇಳಿಜಾರು"
+   },
+   "narration": {
+    "en": "Drag P and Q. The slope is rise over run, (y₂ − y₁)/(x₂ − x₁) = tan θ. The dashed copy is a parallel line; the green one is perpendicular through P.",
+    "kn": "P ಮತ್ತು Q ಎಳೆಯಿರಿ. ಇಳಿಜಾರು = ಏರಿಕೆ / ಓಟ = (y₂ − y₁)/(x₂ − x₁) = tan θ. ಚುಕ್ಕೆ ಪ್ರತಿ ಸಮಾಂತರ ರೇಖೆ; ಹಸಿರು P ಮೂಲಕ ಲಂಬ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag P and Q. The slope is rise over run, (y₂ − y₁)/(x₂ − x₁) = tan θ. The dashed copy is a parallel line; the green one is perpendicular through P.",
+    "kn": "P ಮತ್ತು Q ಎಳೆಯಿರಿ. ಇಳಿಜಾರು = ಏರಿಕೆ / ಓಟ = (y₂ − y₁)/(x₂ − x₁) = tan θ. ಚುಕ್ಕೆ ಪ್ರತಿ ಸಮಾಂತರ ರೇಖೆ; ಹಸಿರು P ಮೂಲಕ ಲಂಬ."
+   },
+   "sliders": [
+    {
+     "name": "c",
+     "label": {
+      "en": "Shift of the parallel line",
+      "kn": "ಸಮಾಂತರ ರೇಖೆಯ ಸ್ಥಳಾಂತರ"
+     },
+     "min": -4,
+     "max": 4,
+     "step": 0.5,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "perp",
+     "label": {
+      "en": "Perpendicular through P",
+      "kn": "P ಮೂಲಕ ಲಂಬ"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "x": -2,
+     "y": -1,
+     "label": "P",
+     "box": {
+      "x": [
+       -5.5,
+       5.5
+      ],
+      "y": [
+       -3.5,
+       3.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "blue"
+    },
+    {
+     "name": "Q",
+     "x": 3,
+     "y": 2,
+     "label": "Q",
+     "box": {
+      "x": [
+       -5.5,
+       5.5
+      ],
+      "y": [
+       -3.5,
+       3.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "orange"
+    }
+   ],
+   "vars": [
+    {
+     "name": "dx",
+     "expr": "Q_x - P_x"
+    },
+    {
+     "name": "dy",
+     "expr": "Q_y - P_y"
+    },
+    {
+     "name": "len",
+     "expr": "max(hypot(dx, dy), 0.000001)"
+    },
+    {
+     "name": "ux",
+     "expr": "if(hypot(dx, dy) > 0, dx/len, 1)"
+    },
+    {
+     "name": "uy",
+     "expr": "dy/len"
+    },
+    {
+     "name": "vert",
+     "expr": "dx == 0 && dy != 0"
+    },
+    {
+     "name": "m",
+     "expr": "if(dx == 0, 0, dy/dx)"
+    },
+    {
+     "name": "th",
+     "expr": "mod(deg(atan2(dy, dx)), 180)"
+    }
+   ],
+   "view": {
+    "x": [
+     -6,
+     6
+    ],
+    "y": [
+     -4,
+     4
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": "P_x - 20*ux",
+     "y1": "P_y - 20*uy",
+     "x2": "P_x + 20*ux",
+     "y2": "P_y + 20*uy",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "P_x - 20*ux + if(vert, c, 0)",
+     "y1": "P_y - 20*uy + if(vert, 0, c)",
+     "x2": "P_x + 20*ux + if(vert, c, 0)",
+     "y2": "P_y + 20*uy + if(vert, 0, c)",
+     "color": "yellow",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": "P_x + 20*uy",
+     "y1": "P_y - 20*ux",
+     "x2": "P_x - 20*uy",
+     "y2": "P_y + 20*ux",
+     "color": "green",
+     "width": 3,
+     "visibleIf": "perp"
+    },
+    {
+     "shape": "line",
+     "x1": "P_x",
+     "y1": "P_y",
+     "x2": "Q_x",
+     "y2": "P_y",
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "Q_x",
+     "y1": "P_y",
+     "x2": "Q_x",
+     "y2": "Q_y",
+     "color": "red",
+     "width": 4
+    },
+    {
+     "shape": "label",
+     "x": "(P_x + Q_x)/2",
+     "y": "P_y - 0.5",
+     "text": {
+      "en": "run {dx:1}",
+      "kn": "ಓಟ {dx:1}"
+     },
+     "size": 22,
+     "color": "blue"
+    },
+    {
+     "shape": "label",
+     "x": "Q_x + 0.4",
+     "y": "(P_y + Q_y)/2",
+     "text": {
+      "en": "rise {dy:1}",
+      "kn": "ಏರಿಕೆ {dy:1}"
+     },
+     "size": 22,
+     "color": "red",
+     "align": "left"
+    },
+    {
+     "shape": "label",
+     "x": -3.5,
+     "y": 3.4,
+     "text": {
+      "en": "m = {m:3}   θ = {th:1}°"
+     },
+     "size": 26,
+     "visibleIf": "!vert"
+    },
+    {
+     "shape": "label",
+     "x": -3.5,
+     "y": 3.4,
+     "text": {
+      "en": "vertical: slope not defined",
+      "kn": "ಲಂಬ: ಇಳಿಜಾರು ವ್ಯಾಖ್ಯಾನಿತವಲ್ಲ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "vert"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Slope m",
+      "kn": "ಇಳಿಜಾರು m"
+     },
+     "expr": "m",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Inclination θ",
+      "kn": "ಓರೆ θ"
+     },
+     "expr": "th",
+     "digits": 1,
+     "unit": "°"
+    },
+    {
+     "label": {
+      "en": "Slope of the perpendicular",
+      "kn": "ಲಂಬದ ಇಳಿಜಾರು"
+     },
+     "expr": "if(m == 0, 0, -1/m)",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make the line horizontal, then vertical. What happens to the slope?",
+     "kn": "ರೇಖೆಯನ್ನು ಅಡ್ಡ, ನಂತರ ಲಂಬ ಮಾಡಿ. ಇಳಿಜಾರಿಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Swap P and Q. Does the slope change?",
+     "kn": "P ಮತ್ತು Q ಅದಲುಬದಲು ಮಾಡಿ. ಇಳಿಜಾರು ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Turn on the perpendicular. Multiply the two slopes: what do you always get?",
+     "kn": "ಲಂಬ ಆನ್ ಮಾಡಿ. ಎರಡು ಇಳಿಜಾರುಗಳನ್ನು ಗುಣಿಸಿ: ಯಾವಾಗಲೂ ಏನು ಸಿಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

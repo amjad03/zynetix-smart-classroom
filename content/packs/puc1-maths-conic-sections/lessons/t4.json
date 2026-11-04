@@ -309,6 +309,232 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Ellipse: the sum of focal distances",
+    "kn": "ದೀರ್ಘವೃತ್ತ: ನಾಭಿ ದೂರಗಳ ಮೊತ್ತ"
+   },
+   "narration": {
+    "en": "P runs round the ellipse x²/a² + y²/b² = 1 with foci (±c, 0), c = ae. However P moves, PF₁ + PF₂ stays equal to 2a, like a loop of string pinned at the foci.",
+    "kn": "P ದೀರ್ಘವೃತ್ತ x²/a² + y²/b² = 1 ರ ಸುತ್ತ ಓಡುತ್ತದೆ, ನಾಭಿಗಳು (±c, 0), c = ae. P ಹೇಗೆ ಚಲಿಸಿದರೂ PF₁ + PF₂ = 2a, ನಾಭಿಗಳಲ್ಲಿ ಕಟ್ಟಿದ ದಾರದಂತೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "P runs round the ellipse x²/a² + y²/b² = 1 with foci (±c, 0), c = ae. However P moves, PF₁ + PF₂ stays equal to 2a, like a loop of string pinned at the foci.",
+    "kn": "P ದೀರ್ಘವೃತ್ತ x²/a² + y²/b² = 1 ರ ಸುತ್ತ ಓಡುತ್ತದೆ, ನಾಭಿಗಳು (±c, 0), c = ae. P ಹೇಗೆ ಚಲಿಸಿದರೂ PF₁ + PF₂ = 2a, ನಾಭಿಗಳಲ್ಲಿ ಕಟ್ಟಿದ ದಾರದಂತೆ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Semi-major axis a",
+      "kn": "ಅರೆ ದೀರ್ಘಾಕ್ಷ a"
+     },
+     "min": 2,
+     "max": 6,
+     "step": 0.5,
+     "value": 5
+    },
+    {
+     "name": "ec",
+     "label": {
+      "en": "Eccentricity e",
+      "kn": "ಉತ್ಕೇಂದ್ರತೆ e"
+     },
+     "min": 0,
+     "max": 0.95,
+     "step": 0.05,
+     "value": 0.6
+    }
+   ],
+   "toggles": [
+    {
+     "name": "dir",
+     "label": {
+      "en": "Directrices x = ±a/e",
+      "kn": "ನಿಯತ ರೇಖೆಗಳು x = ±a/e"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 6.2832,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "c",
+     "expr": "a*ec"
+    },
+    {
+     "name": "b",
+     "expr": "a*sqrt(1 - ec^2)"
+    },
+    {
+     "name": "px",
+     "expr": "a*cos(t)"
+    },
+    {
+     "name": "py",
+     "expr": "b*sin(t)"
+    },
+    {
+     "name": "d1",
+     "expr": "hypot(px - c, py)"
+    },
+    {
+     "name": "d2",
+     "expr": "hypot(px + c, py)"
+    }
+   ],
+   "view": {
+    "x": [
+     -8,
+     8
+    ],
+    "y": [
+     -5.5,
+     5.5
+    ],
+    "axes": true,
+    "grid": false,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "b*sqrt(1 - x^2/a^2)",
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "fn": "-b*sqrt(1 - x^2/a^2)",
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "a/ec",
+     "y1": -5.5,
+     "x2": "a/ec",
+     "y2": 5.5,
+     "color": "green",
+     "dashed": true,
+     "width": 2,
+     "visibleIf": "dir && ec > 0.05"
+    },
+    {
+     "shape": "line",
+     "x1": "-a/ec",
+     "y1": -5.5,
+     "x2": "-a/ec",
+     "y2": 5.5,
+     "color": "green",
+     "dashed": true,
+     "width": 2,
+     "visibleIf": "dir && ec > 0.05"
+    },
+    {
+     "shape": "line",
+     "x1": "c",
+     "y1": 0,
+     "x2": "px",
+     "y2": "py",
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "-c",
+     "y1": 0,
+     "x2": "px",
+     "y2": "py",
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "c",
+     "y": 0,
+     "r": 0.13,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "x": "-c",
+     "y": 0,
+     "r": 0.13,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 0.15,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 5,
+     "text": {
+      "en": "PF₁ + PF₂ = {d1:2} + {d2:2} = {d1 + d2:2}"
+     },
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "b = a√(1 − e²)"
+     },
+     "expr": "b",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "c = ae"
+     },
+     "expr": "c",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "PF₁ + PF₂"
+     },
+     "expr": "d1 + d2",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Latus rectum 2b²/a",
+      "kn": "ನಾಭಿ ಲಂಬ 2b²/a"
+     },
+     "expr": "2*b^2/a",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set e = 0. What happens to the foci and the shape?",
+     "kn": "e = 0 ಮಾಡಿ. ನಾಭಿಗಳು ಮತ್ತು ಆಕಾರಕ್ಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Push e towards 1. How does b change?",
+     "kn": "e ಅನ್ನು 1 ರ ಕಡೆ ತಳ್ಳಿ. b ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Check c² = a² − b² with a = 5 and e = 0.6.",
+     "kn": "a = 5, e = 0.6: c² = a² − b² ಪರೀಕ್ಷಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

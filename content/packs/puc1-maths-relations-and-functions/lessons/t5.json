@@ -194,6 +194,223 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Add, subtract, multiply, divide functions",
+    "kn": "ಫಲನಗಳನ್ನು ಕೂಡಿಸಿ, ಕಳೆಯಿರಿ, ಗುಣಿಸಿ, ಭಾಗಿಸಿ"
+   },
+   "narration": {
+    "en": "f(x) = x² (blue) and g(x) = kx + 1 (green). The yellow graph is the chosen combination. Drag the point x₀: the bars show f(x₀), g(x₀) and the result.",
+    "kn": "f(x) = x² (ನೀಲಿ), g(x) = kx + 1 (ಹಸಿರು). ಹಳದಿ ನಕ್ಷೆ ಆರಿಸಿದ ಸಂಯೋಜನೆ. x₀ ಬಿಂದುವನ್ನು ಎಳೆಯಿರಿ: ಪಟ್ಟಿಗಳು f(x₀), g(x₀) ಮತ್ತು ಫಲಿತವನ್ನು ತೋರಿಸುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "f(x) = x² (blue) and g(x) = kx + 1 (green). The yellow graph is the chosen combination. Drag the point x₀: the bars show f(x₀), g(x₀) and the result.",
+    "kn": "f(x) = x² (ನೀಲಿ), g(x) = kx + 1 (ಹಸಿರು). ಹಳದಿ ನಕ್ಷೆ ಆರಿಸಿದ ಸಂಯೋಜನೆ. x₀ ಬಿಂದುವನ್ನು ಎಳೆಯಿರಿ: ಪಟ್ಟಿಗಳು f(x₀), g(x₀) ಮತ್ತು ಫಲಿತವನ್ನು ತೋರಿಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "k in g(x) = kx + 1"
+     },
+     "min": -2,
+     "max": 2,
+     "step": 0.25,
+     "value": 1
+    }
+   ],
+   "choices": [
+    {
+     "name": "op",
+     "label": {
+      "en": "Combine",
+      "kn": "ಸಂಯೋಜನೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "f + g"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "f − g"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "f · g"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "f / g"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "handles": [
+    {
+     "name": "X",
+     "x": 1,
+     "y": 0,
+     "label": "x₀",
+     "axis": "x",
+     "box": {
+      "x": [
+       -4,
+       4
+      ],
+      "y": [
+       -1,
+       1
+      ]
+     },
+     "snap": 0.25,
+     "color": "orange"
+    }
+   ],
+   "vars": [
+    {
+     "name": "f0",
+     "expr": "X_x^2"
+    },
+    {
+     "name": "g0",
+     "expr": "k*X_x + 1"
+    },
+    {
+     "name": "bad",
+     "expr": "op == 4 && abs(g0) < 0.03"
+    },
+    {
+     "name": "h0",
+     "expr": "if(op == 1, f0 + g0, if(op == 2, f0 - g0, if(op == 3, f0*g0, if(bad, 0, f0/g0))))"
+    }
+   ],
+   "view": {
+    "x": [
+     -4.5,
+     4.5
+    ],
+    "y": [
+     -9,
+     9
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": false,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "x^2",
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "fn": "k*x + 1",
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "fn": "if(op == 1, x^2 + (k*x + 1), if(op == 2, x^2 - (k*x + 1), if(op == 3, x^2*(k*x + 1), if(abs(k*x + 1) < 0.03, sqrt(-1), x^2/(k*x + 1)))))",
+     "color": "yellow",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": "X_x - 0.12",
+     "y1": 0,
+     "x2": "X_x - 0.12",
+     "y2": "clamp(f0, -9, 9)",
+     "color": "blue",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": "X_x + 0.12",
+     "y1": 0,
+     "x2": "X_x + 0.12",
+     "y2": "clamp(g0, -9, 9)",
+     "color": "green",
+     "width": 8
+    },
+    {
+     "shape": "circle",
+     "x": "X_x",
+     "y": "clamp(h0, -9, 9)",
+     "r": 0.13,
+     "color": "yellow",
+     "visibleIf": "!bad"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 8,
+     "text": {
+      "en": "f/g is not defined where g(x) = 0",
+      "kn": "g(x) = 0 ಇರುವಲ್ಲಿ f/g ವ್ಯಾಖ್ಯಾನಿತವಲ್ಲ"
+     },
+     "size": 26,
+     "color": "red",
+     "visibleIf": "bad"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "f(x₀)"
+     },
+     "expr": "f0",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "g(x₀)"
+     },
+     "expr": "g0",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Result at x₀",
+      "kn": "x₀ ನಲ್ಲಿ ಫಲಿತ"
+     },
+     "expr": "h0",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Choose f/g with k = 1. Where is f/g not defined, and why?",
+     "kn": "k = 1 ಜೊತೆ f/g ಆರಿಸಿ. f/g ಎಲ್ಲಿ ವ್ಯಾಖ್ಯಾನಿತವಲ್ಲ, ಏಕೆ?"
+    },
+    {
+     "en": "For f + g, check at one point that the yellow bar is the blue bar plus the green bar.",
+     "kn": "f + g ಗೆ, ಒಂದು ಬಿಂದುವಿನಲ್ಲಿ ಹಳದಿ ಪಟ್ಟಿ = ನೀಲಿ + ಹಸಿರು ಎಂದು ಪರೀಕ್ಷಿಸಿ."
+    },
+    {
+     "en": "Where does f·g cross the x-axis? Compare with where f or g is zero.",
+     "kn": "f·g x-ಅಕ್ಷವನ್ನು ಎಲ್ಲಿ ದಾಟುತ್ತದೆ? f ಅಥವಾ g ಸೊನ್ನೆಯಾಗುವ ಸ್ಥಳದೊಂದಿಗೆ ಹೋಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

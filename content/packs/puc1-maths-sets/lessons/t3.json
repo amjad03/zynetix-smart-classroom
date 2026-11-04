@@ -283,6 +283,293 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Build an interval",
+    "kn": "ಅಂತರವನ್ನು ರಚಿಸಿ"
+   },
+   "narration": {
+    "en": "Set the end points and choose whether each one belongs to the interval. Drag the point p to test membership.",
+    "kn": "ಕೊನೆಯ ಬಿಂದುಗಳನ್ನು ಹೊಂದಿಸಿ, ಪ್ರತಿಯೊಂದೂ ಅಂತರಕ್ಕೆ ಸೇರುತ್ತದೆಯೇ ಎಂದು ಆರಿಸಿ. ಸದಸ್ಯತ್ವ ಪರೀಕ್ಷಿಸಲು p ಬಿಂದುವನ್ನು ಎಳೆಯಿರಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Set the end points and choose whether each one belongs to the interval. Drag the point p to test membership.",
+    "kn": "ಕೊನೆಯ ಬಿಂದುಗಳನ್ನು ಹೊಂದಿಸಿ, ಪ್ರತಿಯೊಂದೂ ಅಂತರಕ್ಕೆ ಸೇರುತ್ತದೆಯೇ ಎಂದು ಆರಿಸಿ. ಸದಸ್ಯತ್ವ ಪರೀಕ್ಷಿಸಲು p ಬಿಂದುವನ್ನು ಎಳೆಯಿರಿ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Left end a",
+      "kn": "ಎಡ ತುದಿ a"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 0.5,
+     "value": -2
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "Right end b",
+      "kn": "ಬಲ ತುದಿ b"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 0.5,
+     "value": 3
+    }
+   ],
+   "toggles": [
+    {
+     "name": "inA",
+     "label": {
+      "en": "Include a",
+      "kn": "a ಸೇರಿಸಿ"
+     },
+     "value": true
+    },
+    {
+     "name": "inB",
+     "label": {
+      "en": "Include b",
+      "kn": "b ಸೇರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "p",
+     "x": 1,
+     "y": 0,
+     "label": "p",
+     "axis": "x",
+     "box": {
+      "x": [
+       -6,
+       6
+      ],
+      "y": [
+       -1,
+       1
+      ]
+     },
+     "snap": 0.5,
+     "color": "orange"
+    }
+   ],
+   "vars": [
+    {
+     "name": "lo",
+     "expr": "min(a, b)"
+    },
+    {
+     "name": "hi",
+     "expr": "max(a, b)"
+    },
+    {
+     "name": "inL",
+     "expr": "if(a <= b, inA, inB)"
+    },
+    {
+     "name": "inR",
+     "expr": "if(a <= b, inB, inA)"
+    },
+    {
+     "name": "isIn",
+     "expr": "(p_x > lo || (inL && p_x == lo)) && (p_x < hi || (inR && p_x == hi)) && (lo < hi || (inL && inR))"
+    }
+   ],
+   "view": {
+    "x": [
+     -6,
+     6
+    ],
+    "y": [
+     -2,
+     2.5
+    ],
+    "axes": false,
+    "grid": false,
+    "equal": false
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -6,
+     "y1": 0,
+     "x2": 6,
+     "y2": 0,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": "lo",
+     "y": -0.12,
+     "w": "hi - lo",
+     "h": 0.24,
+     "color": "yellow",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "lo",
+     "y": 0,
+     "r": 0.22,
+     "color": "yellow",
+     "visibleIf": "inL"
+    },
+    {
+     "shape": "circle",
+     "x": "lo",
+     "y": 0,
+     "r": 0.22,
+     "fill": false,
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "!inL"
+    },
+    {
+     "shape": "circle",
+     "x": "hi",
+     "y": 0,
+     "r": 0.22,
+     "color": "yellow",
+     "visibleIf": "inR"
+    },
+    {
+     "shape": "circle",
+     "x": "hi",
+     "y": 0,
+     "r": 0.22,
+     "fill": false,
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "!inR"
+    },
+    {
+     "shape": "text",
+     "x": "lo",
+     "y": -0.8,
+     "text": {
+      "en": "{lo:1}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": "hi",
+     "y": -0.8,
+     "text": {
+      "en": "{hi:1}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "label",
+     "x": -3,
+     "y": 1.8,
+     "text": {
+      "en": "[{lo:1}, {hi:1}]"
+     },
+     "size": 34,
+     "visibleIf": "inL && inR"
+    },
+    {
+     "shape": "label",
+     "x": -3,
+     "y": 1.8,
+     "text": {
+      "en": "({lo:1}, {hi:1})"
+     },
+     "size": 34,
+     "visibleIf": "!inL && !inR"
+    },
+    {
+     "shape": "label",
+     "x": -3,
+     "y": 1.8,
+     "text": {
+      "en": "[{lo:1}, {hi:1})"
+     },
+     "size": 34,
+     "visibleIf": "inL && !inR"
+    },
+    {
+     "shape": "label",
+     "x": -3,
+     "y": 1.8,
+     "text": {
+      "en": "({lo:1}, {hi:1}]"
+     },
+     "size": 34,
+     "visibleIf": "!inL && inR"
+    },
+    {
+     "shape": "label",
+     "x": 3,
+     "y": 1.8,
+     "text": {
+      "en": "p = {p_x:1} is in the interval",
+      "kn": "p = {p_x:1} ಅಂತರದಲ್ಲಿದೆ"
+     },
+     "size": 28,
+     "color": "green",
+     "visibleIf": "isIn"
+    },
+    {
+     "shape": "label",
+     "x": 3,
+     "y": 1.8,
+     "text": {
+      "en": "p = {p_x:1} is not in it",
+      "kn": "p = {p_x:1} ಅದರಲ್ಲಿಲ್ಲ"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "!isIn"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Length b − a",
+      "kn": "ಉದ್ದ"
+     },
+     "expr": "hi - lo",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "p in the interval (1 = yes)",
+      "kn": "p ಅಂತರದಲ್ಲಿ (1 = ಹೌದು)"
+     },
+     "expr": "isIn",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make (a, b) and put p exactly on a. Is p in the interval? Now include a.",
+     "kn": "(a, b) ಮಾಡಿ p ಅನ್ನು a ಮೇಲೆ ಇಡಿ. p ಅಂತರದಲ್ಲಿದೆಯೇ? ಈಗ a ಸೇರಿಸಿ."
+    },
+    {
+     "en": "Does the length b − a change when you include or exclude the end points?",
+     "kn": "ಕೊನೆಯ ಬಿಂದುಗಳನ್ನು ಸೇರಿಸಿದಾಗ ಉದ್ದ b − a ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Which interval is the set {x : −2 ≤ x < 3}? Build it.",
+     "kn": "{x : −2 ≤ x < 3} ಯಾವ ಅಂತರ? ಅದನ್ನು ರಚಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

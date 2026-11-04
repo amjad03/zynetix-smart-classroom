@@ -397,6 +397,263 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The vertical line test",
+    "kn": "ಲಂಬ ರೇಖಾ ಪರೀಕ್ಷೆ"
+   },
+   "narration": {
+    "en": "A relation is a function when no x has two images. Slide the vertical line and count where it meets the graph.",
+    "kn": "ಯಾವ x ಗೂ ಎರಡು ಪ್ರತಿಬಿಂಬಗಳಿಲ್ಲದಿದ್ದರೆ ಸಂಬಂಧ ಒಂದು ಫಲನ. ಲಂಬ ರೇಖೆಯನ್ನು ಸರಿಸಿ ಅದು ನಕ್ಷೆಯನ್ನು ಎಲ್ಲಿ ಸಂಧಿಸುತ್ತದೆ ಎಣಿಸಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A relation is a function when no x has two images. Slide the vertical line and count where it meets the graph.",
+    "kn": "ಯಾವ x ಗೂ ಎರಡು ಪ್ರತಿಬಿಂಬಗಳಿಲ್ಲದಿದ್ದರೆ ಸಂಬಂಧ ಒಂದು ಫಲನ. ಲಂಬ ರೇಖೆಯನ್ನು ಸರಿಸಿ ಅದು ನಕ್ಷೆಯನ್ನು ಎಲ್ಲಿ ಸಂಧಿಸುತ್ತದೆ ಎಣಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "x0",
+     "label": {
+      "en": "Vertical line x =",
+      "kn": "ಲಂಬ ರೇಖೆ x ="
+     },
+     "min": -4,
+     "max": 4,
+     "step": 0.25,
+     "value": 1
+    }
+   ],
+   "choices": [
+    {
+     "name": "rel",
+     "label": {
+      "en": "Relation",
+      "kn": "ಸಂಬಂಧ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "y = x² − 2"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "y² = x"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "x² + y² = 9"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "y = |x| − 1"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "x = 2"
+       },
+       "value": 5
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "cnt",
+     "expr": "if(rel == 1 || rel == 4, 1, if(rel == 2, if(x0 > 0, 2, if(x0 == 0, 1, 0)), if(rel == 3, if(abs(x0) < 3, 2, if(abs(x0) == 3, 1, 0)), 0)))"
+    },
+    {
+     "name": "y1",
+     "expr": "if(rel == 1, x0^2 - 2, if(rel == 2, sqrt(max(x0, 0)), if(rel == 3, sqrt(max(9 - x0^2, 0)), abs(x0) - 1)))"
+    },
+    {
+     "name": "inf",
+     "expr": "rel == 5 && x0 == 2"
+    },
+    {
+     "name": "isF",
+     "expr": "rel == 1 || rel == 4"
+    }
+   ],
+   "view": {
+    "x": [
+     -5,
+     5
+    ],
+    "y": [
+     -4,
+     4
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": false,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "x^2 - 2",
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "rel == 1"
+    },
+    {
+     "shape": "path",
+     "fn": "sqrt(x)",
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "rel == 2"
+    },
+    {
+     "shape": "path",
+     "fn": "-sqrt(x)",
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "rel == 2"
+    },
+    {
+     "shape": "path",
+     "fn": "sqrt(9 - x^2)",
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "rel == 3"
+    },
+    {
+     "shape": "path",
+     "fn": "-sqrt(9 - x^2)",
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "rel == 3"
+    },
+    {
+     "shape": "path",
+     "fn": "abs(x) - 1",
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "rel == 4"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": -4,
+     "x2": 2,
+     "y2": 4,
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "rel == 5"
+    },
+    {
+     "shape": "line",
+     "x1": "x0",
+     "y1": -4,
+     "x2": "x0",
+     "y2": 4,
+     "color": "orange",
+     "width": 3,
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "x": "x0",
+     "y": "y1",
+     "r": 0.15,
+     "color": "red",
+     "visibleIf": "cnt >= 1"
+    },
+    {
+     "shape": "circle",
+     "x": "x0",
+     "y": "-y1",
+     "r": 0.15,
+     "color": "red",
+     "visibleIf": "cnt == 2"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 3.5,
+     "text": {
+      "en": "{cnt:0} image(s) of x = {x0:2}",
+      "kn": "x = {x0:2} ಗೆ {cnt:0} ಪ್ರತಿಬಿಂಬ"
+     },
+     "size": 26,
+     "visibleIf": "!inf"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 3.5,
+     "text": {
+      "en": "infinitely many images",
+      "kn": "ಅನಂತ ಪ್ರತಿಬಿಂಬಗಳು"
+     },
+     "size": 26,
+     "visibleIf": "inf"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": -3.5,
+     "text": {
+      "en": "a function",
+      "kn": "ಫಲನ"
+     },
+     "size": 28,
+     "color": "green",
+     "visibleIf": "isF"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": -3.5,
+     "text": {
+      "en": "not a function",
+      "kn": "ಫಲನವಲ್ಲ"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "!isF"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Images of x",
+      "kn": "x ನ ಪ್ರತಿಬಿಂಬಗಳು"
+     },
+     "expr": "if(inf, 0, cnt)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "For y² = x, find an x with two images. Which two?",
+     "kn": "y² = x ಗೆ ಎರಡು ಪ್ರತಿಬಿಂಬಗಳಿರುವ x ಹುಡುಕಿ. ಯಾವ ಎರಡು?"
+    },
+    {
+     "en": "For the circle, which x have no image at all? What is the domain?",
+     "kn": "ವೃತ್ತಕ್ಕೆ ಯಾವ x ಗೆ ಪ್ರತಿಬಿಂಬವೇ ಇಲ್ಲ? ಪ್ರಾಂತ ಏನು?"
+    },
+    {
+     "en": "For y = x² − 2, what is the lowest value y takes? That starts the range.",
+     "kn": "y = x² − 2 ಗೆ y ಯ ಕನಿಷ್ಠ ಮೌಲ್ಯ ಏನು? ಅಲ್ಲಿಂದ ವ್ಯಾಪ್ತಿ ಆರಂಭ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

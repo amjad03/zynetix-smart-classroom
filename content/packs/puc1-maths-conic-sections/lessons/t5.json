@@ -301,6 +301,237 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Hyperbola: the difference of focal distances",
+    "kn": "ಅತಿಪರವಲಯ: ನಾಭಿ ದೂರಗಳ ವ್ಯತ್ಯಾಸ"
+   },
+   "narration": {
+    "en": "P runs along a branch of x²/a² − y²/b² = 1 with foci (±c, 0), c = ae and e > 1. The difference |PF₁ − PF₂| stays equal to 2a. The dashed lines are the asymptotes y = ±(b/a)x.",
+    "kn": "P ಯು x²/a² − y²/b² = 1 ರ ಶಾಖೆಯ ಮೇಲೆ ಓಡುತ್ತದೆ, ನಾಭಿಗಳು (±c, 0), c = ae, e > 1. |PF₁ − PF₂| ಯಾವಾಗಲೂ 2a. ಚುಕ್ಕೆ ರೇಖೆಗಳು ಅನಂತಸ್ಪರ್ಶಿಗಳು y = ±(b/a)x."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "P runs along a branch of x²/a² − y²/b² = 1 with foci (±c, 0), c = ae and e > 1. The difference |PF₁ − PF₂| stays equal to 2a. The dashed lines are the asymptotes y = ±(b/a)x.",
+    "kn": "P ಯು x²/a² − y²/b² = 1 ರ ಶಾಖೆಯ ಮೇಲೆ ಓಡುತ್ತದೆ, ನಾಭಿಗಳು (±c, 0), c = ae, e > 1. |PF₁ − PF₂| ಯಾವಾಗಲೂ 2a. ಚುಕ್ಕೆ ರೇಖೆಗಳು ಅನಂತಸ್ಪರ್ಶಿಗಳು y = ±(b/a)x."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "a"
+     },
+     "min": 1,
+     "max": 4,
+     "step": 0.5,
+     "value": 2
+    },
+    {
+     "name": "ec",
+     "label": {
+      "en": "Eccentricity e",
+      "kn": "ಉತ್ಕೇಂದ್ರತೆ e"
+     },
+     "min": 1.1,
+     "max": 2.5,
+     "step": 0.1,
+     "value": 1.5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "left",
+     "label": {
+      "en": "Left branch",
+      "kn": "ಎಡ ಶಾಖೆ"
+     },
+     "value": false
+    },
+    {
+     "name": "asy",
+     "label": {
+      "en": "Asymptotes",
+      "kn": "ಅನಂತಸ್ಪರ್ಶಿಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 3,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "c",
+     "expr": "a*ec"
+    },
+    {
+     "name": "b",
+     "expr": "a*sqrt(ec^2 - 1)"
+    },
+    {
+     "name": "u",
+     "expr": "t - 1.5"
+    },
+    {
+     "name": "px",
+     "expr": "if(left, -1, 1)*a*(exp(u) + exp(-u))/2"
+    },
+    {
+     "name": "py",
+     "expr": "b*(exp(u) - exp(-u))/2"
+    },
+    {
+     "name": "d1",
+     "expr": "hypot(px - c, py)"
+    },
+    {
+     "name": "d2",
+     "expr": "hypot(px + c, py)"
+    }
+   ],
+   "view": {
+    "x": [
+     -12,
+     12
+    ],
+    "y": [
+     -7.5,
+     7.5
+    ],
+    "axes": true,
+    "grid": false,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "b*sqrt(x^2/a^2 - 1)",
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "fn": "-b*sqrt(x^2/a^2 - 1)",
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "fn": "b/a*x",
+     "color": "green",
+     "dashed": true,
+     "width": 2,
+     "visibleIf": "asy"
+    },
+    {
+     "shape": "path",
+     "fn": "-b/a*x",
+     "color": "green",
+     "dashed": true,
+     "width": 2,
+     "visibleIf": "asy"
+    },
+    {
+     "shape": "line",
+     "x1": "c",
+     "y1": 0,
+     "x2": "px",
+     "y2": "py",
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "-c",
+     "y1": 0,
+     "x2": "px",
+     "y2": "py",
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "c",
+     "y": 0,
+     "r": 0.18,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "x": "-c",
+     "y": 0,
+     "r": 0.18,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 0.2,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 6.8,
+     "text": {
+      "en": "|PF₁ − PF₂| = |{d1:2} − {d2:2}| = {abs(d1 - d2):2}"
+     },
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "b = a√(e² − 1)"
+     },
+     "expr": "b",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "c = ae"
+     },
+     "expr": "c",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "|PF₁ − PF₂|"
+     },
+     "expr": "abs(d1 - d2)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Latus rectum 2b²/a",
+      "kn": "ನಾಭಿ ಲಂಬ 2b²/a"
+     },
+     "expr": "2*b^2/a",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Switch to the left branch. Is the difference still 2a?",
+     "kn": "ಎಡ ಶಾಖೆಗೆ ಬದಲಿಸಿ. ವ್ಯತ್ಯಾಸ ಇನ್ನೂ 2a ಯೇ?"
+    },
+    {
+     "en": "Take e = √2 ≈ 1.4. What angle do the asymptotes make? (Rectangular hyperbola: b = a.)",
+     "kn": "e = √2 ≈ 1.4. ಅನಂತಸ್ಪರ್ಶಿಗಳ ಕೋನ? (ಆಯತಾಕಾರ: b = a.)"
+    },
+    {
+     "en": "As P goes far out, how close does it come to an asymptote?",
+     "kn": "P ದೂರ ಹೋದಂತೆ ಅನಂತಸ್ಪರ್ಶಿಗೆ ಎಷ್ಟು ಹತ್ತಿರ ಬರುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

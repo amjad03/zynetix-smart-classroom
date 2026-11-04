@@ -519,6 +519,237 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Relative frequency settles down",
+    "kn": "ಸಾಪೇಕ್ಷ ಆವೃತ್ತಿ ಸ್ಥಿರವಾಗುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "Each tick is one trial of the experiment. The yellow graph is the fraction of trials in which E happened; it wanders at first and then settles near P(E).",
+    "kn": "ಪ್ರತಿ ಹೆಜ್ಜೆ ಪ್ರಯೋಗದ ಒಂದು ಪ್ರಯತ್ನ. ಹಳದಿ ರೇಖೆ E ಸಂಭವಿಸಿದ ಪ್ರಯತ್ನಗಳ ಭಾಗ; ಮೊದಲು ಅಲೆದಾಡಿ ನಂತರ P(E) ಬಳಿ ನೆಲೆಸುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Each tick is one trial of the experiment. The yellow graph is the fraction of trials in which E happened; it wanders at first and then settles near P(E).",
+    "kn": "ಪ್ರತಿ ಹೆಜ್ಜೆ ಪ್ರಯೋಗದ ಒಂದು ಪ್ರಯತ್ನ. ಹಳದಿ ರೇಖೆ E ಸಂಭವಿಸಿದ ಪ್ರಯತ್ನಗಳ ಭಾಗ; ಮೊದಲು ಅಲೆದಾಡಿ ನಂತರ P(E) ಬಳಿ ನೆಲೆಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "N",
+     "label": {
+      "en": "Trials to run",
+      "kn": "ಪ್ರಯತ್ನಗಳು"
+     },
+     "min": 50,
+     "max": 400,
+     "step": 10,
+     "value": 400
+    }
+   ],
+   "toggles": [
+    {
+     "name": "notE",
+     "label": {
+      "en": "Show not E",
+      "kn": "E ಅಲ್ಲ ತೋರಿಸು"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "pE",
+     "label": {
+      "en": "Event E",
+      "kn": "ಘಟನೆ E"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Head on a coin",
+        "kn": "ನಾಣ್ಯದಲ್ಲಿ ಶಿರ"
+       },
+       "value": 0.5
+      },
+      {
+       "label": {
+        "en": "A six on a die",
+        "kn": "ದಾಳದಲ್ಲಿ ಆರು"
+       },
+       "value": 0.16667
+      },
+      {
+       "label": {
+        "en": "A heart from a pack",
+        "kn": "ಎಲೆಕಟ್ಟಿನಿಂದ ಹೃದಯ"
+       },
+       "value": 0.25
+      },
+      {
+       "label": {
+        "en": "Less than 3 on a die",
+        "kn": "ದಾಳದಲ್ಲಿ 3 ಕ್ಕಿಂತ ಕಡಿಮೆ"
+       },
+       "value": 0.33333
+      }
+     ],
+     "value": 0.16667
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 50
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New run",
+      "kn": "ಹೊಸ ಓಟ"
+     },
+     "icon": "launch",
+     "set": {
+      "seed": "mod(seed + 1, 50)"
+     },
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 200,
+    "dt": 0.5,
+    "stopWhen": "n >= N",
+    "unit": "s"
+   },
+   "vars": [
+    {
+     "name": "n",
+     "expr": "round(2*t)"
+    },
+    {
+     "name": "f",
+     "expr": "if(n > 0, hits/max(n, 1), 0)"
+    }
+   ],
+   "state": [
+    {
+     "name": "hits",
+     "init": 0,
+     "rate": "2*(rand(round(2*t) + 401*seed) < pE)"
+    }
+   ],
+   "view": {
+    "x": [
+     -20,
+     410
+    ],
+    "y": [
+     -0.12,
+     1.08
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": false,
+    "xLabel": "trials",
+    "yLabel": "fraction"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "pE",
+     "x2": 400,
+     "y2": "pE",
+     "dashed": true,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "1 - pE",
+     "x2": 400,
+     "y2": "1 - pE",
+     "dashed": true,
+     "color": "blue",
+     "width": 2,
+     "visibleIf": "notE"
+    },
+    {
+     "shape": "trail",
+     "x": "n",
+     "y": "f",
+     "length": 900,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "trail",
+     "x": "n",
+     "y": "1 - f",
+     "length": 900,
+     "color": "blue",
+     "width": 3,
+     "visibleIf": "notE && n > 0"
+    },
+    {
+     "shape": "label",
+     "x": 300,
+     "y": 0.95,
+     "text": {
+      "en": "{n:0} trials, E happened {hits:0} times",
+      "kn": "{n:0} ಪ್ರಯತ್ನ, E {hits:0} ಬಾರಿ"
+     },
+     "size": 26
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Fraction of trials with E",
+      "kn": "E ಸಂಭವಿಸಿದ ಭಾಗ"
+     },
+     "expr": "f",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "P(E)"
+     },
+     "expr": "pE",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Fraction with not E",
+      "kn": "E ಅಲ್ಲದ ಭಾಗ"
+     },
+     "expr": "if(n > 0, 1 - f, 0)",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Run 'a six' three times with New run. Where does the graph end each time?",
+     "kn": "'ಆರು' ಅನ್ನು New run ನೊಂದಿಗೆ ಮೂರು ಬಾರಿ ಓಡಿಸಿ. ರೇಖೆ ಪ್ರತಿ ಬಾರಿ ಎಲ್ಲಿ ಕೊನೆಗೊಳ್ಳುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on 'not E'. Do the two graphs always add up to 1?",
+     "kn": "'E ಅಲ್ಲ' ಆನ್ ಮಾಡಿ. ಎರಡೂ ರೇಖೆಗಳ ಮೊತ್ತ ಯಾವಾಗಲೂ 1 ಆಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Why can the fraction never go below 0 or above 1?",
+     "kn": "ಆ ಭಾಗ 0 ಕ್ಕಿಂತ ಕೆಳಗೆ ಅಥವಾ 1 ಕ್ಕಿಂತ ಮೇಲೆ ಏಕೆ ಹೋಗುವುದಿಲ್ಲ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

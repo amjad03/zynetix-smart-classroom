@@ -342,6 +342,209 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A × B as a grid of points",
+    "kn": "ಬಿಂದುಗಳ ಜಾಲವಾಗಿ A × B"
+   },
+   "narration": {
+    "en": "A = {1, …, p} runs along the x-axis and B = {1, …, q} up the y-axis. Each yellow dot is an ordered pair (a, b) of A × B. Drag the point to test a pair.",
+    "kn": "A = {1, …, p} x-ಅಕ್ಷದ ಮೇಲೆ, B = {1, …, q} y-ಅಕ್ಷದ ಮೇಲೆ. ಪ್ರತಿ ಹಳದಿ ಚುಕ್ಕೆ A × B ಯ ಕ್ರಮಿತ ಜೋಡಿ (a, b). ಒಂದು ಜೋಡಿ ಪರೀಕ್ಷಿಸಲು ಬಿಂದುವನ್ನು ಎಳೆಯಿರಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A = {1, …, p} runs along the x-axis and B = {1, …, q} up the y-axis. Each yellow dot is an ordered pair (a, b) of A × B. Drag the point to test a pair.",
+    "kn": "A = {1, …, p} x-ಅಕ್ಷದ ಮೇಲೆ, B = {1, …, q} y-ಅಕ್ಷದ ಮೇಲೆ. ಪ್ರತಿ ಹಳದಿ ಚುಕ್ಕೆ A × B ಯ ಕ್ರಮಿತ ಜೋಡಿ (a, b). ಒಂದು ಜೋಡಿ ಪರೀಕ್ಷಿಸಲು ಬಿಂದುವನ್ನು ಎಳೆಯಿರಿ."
+   },
+   "sliders": [
+    {
+     "name": "p",
+     "label": {
+      "en": "n(A) = p"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 1,
+     "value": 2
+    },
+    {
+     "name": "q",
+     "label": {
+      "en": "n(B) = q"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ba",
+     "label": {
+      "en": "Show B × A",
+      "kn": "B × A ತೋರಿಸು"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "x": 2,
+     "y": 3,
+     "label": "(x, y)",
+     "box": {
+      "x": [
+       1,
+       6
+      ],
+      "y": [
+       1,
+       6
+      ]
+     },
+     "snap": 1,
+     "color": "orange"
+    }
+   ],
+   "vars": [
+    {
+     "name": "inAB",
+     "expr": "P_x <= p && P_y <= q"
+    },
+    {
+     "name": "inBA",
+     "expr": "P_x <= q && P_y <= p"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     9.5
+    ],
+    "y": [
+     0,
+     7
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": true,
+    "xLabel": "A",
+    "yLabel": "B"
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 36,
+     "x": "1 + mod(i, 6)",
+     "y": "1 + floor(i/6)",
+     "r": 0.2,
+     "color": "yellow",
+     "visibleIf": "1 + mod(i, 6) <= p && 1 + floor(i/6) <= q"
+    },
+    {
+     "shape": "particles",
+     "count": 36,
+     "x": "1.25 + mod(i, 6)",
+     "y": "1.25 + floor(i/6)",
+     "r": 0.12,
+     "color": "blue",
+     "visibleIf": "ba && 1 + mod(i, 6) <= q && 1 + floor(i/6) <= p"
+    },
+    {
+     "shape": "label",
+     "x": 7.9,
+     "y": 6,
+     "text": {
+      "en": "({P_x:0}, {P_y:0})"
+     },
+     "size": 32
+    },
+    {
+     "shape": "label",
+     "x": 7.9,
+     "y": 5,
+     "text": {
+      "en": "in A × B",
+      "kn": "A × B ಯಲ್ಲಿದೆ"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "inAB"
+    },
+    {
+     "shape": "label",
+     "x": 7.9,
+     "y": 5,
+     "text": {
+      "en": "not in A × B",
+      "kn": "A × B ಯಲ್ಲಿಲ್ಲ"
+     },
+     "size": 26,
+     "color": "red",
+     "visibleIf": "!inAB"
+    },
+    {
+     "shape": "label",
+     "x": 7.9,
+     "y": 4,
+     "text": {
+      "en": "in B × A",
+      "kn": "B × A ಯಲ್ಲಿದೆ"
+     },
+     "size": 26,
+     "color": "blue",
+     "visibleIf": "ba && inBA"
+    },
+    {
+     "shape": "label",
+     "x": 7.9,
+     "y": 4,
+     "text": {
+      "en": "not in B × A",
+      "kn": "B × A ಯಲ್ಲಿಲ್ಲ"
+     },
+     "size": 26,
+     "color": "red",
+     "visibleIf": "ba && !inBA"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "n(A × B) = pq"
+     },
+     "expr": "p*q",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "n(A × A) = p²"
+     },
+     "expr": "p^2",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With p = 2 and q = 5, is (5, 2) in A × B? Is it in B × A?",
+     "kn": "p = 2, q = 5 ಆದಾಗ (5, 2) A × B ಯಲ್ಲಿದೆಯೇ? B × A ಯಲ್ಲಿ?"
+    },
+    {
+     "en": "Turn on B × A. When do the two grids cover the same dots?",
+     "kn": "B × A ಆನ್ ಮಾಡಿ. ಎರಡು ಜಾಲಗಳು ಯಾವಾಗ ಒಂದೇ ಚುಕ್ಕೆಗಳನ್ನು ಹೊಂದುತ್ತವೆ?"
+    },
+    {
+     "en": "Count the dots and compare with p × q.",
+     "kn": "ಚುಕ್ಕೆಗಳನ್ನು ಎಣಿಸಿ p × q ಜೊತೆ ಹೋಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

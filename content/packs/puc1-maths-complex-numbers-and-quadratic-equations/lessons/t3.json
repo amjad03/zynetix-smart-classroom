@@ -232,6 +232,242 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Conjugate, negative and modulus",
+    "kn": "ಸಂಯುಗ್ಮ, ಋಣ ಮತ್ತು ಮಾಪಾಂಕ"
+   },
+   "narration": {
+    "en": "Drag z. Its conjugate is the mirror image in the real axis and −z is the point opposite through O. All of them lie on the circle of radius |z|, and z times its conjugate is |z|², a real number.",
+    "kn": "z ಎಳೆಯಿರಿ. ಸಂಯುಗ್ಮ ವಾಸ್ತವ ಅಕ್ಷದಲ್ಲಿ ಪ್ರತಿಬಿಂಬ, −z ಮೂಲಬಿಂದುವಿನ ಮೂಲಕ ಎದುರಿನ ಬಿಂದು. ಎಲ್ಲವೂ |z| ತ್ರಿಜ್ಯದ ವೃತ್ತದ ಮೇಲಿವೆ; z × ಸಂಯುಗ್ಮ = |z|², ವಾಸ್ತವ ಸಂಖ್ಯೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag z. Its conjugate is the mirror image in the real axis and −z is the point opposite through O. All of them lie on the circle of radius |z|, and z times its conjugate is |z|², a real number.",
+    "kn": "z ಎಳೆಯಿರಿ. ಸಂಯುಗ್ಮ ವಾಸ್ತವ ಅಕ್ಷದಲ್ಲಿ ಪ್ರತಿಬಿಂಬ, −z ಮೂಲಬಿಂದುವಿನ ಮೂಲಕ ಎದುರಿನ ಬಿಂದು. ಎಲ್ಲವೂ |z| ತ್ರಿಜ್ಯದ ವೃತ್ತದ ಮೇಲಿವೆ; z × ಸಂಯುಗ್ಮ = |z|², ವಾಸ್ತವ ಸಂಖ್ಯೆ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Real multiplier k",
+      "kn": "ವಾಸ್ತವ ಗುಣಕ k"
+     },
+     "min": -2,
+     "max": 2,
+     "step": 0.5,
+     "value": 1
+    }
+   ],
+   "choices": [
+    {
+     "name": "sh",
+     "label": {
+      "en": "Show",
+      "kn": "ತೋರಿಸು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "z̄"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "−z"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "−z̄"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "handles": [
+    {
+     "name": "Z",
+     "x": 3,
+     "y": 2,
+     "label": "z",
+     "box": {
+      "x": [
+       -4,
+       4
+      ],
+      "y": [
+       -3.5,
+       3.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "r",
+     "expr": "hypot(Z_x, Z_y)"
+    },
+    {
+     "name": "ox",
+     "expr": "if(sh == 1, Z_x, -Z_x)"
+    },
+    {
+     "name": "oy",
+     "expr": "if(sh == 2, -Z_y, if(sh == 1, -Z_y, Z_y))"
+    }
+   ],
+   "view": {
+    "x": [
+     -6.5,
+     6.5
+    ],
+    "y": [
+     -4.6,
+     4.6
+    ],
+    "axes": false,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -6,
+     "y1": 0,
+     "x2": 6,
+     "y2": 0,
+     "color": "white",
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -4,
+     "x2": 0,
+     "y2": 4,
+     "color": "white",
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": "r",
+     "fill": false,
+     "color": "white",
+     "width": 2,
+     "opacity": 0.6
+    },
+    {
+     "shape": "arrow",
+     "x": 0,
+     "y": 0,
+     "dx": "k*Z_x",
+     "dy": "k*Z_y",
+     "color": "orange",
+     "width": 2,
+     "visibleIf": "k != 1"
+    },
+    {
+     "shape": "arrow",
+     "x": 0,
+     "y": 0,
+     "dx": "Z_x",
+     "dy": "Z_y",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "x": 0,
+     "y": 0,
+     "dx": "ox",
+     "dy": "oy",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "Z_x",
+     "y1": "Z_y",
+     "x2": "ox",
+     "y2": "oy",
+     "color": "green",
+     "dashed": true,
+     "width": 1
+    },
+    {
+     "shape": "label",
+     "x": "ox",
+     "y": "oy + if(oy >= 0, 0.5, -0.5)",
+     "text": {
+      "en": "({ox:1}, {oy:1})"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": -4.5,
+     "y": 4.1,
+     "text": {
+      "en": "|z| = {r:3}"
+     },
+     "size": 26,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "|z|"
+     },
+     "expr": "r",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "z · z̄ = |z|²"
+     },
+     "expr": "Z_x^2 + Z_y^2",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "|kz|"
+     },
+     "expr": "abs(k)*r",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Move z onto the real axis. Where is its conjugate now?",
+     "kn": "z ಅನ್ನು ವಾಸ್ತವ ಅಕ್ಷಕ್ಕೆ ಸರಿಸಿ. ಈಗ ಸಂಯುಗ್ಮ ಎಲ್ಲಿದೆ?"
+    },
+    {
+     "en": "For z = 3 + 4i, read |z| and z·z̄.",
+     "kn": "z = 3 + 4i ಗೆ |z| ಮತ್ತು z·z̄ ಓದಿ."
+    },
+    {
+     "en": "Set k = −2. Is |kz| equal to |k|·|z|?",
+     "kn": "k = −2 ಮಾಡಿ. |kz| = |k|·|z| ಆಗಿದೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

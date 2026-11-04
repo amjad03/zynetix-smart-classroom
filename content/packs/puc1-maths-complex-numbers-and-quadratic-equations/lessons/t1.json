@@ -298,6 +298,281 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Multiplying by i turns by 90°",
+    "kn": "i ಇಂದ ಗುಣಿಸುವುದು 90° ತಿರುಗಿಸುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "Set z = a + ib and press × i. Each press multiplies by i and turns the arrow a quarter turn anticlockwise, so the powers of i repeat in fours: i, −1, −i, 1.",
+    "kn": "z = a + ib ಹೊಂದಿಸಿ × i ಒತ್ತಿ. ಪ್ರತಿ ಒತ್ತುವಿಕೆ i ಇಂದ ಗುಣಿಸಿ ಬಾಣವನ್ನು ಅಪ್ರದಕ್ಷಿಣವಾಗಿ ಕಾಲು ಸುತ್ತು ತಿರುಗಿಸುತ್ತದೆ; i ಯ ಘಾತಗಳು ನಾಲ್ಕರಲ್ಲಿ ಪುನರಾವರ್ತಿಸುತ್ತವೆ: i, −1, −i, 1."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Set z = a + ib and press × i. Each press multiplies by i and turns the arrow a quarter turn anticlockwise, so the powers of i repeat in fours: i, −1, −i, 1.",
+    "kn": "z = a + ib ಹೊಂದಿಸಿ × i ಒತ್ತಿ. ಪ್ರತಿ ಒತ್ತುವಿಕೆ i ಇಂದ ಗುಣಿಸಿ ಬಾಣವನ್ನು ಅಪ್ರದಕ್ಷಿಣವಾಗಿ ಕಾಲು ಸುತ್ತು ತಿರುಗಿಸುತ್ತದೆ; i ಯ ಘಾತಗಳು ನಾಲ್ಕರಲ್ಲಿ ಪುನರಾವರ್ತಿಸುತ್ತವೆ: i, −1, −i, 1."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Re z = a"
+     },
+     "min": -3,
+     "max": 3,
+     "step": 0.5,
+     "value": 2
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "Im z = b"
+     },
+     "min": -3,
+     "max": 3,
+     "step": 0.5,
+     "value": 1
+    }
+   ],
+   "counters": [
+    {
+     "name": "n",
+     "value": 0,
+     "min": 0,
+     "max": 40
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "× i"
+     },
+     "icon": "next",
+     "set": {
+      "n": "n + 1"
+     },
+     "reset": true,
+     "play": true
+    },
+    {
+     "label": {
+      "en": "Back to z",
+      "kn": "z ಗೆ ಹಿಂದಿರುಗಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "n": "0"
+     },
+     "reset": true
+    }
+   ],
+   "time": {
+    "max": 0.6,
+    "speeds": [
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "k",
+     "expr": "mod(n, 4)"
+    },
+    {
+     "name": "ang",
+     "expr": "rad(90*if(n > 0, n - 1 + min(t/0.5, 1), 0))"
+    },
+    {
+     "name": "wx",
+     "expr": "a*cos(ang) - b*sin(ang)"
+    },
+    {
+     "name": "wy",
+     "expr": "a*sin(ang) + b*cos(ang)"
+    }
+   ],
+   "view": {
+    "x": [
+     -6,
+     6
+    ],
+    "y": [
+     -4,
+     4
+    ],
+    "axes": false,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -6,
+     "y1": 0,
+     "x2": 6,
+     "y2": 0,
+     "color": "white",
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -4,
+     "x2": 0,
+     "y2": 4,
+     "color": "white",
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": "hypot(a, b)",
+     "fill": false,
+     "color": "white",
+     "width": 1,
+     "opacity": 0.4
+    },
+    {
+     "shape": "particles",
+     "count": 4,
+     "x": "if(i == 0, a, if(i == 1, -b, if(i == 2, -a, b)))",
+     "y": "if(i == 0, b, if(i == 1, a, if(i == 2, -b, -a)))",
+     "r": 0.12,
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "arrow",
+     "x": 0,
+     "y": 0,
+     "dx": "a",
+     "dy": "b",
+     "color": "blue",
+     "width": 2,
+     "label": "z"
+    },
+    {
+     "shape": "arrow",
+     "x": 0,
+     "y": 0,
+     "dx": "wx",
+     "dy": "wy",
+     "color": "yellow",
+     "width": 5,
+     "label": "iⁿz"
+    },
+    {
+     "shape": "label",
+     "x": -4,
+     "y": 3.4,
+     "text": {
+      "en": "n = {n:0},  n mod 4 = {k:0}"
+     },
+     "size": 26
+    },
+    {
+     "shape": "label",
+     "x": -4,
+     "y": 2.5,
+     "text": {
+      "en": "iⁿ = 1"
+     },
+     "size": 26,
+     "color": "yellow",
+     "visibleIf": "k == 0"
+    },
+    {
+     "shape": "label",
+     "x": -4,
+     "y": 2.5,
+     "text": {
+      "en": "iⁿ = i"
+     },
+     "size": 26,
+     "color": "yellow",
+     "visibleIf": "k == 1"
+    },
+    {
+     "shape": "label",
+     "x": -4,
+     "y": 2.5,
+     "text": {
+      "en": "iⁿ = −1"
+     },
+     "size": 26,
+     "color": "yellow",
+     "visibleIf": "k == 2"
+    },
+    {
+     "shape": "label",
+     "x": -4,
+     "y": 2.5,
+     "text": {
+      "en": "iⁿ = −i"
+     },
+     "size": 26,
+     "color": "yellow",
+     "visibleIf": "k == 3"
+    },
+    {
+     "shape": "text",
+     "x": 5.6,
+     "y": 0.2,
+     "text": {
+      "en": "Re"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 3.6,
+     "text": {
+      "en": "Im"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Re(iⁿz)"
+     },
+     "expr": "if(k == 0, a, if(k == 1, -b, if(k == 2, -a, b)))",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Im(iⁿz)"
+     },
+     "expr": "if(k == 0, b, if(k == 1, a, if(k == 2, -b, -a)))",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Start from z = 1 (a = 1, b = 0) and press × i four times. Where do you land?",
+     "kn": "z = 1 ಇಂದ ಆರಂಭಿಸಿ × i ನಾಲ್ಕು ಬಾರಿ ಒತ್ತಿ. ಎಲ್ಲಿ ತಲುಪುತ್ತೀರಿ?"
+    },
+    {
+     "en": "Press until n = 10. Predict i¹⁰ from n mod 4 before you look.",
+     "kn": "n = 10 ರವರೆಗೆ ಒತ್ತಿ. ನೋಡುವ ಮೊದಲು n mod 4 ಇಂದ i¹⁰ ಊಹಿಸಿ."
+    },
+    {
+     "en": "Take z = 2 + i. What is i·z? Check: i(2 + i) = −1 + 2i.",
+     "kn": "z = 2 + i. i·z ಎಷ್ಟು? ಪರೀಕ್ಷಿಸಿ: i(2 + i) = −1 + 2i."
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

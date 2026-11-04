@@ -243,6 +243,301 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Add, multiply and divide on the Argand plane",
+    "kn": "ಆರ್ಗಾಂಡ್ ಸಮತಲದಲ್ಲಿ ಕೂಡಿಸಿ, ಗುಣಿಸಿ, ಭಾಗಿಸಿ"
+   },
+   "narration": {
+    "en": "Drag z₁ and set z₂ with the sliders. The sum follows the parallelogram rule. In a product the lengths multiply and the angles add; in a quotient the lengths divide and the angles subtract.",
+    "kn": "z₁ ಎಳೆದು z₂ ಅನ್ನು ಸ್ಲೈಡರ್‌ಗಳಿಂದ ಹೊಂದಿಸಿ. ಮೊತ್ತ ಸಮಾಂತರ ಚತುರ್ಭುಜ ನಿಯಮ ಪಾಲಿಸುತ್ತದೆ. ಗುಣಲಬ್ಧದಲ್ಲಿ ಉದ್ದಗಳು ಗುಣಿಸುತ್ತವೆ, ಕೋನಗಳು ಕೂಡುತ್ತವೆ; ಭಾಗಲಬ್ಧದಲ್ಲಿ ಉದ್ದಗಳು ಭಾಗಿಸುತ್ತವೆ, ಕೋನಗಳು ಕಳೆಯುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag z₁ and set z₂ with the sliders. The sum follows the parallelogram rule. In a product the lengths multiply and the angles add; in a quotient the lengths divide and the angles subtract.",
+    "kn": "z₁ ಎಳೆದು z₂ ಅನ್ನು ಸ್ಲೈಡರ್‌ಗಳಿಂದ ಹೊಂದಿಸಿ. ಮೊತ್ತ ಸಮಾಂತರ ಚತುರ್ಭುಜ ನಿಯಮ ಪಾಲಿಸುತ್ತದೆ. ಗುಣಲಬ್ಧದಲ್ಲಿ ಉದ್ದಗಳು ಗುಣಿಸುತ್ತವೆ, ಕೋನಗಳು ಕೂಡುತ್ತವೆ; ಭಾಗಲಬ್ಧದಲ್ಲಿ ಉದ್ದಗಳು ಭಾಗಿಸುತ್ತವೆ, ಕೋನಗಳು ಕಳೆಯುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "zc",
+     "label": {
+      "en": "Re z₂"
+     },
+     "min": -3,
+     "max": 3,
+     "step": 0.5,
+     "value": 1
+    },
+    {
+     "name": "zd",
+     "label": {
+      "en": "Im z₂"
+     },
+     "min": -3,
+     "max": 3,
+     "step": 0.5,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ang",
+     "label": {
+      "en": "Show angles",
+      "kn": "ಕೋನಗಳನ್ನು ತೋರಿಸು"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "op",
+     "label": {
+      "en": "Operation",
+      "kn": "ಕ್ರಿಯೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "z₁ + z₂"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "z₁ − z₂"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "z₁ × z₂"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "z₁ ÷ z₂"
+       },
+       "value": 4
+      }
+     ],
+     "value": 3
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "x": 2,
+     "y": 1,
+     "label": "z₁",
+     "box": {
+      "x": [
+       -3,
+       3
+      ],
+      "y": [
+       -3,
+       3
+      ]
+     },
+     "snap": 0.5,
+     "color": "blue"
+    }
+   ],
+   "vars": [
+    {
+     "name": "d2",
+     "expr": "zc^2 + zd^2"
+    },
+    {
+     "name": "bad",
+     "expr": "op == 4 && d2 == 0"
+    },
+    {
+     "name": "rx",
+     "expr": "if(op == 1, P_x + zc, if(op == 2, P_x - zc, if(op == 3, P_x*zc - P_y*zd, if(bad, 0, (P_x*zc + P_y*zd)/d2))))"
+    },
+    {
+     "name": "ry",
+     "expr": "if(op == 1, P_y + zd, if(op == 2, P_y - zd, if(op == 3, P_x*zd + P_y*zc, if(bad, 0, (P_y*zc - P_x*zd)/d2))))"
+    }
+   ],
+   "view": {
+    "x": [
+     -6.5,
+     6.5
+    ],
+    "y": [
+     -4.5,
+     4.5
+    ],
+    "axes": false,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -6,
+     "y1": 0,
+     "x2": 6,
+     "y2": 0,
+     "color": "white",
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -4,
+     "x2": 0,
+     "y2": 4,
+     "color": "white",
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "arrow",
+     "x": 0,
+     "y": 0,
+     "dx": "P_x",
+     "dy": "P_y",
+     "color": "blue",
+     "width": 3,
+     "label": "z₁"
+    },
+    {
+     "shape": "arrow",
+     "x": 0,
+     "y": 0,
+     "dx": "zc",
+     "dy": "zd",
+     "color": "green",
+     "width": 3,
+     "label": "z₂"
+    },
+    {
+     "shape": "line",
+     "x1": "P_x",
+     "y1": "P_y",
+     "x2": "P_x + zc",
+     "y2": "P_y + zd",
+     "color": "green",
+     "dashed": true,
+     "width": 2,
+     "visibleIf": "op == 1"
+    },
+    {
+     "shape": "line",
+     "x1": "zc",
+     "y1": "zd",
+     "x2": "P_x + zc",
+     "y2": "P_y + zd",
+     "color": "blue",
+     "dashed": true,
+     "width": 2,
+     "visibleIf": "op == 1"
+    },
+    {
+     "shape": "arrow",
+     "x": 0,
+     "y": 0,
+     "dx": "rx",
+     "dy": "ry",
+     "color": "yellow",
+     "width": 5,
+     "visibleIf": "!bad"
+    },
+    {
+     "shape": "label",
+     "x": -4.3,
+     "y": 4,
+     "text": {
+      "en": "= {rx:2} + ({ry:2})i"
+     },
+     "size": 26,
+     "color": "yellow",
+     "visibleIf": "!bad"
+    },
+    {
+     "shape": "label",
+     "x": -4.3,
+     "y": 4,
+     "text": {
+      "en": "cannot divide by 0",
+      "kn": "0 ಇಂದ ಭಾಗಿಸಲಾಗದು"
+     },
+     "size": 26,
+     "color": "red",
+     "visibleIf": "bad"
+    },
+    {
+     "shape": "label",
+     "x": 4.3,
+     "y": -3.2,
+     "text": {
+      "en": "arg z₁ = {deg(atan2(P_y, P_x)):0}°, arg z₂ = {deg(atan2(zd, zc)):0}°"
+     },
+     "size": 20,
+     "visibleIf": "ang"
+    },
+    {
+     "shape": "label",
+     "x": 4.3,
+     "y": -4,
+     "text": {
+      "en": "arg of the answer = {deg(atan2(ry, rx)):0}°",
+      "kn": "ಉತ್ತರದ arg = {deg(atan2(ry, rx)):0}°"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "ang && !bad"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Re"
+     },
+     "expr": "rx",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Im"
+     },
+     "expr": "ry",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Modulus",
+      "kn": "ಮಾಪಾಂಕ"
+     },
+     "expr": "hypot(rx, ry)",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set z₂ = i and choose product. What does multiplying by i do to z₁?",
+     "kn": "z₂ = i ಮಾಡಿ ಗುಣಲಬ್ಧ ಆರಿಸಿ. i ಇಂದ ಗುಣಿಸುವುದು z₁ ಗೆ ಏನು ಮಾಡುತ್ತದೆ?"
+    },
+    {
+     "en": "Check (2 + i)(1 + 2i) = 5i using the readouts.",
+     "kn": "(2 + i)(1 + 2i) = 5i ಎಂದು ಪರೀಕ್ಷಿಸಿ."
+    },
+    {
+     "en": "Choose quotient and set z₂ = 0. Why does the answer disappear?",
+     "kn": "ಭಾಗಲಬ್ಧ ಆರಿಸಿ z₂ = 0 ಮಾಡಿ. ಉತ್ತರ ಏಕೆ ಮಾಯವಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
