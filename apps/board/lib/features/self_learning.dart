@@ -11,6 +11,7 @@ import '../engine/model.dart';
 import '../engine/period.dart';
 import '../engine/session_log.dart';
 import 'home.dart';
+import 'insight/reteach.dart' show selfLearningQuizDone;
 import 'participation.dart';
 import 'pin.dart';
 import 'smartboard.dart';
@@ -154,7 +155,7 @@ class SelfLearningScreenState extends State<SelfLearningScreen> {
                           : Stack(
                               children: [
                                 Positioned.fill(
-                                  child: BlockView(c: c, embeds: s.embeds, room: room, auto: true, onFinished: runner.onQuizFinished),
+                                  child: BlockView(c: c, embeds: s.embeds, room: room, auto: true, onFinished: () => selfLearningQuizDone(context, runner)),
                                 ),
                                 if (runner.paused)
                                   Positioned.fill(

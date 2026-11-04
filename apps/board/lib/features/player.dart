@@ -10,6 +10,7 @@ import '../core/theme.dart';
 import '../engine/lesson_controller.dart';
 import '../engine/model.dart';
 import '../engine/session_log.dart';
+import 'insight/reteach.dart' show teacherQuizDone;
 import 'participation.dart';
 import 'smartboard.dart';
 
@@ -147,7 +148,7 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
                       Positioned.fill(
                         child: Padding(
                           padding: EdgeInsets.all(context.narrow ? 20 : 40),
-                          child: BlockView(c: c, embeds: s.embeds, room: room),
+                          child: BlockView(c: c, embeds: s.embeds, room: room, onFinished: () => teacherQuizDone(context, c)),
                         ),
                       ),
                       if (c.pen) ...[Positioned.fill(child: InkCanvas(controller: ink, transparent: true)), Positioned(right: 24, top: 24, child: _PenPalette(ink: ink))],
