@@ -491,6 +491,456 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Credit creation by banks",
+    "kn": "ಬ್ಯಾಂಕುಗಳಿಂದ ಸಾಲ ಸೃಷ್ಟಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Someone deposits money in a bank. The bank keeps the reserve ratio r and lends the rest; the loan is spent and comes back as a new deposit. Press Next round: each bar is a new deposit (blue part kept as reserve, green part lent on). Total deposits approach the initial deposit × 1/r.",
+    "kn": "ಒಬ್ಬರು ಬ್ಯಾಂಕಿನಲ್ಲಿ ಹಣ ಠೇವಣಿ ಇಡುತ್ತಾರೆ. ಬ್ಯಾಂಕ್ r ಮೀಸಲು ಇಟ್ಟು ಉಳಿದದ್ದನ್ನು ಸಾಲ ಕೊಡುತ್ತದೆ; ಅದು ಹೊಸ ಠೇವಣಿಯಾಗಿ ಮರಳುತ್ತದೆ. ಒಟ್ಟು ಠೇವಣಿ ಆರಂಭಿಕ ಠೇವಣಿ × 1/r ಕಡೆಗೆ."
+   },
+   "sliders": [
+    {
+     "name": "D0",
+     "label": {
+      "en": "Initial deposit",
+      "kn": "ಆರಂಭಿಕ ಠೇವಣಿ"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 100,
+     "value": 1000,
+     "unit": "₹"
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Reserve ratio r",
+      "kn": "ಮೀಸಲು ಅನುಪಾತ r"
+     },
+     "min": 0.05,
+     "max": 0.5,
+     "step": 0.05,
+     "value": 0.2
+    }
+   ],
+   "counters": [
+    {
+     "name": "n",
+     "value": 1,
+     "min": 1,
+     "max": 13
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Next round",
+      "kn": "ಮುಂದಿನ ಸುತ್ತು"
+     },
+     "icon": "next",
+     "set": {
+      "n": "n + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "All rounds",
+      "kn": "ಎಲ್ಲಾ ಸುತ್ತು"
+     },
+     "icon": "play",
+     "set": {
+      "n": "13"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "n": "1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "tot",
+     "expr": "D0*(1 - (1 - r)^n)/r"
+    },
+    {
+     "name": "lim",
+     "expr": "D0/r"
+    },
+    {
+     "name": "fr",
+     "expr": "1 - (1 - r)^n"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     14
+    ],
+    "y": [
+     0,
+     140
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "round",
+    "yLabel": "deposit (% of the first)"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "visibleIf": "n > 0",
+     "x": 0.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "100*(1 - r)^0*r",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 0",
+     "x": 0.6,
+     "y": "100*(1 - r)^0*r",
+     "w": 0.8,
+     "h": "100*(1 - r)^1",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 1",
+     "x": 1.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "100*(1 - r)^1*r",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 1",
+     "x": 1.6,
+     "y": "100*(1 - r)^1*r",
+     "w": 0.8,
+     "h": "100*(1 - r)^2",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 2",
+     "x": 2.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "100*(1 - r)^2*r",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 2",
+     "x": 2.6,
+     "y": "100*(1 - r)^2*r",
+     "w": 0.8,
+     "h": "100*(1 - r)^3",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 3",
+     "x": 3.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "100*(1 - r)^3*r",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 3",
+     "x": 3.6,
+     "y": "100*(1 - r)^3*r",
+     "w": 0.8,
+     "h": "100*(1 - r)^4",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 4",
+     "x": 4.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "100*(1 - r)^4*r",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 4",
+     "x": 4.6,
+     "y": "100*(1 - r)^4*r",
+     "w": 0.8,
+     "h": "100*(1 - r)^5",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 5",
+     "x": 5.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "100*(1 - r)^5*r",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 5",
+     "x": 5.6,
+     "y": "100*(1 - r)^5*r",
+     "w": 0.8,
+     "h": "100*(1 - r)^6",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 6",
+     "x": 6.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "100*(1 - r)^6*r",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 6",
+     "x": 6.6,
+     "y": "100*(1 - r)^6*r",
+     "w": 0.8,
+     "h": "100*(1 - r)^7",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 7",
+     "x": 7.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "100*(1 - r)^7*r",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 7",
+     "x": 7.6,
+     "y": "100*(1 - r)^7*r",
+     "w": 0.8,
+     "h": "100*(1 - r)^8",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 8",
+     "x": 8.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "100*(1 - r)^8*r",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 8",
+     "x": 8.6,
+     "y": "100*(1 - r)^8*r",
+     "w": 0.8,
+     "h": "100*(1 - r)^9",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 9",
+     "x": 9.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "100*(1 - r)^9*r",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 9",
+     "x": 9.6,
+     "y": "100*(1 - r)^9*r",
+     "w": 0.8,
+     "h": "100*(1 - r)^10",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 10",
+     "x": 10.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "100*(1 - r)^10*r",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 10",
+     "x": 10.6,
+     "y": "100*(1 - r)^10*r",
+     "w": 0.8,
+     "h": "100*(1 - r)^11",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 11",
+     "x": 11.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "100*(1 - r)^11*r",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 11",
+     "x": 11.6,
+     "y": "100*(1 - r)^11*r",
+     "w": 0.8,
+     "h": "100*(1 - r)^12",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 12",
+     "x": 12.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "100*(1 - r)^12*r",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 12",
+     "x": 12.6,
+     "y": "100*(1 - r)^12*r",
+     "w": 0.8,
+     "h": "100*(1 - r)^13",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 118,
+     "w": 13,
+     "h": 8,
+     "fill": false,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 118,
+     "w": "13*fr",
+     "h": 8,
+     "color": "yellow",
+     "opacity": 0.8
+    },
+    {
+     "shape": "label",
+     "x": 7,
+     "y": 133,
+     "text": {
+      "en": "total deposits ₹{tot:0} of ₹{lim:0} possible"
+     },
+     "size": 20,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Total deposits so far",
+      "kn": "ಇದುವರೆಗಿನ ಒಟ್ಟು ಠೇವಣಿ"
+     },
+     "expr": "tot",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Limit D0/r",
+      "kn": "ಮಿತಿ D0/r"
+     },
+     "expr": "lim",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Money multiplier 1/r",
+      "kn": "ಹಣ ಗುಣಕ 1/r"
+     },
+     "expr": "1/r",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Credit created",
+      "kn": "ಸೃಷ್ಟಿಯಾದ ಸಾಲ"
+     },
+     "expr": "lim - D0",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With r = 0.2 and ₹1,000 deposited, what is the most that total deposits can grow to?",
+     "kn": "r = 0.2, ₹1,000 ಠೇವಣಿ: ಗರಿಷ್ಠ ಒಟ್ಟು ಠೇವಣಿ ಎಷ್ಟು?"
+    },
+    {
+     "en": "Raise the reserve ratio to 0.5. How does the multiplier change?",
+     "kn": "ಮೀಸಲು ಅನುಪಾತ 0.5ಕ್ಕೆ ಏರಿಸಿ. ಗುಣಕ ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "What could stop this chain in real life, even with a low reserve ratio?",
+     "kn": "ನಿಜ ಜೀವನದಲ್ಲಿ ಈ ಸರಪಳಿಯನ್ನು ಯಾವುದು ನಿಲ್ಲಿಸಬಹುದು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

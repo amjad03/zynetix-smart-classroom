@@ -329,6 +329,250 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Is a degree worth it?",
+    "kn": "ಪದವಿ ಲಾಭದಾಯಕವೇ?"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Two paths from age 18. Without a degree you start earning at once. With a degree you pay fees for four years and then earn more from 22. Play a working life and find the age at which total earnings with the degree catch up.",
+    "kn": "18ನೇ ವಯಸ್ಸಿನಿಂದ ಎರಡು ಹಾದಿಗಳು. ಪದವಿ ಇಲ್ಲದೆ ತಕ್ಷಣ ಗಳಿಕೆ. ಪದವಿಯೊಂದಿಗೆ ನಾಲ್ಕು ವರ್ಷ ಶುಲ್ಕ, ನಂತರ 22ರಿಂದ ಹೆಚ್ಚು ಗಳಿಕೆ. ಒಟ್ಟು ಗಳಿಕೆ ಯಾವ ವಯಸ್ಸಿನಲ್ಲಿ ಸಮವಾಗುತ್ತದೆ ಕಂಡುಹಿಡಿಯಿರಿ."
+   },
+   "sliders": [
+    {
+     "name": "w0",
+     "label": {
+      "en": "Salary without degree",
+      "kn": "ಪದವಿ ಇಲ್ಲದ ವೇತನ"
+     },
+     "min": 8,
+     "max": 30,
+     "step": 1,
+     "value": 12,
+     "unit": "₹ thousand/month"
+    },
+    {
+     "name": "w1",
+     "label": {
+      "en": "Salary with degree",
+      "kn": "ಪದವಿಯ ವೇತನ"
+     },
+     "min": 10,
+     "max": 60,
+     "step": 1,
+     "value": 25,
+     "unit": "₹ thousand/month"
+    },
+    {
+     "name": "f",
+     "label": {
+      "en": "College fees",
+      "kn": "ಕಾಲೇಜು ಶುಲ್ಕ"
+     },
+     "min": 0,
+     "max": 200,
+     "step": 10,
+     "value": 60,
+     "unit": "₹ thousand/year"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "be",
+     "label": {
+      "en": "Show the break-even age",
+      "kn": "ಸಮಗಳಿಕೆ ವಯಸ್ಸು ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 42,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 4,
+    "unit": "yr"
+   },
+   "vars": [
+    {
+     "name": "age",
+     "expr": "18 + t"
+    },
+    {
+     "name": "E0",
+     "expr": "0.12*w0*t"
+    },
+    {
+     "name": "E1",
+     "expr": "-0.01*f*min(t, 4) + 0.12*w1*max(t - 4, 0)"
+    },
+    {
+     "name": "A",
+     "expr": "if(w1 > w0, (264*w1 - 216*w0 + 4*f)/(12*(w1 - w0)), 99)"
+    }
+   ],
+   "view": {
+    "x": [
+     18,
+     60
+    ],
+    "y": [
+     -10,
+     320
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "age (years)",
+    "yLabel": "total earnings so far (₹ lakh)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "0.12*w0*(x - 18)",
+     "color": "blue",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "-0.01*f*min(x - 18, 4) + 0.12*w1*max(x - 22, 0)",
+     "color": "green",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "trail",
+     "x": "age",
+     "y": "E0",
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "trail",
+     "x": "age",
+     "y": "E1",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "age",
+     "y": "E0",
+     "r": 0.6,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "x": "age",
+     "y": "E1",
+     "r": 0.6,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "visibleIf": "be && A < 60",
+     "x1": "A",
+     "y1": -10,
+     "x2": "A",
+     "y2": 320,
+     "color": "yellow",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "label",
+     "visibleIf": "be && A < 60",
+     "x": "clamp(A, 24, 54)",
+     "y": 290,
+     "text": {
+      "en": "break-even at {A:1}"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 26,
+     "y": 250,
+     "text": {
+      "en": "with degree"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 26,
+     "y": 220,
+     "text": {
+      "en": "without degree"
+     },
+     "size": 20,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Age",
+      "kn": "ವಯಸ್ಸು"
+     },
+     "expr": "age",
+     "digits": 0,
+     "unit": "yr"
+    },
+    {
+     "label": {
+      "en": "Without degree",
+      "kn": "ಪದವಿ ಇಲ್ಲದೆ"
+     },
+     "expr": "E0",
+     "digits": 1,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "With degree",
+      "kn": "ಪದವಿಯೊಂದಿಗೆ"
+     },
+     "expr": "E1",
+     "digits": 1,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Break-even age",
+      "kn": "ಸಮಗಳಿಕೆ ವಯಸ್ಸು"
+     },
+     "expr": "if(A < 60, A, 0)",
+     "digits": 1,
+     "unit": "yr"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise the fees to ₹200 thousand a year. How much later is the break-even age?",
+     "kn": "ಶುಲ್ಕವನ್ನು ₹2 ಲಕ್ಷಕ್ಕೆ ಏರಿಸಿ. ಸಮಗಳಿಕೆ ವಯಸ್ಸು ಎಷ್ಟು ತಡವಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "What happens if the degree adds only a little to the salary?",
+     "kn": "ಪದವಿ ವೇತನವನ್ನು ಸ್ವಲ್ಪವೇ ಹೆಚ್ಚಿಸಿದರೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Why do people treat education as an investment, like a firm buying a machine?",
+     "kn": "ಜನರು ಶಿಕ್ಷಣವನ್ನು ಹೂಡಿಕೆ ಎಂದು ಏಕೆ ಪರಿಗಣಿಸುತ್ತಾರೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

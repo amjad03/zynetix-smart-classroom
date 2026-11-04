@@ -338,6 +338,200 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Nominal GDP, real GDP and the deflator",
+    "kn": "ನಾಮಮಾತ್ರ GDP, ನೈಜ GDP ಮತ್ತು ಡಿಫ್ಲೇಟರ್"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Both start at 100 in the base year. Nominal GDP grows with output and prices; real GDP grows only with output. The GDP deflator = nominal ÷ real × 100 tracks prices. Play the years.",
+    "kn": "ಆಧಾರ ವರ್ಷದಲ್ಲಿ ಎರಡೂ 100. ನಾಮಮಾತ್ರ GDP ಉತ್ಪಾದನೆ ಮತ್ತು ಬೆಲೆ ಎರಡರಿಂದ ಬೆಳೆಯುತ್ತದೆ; ನೈಜ GDP ಉತ್ಪಾದನೆಯಿಂದ ಮಾತ್ರ. GDP ಡಿಫ್ಲೇಟರ್ = ನಾಮಮಾತ್ರ ÷ ನೈಜ × 100."
+   },
+   "sliders": [
+    {
+     "name": "g",
+     "label": {
+      "en": "Growth of output",
+      "kn": "ಉತ್ಪಾದನೆ ಬೆಳವಣಿಗೆ"
+     },
+     "min": 0,
+     "max": 8,
+     "step": 0.5,
+     "value": 6,
+     "unit": "% a year"
+    },
+    {
+     "name": "infl",
+     "label": {
+      "en": "Inflation",
+      "kn": "ಹಣದುಬ್ಬರ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 0.5,
+     "value": 5,
+     "unit": "% a year"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "defl",
+     "label": {
+      "en": "Show the GDP deflator",
+      "kn": "GDP ಡಿಫ್ಲೇಟರ್ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 15,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 1,
+    "unit": "yr"
+   },
+   "vars": [
+    {
+     "name": "R",
+     "expr": "100*(1 + g/100)^t"
+    },
+    {
+     "name": "Pd",
+     "expr": "100*(1 + infl/100)^t"
+    },
+    {
+     "name": "N",
+     "expr": "R*Pd/100"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     15
+    ],
+    "y": [
+     0,
+     1400
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "years after base year",
+    "yLabel": "index"
+   },
+   "shapes": [
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "N",
+     "color": "red",
+     "width": 4
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "R",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "trail",
+     "visibleIf": "defl",
+     "x": "t",
+     "y": "Pd",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "N",
+     "r": 0.18,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "R",
+     "r": 0.18,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 3,
+     "y": 1300,
+     "text": {
+      "en": "nominal {N:0}"
+     },
+     "size": 20,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 3,
+     "y": 1200,
+     "text": {
+      "en": "real {R:0}"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "defl",
+     "x": 3,
+     "y": 1100,
+     "text": {
+      "en": "deflator {Pd:0}"
+     },
+     "size": 20,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Nominal GDP",
+      "kn": "ನಾಮಮಾತ್ರ GDP"
+     },
+     "expr": "N",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Real GDP",
+      "kn": "ನೈಜ GDP"
+     },
+     "expr": "R",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "GDP deflator",
+      "kn": "GDP ಡಿಫ್ಲೇಟರ್"
+     },
+     "expr": "100*N/R",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set output growth to 0 and inflation to 8%. Is the country better off as nominal GDP rises?",
+     "kn": "ಉತ್ಪಾದನೆ ಬೆಳವಣಿಗೆ 0, ಹಣದುಬ್ಬರ 8%. ನಾಮಮಾತ್ರ GDP ಏರಿದರೂ ದೇಶ ಉತ್ತಮವೇ?"
+    },
+    {
+     "en": "Set inflation to 0. What happens to the gap between nominal and real GDP?",
+     "kn": "ಹಣದುಬ್ಬರ 0 ಮಾಡಿ. ನಾಮಮಾತ್ರ ಮತ್ತು ನೈಜ GDP ಅಂತರ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

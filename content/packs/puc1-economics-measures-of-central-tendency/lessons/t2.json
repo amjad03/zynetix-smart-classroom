@@ -391,6 +391,244 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Weighted arithmetic mean",
+    "kn": "ತೂಕದ ಸರಾಸರಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A student's marks in three papers, each with a weight. The width of each bar is its weight, so a heavier paper pulls the weighted mean towards its mark. With equal weights you get the simple mean.",
+    "kn": "ಮೂರು ಪತ್ರಿಕೆಗಳ ಅಂಕಗಳು, ಪ್ರತಿಯೊಂದಕ್ಕೆ ತೂಕ. ಪಟ್ಟಿಯ ಅಗಲವೇ ತೂಕ; ಭಾರವಾದ ಪತ್ರಿಕೆ ತೂಕದ ಸರಾಸರಿಯನ್ನು ತನ್ನ ಅಂಕದತ್ತ ಎಳೆಯುತ್ತದೆ. ಸಮ ತೂಕವಿದ್ದರೆ ಸರಳ ಸರಾಸರಿ."
+   },
+   "sliders": [
+    {
+     "name": "w1",
+     "label": {
+      "en": "Weight: Economics",
+      "kn": "ತೂಕ: ಅರ್ಥಶಾಸ್ತ್ರ"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 3
+    },
+    {
+     "name": "w2",
+     "label": {
+      "en": "Weight: Accountancy",
+      "kn": "ತೂಕ: ಲೆಕ್ಕಶಾಸ್ತ್ರ"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "w3",
+     "label": {
+      "en": "Weight: English",
+      "kn": "ತೂಕ: ಇಂಗ್ಲಿಷ್"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 2
+    },
+    {
+     "name": "m3",
+     "label": {
+      "en": "English marks",
+      "kn": "ಇಂಗ್ಲಿಷ್ ಅಂಕ"
+     },
+     "min": 30,
+     "max": 100,
+     "step": 1,
+     "value": 65
+    }
+   ],
+   "toggles": [
+    {
+     "name": "simple",
+     "label": {
+      "en": "Show the simple mean",
+      "kn": "ಸರಳ ಸರಾಸರಿ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "wm",
+     "expr": "(w1*80 + w2*50 + w3*m3)/(w1 + w2 + w3)"
+    },
+    {
+     "name": "sm",
+     "expr": "(80 + 50 + m3)/3"
+    },
+    {
+     "name": "x2",
+     "expr": "w1"
+    },
+    {
+     "name": "x3",
+     "expr": "w1 + w2"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     15
+    ],
+    "y": [
+     0,
+     100
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "weight (bar width)",
+    "yLabel": "marks"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": "w1",
+     "h": 80,
+     "color": "blue",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": "x2",
+     "y": 0,
+     "w": "w2",
+     "h": 50,
+     "color": "orange",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": "x3",
+     "y": 0,
+     "w": "w3",
+     "h": "m3",
+     "color": "green",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": "w1/2",
+     "y": 40,
+     "text": {
+      "en": "Eco 80"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": "x2 + w2/2",
+     "y": 25,
+     "text": {
+      "en": "Acc 50"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": "x3 + w3/2",
+     "y": "m3/2",
+     "text": {
+      "en": "Eng {m3}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "wm",
+     "x2": 15,
+     "y2": "wm",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "label",
+     "x": 13,
+     "y": "wm + 4",
+     "text": {
+      "en": "weighted {wm:1}"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "visibleIf": "simple",
+     "x1": 0,
+     "y1": "sm",
+     "x2": 15,
+     "y2": "sm",
+     "color": "white",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "label",
+     "visibleIf": "simple",
+     "x": 13,
+     "y": "sm - 4",
+     "text": {
+      "en": "simple {sm:1}"
+     },
+     "size": 22,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Weighted mean ΣWX/ΣW",
+      "kn": "ತೂಕದ ಸರಾಸರಿ"
+     },
+     "expr": "wm",
+     "digits": 2,
+     "unit": "marks"
+    },
+    {
+     "label": {
+      "en": "Simple mean",
+      "kn": "ಸರಳ ಸರಾಸರಿ"
+     },
+     "expr": "sm",
+     "digits": 2,
+     "unit": "marks"
+    },
+    {
+     "label": {
+      "en": "Total weight ΣW",
+      "kn": "ಒಟ್ಟು ತೂಕ ΣW"
+     },
+     "expr": "w1 + w2 + w3",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set all weights equal. Do the two means agree?",
+     "kn": "ಎಲ್ಲಾ ತೂಕ ಸಮ ಮಾಡಿ. ಎರಡು ಸರಾಸರಿ ಒಂದೇ ಆಗುತ್ತವೆಯೇ?"
+    },
+    {
+     "en": "Give Accountancy weight 5 and the others 1. Which way does the weighted mean move?",
+     "kn": "ಲೆಕ್ಕಶಾಸ್ತ್ರಕ್ಕೆ ತೂಕ 5, ಉಳಿದವಕ್ಕೆ 1. ತೂಕದ ಸರಾಸರಿ ಯಾವ ಕಡೆ ಸರಿಯುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

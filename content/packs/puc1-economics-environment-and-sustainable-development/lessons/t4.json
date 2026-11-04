@@ -252,6 +252,219 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Harvesting a renewable resource",
+    "kn": "ನವೀಕರಿಸಬಹುದಾದ ಸಂಪನ್ಮೂಲ ಕೊಯ್ಲು"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A lake's fish stock regrows each year, fastest at half its full size. If the yearly catch stays within what the stock can regrow, fishing can go on for ever. Catch more than the regrowth and the stock collapses, leaving nothing for future generations.",
+    "kn": "ಕೆರೆಯ ಮೀನಿನ ಸಂಗ್ರಹ ಪ್ರತಿ ವರ್ಷ ಮರುಬೆಳೆಯುತ್ತದೆ. ಕೊಯ್ಲು ಮರುಬೆಳವಣಿಗೆಯೊಳಗಿದ್ದರೆ ಮೀನುಗಾರಿಕೆ ಸದಾ ಸಾಧ್ಯ. ಹೆಚ್ಚು ಕೊಯ್ದರೆ ಮುಂದಿನ ಪೀಳಿಗೆಗೆ ಏನೂ ಉಳಿಯದು."
+   },
+   "sliders": [
+    {
+     "name": "h",
+     "label": {
+      "en": "Yearly catch",
+      "kn": "ವಾರ್ಷಿಕ ಕೊಯ್ಲು"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 15,
+     "unit": "t/yr"
+    },
+    {
+     "name": "g",
+     "label": {
+      "en": "Regrowth rate",
+      "kn": "ಮರುಬೆಳವಣಿಗೆ ದರ"
+     },
+     "min": 0.4,
+     "max": 1.2,
+     "step": 0.05,
+     "value": 0.8,
+     "unit": "/yr"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "low",
+     "label": {
+      "en": "Start from an over-fished lake",
+      "kn": "ಅತಿ ಮೀನುಗಾರಿಕೆಯ ಕೆರೆಯಿಂದ ಆರಂಭ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 40,
+    "dt": 0.02,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 4,
+    "unit": "yr"
+   },
+   "vars": [
+    {
+     "name": "Sx",
+     "expr": "max(S, 0)"
+    },
+    {
+     "name": "regrow",
+     "expr": "g*Sx*(1 - Sx/100)"
+    },
+    {
+     "name": "msy",
+     "expr": "g*100/4"
+    }
+   ],
+   "state": [
+    {
+     "name": "S",
+     "init": "if(low, 25, 80)",
+     "rate": "if(S > 0.05, g*S*(1 - S/100) - h, 0)"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     0,
+     60
+    ],
+    "y": [
+     0,
+     110
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "years",
+    "yLabel": "fish stock (tonnes)"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 100,
+     "x2": 40,
+     "y2": 100,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 50,
+     "x2": 40,
+     "y2": 50,
+     "dashed": true,
+     "color": "green",
+     "opacity": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "Sx",
+     "color": "yellow",
+     "width": 4,
+     "length": 2000
+    },
+    {
+     "shape": "rect",
+     "x": 44,
+     "y": 0,
+     "w": 15,
+     "h": 100,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "particles",
+     "count": 100,
+     "visibleIf": "i < Sx",
+     "x": "bounce(44.5 + 14*rand(i) + 3*t*(rand(i + 100) - 0.5), 44.5, 58.5)",
+     "y": "bounce(4 + 92*rand(i + 200) + 6*t*(rand(i + 300) - 0.5), 3, 97)",
+     "r": 0.5,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 51.5,
+     "y": 105,
+     "text": {
+      "en": "stock {Sx:0} t"
+     },
+     "size": 22,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "Sx < 1 && t > 0",
+     "x": 20,
+     "y": 75,
+     "text": {
+      "en": "the stock has collapsed"
+     },
+     "size": 26,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Fish stock",
+      "kn": "ಮೀನಿನ ಸಂಗ್ರಹ"
+     },
+     "expr": "Sx",
+     "digits": 0,
+     "unit": "t"
+    },
+    {
+     "label": {
+      "en": "Natural regrowth at this stock",
+      "kn": "ಈ ಸಂಗ್ರಹದಲ್ಲಿ ಮರುಬೆಳವಣಿಗೆ"
+     },
+     "expr": "regrow",
+     "digits": 1,
+     "unit": "t/yr"
+    },
+    {
+     "label": {
+      "en": "Largest sustainable catch",
+      "kn": "ಗರಿಷ್ಠ ಸುಸ್ಥಿರ ಕೊಯ್ಲು"
+     },
+     "expr": "msy",
+     "digits": 1,
+     "unit": "t/yr"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With regrowth 0.8 the largest sustainable catch is 20 t a year. Play with a catch of 15, then 22.",
+     "kn": "ಮರುಬೆಳವಣಿಗೆ 0.8 ಇದ್ದಾಗ ಗರಿಷ್ಠ ಸುಸ್ಥಿರ ಕೊಯ್ಲು 20 t. 15, ನಂತರ 22 ಪ್ರಯತ್ನಿಸಿ."
+    },
+    {
+     "en": "Start from an over-fished lake with a catch of 16. Does the stock recover? What catch lets it recover?",
+     "kn": "ಅತಿ ಮೀನುಗಾರಿಕೆಯ ಕೆರೆಯಿಂದ ಕೊಯ್ಲು 16. ಚೇತರಿಸುತ್ತದೆಯೇ? ಯಾವ ಕೊಯ್ಲಿನಲ್ಲಿ ಚೇತರಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "How does this show Herman Daly's rule for renewable resources?",
+     "kn": "ನವೀಕರಿಸಬಹುದಾದ ಸಂಪನ್ಮೂಲಗಳ ಬಗ್ಗೆ ಹರ್ಮನ್ ಡೇಲಿ ನಿಯಮವನ್ನು ಇದು ಹೇಗೆ ತೋರಿಸುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

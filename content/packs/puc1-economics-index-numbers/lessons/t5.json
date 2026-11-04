@@ -302,6 +302,190 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Inflation and the value of money",
+    "kn": "ಹಣದುಬ್ಬರ ಮತ್ತು ಹಣದ ಮೌಲ್ಯ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The inflation rate is the percentage change in a price index from one year to the next. The purchasing power of a rupee is 100 ÷ CPI (in base-year rupees), and real income is money income × 100 ÷ CPI.",
+    "kn": "ಹಣದುಬ್ಬರ ದರ ಬೆಲೆ ಸೂಚ್ಯಂಕದ ವಾರ್ಷಿಕ ಶೇಕಡಾ ಬದಲಾವಣೆ. ರೂಪಾಯಿಯ ಖರೀದಿ ಶಕ್ತಿ 100 ÷ CPI; ನೈಜ ಆದಾಯ = ಹಣದ ಆದಾಯ × 100 ÷ CPI."
+   },
+   "sliders": [
+    {
+     "name": "c0",
+     "label": {
+      "en": "CPI last year",
+      "kn": "ಕಳೆದ ವರ್ಷದ CPI"
+     },
+     "min": 100,
+     "max": 200,
+     "step": 2,
+     "value": 150
+    },
+    {
+     "name": "c1",
+     "label": {
+      "en": "CPI this year",
+      "kn": "ಈ ವರ್ಷದ CPI"
+     },
+     "min": 100,
+     "max": 220,
+     "step": 2,
+     "value": 162
+    },
+    {
+     "name": "Y",
+     "label": {
+      "en": "Money income",
+      "kn": "ಹಣದ ಆದಾಯ"
+     },
+     "min": 10000,
+     "max": 60000,
+     "step": 1000,
+     "value": 30000,
+     "unit": "₹/month"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "coin",
+     "label": {
+      "en": "Show the shrinking rupee",
+      "kn": "ಕುಗ್ಗುವ ರೂಪಾಯಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "inf",
+     "expr": "(c1 - c0)/c0*100"
+    },
+    {
+     "name": "pp",
+     "expr": "100/c1"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     6
+    ],
+    "axes": false,
+    "grid": false,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "visibleIf": "coin",
+     "x": 2.5,
+     "y": 3,
+     "r": 2.2,
+     "fill": false,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "coin",
+     "x": 2.5,
+     "y": 3,
+     "r": "2.2*sqrt(pp)",
+     "color": "yellow",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "visibleIf": "coin",
+     "x": 2.5,
+     "y": 0.3,
+     "text": {
+      "en": "₹1 buys {pp*100:0} paise of base-year goods"
+     },
+     "size": 20
+    },
+    {
+     "shape": "label",
+     "x": 7,
+     "y": 4.5,
+     "text": {
+      "en": "inflation {inf:1}%"
+     },
+     "size": 30,
+     "color": {
+      "by": "clamp(inf/10, 0, 1)",
+      "scale": [
+       "green",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "label",
+     "x": 7,
+     "y": 2.5,
+     "text": {
+      "en": "real income ₹{Y*100/c1:0}"
+     },
+     "size": 26,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Inflation rate",
+      "kn": "ಹಣದುಬ್ಬರ ದರ"
+     },
+     "expr": "inf",
+     "digits": 2,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Purchasing power of ₹1",
+      "kn": "₹1 ಖರೀದಿ ಶಕ್ತಿ"
+     },
+     "expr": "pp",
+     "digits": 2,
+     "unit": "₹ (base)"
+    },
+    {
+     "label": {
+      "en": "Real income",
+      "kn": "ನೈಜ ಆದಾಯ"
+     },
+     "expr": "Y*100/c1",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "CPI rises from 150 to 162. What is the inflation rate?",
+     "kn": "CPI 150 ರಿಂದ 162ಕ್ಕೆ ಏರಿದೆ. ಹಣದುಬ್ಬರ ದರ ಎಷ್ಟು?"
+    },
+    {
+     "en": "How much must money income rise to keep real income unchanged?",
+     "kn": "ನೈಜ ಆದಾಯ ಬದಲಾಗದಿರಲು ಹಣದ ಆದಾಯ ಎಷ್ಟು ಏರಬೇಕು?"
+    },
+    {
+     "en": "Set this year's CPI below last year's. What is this called?",
+     "kn": "ಈ ವರ್ಷದ CPI ಕಳೆದ ವರ್ಷಕ್ಕಿಂತ ಕಡಿಮೆ ಮಾಡಿ. ಇದನ್ನು ಏನೆನ್ನುತ್ತಾರೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

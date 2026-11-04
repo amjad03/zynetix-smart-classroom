@@ -770,6 +770,260 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Profit maximisation",
+    "kn": "ಲಾಭ ಗರಿಷ್ಠೀಕರಣ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the yellow ring to set the market price. The firm produces where p = MC on the rising part of MC. Profit is the rectangle between price and AC: green for profit, red for loss. Here TFC = ₹32, so minimum AC is ₹15 at q = 4.",
+    "kn": "ಹಳದಿ ಉಂಗುರ ಎಳೆದು ಮಾರುಕಟ್ಟೆ ಬೆಲೆ ಇಡಿ. ಸಂಸ್ಥೆ MC ಏರುವ ಭಾಗದಲ್ಲಿ p = MC ಆಗುವಲ್ಲಿ ಉತ್ಪಾದಿಸುತ್ತದೆ. ಬೆಲೆ ಮತ್ತು AC ನಡುವಿನ ಆಯತವೇ ಲಾಭ: ಹಸಿರು ಲಾಭ, ಕೆಂಪು ನಷ್ಟ."
+   },
+   "sliders": [
+    {
+     "name": "w",
+     "label": {
+      "en": "Rectangle shading",
+      "kn": "ಆಯತ ಛಾಯೆ"
+     },
+     "min": 0.1,
+     "max": 0.6,
+     "step": 0.05,
+     "value": 0.35
+    }
+   ],
+   "toggles": [
+    {
+     "name": "avc",
+     "label": {
+      "en": "Show AVC",
+      "kn": "AVC ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "Pr",
+     "label": "price",
+     "x": 6.2,
+     "y": 20,
+     "axis": "y",
+     "box": {
+      "x": [
+       0,
+       7
+      ],
+      "y": [
+       4,
+       40
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "p",
+     "expr": "Pr_y"
+    },
+    {
+     "name": "q",
+     "expr": "2 + sqrt(max(12*p - 36, 0))/6"
+    },
+    {
+     "name": "acq",
+     "expr": "q^2 - 6*q + 15 + 32/q"
+    },
+    {
+     "name": "prof",
+     "expr": "(p - acq)*q"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     7
+    ],
+    "y": [
+     0,
+     45
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "output q",
+    "yLabel": "₹ per unit"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": "min(p, acq)",
+     "w": "q",
+     "h": "abs(p - acq)",
+     "color": {
+      "by": "step(0, prof)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "opacity": "w"
+    },
+    {
+     "shape": "path",
+     "fn": "3*x^2 - 12*x + 15",
+     "from": 0.2,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "x^2 - 6*x + 15 + 32/x",
+     "from": 0.8,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "visibleIf": "avc",
+     "fn": "x^2 - 6*x + 15",
+     "from": 0.2,
+     "color": "green",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "p",
+     "x2": 7,
+     "y2": "p",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "q",
+     "y1": 0,
+     "x2": "q",
+     "y2": "p",
+     "color": "white",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "q",
+     "y": "p",
+     "r": 0.12,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 42,
+     "text": {
+      "en": "MC"
+     },
+     "size": 18,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 1.1,
+     "y": 42,
+     "text": {
+      "en": "AC"
+     },
+     "size": 18,
+     "color": "blue"
+    },
+    {
+     "shape": "label",
+     "x": 3.5,
+     "y": 43,
+     "text": {
+      "en": "profit ₹{prof:1}"
+     },
+     "size": 22,
+     "color": {
+      "by": "step(0, prof)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "label",
+     "visibleIf": "p < 6",
+     "x": 3.5,
+     "y": 38,
+     "text": {
+      "en": "price below min AVC: better to shut down"
+     },
+     "size": 18,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Profit-maximising output",
+      "kn": "ಲಾಭ ಗರಿಷ್ಠ ಉತ್ಪಾದನೆ"
+     },
+     "expr": "q",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "TR = p × q",
+      "kn": "TR"
+     },
+     "expr": "p*q",
+     "digits": 1,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "TC = AC × q",
+      "kn": "TC"
+     },
+     "expr": "acq*q",
+     "digits": 1,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Profit",
+      "kn": "ಲಾಭ"
+     },
+     "expr": "prof",
+     "digits": 1,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set the price at ₹15. What profit does the firm make? Why is this called normal profit?",
+     "kn": "ಬೆಲೆ ₹15 ಇಡಿ. ಲಾಭ ಎಷ್ಟು? ಇದನ್ನು ಸಾಮಾನ್ಯ ಲಾಭ ಎಂದು ಏಕೆ ಕರೆಯುತ್ತಾರೆ?"
+    },
+    {
+     "en": "Raise the price to ₹27. How much does output rise, and how big is the profit?",
+     "kn": "ಬೆಲೆ ₹27ಕ್ಕೆ ಏರಿಸಿ. ಉತ್ಪಾದನೆ ಎಷ್ಟು ಏರುತ್ತದೆ? ಲಾಭ ಎಷ್ಟು?"
+    },
+    {
+     "en": "At ₹10 the firm makes a loss. Should it still produce in the short run?",
+     "kn": "₹10 ನಲ್ಲಿ ನಷ್ಟ. ಅಲ್ಪಾವಧಿಯಲ್ಲಿ ಉತ್ಪಾದಿಸಬೇಕೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -372,6 +372,202 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Green Revolution on a 10-hectare farm",
+    "kn": "10 ಹೆಕ್ಟೇರ್ ಹೊಲದಲ್ಲಿ ಹಸಿರು ಕ್ರಾಂತಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Move land from traditional wheat to HYV seeds. HYV seeds give big yields only with regular water and fertiliser. The family keeps what it eats; the rest is the marketed surplus. Yields are illustrative.",
+    "kn": "ಸಾಂಪ್ರದಾಯಿಕ ಗೋಧಿಯಿಂದ HYV ಬೀಜಗಳಿಗೆ ಭೂಮಿ ಬದಲಿಸಿ. ನಿಯಮಿತ ನೀರು ಮತ್ತು ರಸಗೊಬ್ಬರವಿದ್ದರೆ ಮಾತ್ರ HYV ಹೆಚ್ಚು ಇಳುವರಿ. ಕುಟುಂಬ ತಿನ್ನುವುದನ್ನು ಉಳಿಸಿ ಉಳಿದದ್ದು ಮಾರುಕಟ್ಟೆ ಹೆಚ್ಚುವರಿ."
+   },
+   "sliders": [
+    {
+     "name": "s",
+     "label": {
+      "en": "Area under HYV seeds",
+      "kn": "HYV ಬೀಜದ ಪ್ರದೇಶ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "%"
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "Grain the family eats",
+      "kn": "ಕುಟುಂಬದ ಬಳಕೆ"
+     },
+     "min": 2,
+     "max": 10,
+     "step": 0.5,
+     "value": 6,
+     "unit": "tonnes"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "irr",
+     "label": {
+      "en": "Assured irrigation",
+      "kn": "ಖಚಿತ ನೀರಾವರಿ"
+     },
+     "value": true
+    },
+    {
+     "name": "fert",
+     "label": {
+      "en": "Fertilisers and pesticides",
+      "kn": "ರಸಗೊಬ್ಬರ ಮತ್ತು ಕೀಟನಾಶಕ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "yH",
+     "expr": "if(irr && fert, 3, if(irr || fert, 1.5, 0.8))"
+    },
+    {
+     "name": "Q",
+     "expr": "10*(s/100*yH + (1 - s/100)*1)"
+    },
+    {
+     "name": "ms",
+     "expr": "max(Q - c, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     34
+    ],
+    "axes": true,
+    "grid": true,
+    "yLabel": "tonnes"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.8,
+     "y": 0,
+     "w": 2.2,
+     "h": "Q",
+     "color": "green",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 1.9,
+     "y": "Q + 1.2",
+     "text": {
+      "en": "output {Q:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 3.9,
+     "y": 0,
+     "w": 2.2,
+     "h": "min(c, Q)",
+     "color": "blue",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": "min(c, Q) + 1.2",
+     "text": {
+      "en": "eaten {min(c, Q):1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 7,
+     "y": 0,
+     "w": 2.2,
+     "h": "ms",
+     "color": "yellow",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 8.1,
+     "y": "ms + 1.2",
+     "text": {
+      "en": "sold {ms:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "label",
+     "visibleIf": "s > 0 && !irr",
+     "x": 5,
+     "y": 31,
+     "text": {
+      "en": "HYV without water: yields fall"
+     },
+     "size": 20,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Yield of HYV land",
+      "kn": "HYV ಇಳುವರಿ"
+     },
+     "expr": "yH",
+     "digits": 1,
+     "unit": "t/ha"
+    },
+    {
+     "label": {
+      "en": "Total output",
+      "kn": "ಒಟ್ಟು ಉತ್ಪಾದನೆ"
+     },
+     "expr": "Q",
+     "digits": 1,
+     "unit": "t"
+    },
+    {
+     "label": {
+      "en": "Marketed surplus",
+      "kn": "ಮಾರುಕಟ್ಟೆ ಹೆಚ್ಚುವರಿ"
+     },
+     "expr": "ms",
+     "digits": 1,
+     "unit": "t"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Move from 0% to 100% HYV with irrigation and fertiliser. How does the marketed surplus change?",
+     "kn": "ನೀರಾವರಿ, ರಸಗೊಬ್ಬರದೊಂದಿಗೆ 0% ರಿಂದ 100% HYV. ಮಾರುಕಟ್ಟೆ ಹೆಚ್ಚುವರಿ ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn off irrigation and fertiliser. Is HYV still better than traditional seed?",
+     "kn": "ನೀರಾವರಿ ಮತ್ತು ರಸಗೊಬ್ಬರ ಆಫ್ ಮಾಡಿ. HYV ಇನ್ನೂ ಉತ್ತಮವೇ?"
+    },
+    {
+     "en": "Why did the government subsidise fertiliser for small farmers?",
+     "kn": "ಸಣ್ಣ ರೈತರಿಗೆ ಸರ್ಕಾರ ರಸಗೊಬ್ಬರ ಸಹಾಯಧನ ಏಕೆ ನೀಡಿತು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

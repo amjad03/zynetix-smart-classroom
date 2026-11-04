@@ -329,6 +329,280 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Disguised unemployment on a family farm",
+    "kn": "ಕುಟುಂಬದ ಹೊಲದಲ್ಲಿ ಮರೆಮಾಚಿದ ನಿರುದ್ಯೋಗ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A small family farm needs only 5 workers. Add family members: output stops rising after the fifth, so the extra members add nothing. Their marginal product is zero: they are disguisedly unemployed. Work outside the farm, such as MGNREGA's 100 days per household, adds income without cutting output.",
+    "kn": "ಸಣ್ಣ ಕುಟುಂಬದ ಹೊಲಕ್ಕೆ 5 ಕಾರ್ಮಿಕರು ಸಾಕು. ಹೆಚ್ಚಿನವರು ಉತ್ಪಾದನೆ ಹೆಚ್ಚಿಸುವುದಿಲ್ಲ; ಅವರ ಸೀಮಾಂತ ಉತ್ಪನ್ನ ಶೂನ್ಯ. ಹೊಲದ ಹೊರಗಿನ ಕೆಲಸ (MGNREGA ಮನೆಗೆ 100 ದಿನ) ಉತ್ಪಾದನೆ ಕಡಿಮೆ ಮಾಡದೆ ಆದಾಯ ಹೆಚ್ಚಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "N",
+     "label": {
+      "en": "Family members working on the farm",
+      "kn": "ಹೊಲದಲ್ಲಿ ಕೆಲಸ ಮಾಡುವ ಸದಸ್ಯರು"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 8
+    },
+    {
+     "name": "w",
+     "label": {
+      "en": "MGNREGA wage",
+      "kn": "MGNREGA ಕೂಲಿ"
+     },
+     "min": 200,
+     "max": 400,
+     "step": 10,
+     "value": 300,
+     "unit": "₹/day"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "mg",
+     "label": {
+      "en": "One surplus member takes MGNREGA work",
+      "kn": "ಒಬ್ಬ ಹೆಚ್ಚುವರಿ ಸದಸ್ಯ MGNREGA ಕೆಲಸಕ್ಕೆ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "TP",
+     "expr": "100*(1 - (1 - min(N, 5)/5)^2)"
+    },
+    {
+     "name": "TPm",
+     "expr": "100*(1 - (1 - min(N - 1, 5)/5)^2)"
+    },
+    {
+     "name": "MP",
+     "expr": "TP - TPm"
+    },
+    {
+     "name": "ext",
+     "expr": "if(mg && N > 5, 100*w, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     0,
+     120
+    ],
+    "axes": true,
+    "grid": false,
+    "xLabel": "family members",
+    "yLabel": "farm output (quintals)"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.3,
+     "y": 0,
+     "w": 1.4,
+     "h": "TP",
+     "color": "green",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": "TP + 6",
+     "text": {
+      "en": "{TP:0} q"
+     },
+     "size": 22
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "N >= 1",
+     "x": 2.6,
+     "y": 60,
+     "r": 0.38,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "N >= 2",
+     "x": 3.6,
+     "y": 60,
+     "r": 0.38,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "N >= 3",
+     "x": 4.6,
+     "y": 60,
+     "r": 0.38,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "N >= 4",
+     "x": 5.6,
+     "y": 60,
+     "r": 0.38,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "N >= 5",
+     "x": 6.6,
+     "y": 60,
+     "r": 0.38,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "N >= 6",
+     "x": 7.6,
+     "y": 60,
+     "r": 0.38,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "N >= 7",
+     "x": 8.6,
+     "y": 60,
+     "r": 0.38,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "N >= 8",
+     "x": 9.6,
+     "y": 60,
+     "r": 0.38,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "N >= 9",
+     "x": 10.6,
+     "y": 60,
+     "r": 0.38,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "N >= 10",
+     "x": 11.6,
+     "y": 60,
+     "r": 0.38,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "mg && N > 5",
+     "x": "1.6 + N",
+     "y": 60,
+     "r": 0.45,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "N > 5",
+     "x": 7,
+     "y": 100,
+     "text": {
+      "en": "{N - 5} member(s) add no output"
+     },
+     "size": 22,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "ext > 0",
+     "x": 7,
+     "y": 85,
+     "text": {
+      "en": "MGNREGA adds ₹{ext:0} a year"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 7,
+     "y": 40,
+     "text": {
+      "en": "green: needed   red: surplus"
+     },
+     "size": 18,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Farm output",
+      "kn": "ಹೊಲದ ಉತ್ಪಾದನೆ"
+     },
+     "expr": "TP",
+     "digits": 0,
+     "unit": "quintals"
+    },
+    {
+     "label": {
+      "en": "Marginal product of last member",
+      "kn": "ಕೊನೆಯ ಸದಸ್ಯನ ಸೀಮಾಂತ ಉತ್ಪನ್ನ"
+     },
+     "expr": "MP",
+     "digits": 0,
+     "unit": "quintals"
+    },
+    {
+     "label": {
+      "en": "Disguisedly unemployed",
+      "kn": "ಮರೆಮಾಚಿದ ನಿರುದ್ಯೋಗಿಗಳು"
+     },
+     "expr": "max(N - 5, 0)",
+     "digits": 0,
+     "unit": "people"
+    },
+    {
+     "label": {
+      "en": "Extra income from MGNREGA",
+      "kn": "MGNREGA ಹೆಚ್ಚುವರಿ ಆದಾಯ"
+     },
+     "expr": "ext",
+     "digits": 0,
+     "unit": "₹/year"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Go from 5 to 8 members. Does output change? What is the marginal product of the 8th?",
+     "kn": "5 ರಿಂದ 8 ಸದಸ್ಯರಿಗೆ ಹೋಗಿ. ಉತ್ಪಾದನೆ ಬದಲಾಗುತ್ತದೆಯೇ? 8ನೇ ಸದಸ್ಯನ ಸೀಮಾಂತ ಉತ್ಪನ್ನ?"
+    },
+    {
+     "en": "Remove members one by one from 10. When does output first fall?",
+     "kn": "10 ರಿಂದ ಒಬ್ಬೊಬ್ಬರನ್ನು ತೆಗೆಯಿರಿ. ಉತ್ಪಾದನೆ ಮೊದಲು ಯಾವಾಗ ಕುಸಿಯುತ್ತದೆ?"
+    },
+    {
+     "en": "With 8 members, switch on MGNREGA work. What happens to farm output and to income?",
+     "kn": "8 ಸದಸ್ಯರೊಂದಿಗೆ MGNREGA ಆನ್ ಮಾಡಿ. ಉತ್ಪಾದನೆ ಮತ್ತು ಆದಾಯ ಏನಾಗುತ್ತವೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

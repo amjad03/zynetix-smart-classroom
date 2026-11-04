@@ -340,6 +340,232 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Sampling error and sample size",
+    "kn": "ಮಾದರಿ ದೋಷ ಮತ್ತು ಮಾದರಿ ಗಾತ್ರ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Each dot is the estimate from one random sample of a town where P per cent own a smartphone. Draw samples and watch how far they fall from the true value. A bigger sample cuts the sampling error; a biased question shifts every estimate and does not shrink.",
+    "kn": "ಪ್ರತಿ ಚುಕ್ಕೆ ಒಂದು ಯಾದೃಚ್ಛಿಕ ಮಾದರಿಯ ಅಂದಾಜು. ಮಾದರಿಗಳನ್ನು ತೆಗೆದು ನಿಜ ಮೌಲ್ಯದಿಂದ ಎಷ್ಟು ದೂರ ಬೀಳುತ್ತವೆ ನೋಡಿ. ದೊಡ್ಡ ಮಾದರಿ ಮಾದರಿ ದೋಷವನ್ನು ಕಡಿಮೆ ಮಾಡುತ್ತದೆ; ಪಕ್ಷಪಾತದ ಪ್ರಶ್ನೆ ಎಲ್ಲಾ ಅಂದಾಜುಗಳನ್ನು ಸರಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "P",
+     "label": {
+      "en": "True share owning a phone",
+      "kn": "ನಿಜವಾದ ಪಾಲು"
+     },
+     "min": 10,
+     "max": 90,
+     "step": 5,
+     "value": 40,
+     "unit": "%"
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "Sample size",
+      "kn": "ಮಾದರಿ ಗಾತ್ರ"
+     },
+     "min": 20,
+     "max": 1000,
+     "step": 20,
+     "value": 40,
+     "unit": "people"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "bias",
+     "label": {
+      "en": "Biased question (non-sampling error)",
+      "kn": "ಪಕ್ಷಪಾತದ ಪ್ರಶ್ನೆ (ಮಾದರಿಯೇತರ ದೋಷ)"
+     },
+     "value": false
+    }
+   ],
+   "counters": [
+    {
+     "name": "k",
+     "value": 0,
+     "min": 0,
+     "max": 40
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Draw a sample",
+      "kn": "ಮಾದರಿ ತೆಗೆಯಿರಿ"
+     },
+     "icon": "add",
+     "set": {
+      "k": "k + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Draw 10",
+      "kn": "10 ಮಾದರಿ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "k + 10"
+     }
+    },
+    {
+     "label": {
+      "en": "Clear",
+      "kn": "ಅಳಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "se",
+     "expr": "100*sqrt(P/100*(1 - P/100)/n)"
+    },
+    {
+     "name": "last",
+     "expr": "if(k > 0, clamp(P + 10*bias + 100*sqrt(P/100*(1 - P/100)/n)*sqrt(-2*ln(1 - rand(k - 1)))*cos(2*pi*rand(k + 499)), 0, 100), P)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     11
+    ],
+    "axes": true,
+    "grid": false,
+    "xLabel": "estimated share (%)"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "P - 2*se",
+     "y": 0,
+     "w": "4*se",
+     "h": 11,
+     "color": "green",
+     "opacity": 0.12
+    },
+    {
+     "shape": "line",
+     "x1": "P",
+     "y1": 0,
+     "x2": "P",
+     "y2": 11,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "label",
+     "x": "P",
+     "y": 10.3,
+     "text": {
+      "en": "true P = {P}%",
+      "kn": "ನಿಜ P = {P}%"
+     },
+     "size": 24,
+     "color": "green"
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "visibleIf": "i < k",
+     "x": "clamp(P + 10*bias + 100*sqrt(P/100*(1 - P/100)/n)*sqrt(-2*ln(1 - rand(i)))*cos(2*pi*rand(i + 500)), 0, 100)",
+     "y": "0.8 + 0.22*i",
+     "r": 0.9,
+     "color": "yellow",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "k > 0",
+     "x": "last",
+     "y": "0.58 + 0.22*k",
+     "r": 1.5,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "bias",
+     "x": 50,
+     "y": 9.2,
+     "text": {
+      "en": "every estimate is pushed up by the biased question",
+      "kn": "ಪಕ್ಷಪಾತದ ಪ್ರಶ್ನೆಯಿಂದ ಎಲ್ಲಾ ಅಂದಾಜುಗಳು ಏರಿವೆ"
+     },
+     "size": 22,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Latest estimate",
+      "kn": "ಇತ್ತೀಚಿನ ಅಂದಾಜು"
+     },
+     "expr": "last",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Sampling error of latest",
+      "kn": "ಇತ್ತೀಚಿನ ದೋಷ"
+     },
+     "expr": "last - P",
+     "digits": 1,
+     "unit": "points"
+    },
+    {
+     "label": {
+      "en": "Typical sampling error (1 s.e.)",
+      "kn": "ಸಾಮಾನ್ಯ ಮಾದರಿ ದೋಷ"
+     },
+     "expr": "se",
+     "digits": 1,
+     "unit": "points"
+    },
+    {
+     "label": {
+      "en": "Samples drawn",
+      "kn": "ತೆಗೆದ ಮಾದರಿಗಳು"
+     },
+     "expr": "k",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With n = 40, draw 10 samples. How far from the true 40% do they fall?",
+     "kn": "n = 40 ಇಟ್ಟು 10 ಮಾದರಿ ತೆಗೆಯಿರಿ. ನಿಜ 40% ರಿಂದ ಎಷ್ಟು ದೂರ ಬೀಳುತ್ತವೆ?"
+    },
+    {
+     "en": "Now raise the sample size to 1000. What happens to the spread of the dots?",
+     "kn": "ಮಾದರಿ ಗಾತ್ರವನ್ನು 1000ಕ್ಕೆ ಏರಿಸಿ. ಚುಕ್ಕೆಗಳ ಹರಡುವಿಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Switch on the biased question. Does a bigger sample remove this error?",
+     "kn": "ಪಕ್ಷಪಾತದ ಪ್ರಶ್ನೆ ಆನ್ ಮಾಡಿ. ದೊಡ್ಡ ಮಾದರಿ ಈ ದೋಷವನ್ನು ತೆಗೆಯುತ್ತದೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -299,6 +299,241 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The consumption function",
+    "kn": "ಉಪಭೋಗ ಫಲನ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "C = C̄ + cY. Drag the yellow ring to set autonomous consumption C̄ and move the MPC c. Where the C line crosses the 45° line, C = Y and saving is zero (break-even income). Below it households dissave; above it they save.",
+    "kn": "C = C̄ + cY. ಹಳದಿ ಉಂಗುರ ಎಳೆದು ಸ್ವಾಯತ್ತ ಉಪಭೋಗ C̄ ಹೊಂದಿಸಿ, MPC c ಬದಲಿಸಿ. C ರೇಖೆ 45° ರೇಖೆಯನ್ನು ದಾಟುವಲ್ಲಿ C = Y, ಉಳಿತಾಯ ಶೂನ್ಯ."
+   },
+   "sliders": [
+    {
+     "name": "c",
+     "label": {
+      "en": "MPC c",
+      "kn": "MPC c"
+     },
+     "min": 0.5,
+     "max": 0.95,
+     "step": 0.05,
+     "value": 0.8
+    },
+    {
+     "name": "Y",
+     "label": {
+      "en": "Income Y",
+      "kn": "ಆದಾಯ Y"
+     },
+     "min": 0,
+     "max": 400,
+     "step": 10,
+     "value": 300,
+     "unit": "₹ crore"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sv",
+     "label": {
+      "en": "Show the saving line",
+      "kn": "ಉಳಿತಾಯ ರೇಖೆ ತೋರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "A",
+     "label": "C̄",
+     "x": 0,
+     "y": 40,
+     "axis": "y",
+     "box": {
+      "x": [
+       0,
+       400
+      ],
+      "y": [
+       10,
+       100
+      ]
+     },
+     "snap": 5,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "Cb",
+     "expr": "A_y"
+    },
+    {
+     "name": "C",
+     "expr": "Cb + c*Y"
+    },
+    {
+     "name": "S",
+     "expr": "Y - C"
+    },
+    {
+     "name": "Yb",
+     "expr": "Cb/(1 - c)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     400
+    ],
+    "y": [
+     -100,
+     400
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "income Y (₹ crore)",
+    "yLabel": "C, S (₹ crore)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "x",
+     "color": "white",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "Cb + c*x",
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "visibleIf": "sv",
+     "fn": "-Cb + (1 - c)*x",
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "Y",
+     "y1": "C",
+     "x2": "Y",
+     "y2": "Y",
+     "color": {
+      "by": "step(0, S)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "width": 6
+    },
+    {
+     "shape": "circle",
+     "x": "Y",
+     "y": "C",
+     "r": 5,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "Yb <= 400",
+     "x": "Yb",
+     "y": "Yb",
+     "r": 6,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "Yb <= 400",
+     "x": "clamp(Yb, 60, 340)",
+     "y": "Yb + 30",
+     "text": {
+      "en": "break-even Y = {Yb:0}"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 380,
+     "y": 360,
+     "text": {
+      "en": "45°"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 370,
+     "y": 250,
+     "text": {
+      "en": "C"
+     },
+     "size": 24,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Consumption C",
+      "kn": "ಉಪಭೋಗ C"
+     },
+     "expr": "C",
+     "digits": 0,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "Saving S",
+      "kn": "ಉಳಿತಾಯ S"
+     },
+     "expr": "S",
+     "digits": 0,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "APC = C/Y",
+      "kn": "APC = C/Y"
+     },
+     "expr": "if(Y > 0, C/Y, 0)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "MPS = 1 − c",
+      "kn": "MPS = 1 − c"
+     },
+     "expr": "1 - c",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set Y to 0. How much do households consume, and where does it come from?",
+     "kn": "Y = 0 ಇಡಿ. ಕುಟುಂಬಗಳು ಎಷ್ಟು ಉಪಭೋಗಿಸುತ್ತವೆ? ಎಲ್ಲಿಂದ?"
+    },
+    {
+     "en": "Raise the MPC. Does the break-even income rise or fall?",
+     "kn": "MPC ಏರಿಸಿ. ಸಮತೋಲ ಆದಾಯ ಏರುತ್ತದೆಯೇ ಇಳಿಯುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Compare APC at Y = 100 and Y = 400. Why does APC fall as income rises?",
+     "kn": "Y = 100 ಮತ್ತು 400 ನಲ್ಲಿ APC ಹೋಲಿಸಿ. ಆದಾಯ ಏರಿದಂತೆ APC ಏಕೆ ಇಳಿಯುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

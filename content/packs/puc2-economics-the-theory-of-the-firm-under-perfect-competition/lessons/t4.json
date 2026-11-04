@@ -327,6 +327,209 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Shut-down point and the supply curve",
+    "kn": "ಸ್ಥಗಿತ ಬಿಂದು ಮತ್ತು ಪೂರೈಕೆ ವಕ್ರರೇಖೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Move the price. Above minimum AVC (₹6) the firm supplies where p = MC; below it, it shuts down and supplies nothing. So the short-run supply curve is the rising MC above the minimum of AVC. At minimum AC (₹15) the firm just breaks even.",
+    "kn": "ಬೆಲೆ ಬದಲಿಸಿ. ಕನಿಷ್ಠ AVC (₹6) ಮೇಲೆ ಸಂಸ್ಥೆ p = MC ಆಗುವಲ್ಲಿ ಪೂರೈಸುತ್ತದೆ; ಕೆಳಗೆ ಸ್ಥಗಿತಗೊಳ್ಳುತ್ತದೆ. ಕನಿಷ್ಠ AC (₹15) ನಲ್ಲಿ ಲಾಭ-ನಷ್ಟ ಇಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "p",
+     "label": {
+      "en": "Market price",
+      "kn": "ಮಾರುಕಟ್ಟೆ ಬೆಲೆ"
+     },
+     "min": 2,
+     "max": 40,
+     "step": 1,
+     "value": 10,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ac",
+     "label": {
+      "en": "Show AC and AVC",
+      "kn": "AC ಮತ್ತು AVC ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "on",
+     "expr": "p >= 6"
+    },
+    {
+     "name": "q",
+     "expr": "if(on, 2 + sqrt(max(12*p - 36, 0))/6, 0)"
+    },
+    {
+     "name": "prof",
+     "expr": "if(on, p*q - (q^3 - 6*q^2 + 15*q) - 32, -32)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     7
+    ],
+    "y": [
+     0,
+     45
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "output q",
+    "yLabel": "₹ per unit"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "ac",
+     "fn": "x^2 - 6*x + 15 + 32/x",
+     "from": 0.8,
+     "color": "blue",
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "visibleIf": "ac",
+     "fn": "x^2 - 6*x + 15",
+     "from": 0.2,
+     "color": "green",
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "3*x^2 - 12*x + 15",
+     "from": 0.2,
+     "to": 3,
+     "color": "orange",
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "fn": "3*x^2 - 12*x + 15",
+     "from": 3,
+     "color": "orange",
+     "width": 6
+    },
+    {
+     "shape": "line",
+     "x1": 0.03,
+     "y1": 0,
+     "x2": 0.03,
+     "y2": 6,
+     "color": "orange",
+     "width": 6
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "p",
+     "x2": 7,
+     "y2": "p",
+     "color": "yellow",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "q",
+     "y": "p",
+     "r": 0.15,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": 3,
+     "y": 6,
+     "r": 0.12,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 3.9,
+     "y": 4,
+     "text": {
+      "en": "shut-down point"
+     },
+     "size": 18,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "x": 4,
+     "y": 15,
+     "r": 0.12,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 5.1,
+     "y": 13.5,
+     "text": {
+      "en": "break-even point"
+     },
+     "size": 18,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 3.5,
+     "y": 43,
+     "text": {
+      "en": "supply {q:2} units"
+     },
+     "size": 22,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Quantity supplied",
+      "kn": "ಪೂರೈಕೆ ಪ್ರಮಾಣ"
+     },
+     "expr": "q",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Profit (TFC = ₹32)",
+      "kn": "ಲಾಭ"
+     },
+     "expr": "prof",
+     "digits": 1,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Lower the price from ₹10 to ₹5. What does the firm do, and what does it lose?",
+     "kn": "ಬೆಲೆಯನ್ನು ₹10 ರಿಂದ ₹5ಕ್ಕೆ ಇಳಿಸಿ. ಸಂಸ್ಥೆ ಏನು ಮಾಡುತ್ತದೆ? ನಷ್ಟ ಎಷ್ಟು?"
+    },
+    {
+     "en": "Between ₹6 and ₹15 the firm makes a loss but still produces. Why?",
+     "kn": "₹6 ಮತ್ತು ₹15 ನಡುವೆ ನಷ್ಟವಿದ್ದರೂ ಉತ್ಪಾದಿಸುತ್ತದೆ. ಏಕೆ?"
+    },
+    {
+     "en": "Trace the thick orange line: why is it the firm's supply curve?",
+     "kn": "ದಪ್ಪ ಕಿತ್ತಳೆ ರೇಖೆ ಸಂಸ್ಥೆಯ ಪೂರೈಕೆ ವಕ್ರರೇಖೆ ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -369,6 +369,192 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Direction and strength of correlation",
+    "kn": "ಸಹಸಂಬಂಧದ ದಿಕ್ಕು ಮತ್ತು ತೀವ್ರತೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Each dot is one pair of values (X, Y). Set the correlation r in the population and watch the cloud: rising for positive, falling for negative, a round blob for zero, and a straight line at plus or minus 1.",
+    "kn": "ಪ್ರತಿ ಚುಕ್ಕೆ ಒಂದು (X, Y) ಜೋಡಿ. r ಬದಲಿಸಿ ಮೋಡವನ್ನು ನೋಡಿ: ಧನಾತ್ಮಕವಾದರೆ ಏರುತ್ತದೆ, ಋಣಾತ್ಮಕವಾದರೆ ಇಳಿಯುತ್ತದೆ, ಶೂನ್ಯವಾದರೆ ದುಂಡು, ±1 ಆದರೆ ಸರಳರೇಖೆ."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Correlation r",
+      "kn": "ಸಹಸಂಬಂಧ r"
+     },
+     "min": -1,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.6
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fit",
+     "label": {
+      "en": "Show the trend line",
+      "kn": "ಪ್ರವೃತ್ತಿ ರೇಖೆ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 50
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New sample",
+      "kn": "ಹೊಸ ಮಾದರಿ"
+     },
+     "icon": "flip",
+     "set": {
+      "seed": "mod(seed + 1, 50)"
+     }
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     10
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "X",
+    "yLabel": "Y",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "visibleIf": "fit",
+     "x1": 0,
+     "y1": "5 - 5*r",
+     "x2": 10,
+     "y2": "5 + 5*r",
+     "color": "green",
+     "width": 3,
+     "dashed": true
+    },
+    {
+     "shape": "particles",
+     "count": 60,
+     "x": "clamp(5 + 1.5*sqrt(-2*ln(1 - rand(i + 400*seed)))*cos(2*pi*rand(i + 400*seed + 200)), 0.1, 9.9)",
+     "y": "clamp(5 + 1.5*(r*sqrt(-2*ln(1 - rand(i + 400*seed)))*cos(2*pi*rand(i + 400*seed + 200)) + sqrt(1 - r^2)*sqrt(-2*ln(1 - rand(i + 400*seed)))*sin(2*pi*rand(i + 400*seed + 200))), 0.1, 9.9)",
+     "r": 0.13,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "r >= 0.999",
+     "x": 5,
+     "y": 9.3,
+     "text": {
+      "en": "Perfect positive",
+      "kn": "ಪರಿಪೂರ್ಣ ಧನಾತ್ಮಕ"
+     },
+     "size": 26,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "r > 0.001 && r < 0.999",
+     "x": 5,
+     "y": 9.3,
+     "text": {
+      "en": "Positive: X and Y move together",
+      "kn": "ಧನಾತ್ಮಕ: X, Y ಒಟ್ಟಿಗೆ ಚಲಿಸುತ್ತವೆ"
+     },
+     "size": 26,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "abs(r) <= 0.001",
+     "x": 5,
+     "y": 9.3,
+     "text": {
+      "en": "No (linear) correlation",
+      "kn": "ಸಹಸಂಬಂಧ ಇಲ್ಲ"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "r < -0.001 && r > -0.999",
+     "x": 5,
+     "y": 9.3,
+     "text": {
+      "en": "Negative: one rises as the other falls",
+      "kn": "ಋಣಾತ್ಮಕ: ಒಂದು ಏರಿದರೆ ಇನ್ನೊಂದು ಇಳಿಯುತ್ತದೆ"
+     },
+     "size": 26,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "r <= -0.999",
+     "x": 5,
+     "y": 9.3,
+     "text": {
+      "en": "Perfect negative",
+      "kn": "ಪರಿಪೂರ್ಣ ಋಣಾತ್ಮಕ"
+     },
+     "size": 26,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "r",
+      "kn": "r"
+     },
+     "expr": "r",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Strength |r|",
+      "kn": "ತೀವ್ರತೆ |r|"
+     },
+     "expr": "abs(r)",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Slide r from +1 down to −1. When does the cloud look like a round blob?",
+     "kn": "r ಅನ್ನು +1 ರಿಂದ −1 ವರೆಗೆ ಸರಿಸಿ. ಮೋಡ ದುಂಡಾಗಿ ಕಾಣುವುದು ಯಾವಾಗ?"
+    },
+    {
+     "en": "Compare r = 0.3 and r = 0.9. Which cloud hugs the line more tightly?",
+     "kn": "r = 0.3 ಮತ್ತು r = 0.9 ಹೋಲಿಸಿ. ಯಾವ ಮೋಡ ರೇಖೆಗೆ ಹತ್ತಿರವಿದೆ?"
+    },
+    {
+     "en": "Ice-cream sales and drowning deaths have r near +0.8. Does one cause the other?",
+     "kn": "ಐಸ್‌ಕ್ರೀಮ್ ಮಾರಾಟ ಮತ್ತು ಮುಳುಗಿ ಸಾವುಗಳಲ್ಲಿ r ≈ +0.8. ಒಂದು ಇನ್ನೊಂದಕ್ಕೆ ಕಾರಣವೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

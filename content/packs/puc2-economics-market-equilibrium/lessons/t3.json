@@ -352,6 +352,242 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Demand and supply shift together",
+    "kn": "ಬೇಡಿಕೆ ಮತ್ತು ಪೂರೈಕೆ ಒಟ್ಟಿಗೆ ಸರಿದಾಗ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Shift both curves. When both rise, quantity surely rises but price may go either way; when demand rises and supply falls, price surely rises but quantity may go either way. Which way depends on the size of each shift.",
+    "kn": "ಎರಡೂ ವಕ್ರರೇಖೆಗಳನ್ನು ಸರಿಸಿ. ಎರಡೂ ಏರಿದರೆ ಪ್ರಮಾಣ ಖಚಿತವಾಗಿ ಏರುತ್ತದೆ, ಬೆಲೆ ಯಾವ ಕಡೆಯೂ ಹೋಗಬಹುದು. ದಿಕ್ಕು ಪ್ರತಿ ಸರಿಯುವಿಕೆಯ ಗಾತ್ರವನ್ನು ಅವಲಂಬಿಸಿದೆ."
+   },
+   "sliders": [
+    {
+     "name": "dD",
+     "label": {
+      "en": "Shift in demand",
+      "kn": "ಬೇಡಿಕೆ ಬದಲಾವಣೆ"
+     },
+     "min": -30,
+     "max": 30,
+     "step": 5,
+     "value": 20,
+     "unit": "units"
+    },
+    {
+     "name": "dS",
+     "label": {
+      "en": "Shift in supply",
+      "kn": "ಪೂರೈಕೆ ಬದಲಾವಣೆ"
+     },
+     "min": -30,
+     "max": 30,
+     "step": 5,
+     "value": 10,
+     "unit": "units"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "old",
+     "label": {
+      "en": "Show the original curves",
+      "kn": "ಮೂಲ ವಕ್ರರೇಖೆಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Both rise equally",
+      "kn": "ಎರಡೂ ಸಮವಾಗಿ ಏರಿಕೆ"
+     },
+     "icon": "flip",
+     "set": {
+      "dD": "20",
+      "dS": "20"
+     }
+    },
+    {
+     "label": {
+      "en": "Demand up, supply down",
+      "kn": "ಬೇಡಿಕೆ ಏರಿಕೆ, ಪೂರೈಕೆ ಇಳಿಕೆ"
+     },
+     "icon": "flip",
+     "set": {
+      "dD": "20",
+      "dS": "-20"
+     }
+    },
+    {
+     "label": {
+      "en": "Back to start",
+      "kn": "ಆರಂಭಕ್ಕೆ"
+     },
+     "icon": "reset",
+     "set": {
+      "dD": "0",
+      "dS": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "pe",
+     "expr": "(120 + dD - dS)/10"
+    },
+    {
+     "name": "qe",
+     "expr": "40 + (dD + dS)/2"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     120
+    ],
+    "y": [
+     0,
+     25
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "quantity",
+    "yLabel": "price (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "old",
+     "fn": "(100 - x)/5",
+     "color": "blue",
+     "dashed": true,
+     "opacity": 0.4,
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "visibleIf": "old",
+     "fn": "(x + 20)/5",
+     "color": "green",
+     "dashed": true,
+     "opacity": 0.4,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "old",
+     "x": 40,
+     "y": 12,
+     "r": 1,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "path",
+     "fn": "(100 + dD - x)/5",
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "(x + 20 - dS)/5",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "qe",
+     "y1": 0,
+     "x2": "qe",
+     "y2": "pe",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "pe",
+     "x2": "qe",
+     "y2": "pe",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "qe",
+     "y": "pe",
+     "r": 1.3,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 60,
+     "y": 23.5,
+     "text": {
+      "en": "Δp = ₹{pe - 12:1}    Δq = {qe - 40:0}"
+     },
+     "size": 22,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Equilibrium price",
+      "kn": "ಸಮತೋಲನ ಬೆಲೆ"
+     },
+     "expr": "pe",
+     "digits": 1,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Change in price",
+      "kn": "ಬೆಲೆ ಬದಲಾವಣೆ"
+     },
+     "expr": "pe - 12",
+     "digits": 1,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Equilibrium quantity",
+      "kn": "ಸಮತೋಲನ ಪ್ರಮಾಣ"
+     },
+     "expr": "qe",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Change in quantity",
+      "kn": "ಪ್ರಮಾಣ ಬದಲಾವಣೆ"
+     },
+     "expr": "qe - 40",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Press 'Both rise equally'. What happens to price and quantity?",
+     "kn": "'ಎರಡೂ ಸಮವಾಗಿ ಏರಿಕೆ' ಒತ್ತಿ. ಬೆಲೆ, ಪ್ರಮಾಣ ಏನಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Keep both rising but make supply rise more than demand. Which way does price move now?",
+     "kn": "ಎರಡೂ ಏರಲಿ, ಆದರೆ ಪೂರೈಕೆ ಹೆಚ್ಚು. ಬೆಲೆ ಯಾವ ಕಡೆ?"
+    },
+    {
+     "en": "Demand up and supply down: can quantity rise, fall or stay the same?",
+     "kn": "ಬೇಡಿಕೆ ಏರಿಕೆ, ಪೂರೈಕೆ ಇಳಿಕೆ: ಪ್ರಮಾಣ ಏರಬಹುದೇ, ಇಳಿಯಬಹುದೇ, ಅದೇ ಉಳಿಯಬಹುದೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

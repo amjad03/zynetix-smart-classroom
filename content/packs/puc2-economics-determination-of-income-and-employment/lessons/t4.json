@@ -485,6 +485,356 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The multiplier, round by round",
+    "kn": "ಗುಣಕ: ಸುತ್ತು ಸುತ್ತಾಗಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Investment rises by ΔI. In round 1 income rises by ΔI; people spend the fraction c of it, so round 2 adds cΔI, round 3 adds c²ΔI, and so on. Press Next round and watch the total climb towards ΔI/(1 − c).",
+    "kn": "ಹೂಡಿಕೆ ΔI ಏರುತ್ತದೆ. 1ನೇ ಸುತ್ತಿನಲ್ಲಿ ಆದಾಯ ΔI ಏರುತ್ತದೆ; ಅದರ c ಭಾಗ ಖರ್ಚಾಗಿ 2ನೇ ಸುತ್ತಿನಲ್ಲಿ cΔI, 3ನೇಯಲ್ಲಿ c²ΔI... ಮುಂದಿನ ಸುತ್ತು ಒತ್ತಿ ಒಟ್ಟು ΔI/(1 − c) ಕಡೆಗೆ ಏರುವುದನ್ನು ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "dI",
+     "label": {
+      "en": "Rise in investment ΔI",
+      "kn": "ಹೂಡಿಕೆ ಏರಿಕೆ ΔI"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 10,
+     "value": 100,
+     "unit": "₹ crore"
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "MPC c",
+      "kn": "MPC c"
+     },
+     "min": 0.5,
+     "max": 0.8,
+     "step": 0.05,
+     "value": 0.8
+    }
+   ],
+   "counters": [
+    {
+     "name": "n",
+     "value": 0,
+     "min": 0,
+     "max": 14
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Next round",
+      "kn": "ಮುಂದಿನ ಸುತ್ತು"
+     },
+     "icon": "next",
+     "set": {
+      "n": "n + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "All rounds",
+      "kn": "ಎಲ್ಲಾ ಸುತ್ತು"
+     },
+     "icon": "play",
+     "set": {
+      "n": "14"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "n": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "tot",
+     "expr": "dI*(1 - c^n)/(1 - c)"
+    },
+    {
+     "name": "fin",
+     "expr": "dI/(1 - c)"
+    },
+    {
+     "name": "last",
+     "expr": "if(n > 0, dI*c^(n - 1), 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     540
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "round",
+    "yLabel": "₹ crore"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "visibleIf": "n > 0",
+     "x": 0.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "dI*c^0",
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 1",
+     "x": 1.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "dI*c^1",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 2",
+     "x": 2.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "dI*c^2",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 3",
+     "x": 3.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "dI*c^3",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 4",
+     "x": 4.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "dI*c^4",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 5",
+     "x": 5.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "dI*c^5",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 6",
+     "x": 6.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "dI*c^6",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 7",
+     "x": 7.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "dI*c^7",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 8",
+     "x": 8.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "dI*c^8",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 9",
+     "x": 9.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "dI*c^9",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 10",
+     "x": 10.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "dI*c^10",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 11",
+     "x": 11.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "dI*c^11",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 12",
+     "x": 12.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "dI*c^12",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 13",
+     "x": 13.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "dI*c^13",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 16.5,
+     "y": 0,
+     "w": 2,
+     "h": "tot",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "line",
+     "x1": 16,
+     "y1": "fin",
+     "x2": 19,
+     "y2": "fin",
+     "color": "yellow",
+     "width": 3,
+     "dashed": true
+    },
+    {
+     "shape": "label",
+     "x": 17.5,
+     "y": "fin + 20",
+     "text": {
+      "en": "final {fin:0}"
+     },
+     "size": 20,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "n > 0",
+     "x": 17.5,
+     "y": "tot/2",
+     "text": {
+      "en": "{tot:0}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "label",
+     "visibleIf": "n > 0",
+     "x": 8,
+     "y": 500,
+     "text": {
+      "en": "round {n}: +{last:1}"
+     },
+     "size": 24,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Rounds",
+      "kn": "ಸುತ್ತುಗಳು"
+     },
+     "expr": "n",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Added this round",
+      "kn": "ಈ ಸುತ್ತಿನ ಏರಿಕೆ"
+     },
+     "expr": "last",
+     "digits": 1,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "Total rise in income so far",
+      "kn": "ಇದುವರೆಗಿನ ಒಟ್ಟು ಏರಿಕೆ"
+     },
+     "expr": "tot",
+     "digits": 1,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "Multiplier k = 1/(1 − c)",
+      "kn": "ಗುಣಕ k"
+     },
+     "expr": "1/(1 - c)",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With c = 0.8 and ΔI = 100, how many rounds until the total passes 400?",
+     "kn": "c = 0.8, ΔI = 100: ಒಟ್ಟು 400 ದಾಟಲು ಎಷ್ಟು ಸುತ್ತು?"
+    },
+    {
+     "en": "Lower c to 0.5. What is the final rise in income now?",
+     "kn": "c ಅನ್ನು 0.5ಕ್ಕೆ ಇಳಿಸಿ. ಅಂತಿಮ ಏರಿಕೆ ಎಷ್ಟು?"
+    },
+    {
+     "en": "Why does each round get smaller? Where does the rest of the income go?",
+     "kn": "ಪ್ರತಿ ಸುತ್ತು ಏಕೆ ಚಿಕ್ಕದಾಗುತ್ತದೆ? ಉಳಿದ ಆದಾಯ ಎಲ್ಲಿಗೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

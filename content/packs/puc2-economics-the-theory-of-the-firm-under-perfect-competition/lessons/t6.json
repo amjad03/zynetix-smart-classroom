@@ -230,6 +230,200 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Price elasticity along a supply line",
+    "kn": "ಪೂರೈಕೆ ರೇಖೆಯ ಬೆಲೆ ಸ್ಥಿತಿಸ್ಥಾಪಕತೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A straight supply line q = 2(p − a). If it starts on the price axis (a > 0), supply is elastic (eS > 1); through the origin (a = 0), eS = 1 everywhere; from the quantity axis (a < 0), it is inelastic (eS < 1). Move a and the price and read eS = (Δq/Δp) × (p/q).",
+    "kn": "ಸರಳ ಪೂರೈಕೆ ರೇಖೆ q = 2(p − a). ಬೆಲೆ ಅಕ್ಷದಿಂದ ಆರಂಭವಾದರೆ ಸ್ಥಿತಿಸ್ಥಾಪಕ (eS > 1); ಮೂಲದ ಮೂಲಕ eS = 1; ಪ್ರಮಾಣ ಅಕ್ಷದಿಂದ ಅಸ್ಥಿತಿಸ್ಥಾಪಕ (eS < 1)."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Where the line meets the axes (a)",
+      "kn": "ರೇಖೆ ಅಕ್ಷ ಸಂಧಿಸುವ ಸ್ಥಳ (a)"
+     },
+     "min": -20,
+     "max": 20,
+     "step": 2,
+     "value": 10,
+     "unit": "₹"
+    },
+    {
+     "name": "p",
+     "label": {
+      "en": "Price",
+      "kn": "ಬೆಲೆ"
+     },
+     "min": 25,
+     "max": 50,
+     "step": 1,
+     "value": 30,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "orig",
+     "label": {
+      "en": "Show the line through the origin",
+      "kn": "ಮೂಲದ ಮೂಲಕ ರೇಖೆ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "q",
+     "expr": "2*(p - a)"
+    },
+    {
+     "name": "es",
+     "expr": "p/(p - a)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     150
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "quantity supplied",
+    "yLabel": "price (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "orig",
+     "fn": "x/2",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "a + x/2",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "q",
+     "y1": 0,
+     "x2": "q",
+     "y2": "p",
+     "color": "yellow",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "p",
+     "x2": "q",
+     "y2": "p",
+     "color": "yellow",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "q",
+     "y": "p",
+     "r": 1.8,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": "clamp(q + 20, 30, 130)",
+     "y": "p + 3",
+     "text": {
+      "en": "eS = {es:2}"
+     },
+     "size": 24,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "a > 0",
+     "x": 75,
+     "y": 57,
+     "text": {
+      "en": "meets the price axis: elastic"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "a == 0",
+     "x": 75,
+     "y": 57,
+     "text": {
+      "en": "through the origin: unit elastic"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "a < 0",
+     "x": 75,
+     "y": 57,
+     "text": {
+      "en": "meets the quantity axis: inelastic"
+     },
+     "size": 20,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Quantity supplied",
+      "kn": "ಪೂರೈಕೆ ಪ್ರಮಾಣ"
+     },
+     "expr": "q",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Elasticity of supply eS",
+      "kn": "ಪೂರೈಕೆ ಸ್ಥಿತಿಸ್ಥಾಪಕತೆ eS"
+     },
+     "expr": "es",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set a = 0. Does eS change as you move the price?",
+     "kn": "a = 0 ಇಡಿ. ಬೆಲೆ ಬದಲಿಸಿದರೆ eS ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "With a = 10, raise the price. Does supply become more or less elastic?",
+     "kn": "a = 10 ಇಟ್ಟು ಬೆಲೆ ಏರಿಸಿ. ಹೆಚ್ಚು ಅಥವಾ ಕಡಿಮೆ ಸ್ಥಿತಿಸ್ಥಾಪಕ?"
+    },
+    {
+     "en": "Which kind of good might have a supply line starting on the quantity axis?",
+     "kn": "ಪ್ರಮಾಣ ಅಕ್ಷದಿಂದ ಆರಂಭವಾಗುವ ರೇಖೆ ಯಾವ ಸರಕಿಗೆ ಇರಬಹುದು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

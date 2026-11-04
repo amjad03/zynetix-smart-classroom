@@ -222,6 +222,265 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Long-run average cost",
+    "kn": "ದೀರ್ಘಾವಧಿ ಸರಾಸರಿ ವೆಚ್ಚ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "In the long run the firm can choose its plant size. Each thin curve is the short-run AC of one plant; the LRAC is the lowest cost of producing each output with the best plant. LRAC falls with economies of scale, then rises with diseconomies. LRMC cuts LRAC at its minimum.",
+    "kn": "ದೀರ್ಘಾವಧಿಯಲ್ಲಿ ಸಂಸ್ಥೆ ಘಟಕದ ಗಾತ್ರ ಆರಿಸಬಹುದು. ತೆಳು ವಕ್ರರೇಖೆಗಳು ಪ್ರತಿ ಘಟಕದ ಅಲ್ಪಾವಧಿ AC; LRAC ಪ್ರತಿ ಉತ್ಪಾದನೆಗೆ ಉತ್ತಮ ಘಟಕದ ಕನಿಷ್ಠ ವೆಚ್ಚ. LRMC, LRAC ಯನ್ನು ಅದರ ಕನಿಷ್ಠದಲ್ಲಿ ಛೇದಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "q",
+     "label": {
+      "en": "Output q",
+      "kn": "ಉತ್ಪಾದನೆ q"
+     },
+     "min": 1,
+     "max": 11,
+     "step": 0.25,
+     "value": 4
+    }
+   ],
+   "toggles": [
+    {
+     "name": "mc",
+     "label": {
+      "en": "Show LRMC",
+      "kn": "LRMC ತೋರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "pl",
+     "label": {
+      "en": "Plant size",
+      "kn": "ಘಟಕದ ಗಾತ್ರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Small",
+        "kn": "ಸಣ್ಣ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Medium",
+        "kn": "ಮಧ್ಯಮ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Large",
+        "kn": "ದೊಡ್ಡ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "lr",
+     "expr": "5 + (q - 6)^2/4"
+    },
+    {
+     "name": "lmc",
+     "expr": "5 + (q - 6)^2/4 + q*(q - 6)/2"
+    },
+    {
+     "name": "s1",
+     "expr": "7.25 + -1.5*(q - 3) + 0.6*(q - 3)^2"
+    },
+    {
+     "name": "s2",
+     "expr": "5.0 + 0.0*(q - 6) + 0.6*(q - 6)^2"
+    },
+    {
+     "name": "s3",
+     "expr": "7.25 + 1.5*(q - 9) + 0.6*(q - 9)^2"
+    },
+    {
+     "name": "sp",
+     "expr": "if(pl == 1, s1, if(pl == 2, s2, s3))"
+    },
+    {
+     "name": "best",
+     "expr": "if(s1 <= s2 && s1 <= s3, 1, if(s2 <= s3, 2, 3))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     0,
+     15
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "output q",
+    "yLabel": "cost per unit (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "7.25 + -1.5*(x - 3) + 0.6*(x - 3)^2",
+     "color": {
+      "by": "pl == 1",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "opacity": "if(pl == 1, 1, 0.4)",
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "5.0 + 0.0*(x - 6) + 0.6*(x - 6)^2",
+     "color": {
+      "by": "pl == 2",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "opacity": "if(pl == 2, 1, 0.4)",
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "7.25 + 1.5*(x - 9) + 0.6*(x - 9)^2",
+     "color": {
+      "by": "pl == 3",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "opacity": "if(pl == 3, 1, 0.4)",
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "5 + (x - 6)^2/4",
+     "from": 0.5,
+     "to": 11.5,
+     "color": "blue",
+     "width": 5
+    },
+    {
+     "shape": "path",
+     "visibleIf": "mc",
+     "fn": "5 + (x - 6)^2/4 + x*(x - 6)/2",
+     "from": 1,
+     "to": 9,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "q",
+     "y1": 0,
+     "x2": "q",
+     "y2": "min(sp, 15)",
+     "color": "white",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "q",
+     "y": "lr",
+     "r": 0.15,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "sp <= 15",
+     "x": "q",
+     "y": "sp",
+     "r": 0.15,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 12.5,
+     "text": {
+      "en": "LRAC"
+     },
+     "size": 20,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "LRAC",
+      "kn": "LRAC"
+     },
+     "expr": "lr",
+     "digits": 2,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "SAC of the chosen plant",
+      "kn": "ಆರಿಸಿದ ಘಟಕದ SAC"
+     },
+     "expr": "sp",
+     "digits": 2,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Cheapest plant for this output (1 small, 2 medium, 3 large)",
+      "kn": "ಈ ಉತ್ಪಾದನೆಗೆ ಅಗ್ಗದ ಘಟಕ"
+     },
+     "expr": "best",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "LRMC",
+      "kn": "LRMC"
+     },
+     "expr": "lmc",
+     "digits": 2,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At q = 3, which plant is cheapest? At q = 9?",
+     "kn": "q = 3 ನಲ್ಲಿ ಅಗ್ಗದ ಘಟಕ ಯಾವುದು? q = 9 ನಲ್ಲಿ?"
+    },
+    {
+     "en": "Where is LRAC lowest? Turn on LRMC and check that it passes through that point.",
+     "kn": "LRAC ಕನಿಷ್ಠ ಎಲ್ಲಿ? LRMC ಆನ್ ಮಾಡಿ ಅದು ಆ ಬಿಂದುವಿನ ಮೂಲಕ ಹಾದುಹೋಗುತ್ತದೆಯೇ ನೋಡಿ."
+    },
+    {
+     "en": "Why does each short-run curve touch the LRAC at only one point?",
+     "kn": "ಪ್ರತಿ ಅಲ್ಪಾವಧಿ ವಕ್ರರೇಖೆ LRAC ಯನ್ನು ಒಂದೇ ಬಿಂದುವಿನಲ್ಲಿ ಏಕೆ ಮುಟ್ಟುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -345,6 +345,257 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Equilibrium output and inventories",
+    "kn": "ಸಮತೋಲನ ಉತ್ಪಾದನೆ ಮತ್ತು ದಾಸ್ತಾನು"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "AD = C̄ + Ī + cY. Drag the output marker. If output is above AD, unsold goods pile up (unplanned inventories rise) and firms cut output; below AD, stocks run down and firms raise it. Press Play to watch output settle where AD meets the 45° line.",
+    "kn": "AD = C̄ + Ī + cY. ಉತ್ಪಾದನಾ ಗುರುತು ಎಳೆಯಿರಿ. ಉತ್ಪಾದನೆ AD ಗಿಂತ ಹೆಚ್ಚಿದ್ದರೆ ಮಾರಾಟವಾಗದ ಸರಕು ಸೇರುತ್ತದೆ, ಸಂಸ್ಥೆಗಳು ಉತ್ಪಾದನೆ ಕಡಿಮೆ ಮಾಡುತ್ತವೆ. Play ಒತ್ತಿ ಸಮತೋಲನ ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "Cb",
+     "label": {
+      "en": "Autonomous consumption C̄",
+      "kn": "ಸ್ವಾಯತ್ತ ಉಪಭೋಗ"
+     },
+     "min": 20,
+     "max": 80,
+     "step": 5,
+     "value": 40,
+     "unit": "₹ crore"
+    },
+    {
+     "name": "I",
+     "label": {
+      "en": "Planned investment Ī",
+      "kn": "ಯೋಜಿತ ಹೂಡಿಕೆ"
+     },
+     "min": 10,
+     "max": 80,
+     "step": 5,
+     "value": 60,
+     "unit": "₹ crore"
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "MPC c",
+      "kn": "MPC c"
+     },
+     "min": 0.5,
+     "max": 0.8,
+     "step": 0.05,
+     "value": 0.75
+    }
+   ],
+   "handles": [
+    {
+     "name": "Q",
+     "label": "output",
+     "x": 650,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       50,
+       780
+      ],
+      "y": [
+       0,
+       800
+      ]
+     },
+     "snap": 10,
+     "color": "yellow"
+    }
+   ],
+   "time": {
+    "max": 30,
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2
+   },
+   "vars": [
+    {
+     "name": "Ye",
+     "expr": "(Cb + I)/(1 - c)"
+    },
+    {
+     "name": "AD",
+     "expr": "Cb + I + c*Yt"
+    },
+    {
+     "name": "inv",
+     "expr": "Yt - AD"
+    }
+   ],
+   "state": [
+    {
+     "name": "Yt",
+     "init": "Q_x",
+     "rate": "0.4*(Cb + I + c*Yt - Yt)"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     0,
+     800
+    ],
+    "y": [
+     0,
+     800
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "output Y (₹ crore)",
+    "yLabel": "AD (₹ crore)",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "x",
+     "color": "white",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "Cb + I + c*x",
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "Yt",
+     "y1": 0,
+     "x2": "Yt",
+     "y2": "max(Yt, AD)",
+     "color": "yellow",
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": "Yt",
+     "y1": "AD",
+     "x2": "Yt",
+     "y2": "Yt",
+     "color": {
+      "by": "step(0, inv)",
+      "scale": [
+       "green",
+       "red"
+      ]
+     },
+     "width": 8
+    },
+    {
+     "shape": "circle",
+     "x": "Ye",
+     "y": "Ye",
+     "r": 10,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": "clamp(Ye, 120, 700)",
+     "y": "min(Ye + 50, 760)",
+     "text": {
+      "en": "E: Y* = {Ye:0}"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "inv > 1",
+     "x": 400,
+     "y": 770,
+     "text": {
+      "en": "unplanned inventories pile up: {inv:0}"
+     },
+     "size": 20,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "inv < -1",
+     "x": 400,
+     "y": 770,
+     "text": {
+      "en": "stocks run down: {-inv:0}"
+     },
+     "size": 20,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Output now",
+      "kn": "ಈಗಿನ ಉತ್ಪಾದನೆ"
+     },
+     "expr": "Yt",
+     "digits": 0,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "Aggregate demand",
+      "kn": "ಸಮಗ್ರ ಬೇಡಿಕೆ"
+     },
+     "expr": "AD",
+     "digits": 0,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "Unplanned inventory change",
+      "kn": "ಯೋಜಿತವಲ್ಲದ ದಾಸ್ತಾನು ಬದಲಾವಣೆ"
+     },
+     "expr": "inv",
+     "digits": 0,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "Equilibrium output",
+      "kn": "ಸಮತೋಲನ ಉತ್ಪಾದನೆ"
+     },
+     "expr": "Ye",
+     "digits": 0,
+     "unit": "₹ crore"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Put output at 650 and press Play. Which way does output move, and why?",
+     "kn": "ಉತ್ಪಾದನೆ 650 ಇಟ್ಟು Play ಒತ್ತಿ. ಯಾವ ಕಡೆ ಚಲಿಸುತ್ತದೆ? ಏಕೆ?"
+    },
+    {
+     "en": "At equilibrium, check that saving (Y − C) equals planned investment.",
+     "kn": "ಸಮತೋಲನದಲ್ಲಿ ಉಳಿತಾಯ (Y − C) = ಯೋಜಿತ ಹೂಡಿಕೆ ಎಂದು ಪರಿಶೀಲಿಸಿ."
+    },
+    {
+     "en": "Start output below equilibrium. What happens to inventories?",
+     "kn": "ಸಮತೋಲನಕ್ಕಿಂತ ಕೆಳಗೆ ಆರಂಭಿಸಿ. ದಾಸ್ತಾನು ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

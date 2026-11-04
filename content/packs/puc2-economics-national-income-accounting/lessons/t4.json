@@ -407,6 +407,246 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "From GDP to national income",
+    "kn": "GDP ಯಿಂದ ರಾಷ್ಟ್ರೀಯ ಆದಾಯಕ್ಕೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Start with GDP at market prices. Add net factor income from abroad to get GNP; subtract depreciation to get NNP; subtract net indirect taxes (indirect taxes − subsidies) to get NNP at factor cost, which is national income.",
+    "kn": "ಮಾರುಕಟ್ಟೆ ಬೆಲೆಯ GDP ಯಿಂದ ಆರಂಭ. NFIA ಸೇರಿಸಿ GNP; ಸವಕಳಿ ಕಳೆದು NNP; ನಿವ್ವಳ ಪರೋಕ್ಷ ತೆರಿಗೆ ಕಳೆದು ಅಂಶ ವೆಚ್ಚದ NNP = ರಾಷ್ಟ್ರೀಯ ಆದಾಯ."
+   },
+   "sliders": [
+    {
+     "name": "Y",
+     "label": {
+      "en": "GDP at market prices",
+      "kn": "ಮಾರುಕಟ್ಟೆ ಬೆಲೆಯ GDP"
+     },
+     "min": 200,
+     "max": 500,
+     "step": 10,
+     "value": 300,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "name": "nf",
+     "label": {
+      "en": "Net factor income from abroad",
+      "kn": "ವಿದೇಶದಿಂದ ನಿವ್ವಳ ಅಂಶ ಆದಾಯ"
+     },
+     "min": -20,
+     "max": 20,
+     "step": 1,
+     "value": -5,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "name": "dp",
+     "label": {
+      "en": "Depreciation",
+      "kn": "ಸವಕಳಿ"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 2,
+     "value": 36,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "name": "nit",
+     "label": {
+      "en": "Net indirect taxes",
+      "kn": "ನಿವ್ವಳ ಪರೋಕ್ಷ ತೆರಿಗೆ"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 2,
+     "value": 30,
+     "unit": "₹ lakh crore"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "dom",
+     "label": {
+      "en": "Also show NDP at factor cost (domestic income)",
+      "kn": "ಅಂಶ ವೆಚ್ಚದ NDP ತೋರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "gnp",
+     "expr": "Y + nf"
+    },
+    {
+     "name": "nnp",
+     "expr": "gnp - dp"
+    },
+    {
+     "name": "ni",
+     "expr": "nnp - nit"
+    },
+    {
+     "name": "ndpfc",
+     "expr": "Y - dp - nit"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     0,
+     560
+    ],
+    "axes": true,
+    "grid": true,
+    "yLabel": "₹ lakh crore"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 0,
+     "w": 2,
+     "h": "Y",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": "Y + 20",
+     "text": {
+      "en": "GDPmp {Y}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 3.3,
+     "y": 0,
+     "w": 2,
+     "h": "gnp",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 4.3,
+     "y": "gnp + 20",
+     "text": {
+      "en": "GNPmp {gnp}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 6.1,
+     "y": 0,
+     "w": 2,
+     "h": "nnp",
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 7.1,
+     "y": "nnp + 20",
+     "text": {
+      "en": "NNPmp {nnp}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 8.9,
+     "y": 0,
+     "w": 2,
+     "h": "ni",
+     "color": "yellow",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 9.9,
+     "y": "ni + 20",
+     "text": {
+      "en": "NNPfc {ni}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "dom",
+     "x": 8.9,
+     "y": 0,
+     "w": 2,
+     "h": "ndpfc",
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "visibleIf": "dom",
+     "x": 9.9,
+     "y": "ndpfc - 25",
+     "text": {
+      "en": "NDPfc {ndpfc}"
+     },
+     "size": 16
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "GNP at market prices",
+      "kn": "GNPmp"
+     },
+     "expr": "gnp",
+     "digits": 0,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "label": {
+      "en": "NNP at market prices",
+      "kn": "NNPmp"
+     },
+     "expr": "nnp",
+     "digits": 0,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "label": {
+      "en": "National income (NNP at factor cost)",
+      "kn": "ರಾಷ್ಟ್ರೀಯ ಆದಾಯ"
+     },
+     "expr": "ni",
+     "digits": 0,
+     "unit": "₹ lakh crore"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make net factor income from abroad negative. Is GNP more or less than GDP?",
+     "kn": "NFIA ಋಣ ಮಾಡಿ. GNP, GDP ಗಿಂತ ಹೆಚ್ಚೋ ಕಡಿಮೆಯೋ?"
+    },
+    {
+     "en": "Set net indirect taxes to zero. When do NNP at market prices and at factor cost agree?",
+     "kn": "ನಿವ್ವಳ ಪರೋಕ್ಷ ತೆರಿಗೆ ಶೂನ್ಯ ಮಾಡಿ. NNPmp ಮತ್ತು NNPfc ಯಾವಾಗ ಸಮ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

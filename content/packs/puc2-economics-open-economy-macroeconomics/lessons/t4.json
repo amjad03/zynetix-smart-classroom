@@ -306,6 +306,250 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The market for dollars",
+    "kn": "ಡಾಲರ್ ಮಾರುಕಟ್ಟೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The exchange rate is the rupee price of a dollar. Demand for dollars comes from imports and investment abroad; supply comes from exports and foreign investment in India. Drag the yellow ring to shift demand and the green ring to shift supply. A higher rate means the rupee has depreciated.",
+    "kn": "ವಿನಿಮಯ ದರ = ಒಂದು ಡಾಲರಿನ ರೂಪಾಯಿ ಬೆಲೆ. ಆಮದು ಡಾಲರ್ ಬೇಡಿಕೆ ಸೃಷ್ಟಿಸುತ್ತದೆ; ರಫ್ತು ಮತ್ತು ವಿದೇಶಿ ಹೂಡಿಕೆ ಪೂರೈಕೆ. ಹಳದಿ ಉಂಗುರ ಬೇಡಿಕೆ, ಹಸಿರು ಉಂಗುರ ಪೂರೈಕೆ ಸರಿಸುತ್ತದೆ. ದರ ಏರಿದರೆ ರೂಪಾಯಿ ಅಪಮೌಲ್ಯ."
+   },
+   "sliders": [
+    {
+     "name": "pd",
+     "label": {
+      "en": "Price of an imported gadget",
+      "kn": "ಆಮದು ಉಪಕರಣದ ಬೆಲೆ"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "$"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "old",
+     "label": {
+      "en": "Show the original curves",
+      "kn": "ಮೂಲ ವಕ್ರರೇಖೆಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "D",
+     "label": "demand",
+     "x": 60,
+     "y": 96,
+     "axis": "x",
+     "box": {
+      "x": [
+       10,
+       110
+      ],
+      "y": [
+       50,
+       110
+      ]
+     },
+     "snap": 5,
+     "color": "yellow"
+    },
+    {
+     "name": "Sp",
+     "label": "supply",
+     "x": 140,
+     "y": 96,
+     "axis": "x",
+     "box": {
+      "x": [
+       90,
+       190
+      ],
+      "y": [
+       50,
+       110
+      ]
+     },
+     "snap": 5,
+     "color": "green"
+    }
+   ],
+   "vars": [
+    {
+     "name": "dD",
+     "expr": "D_x - 60"
+    },
+    {
+     "name": "dS",
+     "expr": "Sp_x - 140"
+    },
+    {
+     "name": "er",
+     "expr": "80 + (dD - dS)/5"
+    },
+    {
+     "name": "q",
+     "expr": "100 + (dD + dS)/2"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     200
+    ],
+    "y": [
+     50,
+     110
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "dollars traded ($ billion)",
+    "yLabel": "₹ per $"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "old",
+     "fn": "80 - (x - 100)/2.5",
+     "color": "blue",
+     "dashed": true,
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "visibleIf": "old",
+     "fn": "80 + (x - 100)/2.5",
+     "color": "green",
+     "dashed": true,
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "80 - (x - 100 - dD)/2.5",
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "80 + (x - 100 - dS)/2.5",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "er",
+     "x2": "q",
+     "y2": "er",
+     "dashed": true,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "q",
+     "y": "er",
+     "r": 2.5,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": "clamp(q + 30, 40, 170)",
+     "y": "er + 3",
+     "text": {
+      "en": "₹{er:1} per $"
+     },
+     "size": 22,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "er > 80.01",
+     "x": 100,
+     "y": 106,
+     "text": {
+      "en": "rupee depreciated"
+     },
+     "size": 22,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "er < 79.99",
+     "x": 100,
+     "y": 106,
+     "text": {
+      "en": "rupee appreciated"
+     },
+     "size": 22,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Exchange rate",
+      "kn": "ವಿನಿಮಯ ದರ"
+     },
+     "expr": "er",
+     "digits": 1,
+     "unit": "₹/$"
+    },
+    {
+     "label": {
+      "en": "Dollars traded",
+      "kn": "ವಹಿವಾಟಾದ ಡಾಲರ್"
+     },
+     "expr": "q",
+     "digits": 0,
+     "unit": "$ bn"
+    },
+    {
+     "label": {
+      "en": "Rupee price of the gadget",
+      "kn": "ಉಪಕರಣದ ರೂಪಾಯಿ ಬೆಲೆ"
+     },
+     "expr": "pd*er",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Change in the rupee's value",
+      "kn": "₹ ಮೌಲ್ಯ ಬದಲಾವಣೆ"
+     },
+     "expr": "100*(80/er - 1)",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Indians import more (shift demand right). What happens to the rate and to the gadget's rupee price?",
+     "kn": "ಭಾರತೀಯರು ಹೆಚ್ಚು ಆಮದು ಮಾಡುತ್ತಾರೆ (ಬೇಡಿಕೆ ಬಲಕ್ಕೆ). ದರ ಮತ್ತು ಉಪಕರಣದ ಬೆಲೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Foreign investors pour money into India (shift supply right). Does the rupee appreciate?",
+     "kn": "ವಿದೇಶಿ ಹೂಡಿಕೆ ಹರಿದು ಬರುತ್ತದೆ (ಪೂರೈಕೆ ಬಲಕ್ಕೆ). ರೂಪಾಯಿ ಮೌಲ್ಯ ಏರುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Shift both curves right by the same amount. What changes, and what does not?",
+     "kn": "ಎರಡೂ ವಕ್ರರೇಖೆಗಳನ್ನು ಸಮವಾಗಿ ಬಲಕ್ಕೆ ಸರಿಸಿ. ಏನು ಬದಲಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

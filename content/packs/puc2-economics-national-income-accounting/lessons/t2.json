@@ -310,6 +310,286 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Value added and double counting",
+    "kn": "ಮೌಲ್ಯವರ್ಧನೆ ಮತ್ತು ಎರಡು ಬಾರಿ ಎಣಿಕೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A farmer grows wheat, a miller makes flour, a baker makes bread. Set the value each adds. GDP is the sum of value added, which equals the value of the final good, bread. Adding up every sale counts the wheat three times.",
+    "kn": "ರೈತ ಗೋಧಿ, ಗಿರಣಿ ಹಿಟ್ಟು, ಬೇಕರಿ ಬ್ರೆಡ್. ಪ್ರತಿಯೊಬ್ಬರ ಮೌಲ್ಯವರ್ಧನೆ ಹೊಂದಿಸಿ. GDP = ಮೌಲ್ಯವರ್ಧನೆಗಳ ಮೊತ್ತ = ಬ್ರೆಡ್‌ನ ಮೌಲ್ಯ. ಎಲ್ಲಾ ಮಾರಾಟ ಕೂಡಿಸಿದರೆ ಗೋಧಿ ಮೂರು ಬಾರಿ ಎಣಿಕೆಯಾಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "v1",
+     "label": {
+      "en": "Farmer's value added (wheat)",
+      "kn": "ರೈತನ ಮೌಲ್ಯವರ್ಧನೆ"
+     },
+     "min": 20,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "₹"
+    },
+    {
+     "name": "v2",
+     "label": {
+      "en": "Miller's value added",
+      "kn": "ಗಿರಣಿಯ ಮೌಲ್ಯವರ್ಧನೆ"
+     },
+     "min": 10,
+     "max": 60,
+     "step": 5,
+     "value": 20,
+     "unit": "₹"
+    },
+    {
+     "name": "v3",
+     "label": {
+      "en": "Baker's value added",
+      "kn": "ಬೇಕರಿಯ ಮೌಲ್ಯವರ್ಧನೆ"
+     },
+     "min": 10,
+     "max": 80,
+     "step": 5,
+     "value": 30,
+     "unit": "₹"
+    },
+    {
+     "name": "dep",
+     "label": {
+      "en": "Depreciation of the baker's oven",
+      "kn": "ಒಲೆಯ ಸವಕಳಿ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 4,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "dbl",
+     "label": {
+      "en": "Add up every sale (double counting)",
+      "kn": "ಎಲ್ಲಾ ಮಾರಾಟ ಕೂಡಿಸಿ (ಎರಡು ಬಾರಿ ಎಣಿಕೆ)"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "w",
+     "expr": "v1"
+    },
+    {
+     "name": "f",
+     "expr": "v1 + v2"
+    },
+    {
+     "name": "b",
+     "expr": "v1 + v2 + v3"
+    },
+    {
+     "name": "tot",
+     "expr": "w + f + b"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     0,
+     560
+    ],
+    "axes": true,
+    "grid": true,
+    "yLabel": "₹"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 0,
+     "w": 1.6,
+     "h": "w",
+     "color": "yellow",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 1.3,
+     "y": "w + 18",
+     "text": {
+      "en": "wheat {w}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 2.7,
+     "y": 0,
+     "w": 1.6,
+     "h": "v1",
+     "color": "yellow",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 2.7,
+     "y": "v1",
+     "w": 1.6,
+     "h": "v2",
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": "f + 18",
+     "text": {
+      "en": "flour {f}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 4.9,
+     "y": 0,
+     "w": 1.6,
+     "h": "v1",
+     "color": "yellow",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 4.9,
+     "y": "v1",
+     "w": 1.6,
+     "h": "v2",
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 4.9,
+     "y": "f",
+     "w": 1.6,
+     "h": "v3",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 5.7,
+     "y": "b + 18",
+     "text": {
+      "en": "bread {b}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 8,
+     "y": 0,
+     "w": 1.8,
+     "h": "b",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 8.9,
+     "y": "b + 18",
+     "text": {
+      "en": "GDP {b}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "dbl",
+     "x": 10.1,
+     "y": 0,
+     "w": 1.6,
+     "h": "tot",
+     "color": "red",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "visibleIf": "dbl",
+     "x": 10.9,
+     "y": "tot + 18",
+     "text": {
+      "en": "{tot}?"
+     },
+     "size": 20,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "GDP (sum of value added)",
+      "kn": "GDP (ಮೌಲ್ಯವರ್ಧನೆ ಮೊತ್ತ)"
+     },
+     "expr": "b",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Net value added",
+      "kn": "ನಿವ್ವಳ ಮೌಲ್ಯವರ್ಧನೆ"
+     },
+     "expr": "b - dep",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Sum of all sales",
+      "kn": "ಎಲ್ಲಾ ಮಾರಾಟಗಳ ಮೊತ್ತ"
+     },
+     "expr": "tot",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Over-count",
+      "kn": "ಹೆಚ್ಚುವರಿ ಎಣಿಕೆ"
+     },
+     "expr": "tot - b",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn on double counting. How many times is the farmer's wheat counted?",
+     "kn": "ಎರಡು ಬಾರಿ ಎಣಿಕೆ ಆನ್ ಮಾಡಿ. ರೈತನ ಗೋಧಿ ಎಷ್ಟು ಬಾರಿ ಎಣಿಕೆಯಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Raise only the baker's value added. Which bars change?",
+     "kn": "ಬೇಕರಿಯ ಮೌಲ್ಯವರ್ಧನೆ ಮಾತ್ರ ಏರಿಸಿ. ಯಾವ ಪಟ್ಟಿಗಳು ಬದಲಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "What is the difference between gross and net value added here?",
+     "kn": "ಇಲ್ಲಿ ಒಟ್ಟು ಮತ್ತು ನಿವ್ವಳ ಮೌಲ್ಯವರ್ಧನೆಯ ವ್ಯತ್ಯಾಸ ಏನು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

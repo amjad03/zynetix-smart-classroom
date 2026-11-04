@@ -355,6 +355,192 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Indifference curves",
+    "kn": "ಉದಾಸೀನ ವಕ್ರರೇಖೆಗಳು"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Every bundle on one curve gives the same satisfaction (here x₁ × x₂ is constant). Drag the bundle: curves further out are preferred, because more is better. The slope of the curve at the bundle is the MRS: how much of good 2 the consumer will give up for one more unit of good 1.",
+    "kn": "ಒಂದು ವಕ್ರರೇಖೆಯ ಎಲ್ಲಾ ಕಟ್ಟುಗಳು ಸಮಾನ ತೃಪ್ತಿ ನೀಡುತ್ತವೆ. ಕಟ್ಟನ್ನು ಎಳೆಯಿರಿ: ಹೊರಗಿನ ವಕ್ರರೇಖೆಗಳು ಹೆಚ್ಚು ಅಪೇಕ್ಷಿತ. ಬಿಂದುವಿನಲ್ಲಿ ಇಳಿಜಾರು MRS."
+   },
+   "sliders": [
+    {
+     "name": "U0",
+     "label": {
+      "en": "Reference indifference curve",
+      "kn": "ಉಲ್ಲೇಖ ಉದಾಸೀನ ವಕ್ರರೇಖೆ"
+     },
+     "min": 5,
+     "max": 60,
+     "step": 5,
+     "value": 25,
+     "unit": "utility"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "tg",
+     "label": {
+      "en": "Show the slope (MRS)",
+      "kn": "ಇಳಿಜಾರು (MRS) ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "B",
+     "label": "bundle",
+     "x": 4,
+     "y": 4,
+     "box": {
+      "x": [
+       0.5,
+       12
+      ],
+      "y": [
+       0.5,
+       12
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "U",
+     "expr": "B_x*B_y"
+    },
+    {
+     "name": "mrs",
+     "expr": "B_y/B_x"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     0,
+     12
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "good 1 (x₁)",
+    "yLabel": "good 2 (x₂)",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "U0/x",
+     "from": 0.3,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "U/x",
+     "from": 0.3,
+     "color": "yellow",
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "visibleIf": "tg",
+     "x1": "B_x - 1.5",
+     "y1": "B_y + 1.5*mrs",
+     "x2": "B_x + 1.5",
+     "y2": "B_y - 1.5*mrs",
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "label",
+     "x": 9,
+     "y": 11.3,
+     "text": {
+      "en": "your bundle: U = {U:1}"
+     },
+     "size": 20,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "U > U0 + 0.01",
+     "x": 9,
+     "y": 10.3,
+     "text": {
+      "en": "preferred to the blue curve"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "abs(U - U0) <= 0.01",
+     "x": 9,
+     "y": 10.3,
+     "text": {
+      "en": "indifferent: same curve"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "U < U0 - 0.01",
+     "x": 9,
+     "y": 10.3,
+     "text": {
+      "en": "worse than the blue curve"
+     },
+     "size": 20,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Utility of the bundle",
+      "kn": "ಕಟ್ಟಿನ ತುಷ್ಟಿಗುಣ"
+     },
+     "expr": "U",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "MRS at the bundle",
+      "kn": "ಕಟ್ಟಿನಲ್ಲಿ MRS"
+     },
+     "expr": "mrs",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Move the bundle along the blue curve from top-left to bottom-right. What happens to the MRS?",
+     "kn": "ಕಟ್ಟನ್ನು ನೀಲಿ ವಕ್ರರೇಖೆಯ ಮೇಲೆ ಮೇಲಿನ-ಎಡದಿಂದ ಕೆಳಗಿನ-ಬಲಕ್ಕೆ ಸರಿಸಿ. MRS ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Find two different bundles that give exactly the same utility.",
+     "kn": "ಸಮಾನ ತುಷ್ಟಿಗುಣ ನೀಡುವ ಎರಡು ಬೇರೆ ಕಟ್ಟುಗಳನ್ನು ಕಂಡುಹಿಡಿಯಿರಿ."
+    },
+    {
+     "en": "Why can two indifference curves never cross?",
+     "kn": "ಎರಡು ಉದಾಸೀನ ವಕ್ರರೇಖೆಗಳು ಏಕೆ ಎಂದಿಗೂ ಛೇದಿಸುವುದಿಲ್ಲ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

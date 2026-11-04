@@ -214,6 +214,232 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Returns to scale",
+    "kn": "ಪ್ರಮಾಣದ ಪ್ರತಿಫಲ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The firm's output is q = L^a × K^b. Double both inputs with the button and compare how output grows. If a + b > 1 output more than doubles (increasing returns), if a + b = 1 it exactly doubles (constant), if a + b < 1 it less than doubles (decreasing).",
+    "kn": "ಉತ್ಪಾದನೆ q = L^a × K^b. ಗುಂಡಿಯಿಂದ ಎರಡೂ ಆದಾನಗಳನ್ನು ದ್ವಿಗುಣಗೊಳಿಸಿ. a + b > 1 ಆದರೆ ಉತ್ಪಾದನೆ ದ್ವಿಗುಣಕ್ಕಿಂತ ಹೆಚ್ಚು (ಹೆಚ್ಚುತ್ತಿರುವ), = 1 ಆದರೆ ದ್ವಿಗುಣ (ಸ್ಥಿರ), < 1 ಆದರೆ ಕಡಿಮೆ (ಕುಗ್ಗುತ್ತಿರುವ)."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Exponent of labour a",
+      "kn": "ಶ್ರಮದ ಘಾತ a"
+     },
+     "min": 0.1,
+     "max": 0.9,
+     "step": 0.05,
+     "value": 0.6
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "Exponent of capital b",
+      "kn": "ಬಂಡವಾಳದ ಘಾತ b"
+     },
+     "min": 0.1,
+     "max": 0.9,
+     "step": 0.05,
+     "value": 0.6
+    }
+   ],
+   "counters": [
+    {
+     "name": "m",
+     "value": 0,
+     "min": 0,
+     "max": 3
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Double all inputs",
+      "kn": "ಎಲ್ಲಾ ಆದಾನ ದ್ವಿಗುಣ"
+     },
+     "icon": "add",
+     "set": {
+      "m": "m + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "m": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "s",
+     "expr": "a + b"
+    },
+    {
+     "name": "fin",
+     "expr": "2^m"
+    },
+    {
+     "name": "fout",
+     "expr": "2^(m*s)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     45
+    ],
+    "axes": true,
+    "grid": true,
+    "yLabel": "times the starting level"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0,
+     "w": 1.6,
+     "h": "fin",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 1.8,
+     "y": "fin + 1.5",
+     "text": {
+      "en": "L ×{fin}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": 0,
+     "w": 1.6,
+     "h": "fin",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 3.8,
+     "y": "fin + 1.5",
+     "text": {
+      "en": "K ×{fin}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 6,
+     "y": 0,
+     "w": 2.4,
+     "h": "fout",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 7.2,
+     "y": "fout + 1.5",
+     "text": {
+      "en": "q ×{fout:2}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "label",
+     "visibleIf": "s > 1.001",
+     "x": 5,
+     "y": 42,
+     "text": {
+      "en": "increasing returns to scale"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "abs(s - 1) <= 0.001",
+     "x": 5,
+     "y": 42,
+     "text": {
+      "en": "constant returns to scale"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "s < 0.999",
+     "x": 5,
+     "y": 42,
+     "text": {
+      "en": "decreasing returns to scale"
+     },
+     "size": 22,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "a + b",
+      "kn": "a + b"
+     },
+     "expr": "s",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Output multiplier when inputs double",
+      "kn": "ಆದಾನ ದ್ವಿಗುಣವಾದಾಗ ಉತ್ಪಾದನೆ ಗುಣಕ"
+     },
+     "expr": "2^s",
+     "digits": 2,
+     "unit": "×"
+    },
+    {
+     "label": {
+      "en": "Times inputs doubled",
+      "kn": "ದ್ವಿಗುಣಗೊಳಿಸಿದ ಬಾರಿ"
+     },
+     "expr": "m",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set a = b = 0.5 and double inputs three times. How many times bigger is output?",
+     "kn": "a = b = 0.5 ಇಟ್ಟು ಮೂರು ಬಾರಿ ದ್ವಿಗುಣಗೊಳಿಸಿ. ಉತ್ಪಾದನೆ ಎಷ್ಟು ಪಟ್ಟು?"
+    },
+    {
+     "en": "Find settings with increasing returns. What might cause them in a real factory?",
+     "kn": "ಹೆಚ್ಚುತ್ತಿರುವ ಪ್ರತಿಫಲದ ಸೆಟ್ಟಿಂಗ್ ಕಂಡುಹಿಡಿಯಿರಿ. ನಿಜ ಕಾರ್ಖಾನೆಯಲ್ಲಿ ಕಾರಣ ಏನು?"
+    },
+    {
+     "en": "How is returns to scale different from the law of variable proportions?",
+     "kn": "ಇದು ಬದಲಾಗುವ ಅನುಪಾತಗಳ ನಿಯಮದಿಂದ ಹೇಗೆ ಭಿನ್ನ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -378,6 +378,201 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Population growth and doubling time",
+    "kn": "ಜನಸಂಖ್ಯೆ ಬೆಳವಣಿಗೆ ಮತ್ತು ದ್ವಿಗುಣ ಸಮಯ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Pick a country and an annual growth rate, then play 50 years. Small differences in the growth rate compound into very different populations. The doubling time is about 70 divided by the growth rate.",
+    "kn": "ದೇಶ ಮತ್ತು ವಾರ್ಷಿಕ ಬೆಳವಣಿಗೆ ದರ ಆರಿಸಿ, 50 ವರ್ಷ ಚಲಾಯಿಸಿ. ಸಣ್ಣ ವ್ಯತ್ಯಾಸವೂ ಚಕ್ರಬಡ್ಡಿಯಂತೆ ಬೆಳೆಯುತ್ತದೆ. ದ್ವಿಗುಣ ಸಮಯ ≈ 70 ÷ ಬೆಳವಣಿಗೆ ದರ."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Population growth rate",
+      "kn": "ಜನಸಂಖ್ಯಾ ಬೆಳವಣಿಗೆ ದರ"
+     },
+     "min": 0,
+     "max": 3,
+     "step": 0.1,
+     "value": 2,
+     "unit": "% a year"
+    }
+   ],
+   "choices": [
+    {
+     "name": "c",
+     "label": {
+      "en": "Starting population (about 2020)",
+      "kn": "ಆರಂಭಿಕ ಜನಸಂಖ್ಯೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "India",
+        "kn": "ಭಾರತ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "China",
+        "kn": "ಚೀನಾ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Pakistan",
+        "kn": "ಪಾಕಿಸ್ತಾನ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 3
+    }
+   ],
+   "time": {
+    "max": 50,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 4,
+    "unit": "yr"
+   },
+   "vars": [
+    {
+     "name": "P0",
+     "expr": "if(c == 1, 1380, if(c == 2, 1410, 220))"
+    },
+    {
+     "name": "Pt",
+     "expr": "P0*(1 + r/100)^t"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     50
+    ],
+    "y": [
+     0,
+     4000
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "years from now",
+    "yLabel": "population (million)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "P0*(1 + r/100)^x",
+     "color": "blue",
+     "width": 3,
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "2*P0",
+     "x2": 50,
+     "y2": "2*P0",
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "label",
+     "x": 6,
+     "y": "2*P0 + 150",
+     "text": {
+      "en": "double the start"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "Pt",
+     "color": "yellow",
+     "width": 4,
+     "length": 600
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "Pt",
+     "r": 0.8,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": "clamp(t, 6, 44)",
+     "y": "Pt + 280",
+     "text": {
+      "en": "{Pt:0} million"
+     },
+     "size": 22,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Population now",
+      "kn": "ಈಗಿನ ಜನಸಂಖ್ಯೆ"
+     },
+     "expr": "Pt",
+     "digits": 0,
+     "unit": "million"
+    },
+    {
+     "label": {
+      "en": "Times the start",
+      "kn": "ಆರಂಭದ ಎಷ್ಟು ಪಟ್ಟು"
+     },
+     "expr": "Pt/P0",
+     "digits": 2,
+     "unit": "×"
+    },
+    {
+     "label": {
+      "en": "Doubling time",
+      "kn": "ದ್ವಿಗುಣ ಸಮಯ"
+     },
+     "expr": "if(r > 0, ln(2)/ln(1 + r/100), 0)",
+     "digits": 0,
+     "unit": "years"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Pakistan's population grows fastest of the three. Try 2% a year for 50 years: how many times bigger does it get?",
+     "kn": "ಪಾಕಿಸ್ತಾನದ ಜನಸಂಖ್ಯೆ ಮೂರರಲ್ಲಿ ವೇಗವಾಗಿ ಬೆಳೆಯುತ್ತದೆ. 2% ದರದಲ್ಲಿ 50 ವರ್ಷ: ಎಷ್ಟು ಪಟ್ಟು ಆಗುತ್ತದೆ?"
+    },
+    {
+     "en": "China's one-child norm kept its growth very low. Compare China at 0.3% with India at 1%.",
+     "kn": "ಚೀನಾದ ಒಂದು ಮಗು ನಿಯಮ ಬೆಳವಣಿಗೆಯನ್ನು ಕಡಿಮೆ ಇರಿಸಿತು. ಚೀನಾ 0.3%, ಭಾರತ 1% ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Check the rule of 70: at 2% a year, how long does it take to double?",
+     "kn": "70ರ ನಿಯಮ: 2% ದರದಲ್ಲಿ ದ್ವಿಗುಣಕ್ಕೆ ಎಷ್ಟು ವರ್ಷ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -324,6 +324,208 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Individual and market demand",
+    "kn": "ವೈಯಕ್ತಿಕ ಮತ್ತು ಮಾರುಕಟ್ಟೆ ಬೇಡಿಕೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Two consumers: d₁ = 10 − p and d₂ = 15 − p. Market demand is their horizontal sum: add the quantities at each price. If income rises, demand for a normal good shifts right; for an inferior good it shifts left.",
+    "kn": "ಇಬ್ಬರು ಗ್ರಾಹಕರು: d₁ = 10 − p, d₂ = 15 − p. ಮಾರುಕಟ್ಟೆ ಬೇಡಿಕೆ ಅವುಗಳ ಅಡ್ಡ ಮೊತ್ತ. ಆದಾಯ ಏರಿದರೆ ಸಾಮಾನ್ಯ ಸರಕಿನ ಬೇಡಿಕೆ ಬಲಕ್ಕೆ, ಕೀಳು ಸರಕಿನದು ಎಡಕ್ಕೆ ಸರಿಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "p",
+     "label": {
+      "en": "Price",
+      "kn": "ಬೆಲೆ"
+     },
+     "min": 0,
+     "max": 18,
+     "step": 1,
+     "value": 6,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "inc",
+     "label": {
+      "en": "Income rises",
+      "kn": "ಆದಾಯ ಏರಿಕೆ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "g",
+     "label": {
+      "en": "Kind of good",
+      "kn": "ಸರಕಿನ ವಿಧ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Normal",
+        "kn": "ಸಾಮಾನ್ಯ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Inferior",
+        "kn": "ಕೀಳು"
+       },
+       "value": -1
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "sft",
+     "expr": "3*inc*g"
+    },
+    {
+     "name": "d1",
+     "expr": "max(10 + sft - p, 0)"
+    },
+    {
+     "name": "d2",
+     "expr": "max(15 + sft - p, 0)"
+    },
+    {
+     "name": "D",
+     "expr": "d1 + d2"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     40
+    ],
+    "y": [
+     0,
+     20
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "quantity demanded",
+    "yLabel": "price (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "10 + sft - x",
+     "color": "blue",
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "fn": "15 + sft - x",
+     "color": "green",
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "fn": "if(x <= 5, 15 + sft - x, (25 + 2*sft - x)/2)",
+     "color": "orange",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "p",
+     "x2": 40,
+     "y2": "p",
+     "color": "yellow",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "d1 > 0",
+     "x": "d1",
+     "y": "p",
+     "r": 0.4,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "d2 > 0",
+     "x": "d2",
+     "y": "p",
+     "r": 0.4,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "D > 0",
+     "x": "D",
+     "y": "p",
+     "r": 0.5,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 29,
+     "y": 18.8,
+     "text": {
+      "en": "d₁ {d1} + d₂ {d2} = market {D}"
+     },
+     "size": 22,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Consumer 1",
+      "kn": "ಗ್ರಾಹಕ 1"
+     },
+     "expr": "d1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Consumer 2",
+      "kn": "ಗ್ರಾಹಕ 2"
+     },
+     "expr": "d2",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Market demand",
+      "kn": "ಮಾರುಕಟ್ಟೆ ಬೇಡಿಕೆ"
+     },
+     "expr": "D",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At a price of ₹12, who buys? Why does the market curve bend at ₹10?",
+     "kn": "₹12 ನಲ್ಲಿ ಯಾರು ಕೊಳ್ಳುತ್ತಾರೆ? ₹10 ನಲ್ಲಿ ಮಾರುಕಟ್ಟೆ ವಕ್ರರೇಖೆ ಏಕೆ ಬಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on 'Income rises' for a normal good, then for an inferior good. Compare.",
+     "kn": "ಸಾಮಾನ್ಯ ಸರಕಿಗೆ 'ಆದಾಯ ಏರಿಕೆ' ಆನ್ ಮಾಡಿ, ನಂತರ ಕೀಳು ಸರಕಿಗೆ. ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Lower the price from ₹10 to ₹5. Is this a movement along the curve or a shift of it?",
+     "kn": "ಬೆಲೆ ₹10 ರಿಂದ ₹5. ಇದು ವಕ್ರರೇಖೆಯ ಮೇಲಿನ ಚಲನೆಯೇ ಅಥವಾ ಸರಿಯುವಿಕೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

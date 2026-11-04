@@ -370,6 +370,512 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Pie diagram and bar diagram",
+    "kn": "ವೃತ್ತ ಚಿತ್ರ ಮತ್ತು ಪಟ್ಟಿ ಚಿತ್ರ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A family's monthly spending in four parts (₹ hundred). Each sector's angle = value ÷ total × 360°. The bar diagram shows the same values by height. Change a value and watch both.",
+    "kn": "ಕುಟುಂಬದ ಮಾಸಿಕ ವೆಚ್ಚ ನಾಲ್ಕು ಭಾಗಗಳಲ್ಲಿ. ಪ್ರತಿ ವಲಯದ ಕೋನ = ಮೌಲ್ಯ ÷ ಒಟ್ಟು × 360°. ಪಟ್ಟಿ ಚಿತ್ರ ಅದನ್ನೇ ಎತ್ತರದಿಂದ ತೋರಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "v1",
+     "label": {
+      "en": "Food",
+      "kn": "ಆಹಾರ"
+     },
+     "min": 5,
+     "max": 60,
+     "step": 1,
+     "value": 45,
+     "unit": "₹ hundred"
+    },
+    {
+     "name": "v2",
+     "label": {
+      "en": "Housing",
+      "kn": "ವಸತಿ"
+     },
+     "min": 5,
+     "max": 60,
+     "step": 1,
+     "value": 25,
+     "unit": "₹ hundred"
+    },
+    {
+     "name": "v3",
+     "label": {
+      "en": "Education",
+      "kn": "ಶಿಕ್ಷಣ"
+     },
+     "min": 5,
+     "max": 60,
+     "step": 1,
+     "value": 15,
+     "unit": "₹ hundred"
+    },
+    {
+     "name": "v4",
+     "label": {
+      "en": "Others",
+      "kn": "ಇತರೆ"
+     },
+     "min": 5,
+     "max": 60,
+     "step": 1,
+     "value": 15,
+     "unit": "₹ hundred"
+    }
+   ],
+   "choices": [
+    {
+     "name": "mode",
+     "label": {
+      "en": "Show",
+      "kn": "ತೋರಿಸು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Pie",
+        "kn": "ವೃತ್ತ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Bar",
+        "kn": "ಪಟ್ಟಿ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Both",
+        "kn": "ಎರಡೂ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 3
+    }
+   ],
+   "vars": [
+    {
+     "name": "T",
+     "expr": "v1 + v2 + v3 + v4"
+    },
+    {
+     "name": "a0",
+     "expr": "0"
+    },
+    {
+     "name": "a1",
+     "expr": "360*v1/T"
+    },
+    {
+     "name": "a2",
+     "expr": "360*(v1 + v2)/T"
+    },
+    {
+     "name": "a3",
+     "expr": "360*(v1 + v2 + v3)/T"
+    },
+    {
+     "name": "a4",
+     "expr": "360"
+    },
+    {
+     "name": "d0",
+     "expr": "rad(a1 - a0)/8"
+    },
+    {
+     "name": "d1",
+     "expr": "rad(a2 - a1)/8"
+    },
+    {
+     "name": "d2",
+     "expr": "rad(a3 - a2)/8"
+    },
+    {
+     "name": "d3",
+     "expr": "rad(a4 - a3)/8"
+    },
+    {
+     "name": "b0",
+     "expr": "rad(a0)"
+    },
+    {
+     "name": "b1",
+     "expr": "rad(a1)"
+    },
+    {
+     "name": "b2",
+     "expr": "rad(a2)"
+    },
+    {
+     "name": "b3",
+     "expr": "rad(a3)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     0,
+     9
+    ],
+    "axes": false,
+    "grid": false,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "visibleIf": "mode != 2",
+     "points": [
+      [
+       4,
+       4.5
+      ],
+      [
+       "4+3.4*sin(b0+0*d0)",
+       "4.5+3.4*cos(b0+0*d0)"
+      ],
+      [
+       "4+3.4*sin(b0+1*d0)",
+       "4.5+3.4*cos(b0+1*d0)"
+      ],
+      [
+       "4+3.4*sin(b0+2*d0)",
+       "4.5+3.4*cos(b0+2*d0)"
+      ],
+      [
+       "4+3.4*sin(b0+3*d0)",
+       "4.5+3.4*cos(b0+3*d0)"
+      ],
+      [
+       "4+3.4*sin(b0+4*d0)",
+       "4.5+3.4*cos(b0+4*d0)"
+      ],
+      [
+       "4+3.4*sin(b0+5*d0)",
+       "4.5+3.4*cos(b0+5*d0)"
+      ],
+      [
+       "4+3.4*sin(b0+6*d0)",
+       "4.5+3.4*cos(b0+6*d0)"
+      ],
+      [
+       "4+3.4*sin(b0+7*d0)",
+       "4.5+3.4*cos(b0+7*d0)"
+      ],
+      [
+       "4+3.4*sin(b0+8*d0)",
+       "4.5+3.4*cos(b0+8*d0)"
+      ]
+     ],
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "polygon",
+     "visibleIf": "mode != 2",
+     "points": [
+      [
+       4,
+       4.5
+      ],
+      [
+       "4+3.4*sin(b1+0*d1)",
+       "4.5+3.4*cos(b1+0*d1)"
+      ],
+      [
+       "4+3.4*sin(b1+1*d1)",
+       "4.5+3.4*cos(b1+1*d1)"
+      ],
+      [
+       "4+3.4*sin(b1+2*d1)",
+       "4.5+3.4*cos(b1+2*d1)"
+      ],
+      [
+       "4+3.4*sin(b1+3*d1)",
+       "4.5+3.4*cos(b1+3*d1)"
+      ],
+      [
+       "4+3.4*sin(b1+4*d1)",
+       "4.5+3.4*cos(b1+4*d1)"
+      ],
+      [
+       "4+3.4*sin(b1+5*d1)",
+       "4.5+3.4*cos(b1+5*d1)"
+      ],
+      [
+       "4+3.4*sin(b1+6*d1)",
+       "4.5+3.4*cos(b1+6*d1)"
+      ],
+      [
+       "4+3.4*sin(b1+7*d1)",
+       "4.5+3.4*cos(b1+7*d1)"
+      ],
+      [
+       "4+3.4*sin(b1+8*d1)",
+       "4.5+3.4*cos(b1+8*d1)"
+      ]
+     ],
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "polygon",
+     "visibleIf": "mode != 2",
+     "points": [
+      [
+       4,
+       4.5
+      ],
+      [
+       "4+3.4*sin(b2+0*d2)",
+       "4.5+3.4*cos(b2+0*d2)"
+      ],
+      [
+       "4+3.4*sin(b2+1*d2)",
+       "4.5+3.4*cos(b2+1*d2)"
+      ],
+      [
+       "4+3.4*sin(b2+2*d2)",
+       "4.5+3.4*cos(b2+2*d2)"
+      ],
+      [
+       "4+3.4*sin(b2+3*d2)",
+       "4.5+3.4*cos(b2+3*d2)"
+      ],
+      [
+       "4+3.4*sin(b2+4*d2)",
+       "4.5+3.4*cos(b2+4*d2)"
+      ],
+      [
+       "4+3.4*sin(b2+5*d2)",
+       "4.5+3.4*cos(b2+5*d2)"
+      ],
+      [
+       "4+3.4*sin(b2+6*d2)",
+       "4.5+3.4*cos(b2+6*d2)"
+      ],
+      [
+       "4+3.4*sin(b2+7*d2)",
+       "4.5+3.4*cos(b2+7*d2)"
+      ],
+      [
+       "4+3.4*sin(b2+8*d2)",
+       "4.5+3.4*cos(b2+8*d2)"
+      ]
+     ],
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "polygon",
+     "visibleIf": "mode != 2",
+     "points": [
+      [
+       4,
+       4.5
+      ],
+      [
+       "4+3.4*sin(b3+0*d3)",
+       "4.5+3.4*cos(b3+0*d3)"
+      ],
+      [
+       "4+3.4*sin(b3+1*d3)",
+       "4.5+3.4*cos(b3+1*d3)"
+      ],
+      [
+       "4+3.4*sin(b3+2*d3)",
+       "4.5+3.4*cos(b3+2*d3)"
+      ],
+      [
+       "4+3.4*sin(b3+3*d3)",
+       "4.5+3.4*cos(b3+3*d3)"
+      ],
+      [
+       "4+3.4*sin(b3+4*d3)",
+       "4.5+3.4*cos(b3+4*d3)"
+      ],
+      [
+       "4+3.4*sin(b3+5*d3)",
+       "4.5+3.4*cos(b3+5*d3)"
+      ],
+      [
+       "4+3.4*sin(b3+6*d3)",
+       "4.5+3.4*cos(b3+6*d3)"
+      ],
+      [
+       "4+3.4*sin(b3+7*d3)",
+       "4.5+3.4*cos(b3+7*d3)"
+      ],
+      [
+       "4+3.4*sin(b3+8*d3)",
+       "4.5+3.4*cos(b3+8*d3)"
+      ]
+     ],
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "mode != 1",
+     "x": 9.0,
+     "y": 0.6,
+     "w": 1.1,
+     "h": "v1/8",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "visibleIf": "mode != 1",
+     "x": 9.55,
+     "y": 0.25,
+     "text": {
+      "en": "Food"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "mode != 1",
+     "x": 10.6,
+     "y": 0.6,
+     "w": 1.1,
+     "h": "v2/8",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "visibleIf": "mode != 1",
+     "x": 11.15,
+     "y": 0.25,
+     "text": {
+      "en": "Housing"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "mode != 1",
+     "x": 12.2,
+     "y": 0.6,
+     "w": 1.1,
+     "h": "v3/8",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "visibleIf": "mode != 1",
+     "x": 12.75,
+     "y": 0.25,
+     "text": {
+      "en": "Education"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "mode != 1",
+     "x": 13.8,
+     "y": 0.6,
+     "w": 1.1,
+     "h": "v4/8",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "visibleIf": "mode != 1",
+     "x": 14.350000000000001,
+     "y": 0.25,
+     "text": {
+      "en": "Others"
+     },
+     "size": 18
+    },
+    {
+     "shape": "label",
+     "visibleIf": "mode != 2",
+     "x": 4,
+     "y": 0.4,
+     "text": {
+      "en": "Food {a1:0}°  Housing {a2 - a1:0}°"
+     },
+     "size": 20,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Food angle",
+      "kn": "ಆಹಾರ ಕೋನ"
+     },
+     "expr": "a1",
+     "digits": 1,
+     "unit": "°"
+    },
+    {
+     "label": {
+      "en": "Housing angle",
+      "kn": "ವಸತಿ ಕೋನ"
+     },
+     "expr": "a2 - a1",
+     "digits": 1,
+     "unit": "°"
+    },
+    {
+     "label": {
+      "en": "Food share",
+      "kn": "ಆಹಾರ ಪಾಲು"
+     },
+     "expr": "100*v1/T",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Total",
+      "kn": "ಒಟ್ಟು"
+     },
+     "expr": "T",
+     "digits": 0,
+     "unit": "₹ hundred"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double every value. Does the pie change? Does the bar diagram?",
+     "kn": "ಎಲ್ಲಾ ಮೌಲ್ಯ ದ್ವಿಗುಣಗೊಳಿಸಿ. ವೃತ್ತ ಬದಲಾಗುತ್ತದೆಯೇ? ಪಟ್ಟಿ ಚಿತ್ರ?"
+    },
+    {
+     "en": "Make food exactly half of the total. What is its angle?",
+     "kn": "ಆಹಾರವನ್ನು ಒಟ್ಟಿನ ಅರ್ಧ ಮಾಡಿ. ಅದರ ಕೋನ ಎಷ್ಟು?"
+    },
+    {
+     "en": "Which diagram is better for comparing shares, and which for comparing amounts?",
+     "kn": "ಪಾಲು ಹೋಲಿಸಲು ಯಾವುದು ಉತ್ತಮ? ಮೊತ್ತ ಹೋಲಿಸಲು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

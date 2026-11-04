@@ -791,6 +791,190 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Laspeyres and Paasche",
+    "kn": "ಲಾಸ್ಪೈರ್ಸ್ ಮತ್ತು ಪಾಶೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Two goods. Base year: A costs ₹10 and 20 units are bought; B costs ₹5 and 40 units are bought. Laspeyres weights today's prices by base-year quantities; Paasche by current-year quantities. When buyers switch away from the good that got dearer, Paasche comes out lower.",
+    "kn": "ಎರಡು ಸರಕುಗಳು. ಆಧಾರ ವರ್ಷ: A ₹10, 20 ಘಟಕ; B ₹5, 40 ಘಟಕ. ಲಾಸ್ಪೈರ್ಸ್ ಆಧಾರ ವರ್ಷದ ಪ್ರಮಾಣಗಳನ್ನು, ಪಾಶೆ ಪ್ರಸಕ್ತ ವರ್ಷದ ಪ್ರಮಾಣಗಳನ್ನು ತೂಕವಾಗಿ ಬಳಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "pa",
+     "label": {
+      "en": "Price of A now",
+      "kn": "A ಬೆಲೆ ಈಗ"
+     },
+     "min": 5,
+     "max": 30,
+     "step": 1,
+     "value": 20,
+     "unit": "₹"
+    },
+    {
+     "name": "pb",
+     "label": {
+      "en": "Price of B now",
+      "kn": "B ಬೆಲೆ ಈಗ"
+     },
+     "min": 2,
+     "max": 15,
+     "step": 0.5,
+     "value": 6,
+     "unit": "₹"
+    },
+    {
+     "name": "qa",
+     "label": {
+      "en": "Quantity of A now",
+      "kn": "A ಪ್ರಮಾಣ ಈಗ"
+     },
+     "min": 5,
+     "max": 40,
+     "step": 1,
+     "value": 12,
+     "unit": "units"
+    },
+    {
+     "name": "qb",
+     "label": {
+      "en": "Quantity of B now",
+      "kn": "B ಪ್ರಮಾಣ ಈಗ"
+     },
+     "min": 10,
+     "max": 60,
+     "step": 1,
+     "value": 48,
+     "unit": "units"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "pa_on",
+     "label": {
+      "en": "Show Paasche",
+      "kn": "ಪಾಶೆ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "las",
+     "expr": "(pa*20 + pb*40)/(10*20 + 5*40)*100"
+    },
+    {
+     "name": "paa",
+     "expr": "(pa*qa + pb*qb)/(10*qa + 5*qb)*100"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     320
+    ],
+    "axes": true,
+    "grid": true,
+    "yLabel": "index"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0,
+     "w": 2.5,
+     "h": "las",
+     "color": "yellow",
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 2.25,
+     "y": "las + 14",
+     "text": {
+      "en": "L {las:1}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "pa_on",
+     "x": 5.5,
+     "y": 0,
+     "w": 2.5,
+     "h": "paa",
+     "color": "green",
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "visibleIf": "pa_on",
+     "x": 6.75,
+     "y": "paa + 14",
+     "text": {
+      "en": "P {paa:1}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 100,
+     "x2": 10,
+     "y2": 100,
+     "dashed": true,
+     "width": 2
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Laspeyres ΣP1Q0/ΣP0Q0 × 100",
+      "kn": "ಲಾಸ್ಪೈರ್ಸ್"
+     },
+     "expr": "las",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Paasche ΣP1Q1/ΣP0Q1 × 100",
+      "kn": "ಪಾಶೆ"
+     },
+     "expr": "paa",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Cost of base basket now",
+      "kn": "ಆಧಾರ ಬುಟ್ಟಿಯ ಈಗಿನ ವೆಚ್ಚ"
+     },
+     "expr": "pa*20 + pb*40",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set current quantities equal to the base ones (20 and 40). Do the two indices agree?",
+     "kn": "ಪ್ರಸಕ್ತ ಪ್ರಮಾಣಗಳನ್ನು 20 ಮತ್ತು 40 ಮಾಡಿ. ಎರಡು ಸೂಚ್ಯಂಕ ಒಂದೇ ಆಗುತ್ತವೆಯೇ?"
+    },
+    {
+     "en": "A doubles in price and people buy less of it. Which index is higher?",
+     "kn": "A ಬೆಲೆ ದ್ವಿಗುಣ, ಜನರು ಕಡಿಮೆ ಕೊಳ್ಳುತ್ತಾರೆ. ಯಾವ ಸೂಚ್ಯಂಕ ಹೆಚ್ಚು?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

@@ -336,6 +336,217 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "How the RBI controls money supply",
+    "kn": "RBI ಹಣ ಪೂರೈಕೆಯನ್ನು ಹೇಗೆ ನಿಯಂತ್ರಿಸುತ್ತದೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Money supply M = high-powered money H × money multiplier, where the multiplier = (1 + cdr) ÷ (cdr + rdr). cdr is the public's currency–deposit ratio and rdr the banks' reserve ratio, set mainly by the CRR. Open market operations change H.",
+    "kn": "ಹಣ ಪೂರೈಕೆ M = ಉನ್ನತ ಶಕ್ತಿಯ ಹಣ H × ಗುಣಕ; ಗುಣಕ = (1 + cdr) ÷ (cdr + rdr). CRR ಮೀಸಲು ಅನುಪಾತವನ್ನು ನಿರ್ಧರಿಸುತ್ತದೆ; ಮುಕ್ತ ಮಾರುಕಟ್ಟೆ ಕಾರ್ಯಾಚರಣೆ H ಬದಲಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "rdr",
+     "label": {
+      "en": "Reserve ratio (CRR)",
+      "kn": "ಮೀಸಲು ಅನುಪಾತ (CRR)"
+     },
+     "min": 0.03,
+     "max": 0.2,
+     "step": 0.01,
+     "value": 0.05
+    },
+    {
+     "name": "cdr",
+     "label": {
+      "en": "Currency–deposit ratio",
+      "kn": "ನಗದು–ಠೇವಣಿ ಅನುಪಾತ"
+     },
+     "min": 0.1,
+     "max": 0.5,
+     "step": 0.02,
+     "value": 0.2
+    }
+   ],
+   "choices": [
+    {
+     "name": "omo",
+     "label": {
+      "en": "Open market operation",
+      "kn": "ಮುಕ್ತ ಮಾರುಕಟ್ಟೆ ಕಾರ್ಯಾಚರಣೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Sell securities",
+        "kn": "ಭದ್ರತೆ ಮಾರಾಟ"
+       },
+       "value": -10
+      },
+      {
+       "label": {
+        "en": "None",
+        "kn": "ಇಲ್ಲ"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "Buy securities",
+        "kn": "ಭದ್ರತೆ ಖರೀದಿ"
+       },
+       "value": 10
+      }
+     ],
+     "value": 0
+    }
+   ],
+   "vars": [
+    {
+     "name": "H",
+     "expr": "50 + omo"
+    },
+    {
+     "name": "mm",
+     "expr": "(1 + cdr)/(cdr + rdr)"
+    },
+    {
+     "name": "M",
+     "expr": "H*mm"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     560
+    ],
+    "axes": true,
+    "grid": true,
+    "yLabel": "₹ lakh crore"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0,
+     "w": 2.5,
+     "h": "H",
+     "color": "blue",
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 2.25,
+     "y": "H + 12",
+     "text": {
+      "en": "H {H}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 6,
+     "y": 0,
+     "w": 2.5,
+     "h": "M",
+     "color": "green",
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "x": 7.25,
+     "y": "M + 12",
+     "text": {
+      "en": "M {M:0}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "label",
+     "x": 5,
+     "y": 530,
+     "text": {
+      "en": "multiplier {mm:2}"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "omo > 0",
+     "x": 2.25,
+     "y": 480,
+     "text": {
+      "en": "RBI buys: money injected"
+     },
+     "size": 18,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "omo < 0",
+     "x": 2.25,
+     "y": 480,
+     "text": {
+      "en": "RBI sells: money absorbed"
+     },
+     "size": 18,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Money multiplier",
+      "kn": "ಹಣ ಗುಣಕ"
+     },
+     "expr": "mm",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "High-powered money H",
+      "kn": "ಉನ್ನತ ಶಕ್ತಿಯ ಹಣ H"
+     },
+     "expr": "H",
+     "digits": 0,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "label": {
+      "en": "Money supply M",
+      "kn": "ಹಣ ಪೂರೈಕೆ M"
+     },
+     "expr": "M",
+     "digits": 0,
+     "unit": "₹ lakh crore"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise the CRR from 5% to 10%. By how much does money supply fall?",
+     "kn": "CRR ಅನ್ನು 5% ರಿಂದ 10%ಗೆ ಏರಿಸಿ. ಹಣ ಪೂರೈಕೆ ಎಷ್ಟು ಇಳಿಯುತ್ತದೆ?"
+    },
+    {
+     "en": "Choose 'Buy securities'. Why does M rise by more than the ₹10 lakh crore injected?",
+     "kn": "'ಭದ್ರತೆ ಖರೀದಿ' ಆರಿಸಿ. M ₹10 ಲಕ್ಷ ಕೋಟಿಗಿಂತ ಹೆಚ್ಚು ಏಕೆ ಏರುತ್ತದೆ?"
+    },
+    {
+     "en": "People hold more cash (raise cdr). What happens to the multiplier?",
+     "kn": "ಜನರು ಹೆಚ್ಚು ನಗದು ಇಟ್ಟುಕೊಂಡರೆ (cdr ಏರಿಕೆ) ಗುಣಕ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

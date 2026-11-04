@@ -737,3 +737,10 @@ No text is reproduced. Check these plot details against the texts:
 - **Illustrative values:** diode Is, LED Vf approximately Eg, mobilities, depletion width, the crystal and varactor values, stability factors.
 - **Class efficiencies:** AB about 70% and C about 90%, labelled approximate.
 - **Kannada:** partial; needs a native-speaker review.
+
+## Economics simulations and activities (128 lessons)
+
+- **Illustrative numbers (labelled on screen):** yields, loan rates, budget and BoP amounts, populations, tariffs.
+- **From the writer's own knowledge, please check:** IPR 1956 schedules; GATT 1948 with 23 countries; TISCO 1907; China and Pakistan dates; M1-M4 components; MGNREGA 100 days.
+- **Simplified model:** CO2 warming uses 3 C per doubling.
+- **Kannada:** needs a native-speaker review.

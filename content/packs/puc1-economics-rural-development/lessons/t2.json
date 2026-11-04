@@ -483,6 +483,201 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The cost of a rural loan",
+    "kn": "ಗ್ರಾಮೀಣ ಸಾಲದ ವೆಚ್ಚ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A farmer borrows before sowing and repays after harvest. Play the months and compare what is owed to a moneylender, a self-help group and a bank (Kisan Credit Card). Interest compounds monthly; the rates are illustrative.",
+    "kn": "ರೈತ ಬಿತ್ತನೆಗೆ ಮೊದಲು ಸಾಲ ಪಡೆದು ಕೊಯ್ಲಿನ ನಂತರ ತೀರಿಸುತ್ತಾನೆ. ಲೇವಾದೇವಿಗಾರ, ಸ್ವಸಹಾಯ ಗುಂಪು ಮತ್ತು ಬ್ಯಾಂಕ್ ಸಾಲ ಹೋಲಿಸಿ. ದರಗಳು ಉದಾಹರಣೆಗೆ ಮಾತ್ರ."
+   },
+   "sliders": [
+    {
+     "name": "L",
+     "label": {
+      "en": "Loan",
+      "kn": "ಸಾಲ"
+     },
+     "min": 5000,
+     "max": 50000,
+     "step": 1000,
+     "value": 20000,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "all",
+     "label": {
+      "en": "Compare all three",
+      "kn": "ಮೂರನ್ನೂ ಹೋಲಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Lender",
+      "kn": "ಸಾಲದಾತ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Moneylender 5%/month",
+        "kn": "ಲೇವಾದೇವಿ"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "SHG 1.5%/month",
+        "kn": "ಸ್ವಸಹಾಯ ಗುಂಪು"
+       },
+       "value": 1.5
+      },
+      {
+       "label": {
+        "en": "Bank (KCC) 7%/year",
+        "kn": "ಬ್ಯಾಂಕ್"
+       },
+       "value": 0.57
+      }
+     ],
+     "value": 5
+    }
+   ],
+   "time": {
+    "max": 24,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2,
+    "unit": "mo"
+   },
+   "vars": [
+    {
+     "name": "D",
+     "expr": "L*(1 + r/100)^t"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     24
+    ],
+    "y": [
+     0,
+     170000
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "months",
+    "yLabel": "amount owed (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "all",
+     "fn": "L*1.05^x",
+     "color": "red",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "visibleIf": "all",
+     "fn": "L*1.015^x",
+     "color": "orange",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "visibleIf": "all",
+     "fn": "L*1.0057^x",
+     "color": "green",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "D",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "D",
+     "r": 0.35,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": "clamp(t, 3, 21)",
+     "y": "D + 12000",
+     "text": {
+      "en": "₹{D:0}"
+     },
+     "size": 22,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Amount owed",
+      "kn": "ಬಾಕಿ ಮೊತ್ತ"
+     },
+     "expr": "D",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Interest so far",
+      "kn": "ಇದುವರೆಗಿನ ಬಡ್ಡಿ"
+     },
+     "expr": "D - L",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Times the loan",
+      "kn": "ಸಾಲದ ಎಷ್ಟು ಪಟ್ಟು"
+     },
+     "expr": "D/L",
+     "digits": 2,
+     "unit": "×"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Borrow ₹20,000 from a moneylender and play 6 months, one crop season. How much interest is due?",
+     "kn": "ಲೇವಾದೇವಿಗಾರನಿಂದ ₹20,000; 6 ತಿಂಗಳು ಚಲಾಯಿಸಿ. ಬಡ್ಡಿ ಎಷ್ಟು?"
+    },
+    {
+     "en": "A bad monsoon delays repayment to 24 months. Compare the moneylender with the bank.",
+     "kn": "ಕೆಟ್ಟ ಮುಂಗಾರಿನಿಂದ 24 ತಿಂಗಳು ತಡ. ಲೇವಾದೇವಿ ಮತ್ತು ಬ್ಯಾಂಕ್ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Why did NABARD and SHGs matter for small farmers?",
+     "kn": "ಸಣ್ಣ ರೈತರಿಗೆ NABARD ಮತ್ತು ಸ್ವಸಹಾಯ ಗುಂಪುಗಳು ಏಕೆ ಮುಖ್ಯ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

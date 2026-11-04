@@ -337,6 +337,253 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Excess demand, excess supply and the invisible hand",
+    "kn": "ಅಧಿಕ ಬೇಡಿಕೆ, ಅಧಿಕ ಪೂರೈಕೆ ಮತ್ತು ಅದೃಶ್ಯ ಹಸ್ತ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the yellow ring to set a price. Below equilibrium, buyers want more than sellers offer (excess demand); above it, unsold stock piles up (excess supply). Press Play: excess demand pushes the price up and excess supply pulls it down until quantity demanded equals quantity supplied.",
+    "kn": "ಹಳದಿ ಉಂಗುರ ಎಳೆದು ಬೆಲೆ ಇಡಿ. ಸಮತೋಲನಕ್ಕಿಂತ ಕೆಳಗೆ ಅಧಿಕ ಬೇಡಿಕೆ; ಮೇಲೆ ಅಧಿಕ ಪೂರೈಕೆ. Play ಒತ್ತಿ: ಬೆಲೆ ಸಮತೋಲನದತ್ತ ಸರಿಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "d",
+     "label": {
+      "en": "Shift in demand",
+      "kn": "ಬೇಡಿಕೆ ಬದಲಾವಣೆ"
+     },
+     "min": -20,
+     "max": 20,
+     "step": 5,
+     "value": 0,
+     "unit": "units"
+    }
+   ],
+   "handles": [
+    {
+     "name": "Pr",
+     "label": "price",
+     "x": 110,
+     "y": 6,
+     "axis": "y",
+     "box": {
+      "x": [
+       0,
+       120
+      ],
+      "y": [
+       2,
+       22
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    }
+   ],
+   "time": {
+    "max": 12,
+    "dt": 0.02,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "qd",
+     "expr": "max(100 - 5*p + d, 0)"
+    },
+    {
+     "name": "qs",
+     "expr": "max(5*p - 20, 0)"
+    },
+    {
+     "name": "gap",
+     "expr": "qd - qs"
+    },
+    {
+     "name": "pe",
+     "expr": "(120 + d)/10"
+    }
+   ],
+   "state": [
+    {
+     "name": "p",
+     "init": "Pr_y",
+     "rate": "0.05*(max(100 - 5*p + d, 0) - max(5*p - 20, 0))"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     0,
+     120
+    ],
+    "y": [
+     0,
+     25
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "quantity",
+    "yLabel": "price (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "(100 + d - x)/5",
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "(x + 20)/5",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "pe",
+     "x2": 120,
+     "y2": "pe",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "p",
+     "x2": 120,
+     "y2": "p",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "abs(gap) > 0.5",
+     "x1": "qs",
+     "y1": "p",
+     "x2": "qd",
+     "y2": "p",
+     "color": {
+      "by": "step(0, gap)",
+      "scale": [
+       "orange",
+       "red"
+      ]
+     },
+     "width": 8
+    },
+    {
+     "shape": "circle",
+     "x": "qd",
+     "y": "p",
+     "r": 1.2,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "x": "qs",
+     "y": "p",
+     "r": 1.2,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "gap > 0.5",
+     "x": 60,
+     "y": 23.5,
+     "text": {
+      "en": "excess demand {gap:0}: price rises"
+     },
+     "size": 22,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "gap < -0.5",
+     "x": 60,
+     "y": 23.5,
+     "text": {
+      "en": "excess supply {-gap:0}: price falls"
+     },
+     "size": 22,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "abs(gap) <= 0.5",
+     "x": 60,
+     "y": 23.5,
+     "text": {
+      "en": "equilibrium: no pressure to change"
+     },
+     "size": 22,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Price",
+      "kn": "ಬೆಲೆ"
+     },
+     "expr": "p",
+     "digits": 2,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Quantity demanded",
+      "kn": "ಬೇಡಿಕೆ ಪ್ರಮಾಣ"
+     },
+     "expr": "qd",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Quantity supplied",
+      "kn": "ಪೂರೈಕೆ ಪ್ರಮಾಣ"
+     },
+     "expr": "qs",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Equilibrium price",
+      "kn": "ಸಮತೋಲನ ಬೆಲೆ"
+     },
+     "expr": "pe",
+     "digits": 1,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set the price at ₹6 and play. How big is the excess demand at the start, and where does the price end?",
+     "kn": "ಬೆಲೆ ₹6 ಇಟ್ಟು ಚಲಾಯಿಸಿ. ಆರಂಭದ ಅಧಿಕ ಬೇಡಿಕೆ ಎಷ್ಟು? ಬೆಲೆ ಎಲ್ಲಿ ನಿಲ್ಲುತ್ತದೆ?"
+    },
+    {
+     "en": "Start at ₹20. Why does the price fall?",
+     "kn": "₹20 ರಿಂದ ಆರಂಭಿಸಿ. ಬೆಲೆ ಏಕೆ ಇಳಿಯುತ್ತದೆ?"
+    },
+    {
+     "en": "Shift demand up by 20 and play again. What is the new equilibrium price?",
+     "kn": "ಬೇಡಿಕೆ 20 ಏರಿಸಿ ಮತ್ತೆ ಚಲಾಯಿಸಿ. ಹೊಸ ಸಮತೋಲನ ಬೆಲೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

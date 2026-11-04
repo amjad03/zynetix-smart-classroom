@@ -306,6 +306,346 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The circular flow of income",
+    "kn": "ಆದಾಯದ ವೃತ್ತಾಕಾರದ ಹರಿವು"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Yellow dots are money. Firms pay factor incomes to households (bottom); households spend on firms' goods (top). Saving leaks out to the financial market and investment flows back in. Play: income settles where investment equals saving, Y = I ÷ s.",
+    "kn": "ಹಳದಿ ಚುಕ್ಕೆಗಳು ಹಣ. ಸಂಸ್ಥೆಗಳು ಕುಟುಂಬಗಳಿಗೆ ಆದಾಯ ಪಾವತಿಸುತ್ತವೆ (ಕೆಳಗೆ); ಕುಟುಂಬಗಳು ಸಂಸ್ಥೆಗಳ ಸರಕುಗಳಿಗೆ ಖರ್ಚು ಮಾಡುತ್ತವೆ (ಮೇಲೆ). ಉಳಿತಾಯ ಸೋರಿಕೆ, ಹೂಡಿಕೆ ಸೇರ್ಪಡೆ. ಹೂಡಿಕೆ = ಉಳಿತಾಯ ಆದಾಗ ಆದಾಯ ಸ್ಥಿರ."
+   },
+   "sliders": [
+    {
+     "name": "s",
+     "label": {
+      "en": "Saving rate",
+      "kn": "ಉಳಿತಾಯ ದರ"
+     },
+     "min": 0.1,
+     "max": 0.5,
+     "step": 0.05,
+     "value": 0.2
+    },
+    {
+     "name": "I",
+     "label": {
+      "en": "Investment",
+      "kn": "ಹೂಡಿಕೆ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 80,
+     "unit": "₹ crore"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "real",
+     "label": {
+      "en": "Show real flows (goods and factor services)",
+      "kn": "ನೈಜ ಹರಿವು ತೋರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 60,
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "C",
+     "expr": "(1 - s)*Y"
+    },
+    {
+     "name": "Sv",
+     "expr": "s*Y"
+    }
+   ],
+   "state": [
+    {
+     "name": "Y",
+     "init": 400,
+     "rate": "0.3*(I - s*Y)"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     0,
+     10
+    ],
+    "axes": false,
+    "grid": false,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 3.5,
+     "w": 3,
+     "h": 3,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 5,
+     "text": {
+      "en": "Households",
+      "kn": "ಕುಟುಂಬಗಳು"
+     },
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": 12.5,
+     "y": 3.5,
+     "w": 3,
+     "h": 3,
+     "color": "green",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 5,
+     "text": {
+      "en": "Firms",
+      "kn": "ಸಂಸ್ಥೆಗಳು"
+     },
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": 6.5,
+     "y": 4.2,
+     "w": 3,
+     "h": 1.6,
+     "color": "orange",
+     "opacity": 0.4
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 5,
+     "text": {
+      "en": "Financial market",
+      "kn": "ಹಣಕಾಸು ಮಾರುಕಟ್ಟೆ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 8.5,
+     "x2": 14,
+     "y2": 8.5,
+     "color": "yellow",
+     "opacity": 0.3,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 1.5,
+     "x2": 2,
+     "y2": 1.5,
+     "color": "yellow",
+     "opacity": 0.3,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 6.5,
+     "x2": 2,
+     "y2": 8.5,
+     "color": "yellow",
+     "opacity": 0.3,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 1.5,
+     "x2": 14,
+     "y2": 3.5,
+     "color": "yellow",
+     "opacity": 0.3,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 9.3,
+     "text": {
+      "en": "consumption spending C = {C:0}"
+     },
+     "size": 18,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 0.7,
+     "text": {
+      "en": "factor incomes Y = {Y:0}"
+     },
+     "size": 18,
+     "color": "yellow"
+    },
+    {
+     "shape": "particles",
+     "count": 34,
+     "visibleIf": "i < C/30",
+     "x": "2 + 12*mod(0.06*t + i/34, 1)",
+     "y": 8.5,
+     "r": 0.13,
+     "color": "yellow"
+    },
+    {
+     "shape": "particles",
+     "count": 34,
+     "visibleIf": "i < Y/30",
+     "x": "14 - 12*mod(0.06*t + i/34, 1)",
+     "y": 1.5,
+     "r": 0.13,
+     "color": "yellow"
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "visibleIf": "i < Sv/10",
+     "x": "3.5 + 3*mod(0.1*t + i/10, 1)",
+     "y": 4.6,
+     "r": 0.11,
+     "color": "red"
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "visibleIf": "i < I/10",
+     "x": "9.5 + 3*mod(0.1*t + i/10, 1)",
+     "y": 5.4,
+     "r": 0.11,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 3.9,
+     "text": {
+      "en": "saving {Sv:0}"
+     },
+     "size": 16,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 6.1,
+     "text": {
+      "en": "investment {I:0}"
+     },
+     "size": 16,
+     "color": "green"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "real",
+     "x": 13,
+     "y": 7.3,
+     "dx": -10,
+     "dy": 0,
+     "color": "white",
+     "label": "goods and services",
+     "width": 2
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "real",
+     "x": 3,
+     "y": 2.7,
+     "dx": 10,
+     "dy": 0,
+     "color": "white",
+     "label": "factor services",
+     "width": 2
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Income Y",
+      "kn": "ಆದಾಯ Y"
+     },
+     "expr": "Y",
+     "digits": 0,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "Saving",
+      "kn": "ಉಳಿತಾಯ"
+     },
+     "expr": "Sv",
+     "digits": 0,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "Investment",
+      "kn": "ಹೂಡಿಕೆ"
+     },
+     "expr": "I",
+     "digits": 0,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "Income where S = I",
+      "kn": "S = I ಆದಾಯ"
+     },
+     "expr": "I/s",
+     "digits": 0,
+     "unit": "₹ crore"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Start with I = 80 and s = 0.2, then play. Does income stay at 400?",
+     "kn": "I = 80, s = 0.2 ಇಟ್ಟು ಚಲಾಯಿಸಿ. ಆದಾಯ 400 ರಲ್ಲೇ ಇರುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Cut investment to 40 while it plays. What happens to the flow of money?",
+     "kn": "ಚಲಿಸುತ್ತಿರುವಾಗ ಹೂಡಿಕೆಯನ್ನು 40ಕ್ಕೆ ಇಳಿಸಿ. ಹಣದ ಹರಿವು ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Raise the saving rate with investment unchanged. Does total saving end up higher?",
+     "kn": "ಹೂಡಿಕೆ ಬದಲಿಸದೆ ಉಳಿತಾಯ ದರ ಏರಿಸಿ. ಒಟ್ಟು ಉಳಿತಾಯ ಕೊನೆಗೆ ಹೆಚ್ಚುತ್ತದೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

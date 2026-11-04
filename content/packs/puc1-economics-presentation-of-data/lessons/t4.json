@@ -232,6 +232,252 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Less than and more than ogives",
+    "kn": "ಕಡಿಮೆ ಮತ್ತು ಹೆಚ್ಚು ಓಜಿವ್‌ಗಳು"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Daily earnings of shopkeepers in five classes. The less than ogive plots cumulative frequency against upper limits and rises; the more than ogive uses lower limits and falls. They cross at the median.",
+    "kn": "ಅಂಗಡಿಯವರ ದಿನದ ಗಳಿಕೆ ಐದು ವರ್ಗಗಳಲ್ಲಿ. 'ಕಡಿಮೆ' ಓಜಿವ್ ಮೇಲ್ಮಿತಿಗಳ ವಿರುದ್ಧ ಏರುತ್ತದೆ; 'ಹೆಚ್ಚು' ಓಜಿವ್ ಕೆಳಮಿತಿಗಳ ವಿರುದ್ಧ ಇಳಿಯುತ್ತದೆ. ಅವು ಮಧ್ಯಾಂಕದಲ್ಲಿ ಸಂಧಿಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "f1",
+     "label": {
+      "en": "Frequency 0–100",
+      "kn": "ಆವರ್ತನ 0–100"
+     },
+     "min": 1,
+     "max": 30,
+     "step": 1,
+     "value": 6
+    },
+    {
+     "name": "f2",
+     "label": {
+      "en": "Frequency 100–200",
+      "kn": "ಆವರ್ತನ 100–200"
+     },
+     "min": 1,
+     "max": 30,
+     "step": 1,
+     "value": 14
+    },
+    {
+     "name": "f3",
+     "label": {
+      "en": "Frequency 200–300",
+      "kn": "ಆವರ್ತನ 200–300"
+     },
+     "min": 1,
+     "max": 30,
+     "step": 1,
+     "value": 20
+    },
+    {
+     "name": "f4",
+     "label": {
+      "en": "Frequency 300–400",
+      "kn": "ಆವರ್ತನ 300–400"
+     },
+     "min": 1,
+     "max": 30,
+     "step": 1,
+     "value": 10
+    }
+   ],
+   "toggles": [
+    {
+     "name": "lt",
+     "label": {
+      "en": "Less than ogive",
+      "kn": "ಕಡಿಮೆ ಓಜಿವ್"
+     },
+     "value": true
+    },
+    {
+     "name": "mt",
+     "label": {
+      "en": "More than ogive",
+      "kn": "ಹೆಚ್ಚು ಓಜಿವ್"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "f5",
+     "expr": "5"
+    },
+    {
+     "name": "c1",
+     "expr": "f1"
+    },
+    {
+     "name": "c2",
+     "expr": "f1 + f2"
+    },
+    {
+     "name": "c3",
+     "expr": "f1 + f2 + f3"
+    },
+    {
+     "name": "c4",
+     "expr": "f1 + f2 + f3 + f4"
+    },
+    {
+     "name": "N",
+     "expr": "c4 + f5"
+    },
+    {
+     "name": "med",
+     "expr": "100*if(N/2 <= c1, N/2/f1, if(N/2 <= c2, 1 + (N/2 - c1)/f2, if(N/2 <= c3, 2 + (N/2 - c2)/f3, if(N/2 <= c4, 3 + (N/2 - c3)/f4, 4 + (N/2 - c4)/f5))))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     500
+    ],
+    "y": [
+     0,
+     130
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "daily earnings (₹)",
+    "yLabel": "cumulative frequency"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "lt",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       100,
+       "c1"
+      ],
+      [
+       200,
+       "c2"
+      ],
+      [
+       300,
+       "c3"
+      ],
+      [
+       400,
+       "c4"
+      ],
+      [
+       500,
+       "N"
+      ]
+     ],
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "visibleIf": "mt",
+     "points": [
+      [
+       0,
+       "N"
+      ],
+      [
+       100,
+       "N - c1"
+      ],
+      [
+       200,
+       "N - c2"
+      ],
+      [
+       300,
+       "N - c3"
+      ],
+      [
+       400,
+       "N - c4"
+      ],
+      [
+       500,
+       0
+      ]
+     ],
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "med",
+     "y1": 0,
+     "x2": "med",
+     "y2": "N/2",
+     "dashed": true,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "lt && mt",
+     "x": "med",
+     "y": "N/2",
+     "r": 6,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": "med",
+     "y": "N/2 + 10",
+     "text": {
+      "en": "median ₹{med:0}"
+     },
+     "size": 22,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "N (last class has 5)",
+      "kn": "N"
+     },
+     "expr": "N",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Median",
+      "kn": "ಮಧ್ಯಾಂಕ"
+     },
+     "expr": "med",
+     "digits": 1,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make the first class much larger. Which way does the crossing point move?",
+     "kn": "ಮೊದಲ ವರ್ಗ ದೊಡ್ಡದು ಮಾಡಿ. ಸಂಧಿ ಬಿಂದು ಯಾವ ಕಡೆ ಸರಿಯುತ್ತದೆ?"
+    },
+    {
+     "en": "Read from the less than ogive how many earn below ₹300.",
+     "kn": "'ಕಡಿಮೆ' ಓಜಿವ್‌ನಿಂದ ₹300 ಕ್ಕಿಂತ ಕಡಿಮೆ ಗಳಿಸುವವರ ಸಂಖ್ಯೆ ಓದಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

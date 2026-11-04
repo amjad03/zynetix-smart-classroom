@@ -236,6 +236,202 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Mean, median and mode in skewed data",
+    "kn": "ವಿಷಮ ದತ್ತಾಂಶದಲ್ಲಿ ಸರಾಸರಿ, ಮಧ್ಯಾಂಕ, ಬಹುಲಕ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Change the skewness. In a symmetrical curve all three coincide. With a long right tail (positive skew) mean > median > mode; flip it for negative skew. Check Pearson's rule: mode ≈ 3 median − 2 mean.",
+    "kn": "ವಿಷಮತೆ ಬದಲಿಸಿ. ಸಮಮಿತ ವಕ್ರರೇಖೆಯಲ್ಲಿ ಮೂರೂ ಒಂದೇ. ಬಲಕ್ಕೆ ಉದ್ದ ಬಾಲವಿದ್ದರೆ ಸರಾಸರಿ > ಮಧ್ಯಾಂಕ > ಬಹುಲಕ. ಪಿಯರ್ಸನ್ ನಿಯಮ: ಬಹುಲಕ ≈ 3 ಮಧ್ಯಾಂಕ − 2 ಸರಾಸರಿ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Shape (low = more skewed)",
+      "kn": "ಆಕಾರ (ಕಡಿಮೆ = ಹೆಚ್ಚು ವಿಷಮ)"
+     },
+     "min": 2,
+     "max": 50,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "toggles": [
+    {
+     "name": "neg",
+     "label": {
+      "en": "Negative skew (tail to the left)",
+      "kn": "ಋಣ ವಿಷಮತೆ (ಎಡಕ್ಕೆ ಬಾಲ)"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "th",
+     "expr": "12/sqrt(k)"
+    },
+    {
+     "name": "x0",
+     "expr": "50 - 12*sqrt(k)"
+    },
+    {
+     "name": "mo0",
+     "expr": "x0 + (k - 1)*th"
+    },
+    {
+     "name": "me0",
+     "expr": "x0 + th*(k - 1/3 + 0.02/k)"
+    },
+    {
+     "name": "mean",
+     "expr": "50"
+    },
+    {
+     "name": "mode",
+     "expr": "if(neg, 100 - mo0, mo0)"
+    },
+    {
+     "name": "med",
+     "expr": "if(neg, 100 - me0, me0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     11
+    ],
+    "axes": true,
+    "grid": false,
+    "xLabel": "income (₹ thousand)",
+    "yLabel": "frequency"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "if((if(neg, 100 - x, x) - x0) > 0, 9*((if(neg, 100 - x, x) - x0)/((k - 1)*th))^(k - 1)*exp(-((if(neg, 100 - x, x) - x0) - (k - 1)*th)/th), 0)",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "mode",
+     "y1": 0,
+     "x2": "mode",
+     "y2": 9.6,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "med",
+     "y1": 0,
+     "x2": "med",
+     "y2": 9.6,
+     "color": "green",
+     "width": 3,
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": "mean",
+     "y1": 0,
+     "x2": "mean",
+     "y2": 9.6,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "label",
+     "x": "mode",
+     "y": 10.4,
+     "text": {
+      "en": "Mo"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": "med",
+     "y": 9.9,
+     "text": {
+      "en": "Me"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": "mean",
+     "y": 10.4,
+     "text": {
+      "en": "X̄"
+     },
+     "size": 20,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mean",
+      "kn": "ಸರಾಸರಿ"
+     },
+     "expr": "mean",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Median",
+      "kn": "ಮಧ್ಯಾಂಕ"
+     },
+     "expr": "med",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Mode",
+      "kn": "ಬಹುಲಕ"
+     },
+     "expr": "mode",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "3 Me − 2 X̄",
+      "kn": "3 Me − 2 X̄"
+     },
+     "expr": "3*med - 2*mean",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Drag the shape to 50. What happens to the gaps between mean, median and mode?",
+     "kn": "ಆಕಾರವನ್ನು 50ಕ್ಕೆ ಸರಿಸಿ. ಸರಾಸರಿ, ಮಧ್ಯಾಂಕ, ಬಹುಲಕದ ಅಂತರ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Incomes usually have a long right tail. Which average is largest for them?",
+     "kn": "ಆದಾಯಕ್ಕೆ ಸಾಮಾನ್ಯವಾಗಿ ಬಲಕ್ಕೆ ಉದ್ದ ಬಾಲ. ಯಾವ ಸರಾಸರಿ ದೊಡ್ಡದು?"
+    },
+    {
+     "en": "Compare the mode with 3 Me − 2 X̄ at shape 3 and at shape 20.",
+     "kn": "ಆಕಾರ 3 ಮತ್ತು 20ರಲ್ಲಿ ಬಹುಲಕವನ್ನು 3 Me − 2 X̄ ನೊಂದಿಗೆ ಹೋಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

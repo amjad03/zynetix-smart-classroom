@@ -253,6 +253,283 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Mode of a grouped series",
+    "kn": "ವರ್ಗೀಕೃತ ಶ್ರೇಣಿಯ ಬಹುಲಕ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The tallest bar is the modal class. Mode = L + D1/(D1 + D2) × h, where D1 and D2 are how much taller the modal bar is than its neighbours. The crossing lines inside the modal bar find the same point on a histogram.",
+    "kn": "ಅತಿ ಎತ್ತರದ ಪಟ್ಟಿ ಬಹುಲಕ ವರ್ಗ. ಬಹುಲಕ = L + D1/(D1 + D2) × h. ಬಹುಲಕ ಪಟ್ಟಿಯೊಳಗಿನ ಅಡ್ಡರೇಖೆಗಳು ಅದೇ ಬಿಂದು ತೋರಿಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "f1",
+     "label": {
+      "en": "Frequency 0–10",
+      "kn": "ಆವರ್ತನ 0–10"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "f2",
+     "label": {
+      "en": "Frequency 10–20",
+      "kn": "ಆವರ್ತನ 10–20"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 12
+    },
+    {
+     "name": "f3",
+     "label": {
+      "en": "Frequency 20–30",
+      "kn": "ಆವರ್ತನ 20–30"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 16
+    },
+    {
+     "name": "f4",
+     "label": {
+      "en": "Frequency 30–40",
+      "kn": "ಆವರ್ತನ 30–40"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 7
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cross",
+     "label": {
+      "en": "Show the graphic construction",
+      "kn": "ಚಿತ್ರ ವಿಧಾನ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "m1",
+     "expr": "f1 >= f2 && f1 >= f3 && f1 >= f4"
+    },
+    {
+     "name": "m2",
+     "expr": "!m1 && f2 >= f3 && f2 >= f4"
+    },
+    {
+     "name": "m3",
+     "expr": "!m1 && !m2 && f3 >= f4"
+    },
+    {
+     "name": "m4",
+     "expr": "!m1 && !m2 && !m3"
+    },
+    {
+     "name": "L",
+     "expr": "10*(m2 + 2*m3 + 3*m4)"
+    },
+    {
+     "name": "fm",
+     "expr": "f1*m1 + f2*m2 + f3*m3 + f4*m4"
+    },
+    {
+     "name": "fp",
+     "expr": "f1*m2 + f2*m3 + f3*m4"
+    },
+    {
+     "name": "fn",
+     "expr": "f2*m1 + f3*m2 + f4*m3"
+    },
+    {
+     "name": "d1",
+     "expr": "fm - fp"
+    },
+    {
+     "name": "d2",
+     "expr": "fm - fn"
+    },
+    {
+     "name": "mode",
+     "expr": "L + if(d1 + d2 > 0, d1/(d1 + d2), 0.5)*10"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     40
+    ],
+    "y": [
+     0,
+     22
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "class",
+    "yLabel": "frequency"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 10,
+     "h": "f1",
+     "color": {
+      "by": "m1",
+      "scale": [
+       "blue",
+       "orange"
+      ]
+     },
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 0,
+     "w": 10,
+     "h": "f2",
+     "color": {
+      "by": "m2",
+      "scale": [
+       "blue",
+       "orange"
+      ]
+     },
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 20,
+     "y": 0,
+     "w": 10,
+     "h": "f3",
+     "color": {
+      "by": "m3",
+      "scale": [
+       "blue",
+       "orange"
+      ]
+     },
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 30,
+     "y": 0,
+     "w": 10,
+     "h": "f4",
+     "color": {
+      "by": "m4",
+      "scale": [
+       "blue",
+       "orange"
+      ]
+     },
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "visibleIf": "cross",
+     "x1": "L + 10",
+     "y1": "fm",
+     "x2": "L",
+     "y2": "fp",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "cross",
+     "x1": "L",
+     "y1": "fm",
+     "x2": "L + 10",
+     "y2": "fn",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "mode",
+     "y1": 0,
+     "x2": "mode",
+     "y2": "fm",
+     "color": "green",
+     "width": 3,
+     "dashed": true
+    },
+    {
+     "shape": "label",
+     "x": "mode",
+     "y": "fm + 1.5",
+     "text": {
+      "en": "mode {mode:2}"
+     },
+     "size": 22,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Modal class starts at L",
+      "kn": "ಬಹುಲಕ ವರ್ಗ L"
+     },
+     "expr": "L",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "D1",
+      "kn": "D1"
+     },
+     "expr": "d1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "D2",
+      "kn": "D2"
+     },
+     "expr": "d2",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Mode",
+      "kn": "ಬಹುಲಕ"
+     },
+     "expr": "mode",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make the bar after the modal class taller (but not the tallest). Which way does the mode move?",
+     "kn": "ಬಹುಲಕ ವರ್ಗದ ನಂತರದ ಪಟ್ಟಿಯನ್ನು ಎತ್ತರ ಮಾಡಿ. ಬಹುಲಕ ಯಾವ ಕಡೆ ಸರಿಯುತ್ತದೆ?"
+    },
+    {
+     "en": "Make the neighbours of the modal bar equal. Where is the mode?",
+     "kn": "ಬಹುಲಕ ಪಟ್ಟಿಯ ಎರಡೂ ನೆರೆ ಪಟ್ಟಿಗಳನ್ನು ಸಮ ಮಾಡಿ. ಬಹುಲಕ ಎಲ್ಲಿ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -528,6 +528,244 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Trade balance and current account",
+    "kn": "ವ್ಯಾಪಾರ ಶಿಲ್ಕು ಮತ್ತು ಚಾಲ್ತಿ ಖಾತೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The trade balance is exports minus imports of goods. Add net services and net transfers (such as remittances) to get the current account balance (net income from abroad is left out here to keep it simple). Service exports and remittances can cover part of a large goods deficit. Figures are illustrative.",
+    "kn": "ವ್ಯಾಪಾರ ಶಿಲ್ಕು = ಸರಕು ರಫ್ತು − ಆಮದು. ನಿವ್ವಳ ಸೇವೆಗಳು ಮತ್ತು ವರ್ಗಾವಣೆಗಳನ್ನು ಸೇರಿಸಿದರೆ ಚಾಲ್ತಿ ಖಾತೆ ಶಿಲ್ಕು. ಅಂಕಿಗಳು ಉದಾಹರಣೆಗೆ."
+   },
+   "sliders": [
+    {
+     "name": "X",
+     "label": {
+      "en": "Goods exports",
+      "kn": "ಸರಕು ರಫ್ತು"
+     },
+     "min": 200,
+     "max": 600,
+     "step": 10,
+     "value": 300,
+     "unit": "$ billion"
+    },
+    {
+     "name": "M",
+     "label": {
+      "en": "Goods imports",
+      "kn": "ಸರಕು ಆಮದು"
+     },
+     "min": 200,
+     "max": 800,
+     "step": 10,
+     "value": 450,
+     "unit": "$ billion"
+    },
+    {
+     "name": "Sv",
+     "label": {
+      "en": "Net services",
+      "kn": "ನಿವ್ವಳ ಸೇವೆಗಳು"
+     },
+     "min": 0,
+     "max": 200,
+     "step": 10,
+     "value": 80,
+     "unit": "$ billion"
+    },
+    {
+     "name": "Tr",
+     "label": {
+      "en": "Net transfers (remittances)",
+      "kn": "ನಿವ್ವಳ ವರ್ಗಾವಣೆ"
+     },
+     "min": 0,
+     "max": 150,
+     "step": 10,
+     "value": 40,
+     "unit": "$ billion"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "tbonly",
+     "label": {
+      "en": "Show only the trade balance",
+      "kn": "ವ್ಯಾಪಾರ ಶಿಲ್ಕು ಮಾತ್ರ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "TB",
+     "expr": "X - M"
+    },
+    {
+     "name": "CA",
+     "expr": "TB + Sv + Tr"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     -650,
+     800
+    ],
+    "axes": true,
+    "grid": true,
+    "yLabel": "$ billion"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 10,
+     "y2": 0,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "x": 0.6,
+     "y": "min(TB, 0)",
+     "w": 2,
+     "h": "max(abs(TB), 1)",
+     "color": {
+      "by": "step(0, TB)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 1.6,
+     "y": "TB + if(TB < 0, -30, 30)",
+     "text": {
+      "en": "trade {TB}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "!tbonly && Sv > 0",
+     "x": 3.0,
+     "y": "TB",
+     "w": 2,
+     "h": "Sv",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "visibleIf": "!tbonly",
+     "x": 4.0,
+     "y": "TB + Sv + 30",
+     "text": {
+      "en": "+services {Sv}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "!tbonly && Tr > 0",
+     "x": 5.4,
+     "y": "TB + Sv",
+     "w": 2,
+     "h": "Tr",
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "visibleIf": "!tbonly",
+     "x": 6.4,
+     "y": "TB + Sv + Tr + 30",
+     "text": {
+      "en": "+transfers {Tr}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "!tbonly",
+     "x": 7.8,
+     "y": "min(CA, 0)",
+     "w": 2,
+     "h": "max(abs(CA), 1)",
+     "color": {
+      "by": "step(0, CA)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "visibleIf": "!tbonly",
+     "x": 8.8,
+     "y": "CA + if(CA < 0, -30, 30)",
+     "text": {
+      "en": "current a/c {CA}"
+     },
+     "size": 18
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Trade balance",
+      "kn": "ವ್ಯಾಪಾರ ಶಿಲ್ಕು"
+     },
+     "expr": "TB",
+     "digits": 0,
+     "unit": "$ bn"
+    },
+    {
+     "label": {
+      "en": "Net invisibles",
+      "kn": "ನಿವ್ವಳ ಅದೃಶ್ಯಗಳು"
+     },
+     "expr": "Sv + Tr",
+     "digits": 0,
+     "unit": "$ bn"
+    },
+    {
+     "label": {
+      "en": "Current account balance",
+      "kn": "ಚಾಲ್ತಿ ಖಾತೆ ಶಿಲ್ಕು"
+     },
+     "expr": "CA",
+     "digits": 0,
+     "unit": "$ bn"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Can the current account be in surplus while trade in goods is in deficit? Find such a setting.",
+     "kn": "ಸರಕು ವ್ಯಾಪಾರ ಕೊರತೆಯಿದ್ದರೂ ಚಾಲ್ತಿ ಖಾತೆ ಮಿಗತೆ ಸಾಧ್ಯವೇ? ಹುಡುಕಿ."
+    },
+    {
+     "en": "Oil prices rise and imports jump by $100 billion. What happens to the current account?",
+     "kn": "ತೈಲ ಬೆಲೆ ಏರಿ ಆಮದು $100 ಬಿಲಿಯನ್ ಹೆಚ್ಚಾಯಿತು. ಚಾಲ್ತಿ ಖಾತೆ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

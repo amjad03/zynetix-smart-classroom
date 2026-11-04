@@ -275,6 +275,244 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The consumer's optimum",
+    "kn": "ಗ್ರಾಹಕನ ಅತ್ಯುತ್ತಮ ಆಯ್ಕೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Slide along the budget line by choosing what share of income goes to good 1 (p₂ = ₹4). The yellow curve is the indifference curve through your bundle. The best bundle is where that curve just touches the budget line: there MRS = p₁/p₂.",
+    "kn": "ಆದಾಯದ ಎಷ್ಟು ಪಾಲು ಸರಕು 1 ಕ್ಕೆ ಎಂದು ಆರಿಸಿ ಬಜೆಟ್ ರೇಖೆಯ ಮೇಲೆ ಸರಿಯಿರಿ (p₂ = ₹4). ಹಳದಿ ವಕ್ರರೇಖೆ ನಿಮ್ಮ ಕಟ್ಟಿನ ಮೂಲಕ ಉದಾಸೀನ ವಕ್ರರೇಖೆ. ಅದು ಬಜೆಟ್ ರೇಖೆಯನ್ನು ಸ್ಪರ್ಶಿಸುವಲ್ಲಿ MRS = p₁/p₂."
+   },
+   "sliders": [
+    {
+     "name": "f",
+     "label": {
+      "en": "Share of income on good 1",
+      "kn": "ಸರಕು 1 ಕ್ಕೆ ಆದಾಯದ ಪಾಲು"
+     },
+     "min": 0.05,
+     "max": 0.95,
+     "step": 0.05,
+     "value": 0.25
+    },
+    {
+     "name": "p1",
+     "label": {
+      "en": "Price of good 1",
+      "kn": "ಸರಕು 1 ಬೆಲೆ"
+     },
+     "min": 2,
+     "max": 8,
+     "step": 0.5,
+     "value": 4,
+     "unit": "₹"
+    },
+    {
+     "name": "M",
+     "label": {
+      "en": "Income",
+      "kn": "ಆದಾಯ"
+     },
+     "min": 20,
+     "max": 60,
+     "step": 5,
+     "value": 40,
+     "unit": "₹"
+    },
+    {
+     "name": "a",
+     "label": {
+      "en": "Liking for good 1",
+      "kn": "ಸರಕು 1 ರ ಮೇಲಿನ ಒಲವು"
+     },
+     "min": 0.2,
+     "max": 0.8,
+     "step": 0.05,
+     "value": 0.5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "opt",
+     "label": {
+      "en": "Show the optimum",
+      "kn": "ಅತ್ಯುತ್ತಮ ಕಟ್ಟು ತೋರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "x1",
+     "expr": "f*M/p1"
+    },
+    {
+     "name": "x2",
+     "expr": "(1 - f)*M/4"
+    },
+    {
+     "name": "U",
+     "expr": "x1^a*x2^(1 - a)"
+    },
+    {
+     "name": "mrs",
+     "expr": "a/(1 - a)*x2/x1"
+    },
+    {
+     "name": "o1",
+     "expr": "a*M/p1"
+    },
+    {
+     "name": "o2",
+     "expr": "(1 - a)*M/4"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     15
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "good 1 (x₁)",
+    "yLabel": "good 2 (x₂)"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "M/4",
+     "x2": "M/p1",
+     "y2": 0,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "(U/x^a)^(1/(1 - a))",
+     "from": 0.3,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "x1",
+     "y": "x2",
+     "r": 0.35,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "opt",
+     "x": "o1",
+     "y": "o2",
+     "r": 0.4,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "opt",
+     "x": "clamp(o1 + 3, 4, 26)",
+     "y": "o2 + 1",
+     "text": {
+      "en": "optimum"
+     },
+     "size": 18,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "mrs > p1/4 + 0.01",
+     "x": 19,
+     "y": 14,
+     "text": {
+      "en": "MRS > p₁/p₂: buy more of good 1"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "mrs < p1/4 - 0.01",
+     "x": 19,
+     "y": 14,
+     "text": {
+      "en": "MRS < p₁/p₂: buy less of good 1"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "abs(mrs - p1/4) <= 0.01",
+     "x": 19,
+     "y": 14,
+     "text": {
+      "en": "MRS = p₁/p₂: best bundle"
+     },
+     "size": 20,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Good 1 bought",
+      "kn": "ಸರಕು 1"
+     },
+     "expr": "x1",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Good 2 bought",
+      "kn": "ಸರಕು 2"
+     },
+     "expr": "x2",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "MRS",
+      "kn": "MRS"
+     },
+     "expr": "mrs",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Price ratio p₁/p₂",
+      "kn": "ಬೆಲೆ ಅನುಪಾತ"
+     },
+     "expr": "p1/4",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Move the share until the yellow curve just touches the budget line. What are MRS and p₁/p₂ there?",
+     "kn": "ಹಳದಿ ವಕ್ರರೇಖೆ ಬಜೆಟ್ ರೇಖೆಯನ್ನು ಸ್ಪರ್ಶಿಸುವವರೆಗೆ ಪಾಲು ಬದಲಿಸಿ. ಅಲ್ಲಿ MRS ಮತ್ತು p₁/p₂?"
+    },
+    {
+     "en": "Raise the price of good 1. Does the best quantity of good 1 rise or fall?",
+     "kn": "ಸರಕು 1 ಬೆಲೆ ಏರಿಸಿ. ಅತ್ಯುತ್ತಮ ಪ್ರಮಾಣ ಏರುತ್ತದೆಯೇ ಇಳಿಯುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Why is a bundle where the curve cuts the budget line not the best?",
+     "kn": "ವಕ್ರರೇಖೆ ಬಜೆಟ್ ರೇಖೆಯನ್ನು ಛೇದಿಸುವ ಕಟ್ಟು ಏಕೆ ಅತ್ಯುತ್ತಮವಲ್ಲ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

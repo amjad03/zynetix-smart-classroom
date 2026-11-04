@@ -299,6 +299,214 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Shifting aggregate demand",
+    "kn": "ಸಮಗ್ರ ಬೇಡಿಕೆಯ ಸ್ಥಳಾಂತರ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The dashed line is the old AD with autonomous spending Ā = 100. Drag the yellow ring to change Ā: the AD line shifts parallel and equilibrium output changes by ΔĀ/(1 − c). Changing c instead swings the line and changes its slope.",
+    "kn": "ಚುಕ್ಕೆ ರೇಖೆ ಹಳೆಯ AD (Ā = 100). ಹಳದಿ ಉಂಗುರ ಎಳೆದು Ā ಬದಲಿಸಿ: AD ಸಮಾಂತರವಾಗಿ ಸರಿಯುತ್ತದೆ, ಉತ್ಪಾದನೆ ΔĀ/(1 − c) ರಷ್ಟು ಬದಲಾಗುತ್ತದೆ. c ಬದಲಿಸಿದರೆ ಇಳಿಜಾರು ಬದಲಾಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "c",
+     "label": {
+      "en": "MPC c",
+      "kn": "MPC c"
+     },
+     "min": 0.5,
+     "max": 0.8,
+     "step": 0.05,
+     "value": 0.75
+    }
+   ],
+   "toggles": [
+    {
+     "name": "old",
+     "label": {
+      "en": "Show the old AD",
+      "kn": "ಹಳೆಯ AD ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "A",
+     "label": "Ā",
+     "x": 0,
+     "y": 140,
+     "axis": "y",
+     "box": {
+      "x": [
+       0,
+       900
+      ],
+      "y": [
+       40,
+       180
+      ]
+     },
+     "snap": 5,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "Ab",
+     "expr": "A_y"
+    },
+    {
+     "name": "Y0",
+     "expr": "100/(1 - c)"
+    },
+    {
+     "name": "Y1",
+     "expr": "Ab/(1 - c)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     900
+    ],
+    "y": [
+     0,
+     900
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "output Y (₹ crore)",
+    "yLabel": "AD (₹ crore)",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "x",
+     "color": "white",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "visibleIf": "old",
+     "fn": "100 + c*x",
+     "color": "blue",
+     "dashed": true,
+     "width": 3,
+     "opacity": 0.5
+    },
+    {
+     "shape": "path",
+     "fn": "Ab + c*x",
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "old",
+     "x": "Y0",
+     "y": "Y0",
+     "r": 10,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "circle",
+     "x": "min(Y1, 890)",
+     "y": "min(Y1, 890)",
+     "r": 12,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": "Y0",
+     "y1": 30,
+     "x2": "min(Y1, 900)",
+     "y2": 30,
+     "color": "green",
+     "width": 5
+    },
+    {
+     "shape": "label",
+     "x": "clamp((Y0 + Y1)/2, 100, 800)",
+     "y": 70,
+     "text": {
+      "en": "ΔY = {Y1 - Y0:0}"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": "clamp(Y1, 140, 760)",
+     "y": "min(Y1 + 60, 860)",
+     "text": {
+      "en": "E₁: {Y1:0}"
+     },
+     "size": 20,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Change in Ā",
+      "kn": "Ā ಬದಲಾವಣೆ"
+     },
+     "expr": "Ab - 100",
+     "digits": 0,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "New equilibrium output",
+      "kn": "ಹೊಸ ಸಮತೋಲನ ಉತ್ಪಾದನೆ"
+     },
+     "expr": "Y1",
+     "digits": 0,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "Change in output",
+      "kn": "ಉತ್ಪಾದನೆಯ ಬದಲಾವಣೆ"
+     },
+     "expr": "Y1 - Y0",
+     "digits": 0,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "Multiplier 1/(1 − c)",
+      "kn": "ಗುಣಕ"
+     },
+     "expr": "1/(1 - c)",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise Ā by 20. How much does output rise when c = 0.75?",
+     "kn": "Ā ಅನ್ನು 20 ಏರಿಸಿ. c = 0.75 ಇದ್ದಾಗ ಉತ್ಪಾದನೆ ಎಷ್ಟು ಏರುತ್ತದೆ?"
+    },
+    {
+     "en": "Keep Ā fixed and raise c. Does the old line move, or only the new one?",
+     "kn": "Ā ಸ್ಥಿರವಿಟ್ಟು c ಏರಿಸಿ. ಯಾವ ರೇಖೆ ಚಲಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Cut Ā by 40. Which way does equilibrium move?",
+     "kn": "Ā ಅನ್ನು 40 ಇಳಿಸಿ. ಸಮತೋಲನ ಯಾವ ಕಡೆ ಸರಿಯುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "kind": "function_plot",

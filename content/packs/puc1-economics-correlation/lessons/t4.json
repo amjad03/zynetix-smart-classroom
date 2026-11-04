@@ -274,6 +274,185 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "r ignores change of origin and scale",
+    "kn": "ಮೂಲ ಮತ್ತು ಮಾಪನ ಬದಲಾವಣೆಗೆ r ಬದಲಾಗದು"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Six pairs (X, Y). The step deviation method uses u = (X − A)/c. Move A and c: the cloud slides and squeezes, but r stays the same. Flip the sign of c and only the sign of r changes.",
+    "kn": "ಆರು (X, Y) ಜೋಡಿಗಳು. ಹಂತ ವಿಚಲನೆ ವಿಧಾನದಲ್ಲಿ u = (X − A)/c. A ಮತ್ತು c ಬದಲಿಸಿ: ಮೋಡ ಸರಿಯುತ್ತದೆ, ಕುಗ್ಗುತ್ತದೆ, ಆದರೆ r ಬದಲಾಗದು. c ಋಣವಾದರೆ r ನ ಚಿಹ್ನೆ ಮಾತ್ರ ಬದಲಾಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Assumed origin A",
+      "kn": "ಊಹಿತ ಮೂಲ A"
+     },
+     "min": 0,
+     "max": 50,
+     "step": 5,
+     "value": 0
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "Common factor c",
+      "kn": "ಸಾಮಾನ್ಯ ಅಂಶ c"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "neg",
+     "label": {
+      "en": "Make c negative",
+      "kn": "c ಋಣಾತ್ಮಕ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "cc",
+     "expr": "c*if(neg, -1, 1)"
+    },
+    {
+     "name": "mu",
+     "expr": "((20 - A)/cc+(30 - A)/cc+(40 - A)/cc+(50 - A)/cc+(60 - A)/cc+(70 - A)/cc)/6"
+    },
+    {
+     "name": "my",
+     "expr": "14.333333333333334"
+    },
+    {
+     "name": "suv",
+     "expr": "((20 - A)/cc - mu)*(8 - my)+((30 - A)/cc - mu)*(12 - my)+((40 - A)/cc - mu)*(11 - my)+((50 - A)/cc - mu)*(16 - my)+((60 - A)/cc - mu)*(18 - my)+((70 - A)/cc - mu)*(21 - my)"
+    },
+    {
+     "name": "suu",
+     "expr": "((20 - A)/cc - mu)^2+((30 - A)/cc - mu)^2+((40 - A)/cc - mu)^2+((50 - A)/cc - mu)^2+((60 - A)/cc - mu)^2+((70 - A)/cc - mu)^2"
+    },
+    {
+     "name": "ruv",
+     "expr": "suv/sqrt(suu*117.3333)"
+    }
+   ],
+   "view": {
+    "x": [
+     -75,
+     75
+    ],
+    "y": [
+     0,
+     25
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "u = (X − A)/c",
+    "yLabel": "Y"
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": "(20 - A)/cc",
+     "y": 8,
+     "r": 1.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "(30 - A)/cc",
+     "y": 12,
+     "r": 1.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "(40 - A)/cc",
+     "y": 11,
+     "r": 1.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "(50 - A)/cc",
+     "y": 16,
+     "r": 1.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "(60 - A)/cc",
+     "y": 18,
+     "r": 1.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "(70 - A)/cc",
+     "y": 21,
+     "r": 1.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 23.5,
+     "text": {
+      "en": "r(u, Y) = {ruv:3}"
+     },
+     "size": 28,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "r between X and Y",
+      "kn": "X, Y ನಡುವೆ r"
+     },
+     "expr": "0.971008",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "r between u and Y",
+      "kn": "u, Y ನಡುವೆ r"
+     },
+     "expr": "ruv",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Mean of u",
+      "kn": "u ಸರಾಸರಿ"
+     },
+     "expr": "mu",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set A = 40 and c = 10. The numbers become small and easy. Is r the same?",
+     "kn": "A = 40, c = 10 ಇಡಿ. ಸಂಖ್ಯೆಗಳು ಚಿಕ್ಕದಾಗುತ್ತವೆ. r ಅದೇ ಇದೆಯೇ?"
+    },
+    {
+     "en": "Turn on 'Make c negative'. What happens to the cloud and to r?",
+     "kn": "'c ಋಣಾತ್ಮಕ' ಆನ್ ಮಾಡಿ. ಮೋಡ ಮತ್ತು r ಏನಾಗುತ್ತವೆ?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

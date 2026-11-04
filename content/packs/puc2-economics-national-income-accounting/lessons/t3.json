@@ -189,6 +189,249 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "GDP by the expenditure method",
+    "kn": "ವೆಚ್ಚ ವಿಧಾನದಿಂದ GDP"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "GDP = C + I + G + (X − M). Stack the four kinds of final spending. When imports exceed exports, net exports are negative and the red block is taken off the top.",
+    "kn": "GDP = C + I + G + (X − M). ನಾಲ್ಕು ರೀತಿಯ ಅಂತಿಮ ವೆಚ್ಚಗಳನ್ನು ಜೋಡಿಸಿ. ಆಮದು ರಫ್ತಿಗಿಂತ ಹೆಚ್ಚಿದ್ದರೆ ನಿವ್ವಳ ರಫ್ತು ಋಣ; ಕೆಂಪು ಭಾಗ ಮೇಲಿನಿಂದ ಕಳೆಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "C",
+     "label": {
+      "en": "Private consumption C",
+      "kn": "ಖಾಸಗಿ ಉಪಭೋಗ C"
+     },
+     "min": 100,
+     "max": 400,
+     "step": 10,
+     "value": 300,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "name": "I",
+     "label": {
+      "en": "Investment I",
+      "kn": "ಹೂಡಿಕೆ I"
+     },
+     "min": 20,
+     "max": 200,
+     "step": 10,
+     "value": 120,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "name": "G",
+     "label": {
+      "en": "Government consumption G",
+      "kn": "ಸರ್ಕಾರಿ ಉಪಭೋಗ G"
+     },
+     "min": 20,
+     "max": 120,
+     "step": 10,
+     "value": 50,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "name": "NX",
+     "label": {
+      "en": "Net exports X − M",
+      "kn": "ನಿವ್ವಳ ರಫ್ತು X − M"
+     },
+     "min": -50,
+     "max": 50,
+     "step": 5,
+     "value": -20,
+     "unit": "₹ lakh crore"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "pct",
+     "label": {
+      "en": "Show shares of GDP",
+      "kn": "GDP ಪಾಲು ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "D",
+     "expr": "C + I + G"
+    },
+    {
+     "name": "Y",
+     "expr": "D + NX"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     800
+    ],
+    "axes": true,
+    "grid": true,
+    "yLabel": "₹ lakh crore"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 0,
+     "w": 3,
+     "h": "C",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": "C",
+     "w": 3,
+     "h": "I",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": "C + I",
+     "w": 3,
+     "h": "G",
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "NX >= 0",
+     "x": 2,
+     "y": "D",
+     "w": 3,
+     "h": "NX",
+     "color": "yellow",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "NX < 0",
+     "x": 2,
+     "y": "D + NX",
+     "w": 3,
+     "h": "-NX",
+     "color": "red",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": "C/2",
+     "text": {
+      "en": "C"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": "C + I/2",
+     "text": {
+      "en": "I"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": "C + I + G/2",
+     "text": {
+      "en": "G"
+     },
+     "size": 22
+    },
+    {
+     "shape": "line",
+     "x1": 1.5,
+     "y1": "Y",
+     "x2": 5.5,
+     "y2": "Y",
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "label",
+     "x": 7.5,
+     "y": "Y",
+     "text": {
+      "en": "GDP = {Y}"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "pct",
+     "x": 7.5,
+     "y": "Y - 90",
+     "text": {
+      "en": "C {100*C/Y:0}%  I {100*I/Y:0}%  G {100*G/Y:0}%"
+     },
+     "size": 18,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "GDP",
+      "kn": "GDP"
+     },
+     "expr": "Y",
+     "digits": 0,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "label": {
+      "en": "Domestic absorption C + I + G",
+      "kn": "ದೇಶೀಯ ವೆಚ್ಚ"
+     },
+     "expr": "D",
+     "digits": 0,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "label": {
+      "en": "Consumption share",
+      "kn": "ಉಪಭೋಗದ ಪಾಲು"
+     },
+     "expr": "100*C/Y",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make net exports negative. Why are imports subtracted when GDP is worked out?",
+     "kn": "ನಿವ್ವಳ ರಫ್ತು ಋಣ ಮಾಡಿ. GDP ಲೆಕ್ಕದಲ್ಲಿ ಆಮದು ಏಕೆ ಕಳೆಯಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Which component is the largest part of GDP here?",
+     "kn": "ಇಲ್ಲಿ GDP ಯ ಅತಿ ದೊಡ್ಡ ಭಾಗ ಯಾವುದು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

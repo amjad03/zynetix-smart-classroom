@@ -768,6 +768,242 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Short-run cost curves",
+    "kn": "ಅಲ್ಪಾವಧಿ ವೆಚ್ಚ ವಕ್ರರೇಖೆಗಳು"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "TVC = q³ − 6q² + 15q and TFC is set by the slider. AFC keeps falling; AVC and AC are U-shaped; MC cuts AVC and AC at their lowest points. Move q to read every cost.",
+    "kn": "TVC = q³ − 6q² + 15q, TFC ಸ್ಲೈಡರ್‌ನಿಂದ. AFC ಸದಾ ಇಳಿಯುತ್ತದೆ; AVC ಮತ್ತು AC U-ಆಕಾರ; MC, AVC ಮತ್ತು AC ಯನ್ನು ಅವುಗಳ ಕನಿಷ್ಠ ಬಿಂದುಗಳಲ್ಲಿ ಛೇದಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "q",
+     "label": {
+      "en": "Output q",
+      "kn": "ಉತ್ಪಾದನೆ q"
+     },
+     "min": 0.5,
+     "max": 6,
+     "step": 0.1,
+     "value": 3
+    },
+    {
+     "name": "F",
+     "label": {
+      "en": "Total fixed cost TFC",
+      "kn": "ಒಟ್ಟು ಸ್ಥಿರ ವೆಚ್ಚ TFC"
+     },
+     "min": 8,
+     "max": 40,
+     "step": 2,
+     "value": 32,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "shafc",
+     "label": {
+      "en": "Show AFC",
+      "kn": "AFC ತೋರಿಸಿ"
+     },
+     "value": true
+    },
+    {
+     "name": "mc",
+     "label": {
+      "en": "Show MC",
+      "kn": "MC ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "tvc",
+     "expr": "q^3 - 6*q^2 + 15*q"
+    },
+    {
+     "name": "avc",
+     "expr": "q^2 - 6*q + 15"
+    },
+    {
+     "name": "afc",
+     "expr": "F/q"
+    },
+    {
+     "name": "ac",
+     "expr": "avc + afc"
+    },
+    {
+     "name": "mcq",
+     "expr": "3*q^2 - 12*q + 15"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     6.5
+    ],
+    "y": [
+     0,
+     45
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "output q",
+    "yLabel": "cost per unit (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "shafc",
+     "fn": "F/x",
+     "from": 0.3,
+     "color": "white",
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "fn": "x^2 - 6*x + 15",
+     "from": 0.2,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "x^2 - 6*x + 15 + F/x",
+     "from": 0.3,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "visibleIf": "mc",
+     "fn": "3*x^2 - 12*x + 15",
+     "from": 0.2,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "q",
+     "y1": 0,
+     "x2": "q",
+     "y2": "min(ac, 45)",
+     "color": "yellow",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": 3,
+     "y": 6,
+     "r": 0.1,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 3.8,
+     "text": {
+      "en": "min AVC"
+     },
+     "size": 18,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 4.6,
+     "y": 42,
+     "text": {
+      "en": "TFC {F}  TVC {tvc:1}  TC {F + tvc:1}"
+     },
+     "size": 20,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": 18.5,
+     "text": {
+      "en": "AVC"
+     },
+     "size": 18,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": 26,
+     "text": {
+      "en": "AC"
+     },
+     "size": 18,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "AFC",
+      "kn": "AFC"
+     },
+     "expr": "afc",
+     "digits": 2,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "AVC",
+      "kn": "AVC"
+     },
+     "expr": "avc",
+     "digits": 2,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "AC",
+      "kn": "AC"
+     },
+     "expr": "ac",
+     "digits": 2,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "MC",
+      "kn": "MC"
+     },
+     "expr": "mcq",
+     "digits": 2,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Move q to 3. Check that MC = AVC there. Is that the lowest AVC?",
+     "kn": "q = 3 ಇಡಿ. ಅಲ್ಲಿ MC = AVC ಎಂದು ಪರಿಶೀಲಿಸಿ. ಅದು ಕನಿಷ್ಠ AVC ಯೇ?"
+    },
+    {
+     "en": "Raise TFC. Which curves move, and which stay put?",
+     "kn": "TFC ಏರಿಸಿ. ಯಾವ ವಕ್ರರೇಖೆಗಳು ಸರಿಯುತ್ತವೆ, ಯಾವುವು ಸ್ಥಿರ?"
+    },
+    {
+     "en": "Why does the gap between AC and AVC shrink as output rises?",
+     "kn": "ಉತ್ಪಾದನೆ ಏರಿದಂತೆ AC ಮತ್ತು AVC ಅಂತರ ಏಕೆ ಕುಗ್ಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

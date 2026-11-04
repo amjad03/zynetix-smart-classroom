@@ -264,6 +264,232 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Elasticity along a demand line",
+    "kn": "ಬೇಡಿಕೆ ರೇಖೆಯ ಮೇಲೆ ಸ್ಥಿತಿಸ್ಥಾಪಕತೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "For q = 100 − 5p, eD = 5p ÷ (100 − 5p). Drag the point along the line: above the middle demand is elastic, at the middle eD = 1, below it inelastic. Try a price change: when demand is elastic, cutting the price raises total spending.",
+    "kn": "q = 100 − 5p ಗೆ eD = 5p ÷ (100 − 5p). ಬಿಂದುವನ್ನು ರೇಖೆಯ ಮೇಲೆ ಎಳೆಯಿರಿ: ಮಧ್ಯದ ಮೇಲೆ ಸ್ಥಿತಿಸ್ಥಾಪಕ, ಮಧ್ಯದಲ್ಲಿ eD = 1, ಕೆಳಗೆ ಅಸ್ಥಿತಿಸ್ಥಾಪಕ. ಸ್ಥಿತಿಸ್ಥಾಪಕವಾದಾಗ ಬೆಲೆ ಇಳಿಸಿದರೆ ಒಟ್ಟು ವೆಚ್ಚ ಏರುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "dp",
+     "label": {
+      "en": "Price change",
+      "kn": "ಬೆಲೆ ಬದಲಾವಣೆ"
+     },
+     "min": -20,
+     "max": 20,
+     "step": 5,
+     "value": -10,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "tr",
+     "label": {
+      "en": "Show total expenditure rectangles",
+      "kn": "ಒಟ್ಟು ವೆಚ್ಚ ಆಯತಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "A",
+     "label": "point",
+     "x": 30,
+     "y": 14,
+     "line": [
+      [
+       5,
+       19
+      ],
+      [
+       95,
+       1
+      ]
+     ],
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "p",
+     "expr": "A_y"
+    },
+    {
+     "name": "q",
+     "expr": "100 - 5*p"
+    },
+    {
+     "name": "ed",
+     "expr": "5*p/max(q, 0.01)"
+    },
+    {
+     "name": "p2",
+     "expr": "min(p*(1 + dp/100), 20)"
+    },
+    {
+     "name": "q2",
+     "expr": "100 - 5*p2"
+    },
+    {
+     "name": "dTR",
+     "expr": "p2*q2 - p*q"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     21
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "quantity",
+    "yLabel": "price (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "visibleIf": "tr",
+     "x": 0,
+     "y": 0,
+     "w": "q",
+     "h": "p",
+     "color": "blue",
+     "opacity": 0.2
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "tr",
+     "x": 0,
+     "y": 0,
+     "w": "q2",
+     "h": "p2",
+     "fill": false,
+     "color": "orange",
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "(100 - x)/5",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 50,
+     "y": 10,
+     "r": 0.8,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 56,
+     "y": 11,
+     "text": {
+      "en": "e = 1"
+     },
+     "size": 18
+    },
+    {
+     "shape": "circle",
+     "x": "q2",
+     "y": "p2",
+     "r": 0.6,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 78,
+     "y": 19.8,
+     "text": {
+      "en": "eD = {ed:2}"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 78,
+     "y": 17.8,
+     "text": {
+      "en": "spending changes by ₹{dTR:0}"
+     },
+     "size": 20,
+     "color": {
+      "by": "step(0, dTR)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Price",
+      "kn": "ಬೆಲೆ"
+     },
+     "expr": "p",
+     "digits": 1,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Quantity",
+      "kn": "ಪ್ರಮಾಣ"
+     },
+     "expr": "q",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Elasticity eD",
+      "kn": "ಸ್ಥಿತಿಸ್ಥಾಪಕತೆ eD"
+     },
+     "expr": "ed",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Change in total spending",
+      "kn": "ಒಟ್ಟು ವೆಚ್ಚ ಬದಲಾವಣೆ"
+     },
+     "expr": "dTR",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Put the point near p = 16 and cut the price by 10%. Does spending rise or fall? Why?",
+     "kn": "p ≈ 16 ಇಟ್ಟು ಬೆಲೆ 10% ಇಳಿಸಿ. ವೆಚ್ಚ ಏರುತ್ತದೆಯೇ ಇಳಿಯುತ್ತದೆಯೇ? ಏಕೆ?"
+    },
+    {
+     "en": "Now try p near 4 with the same cut. What changes?",
+     "kn": "ಈಗ p ≈ 4 ನಲ್ಲಿ ಅದೇ ಇಳಿಕೆ. ಏನು ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Where on the line is total spending largest?",
+     "kn": "ರೇಖೆಯ ಮೇಲೆ ಒಟ್ಟು ವೆಚ್ಚ ಗರಿಷ್ಠ ಎಲ್ಲಿ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

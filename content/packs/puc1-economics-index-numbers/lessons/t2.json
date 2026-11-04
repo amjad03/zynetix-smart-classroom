@@ -447,6 +447,269 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Two simple index numbers",
+    "kn": "ಎರಡು ಸರಳ ಸೂಚ್ಯಂಕಗಳು"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Base prices: rice ₹40 per kg, salt ₹20 per kg, cloth ₹100 per metre. The simple aggregative index divides total prices; the simple average of price relatives averages each item's relative. Quote rice per quintal and see which index is fooled by units.",
+    "kn": "ಆಧಾರ ಬೆಲೆಗಳು: ಅಕ್ಕಿ ₹40/ಕೆಜಿ, ಉಪ್ಪು ₹20/ಕೆಜಿ, ಬಟ್ಟೆ ₹100/ಮೀ. ಅಕ್ಕಿಯನ್ನು ಕ್ವಿಂಟಾಲ್‌ಗೆ ಬೆಲೆ ಹೇಳಿದರೆ ಯಾವ ಸೂಚ್ಯಂಕ ಘಟಕದಿಂದ ಮೋಸಹೋಗುತ್ತದೆ ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "r1",
+     "label": {
+      "en": "Rice now",
+      "kn": "ಅಕ್ಕಿ ಈಗ"
+     },
+     "min": 20,
+     "max": 80,
+     "step": 2,
+     "value": 50,
+     "unit": "₹/kg"
+    },
+    {
+     "name": "s1",
+     "label": {
+      "en": "Salt now",
+      "kn": "ಉಪ್ಪು ಈಗ"
+     },
+     "min": 10,
+     "max": 40,
+     "step": 1,
+     "value": 20,
+     "unit": "₹/kg"
+    },
+    {
+     "name": "c1",
+     "label": {
+      "en": "Cloth now",
+      "kn": "ಬಟ್ಟೆ ಈಗ"
+     },
+     "min": 50,
+     "max": 200,
+     "step": 5,
+     "value": 110,
+     "unit": "₹/m"
+    }
+   ],
+   "choices": [
+    {
+     "name": "u",
+     "label": {
+      "en": "Rice quoted per",
+      "kn": "ಅಕ್ಕಿ ಬೆಲೆ ಘಟಕ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "kg",
+        "kn": "ಕೆಜಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "quintal",
+        "kn": "ಕ್ವಿಂಟಾಲ್"
+       },
+       "value": 100
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "agg",
+     "expr": "(r1*u + s1 + c1)/(40*u + 20 + 100)*100"
+    },
+    {
+     "name": "Rr",
+     "expr": "r1/40*100"
+    },
+    {
+     "name": "Rs",
+     "expr": "s1/20*100"
+    },
+    {
+     "name": "Rc",
+     "expr": "c1/100*100"
+    },
+    {
+     "name": "avg",
+     "expr": "(Rr + Rs + Rc)/3"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     0,
+     220
+    ],
+    "axes": true,
+    "grid": true,
+    "yLabel": "index"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 0,
+     "w": 1.6,
+     "h": "Rr",
+     "color": "orange",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 1.3,
+     "y": 8,
+     "text": {
+      "en": "rice"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 2.5,
+     "y": 0,
+     "w": 1.6,
+     "h": "Rs",
+     "color": "blue",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 3.3,
+     "y": 8,
+     "text": {
+      "en": "salt"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 4.5,
+     "y": 0,
+     "w": 1.6,
+     "h": "Rc",
+     "color": "green",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 5.3,
+     "y": 8,
+     "text": {
+      "en": "cloth"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 7.5,
+     "y": 0,
+     "w": 1.8,
+     "h": "agg",
+     "color": "yellow",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "agg + 10",
+     "text": {
+      "en": "{agg:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 9.8,
+     "y": 0,
+     "w": 1.8,
+     "h": "avg",
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 10.7,
+     "y": "avg + 10",
+     "text": {
+      "en": "{avg:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 100,
+     "x2": 12,
+     "y2": 100,
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "label",
+     "x": 8.4,
+     "y": 205,
+     "text": {
+      "en": "aggregative"
+     },
+     "size": 18,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 10.7,
+     "y": 190,
+     "text": {
+      "en": "avg of relatives"
+     },
+     "size": 18,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Simple aggregative ΣP1/ΣP0 × 100",
+      "kn": "ಸರಳ ಸಮಗ್ರ"
+     },
+     "expr": "agg",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Simple average of relatives",
+      "kn": "ಸಾಪೇಕ್ಷಗಳ ಸರಳ ಸರಾಸರಿ"
+     },
+     "expr": "avg",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise only the salt price to ₹40 (it doubles). Which index rises more? Why?",
+     "kn": "ಉಪ್ಪಿನ ಬೆಲೆಯನ್ನು ₹40 ಮಾಡಿ (ದ್ವಿಗುಣ). ಯಾವ ಸೂಚ್ಯಂಕ ಹೆಚ್ಚು ಏರುತ್ತದೆ? ಏಕೆ?"
+    },
+    {
+     "en": "Switch rice to 'per quintal'. Which index changes, though no price changed?",
+     "kn": "ಅಕ್ಕಿಯನ್ನು 'ಕ್ವಿಂಟಾಲ್'ಗೆ ಬದಲಿಸಿ. ಬೆಲೆ ಬದಲಾಗದಿದ್ದರೂ ಯಾವ ಸೂಚ್ಯಂಕ ಬದಲಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

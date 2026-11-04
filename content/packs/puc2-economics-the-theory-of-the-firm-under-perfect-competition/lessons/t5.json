@@ -248,6 +248,222 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "From firm supply to market supply",
+    "kn": "ಸಂಸ್ಥೆ ಪೂರೈಕೆಯಿಂದ ಮಾರುಕಟ್ಟೆ ಪೂರೈಕೆಗೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Firm 1 supplies p − 10 units at prices of ₹10 or more; firm 2 supplies p − 15 units at ₹15 or more. The market supply is their horizontal sum, so it bends at ₹15 where firm 2 joins. A rise in input costs shifts every supply curve up.",
+    "kn": "ಸಂಸ್ಥೆ 1 ₹10 ಅಥವಾ ಹೆಚ್ಚಿನ ಬೆಲೆಯಲ್ಲಿ p − 10 ಘಟಕ; ಸಂಸ್ಥೆ 2 ₹15 ಅಥವಾ ಹೆಚ್ಚಿನಲ್ಲಿ p − 15 ಘಟಕ ಪೂರೈಸುತ್ತವೆ. ಮಾರುಕಟ್ಟೆ ಪೂರೈಕೆ ಅವುಗಳ ಅಡ್ಡ ಮೊತ್ತ. ಆದಾನ ವೆಚ್ಚ ಏರಿದರೆ ಪೂರೈಕೆ ಮೇಲೆ ಸರಿಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "p",
+     "label": {
+      "en": "Market price",
+      "kn": "ಮಾರುಕಟ್ಟೆ ಬೆಲೆ"
+     },
+     "min": 0,
+     "max": 40,
+     "step": 1,
+     "value": 20,
+     "unit": "₹"
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "Rise in input costs",
+      "kn": "ಆದಾನ ವೆಚ್ಚ ಏರಿಕೆ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 0,
+     "unit": "₹/unit"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "each",
+     "label": {
+      "en": "Show each firm's supply",
+      "kn": "ಪ್ರತಿ ಸಂಸ್ಥೆಯ ಪೂರೈಕೆ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "q1",
+     "expr": "max(p - 10 - c, 0)"
+    },
+    {
+     "name": "q2",
+     "expr": "max(p - 15 - c, 0)"
+    },
+    {
+     "name": "Q",
+     "expr": "q1 + q2"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     60
+    ],
+    "y": [
+     0,
+     45
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "quantity supplied",
+    "yLabel": "price (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "each",
+     "fn": "10 + c + x",
+     "color": "blue",
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "visibleIf": "each",
+     "fn": "15 + c + x",
+     "color": "green",
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "fn": "if(x <= 5, 10 + c + x, (x + 25 + 2*c)/2)",
+     "color": "orange",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": 0.2,
+     "y1": 0,
+     "x2": 0.2,
+     "y2": "10 + c",
+     "color": "orange",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "p",
+     "x2": 60,
+     "y2": "p",
+     "color": "yellow",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "Q",
+     "y": "p",
+     "r": 0.6,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "each && q1 > 0",
+     "x": "q1",
+     "y": "p",
+     "r": 0.45,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "each && q2 > 0",
+     "x": "q2",
+     "y": "p",
+     "r": 0.45,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "each",
+     "x": 31,
+     "y": "min(41 + c, 44)",
+     "text": {
+      "en": "firm 1"
+     },
+     "size": 18,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "each",
+     "x": 22,
+     "y": "min(37 + c, 44)",
+     "text": {
+      "en": "firm 2"
+     },
+     "size": 18,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 46,
+     "y": 8,
+     "text": {
+      "en": "market supply {Q}"
+     },
+     "size": 22,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Firm 1",
+      "kn": "ಸಂಸ್ಥೆ 1"
+     },
+     "expr": "q1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Firm 2",
+      "kn": "ಸಂಸ್ಥೆ 2"
+     },
+     "expr": "q2",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Market supply",
+      "kn": "ಮಾರುಕಟ್ಟೆ ಪೂರೈಕೆ"
+     },
+     "expr": "Q",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At ₹12, who supplies? At ₹20?",
+     "kn": "₹12 ನಲ್ಲಿ ಯಾರು ಪೂರೈಸುತ್ತಾರೆ? ₹20 ನಲ್ಲಿ?"
+    },
+    {
+     "en": "Why does the market supply curve become flatter above ₹15?",
+     "kn": "₹15 ಮೇಲೆ ಮಾರುಕಟ್ಟೆ ಪೂರೈಕೆ ವಕ್ರರೇಖೆ ಏಕೆ ಕಡಿಮೆ ಕಡಿದಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Raise input costs by ₹5 and keep the price at ₹20. How much does supply fall?",
+     "kn": "ಆದಾನ ವೆಚ್ಚ ₹5 ಏರಿಸಿ, ಬೆಲೆ ₹20. ಪೂರೈಕೆ ಎಷ್ಟು ಇಳಿಯುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

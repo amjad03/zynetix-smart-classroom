@@ -550,6 +550,184 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Total, average and marginal product",
+    "kn": "ಒಟ್ಟು, ಸರಾಸರಿ ಮತ್ತು ಸೀಮಾಂತ ಉತ್ಪನ್ನ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "TP = 6L² − 0.5L³ with capital fixed. Move labour L. AP is the slope of the ray from the origin to the point; MP is the slope of the tangent. Where the ray is the tangent, AP = MP and AP is at its highest.",
+    "kn": "ಬಂಡವಾಳ ಸ್ಥಿರ; TP = 6L² − 0.5L³. ಶ್ರಮ L ಬದಲಿಸಿ. AP = ಮೂಲದಿಂದ ಬಿಂದುವಿಗೆ ಕಿರಣದ ಇಳಿಜಾರು; MP = ಸ್ಪರ್ಶಕದ ಇಳಿಜಾರು. ಕಿರಣವೇ ಸ್ಪರ್ಶಕವಾದಾಗ AP = MP, AP ಗರಿಷ್ಠ."
+   },
+   "sliders": [
+    {
+     "name": "L",
+     "label": {
+      "en": "Labour L",
+      "kn": "ಶ್ರಮ L"
+     },
+     "min": 0.5,
+     "max": 10,
+     "step": 0.5,
+     "value": 3,
+     "unit": "workers"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ray",
+     "label": {
+      "en": "Ray from origin (AP)",
+      "kn": "ಮೂಲದಿಂದ ಕಿರಣ (AP)"
+     },
+     "value": true
+    },
+    {
+     "name": "tg",
+     "label": {
+      "en": "Tangent (MP)",
+      "kn": "ಸ್ಪರ್ಶಕ (MP)"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "TP",
+     "expr": "6*L^2 - 0.5*L^3"
+    },
+    {
+     "name": "AP",
+     "expr": "TP/L"
+    },
+    {
+     "name": "MP",
+     "expr": "12*L - 1.5*L^2"
+    },
+    {
+     "name": "ext",
+     "expr": "min(1.3, 10.5/L)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     11
+    ],
+    "y": [
+     0,
+     140
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "labour L",
+    "yLabel": "output TP"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "6*x^2 - 0.5*x^3",
+     "to": 10.5,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "ray",
+     "x1": 0,
+     "y1": 0,
+     "x2": "L*ext",
+     "y2": "TP*ext",
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "tg",
+     "x1": "L - 1.5",
+     "y1": "TP - 1.5*MP",
+     "x2": "L + 1.5",
+     "y2": "TP + 1.5*MP",
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "L",
+     "y": "TP",
+     "r": 0.18,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 2.5,
+     "y": 130,
+     "text": {
+      "en": "AP = {AP:1}"
+     },
+     "size": 22,
+     "color": "blue"
+    },
+    {
+     "shape": "label",
+     "x": 2.5,
+     "y": 118,
+     "text": {
+      "en": "MP = {MP:1}"
+     },
+     "size": 22,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Total product",
+      "kn": "ಒಟ್ಟು ಉತ್ಪನ್ನ"
+     },
+     "expr": "TP",
+     "digits": 1,
+     "unit": "units"
+    },
+    {
+     "label": {
+      "en": "Average product",
+      "kn": "ಸರಾಸರಿ ಉತ್ಪನ್ನ"
+     },
+     "expr": "AP",
+     "digits": 2,
+     "unit": "units"
+    },
+    {
+     "label": {
+      "en": "Marginal product",
+      "kn": "ಸೀಮಾಂತ ಉತ್ಪನ್ನ"
+     },
+     "expr": "MP",
+     "digits": 2,
+     "unit": "units"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the L where the ray and the tangent line up. What are AP and MP there?",
+     "kn": "ಕಿರಣ ಮತ್ತು ಸ್ಪರ್ಶಕ ಒಂದಾಗುವ L ಕಂಡುಹಿಡಿಯಿರಿ. ಅಲ್ಲಿ AP, MP ಎಷ್ಟು?"
+    },
+    {
+     "en": "At what L does TP stop rising? What is MP there?",
+     "kn": "ಯಾವ L ನಲ್ಲಿ TP ಏರುವುದು ನಿಲ್ಲುತ್ತದೆ? ಅಲ್ಲಿ MP?"
+    },
+    {
+     "en": "Where is the tangent steepest? That is where MP is largest.",
+     "kn": "ಸ್ಪರ್ಶಕ ಅತಿ ಕಡಿದಾಗಿರುವುದು ಎಲ್ಲಿ? ಅಲ್ಲಿ MP ಗರಿಷ್ಠ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

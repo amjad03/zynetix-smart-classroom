@@ -237,6 +237,197 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "How much does India spend on education?",
+    "kn": "ಭಾರತ ಶಿಕ್ಷಣಕ್ಕೆ ಎಷ್ಟು ವೆಚ್ಚ ಮಾಡುತ್ತದೆ?"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Education spending can be seen as a share of total government spending or as a share of GDP. They are linked: education as % of GDP = (its share of government spending) × (government spending as % of GDP) ÷ 100. The Kothari Commission (1964–66) asked for at least 6% of GDP.",
+    "kn": "ಶಿಕ್ಷಣ ವೆಚ್ಚವನ್ನು ಸರ್ಕಾರದ ಒಟ್ಟು ವೆಚ್ಚದ ಪಾಲಾಗಿ ಅಥವಾ GDPಯ ಪಾಲಾಗಿ ನೋಡಬಹುದು. ಕೊಠಾರಿ ಆಯೋಗ (1964–66) GDPಯ ಕನಿಷ್ಠ 6% ಶಿಫಾರಸು ಮಾಡಿತು."
+   },
+   "sliders": [
+    {
+     "name": "G",
+     "label": {
+      "en": "Government spending",
+      "kn": "ಸರ್ಕಾರದ ವೆಚ್ಚ"
+     },
+     "min": 15,
+     "max": 40,
+     "step": 1,
+     "value": 28,
+     "unit": "% of GDP"
+    },
+    {
+     "name": "es",
+     "label": {
+      "en": "Education's share of it",
+      "kn": "ಅದರಲ್ಲಿ ಶಿಕ್ಷಣದ ಪಾಲು"
+     },
+     "min": 5,
+     "max": 25,
+     "step": 0.5,
+     "value": 15,
+     "unit": "%"
+    },
+    {
+     "name": "Y",
+     "label": {
+      "en": "GDP",
+      "kn": "GDP"
+     },
+     "min": 100,
+     "max": 400,
+     "step": 10,
+     "value": 300,
+     "unit": "₹ lakh crore"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Show the Kothari target (6%)",
+      "kn": "ಕೊಠಾರಿ ಗುರಿ (6%) ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "eg",
+     "expr": "G*es/100"
+    },
+    {
+     "name": "amt",
+     "expr": "eg/100*Y"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     11
+    ],
+    "axes": true,
+    "grid": true,
+    "yLabel": "% of GDP"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0,
+     "w": 2.5,
+     "h": "G/4",
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 2.25,
+     "y": "G/4 + 0.5",
+     "text": {
+      "en": "govt spending {G}% (bar ÷ 4)"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 6,
+     "y": 0,
+     "w": 2.5,
+     "h": "eg",
+     "color": {
+      "by": "step(6, eg)",
+      "scale": [
+       "orange",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 7.25,
+     "y": "eg + 0.5",
+     "text": {
+      "en": "education {eg:2}%"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "visibleIf": "k",
+     "x1": 0,
+     "y1": 6,
+     "x2": 10,
+     "y2": 6,
+     "dashed": true,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "label",
+     "visibleIf": "k",
+     "x": 5,
+     "y": 10.3,
+     "text": {
+      "en": "Kothari target: 6% of GDP (dashed line)"
+     },
+     "size": 20,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Education as % of GDP",
+      "kn": "GDPಯ % ಆಗಿ ಶಿಕ್ಷಣ"
+     },
+     "expr": "eg",
+     "digits": 2,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Education spending",
+      "kn": "ಶಿಕ್ಷಣ ವೆಚ್ಚ"
+     },
+     "expr": "amt",
+     "digits": 1,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "label": {
+      "en": "Gap to 6%",
+      "kn": "6% ಗೆ ಅಂತರ"
+     },
+     "expr": "max(6 - eg, 0)",
+     "digits": 2,
+     "unit": "points"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With government spending at 28% of GDP, what share must education get to reach 6% of GDP?",
+     "kn": "ಸರ್ಕಾರದ ವೆಚ್ಚ GDPಯ 28% ಇದ್ದರೆ, 6% ತಲುಪಲು ಶಿಕ್ಷಣಕ್ಕೆ ಎಷ್ಟು ಪಾಲು ಬೇಕು?"
+    },
+    {
+     "en": "Keep the shares fixed and raise GDP. Does the % of GDP change? Does the rupee amount?",
+     "kn": "ಪಾಲುಗಳನ್ನು ಸ್ಥಿರವಿಟ್ಟು GDP ಏರಿಸಿ. % ಬದಲಾಗುತ್ತದೆಯೇ? ರೂಪಾಯಿ ಮೊತ್ತ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

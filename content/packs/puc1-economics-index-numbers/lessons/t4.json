@@ -521,6 +521,236 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Consumer price index",
+    "kn": "ಗ್ರಾಹಕ ಬೆಲೆ ಸೂಚ್ಯಂಕ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The CPI is a weighted average of price relatives, Σ WR / Σ W, where W is each group's share of the family budget. Bar widths are the weights. Choose a household type and move the price relatives.",
+    "kn": "ಗ್ರಾಹಕ ಬೆಲೆ ಸೂಚ್ಯಂಕ ಬೆಲೆ ಸಾಪೇಕ್ಷಗಳ ತೂಕದ ಸರಾಸರಿ Σ WR / Σ W; W ಕುಟುಂಬ ಬಜೆಟ್‌ನಲ್ಲಿ ಪ್ರತಿ ಗುಂಪಿನ ಪಾಲು. ಪಟ್ಟಿಯ ಅಗಲವೇ ತೂಕ."
+   },
+   "sliders": [
+    {
+     "name": "R1",
+     "label": {
+      "en": "Food: price relative",
+      "kn": "ಆಹಾರ: ಬೆಲೆ ಸಾಪೇಕ್ಷ"
+     },
+     "min": 80,
+     "max": 200,
+     "step": 5,
+     "value": 150
+    },
+    {
+     "name": "R2",
+     "label": {
+      "en": "Clothing: price relative",
+      "kn": "ಬಟ್ಟೆ: ಬೆಲೆ ಸಾಪೇಕ್ಷ"
+     },
+     "min": 80,
+     "max": 200,
+     "step": 5,
+     "value": 120
+    },
+    {
+     "name": "R3",
+     "label": {
+      "en": "Housing: price relative",
+      "kn": "ವಸತಿ: ಬೆಲೆ ಸಾಪೇಕ್ಷ"
+     },
+     "min": 80,
+     "max": 200,
+     "step": 5,
+     "value": 140
+    },
+    {
+     "name": "R4",
+     "label": {
+      "en": "Fuel and others: price relative",
+      "kn": "ಇಂಧನ, ಇತರೆ: ಬೆಲೆ ಸಾಪೇಕ್ಷ"
+     },
+     "min": 80,
+     "max": 200,
+     "step": 5,
+     "value": 130
+    }
+   ],
+   "choices": [
+    {
+     "name": "h",
+     "label": {
+      "en": "Household",
+      "kn": "ಕುಟುಂಬ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Worker family",
+        "kn": "ಕಾರ್ಮಿಕ ಕುಟುಂಬ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Office family",
+        "kn": "ಕಚೇರಿ ಕುಟುಂಬ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "W1",
+     "expr": "if(h == 1, 60, 35)"
+    },
+    {
+     "name": "W2",
+     "expr": "10"
+    },
+    {
+     "name": "W3",
+     "expr": "if(h == 1, 15, 30)"
+    },
+    {
+     "name": "W4",
+     "expr": "if(h == 1, 15, 25)"
+    },
+    {
+     "name": "cpi",
+     "expr": "(W1*R1 + W2*R2 + W3*R3 + W4*R4)/100"
+    },
+    {
+     "name": "x2",
+     "expr": "W1/10"
+    },
+    {
+     "name": "x3",
+     "expr": "(W1 + W2)/10"
+    },
+    {
+     "name": "x4",
+     "expr": "(W1 + W2 + W3)/10"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     220
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "budget share (bar width)",
+    "yLabel": "price relative"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": "W1/10",
+     "h": "R1",
+     "color": "orange",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": "x2",
+     "y": 0,
+     "w": "W2/10",
+     "h": "R2",
+     "color": "blue",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": "x3",
+     "y": 0,
+     "w": "W3/10",
+     "h": "R3",
+     "color": "green",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": "x4",
+     "y": 0,
+     "w": "W4/10",
+     "h": "R4",
+     "color": "red",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "cpi",
+     "x2": 10,
+     "y2": "cpi",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": "cpi + 12",
+     "text": {
+      "en": "CPI {cpi:1}"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": "W1/20",
+     "y": 20,
+     "text": {
+      "en": "food {W1}%"
+     },
+     "size": 18
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "CPI",
+      "kn": "CPI"
+     },
+     "expr": "cpi",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Salary to keep the same living (₹20,000 in base year)",
+      "kn": "ಅದೇ ಜೀವನಮಟ್ಟಕ್ಕೆ ಬೇಕಾದ ವೇತನ"
+     },
+     "expr": "20000*cpi/100",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Food prices rise most. Which household's CPI rises more?",
+     "kn": "ಆಹಾರ ಬೆಲೆ ಅತಿ ಹೆಚ್ಚು ಏರುತ್ತದೆ. ಯಾವ ಕುಟುಂಬದ CPI ಹೆಚ್ಚು ಏರುತ್ತದೆ?"
+    },
+    {
+     "en": "Set every relative to 120. Does the household type matter now?",
+     "kn": "ಎಲ್ಲಾ ಸಾಪೇಕ್ಷ 120 ಮಾಡಿ. ಈಗ ಕುಟುಂಬದ ವಿಧ ಮುಖ್ಯವೇ?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

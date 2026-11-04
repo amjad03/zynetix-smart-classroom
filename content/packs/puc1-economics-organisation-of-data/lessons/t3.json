@@ -571,6 +571,412 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Make a frequency distribution",
+    "kn": "ಆವರ್ತನ ವಿತರಣೆ ರಚಿಸಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Twenty students' marks are tallied into classes. Choose the class interval: narrow classes keep detail, wide ones condense the data. Each bar's height is the class frequency, and the class mark is the middle of the class.",
+    "kn": "ಇಪ್ಪತ್ತು ವಿದ್ಯಾರ್ಥಿಗಳ ಅಂಕಗಳನ್ನು ವರ್ಗಗಳಿಗೆ ಹಂಚಲಾಗಿದೆ. ವರ್ಗಾಂತರ ಆರಿಸಿ: ಕಿರಿದಾದ ವರ್ಗಗಳು ವಿವರ ಉಳಿಸುತ್ತವೆ, ಅಗಲವಾದವು ದತ್ತಾಂಶವನ್ನು ಸಂಕ್ಷಿಪ್ತಗೊಳಿಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "mk",
+     "label": {
+      "en": "Show class mark of class no.",
+      "kn": "ವರ್ಗ ಸಂಖ್ಯೆಯ ವರ್ಗ ಮಧ್ಯಬಿಂದು"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "toggles": [
+    {
+     "name": "raw",
+     "label": {
+      "en": "Show the raw marks",
+      "kn": "ಕಚ್ಚಾ ಅಂಕಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "w",
+     "label": {
+      "en": "Class interval",
+      "kn": "ವರ್ಗಾಂತರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "10"
+       },
+       "value": 10
+      },
+      {
+       "label": {
+        "en": "20"
+       },
+       "value": 20
+      },
+      {
+       "label": {
+        "en": "25"
+       },
+       "value": 25
+      }
+     ],
+     "value": 10
+    }
+   ],
+   "vars": [
+    {
+     "name": "n0",
+     "expr": "if(w == 10, 0, if(w == 20, 1, 1))"
+    },
+    {
+     "name": "n1",
+     "expr": "if(w == 10, 1, if(w == 20, 4, 8))"
+    },
+    {
+     "name": "n2",
+     "expr": "if(w == 10, 2, if(w == 20, 8, 8))"
+    },
+    {
+     "name": "n3",
+     "expr": "if(w == 10, 2, if(w == 20, 5, 3))"
+    },
+    {
+     "name": "n4",
+     "expr": "if(w == 10, 4, if(w == 20, 2, 0))"
+    },
+    {
+     "name": "n5",
+     "expr": "if(w == 10, 4, if(w == 20, 0, 0))"
+    },
+    {
+     "name": "n6",
+     "expr": "if(w == 10, 2, if(w == 20, 0, 0))"
+    },
+    {
+     "name": "n7",
+     "expr": "if(w == 10, 3, if(w == 20, 0, 0))"
+    },
+    {
+     "name": "n8",
+     "expr": "if(w == 10, 1, if(w == 20, 0, 0))"
+    },
+    {
+     "name": "n9",
+     "expr": "if(w == 10, 1, if(w == 20, 0, 0))"
+    },
+    {
+     "name": "kk",
+     "expr": "min(mk, 100/w) - 1"
+    },
+    {
+     "name": "cm",
+     "expr": "kk*w + w/2"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     -1.5,
+     11
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "marks",
+    "yLabel": "frequency"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "visibleIf": "0*w < 100",
+     "x": "0*w",
+     "y": 0,
+     "w": "w",
+     "h": "n0",
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "1*w < 100",
+     "x": "1*w",
+     "y": 0,
+     "w": "w",
+     "h": "n1",
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "2*w < 100",
+     "x": "2*w",
+     "y": 0,
+     "w": "w",
+     "h": "n2",
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "3*w < 100",
+     "x": "3*w",
+     "y": 0,
+     "w": "w",
+     "h": "n3",
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "4*w < 100",
+     "x": "4*w",
+     "y": 0,
+     "w": "w",
+     "h": "n4",
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "5*w < 100",
+     "x": "5*w",
+     "y": 0,
+     "w": "w",
+     "h": "n5",
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "6*w < 100",
+     "x": "6*w",
+     "y": 0,
+     "w": "w",
+     "h": "n6",
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "7*w < 100",
+     "x": "7*w",
+     "y": 0,
+     "w": "w",
+     "h": "n7",
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "8*w < 100",
+     "x": "8*w",
+     "y": 0,
+     "w": "w",
+     "h": "n8",
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "9*w < 100",
+     "x": "9*w",
+     "y": 0,
+     "w": "w",
+     "h": "n9",
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "visibleIf": "0*w < 100 && n0 > 0",
+     "x": "0*w + w/2",
+     "y": "n0 + 0.4",
+     "text": {
+      "en": "{n0}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "visibleIf": "1*w < 100 && n1 > 0",
+     "x": "1*w + w/2",
+     "y": "n1 + 0.4",
+     "text": {
+      "en": "{n1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "visibleIf": "2*w < 100 && n2 > 0",
+     "x": "2*w + w/2",
+     "y": "n2 + 0.4",
+     "text": {
+      "en": "{n2}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "visibleIf": "3*w < 100 && n3 > 0",
+     "x": "3*w + w/2",
+     "y": "n3 + 0.4",
+     "text": {
+      "en": "{n3}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "visibleIf": "4*w < 100 && n4 > 0",
+     "x": "4*w + w/2",
+     "y": "n4 + 0.4",
+     "text": {
+      "en": "{n4}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "visibleIf": "5*w < 100 && n5 > 0",
+     "x": "5*w + w/2",
+     "y": "n5 + 0.4",
+     "text": {
+      "en": "{n5}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "visibleIf": "6*w < 100 && n6 > 0",
+     "x": "6*w + w/2",
+     "y": "n6 + 0.4",
+     "text": {
+      "en": "{n6}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "visibleIf": "7*w < 100 && n7 > 0",
+     "x": "7*w + w/2",
+     "y": "n7 + 0.4",
+     "text": {
+      "en": "{n7}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "visibleIf": "8*w < 100 && n8 > 0",
+     "x": "8*w + w/2",
+     "y": "n8 + 0.4",
+     "text": {
+      "en": "{n8}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "visibleIf": "9*w < 100 && n9 > 0",
+     "x": "9*w + w/2",
+     "y": "n9 + 0.4",
+     "text": {
+      "en": "{n9}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": "cm",
+     "y1": 0,
+     "x2": "cm",
+     "y2": 9.8,
+     "color": "orange",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "label",
+     "x": "cm",
+     "y": 10.3,
+     "text": {
+      "en": "class mark {cm}"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "raw",
+     "x": 50,
+     "y": -0.9,
+     "text": {
+      "en": "12 25 28 33 37 41 44 45 48 52 55 56 58 63 66 71 74 79 86 93"
+     },
+     "size": 18,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Number of classes",
+      "kn": "ವರ್ಗಗಳ ಸಂಖ್ಯೆ"
+     },
+     "expr": "100/w",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Total frequency",
+      "kn": "ಒಟ್ಟು ಆವರ್ತನ"
+     },
+     "expr": "n0*(0*w < 100)+n1*(1*w < 100)+n2*(2*w < 100)+n3*(3*w < 100)+n4*(4*w < 100)+n5*(5*w < 100)+n6*(6*w < 100)+n7*(7*w < 100)+n8*(8*w < 100)+n9*(9*w < 100)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Class mark shown",
+      "kn": "ತೋರಿಸಿದ ವರ್ಗ ಮಧ್ಯಬಿಂದು"
+     },
+     "expr": "cm",
+     "digits": 1,
+     "unit": "marks"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Switch from width 10 to width 25. Which detail of the data is lost?",
+     "kn": "ಅಗಲ 10 ರಿಂದ 25ಕ್ಕೆ ಬದಲಿಸಿ. ಯಾವ ವಿವರ ಕಳೆದುಹೋಗುತ್ತದೆ?"
+    },
+    {
+     "en": "With width 10, which classes are the most common? What are their class marks?",
+     "kn": "ಅಗಲ 10ರಲ್ಲಿ ಅತಿ ಹೆಚ್ಚು ಆವರ್ತನದ ವರ್ಗಗಳು ಯಾವುವು? ಅವುಗಳ ವರ್ಗ ಮಧ್ಯಬಿಂದುಗಳು?"
+    },
+    {
+     "en": "Do the frequencies always add up to 20?",
+     "kn": "ಆವರ್ತನಗಳ ಮೊತ್ತ ಸದಾ 20 ಆಗುತ್ತದೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

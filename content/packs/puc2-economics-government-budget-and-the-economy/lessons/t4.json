@@ -389,6 +389,276 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Balanced, surplus or deficit budget",
+    "kn": "ಸಮತೋಲನ, ಮಿಗತೆ ಅಥವಾ ಕೊರತೆ ಬಜೆಟ್"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Receipts on the left (revenue receipts plus non-debt capital receipts), expenditure on the right (revenue plus capital). The red block is the gap the government must borrow: the fiscal deficit. Revenue deficit = revenue expenditure − revenue receipts. Figures are illustrative.",
+    "kn": "ಎಡಕ್ಕೆ ಸ್ವೀಕೃತಿಗಳು, ಬಲಕ್ಕೆ ವೆಚ್ಚ. ಕೆಂಪು ಭಾಗವೇ ಸರ್ಕಾರ ಸಾಲ ಪಡೆಯಬೇಕಾದ ಅಂತರ: ವಿತ್ತೀಯ ಕೊರತೆ. ರೆವಿನ್ಯೂ ಕೊರತೆ = ರೆವಿನ್ಯೂ ವೆಚ್ಚ − ರೆವಿನ್ಯೂ ಸ್ವೀಕೃತಿ."
+   },
+   "sliders": [
+    {
+     "name": "RR",
+     "label": {
+      "en": "Revenue receipts",
+      "kn": "ರೆವಿನ್ಯೂ ಸ್ವೀಕೃತಿ"
+     },
+     "min": 20,
+     "max": 45,
+     "step": 1,
+     "value": 31,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "name": "RE",
+     "label": {
+      "en": "Revenue expenditure",
+      "kn": "ರೆವಿನ್ಯೂ ವೆಚ್ಚ"
+     },
+     "min": 20,
+     "max": 45,
+     "step": 1,
+     "value": 37,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "name": "CE",
+     "label": {
+      "en": "Capital expenditure",
+      "kn": "ಬಂಡವಾಳ ವೆಚ್ಚ"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 11,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "name": "ND",
+     "label": {
+      "en": "Non-debt capital receipts",
+      "kn": "ಸಾಲೇತರ ಬಂಡವಾಳ ಸ್ವೀಕೃತಿ"
+     },
+     "min": 0,
+     "max": 5,
+     "step": 0.5,
+     "value": 1,
+     "unit": "₹ lakh crore"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "lab",
+     "label": {
+      "en": "Label the blocks",
+      "kn": "ಭಾಗಗಳಿಗೆ ಹೆಸರು"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "TR",
+     "expr": "RR + ND"
+    },
+    {
+     "name": "TE",
+     "expr": "RE + CE"
+    },
+    {
+     "name": "FD",
+     "expr": "TE - TR"
+    },
+    {
+     "name": "RD",
+     "expr": "RE - RR"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     64
+    ],
+    "axes": true,
+    "grid": true,
+    "yLabel": "₹ lakh crore"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0,
+     "w": 3,
+     "h": "RR",
+     "color": "green",
+     "opacity": 0.75
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": "RR",
+     "w": 3,
+     "h": "ND",
+     "color": "blue",
+     "opacity": 0.75
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "FD > 0",
+     "x": 1,
+     "y": "TR",
+     "w": 3,
+     "h": "FD",
+     "color": "red",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 6,
+     "y": 0,
+     "w": 3,
+     "h": "RE",
+     "color": "orange",
+     "opacity": 0.75
+    },
+    {
+     "shape": "rect",
+     "x": 6,
+     "y": "RE",
+     "w": 3,
+     "h": "CE",
+     "color": "yellow",
+     "opacity": 0.75
+    },
+    {
+     "shape": "text",
+     "visibleIf": "lab",
+     "x": 2.5,
+     "y": "RR/2",
+     "text": {
+      "en": "revenue receipts"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "visibleIf": "lab && FD > 2",
+     "x": 2.5,
+     "y": "TR + FD/2",
+     "text": {
+      "en": "borrowing {FD:1}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "visibleIf": "lab",
+     "x": 7.5,
+     "y": "RE/2",
+     "text": {
+      "en": "revenue exp."
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "visibleIf": "lab && CE > 2",
+     "x": 7.5,
+     "y": "RE + CE/2",
+     "text": {
+      "en": "capital exp."
+     },
+     "size": 18
+    },
+    {
+     "shape": "label",
+     "visibleIf": "FD > 0",
+     "x": 5,
+     "y": 61,
+     "text": {
+      "en": "deficit budget"
+     },
+     "size": 22,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "FD == 0",
+     "x": 5,
+     "y": 61,
+     "text": {
+      "en": "balanced budget"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "FD < 0",
+     "x": 5,
+     "y": 61,
+     "text": {
+      "en": "surplus budget"
+     },
+     "size": 22,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Fiscal deficit",
+      "kn": "ವಿತ್ತೀಯ ಕೊರತೆ"
+     },
+     "expr": "FD",
+     "digits": 1,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "label": {
+      "en": "Revenue deficit",
+      "kn": "ರೆವಿನ್ಯೂ ಕೊರತೆ"
+     },
+     "expr": "RD",
+     "digits": 1,
+     "unit": "₹ lakh crore"
+    },
+    {
+     "label": {
+      "en": "Share of borrowing spent on revenue items",
+      "kn": "ರೆವಿನ್ಯೂ ವೆಚ್ಚಕ್ಕೆ ಹೋದ ಸಾಲದ ಪಾಲು"
+     },
+     "expr": "if(FD > 0, 100*clamp(RD, 0, FD)/FD, 0)",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make revenue receipts equal revenue expenditure. Is the budget balanced now?",
+     "kn": "ರೆವಿನ್ಯೂ ಸ್ವೀಕೃತಿ = ರೆವಿನ್ಯೂ ವೆಚ್ಚ ಮಾಡಿ. ಬಜೆಟ್ ಸಮತೋಲನವೇ?"
+    },
+    {
+     "en": "A large revenue deficit means borrowing pays for current spending. What share of borrowing is used that way?",
+     "kn": "ದೊಡ್ಡ ರೆವಿನ್ಯೂ ಕೊರತೆ ಎಂದರೆ ಸಾಲ ದಿನನಿತ್ಯದ ವೆಚ್ಚಕ್ಕೆ. ಆ ಪಾಲು ಎಷ್ಟು?"
+    },
+    {
+     "en": "Raise disinvestment (non-debt capital receipts). What happens to the fiscal deficit?",
+     "kn": "ಬಂಡವಾಳ ಹಿಂತೆಗೆತ ಏರಿಸಿ. ವಿತ್ತೀಯ ಕೊರತೆ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

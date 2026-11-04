@@ -313,6 +313,255 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Growth rates compound",
+    "kn": "ಬೆಳವಣಿಗೆ ದರಗಳು ಸಂಚಯಿಸುತ್ತವೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Each country's GDP starts at an index of 100. In 1980–90 China's GDP grew about 10.3% a year, Pakistan's about 6.3% and India's about 5.7%. Play the years and see what a few points of growth do over decades.",
+    "kn": "ಪ್ರತಿ ದೇಶದ GDP ಸೂಚ್ಯಂಕ 100ರಿಂದ ಆರಂಭ. 1980–90ರಲ್ಲಿ ಚೀನಾ ಸುಮಾರು 10.3%, ಪಾಕಿಸ್ತಾನ 6.3%, ಭಾರತ 5.7% ದರದಲ್ಲಿ ಬೆಳೆದವು. ವರ್ಷಗಳನ್ನು ಚಲಾಯಿಸಿ ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "gc",
+     "label": {
+      "en": "China's growth",
+      "kn": "ಚೀನಾ ಬೆಳವಣಿಗೆ"
+     },
+     "min": 0,
+     "max": 12,
+     "step": 0.1,
+     "value": 10.3,
+     "unit": "%"
+    },
+    {
+     "name": "gp",
+     "label": {
+      "en": "Pakistan's growth",
+      "kn": "ಪಾಕಿಸ್ತಾನ ಬೆಳವಣಿಗೆ"
+     },
+     "min": 0,
+     "max": 12,
+     "step": 0.1,
+     "value": 6.3,
+     "unit": "%"
+    },
+    {
+     "name": "gi",
+     "label": {
+      "en": "India's growth",
+      "kn": "ಭಾರತ ಬೆಳವಣಿಗೆ"
+     },
+     "min": 0,
+     "max": 12,
+     "step": 0.1,
+     "value": 5.7,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "curves",
+     "label": {
+      "en": "Show whole paths",
+      "kn": "ಸಂಪೂರ್ಣ ಹಾದಿ ತೋರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 30,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2,
+    "unit": "yr"
+   },
+   "vars": [
+    {
+     "name": "C",
+     "expr": "100*(1 + gc/100)^t"
+    },
+    {
+     "name": "Pk",
+     "expr": "100*(1 + gp/100)^t"
+    },
+    {
+     "name": "I",
+     "expr": "100*(1 + gi/100)^t"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     3000
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "years",
+    "yLabel": "GDP index (start = 100)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "curves",
+     "fn": "100*(1 + gc/100)^x",
+     "color": "red",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "visibleIf": "curves",
+     "fn": "100*(1 + gp/100)^x",
+     "color": "green",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "visibleIf": "curves",
+     "fn": "100*(1 + gi/100)^x",
+     "color": "orange",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "C",
+     "color": "red",
+     "width": 4
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "Pk",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "I",
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "C",
+     "r": 0.3,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "Pk",
+     "r": 0.3,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "I",
+     "r": 0.3,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 24,
+     "y": 2800,
+     "text": {
+      "en": "China {C:0}"
+     },
+     "size": 20,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 24,
+     "y": 2550,
+     "text": {
+      "en": "Pakistan {Pk:0}"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 24,
+     "y": 2300,
+     "text": {
+      "en": "India {I:0}"
+     },
+     "size": 20,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "China",
+      "kn": "ಚೀನಾ"
+     },
+     "expr": "C",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Pakistan",
+      "kn": "ಪಾಕಿಸ್ತಾನ"
+     },
+     "expr": "Pk",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "India",
+      "kn": "ಭಾರತ"
+     },
+     "expr": "I",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "China ÷ India",
+      "kn": "ಚೀನಾ ÷ ಭಾರತ"
+     },
+     "expr": "C/I",
+     "digits": 2,
+     "unit": "×"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "After 10 years at the 1980s rates, how many times bigger is China's economy?",
+     "kn": "1980ರ ದರಗಳಲ್ಲಿ 10 ವರ್ಷದ ನಂತರ ಚೀನಾದ ಆರ್ಥಿಕತೆ ಎಷ್ಟು ಪಟ್ಟು?"
+    },
+    {
+     "en": "Give India 8% a year. How many years until its GDP doubles?",
+     "kn": "ಭಾರತಕ್ಕೆ 8% ದರ ಕೊಡಿ. GDP ದ್ವಿಗುಣಕ್ಕೆ ಎಷ್ಟು ವರ್ಷ?"
+    },
+    {
+     "en": "Pakistan was ahead of India by only 0.6 points a year. How big is the gap after 30 years?",
+     "kn": "ಪಾಕಿಸ್ತಾನ ಕೇವಲ 0.6 ಅಂಕ ಮುಂದಿತ್ತು. 30 ವರ್ಷದ ನಂತರ ಅಂತರ ಎಷ್ಟು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

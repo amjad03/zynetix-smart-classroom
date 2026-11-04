@@ -405,6 +405,210 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Carbon dioxide and warming",
+    "kn": "ಕಾರ್ಬನ್ ಡೈಆಕ್ಸೈಡ್ ಮತ್ತು ತಾಪಮಾನ ಏರಿಕೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Sunlight warms the Earth, and the Earth sends heat back out. Greenhouse gases such as carbon dioxide trap part of that heat. Raise CO2 from the pre-industrial 280 ppm: long-run warming grows by about 3 °C for every doubling (a central scientific estimate).",
+    "kn": "ಸೂರ್ಯನ ಬೆಳಕು ಭೂಮಿಯನ್ನು ಬಿಸಿಮಾಡುತ್ತದೆ; ಭೂಮಿ ಶಾಖವನ್ನು ಹೊರಗೆ ಕಳುಹಿಸುತ್ತದೆ. CO2 ನಂತಹ ಹಸಿರುಮನೆ ಅನಿಲಗಳು ಅದರ ಭಾಗವನ್ನು ಹಿಡಿದಿಡುತ್ತವೆ. ಪ್ರತಿ ದ್ವಿಗುಣಕ್ಕೆ ಸುಮಾರು 3 °C ಏರಿಕೆ."
+   },
+   "sliders": [
+    {
+     "name": "C",
+     "label": {
+      "en": "CO2 in the air",
+      "kn": "ಗಾಳಿಯಲ್ಲಿ CO2"
+     },
+     "min": 280,
+     "max": 800,
+     "step": 10,
+     "value": 420,
+     "unit": "ppm"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "heat",
+     "label": {
+      "en": "Show heat sent back down",
+      "kn": "ಹಿಂದಿರುಗುವ ಶಾಖ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 20,
+    "loop": true,
+    "autoplay": true,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "dT",
+     "expr": "3*ln(C/280)/ln(2)"
+    },
+    {
+     "name": "back",
+     "expr": "clamp((C - 200)/700, 0, 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     0,
+     9
+    ],
+    "axes": false,
+    "grid": false,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 16,
+     "h": 1.2,
+     "color": {
+      "by": "clamp(dT/5, 0, 1)",
+      "scale": [
+       "green",
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 5.5,
+     "w": 16,
+     "h": 2,
+     "color": "blue",
+     "opacity": "0.1 + 0.3*back"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 8.6,
+     "text": {
+      "en": "atmosphere with greenhouse gases",
+      "kn": "ಹಸಿರುಮನೆ ಅನಿಲಗಳ ವಾತಾವರಣ"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "x": 1.2,
+     "y": 8.2,
+     "r": 0.7,
+     "color": "yellow"
+    },
+    {
+     "shape": "particles",
+     "count": 60,
+     "visibleIf": "i < (C - 200)/10",
+     "x": "bounce(16*rand(i) + 0.4*t*(rand(i + 100) - 0.5), 0.2, 15.8)",
+     "y": "bounce(5.7 + 1.6*rand(i + 200) + 0.2*t*(rand(i + 300) - 0.5), 5.6, 7.4)",
+     "r": 0.09,
+     "color": "white"
+    },
+    {
+     "shape": "particles",
+     "count": 12,
+     "x": "2 + 1.1*i",
+     "y": "8 - mod(t*1.5 + 0.6*i, 6.8)",
+     "r": 0.12,
+     "color": "yellow"
+    },
+    {
+     "shape": "particles",
+     "count": 12,
+     "x": "2.5 + 1.1*i",
+     "y": "1.2 + mod(t*1.2 + 0.5*i, 5)",
+     "r": 0.12,
+     "color": "red"
+    },
+    {
+     "shape": "particles",
+     "count": 12,
+     "visibleIf": "heat && rand(i + 50) < back",
+     "x": "2.9 + 1.1*i",
+     "y": "6.2 - mod(t*1.2 + 0.5*i, 5)",
+     "r": 0.12,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": 3.3,
+     "text": {
+      "en": "warming ≈ {dT:1} °C"
+     },
+     "size": 30,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "CO2",
+      "kn": "CO2"
+     },
+     "expr": "C",
+     "digits": 0,
+     "unit": "ppm"
+    },
+    {
+     "label": {
+      "en": "Times pre-industrial",
+      "kn": "ಕೈಗಾರಿಕಾ ಪೂರ್ವದ ಎಷ್ಟು ಪಟ್ಟು"
+     },
+     "expr": "C/280",
+     "digits": 2,
+     "unit": "×"
+    },
+    {
+     "label": {
+      "en": "Long-run warming",
+      "kn": "ದೀರ್ಘಾವಧಿ ತಾಪಮಾನ ಏರಿಕೆ"
+     },
+     "expr": "dT",
+     "digits": 1,
+     "unit": "°C"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set CO2 to 560 ppm, double the pre-industrial level. How much warming?",
+     "kn": "CO2 ಅನ್ನು 560 ppm (ದ್ವಿಗುಣ) ಮಾಡಿ. ಎಷ್ಟು ಏರಿಕೆ?"
+    },
+    {
+     "en": "Today the air holds about 420 ppm. What long-run warming does that point to?",
+     "kn": "ಇಂದು ಸುಮಾರು 420 ppm. ದೀರ್ಘಾವಧಿಯಲ್ಲಿ ಎಷ್ಟು ಏರಿಕೆ?"
+    },
+    {
+     "en": "Each extra 100 ppm matters less at high levels. Compare 280→380 with 700→800.",
+     "kn": "280→380 ಮತ್ತು 700→800 ಹೋಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

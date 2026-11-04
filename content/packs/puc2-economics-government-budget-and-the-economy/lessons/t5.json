@@ -340,6 +340,221 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Deficits and the growth of public debt",
+    "kn": "ಕೊರತೆ ಮತ್ತು ಸಾರ್ವಜನಿಕ ಸಾಲದ ಬೆಳವಣಿಗೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Debt is shown as a share of GDP. Each year the fiscal deficit adds to debt, and fiscal deficit = primary deficit + interest. Interest grows the debt at rate r while GDP grows at g. If r is above g, even a zero primary deficit makes the debt ratio climb.",
+    "kn": "ಸಾಲವನ್ನು GDPಯ ಪಾಲಾಗಿ ತೋರಿಸಲಾಗಿದೆ. ವಿತ್ತೀಯ ಕೊರತೆ = ಪ್ರಾಥಮಿಕ ಕೊರತೆ + ಬಡ್ಡಿ. ಬಡ್ಡಿ ದರ r, GDP ಬೆಳವಣಿಗೆ g. r > g ಆದರೆ ಪ್ರಾಥಮಿಕ ಕೊರತೆ ಶೂನ್ಯವಿದ್ದರೂ ಸಾಲದ ಅನುಪಾತ ಏರುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "pd",
+     "label": {
+      "en": "Primary deficit",
+      "kn": "ಪ್ರಾಥಮಿಕ ಕೊರತೆ"
+     },
+     "min": -3,
+     "max": 6,
+     "step": 0.5,
+     "value": 2,
+     "unit": "% of GDP"
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Interest rate on debt",
+      "kn": "ಸಾಲದ ಬಡ್ಡಿ ದರ"
+     },
+     "min": 4,
+     "max": 12,
+     "step": 0.5,
+     "value": 7,
+     "unit": "%"
+    },
+    {
+     "name": "g",
+     "label": {
+      "en": "Growth of nominal GDP",
+      "kn": "ನಾಮಮಾತ್ರ GDP ಬೆಳವಣಿಗೆ"
+     },
+     "min": 4,
+     "max": 14,
+     "step": 0.5,
+     "value": 10,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "hi",
+     "label": {
+      "en": "Start with high debt (80% of GDP)",
+      "kn": "ಹೆಚ್ಚು ಸಾಲದಿಂದ ಆರಂಭ (80%)"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 30,
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2,
+    "unit": "yr"
+   },
+   "vars": [
+    {
+     "name": "dx",
+     "expr": "max(d, 0)"
+    },
+    {
+     "name": "intr",
+     "expr": "r*dx/100"
+    },
+    {
+     "name": "fd",
+     "expr": "pd + intr"
+    },
+    {
+     "name": "dstar",
+     "expr": "if(g > r, 100*pd/(g - r), -1)"
+    }
+   ],
+   "state": [
+    {
+     "name": "d",
+     "init": "if(hi, 80, 50)",
+     "rate": "pd + (r - g)/100*d"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     160
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "years",
+    "yLabel": "debt (% of GDP)"
+   },
+   "shapes": [
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "dx",
+     "color": "yellow",
+     "width": 4,
+     "length": 1000
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "min(dx, 160)",
+     "r": 0.4,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "visibleIf": "dstar >= 0 && dstar <= 160",
+     "x1": 0,
+     "y1": "dstar",
+     "x2": 30,
+     "y2": "dstar",
+     "color": "green",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "label",
+     "visibleIf": "dstar >= 0 && dstar <= 150",
+     "x": 24,
+     "y": "dstar + 6",
+     "text": {
+      "en": "settles at {dstar:0}%"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 10,
+     "y": 150,
+     "text": {
+      "en": "debt {dx:0}% of GDP"
+     },
+     "size": 24,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Debt",
+      "kn": "ಸಾಲ"
+     },
+     "expr": "dx",
+     "digits": 1,
+     "unit": "% of GDP"
+    },
+    {
+     "label": {
+      "en": "Interest payments",
+      "kn": "ಬಡ್ಡಿ ಪಾವತಿ"
+     },
+     "expr": "intr",
+     "digits": 2,
+     "unit": "% of GDP"
+    },
+    {
+     "label": {
+      "en": "Fiscal deficit",
+      "kn": "ವಿತ್ತೀಯ ಕೊರತೆ"
+     },
+     "expr": "fd",
+     "digits": 2,
+     "unit": "% of GDP"
+    },
+    {
+     "label": {
+      "en": "Primary deficit",
+      "kn": "ಪ್ರಾಥಮಿಕ ಕೊರತೆ"
+     },
+     "expr": "pd",
+     "digits": 1,
+     "unit": "% of GDP"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set the primary deficit to 0 and the interest rate above GDP growth. Play: what happens to debt?",
+     "kn": "ಪ್ರಾಥಮಿಕ ಕೊರತೆ 0, ಬಡ್ಡಿ ದರ > GDP ಬೆಳವಣಿಗೆ. Play: ಸಾಲ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Start with high debt. How large is the interest bill, and so the gap between the fiscal and primary deficits?",
+     "kn": "ಹೆಚ್ಚು ಸಾಲದಿಂದ ಆರಂಭಿಸಿ. ಬಡ್ಡಿ ಎಷ್ಟು? ವಿತ್ತೀಯ ಮತ್ತು ಪ್ರಾಥಮಿಕ ಕೊರತೆಯ ಅಂತರ?"
+    },
+    {
+     "en": "Find settings where the debt ratio falls even though the government keeps borrowing.",
+     "kn": "ಸರ್ಕಾರ ಸಾಲ ಪಡೆಯುತ್ತಿದ್ದರೂ ಸಾಲದ ಅನುಪಾತ ಇಳಿಯುವಂತೆ ಮಾಡಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

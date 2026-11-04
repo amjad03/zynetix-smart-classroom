@@ -402,6 +402,257 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Exclusive and inclusive classes",
+    "kn": "ಹೊರತುಪಡಿಸುವ ಮತ್ತು ಒಳಗೊಳ್ಳುವ ವರ್ಗಗಳು"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Slide a value and see which class it joins. In the exclusive method a value equal to an upper limit goes to the next class. Inclusive classes (10–19, 20–29) leave gaps; the adjustment subtracts 0.5 from lower limits and adds 0.5 to upper limits.",
+    "kn": "ಒಂದು ಮೌಲ್ಯವನ್ನು ಸರಿಸಿ ಅದು ಯಾವ ವರ್ಗಕ್ಕೆ ಸೇರುತ್ತದೆ ನೋಡಿ. ಹೊರತುಪಡಿಸುವ ವಿಧಾನದಲ್ಲಿ ಮೇಲ್ಮಿತಿಗೆ ಸಮನಾದ ಮೌಲ್ಯ ಮುಂದಿನ ವರ್ಗಕ್ಕೆ. ಒಳಗೊಳ್ಳುವ ವರ್ಗಗಳಲ್ಲಿ ಅಂತರ ಉಳಿಯುತ್ತದೆ; ಹೊಂದಾಣಿಕೆ 0.5 ಕಳೆದು/ಸೇರಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "v",
+     "label": {
+      "en": "Value",
+      "kn": "ಮೌಲ್ಯ"
+     },
+     "min": 10,
+     "max": 39.5,
+     "step": 0.5,
+     "value": 19.5
+    }
+   ],
+   "choices": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Method",
+      "kn": "ವಿಧಾನ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Exclusive",
+        "kn": "ಹೊರತುಪಡಿಸುವ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Inclusive",
+        "kn": "ಒಳಗೊಳ್ಳುವ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Inclusive, adjusted",
+        "kn": "ಹೊಂದಿಸಿದ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "vars": [
+    {
+     "name": "off",
+     "expr": "if(m == 3, -0.5, 0)"
+    },
+    {
+     "name": "top",
+     "expr": "if(m == 1, 10, if(m == 2, 9, 10))"
+    },
+    {
+     "name": "k",
+     "expr": "if(m == 1, floor((v - 10)/10), if(m == 2, if(v - 10 - 10*floor((v - 10)/10) <= 9, floor((v - 10)/10), -1), floor((v - 9.5)/10)))"
+    },
+    {
+     "name": "lo",
+     "expr": "10 + 10*k + off"
+    },
+    {
+     "name": "hi",
+     "expr": "10 + 10*k + off + top"
+    }
+   ],
+   "view": {
+    "x": [
+     5,
+     45
+    ],
+    "y": [
+     0,
+     10
+    ],
+    "axes": true,
+    "grid": false,
+    "xLabel": "value"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "10 + off",
+     "y": 3,
+     "w": "top",
+     "h": 3,
+     "color": {
+      "by": "k == 0",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     },
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": "10 + off + top/2",
+     "y": 4.5,
+     "text": {
+      "en": "{10 + off:1}–{10 + off + top:1}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": "20 + off",
+     "y": 3,
+     "w": "top",
+     "h": 3,
+     "color": {
+      "by": "k == 1",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     },
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": "20 + off + top/2",
+     "y": 4.5,
+     "text": {
+      "en": "{20 + off:1}–{20 + off + top:1}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": "30 + off",
+     "y": 3,
+     "w": "top",
+     "h": 3,
+     "color": {
+      "by": "k == 2",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     },
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": "30 + off + top/2",
+     "y": 4.5,
+     "text": {
+      "en": "{30 + off:1}–{30 + off + top:1}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "arrow",
+     "x": "v",
+     "y": 9,
+     "dx": 0,
+     "dy": -2.8,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "label",
+     "x": "v",
+     "y": 9.3,
+     "text": {
+      "en": "{v:1}"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "k >= 0",
+     "x": 25,
+     "y": 1.4,
+     "text": {
+      "en": "goes to class {lo:1}–{hi:1}"
+     },
+     "size": 24,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "k < 0",
+     "x": 25,
+     "y": 1.4,
+     "text": {
+      "en": "falls in a gap: no class holds it!"
+     },
+     "size": 24,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Lower limit of its class",
+      "kn": "ವರ್ಗದ ಕೆಳಮಿತಿ"
+     },
+     "expr": "if(k >= 0, lo, 0)",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Upper limit",
+      "kn": "ಮೇಲ್ಮಿತಿ"
+     },
+     "expr": "if(k >= 0, hi, 0)",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Class mark",
+      "kn": "ವರ್ಗ ಮಧ್ಯಬಿಂದು"
+     },
+     "expr": "if(k >= 0, (lo + hi)/2, 0)",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Exclusive method: set the value to 20. Which class takes it?",
+     "kn": "ಹೊರತುಪಡಿಸುವ ವಿಧಾನ: ಮೌಲ್ಯ 20 ಇಡಿ. ಯಾವ ವರ್ಗ?"
+    },
+    {
+     "en": "Inclusive method: set 19.5. What goes wrong, and how does the adjustment fix it?",
+     "kn": "ಒಳಗೊಳ್ಳುವ ವಿಧಾನ: 19.5 ಇಡಿ. ಏನು ತೊಂದರೆ? ಹೊಂದಾಣಿಕೆ ಹೇಗೆ ಸರಿಪಡಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Compare the class marks of 10–19 and of 9.5–19.5.",
+     "kn": "10–19 ಮತ್ತು 9.5–19.5 ರ ವರ್ಗ ಮಧ್ಯಬಿಂದು ಹೋಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

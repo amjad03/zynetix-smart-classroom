@@ -536,6 +536,275 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Fixed, flexible and managed rates",
+    "kn": "ಸ್ಥಿರ, ನಮ್ಯ ಮತ್ತು ನಿರ್ವಹಿತ ದರ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Move the demand for dollars. Under a flexible rate the market sets the rate. Under a fixed rate the RBI holds the peg by selling or buying dollars, so its reserves change year after year. Under managed floating it lets the rate move, but only within a band.",
+    "kn": "ಡಾಲರ್ ಬೇಡಿಕೆ ಬದಲಿಸಿ. ನಮ್ಯ ದರದಲ್ಲಿ ಮಾರುಕಟ್ಟೆ ದರ ನಿರ್ಧರಿಸುತ್ತದೆ. ಸ್ಥಿರ ದರದಲ್ಲಿ RBI ಡಾಲರ್ ಮಾರಿ/ಕೊಂಡು ದರ ಕಾಯುತ್ತದೆ; ಮೀಸಲು ಬದಲಾಗುತ್ತದೆ. ನಿರ್ವಹಿತ ತೇಲುವಿಕೆಯಲ್ಲಿ ದರ ಒಂದು ಪಟ್ಟಿಯೊಳಗೆ ಮಾತ್ರ."
+   },
+   "sliders": [
+    {
+     "name": "dD",
+     "label": {
+      "en": "Shift in demand for dollars",
+      "kn": "ಡಾಲರ್ ಬೇಡಿಕೆಯ ಬದಲಾವಣೆ"
+     },
+     "min": -40,
+     "max": 40,
+     "step": 5,
+     "value": 20,
+     "unit": "$ bn"
+    },
+    {
+     "name": "e0",
+     "label": {
+      "en": "Official (target) rate",
+      "kn": "ಅಧಿಕೃತ ದರ"
+     },
+     "min": 70,
+     "max": 90,
+     "step": 1,
+     "value": 80,
+     "unit": "₹/$"
+    }
+   ],
+   "choices": [
+    {
+     "name": "reg",
+     "label": {
+      "en": "Exchange rate system",
+      "kn": "ವಿನಿಮಯ ದರ ವ್ಯವಸ್ಥೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Flexible",
+        "kn": "ನಮ್ಯ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Fixed",
+        "kn": "ಸ್ಥಿರ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Managed float",
+        "kn": "ನಿರ್ವಹಿತ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "time": {
+    "max": 10,
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 1,
+    "unit": "yr"
+   },
+   "vars": [
+    {
+     "name": "em",
+     "expr": "80 + dD/5"
+    },
+    {
+     "name": "er",
+     "expr": "if(reg == 1, em, if(reg == 2, e0, clamp(em, e0 - 2, e0 + 2)))"
+    },
+    {
+     "name": "qd",
+     "expr": "100 - 2.5*(er - 80) + dD"
+    },
+    {
+     "name": "qs",
+     "expr": "100 + 2.5*(er - 80)"
+    },
+    {
+     "name": "gap",
+     "expr": "qd - qs"
+    }
+   ],
+   "state": [
+    {
+     "name": "R",
+     "init": 300,
+     "rate": "-gap"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     0,
+     200
+    ],
+    "y": [
+     60,
+     100
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "dollars ($ billion a year)",
+    "yLabel": "₹ per $"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "80 - (x - 100 - dD)/2.5",
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "80 + (x - 100)/2.5",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "reg != 1",
+     "x1": 0,
+     "y1": "e0",
+     "x2": 200,
+     "y2": "e0",
+     "color": "white",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "reg == 3",
+     "x": 0,
+     "y": "e0 - 2",
+     "w": 200,
+     "h": 4,
+     "color": "white",
+     "opacity": 0.12
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "er",
+     "x2": 200,
+     "y2": "er",
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "abs(gap) > 0.1",
+     "x1": "qs",
+     "y1": "er",
+     "x2": "qd",
+     "y2": "er",
+     "color": "red",
+     "width": 7
+    },
+    {
+     "shape": "label",
+     "visibleIf": "gap > 0.1",
+     "x": 100,
+     "y": 97,
+     "text": {
+      "en": "RBI sells ${gap:0} bn a year"
+     },
+     "size": 20,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "gap < -0.1",
+     "x": 100,
+     "y": 97,
+     "text": {
+      "en": "RBI buys ${-gap:0} bn a year"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 40,
+     "y": 63,
+     "text": {
+      "en": "reserves ${max(R, 0):0} bn"
+     },
+     "size": 20,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "R <= 0",
+     "x": 100,
+     "y": 75,
+     "text": {
+      "en": "reserves used up: the peg cannot hold"
+     },
+     "size": 20,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Exchange rate",
+      "kn": "ವಿನಿಮಯ ದರ"
+     },
+     "expr": "er",
+     "digits": 1,
+     "unit": "₹/$"
+    },
+    {
+     "label": {
+      "en": "RBI dollar sales (+) or purchases (−)",
+      "kn": "RBI ಮಾರಾಟ (+)/ಖರೀದಿ (−)"
+     },
+     "expr": "gap",
+     "digits": 0,
+     "unit": "$ bn/yr"
+    },
+    {
+     "label": {
+      "en": "Foreign exchange reserves",
+      "kn": "ವಿದೇಶಿ ವಿನಿಮಯ ಮೀಸಲು"
+     },
+     "expr": "max(R, 0)",
+     "digits": 0,
+     "unit": "$ bn"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Fixed rate with demand up by 20: play 10 years. What happens to the reserves?",
+     "kn": "ಸ್ಥಿರ ದರ, ಬೇಡಿಕೆ +20: 10 ವರ್ಷ ಚಲಾಯಿಸಿ. ಮೀಸಲು ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Switch to flexible. Does the RBI need its reserves now? What happens to the rate?",
+     "kn": "ನಮ್ಯಕ್ಕೆ ಬದಲಿಸಿ. RBIಗೆ ಮೀಸಲು ಬೇಕೇ? ದರ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Try a managed float. How does the RBI's intervention compare with the fixed case?",
+     "kn": "ನಿರ್ವಹಿತ ತೇಲುವಿಕೆ ಪ್ರಯತ್ನಿಸಿ. ಹಸ್ತಕ್ಷೇಪ ಸ್ಥಿರ ದರಕ್ಕೆ ಹೋಲಿಸಿದರೆ ಹೇಗೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -525,6 +525,214 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Production possibility frontier",
+    "kn": "ಉತ್ಪಾದನಾ ಸಾಧ್ಯತಾ ಗಡಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The curve shows the most corn and cotton the economy can make with all its resources fully used. Drag the yellow point: inside the curve resources are idle, on it they are fully used, beyond it is unattainable. More resources or better technology push the curve out.",
+    "kn": "ವಕ್ರರೇಖೆ ಎಲ್ಲಾ ಸಂಪನ್ಮೂಲ ಪೂರ್ಣ ಬಳಸಿದಾಗ ಸಾಧ್ಯವಾದ ಗರಿಷ್ಠ ಮೆಕ್ಕೆಜೋಳ ಮತ್ತು ಹತ್ತಿ. ಹಳದಿ ಬಿಂದು ಎಳೆಯಿರಿ: ಒಳಗೆ ಸಂಪನ್ಮೂಲ ನಿಷ್ಕ್ರಿಯ, ರೇಖೆಯ ಮೇಲೆ ಪೂರ್ಣ ಬಳಕೆ, ಹೊರಗೆ ಅಸಾಧ್ಯ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Resources and technology",
+      "kn": "ಸಂಪನ್ಮೂಲ ಮತ್ತು ತಂತ್ರಜ್ಞಾನ"
+     },
+     "min": 0.8,
+     "max": 1.3,
+     "step": 0.05,
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "tc",
+     "label": {
+      "en": "Better technology for corn only",
+      "kn": "ಮೆಕ್ಕೆಜೋಳಕ್ಕೆ ಮಾತ್ರ ಉತ್ತಮ ತಂತ್ರಜ್ಞಾನ"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "bundle",
+     "x": 6,
+     "y": 6,
+     "box": {
+      "x": [
+       0,
+       17
+      ],
+      "y": [
+       0,
+       17
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "a",
+     "expr": "10*k*if(tc, 1.3, 1)"
+    },
+    {
+     "name": "b",
+     "expr": "10*k"
+    },
+    {
+     "name": "rho",
+     "expr": "(P_x/a)^2 + (P_y/b)^2"
+    },
+    {
+     "name": "yf",
+     "expr": "b*sqrt(max(1 - (P_x/a)^2, 0))"
+    },
+    {
+     "name": "oc",
+     "expr": "if(P_x < 0.97*a, b^2*P_x/(a^2*max(yf, 0.01)), 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     17
+    ],
+    "y": [
+     0,
+     17
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "corn (tonnes)",
+    "yLabel": "cotton (bales)",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "b*sqrt(max(1 - (x/a)^2, 0))",
+     "to": "a",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "P_x < a",
+     "x1": "P_x",
+     "y1": "P_y",
+     "x2": "P_x",
+     "y2": "yf",
+     "color": "white",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "P_x < a",
+     "x": "P_x",
+     "y": "yf",
+     "r": 0.18,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "rho < 0.97",
+     "x": 11,
+     "y": 16.3,
+     "text": {
+      "en": "inside: resources idle or wasted"
+     },
+     "size": 22,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "rho >= 0.97 && rho <= 1.03",
+     "x": 11,
+     "y": 16.3,
+     "text": {
+      "en": "on the frontier: efficient"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "rho > 1.03",
+     "x": 11,
+     "y": 16.3,
+     "text": {
+      "en": "outside: not attainable now"
+     },
+     "size": 22,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Corn",
+      "kn": "ಮೆಕ್ಕೆಜೋಳ"
+     },
+     "expr": "P_x",
+     "digits": 1,
+     "unit": "t"
+    },
+    {
+     "label": {
+      "en": "Cotton",
+      "kn": "ಹತ್ತಿ"
+     },
+     "expr": "P_y",
+     "digits": 1,
+     "unit": "bales"
+    },
+    {
+     "label": {
+      "en": "Most cotton possible with this much corn",
+      "kn": "ಈ ಮೆಕ್ಕೆಜೋಳದೊಂದಿಗೆ ಗರಿಷ್ಠ ಹತ್ತಿ"
+     },
+     "expr": "yf",
+     "digits": 1,
+     "unit": "bales"
+    },
+    {
+     "label": {
+      "en": "Opportunity cost of one more tonne of corn",
+      "kn": "ಇನ್ನೊಂದು ಟನ್ ಮೆಕ್ಕೆಜೋಳದ ಅವಕಾಶ ವೆಚ್ಚ"
+     },
+     "expr": "oc",
+     "digits": 2,
+     "unit": "bales"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Slide the point along the curve towards more corn. Does each extra tonne of corn cost more cotton?",
+     "kn": "ಬಿಂದುವನ್ನು ವಕ್ರರೇಖೆಯ ಮೇಲೆ ಹೆಚ್ಚು ಮೆಕ್ಕೆಜೋಳದ ಕಡೆ ಸರಿಸಿ. ಅವಕಾಶ ವೆಚ್ಚ ಏರುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Put the point outside the curve, then raise resources. Can the economy reach it now?",
+     "kn": "ಬಿಂದುವನ್ನು ಹೊರಗಿಡಿ, ನಂತರ ಸಂಪನ್ಮೂಲ ಏರಿಸಿ. ಈಗ ತಲುಪಬಹುದೇ?"
+    },
+    {
+     "en": "Turn on better technology for corn. Why does the curve stretch along one axis only?",
+     "kn": "ಮೆಕ್ಕೆಜೋಳಕ್ಕೆ ಉತ್ತಮ ತಂತ್ರಜ್ಞಾನ ಆನ್ ಮಾಡಿ. ವಕ್ರರೇಖೆ ಒಂದು ಅಕ್ಷದಲ್ಲಿ ಮಾತ್ರ ಏಕೆ ಸರಿಯುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

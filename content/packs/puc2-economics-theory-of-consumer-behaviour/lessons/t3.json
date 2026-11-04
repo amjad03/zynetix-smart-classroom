@@ -314,6 +314,232 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The budget set",
+    "kn": "ಬಜೆಟ್ ಸೆಟ್"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "With income M and prices p₁ and p₂, every bundle with p₁x₁ + p₂x₂ ≤ M is affordable (shaded). The budget line has slope −p₁/p₂. Change income to shift it parallel; change one price to swing it about the other axis.",
+    "kn": "ಆದಾಯ M, ಬೆಲೆಗಳು p₁, p₂. p₁x₁ + p₂x₂ ≤ M ಆದ ಎಲ್ಲಾ ಕಟ್ಟುಗಳು ಕೈಗೆಟಕುವವು (ಛಾಯೆ). ಬಜೆಟ್ ರೇಖೆಯ ಇಳಿಜಾರು −p₁/p₂. ಆದಾಯ ಬದಲಿಸಿದರೆ ಸಮಾಂತರ ಸರಿಯುವಿಕೆ; ಒಂದು ಬೆಲೆ ಬದಲಿಸಿದರೆ ತಿರುಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "M",
+     "label": {
+      "en": "Income M",
+      "kn": "ಆದಾಯ M"
+     },
+     "min": 20,
+     "max": 100,
+     "step": 5,
+     "value": 60,
+     "unit": "₹"
+    },
+    {
+     "name": "p1",
+     "label": {
+      "en": "Price of good 1",
+      "kn": "ಸರಕು 1 ಬೆಲೆ"
+     },
+     "min": 4,
+     "max": 10,
+     "step": 0.5,
+     "value": 5,
+     "unit": "₹"
+    },
+    {
+     "name": "p2",
+     "label": {
+      "en": "Price of good 2",
+      "kn": "ಸರಕು 2 ಬೆಲೆ"
+     },
+     "min": 4,
+     "max": 10,
+     "step": 0.5,
+     "value": 4,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "set",
+     "label": {
+      "en": "Shade the budget set",
+      "kn": "ಬಜೆಟ್ ಸೆಟ್ ಛಾಯೆ"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "B",
+     "label": "bundle",
+     "x": 5,
+     "y": 5,
+     "box": {
+      "x": [
+       0,
+       25
+      ],
+      "y": [
+       0,
+       25
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "cost",
+     "expr": "p1*B_x + p2*B_y"
+    },
+    {
+     "name": "ok",
+     "expr": "cost <= M + 0.001"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     25
+    ],
+    "y": [
+     0,
+     25
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "good 1 (x₁)",
+    "yLabel": "good 2 (x₂)",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "visibleIf": "set",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "M/p1",
+       0
+      ],
+      [
+       0,
+       "M/p2"
+      ]
+     ],
+     "color": "green",
+     "opacity": 0.2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "M/p2",
+     "x2": "M/p1",
+     "y2": 0,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "label",
+     "x": 17,
+     "y": 23.8,
+     "text": {
+      "en": "bundle costs ₹{cost:1} of ₹{M}"
+     },
+     "size": 20,
+     "color": {
+      "by": "ok",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "label",
+     "visibleIf": "!ok",
+     "x": 17,
+     "y": 22.3,
+     "text": {
+      "en": "not affordable"
+     },
+     "size": 20,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "ok && abs(cost - M) < 0.01",
+     "x": 17,
+     "y": 22.3,
+     "text": {
+      "en": "on the budget line"
+     },
+     "size": 20,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cost of the bundle",
+      "kn": "ಕಟ್ಟಿನ ವೆಚ್ಚ"
+     },
+     "expr": "cost",
+     "digits": 1,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Most of good 1 (M/p₁)",
+      "kn": "ಗರಿಷ್ಠ ಸರಕು 1"
+     },
+     "expr": "M/p1",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Most of good 2 (M/p₂)",
+      "kn": "ಗರಿಷ್ಠ ಸರಕು 2"
+     },
+     "expr": "M/p2",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Slope of budget line",
+      "kn": "ಬಜೆಟ್ ರೇಖೆ ಇಳಿಜಾರು"
+     },
+     "expr": "-p1/p2",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double income from ₹40 to ₹80. How does the budget line move?",
+     "kn": "ಆದಾಯ ₹40 ರಿಂದ ₹80. ಬಜೆಟ್ ರೇಖೆ ಹೇಗೆ ಸರಿಯುತ್ತದೆ?"
+    },
+    {
+     "en": "Raise only the price of good 1. Which intercept changes?",
+     "kn": "ಸರಕು 1 ಬೆಲೆಯನ್ನು ಮಾತ್ರ ಏರಿಸಿ. ಯಾವ ಛೇದ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Double income and both prices together. Does anything change?",
+     "kn": "ಆದಾಯ ಮತ್ತು ಎರಡೂ ಬೆಲೆ ದ್ವಿಗುಣಗೊಳಿಸಿ. ಏನಾದರೂ ಬದಲಾಗುತ್ತದೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -438,6 +438,329 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Median and quartiles from the ogive",
+    "kn": "ಓಜಿವ್‌ನಿಂದ ಮಧ್ಯಾಂಕ ಮತ್ತು ಚತುರ್ಥಕಗಳು"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Daily wages (₹ hundred) of workers in four classes. The curve is the less-than ogive. Read across at N/4, N/2 and 3N/4 to find Q1, the median and Q3; the formula L + (N/2 − c.f.)/f × h gives the same values.",
+    "kn": "ನಾಲ್ಕು ವರ್ಗಗಳಲ್ಲಿ ಕಾರ್ಮಿಕರ ದಿನಗೂಲಿ. ವಕ್ರರೇಖೆ 'ಕಡಿಮೆ' ಓಜಿವ್. N/4, N/2, 3N/4 ನಲ್ಲಿ ಅಡ್ಡ ಓದಿ Q1, ಮಧ್ಯಾಂಕ, Q3 ಪಡೆಯಿರಿ."
+   },
+   "sliders": [
+    {
+     "name": "f1",
+     "label": {
+      "en": "Frequency 0–10",
+      "kn": "ಆವರ್ತನ 0–10"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 4
+    },
+    {
+     "name": "f2",
+     "label": {
+      "en": "Frequency 10–20",
+      "kn": "ಆವರ್ತನ 10–20"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 10
+    },
+    {
+     "name": "f3",
+     "label": {
+      "en": "Frequency 20–30",
+      "kn": "ಆವರ್ತನ 20–30"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 16
+    },
+    {
+     "name": "f4",
+     "label": {
+      "en": "Frequency 30–40",
+      "kn": "ಆವರ್ತನ 30–40"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 6
+    }
+   ],
+   "toggles": [
+    {
+     "name": "qt",
+     "label": {
+      "en": "Show quartiles",
+      "kn": "ಚತುರ್ಥಕಗಳು ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "c1",
+     "expr": "f1"
+    },
+    {
+     "name": "c2",
+     "expr": "f1 + f2"
+    },
+    {
+     "name": "c3",
+     "expr": "f1 + f2 + f3"
+    },
+    {
+     "name": "N",
+     "expr": "f1 + f2 + f3 + f4"
+    },
+    {
+     "name": "med",
+     "expr": "if(N/2 <= c1, N/2/f1*10, if(N/2 <= c2, 10 + (N/2 - c1)/f2*10, if(N/2 <= c3, 20 + (N/2 - c2)/f3*10, 30 + (N/2 - c3)/f4*10)))"
+    },
+    {
+     "name": "q1",
+     "expr": "if(N/4 <= c1, N/4/f1*10, if(N/4 <= c2, 10 + (N/4 - c1)/f2*10, if(N/4 <= c3, 20 + (N/4 - c2)/f3*10, 30 + (N/4 - c3)/f4*10)))"
+    },
+    {
+     "name": "q3",
+     "expr": "if(3*N/4 <= c1, 3*N/4/f1*10, if(3*N/4 <= c2, 10 + (3*N/4 - c1)/f2*10, if(3*N/4 <= c3, 20 + (3*N/4 - c2)/f3*10, 30 + (3*N/4 - c3)/f4*10)))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     40
+    ],
+    "y": [
+     0,
+     80
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "wage (₹ hundred)",
+    "yLabel": "cumulative frequency"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 10,
+     "h": "f1",
+     "color": "blue",
+     "opacity": 0.35
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 0,
+     "w": 10,
+     "h": "f2",
+     "color": "blue",
+     "opacity": 0.35
+    },
+    {
+     "shape": "rect",
+     "x": 20,
+     "y": 0,
+     "w": 10,
+     "h": "f3",
+     "color": "blue",
+     "opacity": 0.35
+    },
+    {
+     "shape": "rect",
+     "x": 30,
+     "y": 0,
+     "w": 10,
+     "h": "f4",
+     "color": "blue",
+     "opacity": 0.35
+    },
+    {
+     "shape": "path",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       10,
+       "c1"
+      ],
+      [
+       20,
+       "c2"
+      ],
+      [
+       30,
+       "c3"
+      ],
+      [
+       40,
+       "N"
+      ]
+     ],
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "N/2",
+     "x2": "med",
+     "y2": "N/2",
+     "dashed": true,
+     "color": "green",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": "med",
+     "y1": 0,
+     "x2": "med",
+     "y2": "N/2",
+     "dashed": true,
+     "color": "green",
+     "width": 2
+    },
+    {
+     "shape": "label",
+     "x": "med",
+     "y": 2.9,
+     "text": {
+      "en": "Me {med:1}"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "visibleIf": "qt",
+     "x1": 0,
+     "y1": "N/4",
+     "x2": "q1",
+     "y2": "N/4",
+     "dashed": true,
+     "color": "orange",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "qt",
+     "x1": "q1",
+     "y1": 0,
+     "x2": "q1",
+     "y2": "N/4",
+     "dashed": true,
+     "color": "orange",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "qt",
+     "x1": 0,
+     "y1": "3*N/4",
+     "x2": "q3",
+     "y2": "3*N/4",
+     "dashed": true,
+     "color": "orange",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "qt",
+     "x1": "q3",
+     "y1": 0,
+     "x2": "q3",
+     "y2": "3*N/4",
+     "dashed": true,
+     "color": "orange",
+     "width": 2
+    },
+    {
+     "shape": "label",
+     "visibleIf": "qt",
+     "x": "q1",
+     "y": 8,
+     "text": {
+      "en": "Q1"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "qt",
+     "x": "q3",
+     "y": 8,
+     "text": {
+      "en": "Q3"
+     },
+     "size": 20,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "N",
+      "kn": "N"
+     },
+     "expr": "N",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Q1",
+      "kn": "Q1"
+     },
+     "expr": "q1",
+     "digits": 2,
+     "unit": "₹ hundred"
+    },
+    {
+     "label": {
+      "en": "Median",
+      "kn": "ಮಧ್ಯಾಂಕ"
+     },
+     "expr": "med",
+     "digits": 2,
+     "unit": "₹ hundred"
+    },
+    {
+     "label": {
+      "en": "Q3",
+      "kn": "Q3"
+     },
+     "expr": "q3",
+     "digits": 2,
+     "unit": "₹ hundred"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise the frequency of the last class. Which way do the median and Q3 move?",
+     "kn": "ಕೊನೆಯ ವರ್ಗದ ಆವರ್ತನ ಏರಿಸಿ. ಮಧ್ಯಾಂಕ, Q3 ಯಾವ ಕಡೆ ಸರಿಯುತ್ತವೆ?"
+    },
+    {
+     "en": "Make all four frequencies equal. Where are Q1, median and Q3 now?",
+     "kn": "ನಾಲ್ಕೂ ಆವರ್ತನ ಸಮ ಮಾಡಿ. Q1, ಮಧ್ಯಾಂಕ, Q3 ಎಲ್ಲಿವೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
