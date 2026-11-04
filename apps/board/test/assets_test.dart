@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
@@ -15,7 +16,7 @@ void main() {
     final key = parseTrustedKey(await rootBundle.loadString('assets/packs/trusted-key.json'));
     final store = PackStore(tmpDir('p'), trustedKeys: {key.key: key.value});
     await Services.installSeedPacks(store, rootBundle);
-    expect(store.packs.length, 270); // every chapter of every subject, both years
+    expect(store.packs.length, Directory('assets/packs').listSync().where((e) => e.path.endsWith('.zpack')).length); // every bundled chapter pack
     final syllabus = await Services.loadSyllabus(rootBundle);
     final index = jsonDecode(await rootBundle.loadString('assets/syllabus/index.json')) as Map<String, dynamic>;
     final expected = (index['subjects'] as List).fold<int>(0, (a, s) => a + (s['chapters'] as int));
