@@ -61,9 +61,10 @@ async function examTopics(db: Db, sec: Sec) {
      FROM question q JOIN chapter c ON c.id = q.chapter_id CROSS JOIN LATERAL unnest(q.exams) e
      WHERE c.year = $1 AND c.subject = ANY($2) AND $3 = ANY(c.boards) AND q.topic_id IS NOT NULL GROUP BY e ORDER BY e`,
     [sec.year, sec.subjects, sec.board]);
-  const order = ['PUC', 'CBSE', 'KCET', 'COMEDK', 'NEET', 'JEE', 'JEE_ADV', 'CUET'];
+  const order = ['PUC', 'CBSE', 'ISC', 'KCET', 'COMEDK', 'NEET', 'JEE', 'JEE_ADV', 'CUET'];
   // Each board's own board exam only (a Karnataka PU section is not sitting the CBSE board exam).
-  const other = sec.board === 'cbse' ? ['PUC'] : ['CBSE'];
+  const own = sec.board === 'cbse' ? 'CBSE' : sec.board === 'isc' ? 'ISC' : 'PUC';
+  const other = ['PUC', 'CBSE', 'ISC'].filter((e) => e !== own);
   return rows.filter((r) => !other.includes(r.exam)).sort((a, b) => order.indexOf(a.exam) - order.indexOf(b.exam)).map((r) => ({ exam: r.exam, topics: new Set(r.topics) }));
 }
 

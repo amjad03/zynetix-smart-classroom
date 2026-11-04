@@ -64,7 +64,13 @@ class _TeacherModeScreenState extends State<TeacherModeScreen> {
                     indicator: BoxDecoration(color: Z.tagBg, borderRadius: BorderRadius.circular(Z.radius)),
                     splashBorderRadius: BorderRadius.circular(Z.radius),
                     labelPadding: const EdgeInsets.symmetric(horizontal: 36),
-                    tabs: [for (final sub in subjects) Tab(height: 80, text: subjectName(sub, l))],
+                    tabs: [
+                      for (final sub in subjects)
+                        Tab(
+                          height: 80,
+                          child: Row(mainAxisSize: MainAxisSize.min, children: [Icon(subjectIcon(sub), size: 30), const SizedBox(width: 12), Flexible(child: Text(subjectName(sub, l), overflow: TextOverflow.ellipsis))]),
+                        ),
+                    ],
                   ),
                 ),
                 Expanded(

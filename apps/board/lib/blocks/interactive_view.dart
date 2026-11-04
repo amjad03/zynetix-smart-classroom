@@ -277,16 +277,20 @@ class _StageReadout extends StatelessWidget {
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(label, style: zText(30, FontWeight.w400).copyWith(color: Z.onStage2)),
+        Text(label, textAlign: TextAlign.center, style: zText(30, FontWeight.w400).copyWith(color: Z.onStage2)),
         const SizedBox(height: 8),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          children: [
-            Text(value, style: zText(64, FontWeight.w600).copyWith(color: Z.stageAccent)),
-            if (unit != null) Text(' $unit', style: zText(32, FontWeight.w500).copyWith(color: Z.onStage2)),
-          ],
+        // A long value shrinks to fit the stage (a phone) rather than running off it.
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Text(value, style: zText(64, FontWeight.w600).copyWith(color: Z.stageAccent)),
+              if (unit != null) Text(' $unit', style: zText(32, FontWeight.w500).copyWith(color: Z.onStage2)),
+            ],
+          ),
         ),
       ],
     ),
@@ -313,13 +317,25 @@ class _RailSlider extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
           children: [
             Expanded(child: MathText(spec.label.t(lang), style: zText(30, FontWeight.w500).copyWith(color: Z.ink))),
             const SizedBox(width: 16),
-            Text(_fmt(value, decimals), style: zText(36, FontWeight.w600).copyWith(color: Z.ink)),
-            if (spec.unit != null) Text(' ${spec.unit}', style: zText(28, FontWeight.w500).copyWith(color: Z.muted)),
+            // The value and a long unit (mol L⁻¹ s⁻¹) shrink together rather than overflow.
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerRight,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Text(_fmt(value, decimals), style: zText(36, FontWeight.w600).copyWith(color: Z.ink)),
+                    if (spec.unit != null) Text(' ${spec.unit}', style: zText(28, FontWeight.w500).copyWith(color: Z.muted)),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
         SizedBox(

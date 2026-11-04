@@ -7,6 +7,7 @@ import 'package:kinetix_cs/kinetix_cs.dart';
 import 'package:kinetix_labs/kinetix_labs.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../core/theme.dart';
 import '../core/ui_scale.dart';
 import '../engine/model.dart';
 
@@ -66,7 +67,20 @@ class KinetixEmbeds implements Embeds {
           ),
         );
 
-  static Widget _missing(String id) => Center(child: Text('“$id” is not available on this board yet.', style: const TextStyle(fontSize: 28)));
+  /// On the dark stage, in the board's type: a lab or player this build does not have.
+  static Widget _missing(String id) => Center(
+    child: Padding(
+      padding: const EdgeInsets.all(32),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.extension_off_outlined, size: 72, color: Z.onStage3),
+          const SizedBox(height: 20),
+          Text('“$id” is not available on this board yet.', textAlign: TextAlign.center, style: zText(30, FontWeight.w500).copyWith(color: Z.onStage2)),
+        ],
+      ),
+    ),
+  );
 }
 
 /// Serves an installed pack's media on 127.0.0.1 only (never the college network), the way the

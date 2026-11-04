@@ -13,7 +13,7 @@ import 'participation.dart';
 import 'smartboard.dart';
 
 /// Exam names on the board. JEE is JEE Main.
-const examNames = <String, String>{'KCET': 'KCET', 'COMEDK': 'COMEDK', 'NEET': 'NEET', 'JEE': 'JEE Main', 'JEE_ADV': 'JEE Advanced', 'PUC': 'II PUC Board', 'CBSE': 'CBSE Board'};
+const examNames = <String, String>{'KCET': 'KCET', 'COMEDK': 'COMEDK', 'NEET': 'NEET', 'JEE': 'JEE Main', 'JEE_ADV': 'JEE Advanced', 'PUC': 'II PUC Board', 'CBSE': 'CBSE Board', 'ISC': 'ISC Board'};
 
 /// The subjects each entrance exam tests (board exams test all of the section's subjects).
 const examSubjects = <String, List<String>>{
@@ -32,14 +32,18 @@ const _examColors = <String, Color>{
   'JEE_ADV': Color(0xFF6A1B9A),
   'PUC': Color(0xFFEF6C00),
   'CBSE': Color(0xFFEF6C00),
+  'ISC': Color(0xFFEF6C00),
 };
 
 /// The exams that fit a section: NEET needs biology, JEE and COMEDK need maths, KCET needs one
-/// of PCMB; the section's own board exam (PUC or CBSE) is always there.
+/// of PCMB; the section's own board exam (PUC, CBSE or ISC) is always there.
 List<String> examsFor(List<String> subjects, String board) {
   bool has(String s) => subjects.contains(s);
-  return [if (examSubjects['KCET']!.any(has)) 'KCET', if (has('maths')) 'COMEDK', if (has('biology')) 'NEET', if (has('maths')) 'JEE', if (has('maths')) 'JEE_ADV', board == 'cbse' ? 'CBSE' : 'PUC'];
+  return [if (examSubjects['KCET']!.any(has)) 'KCET', if (has('maths')) 'COMEDK', if (has('biology')) 'NEET', if (has('maths')) 'JEE', if (has('maths')) 'JEE_ADV', boardExam(board)];
 }
+
+/// The board exam a section sits: II PUC (Karnataka), CBSE or ISC.
+String boardExam(String board) => switch (board) { 'cbse' => 'CBSE', 'isc' => 'ISC', _ => 'PUC' };
 
 /// The section's subjects that [exam] tests, in the section's order.
 List<String> examSubjectsFor(String exam, List<String> subjects) => [

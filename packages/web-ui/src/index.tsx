@@ -109,12 +109,14 @@ export function L10nInput({ label, value, onChange, multiline }: { label: string
   );
 }
 
-export const SUBJECTS = ['physics', 'chemistry', 'maths', 'biology', 'computer_science', 'electronics', 'statistics', 'accountancy', 'business_studies', 'economics', 'english'] as const;
+export const SUBJECTS = ['physics', 'chemistry', 'maths', 'biology', 'computer_science', 'electronics', 'statistics', 'accountancy', 'business_studies', 'economics', 'commerce', 'english'] as const;
 export const SUBJECT_NAMES: Record<string, string> = {
   physics: 'Physics', chemistry: 'Chemistry', maths: 'Maths', biology: 'Biology', computer_science: 'Computer Science', electronics: 'Electronics',
-  statistics: 'Statistics', accountancy: 'Accountancy', business_studies: 'Business Studies', economics: 'Economics', english: 'English',
+  statistics: 'Statistics', accountancy: 'Accountancy', business_studies: 'Business Studies', economics: 'Economics', commerce: 'Commerce', english: 'English',
 };
-export const EXAMS = ['PUC', 'CBSE', 'KCET', 'COMEDK', 'NEET', 'JEE', 'JEE_ADV', 'CUET'] as const;
-export const BOARD_NAMES: Record<string, string> = { kar_pu: 'Karnataka PU', cbse: 'CBSE' };
-/** "1st PUC" for Karnataka PU, "Class 11" for CBSE. */
-export const yearLabel = (year: string, board = 'kar_pu') => (board === 'cbse' ? (year === 'puc1' ? 'Class 11' : 'Class 12') : year === 'puc1' ? '1st PUC' : '2nd PUC');
+export const EXAMS = ['PUC', 'CBSE', 'ISC', 'KCET', 'COMEDK', 'NEET', 'JEE', 'JEE_ADV', 'CUET'] as const;
+export const BOARD_NAMES: Record<string, string> = { kar_pu: 'Karnataka PU', cbse: 'CBSE', isc: 'ISC (CISCE)' };
+export const BOARDS = ['kar_pu', 'cbse', 'isc'] as const;
+/** "1st PUC" for Karnataka PU, "Class 11" for CBSE, "Class XI" for ISC. */
+export const yearLabel = (year: string, board = 'kar_pu') =>
+  board === 'cbse' ? (year === 'puc1' ? 'Class 11' : 'Class 12') : board === 'isc' ? (year === 'puc1' ? 'Class XI' : 'Class XII') : year === 'puc1' ? '1st PUC' : '2nd PUC';

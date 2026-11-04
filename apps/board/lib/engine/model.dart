@@ -209,6 +209,13 @@ class Topic {
   final List<String>? boards;
 }
 
+/// The curricula the board knows. An unknown or missing board falls back to Karnataka PU.
+const boardIds = ['kar_pu', 'cbse', 'isc'];
+String normalizeBoard(String? b) {
+  final v = b?.trim().toLowerCase();
+  return boardIds.contains(v) ? v! : 'kar_pu';
+}
+
 class Chapter {
   Chapter({required this.id, required this.subject, required this.year, required this.number, required this.title, required this.topics, this.boards = const ['kar_pu', 'cbse']});
   final String id, subject, year;
@@ -230,7 +237,7 @@ class Chapter {
     number: j['number'] as int,
     title: L10n.of(j['title']),
     topics: [for (final t in (j['topics'] as List?) ?? const []) Topic(t['id'] as String, L10n.of(t['title']), t['ncert'] as String?, (t['boards'] as List?)?.cast<String>())],
-    boards: (j['boards'] as List?)?.cast<String>() ?? const ['kar_pu', 'cbse'],
+    boards: [for (final b in (j['boards'] as List?) ?? const ['kar_pu', 'cbse']) (b as String).toLowerCase()],
   );
 }
 

@@ -27,15 +27,19 @@ class BoardConfig extends ChangeNotifier {
   /// puc1 / puc2: which year's chapters to list first.
   String get year => _p.getString('year') ?? 'puc1';
 
-  /// The curriculum this section follows: kar_pu (Karnataka PU) or cbse.
-  String get board => _p.getString('board') ?? 'kar_pu';
+  /// The curriculum this section follows: kar_pu (Karnataka PU), cbse, or isc (CISCE Class XI/XII).
+  String get board => normalizeBoard(_p.getString('board'));
   bool get isCbse => board == 'cbse';
+  bool get isIsc => board == 'isc';
+
+  /// ISC is taught in English only: no Kannada switch, and the board stays in English.
+  bool get kannadaOffered => !isIsc;
 
   /// Subjects taught in this section, in tab order (from Admin → Sections).
   List<String> get subjects => _p.getStringList('subjects') ?? const ['physics', 'chemistry', 'maths', 'biology'];
   int get rollCount => _p.getInt('rollCount') ?? 60;
   int get periodMinutes => _p.getInt('periodMinutes') ?? 40;
-  Lang get lang => _p.getString('lang') == 'kn' ? Lang.kn : Lang.en;
+  Lang get lang => kannadaOffered && _p.getString('lang') == 'kn' ? Lang.kn : Lang.en;
   String? get licenceToken => _p.getString('licenceToken');
   bool get kioskOn => _p.getBool('kiosk') ?? false;
 

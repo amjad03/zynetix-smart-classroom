@@ -135,6 +135,24 @@ describe('Zynetix API', () => {
     expect(ids).toContain("puc2-physics-wave-optics");
   });
 
+  it('an ISC section can be added (Science or Commerce, Class XI/XII) and activates with its board', async () => {
+    const sec = { id: 'test-isc-12-com', label: 'Class XII · ISC · Commerce', year: 'puc2', rollCount: 35, board: 'isc', subjects: ['accountancy', 'commerce', 'economics', 'english'] };
+    await http.post('/v1/admin/sections').auth(admin, { type: 'bearer' }).send({ ...sec, board: 'icse' }).expect(400);
+    await http.post('/v1/admin/sections').auth(admin, { type: 'bearer' }).send(sec).expect(201);
+    try {
+      const code = (await http.post(`/v1/admin/sections/${sec.id}/activation-code`).auth(admin, { type: 'bearer' }).expect(201)).body.code;
+      const a = await http.post('/v1/devices/activate').send({ code, name: 'ISC room', pin: '6666' }).expect(201);
+      expect(a.body.config).toMatchObject({ board: 'isc', year: 'puc2', subjects: sec.subjects });
+      const r = await http.post('/v1/board/sync').auth(a.body.deviceToken, { type: 'bearer' }).send({}).expect(201);
+      const isc = new Set((await db.q<{ id: string }>("SELECT p.id FROM pack p JOIN chapter c ON c.id = p.chapter_id WHERE 'isc' = ANY(c.boards) AND c.subject = ANY($1)", [sec.subjects])).map((c) => c.id));
+      expect(r.body.packs.every((p: any) => isc.has(p.id))).toBe(true); // nothing outside the ISC syllabus or its subjects
+      await db.q("INSERT INTO section(id, college_id, label, year, roll_count, board) VALUES ('test-bad', 'demo-pu', 'x', 'puc1', 1, 'icse')").then(() => { throw new Error('board check missing'); }, (e) => expect(String(e)).toMatch(/check/i));
+    } finally {
+      for (const t of ['activation_code', 'device']) await db.q(`DELETE FROM ${t} WHERE section_id = $1`, [sec.id]).catch(() => undefined);
+      await db.q('DELETE FROM section WHERE id = $1', [sec.id]);
+    }
+  });
+
   it('roles: admins cannot use the CMS; editors cannot use Admin without naming a college', async () => {
     await http.get('/v1/cms/packs').auth(admin, { type: 'bearer' }).expect(403);
     await http.get('/v1/admin/sections').auth(editor, { type: 'bearer' }).expect(403);

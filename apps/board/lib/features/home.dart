@@ -197,6 +197,7 @@ class _StatusBarState extends State<StatusBar> {
             onLongPress: () => openSettings(context),
             child: Text('${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}', style: zText(narrow ? 30 : 36, FontWeight.w600)),
           ),
+          if (s.config.kannadaOffered) ...[
           gap,
           ZSegmented<Lang>(
             expand: false,
@@ -205,6 +206,7 @@ class _StatusBarState extends State<StatusBar> {
             selected: widget.lang,
             onChanged: s.config.setLang,
           ),
+          ],
         ],
       ),
     );

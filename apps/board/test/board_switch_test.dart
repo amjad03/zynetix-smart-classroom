@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zynetix_board/core/strings.dart';
 import 'package:zynetix_board/engine/model.dart';
+import 'package:zynetix_board/features/exam_practice.dart';
+import 'package:zynetix_board/features/insight/analysis.dart' show Exam;
 import 'package:zynetix_board/engine/session_log.dart';
 import 'package:zynetix_board/features/participation.dart';
 import 'package:zynetix_board/features/teacher_mode.dart';
@@ -28,6 +31,41 @@ void main() {
     await pumpBoard(t, s, home: const TeacherModeScreen());
     expect(find.text('Class 11'), findsOneWidget);
     expect(find.text('Accountancy'), findsOneWidget);
+    expect(find.text('1st PUC'), findsNothing);
+  });
+
+  test('ISC: board parsing, Class XI/XII labels, its own board exam and readiness tag', () {
+    expect(normalizeBoard('ISC'), 'isc');
+    expect(normalizeBoard(null), 'kar_pu');
+    expect(normalizeBoard('icse'), 'kar_pu');
+    final ch = Chapter.fromJson({'id': 'puc2-commerce-01-x', 'subject': 'commerce', 'year': 'puc2', 'number': 1, 'title': {'en': 'X'}, 'boards': ['isc'], 'topics': [{'id': 'puc2-commerce-01-x.t1', 'title': {'en': 'T'}}]});
+    expect(ch.forBoard('isc'), isTrue);
+    expect(ch.forBoard('cbse'), isFalse);
+    expect(ch.topicsFor('isc').length, 1);
+    expect(yearLabel('puc1', 'isc', Lang.en), 'Class XI');
+    expect(yearLabel('puc2', 'isc', Lang.kn), 'Class XII');
+    expect(examsFor(['accountancy', 'commerce', 'economics', 'english'], 'isc'), ['ISC']);
+    expect(examsFor(['physics', 'chemistry', 'maths'], 'isc'), containsAllInOrder(['JEE', 'ISC']));
+    expect(examsFor(['physics'], 'isc'), isNot(contains('PUC')));
+    expect(examNames['ISC'], 'ISC Board');
+    expect(Exam.board.tagFor('isc'), 'ISC');
+    expect(Exam.board.labelFor('isc'), 'ISC board');
+    expect(subjectName('commerce', Lang.en), 'Commerce');
+    expect(subjectIcon('commerce'), isNot(subjectIcon('nope')));
+  });
+
+  testWidgets('an ISC section: English only (no Kannada switch), "Class XI", Commerce with its icon', (t) async {
+    final s = await testServices(prefs: {'board': 'isc', 'lang': 'kn', 'subjects': ['accountancy', 'commerce', 'economics', 'english']});
+    expect(s.config.lang, Lang.en, reason: 'ISC is taught in English only');
+    expect(s.config.kannadaOffered, isFalse);
+    // Until the ISC Commerce syllabus is in the seed, give the board one chapter of it.
+    s.syllabus['commerce'] ??= {'puc1': [Chapter(id: 'puc1-commerce-01-x', subject: 'commerce', year: 'puc1', number: 1, title: const L10n('Trade'), topics: const [], boards: const ['isc'])]};
+    await pumpBoard(t, s);
+    expect(find.byKey(const ValueKey('lang-kn')), findsNothing);
+    await pumpBoard(t, s, home: const TeacherModeScreen());
+    expect(find.text('Class XI'), findsOneWidget);
+    expect(find.text('Commerce'), findsOneWidget);
+    expect(find.byIcon(subjectIcon('commerce')), findsOneWidget);
     expect(find.text('1st PUC'), findsNothing);
   });
 

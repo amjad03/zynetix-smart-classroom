@@ -172,9 +172,9 @@ enum Exam {
   /// The exam's subjects; null = every subject the section studies.
   final List<String>? subjects;
 
-  /// The board exam follows the section's curriculum (PUC or CBSE).
-  String tagFor(String curriculum) => this == board && curriculum == 'cbse' ? 'CBSE' : tag;
-  String labelFor(String curriculum) => this == board && curriculum == 'cbse' ? 'CBSE board' : label;
+  /// The board exam follows the section's curriculum (PUC, CBSE or ISC).
+  String tagFor(String curriculum) => this != board ? tag : switch (curriculum) { 'cbse' => 'CBSE', 'isc' => 'ISC', _ => tag };
+  String labelFor(String curriculum) => this != board ? label : switch (curriculum) { 'cbse' => 'CBSE board', 'isc' => 'ISC board', _ => label };
 }
 
 enum Band { ready, onTrack, needsWork, noData }

@@ -147,7 +147,7 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
                       ] else
                         Text('${c.index + 1}/${c.blocks.length}', key: const ValueKey('stepOf'), style: zText(28, FontWeight.w500).copyWith(color: Z.muted)),
                       if (!phone) SmartboardButton(onOpen: _boardOpened, onClose: _boardClosed),
-                      if (!phone) ZSmallButton(key: const ValueKey('lang'), label: l == Lang.en ? 'ಕನ್ನಡ' : 'English', onPressed: () => c.setLang(l == Lang.en ? Lang.kn : Lang.en)),
+                      if (!phone && s.config.kannadaOffered) ZSmallButton(key: const ValueKey('lang'), label: l == Lang.en ? 'ಕನ್ನಡ' : 'English', onPressed: () => c.setLang(l == Lang.en ? Lang.kn : Lang.en)),
                       ZIconSquare(key: const ValueKey('close'), icon: Icons.close, tooltip: tr('closeLesson', l), onPressed: () => Navigator.pop(context)),
                     ],
                   ),

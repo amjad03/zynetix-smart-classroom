@@ -39,7 +39,7 @@ const common: Field[] = [
   { key: 'narration', label: 'Narration (read aloud in Self-Learning)', kind: 'l10nLong' },
   { key: 'seconds', label: 'Seconds on screen (Self-Learning)', kind: 'number' },
   { key: 'optional', label: 'Optional (dropped first in a short period)', kind: 'bool' },
-  { key: 'boards', label: 'Only for boards (kar_pu, cbse); empty = all', kind: 'ids' },
+  { key: 'boards', label: 'Only for boards (kar_pu, cbse, isc); empty = all', kind: 'ids' },
 ];
 
 export const BLOCK_FIELDS: Record<BlockType, Field[]> = {

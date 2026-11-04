@@ -508,7 +508,7 @@ class StageLayout extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(flex: stageFlexPortrait, child: stage),
-          if (rail.isNotEmpty) ...[SizedBox(height: gap), Expanded(flex: railFlexPortrait, child: SingleChildScrollView(child: railCol))],
+          if (rail.isNotEmpty) ...[SizedBox(height: gap), Expanded(flex: railFlexPortrait, child: RailScroll(child: railCol))],
         ],
       );
     }
@@ -519,10 +519,80 @@ class StageLayout extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(child: stage),
-            if (rail.isNotEmpty) ...[SizedBox(width: gap), SizedBox(width: w, child: SingleChildScrollView(child: railCol))],
+            if (rail.isNotEmpty) ...[SizedBox(width: gap), SizedBox(width: w, child: RailScroll(child: railCol))],
           ],
         );
       },
+    );
+  }
+}
+
+/// The rail beside a stage: its panels scroll as a column, whole (none is squeezed or cut off for
+/// good). When there is more below, a slim scrollbar shows and the bottom edge fades, so a panel
+/// that runs past the edge reads as "scroll for more" rather than as clipped.
+class RailScroll extends StatefulWidget {
+  const RailScroll({super.key, required this.child});
+  final Widget child;
+  @override
+  State<RailScroll> createState() => _RailScrollState();
+}
+
+class _RailScrollState extends State<RailScroll> {
+  final _scroll = ScrollController();
+  bool _more = false, _scrolled = false;
+
+  bool _onMetrics(Notification n) {
+    final m = switch (n) {
+      ScrollMetricsNotification(:final metrics) => metrics,
+      ScrollNotification(:final metrics) => metrics,
+      _ => null,
+    };
+    if (m == null || m.axis != Axis.vertical) return false;
+    final more = m.extentAfter > 1, scrolled = m.extentBefore > 1;
+    if (more != _more || scrolled != _scrolled) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        setState(() {
+          _more = more;
+          _scrolled = scrolled;
+        });
+      });
+    }
+    return false;
+  }
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    const fade = 72.0;
+    // Always the same tree (only the gradient changes), so the scroll position is kept.
+    final list = ShaderMask(
+      blendMode: BlendMode.dstIn,
+      shaderCallback: (r) => LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [Colors.white, Colors.white, _more ? Colors.transparent : Colors.white],
+        stops: [0, r.height <= fade ? 0 : (r.height - fade) / r.height, 1],
+      ).createShader(r),
+      child: SingleChildScrollView(key: const ValueKey('railScroll'), controller: _scroll, child: widget.child),
+    );
+    return NotificationListener<Notification>(
+      onNotification: _onMetrics,
+      child: RawScrollbar(
+        controller: _scroll,
+        thumbVisibility: _more || _scrolled,
+        thickness: 8,
+        radius: const Radius.circular(Z.pill),
+        thumbColor: Z.ghost,
+        crossAxisMargin: 6,
+        mainAxisMargin: 12,
+        child: list,
+      ),
     );
   }
 }

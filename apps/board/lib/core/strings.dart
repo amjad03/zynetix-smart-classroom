@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../engine/model.dart';
 
 /// Board UI text in English and Kannada (Kannada to be checked by a native speaker,
@@ -161,12 +163,32 @@ const subjectNames = <String, (String, String)>{
   'accountancy': ('Accountancy', 'ಲೆಕ್ಕಶಾಸ್ತ್ರ'),
   'business_studies': ('Business Studies', 'ವ್ಯವಹಾರ ಅಧ್ಯಯನ'),
   'economics': ('Economics', 'ಅರ್ಥಶಾಸ್ತ್ರ'),
+  'commerce': ('Commerce', 'ವಾಣಿಜ್ಯ'),
   'english': ('English', 'ಇಂಗ್ಲಿಷ್'),
 };
 
-/// "1st PUC" on Karnataka PU boards, "Class 11" on CBSE boards.
-String yearLabel(String year, String board, Lang l) => board == 'cbse'
-    ? (year == 'puc1' ? (l == Lang.kn ? '11ನೇ ತರಗತಿ' : 'Class 11') : (l == Lang.kn ? '12ನೇ ತರಗತಿ' : 'Class 12'))
-    : (year == 'puc1' ? (l == Lang.kn ? 'ಪ್ರಥಮ ಪಿಯುಸಿ' : '1st PUC') : (l == Lang.kn ? 'ದ್ವಿತೀಯ ಪಿಯುಸಿ' : '2nd PUC'));
+/// "1st PUC" on Karnataka PU boards, "Class 11" on CBSE boards, "Class XI" on ISC boards.
+String yearLabel(String year, String board, Lang l) => switch (board) {
+  'cbse' => year == 'puc1' ? (l == Lang.kn ? '11ನೇ ತರಗತಿ' : 'Class 11') : (l == Lang.kn ? '12ನೇ ತರಗತಿ' : 'Class 12'),
+  'isc' => year == 'puc1' ? 'Class XI' : 'Class XII',
+  _ => year == 'puc1' ? (l == Lang.kn ? 'ಪ್ರಥಮ ಪಿಯುಸಿ' : '1st PUC') : (l == Lang.kn ? 'ದ್ವಿತೀಯ ಪಿಯುಸಿ' : '2nd PUC'),
+};
+
+/// A small icon for each subject (subject tabs and lists).
+IconData subjectIcon(String s) => switch (s) {
+  'physics' => Icons.bolt_outlined,
+  'chemistry' => Icons.science_outlined,
+  'maths' => Icons.functions,
+  'biology' => Icons.eco_outlined,
+  'computer_science' => Icons.computer_outlined,
+  'electronics' => Icons.memory_outlined,
+  'statistics' => Icons.bar_chart_outlined,
+  'accountancy' => Icons.receipt_long_outlined,
+  'business_studies' => Icons.business_center_outlined,
+  'economics' => Icons.trending_up,
+  'commerce' => Icons.storefront_outlined,
+  'english' => Icons.menu_book_outlined,
+  _ => Icons.school_outlined,
+};
 
 String subjectName(String s, Lang l) => l == Lang.kn ? (subjectNames[s]?.$2 ?? s) : (subjectNames[s]?.$1 ?? s);
