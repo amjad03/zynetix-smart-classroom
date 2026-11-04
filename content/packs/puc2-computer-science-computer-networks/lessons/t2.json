@@ -61,6 +61,272 @@
    }
   },
   {
+   "id": "scene-network-reach",
+   "type": "interactive",
+   "title": {
+    "en": "PAN, LAN, MAN or WAN?",
+    "kn": "PAN, LAN, MAN ಅಥವಾ WAN?"
+   },
+   "narration": {
+    "en": "Networks are named by the area they cover. Move the second device further away and see which kind of network is needed to connect it. The rings are on a log scale: each ring is many times wider than the one inside it. Connect a printer in the next room. Which network is it? Your bank's branches in Mysuru and Delhi share data. Which network?",
+    "kn": "ಜಾಲಗಳನ್ನು ಅವು ವ್ಯಾಪಿಸುವ ಪ್ರದೇಶದಿಂದ ಹೆಸರಿಸಲಾಗುತ್ತದೆ. ಎರಡನೇ ಸಾಧನವನ್ನು ದೂರ ಸರಿಸಿ ಅದನ್ನು ಸಂಪರ್ಕಿಸಲು ಯಾವ ಜಾಲ ಬೇಕು ನೋಡಿ. ವೃತ್ತಗಳು ಲಾಗ್ ಪ್ರಮಾಣದಲ್ಲಿವೆ: ಪ್ರತಿ ವೃತ್ತ ಒಳಗಿನದಕ್ಕಿಂತ ಅನೇಕ ಪಟ್ಟು ಅಗಲ. ಪಕ್ಕದ ಕೋಣೆಯ ಪ್ರಿಂಟರ್ ಸಂಪರ್ಕಿಸಿ. ಯಾವ ಜಾಲ? ಮೈಸೂರು ಮತ್ತು ದೆಹಲಿಯ ಬ್ಯಾಂಕ್ ಶಾಖೆಗಳು ದತ್ತಾಂಶ ಹಂಚುತ್ತವೆ. ಯಾವ ಜಾಲ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Networks are named by the area they cover. Move the second device further away and see which kind of network is needed to connect it. The rings are on a log scale: each ring is many times wider than the one inside it.",
+    "kn": "ಜಾಲಗಳನ್ನು ಅವು ವ್ಯಾಪಿಸುವ ಪ್ರದೇಶದಿಂದ ಹೆಸರಿಸಲಾಗುತ್ತದೆ. ಎರಡನೇ ಸಾಧನವನ್ನು ದೂರ ಸರಿಸಿ ಅದನ್ನು ಸಂಪರ್ಕಿಸಲು ಯಾವ ಜಾಲ ಬೇಕು ನೋಡಿ. ವೃತ್ತಗಳು ಲಾಗ್ ಪ್ರಮಾಣದಲ್ಲಿವೆ: ಪ್ರತಿ ವೃತ್ತ ಒಳಗಿನದಕ್ಕಿಂತ ಅನೇಕ ಪಟ್ಟು ಅಗಲ."
+   },
+   "sliders": [
+    {
+     "name": "lg",
+     "label": {
+      "en": "Distance (power of 10, in metres)",
+      "kn": "ದೂರ (10ರ ಘಾತ, ಮೀಟರ್)"
+     },
+     "min": 0,
+     "max": 7,
+     "step": 0.25,
+     "value": 2
+    }
+   ],
+   "vars": [
+    {
+     "name": "ty",
+     "expr": "if(lg <= 1, 1, if(lg <= 3, 2, if(lg <= 4.7, 3, 4)))"
+    },
+    {
+     "name": "rr",
+     "expr": "clamp(0.3 + lg*0.66, 0.3, 4.95)"
+    }
+   ],
+   "view": {
+    "x": [
+     -6.5,
+     6.5
+    ],
+    "y": [
+     -5.2,
+     6.4
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 4.8,
+     "color": "red",
+     "opacity": 0.18
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 4.8,
+     "color": "red",
+     "fill": false
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 4.45,
+     "text": {
+      "en": "WAN",
+      "kn": "WAN"
+     },
+     "size": 18,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 3.6,
+     "color": "orange",
+     "opacity": 0.18
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 3.6,
+     "color": "orange",
+     "fill": false
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 3.25,
+     "text": {
+      "en": "MAN ~50 km",
+      "kn": "MAN ~50 ಕಿಮೀ"
+     },
+     "size": 18,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 2.4,
+     "color": "blue",
+     "opacity": 0.18
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 2.4,
+     "color": "blue",
+     "fill": false
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 2.05,
+     "text": {
+      "en": "LAN ~1 km",
+      "kn": "LAN ~1 ಕಿಮೀ"
+     },
+     "size": 18,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 1.2,
+     "color": "green",
+     "opacity": 0.18
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 1.2,
+     "color": "green",
+     "fill": false
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 0.85,
+     "text": {
+      "en": "PAN ~10 m",
+      "kn": "PAN ~10 ಮೀ"
+     },
+     "size": 18,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 0.25,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -0.55,
+     "text": {
+      "en": "you",
+      "kn": "ನೀವು"
+     },
+     "size": 16,
+     "color": "white"
+    },
+    {
+     "shape": "circle",
+     "x": "rr",
+     "y": 0,
+     "r": 0.25,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "rr",
+     "y2": 0,
+     "color": "yellow",
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 5.6,
+     "text": {
+      "en": "Personal Area Network: Bluetooth earbuds, phone to laptop",
+      "kn": "ವೈಯಕ್ತಿಕ ಜಾಲ: ಬ್ಲೂಟೂತ್ ಇಯರ್‌ಬಡ್, ಫೋನ್-ಲ್ಯಾಪ್‌ಟಾಪ್"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "ty == 1"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 5.6,
+     "text": {
+      "en": "Local Area Network: a school lab or office building",
+      "kn": "ಸ್ಥಳೀಯ ಜಾಲ: ಶಾಲಾ ಪ್ರಯೋಗಾಲಯ ಅಥವಾ ಕಚೇರಿ ಕಟ್ಟಡ"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "ty == 2"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 5.6,
+     "text": {
+      "en": "Metropolitan Area Network: cable TV or offices across a city",
+      "kn": "ಮಹಾನಗರ ಜಾಲ: ನಗರದಾದ್ಯಂತ ಕೇಬಲ್ ಟಿವಿ ಅಥವಾ ಕಚೇರಿಗಳು"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "ty == 3"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 5.6,
+     "text": {
+      "en": "Wide Area Network: across countries; the Internet is the largest",
+      "kn": "ವಿಶಾಲ ಜಾಲ: ದೇಶಗಳಾದ್ಯಂತ; ಇಂಟರ್ನೆಟ್ ಅತಿ ದೊಡ್ಡದು"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "ty == 4"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Distance",
+      "kn": "ದೂರ"
+     },
+     "expr": "10^lg/1000",
+     "digits": 3,
+     "unit": "km"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Connect a printer in the next room. Which network is it?",
+     "kn": "ಪಕ್ಕದ ಕೋಣೆಯ ಪ್ರಿಂಟರ್ ಸಂಪರ್ಕಿಸಿ. ಯಾವ ಜಾಲ?"
+    },
+    {
+     "en": "Your bank's branches in Mysuru and Delhi share data. Which network?",
+     "kn": "ಮೈಸೂರು ಮತ್ತು ದೆಹಲಿಯ ಬ್ಯಾಂಕ್ ಶಾಖೆಗಳು ದತ್ತಾಂಶ ಹಂಚುತ್ತವೆ. ಯಾವ ಜಾಲ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

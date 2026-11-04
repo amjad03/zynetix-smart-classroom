@@ -55,6 +55,490 @@
    }
   },
   {
+   "id": "scene-file-redundancy",
+   "type": "interactive",
+   "title": {
+    "en": "Why files lead to inconsistency",
+    "kn": "ಕಡತಗಳು ಏಕೆ ಅಸಂಗತತೆಗೆ ಕಾರಣ"
+   },
+   "narration": {
+    "en": "In a file system each department keeps its own file, so the same address is stored many times (redundancy). When the student moves and only one file is updated, the copies disagree (inconsistency). A DBMS keeps one copy that every application shares. With 4 department files, update the address once. How many copies are now wrong? Switch to a database and update again. Why is there nothing to fix?",
+    "kn": "ಕಡತ ವ್ಯವಸ್ಥೆಯಲ್ಲಿ ಪ್ರತಿ ವಿಭಾಗ ತನ್ನದೇ ಕಡತ ಇಡುತ್ತದೆ; ಒಂದೇ ವಿಳಾಸ ಹಲವು ಬಾರಿ (ಪುನರಾವರ್ತನೆ). ವಿದ್ಯಾರ್ಥಿ ಸ್ಥಳಾಂತರಿಸಿ ಒಂದೇ ಕಡತ ನವೀಕರಿಸಿದರೆ ಪ್ರತಿಗಳು ಹೊಂದುವುದಿಲ್ಲ (ಅಸಂಗತತೆ). DBMS ಎಲ್ಲಾ ಅನ್ವಯಗಳು ಹಂಚುವ ಒಂದೇ ಪ್ರತಿ ಇಡುತ್ತದೆ. 4 ವಿಭಾಗ ಕಡತಗಳಿದ್ದಾಗ ಒಮ್ಮೆ ವಿಳಾಸ ನವೀಕರಿಸಿ. ಎಷ್ಟು ಪ್ರತಿಗಳು ತಪ್ಪು? ದತ್ತಸಂಚಯಕ್ಕೆ ಬದಲಿಸಿ ಮತ್ತೆ ನವೀಕರಿಸಿ. ಏಕೆ ಸರಿಪಡಿಸಲು ಏನೂ ಇಲ್ಲ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "In a file system each department keeps its own file, so the same address is stored many times (redundancy). When the student moves and only one file is updated, the copies disagree (inconsistency). A DBMS keeps one copy that every application shares.",
+    "kn": "ಕಡತ ವ್ಯವಸ್ಥೆಯಲ್ಲಿ ಪ್ರತಿ ವಿಭಾಗ ತನ್ನದೇ ಕಡತ ಇಡುತ್ತದೆ; ಒಂದೇ ವಿಳಾಸ ಹಲವು ಬಾರಿ (ಪುನರಾವರ್ತನೆ). ವಿದ್ಯಾರ್ಥಿ ಸ್ಥಳಾಂತರಿಸಿ ಒಂದೇ ಕಡತ ನವೀಕರಿಸಿದರೆ ಪ್ರತಿಗಳು ಹೊಂದುವುದಿಲ್ಲ (ಅಸಂಗತತೆ). DBMS ಎಲ್ಲಾ ಅನ್ವಯಗಳು ಹಂಚುವ ಒಂದೇ ಪ್ರತಿ ಇಡುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "nd",
+     "label": {
+      "en": "Departments keeping a file",
+      "kn": "ಕಡತ ಇಡುವ ವಿಭಾಗಗಳು"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "choices": [
+    {
+     "name": "fs",
+     "label": {
+      "en": "Storage",
+      "kn": "ಸಂಗ್ರಹ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Separate files",
+        "kn": "ಪ್ರತ್ಯೇಕ ಕಡತಗಳು"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "One database",
+        "kn": "ಒಂದು ದತ್ತಸಂಚಯ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "counters": [
+    {
+     "name": "upd",
+     "value": 0,
+     "min": 0,
+     "max": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Student moves: update the first copy",
+      "kn": "ವಿದ್ಯಾರ್ಥಿ ಸ್ಥಳಾಂತರ: ಮೊದಲ ಪ್ರತಿ ನವೀಕರಿಸಿ"
+     },
+     "icon": "check",
+     "set": {
+      "upd": "1"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ"
+     },
+     "icon": "reset",
+     "set": {
+      "upd": "0"
+     }
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     1,
+     9
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 3,
+     "w": 2.7,
+     "h": 3,
+     "color": "blue",
+     "visibleIf": "0 < nd && fs == 1",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": 2.35,
+     "y": 5.4,
+     "text": {
+      "en": "Dept 1 file",
+      "kn": "ವಿಭಾಗ 1 ಕಡತ"
+     },
+     "size": 16,
+     "color": "white",
+     "visibleIf": "0 < nd && fs == 1"
+    },
+    {
+     "shape": "text",
+     "x": 2.35,
+     "y": 4.3,
+     "text": {
+      "en": "Mysuru",
+      "kn": "ಮೈಸೂರು"
+     },
+     "size": 18,
+     "color": "green",
+     "visibleIf": "0 < nd && fs == 1 && (upd == 0 || 0 > 0)"
+    },
+    {
+     "shape": "text",
+     "x": 2.35,
+     "y": 4.3,
+     "text": {
+      "en": "Hubballi",
+      "kn": "ಹುಬ್ಬಳ್ಳಿ"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "0 < nd && fs == 1 && upd == 1 && 0 == 0"
+    },
+    {
+     "shape": "rect",
+     "x": 4.1,
+     "y": 3,
+     "w": 2.7,
+     "h": 3,
+     "color": "blue",
+     "visibleIf": "1 < nd && fs == 1",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": 5.449999999999999,
+     "y": 5.4,
+     "text": {
+      "en": "Dept 2 file",
+      "kn": "ವಿಭಾಗ 2 ಕಡತ"
+     },
+     "size": 16,
+     "color": "white",
+     "visibleIf": "1 < nd && fs == 1"
+    },
+    {
+     "shape": "text",
+     "x": 5.449999999999999,
+     "y": 4.3,
+     "text": {
+      "en": "Mysuru",
+      "kn": "ಮೈಸೂರು"
+     },
+     "size": 18,
+     "color": "green",
+     "visibleIf": "1 < nd && fs == 1 && (upd == 0 || 1 > 0)"
+    },
+    {
+     "shape": "text",
+     "x": 5.449999999999999,
+     "y": 4.3,
+     "text": {
+      "en": "Hubballi",
+      "kn": "ಹುಬ್ಬಳ್ಳಿ"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "1 < nd && fs == 1 && upd == 1 && 1 == 0"
+    },
+    {
+     "shape": "rect",
+     "x": 7.2,
+     "y": 3,
+     "w": 2.7,
+     "h": 3,
+     "color": "blue",
+     "visibleIf": "2 < nd && fs == 1",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": 8.55,
+     "y": 5.4,
+     "text": {
+      "en": "Dept 3 file",
+      "kn": "ವಿಭಾಗ 3 ಕಡತ"
+     },
+     "size": 16,
+     "color": "white",
+     "visibleIf": "2 < nd && fs == 1"
+    },
+    {
+     "shape": "text",
+     "x": 8.55,
+     "y": 4.3,
+     "text": {
+      "en": "Mysuru",
+      "kn": "ಮೈಸೂರು"
+     },
+     "size": 18,
+     "color": "green",
+     "visibleIf": "2 < nd && fs == 1 && (upd == 0 || 2 > 0)"
+    },
+    {
+     "shape": "text",
+     "x": 8.55,
+     "y": 4.3,
+     "text": {
+      "en": "Hubballi",
+      "kn": "ಹುಬ್ಬಳ್ಳಿ"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "2 < nd && fs == 1 && upd == 1 && 2 == 0"
+    },
+    {
+     "shape": "rect",
+     "x": 10.3,
+     "y": 3,
+     "w": 2.7,
+     "h": 3,
+     "color": "blue",
+     "visibleIf": "3 < nd && fs == 1",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": 11.65,
+     "y": 5.4,
+     "text": {
+      "en": "Dept 4 file",
+      "kn": "ವಿಭಾಗ 4 ಕಡತ"
+     },
+     "size": 16,
+     "color": "white",
+     "visibleIf": "3 < nd && fs == 1"
+    },
+    {
+     "shape": "text",
+     "x": 11.65,
+     "y": 4.3,
+     "text": {
+      "en": "Mysuru",
+      "kn": "ಮೈಸೂರು"
+     },
+     "size": 18,
+     "color": "green",
+     "visibleIf": "3 < nd && fs == 1 && (upd == 0 || 3 > 0)"
+    },
+    {
+     "shape": "text",
+     "x": 11.65,
+     "y": 4.3,
+     "text": {
+      "en": "Hubballi",
+      "kn": "ಹುಬ್ಬಳ್ಳಿ"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "3 < nd && fs == 1 && upd == 1 && 3 == 0"
+    },
+    {
+     "shape": "rect",
+     "x": 13.4,
+     "y": 3,
+     "w": 2.7,
+     "h": 3,
+     "color": "blue",
+     "visibleIf": "4 < nd && fs == 1",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": 5.4,
+     "text": {
+      "en": "Dept 5 file",
+      "kn": "ವಿಭಾಗ 5 ಕಡತ"
+     },
+     "size": 16,
+     "color": "white",
+     "visibleIf": "4 < nd && fs == 1"
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": 4.3,
+     "text": {
+      "en": "Mysuru",
+      "kn": "ಮೈಸೂರು"
+     },
+     "size": 18,
+     "color": "green",
+     "visibleIf": "4 < nd && fs == 1 && (upd == 0 || 4 > 0)"
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": 4.3,
+     "text": {
+      "en": "Hubballi",
+      "kn": "ಹುಬ್ಬಳ್ಳಿ"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "4 < nd && fs == 1 && upd == 1 && 4 == 0"
+    },
+    {
+     "shape": "rect",
+     "x": 16.5,
+     "y": 3,
+     "w": 2.7,
+     "h": 3,
+     "color": "blue",
+     "visibleIf": "5 < nd && fs == 1",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": 17.85,
+     "y": 5.4,
+     "text": {
+      "en": "Dept 6 file",
+      "kn": "ವಿಭಾಗ 6 ಕಡತ"
+     },
+     "size": 16,
+     "color": "white",
+     "visibleIf": "5 < nd && fs == 1"
+    },
+    {
+     "shape": "text",
+     "x": 17.85,
+     "y": 4.3,
+     "text": {
+      "en": "Mysuru",
+      "kn": "ಮೈಸೂರು"
+     },
+     "size": 18,
+     "color": "green",
+     "visibleIf": "5 < nd && fs == 1 && (upd == 0 || 5 > 0)"
+    },
+    {
+     "shape": "text",
+     "x": 17.85,
+     "y": 4.3,
+     "text": {
+      "en": "Hubballi",
+      "kn": "ಹುಬ್ಬಳ್ಳಿ"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "5 < nd && fs == 1 && upd == 1 && 5 == 0"
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 3,
+     "w": 9,
+     "h": 3,
+     "color": "green",
+     "visibleIf": "fs == 2",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": 9.5,
+     "y": 5.4,
+     "text": {
+      "en": "One database table: Student",
+      "kn": "ಒಂದು ದತ್ತಸಂಚಯ ಕೋಷ್ಟಕ: ವಿದ್ಯಾರ್ಥಿ"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "fs == 2"
+    },
+    {
+     "shape": "text",
+     "x": 9.5,
+     "y": 4.3,
+     "text": {
+      "en": "Mysuru",
+      "kn": "ಮೈಸೂರು"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "fs == 2 && upd == 0"
+    },
+    {
+     "shape": "text",
+     "x": 9.5,
+     "y": 4.3,
+     "text": {
+      "en": "Hubballi",
+      "kn": "ಹುಬ್ಬಳ್ಳಿ"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "fs == 2 && upd == 1"
+    },
+    {
+     "shape": "label",
+     "x": 9.5,
+     "y": 8.2,
+     "text": {
+      "en": "Inconsistent! Files disagree on the address",
+      "kn": "ಅಸಂಗತ! ಕಡತಗಳಲ್ಲಿ ವಿಳಾಸ ಬೇರೆ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "fs == 1 && upd == 1 && nd > 1"
+    },
+    {
+     "shape": "label",
+     "x": 9.5,
+     "y": 8.2,
+     "text": {
+      "en": "Consistent: one copy, everyone sees the change",
+      "kn": "ಸಂಗತ: ಒಂದೇ ಪ್ರತಿ, ಎಲ್ಲರಿಗೂ ಬದಲಾವಣೆ ಕಾಣುತ್ತದೆ"
+     },
+     "size": 24,
+     "color": "green",
+     "visibleIf": "fs == 2 || upd == 0 || nd == 1"
+    },
+    {
+     "shape": "text",
+     "x": 9.5,
+     "y": 1.6,
+     "text": {
+      "en": "Student 1021: address",
+      "kn": "ವಿದ್ಯಾರ್ಥಿ 1021: ವಿಳಾಸ"
+     },
+     "size": 18,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Copies of the address",
+      "kn": "ವಿಳಾಸದ ಪ್ರತಿಗಳು"
+     },
+     "expr": "if(fs == 1, nd, 1)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Wrong copies",
+      "kn": "ತಪ್ಪು ಪ್ರತಿಗಳು"
+     },
+     "expr": "if(fs == 1 && upd == 1, nd - 1, 0)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With 4 department files, update the address once. How many copies are now wrong?",
+     "kn": "4 ವಿಭಾಗ ಕಡತಗಳಿದ್ದಾಗ ಒಮ್ಮೆ ವಿಳಾಸ ನವೀಕರಿಸಿ. ಎಷ್ಟು ಪ್ರತಿಗಳು ತಪ್ಪು?"
+    },
+    {
+     "en": "Switch to a database and update again. Why is there nothing to fix?",
+     "kn": "ದತ್ತಸಂಚಯಕ್ಕೆ ಬದಲಿಸಿ ಮತ್ತೆ ನವೀಕರಿಸಿ. ಏಕೆ ಸರಿಪಡಿಸಲು ಏನೂ ಇಲ್ಲ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

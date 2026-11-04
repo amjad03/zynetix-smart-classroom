@@ -1039,6 +1039,10 @@
   {
    "id": "ex2",
    "type": "example",
+   "boards": [
+    "kar_pu",
+    "cbse"
+   ],
    "problem": {
     "en": "This program evaluates a postfix expression whose tokens are separated by spaces. Give the exact output."
    },
@@ -1094,6 +1098,87 @@
    },
    "narration": {
     "en": "Now the same algorithm in Python. Note that / gives a float, so the second answer is printed as 8.0."
+   }
+  },
+  {
+   "id": "ex2-java",
+   "type": "example",
+   "boards": [
+    "isc"
+   ],
+   "problem": {
+    "en": "This Java method evaluates a postfix expression whose tokens are separated by spaces, using integer arithmetic. Give the exact output."
+   },
+   "steps": [
+    {
+     "en": "import java.util.Stack;"
+    },
+    {
+     "en": "static int evaluate(String expr) {"
+    },
+    {
+     "en": "    Stack<Integer> stack = new Stack<>();"
+    },
+    {
+     "en": "    for (String tok : expr.split(\" \")) {"
+    },
+    {
+     "en": "        if (\"+-*/\".contains(tok)) {"
+    },
+    {
+     "en": "            int b = stack.pop();"
+    },
+    {
+     "en": "            int a = stack.pop();"
+    },
+    {
+     "en": "            switch (tok) {"
+    },
+    {
+     "en": "                case \"+\": stack.push(a + b); break;"
+    },
+    {
+     "en": "                case \"-\": stack.push(a - b); break;"
+    },
+    {
+     "en": "                case \"*\": stack.push(a * b); break;"
+    },
+    {
+     "en": "                default:  stack.push(a / b);"
+    },
+    {
+     "en": "            }"
+    },
+    {
+     "en": "        } else {"
+    },
+    {
+     "en": "            stack.push(Integer.parseInt(tok));"
+    },
+    {
+     "en": "        }"
+    },
+    {
+     "en": "    }"
+    },
+    {
+     "en": "    return stack.pop();"
+    },
+    {
+     "en": "}"
+    },
+    {
+     "en": "System.out.println(evaluate(\"2 3 4 * + 5 -\"));"
+    },
+    {
+     "en": "System.out.println(evaluate(\"6 2 / 3 - 4 2 * +\"));"
+    }
+   ],
+   "answer": {
+    "en": "9\n8"
+   },
+   "narration": {
+    "en": "The same algorithm in Java. With int operands, / is integer division, so the second answer is printed as 8, not 8.0 as in Python."
    }
   },
   {

@@ -64,6 +64,282 @@
    }
   },
   {
+   "id": "scene-dns-lookup",
+   "type": "interactive",
+   "title": {
+    "en": "How DNS finds an IP address",
+    "kn": "DNS IP ವಿಳಾಸವನ್ನು ಹೇಗೆ ಹುಡುಕುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "Computers reach each other by IP address, but we type names. The resolver asks a root server, which points to the .in server, which points to the domain's own name server, which gives the IP address. A cached answer skips all of that. Look up the name with no cache. How many messages travel? Turn on the cache. How much time does it save at 30 ms per hop?",
+    "kn": "ಕಂಪ್ಯೂಟರ್‌ಗಳು IP ವಿಳಾಸದಿಂದ ಸಂಪರ್ಕಿಸುತ್ತವೆ, ನಾವು ಹೆಸರು ಟೈಪ್ ಮಾಡುತ್ತೇವೆ. ರಿಸಾಲ್ವರ್ ಮೂಲ ಸರ್ವರ್ ಕೇಳುತ್ತದೆ, ಅದು .in ಸರ್ವರ್ ತೋರಿಸುತ್ತದೆ, ಅದು ಡೊಮೇನ್‌ನ ಸ್ವಂತ ಹೆಸರು ಸರ್ವರ್ ತೋರಿಸುತ್ತದೆ, ಅದು IP ವಿಳಾಸ ಕೊಡುತ್ತದೆ. ಕ್ಯಾಶ್ ಉತ್ತರ ಇವೆಲ್ಲವನ್ನೂ ತಪ್ಪಿಸುತ್ತದೆ. ಕ್ಯಾಶ್ ಇಲ್ಲದೆ ಹೆಸರು ಹುಡುಕಿ. ಎಷ್ಟು ಸಂದೇಶಗಳು ಚಲಿಸುತ್ತವೆ? ಕ್ಯಾಶ್ ಆನ್ ಮಾಡಿ. ಪ್ರತಿ ಹಾಪ್‌ಗೆ 30 ms ಆದರೆ ಎಷ್ಟು ಸಮಯ ಉಳಿತಾಯ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Computers reach each other by IP address, but we type names. The resolver asks a root server, which points to the .in server, which points to the domain's own name server, which gives the IP address. A cached answer skips all of that.",
+    "kn": "ಕಂಪ್ಯೂಟರ್‌ಗಳು IP ವಿಳಾಸದಿಂದ ಸಂಪರ್ಕಿಸುತ್ತವೆ, ನಾವು ಹೆಸರು ಟೈಪ್ ಮಾಡುತ್ತೇವೆ. ರಿಸಾಲ್ವರ್ ಮೂಲ ಸರ್ವರ್ ಕೇಳುತ್ತದೆ, ಅದು .in ಸರ್ವರ್ ತೋರಿಸುತ್ತದೆ, ಅದು ಡೊಮೇನ್‌ನ ಸ್ವಂತ ಹೆಸರು ಸರ್ವರ್ ತೋರಿಸುತ್ತದೆ, ಅದು IP ವಿಳಾಸ ಕೊಡುತ್ತದೆ. ಕ್ಯಾಶ್ ಉತ್ತರ ಇವೆಲ್ಲವನ್ನೂ ತಪ್ಪಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "lat",
+     "label": {
+      "en": "Delay per hop",
+      "kn": "ಪ್ರತಿ ಹಾಪ್ ವಿಳಂಬ"
+     },
+     "min": 5,
+     "max": 100,
+     "step": 5,
+     "value": 30,
+     "unit": "ms"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cache",
+     "label": {
+      "en": "Resolver has the answer cached",
+      "kn": "ರಿಸಾಲ್ವರ್ ಕ್ಯಾಶ್‌ನಲ್ಲಿ ಉತ್ತರ"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Look up www.example.in",
+      "kn": "www.example.in ಹುಡುಕಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 8.2,
+    "stopWhen": "t >= hops",
+    "unit": "hop"
+   },
+   "vars": [
+    {
+     "name": "hops",
+     "expr": "if(cache, 2, 8)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     18.5
+    ],
+    "y": [
+     0.5,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.10000000000000009,
+     "y": 4.3,
+     "w": 3.8,
+     "h": 1.4,
+     "color": "orange",
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 5,
+     "text": {
+      "en": "Browser",
+      "kn": "ಬ್ರೌಸರ್"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 6.1,
+     "y": 4.3,
+     "w": 3.8,
+     "h": 1.4,
+     "color": "blue",
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 5,
+     "text": {
+      "en": "Resolver (ISP)",
+      "kn": "ರಿಸಾಲ್ವರ್ (ISP)"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 14.1,
+     "y": 7.8,
+     "w": 3.8,
+     "h": 1.4,
+     "color": "green",
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 16,
+     "y": 8.5,
+     "text": {
+      "en": "Root server",
+      "kn": "ಮೂಲ ಸರ್ವರ್"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 14.1,
+     "y": 4.3,
+     "w": 3.8,
+     "h": 1.4,
+     "color": "green",
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 16,
+     "y": 5,
+     "text": {
+      "en": ".in TLD server",
+      "kn": ".in TLD ಸರ್ವರ್"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 14.1,
+     "y": 0.8,
+     "w": 3.8,
+     "h": 1.4,
+     "color": "green",
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 16,
+     "y": 1.5,
+     "text": {
+      "en": "Authoritative: example.in",
+      "kn": "ಅಧಿಕೃತ: example.in"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 5,
+     "x2": 16,
+     "y2": 8.5,
+     "color": "white",
+     "width": 2,
+     "opacity": 0.3
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 5,
+     "x2": 16,
+     "y2": 5,
+     "color": "white",
+     "width": 2,
+     "opacity": 0.3
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 5,
+     "x2": 16,
+     "y2": 1.5,
+     "color": "white",
+     "width": 2,
+     "opacity": 0.3
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 5,
+     "x2": 8,
+     "y2": 5,
+     "color": "white",
+     "width": 2,
+     "opacity": 0.3
+    },
+    {
+     "shape": "circle",
+     "x": "if(cache, if(t < 1, (2 + (8 - 2)*clamp(t - 0, 0, 1)), (8 + (2 - 8)*clamp(t - 1, 0, 1))), if(t < 1, (2 + (8 - 2)*clamp(t - 0, 0, 1)), if(t < 2, (8 + (16 - 8)*clamp(t - 1, 0, 1)), if(t < 3, (16 + (8 - 16)*clamp(t - 2, 0, 1)), if(t < 4, (8 + (16 - 8)*clamp(t - 3, 0, 1)), if(t < 5, (16 + (8 - 16)*clamp(t - 4, 0, 1)), if(t < 6, (8 + (16 - 8)*clamp(t - 5, 0, 1)), if(t < 7, (16 + (8 - 16)*clamp(t - 6, 0, 1)), (8 + (2 - 8)*clamp(t - 7, 0, 1))))))))))",
+     "y": "if(cache, if(t < 1, (5 + (5 - 5)*clamp(t - 0, 0, 1)), (5 + (5 - 5)*clamp(t - 1, 0, 1))), if(t < 1, (5 + (5 - 5)*clamp(t - 0, 0, 1)), if(t < 2, (5 + (8.5 - 5)*clamp(t - 1, 0, 1)), if(t < 3, (8.5 + (5 - 8.5)*clamp(t - 2, 0, 1)), if(t < 4, (5 + (5 - 5)*clamp(t - 3, 0, 1)), if(t < 5, (5 + (5 - 5)*clamp(t - 4, 0, 1)), if(t < 6, (5 + (1.5 - 5)*clamp(t - 5, 0, 1)), if(t < 7, (1.5 + (5 - 1.5)*clamp(t - 6, 0, 1)), (5 + (5 - 5)*clamp(t - 7, 0, 1))))))))))",
+     "r": 0.35,
+     "color": "yellow",
+     "visibleIf": "t > 0"
+    },
+    {
+     "shape": "label",
+     "x": 5,
+     "y": 9.3,
+     "text": {
+      "en": "www.example.in → 203.0.113.7"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "t >= hops"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 3.6,
+     "text": {
+      "en": "answer in cache",
+      "kn": "ಕ್ಯಾಶ್‌ನಲ್ಲಿ ಉತ್ತರ"
+     },
+     "size": 16,
+     "color": "green",
+     "visibleIf": "cache"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Messages",
+      "kn": "ಸಂದೇಶಗಳು"
+     },
+     "expr": "hops",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Lookup time",
+      "kn": "ಹುಡುಕಾಟ ಸಮಯ"
+     },
+     "expr": "hops*lat",
+     "digits": 0,
+     "unit": "ms"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Look up the name with no cache. How many messages travel?",
+     "kn": "ಕ್ಯಾಶ್ ಇಲ್ಲದೆ ಹೆಸರು ಹುಡುಕಿ. ಎಷ್ಟು ಸಂದೇಶಗಳು ಚಲಿಸುತ್ತವೆ?"
+    },
+    {
+     "en": "Turn on the cache. How much time does it save at 30 ms per hop?",
+     "kn": "ಕ್ಯಾಶ್ ಆನ್ ಮಾಡಿ. ಪ್ರತಿ ಹಾಪ್‌ಗೆ 30 ms ಆದರೆ ಎಷ್ಟು ಸಮಯ ಉಳಿತಾಯ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

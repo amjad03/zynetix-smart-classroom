@@ -61,6 +61,206 @@
    }
   },
   {
+   "id": "scene-text-binary-size",
+   "type": "interactive",
+   "title": {
+    "en": "Text file or binary file?",
+    "kn": "ಪಠ್ಯ ಕಡತ ಅಥವಾ ದ್ವಿಮಾನ ಕಡತ?"
+   },
+   "narration": {
+    "en": "A text file stores each number as characters, one byte per digit plus a separator, and any editor can read it. A binary file stores each whole number in a fixed 4 bytes, as the computer holds it in memory: smaller for big numbers, but unreadable without the program. Store 1000 six-digit numbers. Which file is smaller? With 2-digit numbers, which wins now?",
+    "kn": "ಪಠ್ಯ ಕಡತ ಪ್ರತಿ ಸಂಖ್ಯೆಯನ್ನು ಅಕ್ಷರಗಳಾಗಿ, ಪ್ರತಿ ಅಂಕಿಗೆ ಒಂದು ಬೈಟ್ ಮತ್ತು ವಿಭಾಜಕದೊಂದಿಗೆ ಇಡುತ್ತದೆ; ಯಾವುದೇ ಸಂಪಾದಕ ಓದಬಹುದು. ದ್ವಿಮಾನ ಕಡತ ಪ್ರತಿ ಪೂರ್ಣಾಂಕವನ್ನು ನೆನಪಿನಲ್ಲಿರುವಂತೆ ನಿಶ್ಚಿತ 4 ಬೈಟ್‌ನಲ್ಲಿ ಇಡುತ್ತದೆ: ದೊಡ್ಡ ಸಂಖ್ಯೆಗಳಿಗೆ ಚಿಕ್ಕದು, ಆದರೆ ಪ್ರೋಗ್ರಾಂ ಇಲ್ಲದೆ ಓದಲಾಗದು. 1000 ಆರು-ಅಂಕಿ ಸಂಖ್ಯೆ ಸಂಗ್ರಹಿಸಿ. ಯಾವ ಕಡತ ಚಿಕ್ಕದು? 2-ಅಂಕಿ ಸಂಖ್ಯೆಗಳಾದರೆ ಈಗ ಯಾವುದು ಚಿಕ್ಕದು?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "A text file stores each number as characters, one byte per digit plus a separator, and any editor can read it. A binary file stores each whole number in a fixed 4 bytes, as the computer holds it in memory: smaller for big numbers, but unreadable without the program.",
+    "kn": "ಪಠ್ಯ ಕಡತ ಪ್ರತಿ ಸಂಖ್ಯೆಯನ್ನು ಅಕ್ಷರಗಳಾಗಿ, ಪ್ರತಿ ಅಂಕಿಗೆ ಒಂದು ಬೈಟ್ ಮತ್ತು ವಿಭಾಜಕದೊಂದಿಗೆ ಇಡುತ್ತದೆ; ಯಾವುದೇ ಸಂಪಾದಕ ಓದಬಹುದು. ದ್ವಿಮಾನ ಕಡತ ಪ್ರತಿ ಪೂರ್ಣಾಂಕವನ್ನು ನೆನಪಿನಲ್ಲಿರುವಂತೆ ನಿಶ್ಚಿತ 4 ಬೈಟ್‌ನಲ್ಲಿ ಇಡುತ್ತದೆ: ದೊಡ್ಡ ಸಂಖ್ಯೆಗಳಿಗೆ ಚಿಕ್ಕದು, ಆದರೆ ಪ್ರೋಗ್ರಾಂ ಇಲ್ಲದೆ ಓದಲಾಗದು."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "How many numbers",
+      "kn": "ಎಷ್ಟು ಸಂಖ್ಯೆಗಳು"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 25,
+     "value": 1000
+    },
+    {
+     "name": "dg",
+     "label": {
+      "en": "Digits in each number",
+      "kn": "ಪ್ರತಿ ಸಂಖ್ಯೆಯ ಅಂಕಿಗಳು"
+     },
+     "min": 1,
+     "max": 9,
+     "step": 1,
+     "value": 6
+    }
+   ],
+   "toggles": [
+    {
+     "name": "see",
+     "label": {
+      "en": "Open both in a text editor",
+      "kn": "ಎರಡನ್ನೂ ಪಠ್ಯ ಸಂಪಾದಕದಲ್ಲಿ ತೆರೆಯಿರಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "tb",
+     "expr": "n*(dg + 1)"
+    },
+    {
+     "name": "bb",
+     "expr": "n*4"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     24
+    ],
+    "y": [
+     -500,
+     11000
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 0,
+     "w": 3,
+     "h": "max(tb - 0, 22)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": "max(tb, 0) + 385",
+     "text": {
+      "en": "{tb:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": -385.00000000000006,
+     "text": {
+      "en": "Text file",
+      "kn": "ಪಠ್ಯ ಕಡತ"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 8,
+     "y": 0,
+     "w": 3,
+     "h": "max(bb - 0, 22)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 9.5,
+     "y": "max(bb, 0) + 385",
+     "text": {
+      "en": "{bb:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.5,
+     "y": -385.00000000000006,
+     "text": {
+      "en": "Binary file",
+      "kn": "ದ್ವಿಮಾನ ಕಡತ"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 9500,
+     "text": {
+      "en": "Text: \"123456,48211,…\" readable in Notepad",
+      "kn": "ಪಠ್ಯ: \"123456,48211,…\" ನೋಟ್‌ಪ್ಯಾಡ್‌ನಲ್ಲಿ ಓದಬಹುದು"
+     },
+     "size": 18,
+     "color": "blue",
+     "align": "left",
+     "visibleIf": "see"
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 8500,
+     "text": {
+      "en": "Binary: \"@\\x01\\xe2…\" looks like garbage",
+      "kn": "ದ್ವಿಮಾನ: \"@\\x01\\xe2…\" ಅರ್ಥವಾಗದು"
+     },
+     "size": 18,
+     "color": "green",
+     "align": "left",
+     "visibleIf": "see"
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 7000,
+     "text": {
+      "en": "bytes",
+      "kn": "ಬೈಟ್"
+     },
+     "size": 18,
+     "color": "white",
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Text file size",
+      "kn": "ಪಠ್ಯ ಕಡತ ಗಾತ್ರ"
+     },
+     "expr": "tb",
+     "digits": 0,
+     "unit": "bytes"
+    },
+    {
+     "label": {
+      "en": "Binary file size",
+      "kn": "ದ್ವಿಮಾನ ಕಡತ ಗಾತ್ರ"
+     },
+     "expr": "bb",
+     "digits": 0,
+     "unit": "bytes"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Store 1000 six-digit numbers. Which file is smaller?",
+     "kn": "1000 ಆರು-ಅಂಕಿ ಸಂಖ್ಯೆ ಸಂಗ್ರಹಿಸಿ. ಯಾವ ಕಡತ ಚಿಕ್ಕದು?"
+    },
+    {
+     "en": "With 2-digit numbers, which wins now?",
+     "kn": "2-ಅಂಕಿ ಸಂಖ್ಯೆಗಳಾದರೆ ಈಗ ಯಾವುದು ಚಿಕ್ಕದು?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

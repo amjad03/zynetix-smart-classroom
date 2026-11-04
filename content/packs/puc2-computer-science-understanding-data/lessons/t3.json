@@ -58,6 +58,317 @@
    }
   },
   {
+   "id": "scene-data-cleaning",
+   "type": "interactive",
+   "title": {
+    "en": "Processing data: clean before you calculate",
+    "kn": "ದತ್ತಾಂಶ ಸಂಸ್ಕರಣೆ: ಲೆಕ್ಕಕ್ಕೆ ಮೊದಲು ಸ್ವಚ್ಛಗೊಳಿಸಿ"
+   },
+   "narration": {
+    "en": "Processing turns raw readings into results: collect, clean, then compute. A failed sensor that writes −99 for \"no reading\" ruins the average unless the cleaning step removes invalid values first. Fail sensor 4 without cleaning. What average temperature do you get? Now clean the data. Is the new average trustworthy?",
+    "kn": "ಸಂಸ್ಕರಣೆ ಕಚ್ಚಾ ಓದುಗಳನ್ನು ಫಲಿತಾಂಶವಾಗಿಸುತ್ತದೆ: ಸಂಗ್ರಹ, ಸ್ವಚ್ಛ, ನಂತರ ಲೆಕ್ಕ. \"ಓದು ಇಲ್ಲ\" ಎಂಬುದಕ್ಕೆ −99 ಬರೆಯುವ ವಿಫಲ ಸಂವೇದಕ, ಸ್ವಚ್ಛಗೊಳಿಸುವ ಹಂತ ಅಮಾನ್ಯ ಮೌಲ್ಯ ತೆಗೆಯದಿದ್ದರೆ ಸರಾಸರಿಯನ್ನು ಹಾಳುಮಾಡುತ್ತದೆ. ಸ್ವಚ್ಛಗೊಳಿಸದೆ ಸಂವೇದಕ 4 ವಿಫಲಗೊಳಿಸಿ. ಸರಾಸರಿ ಎಷ್ಟು? ಈಗ ದತ್ತಾಂಶ ಸ್ವಚ್ಛಗೊಳಿಸಿ. ಹೊಸ ಸರಾಸರಿ ನಂಬಲರ್ಹವೇ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Processing turns raw readings into results: collect, clean, then compute. A failed sensor that writes −99 for \"no reading\" ruins the average unless the cleaning step removes invalid values first.",
+    "kn": "ಸಂಸ್ಕರಣೆ ಕಚ್ಚಾ ಓದುಗಳನ್ನು ಫಲಿತಾಂಶವಾಗಿಸುತ್ತದೆ: ಸಂಗ್ರಹ, ಸ್ವಚ್ಛ, ನಂತರ ಲೆಕ್ಕ. \"ಓದು ಇಲ್ಲ\" ಎಂಬುದಕ್ಕೆ −99 ಬರೆಯುವ ವಿಫಲ ಸಂವೇದಕ, ಸ್ವಚ್ಛಗೊಳಿಸುವ ಹಂತ ಅಮಾನ್ಯ ಮೌಲ್ಯ ತೆಗೆಯದಿದ್ದರೆ ಸರಾಸರಿಯನ್ನು ಹಾಳುಮಾಡುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "r1",
+     "label": {
+      "en": "Sensor 1",
+      "kn": "ಸಂವೇದಕ 1"
+     },
+     "min": 20,
+     "max": 45,
+     "step": 1,
+     "value": 31,
+     "unit": "°C"
+    },
+    {
+     "name": "r2",
+     "label": {
+      "en": "Sensor 2",
+      "kn": "ಸಂವೇದಕ 2"
+     },
+     "min": 20,
+     "max": 45,
+     "step": 1,
+     "value": 33,
+     "unit": "°C"
+    },
+    {
+     "name": "r3",
+     "label": {
+      "en": "Sensor 3",
+      "kn": "ಸಂವೇದಕ 3"
+     },
+     "min": 20,
+     "max": 45,
+     "step": 1,
+     "value": 30,
+     "unit": "°C"
+    },
+    {
+     "name": "r4",
+     "label": {
+      "en": "Sensor 4",
+      "kn": "ಸಂವೇದಕ 4"
+     },
+     "min": 20,
+     "max": 45,
+     "step": 1,
+     "value": 32,
+     "unit": "°C"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "bad",
+     "label": {
+      "en": "Sensor 4 fails (writes −99)",
+      "kn": "ಸಂವೇದಕ 4 ವಿಫಲ (−99)"
+     },
+     "value": true
+    },
+    {
+     "name": "cl",
+     "label": {
+      "en": "Clean: drop invalid readings",
+      "kn": "ಸ್ವಚ್ಛ: ಅಮಾನ್ಯ ಓದು ತೆಗೆಯಿರಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "r4v",
+     "expr": "if(bad, -99, r4)"
+    },
+    {
+     "name": "mean",
+     "expr": "if(bad && cl, (r1 + r2 + r3)/3, (r1 + r2 + r3 + r4v)/4)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     14
+    ],
+    "y": [
+     -108,
+     56
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": "min(0, r1)",
+     "w": 2.0,
+     "h": "max(abs(r1), 0.32)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "if(r1 >= 0, r1 + 5.6, r1 - 5.6)",
+     "text": {
+      "en": "{r1:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "if(r1 >= 0, -5.6, 5.6)",
+     "text": {
+      "en": "Sensor 1",
+      "kn": "ಸಂವೇದಕ 1"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": "min(0, r2)",
+     "w": 2.0,
+     "h": "max(abs(r2), 0.32)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "if(r2 >= 0, r2 + 5.6, r2 - 5.6)",
+     "text": {
+      "en": "{r2:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "if(r2 >= 0, -5.6, 5.6)",
+     "text": {
+      "en": "Sensor 2",
+      "kn": "ಸಂವೇದಕ 2"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": "min(0, r3)",
+     "w": 2.0,
+     "h": "max(abs(r3), 0.32)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "if(r3 >= 0, r3 + 5.6, r3 - 5.6)",
+     "text": {
+      "en": "{r3:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "if(r3 >= 0, -5.6, 5.6)",
+     "text": {
+      "en": "Sensor 3",
+      "kn": "ಸಂವೇದಕ 3"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": "min(0, r4v)",
+     "w": 2.0,
+     "h": "max(abs(r4v), 0.32)",
+     "color": {
+      "by": "if(bad, 1, 0)",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "if(r4v >= 0, r4v + 5.6, r4v - 5.6)",
+     "text": {
+      "en": "{r4v:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "if(r4v >= 0, -5.6, 5.6)",
+     "text": {
+      "en": "Sensor 4",
+      "kn": "ಸಂವೇದಕ 4"
+     },
+     "size": 20,
+     "color": {
+      "by": "if(bad, 1, 0)",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "mean",
+     "x2": 13.8,
+     "y2": "mean",
+     "color": "yellow",
+     "width": 3,
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 13.5,
+     "y": "mean + 6",
+     "text": {
+      "en": "mean {mean:1} °C",
+      "kn": "ಸರಾಸರಿ {mean:1} °C"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "right"
+    },
+    {
+     "shape": "label",
+     "x": 7,
+     "y": 50,
+     "text": {
+      "en": "Sensor 4 failed: it reports −99",
+      "kn": "ಸಂವೇದಕ 4 ವಿಫಲ: −99 ತೋರಿಸುತ್ತದೆ"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "bad && !cl"
+    },
+    {
+     "shape": "label",
+     "x": 7,
+     "y": 50,
+     "text": {
+      "en": "Cleaned: the −99 reading is removed",
+      "kn": "ಸ್ವಚ್ಛ: −99 ಓದು ತೆಗೆಯಲಾಗಿದೆ"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "bad && cl"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Average",
+      "kn": "ಸರಾಸರಿ"
+     },
+     "expr": "mean",
+     "digits": 1,
+     "unit": "°C"
+    },
+    {
+     "label": {
+      "en": "Readings used",
+      "kn": "ಬಳಸಿದ ಓದುಗಳು"
+     },
+     "expr": "if(bad && cl, 3, 4)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Fail sensor 4 without cleaning. What average temperature do you get?",
+     "kn": "ಸ್ವಚ್ಛಗೊಳಿಸದೆ ಸಂವೇದಕ 4 ವಿಫಲಗೊಳಿಸಿ. ಸರಾಸರಿ ಎಷ್ಟು?"
+    },
+    {
+     "en": "Now clean the data. Is the new average trustworthy?",
+     "kn": "ಈಗ ದತ್ತಾಂಶ ಸ್ವಚ್ಛಗೊಳಿಸಿ. ಹೊಸ ಸರಾಸರಿ ನಂಬಲರ್ಹವೇ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

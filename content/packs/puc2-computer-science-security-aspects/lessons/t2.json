@@ -61,6 +61,174 @@
    }
   },
   {
+   "id": "scene-malware-spread",
+   "type": "interactive",
+   "title": {
+    "en": "How malware spreads",
+    "kn": "ಮಾಲ್‌ವೇರ್ ಹೇಗೆ ಹರಡುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "A worm copies itself to other computers over the network; the more contacts each infected machine has, the faster it spreads. Antivirus and patches clean machines and protect them. Play the outbreak in an office of 100 computers. With no antivirus, how many machines are infected at the peak? Turn on antivirus and patches and play again. What happens to the peak?",
+    "kn": "ವರ್ಮ್ ಜಾಲದ ಮೂಲಕ ಇತರ ಕಂಪ್ಯೂಟರ್‌ಗಳಿಗೆ ತನ್ನನ್ನು ನಕಲಿಸುತ್ತದೆ; ಸೋಂಕಿತ ಯಂತ್ರಕ್ಕೆ ಹೆಚ್ಚು ಸಂಪರ್ಕವಿದ್ದಷ್ಟು ವೇಗ. ಆಂಟಿವೈರಸ್ ಮತ್ತು ಪ್ಯಾಚ್‌ಗಳು ಸ್ವಚ್ಛಗೊಳಿಸಿ ರಕ್ಷಿಸುತ್ತವೆ. 100 ಕಂಪ್ಯೂಟರ್‌ಗಳ ಕಚೇರಿಯಲ್ಲಿ ಹರಡುವಿಕೆ ಚಾಲನೆ ಮಾಡಿ. ಆಂಟಿವೈರಸ್ ಇಲ್ಲದೆ ಗರಿಷ್ಠ ಎಷ್ಟು ಯಂತ್ರ ಸೋಂಕಿತ? ಆಂಟಿವೈರಸ್ ಮತ್ತು ಪ್ಯಾಚ್ ಆನ್ ಮಾಡಿ ಮತ್ತೆ ಚಾಲನೆ ಮಾಡಿ. ಗರಿಷ್ಠ ಏನಾಗುತ್ತದೆ?"
+   },
+   "seconds": 110,
+   "kind": "scene",
+   "caption": {
+    "en": "A worm copies itself to other computers over the network; the more contacts each infected machine has, the faster it spreads. Antivirus and patches clean machines and protect them. Play the outbreak in an office of 100 computers.",
+    "kn": "ವರ್ಮ್ ಜಾಲದ ಮೂಲಕ ಇತರ ಕಂಪ್ಯೂಟರ್‌ಗಳಿಗೆ ತನ್ನನ್ನು ನಕಲಿಸುತ್ತದೆ; ಸೋಂಕಿತ ಯಂತ್ರಕ್ಕೆ ಹೆಚ್ಚು ಸಂಪರ್ಕವಿದ್ದಷ್ಟು ವೇಗ. ಆಂಟಿವೈರಸ್ ಮತ್ತು ಪ್ಯಾಚ್‌ಗಳು ಸ್ವಚ್ಛಗೊಳಿಸಿ ರಕ್ಷಿಸುತ್ತವೆ. 100 ಕಂಪ್ಯೂಟರ್‌ಗಳ ಕಚೇರಿಯಲ್ಲಿ ಹರಡುವಿಕೆ ಚಾಲನೆ ಮಾಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "beta",
+     "label": {
+      "en": "Contacts per infected machine per day",
+      "kn": "ಸೋಂಕಿತ ಯಂತ್ರಕ್ಕೆ ದಿನಕ್ಕೆ ಸಂಪರ್ಕ"
+     },
+     "min": 0.2,
+     "max": 2,
+     "step": 0.1,
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "av",
+     "label": {
+      "en": "Antivirus and patches",
+      "kn": "ಆಂಟಿವೈರಸ್ ಮತ್ತು ಪ್ಯಾಚ್"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 36,
+    "dt": 0.02,
+    "unit": "day"
+   },
+   "vars": [
+    {
+     "name": "g",
+     "expr": "if(av, 0.5, 0.05)"
+    }
+   ],
+   "state": [
+    {
+     "name": "inf",
+     "init": 1,
+     "rate": "beta*inf*(100 - inf - rec)/100 - g*inf"
+    },
+    {
+     "name": "rec",
+     "init": 0,
+     "rate": "g*inf"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     40
+    ],
+    "y": [
+     0,
+     108
+    ],
+    "axes": true,
+    "xLabel": "days ×2",
+    "yLabel": "computers"
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 100,
+     "x": "21 + mod(i, 10)*1.8",
+     "y": "6 + floor(i/10)*9",
+     "r": 0.6,
+     "color": {
+      "by": "if(i < inf, 1, if(i < inf + rec, 0.5, 0))",
+      "scale": [
+       "white",
+       "green",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "trail",
+     "x": "t/2",
+     "y": "inf",
+     "length": 2000,
+     "color": "red",
+     "width": 4
+    },
+    {
+     "shape": "trail",
+     "x": "t/2",
+     "y": "rec",
+     "length": 2000,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 104,
+     "text": {
+      "en": "red: infected, green: cleaned",
+      "kn": "ಕೆಂಪು: ಸೋಂಕಿತ, ಹಸಿರು: ಸ್ವಚ್ಛ"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 100,
+     "text": {
+      "en": "100 computers",
+      "kn": "100 ಕಂಪ್ಯೂಟರ್"
+     },
+     "size": 18,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Infected now",
+      "kn": "ಈಗ ಸೋಂಕಿತ"
+     },
+     "expr": "inf",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Cleaned",
+      "kn": "ಸ್ವಚ್ಛಗೊಂಡವು"
+     },
+     "expr": "rec",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Never infected",
+      "kn": "ಸೋಂಕು ತಗಲದವು"
+     },
+     "expr": "100 - inf - rec",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With no antivirus, how many machines are infected at the peak?",
+     "kn": "ಆಂಟಿವೈರಸ್ ಇಲ್ಲದೆ ಗರಿಷ್ಠ ಎಷ್ಟು ಯಂತ್ರ ಸೋಂಕಿತ?"
+    },
+    {
+     "en": "Turn on antivirus and patches and play again. What happens to the peak?",
+     "kn": "ಆಂಟಿವೈರಸ್ ಮತ್ತು ಪ್ಯಾಚ್ ಆನ್ ಮಾಡಿ ಮತ್ತೆ ಚಾಲನೆ ಮಾಡಿ. ಗರಿಷ್ಠ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -65,6 +65,227 @@
    }
   },
   {
+   "id": "scene-sampling",
+   "type": "interactive",
+   "title": {
+    "en": "A sample is true only on average",
+    "kn": "ಮಾದರಿ ಸರಾಸರಿಯಲ್ಲಿ ಮಾತ್ರ ಸತ್ಯ"
+   },
+   "narration": {
+    "en": "A study collects data from a sample, organises it and draws a conclusion about the whole population. Take samples of different sizes from 400 households whose true average monthly spending is ₹ 8,000. Each sample gives a slightly different answer; bigger samples miss by less. Statistics tells us about aggregates and averages, not about any one household.",
+    "kn": "ಅಧ್ಯಯನ ಮಾದರಿಯಿಂದ ದತ್ತಾಂಶ ಸಂಗ್ರಹಿಸಿ, ವ್ಯವಸ್ಥೆಗೊಳಿಸಿ ಇಡೀ ಸಮೂಹದ ಬಗ್ಗೆ ತೀರ್ಮಾನಿಸುತ್ತದೆ. ನಿಜವಾದ ಸರಾಸರಿ ಮಾಸಿಕ ವೆಚ್ಚ ₹ 8,000 ಇರುವ 400 ಕುಟುಂಬಗಳಿಂದ ಬೇರೆ ಬೇರೆ ಗಾತ್ರದ ಮಾದರಿ ತೆಗೆಯಿರಿ. ಪ್ರತಿ ಮಾದರಿ ಸ್ವಲ್ಪ ಬೇರೆ ಉತ್ತರ ನೀಡುತ್ತದೆ; ದೊಡ್ಡ ಮಾದರಿ ಕಡಿಮೆ ತಪ್ಪುತ್ತದೆ. ಸಂಖ್ಯಾಶಾಸ್ತ್ರ ಒಟ್ಟು ಮತ್ತು ಸರಾಸರಿಯ ಬಗ್ಗೆ ಹೇಳುತ್ತದೆ, ಒಂದು ಕುಟುಂಬದ ಬಗ್ಗೆ ಅಲ್ಲ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "A study collects data from a sample, organises it and draws a conclusion about the whole population. Take samples of different sizes from 400 households whose true average monthly spending is ₹ 8,000. Each sample gives a slightly different answer; bigger samples miss by less. Statistics tells us about aggregates and averages, not about any one household.",
+    "kn": "ಅಧ್ಯಯನ ಮಾದರಿಯಿಂದ ದತ್ತಾಂಶ ಸಂಗ್ರಹಿಸಿ, ವ್ಯವಸ್ಥೆಗೊಳಿಸಿ ಇಡೀ ಸಮೂಹದ ಬಗ್ಗೆ ತೀರ್ಮಾನಿಸುತ್ತದೆ. ನಿಜವಾದ ಸರಾಸರಿ ಮಾಸಿಕ ವೆಚ್ಚ ₹ 8,000 ಇರುವ 400 ಕುಟುಂಬಗಳಿಂದ ಬೇರೆ ಬೇರೆ ಗಾತ್ರದ ಮಾದರಿ ತೆಗೆಯಿರಿ. ಪ್ರತಿ ಮಾದರಿ ಸ್ವಲ್ಪ ಬೇರೆ ಉತ್ತರ ನೀಡುತ್ತದೆ; ದೊಡ್ಡ ಮಾದರಿ ಕಡಿಮೆ ತಪ್ಪುತ್ತದೆ. ಸಂಖ್ಯಾಶಾಸ್ತ್ರ ಒಟ್ಟು ಮತ್ತು ಸರಾಸರಿಯ ಬಗ್ಗೆ ಹೇಳುತ್ತದೆ, ಒಂದು ಕುಟುಂಬದ ಬಗ್ಗೆ ಅಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Sample size",
+      "kn": "ಮಾದರಿ ಗಾತ್ರ"
+     },
+     "min": 10,
+     "max": 400,
+     "step": 10,
+     "value": 20
+    }
+   ],
+   "counters": [
+    {
+     "name": "sd",
+     "value": 0,
+     "min": 0,
+     "max": 1000
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Draw a new sample",
+      "kn": "ಹೊಸ ಮಾದರಿ ತೆಗೆಯಿರಿ"
+     },
+     "icon": "next",
+     "set": {
+      "sd": "sd + 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "est",
+     "expr": "8000 + 2300/sqrt(n)*sqrt(max(1 - n/400, 0))*sqrt(-2*ln(rand(sd + 11)*0.98 + 0.01))*cos(2*pi*rand(sd + 57))"
+    },
+    {
+     "name": "err",
+     "expr": "abs(est - 8000)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 400,
+     "x": "3 + 2.3*mod(i, 20)",
+     "y": "12 + 2.3*floor(i/20)",
+     "r": 0.8,
+     "color": "white",
+     "opacity": 0.35
+    },
+    {
+     "shape": "particles",
+     "count": 400,
+     "x": "3 + 2.3*mod(i, 20)",
+     "y": "12 + 2.3*floor(i/20)",
+     "r": 0.8,
+     "color": "yellow",
+     "visibleIf": "rand(i + 7*sd + 3) < n/400"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 4,
+     "size": 20,
+     "text": {
+      "en": "Yellow: households in the sample",
+      "kn": "ಹಳದಿ: ಮಾದರಿಯ ಕುಟುಂಬಗಳು"
+     },
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 55,
+     "y1": 30,
+     "x2": 97,
+     "y2": 30,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 76,
+     "y1": 26,
+     "x2": 76,
+     "y2": 34,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 76,
+     "y": 22,
+     "size": 20,
+     "text": {
+      "en": "True ₹ 8,000",
+      "kn": "ನಿಜ ₹ 8,000"
+     },
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": "76 + (est - 8000)/50",
+     "y": 30,
+     "r": 1.3,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 76,
+     "y": 38,
+     "size": 24,
+     "text": {
+      "en": "Sample says ₹ {est:0}",
+      "kn": "ಮಾದರಿ ಹೇಳುವುದು ₹ {est:0}"
+     },
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 56,
+     "y": 26,
+     "size": 16,
+     "text": {
+      "en": "₹ 7,000"
+     },
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 96,
+     "y": 26,
+     "size": 16,
+     "text": {
+      "en": "₹ 9,000"
+     },
+     "opacity": 0.7
+    },
+    {
+     "shape": "label",
+     "x": 76,
+     "y": 50,
+     "size": 18,
+     "text": {
+      "en": "Census: every household counted, no sampling error",
+      "kn": "ಜನಗಣತಿ: ಎಲ್ಲ ಕುಟುಂಬಗಳ ಎಣಿಕೆ, ಮಾದರಿ ದೋಷವಿಲ್ಲ"
+     },
+     "visibleIf": "n == 400",
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Sample estimate",
+      "kn": "ಮಾದರಿ ಅಂದಾಜು"
+     },
+     "expr": "est",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Error",
+      "kn": "ದೋಷ"
+     },
+     "expr": "err",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Typical error",
+      "kn": "ಸಾಮಾನ್ಯ ದೋಷ"
+     },
+     "expr": "2300/sqrt(n)*sqrt(max(1 - n/400, 0))",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With a sample of 20, draw five new samples. How far apart are the answers?",
+     "kn": "20 ರ ಮಾದರಿಯೊಂದಿಗೆ ಐದು ಹೊಸ ಮಾದರಿ ತೆಗೆಯಿರಿ. ಉತ್ತರಗಳು ಎಷ್ಟು ಅಂತರದಲ್ಲಿವೆ?"
+    },
+    {
+     "en": "How big must the sample be for the typical error to fall below ₹ 200?",
+     "kn": "ಸಾಮಾನ್ಯ ದೋಷ ₹ 200 ಕ್ಕಿಂತ ಕಡಿಮೆಯಾಗಲು ಮಾದರಿ ಎಷ್ಟು ದೊಡ್ಡದಿರಬೇಕು?"
+    }
+   ]
+  },
+  {
    "id": "scene-average-hides",
    "type": "interactive",
    "title": {

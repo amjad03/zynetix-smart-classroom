@@ -58,6 +58,387 @@
    }
   },
   {
+   "id": "scene-data-types-size",
+   "type": "interactive",
+   "title": {
+    "en": "Kinds of data and their size",
+    "kn": "ದತ್ತಾಂಶದ ವಿಧಗಳು ಮತ್ತು ಗಾತ್ರ"
+   },
+   "narration": {
+    "en": "Structured data fits rows and columns (a marks table). Unstructured data, such as messages, photos, audio and video, has no fixed format and is far larger. Bars are on a log scale: each step up is ten times more storage. How many marks rows fit in the space of one photo? Make 100 items of each. Which kind fills a 1 GB card?",
+    "kn": "ರಚನಾತ್ಮಕ ದತ್ತಾಂಶ ಸಾಲು-ಕಾಲಂಗಳಲ್ಲಿ ಹೊಂದುತ್ತದೆ (ಅಂಕ ಕೋಷ್ಟಕ). ಸಂದೇಶ, ಫೋಟೋ, ಧ್ವನಿ, ವೀಡಿಯೊದಂತಹ ಅರಚನಾತ್ಮಕ ದತ್ತಾಂಶಕ್ಕೆ ನಿಶ್ಚಿತ ರೂಪವಿಲ್ಲ, ಗಾತ್ರ ತುಂಬಾ ದೊಡ್ಡದು. ಪಟ್ಟಿಗಳು ಲಾಗ್ ಪ್ರಮಾಣದಲ್ಲಿ: ಪ್ರತಿ ಮೆಟ್ಟಿಲು ಹತ್ತು ಪಟ್ಟು. ಒಂದು ಫೋಟೋದ ಜಾಗದಲ್ಲಿ ಎಷ್ಟು ಅಂಕ ಸಾಲುಗಳು? ಪ್ರತಿಯೊಂದು 100. ಯಾವುದು 1 GB ಕಾರ್ಡ್ ತುಂಬುತ್ತದೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Structured data fits rows and columns (a marks table). Unstructured data, such as messages, photos, audio and video, has no fixed format and is far larger. Bars are on a log scale: each step up is ten times more storage.",
+    "kn": "ರಚನಾತ್ಮಕ ದತ್ತಾಂಶ ಸಾಲು-ಕಾಲಂಗಳಲ್ಲಿ ಹೊಂದುತ್ತದೆ (ಅಂಕ ಕೋಷ್ಟಕ). ಸಂದೇಶ, ಫೋಟೋ, ಧ್ವನಿ, ವೀಡಿಯೊದಂತಹ ಅರಚನಾತ್ಮಕ ದತ್ತಾಂಶಕ್ಕೆ ನಿಶ್ಚಿತ ರೂಪವಿಲ್ಲ, ಗಾತ್ರ ತುಂಬಾ ದೊಡ್ಡದು. ಪಟ್ಟಿಗಳು ಲಾಗ್ ಪ್ರಮಾಣದಲ್ಲಿ: ಪ್ರತಿ ಮೆಟ್ಟಿಲು ಹತ್ತು ಪಟ್ಟು."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "How many items",
+      "kn": "ಎಷ್ಟು ವಸ್ತುಗಳು"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 10
+    }
+   ],
+   "choices": [
+    {
+     "name": "ty",
+     "label": {
+      "en": "Highlight",
+      "kn": "ಗುರುತಿಸಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Marks row",
+        "kn": "ಅಂಕ ಸಾಲು"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Text message",
+        "kn": "ಪಠ್ಯ ಸಂದೇಶ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Photo",
+        "kn": "ಫೋಟೋ"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Song",
+        "kn": "ಹಾಡು"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "1-min video",
+        "kn": "1 ನಿಮಿಷ ವೀಡಿಯೊ"
+       },
+       "value": 5
+      }
+     ],
+     "value": 3
+    }
+   ],
+   "vars": [
+    {
+     "name": "kb",
+     "expr": "if(ty == 1, 0.1, if(ty == 2, 0.2, if(ty == 3, 3000, if(ty == 4, 4000, 100000))))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     -1.4,
+     9.4
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0,
+     "w": 2.2,
+     "h": "log(0.1*n) + 1",
+     "color": "green",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0,
+     "w": 2.2,
+     "h": "log(0.1*n) + 1",
+     "color": "yellow",
+     "visibleIf": "ty == 1",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 2.1,
+     "y": "log(0.1*n) + 1 + 0.4",
+     "text": {
+      "en": "{0.1*n:1} KB"
+     },
+     "size": 16,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.1,
+     "y": -0.4,
+     "text": {
+      "en": "Marks row",
+      "kn": "ಅಂಕ ಸಾಲು"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.1,
+     "y": -1.0,
+     "text": {
+      "en": "structured",
+      "kn": "ರಚನಾತ್ಮಕ"
+     },
+     "size": 14,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 4,
+     "y": 0,
+     "w": 2.2,
+     "h": "log(0.2*n) + 1",
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 4,
+     "y": 0,
+     "w": 2.2,
+     "h": "log(0.2*n) + 1",
+     "color": "yellow",
+     "visibleIf": "ty == 2",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 5.1,
+     "y": "log(0.2*n) + 1 + 0.4",
+     "text": {
+      "en": "{0.2*n:1} KB"
+     },
+     "size": 16,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.1,
+     "y": -0.4,
+     "text": {
+      "en": "Text message",
+      "kn": "ಪಠ್ಯ ಸಂದೇಶ"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.1,
+     "y": -1.0,
+     "text": {
+      "en": "unstructured",
+      "kn": "ಅರಚನಾತ್ಮಕ"
+     },
+     "size": 14,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 7,
+     "y": 0,
+     "w": 2.2,
+     "h": "log(3000*n) + 1",
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 7,
+     "y": 0,
+     "w": 2.2,
+     "h": "log(3000*n) + 1",
+     "color": "yellow",
+     "visibleIf": "ty == 3",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 8.1,
+     "y": "log(3000*n) + 1 + 0.4",
+     "text": {
+      "en": "{3000*n:1} KB"
+     },
+     "size": 16,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.1,
+     "y": -0.4,
+     "text": {
+      "en": "Photo",
+      "kn": "ಫೋಟೋ"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.1,
+     "y": -1.0,
+     "text": {
+      "en": "unstructured",
+      "kn": "ಅರಚನಾತ್ಮಕ"
+     },
+     "size": 14,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 0,
+     "w": 2.2,
+     "h": "log(4000*n) + 1",
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 0,
+     "w": 2.2,
+     "h": "log(4000*n) + 1",
+     "color": "yellow",
+     "visibleIf": "ty == 4",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 11.1,
+     "y": "log(4000*n) + 1 + 0.4",
+     "text": {
+      "en": "{4000*n:1} KB"
+     },
+     "size": 16,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.1,
+     "y": -0.4,
+     "text": {
+      "en": "Song",
+      "kn": "ಹಾಡು"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.1,
+     "y": -1.0,
+     "text": {
+      "en": "unstructured",
+      "kn": "ಅರಚನಾತ್ಮಕ"
+     },
+     "size": 14,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 13,
+     "y": 0,
+     "w": 2.2,
+     "h": "log(100000*n) + 1",
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 13,
+     "y": 0,
+     "w": 2.2,
+     "h": "log(100000*n) + 1",
+     "color": "yellow",
+     "visibleIf": "ty == 5",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 14.1,
+     "y": "log(100000*n) + 1 + 0.4",
+     "text": {
+      "en": "{100000*n:1} KB"
+     },
+     "size": 16,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.1,
+     "y": -0.4,
+     "text": {
+      "en": "1-min video",
+      "kn": "1 ನಿಮಿಷ ವೀಡಿಯೊ"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.1,
+     "y": -1.0,
+     "text": {
+      "en": "unstructured",
+      "kn": "ಅರಚನಾತ್ಮಕ"
+     },
+     "size": 14,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Storage for the highlighted kind",
+      "kn": "ಗುರುತಿಸಿದ ವಿಧದ ಸಂಗ್ರಹ"
+     },
+     "expr": "kb*n/1024",
+     "digits": 2,
+     "unit": "MB"
+    },
+    {
+     "label": {
+      "en": "Share of a 1 GB card",
+      "kn": "1 GB ಕಾರ್ಡ್‌ನ ಪಾಲು"
+     },
+     "expr": "kb*n/1048576*100",
+     "digits": 2,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "How many marks rows fit in the space of one photo?",
+     "kn": "ಒಂದು ಫೋಟೋದ ಜಾಗದಲ್ಲಿ ಎಷ್ಟು ಅಂಕ ಸಾಲುಗಳು?"
+    },
+    {
+     "en": "Make 100 items of each. Which kind fills a 1 GB card?",
+     "kn": "ಪ್ರತಿಯೊಂದು 100. ಯಾವುದು 1 GB ಕಾರ್ಡ್ ತುಂಬುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

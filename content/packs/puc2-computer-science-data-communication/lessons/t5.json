@@ -64,6 +64,289 @@
    }
   },
   {
+   "id": "scene-mobile-generations",
+   "type": "interactive",
+   "title": {
+    "en": "Mobile generations: how fast?",
+    "kn": "ಮೊಬೈಲ್ ತಲೆಮಾರುಗಳು: ಎಷ್ಟು ವೇಗ?"
+   },
+   "narration": {
+    "en": "1G carried only analogue voice. 2G added digital voice and SMS, 3G mobile internet, 4G fast all-IP data for video, and 5G very high speed with low delay. Bars use a log scale: each step up is ten times faster. Speeds are typical, not peak. Download a 100 MB video on 3G and on 4G. Compare the times. Why is a 1 MB photo still slow on 2G?",
+    "kn": "1G ಕೇವಲ ಅನಲಾಗ್ ಧ್ವನಿ. 2G ಡಿಜಿಟಲ್ ಧ್ವನಿ ಮತ್ತು SMS, 3G ಮೊಬೈಲ್ ಇಂಟರ್ನೆಟ್, 4G ವೀಡಿಯೊಗೆ ವೇಗದ IP ದತ್ತಾಂಶ, 5G ಕಡಿಮೆ ವಿಳಂಬದ ಅತಿ ಹೆಚ್ಚು ವೇಗ. ಪಟ್ಟಿಗಳು ಲಾಗ್ ಪ್ರಮಾಣದಲ್ಲಿ: ಪ್ರತಿ ಮೆಟ್ಟಿಲು ಹತ್ತು ಪಟ್ಟು ವೇಗ. ವೇಗಗಳು ಸಾಮಾನ್ಯ, ಗರಿಷ್ಠವಲ್ಲ. 3G ಮತ್ತು 4Gಯಲ್ಲಿ 100 MB ವೀಡಿಯೊ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ. ಸಮಯ ಹೋಲಿಸಿ. 2Gಯಲ್ಲಿ 1 MB ಫೋಟೋ ಕೂಡ ಏಕೆ ನಿಧಾನ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "1G carried only analogue voice. 2G added digital voice and SMS, 3G mobile internet, 4G fast all-IP data for video, and 5G very high speed with low delay. Bars use a log scale: each step up is ten times faster. Speeds are typical, not peak.",
+    "kn": "1G ಕೇವಲ ಅನಲಾಗ್ ಧ್ವನಿ. 2G ಡಿಜಿಟಲ್ ಧ್ವನಿ ಮತ್ತು SMS, 3G ಮೊಬೈಲ್ ಇಂಟರ್ನೆಟ್, 4G ವೀಡಿಯೊಗೆ ವೇಗದ IP ದತ್ತಾಂಶ, 5G ಕಡಿಮೆ ವಿಳಂಬದ ಅತಿ ಹೆಚ್ಚು ವೇಗ. ಪಟ್ಟಿಗಳು ಲಾಗ್ ಪ್ರಮಾಣದಲ್ಲಿ: ಪ್ರತಿ ಮೆಟ್ಟಿಲು ಹತ್ತು ಪಟ್ಟು ವೇಗ. ವೇಗಗಳು ಸಾಮಾನ್ಯ, ಗರಿಷ್ಠವಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "mb",
+     "label": {
+      "en": "File size",
+      "kn": "ಕಡತ ಗಾತ್ರ"
+     },
+     "min": 10,
+     "max": 500,
+     "step": 10,
+     "value": 100,
+     "unit": "MB"
+    }
+   ],
+   "choices": [
+    {
+     "name": "gen",
+     "label": {
+      "en": "Generation",
+      "kn": "ತಲೆಮಾರು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "2G"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "3G"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "4G"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "5G"
+       },
+       "value": 5
+      }
+     ],
+     "value": 4
+    }
+   ],
+   "vars": [
+    {
+     "name": "spd",
+     "expr": "if(gen == 2, 0.1, if(gen == 3, 2, if(gen == 4, 50, 1000)))"
+    },
+    {
+     "name": "secs",
+     "expr": "mb*8/spd"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     15.5
+    ],
+    "y": [
+     -0.8,
+     7.3
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.5,
+     "y": 0,
+     "w": 2.4,
+     "h": 1.0,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 1.5,
+     "y": 0,
+     "w": 2.4,
+     "h": 1.0,
+     "color": "yellow",
+     "visibleIf": "gen == 2",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 2.7,
+     "y": 1.3,
+     "text": {
+      "en": "0.1 Mbps"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.7,
+     "y": -0.35,
+     "text": {
+      "en": "2G"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 5.0,
+     "y": 0,
+     "w": 2.4,
+     "h": 2.301,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 5.0,
+     "y": 0,
+     "w": 2.4,
+     "h": 2.301,
+     "color": "yellow",
+     "visibleIf": "gen == 3",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": 2.601,
+     "text": {
+      "en": "2 Mbps"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": -0.35,
+     "text": {
+      "en": "3G"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 8.5,
+     "y": 0,
+     "w": 2.4,
+     "h": 3.699,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 8.5,
+     "y": 0,
+     "w": 2.4,
+     "h": 3.699,
+     "color": "yellow",
+     "visibleIf": "gen == 4",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 9.7,
+     "y": 3.9989999999999997,
+     "text": {
+      "en": "50 Mbps"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.7,
+     "y": -0.35,
+     "text": {
+      "en": "4G"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 12.0,
+     "y": 0,
+     "w": 2.4,
+     "h": 5.0,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 12.0,
+     "y": 0,
+     "w": 2.4,
+     "h": 5.0,
+     "color": "yellow",
+     "visibleIf": "gen == 5",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 13.2,
+     "y": 5.3,
+     "text": {
+      "en": "1000 Mbps"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.2,
+     "y": -0.35,
+     "text": {
+      "en": "5G"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 8.2,
+     "y": 6.6,
+     "text": {
+      "en": "{mb:0} MB on {gen:0}G: {secs:1} s",
+      "kn": "{mb:0} MB, {gen:0}G: {secs:1} ಸೆ"
+     },
+     "size": 24,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Download time",
+      "kn": "ಡೌನ್‌ಲೋಡ್ ಸಮಯ"
+     },
+     "expr": "secs",
+     "digits": 1,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "In minutes",
+      "kn": "ನಿಮಿಷಗಳಲ್ಲಿ"
+     },
+     "expr": "secs/60",
+     "digits": 1,
+     "unit": "min"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Download a 100 MB video on 3G and on 4G. Compare the times.",
+     "kn": "3G ಮತ್ತು 4Gಯಲ್ಲಿ 100 MB ವೀಡಿಯೊ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ. ಸಮಯ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Why is a 1 MB photo still slow on 2G?",
+     "kn": "2Gಯಲ್ಲಿ 1 MB ಫೋಟೋ ಕೂಡ ಏಕೆ ನಿಧಾನ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -58,6 +58,192 @@
    }
   },
   {
+   "id": "scene-storage-fill",
+   "type": "interactive",
+   "title": {
+    "en": "Will it fit? Data storage",
+    "kn": "ಹೊಂದುತ್ತದೆಯೇ? ದತ್ತಾಂಶ ಸಂಗ್ರಹ"
+   },
+   "narration": {
+    "en": "Data collected every day has to be stored somewhere. A phone camera adds a few MB per photo; over months this fills even a large memory. 1 GB = 1024 MB. Take 20 photos a day at 3 MB. When does a 64 GB phone fill up? Halve the photo size (compression). How many more days do you get?",
+    "kn": "ಪ್ರತಿದಿನ ಸಂಗ್ರಹಿಸಿದ ದತ್ತಾಂಶವನ್ನು ಎಲ್ಲಾದರೂ ಇಡಬೇಕು. ಫೋನ್ ಕ್ಯಾಮೆರಾ ಪ್ರತಿ ಫೋಟೋಗೆ ಕೆಲವು MB ಸೇರಿಸುತ್ತದೆ; ತಿಂಗಳುಗಳಲ್ಲಿ ದೊಡ್ಡ ಮೆಮೊರಿಯೂ ತುಂಬುತ್ತದೆ. 1 GB = 1024 MB. ದಿನಕ್ಕೆ 3 MBಯ 20 ಫೋಟೋ. 64 GB ಫೋನ್ ಯಾವಾಗ ತುಂಬುತ್ತದೆ? ಫೋಟೋ ಗಾತ್ರ ಅರ್ಧ (ಸಂಕೋಚನ). ಎಷ್ಟು ಹೆಚ್ಚು ದಿನ ಸಿಗುತ್ತದೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Data collected every day has to be stored somewhere. A phone camera adds a few MB per photo; over months this fills even a large memory. 1 GB = 1024 MB.",
+    "kn": "ಪ್ರತಿದಿನ ಸಂಗ್ರಹಿಸಿದ ದತ್ತಾಂಶವನ್ನು ಎಲ್ಲಾದರೂ ಇಡಬೇಕು. ಫೋನ್ ಕ್ಯಾಮೆರಾ ಪ್ರತಿ ಫೋಟೋಗೆ ಕೆಲವು MB ಸೇರಿಸುತ್ತದೆ; ತಿಂಗಳುಗಳಲ್ಲಿ ದೊಡ್ಡ ಮೆಮೊರಿಯೂ ತುಂಬುತ್ತದೆ. 1 GB = 1024 MB."
+   },
+   "sliders": [
+    {
+     "name": "pd",
+     "label": {
+      "en": "Photos per day",
+      "kn": "ದಿನಕ್ಕೆ ಫೋಟೋ"
+     },
+     "min": 2,
+     "max": 100,
+     "step": 2,
+     "value": 20
+    },
+    {
+     "name": "mb",
+     "label": {
+      "en": "Size of one photo",
+      "kn": "ಒಂದು ಫೋಟೋ ಗಾತ್ರ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 3,
+     "unit": "MB"
+    },
+    {
+     "name": "days",
+     "label": {
+      "en": "Days",
+      "kn": "ದಿನಗಳು"
+     },
+     "min": 7,
+     "max": 364,
+     "step": 7,
+     "value": 182
+    }
+   ],
+   "choices": [
+    {
+     "name": "cap",
+     "label": {
+      "en": "Phone storage",
+      "kn": "ಫೋನ್ ಸಂಗ್ರಹ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "32 GB"
+       },
+       "value": 32
+      },
+      {
+       "label": {
+        "en": "64 GB"
+       },
+       "value": 64
+      },
+      {
+       "label": {
+        "en": "128 GB"
+       },
+       "value": 128
+      },
+      {
+       "label": {
+        "en": "256 GB"
+       },
+       "value": 256
+      }
+     ],
+     "value": 64
+    }
+   ],
+   "vars": [
+    {
+     "name": "used",
+     "expr": "pd*mb*days/1024"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     0.6,
+     7.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 3,
+     "w": 14,
+     "h": 2,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 3,
+     "w": "clamp(used/cap, 0, 1)*14",
+     "h": 2,
+     "color": {
+      "by": "clamp(used/cap, 0, 1)",
+      "scale": [
+       "green",
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 6.2,
+     "text": {
+      "en": "{used:1} GB of {cap:0} GB",
+      "kn": "{cap:0} GB ಪೈಕಿ {used:1} GB"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": 1.6,
+     "text": {
+      "en": "Storage full! Back up to the cloud or a computer",
+      "kn": "ಸಂಗ್ರಹ ತುಂಬಿದೆ! ಕ್ಲೌಡ್ ಅಥವಾ ಕಂಪ್ಯೂಟರ್‌ಗೆ ಬ್ಯಾಕಪ್ ಮಾಡಿ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "used >= cap"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Storage used",
+      "kn": "ಬಳಸಿದ ಸಂಗ್ರಹ"
+     },
+     "expr": "used",
+     "digits": 1,
+     "unit": "GB"
+    },
+    {
+     "label": {
+      "en": "Days until full",
+      "kn": "ತುಂಬಲು ದಿನಗಳು"
+     },
+     "expr": "cap*1024/(pd*mb)",
+     "digits": 0,
+     "unit": "days"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Take 20 photos a day at 3 MB. When does a 64 GB phone fill up?",
+     "kn": "ದಿನಕ್ಕೆ 3 MBಯ 20 ಫೋಟೋ. 64 GB ಫೋನ್ ಯಾವಾಗ ತುಂಬುತ್ತದೆ?"
+    },
+    {
+     "en": "Halve the photo size (compression). How many more days do you get?",
+     "kn": "ಫೋಟೋ ಗಾತ್ರ ಅರ್ಧ (ಸಂಕೋಚನ). ಎಷ್ಟು ಹೆಚ್ಚು ದಿನ ಸಿಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

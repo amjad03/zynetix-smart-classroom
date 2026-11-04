@@ -59,6 +59,249 @@
    }
   },
   {
+   "id": "scene-interface-dispatch",
+   "type": "interactive",
+   "title": {
+    "en": "One interface, many classes"
+   },
+   "narration": {
+    "en": "Circle, Rectangle and Square all implement the interface Shape, so each must provide area(). A variable of type Shape can hold any of them; s.area() runs the version of the object it actually refers to, chosen at run time (dynamic method dispatch). Keep the same variable s and change the object. Which area() runs? Square could extend Rectangle instead. What would its constructor pass to super()?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Circle, Rectangle and Square all implement the interface Shape, so each must provide area(). A variable of type Shape can hold any of them; s.area() runs the version of the object it actually refers to, chosen at run time (dynamic method dispatch)."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "r×2 / l / side"
+     },
+     "min": 1,
+     "max": 9,
+     "step": 0.5,
+     "value": 6
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "b (rectangle)"
+     },
+     "min": 1,
+     "max": 9,
+     "step": 0.5,
+     "value": 4
+    }
+   ],
+   "choices": [
+    {
+     "name": "sc",
+     "label": {
+      "en": "Object"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Circle"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Rectangle"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Square"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "ar",
+     "expr": "if(sc == 1, pi*(a/2)^2, if(sc == 2, a*b, a*a))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10.5
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 5,
+     "y": 5,
+     "r": "a/2",
+     "color": "blue",
+     "visibleIf": "sc == 1",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": "5 - a/2",
+     "y": "5 - b/2",
+     "w": "a",
+     "h": "b",
+     "color": "green",
+     "visibleIf": "sc == 2",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": "5 - a/2",
+     "y": "5 - a/2",
+     "w": "a",
+     "h": "a",
+     "color": "orange",
+     "visibleIf": "sc == 3",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 9.5,
+     "text": {
+      "en": "interface Shape declares: double area();"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 8.5,
+     "text": {
+      "en": "Shape s = new Circle(r);"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "left",
+     "visibleIf": "sc == 1"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 8.5,
+     "text": {
+      "en": "Shape s = new Rectangle(l, b);"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "left",
+     "visibleIf": "sc == 2"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 8.5,
+     "text": {
+      "en": "Shape s = new Square(side);"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "left",
+     "visibleIf": "sc == 3"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 7.5,
+     "text": {
+      "en": "s.area() runs Circle.area()"
+     },
+     "size": 20,
+     "color": "blue",
+     "align": "left",
+     "visibleIf": "sc == 1"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 7.5,
+     "text": {
+      "en": "s.area() runs Rectangle.area()"
+     },
+     "size": 20,
+     "color": "green",
+     "align": "left",
+     "visibleIf": "sc == 2"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 7.5,
+     "text": {
+      "en": "s.area() runs Square.area()"
+     },
+     "size": 20,
+     "color": "orange",
+     "align": "left",
+     "visibleIf": "sc == 3"
+    },
+    {
+     "shape": "label",
+     "x": 11,
+     "y": 6.3,
+     "text": {
+      "en": "= {ar:2}"
+     },
+     "size": 26,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 5,
+     "text": {
+      "en": "abstract class Shape2D cannot be instantiated"
+     },
+     "size": 16,
+     "color": "red",
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "area()"
+     },
+     "expr": "ar",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "perimeter"
+     },
+     "expr": "if(sc == 1, pi*a, if(sc == 2, 2*(a + b), 4*a))",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Keep the same variable s and change the object. Which area() runs?"
+    },
+    {
+     "en": "Square could extend Rectangle instead. What would its constructor pass to super()?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {
