@@ -1,6 +1,6 @@
 # Zynetix Board APKs: production 1.1.0
 
-Built from `main` at 25b0f21. **Release-signed** with the Zynetix production key.
+Built from `main` at c379c33. **Release-signed** with the Zynetix production key.
 
 Signing certificate SHA-256: `8c4c01f3fb0ab2bb6cd6eb10ff61f6ad695507ebbc00c7ed55445897bb49306a` (CN=Zynetix Smart Classroom, O=Zynetix, Bengaluru).
 
