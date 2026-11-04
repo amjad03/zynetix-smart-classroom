@@ -323,6 +323,21 @@ class _ChartPainter extends CustomPainter {
       _text(canvas, label, Offset(pb.right - 240, legendY + 16), color: color, align: Alignment.centerLeft);
       legendY += 44;
     }
+    // Targets: a flag on its pole at each mark (a challenge's landing point, for example).
+    for (final m in (raw['marks'] as List?) ?? const []) {
+      if (m is! Map || m['x'] is! num) continue;
+      final mx = (m['x'] as num).toDouble(), my = (m['y'] as num?)?.toDouble() ?? 0;
+      final p = Offset(pb.left + (mx - xr[0]) / (xr[1] - xr[0]) * pb.width, pb.bottom - (my - yr[0]) / (yr[1] - yr[0]) * pb.height);
+      if (!pb.inflate(1).contains(p)) continue;
+      final pole = Paint()
+        ..color = Colors.white
+        ..strokeWidth = 4;
+      canvas.drawLine(p, p - const Offset(0, 70), pole);
+      canvas.drawPath(Path()..moveTo(p.dx, p.dy - 70)..lineTo(p.dx + 44, p.dy - 56)..lineTo(p.dx, p.dy - 42)..close(), Paint()..color = const Color(0xFFFF5252));
+      canvas.drawCircle(p, 7, Paint()..color = const Color(0xFFFF5252));
+      final label = m['label'] as String?;
+      if (label != null) _text(canvas, label, p - const Offset(-52, 62), color: Colors.white, align: Alignment.centerLeft);
+    }
   }
 
   void _vectors(Canvas canvas, Rect box) {

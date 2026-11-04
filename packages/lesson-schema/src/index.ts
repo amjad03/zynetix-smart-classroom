@@ -192,6 +192,8 @@ const playfield = {
   vectors: z.array(z.tuple([z.union([z.number(), z.string()]), z.union([z.number(), z.string()])])).max(4).optional(),
   data: z.record(z.union([z.number(), z.string()])).optional(),
   points: z.array(z.union([z.number(), z.string()])).max(8).optional(),
+  /** function_plot: fixed targets drawn as flags at (x, y), e.g. where a projectile must land. */
+  marks: z.array(z.object({ x: z.number(), y: z.number().default(0), label: z.string().max(24).optional() }).strict()).max(4).optional(),
   readouts: z.array(z.object({ label: L10n, expr: z.string(), unit: z.string().optional(), digits: z.number().int().min(0).max(6).default(2) }).strict()).max(4).default([]),
 };
 /**

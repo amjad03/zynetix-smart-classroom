@@ -21,6 +21,16 @@ import 'package:zynetix_board/features/self_learning.dart';
 import 'package:zynetix_board/features/smartboard.dart';
 import 'package:zynetix_board/features/teacher_mode.dart';
 
+import 'dart:math';
+
+import 'package:zynetix_board/engine/mastery.dart';
+import 'package:zynetix_board/features/game/game_hub.dart';
+import 'package:zynetix_board/features/home.dart';
+import 'package:zynetix_board/features/insight/mastery_map.dart';
+import 'package:zynetix_board/features/live/live_quiz_screen.dart';
+import 'package:zynetix_board/features/live/live_server.dart';
+import 'package:zynetix_board/features/live/paper_marks.dart';
+
 import '../test/fixtures.dart';
 import '../test/helpers.dart';
 
@@ -246,6 +256,69 @@ void main() {
 
   testWidgets('19 accountancy whiteboard', (t) => realBlock(t, 'puc2-accountancy-09-accounting-ratios.t2', 'wb1', '19-accountancy-whiteboard', steps: 3));
   testWidgets('20 economics interactive', (t) => realBlock(t, 'puc2-economics-02-theory-of-consumer-behaviour.t3', 'int1', '20-economics-interactive'));
+
+  // Version 2: what the board knows about each roll number, and the game layer. Demo answers.
+  Future<Services> v2Services() async {
+    final s = await shotServices(prefs: {'displaySize': 'classroom', 'rollCount': 40}, taught: ['$motion.t1', '$motion.t2', '$motion.t3']);
+    final rnd = Random(7);
+    final rs = <Response>[];
+    for (final ch in ['puc1-physics-02-motion-in-a-straight-line', 'puc1-physics-03-motion-in-a-plane', 'puc1-physics-04-laws-of-motion']) {
+      final p = s.store.byChapter(ch);
+      if (p == null) continue;
+      for (final (ti, t) in p.chapter.topics.indexed) {
+        for (var roll = 1; roll <= 40; roll++) {
+          final skill = 0.35 + 0.6 * ((roll * 37) % 40) / 40 - 0.08 * ti;
+          for (var k = 0; k < 3; k++) {
+            rs.add(Response(roll: roll, questionId: 'q$k', topicId: t.id, chapterId: ch, correct: rnd.nextDouble() < skill, source: 'hands', at: DateTime(2026, 11, 1 + k)));
+          }
+        }
+      }
+    }
+    s.mastery.recordAll(rs);
+    return s;
+  }
+
+  testWidgets('21 home with v2 tools', (t) async {
+    await pumpBoard(t, await v2Services(), home: const HomeScreen());
+    await shot(t, '21-home-v2');
+  });
+
+  testWidgets('22 mastery map', (t) async {
+    await pumpBoard(t, await v2Services(), home: const MasteryMapScreen());
+    await t.pump(const Duration(seconds: 1));
+    await shot(t, '22-mastery-map');
+  });
+
+  testWidgets('23 challenge', (t) async {
+    final s = await v2Services();
+    final hit = s.lessonFor('puc1-physics-03-motion-in-a-plane.t4')!;
+    final b = hit.lesson.blocks.firstWhere((b) => b.type == BlockType.challenge);
+    await pumpBoard(t, s, home: LessonPlayerScreen(pack: hit.pack, lesson: lessonWith(hit.pack, [b])));
+    await t.pump(const Duration(seconds: 1));
+    await shot(t, '23-challenge');
+  });
+
+  testWidgets('24 game zone', (t) async {
+    await pumpBoard(t, await v2Services(), home: const GameHubScreen());
+    await t.pump(const Duration(seconds: 1));
+    await shot(t, '24-game-zone');
+  });
+
+  testWidgets('25 phone quiz', (t) async {
+    final s = await v2Services();
+    final p = s.store.byChapter(motion)!;
+    await pumpBoard(t, s, home: LiveQuizScreen(questions: p.questions.values.where((q) => q.format == 'mcq').take(5).toList(), pack: p, server: LiveServer(rollCount: 40), listen: false));
+    await t.pump(const Duration(seconds: 1));
+    await shot(t, '25-phone-quiz');
+  });
+
+  testWidgets('26 paper marks', (t) async {
+    final s = await v2Services();
+    final p = s.store.byChapter(motion)!;
+    await pumpBoard(t, s, home: PaperMarksScreen(pack: p, questions: p.questions.values.take(10).toList()));
+    await t.pump(const Duration(seconds: 1));
+    await shot(t, '26-paper-marks');
+  });
 }
 
 int _index(WidgetTester t) {

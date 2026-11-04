@@ -46,6 +46,19 @@ Board screens are 1920×1080 and rendered with the app's own fonts (`apps/board/
 | ![Numeric question with keypad](apps/board/screenshots/png/17-quiz-numeric-keypad.png) | ![Teacher Mode, CBSE Class 12 Commerce](apps/board/screenshots/png/18-teacher-mode-cbse-commerce.png) |
 | ![Accountancy whiteboard: liquidity ratios](apps/board/screenshots/png/19-accountancy-whiteboard.png) | ![Economics interactive: budget line](apps/board/screenshots/png/20-economics-interactive.png) |
 
+**Version 2: the board knows every roll number, and students play.**
+
+| | |
+|---|---|
+| ![Home with today's plan and the tools](apps/board/screenshots/png/21-home-v2.png) | ![Mastery map: topics × roll numbers](apps/board/screenshots/png/22-mastery-map.png) |
+| ![Challenge: land the projectile on the flag](apps/board/screenshots/png/23-challenge.png) | ![Game Zone missions](apps/board/screenshots/png/24-game-zone.png) |
+| ![Phone quiz over the board's own Wi-Fi](apps/board/screenshots/png/25-phone-quiz.png) | ![Paper test marks](apps/board/screenshots/png/26-paper-marks.png) |
+
+| College Admin: outcomes | |
+|---|---|
+| ![Outcomes](docs/screenshots/admin-06-outcomes.png) | ![Section drill-down](docs/screenshots/admin-07-section-drilldown.png) |
+| ![Exam readiness](docs/screenshots/admin-09-exam-readiness.png) | ![Monthly college report](docs/screenshots/admin-11-monthly-report.png) |
+
 | College Admin | Content CMS |
 |---|---|
 | ![Usage](docs/screenshots/admin-01-usage.png) | ![Packs](docs/screenshots/cms-01-packs.png) |

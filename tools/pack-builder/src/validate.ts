@@ -32,6 +32,10 @@ export function checkPlayfield(b: Playfield, where: string): string[] {
   for (const sl of b.sliders) if (RESERVED.has(sl.name)) problems.push(`${where}: slider name "${sl.name}" clashes with a built-in name`);
   for (const sl of b.sliders) if (!(sl.min <= sl.value && sl.value <= sl.max)) problems.push(`${where}: slider ${sl.name} value outside min..max`);
   if (new Set(b.sliders.map((sl) => sl.name)).size !== b.sliders.length) problems.push(`${where}: two sliders share a name`);
+  for (const m of b.marks ?? []) {
+    const inX = !b.x || (b.x[0] <= m.x && m.x <= b.x[1]), inY = !b.y || (b.y[0] <= m.y && m.y <= b.y[1]);
+    if (!inX || !inY) problems.push(`${where}: mark (${m.x}, ${m.y}) is outside the plot`);
+  }
   const exprs = [...(b.fns ?? []).map((f) => f.fn), ...b.readouts.map((r) => r.expr),
     ...[...(b.vectors ?? []).flat(), ...Object.values(b.data ?? {}), ...(b.points ?? [])].filter((v): v is string => typeof v === 'string')];
   for (const ex of exprs) {

@@ -387,7 +387,7 @@ class _HeaderPainter extends CustomPainter {
     for (var i = first; i <= last; i++) {
       if (rolls[i] % every != 0 && rolls[i] != 1) continue;
       final tp = TextPainter(
-        text: TextSpan(text: '${rolls[i]}', style: TextStyle(fontSize: min(24, cell * 0.55 * every), color: color)),
+        text: TextSpan(text: '${rolls[i]}', style: zText(min(24, cell * 0.55 * every), FontWeight.w600).copyWith(color: color)),
         textDirection: TextDirection.ltr,
       )..layout();
       tp.paint(canvas, Offset(i * cell - offset.value + (cell - tp.width) / 2, (size.height - tp.height) / 2));
