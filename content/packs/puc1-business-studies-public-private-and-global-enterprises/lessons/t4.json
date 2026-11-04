@@ -70,6 +70,225 @@
    }
   },
   {
+   "id": "scene-mnc",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A global enterprise across countries",
+    "kn": "ದೇಶಗಳಾದ್ಯಂತ ಜಾಗತಿಕ ಉದ್ಯಮ"
+   },
+   "caption": {
+    "en": "An MNC runs units in many countries under one head office. Add countries and set how much it produces locally: sales grow, cost per unit falls with scale, and control stays centralised.",
+    "kn": "ಬಹುರಾಷ್ಟ್ರೀಯ ಕಂಪನಿ ಒಂದೇ ಮುಖ್ಯ ಕಚೇರಿಯಡಿ ಹಲವು ದೇಶಗಳಲ್ಲಿ ಘಟಕ ನಡೆಸುತ್ತದೆ. ದೇಶಗಳನ್ನು ಸೇರಿಸಿ ಸ್ಥಳೀಯ ಉತ್ಪಾದನೆ ಹೊಂದಿಸಿ: ಮಾರಾಟ ಏರುತ್ತದೆ, ಘಟಕ ವೆಚ್ಚ ಇಳಿಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "lp",
+     "label": {
+      "en": "Produced locally",
+      "kn": "ಸ್ಥಳೀಯ ಉತ್ಪಾದನೆ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 40,
+     "unit": "%"
+    },
+    {
+     "name": "sc",
+     "label": {
+      "en": "Sales per country",
+      "kn": "ಪ್ರತಿ ದೇಶ ಮಾರಾಟ"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 50,
+     "value": 400,
+     "unit": "$ m"
+    }
+   ],
+   "counters": [
+    {
+     "name": "nc",
+     "value": 3,
+     "min": 1,
+     "max": 12
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Enter a new country",
+      "kn": "ಹೊಸ ದೇಶ ಪ್ರವೇಶ"
+     },
+     "icon": "add",
+     "set": {
+      "nc": "nc + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Leave a country",
+      "kn": "ದೇಶ ಬಿಡಿ"
+     },
+     "icon": "remove",
+     "set": {
+      "nc": "nc - 1"
+     }
+    }
+   ],
+   "time": {
+    "max": 12,
+    "loop": true,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 1,
+    "unit": "s"
+   },
+   "vars": [
+    {
+     "name": "sales",
+     "expr": "nc*sc"
+    },
+    {
+     "name": "cpu",
+     "expr": "100*(1 - 0.08*ln(nc)) - 0.1*lp"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 35,
+     "y": 30,
+     "r": 4,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 35,
+     "y": 30,
+     "text": {
+      "en": "HQ",
+      "kn": "ಮುಖ್ಯ"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "particles",
+     "count": 12,
+     "x": "35 + 20*cos(2*pi*i/max(nc, 1))",
+     "y": "30 + 20*sin(2*pi*i/max(nc, 1))",
+     "r": 2.2,
+     "color": "blue",
+     "visibleIf": "i < nc"
+    },
+    {
+     "shape": "particles",
+     "count": 12,
+     "x": "35 + 20*cos(2*pi*i/max(nc, 1))*(1 - mod(t + i/3, 1))",
+     "y": "30 + 20*sin(2*pi*i/max(nc, 1))*(1 - mod(t + i/3, 1))",
+     "r": 0.6,
+     "color": "orange",
+     "visibleIf": "i < nc"
+    },
+    {
+     "shape": "label",
+     "x": 78,
+     "y": 46,
+     "text": {
+      "en": "{nc:0} countries",
+      "kn": "{nc:0} ದೇಶಗಳು"
+     },
+     "size": 22
+    },
+    {
+     "shape": "label",
+     "x": 78,
+     "y": 36,
+     "text": {
+      "en": "Sales ${sales:0} m",
+      "kn": "ಮಾರಾಟ ${sales:0} m"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 78,
+     "y": 26,
+     "text": {
+      "en": "Cost a unit {cpu:1}",
+      "kn": "ಘಟಕ ವೆಚ್ಚ {cpu:1}"
+     },
+     "size": 20,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 78,
+     "y": 14,
+     "text": {
+      "en": "Profits and reports flow to HQ",
+      "kn": "ಲಾಭ, ವರದಿ ಮುಖ್ಯ ಕಚೇರಿಗೆ"
+     },
+     "size": 16
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Global sales",
+      "kn": "ಜಾಗತಿಕ ಮಾರಾಟ"
+     },
+     "expr": "sales",
+     "digits": 0,
+     "unit": "$ m"
+    },
+    {
+     "label": {
+      "en": "Cost index per unit",
+      "kn": "ಘಟಕ ವೆಚ್ಚ ಸೂಚ್ಯಂಕ"
+     },
+     "expr": "cpu",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why does cost per unit fall as the MNC enters more countries?",
+     "kn": "ಹೆಚ್ಚು ದೇಶ ಪ್ರವೇಶಿಸಿದಂತೆ ಘಟಕ ವೆಚ್ಚ ಏಕೆ ಇಳಿಯುತ್ತದೆ?"
+    },
+    {
+     "en": "Why do MNCs produce locally in big markets?",
+     "kn": "ದೊಡ್ಡ ಮಾರುಕಟ್ಟೆಯಲ್ಲಿ ಸ್ಥಳೀಯ ಉತ್ಪಾದನೆ ಏಕೆ?"
+    },
+    {
+     "en": "Which feature does the single HQ show?",
+     "kn": "ಒಂದೇ ಮುಖ್ಯ ಕಚೇರಿ ಯಾವ ಲಕ್ಷಣ ತೋರಿಸುತ್ತದೆ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "An MNC runs units in many countries under one head office. Add countries and set how much it produces locally: sales grow, cost per unit falls with scale, and control stays centralised.",
+    "kn": "ಬಹುರಾಷ್ಟ್ರೀಯ ಕಂಪನಿ ಒಂದೇ ಮುಖ್ಯ ಕಚೇರಿಯಡಿ ಹಲವು ದೇಶಗಳಲ್ಲಿ ಘಟಕ ನಡೆಸುತ್ತದೆ. ದೇಶಗಳನ್ನು ಸೇರಿಸಿ ಸ್ಥಳೀಯ ಉತ್ಪಾದನೆ ಹೊಂದಿಸಿ: ಮಾರಾಟ ಏರುತ್ತದೆ, ಘಟಕ ವೆಚ್ಚ ಇಳಿಯುತ್ತದೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

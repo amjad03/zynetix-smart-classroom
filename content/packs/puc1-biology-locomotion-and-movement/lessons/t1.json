@@ -62,6 +62,198 @@
    }
   },
   {
+   "id": "scene-cilia",
+   "type": "interactive",
+   "title": {
+    "en": "Ciliary movement clears the windpipe",
+    "kn": "ಸೀಲಿಯಾ ಚಲನೆ ಶ್ವಾಸನಾಳವನ್ನು ಸ್ವಚ್ಛಗೊಳಿಸುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "Cilia on the cells lining the trachea beat one after another in a metachronal wave and sweep the mucus layer, with trapped dust and germs, up towards the throat. The same ciliary movement moves the ovum along the fallopian tube. Smoke paralyses cilia, so mucus collects.",
+    "kn": "ಶ್ವಾಸನಾಳದ ಒಳಪದರ ಕೋಶಗಳ ಸೀಲಿಯಾಗಳು ಒಂದರ ನಂತರ ಒಂದು ಅಲೆಯಂತೆ ಬಡಿದು, ಧೂಳು ಮತ್ತು ರೋಗಾಣುಗಳಿರುವ ಲೋಳೆಯನ್ನು ಗಂಟಲಿನತ್ತ ತಳ್ಳುತ್ತವೆ. ಇದೇ ಸೀಲಿಯಾ ಚಲನೆ ಅಂಡಾಣುವನ್ನು ಅಂಡನಾಳದಲ್ಲಿ ಸಾಗಿಸುತ್ತದೆ. ಹೊಗೆ ಸೀಲಿಯಾಗಳನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸುತ್ತದೆ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Cilia on the cells lining the trachea beat one after another in a metachronal wave and sweep the mucus layer, with trapped dust and germs, up towards the throat. The same ciliary movement moves the ovum along the fallopian tube. Smoke paralyses cilia, so mucus collects.",
+    "kn": "ಶ್ವಾಸನಾಳದ ಒಳಪದರ ಕೋಶಗಳ ಸೀಲಿಯಾಗಳು ಒಂದರ ನಂತರ ಒಂದು ಅಲೆಯಂತೆ ಬಡಿದು, ಧೂಳು ಮತ್ತು ರೋಗಾಣುಗಳಿರುವ ಲೋಳೆಯನ್ನು ಗಂಟಲಿನತ್ತ ತಳ್ಳುತ್ತವೆ. ಇದೇ ಸೀಲಿಯಾ ಚಲನೆ ಅಂಡಾಣುವನ್ನು ಅಂಡನಾಳದಲ್ಲಿ ಸಾಗಿಸುತ್ತದೆ. ಹೊಗೆ ಸೀಲಿಯಾಗಳನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "f",
+     "label": {
+      "en": "Beat frequency",
+      "kn": "ಬಡಿತದ ಆವರ್ತನ"
+     },
+     "min": 2,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "Hz"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "smoke",
+     "label": {
+      "en": "Smoker (damaged cilia)",
+      "kn": "ಧೂಮಪಾನಿ (ಹಾನಿಗೊಂಡ ಸೀಲಿಯಾ)"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "fe",
+     "expr": "if(smoke, 0.15*f, f)"
+    },
+    {
+     "name": "ph",
+     "expr": "0.6*fe*t"
+    },
+    {
+     "name": "v",
+     "expr": "0.12*fe"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 12,
+     "x": "4 + 8*i",
+     "y": 12,
+     "r": 3.6,
+     "color": "orange",
+     "opacity": 0.5
+    },
+    {
+     "shape": "particles",
+     "count": 48,
+     "x": "2 + 2*i + 1.4*sin(ph - 0.7*i)",
+     "y": "19 + 0.7*cos(ph - 0.7*i)",
+     "r": 0.45,
+     "color": "white"
+    },
+    {
+     "shape": "particles",
+     "count": 48,
+     "x": "2 + 2*i + 0.7*sin(ph - 0.7*i)",
+     "y": "17.5",
+     "r": 0.35,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 20,
+     "w": 100,
+     "h": 6,
+     "color": "yellow",
+     "opacity": 0.25
+    },
+    {
+     "shape": "particles",
+     "count": 18,
+     "x": "mod(100*rand(i) + v*t, 100)",
+     "y": "22 + 3*rand(i + 40)",
+     "r": 0.8,
+     "color": "red"
+    },
+    {
+     "shape": "arrow",
+     "x": 60,
+     "y": 34,
+     "dx": 20,
+     "dy": 0,
+     "color": "yellow",
+     "width": 4,
+     "label": "to the throat"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 4,
+     "size": 22,
+     "text": {
+      "en": "Ciliated epithelium of the trachea",
+      "kn": "ಶ್ವಾಸನಾಳದ ಸೀಲಿಯಾ ಉಪಕಲೆ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 30,
+     "size": 20,
+     "text": {
+      "en": "Mucus with trapped dust",
+      "kn": "ಧೂಳು ಹಿಡಿದ ಲೋಳೆ"
+     },
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 48,
+     "size": 22,
+     "text": {
+      "en": "Cilia barely move: mucus collects, cough",
+      "kn": "ಸೀಲಿಯಾ ಅಷ್ಟೇನೂ ಚಲಿಸವು: ಲೋಳೆ ಸಂಗ್ರಹ, ಕೆಮ್ಮು"
+     },
+     "visibleIf": "smoke",
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 48,
+     "size": 22,
+     "text": {
+      "en": "Amoeboid · ciliary · muscular: three kinds of movement",
+      "kn": "ಅಮೀಬೀಯ · ಸೀಲಿಯಾ · ಸ್ನಾಯು: ಮೂರು ಬಗೆಯ ಚಲನೆ"
+     },
+     "visibleIf": "!smoke"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mucus speed",
+      "kn": "ಲೋಳೆಯ ವೇಗ"
+     },
+     "expr": "v*6",
+     "digits": 1,
+     "unit": "mm/min"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Halve the beat frequency. What happens to the speed of the mucus?",
+     "kn": "ಬಡಿತದ ಆವರ್ತನ ಅರ್ಧ ಮಾಡಿ. ಲೋಳೆಯ ವೇಗಕ್ಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Why do smokers cough in the morning?",
+     "kn": "ಧೂಮಪಾನಿಗಳು ಬೆಳಿಗ್ಗೆ ಏಕೆ ಕೆಮ್ಮುತ್ತಾರೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

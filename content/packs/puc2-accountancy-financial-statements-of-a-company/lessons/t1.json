@@ -65,6 +65,288 @@
    }
   },
   {
+   "id": "scene-company-pl",
+   "type": "interactive",
+   "title": {
+    "en": "A company's statement of profit and loss",
+    "kn": "ಕಂಪನಿಯ ಲಾಭ-ನಷ್ಟ ಪಟ್ಟಿ"
+   },
+   "narration": {
+    "en": "Schedule III sets the order: revenue from operations and other income, less expenses, gives profit before tax; tax expense is deducted to give the profit for the period, which goes to the balance sheet under reserves and surplus. Raise the tax rate from 22% to 30%. What happens to profit for the year? Make expenses exceed revenue. Is any tax charged?",
+    "kn": "ಅನುಸೂಚಿ III ಕ್ರಮ ನಿಗದಿಪಡಿಸುತ್ತದೆ: ಕಾರ್ಯಾಚರಣೆ ಆದಾಯ ಮತ್ತು ಇತರ ಆದಾಯದಿಂದ ವೆಚ್ಚ ಕಳೆದರೆ ತೆರಿಗೆ ಮೊದಲ ಲಾಭ; ತೆರಿಗೆ ಕಳೆದರೆ ಅವಧಿಯ ಲಾಭ, ಅದು ಆಸ್ತಿ-ಹೊಣೆ ಪಟ್ಟಿಯ ಮೀಸಲು ಮತ್ತು ಹೆಚ್ಚುವರಿಗೆ ಹೋಗುತ್ತದೆ. ತೆರಿಗೆ ದರವನ್ನು 22%ರಿಂದ 30%ಕ್ಕೆ ಏರಿಸಿ. ವರ್ಷದ ಲಾಭ ಏನಾಗುತ್ತದೆ? ವೆಚ್ಚ ಆದಾಯಕ್ಕಿಂತ ಹೆಚ್ಚಾಗಲಿ. ತೆರಿಗೆ ಉಂಟೇ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Schedule III sets the order: revenue from operations and other income, less expenses, gives profit before tax; tax expense is deducted to give the profit for the period, which goes to the balance sheet under reserves and surplus.",
+    "kn": "ಅನುಸೂಚಿ III ಕ್ರಮ ನಿಗದಿಪಡಿಸುತ್ತದೆ: ಕಾರ್ಯಾಚರಣೆ ಆದಾಯ ಮತ್ತು ಇತರ ಆದಾಯದಿಂದ ವೆಚ್ಚ ಕಳೆದರೆ ತೆರಿಗೆ ಮೊದಲ ಲಾಭ; ತೆರಿಗೆ ಕಳೆದರೆ ಅವಧಿಯ ಲಾಭ, ಅದು ಆಸ್ತಿ-ಹೊಣೆ ಪಟ್ಟಿಯ ಮೀಸಲು ಮತ್ತು ಹೆಚ್ಚುವರಿಗೆ ಹೋಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "rv",
+     "label": {
+      "en": "Revenue (₹ lakh)",
+      "kn": "ಆದಾಯ (₹ ಲಕ್ಷ)"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 20,
+     "value": 500
+    },
+    {
+     "name": "ex",
+     "label": {
+      "en": "Expenses (₹ lakh)",
+      "kn": "ವೆಚ್ಚ (₹ ಲಕ್ಷ)"
+     },
+     "min": 50,
+     "max": 900,
+     "step": 10,
+     "value": 350
+    }
+   ],
+   "choices": [
+    {
+     "name": "tr",
+     "label": {
+      "en": "Tax rate",
+      "kn": "ತೆರಿಗೆ ದರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "22%"
+       },
+       "value": 22
+      },
+      {
+       "label": {
+        "en": "25%"
+       },
+       "value": 25
+      },
+      {
+       "label": {
+        "en": "30%"
+       },
+       "value": 30
+      }
+     ],
+     "value": 25
+    }
+   ],
+   "vars": [
+    {
+     "name": "pbt",
+     "expr": "rv - ex"
+    },
+    {
+     "name": "tx",
+     "expr": "max(pbt, 0)*tr/100"
+    },
+    {
+     "name": "pat",
+     "expr": "pbt - tx"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16.8
+    ],
+    "y": [
+     -500,
+     1150
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": "min(0, rv)",
+     "w": 2.0,
+     "h": "max(abs(rv), 3.3)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "if(rv >= 0, rv + 57.75, rv - 57.75)",
+     "text": {
+      "en": "₹{rv:0}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "if(rv >= 0, -57.75, 57.75)",
+     "text": {
+      "en": "Revenue",
+      "kn": "ಆದಾಯ"
+     },
+     "size": 18,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": "min(0, ex)",
+     "w": 2.0,
+     "h": "max(abs(ex), 3.3)",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "if(ex >= 0, ex + 57.75, ex - 57.75)",
+     "text": {
+      "en": "₹{ex:0}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "if(ex >= 0, -57.75, 57.75)",
+     "text": {
+      "en": "Expenses",
+      "kn": "ವೆಚ್ಚ"
+     },
+     "size": 18,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": "min(0, pbt)",
+     "w": 2.0,
+     "h": "max(abs(pbt), 3.3)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "if(pbt >= 0, pbt + 57.75, pbt - 57.75)",
+     "text": {
+      "en": "₹{pbt:0}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "if(pbt >= 0, -57.75, 57.75)",
+     "text": {
+      "en": "Profit before tax",
+      "kn": "ತೆರಿಗೆ ಮೊದಲ ಲಾಭ"
+     },
+     "size": 18,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": "min(0, tx)",
+     "w": 2.0,
+     "h": "max(abs(tx), 3.3)",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "if(tx >= 0, tx + 57.75, tx - 57.75)",
+     "text": {
+      "en": "₹{tx:0}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "if(tx >= 0, -57.75, 57.75)",
+     "text": {
+      "en": "Tax",
+      "kn": "ತೆರಿಗೆ"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 13.8,
+     "y": "min(0, pat)",
+     "w": 2.0,
+     "h": "max(abs(pat), 3.3)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 14.8,
+     "y": "if(pat >= 0, pat + 57.75, pat - 57.75)",
+     "text": {
+      "en": "₹{pat:0}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.8,
+     "y": "if(pat >= 0, -57.75, 57.75)",
+     "text": {
+      "en": "Profit for the year",
+      "kn": "ವರ್ಷದ ಲಾಭ"
+     },
+     "size": 18,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Profit before tax",
+      "kn": "ತೆರಿಗೆ ಮೊದಲ ಲಾಭ"
+     },
+     "expr": "pbt",
+     "digits": 1,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Tax expense",
+      "kn": "ತೆರಿಗೆ ವೆಚ್ಚ"
+     },
+     "expr": "tx",
+     "digits": 1,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Profit for the year",
+      "kn": "ವರ್ಷದ ಲಾಭ"
+     },
+     "expr": "pat",
+     "digits": 1,
+     "unit": "₹ lakh"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise the tax rate from 22% to 30%. What happens to profit for the year?",
+     "kn": "ತೆರಿಗೆ ದರವನ್ನು 22%ರಿಂದ 30%ಕ್ಕೆ ಏರಿಸಿ. ವರ್ಷದ ಲಾಭ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Make expenses exceed revenue. Is any tax charged?",
+     "kn": "ವೆಚ್ಚ ಆದಾಯಕ್ಕಿಂತ ಹೆಚ್ಚಾಗಲಿ. ತೆರಿಗೆ ಉಂಟೇ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

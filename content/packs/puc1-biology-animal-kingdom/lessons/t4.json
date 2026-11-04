@@ -65,6 +65,268 @@
    }
   },
   {
+   "id": "scene-moult-growth",
+   "type": "interactive",
+   "title": {
+    "en": "Growing inside armour: moulting",
+    "kn": "ಕವಚದೊಳಗೆ ಬೆಳವಣಿಗೆ: ಪೊರೆಬಿಡುವಿಕೆ"
+   },
+   "narration": {
+    "en": "An arthropod is covered by a stiff chitinous exoskeleton that cannot stretch. It grows in steps: it moults (ecdysis), swells while the new cuticle is soft, and then hardens again. Compare it with a mollusc, whose shell grows little by little at its edge. The size axis is logarithmic.",
+    "kn": "ಸಂಧಿಪದಿಯನ್ನು ಹಿಗ್ಗದ ಕೈಟಿನ್ ಹೊರಕವಚ ಮುಚ್ಚಿದೆ. ಅದು ಹಂತಗಳಲ್ಲಿ ಬೆಳೆಯುತ್ತದೆ: ಪೊರೆ ಬಿಟ್ಟು (ಎಕ್ಡಿಸಿಸ್), ಹೊಸ ಹೊರಪೊರೆ ಮೃದುವಾಗಿರುವಾಗ ಹಿಗ್ಗಿ, ನಂತರ ಮತ್ತೆ ಗಟ್ಟಿಯಾಗುತ್ತದೆ. ಅಂಚಿನಲ್ಲಿ ಸ್ವಲ್ಪ ಸ್ವಲ್ಪವಾಗಿ ಬೆಳೆಯುವ ಮೃದ್ವಂಗಿಯ ಚಿಪ್ಪಿನೊಂದಿಗೆ ಹೋಲಿಸಿ. ಗಾತ್ರದ ಅಕ್ಷ ಲಘುಗಣಕೀಯ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "An arthropod is covered by a stiff chitinous exoskeleton that cannot stretch. It grows in steps: it moults (ecdysis), swells while the new cuticle is soft, and then hardens again. Compare it with a mollusc, whose shell grows little by little at its edge. The size axis is logarithmic.",
+    "kn": "ಸಂಧಿಪದಿಯನ್ನು ಹಿಗ್ಗದ ಕೈಟಿನ್ ಹೊರಕವಚ ಮುಚ್ಚಿದೆ. ಅದು ಹಂತಗಳಲ್ಲಿ ಬೆಳೆಯುತ್ತದೆ: ಪೊರೆ ಬಿಟ್ಟು (ಎಕ್ಡಿಸಿಸ್), ಹೊಸ ಹೊರಪೊರೆ ಮೃದುವಾಗಿರುವಾಗ ಹಿಗ್ಗಿ, ನಂತರ ಮತ್ತೆ ಗಟ್ಟಿಯಾಗುತ್ತದೆ. ಅಂಚಿನಲ್ಲಿ ಸ್ವಲ್ಪ ಸ್ವಲ್ಪವಾಗಿ ಬೆಳೆಯುವ ಮೃದ್ವಂಗಿಯ ಚಿಪ್ಪಿನೊಂದಿಗೆ ಹೋಲಿಸಿ. ಗಾತ್ರದ ಅಕ್ಷ ಲಘುಗಣಕೀಯ."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Days between moults",
+      "kn": "ಪೊರೆಬಿಡುವಿಕೆಗಳ ನಡುವಿನ ದಿನಗಳು"
+     },
+     "min": 10,
+     "max": 30,
+     "step": 1,
+     "value": 15,
+     "unit": "d"
+    },
+    {
+     "name": "g",
+     "label": {
+      "en": "Growth at each moult",
+      "kn": "ಪ್ರತಿ ಪೊರೆಬಿಡುವಿಕೆಯ ಬೆಳವಣಿಗೆ"
+     },
+     "min": 10,
+     "max": 40,
+     "step": 5,
+     "value": 30,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "moll",
+     "label": {
+      "en": "Compare: mollusc shell",
+      "kn": "ಹೋಲಿಸಿ: ಮೃದ್ವಂಗಿ ಚಿಪ್ಪು"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 120,
+    "unit": "d",
+    "speeds": [
+     1,
+     4,
+     8,
+     16
+    ],
+    "speed": 8
+   },
+   "vars": [
+    {
+     "name": "n",
+     "expr": "floor(t/m)"
+    },
+    {
+     "name": "size",
+     "expr": "10*(1 + g/100)^n"
+    },
+    {
+     "name": "gx",
+     "expr": "8 + t*50/120"
+    },
+    {
+     "name": "gy",
+     "expr": "8 + 25*log(size/10)"
+    },
+    {
+     "name": "soft",
+     "expr": "n > 0 && t - n*m < 2"
+    },
+    {
+     "name": "rb",
+     "expr": "2.5*(size/10)^(1/3)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 60,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 8,
+     "y2": 58,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 34.0,
+     "y": 4.6,
+     "size": 22,
+     "text": {
+      "en": "Days",
+      "kn": "ದಿನಗಳು"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 59.5,
+     "size": 22,
+     "text": {
+      "en": "Body length (log scale)",
+      "kn": "ದೇಹದ ಉದ್ದ (ಲಘುಗಣಕ)"
+     },
+     "align": "left"
+    },
+    {
+     "shape": "path",
+     "fn": "8 + 25*((x - 8)*120/50/m)*log(1 + g/100)",
+     "from": 8,
+     "to": 58,
+     "color": "blue",
+     "width": 3,
+     "dashed": true,
+     "visibleIf": "moll"
+    },
+    {
+     "shape": "trail",
+     "x": "gx",
+     "y": "gy",
+     "length": 1500,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "gx",
+     "y": "gy",
+     "r": 0.9,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": 80,
+     "y": 30,
+     "r": "rb",
+     "color": "green",
+     "opacity": 0.7
+    },
+    {
+     "shape": "circle",
+     "x": 80,
+     "y": 30,
+     "r": "rb + 0.4",
+     "fill": false,
+     "width": 6,
+     "color": "orange",
+     "visibleIf": "!soft"
+    },
+    {
+     "shape": "circle",
+     "x": 80,
+     "y": 30,
+     "r": "rb + 0.4",
+     "fill": false,
+     "width": 2,
+     "color": "white",
+     "opacity": 0.6,
+     "visibleIf": "soft"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 50,
+     "size": 20,
+     "text": {
+      "en": "Moulting: soft new cuticle, body swells",
+      "kn": "ಪೊರೆಬಿಡುವಿಕೆ: ಮೃದು ಹೊಸ ಹೊರಪೊರೆ, ದೇಹ ಹಿಗ್ಗುತ್ತದೆ"
+     },
+     "visibleIf": "soft",
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 50,
+     "size": 20,
+     "text": {
+      "en": "Hard exoskeleton: no growth",
+      "kn": "ಗಟ್ಟಿ ಹೊರಕವಚ: ಬೆಳವಣಿಗೆ ಇಲ್ಲ"
+     },
+     "visibleIf": "!soft",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 10,
+     "size": 18,
+     "text": {
+      "en": "Blue dashed: steady growth of a shell",
+      "kn": "ನೀಲಿ ಚುಕ್ಕೆ ರೇಖೆ: ಚಿಪ್ಪಿನ ನಿರಂತರ ಬೆಳವಣಿಗೆ"
+     },
+     "visibleIf": "moll",
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Moults so far",
+      "kn": "ಇದುವರೆಗಿನ ಪೊರೆಬಿಡುವಿಕೆ"
+     },
+     "expr": "n",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Body length",
+      "kn": "ದೇಹದ ಉದ್ದ"
+     },
+     "expr": "size",
+     "digits": 1,
+     "unit": "mm"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Play to 120 days. Where on the graph does the animal actually grow?",
+     "kn": "120 ದಿನಗಳವರೆಗೆ ಚಲಾಯಿಸಿ. ಗ್ರಾಫ್‌ನ ಎಲ್ಲಿ ಪ್ರಾಣಿ ನಿಜವಾಗಿ ಬೆಳೆಯುತ್ತದೆ?"
+    },
+    {
+     "en": "Halve the days between moults. How does the final length change?",
+     "kn": "ಪೊರೆಬಿಡುವಿಕೆಗಳ ನಡುವಿನ ದಿನಗಳನ್ನು ಅರ್ಧ ಮಾಡಿ. ಅಂತಿಮ ಉದ್ದ ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

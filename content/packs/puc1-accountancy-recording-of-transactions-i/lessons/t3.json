@@ -56,6 +56,349 @@
    }
   },
   {
+   "id": "scene-debit-credit",
+   "type": "interactive",
+   "title": {
+    "en": "Every debit has a credit",
+    "kn": "ಪ್ರತಿ ಡೆಬಿಟ್‌ಗೆ ಒಂದು ಕ್ರೆಡಿಟ್"
+   },
+   "narration": {
+    "en": "Each transaction is recorded twice: one account is debited and another credited by the same amount, so assets always equal liabilities plus capital. Press the buttons and watch both sides move together. Buy goods on credit twice, then pay the creditor once. Which accounts changed? Can you make the beam tip? Why not?",
+    "kn": "ಪ್ರತಿ ವ್ಯವಹಾರವನ್ನು ಎರಡು ಬಾರಿ ದಾಖಲಿಸಲಾಗುತ್ತದೆ: ಒಂದು ಖಾತೆಗೆ ಡೆಬಿಟ್, ಇನ್ನೊಂದಕ್ಕೆ ಅದೇ ಮೊತ್ತದ ಕ್ರೆಡಿಟ್; ಆದ್ದರಿಂದ ಆಸ್ತಿ = ಹೊಣೆ + ಬಂಡವಾಳ. ಬಟನ್ ಒತ್ತಿ ಎರಡೂ ಬದಿ ಜೊತೆಗೆ ಬದಲಾಗುವುದನ್ನು ನೋಡಿ. ಎರಡು ಬಾರಿ ಸಾಲದಲ್ಲಿ ಖರೀದಿಸಿ, ಒಮ್ಮೆ ಸಾಲಗಾರನಿಗೆ ಪಾವತಿಸಿ. ಯಾವ ಖಾತೆಗಳು ಬದಲಾದವು? ತಕ್ಕಡಿಯನ್ನು ಓರೆ ಮಾಡಬಲ್ಲಿರಾ? ಏಕೆ ಆಗದು?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Each transaction is recorded twice: one account is debited and another credited by the same amount, so assets always equal liabilities plus capital. Press the buttons and watch both sides move together.",
+    "kn": "ಪ್ರತಿ ವ್ಯವಹಾರವನ್ನು ಎರಡು ಬಾರಿ ದಾಖಲಿಸಲಾಗುತ್ತದೆ: ಒಂದು ಖಾತೆಗೆ ಡೆಬಿಟ್, ಇನ್ನೊಂದಕ್ಕೆ ಅದೇ ಮೊತ್ತದ ಕ್ರೆಡಿಟ್; ಆದ್ದರಿಂದ ಆಸ್ತಿ = ಹೊಣೆ + ಬಂಡವಾಳ. ಬಟನ್ ಒತ್ತಿ ಎರಡೂ ಬದಿ ಜೊತೆಗೆ ಬದಲಾಗುವುದನ್ನು ನೋಡಿ."
+   },
+   "sliders": [],
+   "counters": [
+    {
+     "name": "a",
+     "value": 1,
+     "min": 0,
+     "max": 3
+    },
+    {
+     "name": "b",
+     "value": 0,
+     "min": 0,
+     "max": 4
+    },
+    {
+     "name": "p",
+     "value": 0,
+     "min": 0,
+     "max": 8
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Owner brings ₹10,000",
+      "kn": "ಮಾಲೀಕ ₹10,000 ತರುತ್ತಾರೆ"
+     },
+     "icon": "add",
+     "set": {
+      "a": "a + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Buy goods on credit ₹4,000",
+      "kn": "ಸಾಲದಲ್ಲಿ ₹4,000 ಸರಕು ಖರೀದಿ"
+     },
+     "icon": "add",
+     "set": {
+      "b": "b + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Pay a creditor ₹2,000",
+      "kn": "ಸಾಲಗಾರನಿಗೆ ₹2,000 ಪಾವತಿ"
+     },
+     "icon": "remove",
+     "set": {
+      "p": "p + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "a": "1",
+      "b": "0",
+      "p": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "pay",
+     "expr": "min(2000*p, 4000*b, 10000*a)"
+    },
+    {
+     "name": "cash",
+     "expr": "10000*a - pay"
+    },
+    {
+     "name": "stock",
+     "expr": "4000*b"
+    },
+    {
+     "name": "cap",
+     "expr": "10000*a"
+    },
+    {
+     "name": "cred",
+     "expr": "4000*b - pay"
+    },
+    {
+     "name": "LT",
+     "expr": "cash + stock"
+    },
+    {
+     "name": "RT",
+     "expr": "cap + cred"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     46
+    ],
+    "y": [
+     0,
+     58000
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 2.0,
+     "y": "0",
+     "w": 4.0,
+     "h": "max(cash, 0)",
+     "color": "green",
+     "visibleIf": "cash > 0"
+    },
+    {
+     "shape": "label",
+     "x": 4.0,
+     "y": "0 + max(cash, 0)/2",
+     "text": {
+      "en": "Cash: ₹{cash:0}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "cash > 2200"
+    },
+    {
+     "shape": "rect",
+     "x": 2.0,
+     "y": "0 + max(cash, 0)",
+     "w": 4.0,
+     "h": "max(stock, 0)",
+     "color": "blue",
+     "visibleIf": "stock > 0"
+    },
+    {
+     "shape": "label",
+     "x": 4.0,
+     "y": "0 + max(cash, 0) + max(stock, 0)/2",
+     "text": {
+      "en": "Stock: ₹{stock:0}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "stock > 2200"
+    },
+    {
+     "shape": "rect",
+     "x": 12.0,
+     "y": "0",
+     "w": 4.0,
+     "h": "max(cap, 0)",
+     "color": "orange",
+     "visibleIf": "cap > 0"
+    },
+    {
+     "shape": "label",
+     "x": 14.0,
+     "y": "0 + max(cap, 0)/2",
+     "text": {
+      "en": "Capital: ₹{cap:0}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "cap > 2200"
+    },
+    {
+     "shape": "rect",
+     "x": 12.0,
+     "y": "0 + max(cap, 0)",
+     "w": 4.0,
+     "h": "max(cred, 0)",
+     "color": "red",
+     "visibleIf": "cred > 0"
+    },
+    {
+     "shape": "label",
+     "x": 14.0,
+     "y": "0 + max(cap, 0) + max(cred, 0)/2",
+     "text": {
+      "en": "Creditors: ₹{cred:0}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "cred > 2200"
+    },
+    {
+     "shape": "line",
+     "x1": 10.0,
+     "y1": 0,
+     "x2": 10.0,
+     "y2": 45100.0,
+     "color": "white",
+     "width": 4,
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": "10.0 - 6*cos(clamp((LT - RT)/33000, -0.35, 0.35))",
+     "y1": "45100.0 - 6*sin(clamp((LT - RT)/33000, -0.35, 0.35))*4583.33",
+     "x2": "10.0 + 6*cos(clamp((LT - RT)/33000, -0.35, 0.35))",
+     "y2": "45100.0 + 6*sin(clamp((LT - RT)/33000, -0.35, 0.35))*4583.33",
+     "color": "yellow",
+     "width": 6
+    },
+    {
+     "shape": "circle",
+     "x": 10.0,
+     "y": 45100.0,
+     "r": 0.35,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 4.0,
+     "y": 52250.0,
+     "text": {
+      "en": "Assets ₹{LT:0}",
+      "kn": "ಆಸ್ತಿ ₹{LT:0}"
+     },
+     "size": 22,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 14.0,
+     "y": 52250.0,
+     "text": {
+      "en": "Liabilities + capital ₹{RT:0}",
+      "kn": "ಹೊಣೆ + ಬಂಡವಾಳ ₹{RT:0}"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 10.0,
+     "y": 39600.0,
+     "text": {
+      "en": "Balanced ✓",
+      "kn": "ಸಮತೋಲನ ✓"
+     },
+     "size": 24,
+     "color": "green",
+     "visibleIf": "abs(LT - RT) < 0.5"
+    },
+    {
+     "shape": "label",
+     "x": 10.0,
+     "y": 39600.0,
+     "text": {
+      "en": "Difference {abs(LT - RT):0}",
+      "kn": "ವ್ಯತ್ಯಾಸ {abs(LT - RT):0}"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "abs(LT - RT) >= 0.5"
+    },
+    {
+     "shape": "text",
+     "x": 26,
+     "y": 50000,
+     "text": {
+      "en": "Owner brings cash: Dr Cash, Cr Capital",
+      "kn": "ಮಾಲೀಕ ನಗದು ತಂದರೆ: ಡೆ ನಗದು, ಕ್ರೆ ಬಂಡವಾಳ"
+     },
+     "size": 18,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 26,
+     "y": 44000,
+     "text": {
+      "en": "Credit purchase: Dr Purchases, Cr Creditor",
+      "kn": "ಸಾಲದ ಖರೀದಿ: ಡೆ ಖರೀದಿ, ಕ್ರೆ ಸಾಲಗಾರ"
+     },
+     "size": 18,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 26,
+     "y": 38000,
+     "text": {
+      "en": "Pay creditor: Dr Creditor, Cr Cash",
+      "kn": "ಸಾಲಗಾರನಿಗೆ ಪಾವತಿ: ಡೆ ಸಾಲಗಾರ, ಕ್ರೆ ನಗದು"
+     },
+     "size": 18,
+     "color": "white",
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Assets",
+      "kn": "ಆಸ್ತಿ"
+     },
+     "expr": "LT",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Liabilities + capital",
+      "kn": "ಹೊಣೆ + ಬಂಡವಾಳ"
+     },
+     "expr": "RT",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Buy goods on credit twice, then pay the creditor once. Which accounts changed?",
+     "kn": "ಎರಡು ಬಾರಿ ಸಾಲದಲ್ಲಿ ಖರೀದಿಸಿ, ಒಮ್ಮೆ ಸಾಲಗಾರನಿಗೆ ಪಾವತಿಸಿ. ಯಾವ ಖಾತೆಗಳು ಬದಲಾದವು?"
+    },
+    {
+     "en": "Can you make the beam tip? Why not?",
+     "kn": "ತಕ್ಕಡಿಯನ್ನು ಓರೆ ಮಾಡಬಲ್ಲಿರಾ? ಏಕೆ ಆಗದು?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

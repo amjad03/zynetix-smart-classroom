@@ -59,6 +59,321 @@
    }
   },
   {
+   "id": "scene-algae-depth",
+   "type": "interactive",
+   "title": {
+    "en": "Which algae can live deep?",
+    "kn": "ಯಾವ ಶೈವಲ ಆಳದಲ್ಲಿ ಬದುಕಬಲ್ಲದು?"
+   },
+   "narration": {
+    "en": "Sea water absorbs red light within the first few metres, while blue and green light go much deeper. Green algae (chlorophyll a and b) need red and blue light and live near the surface; brown algae use fucoxanthin to catch blue-green light; red algae use r-phycoerythrin to catch green-blue light and can live at great depths.",
+    "kn": "ಸಮುದ್ರದ ನೀರು ಮೊದಲ ಕೆಲವು ಮೀಟರ್‌ಗಳಲ್ಲೇ ಕೆಂಪು ಬೆಳಕನ್ನು ಹೀರುತ್ತದೆ, ನೀಲಿ ಮತ್ತು ಹಸಿರು ಬೆಳಕು ಹೆಚ್ಚು ಆಳಕ್ಕೆ ಹೋಗುತ್ತವೆ. ಹಸಿರು ಶೈವಲಗಳು (ಕ್ಲೋರೋಫಿಲ್ a, b) ಮೇಲ್ಮೈ ಬಳಿ; ಕಂದು ಶೈವಲಗಳು ಫ್ಯೂಕೋಕ್ಸಾಂಥಿನ್‌ನಿಂದ ನೀಲಿ-ಹಸಿರು ಬೆಳಕು ಹಿಡಿಯುತ್ತವೆ; ಕೆಂಪು ಶೈವಲಗಳು r-ಫೈಕೋಎರಿತ್ರಿನ್‌ನಿಂದ ಹಸಿರು-ನೀಲಿ ಬೆಳಕು ಹಿಡಿದು ಬಹಳ ಆಳದಲ್ಲೂ ಬದುಕುತ್ತವೆ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Sea water absorbs red light within the first few metres, while blue and green light go much deeper. Green algae (chlorophyll a and b) need red and blue light and live near the surface; brown algae use fucoxanthin to catch blue-green light; red algae use r-phycoerythrin to catch green-blue light and can live at great depths.",
+    "kn": "ಸಮುದ್ರದ ನೀರು ಮೊದಲ ಕೆಲವು ಮೀಟರ್‌ಗಳಲ್ಲೇ ಕೆಂಪು ಬೆಳಕನ್ನು ಹೀರುತ್ತದೆ, ನೀಲಿ ಮತ್ತು ಹಸಿರು ಬೆಳಕು ಹೆಚ್ಚು ಆಳಕ್ಕೆ ಹೋಗುತ್ತವೆ. ಹಸಿರು ಶೈವಲಗಳು (ಕ್ಲೋರೋಫಿಲ್ a, b) ಮೇಲ್ಮೈ ಬಳಿ; ಕಂದು ಶೈವಲಗಳು ಫ್ಯೂಕೋಕ್ಸಾಂಥಿನ್‌ನಿಂದ ನೀಲಿ-ಹಸಿರು ಬೆಳಕು ಹಿಡಿಯುತ್ತವೆ; ಕೆಂಪು ಶೈವಲಗಳು r-ಫೈಕೋಎರಿತ್ರಿನ್‌ನಿಂದ ಹಸಿರು-ನೀಲಿ ಬೆಳಕು ಹಿಡಿದು ಬಹಳ ಆಳದಲ್ಲೂ ಬದುಕುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "d",
+     "label": {
+      "en": "Depth",
+      "kn": "ಆಳ"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 2,
+     "value": 0,
+     "unit": "m"
+    }
+   ],
+   "choices": [
+    {
+     "name": "al",
+     "label": {
+      "en": "Alga",
+      "kn": "ಶೈವಲ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Green (Chlorophyceae)",
+        "kn": "ಹಸಿರು (ಕ್ಲೋರೋಫೈಸೀ)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Brown (Phaeophyceae)",
+        "kn": "ಕಂದು (ಫಿಯೋಫೈಸೀ)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Red (Rhodophyceae)",
+        "kn": "ಕೆಂಪು (ರೋಡೋಫೈಸೀ)"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "Ir",
+     "expr": "100*exp(-0.35*d)"
+    },
+    {
+     "name": "Ig",
+     "expr": "100*exp(-0.07*d)"
+    },
+    {
+     "name": "Ib",
+     "expr": "100*exp(-0.04*d)"
+    },
+    {
+     "name": "use",
+     "expr": "if(al == 1, 0.5*Ir + 0.3*Ib + 0.2*0.1*Ig, if(al == 2, 0.2*Ir + 0.4*Ig + 0.4*Ib, 0.05*Ir + 0.55*Ig + 0.4*Ib))"
+    },
+    {
+     "name": "yd",
+     "expr": "54 - 0.8*d"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 4,
+     "y": 4,
+     "w": 40,
+     "h": 50,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": 54,
+     "x2": 44,
+     "y2": 54,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 46,
+     "y": 53,
+     "size": 18,
+     "text": {
+      "en": "0 m"
+     },
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 46,
+     "y": 29,
+     "size": 18,
+     "text": {
+      "en": "30 m"
+     },
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 46,
+     "y": 5,
+     "size": 18,
+     "text": {
+      "en": "60 m"
+     },
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "yd",
+     "x2": 44,
+     "y2": "yd",
+     "color": "white",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": 24,
+     "y": "yd",
+     "r": 2.6,
+     "color": {
+      "by": "(al - 1)/2",
+      "scale": [
+       "green",
+       "orange",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 60,
+     "y1": 8,
+     "x2": 96,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 60,
+     "y1": 8,
+     "x2": 60,
+     "y2": 54,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 62,
+     "y": 8,
+     "w": 7,
+     "h": "0.44*Ir",
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": 71,
+     "y": 8,
+     "w": 7,
+     "h": "0.44*Ig",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 80,
+     "y": 8,
+     "w": 7,
+     "h": "0.44*Ib",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 89,
+     "y": 8,
+     "w": 6,
+     "h": "0.44*use",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 65.5,
+     "y": 4.5,
+     "size": 18,
+     "text": {
+      "en": "Red",
+      "kn": "ಕೆಂಪು"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 74.5,
+     "y": 4.5,
+     "size": 18,
+     "text": {
+      "en": "Green",
+      "kn": "ಹಸಿರು"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 83.5,
+     "y": 4.5,
+     "size": 18,
+     "text": {
+      "en": "Blue",
+      "kn": "ನೀಲಿ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 92,
+     "y": 4.5,
+     "size": 18,
+     "text": {
+      "en": "Used",
+      "kn": "ಬಳಕೆ"
+     },
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 78,
+     "y": 57,
+     "size": 20,
+     "text": {
+      "en": "Light reaching this depth (%)",
+      "kn": "ಈ ಆಳ ತಲುಪುವ ಬೆಳಕು (%)"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 24,
+     "y": 58,
+     "size": 20,
+     "text": {
+      "en": "Too little usable light here",
+      "kn": "ಇಲ್ಲಿ ಬಳಸಬಲ್ಲ ಬೆಳಕು ತುಂಬಾ ಕಡಿಮೆ"
+     },
+     "visibleIf": "use < 15",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Usable light for this alga",
+      "kn": "ಈ ಶೈವಲಕ್ಕೆ ಬಳಸಬಲ್ಲ ಬೆಳಕು"
+     },
+     "expr": "use",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Red light left",
+      "kn": "ಉಳಿದ ಕೆಂಪು ಬೆಳಕು"
+     },
+     "expr": "Ir",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Take each alga down until usable light falls below 15%. Which goes deepest?",
+     "kn": "ಬಳಸಬಲ್ಲ ಬೆಳಕು 15% ಕ್ಕಿಂತ ಇಳಿಯುವವರೆಗೆ ಪ್ರತಿ ಶೈವಲವನ್ನು ಆಳಕ್ಕೆ ಒಯ್ಯಿರಿ. ಯಾವುದು ಅತ್ಯಂತ ಆಳಕ್ಕೆ ಹೋಗುತ್ತದೆ?"
+    },
+    {
+     "en": "At what depth is almost all the red light gone?",
+     "kn": "ಯಾವ ಆಳದಲ್ಲಿ ಬಹುತೇಕ ಎಲ್ಲಾ ಕೆಂಪು ಬೆಳಕು ಮಾಯವಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -58,6 +58,304 @@
    }
   },
   {
+   "id": "scene-jv-ppp",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Sharing a project: joint venture and PPP",
+    "kn": "ಯೋಜನೆ ಹಂಚಿಕೆ: ಜಂಟಿ ಉದ್ಯಮ ಮತ್ತು PPP"
+   },
+   "caption": {
+    "en": "Two partners share the cost, risk and profit of a project in proportion to their stake. Set the project cost, the private partner's share and the yearly return. In a PPP the government also brings land and clearances.",
+    "kn": "ಇಬ್ಬರು ಪಾಲುದಾರರು ಪಾಲಿನ ಅನುಪಾತದಲ್ಲಿ ವೆಚ್ಚ, ಅಪಾಯ, ಲಾಭ ಹಂಚಿಕೊಳ್ಳುತ್ತಾರೆ. ಯೋಜನಾ ವೆಚ್ಚ, ಖಾಸಗಿ ಪಾಲು ಮತ್ತು ವಾರ್ಷಿಕ ಆದಾಯ ಹೊಂದಿಸಿ. PPPಯಲ್ಲಿ ಸರ್ಕಾರ ಭೂಮಿ ಮತ್ತು ಅನುಮತಿ ನೀಡುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "pc",
+     "label": {
+      "en": "Project cost",
+      "kn": "ಯೋಜನಾ ವೆಚ್ಚ"
+     },
+     "min": 100,
+     "max": 800,
+     "step": 50,
+     "value": 400,
+     "unit": "₹ crore"
+    },
+    {
+     "name": "ps",
+     "label": {
+      "en": "Partner A's stake",
+      "kn": "A ಪಾಲು"
+     },
+     "min": 10,
+     "max": 90,
+     "step": 5,
+     "value": 50,
+     "unit": "%"
+    },
+    {
+     "name": "rr",
+     "label": {
+      "en": "Yearly return",
+      "kn": "ವಾರ್ಷಿಕ ಆದಾಯ"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 12,
+     "unit": "%"
+    },
+    {
+     "name": "ld",
+     "label": {
+      "en": "Land and clearances (PPP)",
+      "kn": "ಭೂಮಿ, ಅನುಮತಿ (PPP)"
+     },
+     "min": 0,
+     "max": 200,
+     "step": 10,
+     "value": 100,
+     "unit": "₹ crore"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ppp",
+     "label": {
+      "en": "Public private partnership (B is the government)",
+      "kn": "ಸಾರ್ವಜನಿಕ ಖಾಸಗಿ ಸಹಭಾಗಿತ್ವ (B ಸರ್ಕಾರ)"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "pc*ps/100"
+    },
+    {
+     "name": "b1",
+     "expr": "pc*(100 - ps)/100 + if(ppp, ld, 0)"
+    },
+    {
+     "name": "b2",
+     "expr": "5*pc*rr/100*ps/100"
+    },
+    {
+     "name": "b3",
+     "expr": "5*pc*rr/100*(100 - ps)/100"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "₹ crore (profits ×5 to show)",
+      "kn": "₹ ಕೋಟಿ (ಲಾಭ ×5)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/1000, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/1000, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Partner A invests",
+      "kn": "A ಹೂಡಿಕೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/1000, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/1000, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Partner B invests",
+      "kn": "B ಹೂಡಿಕೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/1000, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/1000, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "A's profit a year",
+      "kn": "A ವಾರ್ಷಿಕ ಲಾಭ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/1000, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/1000, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "B's profit a year",
+      "kn": "B ವಾರ್ಷಿಕ ಲಾಭ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "PPP: e.g. a toll road",
+      "kn": "PPP: ಉದಾ: ಟೋಲ್ ರಸ್ತೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "ppp"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Joint venture of two firms",
+      "kn": "ಎರಡು ಸಂಸ್ಥೆಗಳ ಜಂಟಿ ಉದ್ಯಮ"
+     },
+     "size": 22,
+     "color": "blue",
+     "visibleIf": "!ppp"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "A's yearly profit",
+      "kn": "A ವಾರ್ಷಿಕ ಲಾಭ"
+     },
+     "expr": "pc*rr/100*ps/100",
+     "digits": 1,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "B's yearly profit",
+      "kn": "B ವಾರ್ಷಿಕ ಲಾಭ"
+     },
+     "expr": "pc*rr/100*(100 - ps)/100",
+     "digits": 1,
+     "unit": "₹ crore"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why would a foreign firm take an Indian partner?",
+     "kn": "ವಿದೇಶಿ ಸಂಸ್ಥೆ ಭಾರತೀಯ ಪಾಲುದಾರ ಏಕೆ?"
+    },
+    {
+     "en": "In a PPP, what does each side bring?",
+     "kn": "PPPಯಲ್ಲಿ ಪ್ರತಿ ಪಕ್ಷ ಏನು ತರುತ್ತದೆ?"
+    },
+    {
+     "en": "Set return to 0. Who bears the loss?",
+     "kn": "ಆದಾಯ 0 ಮಾಡಿ. ನಷ್ಟ ಯಾರಿಗೆ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Two partners share the cost, risk and profit of a project in proportion to their stake. Set the project cost, the private partner's share and the yearly return. In a PPP the government also brings land and clearances.",
+    "kn": "ಇಬ್ಬರು ಪಾಲುದಾರರು ಪಾಲಿನ ಅನುಪಾತದಲ್ಲಿ ವೆಚ್ಚ, ಅಪಾಯ, ಲಾಭ ಹಂಚಿಕೊಳ್ಳುತ್ತಾರೆ. ಯೋಜನಾ ವೆಚ್ಚ, ಖಾಸಗಿ ಪಾಲು ಮತ್ತು ವಾರ್ಷಿಕ ಆದಾಯ ಹೊಂದಿಸಿ. PPPಯಲ್ಲಿ ಸರ್ಕಾರ ಭೂಮಿ ಮತ್ತು ಅನುಮತಿ ನೀಡುತ್ತದೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

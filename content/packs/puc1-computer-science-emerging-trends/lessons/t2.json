@@ -64,6 +64,229 @@
    }
   },
   {
+   "id": "scene-robot-arm",
+   "type": "interactive",
+   "title": {
+    "en": "Program a robot arm",
+    "kn": "ರೋಬೋಟ್ ತೋಳನ್ನು ನಿಯಂತ್ರಿಸಿ"
+   },
+   "narration": {
+    "en": "A robot arm has joints driven by motors. The controller sets each joint angle, and the position of the gripper follows from the arm lengths (5 and 4 units) by trigonometry. Drag the box, then set the angles to reach it. Reach the box with the elbow bent up, then with it bent down. Put the box 10 units away. Why can the arm never reach it?",
+    "kn": "ರೋಬೋಟ್ ತೋಳಿನ ಕೀಲುಗಳನ್ನು ಮೋಟಾರ್‌ಗಳು ತಿರುಗಿಸುತ್ತವೆ. ನಿಯಂತ್ರಕ ಪ್ರತಿ ಕೀಲಿನ ಕೋನ ನಿಗದಿಪಡಿಸುತ್ತದೆ; ಹಿಡಿಕೆಯ ಸ್ಥಾನ ತೋಳಿನ ಉದ್ದ (5 ಮತ್ತು 4) ಮತ್ತು ತ್ರಿಕೋನಮಿತಿಯಿಂದ ಬರುತ್ತದೆ. ಪೆಟ್ಟಿಗೆ ಎಳೆಯಿರಿ, ನಂತರ ಅದನ್ನು ತಲುಪುವಂತೆ ಕೋನಗಳನ್ನು ಹೊಂದಿಸಿ. ಮೊಣಕೈ ಮೇಲೆ ಬಾಗಿಸಿ, ನಂತರ ಕೆಳಗೆ ಬಾಗಿಸಿ ಪೆಟ್ಟಿಗೆ ತಲುಪಿ. ಪೆಟ್ಟಿಗೆಯನ್ನು 10 ಘಟಕ ದೂರ ಇಡಿ. ತೋಳು ಏಕೆ ತಲುಪದು?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "A robot arm has joints driven by motors. The controller sets each joint angle, and the position of the gripper follows from the arm lengths (5 and 4 units) by trigonometry. Drag the box, then set the angles to reach it.",
+    "kn": "ರೋಬೋಟ್ ತೋಳಿನ ಕೀಲುಗಳನ್ನು ಮೋಟಾರ್‌ಗಳು ತಿರುಗಿಸುತ್ತವೆ. ನಿಯಂತ್ರಕ ಪ್ರತಿ ಕೀಲಿನ ಕೋನ ನಿಗದಿಪಡಿಸುತ್ತದೆ; ಹಿಡಿಕೆಯ ಸ್ಥಾನ ತೋಳಿನ ಉದ್ದ (5 ಮತ್ತು 4) ಮತ್ತು ತ್ರಿಕೋನಮಿತಿಯಿಂದ ಬರುತ್ತದೆ. ಪೆಟ್ಟಿಗೆ ಎಳೆಯಿರಿ, ನಂತರ ಅದನ್ನು ತಲುಪುವಂತೆ ಕೋನಗಳನ್ನು ಹೊಂದಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "a1",
+     "label": {
+      "en": "Shoulder angle",
+      "kn": "ಭುಜದ ಕೋನ"
+     },
+     "min": 0,
+     "max": 180,
+     "step": 5,
+     "value": 60,
+     "unit": "°"
+    },
+    {
+     "name": "a2",
+     "label": {
+      "en": "Elbow angle",
+      "kn": "ಮೊಣಕೈ ಕೋನ"
+     },
+     "min": -150,
+     "max": 150,
+     "step": 5,
+     "value": -60,
+     "unit": "°"
+    }
+   ],
+   "vars": [
+    {
+     "name": "x1",
+     "expr": "5*cos(rad(a1))"
+    },
+    {
+     "name": "y1",
+     "expr": "5*sin(rad(a1))"
+    },
+    {
+     "name": "x2",
+     "expr": "x1 + 4*cos(rad(a1 + a2))"
+    },
+    {
+     "name": "y2",
+     "expr": "y1 + 4*sin(rad(a1 + a2))"
+    },
+    {
+     "name": "dist",
+     "expr": "hypot(x2 - B_x, y2 - B_y)"
+    }
+   ],
+   "view": {
+    "x": [
+     -10,
+     10
+    ],
+    "y": [
+     -1,
+     10
+    ],
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -1.2,
+     "y": -0.6,
+     "w": 2.4,
+     "h": 0.6,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "x1",
+     "y2": "y1",
+     "color": "blue",
+     "width": 12
+    },
+    {
+     "shape": "line",
+     "x1": "x1",
+     "y1": "y1",
+     "x2": "x2",
+     "y2": "y2",
+     "color": "green",
+     "width": 10
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 0.35,
+     "color": "white"
+    },
+    {
+     "shape": "circle",
+     "x": "x1",
+     "y": "y1",
+     "r": 0.3,
+     "color": "white"
+    },
+    {
+     "shape": "circle",
+     "x": "x2",
+     "y": "y2",
+     "r": 0.35,
+     "color": {
+      "by": "if(dist < 0.6, 0, 1)",
+      "scale": [
+       "green",
+       "orange"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "B_x - 0.4",
+     "y": "B_y - 0.4",
+     "w": 0.8,
+     "h": 0.8,
+     "color": "yellow",
+     "fill": false,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": "B_x",
+     "y": "B_y + 0.9",
+     "text": {
+      "en": "box",
+      "kn": "ಪೆಟ್ಟಿಗೆ"
+     },
+     "size": 18,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 9.5,
+     "text": {
+      "en": "Gripper reached the box!",
+      "kn": "ಹಿಡಿಕೆ ಪೆಟ್ಟಿಗೆ ತಲುಪಿತು!"
+     },
+     "size": 24,
+     "color": "green",
+     "visibleIf": "dist < 0.6"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Gripper x",
+      "kn": "ಹಿಡಿಕೆ x"
+     },
+     "expr": "x2",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Gripper y",
+      "kn": "ಹಿಡಿಕೆ y"
+     },
+     "expr": "y2",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Distance to box",
+      "kn": "ಪೆಟ್ಟಿಗೆಗೆ ದೂರ"
+     },
+     "expr": "dist",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Reach the box with the elbow bent up, then with it bent down.",
+     "kn": "ಮೊಣಕೈ ಮೇಲೆ ಬಾಗಿಸಿ, ನಂತರ ಕೆಳಗೆ ಬಾಗಿಸಿ ಪೆಟ್ಟಿಗೆ ತಲುಪಿ."
+    },
+    {
+     "en": "Put the box 10 units away. Why can the arm never reach it?",
+     "kn": "ಪೆಟ್ಟಿಗೆಯನ್ನು 10 ಘಟಕ ದೂರ ಇಡಿ. ತೋಳು ಏಕೆ ತಲುಪದು?"
+    }
+   ],
+   "handles": [
+    {
+     "name": "B",
+     "label": "box",
+     "x": 4,
+     "y": 5,
+     "box": {
+      "x": [
+       -9.5,
+       9.5
+      ],
+      "y": [
+       0,
+       9.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

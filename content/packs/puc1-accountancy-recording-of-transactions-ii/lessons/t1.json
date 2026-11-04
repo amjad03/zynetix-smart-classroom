@@ -56,6 +56,295 @@
    }
   },
   {
+   "id": "scene-cash-book",
+   "type": "interactive",
+   "title": {
+    "en": "Balance a cash book",
+    "kn": "ನಗದು ಪುಸ್ತಕವನ್ನು ಶಿಲ್ಕು ಮಾಡಿ"
+   },
+   "narration": {
+    "en": "The debit side of a simple cash book holds the opening balance and receipts; the credit side holds payments. The balance carried down makes both sides equal. Cash in hand can never be negative. With ₹5,000 opening, ₹20,000 receipts and ₹18,000 payments, what is carried down? Push payments above the cash available. Why does the cash book refuse?",
+    "kn": "ಸರಳ ನಗದು ಪುಸ್ತಕದ ಡೆಬಿಟ್ ಬದಿಯಲ್ಲಿ ಆರಂಭಿಕ ಶಿಲ್ಕು ಮತ್ತು ಸ್ವೀಕೃತಿ; ಕ್ರೆಡಿಟ್ ಬದಿಯಲ್ಲಿ ಪಾವತಿ. ಮುಂದಕ್ಕೆ ಒಯ್ದ ಶಿಲ್ಕು ಎರಡೂ ಬದಿ ಸಮಗೊಳಿಸುತ್ತದೆ. ಕೈಯಲ್ಲಿನ ನಗದು ಎಂದೂ ಋಣಾತ್ಮಕವಾಗದು. ₹5,000 ಆರಂಭ, ₹20,000 ಸ್ವೀಕೃತಿ, ₹18,000 ಪಾವತಿ: ಮುಂದಕ್ಕೆ ಎಷ್ಟು? ಪಾವತಿಯನ್ನು ಇರುವ ನಗದಿಗಿಂತ ಹೆಚ್ಚಿಸಿ. ನಗದು ಪುಸ್ತಕ ಏಕೆ ಒಪ್ಪದು?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "The debit side of a simple cash book holds the opening balance and receipts; the credit side holds payments. The balance carried down makes both sides equal. Cash in hand can never be negative.",
+    "kn": "ಸರಳ ನಗದು ಪುಸ್ತಕದ ಡೆಬಿಟ್ ಬದಿಯಲ್ಲಿ ಆರಂಭಿಕ ಶಿಲ್ಕು ಮತ್ತು ಸ್ವೀಕೃತಿ; ಕ್ರೆಡಿಟ್ ಬದಿಯಲ್ಲಿ ಪಾವತಿ. ಮುಂದಕ್ಕೆ ಒಯ್ದ ಶಿಲ್ಕು ಎರಡೂ ಬದಿ ಸಮಗೊಳಿಸುತ್ತದೆ. ಕೈಯಲ್ಲಿನ ನಗದು ಎಂದೂ ಋಣಾತ್ಮಕವಾಗದು."
+   },
+   "sliders": [
+    {
+     "name": "ob",
+     "label": {
+      "en": "Opening balance",
+      "kn": "ಆರಂಭಿಕ ಶಿಲ್ಕು"
+     },
+     "min": 0,
+     "max": 20000,
+     "step": 1000,
+     "value": 5000,
+     "unit": "₹"
+    },
+    {
+     "name": "rec",
+     "label": {
+      "en": "Cash received",
+      "kn": "ಸ್ವೀಕರಿಸಿದ ನಗದು"
+     },
+     "min": 0,
+     "max": 40000,
+     "step": 1000,
+     "value": 20000,
+     "unit": "₹"
+    },
+    {
+     "name": "pay",
+     "label": {
+      "en": "Cash paid",
+      "kn": "ಪಾವತಿಸಿದ ನಗದು"
+     },
+     "min": 0,
+     "max": 60000,
+     "step": 1000,
+     "value": 18000,
+     "unit": "₹"
+    }
+   ],
+   "vars": [
+    {
+     "name": "bal",
+     "expr": "ob + rec - pay"
+    },
+    {
+     "name": "bcd",
+     "expr": "max(bal, 0)"
+    },
+    {
+     "name": "LT",
+     "expr": "ob + rec"
+    },
+    {
+     "name": "RT",
+     "expr": "pay + bcd"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     78000
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 2.0,
+     "y": "0",
+     "w": 4.0,
+     "h": "max(ob, 0)",
+     "color": "blue",
+     "visibleIf": "ob > 0"
+    },
+    {
+     "shape": "label",
+     "x": 4.0,
+     "y": "0 + max(ob, 0)/2",
+     "text": {
+      "en": "Opening balance: ₹{ob:0}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "ob > 3000"
+    },
+    {
+     "shape": "rect",
+     "x": 2.0,
+     "y": "0 + max(ob, 0)",
+     "w": 4.0,
+     "h": "max(rec, 0)",
+     "color": "green",
+     "visibleIf": "rec > 0"
+    },
+    {
+     "shape": "label",
+     "x": 4.0,
+     "y": "0 + max(ob, 0) + max(rec, 0)/2",
+     "text": {
+      "en": "Receipts: ₹{rec:0}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "rec > 3000"
+    },
+    {
+     "shape": "rect",
+     "x": 12.0,
+     "y": "0",
+     "w": 4.0,
+     "h": "max(pay, 0)",
+     "color": "red",
+     "visibleIf": "pay > 0"
+    },
+    {
+     "shape": "label",
+     "x": 14.0,
+     "y": "0 + max(pay, 0)/2",
+     "text": {
+      "en": "Payments: ₹{pay:0}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "pay > 3000"
+    },
+    {
+     "shape": "rect",
+     "x": 12.0,
+     "y": "0 + max(pay, 0)",
+     "w": 4.0,
+     "h": "max(bcd, 0)",
+     "color": "orange",
+     "visibleIf": "bcd > 0"
+    },
+    {
+     "shape": "label",
+     "x": 14.0,
+     "y": "0 + max(pay, 0) + max(bcd, 0)/2",
+     "text": {
+      "en": "Balance c/d: ₹{bcd:0}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "bcd > 3000"
+    },
+    {
+     "shape": "line",
+     "x1": 10.0,
+     "y1": 0,
+     "x2": 10.0,
+     "y2": 61499.99999999999,
+     "color": "white",
+     "width": 4,
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": "10.0 - 6*cos(clamp((LT - RT)/45000, -0.35, 0.35))",
+     "y1": "61499.99999999999 - 6*sin(clamp((LT - RT)/45000, -0.35, 0.35))*6250",
+     "x2": "10.0 + 6*cos(clamp((LT - RT)/45000, -0.35, 0.35))",
+     "y2": "61499.99999999999 + 6*sin(clamp((LT - RT)/45000, -0.35, 0.35))*6250",
+     "color": "yellow",
+     "width": 6
+    },
+    {
+     "shape": "circle",
+     "x": 10.0,
+     "y": 61499.99999999999,
+     "r": 0.35,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 4.0,
+     "y": 71250.0,
+     "text": {
+      "en": "Dr: receipts ₹{LT:0}",
+      "kn": "ಡೆ: ಸ್ವೀಕೃತಿ ₹{LT:0}"
+     },
+     "size": 22,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 14.0,
+     "y": 71250.0,
+     "text": {
+      "en": "Cr: payments ₹{RT:0}",
+      "kn": "ಕ್ರೆ: ಪಾವತಿ ₹{RT:0}"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 10.0,
+     "y": 54000.0,
+     "text": {
+      "en": "Balanced ✓",
+      "kn": "ಸಮತೋಲನ ✓"
+     },
+     "size": 24,
+     "color": "green",
+     "visibleIf": "abs(LT - RT) < 0.5"
+    },
+    {
+     "shape": "label",
+     "x": 10.0,
+     "y": 54000.0,
+     "text": {
+      "en": "Difference {abs(LT - RT):0}",
+      "kn": "ವ್ಯತ್ಯಾಸ {abs(LT - RT):0}"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "abs(LT - RT) >= 0.5"
+    },
+    {
+     "shape": "label",
+     "x": 10,
+     "y": 62000,
+     "text": {
+      "en": "Not possible: cash paid cannot exceed cash available",
+      "kn": "ಸಾಧ್ಯವಿಲ್ಲ: ಇರುವ ನಗದಿಗಿಂತ ಹೆಚ್ಚು ಪಾವತಿಸಲು ಆಗದು"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "bal < 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Balance c/d",
+      "kn": "ಮುಂದಕ್ಕೆ ಶಿಲ್ಕು"
+     },
+     "expr": "bcd",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Dr total",
+      "kn": "ಡೆ ಒಟ್ಟು"
+     },
+     "expr": "LT",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Cr total",
+      "kn": "ಕ್ರೆ ಒಟ್ಟು"
+     },
+     "expr": "RT",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With ₹5,000 opening, ₹20,000 receipts and ₹18,000 payments, what is carried down?",
+     "kn": "₹5,000 ಆರಂಭ, ₹20,000 ಸ್ವೀಕೃತಿ, ₹18,000 ಪಾವತಿ: ಮುಂದಕ್ಕೆ ಎಷ್ಟು?"
+    },
+    {
+     "en": "Push payments above the cash available. Why does the cash book refuse?",
+     "kn": "ಪಾವತಿಯನ್ನು ಇರುವ ನಗದಿಗಿಂತ ಹೆಚ್ಚಿಸಿ. ನಗದು ಪುಸ್ತಕ ಏಕೆ ಒಪ್ಪದು?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -62,6 +62,308 @@
    }
   },
   {
+   "id": "scene-fruit-dev",
+   "type": "interactive",
+   "title": {
+    "en": "From flower to fruit",
+    "kn": "ಹೂವಿನಿಂದ ಹಣ್ಣಿಗೆ"
+   },
+   "narration": {
+    "en": "After fertilisation the petals fall, the ovary wall grows into the pericarp and the ovules become seeds. In a mango (a drupe) the pericarp is an outer epicarp, a fleshy mesocarp and a hard, stony endocarp around one seed; a tomato (a berry) is fleshy throughout with many seeds. Without fertilisation the flower drops off, unless the fruit forms by parthenocarpy, which gives seedless fruit as in banana.",
+    "kn": "ನಿಷೇಚನದ ನಂತರ ದಳಗಳು ಉದುರುತ್ತವೆ, ಅಂಡಾಶಯದ ಭಿತ್ತಿ ಫಲಭಿತ್ತಿಯಾಗುತ್ತದೆ ಮತ್ತು ಅಂಡಕಗಳು ಬೀಜಗಳಾಗುತ್ತವೆ. ಮಾವಿನಲ್ಲಿ (ಡ್ರೂಪ್) ಹೊರಭಿತ್ತಿ, ತಿರುಳಿನ ಮಧ್ಯಭಿತ್ತಿ ಮತ್ತು ಒಂದು ಬೀಜದ ಸುತ್ತ ಗಟ್ಟಿ ಒಳಭಿತ್ತಿ; ಟೊಮ್ಯಾಟೊ (ಬೆರ್ರಿ) ಪೂರ್ತಿ ತಿರುಳಿದ್ದು ಅನೇಕ ಬೀಜಗಳಿರುತ್ತವೆ. ನಿಷೇಚನವಿಲ್ಲದೆ ಹೂವು ಉದುರುತ್ತದೆ, ಅನಿಷೇಕ ಫಲನ (ಬಾಳೆಯಂತೆ ಬೀಜರಹಿತ) ಹೊರತು."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "After fertilisation the petals fall, the ovary wall grows into the pericarp and the ovules become seeds. In a mango (a drupe) the pericarp is an outer epicarp, a fleshy mesocarp and a hard, stony endocarp around one seed; a tomato (a berry) is fleshy throughout with many seeds. Without fertilisation the flower drops off, unless the fruit forms by parthenocarpy, which gives seedless fruit as in banana.",
+    "kn": "ನಿಷೇಚನದ ನಂತರ ದಳಗಳು ಉದುರುತ್ತವೆ, ಅಂಡಾಶಯದ ಭಿತ್ತಿ ಫಲಭಿತ್ತಿಯಾಗುತ್ತದೆ ಮತ್ತು ಅಂಡಕಗಳು ಬೀಜಗಳಾಗುತ್ತವೆ. ಮಾವಿನಲ್ಲಿ (ಡ್ರೂಪ್) ಹೊರಭಿತ್ತಿ, ತಿರುಳಿನ ಮಧ್ಯಭಿತ್ತಿ ಮತ್ತು ಒಂದು ಬೀಜದ ಸುತ್ತ ಗಟ್ಟಿ ಒಳಭಿತ್ತಿ; ಟೊಮ್ಯಾಟೊ (ಬೆರ್ರಿ) ಪೂರ್ತಿ ತಿರುಳಿದ್ದು ಅನೇಕ ಬೀಜಗಳಿರುತ್ತವೆ. ನಿಷೇಚನವಿಲ್ಲದೆ ಹೂವು ಉದುರುತ್ತದೆ, ಅನಿಷೇಕ ಫಲನ (ಬಾಳೆಯಂತೆ ಬೀಜರಹಿತ) ಹೊರತು."
+   },
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "fert",
+     "label": {
+      "en": "Fertilised",
+      "kn": "ನಿಷೇಚನಗೊಂಡಿದೆ"
+     },
+     "value": true
+    },
+    {
+     "name": "par",
+     "label": {
+      "en": "Parthenocarpy",
+      "kn": "ಅನಿಷೇಕ ಫಲನ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "fr",
+     "label": {
+      "en": "Fruit",
+      "kn": "ಹಣ್ಣು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Mango (drupe)",
+        "kn": "ಮಾವು (ಡ್ರೂಪ್)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Tomato (berry)",
+        "kn": "ಟೊಮ್ಯಾಟೊ (ಬೆರ್ರಿ)"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "unit": "d",
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 4
+   },
+   "vars": [
+    {
+     "name": "grows",
+     "expr": "fert || par"
+    },
+    {
+     "name": "drop",
+     "expr": "!grows && t > 8"
+    },
+    {
+     "name": "rf",
+     "expr": "if(grows, 2.5 + 14*smoothstep(4, 45, t), 2.5)"
+    },
+    {
+     "name": "seeds",
+     "expr": "fert && !par"
+    },
+    {
+     "name": "ripe",
+     "expr": "smoothstep(35, 55, t)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 40,
+     "y1": 56,
+     "x2": 40,
+     "y2": "if(drop, 56, 30 + rf)",
+     "color": "green",
+     "width": 6
+    },
+    {
+     "shape": "particles",
+     "count": 5,
+     "x": "40 + 7*cos(2*pi*i/5)",
+     "y": "30 + 7*sin(2*pi*i/5)",
+     "r": 3.2,
+     "color": "white",
+     "opacity": "1 - t/6",
+     "visibleIf": "t < 6 && !drop"
+    },
+    {
+     "shape": "circle",
+     "x": 40,
+     "y": 30,
+     "r": "rf",
+     "color": {
+      "by": "ripe",
+      "scale": [
+       "green",
+       "yellow",
+       "orange"
+      ]
+     },
+     "visibleIf": "!drop"
+    },
+    {
+     "shape": "circle",
+     "x": 40,
+     "y": 30,
+     "r": "0.45*rf",
+     "fill": false,
+     "width": 8,
+     "color": "white",
+     "opacity": 0.85,
+     "visibleIf": "!drop && fr == 1 && t > 20"
+    },
+    {
+     "shape": "circle",
+     "x": 40,
+     "y": 30,
+     "r": "0.3*rf",
+     "color": "orange",
+     "opacity": 0.9,
+     "visibleIf": "!drop && fr == 1 && seeds && t > 20"
+    },
+    {
+     "shape": "particles",
+     "count": 30,
+     "x": "40 + 0.7*rf*sqrt(rand(i))*cos(2*pi*rand(i + 50))",
+     "y": "30 + 0.7*rf*sqrt(rand(i))*sin(2*pi*rand(i + 50))",
+     "r": 0.55,
+     "color": "yellow",
+     "visibleIf": "!drop && fr == 2 && seeds && t > 15"
+    },
+    {
+     "shape": "label",
+     "x": 40,
+     "y": 6,
+     "size": 22,
+     "text": {
+      "en": "No fertilisation: the flower drops off",
+      "kn": "ನಿಷೇಚನವಿಲ್ಲ: ಹೂವು ಉದುರುತ್ತದೆ"
+     },
+     "visibleIf": "drop",
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 40,
+     "y": 6,
+     "size": 22,
+     "text": {
+      "en": "Parthenocarpic fruit: no seeds",
+      "kn": "ಅನಿಷೇಕ ಫಲ: ಬೀಜಗಳಿಲ್ಲ"
+     },
+     "visibleIf": "par && !fert",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 46,
+     "size": 20,
+     "text": {
+      "en": "Epicarp: the skin",
+      "kn": "ಹೊರಭಿತ್ತಿ: ಸಿಪ್ಪೆ"
+     },
+     "visibleIf": "fr == 1 && t > 20 && !drop"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 40,
+     "size": 20,
+     "text": {
+      "en": "Mesocarp: fleshy, eaten",
+      "kn": "ಮಧ್ಯಭಿತ್ತಿ: ತಿನ್ನುವ ತಿರುಳು"
+     },
+     "visibleIf": "fr == 1 && t > 20 && !drop"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 34,
+     "size": 20,
+     "text": {
+      "en": "Endocarp: hard and stony",
+      "kn": "ಒಳಭಿತ್ತಿ: ಗಟ್ಟಿ, ಕಲ್ಲಿನಂತೆ"
+     },
+     "visibleIf": "fr == 1 && t > 20 && !drop",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 28,
+     "size": 20,
+     "text": {
+      "en": "Single seed inside",
+      "kn": "ಒಳಗೆ ಒಂದು ಬೀಜ"
+     },
+     "visibleIf": "fr == 1 && seeds && t > 20 && !drop",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 40,
+     "size": 20,
+     "text": {
+      "en": "Fleshy pericarp, many seeds",
+      "kn": "ತಿರುಳಿನ ಫಲಭಿತ್ತಿ, ಅನೇಕ ಬೀಜ"
+     },
+     "visibleIf": "fr == 2 && t > 15 && !drop"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 56,
+     "size": 18,
+     "text": {
+      "en": "Petals fall after fertilisation",
+      "kn": "ನಿಷೇಚನದ ನಂತರ ದಳ ಉದುರುತ್ತವೆ"
+     },
+     "visibleIf": "t < 6",
+     "opacity": 0.8
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Day",
+      "kn": "ದಿನ"
+     },
+     "expr": "t",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Fruit diameter",
+      "kn": "ಹಣ್ಣಿನ ವ್ಯಾಸ"
+     },
+     "expr": "if(drop, 0, rf*0.6)",
+     "digits": 1,
+     "unit": "cm"
+    },
+    {
+     "label": {
+      "en": "Seeds",
+      "kn": "ಬೀಜಗಳು"
+     },
+     "expr": "if(seeds && !drop, if(fr == 1, 1, 30), 0)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn fertilisation off, then turn on parthenocarpy. Which fruit do we eat that forms like this?",
+     "kn": "ನಿಷೇಚನ ಆಫ್ ಮಾಡಿ, ನಂತರ ಅನಿಷೇಕ ಫಲನ ಆನ್ ಮಾಡಿ. ಹೀಗೆ ರೂಪುಗೊಳ್ಳುವ ಯಾವ ಹಣ್ಣನ್ನು ನಾವು ತಿನ್ನುತ್ತೇವೆ?"
+    },
+    {
+     "en": "Which layer of the mango pericarp do we eat? And of the coconut?",
+     "kn": "ಮಾವಿನ ಫಲಭಿತ್ತಿಯ ಯಾವ ಪದರ ತಿನ್ನುತ್ತೇವೆ? ತೆಂಗಿನಕಾಯಿಯದು?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

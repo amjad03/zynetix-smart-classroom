@@ -65,6 +65,225 @@
    }
   },
   {
+   "id": "scene-pollution",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A factory and the river",
+    "kn": "ಕಾರ್ಖಾನೆ ಮತ್ತು ನದಿ"
+   },
+   "caption": {
+    "en": "A factory releases waste; the river cleans some of it naturally. Set output and how much waste is treated, then press Play. If pollution crosses the safe limit the law fines the firm.",
+    "kn": "ಕಾರ್ಖಾನೆ ತ್ಯಾಜ್ಯ ಬಿಡುತ್ತದೆ; ನದಿ ಸ್ವಲ್ಪ ಸ್ವಚ್ಛಗೊಳಿಸುತ್ತದೆ. ಉತ್ಪಾದನೆ ಮತ್ತು ಶುದ್ಧೀಕರಣ ಹೊಂದಿಸಿ Play ಒತ್ತಿ. ಮಾಲಿನ್ಯ ಸುರಕ್ಷಿತ ಮಿತಿ ಮೀರಿದರೆ ದಂಡ."
+   },
+   "sliders": [
+    {
+     "name": "out",
+     "label": {
+      "en": "Output",
+      "kn": "ಉತ್ಪಾದನೆ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 60,
+     "unit": "%"
+    },
+    {
+     "name": "tr",
+     "label": {
+      "en": "Waste treated",
+      "kn": "ಶುದ್ಧೀಕರಿಸಿದ ತ್ಯಾಜ್ಯ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 20,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "law",
+     "label": {
+      "en": "Pollution control law enforced",
+      "kn": "ಮಾಲಿನ್ಯ ನಿಯಂತ್ರಣ ಕಾಯ್ದೆ ಜಾರಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 36,
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2,
+    "unit": "month"
+   },
+   "vars": [
+    {
+     "name": "em",
+     "expr": "out*(1 - tr/100)/10"
+    },
+    {
+     "name": "over",
+     "expr": "pol > 50"
+    }
+   ],
+   "state": [
+    {
+     "name": "pol",
+     "init": 10,
+     "rate": "em - 0.12*pol"
+    },
+    {
+     "name": "fine",
+     "init": 0,
+     "rate": "if(law && pol > 50, 2, 0)"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     0,
+     36
+    ],
+    "y": [
+     0,
+     100
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "month",
+    "yLabel": "pollution index"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 50,
+     "w": 36,
+     "h": 50,
+     "color": "red",
+     "opacity": 0.12
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 50,
+     "x2": 36,
+     "y2": 50,
+     "dashed": true,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 54,
+     "text": {
+      "en": "safe limit",
+      "kn": "ಸುರಕ್ಷಿತ ಮಿತಿ"
+     },
+     "size": 16,
+     "color": "red"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "pol",
+     "length": 800,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "pol",
+     "r": 0.4,
+     "color": {
+      "by": "clamp(pol/80, 0, 1)",
+      "scale": [
+       "green",
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "label",
+     "x": 18,
+     "y": 92,
+     "text": {
+      "en": "Fines so far ₹{fine:0} lakh",
+      "kn": "ದಂಡ ₹{fine:0} ಲಕ್ಷ"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "law && fine > 0"
+    },
+    {
+     "shape": "label",
+     "x": 18,
+     "y": 92,
+     "text": {
+      "en": "Within limits",
+      "kn": "ಮಿತಿಯೊಳಗೆ"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "fine <= 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Pollution index",
+      "kn": "ಮಾಲಿನ್ಯ ಸೂಚ್ಯಂಕ"
+     },
+     "expr": "pol",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Level it settles at",
+      "kn": "ಸ್ಥಿರ ಮಟ್ಟ"
+     },
+     "expr": "em/0.12",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Fines paid",
+      "kn": "ಪಾವತಿಸಿದ ದಂಡ"
+     },
+     "expr": "fine",
+     "digits": 0,
+     "unit": "₹ lakh"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At 60% output, how much treatment keeps the river safe?",
+     "kn": "60% ಉತ್ಪಾದನೆಯಲ್ಲಿ ಎಷ್ಟು ಶುದ್ಧೀಕರಣ ಸುರಕ್ಷಿತ?"
+    },
+    {
+     "en": "Is cutting output the only way to protect the river?",
+     "kn": "ಉತ್ಪಾದನೆ ಕಡಿತವೇ ಏಕೈಕ ದಾರಿಯೇ?"
+    },
+    {
+     "en": "Why should firms treat waste even without a law?",
+     "kn": "ಕಾನೂನು ಇಲ್ಲದಿದ್ದರೂ ತ್ಯಾಜ್ಯ ಶುದ್ಧೀಕರಣ ಏಕೆ?"
+    }
+   ],
+   "seconds": 120,
+   "narration": {
+    "en": "A factory releases waste; the river cleans some of it naturally. Set output and how much waste is treated, then press Play. If pollution crosses the safe limit the law fines the firm.",
+    "kn": "ಕಾರ್ಖಾನೆ ತ್ಯಾಜ್ಯ ಬಿಡುತ್ತದೆ; ನದಿ ಸ್ವಲ್ಪ ಸ್ವಚ್ಛಗೊಳಿಸುತ್ತದೆ. ಉತ್ಪಾದನೆ ಮತ್ತು ಶುದ್ಧೀಕರಣ ಹೊಂದಿಸಿ Play ಒತ್ತಿ. ಮಾಲಿನ್ಯ ಸುರಕ್ಷಿತ ಮಿತಿ ಮೀರಿದರೆ ದಂಡ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

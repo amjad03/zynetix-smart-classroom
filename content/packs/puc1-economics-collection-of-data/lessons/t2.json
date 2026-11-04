@@ -62,6 +62,177 @@
    }
   },
   {
+   "id": "scene-survey-margin",
+   "type": "interactive",
+   "title": {
+    "en": "How many questionnaires?",
+    "kn": "ಎಷ್ಟು ಪ್ರಶ್ನಾವಳಿಗಳು?"
+   },
+   "narration": {
+    "en": "If p% of the people who return your questionnaire say \"yes\", the true share in the population lies within p ± margin. The margin shrinks with more replies, but only as 1/√n: four times the replies halve it. Go from 100 to 400 replies. What happens to the margin? Which answer share p gives the widest margin?",
+    "kn": "ಪ್ರಶ್ನಾವಳಿ ಹಿಂದಿರುಗಿಸಿದವರಲ್ಲಿ p% \"ಹೌದು\" ಎಂದರೆ, ಜನಸಂಖ್ಯೆಯ ನಿಜ ಪಾಲು p ± ಅಂಚಿನೊಳಗೆ. ಹೆಚ್ಚು ಉತ್ತರಗಳಿಂದ ಅಂಚು ಕಡಿಮೆ, ಆದರೆ 1/√n ರಷ್ಟು ಮಾತ್ರ: ನಾಲ್ಕು ಪಟ್ಟು ಉತ್ತರ ಅಂಚನ್ನು ಅರ್ಧ ಮಾಡುತ್ತದೆ. 100ರಿಂದ 400 ಉತ್ತರಗಳಿಗೆ ಹೋಗಿ. ಅಂಚು ಏನಾಗುತ್ತದೆ? ಯಾವ ಪಾಲು p ಅತಿ ಅಗಲ ಅಂಚು ಕೊಡುತ್ತದೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "If p% of the people who return your questionnaire say \"yes\", the true share in the population lies within p ± margin. The margin shrinks with more replies, but only as 1/√n: four times the replies halve it.",
+    "kn": "ಪ್ರಶ್ನಾವಳಿ ಹಿಂದಿರುಗಿಸಿದವರಲ್ಲಿ p% \"ಹೌದು\" ಎಂದರೆ, ಜನಸಂಖ್ಯೆಯ ನಿಜ ಪಾಲು p ± ಅಂಚಿನೊಳಗೆ. ಹೆಚ್ಚು ಉತ್ತರಗಳಿಂದ ಅಂಚು ಕಡಿಮೆ, ಆದರೆ 1/√n ರಷ್ಟು ಮಾತ್ರ: ನಾಲ್ಕು ಪಟ್ಟು ಉತ್ತರ ಅಂಚನ್ನು ಅರ್ಧ ಮಾಡುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Replies received",
+      "kn": "ಬಂದ ಉತ್ತರಗಳು"
+     },
+     "min": 50,
+     "max": 2000,
+     "step": 50,
+     "value": 400
+    },
+    {
+     "name": "p",
+     "label": {
+      "en": "Share answering yes",
+      "kn": "\"ಹೌದು\" ಪಾಲು"
+     },
+     "min": 10,
+     "max": 90,
+     "step": 5,
+     "value": 50,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "z",
+     "label": {
+      "en": "Confidence",
+      "kn": "ವಿಶ್ವಾಸ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "90%"
+       },
+       "value": 1.645
+      },
+      {
+       "label": {
+        "en": "95%"
+       },
+       "value": 1.96
+      },
+      {
+       "label": {
+        "en": "99%"
+       },
+       "value": 2.576
+      }
+     ],
+     "value": 1.96
+    }
+   ],
+   "vars": [
+    {
+     "name": "moe",
+     "expr": "z*sqrt(p*(100 - p)/n)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     2050
+    ],
+    "y": [
+     0,
+     20
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "replies n",
+    "yLabel": "margin of error (±%)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "color": "blue",
+     "width": 4,
+     "fn": "z*sqrt(p*(100 - p)/x)",
+     "from": 50,
+     "to": 2000
+    },
+    {
+     "shape": "circle",
+     "x": "n",
+     "y": "moe",
+     "r": 25,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": "n",
+     "y1": 0,
+     "x2": "n",
+     "y2": "moe",
+     "color": "white",
+     "width": 2,
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "label",
+     "x": "clamp(n + 300, 400, 1700)",
+     "y": "moe + 2",
+     "text": {
+      "en": "±{moe:1}% with {n:0} replies",
+      "kn": "{n:0} ಉತ್ತರಗಳಿಗೆ ±{moe:1}%"
+     },
+     "size": 22,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Margin of error",
+      "kn": "ದೋಷದ ಅಂಚು"
+     },
+     "expr": "moe",
+     "digits": 1,
+     "unit": "±%"
+    },
+    {
+     "label": {
+      "en": "Lowest likely share",
+      "kn": "ಕನಿಷ್ಠ ಸಂಭವನೀಯ ಪಾಲು"
+     },
+     "expr": "p - moe",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Highest likely share",
+      "kn": "ಗರಿಷ್ಠ ಸಂಭವನೀಯ ಪಾಲು"
+     },
+     "expr": "p + moe",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Go from 100 to 400 replies. What happens to the margin?",
+     "kn": "100ರಿಂದ 400 ಉತ್ತರಗಳಿಗೆ ಹೋಗಿ. ಅಂಚು ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Which answer share p gives the widest margin?",
+     "kn": "ಯಾವ ಪಾಲು p ಅತಿ ಅಗಲ ಅಂಚು ಕೊಡುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

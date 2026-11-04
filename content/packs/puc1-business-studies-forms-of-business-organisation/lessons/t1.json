@@ -67,6 +67,332 @@
    }
   },
   {
+   "id": "scene-unlimited-liability",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Unlimited liability of a sole trader",
+    "kn": "ಏಕಮಾಲೀಕನ ಅಪರಿಮಿತ ಹೊಣೆ"
+   },
+   "caption": {
+    "en": "The business fails and owes its creditors. Set the business assets, the debts and the owner's personal assets. A sole trader must pay from personal property too; switch to limited liability to compare.",
+    "kn": "ವ್ಯವಹಾರ ವಿಫಲವಾಗಿ ಸಾಲ ಬಾಕಿ ಇದೆ. ವ್ಯವಹಾರ ಆಸ್ತಿ, ಸಾಲ ಮತ್ತು ಮಾಲೀಕನ ವೈಯಕ್ತಿಕ ಆಸ್ತಿ ಹೊಂದಿಸಿ. ಏಕಮಾಲೀಕ ವೈಯಕ್ತಿಕ ಆಸ್ತಿಯಿಂದಲೂ ಪಾವತಿಸಬೇಕು; ಸೀಮಿತ ಹೊಣೆಗೆ ಬದಲಿಸಿ ಹೋಲಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "bas",
+     "label": {
+      "en": "Business assets",
+      "kn": "ವ್ಯವಹಾರ ಆಸ್ತಿ"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 6,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "debt",
+     "label": {
+      "en": "Debts",
+      "kn": "ಸಾಲ"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 15,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "home",
+     "label": {
+      "en": "Owner's personal assets",
+      "kn": "ಮಾಲೀಕನ ವೈಯಕ್ತಿಕ ಆಸ್ತಿ"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 12,
+     "unit": "₹ lakh"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "lim",
+     "label": {
+      "en": "Limited liability (like a company)",
+      "kn": "ಸೀಮಿತ ಹೊಣೆ (ಕಂಪನಿಯಂತೆ)"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "pb",
+     "expr": "min(bas, debt)"
+    },
+    {
+     "name": "pp",
+     "expr": "if(lim, 0, min(home, debt - pb))"
+    },
+    {
+     "name": "b0",
+     "expr": "debt"
+    },
+    {
+     "name": "b1",
+     "expr": "pb"
+    },
+    {
+     "name": "b2",
+     "expr": "pp"
+    },
+    {
+     "name": "b3",
+     "expr": "debt - pb - pp"
+    },
+    {
+     "name": "b4",
+     "expr": "home - pp"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "₹ lakh",
+      "kn": "₹ ಲಕ್ಷ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.05,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b0/30, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": "14.5 + clamp(b0/30, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": 8,
+     "text": {
+      "en": "Debts",
+      "kn": "ಸಾಲ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 18.85,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b1/30, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 22.2,
+     "y": "14.5 + clamp(b1/30, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 22.2,
+     "y": 8,
+     "text": {
+      "en": "Paid by business",
+      "kn": "ವ್ಯವಹಾರದಿಂದ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 29.65,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b2/30, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": "14.5 + clamp(b2/30, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 8,
+     "text": {
+      "en": "Paid from home",
+      "kn": "ಮನೆಯ ಆಸ್ತಿಯಿಂದ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 40.45,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b3/30, 0, 1)*36",
+     "color": "white",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 43.8,
+     "y": "14.5 + clamp(b3/30, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 43.8,
+     "y": 8,
+     "text": {
+      "en": "Left unpaid",
+      "kn": "ಬಾಕಿ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 51.25,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b4/30, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 54.6,
+     "y": "14.5 + clamp(b4/30, 0, 1)*36",
+     "text": {
+      "en": "{b4:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 54.6,
+     "y": 8,
+     "text": {
+      "en": "Owner keeps",
+      "kn": "ಮಾಲೀಕನಿಗೆ ಉಳಿದದ್ದು"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Home assets used!",
+      "kn": "ಮನೆ ಆಸ್ತಿ ಬಳಕೆ!"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "pp > 0"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Home assets safe",
+      "kn": "ಮನೆ ಆಸ್ತಿ ಸುರಕ್ಷಿತ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "pp <= 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Paid from personal assets",
+      "kn": "ವೈಯಕ್ತಿಕ ಆಸ್ತಿಯಿಂದ"
+     },
+     "expr": "pp",
+     "digits": 0,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Creditors unpaid",
+      "kn": "ಸಾಲಗಾರರಿಗೆ ಬಾಕಿ"
+     },
+     "expr": "debt - pb - pp",
+     "digits": 0,
+     "unit": "₹ lakh"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With debts 15 and business assets 6, how much comes from the owner's home?",
+     "kn": "ಸಾಲ 15, ಆಸ್ತಿ 6 ಇದ್ದಾಗ ಮನೆಯಿಂದ ಎಷ್ಟು?"
+    },
+    {
+     "en": "Why does unlimited liability make a sole trader careful?",
+     "kn": "ಅಪರಿಮಿತ ಹೊಣೆ ಏಕಮಾಲೀಕನನ್ನು ಏಕೆ ಎಚ್ಚರಿಕೆಯಿಂದಿರಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on limited liability. Who now bears the loss?",
+     "kn": "ಸೀಮಿತ ಹೊಣೆ ಆನ್ ಮಾಡಿ. ನಷ್ಟ ಈಗ ಯಾರಿಗೆ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "The business fails and owes its creditors. Set the business assets, the debts and the owner's personal assets. A sole trader must pay from personal property too; switch to limited liability to compare.",
+    "kn": "ವ್ಯವಹಾರ ವಿಫಲವಾಗಿ ಸಾಲ ಬಾಕಿ ಇದೆ. ವ್ಯವಹಾರ ಆಸ್ತಿ, ಸಾಲ ಮತ್ತು ಮಾಲೀಕನ ವೈಯಕ್ತಿಕ ಆಸ್ತಿ ಹೊಂದಿಸಿ. ಏಕಮಾಲೀಕ ವೈಯಕ್ತಿಕ ಆಸ್ತಿಯಿಂದಲೂ ಪಾವತಿಸಬೇಕು; ಸೀಮಿತ ಹೊಣೆಗೆ ಬದಲಿಸಿ ಹೋಲಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

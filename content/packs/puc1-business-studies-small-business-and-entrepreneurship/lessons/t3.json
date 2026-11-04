@@ -62,6 +62,404 @@
    }
   },
   {
+   "id": "scene-ipr-term",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "How long does IP protection last?",
+    "kn": "ಬೌದ್ಧಿಕ ಆಸ್ತಿ ರಕ್ಷಣೆ ಎಷ್ಟು ಕಾಲ?"
+   },
+   "caption": {
+    "en": "Each intellectual property right protects for a different term. Choose a right and move the years since it was granted: see whether it is still protected or must be renewed.",
+    "kn": "ಪ್ರತಿ ಬೌದ್ಧಿಕ ಆಸ್ತಿ ಹಕ್ಕಿನ ರಕ್ಷಣಾ ಅವಧಿ ಬೇರೆ. ಹಕ್ಕು ಆರಿಸಿ ವರ್ಷಗಳನ್ನು ಬದಲಿಸಿ: ಇನ್ನೂ ರಕ್ಷಿತವೇ ಅಥವಾ ನವೀಕರಿಸಬೇಕೇ ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "yr",
+     "label": {
+      "en": "Years since grant",
+      "kn": "ನೀಡಿಕೆಯಿಂದ ವರ್ಷಗಳು"
+     },
+     "min": 0,
+     "max": 70,
+     "step": 1,
+     "value": 12,
+     "unit": "years"
+    }
+   ],
+   "choices": [
+    {
+     "name": "ip",
+     "label": {
+      "en": "Right",
+      "kn": "ಹಕ್ಕು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Patent",
+        "kn": "ಪೇಟೆಂಟ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Copyright",
+        "kn": "ಹಕ್ಕುಸ್ವಾಮ್ಯ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Trademark",
+        "kn": "ಟ್ರೇಡ್‌ಮಾರ್ಕ್"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Design",
+        "kn": "ವಿನ್ಯಾಸ"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "GI tag",
+        "kn": "GI ಟ್ಯಾಗ್"
+       },
+       "value": 5
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "counters": [
+    {
+     "name": "rn",
+     "value": 1,
+     "min": 1,
+     "max": 6
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Renew trademark / GI",
+      "kn": "ಟ್ರೇಡ್‌ಮಾರ್ಕ್ / GI ನವೀಕರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "rn": "rn + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Clear renewals",
+      "kn": "ನವೀಕರಣ ತೆಗೆಯಿರಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "rn": 1
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "term",
+     "expr": "if(ip == 1, 20, if(ip == 2, 60, if(ip == 3, 10*rn, if(ip == 4, 15, 10*rn))))"
+    },
+    {
+     "name": "b0",
+     "expr": "20"
+    },
+    {
+     "name": "b1",
+     "expr": "60"
+    },
+    {
+     "name": "b2",
+     "expr": "10*rn"
+    },
+    {
+     "name": "b3",
+     "expr": "15"
+    },
+    {
+     "name": "b4",
+     "expr": "10*rn"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Years of protection",
+      "kn": "ರಕ್ಷಣೆಯ ವರ್ಷಗಳು"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.05,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b0/70, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": "14.5 + clamp(b0/70, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": 8,
+     "text": {
+      "en": "Patent",
+      "kn": "ಪೇಟೆಂಟ್"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 18.85,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b1/70, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 22.2,
+     "y": "14.5 + clamp(b1/70, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 22.2,
+     "y": 8,
+     "text": {
+      "en": "Copyright*",
+      "kn": "ಹಕ್ಕುಸ್ವಾಮ್ಯ*"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 29.65,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b2/70, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": "14.5 + clamp(b2/70, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 8,
+     "text": {
+      "en": "Trademark",
+      "kn": "ಟ್ರೇಡ್‌ಮಾರ್ಕ್"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 40.45,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b3/70, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 43.8,
+     "y": "14.5 + clamp(b3/70, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 43.8,
+     "y": 8,
+     "text": {
+      "en": "Design",
+      "kn": "ವಿನ್ಯಾಸ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 51.25,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b4/70, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 54.6,
+     "y": "14.5 + clamp(b4/70, 0, 1)*36",
+     "text": {
+      "en": "{b4:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 54.6,
+     "y": 8,
+     "text": {
+      "en": "GI tag",
+      "kn": "GI ಟ್ಯಾಗ್"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Still protected: {term - yr:0} years left",
+      "kn": "ರಕ್ಷಿತ: ಇನ್ನೂ {term - yr:0} ವರ್ಷ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "yr < term"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Expired: renew it",
+      "kn": "ಅವಧಿ ಮುಗಿದಿದೆ: ನವೀಕರಿಸಿ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "yr >= term && (ip == 3 || ip == 5)"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Expired: now public",
+      "kn": "ಅವಧಿ ಮುಗಿದಿದೆ: ಸಾರ್ವಜನಿಕ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "yr >= term && ip != 3 && ip != 5"
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": "12 + clamp(yr/70, 0, 1)*36",
+     "x2": 60,
+     "y2": "12 + clamp(yr/70, 0, 1)*36",
+     "dashed": true,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 62,
+     "y": "12 + clamp(yr/70, 0, 1)*36",
+     "text": {
+      "en": "now",
+      "kn": "ಈಗ"
+     },
+     "size": 16,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 10,
+     "text": {
+      "en": "*after the author's death",
+      "kn": "*ಲೇಖಕನ ಮರಣದ ನಂತರ"
+     },
+     "size": 14
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Term of chosen right",
+      "kn": "ಆಯ್ಕೆಯ ಹಕ್ಕಿನ ಅವಧಿ"
+     },
+     "expr": "term",
+     "digits": 0,
+     "unit": "years"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "A patent granted 21 years ago: can others now make the product?",
+     "kn": "21 ವರ್ಷ ಹಿಂದಿನ ಪೇಟೆಂಟ್: ಇತರರು ಉತ್ಪಾದಿಸಬಹುದೇ?"
+    },
+    {
+     "en": "Why can a trademark last for ever but a patent cannot?",
+     "kn": "ಟ್ರೇಡ್‌ಮಾರ್ಕ್ ಶಾಶ್ವತ, ಪೇಟೆಂಟ್ ಅಲ್ಲ ಏಕೆ?"
+    },
+    {
+     "en": "Name a Karnataka product with a GI tag.",
+     "kn": "GI ಟ್ಯಾಗ್ ಇರುವ ಕರ್ನಾಟಕದ ಉತ್ಪನ್ನ ಹೇಳಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Each intellectual property right protects for a different term. Choose a right and move the years since it was granted: see whether it is still protected or must be renewed.",
+    "kn": "ಪ್ರತಿ ಬೌದ್ಧಿಕ ಆಸ್ತಿ ಹಕ್ಕಿನ ರಕ್ಷಣಾ ಅವಧಿ ಬೇರೆ. ಹಕ್ಕು ಆರಿಸಿ ವರ್ಷಗಳನ್ನು ಬದಲಿಸಿ: ಇನ್ನೂ ರಕ್ಷಿತವೇ ಅಥವಾ ನವೀಕರಿಸಬೇಕೇ ನೋಡಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

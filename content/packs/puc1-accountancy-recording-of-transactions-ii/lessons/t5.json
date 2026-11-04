@@ -59,6 +59,265 @@
    }
   },
   {
+   "id": "scene-sales-book",
+   "type": "interactive",
+   "title": {
+    "en": "Which book records it?",
+    "kn": "ಯಾವ ಪುಸ್ತಕದಲ್ಲಿ ದಾಖಲಾಗುತ್ತದೆ?"
+   },
+   "narration": {
+    "en": "Only credit sales of goods go to the Sales Book, at the net amount after trade discount. Cash sales go to the Cash Book, and a credit sale of an old asset goes to the Journal Proper. Sell 40 units at ₹250 on credit with 20% trade discount. What enters the Sales Book? Change it to a sale of old furniture on credit. Which book now?",
+    "kn": "ಸರಕಿನ ಸಾಲದ ಮಾರಾಟ ಮಾತ್ರ ವ್ಯಾಪಾರ ರಿಯಾಯಿತಿ ಕಳೆದ ನಿವ್ವಳ ಮೊತ್ತದಲ್ಲಿ ಮಾರಾಟ ಪುಸ್ತಕಕ್ಕೆ ಹೋಗುತ್ತದೆ. ನಗದು ಮಾರಾಟ ನಗದು ಪುಸ್ತಕಕ್ಕೆ, ಹಳೆಯ ಆಸ್ತಿಯ ಸಾಲದ ಮಾರಾಟ ಮೂಲ ಜರ್ನಲ್‌ಗೆ. ₹250 ದರದಲ್ಲಿ 40 ಘಟಕ ಸಾಲದಲ್ಲಿ, 20% ರಿಯಾಯಿತಿ. ಮಾರಾಟ ಪುಸ್ತಕಕ್ಕೆ ಎಷ್ಟು? ಹಳೆಯ ಪೀಠೋಪಕರಣದ ಸಾಲದ ಮಾರಾಟಕ್ಕೆ ಬದಲಿಸಿ. ಈಗ ಯಾವ ಪುಸ್ತಕ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Only credit sales of goods go to the Sales Book, at the net amount after trade discount. Cash sales go to the Cash Book, and a credit sale of an old asset goes to the Journal Proper.",
+    "kn": "ಸರಕಿನ ಸಾಲದ ಮಾರಾಟ ಮಾತ್ರ ವ್ಯಾಪಾರ ರಿಯಾಯಿತಿ ಕಳೆದ ನಿವ್ವಳ ಮೊತ್ತದಲ್ಲಿ ಮಾರಾಟ ಪುಸ್ತಕಕ್ಕೆ ಹೋಗುತ್ತದೆ. ನಗದು ಮಾರಾಟ ನಗದು ಪುಸ್ತಕಕ್ಕೆ, ಹಳೆಯ ಆಸ್ತಿಯ ಸಾಲದ ಮಾರಾಟ ಮೂಲ ಜರ್ನಲ್‌ಗೆ."
+   },
+   "sliders": [
+    {
+     "name": "q",
+     "label": {
+      "en": "Quantity",
+      "kn": "ಪ್ರಮಾಣ"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 20,
+     "unit": "units"
+    },
+    {
+     "name": "pr",
+     "label": {
+      "en": "List price",
+      "kn": "ಪಟ್ಟಿ ಬೆಲೆ"
+     },
+     "min": 50,
+     "max": 1000,
+     "step": 50,
+     "value": 200,
+     "unit": "₹"
+    },
+    {
+     "name": "td",
+     "label": {
+      "en": "Trade discount",
+      "kn": "ವ್ಯಾಪಾರ ರಿಯಾಯಿತಿ"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 5,
+     "value": 10,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "mode",
+     "label": {
+      "en": "Transaction",
+      "kn": "ವ್ಯವಹಾರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Credit sale of goods",
+        "kn": "ಸರಕಿನ ಸಾಲದ ಮಾರಾಟ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Cash sale of goods",
+        "kn": "ಸರಕಿನ ನಗದು ಮಾರಾಟ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Old furniture sold on credit",
+        "kn": "ಹಳೆಯ ಪೀಠೋಪಕರಣ ಸಾಲದಲ್ಲಿ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "gross",
+     "expr": "q*pr"
+    },
+    {
+     "name": "disc",
+     "expr": "gross*td/100"
+    },
+    {
+     "name": "net",
+     "expr": "gross - disc"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10.4
+    ],
+    "y": [
+     -8000,
+     105000
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(gross - 0, 220)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "max(gross, 0) + 3850",
+     "text": {
+      "en": "₹{gross:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": -3850.0000000000005,
+     "text": {
+      "en": "List price",
+      "kn": "ಪಟ್ಟಿ ಬೆಲೆ"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(disc - 0, 220)",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "max(disc, 0) + 3850",
+     "text": {
+      "en": "₹{disc:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": -3850.0000000000005,
+     "text": {
+      "en": "Trade discount",
+      "kn": "ವ್ಯಾಪಾರ ರಿಯಾಯಿತಿ"
+     },
+     "size": 20,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(net - 0, 220)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "max(net, 0) + 3850",
+     "text": {
+      "en": "₹{net:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": -3850.0000000000005,
+     "text": {
+      "en": "Amount recorded",
+      "kn": "ದಾಖಲಾದ ಮೊತ್ತ"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 5.3,
+     "y": 95000,
+     "text": {
+      "en": "Recorded in: Sales Book",
+      "kn": "ದಾಖಲಾಗುವುದು: ಮಾರಾಟ ಪುಸ್ತಕ"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "label",
+     "x": 5.3,
+     "y": 95000,
+     "text": {
+      "en": "Recorded in: Cash Book (not the Sales Book)",
+      "kn": "ದಾಖಲಾಗುವುದು: ನಗದು ಪುಸ್ತಕ (ಮಾರಾಟ ಪುಸ್ತಕವಲ್ಲ)"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "mode == 2"
+    },
+    {
+     "shape": "label",
+     "x": 5.3,
+     "y": 95000,
+     "text": {
+      "en": "Recorded in: Journal Proper (not goods traded)",
+      "kn": "ದಾಖಲಾಗುವುದು: ಮೂಲ ಜರ್ನಲ್ (ವ್ಯಾಪಾರದ ಸರಕಲ್ಲ)"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "mode == 3"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Amount recorded",
+      "kn": "ದಾಖಲಾದ ಮೊತ್ತ"
+     },
+     "expr": "net",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Sell 40 units at ₹250 on credit with 20% trade discount. What enters the Sales Book?",
+     "kn": "₹250 ದರದಲ್ಲಿ 40 ಘಟಕ ಸಾಲದಲ್ಲಿ, 20% ರಿಯಾಯಿತಿ. ಮಾರಾಟ ಪುಸ್ತಕಕ್ಕೆ ಎಷ್ಟು?"
+    },
+    {
+     "en": "Change it to a sale of old furniture on credit. Which book now?",
+     "kn": "ಹಳೆಯ ಪೀಠೋಪಕರಣದ ಸಾಲದ ಮಾರಾಟಕ್ಕೆ ಬದಲಿಸಿ. ಈಗ ಯಾವ ಪುಸ್ತಕ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

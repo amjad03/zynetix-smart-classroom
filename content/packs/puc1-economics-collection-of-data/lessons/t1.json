@@ -62,6 +62,208 @@
    }
   },
   {
+   "id": "scene-data-cost",
+   "type": "interactive",
+   "title": {
+    "en": "Primary or secondary: what does it cost?",
+    "kn": "ಪ್ರಾಥಮಿಕ ಅಥವಾ ದ್ವಿತೀಯ: ವೆಚ್ಚ ಎಷ್ಟು?"
+   },
+   "narration": {
+    "en": "Primary data is collected first-hand: by asking everyone (census) or a sample. Secondary data, such as a published NSSO report, is already collected and costs little, but may not fit your question exactly. Costs are in ₹ thousand. A town of 20,000 people at ₹100 per interview: compare a census with a 5% sample. When would you still pay for primary data?",
+    "kn": "ಪ್ರಾಥಮಿಕ ದತ್ತಾಂಶ ನೇರವಾಗಿ ಸಂಗ್ರಹಿಸಿದ್ದು: ಎಲ್ಲರನ್ನೂ (ಜನಗಣತಿ) ಅಥವಾ ಮಾದರಿಯನ್ನು ಕೇಳಿ. ದ್ವಿತೀಯ ದತ್ತಾಂಶ (ಉದಾ. ಪ್ರಕಟಿತ NSSO ವರದಿ) ಈಗಾಗಲೇ ಸಂಗ್ರಹವಾಗಿದೆ, ಕಡಿಮೆ ವೆಚ್ಚ, ಆದರೆ ನಿಮ್ಮ ಪ್ರಶ್ನೆಗೆ ಸರಿಯಾಗಿ ಹೊಂದದಿರಬಹುದು. ವೆಚ್ಚ ₹ ಸಾವಿರದಲ್ಲಿ. 20,000 ಜನರ ಪಟ್ಟಣ, ಸಂದರ್ಶನಕ್ಕೆ ₹100: ಜನಗಣತಿ ಮತ್ತು 5% ಮಾದರಿ ಹೋಲಿಸಿ. ಯಾವಾಗ ಪ್ರಾಥಮಿಕ ದತ್ತಾಂಶಕ್ಕೆ ಹಣ ಕೊಡುತ್ತೀರಿ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Primary data is collected first-hand: by asking everyone (census) or a sample. Secondary data, such as a published NSSO report, is already collected and costs little, but may not fit your question exactly. Costs are in ₹ thousand.",
+    "kn": "ಪ್ರಾಥಮಿಕ ದತ್ತಾಂಶ ನೇರವಾಗಿ ಸಂಗ್ರಹಿಸಿದ್ದು: ಎಲ್ಲರನ್ನೂ (ಜನಗಣತಿ) ಅಥವಾ ಮಾದರಿಯನ್ನು ಕೇಳಿ. ದ್ವಿತೀಯ ದತ್ತಾಂಶ (ಉದಾ. ಪ್ರಕಟಿತ NSSO ವರದಿ) ಈಗಾಗಲೇ ಸಂಗ್ರಹವಾಗಿದೆ, ಕಡಿಮೆ ವೆಚ್ಚ, ಆದರೆ ನಿಮ್ಮ ಪ್ರಶ್ನೆಗೆ ಸರಿಯಾಗಿ ಹೊಂದದಿರಬಹುದು. ವೆಚ್ಚ ₹ ಸಾವಿರದಲ್ಲಿ."
+   },
+   "sliders": [
+    {
+     "name": "N",
+     "label": {
+      "en": "People in the population",
+      "kn": "ಸಮುದಾಯದ ಜನರು"
+     },
+     "min": 1000,
+     "max": 20000,
+     "step": 500,
+     "value": 10000
+    },
+    {
+     "name": "sp",
+     "label": {
+      "en": "Sample size",
+      "kn": "ಮಾದರಿ ಗಾತ್ರ"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 5,
+     "unit": "%"
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "Cost per interview",
+      "kn": "ಪ್ರತಿ ಸಂದರ್ಶನದ ವೆಚ್ಚ"
+     },
+     "min": 20,
+     "max": 200,
+     "step": 10,
+     "value": 100,
+     "unit": "₹"
+    }
+   ],
+   "vars": [
+    {
+     "name": "cen",
+     "expr": "N*c/1000"
+    },
+    {
+     "name": "smp",
+     "expr": "N*sp/100*c/1000"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10.4
+    ],
+    "y": [
+     -280,
+     4100
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(cen - 0, 8.8)",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "max(cen, 0) + 154",
+     "text": {
+      "en": "₹{cen:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": -154.00000000000003,
+     "text": {
+      "en": "Census (everyone)",
+      "kn": "ಜನಗಣತಿ (ಎಲ್ಲರೂ)"
+     },
+     "size": 20,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(smp - 0, 8.8)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "max(smp, 0) + 154",
+     "text": {
+      "en": "₹{smp:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": -154.00000000000003,
+     "text": {
+      "en": "Sample survey",
+      "kn": "ಮಾದರಿ ಸಮೀಕ್ಷೆ"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(5 - 0, 8.8)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "max(5, 0) + 154",
+     "text": {
+      "en": "₹{5:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": -154.00000000000003,
+     "text": {
+      "en": "Secondary data",
+      "kn": "ದ್ವಿತೀಯ ದತ್ತಾಂಶ"
+     },
+     "size": 20,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Census cost",
+      "kn": "ಜನಗಣತಿ ವೆಚ್ಚ"
+     },
+     "expr": "cen",
+     "digits": 1,
+     "unit": "₹ thousand"
+    },
+    {
+     "label": {
+      "en": "Sample cost",
+      "kn": "ಮಾದರಿ ವೆಚ್ಚ"
+     },
+     "expr": "smp",
+     "digits": 1,
+     "unit": "₹ thousand"
+    },
+    {
+     "label": {
+      "en": "People interviewed in the sample",
+      "kn": "ಮಾದರಿಯಲ್ಲಿ ಸಂದರ್ಶಿತರು"
+     },
+     "expr": "N*sp/100",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "A town of 20,000 people at ₹100 per interview: compare a census with a 5% sample.",
+     "kn": "20,000 ಜನರ ಪಟ್ಟಣ, ಸಂದರ್ಶನಕ್ಕೆ ₹100: ಜನಗಣತಿ ಮತ್ತು 5% ಮಾದರಿ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "When would you still pay for primary data?",
+     "kn": "ಯಾವಾಗ ಪ್ರಾಥಮಿಕ ದತ್ತಾಂಶಕ್ಕೆ ಹಣ ಕೊಡುತ್ತೀರಿ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -62,6 +62,501 @@
    }
   },
   {
+   "id": "scene-iupac-chain",
+   "type": "interactive",
+   "title": {
+    "en": "Build an IUPAC name",
+    "kn": "IUPAC ಹೆಸರನ್ನು ರಚಿಸಿ"
+   },
+   "narration": {
+    "en": "The IUPAC name of a simple chain compound is a word root for the number of carbons (meth, eth, prop, but…) and a suffix for the functional group: -ane, -ene, -yne, -ol, -oic acid. The chain is numbered from the end nearer the functional group, here carbon 1.",
+    "kn": "ಸರಳ ಸರಪಳಿ ಸಂಯುಕ್ತದ IUPAC ಹೆಸರು ಕಾರ್ಬನ್‌ಗಳ ಸಂಖ್ಯೆಗೆ ಪದಮೂಲ (meth, eth, prop, but…) ಮತ್ತು ಕ್ರಿಯಾತ್ಮಕ ಗುಂಪಿಗೆ ಪ್ರತ್ಯಯ: -ane, -ene, -yne, -ol, -oic acid. ಕ್ರಿಯಾತ್ಮಕ ಗುಂಪಿಗೆ ಹತ್ತಿರದ ತುದಿಯಿಂದ ಸರಪಳಿಗೆ ಸಂಖ್ಯೆ ನೀಡಲಾಗುತ್ತದೆ, ಇಲ್ಲಿ ಕಾರ್ಬನ್ 1."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "The IUPAC name of a simple chain compound is a word root for the number of carbons (meth, eth, prop, but…) and a suffix for the functional group: -ane, -ene, -yne, -ol, -oic acid. The chain is numbered from the end nearer the functional group, here carbon 1.",
+    "kn": "ಸರಳ ಸರಪಳಿ ಸಂಯುಕ್ತದ IUPAC ಹೆಸರು ಕಾರ್ಬನ್‌ಗಳ ಸಂಖ್ಯೆಗೆ ಪದಮೂಲ (meth, eth, prop, but…) ಮತ್ತು ಕ್ರಿಯಾತ್ಮಕ ಗುಂಪಿಗೆ ಪ್ರತ್ಯಯ: -ane, -ene, -yne, -ol, -oic acid. ಕ್ರಿಯಾತ್ಮಕ ಗುಂಪಿಗೆ ಹತ್ತಿರದ ತುದಿಯಿಂದ ಸರಪಳಿಗೆ ಸಂಖ್ಯೆ ನೀಡಲಾಗುತ್ತದೆ, ಇಲ್ಲಿ ಕಾರ್ಬನ್ 1."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Carbon atoms",
+      "kn": "ಕಾರ್ಬನ್ ಪರಮಾಣುಗಳು"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "choices": [
+    {
+     "name": "fg",
+     "label": {
+      "en": "Family",
+      "kn": "ಕುಟುಂಬ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Alkane",
+        "kn": "ಆಲ್ಕೇನ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Alkene",
+        "kn": "ಆಲ್ಕೀನ್"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Alkyne",
+        "kn": "ಆಲ್ಕೈನ್"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Alcohol",
+        "kn": "ಆಲ್ಕೋಹಾಲ್"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "Carboxylic acid",
+        "kn": "ಕಾರ್ಬಾಕ್ಸಿಲಿಕ್ ಆಮ್ಲ"
+       },
+       "value": 5
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "bad",
+     "expr": "n < 2 && (fg == 2 || fg == 3)"
+    },
+    {
+     "name": "nr",
+     "expr": "if(bad, 2, n)"
+    },
+    {
+     "name": "H",
+     "expr": "if(fg == 1 || fg == 4, 2*nr + 2, if(fg == 2 || fg == 5, 2*nr, 2*nr - 2))"
+    },
+    {
+     "name": "O",
+     "expr": "if(fg == 4, 1, if(fg == 5, 2, 0))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 10,
+     "x": "12 + 8*i",
+     "y": "34 + if(mod(i, 2) == 0, 0, 3)",
+     "r": 2,
+     "color": "white",
+     "visibleIf": "i < n"
+    },
+    {
+     "shape": "particles",
+     "count": 9,
+     "x": "16 + 8*i",
+     "y": "35.5",
+     "r": 0.01,
+     "color": "white",
+     "visibleIf": "i < n - 1"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 34,
+     "x2": 20,
+     "y2": 37,
+     "color": "white",
+     "width": 4,
+     "visibleIf": "0 < n - 1"
+    },
+    {
+     "shape": "line",
+     "x1": 20,
+     "y1": 37,
+     "x2": 28,
+     "y2": 34,
+     "color": "white",
+     "width": 4,
+     "visibleIf": "1 < n - 1"
+    },
+    {
+     "shape": "line",
+     "x1": 28,
+     "y1": 34,
+     "x2": 36,
+     "y2": 37,
+     "color": "white",
+     "width": 4,
+     "visibleIf": "2 < n - 1"
+    },
+    {
+     "shape": "line",
+     "x1": 36,
+     "y1": 37,
+     "x2": 44,
+     "y2": 34,
+     "color": "white",
+     "width": 4,
+     "visibleIf": "3 < n - 1"
+    },
+    {
+     "shape": "line",
+     "x1": 44,
+     "y1": 34,
+     "x2": 52,
+     "y2": 37,
+     "color": "white",
+     "width": 4,
+     "visibleIf": "4 < n - 1"
+    },
+    {
+     "shape": "line",
+     "x1": 52,
+     "y1": 37,
+     "x2": 60,
+     "y2": 34,
+     "color": "white",
+     "width": 4,
+     "visibleIf": "5 < n - 1"
+    },
+    {
+     "shape": "line",
+     "x1": 60,
+     "y1": 34,
+     "x2": 68,
+     "y2": 37,
+     "color": "white",
+     "width": 4,
+     "visibleIf": "6 < n - 1"
+    },
+    {
+     "shape": "line",
+     "x1": 68,
+     "y1": 37,
+     "x2": 76,
+     "y2": 34,
+     "color": "white",
+     "width": 4,
+     "visibleIf": "7 < n - 1"
+    },
+    {
+     "shape": "line",
+     "x1": 76,
+     "y1": 34,
+     "x2": 84,
+     "y2": 37,
+     "color": "white",
+     "width": 4,
+     "visibleIf": "8 < n - 1"
+    },
+    {
+     "shape": "line",
+     "x1": 12.6,
+     "y1": 32.8,
+     "x2": 20.6,
+     "y2": 35.8,
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "fg == 2 || fg == 3"
+    },
+    {
+     "shape": "line",
+     "x1": 11.6,
+     "y1": 35.2,
+     "x2": 19.6,
+     "y2": 38.2,
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "fg == 3"
+    },
+    {
+     "shape": "label",
+     "x": 5,
+     "y": 34,
+     "size": 22,
+     "text": {
+      "en": "HO"
+     },
+     "visibleIf": "fg == 4",
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 5,
+     "y": 34,
+     "size": 22,
+     "text": {
+      "en": "HOOC"
+     },
+     "visibleIf": "fg == 5",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "size": 40,
+     "text": {
+      "en": "meth"
+     },
+     "align": "right",
+     "visibleIf": "nr == 1",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "size": 40,
+     "text": {
+      "en": "eth"
+     },
+     "align": "right",
+     "visibleIf": "nr == 2",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "size": 40,
+     "text": {
+      "en": "prop"
+     },
+     "align": "right",
+     "visibleIf": "nr == 3",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "size": 40,
+     "text": {
+      "en": "but"
+     },
+     "align": "right",
+     "visibleIf": "nr == 4",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "size": 40,
+     "text": {
+      "en": "pent"
+     },
+     "align": "right",
+     "visibleIf": "nr == 5",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "size": 40,
+     "text": {
+      "en": "hex"
+     },
+     "align": "right",
+     "visibleIf": "nr == 6",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "size": 40,
+     "text": {
+      "en": "hept"
+     },
+     "align": "right",
+     "visibleIf": "nr == 7",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "size": 40,
+     "text": {
+      "en": "oct"
+     },
+     "align": "right",
+     "visibleIf": "nr == 8",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "size": 40,
+     "text": {
+      "en": "non"
+     },
+     "align": "right",
+     "visibleIf": "nr == 9",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "size": 40,
+     "text": {
+      "en": "dec"
+     },
+     "align": "right",
+     "visibleIf": "nr == 10",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "size": 40,
+     "text": {
+      "en": "ane"
+     },
+     "align": "left",
+     "visibleIf": "fg == 1",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "size": 40,
+     "text": {
+      "en": "ene"
+     },
+     "align": "left",
+     "visibleIf": "fg == 2",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "size": 40,
+     "text": {
+      "en": "yne"
+     },
+     "align": "left",
+     "visibleIf": "fg == 3",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "size": 40,
+     "text": {
+      "en": "anol"
+     },
+     "align": "left",
+     "visibleIf": "fg == 4",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "size": 40,
+     "text": {
+      "en": "anoic acid"
+     },
+     "align": "left",
+     "visibleIf": "fg == 5",
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 20,
+     "size": 22,
+     "text": {
+      "en": "Needs at least 2 carbons for a C=C or C≡C",
+      "kn": "C=C ಅಥವಾ C≡C ಗೆ ಕನಿಷ್ಠ 2 ಕಾರ್ಬನ್ ಬೇಕು"
+     },
+     "visibleIf": "bad",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 8,
+     "size": 22,
+     "text": {
+      "en": "Word root (chain length) + suffix (functional group)",
+      "kn": "ಪದಮೂಲ (ಸರಪಳಿ ಉದ್ದ) + ಪ್ರತ್ಯಯ (ಕ್ರಿಯಾತ್ಮಕ ಗುಂಪು)"
+     },
+     "opacity": 0.85
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "C"
+     },
+     "expr": "nr",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "H"
+     },
+     "expr": "H",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "O"
+     },
+     "expr": "O",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Name the alcohol with 2 carbons. Where have you heard of it?",
+     "kn": "2 ಕಾರ್ಬನ್‌ಗಳ ಆಲ್ಕೋಹಾಲ್ ಹೆಸರಿಸಿ. ಅದನ್ನು ಎಲ್ಲಿ ಕೇಳಿದ್ದೀರಿ?"
+    },
+    {
+     "en": "Make butene and butyne. How does the number of hydrogens change?",
+     "kn": "ಬ್ಯೂಟೀನ್ ಮತ್ತು ಬ್ಯೂಟೈನ್ ರಚಿಸಿ. ಹೈಡ್ರೋಜನ್‌ಗಳ ಸಂಖ್ಯೆ ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

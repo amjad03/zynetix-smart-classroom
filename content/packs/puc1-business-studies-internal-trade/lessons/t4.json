@@ -65,6 +65,344 @@
    }
   },
   {
+   "id": "scene-chain-store",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Chain stores: buying centrally",
+    "kn": "ಸರಪಳಿ ಅಂಗಡಿಗಳು: ಕೇಂದ್ರೀಕೃತ ಖರೀದಿ"
+   },
+   "caption": {
+    "en": "A chain store buys centrally for all its branches, so it gets bigger discounts as it opens more shops, but head-office costs rise too. Change the number of branches and compare with a departmental store under one roof.",
+    "kn": "ಸರಪಳಿ ಅಂಗಡಿ ಎಲ್ಲ ಶಾಖೆಗಳಿಗೆ ಕೇಂದ್ರೀಕೃತವಾಗಿ ಖರೀದಿಸುತ್ತದೆ; ಶಾಖೆಗಳು ಹೆಚ್ಚಾದಂತೆ ರಿಯಾಯಿತಿ ಹೆಚ್ಚು, ಆದರೆ ಕೇಂದ್ರ ವೆಚ್ಚವೂ ಹೆಚ್ಚು. ಶಾಖೆಗಳ ಸಂಖ್ಯೆ ಬದಲಿಸಿ ಡಿಪಾರ್ಟ್‌ಮೆಂಟಲ್ ಸ್ಟೋರ್‌ನೊಂದಿಗೆ ಹೋಲಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "nb",
+     "label": {
+      "en": "Branches",
+      "kn": "ಶಾಖೆಗಳು"
+     },
+     "min": 1,
+     "max": 50,
+     "step": 1,
+     "value": 10
+    },
+    {
+     "name": "sp",
+     "label": {
+      "en": "Uniform selling price",
+      "kn": "ಏಕರೂಪ ಮಾರಾಟ ಬೆಲೆ"
+     },
+     "min": 90,
+     "max": 130,
+     "step": 1,
+     "value": 110,
+     "unit": "₹"
+    }
+   ],
+   "choices": [
+    {
+     "name": "ty",
+     "label": {
+      "en": "Store type",
+      "kn": "ಅಂಗಡಿ ಪ್ರಕಾರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Chain store",
+        "kn": "ಸರಪಳಿ ಅಂಗಡಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Departmental store",
+        "kn": "ಡಿಪಾರ್ಟ್‌ಮೆಂಟಲ್ ಸ್ಟೋರ್"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "buy",
+     "expr": "if(ty == 1, 100*(1 - 0.05*ln(nb)), 92)"
+    },
+    {
+     "name": "ovh",
+     "expr": "if(ty == 1, 6 + 0.12*nb, 18)"
+    },
+    {
+     "name": "b0",
+     "expr": "buy"
+    },
+    {
+     "name": "b1",
+     "expr": "ovh"
+    },
+    {
+     "name": "b2",
+     "expr": "buy + ovh"
+    },
+    {
+     "name": "b3",
+     "expr": "sp"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "₹ per unit",
+      "kn": "ಘಟಕಕ್ಕೆ ₹"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/140, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/140, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Buying cost",
+      "kn": "ಖರೀದಿ ವೆಚ್ಚ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/140, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/140, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Overheads",
+      "kn": "ಮೇಲ್ವೆಚ್ಚ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/140, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/140, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Total cost",
+      "kn": "ಒಟ್ಟು ವೆಚ್ಚ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/140, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/140, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Selling price",
+      "kn": "ಮಾರಾಟ ಬೆಲೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Profit ₹{sp - buy - ovh:1} a unit",
+      "kn": "ಘಟಕಕ್ಕೆ ಲಾಭ ₹{sp - buy - ovh:1}"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "sp > buy + ovh"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Loss per unit",
+      "kn": "ಘಟಕಕ್ಕೆ ನಷ್ಟ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "sp <= buy + ovh"
+    },
+    {
+     "shape": "particles",
+     "count": 50,
+     "x": "66 + 3*mod(i, 10)",
+     "y": "36 + 3*floor(i/10)",
+     "r": 1,
+     "color": "green",
+     "visibleIf": "ty == 1 && i < nb"
+    },
+    {
+     "shape": "rect",
+     "x": 66,
+     "y": 36,
+     "w": 28,
+     "h": 12,
+     "color": "blue",
+     "opacity": 0.5,
+     "visibleIf": "ty == 2"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 52,
+     "text": {
+      "en": "{nb:0} branches",
+      "kn": "{nb:0} ಶಾಖೆಗಳು"
+     },
+     "size": 18,
+     "visibleIf": "ty == 1"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 52,
+     "text": {
+      "en": "One big building, many departments",
+      "kn": "ಒಂದೇ ಕಟ್ಟಡ, ಹಲವು ವಿಭಾಗ"
+     },
+     "size": 16,
+     "visibleIf": "ty == 2"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cost per unit",
+      "kn": "ಘಟಕ ವೆಚ್ಚ"
+     },
+     "expr": "buy + ovh",
+     "digits": 1,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Margin per unit",
+      "kn": "ಘಟಕ ಲಾಭಾಂಶ"
+     },
+     "expr": "sp - buy - ovh",
+     "digits": 1,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the number of branches with the lowest total cost.",
+     "kn": "ಕಡಿಮೆ ಒಟ್ಟು ವೆಚ್ಚದ ಶಾಖೆಗಳ ಸಂಖ್ಯೆ ಹುಡುಕಿ."
+    },
+    {
+     "en": "Why do chain stores sell at the same price everywhere?",
+     "kn": "ಸರಪಳಿ ಅಂಗಡಿಗಳು ಎಲ್ಲೆಡೆ ಒಂದೇ ಬೆಲೆಗೆ ಏಕೆ ಮಾರುತ್ತವೆ?"
+    },
+    {
+     "en": "Why are departmental store overheads high?",
+     "kn": "ಡಿಪಾರ್ಟ್‌ಮೆಂಟಲ್ ಸ್ಟೋರ್ ಮೇಲ್ವೆಚ್ಚ ಏಕೆ ಹೆಚ್ಚು?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "A chain store buys centrally for all its branches, so it gets bigger discounts as it opens more shops, but head-office costs rise too. Change the number of branches and compare with a departmental store under one roof.",
+    "kn": "ಸರಪಳಿ ಅಂಗಡಿ ಎಲ್ಲ ಶಾಖೆಗಳಿಗೆ ಕೇಂದ್ರೀಕೃತವಾಗಿ ಖರೀದಿಸುತ್ತದೆ; ಶಾಖೆಗಳು ಹೆಚ್ಚಾದಂತೆ ರಿಯಾಯಿತಿ ಹೆಚ್ಚು, ಆದರೆ ಕೇಂದ್ರ ವೆಚ್ಚವೂ ಹೆಚ್ಚು. ಶಾಖೆಗಳ ಸಂಖ್ಯೆ ಬದಲಿಸಿ ಡಿಪಾರ್ಟ್‌ಮೆಂಟಲ್ ಸ್ಟೋರ್‌ನೊಂದಿಗೆ ಹೋಲಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

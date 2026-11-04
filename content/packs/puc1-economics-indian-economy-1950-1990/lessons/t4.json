@@ -62,6 +62,159 @@
    }
   },
   {
+   "id": "scene-industrial-growth",
+   "type": "interactive",
+   "title": {
+    "en": "Industrial growth under the plans",
+    "kn": "ಯೋಜನೆಗಳಡಿ ಕೈಗಾರಿಕಾ ಬೆಳವಣಿಗೆ"
+   },
+   "narration": {
+    "en": "From 1951 to 1990 industry, led by the public sector under the Industrial Policy Resolution 1956, grew at about 6% a year. Growth compounds: the index (1951 = 100) multiplies by the same factor each year. At 6% a year, about how many years does output take to double? Compare 6% with 3.5% over forty years. How big is the gap by 1991?",
+    "kn": "1951ರಿಂದ 1990ರವರೆಗೆ 1956ರ ಕೈಗಾರಿಕಾ ನೀತಿ ನಿರ್ಣಯದಡಿ ಸಾರ್ವಜನಿಕ ವಲಯದ ನೇತೃತ್ವದಲ್ಲಿ ಕೈಗಾರಿಕೆ ವರ್ಷಕ್ಕೆ ಸುಮಾರು 6% ಬೆಳೆಯಿತು. ಬೆಳವಣಿಗೆ ಚಕ್ರಬಡ್ಡಿಯಂತೆ: ಸೂಚ್ಯಂಕ (1951 = 100) ಪ್ರತಿ ವರ್ಷ ಒಂದೇ ಅಂಶದಿಂದ ಗುಣಿಸುತ್ತದೆ. ವರ್ಷಕ್ಕೆ 6% ಆದರೆ ಉತ್ಪಾದನೆ ದ್ವಿಗುಣಕ್ಕೆ ಸುಮಾರು ಎಷ್ಟು ವರ್ಷ? 40 ವರ್ಷಗಳಲ್ಲಿ 6% ಮತ್ತು 3.5% ಹೋಲಿಸಿ. 1991ರಲ್ಲಿ ಅಂತರ ಎಷ್ಟು?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "From 1951 to 1990 industry, led by the public sector under the Industrial Policy Resolution 1956, grew at about 6% a year. Growth compounds: the index (1951 = 100) multiplies by the same factor each year.",
+    "kn": "1951ರಿಂದ 1990ರವರೆಗೆ 1956ರ ಕೈಗಾರಿಕಾ ನೀತಿ ನಿರ್ಣಯದಡಿ ಸಾರ್ವಜನಿಕ ವಲಯದ ನೇತೃತ್ವದಲ್ಲಿ ಕೈಗಾರಿಕೆ ವರ್ಷಕ್ಕೆ ಸುಮಾರು 6% ಬೆಳೆಯಿತು. ಬೆಳವಣಿಗೆ ಚಕ್ರಬಡ್ಡಿಯಂತೆ: ಸೂಚ್ಯಂಕ (1951 = 100) ಪ್ರತಿ ವರ್ಷ ಒಂದೇ ಅಂಶದಿಂದ ಗುಣಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "g",
+     "label": {
+      "en": "Growth rate",
+      "kn": "ಬೆಳವಣಿಗೆ ದರ"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 0.5,
+     "value": 6,
+     "unit": "%"
+    },
+    {
+     "name": "yr",
+     "label": {
+      "en": "Year",
+      "kn": "ವರ್ಷ"
+     },
+     "min": 1951,
+     "max": 1991,
+     "step": 1,
+     "value": 1971
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cmp",
+     "label": {
+      "en": "Compare with 3.5% a year",
+      "kn": "ವರ್ಷಕ್ಕೆ 3.5% ಜೊತೆ ಹೋಲಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "idx",
+     "expr": "100*(1 + g/100)^(yr - 1951)"
+    }
+   ],
+   "view": {
+    "x": [
+     1949,
+     1993
+    ],
+    "y": [
+     0,
+     2500
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "year",
+    "yLabel": "output index"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "color": "orange",
+     "width": 4,
+     "fn": "100*(1 + g/100)^(x - 1951)",
+     "from": 1951,
+     "to": 1991
+    },
+    {
+     "shape": "path",
+     "color": "blue",
+     "width": 3,
+     "fn": "100*1.035^(x - 1951)",
+     "from": 1951,
+     "to": 1991,
+     "dashed": true,
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "circle",
+     "x": "yr",
+     "y": "idx",
+     "r": 1.0,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": "clamp(yr, 1958, 1984)",
+     "y": "idx + 300",
+     "text": {
+      "en": "{yr:0}: index {idx:0}",
+      "kn": "{yr:0}: ಸೂಚ್ಯಂಕ {idx:0}"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 1953,
+     "y": 2300,
+     "text": {
+      "en": "dashed: 3.5% a year",
+      "kn": "ಚುಕ್ಕೆ ರೇಖೆ: ವರ್ಷಕ್ಕೆ 3.5%"
+     },
+     "size": 18,
+     "color": "blue",
+     "align": "left",
+     "visibleIf": "cmp"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Index",
+      "kn": "ಸೂಚ್ಯಂಕ"
+     },
+     "expr": "idx",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Doubling time (≈ 70 ÷ rate)",
+      "kn": "ದ್ವಿಗುಣ ಸಮಯ (≈ 70 ÷ ದರ)"
+     },
+     "expr": "ln(2)/ln(1 + g/100)",
+     "digits": 1,
+     "unit": "years"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At 6% a year, about how many years does output take to double?",
+     "kn": "ವರ್ಷಕ್ಕೆ 6% ಆದರೆ ಉತ್ಪಾದನೆ ದ್ವಿಗುಣಕ್ಕೆ ಸುಮಾರು ಎಷ್ಟು ವರ್ಷ?"
+    },
+    {
+     "en": "Compare 6% with 3.5% over forty years. How big is the gap by 1991?",
+     "kn": "40 ವರ್ಷಗಳಲ್ಲಿ 6% ಮತ್ತು 3.5% ಹೋಲಿಸಿ. 1991ರಲ್ಲಿ ಅಂತರ ಎಷ್ಟು?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

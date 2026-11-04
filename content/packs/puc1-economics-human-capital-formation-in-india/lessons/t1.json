@@ -56,6 +56,157 @@
    }
   },
   {
+   "id": "scene-returns-education",
+   "type": "interactive",
+   "title": {
+    "en": "Education as investment",
+    "kn": "ಶಿಕ್ಷಣವೇ ಹೂಡಿಕೆ"
+   },
+   "narration": {
+    "en": "Human capital is the skill and knowledge in people. Each extra year of education raises earnings by a rate of return, just as a machine raises output. Physical capital can be sold; human capital stays with the person. Compare 10 and 15 years of schooling at a 10% return. Does the extra lifetime income cover the years not spent earning?",
+    "kn": "ಮಾನವ ಬಂಡವಾಳ ಜನರಲ್ಲಿರುವ ಕೌಶಲ ಮತ್ತು ಜ್ಞಾನ. ಯಂತ್ರ ಉತ್ಪಾದನೆ ಹೆಚ್ಚಿಸುವಂತೆ ಪ್ರತಿ ಹೆಚ್ಚುವರಿ ಶಿಕ್ಷಣ ವರ್ಷ ಆದಾಯವನ್ನು ಪ್ರತಿಫಲ ದರದಷ್ಟು ಹೆಚ್ಚಿಸುತ್ತದೆ. ಭೌತಿಕ ಬಂಡವಾಳ ಮಾರಬಹುದು; ಮಾನವ ಬಂಡವಾಳ ವ್ಯಕ್ತಿಯೊಂದಿಗೇ ಇರುತ್ತದೆ. 10% ಪ್ರತಿಫಲದಲ್ಲಿ 10 ಮತ್ತು 15 ವರ್ಷ ಶಿಕ್ಷಣ ಹೋಲಿಸಿ. ಹೆಚ್ಚುವರಿ ಜೀವಮಾನ ಆದಾಯ ಗಳಿಸದ ವರ್ಷಗಳನ್ನು ತುಂಬುತ್ತದೆಯೇ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Human capital is the skill and knowledge in people. Each extra year of education raises earnings by a rate of return, just as a machine raises output. Physical capital can be sold; human capital stays with the person.",
+    "kn": "ಮಾನವ ಬಂಡವಾಳ ಜನರಲ್ಲಿರುವ ಕೌಶಲ ಮತ್ತು ಜ್ಞಾನ. ಯಂತ್ರ ಉತ್ಪಾದನೆ ಹೆಚ್ಚಿಸುವಂತೆ ಪ್ರತಿ ಹೆಚ್ಚುವರಿ ಶಿಕ್ಷಣ ವರ್ಷ ಆದಾಯವನ್ನು ಪ್ರತಿಫಲ ದರದಷ್ಟು ಹೆಚ್ಚಿಸುತ್ತದೆ. ಭೌತಿಕ ಬಂಡವಾಳ ಮಾರಬಹುದು; ಮಾನವ ಬಂಡವಾಳ ವ್ಯಕ್ತಿಯೊಂದಿಗೇ ಇರುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "yrs",
+     "label": {
+      "en": "Years of education",
+      "kn": "ಶಿಕ್ಷಣದ ವರ್ಷಗಳು"
+     },
+     "min": 0,
+     "max": 16,
+     "step": 1,
+     "value": 10
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Return per year of education",
+      "kn": "ಪ್ರತಿ ಶಿಕ್ಷಣ ವರ್ಷದ ಪ್ರತಿಫಲ"
+     },
+     "min": 5,
+     "max": 15,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    },
+    {
+     "name": "w0",
+     "label": {
+      "en": "Wage with no schooling (₹ thousand)",
+      "kn": "ಶಾಲೆ ಇಲ್ಲದ ಕೂಲಿ (₹ ಸಾವಿರ)"
+     },
+     "min": 8,
+     "max": 20,
+     "step": 1,
+     "value": 10
+    }
+   ],
+   "vars": [
+    {
+     "name": "wg",
+     "expr": "w0*(1 + r/100)^yrs"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16.5
+    ],
+    "y": [
+     0,
+     200
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "years of education",
+    "yLabel": "wage (₹ thousand / month)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "color": "green",
+     "width": 4,
+     "fn": "w0*(1 + r/100)^x",
+     "from": 0,
+     "to": 16
+    },
+    {
+     "shape": "circle",
+     "x": "yrs",
+     "y": "wg",
+     "r": 0.25,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": "yrs",
+     "y1": 0,
+     "x2": "yrs",
+     "y2": "wg",
+     "color": "white",
+     "width": 2,
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "label",
+     "x": "clamp(yrs, 3, 13)",
+     "y": "wg + 14",
+     "text": {
+      "en": "₹{wg:1} thousand a month",
+      "kn": "ತಿಂಗಳಿಗೆ ₹{wg:1} ಸಾವಿರ"
+     },
+     "size": 22,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Monthly wage",
+      "kn": "ಮಾಸಿಕ ಕೂಲಿ"
+     },
+     "expr": "wg",
+     "digits": 1,
+     "unit": "₹ thousand"
+    },
+    {
+     "label": {
+      "en": "Working years (to age 60)",
+      "kn": "ದುಡಿಮೆಯ ವರ್ಷ (60ರವರೆಗೆ)"
+     },
+     "expr": "54 - yrs",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Lifetime earnings",
+      "kn": "ಜೀವಮಾನ ಗಳಿಕೆ"
+     },
+     "expr": "wg*12*(54 - yrs)/100",
+     "digits": 1,
+     "unit": "₹ lakh"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Compare 10 and 15 years of schooling at a 10% return.",
+     "kn": "10% ಪ್ರತಿಫಲದಲ್ಲಿ 10 ಮತ್ತು 15 ವರ್ಷ ಶಿಕ್ಷಣ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Does the extra lifetime income cover the years not spent earning?",
+     "kn": "ಹೆಚ್ಚುವರಿ ಜೀವಮಾನ ಆದಾಯ ಗಳಿಸದ ವರ್ಷಗಳನ್ನು ತುಂಬುತ್ತದೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

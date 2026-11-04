@@ -61,6 +61,296 @@
    }
   },
   {
+   "id": "scene-hdi",
+   "type": "interactive",
+   "title": {
+    "en": "Build the Human Development Index",
+    "kn": "ಮಾನವ ಅಭಿವೃದ್ಧಿ ಸೂಚ್ಯಂಕ ರಚಿಸಿ"
+   },
+   "narration": {
+    "en": "The UNDP HDI combines a long and healthy life (life expectancy), knowledge (mean and expected years of schooling) and a decent standard of living (GNI per head, on a log scale). Each is scaled 0 to 1 and the HDI is their geometric mean, so a weak dimension drags it down. India is roughly 67 years, 6.6 and 12.6 years of schooling, $6,900. Where does it fall? Doubling income or adding 5 years of life: which raises HDI more?",
+    "kn": "UNDP ಸೂಚ್ಯಂಕ ದೀರ್ಘ ಆರೋಗ್ಯಕರ ಜೀವನ (ಜೀವಿತಾವಧಿ), ಜ್ಞಾನ (ಸರಾಸರಿ ಮತ್ತು ನಿರೀಕ್ಷಿತ ಶಾಲಾ ವರ್ಷಗಳು), ಯೋಗ್ಯ ಜೀವನಮಟ್ಟ (ತಲಾ GNI, ಲಾಗ್ ಪ್ರಮಾಣ) ಸೇರಿಸುತ್ತದೆ. ಪ್ರತಿಯೊಂದು 0ರಿಂದ 1; HDI ಅವುಗಳ ಜ್ಯಾಮಿತೀಯ ಸರಾಸರಿ, ದುರ್ಬಲ ಆಯಾಮ ಅದನ್ನು ಕೆಳಗೆಳೆಯುತ್ತದೆ. ಭಾರತ ಸುಮಾರು 67 ವರ್ಷ, 6.6 ಮತ್ತು 12.6 ಶಾಲಾ ವರ್ಷ, $6,900. ಎಲ್ಲಿ ಬರುತ್ತದೆ? ಆದಾಯ ದ್ವಿಗುಣ ಅಥವಾ 5 ವರ್ಷ ಜೀವಿತಾವಧಿ: ಯಾವುದು HDI ಹೆಚ್ಚು ಏರಿಸುತ್ತದೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "The UNDP HDI combines a long and healthy life (life expectancy), knowledge (mean and expected years of schooling) and a decent standard of living (GNI per head, on a log scale). Each is scaled 0 to 1 and the HDI is their geometric mean, so a weak dimension drags it down.",
+    "kn": "UNDP ಸೂಚ್ಯಂಕ ದೀರ್ಘ ಆರೋಗ್ಯಕರ ಜೀವನ (ಜೀವಿತಾವಧಿ), ಜ್ಞಾನ (ಸರಾಸರಿ ಮತ್ತು ನಿರೀಕ್ಷಿತ ಶಾಲಾ ವರ್ಷಗಳು), ಯೋಗ್ಯ ಜೀವನಮಟ್ಟ (ತಲಾ GNI, ಲಾಗ್ ಪ್ರಮಾಣ) ಸೇರಿಸುತ್ತದೆ. ಪ್ರತಿಯೊಂದು 0ರಿಂದ 1; HDI ಅವುಗಳ ಜ್ಯಾಮಿತೀಯ ಸರಾಸರಿ, ದುರ್ಬಲ ಆಯಾಮ ಅದನ್ನು ಕೆಳಗೆಳೆಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "le",
+     "label": {
+      "en": "Life expectancy",
+      "kn": "ಜೀವಿತಾವಧಿ"
+     },
+     "min": 40,
+     "max": 85,
+     "step": 1,
+     "value": 67,
+     "unit": "years"
+    },
+    {
+     "name": "mys",
+     "label": {
+      "en": "Mean years of schooling",
+      "kn": "ಸರಾಸರಿ ಶಾಲಾ ವರ್ಷ"
+     },
+     "min": 1,
+     "max": 15,
+     "step": 0.5,
+     "value": 6.5,
+     "unit": "years"
+    },
+    {
+     "name": "eys",
+     "label": {
+      "en": "Expected years of schooling",
+      "kn": "ನಿರೀಕ್ಷಿತ ಶಾಲಾ ವರ್ಷ"
+     },
+     "min": 5,
+     "max": 18,
+     "step": 0.5,
+     "value": 12.5,
+     "unit": "years"
+    },
+    {
+     "name": "gni",
+     "label": {
+      "en": "GNI per head (PPP $)",
+      "kn": "ತಲಾ GNI (PPP $)"
+     },
+     "min": 1000,
+     "max": 50000,
+     "step": 1000,
+     "value": 7000,
+     "unit": "$"
+    }
+   ],
+   "vars": [
+    {
+     "name": "hi",
+     "expr": "clamp((le - 20)/65, 0, 1)"
+    },
+    {
+     "name": "ei",
+     "expr": "clamp((mys/15 + eys/18)/2, 0, 1)"
+    },
+    {
+     "name": "ii",
+     "expr": "clamp((ln(gni) - ln(100))/(ln(75000) - ln(100)), 0, 1)"
+    },
+    {
+     "name": "hdi",
+     "expr": "(hi*ei*ii)^(1/3)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     13.2
+    ],
+    "y": [
+     -0.12,
+     1.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0,
+     "w": 2,
+     "h": "hi",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "hi + 0.05",
+     "text": {
+      "en": "{hi:3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": -0.05,
+     "text": {
+      "en": "Health",
+      "kn": "ಆರೋಗ್ಯ"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": 0,
+     "w": 2,
+     "h": "ei",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "ei + 0.05",
+     "text": {
+      "en": "{ei:3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": -0.05,
+     "text": {
+      "en": "Education",
+      "kn": "ಶಿಕ್ಷಣ"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": 0,
+     "w": 2,
+     "h": "ii",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "ii + 0.05",
+     "text": {
+      "en": "{ii:3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": -0.05,
+     "text": {
+      "en": "Income",
+      "kn": "ಆದಾಯ"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 10.600000000000001,
+     "y": 0,
+     "w": 2,
+     "h": "hdi",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 11.600000000000001,
+     "y": "hdi + 0.05",
+     "text": {
+      "en": "{hdi:3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.600000000000001,
+     "y": -0.05,
+     "text": {
+      "en": "HDI",
+      "kn": "ಮಾನವ ಅಭಿವೃದ್ಧಿ ಸೂಚ್ಯಂಕ"
+     },
+     "size": 20,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 6.6,
+     "y": 1.12,
+     "text": {
+      "en": "Low human development",
+      "kn": "ಕಡಿಮೆ ಮಾನವ ಅಭಿವೃದ್ಧಿ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "hdi >= 0 && hdi < 0.55"
+    },
+    {
+     "shape": "label",
+     "x": 6.6,
+     "y": 1.12,
+     "text": {
+      "en": "Medium human development",
+      "kn": "ಮಧ್ಯಮ ಮಾನವ ಅಭಿವೃದ್ಧಿ"
+     },
+     "size": 24,
+     "color": "orange",
+     "visibleIf": "hdi >= 0.55 && hdi < 0.7"
+    },
+    {
+     "shape": "label",
+     "x": 6.6,
+     "y": 1.12,
+     "text": {
+      "en": "High human development",
+      "kn": "ಉನ್ನತ ಮಾನವ ಅಭಿವೃದ್ಧಿ"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "hdi >= 0.7 && hdi < 0.8"
+    },
+    {
+     "shape": "label",
+     "x": 6.6,
+     "y": 1.12,
+     "text": {
+      "en": "Very high human development",
+      "kn": "ಅತ್ಯುನ್ನತ ಮಾನವ ಅಭಿವೃದ್ಧಿ"
+     },
+     "size": 24,
+     "color": "green",
+     "visibleIf": "hdi >= 0.8 && hdi < 2"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "HDI",
+      "kn": "ಮಾನವ ಅಭಿವೃದ್ಧಿ ಸೂಚ್ಯಂಕ"
+     },
+     "expr": "hdi",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Weakest dimension",
+      "kn": "ಅತಿ ದುರ್ಬಲ ಆಯಾಮ"
+     },
+     "expr": "min(hi, ei, ii)",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "India is roughly 67 years, 6.6 and 12.6 years of schooling, $6,900. Where does it fall?",
+     "kn": "ಭಾರತ ಸುಮಾರು 67 ವರ್ಷ, 6.6 ಮತ್ತು 12.6 ಶಾಲಾ ವರ್ಷ, $6,900. ಎಲ್ಲಿ ಬರುತ್ತದೆ?"
+    },
+    {
+     "en": "Doubling income or adding 5 years of life: which raises HDI more?",
+     "kn": "ಆದಾಯ ದ್ವಿಗುಣ ಅಥವಾ 5 ವರ್ಷ ಜೀವಿತಾವಧಿ: ಯಾವುದು HDI ಹೆಚ್ಚು ಏರಿಸುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

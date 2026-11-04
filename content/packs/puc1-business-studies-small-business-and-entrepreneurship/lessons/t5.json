@@ -80,6 +80,273 @@
    }
   },
   {
+   "id": "scene-msme-loan",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Getting a loan for a small unit",
+    "kn": "ಸಣ್ಣ ಘಟಕಕ್ಕೆ ಸಾಲ ಪಡೆಯುವುದು"
+   },
+   "caption": {
+    "en": "Small firms often lack collateral and pay high interest. Set the loan and the collateral the owner has. Turn on the government credit guarantee (CGTMSE) and the interest subsidy to see the problem eased.",
+    "kn": "ಸಣ್ಣ ಸಂಸ್ಥೆಗಳಿಗೆ ಆಧಾರ ಕೊರತೆ ಮತ್ತು ಹೆಚ್ಚು ಬಡ್ಡಿ. ಸಾಲ ಮತ್ತು ಆಧಾರ ಹೊಂದಿಸಿ. ಸರ್ಕಾರದ ಸಾಲ ಖಾತರಿ (CGTMSE) ಮತ್ತು ಬಡ್ಡಿ ಸಹಾಯಧನ ಆನ್ ಮಾಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "lnd",
+     "label": {
+      "en": "Loan needed",
+      "kn": "ಬೇಕಾದ ಸಾಲ"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 1,
+     "value": 20,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "col",
+     "label": {
+      "en": "Collateral the owner has",
+      "kn": "ಮಾಲೀಕನ ಆಧಾರ"
+     },
+     "min": 0,
+     "max": 40,
+     "step": 1,
+     "value": 8,
+     "unit": "₹ lakh"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cg",
+     "label": {
+      "en": "Credit guarantee (CGTMSE)",
+      "kn": "ಸಾಲ ಖಾತರಿ (CGTMSE)"
+     },
+     "value": false
+    },
+    {
+     "name": "sub",
+     "label": {
+      "en": "Interest subsidy 3%",
+      "kn": "3% ಬಡ್ಡಿ ಸಹಾಯಧನ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "ok",
+     "expr": "min(lnd, if(cg, lnd, col*1.25))"
+    },
+    {
+     "name": "rate",
+     "expr": "12 - if(sub, 3, 0) + if(cg, 1, 0)"
+    },
+    {
+     "name": "b0",
+     "expr": "ok"
+    },
+    {
+     "name": "b1",
+     "expr": "lnd - ok"
+    },
+    {
+     "name": "b2",
+     "expr": "ok*rate/100*5"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "₹ lakh (interest ×5)",
+      "kn": "₹ ಲಕ್ಷ (ಬಡ್ಡಿ ×5)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 9.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b0/50, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 15.0,
+     "y": "14.5 + clamp(b0/50, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 15.0,
+     "y": 8,
+     "text": {
+      "en": "Loan approved",
+      "kn": "ಮಂಜೂರಾದ ಸಾಲ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 27.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b1/50, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": "14.5 + clamp(b1/50, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 8,
+     "text": {
+      "en": "Shortfall",
+      "kn": "ಕೊರತೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 45.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b2/50, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 51.0,
+     "y": "14.5 + clamp(b2/50, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 51.0,
+     "y": 8,
+     "text": {
+      "en": "Interest a year",
+      "kn": "ವಾರ್ಷಿಕ ಬಡ್ಡಿ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Fully funded",
+      "kn": "ಪೂರ್ಣ ಹಣ ಲಭ್ಯ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "ok >= lnd"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Short of funds",
+      "kn": "ಹಣದ ಕೊರತೆ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "ok < lnd"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Interest rate",
+      "kn": "ಬಡ್ಡಿ ದರ"
+     },
+     "expr": "rate",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Yearly interest",
+      "kn": "ವಾರ್ಷಿಕ ಬಡ್ಡಿ"
+     },
+     "expr": "ok*rate/100",
+     "digits": 2,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Shortfall",
+      "kn": "ಕೊರತೆ"
+     },
+     "expr": "lnd - ok",
+     "digits": 0,
+     "unit": "₹ lakh"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With ₹8 lakh collateral, how much can the bank lend without the guarantee?",
+     "kn": "₹8 ಲಕ್ಷ ಆಧಾರದಲ್ಲಿ ಖಾತರಿ ಇಲ್ಲದೆ ಎಷ್ಟು ಸಾಲ?"
+    },
+    {
+     "en": "Which problem of small business does CGTMSE solve?",
+     "kn": "CGTMSE ಯಾವ ಸಮಸ್ಯೆ ಪರಿಹರಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Name two other problems small firms face.",
+     "kn": "ಸಣ್ಣ ಸಂಸ್ಥೆಗಳ ಇನ್ನೆರಡು ಸಮಸ್ಯೆ ಹೇಳಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Small firms often lack collateral and pay high interest. Set the loan and the collateral the owner has. Turn on the government credit guarantee (CGTMSE) and the interest subsidy to see the problem eased.",
+    "kn": "ಸಣ್ಣ ಸಂಸ್ಥೆಗಳಿಗೆ ಆಧಾರ ಕೊರತೆ ಮತ್ತು ಹೆಚ್ಚು ಬಡ್ಡಿ. ಸಾಲ ಮತ್ತು ಆಧಾರ ಹೊಂದಿಸಿ. ಸರ್ಕಾರದ ಸಾಲ ಖಾತರಿ (CGTMSE) ಮತ್ತು ಬಡ್ಡಿ ಸಹಾಯಧನ ಆನ್ ಮಾಡಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

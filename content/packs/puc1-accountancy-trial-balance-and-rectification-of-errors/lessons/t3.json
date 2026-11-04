@@ -61,6 +61,289 @@
    }
   },
   {
+   "id": "scene-error-types",
+   "type": "interactive",
+   "title": {
+    "en": "Which errors does a trial balance catch?",
+    "kn": "ತಾಳೆ ಪಟ್ಟಿ ಯಾವ ತಪ್ಪುಗಳನ್ನು ಹಿಡಿಯುತ್ತದೆ?"
+   },
+   "narration": {
+    "en": "The ledger should give ₹50,000 on each side. One-sided errors (partial omission, wrong casting) make the totals differ. Two-sided errors (omission, commission, principle, compensating) leave them equal, so the trial balance cannot reveal them. Before you choose, predict: will an error of principle upset the totals? Which two errors here make the totals differ?",
+    "kn": "ಖಾತೆಪುಸ್ತಕ ಪ್ರತಿ ಬದಿ ₹50,000 ಕೊಡಬೇಕು. ಏಕಪಕ್ಷೀಯ ತಪ್ಪುಗಳು (ಭಾಗಶಃ ಲೋಪ, ತಪ್ಪು ಕೂಡಿಕೆ) ಮೊತ್ತಗಳನ್ನು ಬೇರೆ ಮಾಡುತ್ತವೆ. ದ್ವಿಪಕ್ಷೀಯ ತಪ್ಪುಗಳು (ಲೋಪ, ಆಯೋಗ, ತತ್ವ, ಪರಿಹಾರಕ) ಸಮವಾಗಿಯೇ ಬಿಡುತ್ತವೆ, ತಾಳೆ ಪಟ್ಟಿ ಅವನ್ನು ತೋರಿಸದು. ಆರಿಸುವ ಮೊದಲು ಊಹಿಸಿ: ತತ್ವದ ತಪ್ಪು ಮೊತ್ತಗಳನ್ನು ಬದಲಿಸುತ್ತದೆಯೇ? ಇಲ್ಲಿ ಯಾವ ಎರಡು ತಪ್ಪುಗಳು ಮೊತ್ತ ಬೇರೆ ಮಾಡುತ್ತವೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "The ledger should give ₹50,000 on each side. One-sided errors (partial omission, wrong casting) make the totals differ. Two-sided errors (omission, commission, principle, compensating) leave them equal, so the trial balance cannot reveal them.",
+    "kn": "ಖಾತೆಪುಸ್ತಕ ಪ್ರತಿ ಬದಿ ₹50,000 ಕೊಡಬೇಕು. ಏಕಪಕ್ಷೀಯ ತಪ್ಪುಗಳು (ಭಾಗಶಃ ಲೋಪ, ತಪ್ಪು ಕೂಡಿಕೆ) ಮೊತ್ತಗಳನ್ನು ಬೇರೆ ಮಾಡುತ್ತವೆ. ದ್ವಿಪಕ್ಷೀಯ ತಪ್ಪುಗಳು (ಲೋಪ, ಆಯೋಗ, ತತ್ವ, ಪರಿಹಾರಕ) ಸಮವಾಗಿಯೇ ಬಿಡುತ್ತವೆ, ತಾಳೆ ಪಟ್ಟಿ ಅವನ್ನು ತೋರಿಸದು."
+   },
+   "sliders": [
+    {
+     "name": "amt",
+     "label": {
+      "en": "Amount of the error",
+      "kn": "ತಪ್ಪಿನ ಮೊತ್ತ"
+     },
+     "min": 500,
+     "max": 8000,
+     "step": 500,
+     "value": 3000,
+     "unit": "₹"
+    }
+   ],
+   "choices": [
+    {
+     "name": "et",
+     "label": {
+      "en": "Error",
+      "kn": "ತಪ್ಪು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Omission",
+        "kn": "ಲೋಪ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Commission",
+        "kn": "ಆಯೋಗ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Principle",
+        "kn": "ತತ್ವ"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Compensating",
+        "kn": "ಪರಿಹಾರಕ"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "Partial omission",
+        "kn": "ಭಾಗಶಃ ಲೋಪ"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "Undercasting",
+        "kn": "ಕಡಿಮೆ ಕೂಡಿಕೆ"
+       },
+       "value": 6
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "dr",
+     "expr": "50000 - if(et == 1, amt, 0)"
+    },
+    {
+     "name": "cr",
+     "expr": "50000 - if(et == 1, amt, 0) - if(et == 5, amt, 0) - if(et == 6, amt, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     39000,
+     52000
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 40000,
+     "w": 3,
+     "h": "max(dr - 40000, 24)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": "max(dr, 40000) + 420",
+     "text": {
+      "en": "₹{dr:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 39580.0,
+     "text": {
+      "en": "Debit total",
+      "kn": "ಡೆಬಿಟ್ ಒಟ್ಟು"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 7,
+     "y": 40000,
+     "w": 3,
+     "h": "max(cr - 40000, 24)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 8.5,
+     "y": "max(cr, 40000) + 420",
+     "text": {
+      "en": "₹{cr:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.5,
+     "y": 39580.0,
+     "text": {
+      "en": "Credit total",
+      "kn": "ಕ್ರೆಡಿಟ್ ಒಟ್ಟು"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 51200,
+     "text": {
+      "en": "Omission: a transaction not recorded at all",
+      "kn": "ಲೋಪ: ವ್ಯವಹಾರ ದಾಖಲೇ ಆಗಿಲ್ಲ"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "et == 1"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 51200,
+     "text": {
+      "en": "Commission: posted to Ramesh's account instead of Suresh's",
+      "kn": "ಆಯೋಗ: ಸುರೇಶ್ ಬದಲು ರಮೇಶ್ ಖಾತೆಗೆ"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "et == 2"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 51200,
+     "text": {
+      "en": "Principle: machine bought, debited to Purchases",
+      "kn": "ತತ್ವ: ಯಂತ್ರ ಖರೀದಿ ಖರೀದಿ ಖಾತೆಗೆ"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "et == 3"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 51200,
+     "text": {
+      "en": "Compensating: one account over-debited, another over-credited",
+      "kn": "ಪರಿಹಾರಕ: ಒಂದು ಹೆಚ್ಚು ಡೆಬಿಟ್, ಇನ್ನೊಂದು ಹೆಚ್ಚು ಕ್ರೆಡಿಟ್"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "et == 4"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 51200,
+     "text": {
+      "en": "Partial omission: only the debit side posted",
+      "kn": "ಭಾಗಶಃ ಲೋಪ: ಡೆಬಿಟ್ ಬದಿ ಮಾತ್ರ"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "et == 5"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 51200,
+     "text": {
+      "en": "Sales book undercast (total too low)",
+      "kn": "ಮಾರಾಟ ಪುಸ್ತಕ ಕಡಿಮೆ ಕೂಡಿಸಲಾಗಿದೆ"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "et == 6"
+    },
+    {
+     "shape": "label",
+     "x": 7.5,
+     "y": 50300,
+     "text": {
+      "en": "Trial balance agrees: the error is hidden",
+      "kn": "ತಾಳೆ ಪಟ್ಟಿ ಸಮ: ತಪ್ಪು ಮರೆಯಾಗಿದೆ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "dr == cr"
+    },
+    {
+     "shape": "label",
+     "x": 7.5,
+     "y": 50300,
+     "text": {
+      "en": "Trial balance does not agree: difference ₹{abs(dr - cr):0}",
+      "kn": "ತಾಳೆ ಪಟ್ಟಿ ಸಮವಿಲ್ಲ: ವ್ಯತ್ಯಾಸ ₹{abs(dr - cr):0}"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "dr != cr"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Difference",
+      "kn": "ವ್ಯತ್ಯಾಸ"
+     },
+     "expr": "abs(dr - cr)",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Before you choose, predict: will an error of principle upset the totals?",
+     "kn": "ಆರಿಸುವ ಮೊದಲು ಊಹಿಸಿ: ತತ್ವದ ತಪ್ಪು ಮೊತ್ತಗಳನ್ನು ಬದಲಿಸುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Which two errors here make the totals differ?",
+     "kn": "ಇಲ್ಲಿ ಯಾವ ಎರಡು ತಪ್ಪುಗಳು ಮೊತ್ತ ಬೇರೆ ಮಾಡುತ್ತವೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

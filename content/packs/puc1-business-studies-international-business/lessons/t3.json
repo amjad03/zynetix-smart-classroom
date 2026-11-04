@@ -65,6 +65,341 @@
    }
   },
   {
+   "id": "scene-entry-modes",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Choosing a mode of entry abroad",
+    "kn": "ವಿದೇಶ ಪ್ರವೇಶ ವಿಧಾನದ ಆಯ್ಕೆ"
+   },
+   "caption": {
+    "en": "Each way of entering a foreign market trades control against investment and risk. Set how much control the firm wants, the money it can invest and the risk it can bear; the best-fitting mode stands tallest.",
+    "kn": "ವಿದೇಶಿ ಮಾರುಕಟ್ಟೆ ಪ್ರವೇಶದ ಪ್ರತಿ ವಿಧಾನದಲ್ಲಿ ನಿಯಂತ್ರಣ ಮತ್ತು ಹೂಡಿಕೆ/ಅಪಾಯದ ವಿನಿಮಯ ಇದೆ. ನಿಯಂತ್ರಣ, ಹೂಡಿಕೆ ಮತ್ತು ಅಪಾಯ ಹೊಂದಿಸಿ; ಉತ್ತಮ ವಿಧಾನ ಎತ್ತರ."
+   },
+   "sliders": [
+    {
+     "name": "ctl",
+     "label": {
+      "en": "Control wanted",
+      "kn": "ಬೇಕಾದ ನಿಯಂತ್ರಣ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 3
+    },
+    {
+     "name": "inv",
+     "label": {
+      "en": "Money available to invest",
+      "kn": "ಹೂಡಿಕೆಗೆ ಹಣ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 3
+    },
+    {
+     "name": "rk",
+     "label": {
+      "en": "Risk the firm can bear",
+      "kn": "ಸಹಿಸಬಲ್ಲ ಅಪಾಯ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "60 - 3*ctl - 4*inv - 3*rk + 20"
+    },
+    {
+     "name": "b1",
+     "expr": "55 - 4*ctl - 3*inv - 2*rk + 15"
+    },
+    {
+     "name": "b2",
+     "expr": "45 + ctl - 1*inv - 1*rk"
+    },
+    {
+     "name": "b3",
+     "expr": "25 + 3*ctl + 3*inv + 2*rk"
+    },
+    {
+     "name": "b4",
+     "expr": "5 + 5*ctl + 5*inv + 4*rk"
+    },
+    {
+     "name": "best",
+     "expr": "max(b0, b1, b2, b3, b4)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Fit score",
+      "kn": "ಹೊಂದಿಕೆ ಅಂಕ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.05,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b0/140, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": "14.5 + clamp(b0/140, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": 8,
+     "text": {
+      "en": "Exporting",
+      "kn": "ರಫ್ತು"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 18.85,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b1/140, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 22.2,
+     "y": "14.5 + clamp(b1/140, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 22.2,
+     "y": 8,
+     "text": {
+      "en": "Licensing / franchising",
+      "kn": "ಪರವಾನಗಿ / ಫ್ರಾಂಚೈಸಿ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 29.65,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b2/140, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": "14.5 + clamp(b2/140, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 8,
+     "text": {
+      "en": "Contract mfg",
+      "kn": "ಗುತ್ತಿಗೆ ಉತ್ಪಾದನೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 40.45,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b3/140, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 43.8,
+     "y": "14.5 + clamp(b3/140, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 43.8,
+     "y": 8,
+     "text": {
+      "en": "Joint venture",
+      "kn": "ಜಂಟಿ ಉದ್ಯಮ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 51.25,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b4/140, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 54.6,
+     "y": "14.5 + clamp(b4/140, 0, 1)*36",
+     "text": {
+      "en": "{b4:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 54.6,
+     "y": 8,
+     "text": {
+      "en": "Own subsidiary",
+      "kn": "ಸ್ವಂತ ಅಂಗಸಂಸ್ಥೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Start by exporting",
+      "kn": "ರಫ್ತಿನಿಂದ ಆರಂಭಿಸಿ"
+     },
+     "size": 22,
+     "color": "blue",
+     "visibleIf": "b0 == best"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "License or franchise",
+      "kn": "ಪರವಾನಗಿ / ಫ್ರಾಂಚೈಸಿ"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "b1 == best && b0 < best"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Contract manufacturing",
+      "kn": "ಗುತ್ತಿಗೆ ಉತ್ಪಾದನೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "b2 == best && max(b0, b1) < best"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Joint venture",
+      "kn": "ಜಂಟಿ ಉದ್ಯಮ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "b3 == best && max(b0, b1, b2) < best"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Wholly owned subsidiary",
+      "kn": "ಸಂಪೂರ್ಣ ಸ್ವಾಮ್ಯದ ಅಂಗಸಂಸ್ಥೆ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "b4 == best && max(b0, b1, b2, b3) < best"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Best fit score",
+      "kn": "ಉತ್ತಮ ಅಂಕ"
+     },
+     "expr": "best",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "A small firm with little money: which mode fits?",
+     "kn": "ಕಡಿಮೆ ಹಣದ ಸಣ್ಣ ಸಂಸ್ಥೆಗೆ ಯಾವ ವಿಧಾನ?"
+    },
+    {
+     "en": "Why does a subsidiary give the most control?",
+     "kn": "ಅಂಗಸಂಸ್ಥೆ ಅತಿ ಹೆಚ್ಚು ನಿಯಂತ್ರಣ ಏಕೆ ಕೊಡುತ್ತದೆ?"
+    },
+    {
+     "en": "When is a joint venture with a local partner wise?",
+     "kn": "ಸ್ಥಳೀಯ ಪಾಲುದಾರನೊಂದಿಗೆ ಜಂಟಿ ಉದ್ಯಮ ಯಾವಾಗ ಸೂಕ್ತ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Each way of entering a foreign market trades control against investment and risk. Set how much control the firm wants, the money it can invest and the risk it can bear; the best-fitting mode stands tallest.",
+    "kn": "ವಿದೇಶಿ ಮಾರುಕಟ್ಟೆ ಪ್ರವೇಶದ ಪ್ರತಿ ವಿಧಾನದಲ್ಲಿ ನಿಯಂತ್ರಣ ಮತ್ತು ಹೂಡಿಕೆ/ಅಪಾಯದ ವಿನಿಮಯ ಇದೆ. ನಿಯಂತ್ರಣ, ಹೂಡಿಕೆ ಮತ್ತು ಅಪಾಯ ಹೊಂದಿಸಿ; ಉತ್ತಮ ವಿಧಾನ ಎತ್ತರ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

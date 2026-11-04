@@ -67,6 +67,326 @@
    }
   },
   {
+   "id": "scene-five-is",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The five I's: goods or services?",
+    "kn": "ಐದು 'I'ಗಳು: ಸರಕೇ ಸೇವೆಯೇ?"
+   },
+   "caption": {
+    "en": "Choose an offering and see how strongly it shows each feature of a service. Raise standardisation to cut inconsistency. Goods score low on the I's; services score high.",
+    "kn": "ಒಂದು ಕೊಡುಗೆಯನ್ನು ಆರಿಸಿ ಅದು ಸೇವೆಯ ಪ್ರತಿ ಲಕ್ಷಣವನ್ನು ಎಷ್ಟು ತೋರಿಸುತ್ತದೆ ನೋಡಿ. ಪ್ರಮಾಣೀಕರಣ ಹೆಚ್ಚಿಸಿ ಅಸ್ಥಿರತೆ ಕಡಿಮೆ ಮಾಡಿ. ಸರಕುಗಳಿಗೆ ಕಡಿಮೆ, ಸೇವೆಗಳಿಗೆ ಹೆಚ್ಚು ಅಂಕ."
+   },
+   "sliders": [
+    {
+     "name": "sd",
+     "label": {
+      "en": "Standardisation effort",
+      "kn": "ಪ್ರಮಾಣೀಕರಣ ಪ್ರಯತ್ನ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 0
+    }
+   ],
+   "choices": [
+    {
+     "name": "of",
+     "label": {
+      "en": "Offering",
+      "kn": "ಕೊಡುಗೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Haircut",
+        "kn": "ಕ್ಷೌರ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Bus ride",
+        "kn": "ಬಸ್ ಪ್ರಯಾಣ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Bank transfer",
+        "kn": "ಬ್ಯಾಂಕ್ ವರ್ಗಾವಣೆ"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Shirt",
+        "kn": "ಅಂಗಿ"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "Mobile phone",
+        "kn": "ಮೊಬೈಲ್ ಫೋನ್"
+       },
+       "value": 5
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "if(of == 1, 9, if(of == 2, 8, if(of == 3, 9, if(of == 4, 1, 2))))"
+    },
+    {
+     "name": "b1",
+     "expr": "if(of == 1, 8, if(of == 2, 6, if(of == 3, 4, if(of == 4, 1, 2))))*(1 - sd/15)"
+    },
+    {
+     "name": "b2",
+     "expr": "if(of == 1, 10, if(of == 2, 9, if(of == 3, 6, if(of == 4, 0, 1))))"
+    },
+    {
+     "name": "b3",
+     "expr": "if(of == 1, 10, if(of == 2, 10, if(of == 3, 9, if(of == 4, 0, 1))))"
+    },
+    {
+     "name": "b4",
+     "expr": "if(of == 1, 9, if(of == 2, 7, if(of == 3, 6, if(of == 4, 1, 3))))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "How strongly each feature shows (0 to 10)",
+      "kn": "ಪ್ರತಿ ಲಕ್ಷಣ ಎಷ್ಟು ಕಾಣುತ್ತದೆ (0–10)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.05,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b0/10, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": "14.5 + clamp(b0/10, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": 8,
+     "text": {
+      "en": "Intangible",
+      "kn": "ಅಮೂರ್ತ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 18.85,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b1/10, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 22.2,
+     "y": "14.5 + clamp(b1/10, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 22.2,
+     "y": 8,
+     "text": {
+      "en": "Inconsistent",
+      "kn": "ಅಸ್ಥಿರ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 29.65,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b2/10, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": "14.5 + clamp(b2/10, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 8,
+     "text": {
+      "en": "Inseparable",
+      "kn": "ಅವಿಭಾಜ್ಯ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 40.45,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b3/10, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 43.8,
+     "y": "14.5 + clamp(b3/10, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 43.8,
+     "y": 8,
+     "text": {
+      "en": "No inventory",
+      "kn": "ದಾಸ್ತಾನು ಇಲ್ಲ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 51.25,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b4/10, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 54.6,
+     "y": "14.5 + clamp(b4/10, 0, 1)*36",
+     "text": {
+      "en": "{b4:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 54.6,
+     "y": 8,
+     "text": {
+      "en": "Involvement",
+      "kn": "ಗ್ರಾಹಕ ಪಾಲ್ಗೊಳ್ಳುವಿಕೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Mostly a service",
+      "kn": "ಬಹುತೇಕ ಸೇವೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "b0 + b1 + b2 + b3 + b4 >= 25"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Mostly a good",
+      "kn": "ಬಹುತೇಕ ಸರಕು"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "b0 + b1 + b2 + b3 + b4 < 25"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Service score (of 50)",
+      "kn": "ಸೇವಾ ಅಂಕ (50ರಲ್ಲಿ)"
+     },
+     "expr": "b0 + b1 + b2 + b3 + b4",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why can a bus seat left empty today never be sold again?",
+     "kn": "ಇಂದು ಖಾಲಿ ಉಳಿದ ಬಸ್ ಸೀಟನ್ನು ಮತ್ತೆ ಏಕೆ ಮಾರಲಾಗದು?"
+    },
+    {
+     "en": "Raise standardisation for a haircut. Which I falls?",
+     "kn": "ಕ್ಷೌರಕ್ಕೆ ಪ್ರಮಾಣೀಕರಣ ಹೆಚ್ಚಿಸಿ. ಯಾವ I ಕಡಿಮೆಯಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Is a bank transfer a business, social or personal service?",
+     "kn": "ಬ್ಯಾಂಕ್ ವರ್ಗಾವಣೆ ವ್ಯವಹಾರ, ಸಾಮಾಜಿಕ ಅಥವಾ ವೈಯಕ್ತಿಕ ಸೇವೆಯೇ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Choose an offering and see how strongly it shows each feature of a service. Raise standardisation to cut inconsistency. Goods score low on the I's; services score high.",
+    "kn": "ಒಂದು ಕೊಡುಗೆಯನ್ನು ಆರಿಸಿ ಅದು ಸೇವೆಯ ಪ್ರತಿ ಲಕ್ಷಣವನ್ನು ಎಷ್ಟು ತೋರಿಸುತ್ತದೆ ನೋಡಿ. ಪ್ರಮಾಣೀಕರಣ ಹೆಚ್ಚಿಸಿ ಅಸ್ಥಿರತೆ ಕಡಿಮೆ ಮಾಡಿ. ಸರಕುಗಳಿಗೆ ಕಡಿಮೆ, ಸೇವೆಗಳಿಗೆ ಹೆಚ್ಚು ಅಂಕ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

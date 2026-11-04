@@ -64,6 +64,225 @@
    }
   },
   {
+   "id": "scene-euclid-algorithm",
+   "type": "interactive",
+   "title": {
+    "en": "An algorithm step by step: Euclid's GCD",
+    "kn": "ಹಂತ ಹಂತವಾಗಿ ಕ್ರಮಾವಳಿ: ಯೂಕ್ಲಿಡ್‌ನ ಮ.ಸಾ.ಅ"
+   },
+   "narration": {
+    "en": "An algorithm is a finite list of clear steps that always ends. Euclid's algorithm finds the GCD: while y is not 0, replace (x, y) by (y, x mod y). When y becomes 0, x is the answer. Load two numbers and press Next step. Find GCD(48, 18). How many steps did it take? Try two numbers where one divides the other. Why does it stop after one step?",
+    "kn": "ಕ್ರಮಾವಳಿ ಎಂದರೆ ಯಾವಾಗಲೂ ಮುಗಿಯುವ ಸ್ಪಷ್ಟ ಹಂತಗಳ ಸೀಮಿತ ಪಟ್ಟಿ. ಯೂಕ್ಲಿಡ್ ಕ್ರಮಾವಳಿ ಮ.ಸಾ.ಅ ಕಂಡುಹಿಡಿಯುತ್ತದೆ: y ≠ 0 ಇರುವವರೆಗೆ (x, y) ಬದಲು (y, x mod y). y = 0 ಆದಾಗ x ಉತ್ತರ. ಎರಡು ಸಂಖ್ಯೆ ಲೋಡ್ ಮಾಡಿ Next step ಒತ್ತಿ. GCD(48, 18) ಕಂಡುಹಿಡಿಯಿರಿ. ಎಷ್ಟು ಹಂತ ಬೇಕಾಯಿತು? ಒಂದು ಇನ್ನೊಂದನ್ನು ಭಾಗಿಸುವ ಎರಡು ಸಂಖ್ಯೆ ಪ್ರಯತ್ನಿಸಿ. ಒಂದೇ ಹಂತದಲ್ಲಿ ಏಕೆ ನಿಲ್ಲುತ್ತದೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "An algorithm is a finite list of clear steps that always ends. Euclid's algorithm finds the GCD: while y is not 0, replace (x, y) by (y, x mod y). When y becomes 0, x is the answer. Load two numbers and press Next step.",
+    "kn": "ಕ್ರಮಾವಳಿ ಎಂದರೆ ಯಾವಾಗಲೂ ಮುಗಿಯುವ ಸ್ಪಷ್ಟ ಹಂತಗಳ ಸೀಮಿತ ಪಟ್ಟಿ. ಯೂಕ್ಲಿಡ್ ಕ್ರಮಾವಳಿ ಮ.ಸಾ.ಅ ಕಂಡುಹಿಡಿಯುತ್ತದೆ: y ≠ 0 ಇರುವವರೆಗೆ (x, y) ಬದಲು (y, x mod y). y = 0 ಆದಾಗ x ಉತ್ತರ. ಎರಡು ಸಂಖ್ಯೆ ಲೋಡ್ ಮಾಡಿ Next step ಒತ್ತಿ."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "First number",
+      "kn": "ಮೊದಲ ಸಂಖ್ಯೆ"
+     },
+     "min": 2,
+     "max": 98,
+     "step": 2,
+     "value": 48
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "Second number",
+      "kn": "ಎರಡನೇ ಸಂಖ್ಯೆ"
+     },
+     "min": 2,
+     "max": 60,
+     "step": 2,
+     "value": 18
+    }
+   ],
+   "counters": [
+    {
+     "name": "gx",
+     "value": 48,
+     "min": 0,
+     "max": 100
+    },
+    {
+     "name": "gy",
+     "value": 18,
+     "min": 0,
+     "max": 100
+    },
+    {
+     "name": "n",
+     "value": 0,
+     "min": 0,
+     "max": 30
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Load numbers",
+      "kn": "ಸಂಖ್ಯೆ ಲೋಡ್ ಮಾಡಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "gx": "A",
+      "gy": "B",
+      "n": "0"
+     }
+    },
+    {
+     "label": {
+      "en": "Next step",
+      "kn": "ಮುಂದಿನ ಹಂತ"
+     },
+     "icon": "next",
+     "set": {
+      "gx": "if(gy > 0, gy, gx)",
+      "gy": "if(gy > 0, mod(gx, gy), 0)",
+      "n": "if(gy > 0, n + 1, n)"
+     }
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     21
+    ],
+    "y": [
+     -8,
+     100
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 0,
+     "w": 3,
+     "h": "max(gx - 0, 0.22)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": "max(gx, 0) + 3.85",
+     "text": {
+      "en": "{gx:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": -3.8500000000000005,
+     "text": {
+      "en": "x"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 8,
+     "y": 0,
+     "w": 3,
+     "h": "max(gy - 0, 0.22)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 9.5,
+     "y": "max(gy, 0) + 3.85",
+     "text": {
+      "en": "{gy:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.5,
+     "y": -3.8500000000000005,
+     "text": {
+      "en": "y"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 10.5,
+     "y": 92,
+     "text": {
+      "en": "Step {n:0}: x = {gx:0}, y = {gy:0}",
+      "kn": "ಹಂತ {n:0}: x = {gx:0}, y = {gy:0}"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.5,
+     "y": 80,
+     "text": {
+      "en": "Rule: if y > 0, (x, y) ← (y, x mod y)",
+      "kn": "ನಿಯಮ: y > 0 ಆದರೆ (x, y) ← (y, x mod y)"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "gy > 0"
+    },
+    {
+     "shape": "label",
+     "x": 10.5,
+     "y": 80,
+     "text": {
+      "en": "y = 0, stop. GCD = {gx:0}",
+      "kn": "y = 0, ನಿಲ್ಲಿಸಿ. ಮ.ಸಾ.ಅ = {gx:0}"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "gy == 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Steps",
+      "kn": "ಹಂತಗಳು"
+     },
+     "expr": "n",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Finished?",
+      "kn": "ಮುಗಿಯಿತೇ?"
+     },
+     "expr": "gy == 0",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find GCD(48, 18). How many steps did it take?",
+     "kn": "GCD(48, 18) ಕಂಡುಹಿಡಿಯಿರಿ. ಎಷ್ಟು ಹಂತ ಬೇಕಾಯಿತು?"
+    },
+    {
+     "en": "Try two numbers where one divides the other. Why does it stop after one step?",
+     "kn": "ಒಂದು ಇನ್ನೊಂದನ್ನು ಭಾಗಿಸುವ ಎರಡು ಸಂಖ್ಯೆ ಪ್ರಯತ್ನಿಸಿ. ಒಂದೇ ಹಂತದಲ್ಲಿ ಏಕೆ ನಿಲ್ಲುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

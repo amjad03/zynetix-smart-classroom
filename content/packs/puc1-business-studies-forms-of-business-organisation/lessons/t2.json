@@ -67,6 +67,333 @@
    }
   },
   {
+   "id": "scene-jhf-liability",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Karta and coparceners: who bears what?",
+    "kn": "ಕರ್ತ ಮತ್ತು ಸಹದಾಯಾದಿಗಳು: ಯಾರ ಹೊಣೆ ಎಷ್ಟು?"
+   },
+   "caption": {
+    "en": "In a Joint Hindu Family business the Karta's liability is unlimited, while each coparcener is liable only up to his share in the family property. Add births to the family and set the loss to see the shares change.",
+    "kn": "ಅವಿಭಕ್ತ ಹಿಂದೂ ಕುಟುಂಬ ವ್ಯವಹಾರದಲ್ಲಿ ಕರ್ತನ ಹೊಣೆ ಅಪರಿಮಿತ; ಸಹದಾಯಾದಿಗಳ ಹೊಣೆ ಕುಟುಂಬ ಆಸ್ತಿಯಲ್ಲಿನ ಪಾಲಿನವರೆಗೆ ಮಾತ್ರ. ಜನನ ಸೇರಿಸಿ, ನಷ್ಟ ಹೊಂದಿಸಿ ಬದಲಾವಣೆ ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "prop",
+     "label": {
+      "en": "Family business property",
+      "kn": "ಕುಟುಂಬ ವ್ಯವಹಾರ ಆಸ್ತಿ"
+     },
+     "min": 10,
+     "max": 60,
+     "step": 2,
+     "value": 30,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "loss",
+     "label": {
+      "en": "Business loss",
+      "kn": "ವ್ಯವಹಾರ ನಷ್ಟ"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 2,
+     "value": 36,
+     "unit": "₹ lakh"
+    }
+   ],
+   "counters": [
+    {
+     "name": "n",
+     "value": 2,
+     "min": 1,
+     "max": 9
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "A son or daughter is born",
+      "kn": "ಮಗ ಅಥವಾ ಮಗಳ ಜನನ"
+     },
+     "icon": "add",
+     "set": {
+      "n": "n + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "A coparcener dies",
+      "kn": "ಸಹದಾಯಾದಿ ಮರಣ"
+     },
+     "icon": "remove",
+     "set": {
+      "n": "n - 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "prop"
+    },
+    {
+     "name": "b1",
+     "expr": "prop/(n + 1)"
+    },
+    {
+     "name": "b2",
+     "expr": "loss"
+    },
+    {
+     "name": "b3",
+     "expr": "max(loss - prop, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "₹ lakh",
+      "kn": "₹ ಲಕ್ಷ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/60, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/60, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Family property",
+      "kn": "ಕುಟುಂಬ ಆಸ್ತಿ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/60, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/60, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Share per member",
+      "kn": "ಪ್ರತಿ ಸದಸ್ಯನ ಪಾಲು"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/60, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/60, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Loss",
+      "kn": "ನಷ್ಟ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/60, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/60, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Karta pays extra",
+      "kn": "ಕರ್ತ ಹೆಚ್ಚುವರಿ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Karta's own assets used",
+      "kn": "ಕರ್ತನ ಸ್ವಂತ ಆಸ್ತಿ ಬಳಕೆ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "loss > prop"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Covered by family property",
+      "kn": "ಕುಟುಂಬ ಆಸ್ತಿಯಲ್ಲೇ ಸರಿದೂಗುತ್ತದೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "loss <= prop"
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "x": "70 + 2.6*i",
+     "y": 44,
+     "r": 1,
+     "color": {
+      "by": "if(i == 0, 1, 0)",
+      "scale": [
+       "green",
+       "yellow"
+      ]
+     },
+     "visibleIf": "i <= n"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 50,
+     "text": {
+      "en": "Karta + {n:0} coparceners",
+      "kn": "ಕರ್ತ + {n:0} ಸಹದಾಯಾದಿಗಳು"
+     },
+     "size": 18
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Members sharing the property",
+      "kn": "ಆಸ್ತಿ ಹಂಚಿಕೊಳ್ಳುವವರು"
+     },
+     "expr": "n + 1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Each one's share",
+      "kn": "ಪ್ರತಿಯೊಬ್ಬರ ಪಾಲು"
+     },
+     "expr": "prop/(n + 1)",
+     "digits": 1,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Karta pays from own assets",
+      "kn": "ಕರ್ತನ ಸ್ವಂತ ಆಸ್ತಿಯಿಂದ"
+     },
+     "expr": "max(loss - prop, 0)",
+     "digits": 0,
+     "unit": "₹ lakh"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Membership comes by birth. What happens to each share when a child is born?",
+     "kn": "ಸದಸ್ಯತ್ವ ಜನನದಿಂದ. ಮಗು ಜನಿಸಿದಾಗ ಪಾಲು ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Does a coparcener's death end the business?",
+     "kn": "ಸಹದಾಯಾದಿಯ ಮರಣ ವ್ಯವಹಾರವನ್ನು ಕೊನೆಗೊಳಿಸುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Why does the Karta work hardest to avoid losses?",
+     "kn": "ನಷ್ಟ ತಪ್ಪಿಸಲು ಕರ್ತ ಏಕೆ ಹೆಚ್ಚು ಶ್ರಮಿಸುತ್ತಾನೆ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "In a Joint Hindu Family business the Karta's liability is unlimited, while each coparcener is liable only up to his share in the family property. Add births to the family and set the loss to see the shares change.",
+    "kn": "ಅವಿಭಕ್ತ ಹಿಂದೂ ಕುಟುಂಬ ವ್ಯವಹಾರದಲ್ಲಿ ಕರ್ತನ ಹೊಣೆ ಅಪರಿಮಿತ; ಸಹದಾಯಾದಿಗಳ ಹೊಣೆ ಕುಟುಂಬ ಆಸ್ತಿಯಲ್ಲಿನ ಪಾಲಿನವರೆಗೆ ಮಾತ್ರ. ಜನನ ಸೇರಿಸಿ, ನಷ್ಟ ಹೊಂದಿಸಿ ಬದಲಾವಣೆ ನೋಡಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -59,6 +59,215 @@
    "formula": "\\text{Rectifying entry} = \\text{Correct entry} - \\text{Wrong entry}"
   },
   {
+   "id": "scene-rectify-principle",
+   "type": "interactive",
+   "title": {
+    "en": "Rectify an error of principle",
+    "kn": "ತತ್ವದ ತಪ್ಪನ್ನು ಸರಿಪಡಿಸಿ"
+   },
+   "narration": {
+    "en": "Furniture bought for the office was debited to Purchases. Both sides were posted, so the trial balance agrees, but purchases are overstated and gross profit understated. The rectifying entry moves the amount to the Furniture account. With a ₹20,000 error, by how much is gross profit understated? Pass the rectifying entry. Which two accounts change?",
+    "kn": "ಕಚೇರಿಗೆ ಖರೀದಿಸಿದ ಪೀಠೋಪಕರಣ ಖರೀದಿ ಖಾತೆಗೆ ಡೆಬಿಟ್ ಆಗಿದೆ. ಎರಡೂ ಬದಿ ಖತಾವಣೆ ಆಗಿರುವುದರಿಂದ ತಾಳೆ ಪಟ್ಟಿ ಸಮ, ಆದರೆ ಖರೀದಿ ಹೆಚ್ಚು, ಒಟ್ಟು ಲಾಭ ಕಡಿಮೆ. ತಿದ್ದುಪಡಿ ನಮೂದು ಮೊತ್ತವನ್ನು ಪೀಠೋಪಕರಣ ಖಾತೆಗೆ ವರ್ಗಾಯಿಸುತ್ತದೆ. ₹20,000 ತಪ್ಪಿಗೆ ಒಟ್ಟು ಲಾಭ ಎಷ್ಟು ಕಡಿಮೆ? ತಿದ್ದುಪಡಿ ನಮೂದು ಮಾಡಿ. ಯಾವ ಎರಡು ಖಾತೆಗಳು ಬದಲಾಗುತ್ತವೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Furniture bought for the office was debited to Purchases. Both sides were posted, so the trial balance agrees, but purchases are overstated and gross profit understated. The rectifying entry moves the amount to the Furniture account.",
+    "kn": "ಕಚೇರಿಗೆ ಖರೀದಿಸಿದ ಪೀಠೋಪಕರಣ ಖರೀದಿ ಖಾತೆಗೆ ಡೆಬಿಟ್ ಆಗಿದೆ. ಎರಡೂ ಬದಿ ಖತಾವಣೆ ಆಗಿರುವುದರಿಂದ ತಾಳೆ ಪಟ್ಟಿ ಸಮ, ಆದರೆ ಖರೀದಿ ಹೆಚ್ಚು, ಒಟ್ಟು ಲಾಭ ಕಡಿಮೆ. ತಿದ್ದುಪಡಿ ನಮೂದು ಮೊತ್ತವನ್ನು ಪೀಠೋಪಕರಣ ಖಾತೆಗೆ ವರ್ಗಾಯಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "amt",
+     "label": {
+      "en": "Cost of the furniture",
+      "kn": "ಪೀಠೋಪಕರಣದ ವೆಚ್ಚ"
+     },
+     "min": 1000,
+     "max": 30000,
+     "step": 1000,
+     "value": 10000,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fix",
+     "label": {
+      "en": "Pass the rectifying entry",
+      "kn": "ತಿದ್ದುಪಡಿ ನಮೂದು ಮಾಡಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "pa",
+     "expr": "60000 + if(fix, 0, amt)"
+    },
+    {
+     "name": "fu",
+     "expr": "if(fix, amt, 0)"
+    },
+    {
+     "name": "gp",
+     "expr": "100000 - pa"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10.4
+    ],
+    "y": [
+     -8000,
+     104000
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(pa - 0, 210)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "max(pa, 0) + 3675",
+     "text": {
+      "en": "₹{pa:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": -3675.0000000000005,
+     "text": {
+      "en": "Purchases A/c",
+      "kn": "ಖರೀದಿ ಖಾತೆ"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(fu - 0, 210)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "max(fu, 0) + 3675",
+     "text": {
+      "en": "₹{fu:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": -3675.0000000000005,
+     "text": {
+      "en": "Furniture A/c",
+      "kn": "ಪೀಠೋಪಕರಣ ಖಾತೆ"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(gp - 0, 210)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "max(gp, 0) + 3675",
+     "text": {
+      "en": "₹{gp:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": -3675.0000000000005,
+     "text": {
+      "en": "Gross profit",
+      "kn": "ಒಟ್ಟು ಲಾಭ"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 5.3,
+     "y": 97000,
+     "text": {
+      "en": "Furniture A/c Dr ₹{amt:0} / To Purchases A/c",
+      "kn": "ಪೀಠೋಪಕರಣ ಖಾತೆ ಡೆ ₹{amt:0} / ಖರೀದಿ ಖಾತೆಗೆ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "fix"
+    },
+    {
+     "shape": "label",
+     "x": 5.3,
+     "y": 97000,
+     "text": {
+      "en": "Error: furniture bought was debited to Purchases",
+      "kn": "ತಪ್ಪು: ಖರೀದಿಸಿದ ಪೀಠೋಪಕರಣ ಖರೀದಿ ಖಾತೆಗೆ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "!fix"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Gross profit (sales ₹1,00,000)",
+      "kn": "ಒಟ್ಟು ಲಾಭ (ಮಾರಾಟ ₹1,00,000)"
+     },
+     "expr": "gp",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Understated by",
+      "kn": "ಕಡಿಮೆ ತೋರಿದ್ದು"
+     },
+     "expr": "40000 - gp",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With a ₹20,000 error, by how much is gross profit understated?",
+     "kn": "₹20,000 ತಪ್ಪಿಗೆ ಒಟ್ಟು ಲಾಭ ಎಷ್ಟು ಕಡಿಮೆ?"
+    },
+    {
+     "en": "Pass the rectifying entry. Which two accounts change?",
+     "kn": "ತಿದ್ದುಪಡಿ ನಮೂದು ಮಾಡಿ. ಯಾವ ಎರಡು ಖಾತೆಗಳು ಬದಲಾಗುತ್ತವೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

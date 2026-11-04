@@ -61,6 +61,204 @@
    }
   },
   {
+   "id": "scene-sustainable-harvest",
+   "type": "interactive",
+   "title": {
+    "en": "Harvest without running out",
+    "kn": "ಖಾಲಿಯಾಗದಂತೆ ಕೊಯ್ಲು"
+   },
+   "narration": {
+    "en": "A renewable resource regrows fastest at half its natural limit: growth = 0.5 × S × (1 − S/100). If we harvest no more than it regrows, the stock lasts for ever. The most we can take for ever is 12.5 a year; take more and it collapses. Harvest 8 a year and play. Where does the stock settle? Harvest 14. How many years until it collapses?",
+    "kn": "ನವೀಕರಿಸಬಹುದಾದ ಸಂಪನ್ಮೂಲ ಸಹಜ ಮಿತಿಯ ಅರ್ಧದಲ್ಲಿ ವೇಗವಾಗಿ ಬೆಳೆಯುತ್ತದೆ: ಬೆಳವಣಿಗೆ = 0.5 × S × (1 − S/100). ಬೆಳೆದಷ್ಟಕ್ಕಿಂತ ಹೆಚ್ಚು ಕೊಯ್ಯದಿದ್ದರೆ ದಾಸ್ತಾನು ಶಾಶ್ವತ. ಶಾಶ್ವತವಾಗಿ ಗರಿಷ್ಠ ವರ್ಷಕ್ಕೆ 12.5; ಹೆಚ್ಚು ತೆಗೆದರೆ ಕುಸಿತ. ವರ್ಷಕ್ಕೆ 8 ಕೊಯ್ದು ಚಾಲನೆ ಮಾಡಿ. ದಾಸ್ತಾನು ಎಲ್ಲಿ ನಿಲ್ಲುತ್ತದೆ? 14 ಕೊಯ್ಯಿರಿ. ಎಷ್ಟು ವರ್ಷದಲ್ಲಿ ಕುಸಿಯುತ್ತದೆ?"
+   },
+   "seconds": 110,
+   "kind": "scene",
+   "caption": {
+    "en": "A renewable resource regrows fastest at half its natural limit: growth = 0.5 × S × (1 − S/100). If we harvest no more than it regrows, the stock lasts for ever. The most we can take for ever is 12.5 a year; take more and it collapses.",
+    "kn": "ನವೀಕರಿಸಬಹುದಾದ ಸಂಪನ್ಮೂಲ ಸಹಜ ಮಿತಿಯ ಅರ್ಧದಲ್ಲಿ ವೇಗವಾಗಿ ಬೆಳೆಯುತ್ತದೆ: ಬೆಳವಣಿಗೆ = 0.5 × S × (1 − S/100). ಬೆಳೆದಷ್ಟಕ್ಕಿಂತ ಹೆಚ್ಚು ಕೊಯ್ಯದಿದ್ದರೆ ದಾಸ್ತಾನು ಶಾಶ್ವತ. ಶಾಶ್ವತವಾಗಿ ಗರಿಷ್ಠ ವರ್ಷಕ್ಕೆ 12.5; ಹೆಚ್ಚು ತೆಗೆದರೆ ಕುಸಿತ."
+   },
+   "sliders": [
+    {
+     "name": "H",
+     "label": {
+      "en": "Harvest per year",
+      "kn": "ವರ್ಷಕ್ಕೆ ಕೊಯ್ಲು"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 8
+    },
+    {
+     "name": "S0",
+     "label": {
+      "en": "Starting stock",
+      "kn": "ಆರಂಭಿಕ ದಾಸ್ತಾನು"
+     },
+     "min": 20,
+     "max": 100,
+     "step": 5,
+     "value": 80
+    }
+   ],
+   "toggles": [
+    {
+     "name": "msy",
+     "label": {
+      "en": "Show the best stock level",
+      "kn": "ಉತ್ತಮ ದಾಸ್ತಾನು ಮಟ್ಟ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 40,
+    "dt": 0.02,
+    "unit": "yr"
+   },
+   "state": [
+    {
+     "name": "st",
+     "init": "S0",
+     "rate": "0.5*st*(1 - st/100) - if(st > 0.5, H, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     60
+    ],
+    "y": [
+     0,
+     112
+    ],
+    "axes": true,
+    "xLabel": "years",
+    "yLabel": "stock"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 50,
+     "x2": 40,
+     "y2": 50,
+     "color": "green",
+     "width": 2,
+     "dashed": true,
+     "visibleIf": "msy",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 54,
+     "text": {
+      "en": "stock for maximum sustainable yield",
+      "kn": "ಗರಿಷ್ಠ ಸುಸ್ಥಿರ ಇಳುವರಿ ದಾಸ್ತಾನು"
+     },
+     "size": 16,
+     "color": "green",
+     "align": "left",
+     "visibleIf": "msy"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "max(st, 0)",
+     "length": 2000,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "max(st, 0)",
+     "r": 0.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 42,
+     "y": 2,
+     "w": 17,
+     "h": 100,
+     "color": "blue",
+     "opacity": 0.2
+    },
+    {
+     "shape": "particles",
+     "count": 100,
+     "x": "43 + 15*rand(i)",
+     "y": "4 + 96*rand(i + 150)",
+     "r": 0.45,
+     "color": "green",
+     "visibleIf": "i < st"
+    },
+    {
+     "shape": "text",
+     "x": 50.5,
+     "y": 106,
+     "text": {
+      "en": "forest / fish stock",
+      "kn": "ಅರಣ್ಯ / ಮೀನು ದಾಸ್ತಾನು"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": 20,
+     "y": 104,
+     "text": {
+      "en": "Collapsed!",
+      "kn": "ಕುಸಿದಿದೆ!"
+     },
+     "size": 26,
+     "color": "red",
+     "visibleIf": "st < 1"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Stock",
+      "kn": "ದಾಸ್ತಾನು"
+     },
+     "expr": "max(st, 0)",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Natural regrowth now",
+      "kn": "ಈಗಿನ ಸಹಜ ಬೆಳವಣಿಗೆ"
+     },
+     "expr": "0.5*max(st, 0)*(1 - max(st, 0)/100)",
+     "digits": 1,
+     "unit": "per yr"
+    },
+    {
+     "label": {
+      "en": "Maximum sustainable yield",
+      "kn": "ಗರಿಷ್ಠ ಸುಸ್ಥಿರ ಇಳುವರಿ"
+     },
+     "expr": "12.5",
+     "digits": 1,
+     "unit": "per yr"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Harvest 8 a year and play. Where does the stock settle?",
+     "kn": "ವರ್ಷಕ್ಕೆ 8 ಕೊಯ್ದು ಚಾಲನೆ ಮಾಡಿ. ದಾಸ್ತಾನು ಎಲ್ಲಿ ನಿಲ್ಲುತ್ತದೆ?"
+    },
+    {
+     "en": "Harvest 14. How many years until it collapses?",
+     "kn": "14 ಕೊಯ್ಯಿರಿ. ಎಷ್ಟು ವರ್ಷದಲ್ಲಿ ಕುಸಿಯುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

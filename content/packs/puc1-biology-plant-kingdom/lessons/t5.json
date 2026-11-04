@@ -62,6 +62,247 @@
    }
   },
   {
+   "id": "scene-pine-pollen",
+   "type": "interactive",
+   "title": {
+    "en": "Pine pollen on the wind",
+    "kn": "ಗಾಳಿಯಲ್ಲಿ ಪೈನ್ ಪರಾಗ"
+   },
+   "narration": {
+    "en": "Gymnosperms are wind-pollinated. Pinus pollen grains carry two air sacs, so they sink slowly (a few cm per second) and drift far before landing. Distance drifted is about wind speed × release height ÷ sinking speed. Drag the female cone to catch the most pollen.",
+    "kn": "ಅನಾವೃತಬೀಜಿಗಳಲ್ಲಿ ಗಾಳಿಯಿಂದ ಪರಾಗಸ್ಪರ್ಶ. ಪೈನಸ್ ಪರಾಗಕಣಗಳಿಗೆ ಎರಡು ಗಾಳಿಚೀಲಗಳಿರುವುದರಿಂದ ಅವು ನಿಧಾನವಾಗಿ ಇಳಿದು (ಸೆಕೆಂಡಿಗೆ ಕೆಲವು ಸೆಂ.ಮೀ.) ದೂರ ಸಾಗುತ್ತವೆ. ಸಾಗುವ ದೂರ ≈ ಗಾಳಿಯ ವೇಗ × ಎತ್ತರ ÷ ಇಳಿಯುವ ವೇಗ. ಹೆಚ್ಚು ಪರಾಗ ಹಿಡಿಯಲು ಹೆಣ್ಣು ಶಂಕುವನ್ನು ಎಳೆಯಿರಿ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Gymnosperms are wind-pollinated. Pinus pollen grains carry two air sacs, so they sink slowly (a few cm per second) and drift far before landing. Distance drifted is about wind speed × release height ÷ sinking speed. Drag the female cone to catch the most pollen.",
+    "kn": "ಅನಾವೃತಬೀಜಿಗಳಲ್ಲಿ ಗಾಳಿಯಿಂದ ಪರಾಗಸ್ಪರ್ಶ. ಪೈನಸ್ ಪರಾಗಕಣಗಳಿಗೆ ಎರಡು ಗಾಳಿಚೀಲಗಳಿರುವುದರಿಂದ ಅವು ನಿಧಾನವಾಗಿ ಇಳಿದು (ಸೆಕೆಂಡಿಗೆ ಕೆಲವು ಸೆಂ.ಮೀ.) ದೂರ ಸಾಗುತ್ತವೆ. ಸಾಗುವ ದೂರ ≈ ಗಾಳಿಯ ವೇಗ × ಎತ್ತರ ÷ ಇಳಿಯುವ ವೇಗ. ಹೆಚ್ಚು ಪರಾಗ ಹಿಡಿಯಲು ಹೆಣ್ಣು ಶಂಕುವನ್ನು ಎಳೆಯಿರಿ."
+   },
+   "sliders": [
+    {
+     "name": "w",
+     "label": {
+      "en": "Wind speed",
+      "kn": "ಗಾಳಿಯ ವೇಗ"
+     },
+     "min": 0.5,
+     "max": 5,
+     "step": 0.5,
+     "value": 2,
+     "unit": "m/s"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sac",
+     "label": {
+      "en": "Air sacs",
+      "kn": "ಗಾಳಿಚೀಲಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "C",
+     "label": "female cone",
+     "x": 1500,
+     "y": 2,
+     "axis": "x",
+     "box": {
+      "x": [
+       200,
+       2900
+      ],
+      "y": [
+       2,
+       2
+      ]
+     },
+     "snap": 50,
+     "color": "orange"
+    }
+   ],
+   "time": {
+    "max": 600,
+    "dt": 0.1,
+    "speeds": [
+     1,
+     4,
+     8,
+     16
+    ],
+    "speed": 8
+   },
+   "vars": [
+    {
+     "name": "vs",
+     "expr": "if(sac, 0.04, 0.08)"
+    },
+    {
+     "name": "Ld",
+     "expr": "w*20/vs"
+    },
+    {
+     "name": "lo",
+     "expr": "max(C_x - 150, Ld)"
+    },
+    {
+     "name": "hi",
+     "expr": "min(C_x + 150, 1.3*Ld)"
+    },
+    {
+     "name": "caught",
+     "expr": "100*max(hi - lo, 0)/(0.3*Ld)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     3000
+    ],
+    "y": [
+     0,
+     30
+    ],
+    "axes": true,
+    "xLabel": "distance (m)",
+    "yLabel": "height (m)"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 40,
+     "y": 0,
+     "w": 30,
+     "h": 20,
+     "color": "green"
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       0,
+       14
+      ],
+      [
+       55,
+       26
+      ],
+      [
+       110,
+       14
+      ]
+     ],
+     "color": "green"
+    },
+    {
+     "shape": "particles",
+     "count": 80,
+     "x": "60 + w*min(t, 20/(vs*(1 + 0.3*rand(i)*0)))*(1 + 0.3*rand(i))",
+     "y": "max(20 - vs*t, 0)",
+     "r": 12,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": "C_x - 150",
+     "y": 0,
+     "w": 300,
+     "h": 1.2,
+     "color": "orange",
+     "opacity": 0.5
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       "C_x - 30",
+       2
+      ],
+      [
+       "C_x",
+       6
+      ],
+      [
+       "C_x + 30",
+       2
+      ]
+     ],
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": "Ld",
+     "y1": 0,
+     "x2": "Ld",
+     "y2": 4,
+     "color": "white",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": "1.3*Ld",
+     "y1": 0,
+     "x2": "1.3*Ld",
+     "y2": 4,
+     "color": "white",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 1500,
+     "y": 27,
+     "size": 22,
+     "text": {
+      "en": "Pollen lands between the dashed lines",
+      "kn": "ಪರಾಗ ಚುಕ್ಕೆ ರೇಖೆಗಳ ನಡುವೆ ಇಳಿಯುತ್ತದೆ"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Drift distance",
+      "kn": "ಸಾಗುವ ದೂರ"
+     },
+     "expr": "Ld",
+     "digits": 0,
+     "unit": "m"
+    },
+    {
+     "label": {
+      "en": "Sinking speed",
+      "kn": "ಇಳಿಯುವ ವೇಗ"
+     },
+     "expr": "100*vs",
+     "digits": 0,
+     "unit": "cm/s"
+    },
+    {
+     "label": {
+      "en": "Pollen reaching the cone",
+      "kn": "ಶಂಕು ತಲುಪುವ ಪರಾಗ"
+     },
+     "expr": "min(caught, 100)",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn off the air sacs. How much shorter is the drift?",
+     "kn": "ಗಾಳಿಚೀಲಗಳನ್ನು ಆಫ್ ಮಾಡಿ. ಸಾಗುವ ದೂರ ಎಷ್ಟು ಕಡಿಮೆ?"
+    },
+    {
+     "en": "Why must a wind-pollinated plant make huge amounts of pollen?",
+     "kn": "ಗಾಳಿ ಪರಾಗಸ್ಪರ್ಶದ ಸಸ್ಯ ಏಕೆ ಅಪಾರ ಪರಾಗ ಉತ್ಪಾದಿಸಬೇಕು?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

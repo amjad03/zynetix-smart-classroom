@@ -58,6 +58,253 @@
    }
   },
   {
+   "id": "scene-capital-revenue",
+   "type": "interactive",
+   "title": {
+    "en": "Capital or revenue expenditure?",
+    "kn": "ಬಂಡವಾಳ ಅಥವಾ ಆದಾಯ ವೆಚ್ಚ?"
+   },
+   "narration": {
+    "en": "A machine is capital expenditure: it goes to the balance sheet as an asset. Repairs, wages and rent are revenue expenditure: they reduce this year's profit. Switch on the toggle to see the error of charging the machine to profit. Buy a ₹80,000 machine. Does the profit change? Now treat the machine as a revenue expense. By how much is profit understated?",
+    "kn": "ಯಂತ್ರ ಖರೀದಿ ಬಂಡವಾಳ ವೆಚ್ಚ: ಅದು ಆಸ್ತಿಯಾಗಿ ಆಸ್ತಿ-ಹೊಣೆ ಪಟ್ಟಿಗೆ ಹೋಗುತ್ತದೆ. ದುರಸ್ತಿ, ಕೂಲಿ, ಬಾಡಿಗೆ ಆದಾಯ ವೆಚ್ಚ: ಅವು ಈ ವರ್ಷದ ಲಾಭ ಕಡಿಮೆ ಮಾಡುತ್ತವೆ. ಯಂತ್ರವನ್ನು ಲಾಭಕ್ಕೆ ಹಾಕುವ ತಪ್ಪನ್ನು ನೋಡಲು ಟಾಗಲ್ ಆನ್ ಮಾಡಿ. ₹80,000 ಯಂತ್ರ ಖರೀದಿಸಿ. ಲಾಭ ಬದಲಾಗುತ್ತದೆಯೇ? ಈಗ ಯಂತ್ರವನ್ನು ಆದಾಯ ವೆಚ್ಚವೆಂದು ಪರಿಗಣಿಸಿ. ಲಾಭ ಎಷ್ಟು ಕಡಿಮೆ ತೋರುತ್ತದೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "A machine is capital expenditure: it goes to the balance sheet as an asset. Repairs, wages and rent are revenue expenditure: they reduce this year's profit. Switch on the toggle to see the error of charging the machine to profit.",
+    "kn": "ಯಂತ್ರ ಖರೀದಿ ಬಂಡವಾಳ ವೆಚ್ಚ: ಅದು ಆಸ್ತಿಯಾಗಿ ಆಸ್ತಿ-ಹೊಣೆ ಪಟ್ಟಿಗೆ ಹೋಗುತ್ತದೆ. ದುರಸ್ತಿ, ಕೂಲಿ, ಬಾಡಿಗೆ ಆದಾಯ ವೆಚ್ಚ: ಅವು ಈ ವರ್ಷದ ಲಾಭ ಕಡಿಮೆ ಮಾಡುತ್ತವೆ. ಯಂತ್ರವನ್ನು ಲಾಭಕ್ಕೆ ಹಾಕುವ ತಪ್ಪನ್ನು ನೋಡಲು ಟಾಗಲ್ ಆನ್ ಮಾಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "S",
+     "label": {
+      "en": "Sales",
+      "kn": "ಮಾರಾಟ"
+     },
+     "min": 100000,
+     "max": 200000,
+     "step": 5000,
+     "value": 150000,
+     "unit": "₹"
+    },
+    {
+     "name": "R",
+     "label": {
+      "en": "Revenue expenses",
+      "kn": "ಆದಾಯ ವೆಚ್ಚಗಳು"
+     },
+     "min": 20000,
+     "max": 100000,
+     "step": 5000,
+     "value": 60000,
+     "unit": "₹"
+    },
+    {
+     "name": "M",
+     "label": {
+      "en": "Machine bought",
+      "kn": "ಖರೀದಿಸಿದ ಯಂತ್ರ"
+     },
+     "min": 0,
+     "max": 100000,
+     "step": 5000,
+     "value": 40000,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "wrong",
+     "label": {
+      "en": "Wrongly charge the machine to profit",
+      "kn": "ಯಂತ್ರವನ್ನು ತಪ್ಪಾಗಿ ಲಾಭದಿಂದ ಕಳೆಯಿರಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "rexp",
+     "expr": "R + if(wrong, M, 0)"
+    },
+    {
+     "name": "prof",
+     "expr": "S - rexp"
+    },
+    {
+     "name": "fa",
+     "expr": "if(wrong, 0, M)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     13.6
+    ],
+    "y": [
+     -200000,
+     240000
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": "min(0, S)",
+     "w": 2.0,
+     "h": "max(abs(S), 880)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "if(S >= 0, S + 15400, S - 15400)",
+     "text": {
+      "en": "₹{S:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "if(S >= 0, -15400, 15400)",
+     "text": {
+      "en": "Sales",
+      "kn": "ಮಾರಾಟ"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": "min(0, rexp)",
+     "w": 2.0,
+     "h": "max(abs(rexp), 880)",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "if(rexp >= 0, rexp + 15400, rexp - 15400)",
+     "text": {
+      "en": "₹{rexp:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "if(rexp >= 0, -15400, 15400)",
+     "text": {
+      "en": "Revenue exp.",
+      "kn": "ಆದಾಯ ವೆಚ್ಚ"
+     },
+     "size": 20,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": "min(0, prof)",
+     "w": 2.0,
+     "h": "max(abs(prof), 880)",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "if(prof >= 0, prof + 15400, prof - 15400)",
+     "text": {
+      "en": "₹{prof:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "if(prof >= 0, -15400, 15400)",
+     "text": {
+      "en": "Net profit",
+      "kn": "ನಿವ್ವಳ ಲಾಭ"
+     },
+     "size": 20,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": "min(0, fa)",
+     "w": 2.0,
+     "h": "max(abs(fa), 880)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "if(fa >= 0, fa + 15400, fa - 15400)",
+     "text": {
+      "en": "₹{fa:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "if(fa >= 0, -15400, 15400)",
+     "text": {
+      "en": "Fixed assets",
+      "kn": "ಸ್ಥಿರ ಆಸ್ತಿ"
+     },
+     "size": 20,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Net profit",
+      "kn": "ನಿವ್ವಳ ಲಾಭ"
+     },
+     "expr": "prof",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Machine in balance sheet",
+      "kn": "ಆಸ್ತಿ-ಹೊಣೆ ಪಟ್ಟಿಯಲ್ಲಿ ಯಂತ್ರ"
+     },
+     "expr": "fa",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Profit understated by",
+      "kn": "ಲಾಭ ಕಡಿಮೆ ತೋರಿದ ಮೊತ್ತ"
+     },
+     "expr": "if(wrong, M, 0)",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Buy a ₹80,000 machine. Does the profit change?",
+     "kn": "₹80,000 ಯಂತ್ರ ಖರೀದಿಸಿ. ಲಾಭ ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Now treat the machine as a revenue expense. By how much is profit understated?",
+     "kn": "ಈಗ ಯಂತ್ರವನ್ನು ಆದಾಯ ವೆಚ್ಚವೆಂದು ಪರಿಗಣಿಸಿ. ಲಾಭ ಎಷ್ಟು ಕಡಿಮೆ ತೋರುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

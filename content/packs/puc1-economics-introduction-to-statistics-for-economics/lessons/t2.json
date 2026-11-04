@@ -56,6 +56,302 @@
    }
   },
   {
+   "id": "scene-statistics-aggregate",
+   "type": "interactive",
+   "title": {
+    "en": "Statistics: facts in aggregate",
+    "kn": "ಅಂಕಿಅಂಶ: ಒಟ್ಟು ಸಂಗತಿಗಳು"
+   },
+   "narration": {
+    "en": "In the plural, statistics means numerical facts collected for a purpose and comparable with each other, such as wheat yields of several farms (quintals per acre). In the singular, it is the method: collecting, organising and analysing them, for example finding the mean. Change one farm's yield. How does the mean respond? Show only one farm. Why can we no longer compare or analyse?",
+    "kn": "ಬಹುವಚನದಲ್ಲಿ ಅಂಕಿಅಂಶ ಎಂದರೆ ಒಂದು ಉದ್ದೇಶಕ್ಕಾಗಿ ಸಂಗ್ರಹಿಸಿದ, ಪರಸ್ಪರ ಹೋಲಿಸಬಹುದಾದ ಸಂಖ್ಯಾ ಸಂಗತಿಗಳು, ಉದಾ. ಹಲವು ಹೊಲಗಳ ಗೋಧಿ ಇಳುವರಿ (ಎಕರೆಗೆ ಕ್ವಿಂಟಾಲ್). ಏಕವಚನದಲ್ಲಿ ವಿಧಾನ: ಸಂಗ್ರಹ, ಸಂಘಟನೆ, ವಿಶ್ಲೇಷಣೆ, ಉದಾ. ಸರಾಸರಿ. ಒಂದು ಹೊಲದ ಇಳುವರಿ ಬದಲಿಸಿ. ಸರಾಸರಿ ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ? ಒಂದೇ ಹೊಲ ತೋರಿಸಿ. ಈಗ ಏಕೆ ಹೋಲಿಸಲು, ವಿಶ್ಲೇಷಿಸಲು ಆಗದು?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "In the plural, statistics means numerical facts collected for a purpose and comparable with each other, such as wheat yields of several farms (quintals per acre). In the singular, it is the method: collecting, organising and analysing them, for example finding the mean.",
+    "kn": "ಬಹುವಚನದಲ್ಲಿ ಅಂಕಿಅಂಶ ಎಂದರೆ ಒಂದು ಉದ್ದೇಶಕ್ಕಾಗಿ ಸಂಗ್ರಹಿಸಿದ, ಪರಸ್ಪರ ಹೋಲಿಸಬಹುದಾದ ಸಂಖ್ಯಾ ಸಂಗತಿಗಳು, ಉದಾ. ಹಲವು ಹೊಲಗಳ ಗೋಧಿ ಇಳುವರಿ (ಎಕರೆಗೆ ಕ್ವಿಂಟಾಲ್). ಏಕವಚನದಲ್ಲಿ ವಿಧಾನ: ಸಂಗ್ರಹ, ಸಂಘಟನೆ, ವಿಶ್ಲೇಷಣೆ, ಉದಾ. ಸರಾಸರಿ."
+   },
+   "sliders": [
+    {
+     "name": "y1",
+     "label": {
+      "en": "Farm 1 yield",
+      "kn": "ಹೊಲ 1 ಇಳುವರಿ"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 1,
+     "value": 18,
+     "unit": "q/acre"
+    },
+    {
+     "name": "y2",
+     "label": {
+      "en": "Farm 2 yield",
+      "kn": "ಹೊಲ 2 ಇಳುವರಿ"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 1,
+     "value": 24,
+     "unit": "q/acre"
+    },
+    {
+     "name": "y3",
+     "label": {
+      "en": "Farm 3 yield",
+      "kn": "ಹೊಲ 3 ಇಳುವರಿ"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 1,
+     "value": 15,
+     "unit": "q/acre"
+    },
+    {
+     "name": "y4",
+     "label": {
+      "en": "Farm 4 yield",
+      "kn": "ಹೊಲ 4 ಇಳುವರಿ"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 1,
+     "value": 30,
+     "unit": "q/acre"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "one",
+     "label": {
+      "en": "Show only one farm",
+      "kn": "ಒಂದೇ ಹೊಲ ತೋರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "avg",
+     "expr": "(y1 + y2 + y3 + y4)/4"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     14
+    ],
+    "y": [
+     -5,
+     62
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(y1 - 0, 0.132)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "max(y1, 0) + 2.31",
+     "text": {
+      "en": "{y1:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": -2.31,
+     "text": {
+      "en": "Farm 1",
+      "kn": "ಹೊಲ 1"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(y2 - 0, 0.132)",
+     "color": "green",
+     "visibleIf": "!one"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "max(y2, 0) + 2.31",
+     "text": {
+      "en": "{y2:0}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "!one"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": -2.31,
+     "text": {
+      "en": "Farm 2",
+      "kn": "ಹೊಲ 2"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "!one"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(y3 - 0, 0.132)",
+     "color": "green",
+     "visibleIf": "!one"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "max(y3, 0) + 2.31",
+     "text": {
+      "en": "{y3:0}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "!one"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": -2.31,
+     "text": {
+      "en": "Farm 3",
+      "kn": "ಹೊಲ 3"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "!one"
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(y4 - 0, 0.132)",
+     "color": "green",
+     "visibleIf": "!one"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "max(y4, 0) + 2.31",
+     "text": {
+      "en": "{y4:0}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "!one"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": -2.31,
+     "text": {
+      "en": "Farm 4",
+      "kn": "ಹೊಲ 4"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "!one"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "avg",
+     "x2": 13.8,
+     "y2": "avg",
+     "color": "yellow",
+     "width": 3,
+     "dashed": true,
+     "visibleIf": "!one"
+    },
+    {
+     "shape": "text",
+     "x": 13.5,
+     "y": "avg + 2",
+     "text": {
+      "en": "mean {avg:1}",
+      "kn": "ಸರಾಸರಿ {avg:1}"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "right",
+     "visibleIf": "!one"
+    },
+    {
+     "shape": "label",
+     "x": 7,
+     "y": 57,
+     "text": {
+      "en": "One figure alone is not statistics",
+      "kn": "ಒಂದೇ ಅಂಕಿ ಅಂಕಿಅಂಶವಲ್ಲ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "one"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Total",
+      "kn": "ಒಟ್ಟು"
+     },
+     "expr": "y1 + y2 + y3 + y4",
+     "digits": 0,
+     "unit": "q"
+    },
+    {
+     "label": {
+      "en": "Mean",
+      "kn": "ಸರಾಸರಿ"
+     },
+     "expr": "avg",
+     "digits": 1,
+     "unit": "q/acre"
+    },
+    {
+     "label": {
+      "en": "Range",
+      "kn": "ವ್ಯಾಪ್ತಿ"
+     },
+     "expr": "max(y1, y2, y3, y4) - min(y1, y2, y3, y4)",
+     "digits": 0,
+     "unit": "q/acre"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Change one farm's yield. How does the mean respond?",
+     "kn": "ಒಂದು ಹೊಲದ ಇಳುವರಿ ಬದಲಿಸಿ. ಸರಾಸರಿ ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Show only one farm. Why can we no longer compare or analyse?",
+     "kn": "ಒಂದೇ ಹೊಲ ತೋರಿಸಿ. ಈಗ ಏಕೆ ಹೋಲಿಸಲು, ವಿಶ್ಲೇಷಿಸಲು ಆಗದು?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

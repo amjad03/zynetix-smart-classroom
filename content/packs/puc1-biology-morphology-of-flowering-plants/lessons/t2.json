@@ -59,6 +59,256 @@
    }
   },
   {
+   "id": "scene-stem-nodes",
+   "type": "interactive",
+   "title": {
+    "en": "Nodes, internodes and buds",
+    "kn": "ಗಿಣ್ಣುಗಳು, ಗಿಣ್ಣಂತರಗಳು ಮತ್ತು ಮೊಗ್ಗುಗಳು"
+   },
+   "narration": {
+    "en": "A stem bears leaves at its nodes; the stretch between two nodes is an internode. A bud in the axil of each leaf can grow into a branch. Change the number of nodes, the internode length and how many leaves arise at each node.",
+    "kn": "ಕಾಂಡದ ಗಿಣ್ಣುಗಳಲ್ಲಿ ಎಲೆಗಳಿರುತ್ತವೆ; ಎರಡು ಗಿಣ್ಣುಗಳ ನಡುವಿನ ಭಾಗ ಗಿಣ್ಣಂತರ. ಪ್ರತಿ ಎಲೆಯ ಕಕ್ಷದಲ್ಲಿರುವ ಮೊಗ್ಗು ಕೊಂಬೆಯಾಗಬಲ್ಲದು. ಗಿಣ್ಣುಗಳ ಸಂಖ್ಯೆ, ಗಿಣ್ಣಂತರದ ಉದ್ದ ಮತ್ತು ಪ್ರತಿ ಗಿಣ್ಣಿನ ಎಲೆಗಳನ್ನು ಬದಲಿಸಿ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "A stem bears leaves at its nodes; the stretch between two nodes is an internode. A bud in the axil of each leaf can grow into a branch. Change the number of nodes, the internode length and how many leaves arise at each node.",
+    "kn": "ಕಾಂಡದ ಗಿಣ್ಣುಗಳಲ್ಲಿ ಎಲೆಗಳಿರುತ್ತವೆ; ಎರಡು ಗಿಣ್ಣುಗಳ ನಡುವಿನ ಭಾಗ ಗಿಣ್ಣಂತರ. ಪ್ರತಿ ಎಲೆಯ ಕಕ್ಷದಲ್ಲಿರುವ ಮೊಗ್ಗು ಕೊಂಬೆಯಾಗಬಲ್ಲದು. ಗಿಣ್ಣುಗಳ ಸಂಖ್ಯೆ, ಗಿಣ್ಣಂತರದ ಉದ್ದ ಮತ್ತು ಪ್ರತಿ ಗಿಣ್ಣಿನ ಎಲೆಗಳನ್ನು ಬದಲಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Nodes",
+      "kn": "ಗಿಣ್ಣುಗಳು"
+     },
+     "min": 2,
+     "max": 8,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "il",
+     "label": {
+      "en": "Internode length",
+      "kn": "ಗಿಣ್ಣಂತರದ ಉದ್ದ"
+     },
+     "min": 3,
+     "max": 6,
+     "step": 0.5,
+     "value": 5,
+     "unit": "cm"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "bud",
+     "label": {
+      "en": "Axillary buds",
+      "kn": "ಕಕ್ಷ ಮೊಗ್ಗುಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "ph",
+     "label": {
+      "en": "Leaves at each node",
+      "kn": "ಪ್ರತಿ ಗಿಣ್ಣಿನ ಎಲೆಗಳು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "One (alternate, mustard)",
+        "kn": "ಒಂದು (ಪರ್ಯಾಯ, ಸಾಸಿವೆ)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Two (opposite, guava)",
+        "kn": "ಎರಡು (ಅಭಿಮುಖ, ಸೀಬೆ)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Three or more (whorled, Alstonia)",
+        "kn": "ಮೂರು+ (ಸುತ್ತು, ಆಲ್‌ಸ್ಟೋನಿಯಾ)"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "top",
+     "expr": "6 + n*il"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 100,
+     "h": 6,
+     "color": "orange",
+     "opacity": 0.3
+    },
+    {
+     "shape": "line",
+     "x1": 50,
+     "y1": 6,
+     "x2": 50,
+     "y2": "top + 3",
+     "color": "green",
+     "width": 8
+    },
+    {
+     "shape": "particles",
+     "count": 8,
+     "x": 50,
+     "y": "6 + (i + 1)*il",
+     "r": 0.8,
+     "color": "yellow",
+     "visibleIf": "i < n"
+    },
+    {
+     "shape": "particles",
+     "count": 24,
+     "x": "50 + if(ph == 1, if(mod(floor(i/3), 2) == 0, 7, -7), if(ph == 2, if(mod(i, 3) == 0, 7, -7), 7*cos(2*pi*mod(i, 3)/3 + floor(i/3))))",
+     "y": "6 + (floor(i/3) + 1)*il + if(ph == 3, 1.2*sin(2*pi*mod(i, 3)/3 + floor(i/3)), 0.8)",
+     "r": 2.6,
+     "color": "green",
+     "opacity": 0.85,
+     "visibleIf": "floor(i/3) < n && mod(i, 3) < ph"
+    },
+    {
+     "shape": "particles",
+     "count": 24,
+     "x": "50 + if(ph == 1, if(mod(floor(i/3), 2) == 0, 2, -2), if(ph == 2, if(mod(i, 3) == 0, 2, -2), 2*cos(2*pi*mod(i, 3)/3 + floor(i/3))))",
+     "y": "6 + (floor(i/3) + 1)*il + 1.4",
+     "r": 0.7,
+     "color": "orange",
+     "visibleIf": "bud && floor(i/3) < n && mod(i, 3) < ph"
+    },
+    {
+     "shape": "circle",
+     "x": 50,
+     "y": "top + 3",
+     "r": 1.3,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 72,
+     "y": "top + 3",
+     "size": 20,
+     "text": {
+      "en": "Apical bud",
+      "kn": "ಅಗ್ರ ಮೊಗ್ಗು"
+     },
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 72,
+     "y": "6 + 1.5*il",
+     "size": 20,
+     "text": {
+      "en": "Internode",
+      "kn": "ಗಿಣ್ಣಂತರ"
+     },
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 70,
+     "y1": "6 + il",
+     "x2": 70,
+     "y2": "6 + 2*il",
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 72,
+     "y": "6 + il",
+     "size": 20,
+     "text": {
+      "en": "Node",
+      "kn": "ಗಿಣ್ಣು"
+     },
+     "align": "left",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 22,
+     "y": 30,
+     "size": 20,
+     "text": {
+      "en": "Orange: axillary buds",
+      "kn": "ಕಿತ್ತಳೆ: ಕಕ್ಷ ಮೊಗ್ಗುಗಳು"
+     },
+     "visibleIf": "bud",
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Stem height",
+      "kn": "ಕಾಂಡದ ಎತ್ತರ"
+     },
+     "expr": "n*il",
+     "digits": 1,
+     "unit": "cm"
+    },
+    {
+     "label": {
+      "en": "Leaves",
+      "kn": "ಎಲೆಗಳು"
+     },
+     "expr": "n*ph",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Possible branches",
+      "kn": "ಸಾಧ್ಯ ಕೊಂಬೆಗಳು"
+     },
+     "expr": "if(bud, n*ph, 0)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Keep the height fixed but double the nodes. What must happen to the internodes?",
+     "kn": "ಎತ್ತರ ಬದಲಿಸದೆ ಗಿಣ್ಣುಗಳನ್ನು ದ್ವಿಗುಣಗೊಳಿಸಿ. ಗಿಣ್ಣಂತರಗಳಿಗೆ ಏನಾಗಬೇಕು?"
+    },
+    {
+     "en": "How can you tell a stem from a root using nodes and buds?",
+     "kn": "ಗಿಣ್ಣು ಮತ್ತು ಮೊಗ್ಗುಗಳಿಂದ ಕಾಂಡವನ್ನು ಬೇರಿನಿಂದ ಹೇಗೆ ಗುರುತಿಸುವಿರಿ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

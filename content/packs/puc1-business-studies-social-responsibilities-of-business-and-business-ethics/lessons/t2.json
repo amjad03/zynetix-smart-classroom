@@ -77,6 +77,402 @@
    }
   },
   {
+   "id": "scene-csr-debate",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Should business take social responsibility?",
+    "kn": "ವ್ಯವಹಾರ ಸಾಮಾಜಿಕ ಹೊಣೆ ಹೊರಬೇಕೆ?"
+   },
+   "caption": {
+    "en": "Weigh the arguments. For: long-term self-interest and the power business holds. Against: it dilutes the profit motive and business lacks social skills. Load a view or set your own weights.",
+    "kn": "ವಾದಗಳನ್ನು ತೂಗಿ. ಪರ: ದೀರ್ಘಾವಧಿ ಸ್ವಹಿತ, ವ್ಯವಹಾರದ ಶಕ್ತಿ. ವಿರುದ್ಧ: ಲಾಭ ಉದ್ದೇಶ ದುರ್ಬಲ, ಸಾಮಾಜಿಕ ಕೌಶಲ್ಯ ಕೊರತೆ. ಒಂದು ದೃಷ್ಟಿ ಆರಿಸಿ ಅಥವಾ ತೂಕ ಹೊಂದಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Long-term self-interest",
+      "kn": "ದೀರ್ಘಾವಧಿ ಸ್ವಹಿತ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "Power brings duty",
+      "kn": "ಶಕ್ತಿಯೊಂದಿಗೆ ಹೊಣೆ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "Dilutes profit motive",
+      "kn": "ಲಾಭ ಉದ್ದೇಶ ದುರ್ಬಲ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "Lacks social skills",
+      "kn": "ಸಾಮಾಜಿಕ ಕೌಶಲ್ಯ ಕೊರತೆ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Shareholder view",
+      "kn": "ಷೇರುದಾರರ ದೃಷ್ಟಿ"
+     },
+     "icon": "check",
+     "set": {
+      "a": 3,
+      "b": 2,
+      "c": 9,
+      "d": 7
+     }
+    },
+    {
+     "label": {
+      "en": "Stakeholder view",
+      "kn": "ಹಿತಾಸಕ್ತರ ದೃಷ್ಟಿ"
+     },
+     "icon": "check",
+     "set": {
+      "a": 9,
+      "b": 8,
+      "c": 3,
+      "d": 3
+     }
+    },
+    {
+     "label": {
+      "en": "Small firm owner",
+      "kn": "ಸಣ್ಣ ಸಂಸ್ಥೆ ಮಾಲೀಕ"
+     },
+     "icon": "check",
+     "set": {
+      "a": 6,
+      "b": 2,
+      "c": 7,
+      "d": 6
+     }
+    },
+    {
+     "label": {
+      "en": "Even out",
+      "kn": "ಸಮಮಾಡಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "a": 5,
+      "b": 5,
+      "c": 5,
+      "d": 5
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "Lw",
+     "expr": "a + b"
+    },
+    {
+     "name": "Rw",
+     "expr": "c + d"
+    },
+    {
+     "name": "net",
+     "expr": "Lw - Rw"
+    },
+    {
+     "name": "ang",
+     "expr": "clamp(net*1.5, -22, 22)"
+    },
+    {
+     "name": "xL",
+     "expr": "50 - 26*cos(rad(ang))"
+    },
+    {
+     "name": "yL",
+     "expr": "32 - 26*sin(rad(ang))"
+    },
+    {
+     "name": "xR",
+     "expr": "50 + 26*cos(rad(ang))"
+    },
+    {
+     "name": "yR",
+     "expr": "32 + 26*sin(rad(ang))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       50,
+       32
+      ],
+      [
+       45,
+       6
+      ],
+      [
+       55,
+       6
+      ]
+     ],
+     "color": "white",
+     "opacity": 0.4
+    },
+    {
+     "shape": "line",
+     "x1": "xL",
+     "y1": "yL",
+     "x2": "xR",
+     "y2": "yR",
+     "width": 6,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": "xL",
+     "y1": "yL",
+     "x2": "xL - 7",
+     "y2": "yL - 9",
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": "xL",
+     "y1": "yL",
+     "x2": "xL + 7",
+     "y2": "yL - 9",
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": "xR",
+     "y1": "yR",
+     "x2": "xR - 7",
+     "y2": "yR - 9",
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": "xR",
+     "y1": "yR",
+     "x2": "xR + 7",
+     "y2": "yR - 9",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": "xL - 8",
+     "y": "yL - 10",
+     "w": 16,
+     "h": 1.2,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": "xR - 8",
+     "y": "yR - 10",
+     "w": 16,
+     "h": 1.2,
+     "color": "red"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "xL - 6 + 3*mod(i, 5)",
+     "y": "yL - 7.7 + 1.9*floor(i/5)",
+     "r": 0.9,
+     "color": "green",
+     "visibleIf": "i < Lw/1"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "xR - 6 + 3*mod(i, 5)",
+     "y": "yR - 7.7 + 1.9*floor(i/5)",
+     "r": 0.9,
+     "color": "red",
+     "visibleIf": "i < Rw/1"
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": 57,
+     "text": {
+      "en": "For",
+      "kn": "ಪರವಾಗಿ"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": 53,
+     "text": {
+      "en": "Long-term self-interest: {a:0}",
+      "kn": "ದೀರ್ಘಾವಧಿ ಸ್ವಹಿತ: {a:0}"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": 50,
+     "text": {
+      "en": "Power brings duty: {b:0}",
+      "kn": "ಶಕ್ತಿಯೊಂದಿಗೆ ಹೊಣೆ: {b:0}"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 82,
+     "y": 57,
+     "text": {
+      "en": "Against",
+      "kn": "ವಿರುದ್ಧ"
+     },
+     "size": 22,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 82,
+     "y": 53,
+     "text": {
+      "en": "Dilutes profit motive: {c:0}",
+      "kn": "ಲಾಭ ಉದ್ದೇಶ ದುರ್ಬಲ: {c:0}"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 82,
+     "y": 50,
+     "text": {
+      "en": "Lacks social skills: {d:0}",
+      "kn": "ಸಾಮಾಜಿಕ ಕೌಶಲ್ಯ ಕೊರತೆ: {d:0}"
+     },
+     "size": 16
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 44,
+     "text": {
+      "en": "For",
+      "kn": "ಪರವಾಗಿ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "net > 1"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 44,
+     "text": {
+      "en": "Against",
+      "kn": "ವಿರುದ್ಧ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "net < -1"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 44,
+     "text": {
+      "en": "Finely balanced",
+      "kn": "ಸಮತೋಲನದಲ್ಲಿದೆ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "abs(net) <= 1"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "For",
+      "kn": "ಪರವಾಗಿ"
+     },
+     "expr": "Lw",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Against",
+      "kn": "ವಿರುದ್ಧ"
+     },
+     "expr": "Rw",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Net weight",
+      "kn": "ನಿವ್ವಳ ತೂಕ"
+     },
+     "expr": "net",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Which argument says CSR protects the firm's image?",
+     "kn": "CSR ಸಂಸ್ಥೆಯ ಪ್ರತಿಷ್ಠೆ ಕಾಪಾಡುತ್ತದೆ ಎನ್ನುವ ವಾದ ಯಾವುದು?"
+    },
+    {
+     "en": "Why do large firms feel more pressure than small ones?",
+     "kn": "ದೊಡ್ಡ ಸಂಸ್ಥೆಗಳ ಮೇಲೆ ಹೆಚ್ಚು ಒತ್ತಡ ಏಕೆ?"
+    },
+    {
+     "en": "Add an argument of your own to each side.",
+     "kn": "ಪ್ರತಿ ಕಡೆಗೆ ನಿಮ್ಮದೇ ವಾದ ಸೇರಿಸಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Weigh the arguments. For: long-term self-interest and the power business holds. Against: it dilutes the profit motive and business lacks social skills. Load a view or set your own weights.",
+    "kn": "ವಾದಗಳನ್ನು ತೂಗಿ. ಪರ: ದೀರ್ಘಾವಧಿ ಸ್ವಹಿತ, ವ್ಯವಹಾರದ ಶಕ್ತಿ. ವಿರುದ್ಧ: ಲಾಭ ಉದ್ದೇಶ ದುರ್ಬಲ, ಸಾಮಾಜಿಕ ಕೌಶಲ್ಯ ಕೊರತೆ. ಒಂದು ದೃಷ್ಟಿ ಆರಿಸಿ ಅಥವಾ ತೂಕ ಹೊಂದಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

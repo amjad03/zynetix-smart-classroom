@@ -62,6 +62,273 @@
    }
   },
   {
+   "id": "scene-accounting-process",
+   "type": "interactive",
+   "title": {
+    "en": "From transactions to a summary",
+    "kn": "ವ್ಯವಹಾರಗಳಿಂದ ಸಾರಾಂಶಕ್ಕೆ"
+   },
+   "narration": {
+    "en": "Accounting identifies each transaction, records it, classifies it into accounts and summarises the result. Each button is one transaction; the bars are the summary: cash, stock and profit. The shop starts with ₹10,000 cash and 5 items. Sell three items. Where did the profit come from? Set the selling price below the cost and sell again. What does the summary show?",
+    "kn": "ಲೆಕ್ಕಶಾಸ್ತ್ರ ಪ್ರತಿ ವ್ಯವಹಾರವನ್ನು ಗುರುತಿಸಿ, ದಾಖಲಿಸಿ, ಖಾತೆಗಳಾಗಿ ವರ್ಗೀಕರಿಸಿ, ಫಲಿತಾಂಶವನ್ನು ಸಂಕ್ಷೇಪಿಸುತ್ತದೆ. ಪ್ರತಿ ಬಟನ್ ಒಂದು ವ್ಯವಹಾರ; ಪಟ್ಟಿಗಳು ಸಾರಾಂಶ: ನಗದು, ದಾಸ್ತಾನು, ಲಾಭ. ಅಂಗಡಿ ₹10,000 ನಗದು ಮತ್ತು 5 ವಸ್ತುಗಳಿಂದ ಆರಂಭವಾಗುತ್ತದೆ. ಮೂರು ವಸ್ತು ಮಾರಿ. ಲಾಭ ಎಲ್ಲಿಂದ ಬಂತು? ಮಾರಾಟ ಬೆಲೆಯನ್ನು ವೆಚ್ಚಕ್ಕಿಂತ ಕಡಿಮೆ ಮಾಡಿ ಮತ್ತೆ ಮಾರಿ. ಸಾರಾಂಶ ಏನು ತೋರಿಸುತ್ತದೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Accounting identifies each transaction, records it, classifies it into accounts and summarises the result. Each button is one transaction; the bars are the summary: cash, stock and profit. The shop starts with ₹10,000 cash and 5 items.",
+    "kn": "ಲೆಕ್ಕಶಾಸ್ತ್ರ ಪ್ರತಿ ವ್ಯವಹಾರವನ್ನು ಗುರುತಿಸಿ, ದಾಖಲಿಸಿ, ಖಾತೆಗಳಾಗಿ ವರ್ಗೀಕರಿಸಿ, ಫಲಿತಾಂಶವನ್ನು ಸಂಕ್ಷೇಪಿಸುತ್ತದೆ. ಪ್ರತಿ ಬಟನ್ ಒಂದು ವ್ಯವಹಾರ; ಪಟ್ಟಿಗಳು ಸಾರಾಂಶ: ನಗದು, ದಾಸ್ತಾನು, ಲಾಭ. ಅಂಗಡಿ ₹10,000 ನಗದು ಮತ್ತು 5 ವಸ್ತುಗಳಿಂದ ಆರಂಭವಾಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "P",
+     "label": {
+      "en": "Selling price per item",
+      "kn": "ಪ್ರತಿ ವಸ್ತುವಿನ ಮಾರಾಟ ಬೆಲೆ"
+     },
+     "min": 500,
+     "max": 2000,
+     "step": 100,
+     "value": 1000,
+     "unit": "₹"
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "Cost per item",
+      "kn": "ಪ್ರತಿ ವಸ್ತುವಿನ ವೆಚ್ಚ"
+     },
+     "min": 300,
+     "max": 1500,
+     "step": 100,
+     "value": 600,
+     "unit": "₹"
+    }
+   ],
+   "counters": [
+    {
+     "name": "ns",
+     "value": 0,
+     "min": 0,
+     "max": 12
+    },
+    {
+     "name": "np",
+     "value": 0,
+     "min": 0,
+     "max": 10
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Sell an item",
+      "kn": "ಒಂದು ವಸ್ತು ಮಾರಿ"
+     },
+     "icon": "add",
+     "set": {
+      "ns": "ns + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Buy an item",
+      "kn": "ಒಂದು ವಸ್ತು ಖರೀದಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "np": "np + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "ns": "0",
+      "np": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "sold",
+     "expr": "min(ns, 5 + np)"
+    },
+    {
+     "name": "cash",
+     "expr": "10000 + P*sold - C*np"
+    },
+    {
+     "name": "stk",
+     "expr": "(5 + np - sold)*C"
+    },
+    {
+     "name": "prof",
+     "expr": "(P - C)*sold"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10.4
+    ],
+    "y": [
+     -25000,
+     50000
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": "min(0, cash)",
+     "w": 2.0,
+     "h": "max(abs(cash), 140)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "if(cash >= 0, cash + 2450, cash - 2450)",
+     "text": {
+      "en": "₹{cash:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "if(cash >= 0, -2450, 2450)",
+     "text": {
+      "en": "Cash",
+      "kn": "ನಗದು"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": "min(0, stk)",
+     "w": 2.0,
+     "h": "max(abs(stk), 140)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "if(stk >= 0, stk + 2450, stk - 2450)",
+     "text": {
+      "en": "₹{stk:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "if(stk >= 0, -2450, 2450)",
+     "text": {
+      "en": "Stock (at cost)",
+      "kn": "ದಾಸ್ತಾನು"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": "min(0, prof)",
+     "w": 2.0,
+     "h": "max(abs(prof), 140)",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "if(prof >= 0, prof + 2450, prof - 2450)",
+     "text": {
+      "en": "₹{prof:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "if(prof >= 0, -2450, 2450)",
+     "text": {
+      "en": "Profit",
+      "kn": "ಲಾಭ"
+     },
+     "size": 20,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 5,
+     "y": 46000,
+     "text": {
+      "en": "Transactions recorded: {ns + np:0}",
+      "kn": "ದಾಖಲಾದ ವ್ಯವಹಾರಗಳು: {ns + np:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 40000,
+     "text": {
+      "en": "Sales {sold:0} · Purchases {np:0}",
+      "kn": "ಮಾರಾಟ {sold:0} · ಖರೀದಿ {np:0}"
+     },
+     "size": 20,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Items sold",
+      "kn": "ಮಾರಿದ ವಸ್ತುಗಳು"
+     },
+     "expr": "sold",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Items in stock",
+      "kn": "ದಾಸ್ತಾನಿನಲ್ಲಿ ವಸ್ತುಗಳು"
+     },
+     "expr": "5 + np - sold",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Profit",
+      "kn": "ಲಾಭ"
+     },
+     "expr": "prof",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Sell three items. Where did the profit come from?",
+     "kn": "ಮೂರು ವಸ್ತು ಮಾರಿ. ಲಾಭ ಎಲ್ಲಿಂದ ಬಂತು?"
+    },
+    {
+     "en": "Set the selling price below the cost and sell again. What does the summary show?",
+     "kn": "ಮಾರಾಟ ಬೆಲೆಯನ್ನು ವೆಚ್ಚಕ್ಕಿಂತ ಕಡಿಮೆ ಮಾಡಿ ಮತ್ತೆ ಮಾರಿ. ಸಾರಾಂಶ ಏನು ತೋರಿಸುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

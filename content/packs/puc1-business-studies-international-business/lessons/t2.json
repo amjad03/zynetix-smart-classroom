@@ -65,6 +65,295 @@
    }
   },
   {
+   "id": "scene-gains-trade",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Gains from specialisation and trade",
+    "kn": "ವಿಶೇಷೀಕರಣ ಮತ್ತು ವ್ಯಾಪಾರದ ಲಾಭ"
+   },
+   "caption": {
+    "en": "India is better at textiles and Japan at electronics. Without trade each splits its workers between both goods. Turn on trade: each specialises, they swap, and world output rises.",
+    "kn": "ಭಾರತ ಜವಳಿಯಲ್ಲಿ, ಜಪಾನ್ ಎಲೆಕ್ಟ್ರಾನಿಕ್ಸ್‌ನಲ್ಲಿ ಉತ್ತಮ. ವ್ಯಾಪಾರ ಇಲ್ಲದೆ ಎರಡನ್ನೂ ಉತ್ಪಾದಿಸುತ್ತವೆ. ವ್ಯಾಪಾರ ಆನ್ ಮಾಡಿ: ವಿಶೇಷೀಕರಣ ಮತ್ತು ವಿನಿಮಯದಿಂದ ಜಾಗತಿಕ ಉತ್ಪಾದನೆ ಹೆಚ್ಚುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "ish",
+     "label": {
+      "en": "India's workers on textiles (of 10)",
+      "kn": "ಜವಳಿಯಲ್ಲಿ ಭಾರತದ ಕಾರ್ಮಿಕರು (10ರಲ್ಲಿ)"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 6
+    },
+    {
+     "name": "rt",
+     "label": {
+      "en": "Electronics per 10 textiles (terms of trade)",
+      "kn": "10 ಜವಳಿಗೆ ಎಲೆಕ್ಟ್ರಾನಿಕ್ಸ್"
+     },
+     "min": 3,
+     "max": 9,
+     "step": 1,
+     "value": 6
+    },
+    {
+     "name": "ex",
+     "label": {
+      "en": "Textiles India exports",
+      "kn": "ಭಾರತದ ಜವಳಿ ರಫ್ತು"
+     },
+     "min": 0,
+     "max": 80,
+     "step": 5,
+     "value": 40
+    }
+   ],
+   "toggles": [
+    {
+     "name": "tr",
+     "label": {
+      "en": "Specialise and trade",
+      "kn": "ವಿಶೇಷೀಕರಿಸಿ ವ್ಯಾಪಾರ ಮಾಡಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "tx",
+     "expr": "if(tr, 100, 10*ish + 3*4)"
+    },
+    {
+     "name": "el",
+     "expr": "if(tr, 100, 4*(10 - ish) + 10*6)"
+    },
+    {
+     "name": "b0",
+     "expr": "tx"
+    },
+    {
+     "name": "b1",
+     "expr": "el"
+    },
+    {
+     "name": "b2",
+     "expr": "if(tr, tx - ex, 10*ish)"
+    },
+    {
+     "name": "b3",
+     "expr": "if(tr, ex*rt/10, 4*(10 - ish))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Units produced and consumed",
+      "kn": "ಉತ್ಪಾದನೆ ಮತ್ತು ಬಳಕೆ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/200, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/200, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "World textiles",
+      "kn": "ಜಾಗತಿಕ ಜವಳಿ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/200, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/200, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "World electronics",
+      "kn": "ಜಾಗತಿಕ ಎಲೆಕ್ಟ್ರಾನಿಕ್ಸ್"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/200, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/200, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "India consumes TX",
+      "kn": "ಭಾರತ ಬಳಕೆ ಜವಳಿ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/200, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/200, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "India consumes EL",
+      "kn": "ಭಾರತ ಬಳಕೆ ಎಲೆ."
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "World output up",
+      "kn": "ಜಾಗತಿಕ ಉತ್ಪಾದನೆ ಏರಿಕೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "tr"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Self-sufficient, less output",
+      "kn": "ಸ್ವಾವಲಂಬಿ, ಕಡಿಮೆ ಉತ್ಪಾದನೆ"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "!tr"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "World textiles",
+      "kn": "ಜಾಗತಿಕ ಜವಳಿ"
+     },
+     "expr": "tx",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "World electronics",
+      "kn": "ಜಾಗತಿಕ ಎಲೆಕ್ಟ್ರಾನಿಕ್ಸ್"
+     },
+     "expr": "el",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn trade on. How much more of each good does the world get?",
+     "kn": "ವ್ಯಾಪಾರ ಆನ್ ಮಾಡಿ. ಪ್ರತಿ ಸರಕು ಎಷ್ಟು ಹೆಚ್ಚು?"
+    },
+    {
+     "en": "Find terms of trade where India consumes more of both goods than before.",
+     "kn": "ಭಾರತ ಎರಡನ್ನೂ ಹೆಚ್ಚು ಬಳಸುವ ವಿನಿಮಯ ದರ ಹುಡುಕಿ."
+    },
+    {
+     "en": "Which benefit of international business does this show?",
+     "kn": "ಇದು ಅಂತರರಾಷ್ಟ್ರೀಯ ವ್ಯವಹಾರದ ಯಾವ ಲಾಭ ತೋರಿಸುತ್ತದೆ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "India is better at textiles and Japan at electronics. Without trade each splits its workers between both goods. Turn on trade: each specialises, they swap, and world output rises.",
+    "kn": "ಭಾರತ ಜವಳಿಯಲ್ಲಿ, ಜಪಾನ್ ಎಲೆಕ್ಟ್ರಾನಿಕ್ಸ್‌ನಲ್ಲಿ ಉತ್ತಮ. ವ್ಯಾಪಾರ ಇಲ್ಲದೆ ಎರಡನ್ನೂ ಉತ್ಪಾದಿಸುತ್ತವೆ. ವ್ಯಾಪಾರ ಆನ್ ಮಾಡಿ: ವಿಶೇಷೀಕರಣ ಮತ್ತು ವಿನಿಮಯದಿಂದ ಜಾಗತಿಕ ಉತ್ಪಾದನೆ ಹೆಚ್ಚುತ್ತದೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

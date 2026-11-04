@@ -61,6 +61,204 @@
    }
   },
   {
+   "id": "scene-informal-workforce",
+   "type": "interactive",
+   "title": {
+    "en": "How informal is the workforce?",
+    "kn": "ಕಾರ್ಮಿಕ ಬಲ ಎಷ್ಟು ಅನೌಪಚಾರಿಕ?"
+   },
+   "narration": {
+    "en": "Formal-sector workers have regular jobs with social security such as provident fund and pension. Informal workers, the large majority in India, usually have none. Change the shares and see how many lack protection (millions of workers). With 10% formal jobs, how many workers lack social security? Which helps more: doubling formal jobs, or covering 30% of informal workers?",
+    "kn": "ಔಪಚಾರಿಕ ವಲಯದ ಕಾರ್ಮಿಕರಿಗೆ ಭವಿಷ್ಯ ನಿಧಿ, ಪಿಂಚಣಿಯಂತಹ ಸಾಮಾಜಿಕ ಭದ್ರತೆಯ ನಿಯಮಿತ ಕೆಲಸ. ಭಾರತದ ಬಹುಪಾಲು ಅನೌಪಚಾರಿಕ ಕಾರ್ಮಿಕರಿಗೆ ಸಾಮಾನ್ಯವಾಗಿ ಇಲ್ಲ. ಪಾಲುಗಳನ್ನು ಬದಲಿಸಿ ಎಷ್ಟು ಜನ ರಕ್ಷಣೆ ಇಲ್ಲದವರು ನೋಡಿ (ದಶಲಕ್ಷ ಕಾರ್ಮಿಕರು). 10% ಔಪಚಾರಿಕ ಕೆಲಸಗಳಿದ್ದರೆ, ಎಷ್ಟು ಜನರಿಗೆ ಸಾಮಾಜಿಕ ಭದ್ರತೆ ಇಲ್ಲ? ಯಾವುದು ಹೆಚ್ಚು ಸಹಾಯ: ಔಪಚಾರಿಕ ಕೆಲಸ ದ್ವಿಗುಣ, ಅಥವಾ 30% ಅನೌಪಚಾರಿಕರಿಗೆ ಭದ್ರತೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Formal-sector workers have regular jobs with social security such as provident fund and pension. Informal workers, the large majority in India, usually have none. Change the shares and see how many lack protection (millions of workers).",
+    "kn": "ಔಪಚಾರಿಕ ವಲಯದ ಕಾರ್ಮಿಕರಿಗೆ ಭವಿಷ್ಯ ನಿಧಿ, ಪಿಂಚಣಿಯಂತಹ ಸಾಮಾಜಿಕ ಭದ್ರತೆಯ ನಿಯಮಿತ ಕೆಲಸ. ಭಾರತದ ಬಹುಪಾಲು ಅನೌಪಚಾರಿಕ ಕಾರ್ಮಿಕರಿಗೆ ಸಾಮಾನ್ಯವಾಗಿ ಇಲ್ಲ. ಪಾಲುಗಳನ್ನು ಬದಲಿಸಿ ಎಷ್ಟು ಜನ ರಕ್ಷಣೆ ಇಲ್ಲದವರು ನೋಡಿ (ದಶಲಕ್ಷ ಕಾರ್ಮಿಕರು)."
+   },
+   "sliders": [
+    {
+     "name": "W",
+     "label": {
+      "en": "Total workforce (millions)",
+      "kn": "ಒಟ್ಟು ಕಾರ್ಮಿಕ ಬಲ (ದಶಲಕ್ಷ)"
+     },
+     "min": 100,
+     "max": 600,
+     "step": 10,
+     "value": 470
+    },
+    {
+     "name": "fp",
+     "label": {
+      "en": "Formal share",
+      "kn": "ಔಪಚಾರಿಕ ಪಾಲು"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    },
+    {
+     "name": "cov",
+     "label": {
+      "en": "Informal workers covered by schemes",
+      "kn": "ಯೋಜನೆಗಳಿಂದ ರಕ್ಷಿತ ಅನೌಪಚಾರಿಕರು"
+     },
+     "min": 0,
+     "max": 50,
+     "step": 5,
+     "value": 5,
+     "unit": "%"
+    }
+   ],
+   "vars": [
+    {
+     "name": "fw",
+     "expr": "W*fp/100"
+    },
+    {
+     "name": "iw",
+     "expr": "W - fw"
+    },
+    {
+     "name": "nss",
+     "expr": "iw*(1 - cov/100)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10.4
+    ],
+    "y": [
+     -45,
+     620
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(fw - 0, 1.32)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "max(fw, 0) + 23.1",
+     "text": {
+      "en": "{fw:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": -23.1,
+     "text": {
+      "en": "Formal workers",
+      "kn": "ಔಪಚಾರಿಕ ಕಾರ್ಮಿಕರು"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(iw - 0, 1.32)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "max(iw, 0) + 23.1",
+     "text": {
+      "en": "{iw:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": -23.1,
+     "text": {
+      "en": "Informal workers",
+      "kn": "ಅನೌಪಚಾರಿಕ ಕಾರ್ಮಿಕರು"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(nss - 0, 1.32)",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "max(nss, 0) + 23.1",
+     "text": {
+      "en": "{nss:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": -23.1,
+     "text": {
+      "en": "Without social security",
+      "kn": "ಸಾಮಾಜಿಕ ಭದ್ರತೆ ಇಲ್ಲದವರು"
+     },
+     "size": 20,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Informal share",
+      "kn": "ಅನೌಪಚಾರಿಕ ಪಾಲು"
+     },
+     "expr": "100 - fp",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Without social security",
+      "kn": "ಸಾಮಾಜಿಕ ಭದ್ರತೆ ಇಲ್ಲದವರು"
+     },
+     "expr": "nss",
+     "digits": 0,
+     "unit": "million"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With 10% formal jobs, how many workers lack social security?",
+     "kn": "10% ಔಪಚಾರಿಕ ಕೆಲಸಗಳಿದ್ದರೆ, ಎಷ್ಟು ಜನರಿಗೆ ಸಾಮಾಜಿಕ ಭದ್ರತೆ ಇಲ್ಲ?"
+    },
+    {
+     "en": "Which helps more: doubling formal jobs, or covering 30% of informal workers?",
+     "kn": "ಯಾವುದು ಹೆಚ್ಚು ಸಹಾಯ: ಔಪಚಾರಿಕ ಕೆಲಸ ದ್ವಿಗುಣ, ಅಥವಾ 30% ಅನೌಪಚಾರಿಕರಿಗೆ ಭದ್ರತೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

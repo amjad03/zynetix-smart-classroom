@@ -56,6 +56,221 @@
    }
   },
   {
+   "id": "scene-business-entity",
+   "type": "interactive",
+   "title": {
+    "en": "Business entity: the owner is separate",
+    "kn": "ವ್ಯವಹಾರ ಘಟಕ: ಮಾಲೀಕ ಪ್ರತ್ಯೇಕ"
+   },
+   "narration": {
+    "en": "Under the business entity concept the business and its owner are separate. If the business pays the owner's household bills, that is drawings, not a business expense. Charging it to profit understates the profit. Pay ₹40 thousand of household bills. Compare profit with and without the mistake. Does the closing capital change with the mistake? Why?",
+    "kn": "ವ್ಯವಹಾರ ಘಟಕ ಪರಿಕಲ್ಪನೆಯಂತೆ ವ್ಯವಹಾರ ಮತ್ತು ಮಾಲೀಕ ಬೇರೆ. ವ್ಯವಹಾರ ಮಾಲೀಕರ ಮನೆಯ ಬಿಲ್ ಪಾವತಿಸಿದರೆ ಅದು ಸ್ವಂತ ಬಳಕೆ, ವ್ಯವಹಾರ ವೆಚ್ಚವಲ್ಲ. ಅದನ್ನು ಲಾಭದಿಂದ ಕಳೆದರೆ ಲಾಭ ಕಡಿಮೆ ತೋರುತ್ತದೆ. ₹40 ಸಾವಿರ ಮನೆ ಬಿಲ್ ಪಾವತಿಸಿ. ತಪ್ಪಿನೊಂದಿಗೆ ಮತ್ತು ಇಲ್ಲದೆ ಲಾಭ ಹೋಲಿಸಿ. ತಪ್ಪಿನಿಂದ ಅಂತಿಮ ಬಂಡವಾಳ ಬದಲಾಗುತ್ತದೆಯೇ? ಏಕೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Under the business entity concept the business and its owner are separate. If the business pays the owner's household bills, that is drawings, not a business expense. Charging it to profit understates the profit.",
+    "kn": "ವ್ಯವಹಾರ ಘಟಕ ಪರಿಕಲ್ಪನೆಯಂತೆ ವ್ಯವಹಾರ ಮತ್ತು ಮಾಲೀಕ ಬೇರೆ. ವ್ಯವಹಾರ ಮಾಲೀಕರ ಮನೆಯ ಬಿಲ್ ಪಾವತಿಸಿದರೆ ಅದು ಸ್ವಂತ ಬಳಕೆ, ವ್ಯವಹಾರ ವೆಚ್ಚವಲ್ಲ. ಅದನ್ನು ಲಾಭದಿಂದ ಕಳೆದರೆ ಲಾಭ ಕಡಿಮೆ ತೋರುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "pf",
+     "label": {
+      "en": "True business profit (₹ thousand)",
+      "kn": "ನಿಜವಾದ ವ್ಯವಹಾರ ಲಾಭ (₹ ಸಾವಿರ)"
+     },
+     "min": 50,
+     "max": 300,
+     "step": 10,
+     "value": 150
+    },
+    {
+     "name": "ps",
+     "label": {
+      "en": "Owner's bills paid by the business (₹ thousand)",
+      "kn": "ವ್ಯವಹಾರ ಪಾವತಿಸಿದ ಮಾಲೀಕರ ಬಿಲ್ (₹ ಸಾವಿರ)"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 2,
+     "value": 20
+    },
+    {
+     "name": "cap",
+     "label": {
+      "en": "Opening capital (₹ thousand)",
+      "kn": "ಆರಂಭಿಕ ಬಂಡವಾಳ (₹ ಸಾವಿರ)"
+     },
+     "min": 100,
+     "max": 500,
+     "step": 10,
+     "value": 300
+    }
+   ],
+   "toggles": [
+    {
+     "name": "wrong",
+     "label": {
+      "en": "Wrongly treat the bills as a business expense",
+      "kn": "ಬಿಲ್‌ಗಳನ್ನು ತಪ್ಪಾಗಿ ವ್ಯವಹಾರ ವೆಚ್ಚವೆಂದು ಪರಿಗಣಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "pr",
+     "expr": "pf - if(wrong, ps, 0)"
+    },
+    {
+     "name": "dr",
+     "expr": "if(wrong, 0, ps)"
+    },
+    {
+     "name": "cc",
+     "expr": "cap + pr - dr"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10.4
+    ],
+    "y": [
+     -60,
+     900
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(pr - 0, 1.92)",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "max(pr, 0) + 33.6",
+     "text": {
+      "en": "₹{pr:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": -33.6,
+     "text": {
+      "en": "Profit reported",
+      "kn": "ವರದಿಯ ಲಾಭ"
+     },
+     "size": 20,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(dr - 0, 1.92)",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "max(dr, 0) + 33.6",
+     "text": {
+      "en": "₹{dr:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": -33.6,
+     "text": {
+      "en": "Drawings",
+      "kn": "ಸ್ವಂತ ಬಳಕೆ"
+     },
+     "size": 20,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(cc - 0, 1.92)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "max(cc, 0) + 33.6",
+     "text": {
+      "en": "₹{cc:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": -33.6,
+     "text": {
+      "en": "Closing capital",
+      "kn": "ಅಂತಿಮ ಬಂಡವಾಳ"
+     },
+     "size": 20,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Profit reported",
+      "kn": "ವರದಿಯ ಲಾಭ"
+     },
+     "expr": "pr",
+     "digits": 0,
+     "unit": "₹ thousand"
+    },
+    {
+     "label": {
+      "en": "Profit understated by",
+      "kn": "ಲಾಭ ಕಡಿಮೆ ತೋರಿದ್ದು"
+     },
+     "expr": "pf - pr",
+     "digits": 0,
+     "unit": "₹ thousand"
+    },
+    {
+     "label": {
+      "en": "Closing capital",
+      "kn": "ಅಂತಿಮ ಬಂಡವಾಳ"
+     },
+     "expr": "cc",
+     "digits": 0,
+     "unit": "₹ thousand"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Pay ₹40 thousand of household bills. Compare profit with and without the mistake.",
+     "kn": "₹40 ಸಾವಿರ ಮನೆ ಬಿಲ್ ಪಾವತಿಸಿ. ತಪ್ಪಿನೊಂದಿಗೆ ಮತ್ತು ಇಲ್ಲದೆ ಲಾಭ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Does the closing capital change with the mistake? Why?",
+     "kn": "ತಪ್ಪಿನಿಂದ ಅಂತಿಮ ಬಂಡವಾಳ ಬದಲಾಗುತ್ತದೆಯೇ? ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

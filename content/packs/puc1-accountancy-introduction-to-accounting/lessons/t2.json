@@ -59,6 +59,246 @@
    }
   },
   {
+   "id": "scene-users-information",
+   "type": "interactive",
+   "title": {
+    "en": "What each user reads",
+    "kn": "ಪ್ರತಿ ಬಳಕೆದಾರ ಏನನ್ನು ಓದುತ್ತಾರೆ"
+   },
+   "narration": {
+    "en": "The same accounts answer different questions. Owners and investors look at profit and return on capital, lenders at borrowings against capital, and the government at tax. Change the business and watch each answer. Raise borrowings until debt is twice the capital. Would a bank lend more? Make expenses larger than revenue. What happens to tax?",
+    "kn": "ಅದೇ ಲೆಕ್ಕಪತ್ರಗಳು ಬೇರೆ ಬೇರೆ ಪ್ರಶ್ನೆಗಳಿಗೆ ಉತ್ತರಿಸುತ್ತವೆ. ಮಾಲೀಕರು ಮತ್ತು ಹೂಡಿಕೆದಾರರು ಲಾಭ ಮತ್ತು ಬಂಡವಾಳದ ಮೇಲಿನ ಪ್ರತಿಫಲ ನೋಡುತ್ತಾರೆ, ಸಾಲದಾತರು ಬಂಡವಾಳಕ್ಕೆ ಹೋಲಿಸಿ ಸಾಲ, ಸರ್ಕಾರ ತೆರಿಗೆ. ವ್ಯವಹಾರ ಬದಲಿಸಿ ಉತ್ತರಗಳನ್ನು ನೋಡಿ. ಸಾಲ ಬಂಡವಾಳದ ಎರಡರಷ್ಟು ಆಗುವವರೆಗೆ ಹೆಚ್ಚಿಸಿ. ಬ್ಯಾಂಕ್ ಇನ್ನಷ್ಟು ಸಾಲ ಕೊಡುತ್ತದೆಯೇ? ವೆಚ್ಚವನ್ನು ಆದಾಯಕ್ಕಿಂತ ಹೆಚ್ಚು ಮಾಡಿ. ತೆರಿಗೆ ಏನಾಗುತ್ತದೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "The same accounts answer different questions. Owners and investors look at profit and return on capital, lenders at borrowings against capital, and the government at tax. Change the business and watch each answer.",
+    "kn": "ಅದೇ ಲೆಕ್ಕಪತ್ರಗಳು ಬೇರೆ ಬೇರೆ ಪ್ರಶ್ನೆಗಳಿಗೆ ಉತ್ತರಿಸುತ್ತವೆ. ಮಾಲೀಕರು ಮತ್ತು ಹೂಡಿಕೆದಾರರು ಲಾಭ ಮತ್ತು ಬಂಡವಾಳದ ಮೇಲಿನ ಪ್ರತಿಫಲ ನೋಡುತ್ತಾರೆ, ಸಾಲದಾತರು ಬಂಡವಾಳಕ್ಕೆ ಹೋಲಿಸಿ ಸಾಲ, ಸರ್ಕಾರ ತೆರಿಗೆ. ವ್ಯವಹಾರ ಬದಲಿಸಿ ಉತ್ತರಗಳನ್ನು ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "Rv",
+     "label": {
+      "en": "Revenue (₹ lakh)",
+      "kn": "ಆದಾಯ (₹ ಲಕ್ಷ)"
+     },
+     "min": 100,
+     "max": 500,
+     "step": 10,
+     "value": 300
+    },
+    {
+     "name": "Ex",
+     "label": {
+      "en": "Expenses (₹ lakh)",
+      "kn": "ವೆಚ್ಚ (₹ ಲಕ್ಷ)"
+     },
+     "min": 50,
+     "max": 450,
+     "step": 10,
+     "value": 220
+    },
+    {
+     "name": "Db",
+     "label": {
+      "en": "Borrowings (₹ lakh)",
+      "kn": "ಸಾಲ (₹ ಲಕ್ಷ)"
+     },
+     "min": 0,
+     "max": 400,
+     "step": 10,
+     "value": 100
+    },
+    {
+     "name": "Cap",
+     "label": {
+      "en": "Owners' capital (₹ lakh)",
+      "kn": "ಮಾಲೀಕರ ಬಂಡವಾಳ (₹ ಲಕ್ಷ)"
+     },
+     "min": 50,
+     "max": 300,
+     "step": 10,
+     "value": 200
+    }
+   ],
+   "vars": [
+    {
+     "name": "prof",
+     "expr": "Rv - Ex"
+    },
+    {
+     "name": "tax",
+     "expr": "max(prof, 0)*0.25"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     13.6
+    ],
+    "y": [
+     -400,
+     560
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": "min(0, prof)",
+     "w": 2.0,
+     "h": "max(abs(prof), 1.92)",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "if(prof >= 0, prof + 33.6, prof - 33.6)",
+     "text": {
+      "en": "₹{prof:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "if(prof >= 0, -33.6, 33.6)",
+     "text": {
+      "en": "Profit",
+      "kn": "ಲಾಭ"
+     },
+     "size": 20,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": "min(0, tax)",
+     "w": 2.0,
+     "h": "max(abs(tax), 1.92)",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "if(tax >= 0, tax + 33.6, tax - 33.6)",
+     "text": {
+      "en": "₹{tax:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "if(tax >= 0, -33.6, 33.6)",
+     "text": {
+      "en": "Tax",
+      "kn": "ತೆರಿಗೆ"
+     },
+     "size": 20,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": "min(0, Db)",
+     "w": 2.0,
+     "h": "max(abs(Db), 1.92)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "if(Db >= 0, Db + 33.6, Db - 33.6)",
+     "text": {
+      "en": "₹{Db:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "if(Db >= 0, -33.6, 33.6)",
+     "text": {
+      "en": "Borrowings",
+      "kn": "ಸಾಲ"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": "min(0, Cap)",
+     "w": 2.0,
+     "h": "max(abs(Cap), 1.92)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "if(Cap >= 0, Cap + 33.6, Cap - 33.6)",
+     "text": {
+      "en": "₹{Cap:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "if(Cap >= 0, -33.6, 33.6)",
+     "text": {
+      "en": "Capital",
+      "kn": "ಬಂಡವಾಳ"
+     },
+     "size": 20,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Return on capital (owners)",
+      "kn": "ಬಂಡವಾಳದ ಮೇಲಿನ ಪ್ರತಿಫಲ (ಮಾಲೀಕರು)"
+     },
+     "expr": "prof/Cap*100",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Debt to capital (lenders)",
+      "kn": "ಸಾಲ : ಬಂಡವಾಳ (ಸಾಲದಾತರು)"
+     },
+     "expr": "Db/Cap",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Tax at 25% (government)",
+      "kn": "25% ತೆರಿಗೆ (ಸರ್ಕಾರ)"
+     },
+     "expr": "tax",
+     "digits": 1,
+     "unit": "₹ lakh"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise borrowings until debt is twice the capital. Would a bank lend more?",
+     "kn": "ಸಾಲ ಬಂಡವಾಳದ ಎರಡರಷ್ಟು ಆಗುವವರೆಗೆ ಹೆಚ್ಚಿಸಿ. ಬ್ಯಾಂಕ್ ಇನ್ನಷ್ಟು ಸಾಲ ಕೊಡುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Make expenses larger than revenue. What happens to tax?",
+     "kn": "ವೆಚ್ಚವನ್ನು ಆದಾಯಕ್ಕಿಂತ ಹೆಚ್ಚು ಮಾಡಿ. ತೆರಿಗೆ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

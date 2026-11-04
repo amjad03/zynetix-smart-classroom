@@ -59,6 +59,247 @@
    }
   },
   {
+   "id": "scene-deindustrialisation",
+   "type": "interactive",
+   "title": {
+    "en": "Raw material out, cloth in",
+    "kn": "ಕಚ್ಚಾ ವಸ್ತು ಹೊರಗೆ, ಬಟ್ಟೆ ಒಳಗೆ"
+   },
+   "narration": {
+    "en": "Under colonial rule India exported raw cotton cheaply and bought back machine-made British cloth at a higher price. The value added by manufacturing, and the jobs, went to Britain while Indian handicrafts declined. Values are in ₹ thousand. Export 50 bales at ₹20 and buy cloth back at ₹100 a bale. Who gains the ₹4,000? Switch on \"weave in India\". Where does the value added go now?",
+    "kn": "ವಸಾಹತು ಆಳ್ವಿಕೆಯಲ್ಲಿ ಭಾರತ ಕಚ್ಚಾ ಹತ್ತಿಯನ್ನು ಅಗ್ಗವಾಗಿ ರಫ್ತು ಮಾಡಿ, ಯಂತ್ರದಲ್ಲಿ ಮಾಡಿದ ಬ್ರಿಟಿಷ್ ಬಟ್ಟೆಯನ್ನು ಹೆಚ್ಚಿನ ಬೆಲೆಗೆ ಮರಳಿ ಕೊಂಡಿತು. ಉತ್ಪಾದನೆಯ ಮೌಲ್ಯ ಮತ್ತು ಉದ್ಯೋಗ ಬ್ರಿಟನ್‌ಗೆ ಹೋಯಿತು, ಭಾರತದ ಕರಕುಶಲ ಕುಸಿಯಿತು. ಮೌಲ್ಯ ₹ ಸಾವಿರದಲ್ಲಿ. ₹20ಕ್ಕೆ 50 ಮೂಟೆ ರಫ್ತು, ₹100ಕ್ಕೆ ಬಟ್ಟೆ ಆಮದು. ₹4,000 ಯಾರಿಗೆ? \"ಭಾರತದಲ್ಲೇ ನೇಯಿರಿ\" ಆನ್ ಮಾಡಿ. ಈಗ ಮೌಲ್ಯ ಎಲ್ಲಿಗೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Under colonial rule India exported raw cotton cheaply and bought back machine-made British cloth at a higher price. The value added by manufacturing, and the jobs, went to Britain while Indian handicrafts declined. Values are in ₹ thousand.",
+    "kn": "ವಸಾಹತು ಆಳ್ವಿಕೆಯಲ್ಲಿ ಭಾರತ ಕಚ್ಚಾ ಹತ್ತಿಯನ್ನು ಅಗ್ಗವಾಗಿ ರಫ್ತು ಮಾಡಿ, ಯಂತ್ರದಲ್ಲಿ ಮಾಡಿದ ಬ್ರಿಟಿಷ್ ಬಟ್ಟೆಯನ್ನು ಹೆಚ್ಚಿನ ಬೆಲೆಗೆ ಮರಳಿ ಕೊಂಡಿತು. ಉತ್ಪಾದನೆಯ ಮೌಲ್ಯ ಮತ್ತು ಉದ್ಯೋಗ ಬ್ರಿಟನ್‌ಗೆ ಹೋಯಿತು, ಭಾರತದ ಕರಕುಶಲ ಕುಸಿಯಿತು. ಮೌಲ್ಯ ₹ ಸಾವಿರದಲ್ಲಿ."
+   },
+   "sliders": [
+    {
+     "name": "q",
+     "label": {
+      "en": "Bales of cotton (thousand)",
+      "kn": "ಹತ್ತಿ ಮೂಟೆ (ಸಾವಿರ)"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 50
+    },
+    {
+     "name": "pr",
+     "label": {
+      "en": "Price of raw cotton per bale",
+      "kn": "ಪ್ರತಿ ಮೂಟೆ ಕಚ್ಚಾ ಹತ್ತಿ ಬೆಲೆ"
+     },
+     "min": 10,
+     "max": 50,
+     "step": 2,
+     "value": 20,
+     "unit": "₹"
+    },
+    {
+     "name": "pc",
+     "label": {
+      "en": "Price of cloth made from a bale",
+      "kn": "ಒಂದು ಮೂಟೆಯ ಬಟ್ಟೆಯ ಬೆಲೆ"
+     },
+     "min": 40,
+     "max": 200,
+     "step": 5,
+     "value": 100,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "home",
+     "label": {
+      "en": "Weave the cloth in India",
+      "kn": "ಬಟ್ಟೆಯನ್ನು ಭಾರತದಲ್ಲೇ ನೇಯಿರಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "ex",
+     "expr": "if(home, 0, q*pr)"
+    },
+    {
+     "name": "im",
+     "expr": "if(home, 0, q*pc)"
+    },
+    {
+     "name": "va",
+     "expr": "if(home, 0, q*(pc - pr))"
+    },
+    {
+     "name": "wv",
+     "expr": "if(home, q*(pc - pr), 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     13.6
+    ],
+    "y": [
+     -1400,
+     20000
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(ex - 0, 42.8)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "max(ex, 0) + 749",
+     "text": {
+      "en": "₹{ex:0}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": -749.0000000000001,
+     "text": {
+      "en": "Raw cotton exported",
+      "kn": "ರಫ್ತಾದ ಕಚ್ಚಾ ಹತ್ತಿ"
+     },
+     "size": 18,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(im - 0, 42.8)",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "max(im, 0) + 749",
+     "text": {
+      "en": "₹{im:0}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": -749.0000000000001,
+     "text": {
+      "en": "Cloth imported back",
+      "kn": "ಮರಳಿ ಆಮದಾದ ಬಟ್ಟೆ"
+     },
+     "size": 18,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(va - 0, 42.8)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "max(va, 0) + 749",
+     "text": {
+      "en": "₹{va:0}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": -749.0000000000001,
+     "text": {
+      "en": "Value added in Britain",
+      "kn": "ಬ್ರಿಟನ್‌ನಲ್ಲಿ ಸೇರಿದ ಮೌಲ್ಯ"
+     },
+     "size": 18,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(wv - 0, 42.8)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "max(wv, 0) + 749",
+     "text": {
+      "en": "₹{wv:0}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": -749.0000000000001,
+     "text": {
+      "en": "Indian weavers' income",
+      "kn": "ಭಾರತೀಯ ನೇಕಾರರ ಆದಾಯ"
+     },
+     "size": 18,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Net outflow from India",
+      "kn": "ಭಾರತದಿಂದ ನಿವ್ವಳ ಹೊರಹರಿವು"
+     },
+     "expr": "im - ex",
+     "digits": 0,
+     "unit": "₹ thousand"
+    },
+    {
+     "label": {
+      "en": "Value added kept in India",
+      "kn": "ಭಾರತದಲ್ಲಿ ಉಳಿದ ಮೌಲ್ಯ"
+     },
+     "expr": "wv",
+     "digits": 0,
+     "unit": "₹ thousand"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Export 50 bales at ₹20 and buy cloth back at ₹100 a bale. Who gains the ₹4,000?",
+     "kn": "₹20ಕ್ಕೆ 50 ಮೂಟೆ ರಫ್ತು, ₹100ಕ್ಕೆ ಬಟ್ಟೆ ಆಮದು. ₹4,000 ಯಾರಿಗೆ?"
+    },
+    {
+     "en": "Switch on \"weave in India\". Where does the value added go now?",
+     "kn": "\"ಭಾರತದಲ್ಲೇ ನೇಯಿರಿ\" ಆನ್ ಮಾಡಿ. ಈಗ ಮೌಲ್ಯ ಎಲ್ಲಿಗೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

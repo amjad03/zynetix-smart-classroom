@@ -62,6 +62,260 @@
    }
   },
   {
+   "id": "scene-root-zones",
+   "type": "interactive",
+   "title": {
+    "en": "Where does a root grow?",
+    "kn": "ಬೇರು ಎಲ್ಲಿ ಬೆಳೆಯುತ್ತದೆ?"
+   },
+   "narration": {
+    "en": "Ink marks were made at equal gaps near a root tip. Play the days: the marks in the region of elongation spread apart, while the root cap, the meristem and the region of maturation (with root hairs) hardly stretch. Cells divide in the meristem, lengthen just behind it, and mature further up.",
+    "kn": "ಬೇರಿನ ತುದಿಯ ಬಳಿ ಸಮಾನ ಅಂತರದಲ್ಲಿ ಶಾಯಿ ಗುರುತು ಹಾಕಲಾಗಿದೆ. ದಿನಗಳನ್ನು ಚಲಾಯಿಸಿ: ಉದ್ದವಾಗುವ ವಲಯದ ಗುರುತುಗಳು ದೂರ ಸರಿಯುತ್ತವೆ, ಆದರೆ ಬೇರುಟೊಪ್ಪಿ, ವರ್ಧನ ವಲಯ ಮತ್ತು ಪಕ್ವ ವಲಯ (ಮೂಲರೋಮಗಳೊಂದಿಗೆ) ಹಿಗ್ಗುವುದಿಲ್ಲ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Ink marks were made at equal gaps near a root tip. Play the days: the marks in the region of elongation spread apart, while the root cap, the meristem and the region of maturation (with root hairs) hardly stretch. Cells divide in the meristem, lengthen just behind it, and mature further up.",
+    "kn": "ಬೇರಿನ ತುದಿಯ ಬಳಿ ಸಮಾನ ಅಂತರದಲ್ಲಿ ಶಾಯಿ ಗುರುತು ಹಾಕಲಾಗಿದೆ. ದಿನಗಳನ್ನು ಚಲಾಯಿಸಿ: ಉದ್ದವಾಗುವ ವಲಯದ ಗುರುತುಗಳು ದೂರ ಸರಿಯುತ್ತವೆ, ಆದರೆ ಬೇರುಟೊಪ್ಪಿ, ವರ್ಧನ ವಲಯ ಮತ್ತು ಪಕ್ವ ವಲಯ (ಮೂಲರೋಮಗಳೊಂದಿಗೆ) ಹಿಗ್ಗುವುದಿಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "g",
+     "label": {
+      "en": "Growth rate",
+      "kn": "ಬೆಳವಣಿಗೆಯ ದರ"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "toggles": [
+    {
+     "name": "mk",
+     "label": {
+      "en": "Ink marks",
+      "kn": "ಶಾಯಿ ಗುರುತುಗಳು"
+     },
+     "value": true
+    },
+    {
+     "name": "zn",
+     "label": {
+      "en": "Name the regions",
+      "kn": "ವಲಯಗಳನ್ನು ಹೆಸರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 10,
+    "unit": "d",
+    "speeds": [
+     0.25,
+     0.5,
+     1,
+     2
+    ],
+    "speed": 0.5
+   },
+   "vars": [
+    {
+     "name": "G",
+     "expr": "0.4*g*t"
+    },
+    {
+     "name": "tip",
+     "expr": "40 - G"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 100,
+     "h": 56,
+     "color": "orange",
+     "opacity": 0.15
+    },
+    {
+     "shape": "rect",
+     "x": 47,
+     "y": "tip + 1",
+     "w": 6,
+     "h": "55 - tip",
+     "color": "white",
+     "opacity": 0.85
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       46.5,
+       "tip + 2"
+      ],
+      [
+       53.5,
+       "tip + 2"
+      ],
+      [
+       52,
+       "tip"
+      ],
+      [
+       50,
+       "tip - 0.8"
+      ],
+      [
+       48,
+       "tip"
+      ]
+     ],
+     "color": "yellow"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "if(mod(i, 2) == 0, 45.5, 54.5)",
+     "y": "tip + 15 + G + 1.2*floor(i/2)",
+     "r": 0.35,
+     "color": "white",
+     "visibleIf": "i < 10"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "if(mod(i, 2) == 0, 44 - 0.4*mod(i, 3), 56 + 0.4*mod(i, 3))",
+     "y": "tip + 15.5 + G + 1.6*floor(i/2)*0.6",
+     "r": 0.3,
+     "color": "white",
+     "visibleIf": "i < 16"
+    },
+    {
+     "shape": "particles",
+     "count": 11,
+     "x": 50,
+     "y": "tip + 1.5*i + G*smoothstep(1, 5, i)",
+     "r": 0.55,
+     "color": "blue",
+     "visibleIf": "mk"
+    },
+    {
+     "shape": "label",
+     "x": 70,
+     "y": "tip + 0.6",
+     "size": 20,
+     "text": {
+      "en": "Root cap",
+      "kn": "ಬೇರುಟೊಪ್ಪಿ"
+     },
+     "align": "left",
+     "visibleIf": "zn",
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 70,
+     "y": "tip + 2.5",
+     "size": 20,
+     "text": {
+      "en": "Meristematic region",
+      "kn": "ವರ್ಧನ ವಲಯ"
+     },
+     "align": "left",
+     "visibleIf": "zn"
+    },
+    {
+     "shape": "label",
+     "x": 70,
+     "y": "tip + 3 + 0.5*G + 3",
+     "size": 20,
+     "text": {
+      "en": "Region of elongation",
+      "kn": "ಉದ್ದವಾಗುವ ವಲಯ"
+     },
+     "align": "left",
+     "visibleIf": "zn",
+     "color": "blue"
+    },
+    {
+     "shape": "label",
+     "x": 70,
+     "y": "tip + 9 + G + 6",
+     "size": 20,
+     "text": {
+      "en": "Region of maturation (root hairs)",
+      "kn": "ಪಕ್ವ ವಲಯ (ಮೂಲರೋಮಗಳು)"
+     },
+     "align": "left",
+     "visibleIf": "zn",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 58,
+     "size": 20,
+     "text": {
+      "en": "Soil surface",
+      "kn": "ಮಣ್ಣಿನ ಮೇಲ್ಮೈ"
+     },
+     "opacity": 0.7
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Day",
+      "kn": "ದಿನ"
+     },
+     "expr": "t",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Root grew",
+      "kn": "ಬೇರಿನ ಬೆಳವಣಿಗೆ"
+     },
+     "expr": "G",
+     "digits": 1,
+     "unit": "mm"
+    },
+    {
+     "label": {
+      "en": "Gap between marks 3 and 4",
+      "kn": "ಗುರುತು 3 ಮತ್ತು 4 ರ ಅಂತರ"
+     },
+     "expr": "1.5 + G*(smoothstep(1, 5, 4) - smoothstep(1, 5, 3))",
+     "digits": 1,
+     "unit": "mm"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Which gaps between the blue marks widen most? Name that region.",
+     "kn": "ನೀಲಿ ಗುರುತುಗಳ ಯಾವ ಅಂತರಗಳು ಹೆಚ್ಚು ಹಿಗ್ಗುತ್ತವೆ? ಆ ವಲಯವನ್ನು ಹೆಸರಿಸಿ."
+    },
+    {
+     "en": "Why must root hairs form above, not inside, the growing region?",
+     "kn": "ಮೂಲರೋಮಗಳು ಬೆಳೆಯುವ ವಲಯದ ಒಳಗಲ್ಲ, ಮೇಲೆ ಏಕೆ ರೂಪುಗೊಳ್ಳಬೇಕು?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

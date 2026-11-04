@@ -59,6 +59,233 @@
    }
   },
   {
+   "id": "scene-digital-footprint",
+   "type": "interactive",
+   "title": {
+    "en": "How big is your digital footprint?",
+    "kn": "ನಿಮ್ಮ ಡಿಜಿಟಲ್ ಹೆಜ್ಜೆಗುರುತು ಎಷ್ಟು ದೊಡ್ಡದು?"
+   },
+   "narration": {
+    "en": "Every post you make is an active footprint; every search, click and cookie is a passive one. They add up year after year and are hard to delete. Privacy settings limit who can see the active part. Post 5 times a day for 3 years in public. How many traces? Which setting cuts what strangers see, and which part does it not touch?",
+    "kn": "ನೀವು ಮಾಡುವ ಪ್ರತಿ ಪೋಸ್ಟ್ ಸಕ್ರಿಯ ಹೆಜ್ಜೆಗುರುತು; ಪ್ರತಿ ಹುಡುಕಾಟ, ಕ್ಲಿಕ್, ಕುಕೀ ನಿಷ್ಕ್ರಿಯ. ವರ್ಷದಿಂದ ವರ್ಷಕ್ಕೆ ಸೇರುತ್ತವೆ, ಅಳಿಸುವುದು ಕಷ್ಟ. ಗೌಪ್ಯತಾ ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಸಕ್ರಿಯ ಭಾಗವನ್ನು ಯಾರು ನೋಡಬಹುದು ಎಂದು ಮಿತಿಗೊಳಿಸುತ್ತವೆ. 3 ವರ್ಷ ದಿನಕ್ಕೆ 5 ಪೋಸ್ಟ್ ಸಾರ್ವಜನಿಕವಾಗಿ. ಎಷ್ಟು ಕುರುಹು? ಯಾವ ಸೆಟ್ಟಿಂಗ್ ಅಪರಿಚಿತರು ನೋಡುವುದನ್ನು ಕಡಿಮೆ ಮಾಡುತ್ತದೆ, ಯಾವ ಭಾಗ ಬದಲಾಗದು?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Every post you make is an active footprint; every search, click and cookie is a passive one. They add up year after year and are hard to delete. Privacy settings limit who can see the active part.",
+    "kn": "ನೀವು ಮಾಡುವ ಪ್ರತಿ ಪೋಸ್ಟ್ ಸಕ್ರಿಯ ಹೆಜ್ಜೆಗುರುತು; ಪ್ರತಿ ಹುಡುಕಾಟ, ಕ್ಲಿಕ್, ಕುಕೀ ನಿಷ್ಕ್ರಿಯ. ವರ್ಷದಿಂದ ವರ್ಷಕ್ಕೆ ಸೇರುತ್ತವೆ, ಅಳಿಸುವುದು ಕಷ್ಟ. ಗೌಪ್ಯತಾ ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಸಕ್ರಿಯ ಭಾಗವನ್ನು ಯಾರು ನೋಡಬಹುದು ಎಂದು ಮಿತಿಗೊಳಿಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "pd",
+     "label": {
+      "en": "Posts per day",
+      "kn": "ದಿನಕ್ಕೆ ಪೋಸ್ಟ್"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "sd",
+     "label": {
+      "en": "Searches and clicks per day",
+      "kn": "ದಿನಕ್ಕೆ ಹುಡುಕಾಟ, ಕ್ಲಿಕ್"
+     },
+     "min": 0,
+     "max": 50,
+     "step": 2,
+     "value": 20
+    },
+    {
+     "name": "yrs",
+     "label": {
+      "en": "Years",
+      "kn": "ವರ್ಷಗಳು"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "choices": [
+    {
+     "name": "pv",
+     "label": {
+      "en": "Who can see posts",
+      "kn": "ಪೋಸ್ಟ್ ಯಾರು ನೋಡಬಹುದು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Public",
+        "kn": "ಸಾರ್ವಜನಿಕ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Friends",
+        "kn": "ಸ್ನೇಹಿತರು"
+       },
+       "value": 0.3
+      },
+      {
+       "label": {
+        "en": "Only me",
+        "kn": "ನಾನು ಮಾತ್ರ"
+       },
+       "value": 0.02
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "act",
+     "expr": "pd*365*yrs"
+    },
+    {
+     "name": "pas",
+     "expr": "sd*365*yrs"
+    },
+    {
+     "name": "vis",
+     "expr": "act*pv"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10.4
+    ],
+    "y": [
+     -14000,
+     200000
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(act - 0, 428)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "max(act, 0) + 7490",
+     "text": {
+      "en": "{act:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": -7490.000000000001,
+     "text": {
+      "en": "Active (posts)",
+      "kn": "ಸಕ್ರಿಯ (ಪೋಸ್ಟ್)"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(pas - 0, 428)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "max(pas, 0) + 7490",
+     "text": {
+      "en": "{pas:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": -7490.000000000001,
+     "text": {
+      "en": "Passive (searches, cookies)",
+      "kn": "ನಿಷ್ಕ್ರಿಯ (ಹುಡುಕಾಟ, ಕುಕೀ)"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(vis - 0, 428)",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "max(vis, 0) + 7490",
+     "text": {
+      "en": "{vis:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": -7490.000000000001,
+     "text": {
+      "en": "Visible to strangers",
+      "kn": "ಅಪರಿಚಿತರಿಗೆ ಕಾಣುವುದು"
+     },
+     "size": 20,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Total traces",
+      "kn": "ಒಟ್ಟು ಕುರುಹು"
+     },
+     "expr": "act + pas",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Visible to strangers",
+      "kn": "ಅಪರಿಚಿತರಿಗೆ ಕಾಣುವುದು"
+     },
+     "expr": "vis",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Post 5 times a day for 3 years in public. How many traces?",
+     "kn": "3 ವರ್ಷ ದಿನಕ್ಕೆ 5 ಪೋಸ್ಟ್ ಸಾರ್ವಜನಿಕವಾಗಿ. ಎಷ್ಟು ಕುರುಹು?"
+    },
+    {
+     "en": "Which setting cuts what strangers see, and which part does it not touch?",
+     "kn": "ಯಾವ ಸೆಟ್ಟಿಂಗ್ ಅಪರಿಚಿತರು ನೋಡುವುದನ್ನು ಕಡಿಮೆ ಮಾಡುತ್ತದೆ, ಯಾವ ಭಾಗ ಬದಲಾಗದು?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

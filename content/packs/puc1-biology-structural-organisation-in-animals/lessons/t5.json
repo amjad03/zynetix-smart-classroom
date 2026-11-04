@@ -62,6 +62,309 @@
    }
   },
   {
+   "id": "scene-frog-breathing",
+   "type": "interactive",
+   "title": {
+    "en": "How a frog breathes",
+    "kn": "ಕಪ್ಪೆ ಹೇಗೆ ಉಸಿರಾಡುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "In water a frog breathes through its moist skin (cutaneous respiration). On land the buccal cavity, the skin and the lungs all work, and the lungs take most of the load. During hibernation and aestivation it breathes through the skin alone. A frog is cold-blooded, so warmer water raises its oxygen need.",
+    "kn": "ನೀರಿನಲ್ಲಿ ಕಪ್ಪೆ ತೇವ ಚರ್ಮದ ಮೂಲಕ ಉಸಿರಾಡುತ್ತದೆ (ಚರ್ಮ ಶ್ವಾಸ). ನೆಲದ ಮೇಲೆ ಬಾಯಿಕುಹರ, ಚರ್ಮ ಮತ್ತು ಶ್ವಾಸಕೋಶಗಳು ಕೆಲಸ ಮಾಡುತ್ತವೆ, ಹೆಚ್ಚು ಭಾಗ ಶ್ವಾಸಕೋಶಗಳದ್ದು. ಶಿಶಿರನಿದ್ರೆ ಮತ್ತು ಗ್ರೀಷ್ಮನಿದ್ರೆಯಲ್ಲಿ ಚರ್ಮದಿಂದಲೇ ಉಸಿರಾಟ. ಕಪ್ಪೆ ಶೀತರಕ್ತ ಪ್ರಾಣಿ, ಬಿಸಿಯಾದಂತೆ ಆಮ್ಲಜನಕದ ಬೇಡಿಕೆ ಹೆಚ್ಚು."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "In water a frog breathes through its moist skin (cutaneous respiration). On land the buccal cavity, the skin and the lungs all work, and the lungs take most of the load. During hibernation and aestivation it breathes through the skin alone. A frog is cold-blooded, so warmer water raises its oxygen need.",
+    "kn": "ನೀರಿನಲ್ಲಿ ಕಪ್ಪೆ ತೇವ ಚರ್ಮದ ಮೂಲಕ ಉಸಿರಾಡುತ್ತದೆ (ಚರ್ಮ ಶ್ವಾಸ). ನೆಲದ ಮೇಲೆ ಬಾಯಿಕುಹರ, ಚರ್ಮ ಮತ್ತು ಶ್ವಾಸಕೋಶಗಳು ಕೆಲಸ ಮಾಡುತ್ತವೆ, ಹೆಚ್ಚು ಭಾಗ ಶ್ವಾಸಕೋಶಗಳದ್ದು. ಶಿಶಿರನಿದ್ರೆ ಮತ್ತು ಗ್ರೀಷ್ಮನಿದ್ರೆಯಲ್ಲಿ ಚರ್ಮದಿಂದಲೇ ಉಸಿರಾಟ. ಕಪ್ಪೆ ಶೀತರಕ್ತ ಪ್ರಾಣಿ, ಬಿಸಿಯಾದಂತೆ ಆಮ್ಲಜನಕದ ಬೇಡಿಕೆ ಹೆಚ್ಚು."
+   },
+   "sliders": [
+    {
+     "name": "T",
+     "label": {
+      "en": "Surrounding temperature",
+      "kn": "ಸುತ್ತಲಿನ ತಾಪಮಾನ"
+     },
+     "min": 5,
+     "max": 35,
+     "step": 1,
+     "value": 25,
+     "unit": "°C"
+    }
+   ],
+   "choices": [
+    {
+     "name": "hb",
+     "label": {
+      "en": "Where is the frog?",
+      "kn": "ಕಪ್ಪೆ ಎಲ್ಲಿದೆ?"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "In water",
+        "kn": "ನೀರಿನಲ್ಲಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "On land",
+        "kn": "ನೆಲದ ಮೇಲೆ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Hibernating / aestivating",
+        "kn": "ಶಿಶಿರ / ಗ್ರೀಷ್ಮ ನಿದ್ರೆ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "dem",
+     "expr": "100*2^((T - 25)/10)*if(hb == 3, 0.1, 1)"
+    },
+    {
+     "name": "skin",
+     "expr": "if(hb == 2, 0.3, 1)*dem"
+    },
+    {
+     "name": "lung",
+     "expr": "if(hb == 2, 0.7, 0)*dem"
+    },
+    {
+     "name": "throat",
+     "expr": "if(hb == 2, 1.2*sin(0.25*dem*t/10), 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 56,
+     "h": 46,
+     "color": "blue",
+     "opacity": 0.25,
+     "visibleIf": "hb == 1"
+    },
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 56,
+     "h": 20,
+     "color": "orange",
+     "opacity": 0.35,
+     "visibleIf": "hb == 3"
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       10,
+       24
+      ],
+      [
+       16,
+       32
+      ],
+      [
+       30,
+       36
+      ],
+      [
+       42,
+       34
+      ],
+      [
+       48,
+       28
+      ],
+      [
+       44,
+       22
+      ],
+      [
+       30,
+       18
+      ],
+      [
+       16,
+       18
+      ]
+     ],
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": 42,
+     "y": 34,
+     "r": 1.8,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": 36,
+     "y": 35,
+     "r": 1.8,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": 46,
+     "y": "24 - throat",
+     "r": "2.2 + throat",
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 28,
+     "y": 52,
+     "size": 22,
+     "text": {
+      "en": "Body temperature = surroundings: {T} °C",
+      "kn": "ದೇಹದ ತಾಪಮಾನ = ಸುತ್ತಲಿನದು: {T} °C"
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 62,
+     "y1": 8,
+     "x2": 96,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 62,
+     "y1": 8,
+     "x2": 62,
+     "y2": 54,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 66,
+     "y": 8,
+     "w": 8,
+     "h": "0.16*skin",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 78,
+     "y": 8,
+     "w": 8,
+     "h": "0.16*lung",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 90,
+     "y": 8,
+     "w": 5,
+     "h": "0.16*dem",
+     "color": "yellow",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 70,
+     "y": 4.5,
+     "size": 20,
+     "text": {
+      "en": "Skin",
+      "kn": "ಚರ್ಮ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 82,
+     "y": 4.5,
+     "size": 20,
+     "text": {
+      "en": "Lungs",
+      "kn": "ಶ್ವಾಸಕೋಶ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 92.5,
+     "y": 4.5,
+     "size": 18,
+     "text": {
+      "en": "Need",
+      "kn": "ಬೇಡಿಕೆ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 79,
+     "y": 57,
+     "size": 20,
+     "text": {
+      "en": "Oxygen taken in (relative)",
+      "kn": "ತೆಗೆದುಕೊಂಡ ಆಮ್ಲಜನಕ (ಸಾಪೇಕ್ಷ)"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Through skin",
+      "kn": "ಚರ್ಮದ ಮೂಲಕ"
+     },
+     "expr": "100*skin/max(dem, 0.001)",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Oxygen need",
+      "kn": "ಆಮ್ಲಜನಕ ಬೇಡಿಕೆ"
+     },
+     "expr": "dem",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Put the frog in water. Why must its skin stay moist and thin?",
+     "kn": "ಕಪ್ಪೆಯನ್ನು ನೀರಿನಲ್ಲಿಡಿ. ಅದರ ಚರ್ಮ ಏಕೆ ತೇವ ಮತ್ತು ತೆಳುವಾಗಿರಬೇಕು?"
+    },
+    {
+     "en": "How does hibernation let a frog survive on skin breathing alone?",
+     "kn": "ಶಿಶಿರನಿದ್ರೆ ಚರ್ಮ ಶ್ವಾಸದಿಂದಲೇ ಕಪ್ಪೆ ಬದುಕಲು ಹೇಗೆ ನೆರವಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -55,6 +55,312 @@
    }
   },
   {
+   "id": "scene-transport-choice",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Choosing a mode of transport",
+    "kn": "ಸಾರಿಗೆ ವಿಧಾನದ ಆಯ್ಕೆ"
+   },
+   "caption": {
+    "en": "Pick a mode, the distance and the load. Press Play to send the consignment: the truck, train, plane or ship moves at its own speed. Compare cost and time: transport removes the hindrance of place.",
+    "kn": "ಸಾರಿಗೆ ವಿಧಾನ, ದೂರ ಮತ್ತು ಹೊರೆ ಆರಿಸಿ. Play ಒತ್ತಿ ಸರಕು ಕಳುಹಿಸಿ. ವೆಚ್ಚ ಮತ್ತು ಸಮಯ ಹೋಲಿಸಿ: ಸಾರಿಗೆ ಸ್ಥಳದ ಅಡಚಣೆ ನಿವಾರಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "km",
+     "label": {
+      "en": "Distance",
+      "kn": "ದೂರ"
+     },
+     "min": 100,
+     "max": 2000,
+     "step": 50,
+     "value": 800,
+     "unit": "km"
+    },
+    {
+     "name": "tn",
+     "label": {
+      "en": "Load",
+      "kn": "ಹೊರೆ"
+     },
+     "min": 1,
+     "max": 40,
+     "step": 1,
+     "value": 10,
+     "unit": "t"
+    }
+   ],
+   "choices": [
+    {
+     "name": "md",
+     "label": {
+      "en": "Mode",
+      "kn": "ವಿಧಾನ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Road",
+        "kn": "ರಸ್ತೆ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Rail",
+        "kn": "ರೈಲು"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Air",
+        "kn": "ವಾಯು"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Water",
+        "kn": "ಜಲ"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 4,
+    "unit": "h",
+    "stopWhen": "arrived"
+   },
+   "vars": [
+    {
+     "name": "sp",
+     "expr": "if(md == 1, 50, if(md == 2, 40, if(md == 3, 600, 25)))"
+    },
+    {
+     "name": "rate",
+     "expr": "if(md == 1, 4, if(md == 2, 2.5, if(md == 3, 30, 1.5)))"
+    },
+    {
+     "name": "fix",
+     "expr": "if(md == 1, 500, if(md == 2, 3000, if(md == 3, 8000, 10000)))"
+    },
+    {
+     "name": "hrs",
+     "expr": "km/sp + if(md == 1, 1, if(md == 2, 6, if(md == 3, 4, 12)))"
+    },
+    {
+     "name": "cost",
+     "expr": "fix + rate*km*tn"
+    },
+    {
+     "name": "prog",
+     "expr": "clamp(t/hrs, 0, 1)"
+    },
+    {
+     "name": "arrived",
+     "expr": "t >= hrs"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 30,
+     "x2": 92,
+     "y2": 30,
+     "width": 3,
+     "color": "white"
+    },
+    {
+     "shape": "circle",
+     "x": 8,
+     "y": 30,
+     "r": 2,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "x": 92,
+     "y": 30,
+     "r": 2,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 24,
+     "text": {
+      "en": "Factory",
+      "kn": "ಕಾರ್ಖಾನೆ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 92,
+     "y": 24,
+     "text": {
+      "en": "Market",
+      "kn": "ಮಾರುಕಟ್ಟೆ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": "6 + 84*prog",
+     "y": 31.5,
+     "w": 5,
+     "h": 3,
+     "color": "orange",
+     "visibleIf": "md == 1"
+    },
+    {
+     "shape": "particles",
+     "count": 4,
+     "x": "4 + 84*prog + 3.2*i",
+     "y": 32.5,
+     "r": 1.2,
+     "color": "yellow",
+     "visibleIf": "md == 2"
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       "7 + 84*prog",
+       36
+      ],
+      [
+       "13 + 84*prog",
+       38
+      ],
+      [
+       "7 + 84*prog",
+       40
+      ]
+     ],
+     "color": "white",
+     "visibleIf": "md == 3"
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       "5 + 84*prog",
+       27
+      ],
+      [
+       "13 + 84*prog",
+       27
+      ],
+      [
+       "11 + 84*prog",
+       24
+      ],
+      [
+       "7 + 84*prog",
+       24
+      ]
+     ],
+     "color": "blue",
+     "visibleIf": "md == 4"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 50,
+     "text": {
+      "en": "{km:0} km, {tn:0} t: about {hrs:0} h, ₹{cost:0}",
+      "kn": "{km:0} ಕಿ.ಮೀ, {tn:0} ಟ: ಸುಮಾರು {hrs:0} ಗಂ, ₹{cost:0}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 12,
+     "text": {
+      "en": "Delivered!",
+      "kn": "ತಲುಪಿತು!"
+     },
+     "size": 24,
+     "color": "green",
+     "visibleIf": "arrived"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Travel time",
+      "kn": "ಪ್ರಯಾಣ ಸಮಯ"
+     },
+     "expr": "hrs",
+     "digits": 0,
+     "unit": "h"
+    },
+    {
+     "label": {
+      "en": "Freight cost",
+      "kn": "ಸಾಗಣೆ ವೆಚ್ಚ"
+     },
+     "expr": "cost",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Cost per tonne-km",
+      "kn": "ಟನ್-ಕಿ.ಮೀ ವೆಚ್ಚ"
+     },
+     "expr": "cost/(km*tn)",
+     "digits": 2,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Which mode is cheapest for 40 t over 2000 km? Which is fastest?",
+     "kn": "2000 ಕಿ.ಮೀ ಗೆ 40 ಟ: ಅಗ್ಗದ ಮತ್ತು ವೇಗದ ವಿಧಾನ ಯಾವುದು?"
+    },
+    {
+     "en": "Why do medicines and flowers go by air despite the cost?",
+     "kn": "ವೆಚ್ಚ ಹೆಚ್ಚಾದರೂ ಔಷಧಿ, ಹೂವು ವಾಯುಮಾರ್ಗದಲ್ಲಿ ಏಕೆ?"
+    },
+    {
+     "en": "For a short 100 km trip, why does road beat rail?",
+     "kn": "100 ಕಿ.ಮೀ ಸಣ್ಣ ಪ್ರಯಾಣಕ್ಕೆ ರಸ್ತೆ ಏಕೆ ಉತ್ತಮ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Pick a mode, the distance and the load. Press Play to send the consignment: the truck, train, plane or ship moves at its own speed. Compare cost and time: transport removes the hindrance of place.",
+    "kn": "ಸಾರಿಗೆ ವಿಧಾನ, ದೂರ ಮತ್ತು ಹೊರೆ ಆರಿಸಿ. Play ಒತ್ತಿ ಸರಕು ಕಳುಹಿಸಿ. ವೆಚ್ಚ ಮತ್ತು ಸಮಯ ಹೋಲಿಸಿ: ಸಾರಿಗೆ ಸ್ಥಳದ ಅಡಚಣೆ ನಿವಾರಿಸುತ್ತದೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

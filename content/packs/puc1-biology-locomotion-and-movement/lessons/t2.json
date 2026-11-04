@@ -62,6 +62,394 @@
    }
   },
   {
+   "id": "scene-sarcomere",
+   "type": "interactive",
+   "title": {
+    "en": "Sliding filaments in a sarcomere",
+    "kn": "ಸಾರ್ಕೋಮಿಯರ್‌ನಲ್ಲಿ ಜಾರುವ ತಂತುಗಳು"
+   },
+   "narration": {
+    "en": "A sarcomere runs from one Z line to the next. Thick myosin filaments make the A band; thin actin filaments are fixed to the Z lines. When Ca²⁺ is released, myosin heads pull the actin towards the centre: the Z lines come closer, the I band and H zone shorten, but the A band keeps its length.",
+    "kn": "ಒಂದು Z ರೇಖೆಯಿಂದ ಮುಂದಿನದರವರೆಗೆ ಸಾರ್ಕೋಮಿಯರ್. ದಪ್ಪ ಮಯೋಸಿನ್ ತಂತುಗಳು A ಪಟ್ಟಿ; ತೆಳು ಆಕ್ಟಿನ್ ತಂತುಗಳು Z ರೇಖೆಗೆ ಅಂಟಿವೆ. Ca²⁺ ಬಿಡುಗಡೆಯಾದಾಗ ಮಯೋಸಿನ್ ತಲೆಗಳು ಆಕ್ಟಿನ್ ಅನ್ನು ಕೇಂದ್ರದತ್ತ ಎಳೆಯುತ್ತವೆ: Z ರೇಖೆಗಳು ಹತ್ತಿರ ಬರುತ್ತವೆ, I ಪಟ್ಟಿ ಮತ್ತು H ವಲಯ ಕಿರಿದಾಗುತ್ತವೆ, ಆದರೆ A ಪಟ್ಟಿಯ ಉದ್ದ ಬದಲಾಗದು."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "A sarcomere runs from one Z line to the next. Thick myosin filaments make the A band; thin actin filaments are fixed to the Z lines. When Ca²⁺ is released, myosin heads pull the actin towards the centre: the Z lines come closer, the I band and H zone shorten, but the A band keeps its length.",
+    "kn": "ಒಂದು Z ರೇಖೆಯಿಂದ ಮುಂದಿನದರವರೆಗೆ ಸಾರ್ಕೋಮಿಯರ್. ದಪ್ಪ ಮಯೋಸಿನ್ ತಂತುಗಳು A ಪಟ್ಟಿ; ತೆಳು ಆಕ್ಟಿನ್ ತಂತುಗಳು Z ರೇಖೆಗೆ ಅಂಟಿವೆ. Ca²⁺ ಬಿಡುಗಡೆಯಾದಾಗ ಮಯೋಸಿನ್ ತಲೆಗಳು ಆಕ್ಟಿನ್ ಅನ್ನು ಕೇಂದ್ರದತ್ತ ಎಳೆಯುತ್ತವೆ: Z ರೇಖೆಗಳು ಹತ್ತಿರ ಬರುತ್ತವೆ, I ಪಟ್ಟಿ ಮತ್ತು H ವಲಯ ಕಿರಿದಾಗುತ್ತವೆ, ಆದರೆ A ಪಟ್ಟಿಯ ಉದ್ದ ಬದಲಾಗದು."
+   },
+   "sliders": [
+    {
+     "name": "c",
+     "label": {
+      "en": "Contraction",
+      "kn": "ಸಂಕೋಚನ"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 0,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ca",
+     "label": {
+      "en": "Ca²⁺ released",
+      "kn": "Ca²⁺ ಬಿಡುಗಡೆ"
+     },
+     "value": true
+    },
+    {
+     "name": "anim",
+     "label": {
+      "en": "Repeat contractions",
+      "kn": "ಪುನರಾವರ್ತಿತ ಸಂಕೋಚನ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true
+   },
+   "vars": [
+    {
+     "name": "cc",
+     "expr": "if(ca, if(anim, 15 - 15*cos(t), c), 0)"
+    },
+    {
+     "name": "half",
+     "expr": "25*(1 - cc/100)"
+    },
+    {
+     "name": "zl",
+     "expr": "50 - half"
+    },
+    {
+     "name": "zr",
+     "expr": "50 + half"
+    },
+    {
+     "name": "hz",
+     "expr": "max(2*half - 36, 0)"
+    },
+    {
+     "name": "ib",
+     "expr": "max(2*(half - 16), 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 34,
+     "y": 23.1,
+     "w": 32,
+     "h": 1.8,
+     "color": "orange"
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "x": "35.5 + 3.2*i + if(i > 4, 0, 0)",
+     "y": 25.4,
+     "r": 0.55,
+     "color": "orange",
+     "visibleIf": "i != 4 && i != 5"
+    },
+    {
+     "shape": "rect",
+     "x": 34,
+     "y": 29.1,
+     "w": 32,
+     "h": 1.8,
+     "color": "orange"
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "x": "35.5 + 3.2*i + if(i > 4, 0, 0)",
+     "y": 31.4,
+     "r": 0.55,
+     "color": "orange",
+     "visibleIf": "i != 4 && i != 5"
+    },
+    {
+     "shape": "rect",
+     "x": 34,
+     "y": 35.1,
+     "w": 32,
+     "h": 1.8,
+     "color": "orange"
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "x": "35.5 + 3.2*i + if(i > 4, 0, 0)",
+     "y": 37.4,
+     "r": 0.55,
+     "color": "orange",
+     "visibleIf": "i != 4 && i != 5"
+    },
+    {
+     "shape": "line",
+     "x1": "zl",
+     "y1": 27,
+     "x2": "zl + 18",
+     "y2": 27,
+     "color": "blue",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": "zr",
+     "y1": 27,
+     "x2": "zr - 18",
+     "y2": 27,
+     "color": "blue",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": "zl",
+     "y1": 27,
+     "x2": "zl - 8",
+     "y2": 27,
+     "color": "blue",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": "zr",
+     "y1": 27,
+     "x2": "zr + 8",
+     "y2": 27,
+     "color": "blue",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": "zl",
+     "y1": 33,
+     "x2": "zl + 18",
+     "y2": 33,
+     "color": "blue",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": "zr",
+     "y1": 33,
+     "x2": "zr - 18",
+     "y2": 33,
+     "color": "blue",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": "zl",
+     "y1": 33,
+     "x2": "zl - 8",
+     "y2": 33,
+     "color": "blue",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": "zr",
+     "y1": 33,
+     "x2": "zr + 8",
+     "y2": 33,
+     "color": "blue",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": "zl",
+     "y1": 20,
+     "x2": "zl",
+     "y2": 40,
+     "color": "yellow",
+     "width": 6
+    },
+    {
+     "shape": "line",
+     "x1": "zr",
+     "y1": 20,
+     "x2": "zr",
+     "y2": 40,
+     "color": "yellow",
+     "width": 6
+    },
+    {
+     "shape": "line",
+     "x1": 34,
+     "y1": 44,
+     "x2": 66,
+     "y2": 44,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 46,
+     "size": 22,
+     "text": {
+      "en": "A band",
+      "kn": "A ಪಟ್ಟಿ"
+     },
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": "50 - hz/2",
+     "y1": 16,
+     "x2": "50 + hz/2",
+     "y2": 16,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "hz > 0.5"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 12,
+     "size": 20,
+     "text": {
+      "en": "H zone",
+      "kn": "H ವಲಯ"
+     },
+     "visibleIf": "hz > 0.5"
+    },
+    {
+     "shape": "line",
+     "x1": "zl - ib/2",
+     "y1": 16,
+     "x2": "zl + ib/2",
+     "y2": 16,
+     "color": "blue",
+     "width": 3,
+     "visibleIf": "ib > 0.5"
+    },
+    {
+     "shape": "text",
+     "x": "zl",
+     "y": 12,
+     "size": 20,
+     "text": {
+      "en": "I band",
+      "kn": "I ಪಟ್ಟಿ"
+     },
+     "visibleIf": "ib > 0.5",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": "zl",
+     "y": 42,
+     "size": 24,
+     "text": {
+      "en": "Z"
+     },
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": "zr",
+     "y": 42,
+     "size": 24,
+     "text": {
+      "en": "Z"
+     },
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 54,
+     "size": 22,
+     "text": {
+      "en": "No Ca²⁺: myosin cannot bind actin, muscle relaxed",
+      "kn": "Ca²⁺ ಇಲ್ಲ: ಮಯೋಸಿನ್ ಆಕ್ಟಿನ್‌ಗೆ ಬಂಧಿಸದು, ಸ್ನಾಯು ಸಡಿಲ"
+     },
+     "visibleIf": "!ca",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 4,
+     "size": 20,
+     "text": {
+      "en": "Blue: actin (thin) · orange: myosin (thick)",
+      "kn": "ನೀಲಿ: ಆಕ್ಟಿನ್ (ತೆಳು) · ಕಿತ್ತಳೆ: ಮಯೋಸಿನ್ (ದಪ್ಪ)"
+     },
+     "opacity": 0.8
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Sarcomere length",
+      "kn": "ಸಾರ್ಕೋಮಿಯರ್ ಉದ್ದ"
+     },
+     "expr": "0.1*half",
+     "digits": 2,
+     "unit": "µm"
+    },
+    {
+     "label": {
+      "en": "A band",
+      "kn": "A ಪಟ್ಟಿ"
+     },
+     "expr": "1.6",
+     "digits": 2,
+     "unit": "µm"
+    },
+    {
+     "label": {
+      "en": "I band",
+      "kn": "I ಪಟ್ಟಿ"
+     },
+     "expr": "0.05*ib",
+     "digits": 2,
+     "unit": "µm"
+    },
+    {
+     "label": {
+      "en": "H zone",
+      "kn": "H ವಲಯ"
+     },
+     "expr": "0.05*hz",
+     "digits": 2,
+     "unit": "µm"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Slide the contraction to 30%. Which band never changes length?",
+     "kn": "ಸಂಕೋಚನವನ್ನು 30% ಗೆ ಸರಿಸಿ. ಯಾವ ಪಟ್ಟಿಯ ಉದ್ದ ಎಂದೂ ಬದಲಾಗದು?"
+    },
+    {
+     "en": "Turn Ca²⁺ off. Why does the muscle stay relaxed?",
+     "kn": "Ca²⁺ ಆಫ್ ಮಾಡಿ. ಸ್ನಾಯು ಏಕೆ ಸಡಿಲವಾಗಿಯೇ ಉಳಿಯುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

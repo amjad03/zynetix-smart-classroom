@@ -58,6 +58,303 @@
    }
   },
   {
+   "id": "scene-ownership",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Who owns it decides its sector",
+    "kn": "ಮಾಲೀಕತ್ವವೇ ವಲಯ ನಿರ್ಧರಿಸುತ್ತದೆ"
+   },
+   "caption": {
+    "en": "Slide the government's share of ownership. At 51% or more the enterprise is in the public sector and its aims shift from profit towards public welfare. Compare the priorities.",
+    "kn": "ಸರ್ಕಾರದ ಮಾಲೀಕತ್ವ ಪಾಲು ಬದಲಿಸಿ. 51% ಅಥವಾ ಹೆಚ್ಚಾದರೆ ಸಾರ್ವಜನಿಕ ವಲಯ; ಗುರಿ ಲಾಭದಿಂದ ಸಾರ್ವಜನಿಕ ಕಲ್ಯಾಣದತ್ತ. ಆದ್ಯತೆಗಳನ್ನು ಹೋಲಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "g",
+     "label": {
+      "en": "Government ownership",
+      "kn": "ಸರ್ಕಾರಿ ಮಾಲೀಕತ್ವ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 1,
+     "value": 26,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "ex",
+     "label": {
+      "en": "Example",
+      "kn": "ಉದಾಹರಣೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Tata Steel",
+        "kn": "ಟಾಟಾ ಸ್ಟೀಲ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "SAIL",
+        "kn": "ಸೈಲ್"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Indian Railways",
+        "kn": "ಭಾರತೀಯ ರೈಲ್ವೆ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Set the example",
+      "kn": "ಉದಾಹರಣೆ ಹೊಂದಿಸಿ"
+     },
+     "icon": "check",
+     "set": {
+      "g": "if(ex == 1, 0, if(ex == 2, 65, 100))"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "10 - 0.06*g"
+    },
+    {
+     "name": "b1",
+     "expr": "2 + 0.07*g"
+    },
+    {
+     "name": "b2",
+     "expr": "g/10"
+    },
+    {
+     "name": "b3",
+     "expr": "10 - 0.07*g"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Priority score",
+      "kn": "ಆದ್ಯತೆ ಅಂಕ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/10, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/10, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Profit focus",
+      "kn": "ಲಾಭದ ಗಮನ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/10, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/10, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Public welfare",
+      "kn": "ಸಾರ್ವಜನಿಕ ಕಲ್ಯಾಣ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/10, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/10, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Govt control",
+      "kn": "ಸರ್ಕಾರಿ ನಿಯಂತ್ರಣ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/10, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/10, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Flexibility",
+      "kn": "ನಮ್ಯತೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Public sector",
+      "kn": "ಸಾರ್ವಜನಿಕ ವಲಯ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "g >= 51"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Private sector",
+      "kn": "ಖಾಸಗಿ ವಲಯ"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "g < 51"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Government share",
+      "kn": "ಸರ್ಕಾರಿ ಪಾಲು"
+     },
+     "expr": "g",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Private share",
+      "kn": "ಖಾಸಗಿ ಪಾಲು"
+     },
+     "expr": "100 - g",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set 50% and then 51%. What changes?",
+     "kn": "50% ನಂತರ 51% ಮಾಡಿ. ಏನು ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Why are railways run by the government?",
+     "kn": "ರೈಲ್ವೆಯನ್ನು ಸರ್ಕಾರ ಏಕೆ ನಡೆಸುತ್ತದೆ?"
+    },
+    {
+     "en": "What does disinvestment do to this slider?",
+     "kn": "ಬಂಡವಾಳ ಹಿಂತೆಗೆತ ಈ ಸ್ಲೈಡರ್‌ಗೆ ಏನು ಮಾಡುತ್ತದೆ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Slide the government's share of ownership. At 51% or more the enterprise is in the public sector and its aims shift from profit towards public welfare. Compare the priorities.",
+    "kn": "ಸರ್ಕಾರದ ಮಾಲೀಕತ್ವ ಪಾಲು ಬದಲಿಸಿ. 51% ಅಥವಾ ಹೆಚ್ಚಾದರೆ ಸಾರ್ವಜನಿಕ ವಲಯ; ಗುರಿ ಲಾಭದಿಂದ ಸಾರ್ವಜನಿಕ ಕಲ್ಯಾಣದತ್ತ. ಆದ್ಯತೆಗಳನ್ನು ಹೋಲಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

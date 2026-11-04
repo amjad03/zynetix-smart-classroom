@@ -67,6 +67,262 @@
    }
   },
   {
+   "id": "scene-coop-vote",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "One member, one vote",
+    "kn": "ಒಬ್ಬ ಸದಸ್ಯ, ಒಂದು ಮತ"
+   },
+   "caption": {
+    "en": "In a cooperative every member has one vote, however many shares he holds; in a company votes follow shares. Set the members and the shares held by the richest member to compare who controls each.",
+    "kn": "ಸಹಕಾರಿ ಸಂಘದಲ್ಲಿ ಎಷ್ಟು ಷೇರು ಇದ್ದರೂ ಪ್ರತಿ ಸದಸ್ಯನಿಗೆ ಒಂದೇ ಮತ; ಕಂಪನಿಯಲ್ಲಿ ಮತ ಷೇರಿನಂತೆ. ಸದಸ್ಯರು ಮತ್ತು ಶ್ರೀಮಂತ ಸದಸ್ಯನ ಷೇರು ಹೊಂದಿಸಿ ನಿಯಂತ್ರಣ ಹೋಲಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Members",
+      "kn": "ಸದಸ್ಯರು"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 20
+    },
+    {
+     "name": "big",
+     "label": {
+      "en": "Shares of the richest member (others hold 10 each)",
+      "kn": "ಶ್ರೀಮಂತ ಸದಸ್ಯನ ಷೇರು (ಇತರರು 10)"
+     },
+     "min": 10,
+     "max": 1000,
+     "step": 10,
+     "value": 300
+    },
+    {
+     "name": "sur",
+     "label": {
+      "en": "Surplus to share",
+      "kn": "ಹಂಚಿಕೆಗೆ ಹೆಚ್ಚುವರಿ"
+     },
+     "min": 0,
+     "max": 400,
+     "step": 10,
+     "value": 120,
+     "unit": "₹ '000"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "lc",
+     "label": {
+      "en": "Dividend cap by law",
+      "kn": "ಕಾನೂನಿನ ಲಾಭಾಂಶ ಮಿತಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "cap",
+     "expr": "if(lc, 15, 100)"
+    },
+    {
+     "name": "b0",
+     "expr": "100/m"
+    },
+    {
+     "name": "b1",
+     "expr": "100*big/(big + (m - 1)*10)"
+    },
+    {
+     "name": "b2",
+     "expr": "min(sur/(10*(m - 1) + big)*100, cap)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Percent",
+      "kn": "ಶೇಕಡಾ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 9.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b0/100, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 15.0,
+     "y": "14.5 + clamp(b0/100, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 15.0,
+     "y": 8,
+     "text": {
+      "en": "Rich member: coop vote %",
+      "kn": "ಶ್ರೀಮಂತ: ಸಹಕಾರಿ ಮತ %"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 27.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b1/100, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": "14.5 + clamp(b1/100, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 8,
+     "text": {
+      "en": "Rich member: company vote %",
+      "kn": "ಶ್ರೀಮಂತ: ಕಂಪನಿ ಮತ %"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 45.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b2/100, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 51.0,
+     "y": "14.5 + clamp(b2/100, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 51.0,
+     "y": 8,
+     "text": {
+      "en": "Dividend %",
+      "kn": "ಲಾಭಾಂಶ %"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "In a company he alone controls",
+      "kn": "ಕಂಪನಿಯಲ್ಲಿ ಅವನೇ ನಿಯಂತ್ರಕ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "b1 > 50"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "No single owner controls",
+      "kn": "ಯಾರೂ ಒಬ್ಬರೇ ನಿಯಂತ್ರಿಸರು"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "b1 <= 50"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "His vote in the cooperative",
+      "kn": "ಸಹಕಾರಿಯಲ್ಲಿ ಅವನ ಮತ"
+     },
+     "expr": "100/m",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "His vote if it were a company",
+      "kn": "ಕಂಪನಿಯಾದರೆ ಅವನ ಮತ"
+     },
+     "expr": "b1",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Give the richest member 1000 shares. Does his cooperative vote change?",
+     "kn": "ಶ್ರೀಮಂತನಿಗೆ 1000 ಷೇರು ಕೊಡಿ. ಸಹಕಾರಿ ಮತ ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Why do cooperatives cap the dividend?",
+     "kn": "ಸಹಕಾರಿ ಸಂಘಗಳು ಲಾಭಾಂಶಕ್ಕೆ ಮಿತಿ ಏಕೆ?"
+    },
+    {
+     "en": "Which value of cooperation does one-member-one-vote protect?",
+     "kn": "ಒಬ್ಬ ಸದಸ್ಯ ಒಂದು ಮತ ಯಾವ ಮೌಲ್ಯ ಕಾಪಾಡುತ್ತದೆ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "In a cooperative every member has one vote, however many shares he holds; in a company votes follow shares. Set the members and the shares held by the richest member to compare who controls each.",
+    "kn": "ಸಹಕಾರಿ ಸಂಘದಲ್ಲಿ ಎಷ್ಟು ಷೇರು ಇದ್ದರೂ ಪ್ರತಿ ಸದಸ್ಯನಿಗೆ ಒಂದೇ ಮತ; ಕಂಪನಿಯಲ್ಲಿ ಮತ ಷೇರಿನಂತೆ. ಸದಸ್ಯರು ಮತ್ತು ಶ್ರೀಮಂತ ಸದಸ್ಯನ ಷೇರು ಹೊಂದಿಸಿ ನಿಯಂತ್ರಣ ಹೋಲಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

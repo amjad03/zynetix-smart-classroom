@@ -58,6 +58,592 @@
    }
   },
   {
+   "id": "scene-online-order",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "An online purchase, step by step",
+    "kn": "ಆನ್‌ಲೈನ್ ಖರೀದಿ, ಹಂತ ಹಂತವಾಗಿ"
+   },
+   "caption": {
+    "en": "Follow an online order from registration to delivery. Choose the payment mode: it changes how long confirmation takes and who carries the risk. Step through, or run the whole process.",
+    "kn": "ನೋಂದಣಿಯಿಂದ ವಿತರಣೆಯವರೆಗೆ ಆನ್‌ಲೈನ್ ಆದೇಶವನ್ನು ಅನುಸರಿಸಿ. ಪಾವತಿ ವಿಧಾನ ಆರಿಸಿ: ದೃಢೀಕರಣ ಸಮಯ ಮತ್ತು ಅಪಾಯ ಬದಲಾಗುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "amt",
+     "label": {
+      "en": "Order value",
+      "kn": "ಆದೇಶ ಮೌಲ್ಯ"
+     },
+     "min": 200,
+     "max": 10000,
+     "step": 200,
+     "value": 2000,
+     "unit": "₹"
+    }
+   ],
+   "choices": [
+    {
+     "name": "pm",
+     "label": {
+      "en": "Payment mode",
+      "kn": "ಪಾವತಿ ವಿಧಾನ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Cash on delivery",
+        "kn": "ಕ್ಯಾಶ್ ಆನ್ ಡೆಲಿವರಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "UPI"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Debit/credit card",
+        "kn": "ಡೆಬಿಟ್/ಕ್ರೆಡಿಟ್ ಕಾರ್ಡ್"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Net banking",
+        "kn": "ನೆಟ್ ಬ್ಯಾಂಕಿಂಗ್"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "counters": [
+    {
+     "name": "s",
+     "value": 0,
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Previous step",
+      "kn": "ಹಿಂದಿನ ಹಂತ"
+     },
+     "icon": "remove",
+     "set": {
+      "s": "max(s - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Next step",
+      "kn": "ಮುಂದಿನ ಹಂತ"
+     },
+     "icon": "next",
+     "set": {
+      "s": "min(s + 1, 5)"
+     },
+     "play": true
+    },
+    {
+     "label": {
+      "en": "Run the whole process",
+      "kn": "ಇಡೀ ಪ್ರಕ್ರಿಯೆ ನಡೆಸಿ"
+     },
+     "icon": "launch",
+     "set": {
+      "s": 5
+     },
+     "reset": true,
+     "play": true
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "s": 0
+     },
+     "reset": true
+    }
+   ],
+   "time": {
+    "max": 5,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "step"
+   },
+   "vars": [
+    {
+     "name": "d0",
+     "expr": "5"
+    },
+    {
+     "name": "d1",
+     "expr": "10"
+    },
+    {
+     "name": "d2",
+     "expr": "if(pm == 1, 0, if(pm == 2, 2, if(pm == 3, 3, 3)))"
+    },
+    {
+     "name": "d3",
+     "expr": "if(pm == 1, 30, if(pm == 2, 1, if(pm == 3, 2, 5)))"
+    },
+    {
+     "name": "d4",
+     "expr": "1440"
+    },
+    {
+     "name": "d5",
+     "expr": "if(pm == 1, 2900, if(pm == 2, 2880, if(pm == 3, 2880, 2880)))"
+    },
+    {
+     "name": "cum",
+     "expr": "d0 + if(s >= 1, d1, 0) + if(s >= 2, d2, 0) + if(s >= 3, d3, 0) + if(s >= 4, d4, 0) + if(s >= 5, d5, 0)"
+    },
+    {
+     "name": "tot",
+     "expr": "d0 + d1 + d2 + d3 + d4 + d5"
+    },
+    {
+     "name": "pos",
+     "expr": "min(t, s)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 4.72,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 0, 1, if(s == 0, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 10.83,
+     "y": 36.5,
+     "text": {
+      "en": "Register",
+      "kn": "ನೋಂದಣಿ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 10.83,
+     "y": 31,
+     "text": {
+      "en": "{d0:0} min",
+      "kn": "{d0:0} ನಿಮಿಷ"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 17.14,
+     "y": 35,
+     "dx": 3.05,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 20.39,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 1, 1, if(s == 1, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 26.5,
+     "y": 36.5,
+     "text": {
+      "en": "Place order",
+      "kn": "ಆದೇಶ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 26.5,
+     "y": 31,
+     "text": {
+      "en": "{d1:0} min",
+      "kn": "{d1:0} ನಿಮಿಷ"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 32.81,
+     "y": 35,
+     "dx": 3.05,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 36.06,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 2, 1, if(s == 2, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 42.17,
+     "y": 36.5,
+     "text": {
+      "en": "Pay",
+      "kn": "ಪಾವತಿ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 42.17,
+     "y": 31,
+     "text": {
+      "en": "{d2:0} min",
+      "kn": "{d2:0} ನಿಮಿಷ"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 48.48,
+     "y": 35,
+     "dx": 3.05,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 51.72,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 3, 1, if(s == 3, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 57.83,
+     "y": 36.5,
+     "text": {
+      "en": "Confirm",
+      "kn": "ದೃಢೀಕರಣ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 57.83,
+     "y": 31,
+     "text": {
+      "en": "{d3:0} min",
+      "kn": "{d3:0} ನಿಮಿಷ"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 64.14,
+     "y": 35,
+     "dx": 3.05,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 67.39,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 4, 1, if(s == 4, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 73.5,
+     "y": 36.5,
+     "text": {
+      "en": "Ship",
+      "kn": "ರವಾನೆ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 73.5,
+     "y": 31,
+     "text": {
+      "en": "{d4:0} min",
+      "kn": "{d4:0} ನಿಮಿಷ"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 79.81,
+     "y": 35,
+     "dx": 3.05,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 83.06,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 5, 1, if(s == 5, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 89.17,
+     "y": 36.5,
+     "text": {
+      "en": "Deliver",
+      "kn": "ವಿತರಣೆ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 89.17,
+     "y": 31,
+     "text": {
+      "en": "{d5:0} min",
+      "kn": "{d5:0} ನಿಮಿಷ"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Create an account: name, address, phone",
+      "kn": "ಖಾತೆ ತೆರೆಯಿರಿ: ಹೆಸರು, ವಿಳಾಸ, ಫೋನ್"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 0"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Add items to the cart and check out",
+      "kn": "ವಸ್ತುಗಳನ್ನು ಕಾರ್ಟ್‌ಗೆ ಸೇರಿಸಿ ಚೆಕ್‌ಔಟ್ ಮಾಡಿ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 1"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Pay by the chosen mode",
+      "kn": "ಆಯ್ಕೆಯ ವಿಧಾನದಲ್ಲಿ ಪಾವತಿಸಿ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 2"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Seller confirms order and payment",
+      "kn": "ಮಾರಾಟಗಾರ ಆದೇಶ ದೃಢೀಕರಿಸುತ್ತಾನೆ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 3"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Goods packed and handed to the courier",
+      "kn": "ಸರಕು ಪ್ಯಾಕ್ ಮಾಡಿ ಕೊರಿಯರ್‌ಗೆ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 4"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Delivered; cash collected if COD",
+      "kn": "ವಿತರಣೆ; COD ಆದರೆ ನಗದು ಸಂಗ್ರಹ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 5"
+    },
+    {
+     "shape": "circle",
+     "x": "10.83 + pos*15.667",
+     "y": 46,
+     "r": 1.6,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 54,
+     "text": {
+      "en": "Step {s + 1:0} of 6: {cum:0} of {tot:0} min so far",
+      "kn": "ಹಂತ {s + 1:0} / 6: ಇದುವರೆಗೆ {cum:0} / {tot:0} ನಿಮಿಷ"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಹಂತ"
+     },
+     "expr": "s + 1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Time so far (min)",
+      "kn": "ಇದುವರೆಗಿನ ಸಮಯ (ನಿಮಿಷ)"
+     },
+     "expr": "cum",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Seller's risk of refusal (illustrative)",
+      "kn": "ಮಾರಾಟಗಾರನ ಅಪಾಯ (ಉದಾಹರಣೆ)"
+     },
+     "expr": "if(pm == 1, 12, if(pm == 2, 1, if(pm == 3, 2, 1)))",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Value at risk",
+      "kn": "ಅಪಾಯದಲ್ಲಿರುವ ಮೌಲ್ಯ"
+     },
+     "expr": "amt*if(pm == 1, 0.12, if(pm == 2, 0.01, if(pm == 3, 0.02, 0.01)))",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why does COD raise the seller's risk but lower the buyer's?",
+     "kn": "COD ಮಾರಾಟಗಾರನ ಅಪಾಯ ಹೆಚ್ಚಿಸಿ ಖರೀದಿದಾರನದನ್ನು ಏಕೆ ಕಡಿಮೆ ಮಾಡುತ್ತದೆ?"
+    },
+    {
+     "en": "Which step needs the buyer's personal data to be kept safe?",
+     "kn": "ಯಾವ ಹಂತದಲ್ಲಿ ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ ಸುರಕ್ಷೆ ಬೇಕು?"
+    },
+    {
+     "en": "Why is UPI confirmation almost instant?",
+     "kn": "UPI ದೃಢೀಕರಣ ತಕ್ಷಣ ಏಕೆ?"
+    }
+   ],
+   "seconds": 120,
+   "narration": {
+    "en": "Follow an online order from registration to delivery. Choose the payment mode: it changes how long confirmation takes and who carries the risk. Step through, or run the whole process.",
+    "kn": "ನೋಂದಣಿಯಿಂದ ವಿತರಣೆಯವರೆಗೆ ಆನ್‌ಲೈನ್ ಆದೇಶವನ್ನು ಅನುಸರಿಸಿ. ಪಾವತಿ ವಿಧಾನ ಆರಿಸಿ: ದೃಢೀಕರಣ ಸಮಯ ಮತ್ತು ಅಪಾಯ ಬದಲಾಗುತ್ತವೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

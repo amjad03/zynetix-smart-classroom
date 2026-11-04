@@ -65,6 +65,289 @@
    }
   },
   {
+   "id": "scene-invoice",
+   "type": "interactive",
+   "title": {
+    "en": "Build a tax invoice",
+    "kn": "ತೆರಿಗೆ ಇನ್‌ವಾಯ್ಸ್ ತಯಾರಿಸಿ"
+   },
+   "narration": {
+    "en": "An invoice is the source document for a credit sale. Gross = quantity × rate; trade discount is taken off before tax; GST is charged on the discounted value. The invoice total is what the buyer owes. Sell 20 units at ₹500 with 10% trade discount and 18% GST. What is the total? Does a bigger discount reduce the GST too?",
+    "kn": "ಇನ್‌ವಾಯ್ಸ್ ಸಾಲದ ಮಾರಾಟದ ಮೂಲ ದಾಖಲೆ. ಒಟ್ಟು = ಪ್ರಮಾಣ × ದರ; ತೆರಿಗೆಗೆ ಮೊದಲು ವ್ಯಾಪಾರ ರಿಯಾಯಿತಿ ಕಳೆಯಲಾಗುತ್ತದೆ; ರಿಯಾಯಿತಿ ನಂತರದ ಮೊತ್ತದ ಮೇಲೆ ಜಿಎಸ್‌ಟಿ. ಇನ್‌ವಾಯ್ಸ್ ಒಟ್ಟು ಖರೀದಿದಾರ ಕೊಡಬೇಕಾದ ಮೊತ್ತ. ₹500 ದರದಲ್ಲಿ 20 ಘಟಕ, 10% ರಿಯಾಯಿತಿ, 18% ಜಿಎಸ್‌ಟಿ. ಒಟ್ಟು ಎಷ್ಟು? ಹೆಚ್ಚು ರಿಯಾಯಿತಿ ಜಿಎಸ್‌ಟಿಯನ್ನೂ ಕಡಿಮೆ ಮಾಡುತ್ತದೆಯೇ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "An invoice is the source document for a credit sale. Gross = quantity × rate; trade discount is taken off before tax; GST is charged on the discounted value. The invoice total is what the buyer owes.",
+    "kn": "ಇನ್‌ವಾಯ್ಸ್ ಸಾಲದ ಮಾರಾಟದ ಮೂಲ ದಾಖಲೆ. ಒಟ್ಟು = ಪ್ರಮಾಣ × ದರ; ತೆರಿಗೆಗೆ ಮೊದಲು ವ್ಯಾಪಾರ ರಿಯಾಯಿತಿ ಕಳೆಯಲಾಗುತ್ತದೆ; ರಿಯಾಯಿತಿ ನಂತರದ ಮೊತ್ತದ ಮೇಲೆ ಜಿಎಸ್‌ಟಿ. ಇನ್‌ವಾಯ್ಸ್ ಒಟ್ಟು ಖರೀದಿದಾರ ಕೊಡಬೇಕಾದ ಮೊತ್ತ."
+   },
+   "sliders": [
+    {
+     "name": "q",
+     "label": {
+      "en": "Quantity",
+      "kn": "ಪ್ರಮಾಣ"
+     },
+     "min": 1,
+     "max": 50,
+     "step": 1,
+     "value": 20,
+     "unit": "units"
+    },
+    {
+     "name": "rate",
+     "label": {
+      "en": "Rate",
+      "kn": "ದರ"
+     },
+     "min": 100,
+     "max": 2000,
+     "step": 50,
+     "value": 500,
+     "unit": "₹"
+    },
+    {
+     "name": "td",
+     "label": {
+      "en": "Trade discount",
+      "kn": "ವ್ಯಾಪಾರ ರಿಯಾಯಿತಿ"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "gst",
+     "label": {
+      "en": "GST rate",
+      "kn": "ಜಿಎಸ್‌ಟಿ ದರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "0%"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "5%"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "12%"
+       },
+       "value": 12
+      },
+      {
+       "label": {
+        "en": "18%"
+       },
+       "value": 18
+      },
+      {
+       "label": {
+        "en": "28%"
+       },
+       "value": 28
+      }
+     ],
+     "value": 18
+    }
+   ],
+   "vars": [
+    {
+     "name": "gross",
+     "expr": "q*rate"
+    },
+    {
+     "name": "disc",
+     "expr": "gross*td/100"
+    },
+    {
+     "name": "tax",
+     "expr": "(gross - disc)*gst/100"
+    },
+    {
+     "name": "net",
+     "expr": "gross - disc + tax"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     13.6
+    ],
+    "y": [
+     -10000,
+     140000
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(gross - 0, 300)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "max(gross, 0) + 5250",
+     "text": {
+      "en": "₹{gross:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": -5250.000000000001,
+     "text": {
+      "en": "Gross",
+      "kn": "ಒಟ್ಟು"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(disc - 0, 300)",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "max(disc, 0) + 5250",
+     "text": {
+      "en": "₹{disc:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": -5250.000000000001,
+     "text": {
+      "en": "Trade discount",
+      "kn": "ವ್ಯಾಪಾರ ರಿಯಾಯಿತಿ"
+     },
+     "size": 20,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(tax - 0, 300)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "max(tax, 0) + 5250",
+     "text": {
+      "en": "₹{tax:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": -5250.000000000001,
+     "text": {
+      "en": "GST",
+      "kn": "ಜಿಎಸ್‌ಟಿ"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(net - 0, 300)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "max(net, 0) + 5250",
+     "text": {
+      "en": "₹{net:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": -5250.000000000001,
+     "text": {
+      "en": "Invoice total",
+      "kn": "ಇನ್‌ವಾಯ್ಸ್ ಒಟ್ಟು"
+     },
+     "size": 20,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Taxable value",
+      "kn": "ತೆರಿಗೆಗೆ ಒಳಪಡುವ ಮೌಲ್ಯ"
+     },
+     "expr": "gross - disc",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "GST",
+      "kn": "ಜಿಎಸ್‌ಟಿ"
+     },
+     "expr": "tax",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Invoice total",
+      "kn": "ಇನ್‌ವಾಯ್ಸ್ ಒಟ್ಟು"
+     },
+     "expr": "net",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Sell 20 units at ₹500 with 10% trade discount and 18% GST. What is the total?",
+     "kn": "₹500 ದರದಲ್ಲಿ 20 ಘಟಕ, 10% ರಿಯಾಯಿತಿ, 18% ಜಿಎಸ್‌ಟಿ. ಒಟ್ಟು ಎಷ್ಟು?"
+    },
+    {
+     "en": "Does a bigger discount reduce the GST too?",
+     "kn": "ಹೆಚ್ಚು ರಿಯಾಯಿತಿ ಜಿಎಸ್‌ಟಿಯನ್ನೂ ಕಡಿಮೆ ಮಾಡುತ್ತದೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

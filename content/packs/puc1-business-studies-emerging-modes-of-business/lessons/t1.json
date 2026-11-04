@@ -67,6 +67,300 @@
    }
   },
   {
+   "id": "scene-ebiz-scope",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Who trades with whom online?",
+    "kn": "ಆನ್‌ಲೈನ್‌ನಲ್ಲಿ ಯಾರು ಯಾರೊಂದಿಗೆ ವ್ಯಾಪಾರ?"
+   },
+   "caption": {
+    "en": "E-business covers trade between a business and its customers (B2C), other businesses (B2B), between consumers (C2C) and inside one firm (intra-B). Choose a type and the order rate, then press Play to watch orders flow.",
+    "kn": "ಇ-ವ್ಯವಹಾರದಲ್ಲಿ B2C, B2B, C2C ಮತ್ತು ಸಂಸ್ಥೆಯೊಳಗಿನ ವ್ಯವಹಾರ ಸೇರಿವೆ. ಒಂದು ಪ್ರಕಾರ ಮತ್ತು ಆದೇಶ ದರ ಆರಿಸಿ Play ಒತ್ತಿ."
+   },
+   "sliders": [
+    {
+     "name": "od",
+     "label": {
+      "en": "Orders per hour",
+      "kn": "ಗಂಟೆಗೆ ಆದೇಶಗಳು"
+     },
+     "min": 2,
+     "max": 40,
+     "step": 2,
+     "value": 12
+    },
+    {
+     "name": "val",
+     "label": {
+      "en": "Average order value",
+      "kn": "ಸರಾಸರಿ ಆದೇಶ ಮೌಲ್ಯ"
+     },
+     "min": 100,
+     "max": 5000,
+     "step": 100,
+     "value": 800,
+     "unit": "₹"
+    }
+   ],
+   "choices": [
+    {
+     "name": "ty",
+     "label": {
+      "en": "Type",
+      "kn": "ಪ್ರಕಾರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "B2C"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "B2B"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "C2C"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Intra-B",
+        "kn": "ಸಂಸ್ಥೆಯೊಳಗೆ"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2,
+    "unit": "min"
+   },
+   "vars": [
+    {
+     "name": "sc",
+     "expr": "if(ty == 1, 1, if(ty == 2, 20, if(ty == 3, 0.3, 5)))"
+    },
+    {
+     "name": "sales",
+     "expr": "od*val*sc"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 4,
+     "y": 22,
+     "w": 20,
+     "h": 14,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 76,
+     "y": 22,
+     "w": 20,
+     "h": 14,
+     "color": "green",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 29,
+     "text": {
+      "en": "Business",
+      "kn": "ವ್ಯವಹಾರ"
+     },
+     "size": 18,
+     "visibleIf": "ty != 3"
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 29,
+     "text": {
+      "en": "Consumer",
+      "kn": "ಗ್ರಾಹಕ"
+     },
+     "size": 18,
+     "visibleIf": "ty == 3"
+    },
+    {
+     "shape": "text",
+     "x": 86,
+     "y": 29,
+     "text": {
+      "en": "Consumer",
+      "kn": "ಗ್ರಾಹಕ"
+     },
+     "size": 18,
+     "visibleIf": "ty == 1 || ty == 3"
+    },
+    {
+     "shape": "text",
+     "x": 86,
+     "y": 29,
+     "text": {
+      "en": "Business",
+      "kn": "ವ್ಯವಹಾರ"
+     },
+     "size": 18,
+     "visibleIf": "ty == 2"
+    },
+    {
+     "shape": "text",
+     "x": 86,
+     "y": 29,
+     "text": {
+      "en": "Branch / dept",
+      "kn": "ಶಾಖೆ / ವಿಭಾಗ"
+     },
+     "size": 18,
+     "visibleIf": "ty == 4"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "24 + mod(52*rand(i) + t*(4 + od/4), 52)",
+     "y": "29 + 3*sin(i + t/3)",
+     "r": 0.8,
+     "color": "orange",
+     "visibleIf": "i < od/2"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 42,
+     "text": {
+      "en": "Platform: website / app",
+      "kn": "ವೇದಿಕೆ: ಜಾಲತಾಣ / ಆ್ಯಪ್"
+     },
+     "size": 18,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 12,
+     "text": {
+      "en": "e.g. Amazon to shoppers",
+      "kn": "ಉದಾ: ಅಮೆಜಾನ್‌ನಿಂದ ಗ್ರಾಹಕರಿಗೆ"
+     },
+     "size": 20,
+     "visibleIf": "ty == 1"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 12,
+     "text": {
+      "en": "e.g. a carmaker buys parts online",
+      "kn": "ಉದಾ: ಕಾರು ತಯಾರಕ ಆನ್‌ಲೈನ್‌ನಲ್ಲಿ ಭಾಗ ಖರೀದಿ"
+     },
+     "size": 20,
+     "visibleIf": "ty == 2"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 12,
+     "text": {
+      "en": "e.g. selling an old bike on OLX",
+      "kn": "ಉದಾ: OLXನಲ್ಲಿ ಹಳೆಯ ಬೈಕ್ ಮಾರಾಟ"
+     },
+     "size": 20,
+     "visibleIf": "ty == 3"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 12,
+     "text": {
+      "en": "e.g. head office sends stock data to branches",
+      "kn": "ಉದಾ: ಮುಖ್ಯ ಕಚೇರಿ ಶಾಖೆಗಳಿಗೆ ದಾಸ್ತಾನು ಮಾಹಿತಿ"
+     },
+     "size": 20,
+     "visibleIf": "ty == 4"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 54,
+     "text": {
+      "en": "Value moved per hour: ₹{sales:0}",
+      "kn": "ಗಂಟೆಗೆ ಮೌಲ್ಯ: ₹{sales:0}"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Value per hour",
+      "kn": "ಗಂಟೆಗೆ ಮೌಲ್ಯ"
+     },
+     "expr": "sales",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Value per 8-hour day",
+      "kn": "8 ಗಂಟೆಗೆ ಮೌಲ್ಯ"
+     },
+     "expr": "8*sales",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why is one B2B order usually much bigger than a B2C order?",
+     "kn": "B2B ಆದೇಶ B2C ಗಿಂತ ಏಕೆ ದೊಡ್ಡದು?"
+    },
+    {
+     "en": "Where is the business in a C2C deal?",
+     "kn": "C2C ವ್ಯವಹಾರದಲ್ಲಿ ಸಂಸ್ಥೆಯ ಪಾತ್ರ ಏನು?"
+    },
+    {
+     "en": "Name one intra-B use in a bank.",
+     "kn": "ಬ್ಯಾಂಕಿನಲ್ಲಿ ಒಂದು ಸಂಸ್ಥೆಯೊಳಗಿನ ಬಳಕೆ ಹೇಳಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "E-business covers trade between a business and its customers (B2C), other businesses (B2B), between consumers (C2C) and inside one firm (intra-B). Choose a type and the order rate, then press Play to watch orders flow.",
+    "kn": "ಇ-ವ್ಯವಹಾರದಲ್ಲಿ B2C, B2B, C2C ಮತ್ತು ಸಂಸ್ಥೆಯೊಳಗಿನ ವ್ಯವಹಾರ ಸೇರಿವೆ. ಒಂದು ಪ್ರಕಾರ ಮತ್ತು ಆದೇಶ ದರ ಆರಿಸಿ Play ಒತ್ತಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

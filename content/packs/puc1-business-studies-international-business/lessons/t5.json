@@ -71,6 +71,312 @@
    }
   },
   {
+   "id": "scene-tariff",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Tariffs, WTO limits and export help",
+    "kn": "ಸುಂಕ, WTO ಮಿತಿ ಮತ್ತು ರಫ್ತು ನೆರವು"
+   },
+   "caption": {
+    "en": "A tariff raises the price of imports and shields home producers, but consumers pay more. The WTO binds tariffs at a ceiling. Set the tariff and the world price; toggle the WTO bound rate.",
+    "kn": "ಸುಂಕ ಆಮದು ಬೆಲೆ ಏರಿಸಿ ದೇಶೀಯ ಉತ್ಪಾದಕರನ್ನು ರಕ್ಷಿಸುತ್ತದೆ, ಆದರೆ ಗ್ರಾಹಕರು ಹೆಚ್ಚು ಪಾವತಿಸುತ್ತಾರೆ. WTO ಸುಂಕಕ್ಕೆ ಗರಿಷ್ಠ ಮಿತಿ ಹಾಕುತ್ತದೆ. ಸುಂಕ ಮತ್ತು ಜಾಗತಿಕ ಬೆಲೆ ಹೊಂದಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "tf",
+     "label": {
+      "en": "Tariff",
+      "kn": "ಸುಂಕ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 20,
+     "unit": "%"
+    },
+    {
+     "name": "wp",
+     "label": {
+      "en": "World price",
+      "kn": "ಜಾಗತಿಕ ಬೆಲೆ"
+     },
+     "min": 50,
+     "max": 120,
+     "step": 5,
+     "value": 80,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "wto",
+     "label": {
+      "en": "WTO bound rate 40%",
+      "kn": "WTO ಮಿತಿ 40%"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "tr",
+     "expr": "if(wto, min(tf, 40), tf)"
+    },
+    {
+     "name": "ip",
+     "expr": "wp*(1 + tr/100)"
+    },
+    {
+     "name": "dem",
+     "expr": "max(200 - ip, 0)"
+    },
+    {
+     "name": "hq",
+     "expr": "clamp(ip - 40, 0, dem)"
+    },
+    {
+     "name": "imq",
+     "expr": "max(dem - hq, 0)"
+    },
+    {
+     "name": "rev",
+     "expr": "imq*wp*tr/100"
+    },
+    {
+     "name": "b0",
+     "expr": "ip"
+    },
+    {
+     "name": "b1",
+     "expr": "imq"
+    },
+    {
+     "name": "b2",
+     "expr": "hq"
+    },
+    {
+     "name": "b3",
+     "expr": "rev/10"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Market with a tariff",
+      "kn": "ಸುಂಕದೊಂದಿಗೆ ಮಾರುಕಟ್ಟೆ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/200, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/200, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Import price",
+      "kn": "ಆಮದು ಬೆಲೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/200, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/200, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Imports (units)",
+      "kn": "ಆಮದು (ಘಟಕ)"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/200, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/200, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Home output",
+      "kn": "ದೇಶೀಯ ಉತ್ಪಾದನೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/200, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/200, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Tariff revenue",
+      "kn": "ಸುಂಕ ಆದಾಯ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Capped at 40% by WTO",
+      "kn": "WTO ನಿಂದ 40%ಕ್ಕೆ ಮಿತಿ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "wto && tf > 40"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Tariff {tr:0}%",
+      "kn": "ಸುಂಕ {tr:0}%"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "!(wto && tf > 40)"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Applied tariff",
+      "kn": "ಅನ್ವಯಿಸಿದ ಸುಂಕ"
+     },
+     "expr": "tr",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Consumers buy",
+      "kn": "ಗ್ರಾಹಕ ಖರೀದಿ"
+     },
+     "expr": "dem",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Tariff revenue",
+      "kn": "ಸುಂಕ ಆದಾಯ"
+     },
+     "expr": "rev",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise the tariff to 100% with WTO off. What happens to imports?",
+     "kn": "WTO ಆಫ್ ಮಾಡಿ ಸುಂಕ 100% ಮಾಡಿ. ಆಮದು ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Who gains and who loses from a high tariff?",
+     "kn": "ಹೆಚ್ಚು ಸುಂಕದಿಂದ ಯಾರಿಗೆ ಲಾಭ, ಯಾರಿಗೆ ನಷ್ಟ?"
+    },
+    {
+     "en": "Why does the WTO want tariffs bound and lowered?",
+     "kn": "WTO ಸುಂಕ ಕಡಿಮೆ ಮಾಡಲು ಏಕೆ ಬಯಸುತ್ತದೆ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "A tariff raises the price of imports and shields home producers, but consumers pay more. The WTO binds tariffs at a ceiling. Set the tariff and the world price; toggle the WTO bound rate.",
+    "kn": "ಸುಂಕ ಆಮದು ಬೆಲೆ ಏರಿಸಿ ದೇಶೀಯ ಉತ್ಪಾದಕರನ್ನು ರಕ್ಷಿಸುತ್ತದೆ, ಆದರೆ ಗ್ರಾಹಕರು ಹೆಚ್ಚು ಪಾವತಿಸುತ್ತಾರೆ. WTO ಸುಂಕಕ್ಕೆ ಗರಿಷ್ಠ ಮಿತಿ ಹಾಕುತ್ತದೆ. ಸುಂಕ ಮತ್ತು ಜಾಗತಿಕ ಬೆಲೆ ಹೊಂದಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

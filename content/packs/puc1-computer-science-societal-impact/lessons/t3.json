@@ -65,6 +65,219 @@
    }
   },
   {
+   "id": "scene-password-strength",
+   "type": "interactive",
+   "title": {
+    "en": "Protect your data: password strength",
+    "kn": "ನಿಮ್ಮ ದತ್ತಾಂಶ ರಕ್ಷಿಸಿ: ಪಾಸ್‌ವರ್ಡ್ ಬಲ"
+   },
+   "narration": {
+    "en": "A strong password is the first line of data protection. An attacker trying ten billion guesses a second must, on average, try half of all possible passwords. Length and a bigger set of symbols both multiply the work. An 8-digit PIN against an 8-character mix of letters and digits: compare. Which adds more strength: two more characters, or adding symbols?",
+    "kn": "ಬಲಿಷ್ಠ ಪಾಸ್‌ವರ್ಡ್ ದತ್ತಾಂಶ ರಕ್ಷಣೆಯ ಮೊದಲ ಹೆಜ್ಜೆ. ಸೆಕೆಂಡಿಗೆ ಹತ್ತು ಶತಕೋಟಿ ಊಹೆ ಮಾಡುವ ದಾಳಿಕೋರ ಸರಾಸರಿ ಅರ್ಧದಷ್ಟು ಸಾಧ್ಯ ಪಾಸ್‌ವರ್ಡ್ ಪ್ರಯತ್ನಿಸಬೇಕು. ಉದ್ದ ಮತ್ತು ಹೆಚ್ಚು ಚಿಹ್ನೆಗಳು ಕೆಲಸವನ್ನು ಗುಣಿಸುತ್ತವೆ. 8 ಅಂಕಿ PIN ಮತ್ತು 8 ಅಕ್ಷರ-ಅಂಕಿ ಮಿಶ್ರಣ: ಹೋಲಿಸಿ. ಯಾವುದು ಹೆಚ್ಚು ಬಲ: ಇನ್ನೆರಡು ಅಕ್ಷರ ಅಥವಾ ಚಿಹ್ನೆ ಸೇರಿಸುವುದು?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "A strong password is the first line of data protection. An attacker trying ten billion guesses a second must, on average, try half of all possible passwords. Length and a bigger set of symbols both multiply the work.",
+    "kn": "ಬಲಿಷ್ಠ ಪಾಸ್‌ವರ್ಡ್ ದತ್ತಾಂಶ ರಕ್ಷಣೆಯ ಮೊದಲ ಹೆಜ್ಜೆ. ಸೆಕೆಂಡಿಗೆ ಹತ್ತು ಶತಕೋಟಿ ಊಹೆ ಮಾಡುವ ದಾಳಿಕೋರ ಸರಾಸರಿ ಅರ್ಧದಷ್ಟು ಸಾಧ್ಯ ಪಾಸ್‌ವರ್ಡ್ ಪ್ರಯತ್ನಿಸಬೇಕು. ಉದ್ದ ಮತ್ತು ಹೆಚ್ಚು ಚಿಹ್ನೆಗಳು ಕೆಲಸವನ್ನು ಗುಣಿಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "len",
+     "label": {
+      "en": "Length",
+      "kn": "ಉದ್ದ"
+     },
+     "min": 4,
+     "max": 20,
+     "step": 1,
+     "value": 8,
+     "unit": "characters"
+    }
+   ],
+   "choices": [
+    {
+     "name": "cs",
+     "label": {
+      "en": "Characters used",
+      "kn": "ಬಳಸಿದ ಅಕ್ಷರಗಳು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Digits only (10)",
+        "kn": "ಅಂಕಿ ಮಾತ್ರ (10)"
+       },
+       "value": 10
+      },
+      {
+       "label": {
+        "en": "Lowercase (26)",
+        "kn": "ಸಣ್ಣ ಅಕ್ಷರ (26)"
+       },
+       "value": 26
+      },
+      {
+       "label": {
+        "en": "Upper + lower (52)",
+        "kn": "ದೊಡ್ಡ + ಸಣ್ಣ (52)"
+       },
+       "value": 52
+      },
+      {
+       "label": {
+        "en": "Letters + digits (62)",
+        "kn": "ಅಕ್ಷರ + ಅಂಕಿ (62)"
+       },
+       "value": 62
+      },
+      {
+       "label": {
+        "en": "All keyboard (94)",
+        "kn": "ಎಲ್ಲಾ ಕೀಲಿಮಣೆ (94)"
+       },
+       "value": 94
+      }
+     ],
+     "value": 62
+    }
+   ],
+   "vars": [
+    {
+     "name": "bits",
+     "expr": "len*ln(cs)/ln(2)"
+    },
+    {
+     "name": "yrs",
+     "expr": "len*log(cs) - log(2) - 10 - log(31557600)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     0,
+     7.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 2,
+     "w": 14,
+     "h": 1.4,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 2,
+     "w": "clamp(bits, 0, 128)/128*14",
+     "h": 1.4,
+     "color": {
+      "by": "clamp(bits/90, 0, 1)",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 4.4,
+     "text": {
+      "en": "{bits:0} bits of strength",
+      "kn": "{bits:0} ಬಿಟ್ ಬಲ"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": 6.2,
+     "text": {
+      "en": "Weak: cracked in seconds",
+      "kn": "ದುರ್ಬಲ: ಕ್ಷಣಗಳಲ್ಲಿ ಮುರಿಯಬಹುದು"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "yrs < -4"
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": 6.2,
+     "text": {
+      "en": "Medium: days to years",
+      "kn": "ಮಧ್ಯಮ: ದಿನಗಳಿಂದ ವರ್ಷಗಳು"
+     },
+     "size": 24,
+     "color": "orange",
+     "visibleIf": "yrs >= -4 && yrs < 3"
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": 6.2,
+     "text": {
+      "en": "Strong: thousands of years",
+      "kn": "ಬಲಿಷ್ಠ: ಸಾವಿರಾರು ವರ್ಷ"
+     },
+     "size": 24,
+     "color": "green",
+     "visibleIf": "yrs >= 3"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 0.9,
+     "text": {
+      "en": "password length {len:0} from {cs:0} symbols",
+      "kn": "ಉದ್ದ {len:0}, {cs:0} ಚಿಹ್ನೆಗಳಿಂದ"
+     },
+     "size": 20,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Possible passwords (power of 10)",
+      "kn": "ಸಾಧ್ಯ ಪಾಸ್‌ವರ್ಡ್‌ಗಳು (10ರ ಘಾತ)"
+     },
+     "expr": "len*log(cs)",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Years to crack (power of 10)",
+      "kn": "ಮುರಿಯಲು ವರ್ಷ (10ರ ಘಾತ)"
+     },
+     "expr": "yrs",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "An 8-digit PIN against an 8-character mix of letters and digits: compare.",
+     "kn": "8 ಅಂಕಿ PIN ಮತ್ತು 8 ಅಕ್ಷರ-ಅಂಕಿ ಮಿಶ್ರಣ: ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Which adds more strength: two more characters, or adding symbols?",
+     "kn": "ಯಾವುದು ಹೆಚ್ಚು ಬಲ: ಇನ್ನೆರಡು ಅಕ್ಷರ ಅಥವಾ ಚಿಹ್ನೆ ಸೇರಿಸುವುದು?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -62,6 +62,264 @@
    }
   },
   {
+   "id": "scene-cash-flow-activities",
+   "type": "interactive",
+   "title": {
+    "en": "Sort cash flows into activities",
+    "kn": "ನಗದು ಹರಿವನ್ನು ಚಟುವಟಿಕೆಗಳಾಗಿ ವಿಂಗಡಿಸಿ"
+   },
+   "narration": {
+    "en": "Operating activities come from the main business (profit plus non-cash depreciation of ₹30 thousand). Buying machinery is investing; issuing shares and paying dividends are financing. Their sum is the net change in cash. Buy ₹150 thousand of machinery with no new shares. Does cash rise or fall? Make profit zero. Why is operating cash flow still positive?",
+    "kn": "ಕಾರ್ಯಾಚರಣೆ ಚಟುವಟಿಕೆ ಮುಖ್ಯ ವ್ಯವಹಾರದಿಂದ (ಲಾಭ + ₹30 ಸಾವಿರ ನಗದು-ರಹಿತ ಸವಕಳಿ). ಯಂತ್ರ ಖರೀದಿ ಹೂಡಿಕೆ; ಷೇರು ವಿತರಣೆ ಮತ್ತು ಲಾಭಾಂಶ ಪಾವತಿ ಹಣಕಾಸು. ಇವುಗಳ ಮೊತ್ತ ನಗದಿನ ನಿವ್ವಳ ಬದಲಾವಣೆ. ಹೊಸ ಷೇರು ಇಲ್ಲದೆ ₹150 ಸಾವಿರ ಯಂತ್ರ ಖರೀದಿಸಿ. ನಗದು ಏರುತ್ತದೆಯೇ ಇಳಿಯುತ್ತದೆಯೇ? ಲಾಭ ಶೂನ್ಯ ಮಾಡಿ. ಕಾರ್ಯಾಚರಣೆ ನಗದು ಹರಿವು ಇನ್ನೂ ಏಕೆ ಧನಾತ್ಮಕ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Operating activities come from the main business (profit plus non-cash depreciation of ₹30 thousand). Buying machinery is investing; issuing shares and paying dividends are financing. Their sum is the net change in cash.",
+    "kn": "ಕಾರ್ಯಾಚರಣೆ ಚಟುವಟಿಕೆ ಮುಖ್ಯ ವ್ಯವಹಾರದಿಂದ (ಲಾಭ + ₹30 ಸಾವಿರ ನಗದು-ರಹಿತ ಸವಕಳಿ). ಯಂತ್ರ ಖರೀದಿ ಹೂಡಿಕೆ; ಷೇರು ವಿತರಣೆ ಮತ್ತು ಲಾಭಾಂಶ ಪಾವತಿ ಹಣಕಾಸು. ಇವುಗಳ ಮೊತ್ತ ನಗದಿನ ನಿವ್ವಳ ಬದಲಾವಣೆ."
+   },
+   "sliders": [
+    {
+     "name": "np",
+     "label": {
+      "en": "Net profit (₹ thousand)",
+      "kn": "ನಿವ್ವಳ ಲಾಭ (₹ ಸಾವಿರ)"
+     },
+     "min": 0,
+     "max": 200,
+     "step": 5,
+     "value": 100
+    },
+    {
+     "name": "mach",
+     "label": {
+      "en": "Machinery bought (₹ thousand)",
+      "kn": "ಖರೀದಿಸಿದ ಯಂತ್ರ (₹ ಸಾವಿರ)"
+     },
+     "min": 0,
+     "max": 150,
+     "step": 5,
+     "value": 80
+    },
+    {
+     "name": "sh",
+     "label": {
+      "en": "Shares issued (₹ thousand)",
+      "kn": "ವಿತರಿಸಿದ ಷೇರು (₹ ಸಾವಿರ)"
+     },
+     "min": 0,
+     "max": 150,
+     "step": 5,
+     "value": 50
+    },
+    {
+     "name": "dv",
+     "label": {
+      "en": "Dividend paid (₹ thousand)",
+      "kn": "ಪಾವತಿಸಿದ ಲಾಭಾಂಶ (₹ ಸಾವಿರ)"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 2,
+     "value": 20
+    }
+   ],
+   "vars": [
+    {
+     "name": "op",
+     "expr": "np + 30"
+    },
+    {
+     "name": "inv",
+     "expr": "-mach"
+    },
+    {
+     "name": "fin",
+     "expr": "sh - dv"
+    },
+    {
+     "name": "net",
+     "expr": "op + inv + fin"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     13.6
+    ],
+    "y": [
+     -200,
+     300
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": "min(0, op)",
+     "w": 2.0,
+     "h": "max(abs(op), 1)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "if(op >= 0, op + 17.5, op - 17.5)",
+     "text": {
+      "en": "₹{op:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "if(op >= 0, -17.5, 17.5)",
+     "text": {
+      "en": "Operating",
+      "kn": "ಕಾರ್ಯಾಚರಣೆ"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": "min(0, inv)",
+     "w": 2.0,
+     "h": "max(abs(inv), 1)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "if(inv >= 0, inv + 17.5, inv - 17.5)",
+     "text": {
+      "en": "₹{inv:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "if(inv >= 0, -17.5, 17.5)",
+     "text": {
+      "en": "Investing",
+      "kn": "ಹೂಡಿಕೆ"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": "min(0, fin)",
+     "w": 2.0,
+     "h": "max(abs(fin), 1)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "if(fin >= 0, fin + 17.5, fin - 17.5)",
+     "text": {
+      "en": "₹{fin:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "if(fin >= 0, -17.5, 17.5)",
+     "text": {
+      "en": "Financing",
+      "kn": "ಹಣಕಾಸು"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": "min(0, net)",
+     "w": 2.0,
+     "h": "max(abs(net), 1)",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "if(net >= 0, net + 17.5, net - 17.5)",
+     "text": {
+      "en": "₹{net:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "if(net >= 0, -17.5, 17.5)",
+     "text": {
+      "en": "Net change",
+      "kn": "ನಿವ್ವಳ ಬದಲಾವಣೆ"
+     },
+     "size": 20,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Operating",
+      "kn": "ಕಾರ್ಯಾಚರಣೆ"
+     },
+     "expr": "op",
+     "digits": 0,
+     "unit": "₹ thousand"
+    },
+    {
+     "label": {
+      "en": "Investing",
+      "kn": "ಹೂಡಿಕೆ"
+     },
+     "expr": "inv",
+     "digits": 0,
+     "unit": "₹ thousand"
+    },
+    {
+     "label": {
+      "en": "Financing",
+      "kn": "ಹಣಕಾಸು"
+     },
+     "expr": "fin",
+     "digits": 0,
+     "unit": "₹ thousand"
+    },
+    {
+     "label": {
+      "en": "Net change in cash",
+      "kn": "ನಗದಿನ ನಿವ್ವಳ ಬದಲಾವಣೆ"
+     },
+     "expr": "net",
+     "digits": 0,
+     "unit": "₹ thousand"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Buy ₹150 thousand of machinery with no new shares. Does cash rise or fall?",
+     "kn": "ಹೊಸ ಷೇರು ಇಲ್ಲದೆ ₹150 ಸಾವಿರ ಯಂತ್ರ ಖರೀದಿಸಿ. ನಗದು ಏರುತ್ತದೆಯೇ ಇಳಿಯುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Make profit zero. Why is operating cash flow still positive?",
+     "kn": "ಲಾಭ ಶೂನ್ಯ ಮಾಡಿ. ಕಾರ್ಯಾಚರಣೆ ನಗದು ಹರಿವು ಇನ್ನೂ ಏಕೆ ಧನಾತ್ಮಕ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -62,6 +62,317 @@
    }
   },
   {
+   "id": "scene-stakeholders",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Sharing responsibility among interest groups",
+    "kn": "ಹಿತಾಸಕ್ತ ಗುಂಪುಗಳಿಗೆ ಹೊಣೆ ಹಂಚಿಕೆ"
+   },
+   "caption": {
+    "en": "A firm must be responsible to shareholders, workers, consumers and the community. Share its effort among them. Neglect any group and trust falls; balance them and the firm's long-run standing rises.",
+    "kn": "ಸಂಸ್ಥೆ ಷೇರುದಾರರು, ಕಾರ್ಮಿಕರು, ಗ್ರಾಹಕರು ಮತ್ತು ಸಮುದಾಯಕ್ಕೆ ಹೊಣೆ. ಪ್ರಯತ್ನವನ್ನು ಹಂಚಿ. ಯಾವ ಗುಂಪನ್ನು ನಿರ್ಲಕ್ಷಿಸಿದರೂ ವಿಶ್ವಾಸ ಕುಸಿಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "sh",
+     "label": {
+      "en": "Fair return to shareholders",
+      "kn": "ಷೇರುದಾರರಿಗೆ ನ್ಯಾಯ ಲಾಭ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 7
+    },
+    {
+     "name": "wk",
+     "label": {
+      "en": "Fair wages, safe work",
+      "kn": "ನ್ಯಾಯ ವೇತನ, ಸುರಕ್ಷೆ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 3
+    },
+    {
+     "name": "cs",
+     "label": {
+      "en": "Quality at fair price",
+      "kn": "ನ್ಯಾಯ ಬೆಲೆಗೆ ಗುಣಮಟ್ಟ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "cm",
+     "label": {
+      "en": "Community and environment",
+      "kn": "ಸಮುದಾಯ, ಪರಿಸರ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "tot",
+     "expr": "max(sh + wk + cs + cm, 1)"
+    },
+    {
+     "name": "b0",
+     "expr": "100*sh/tot"
+    },
+    {
+     "name": "b1",
+     "expr": "100*wk/tot"
+    },
+    {
+     "name": "b2",
+     "expr": "100*cs/tot"
+    },
+    {
+     "name": "b3",
+     "expr": "100*cm/tot"
+    },
+    {
+     "name": "b4",
+     "expr": "4*min(sh, wk, cs, cm)/tot*100"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Share of effort (%)",
+      "kn": "ಪ್ರಯತ್ನದ ಪಾಲು (%)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.05,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b0/100, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": "14.5 + clamp(b0/100, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": 8,
+     "text": {
+      "en": "Shareholders",
+      "kn": "ಷೇರುದಾರರು"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 18.85,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b1/100, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 22.2,
+     "y": "14.5 + clamp(b1/100, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 22.2,
+     "y": 8,
+     "text": {
+      "en": "Workers",
+      "kn": "ಕಾರ್ಮಿಕರು"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 29.65,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b2/100, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": "14.5 + clamp(b2/100, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 8,
+     "text": {
+      "en": "Consumers",
+      "kn": "ಗ್ರಾಹಕರು"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 40.45,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b3/100, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 43.8,
+     "y": "14.5 + clamp(b3/100, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 43.8,
+     "y": 8,
+     "text": {
+      "en": "Community",
+      "kn": "ಸಮುದಾಯ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 51.25,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b4/100, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 54.6,
+     "y": "14.5 + clamp(b4/100, 0, 1)*36",
+     "text": {
+      "en": "{b4:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 54.6,
+     "y": 8,
+     "text": {
+      "en": "Long-run standing",
+      "kn": "ದೀರ್ಘಾವಧಿ ಸ್ಥಾನ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "A group is neglected",
+      "kn": "ಒಂದು ಗುಂಪು ನಿರ್ಲಕ್ಷಿತ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "min(sh, wk, cs, cm) <= 1"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Balanced responsibility",
+      "kn": "ಸಮತೋಲಿತ ಹೊಣೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "min(sh, wk, cs, cm) > 1"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Long-run standing",
+      "kn": "ದೀರ್ಘಾವಧಿ ಸ್ಥಾನ"
+     },
+     "expr": "b4",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Put everything into shareholders. What happens to standing?",
+     "kn": "ಎಲ್ಲವನ್ನೂ ಷೇರುದಾರರಿಗೆ ಕೊಡಿ. ಸ್ಥಾನ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Give one example of responsibility to consumers.",
+     "kn": "ಗ್ರಾಹಕರಿಗೆ ಹೊಣೆಯ ಉದಾಹರಣೆ ಕೊಡಿ."
+    },
+    {
+     "en": "What is the best standing you can reach?",
+     "kn": "ಗರಿಷ್ಠ ಸ್ಥಾನ ಎಷ್ಟು ತಲುಪಬಹುದು?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "A firm must be responsible to shareholders, workers, consumers and the community. Share its effort among them. Neglect any group and trust falls; balance them and the firm's long-run standing rises.",
+    "kn": "ಸಂಸ್ಥೆ ಷೇರುದಾರರು, ಕಾರ್ಮಿಕರು, ಗ್ರಾಹಕರು ಮತ್ತು ಸಮುದಾಯಕ್ಕೆ ಹೊಣೆ. ಪ್ರಯತ್ನವನ್ನು ಹಂಚಿ. ಯಾವ ಗುಂಪನ್ನು ನಿರ್ಲಕ್ಷಿಸಿದರೂ ವಿಶ್ವಾಸ ಕುಸಿಯುತ್ತದೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

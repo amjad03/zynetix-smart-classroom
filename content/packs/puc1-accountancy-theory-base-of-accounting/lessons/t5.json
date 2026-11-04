@@ -59,6 +59,284 @@
    }
   },
   {
+   "id": "scene-standards-inventory",
+   "type": "interactive",
+   "title": {
+    "en": "Why accounting standards?",
+    "kn": "ಲೆಕ್ಕಶಾಸ್ತ್ರ ಮಾನದಂಡಗಳು ಏಕೆ?"
+   },
+   "narration": {
+    "en": "Two identical firms buy 50 units at ₹10 and 50 more at a higher price, and sell at ₹25. If one values the goods sold by FIFO and the other by weighted average, their profits differ for the same facts. Standards such as Ind AS 2 fix common rules so statements can be compared. Raise the second purchase price to ₹20. How far apart are the two profits? When do the two methods give the same profit?",
+    "kn": "ಎರಡು ಒಂದೇ ರೀತಿಯ ಸಂಸ್ಥೆಗಳು 50 ಘಟಕ ₹10ಕ್ಕೆ ಮತ್ತು ಇನ್ನೂ 50 ಹೆಚ್ಚಿನ ಬೆಲೆಗೆ ಖರೀದಿಸಿ ₹25ಕ್ಕೆ ಮಾರುತ್ತವೆ. ಒಂದು FIFO, ಇನ್ನೊಂದು ಭಾರಿತ ಸರಾಸರಿ ಬಳಸಿದರೆ ಅದೇ ಸಂಗತಿಗೆ ಲಾಭ ಬೇರೆ. Ind AS 2ರಂತಹ ಮಾನದಂಡಗಳು ಸಾಮಾನ್ಯ ನಿಯಮ ನೀಡಿ ಹೋಲಿಕೆ ಸಾಧ್ಯಗೊಳಿಸುತ್ತವೆ. ಎರಡನೇ ಖರೀದಿ ಬೆಲೆಯನ್ನು ₹20ಕ್ಕೆ ಏರಿಸಿ. ಎರಡು ಲಾಭಗಳ ಅಂತರ ಎಷ್ಟು? ಎರಡು ವಿಧಾನಗಳು ಯಾವಾಗ ಒಂದೇ ಲಾಭ ಕೊಡುತ್ತವೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Two identical firms buy 50 units at ₹10 and 50 more at a higher price, and sell at ₹25. If one values the goods sold by FIFO and the other by weighted average, their profits differ for the same facts. Standards such as Ind AS 2 fix common rules so statements can be compared.",
+    "kn": "ಎರಡು ಒಂದೇ ರೀತಿಯ ಸಂಸ್ಥೆಗಳು 50 ಘಟಕ ₹10ಕ್ಕೆ ಮತ್ತು ಇನ್ನೂ 50 ಹೆಚ್ಚಿನ ಬೆಲೆಗೆ ಖರೀದಿಸಿ ₹25ಕ್ಕೆ ಮಾರುತ್ತವೆ. ಒಂದು FIFO, ಇನ್ನೊಂದು ಭಾರಿತ ಸರಾಸರಿ ಬಳಸಿದರೆ ಅದೇ ಸಂಗತಿಗೆ ಲಾಭ ಬೇರೆ. Ind AS 2ರಂತಹ ಮಾನದಂಡಗಳು ಸಾಮಾನ್ಯ ನಿಯಮ ನೀಡಿ ಹೋಲಿಕೆ ಸಾಧ್ಯಗೊಳಿಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "p2",
+     "label": {
+      "en": "Price of the second lot",
+      "kn": "ಎರಡನೇ ಖರೀದಿಯ ಬೆಲೆ"
+     },
+     "min": 10,
+     "max": 20,
+     "step": 0.5,
+     "value": 14,
+     "unit": "₹"
+    },
+    {
+     "name": "u",
+     "label": {
+      "en": "Units sold",
+      "kn": "ಮಾರಿದ ಘಟಕಗಳು"
+     },
+     "min": 10,
+     "max": 90,
+     "step": 5,
+     "value": 60
+    }
+   ],
+   "choices": [
+    {
+     "name": "std",
+     "label": {
+      "en": "Rules",
+      "kn": "ನಿಯಮಗಳು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Common standard",
+        "kn": "ಸಾಮಾನ್ಯ ಮಾನದಂಡ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Each firm chooses",
+        "kn": "ಪ್ರತಿ ಸಂಸ್ಥೆ ಆರಿಸುತ್ತದೆ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "vars": [
+    {
+     "name": "cf",
+     "expr": "if(u <= 50, 10*u, 500 + (u - 50)*p2)"
+    },
+    {
+     "name": "cw",
+     "expr": "u*(10 + p2)/2"
+    },
+    {
+     "name": "pfi",
+     "expr": "25*u - cf"
+    },
+    {
+     "name": "pwa",
+     "expr": "if(std == 1, pfi, 25*u - cw)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     15.2
+    ],
+    "y": [
+     -200,
+     2600
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0,
+     "w": 2.4,
+     "h": "max(cf - 0, 5.4)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.2,
+     "y": "max(cf, 0) + 94.5",
+     "text": {
+      "en": "₹{cf:0}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.2,
+     "y": -94.50000000000001,
+     "text": {
+      "en": "Cost of goods sold: FIFO",
+      "kn": "ಮಾರಿದ ಸರಕಿನ ವೆಚ್ಚ: FIFO"
+     },
+     "size": 18,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 4.6,
+     "y": 0,
+     "w": 2.4,
+     "h": "max(cw - 0, 5.4)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 5.8,
+     "y": "max(cw, 0) + 94.5",
+     "text": {
+      "en": "₹{cw:0}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.8,
+     "y": -94.50000000000001,
+     "text": {
+      "en": "Cost of goods sold: average",
+      "kn": "ಮಾರಿದ ಸರಕಿನ ವೆಚ್ಚ: ಸರಾಸರಿ"
+     },
+     "size": 18,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 8.2,
+     "y": 0,
+     "w": 2.4,
+     "h": "max(pfi - 0, 5.4)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 9.4,
+     "y": "max(pfi, 0) + 94.5",
+     "text": {
+      "en": "₹{pfi:0}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.4,
+     "y": -94.50000000000001,
+     "text": {
+      "en": "Profit: FIFO",
+      "kn": "ಲಾಭ: FIFO"
+     },
+     "size": 18,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 11.8,
+     "y": 0,
+     "w": 2.4,
+     "h": "max(pwa - 0, 5.4)",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 13.0,
+     "y": "max(pwa, 0) + 94.5",
+     "text": {
+      "en": "₹{pwa:0}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.0,
+     "y": -94.50000000000001,
+     "text": {
+      "en": "Profit: average",
+      "kn": "ಲಾಭ: ಸರಾಸರಿ"
+     },
+     "size": 18,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 7.5,
+     "y": 2350,
+     "text": {
+      "en": "Common standard: both firms use FIFO, profits comparable",
+      "kn": "ಸಾಮಾನ್ಯ ಮಾನದಂಡ: ಎರಡೂ FIFO, ಲಾಭ ಹೋಲಿಕೆಗೆ ಯೋಗ್ಯ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "std == 1"
+    },
+    {
+     "shape": "label",
+     "x": 7.5,
+     "y": 2350,
+     "text": {
+      "en": "No common standard: firm A uses FIFO, firm B average",
+      "kn": "ಸಾಮಾನ್ಯ ಮಾನದಂಡ ಇಲ್ಲ: A FIFO, B ಸರಾಸರಿ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "std == 2"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Firm A profit",
+      "kn": "ಸಂಸ್ಥೆ A ಲಾಭ"
+     },
+     "expr": "pfi",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Firm B profit",
+      "kn": "ಸಂಸ್ಥೆ B ಲಾಭ"
+     },
+     "expr": "pwa",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Difference",
+      "kn": "ವ್ಯತ್ಯಾಸ"
+     },
+     "expr": "abs(pfi - pwa)",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise the second purchase price to ₹20. How far apart are the two profits?",
+     "kn": "ಎರಡನೇ ಖರೀದಿ ಬೆಲೆಯನ್ನು ₹20ಕ್ಕೆ ಏರಿಸಿ. ಎರಡು ಲಾಭಗಳ ಅಂತರ ಎಷ್ಟು?"
+    },
+    {
+     "en": "When do the two methods give the same profit?",
+     "kn": "ಎರಡು ವಿಧಾನಗಳು ಯಾವಾಗ ಒಂದೇ ಲಾಭ ಕೊಡುತ್ತವೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

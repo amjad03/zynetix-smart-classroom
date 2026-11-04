@@ -59,6 +59,264 @@
    }
   },
   {
+   "id": "scene-ethics-culture",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Building an ethical firm",
+    "kn": "ನೈತಿಕ ಸಂಸ್ಥೆ ನಿರ್ಮಾಣ"
+   },
+   "caption": {
+    "en": "The elements of business ethics work together: top management's commitment, a published code, compliance mechanisms and involving employees. Set each and watch trust rise and misconduct fall.",
+    "kn": "ವ್ಯವಹಾರ ನೀತಿಶಾಸ್ತ್ರದ ಅಂಶಗಳು ಒಟ್ಟಾಗಿ ಕೆಲಸ ಮಾಡುತ್ತವೆ: ಉನ್ನತ ಆಡಳಿತದ ಬದ್ಧತೆ, ಪ್ರಕಟಿತ ಸಂಹಿತೆ, ಅನುಸರಣಾ ವ್ಯವಸ್ಥೆ, ನೌಕರರ ಪಾಲ್ಗೊಳ್ಳುವಿಕೆ."
+   },
+   "sliders": [
+    {
+     "name": "tm",
+     "label": {
+      "en": "Top management commitment",
+      "kn": "ಉನ್ನತ ಆಡಳಿತದ ಬದ್ಧತೆ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 4
+    },
+    {
+     "name": "cd",
+     "label": {
+      "en": "Code published and taught",
+      "kn": "ಸಂಹಿತೆ ಪ್ರಕಟಣೆ, ತರಬೇತಿ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 6
+    },
+    {
+     "name": "cm",
+     "label": {
+      "en": "Compliance and audit",
+      "kn": "ಅನುಸರಣೆ, ಪರಿಶೋಧನೆ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 3
+    },
+    {
+     "name": "ev",
+     "label": {
+      "en": "Employee involvement",
+      "kn": "ನೌಕರರ ಪಾಲ್ಗೊಳ್ಳುವಿಕೆ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "vars": [
+    {
+     "name": "ei",
+     "expr": "tm*(cd + cm + ev)/3*0.6 + (cd + cm + ev)*1.33"
+    },
+    {
+     "name": "b0",
+     "expr": "ei"
+    },
+    {
+     "name": "b1",
+     "expr": "20 + 0.75*ei"
+    },
+    {
+     "name": "b2",
+     "expr": "100 - 0.85*ei"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Index 0 to 100",
+      "kn": "ಸೂಚ್ಯಂಕ 0–100"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 9.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b0/100, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 15.0,
+     "y": "14.5 + clamp(b0/100, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 15.0,
+     "y": 8,
+     "text": {
+      "en": "Ethics index",
+      "kn": "ನೀತಿ ಸೂಚ್ಯಂಕ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 27.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b1/100, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": "14.5 + clamp(b1/100, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 8,
+     "text": {
+      "en": "Customer trust",
+      "kn": "ಗ್ರಾಹಕ ವಿಶ್ವಾಸ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 45.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b2/100, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 51.0,
+     "y": "14.5 + clamp(b2/100, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 51.0,
+     "y": 8,
+     "text": {
+      "en": "Misconduct cases",
+      "kn": "ದುರ್ನಡತೆ ಪ್ರಕರಣ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Without the top, codes stay on paper",
+      "kn": "ಮೇಲಿನವರಿಲ್ಲದೆ ಸಂಹಿತೆ ಕಾಗದದಲ್ಲೇ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "tm < 3"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Growing",
+      "kn": "ಬೆಳೆಯುತ್ತಿದೆ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "tm >= 3 && ei < 60"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Strong ethical culture",
+      "kn": "ಬಲವಾದ ನೈತಿಕ ಸಂಸ್ಕೃತಿ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "tm >= 3 && ei >= 60"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Ethics index",
+      "kn": "ನೀತಿ ಸೂಚ್ಯಂಕ"
+     },
+     "expr": "ei",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set the code to 10 but top commitment to 0. What happens?",
+     "kn": "ಸಂಹಿತೆ 10, ಬದ್ಧತೆ 0 ಮಾಡಿ. ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Why is top management's commitment multiplied, not added?",
+     "kn": "ಬದ್ಧತೆಯನ್ನು ಗುಣಿಸಲಾಗಿದೆ, ಸೇರಿಸಿಲ್ಲ ಏಕೆ?"
+    },
+    {
+     "en": "Give one way to measure results of an ethics programme.",
+     "kn": "ನೀತಿ ಕಾರ್ಯಕ್ರಮದ ಫಲಿತಾಂಶ ಅಳೆಯುವ ಒಂದು ದಾರಿ ಹೇಳಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "The elements of business ethics work together: top management's commitment, a published code, compliance mechanisms and involving employees. Set each and watch trust rise and misconduct fall.",
+    "kn": "ವ್ಯವಹಾರ ನೀತಿಶಾಸ್ತ್ರದ ಅಂಶಗಳು ಒಟ್ಟಾಗಿ ಕೆಲಸ ಮಾಡುತ್ತವೆ: ಉನ್ನತ ಆಡಳಿತದ ಬದ್ಧತೆ, ಪ್ರಕಟಿತ ಸಂಹಿತೆ, ಅನುಸರಣಾ ವ್ಯವಸ್ಥೆ, ನೌಕರರ ಪಾಲ್ಗೊಳ್ಳುವಿಕೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

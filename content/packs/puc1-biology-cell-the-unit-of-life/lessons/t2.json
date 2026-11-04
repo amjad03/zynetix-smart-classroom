@@ -61,6 +61,230 @@
    }
   },
   {
+   "id": "scene-sa-volume",
+   "type": "interactive",
+   "title": {
+    "en": "Why bacteria are small",
+    "kn": "ಬ್ಯಾಕ್ಟೀರಿಯಾ ಏಕೆ ಚಿಕ್ಕವು"
+   },
+   "narration": {
+    "en": "A cell takes in food and oxygen through its surface but uses them in its whole volume. As the cell gets bigger, volume grows faster than surface, so the surface-to-volume ratio (6/d for a sphere) falls, and diffusion takes longer to reach the centre (time grows as the square of the radius). Prokaryotes (about 1 to 2 µm) have no internal membranes to help, so they stay small.",
+    "kn": "ಕೋಶ ಆಹಾರ ಮತ್ತು ಆಮ್ಲಜನಕವನ್ನು ಮೇಲ್ಮೈ ಮೂಲಕ ತೆಗೆದುಕೊಂಡು ಇಡೀ ಘನಫಲದಲ್ಲಿ ಬಳಸುತ್ತದೆ. ಕೋಶ ದೊಡ್ಡದಾದಂತೆ ಘನಫಲ ಮೇಲ್ಮೈಗಿಂತ ವೇಗವಾಗಿ ಬೆಳೆದು ಮೇಲ್ಮೈ-ಘನಫಲ ಅನುಪಾತ (ಗೋಳಕ್ಕೆ 6/d) ಇಳಿಯುತ್ತದೆ, ಮತ್ತು ಕೇಂದ್ರ ತಲುಪಲು ವಿಸರಣೆಗೆ ಹೆಚ್ಚು ಸಮಯ ಬೇಕು. ಆದಿಕೋಶಗಳು (ಸುಮಾರು 1-2 µm) ಚಿಕ್ಕದಾಗಿಯೇ ಉಳಿಯುತ್ತವೆ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "A cell takes in food and oxygen through its surface but uses them in its whole volume. As the cell gets bigger, volume grows faster than surface, so the surface-to-volume ratio (6/d for a sphere) falls, and diffusion takes longer to reach the centre (time grows as the square of the radius). Prokaryotes (about 1 to 2 µm) have no internal membranes to help, so they stay small.",
+    "kn": "ಕೋಶ ಆಹಾರ ಮತ್ತು ಆಮ್ಲಜನಕವನ್ನು ಮೇಲ್ಮೈ ಮೂಲಕ ತೆಗೆದುಕೊಂಡು ಇಡೀ ಘನಫಲದಲ್ಲಿ ಬಳಸುತ್ತದೆ. ಕೋಶ ದೊಡ್ಡದಾದಂತೆ ಘನಫಲ ಮೇಲ್ಮೈಗಿಂತ ವೇಗವಾಗಿ ಬೆಳೆದು ಮೇಲ್ಮೈ-ಘನಫಲ ಅನುಪಾತ (ಗೋಳಕ್ಕೆ 6/d) ಇಳಿಯುತ್ತದೆ, ಮತ್ತು ಕೇಂದ್ರ ತಲುಪಲು ವಿಸರಣೆಗೆ ಹೆಚ್ಚು ಸಮಯ ಬೇಕು. ಆದಿಕೋಶಗಳು (ಸುಮಾರು 1-2 µm) ಚಿಕ್ಕದಾಗಿಯೇ ಉಳಿಯುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "d",
+     "label": {
+      "en": "Cell diameter",
+      "kn": "ಕೋಶದ ವ್ಯಾಸ"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 0.5,
+     "value": 2,
+     "unit": "µm"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cmp",
+     "label": {
+      "en": "Compare with a typical bacterium (2 µm)",
+      "kn": "ಸಾಮಾನ್ಯ ಬ್ಯಾಕ್ಟೀರಿಯಂ (2 µm) ಜೊತೆ ಹೋಲಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 20,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "rr",
+     "expr": "1.2*d"
+    },
+    {
+     "name": "sv",
+     "expr": "6/d"
+    },
+    {
+     "name": "td",
+     "expr": "(d/2)^2"
+    },
+    {
+     "name": "ph",
+     "expr": "mod(t/(1.5 + 0.12*td), 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 30,
+     "y": 30,
+     "r": "rr",
+     "color": "green",
+     "opacity": 0.3
+    },
+    {
+     "shape": "circle",
+     "x": 30,
+     "y": 30,
+     "r": "rr",
+     "fill": false,
+     "width": 4,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": 30,
+     "y": 30,
+     "r": 2.4,
+     "fill": false,
+     "width": 3,
+     "color": "yellow",
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "particles",
+     "count": 24,
+     "x": "30 + (rr + 4)*(1 - ph)*cos(2*pi*i/24)",
+     "y": "30 + (rr + 4)*(1 - ph)*sin(2*pi*i/24)",
+     "r": 0.6,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 64,
+     "y1": 8,
+     "x2": 96,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 64,
+     "y1": 8,
+     "x2": 64,
+     "y2": 54,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 68,
+     "y": 8,
+     "w": 10,
+     "h": "min(sv, 6)*7.5",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 82,
+     "y": 8,
+     "w": 10,
+     "h": "min(td, 100)*0.45",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 73,
+     "y": 4.5,
+     "size": 22,
+     "text": {
+      "en": "SA:V"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 87,
+     "y": 4.5,
+     "size": 18,
+     "text": {
+      "en": "Time to centre",
+      "kn": "ಕೇಂದ್ರ ತಲುಪುವ ಸಮಯ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 3,
+     "size": 20,
+     "text": {
+      "en": "Blue: food and oxygen diffusing in",
+      "kn": "ನೀಲಿ: ಒಳಗೆ ವಿಸರಣೆಯಾಗುವ ಆಹಾರ, ಆಮ್ಲಜನಕ"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Surface : volume",
+      "kn": "ಮೇಲ್ಮೈ : ಘನಫಲ"
+     },
+     "expr": "sv",
+     "digits": 2,
+     "unit": "per µm"
+    },
+    {
+     "label": {
+      "en": "Surface area",
+      "kn": "ಮೇಲ್ಮೈ ವಿಸ್ತೀರ್ಣ"
+     },
+     "expr": "pi*d^2",
+     "digits": 1,
+     "unit": "µm²"
+    },
+    {
+     "label": {
+      "en": "Volume",
+      "kn": "ಘನಫಲ"
+     },
+     "expr": "pi*d^3/6",
+     "digits": 1,
+     "unit": "µm³"
+    },
+    {
+     "label": {
+      "en": "Time to reach centre (relative)",
+      "kn": "ಕೇಂದ್ರ ತಲುಪುವ ಸಮಯ (ಸಾಪೇಕ್ಷ)"
+     },
+     "expr": "td/((2/2)^2)",
+     "digits": 0,
+     "unit": "×"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make the cell 10 times wider than a bacterium. How many times longer does food take to reach the centre?",
+     "kn": "ಕೋಶವನ್ನು ಬ್ಯಾಕ್ಟೀರಿಯಂಗಿಂತ 10 ಪಟ್ಟು ಅಗಲ ಮಾಡಿ. ಆಹಾರ ಕೇಂದ್ರ ತಲುಪಲು ಎಷ್ಟು ಪಟ್ಟು ಹೆಚ್ಚು ಸಮಯ?"
+    },
+    {
+     "en": "How do mesosomes (infoldings of the membrane) help a bacterium?",
+     "kn": "ಮೀಸೋಸೋಮ್‌ಗಳು (ಪೊರೆಯ ಒಳಮಡಿಕೆಗಳು) ಬ್ಯಾಕ್ಟೀರಿಯಂಗೆ ಹೇಗೆ ಸಹಾಯ ಮಾಡುತ್ತವೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

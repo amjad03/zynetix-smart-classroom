@@ -49,6 +49,237 @@
    }
   },
   {
+   "id": "scene-realisation",
+   "type": "interactive",
+   "title": {
+    "en": "Realisation on dissolution",
+    "kn": "ವಿಸರ್ಜನೆಯಲ್ಲಿ ವಸೂಲಾತಿ"
+   },
+   "narration": {
+    "en": "When a firm is dissolved its assets are sold. Realisation profit or loss = amount realised − book value − realisation expenses. Partners A and B share it 3 : 2. Assets fetch 90% of book value. Who bears the loss, and how much each? What realisation % gives neither profit nor loss?",
+    "kn": "ಸಂಸ್ಥೆ ವಿಸರ್ಜನೆಯಾದಾಗ ಆಸ್ತಿಗಳನ್ನು ಮಾರಲಾಗುತ್ತದೆ. ವಸೂಲಾತಿ ಲಾಭ ಅಥವಾ ನಷ್ಟ = ವಸೂಲಾದ ಮೊತ್ತ − ಪುಸ್ತಕ ಮೌಲ್ಯ − ವಸೂಲಾತಿ ವೆಚ್ಚ. ಪಾಲುದಾರರು A ಮತ್ತು B ಅದನ್ನು 3 : 2ರಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳುತ್ತಾರೆ. ಆಸ್ತಿಗಳು ಪುಸ್ತಕ ಮೌಲ್ಯದ 90% ತರುತ್ತವೆ. ನಷ್ಟ ಯಾರಿಗೆ, ಎಷ್ಟು? ಯಾವ ವಸೂಲಾತಿ %ಗೆ ಲಾಭವೂ ನಷ್ಟವೂ ಇಲ್ಲ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "When a firm is dissolved its assets are sold. Realisation profit or loss = amount realised − book value − realisation expenses. Partners A and B share it 3 : 2.",
+    "kn": "ಸಂಸ್ಥೆ ವಿಸರ್ಜನೆಯಾದಾಗ ಆಸ್ತಿಗಳನ್ನು ಮಾರಲಾಗುತ್ತದೆ. ವಸೂಲಾತಿ ಲಾಭ ಅಥವಾ ನಷ್ಟ = ವಸೂಲಾದ ಮೊತ್ತ − ಪುಸ್ತಕ ಮೌಲ್ಯ − ವಸೂಲಾತಿ ವೆಚ್ಚ. ಪಾಲುದಾರರು A ಮತ್ತು B ಅದನ್ನು 3 : 2ರಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳುತ್ತಾರೆ."
+   },
+   "sliders": [
+    {
+     "name": "BV",
+     "label": {
+      "en": "Book value of assets (₹ thousand)",
+      "kn": "ಆಸ್ತಿಗಳ ಪುಸ್ತಕ ಮೌಲ್ಯ (₹ ಸಾವಿರ)"
+     },
+     "min": 100,
+     "max": 500,
+     "step": 10,
+     "value": 300
+    },
+    {
+     "name": "rp",
+     "label": {
+      "en": "Realised as % of book value",
+      "kn": "ಪುಸ್ತಕ ಮೌಲ್ಯದ % ವಸೂಲಾತಿ"
+     },
+     "min": 50,
+     "max": 130,
+     "step": 2,
+     "value": 90,
+     "unit": "%"
+    },
+    {
+     "name": "ex",
+     "label": {
+      "en": "Realisation expenses (₹ thousand)",
+      "kn": "ವಸೂಲಾತಿ ವೆಚ್ಚ (₹ ಸಾವಿರ)"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 10
+    }
+   ],
+   "vars": [
+    {
+     "name": "rl",
+     "expr": "BV*rp/100"
+    },
+    {
+     "name": "pl",
+     "expr": "rl - BV - ex"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     13.6
+    ],
+    "y": [
+     -280,
+     720
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": "min(0, BV)",
+     "w": 2.0,
+     "h": "max(abs(BV), 2)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "if(BV >= 0, BV + 35, BV - 35)",
+     "text": {
+      "en": "₹{BV:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "if(BV >= 0, -35, 35)",
+     "text": {
+      "en": "Book value",
+      "kn": "ಪುಸ್ತಕ ಮೌಲ್ಯ"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": "min(0, rl)",
+     "w": 2.0,
+     "h": "max(abs(rl), 2)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "if(rl >= 0, rl + 35, rl - 35)",
+     "text": {
+      "en": "₹{rl:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "if(rl >= 0, -35, 35)",
+     "text": {
+      "en": "Realised",
+      "kn": "ವಸೂಲಾದದ್ದು"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": "min(0, ex)",
+     "w": 2.0,
+     "h": "max(abs(ex), 2)",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "if(ex >= 0, ex + 35, ex - 35)",
+     "text": {
+      "en": "₹{ex:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "if(ex >= 0, -35, 35)",
+     "text": {
+      "en": "Expenses",
+      "kn": "ವೆಚ್ಚ"
+     },
+     "size": 20,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": "min(0, pl)",
+     "w": 2.0,
+     "h": "max(abs(pl), 2)",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "if(pl >= 0, pl + 35, pl - 35)",
+     "text": {
+      "en": "₹{pl:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "if(pl >= 0, -35, 35)",
+     "text": {
+      "en": "Profit or loss",
+      "kn": "ಲಾಭ ಅಥವಾ ನಷ್ಟ"
+     },
+     "size": 20,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Realisation profit (+) or loss (−)",
+      "kn": "ವಸೂಲಾತಿ ಲಾಭ (+) ಅಥವಾ ನಷ್ಟ (−)"
+     },
+     "expr": "pl",
+     "digits": 1,
+     "unit": "₹ thousand"
+    },
+    {
+     "label": {
+      "en": "A's share (3/5)",
+      "kn": "A ಪಾಲು (3/5)"
+     },
+     "expr": "pl*0.6",
+     "digits": 1,
+     "unit": "₹ thousand"
+    },
+    {
+     "label": {
+      "en": "B's share (2/5)",
+      "kn": "B ಪಾಲು (2/5)"
+     },
+     "expr": "pl*0.4",
+     "digits": 1,
+     "unit": "₹ thousand"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Assets fetch 90% of book value. Who bears the loss, and how much each?",
+     "kn": "ಆಸ್ತಿಗಳು ಪುಸ್ತಕ ಮೌಲ್ಯದ 90% ತರುತ್ತವೆ. ನಷ್ಟ ಯಾರಿಗೆ, ಎಷ್ಟು?"
+    },
+    {
+     "en": "What realisation % gives neither profit nor loss?",
+     "kn": "ಯಾವ ವಸೂಲಾತಿ %ಗೆ ಲಾಭವೂ ನಷ್ಟವೂ ಇಲ್ಲ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

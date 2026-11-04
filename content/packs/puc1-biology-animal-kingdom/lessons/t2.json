@@ -62,6 +62,242 @@
    }
   },
   {
+   "id": "scene-sponge-canal",
+   "type": "interactive",
+   "title": {
+    "en": "Water through a sponge",
+    "kn": "ಸ್ಪಂಜಿನ ಮೂಲಕ ನೀರು"
+   },
+   "narration": {
+    "en": "Collar cells (choanocytes) beat their flagella and draw water in through the tiny ostia, into the central spongocoel and out through the osculum. The water brings food and oxygen and carries away wastes; the collar cells trap food particles. Faster beating moves the water through faster.",
+    "kn": "ಕಾಲರ್ ಕೋಶಗಳು (ಕೋಆನೋಸೈಟ್‌ಗಳು) ಕಶಾಂಗ ಬಡಿದು ಸಣ್ಣ ಆಸ್ಟಿಯಾ ಮೂಲಕ ನೀರನ್ನು ಸ್ಪಂಜೋಸೀಲ್‌ಗೆ ಎಳೆದು ಆಸ್ಕ್ಯುಲಮ್ ಮೂಲಕ ಹೊರಹಾಕುತ್ತವೆ. ನೀರು ಆಹಾರ ಮತ್ತು ಆಮ್ಲಜನಕ ತಂದು ತ್ಯಾಜ್ಯ ಒಯ್ಯುತ್ತದೆ; ಕಾಲರ್ ಕೋಶಗಳು ಆಹಾರ ಕಣಗಳನ್ನು ಹಿಡಿಯುತ್ತವೆ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Collar cells (choanocytes) beat their flagella and draw water in through the tiny ostia, into the central spongocoel and out through the osculum. The water brings food and oxygen and carries away wastes; the collar cells trap food particles. Faster beating moves the water through faster.",
+    "kn": "ಕಾಲರ್ ಕೋಶಗಳು (ಕೋಆನೋಸೈಟ್‌ಗಳು) ಕಶಾಂಗ ಬಡಿದು ಸಣ್ಣ ಆಸ್ಟಿಯಾ ಮೂಲಕ ನೀರನ್ನು ಸ್ಪಂಜೋಸೀಲ್‌ಗೆ ಎಳೆದು ಆಸ್ಕ್ಯುಲಮ್ ಮೂಲಕ ಹೊರಹಾಕುತ್ತವೆ. ನೀರು ಆಹಾರ ಮತ್ತು ಆಮ್ಲಜನಕ ತಂದು ತ್ಯಾಜ್ಯ ಒಯ್ಯುತ್ತದೆ; ಕಾಲರ್ ಕೋಶಗಳು ಆಹಾರ ಕಣಗಳನ್ನು ಹಿಡಿಯುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "s",
+     "label": {
+      "en": "Flagella beat rate",
+      "kn": "ಕಶಾಂಗ ಬಡಿತದ ದರ"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "flow",
+     "label": {
+      "en": "Water current",
+      "kn": "ನೀರಿನ ಪ್ರವಾಹ"
+     },
+     "value": true
+    },
+    {
+     "name": "food",
+     "label": {
+      "en": "Food caught by collar cells",
+      "kn": "ಕಾಲರ್ ಕೋಶ ಹಿಡಿದ ಆಹಾರ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       30,
+       6
+      ],
+      [
+       70,
+       6
+      ],
+      [
+       74,
+       38
+      ],
+      [
+       64,
+       54
+      ],
+      [
+       36,
+       54
+      ],
+      [
+       26,
+       38
+      ]
+     ],
+     "color": "green",
+     "opacity": 0.35
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       41,
+       10
+      ],
+      [
+       59,
+       10
+      ],
+      [
+       62,
+       38
+      ],
+      [
+       56,
+       54
+      ],
+      [
+       44,
+       54
+      ],
+      [
+       38,
+       38
+      ]
+     ],
+     "fill": false,
+     "width": 4,
+     "color": "orange"
+    },
+    {
+     "shape": "particles",
+     "count": 12,
+     "x": "if(i < 6, 27.5 + 0.4*i, 72.5 - 0.4*(i - 6))",
+     "y": "12 + 5*mod(i, 6)",
+     "r": 0.9,
+     "color": "white"
+    },
+    {
+     "shape": "particles",
+     "count": 50,
+     "x": "if(mod(0.03*s*t + rand(i), 1) < 0.5, if(rand(i + 3) < 0.5, 28, 72) + (50 - if(rand(i + 3) < 0.5, 28, 72))*2*mod(0.03*s*t + rand(i), 1), 50 + 6*(rand(i + 9) - 0.5))",
+     "y": "if(mod(0.03*s*t + rand(i), 1) < 0.5, 13 + 26*rand(i + 5), 13 + 26*rand(i + 5) + (59 - 13 - 26*rand(i + 5))*2*(mod(0.03*s*t + rand(i), 1) - 0.5))",
+     "r": 0.55,
+     "color": "blue",
+     "visibleIf": "flow"
+    },
+    {
+     "shape": "particles",
+     "count": 24,
+     "x": "if(i < 12, 40.5 + 0.12*mod(i, 12), 59.5 - 0.12*mod(i, 12)) + 0.4*sin(3*t + i)",
+     "y": "13 + 2.2*mod(i, 12)",
+     "r": 0.7,
+     "color": "orange",
+     "visibleIf": "food"
+    },
+    {
+     "shape": "arrow",
+     "x": 50,
+     "y": 54,
+     "dx": 0,
+     "dy": 5,
+     "color": "yellow",
+     "width": 4,
+     "label": "osculum"
+    },
+    {
+     "shape": "arrow",
+     "x": 18,
+     "y": 26,
+     "dx": 8,
+     "dy": 0,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "arrow",
+     "x": 82,
+     "y": 26,
+     "dx": -8,
+     "dy": 0,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 29,
+     "size": 20,
+     "text": {
+      "en": "Ostia: water in",
+      "kn": "ಆಸ್ಟಿಯಾ: ನೀರು ಒಳಗೆ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 30,
+     "size": 22,
+     "text": {
+      "en": "Spongocoel",
+      "kn": "ಸ್ಪಂಜೋಸೀಲ್"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 86,
+     "y": 40,
+     "size": 20,
+     "text": {
+      "en": "Collar cells line the cavity",
+      "kn": "ಕಾಲರ್ ಕೋಶಗಳು ಕುಹರ ಆವರಿಸಿವೆ"
+     },
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Time for water to pass",
+      "kn": "ನೀರು ಹಾದುಹೋಗುವ ಸಮಯ"
+     },
+     "expr": "1/(0.03*s)",
+     "digits": 0,
+     "unit": "s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double the beat rate: what happens to the time for water to pass?",
+     "kn": "ಬಡಿತದ ದರ ದ್ವಿಗುಣಗೊಳಿಸಿ: ನೀರು ಹಾದುಹೋಗುವ ಸಮಯಕ್ಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Water enters through many ostia but leaves through one osculum. Why does it leave faster?",
+     "kn": "ನೀರು ಅನೇಕ ಆಸ್ಟಿಯಾ ಮೂಲಕ ಒಳಬಂದು ಒಂದೇ ಆಸ್ಕ್ಯುಲಮ್ ಮೂಲಕ ಹೊರಹೋಗುತ್ತದೆ. ಅದು ಏಕೆ ವೇಗವಾಗಿ ಹೊರಹೋಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

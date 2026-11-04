@@ -59,6 +59,197 @@
    }
   },
   {
+   "id": "scene-euglena",
+   "type": "interactive",
+   "title": {
+    "en": "Euglena: plant by day, animal in the dark",
+    "kn": "ಯುಗ್ಲೀನಾ: ಬೆಳಕಿನಲ್ಲಿ ಸಸ್ಯ, ಕತ್ತಲಲ್ಲಿ ಪ್ರಾಣಿ"
+   },
+   "narration": {
+    "en": "Drag the lamp. Euglena is a photosynthetic protist with a flexible pellicle and an eyespot: in light it swims towards the lamp and makes its own food. Switch the light off and it behaves like a heterotroph, feeding on organic matter and wandering at random.",
+    "kn": "ದೀಪವನ್ನು ಎಳೆಯಿರಿ. ಯುಗ್ಲೀನಾ ಹೊಂದಿಕೊಳ್ಳುವ ಪೆಲಿಕಲ್ ಮತ್ತು ಕಣ್ಣುಚುಕ್ಕೆ ಇರುವ ದ್ಯುತಿಸಂಶ್ಲೇಷಕ ಪ್ರೊಟಿಸ್ಟ್: ಬೆಳಕಿನಲ್ಲಿ ದೀಪದತ್ತ ಈಜಿ ತನ್ನ ಆಹಾರ ತಯಾರಿಸುತ್ತದೆ. ದೀಪ ಆರಿಸಿದರೆ ಪರಪೋಷಕದಂತೆ ಸಾವಯವ ವಸ್ತು ತಿನ್ನುತ್ತಾ ಯಾದೃಚ್ಛಿಕವಾಗಿ ಅಲೆಯುತ್ತದೆ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the lamp. Euglena is a photosynthetic protist with a flexible pellicle and an eyespot: in light it swims towards the lamp and makes its own food. Switch the light off and it behaves like a heterotroph, feeding on organic matter and wandering at random.",
+    "kn": "ದೀಪವನ್ನು ಎಳೆಯಿರಿ. ಯುಗ್ಲೀನಾ ಹೊಂದಿಕೊಳ್ಳುವ ಪೆಲಿಕಲ್ ಮತ್ತು ಕಣ್ಣುಚುಕ್ಕೆ ಇರುವ ದ್ಯುತಿಸಂಶ್ಲೇಷಕ ಪ್ರೊಟಿಸ್ಟ್: ಬೆಳಕಿನಲ್ಲಿ ದೀಪದತ್ತ ಈಜಿ ತನ್ನ ಆಹಾರ ತಯಾರಿಸುತ್ತದೆ. ದೀಪ ಆರಿಸಿದರೆ ಪರಪೋಷಕದಂತೆ ಸಾವಯವ ವಸ್ತು ತಿನ್ನುತ್ತಾ ಯಾದೃಚ್ಛಿಕವಾಗಿ ಅಲೆಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "s",
+     "label": {
+      "en": "Swimming speed",
+      "kn": "ಈಜುವ ವೇಗ"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "toggles": [
+    {
+     "name": "on",
+     "label": {
+      "en": "Light on",
+      "kn": "ಬೆಳಕು ಆನ್"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "Lp",
+     "label": "lamp",
+     "x": 80,
+     "y": 50,
+     "box": {
+      "x": [
+       8,
+       92
+      ],
+      "y": [
+       40,
+       54
+      ]
+     },
+     "color": "yellow"
+    }
+   ],
+   "time": {
+    "max": 40,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "pull",
+     "expr": "if(on, 1 - exp(-0.06*s*t), 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 4,
+     "y": 4,
+     "w": 92,
+     "h": 32,
+     "fill": false,
+     "width": 3,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 4,
+     "y": 4,
+     "w": 92,
+     "h": 32,
+     "color": "blue",
+     "opacity": 0.12
+    },
+    {
+     "shape": "icon",
+     "icon": "bulb",
+     "x": "Lp_x",
+     "y": "Lp_y",
+     "size": 6,
+     "on": "on"
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "bounce(8 + 84*rand(i) + (Lp_x - 8 - 84*rand(i))*pull + 2*sin(1.3*t + 7*i), 6, 94)",
+     "y": "bounce(8 + 26*rand(i + 50) + (32 - 8 - 26*rand(i + 50))*pull + 1.5*cos(1.1*t + 3*i), 6, 34)",
+     "r": 0.9,
+     "color": "green",
+     "visibleIf": "on"
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "bounce(8 + 84*rand(i) + 0.6*s*t*cos(2*pi*rand(i + 300)), 6, 94)",
+     "y": "bounce(8 + 26*rand(i + 50) + 0.6*s*t*sin(2*pi*rand(i + 300)), 6, 34)",
+     "r": 0.9,
+     "color": "white",
+     "opacity": 0.7,
+     "visibleIf": "!on"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 58,
+     "size": 22,
+     "text": {
+      "en": "Light: chloroplasts make food (autotroph)",
+      "kn": "ಬೆಳಕು: ಹರಿತ್ತಿಲವು ಆಹಾರ ತಯಾರಿಸುತ್ತದೆ (ಸ್ವಪೋಷಕ)"
+     },
+     "visibleIf": "on",
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 58,
+     "size": 22,
+     "text": {
+      "en": "Dark: takes in organic food (heterotroph)",
+      "kn": "ಕತ್ತಲು: ಸಾವಯವ ಆಹಾರ ಸೇವನೆ (ಪರಪೋಷಕ)"
+     },
+     "visibleIf": "!on",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 1.5,
+     "size": 20,
+     "text": {
+      "en": "Pond water",
+      "kn": "ಕೊಳದ ನೀರು"
+     },
+     "opacity": 0.7
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Gathered near the lamp",
+      "kn": "ದೀಪದ ಬಳಿ ಸೇರಿದವು"
+     },
+     "expr": "100*pull",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Move the lamp to the left side. What steers Euglena towards it?",
+     "kn": "ದೀಪವನ್ನು ಎಡಕ್ಕೆ ಸರಿಸಿ. ಯುಗ್ಲೀನಾವನ್ನು ಅದರತ್ತ ಯಾವುದು ತಿರುಗಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Why did the two-kingdom system find Euglena hard to place?",
+     "kn": "ಎರಡು ಸಾಮ್ರಾಜ್ಯ ವ್ಯವಸ್ಥೆಗೆ ಯುಗ್ಲೀನಾವನ್ನು ಇರಿಸುವುದು ಏಕೆ ಕಷ್ಟವಾಯಿತು?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

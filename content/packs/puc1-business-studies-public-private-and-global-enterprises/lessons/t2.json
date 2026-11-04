@@ -61,6 +61,293 @@
    }
   },
   {
+   "id": "scene-public-forms",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Three forms of public enterprise",
+    "kn": "ಸಾರ್ವಜನಿಕ ಉದ್ಯಮದ ಮೂರು ಸ್ವರೂಪಗಳು"
+   },
+   "caption": {
+    "en": "Compare a departmental undertaking, a statutory corporation and a government company on autonomy, flexibility, government control and accountability to Parliament. For a government company set the government's shareholding.",
+    "kn": "ಇಲಾಖಾ ಉದ್ಯಮ, ಶಾಸನಬದ್ಧ ನಿಗಮ ಮತ್ತು ಸರ್ಕಾರಿ ಕಂಪನಿಯನ್ನು ಸ್ವಾಯತ್ತತೆ, ನಮ್ಯತೆ, ನಿಯಂತ್ರಣ, ಸಂಸತ್ತಿಗೆ ಉತ್ತರದಾಯಿತ್ವದಲ್ಲಿ ಹೋಲಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "gs",
+     "label": {
+      "en": "Govt shareholding (company)",
+      "kn": "ಸರ್ಕಾರಿ ಷೇರು (ಕಂಪನಿ)"
+     },
+     "min": 51,
+     "max": 100,
+     "step": 1,
+     "value": 74,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "fm",
+     "label": {
+      "en": "Form",
+      "kn": "ಸ್ವರೂಪ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Departmental undertaking",
+        "kn": "ಇಲಾಖಾ ಉದ್ಯಮ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Statutory corporation",
+        "kn": "ಶಾಸನಬದ್ಧ ನಿಗಮ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Government company",
+        "kn": "ಸರ್ಕಾರಿ ಕಂಪನಿ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "if(fm == 1, 1, if(fm == 2, 6, 4 + (100 - gs)/8))"
+    },
+    {
+     "name": "b1",
+     "expr": "if(fm == 1, 1, if(fm == 2, 5, 8))"
+    },
+    {
+     "name": "b2",
+     "expr": "if(fm == 1, 10, if(fm == 2, 6, gs/10))"
+    },
+    {
+     "name": "b3",
+     "expr": "if(fm == 1, 10, if(fm == 2, 8, 4))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Score 0 to 10",
+      "kn": "ಅಂಕ 0–10"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/10, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/10, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Autonomy",
+      "kn": "ಸ್ವಾಯತ್ತತೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/10, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/10, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Flexibility",
+      "kn": "ನಮ್ಯತೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/10, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/10, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Govt control",
+      "kn": "ಸರ್ಕಾರಿ ನಿಯಂತ್ರಣ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/10, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/10, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Answerable to Parliament",
+      "kn": "ಸಂಸತ್ತಿಗೆ ಉತ್ತರದಾಯಿ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "e.g. Railways, Post",
+      "kn": "ಉದಾ: ರೈಲ್ವೆ, ಅಂಚೆ"
+     },
+     "size": 22,
+     "color": "blue",
+     "visibleIf": "fm == 1"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "e.g. LIC, RBI: by a special Act",
+      "kn": "ಉದಾ: LIC, RBI: ವಿಶೇಷ ಕಾಯ್ದೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "fm == 2"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "e.g. BHEL: under Companies Act",
+      "kn": "ಉದಾ: BHEL: ಕಂಪನಿ ಕಾಯ್ದೆ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "fm == 3"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Autonomy score",
+      "kn": "ಸ್ವಾಯತ್ತತೆ ಅಂಕ"
+     },
+     "expr": "b0",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Which form is financed from the government budget?",
+     "kn": "ಯಾವ ಸ್ವರೂಪಕ್ಕೆ ಸರ್ಕಾರಿ ಬಜೆಟ್ ಹಣ?"
+    },
+    {
+     "en": "Why is a government company the most flexible?",
+     "kn": "ಸರ್ಕಾರಿ ಕಂಪನಿ ಹೆಚ್ಚು ನಮ್ಯ ಏಕೆ?"
+    },
+    {
+     "en": "What minimum share makes it a government company?",
+     "kn": "ಸರ್ಕಾರಿ ಕಂಪನಿಗೆ ಕನಿಷ್ಠ ಪಾಲು ಎಷ್ಟು?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Compare a departmental undertaking, a statutory corporation and a government company on autonomy, flexibility, government control and accountability to Parliament. For a government company set the government's shareholding.",
+    "kn": "ಇಲಾಖಾ ಉದ್ಯಮ, ಶಾಸನಬದ್ಧ ನಿಗಮ ಮತ್ತು ಸರ್ಕಾರಿ ಕಂಪನಿಯನ್ನು ಸ್ವಾಯತ್ತತೆ, ನಮ್ಯತೆ, ನಿಯಂತ್ರಣ, ಸಂಸತ್ತಿಗೆ ಉತ್ತರದಾಯಿತ್ವದಲ್ಲಿ ಹೋಲಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -56,6 +56,209 @@
    }
   },
   {
+   "id": "scene-comparability",
+   "type": "interactive",
+   "title": {
+    "en": "Comparability: same method every year",
+    "kn": "ಹೋಲಿಕೆ ಸಾಧ್ಯತೆ: ಪ್ರತಿ ವರ್ಷ ಅದೇ ವಿಧಾನ"
+   },
+   "narration": {
+    "en": "Information is comparable only when it is prepared the same way each year. Switching the depreciation method in year 2 adds a paper profit, so the reported growth is not the real growth. Set real growth to 0% and switch the method. What growth is reported? Can a fall in profit look like a rise? Try a negative growth.",
+    "kn": "ಪ್ರತಿ ವರ್ಷ ಒಂದೇ ರೀತಿ ತಯಾರಿಸಿದಾಗ ಮಾತ್ರ ಮಾಹಿತಿ ಹೋಲಿಕೆಗೆ ಯೋಗ್ಯ. ವರ್ಷ 2ರಲ್ಲಿ ಸವಕಳಿ ವಿಧಾನ ಬದಲಿಸಿದರೆ ಕಾಗದದ ಲಾಭ ಸೇರುತ್ತದೆ; ವರದಿಯ ಬೆಳವಣಿಗೆ ನಿಜವಾದ ಬೆಳವಣಿಗೆಯಲ್ಲ. ನಿಜ ಬೆಳವಣಿಗೆ 0% ಮಾಡಿ ವಿಧಾನ ಬದಲಿಸಿ. ಎಷ್ಟು ಬೆಳವಣಿಗೆ ವರದಿಯಾಗುತ್ತದೆ? ಲಾಭದ ಇಳಿಕೆ ಏರಿಕೆಯಂತೆ ಕಾಣಬಹುದೇ? ಋಣಾತ್ಮಕ ಬೆಳವಣಿಗೆ ಪ್ರಯತ್ನಿಸಿ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Information is comparable only when it is prepared the same way each year. Switching the depreciation method in year 2 adds a paper profit, so the reported growth is not the real growth.",
+    "kn": "ಪ್ರತಿ ವರ್ಷ ಒಂದೇ ರೀತಿ ತಯಾರಿಸಿದಾಗ ಮಾತ್ರ ಮಾಹಿತಿ ಹೋಲಿಕೆಗೆ ಯೋಗ್ಯ. ವರ್ಷ 2ರಲ್ಲಿ ಸವಕಳಿ ವಿಧಾನ ಬದಲಿಸಿದರೆ ಕಾಗದದ ಲಾಭ ಸೇರುತ್ತದೆ; ವರದಿಯ ಬೆಳವಣಿಗೆ ನಿಜವಾದ ಬೆಳವಣಿಗೆಯಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "P1",
+     "label": {
+      "en": "Year 1 profit (₹ lakh)",
+      "kn": "ವರ್ಷ 1 ಲಾಭ (₹ ಲಕ್ಷ)"
+     },
+     "min": 100,
+     "max": 500,
+     "step": 10,
+     "value": 300
+    },
+    {
+     "name": "g",
+     "label": {
+      "en": "Real growth",
+      "kn": "ನಿಜವಾದ ಬೆಳವಣಿಗೆ"
+     },
+     "min": -20,
+     "max": 30,
+     "step": 1,
+     "value": 5,
+     "unit": "%"
+    },
+    {
+     "name": "D",
+     "label": {
+      "en": "Profit added by the switch (₹ lakh)",
+      "kn": "ಬದಲಾವಣೆಯಿಂದ ಸೇರಿದ ಲಾಭ (₹ ಲಕ್ಷ)"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 60
+    }
+   ],
+   "toggles": [
+    {
+     "name": "chg",
+     "label": {
+      "en": "Change depreciation method in year 2",
+      "kn": "ವರ್ಷ 2ರಲ್ಲಿ ಸವಕಳಿ ವಿಧಾನ ಬದಲಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "tru",
+     "expr": "P1*(1 + g/100)"
+    },
+    {
+     "name": "rep",
+     "expr": "tru + if(chg, D, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10.4
+    ],
+    "y": [
+     -60,
+     800
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(P1 - 0, 1.72)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "max(P1, 0) + 30.1",
+     "text": {
+      "en": "₹{P1:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": -30.1,
+     "text": {
+      "en": "Year 1",
+      "kn": "ವರ್ಷ 1"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(rep - 0, 1.72)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "max(rep, 0) + 30.1",
+     "text": {
+      "en": "₹{rep:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": -30.1,
+     "text": {
+      "en": "Year 2 reported",
+      "kn": "ವರ್ಷ 2 ವರದಿ"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(tru - 0, 1.72)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "max(tru, 0) + 30.1",
+     "text": {
+      "en": "₹{tru:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": -30.1,
+     "text": {
+      "en": "Year 2, same method",
+      "kn": "ವರ್ಷ 2, ಅದೇ ವಿಧಾನ"
+     },
+     "size": 20,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Reported growth",
+      "kn": "ವರದಿಯ ಬೆಳವಣಿಗೆ"
+     },
+     "expr": "(rep/P1 - 1)*100",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Real growth",
+      "kn": "ನಿಜವಾದ ಬೆಳವಣಿಗೆ"
+     },
+     "expr": "g",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set real growth to 0% and switch the method. What growth is reported?",
+     "kn": "ನಿಜ ಬೆಳವಣಿಗೆ 0% ಮಾಡಿ ವಿಧಾನ ಬದಲಿಸಿ. ಎಷ್ಟು ಬೆಳವಣಿಗೆ ವರದಿಯಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Can a fall in profit look like a rise? Try a negative growth.",
+     "kn": "ಲಾಭದ ಇಳಿಕೆ ಏರಿಕೆಯಂತೆ ಕಾಣಬಹುದೇ? ಋಣಾತ್ಮಕ ಬೆಳವಣಿಗೆ ಪ್ರಯತ್ನಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

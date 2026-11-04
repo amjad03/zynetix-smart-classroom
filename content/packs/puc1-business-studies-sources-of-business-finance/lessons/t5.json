@@ -65,6 +65,275 @@
    }
   },
   {
+   "id": "scene-intl-finance",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Raising money abroad",
+    "kn": "ವಿದೇಶದಲ್ಲಿ ಹಣ ಸಂಗ್ರಹ"
+   },
+   "caption": {
+    "en": "Compare raising funds through a domestic loan, an external commercial borrowing (ECB), a foreign currency convertible bond (FCCB) or GDR. Foreign rates are lower, but if the rupee falls the cost in rupees rises.",
+    "kn": "ದೇಶೀಯ ಸಾಲ, ECB, FCCB ಅಥವಾ GDR ಮೂಲಕ ಹಣ ಸಂಗ್ರಹ ಹೋಲಿಸಿ. ವಿದೇಶಿ ಬಡ್ಡಿ ಕಡಿಮೆ, ಆದರೆ ರೂಪಾಯಿ ಕುಸಿದರೆ ರೂಪಾಯಿ ವೆಚ್ಚ ಏರುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "amt",
+     "label": {
+      "en": "Amount needed",
+      "kn": "ಬೇಕಾದ ಮೊತ್ತ"
+     },
+     "min": 50,
+     "max": 300,
+     "step": 10,
+     "value": 100,
+     "unit": "₹ crore"
+    },
+    {
+     "name": "dep",
+     "label": {
+      "en": "Rupee falls by",
+      "kn": "ರೂಪಾಯಿ ಕುಸಿತ"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 4,
+     "unit": "% a year"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cv",
+     "label": {
+      "en": "FCCB holders convert to shares",
+      "kn": "FCCB ಷೇರುಗಳಾಗಿ ಪರಿವರ್ತನೆ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "amt*0.11"
+    },
+    {
+     "name": "b1",
+     "expr": "amt*(0.05 + dep/100)"
+    },
+    {
+     "name": "b2",
+     "expr": "amt*(0.02 + dep/100*if(cv, 0.3, 1))"
+    },
+    {
+     "name": "b3",
+     "expr": "amt*0.04"
+    },
+    {
+     "name": "best",
+     "expr": "min(b0, b1, b2, b3)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Yearly cost in ₹ crore",
+      "kn": "ವಾರ್ಷಿಕ ವೆಚ್ಚ ₹ ಕೋಟಿ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/40, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/40, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Domestic loan",
+      "kn": "ದೇಶೀಯ ಸಾಲ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/40, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/40, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "ECB",
+      "kn": "ECB"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/40, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/40, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "FCCB",
+      "kn": "FCCB"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/40, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/40, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "GDR (dividend)",
+      "kn": "GDR (ಲಾಭಾಂಶ)"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Foreign borrowing is cheaper",
+      "kn": "ವಿದೇಶಿ ಸಾಲ ಅಗ್ಗ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "b1 < b0"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Rupee risk wipes out the gain",
+      "kn": "ರೂಪಾಯಿ ಅಪಾಯ ಲಾಭ ಅಳಿಸುತ್ತದೆ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "b1 >= b0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cheapest yearly cost",
+      "kn": "ಅಗ್ಗದ ವಾರ್ಷಿಕ ವೆಚ್ಚ"
+     },
+     "expr": "best",
+     "digits": 1,
+     "unit": "₹ crore"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At what rupee fall does an ECB cost as much as a domestic loan?",
+     "kn": "ರೂಪಾಯಿ ಎಷ್ಟು ಕುಸಿದರೆ ECB ದೇಶೀಯ ಸಾಲದಷ್ಟೇ?"
+    },
+    {
+     "en": "Why does a GDR not add to debt?",
+     "kn": "GDR ಸಾಲ ಏಕೆ ಹೆಚ್ಚಿಸುವುದಿಲ್ಲ?"
+    },
+    {
+     "en": "Which factors besides cost affect the choice of source?",
+     "kn": "ವೆಚ್ಚ ಹೊರತಾಗಿ ಯಾವ ಅಂಶಗಳು ಆಯ್ಕೆ ಪ್ರಭಾವಿಸುತ್ತವೆ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Compare raising funds through a domestic loan, an external commercial borrowing (ECB), a foreign currency convertible bond (FCCB) or GDR. Foreign rates are lower, but if the rupee falls the cost in rupees rises.",
+    "kn": "ದೇಶೀಯ ಸಾಲ, ECB, FCCB ಅಥವಾ GDR ಮೂಲಕ ಹಣ ಸಂಗ್ರಹ ಹೋಲಿಸಿ. ವಿದೇಶಿ ಬಡ್ಡಿ ಕಡಿಮೆ, ಆದರೆ ರೂಪಾಯಿ ಕುಸಿದರೆ ರೂಪಾಯಿ ವೆಚ್ಚ ಏರುತ್ತದೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

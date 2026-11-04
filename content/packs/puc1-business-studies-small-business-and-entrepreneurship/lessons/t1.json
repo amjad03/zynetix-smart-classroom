@@ -62,6 +62,232 @@
    }
   },
   {
+   "id": "scene-startup-cash",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A start-up's cash journey",
+    "kn": "ಸ್ಟಾರ್ಟ್‌ಅಪ್‌ನ ನಗದು ಪಯಣ"
+   },
+   "caption": {
+    "en": "An entrepreneur invests savings, bears losses in the early months and earns profit if sales grow. Set the investment, monthly costs and growth, then launch the venture and watch the cash line.",
+    "kn": "ಉದ್ಯಮಿ ಉಳಿತಾಯ ಹೂಡಿ, ಆರಂಭಿಕ ತಿಂಗಳಲ್ಲಿ ನಷ್ಟ ಹೊರುತ್ತಾನೆ, ಮಾರಾಟ ಬೆಳೆದರೆ ಲಾಭ. ಹೂಡಿಕೆ, ವೆಚ್ಚ ಮತ್ತು ಬೆಳವಣಿಗೆ ಹೊಂದಿಸಿ ಉದ್ಯಮ ಆರಂಭಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "inv",
+     "label": {
+      "en": "Starting capital",
+      "kn": "ಆರಂಭಿಕ ಬಂಡವಾಳ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 4,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "cost",
+     "label": {
+      "en": "Monthly costs",
+      "kn": "ತಿಂಗಳ ವೆಚ್ಚ"
+     },
+     "min": 0.5,
+     "max": 3,
+     "step": 0.1,
+     "value": 1.5,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "s0",
+     "label": {
+      "en": "First month's sales",
+      "kn": "ಮೊದಲ ತಿಂಗಳ ಮಾರಾಟ"
+     },
+     "min": 0.2,
+     "max": 2,
+     "step": 0.1,
+     "value": 0.5,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "g",
+     "label": {
+      "en": "Sales growth a month",
+      "kn": "ತಿಂಗಳ ಮಾರಾಟ ಬೆಳವಣಿಗೆ"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Launch the venture",
+      "kn": "ಉದ್ಯಮ ಆರಂಭಿಸಿ"
+     },
+     "icon": "launch",
+     "set": {},
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 24,
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2,
+    "unit": "month",
+    "stopWhen": "cash < 0"
+   },
+   "vars": [
+    {
+     "name": "sales",
+     "expr": "s0*(1 + g/100)^t"
+    },
+    {
+     "name": "net",
+     "expr": "sales - cost"
+    }
+   ],
+   "state": [
+    {
+     "name": "cash",
+     "init": "inv",
+     "rate": "net"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     0,
+     24
+    ],
+    "y": [
+     -4,
+     20
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "month",
+    "yLabel": "₹ lakh"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 24,
+     "y2": 0,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "path",
+     "fn": "cost",
+     "dashed": true,
+     "color": "red"
+    },
+    {
+     "shape": "path",
+     "fn": "s0*(1 + g/100)^x",
+     "color": "green"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "cash",
+     "length": 600,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "cash",
+     "r": 0.3,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 12,
+     "y": 18,
+     "text": {
+      "en": "Ran out of cash: the risk an entrepreneur bears",
+      "kn": "ನಗದು ಮುಗಿಯಿತು: ಉದ್ಯಮಿ ಹೊರುವ ಅಪಾಯ"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "cash < 0"
+    },
+    {
+     "shape": "label",
+     "x": 12,
+     "y": 18,
+     "text": {
+      "en": "Cash ₹{cash:1} lakh",
+      "kn": "ನಗದು ₹{cash:1} ಲಕ್ಷ"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "cash >= 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cash in hand",
+      "kn": "ಕೈಯಲ್ಲಿ ನಗದು"
+     },
+     "expr": "cash",
+     "digits": 1,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Profit this month",
+      "kn": "ಈ ತಿಂಗಳ ಲಾಭ"
+     },
+     "expr": "net",
+     "digits": 2,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Month sales pass costs",
+      "kn": "ಮಾರಾಟ ವೆಚ್ಚ ಮೀರುವ ತಿಂಗಳು"
+     },
+     "expr": "if(g > 0 && s0 < cost, ln(cost/s0)/ln(1 + g/100), 0)",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set growth to 5%. Does the venture survive two years?",
+     "kn": "ಬೆಳವಣಿಗೆ 5% ಮಾಡಿ. ಎರಡು ವರ್ಷ ಉಳಿಯುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "How much starting capital is enough at 10% growth?",
+     "kn": "10% ಬೆಳವಣಿಗೆಗೆ ಎಷ್ಟು ಬಂಡವಾಳ ಸಾಕು?"
+    },
+    {
+     "en": "Which features of an entrepreneur does this show?",
+     "kn": "ಇದು ಉದ್ಯಮಿಯ ಯಾವ ಲಕ್ಷಣ ತೋರಿಸುತ್ತದೆ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "An entrepreneur invests savings, bears losses in the early months and earns profit if sales grow. Set the investment, monthly costs and growth, then launch the venture and watch the cash line.",
+    "kn": "ಉದ್ಯಮಿ ಉಳಿತಾಯ ಹೂಡಿ, ಆರಂಭಿಕ ತಿಂಗಳಲ್ಲಿ ನಷ್ಟ ಹೊರುತ್ತಾನೆ, ಮಾರಾಟ ಬೆಳೆದರೆ ಲಾಭ. ಹೂಡಿಕೆ, ವೆಚ್ಚ ಮತ್ತು ಬೆಳವಣಿಗೆ ಹೊಂದಿಸಿ ಉದ್ಯಮ ಆರಂಭಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -62,6 +62,261 @@
    }
   },
   {
+   "id": "scene-cash-equivalents",
+   "type": "interactive",
+   "title": {
+    "en": "What counts as cash?",
+    "kn": "ಯಾವುದು ನಗದು?"
+   },
+   "narration": {
+    "en": "Cash means cash in hand and demand deposits with banks. Cash equivalents are short-term, highly liquid investments with little risk, usually maturing within three months of acquisition. Set the deposit to mature in 2 months, then 6 months. What changes? Why is a 6-month deposit left out?",
+    "kn": "ನಗದು ಎಂದರೆ ಕೈಯಲ್ಲಿನ ನಗದು ಮತ್ತು ಬ್ಯಾಂಕಿನ ಬೇಡಿಕೆ ಠೇವಣಿ. ನಗದು ಸಮಾನಗಳು ಅಲ್ಪಾವಧಿಯ, ಸುಲಭವಾಗಿ ನಗದಾಗುವ, ಕಡಿಮೆ ಅಪಾಯದ ಹೂಡಿಕೆಗಳು; ಸಾಮಾನ್ಯವಾಗಿ ಮೂರು ತಿಂಗಳೊಳಗೆ ಪಕ್ವವಾಗುತ್ತವೆ. ಠೇವಣಿ 2 ತಿಂಗಳು, ನಂತರ 6 ತಿಂಗಳಲ್ಲಿ ಪಕ್ವ ಮಾಡಿ. ಏನು ಬದಲಾಗುತ್ತದೆ? 6 ತಿಂಗಳ ಠೇವಣಿಯನ್ನು ಏಕೆ ಬಿಡಲಾಗುತ್ತದೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Cash means cash in hand and demand deposits with banks. Cash equivalents are short-term, highly liquid investments with little risk, usually maturing within three months of acquisition.",
+    "kn": "ನಗದು ಎಂದರೆ ಕೈಯಲ್ಲಿನ ನಗದು ಮತ್ತು ಬ್ಯಾಂಕಿನ ಬೇಡಿಕೆ ಠೇವಣಿ. ನಗದು ಸಮಾನಗಳು ಅಲ್ಪಾವಧಿಯ, ಸುಲಭವಾಗಿ ನಗದಾಗುವ, ಕಡಿಮೆ ಅಪಾಯದ ಹೂಡಿಕೆಗಳು; ಸಾಮಾನ್ಯವಾಗಿ ಮೂರು ತಿಂಗಳೊಳಗೆ ಪಕ್ವವಾಗುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "ca",
+     "label": {
+      "en": "Cash in hand (₹ thousand)",
+      "kn": "ಕೈಯಲ್ಲಿನ ನಗದು (₹ ಸಾವಿರ)"
+     },
+     "min": 0,
+     "max": 50,
+     "step": 1,
+     "value": 20
+    },
+    {
+     "name": "bk",
+     "label": {
+      "en": "Bank balance (₹ thousand)",
+      "kn": "ಬ್ಯಾಂಕ್ ಶಿಲ್ಕು (₹ ಸಾವಿರ)"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 2,
+     "value": 50
+    },
+    {
+     "name": "dp",
+     "label": {
+      "en": "Fixed deposit (₹ thousand)",
+      "kn": "ನಿಶ್ಚಿತ ಠೇವಣಿ (₹ ಸಾವಿರ)"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 2,
+     "value": 40
+    },
+    {
+     "name": "mt",
+     "label": {
+      "en": "Months to maturity",
+      "kn": "ಪಕ್ವತೆಗೆ ತಿಂಗಳು"
+     },
+     "min": 1,
+     "max": 12,
+     "step": 1,
+     "value": 2
+    }
+   ],
+   "vars": [
+    {
+     "name": "ce",
+     "expr": "ca + bk + if(mt <= 3, dp, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     13.6
+    ],
+    "y": [
+     -16,
+     230
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(ca - 0, 0.46)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "max(ca, 0) + 8.05",
+     "text": {
+      "en": "₹{ca:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": -8.05,
+     "text": {
+      "en": "Cash in hand",
+      "kn": "ಕೈಯಲ್ಲಿನ ನಗದು"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(bk - 0, 0.46)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "max(bk, 0) + 8.05",
+     "text": {
+      "en": "₹{bk:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": -8.05,
+     "text": {
+      "en": "Bank balance",
+      "kn": "ಬ್ಯಾಂಕ್ ಶಿಲ್ಕು"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(dp - 0, 0.46)",
+     "color": {
+      "by": "if(mt <= 3, 0, 1)",
+      "scale": [
+       "green",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "max(dp, 0) + 8.05",
+     "text": {
+      "en": "₹{dp:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": -8.05,
+     "text": {
+      "en": "Deposit",
+      "kn": "ಠೇವಣಿ"
+     },
+     "size": 20,
+     "color": {
+      "by": "if(mt <= 3, 0, 1)",
+      "scale": [
+       "green",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(ce - 0, 0.46)",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": "max(ce, 0) + 8.05",
+     "text": {
+      "en": "₹{ce:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": -8.05,
+     "text": {
+      "en": "Cash and equivalents",
+      "kn": "ನಗದು ಮತ್ತು ಸಮಾನ"
+     },
+     "size": 20,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 6.4,
+     "y": 215,
+     "text": {
+      "en": "Deposit matures in {mt:0} months: counts as a cash equivalent",
+      "kn": "{mt:0} ತಿಂಗಳಲ್ಲಿ ಪಕ್ವ: ನಗದು ಸಮಾನವೆಂದು ಎಣಿಕೆ"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "mt <= 3"
+    },
+    {
+     "shape": "label",
+     "x": 6.4,
+     "y": 215,
+     "text": {
+      "en": "Deposit matures in {mt:0} months: an investment, not cash",
+      "kn": "{mt:0} ತಿಂಗಳಲ್ಲಿ ಪಕ್ವ: ಹೂಡಿಕೆ, ನಗದಲ್ಲ"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "mt > 3"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cash and cash equivalents",
+      "kn": "ನಗದು ಮತ್ತು ನಗದು ಸಮಾನ"
+     },
+     "expr": "ce",
+     "digits": 0,
+     "unit": "₹ thousand"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set the deposit to mature in 2 months, then 6 months. What changes?",
+     "kn": "ಠೇವಣಿ 2 ತಿಂಗಳು, ನಂತರ 6 ತಿಂಗಳಲ್ಲಿ ಪಕ್ವ ಮಾಡಿ. ಏನು ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Why is a 6-month deposit left out?",
+     "kn": "6 ತಿಂಗಳ ಠೇವಣಿಯನ್ನು ಏಕೆ ಬಿಡಲಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

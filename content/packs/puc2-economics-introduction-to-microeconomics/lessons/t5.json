@@ -59,6 +59,198 @@
    }
   },
   {
+   "id": "scene-ppf",
+   "type": "interactive",
+   "title": {
+    "en": "The production possibility frontier",
+    "kn": "ಉತ್ಪಾದನಾ ಸಾಧ್ಯತಾ ಗಡಿ"
+   },
+   "narration": {
+    "en": "With given resources and technology an economy can make at most the combinations of wheat and cloth on the frontier. Drag the point: inside the curve resources lie idle, on it they are used fully, beyond it is impossible. Where the point is, is a positive question; where it should be, is normative. Move along the frontier from 0 to 90 wheat. Why does each 10 wheat cost more cloth? Switch on growth. Which unattainable points become possible?",
+    "kn": "ಇರುವ ಸಂಪನ್ಮೂಲ ಮತ್ತು ತಂತ್ರಜ್ಞಾನದಲ್ಲಿ ಆರ್ಥಿಕತೆ ಗಡಿಯ ಮೇಲಿನ ಗೋಧಿ-ಬಟ್ಟೆ ಸಂಯೋಜನೆಗಳನ್ನೇ ಗರಿಷ್ಠವಾಗಿ ಮಾಡಬಲ್ಲದು. ಬಿಂದು ಎಳೆಯಿರಿ: ವಕ್ರದ ಒಳಗೆ ಸಂಪನ್ಮೂಲ ನಿಷ್ಕ್ರಿಯ, ಮೇಲೆ ಪೂರ್ಣ ಬಳಕೆ, ಹೊರಗೆ ಅಸಾಧ್ಯ. ಬಿಂದು ಎಲ್ಲಿದೆ ಎಂಬುದು ಧನಾತ್ಮಕ ಪ್ರಶ್ನೆ; ಎಲ್ಲಿರಬೇಕು ಎಂಬುದು ಮಾನದಂಡ ಪ್ರಶ್ನೆ. ಗಡಿಯ ಮೇಲೆ 0ರಿಂದ 90 ಗೋಧಿಗೆ ಸರಿಸಿ. ಪ್ರತಿ 10 ಗೋಧಿಗೆ ಏಕೆ ಹೆಚ್ಚು ಬಟ್ಟೆ ವೆಚ್ಚ? ಬೆಳವಣಿಗೆ ಆನ್ ಮಾಡಿ. ಯಾವ ಅಸಾಧ್ಯ ಬಿಂದುಗಳು ಸಾಧ್ಯವಾಗುತ್ತವೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "With given resources and technology an economy can make at most the combinations of wheat and cloth on the frontier. Drag the point: inside the curve resources lie idle, on it they are used fully, beyond it is impossible. Where the point is, is a positive question; where it should be, is normative.",
+    "kn": "ಇರುವ ಸಂಪನ್ಮೂಲ ಮತ್ತು ತಂತ್ರಜ್ಞಾನದಲ್ಲಿ ಆರ್ಥಿಕತೆ ಗಡಿಯ ಮೇಲಿನ ಗೋಧಿ-ಬಟ್ಟೆ ಸಂಯೋಜನೆಗಳನ್ನೇ ಗರಿಷ್ಠವಾಗಿ ಮಾಡಬಲ್ಲದು. ಬಿಂದು ಎಳೆಯಿರಿ: ವಕ್ರದ ಒಳಗೆ ಸಂಪನ್ಮೂಲ ನಿಷ್ಕ್ರಿಯ, ಮೇಲೆ ಪೂರ್ಣ ಬಳಕೆ, ಹೊರಗೆ ಅಸಾಧ್ಯ. ಬಿಂದು ಎಲ್ಲಿದೆ ಎಂಬುದು ಧನಾತ್ಮಕ ಪ್ರಶ್ನೆ; ಎಲ್ಲಿರಬೇಕು ಎಂಬುದು ಮಾನದಂಡ ಪ್ರಶ್ನೆ."
+   },
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "gr",
+     "label": {
+      "en": "Economic growth (more resources)",
+      "kn": "ಆರ್ಥಿಕ ಬೆಳವಣಿಗೆ (ಹೆಚ್ಚು ಸಂಪನ್ಮೂಲ)"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "A",
+     "expr": "if(gr, 120, 100)"
+    },
+    {
+     "name": "f",
+     "expr": "(P_x/A)^2 + (P_y/A)^2"
+    },
+    {
+     "name": "cmax",
+     "expr": "A*sqrt(max(1 - (min(P_x, A)/A)^2, 0))"
+    },
+    {
+     "name": "oc",
+     "expr": "cmax - A*sqrt(max(1 - (min(P_x + 10, A)/A)^2, 0))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     140
+    ],
+    "y": [
+     0,
+     140
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "wheat",
+    "yLabel": "cloth",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "color": "blue",
+     "width": 5,
+     "fn": "A*sqrt(max(1 - (x/A)^2, 0))",
+     "from": 0,
+     "to": "A"
+    },
+    {
+     "shape": "path",
+     "color": "blue",
+     "width": 2,
+     "fn": "100*sqrt(max(1 - (x/100)^2, 0))",
+     "from": 0,
+     "to": 100,
+     "dashed": true,
+     "visibleIf": "gr",
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "x": "P_x",
+     "y": "P_y",
+     "r": 2.2,
+     "color": {
+      "by": "if(f < 0.95, 0, if(f <= 1.05, 0.5, 1))",
+      "scale": [
+       "yellow",
+       "green",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "label",
+     "x": 95,
+     "y": 135,
+     "text": {
+      "en": "Inside: resources idle (unemployment)",
+      "kn": "ಒಳಗೆ: ಸಂಪನ್ಮೂಲ ನಿಷ್ಕ್ರಿಯ (ನಿರುದ್ಯೋಗ)"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "f < 0.95"
+    },
+    {
+     "shape": "label",
+     "x": 95,
+     "y": 135,
+     "text": {
+      "en": "On the frontier: full and efficient use",
+      "kn": "ಗಡಿಯ ಮೇಲೆ: ಪೂರ್ಣ ಮತ್ತು ದಕ್ಷ ಬಳಕೆ"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "f >= 0.95 && f <= 1.05"
+    },
+    {
+     "shape": "label",
+     "x": 95,
+     "y": 135,
+     "text": {
+      "en": "Outside: not attainable with today's resources",
+      "kn": "ಹೊರಗೆ: ಇಂದಿನ ಸಂಪನ್ಮೂಲದಲ್ಲಿ ಸಾಧ್ಯವಿಲ್ಲ"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "f > 1.05"
+    },
+    {
+     "shape": "text",
+     "x": 95,
+     "y": 124,
+     "text": {
+      "en": "Positive: \"this point is inside\". Normative: \"we should produce more cloth\".",
+      "kn": "ಧನಾತ್ಮಕ: \"ಈ ಬಿಂದು ಒಳಗಿದೆ\". ಮಾನದಂಡ: \"ಹೆಚ್ಚು ಬಟ್ಟೆ ಉತ್ಪಾದಿಸಬೇಕು\"."
+     },
+     "size": 16,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Most cloth possible at this wheat",
+      "kn": "ಈ ಗೋಧಿಗೆ ಗರಿಷ್ಠ ಬಟ್ಟೆ"
+     },
+     "expr": "cmax",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Cloth given up for 10 more wheat",
+      "kn": "10 ಹೆಚ್ಚು ಗೋಧಿಗೆ ಬಿಡುವ ಬಟ್ಟೆ"
+     },
+     "expr": "oc",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Move along the frontier from 0 to 90 wheat. Why does each 10 wheat cost more cloth?",
+     "kn": "ಗಡಿಯ ಮೇಲೆ 0ರಿಂದ 90 ಗೋಧಿಗೆ ಸರಿಸಿ. ಪ್ರತಿ 10 ಗೋಧಿಗೆ ಏಕೆ ಹೆಚ್ಚು ಬಟ್ಟೆ ವೆಚ್ಚ?"
+    },
+    {
+     "en": "Switch on growth. Which unattainable points become possible?",
+     "kn": "ಬೆಳವಣಿಗೆ ಆನ್ ಮಾಡಿ. ಯಾವ ಅಸಾಧ್ಯ ಬಿಂದುಗಳು ಸಾಧ್ಯವಾಗುತ್ತವೆ?"
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "economy",
+     "x": 50,
+     "y": 60,
+     "box": {
+      "x": [
+       0,
+       135
+      ],
+      "y": [
+       0,
+       135
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

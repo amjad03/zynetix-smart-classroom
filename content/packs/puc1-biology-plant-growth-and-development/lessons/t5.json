@@ -61,6 +61,254 @@
    }
   },
   {
+   "id": "scene-ripening",
+   "type": "interactive",
+   "title": {
+    "en": "Ethylene ripens fruit",
+    "kn": "ಎಥಿಲೀನ್ ಹಣ್ಣು ಮಾಗಿಸುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "A ripening fruit makes ethylene, and ethylene makes it ripen faster and make more ethylene: the climacteric rise. A ripe fruit in the bag adds ethylene and speeds ripening; ventilation removes it; cold storage slows every step. This is why mangoes and bananas are ripened with ethylene (from ethephon) and stored cool.",
+    "kn": "ಮಾಗುವ ಹಣ್ಣು ಎಥಿಲೀನ್ ಉತ್ಪಾದಿಸುತ್ತದೆ, ಎಥಿಲೀನ್ ಮಾಗುವಿಕೆಯನ್ನು ವೇಗಗೊಳಿಸಿ ಇನ್ನೂ ಹೆಚ್ಚು ಎಥಿಲೀನ್ ಮಾಡಿಸುತ್ತದೆ: ಕ್ಲೈಮ್ಯಾಕ್ಟೆರಿಕ್ ಏರಿಕೆ. ಚೀಲದಲ್ಲಿನ ಮಾಗಿದ ಹಣ್ಣು ಎಥಿಲೀನ್ ಸೇರಿಸುತ್ತದೆ; ಗಾಳಿಯಾಡಿಸುವಿಕೆ ಅದನ್ನು ತೆಗೆಯುತ್ತದೆ; ತಂಪು ಸಂಗ್ರಹ ಎಲ್ಲವನ್ನೂ ನಿಧಾನಿಸುತ್ತದೆ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "A ripening fruit makes ethylene, and ethylene makes it ripen faster and make more ethylene: the climacteric rise. A ripe fruit in the bag adds ethylene and speeds ripening; ventilation removes it; cold storage slows every step. This is why mangoes and bananas are ripened with ethylene (from ethephon) and stored cool.",
+    "kn": "ಮಾಗುವ ಹಣ್ಣು ಎಥಿಲೀನ್ ಉತ್ಪಾದಿಸುತ್ತದೆ, ಎಥಿಲೀನ್ ಮಾಗುವಿಕೆಯನ್ನು ವೇಗಗೊಳಿಸಿ ಇನ್ನೂ ಹೆಚ್ಚು ಎಥಿಲೀನ್ ಮಾಡಿಸುತ್ತದೆ: ಕ್ಲೈಮ್ಯಾಕ್ಟೆರಿಕ್ ಏರಿಕೆ. ಚೀಲದಲ್ಲಿನ ಮಾಗಿದ ಹಣ್ಣು ಎಥಿಲೀನ್ ಸೇರಿಸುತ್ತದೆ; ಗಾಳಿಯಾಡಿಸುವಿಕೆ ಅದನ್ನು ತೆಗೆಯುತ್ತದೆ; ತಂಪು ಸಂಗ್ರಹ ಎಲ್ಲವನ್ನೂ ನಿಧಾನಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "T",
+     "label": {
+      "en": "Storage temperature",
+      "kn": "ಸಂಗ್ರಹ ತಾಪಮಾನ"
+     },
+     "min": 5,
+     "max": 35,
+     "step": 1,
+     "value": 25,
+     "unit": "°C"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "bag",
+     "label": {
+      "en": "Ripe fruit in the bag",
+      "kn": "ಚೀಲದಲ್ಲಿ ಮಾಗಿದ ಹಣ್ಣು"
+     },
+     "value": false
+    },
+    {
+     "name": "vent",
+     "label": {
+      "en": "Ventilate (remove ethylene)",
+      "kn": "ಗಾಳಿಯಾಡಿಸಿ (ಎಥಿಲೀನ್ ತೆಗೆಯಿರಿ)"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 20,
+    "unit": "d",
+    "dt": 0.02,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "q",
+     "expr": "2^((T - 25)/10)"
+    }
+   ],
+   "state": [
+    {
+     "name": "E",
+     "init": 0.05,
+     "rate": "q*(0.03 + 1.5*Rp) + 0.6*bag - if(vent, 2, 0.4)*E"
+    },
+    {
+     "name": "Rp",
+     "init": 0,
+     "rate": "q*0.12*(E + 0.05)*(1 - Rp)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 60,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 8,
+     "y2": 56,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 34.0,
+     "y": 4.6,
+     "size": 22,
+     "text": {
+      "en": "Days",
+      "kn": "ದಿನಗಳು"
+     }
+    },
+    {
+     "shape": "trail",
+     "x": "8 + t*2.6",
+     "y": "8 + 46*Rp",
+     "length": 1200,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "trail",
+     "x": "8 + t*2.6",
+     "y": "8 + 8*min(E, 5.5)",
+     "length": 1200,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 52,
+     "size": 20,
+     "text": {
+      "en": "Yellow: ripeness · blue: ethylene",
+      "kn": "ಹಳದಿ: ಮಾಗುವಿಕೆ · ನೀಲಿ: ಎಥಿಲೀನ್"
+     },
+     "align": "left"
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       70,
+       34
+      ],
+      [
+       74,
+       42
+      ],
+      [
+       82,
+       46
+      ],
+      [
+       92,
+       46
+      ],
+      [
+       94,
+       44
+      ],
+      [
+       86,
+       42
+      ],
+      [
+       78,
+       36
+      ],
+      [
+       75,
+       28
+      ],
+      [
+       71,
+       26
+      ]
+     ],
+     "color": {
+      "by": "Rp",
+      "scale": [
+       "green",
+       "yellow",
+       "orange"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 82,
+     "y": 20,
+     "size": 24,
+     "text": {
+      "en": "Ripeness {100*Rp:0}%",
+      "kn": "ಮಾಗುವಿಕೆ {100*Rp:0}%"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 82,
+     "y": 12,
+     "size": 18,
+     "text": {
+      "en": "Climacteric: ethylene makes more ethylene",
+      "kn": "ಕ್ಲೈಮ್ಯಾಕ್ಟೆರಿಕ್: ಎಥಿಲೀನ್ ಮತ್ತಷ್ಟು ಎಥಿಲೀನ್ ಉತ್ಪಾದಿಸುತ್ತದೆ"
+     },
+     "visibleIf": "E > 1.5",
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Ripeness",
+      "kn": "ಮಾಗುವಿಕೆ"
+     },
+     "expr": "100*Rp",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Ethylene (relative)",
+      "kn": "ಎಥಿಲೀನ್ (ಸಾಪೇಕ್ಷ)"
+     },
+     "expr": "E",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Play at 25 °C, then put a ripe fruit in the bag. How many days sooner is the fruit ripe?",
+     "kn": "25 °C ನಲ್ಲಿ ಚಲಾಯಿಸಿ, ನಂತರ ಚೀಲಕ್ಕೆ ಮಾಗಿದ ಹಣ್ಣು ಸೇರಿಸಿ. ಎಷ್ಟು ದಿನ ಬೇಗ ಮಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Why do fruit sellers store mangoes cool and ventilated?",
+     "kn": "ಹಣ್ಣು ಮಾರುವವರು ಮಾವನ್ನು ಏಕೆ ತಂಪಾಗಿ ಗಾಳಿಯಾಡುವಂತೆ ಇಡುತ್ತಾರೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

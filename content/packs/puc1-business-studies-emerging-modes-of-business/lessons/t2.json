@@ -64,6 +64,402 @@
    }
   },
   {
+   "id": "scene-ebiz-balance",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Should this seller go online?",
+    "kn": "ಈ ಮಾರಾಟಗಾರ ಆನ್‌ಲೈನ್‌ಗೆ ಹೋಗಬೇಕೆ?"
+   },
+   "caption": {
+    "en": "Weigh the benefits of e-business against its limitations for a product. Set how much each point matters, or tap a product to load a case. The beam tips to the heavier side.",
+    "kn": "ಇ-ವ್ಯವಹಾರದ ಲಾಭಗಳನ್ನು ಮಿತಿಗಳೊಂದಿಗೆ ತೂಗಿ. ಪ್ರತಿ ಅಂಶದ ಮಹತ್ವ ಹೊಂದಿಸಿ ಅಥವಾ ಉತ್ಪನ್ನವನ್ನು ಒತ್ತಿ. ತೂಕ ಹೆಚ್ಚಿರುವ ಕಡೆ ತೊಲೆ ವಾಲುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Low cost, 24×7",
+      "kn": "ಕಡಿಮೆ ವೆಚ್ಚ, 24×7"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "Global reach",
+      "kn": "ಜಾಗತಿಕ ವ್ಯಾಪ್ತಿ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "No personal touch",
+      "kn": "ವೈಯಕ್ತಿಕ ಸ್ಪರ್ಶ ಇಲ್ಲ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "Security, delivery risk",
+      "kn": "ಭದ್ರತೆ, ವಿತರಣಾ ಅಪಾಯ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Books",
+      "kn": "ಪುಸ್ತಕಗಳು"
+     },
+     "icon": "check",
+     "set": {
+      "a": 9,
+      "b": 8,
+      "c": 2,
+      "d": 3
+     }
+    },
+    {
+     "label": {
+      "en": "Fresh vegetables",
+      "kn": "ತಾಜಾ ತರಕಾರಿ"
+     },
+     "icon": "check",
+     "set": {
+      "a": 5,
+      "b": 1,
+      "c": 7,
+      "d": 9
+     }
+    },
+    {
+     "label": {
+      "en": "Jewellery",
+      "kn": "ಆಭರಣ"
+     },
+     "icon": "check",
+     "set": {
+      "a": 5,
+      "b": 6,
+      "c": 9,
+      "d": 8
+     }
+    },
+    {
+     "label": {
+      "en": "Even out",
+      "kn": "ಸಮಮಾಡಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "a": 5,
+      "b": 5,
+      "c": 5,
+      "d": 5
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "Lw",
+     "expr": "a + b"
+    },
+    {
+     "name": "Rw",
+     "expr": "c + d"
+    },
+    {
+     "name": "net",
+     "expr": "Lw - Rw"
+    },
+    {
+     "name": "ang",
+     "expr": "clamp(net*1.5, -22, 22)"
+    },
+    {
+     "name": "xL",
+     "expr": "50 - 26*cos(rad(ang))"
+    },
+    {
+     "name": "yL",
+     "expr": "32 - 26*sin(rad(ang))"
+    },
+    {
+     "name": "xR",
+     "expr": "50 + 26*cos(rad(ang))"
+    },
+    {
+     "name": "yR",
+     "expr": "32 + 26*sin(rad(ang))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       50,
+       32
+      ],
+      [
+       45,
+       6
+      ],
+      [
+       55,
+       6
+      ]
+     ],
+     "color": "white",
+     "opacity": 0.4
+    },
+    {
+     "shape": "line",
+     "x1": "xL",
+     "y1": "yL",
+     "x2": "xR",
+     "y2": "yR",
+     "width": 6,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": "xL",
+     "y1": "yL",
+     "x2": "xL - 7",
+     "y2": "yL - 9",
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": "xL",
+     "y1": "yL",
+     "x2": "xL + 7",
+     "y2": "yL - 9",
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": "xR",
+     "y1": "yR",
+     "x2": "xR - 7",
+     "y2": "yR - 9",
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": "xR",
+     "y1": "yR",
+     "x2": "xR + 7",
+     "y2": "yR - 9",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": "xL - 8",
+     "y": "yL - 10",
+     "w": 16,
+     "h": 1.2,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": "xR - 8",
+     "y": "yR - 10",
+     "w": 16,
+     "h": 1.2,
+     "color": "red"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "xL - 6 + 3*mod(i, 5)",
+     "y": "yL - 7.7 + 1.9*floor(i/5)",
+     "r": 0.9,
+     "color": "green",
+     "visibleIf": "i < Lw/1"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "xR - 6 + 3*mod(i, 5)",
+     "y": "yR - 7.7 + 1.9*floor(i/5)",
+     "r": 0.9,
+     "color": "red",
+     "visibleIf": "i < Rw/1"
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": 57,
+     "text": {
+      "en": "Go online",
+      "kn": "ಆನ್‌ಲೈನ್"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": 53,
+     "text": {
+      "en": "Low cost, 24×7: {a:0}",
+      "kn": "ಕಡಿಮೆ ವೆಚ್ಚ, 24×7: {a:0}"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": 50,
+     "text": {
+      "en": "Global reach: {b:0}",
+      "kn": "ಜಾಗತಿಕ ವ್ಯಾಪ್ತಿ: {b:0}"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 82,
+     "y": 57,
+     "text": {
+      "en": "Stay offline",
+      "kn": "ಆಫ್‌ಲೈನ್"
+     },
+     "size": 22,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 82,
+     "y": 53,
+     "text": {
+      "en": "No personal touch: {c:0}",
+      "kn": "ವೈಯಕ್ತಿಕ ಸ್ಪರ್ಶ ಇಲ್ಲ: {c:0}"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 82,
+     "y": 50,
+     "text": {
+      "en": "Security, delivery risk: {d:0}",
+      "kn": "ಭದ್ರತೆ, ವಿತರಣಾ ಅಪಾಯ: {d:0}"
+     },
+     "size": 16
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 44,
+     "text": {
+      "en": "Go online",
+      "kn": "ಆನ್‌ಲೈನ್"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "net > 1"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 44,
+     "text": {
+      "en": "Stay offline",
+      "kn": "ಆಫ್‌ಲೈನ್"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "net < -1"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 44,
+     "text": {
+      "en": "Finely balanced",
+      "kn": "ಸಮತೋಲನದಲ್ಲಿದೆ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "abs(net) <= 1"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Go online",
+      "kn": "ಆನ್‌ಲೈನ್"
+     },
+     "expr": "Lw",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Stay offline",
+      "kn": "ಆಫ್‌ಲೈನ್"
+     },
+     "expr": "Rw",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Net weight",
+      "kn": "ನಿವ್ವಳ ತೂಕ"
+     },
+     "expr": "net",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why do books sell so well online?",
+     "kn": "ಪುಸ್ತಕಗಳು ಆನ್‌ಲೈನ್‌ನಲ್ಲಿ ಏಕೆ ಚೆನ್ನಾಗಿ ಮಾರುತ್ತವೆ?"
+    },
+    {
+     "en": "What could a jewellery seller do to reduce the 'no touch' problem?",
+     "kn": "'ಸ್ಪರ್ಶ ಇಲ್ಲ' ಸಮಸ್ಯೆ ಕಡಿಮೆಮಾಡಲು ಆಭರಣ ಮಾರಾಟಗಾರ ಏನು ಮಾಡಬಹುದು?"
+    },
+    {
+     "en": "Which limitation does cash on delivery reduce?",
+     "kn": "ಕ್ಯಾಶ್ ಆನ್ ಡೆಲಿವರಿ ಯಾವ ಮಿತಿಯನ್ನು ಕಡಿಮೆ ಮಾಡುತ್ತದೆ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Weigh the benefits of e-business against its limitations for a product. Set how much each point matters, or tap a product to load a case. The beam tips to the heavier side.",
+    "kn": "ಇ-ವ್ಯವಹಾರದ ಲಾಭಗಳನ್ನು ಮಿತಿಗಳೊಂದಿಗೆ ತೂಗಿ. ಪ್ರತಿ ಅಂಶದ ಮಹತ್ವ ಹೊಂದಿಸಿ ಅಥವಾ ಉತ್ಪನ್ನವನ್ನು ಒತ್ತಿ. ತೂಕ ಹೆಚ್ಚಿರುವ ಕಡೆ ತೊಲೆ ವಾಲುತ್ತದೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

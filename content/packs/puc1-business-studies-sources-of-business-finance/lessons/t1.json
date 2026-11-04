@@ -62,6 +62,298 @@
    }
   },
   {
+   "id": "scene-finance-need",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "How much finance, and for how long?",
+    "kn": "ಎಷ್ಟು ಹಣಕಾಸು, ಎಷ್ಟು ಕಾಲಕ್ಕೆ?"
+   },
+   "caption": {
+    "en": "A business needs fixed capital for long-lived assets and working capital for day-to-day needs. Set both and the owners' share; see the long, medium and short-term finance needed and the interest burden of borrowing.",
+    "kn": "ದೀರ್ಘಾವಧಿ ಆಸ್ತಿಗೆ ಸ್ಥಿರ ಬಂಡವಾಳ, ದೈನಂದಿನ ಅಗತ್ಯಕ್ಕೆ ಕಾರ್ಯ ಬಂಡವಾಳ. ಎರಡೂ ಮತ್ತು ಮಾಲೀಕರ ಪಾಲು ಹೊಂದಿಸಿ; ದೀರ್ಘ, ಮಧ್ಯಮ, ಅಲ್ಪಾವಧಿ ಹಣ ಮತ್ತು ಬಡ್ಡಿ ಹೊರೆ ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "fx",
+     "label": {
+      "en": "Fixed capital (land, machines)",
+      "kn": "ಸ್ಥಿರ ಬಂಡವಾಳ (ಭೂಮಿ, ಯಂತ್ರ)"
+     },
+     "min": 10,
+     "max": 150,
+     "step": 5,
+     "value": 80,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "wc",
+     "label": {
+      "en": "Working capital (stock, wages)",
+      "kn": "ಕಾರ್ಯ ಬಂಡವಾಳ (ದಾಸ್ತಾನು, ವೇತನ)"
+     },
+     "min": 5,
+     "max": 60,
+     "step": 5,
+     "value": 30,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "ow",
+     "label": {
+      "en": "Owners' funds",
+      "kn": "ಸ್ವಂತ ಹಣ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 60,
+     "unit": "%"
+    },
+    {
+     "name": "ir",
+     "label": {
+      "en": "Interest on borrowing",
+      "kn": "ಎರವಲು ಬಡ್ಡಿ"
+     },
+     "min": 6,
+     "max": 18,
+     "step": 1,
+     "value": 11,
+     "unit": "%"
+    }
+   ],
+   "vars": [
+    {
+     "name": "tot",
+     "expr": "fx + wc"
+    },
+    {
+     "name": "b0",
+     "expr": "fx + 0.3*wc"
+    },
+    {
+     "name": "b1",
+     "expr": "0.7*wc"
+    },
+    {
+     "name": "b2",
+     "expr": "tot*ow/100"
+    },
+    {
+     "name": "b3",
+     "expr": "tot*(100 - ow)/100"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "₹ lakh",
+      "kn": "₹ ಲಕ್ಷ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/200, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/200, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Long-term",
+      "kn": "ದೀರ್ಘಾವಧಿ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/200, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/200, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Short-term",
+      "kn": "ಅಲ್ಪಾವಧಿ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/200, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/200, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Owners' funds",
+      "kn": "ಸ್ವಂತ ಹಣ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/200, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/200, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Borrowed funds",
+      "kn": "ಎರವಲು ಹಣ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "High debt: heavy interest",
+      "kn": "ಹೆಚ್ಚು ಸಾಲ: ಭಾರಿ ಬಡ್ಡಿ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "ow < 40"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Owners carry most of the risk",
+      "kn": "ಮಾಲೀಕರೇ ಹೆಚ್ಚು ಅಪಾಯ ಹೊರುತ್ತಾರೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "ow >= 40"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Total finance",
+      "kn": "ಒಟ್ಟು ಹಣಕಾಸು"
+     },
+     "expr": "tot",
+     "digits": 0,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Interest a year",
+      "kn": "ವಾರ್ಷಿಕ ಬಡ್ಡಿ"
+     },
+     "expr": "tot*(100 - ow)/100*ir/100",
+     "digits": 2,
+     "unit": "₹ lakh"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why should a machine not be bought with a 3-month loan?",
+     "kn": "ಯಂತ್ರವನ್ನು 3 ತಿಂಗಳ ಸಾಲದಿಂದ ಏಕೆ ಖರೀದಿಸಬಾರದು?"
+    },
+    {
+     "en": "Borrowed funds must be repaid; owners' funds need not. Which is riskier for the firm?",
+     "kn": "ಎರವಲು ಮರುಪಾವತಿ ಬೇಕು; ಸ್ವಂತ ಹಣ ಬೇಡ. ಯಾವುದು ಅಪಾಯಕಾರಿ?"
+    },
+    {
+     "en": "Name one source in each bar.",
+     "kn": "ಪ್ರತಿ ಸ್ತಂಭಕ್ಕೆ ಒಂದು ಮೂಲ ಹೇಳಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "A business needs fixed capital for long-lived assets and working capital for day-to-day needs. Set both and the owners' share; see the long, medium and short-term finance needed and the interest burden of borrowing.",
+    "kn": "ದೀರ್ಘಾವಧಿ ಆಸ್ತಿಗೆ ಸ್ಥಿರ ಬಂಡವಾಳ, ದೈನಂದಿನ ಅಗತ್ಯಕ್ಕೆ ಕಾರ್ಯ ಬಂಡವಾಳ. ಎರಡೂ ಮತ್ತು ಮಾಲೀಕರ ಪಾಲು ಹೊಂದಿಸಿ; ದೀರ್ಘ, ಮಧ್ಯಮ, ಅಲ್ಪಾವಧಿ ಹಣ ಮತ್ತು ಬಡ್ಡಿ ಹೊರೆ ನೋಡಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

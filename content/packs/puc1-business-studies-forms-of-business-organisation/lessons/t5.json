@@ -67,6 +67,291 @@
    }
   },
   {
+   "id": "scene-share-liability",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Limited liability of a shareholder",
+    "kn": "ಷೇರುದಾರರ ಸೀಮಿತ ಹೊಣೆ"
+   },
+   "caption": {
+    "en": "A shareholder can lose only what he has paid plus any unpaid amount on his shares, never his personal property. Set the shares held, the face value and how much is paid up, then let the company fail.",
+    "kn": "ಷೇರುದಾರ ಪಾವತಿಸಿದ ಮೊತ್ತ ಮತ್ತು ಬಾಕಿ ಮೊತ್ತದಷ್ಟು ಮಾತ್ರ ಕಳೆದುಕೊಳ್ಳಬಹುದು, ವೈಯಕ್ತಿಕ ಆಸ್ತಿಯಲ್ಲ. ಷೇರುಗಳು, ಮುಖಬೆಲೆ, ಪಾವತಿ ಹೊಂದಿಸಿ ಕಂಪನಿ ವಿಫಲಗೊಳಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "sh",
+     "label": {
+      "en": "Shares held",
+      "kn": "ಹೊಂದಿರುವ ಷೇರು"
+     },
+     "min": 100,
+     "max": 10000,
+     "step": 100,
+     "value": 2000
+    },
+    {
+     "name": "fv",
+     "label": {
+      "en": "Face value",
+      "kn": "ಮುಖಬೆಲೆ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 10,
+     "unit": "₹"
+    },
+    {
+     "name": "pu",
+     "label": {
+      "en": "Paid up",
+      "kn": "ಪಾವತಿಯಾದ ಭಾಗ"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 10,
+     "value": 60,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fail",
+     "label": {
+      "en": "Company wound up with debts",
+      "kn": "ಕಂಪನಿ ಸಾಲದೊಂದಿಗೆ ಮುಚ್ಚಿತು"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "sh*fv*pu/100"
+    },
+    {
+     "name": "b1",
+     "expr": "sh*fv*(100 - pu)/100"
+    },
+    {
+     "name": "b2",
+     "expr": "sh*fv"
+    },
+    {
+     "name": "b3",
+     "expr": "0"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "₹",
+      "kn": "₹"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/100000, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/100000, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Paid so far",
+      "kn": "ಪಾವತಿಸಿದ್ದು"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/100000, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/100000, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Still callable",
+      "kn": "ಇನ್ನೂ ಕೇಳಬಹುದಾದದ್ದು"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/100000, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/100000, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Max loss",
+      "kn": "ಗರಿಷ್ಠ ನಷ್ಟ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/100000, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/100000, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Personal assets at risk",
+      "kn": "ಅಪಾಯದ ವೈಯಕ್ತಿಕ ಆಸ್ತಿ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Must pay the unpaid part only",
+      "kn": "ಬಾಕಿ ಭಾಗ ಮಾತ್ರ ಪಾವತಿ"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "fail"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Company running",
+      "kn": "ಕಂಪನಿ ನಡೆಯುತ್ತಿದೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "!fail"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Has to pay now",
+      "kn": "ಈಗ ಪಾವತಿಸಬೇಕಾದದ್ದು"
+     },
+     "expr": "if(fail, sh*fv*(100 - pu)/100, 0)",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Maximum loss",
+      "kn": "ಗರಿಷ್ಠ ನಷ್ಟ"
+     },
+     "expr": "sh*fv",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With shares fully paid, what more can creditors ask from him?",
+     "kn": "ಷೇರು ಪೂರ್ಣ ಪಾವತಿಯಾದರೆ ಸಾಲಗಾರರು ಇನ್ನೇನು ಕೇಳಬಹುದು?"
+    },
+    {
+     "en": "Why does limited liability help a company raise large capital?",
+     "kn": "ಸೀಮಿತ ಹೊಣೆ ದೊಡ್ಡ ಬಂಡವಾಳ ಸಂಗ್ರಹಕ್ಕೆ ಹೇಗೆ ಸಹಾಯ?"
+    },
+    {
+     "en": "Compare with a sole trader's liability.",
+     "kn": "ಏಕಮಾಲೀಕನ ಹೊಣೆಯೊಂದಿಗೆ ಹೋಲಿಸಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "A shareholder can lose only what he has paid plus any unpaid amount on his shares, never his personal property. Set the shares held, the face value and how much is paid up, then let the company fail.",
+    "kn": "ಷೇರುದಾರ ಪಾವತಿಸಿದ ಮೊತ್ತ ಮತ್ತು ಬಾಕಿ ಮೊತ್ತದಷ್ಟು ಮಾತ್ರ ಕಳೆದುಕೊಳ್ಳಬಹುದು, ವೈಯಕ್ತಿಕ ಆಸ್ತಿಯಲ್ಲ. ಷೇರುಗಳು, ಮುಖಬೆಲೆ, ಪಾವತಿ ಹೊಂದಿಸಿ ಕಂಪನಿ ವಿಫಲಗೊಳಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

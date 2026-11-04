@@ -62,6 +62,194 @@
    }
   },
   {
+   "id": "scene-text-neck",
+   "type": "interactive",
+   "title": {
+    "en": "Screens and your health: text neck",
+    "kn": "ಪರದೆ ಮತ್ತು ಆರೋಗ್ಯ: ಟೆಕ್ಸ್ಟ್ ನೆಕ್"
+   },
+   "narration": {
+    "en": "Looking down at a phone tilts the head forward. Studies estimate the head (about 5 kg upright) loads the neck like 12 kg at 15°, 18 kg at 30° and 27 kg at 60°. Long hours at that angle strain the neck and eyes. Tilt to 45°. How many times the upright load is that? Set your own daily screen hours. What habit would help?",
+    "kn": "ಫೋನ್ ಕೆಳಗೆ ನೋಡುವಾಗ ತಲೆ ಮುಂದೆ ಬಾಗುತ್ತದೆ. ನೇರವಾಗಿದ್ದಾಗ ಸುಮಾರು 5 ಕೆಜಿ ತಲೆ 15°ಗೆ 12 ಕೆಜಿ, 30°ಗೆ 18 ಕೆಜಿ, 60°ಗೆ 27 ಕೆಜಿಯಷ್ಟು ಭಾರ ಕುತ್ತಿಗೆಗೆ ಕೊಡುತ್ತದೆ ಎಂದು ಅಧ್ಯಯನಗಳು ಅಂದಾಜಿಸುತ್ತವೆ. ಹೆಚ್ಚು ಗಂಟೆ ಹಾಗಿದ್ದರೆ ಕುತ್ತಿಗೆ ಮತ್ತು ಕಣ್ಣಿಗೆ ಒತ್ತಡ. 45°ಗೆ ಬಾಗಿಸಿ. ನೇರ ಸ್ಥಿತಿಯ ಎಷ್ಟು ಪಟ್ಟು? ನಿಮ್ಮ ದಿನದ ಪರದೆ ಗಂಟೆ ಹೊಂದಿಸಿ. ಯಾವ ಅಭ್ಯಾಸ ಸಹಾಯಕ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Looking down at a phone tilts the head forward. Studies estimate the head (about 5 kg upright) loads the neck like 12 kg at 15°, 18 kg at 30° and 27 kg at 60°. Long hours at that angle strain the neck and eyes.",
+    "kn": "ಫೋನ್ ಕೆಳಗೆ ನೋಡುವಾಗ ತಲೆ ಮುಂದೆ ಬಾಗುತ್ತದೆ. ನೇರವಾಗಿದ್ದಾಗ ಸುಮಾರು 5 ಕೆಜಿ ತಲೆ 15°ಗೆ 12 ಕೆಜಿ, 30°ಗೆ 18 ಕೆಜಿ, 60°ಗೆ 27 ಕೆಜಿಯಷ್ಟು ಭಾರ ಕುತ್ತಿಗೆಗೆ ಕೊಡುತ್ತದೆ ಎಂದು ಅಧ್ಯಯನಗಳು ಅಂದಾಜಿಸುತ್ತವೆ. ಹೆಚ್ಚು ಗಂಟೆ ಹಾಗಿದ್ದರೆ ಕುತ್ತಿಗೆ ಮತ್ತು ಕಣ್ಣಿಗೆ ಒತ್ತಡ."
+   },
+   "sliders": [
+    {
+     "name": "ang",
+     "label": {
+      "en": "Head tilt",
+      "kn": "ತಲೆ ಬಾಗು"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 5,
+     "value": 30,
+     "unit": "°"
+    },
+    {
+     "name": "hr",
+     "label": {
+      "en": "Screen hours per day",
+      "kn": "ದಿನಕ್ಕೆ ಪರದೆ ಗಂಟೆ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 0.5,
+     "value": 4,
+     "unit": "h"
+    }
+   ],
+   "vars": [
+    {
+     "name": "load",
+     "expr": "if(ang <= 15, 5 + 7*ang/15, if(ang <= 30, 12 + 6*(ang - 15)/15, if(ang <= 45, 18 + 4*(ang - 30)/15, 22 + 5*(ang - 45)/15)))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     0,
+     9
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 0,
+     "x2": 3,
+     "y2": 4.5,
+     "color": "blue",
+     "width": 14
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 4.5,
+     "x2": "3 + 1.4*sin(rad(ang))",
+     "y2": "4.5 + 1.4*cos(rad(ang))",
+     "color": "blue",
+     "width": 10
+    },
+    {
+     "shape": "circle",
+     "x": "3 + 2.3*sin(rad(ang))",
+     "y": "4.5 + 2.3*cos(rad(ang))",
+     "r": 0.9,
+     "color": {
+      "by": "clamp(ang/60, 0, 1)",
+      "scale": [
+       "green",
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "3 + 2.3*sin(rad(ang)) + 0.3",
+     "y": "4.5 + 2.3*cos(rad(ang)) - 2.6",
+     "w": 0.8,
+     "h": 1.4,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "label",
+     "x": 10,
+     "y": 8,
+     "text": {
+      "en": "Neck carries about {load:0} kg",
+      "kn": "ಕುತ್ತಿಗೆ ಸುಮಾರು {load:0} ಕೆಜಿ ಹೊರುತ್ತದೆ"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 6.6,
+     "text": {
+      "en": "Hold the phone at eye level",
+      "kn": "ಫೋನ್ ಕಣ್ಣಿನ ಮಟ್ಟದಲ್ಲಿ ಹಿಡಿಯಿರಿ"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "ang <= 15"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 6.6,
+     "text": {
+      "en": "Risk of neck and back pain",
+      "kn": "ಕುತ್ತಿಗೆ ಮತ್ತು ಬೆನ್ನು ನೋವಿನ ಅಪಾಯ"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "ang > 15"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "20-20-20: every 20 min, look 20 feet away for 20 s",
+      "kn": "20-20-20: ಪ್ರತಿ 20 ನಿಮಿಷಕ್ಕೆ 20 ಅಡಿ ದೂರ 20 ಸೆಕೆಂಡ್ ನೋಡಿ"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "hr > 2"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Load on the neck",
+      "kn": "ಕುತ್ತಿಗೆಯ ಮೇಲಿನ ಭಾರ"
+     },
+     "expr": "load",
+     "digits": 0,
+     "unit": "kg"
+    },
+    {
+     "label": {
+      "en": "Times the upright load",
+      "kn": "ನೇರ ಸ್ಥಿತಿಯ ಪಟ್ಟು"
+     },
+     "expr": "load/5",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Breaks needed (20-20-20)",
+      "kn": "ಬೇಕಾದ ವಿರಾಮಗಳು (20-20-20)"
+     },
+     "expr": "floor(hr*3)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Tilt to 45°. How many times the upright load is that?",
+     "kn": "45°ಗೆ ಬಾಗಿಸಿ. ನೇರ ಸ್ಥಿತಿಯ ಎಷ್ಟು ಪಟ್ಟು?"
+    },
+    {
+     "en": "Set your own daily screen hours. What habit would help?",
+     "kn": "ನಿಮ್ಮ ದಿನದ ಪರದೆ ಗಂಟೆ ಹೊಂದಿಸಿ. ಯಾವ ಅಭ್ಯಾಸ ಸಹಾಯಕ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

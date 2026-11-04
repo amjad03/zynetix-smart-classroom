@@ -59,6 +59,223 @@
    }
   },
   {
+   "id": "scene-prudence-stock",
+   "type": "interactive",
+   "title": {
+    "en": "Prudence: value stock at the lower figure",
+    "kn": "ವಿವೇಕ: ದಾಸ್ತಾನನ್ನು ಕಡಿಮೆ ಮೌಲ್ಯದಲ್ಲಿ"
+   },
+   "narration": {
+    "en": "The principle of prudence (conservatism) says: anticipate no profit, provide for every loss. So closing stock is shown at cost or net realisable value, whichever is lower. Make the market value higher than cost. Which value is shown? Switch on \"ignore prudence\". What unrealised gain would creep into profit?",
+    "kn": "ವಿವೇಕ (ಸಂಪ್ರದಾಯವಾದ) ತತ್ವ: ಲಾಭವನ್ನು ನಿರೀಕ್ಷಿಸಬೇಡಿ, ಪ್ರತಿ ನಷ್ಟಕ್ಕೆ ಅವಕಾಶ ಮಾಡಿ. ಆದ್ದರಿಂದ ಅಂತಿಮ ದಾಸ್ತಾನು ವೆಚ್ಚ ಅಥವಾ ನಿವ್ವಳ ಮಾರುಕಟ್ಟೆ ಮೌಲ್ಯ, ಯಾವುದು ಕಡಿಮೆಯೋ ಅದರಲ್ಲಿ. ಮಾರುಕಟ್ಟೆ ಮೌಲ್ಯವನ್ನು ವೆಚ್ಚಕ್ಕಿಂತ ಹೆಚ್ಚು ಮಾಡಿ. ಯಾವ ಮೌಲ್ಯ ತೋರುತ್ತದೆ? \"ವಿವೇಕ ಕಡೆಗಣಿಸಿ\" ಆನ್ ಮಾಡಿ. ಯಾವ ಅಪ್ರಾಪ್ತ ಲಾಭ ಸೇರುತ್ತದೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "The principle of prudence (conservatism) says: anticipate no profit, provide for every loss. So closing stock is shown at cost or net realisable value, whichever is lower.",
+    "kn": "ವಿವೇಕ (ಸಂಪ್ರದಾಯವಾದ) ತತ್ವ: ಲಾಭವನ್ನು ನಿರೀಕ್ಷಿಸಬೇಡಿ, ಪ್ರತಿ ನಷ್ಟಕ್ಕೆ ಅವಕಾಶ ಮಾಡಿ. ಆದ್ದರಿಂದ ಅಂತಿಮ ದಾಸ್ತಾನು ವೆಚ್ಚ ಅಥವಾ ನಿವ್ವಳ ಮಾರುಕಟ್ಟೆ ಮೌಲ್ಯ, ಯಾವುದು ಕಡಿಮೆಯೋ ಅದರಲ್ಲಿ."
+   },
+   "sliders": [
+    {
+     "name": "c",
+     "label": {
+      "en": "Cost per unit",
+      "kn": "ಪ್ರತಿ ಘಟಕ ವೆಚ್ಚ"
+     },
+     "min": 50,
+     "max": 200,
+     "step": 5,
+     "value": 120,
+     "unit": "₹"
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "Realisable value per unit",
+      "kn": "ಪ್ರತಿ ಘಟಕ ಮಾರುಕಟ್ಟೆ ಮೌಲ್ಯ"
+     },
+     "min": 50,
+     "max": 200,
+     "step": 5,
+     "value": 100,
+     "unit": "₹"
+    },
+    {
+     "name": "q",
+     "label": {
+      "en": "Units in stock",
+      "kn": "ದಾಸ್ತಾನು ಘಟಕಗಳು"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 10,
+     "value": 100
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ign",
+     "label": {
+      "en": "Ignore prudence (always use market value)",
+      "kn": "ವಿವೇಕ ಕಡೆಗಣಿಸಿ (ಮಾರುಕಟ್ಟೆ ಮೌಲ್ಯ ಬಳಸಿ)"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "vc",
+     "expr": "c*q"
+    },
+    {
+     "name": "vn",
+     "expr": "n*q"
+    },
+    {
+     "name": "shown",
+     "expr": "if(ign, vn, min(vc, vn))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10.4
+    ],
+    "y": [
+     -3000,
+     44000
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(vc - 0, 94)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": "max(vc, 0) + 1645",
+     "text": {
+      "en": "₹{vc:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": -1645.0000000000002,
+     "text": {
+      "en": "At cost",
+      "kn": "ವೆಚ್ಚದಲ್ಲಿ"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(vn - 0, 94)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": "max(vn, 0) + 1645",
+     "text": {
+      "en": "₹{vn:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": -1645.0000000000002,
+     "text": {
+      "en": "At realisable value",
+      "kn": "ಮಾರುಕಟ್ಟೆ ಮೌಲ್ಯದಲ್ಲಿ"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 7.4,
+     "y": 0,
+     "w": 2.0,
+     "h": "max(shown - 0, 94)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": "max(shown, 0) + 1645",
+     "text": {
+      "en": "₹{shown:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": -1645.0000000000002,
+     "text": {
+      "en": "Shown in books",
+      "kn": "ಪುಸ್ತಕದಲ್ಲಿ ತೋರಿಸುವುದು"
+     },
+     "size": 20,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Closing stock shown",
+      "kn": "ತೋರಿಸಿದ ಅಂತಿಮ ದಾಸ್ತಾನು"
+     },
+     "expr": "shown",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Loss provided for",
+      "kn": "ಒದಗಿಸಿದ ನಷ್ಟ"
+     },
+     "expr": "max(vc - vn, 0)*(1 - ign)",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Unrealised gain counted",
+      "kn": "ಎಣಿಸಿದ ಅಪ್ರಾಪ್ತ ಲಾಭ"
+     },
+     "expr": "max(vn - vc, 0)*ign",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make the market value higher than cost. Which value is shown?",
+     "kn": "ಮಾರುಕಟ್ಟೆ ಮೌಲ್ಯವನ್ನು ವೆಚ್ಚಕ್ಕಿಂತ ಹೆಚ್ಚು ಮಾಡಿ. ಯಾವ ಮೌಲ್ಯ ತೋರುತ್ತದೆ?"
+    },
+    {
+     "en": "Switch on \"ignore prudence\". What unrealised gain would creep into profit?",
+     "kn": "\"ವಿವೇಕ ಕಡೆಗಣಿಸಿ\" ಆನ್ ಮಾಡಿ. ಯಾವ ಅಪ್ರಾಪ್ತ ಲಾಭ ಸೇರುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -59,6 +59,167 @@
    }
   },
   {
+   "id": "scene-forward-chain",
+   "type": "interactive",
+   "title": {
+    "en": "Think before you forward",
+    "kn": "ಫಾರ್ವರ್ಡ್ ಮಾಡುವ ಮೊದಲು ಯೋಚಿಸಿ"
+   },
+   "narration": {
+    "en": "A good netizen checks a message before sharing it. If every person forwards a message to a few others, it reaches a crowd within a few rounds, true or false. Press Forward to see the next round. With 4 forwards each, how many rounds until 300 people have seen it? Switch on \"check before forwarding\". What happens to the spread?",
+    "kn": "ಉತ್ತಮ ನೆಟಿಜನ್ ಹಂಚಿಕೊಳ್ಳುವ ಮೊದಲು ಸಂದೇಶ ಪರಿಶೀಲಿಸುತ್ತಾರೆ. ಪ್ರತಿಯೊಬ್ಬರೂ ಕೆಲವರಿಗೆ ಫಾರ್ವರ್ಡ್ ಮಾಡಿದರೆ, ಸತ್ಯವಿರಲಿ ಸುಳ್ಳಿರಲಿ, ಕೆಲವೇ ಸುತ್ತುಗಳಲ್ಲಿ ಜನಸಮೂಹ ತಲುಪುತ್ತದೆ. ಮುಂದಿನ ಸುತ್ತಿಗೆ Forward ಒತ್ತಿ. ಪ್ರತಿಯೊಬ್ಬರೂ 4 ಜನರಿಗೆ ಕಳುಹಿಸಿದರೆ, 300 ಜನ ನೋಡಲು ಎಷ್ಟು ಸುತ್ತು? \"ಫಾರ್ವರ್ಡ್ ಮೊದಲು ಪರಿಶೀಲಿಸಿ\" ಆನ್ ಮಾಡಿ. ಹರಡುವಿಕೆ ಏನಾಗುತ್ತದೆ?"
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "A good netizen checks a message before sharing it. If every person forwards a message to a few others, it reaches a crowd within a few rounds, true or false. Press Forward to see the next round.",
+    "kn": "ಉತ್ತಮ ನೆಟಿಜನ್ ಹಂಚಿಕೊಳ್ಳುವ ಮೊದಲು ಸಂದೇಶ ಪರಿಶೀಲಿಸುತ್ತಾರೆ. ಪ್ರತಿಯೊಬ್ಬರೂ ಕೆಲವರಿಗೆ ಫಾರ್ವರ್ಡ್ ಮಾಡಿದರೆ, ಸತ್ಯವಿರಲಿ ಸುಳ್ಳಿರಲಿ, ಕೆಲವೇ ಸುತ್ತುಗಳಲ್ಲಿ ಜನಸಮೂಹ ತಲುಪುತ್ತದೆ. ಮುಂದಿನ ಸುತ್ತಿಗೆ Forward ಒತ್ತಿ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "People each person forwards to",
+      "kn": "ಪ್ರತಿಯೊಬ್ಬರು ಕಳುಹಿಸುವ ಜನ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "toggles": [
+    {
+     "name": "chk",
+     "label": {
+      "en": "Most people check before forwarding",
+      "kn": "ಹೆಚ್ಚಿನವರು ಫಾರ್ವರ್ಡ್ ಮೊದಲು ಪರಿಶೀಲಿಸುತ್ತಾರೆ"
+     },
+     "value": false
+    }
+   ],
+   "counters": [
+    {
+     "name": "g",
+     "value": 0,
+     "min": 0,
+     "max": 8
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Forward",
+      "kn": "ಫಾರ್ವರ್ಡ್"
+     },
+     "icon": "next",
+     "set": {
+      "g": "g + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ"
+     },
+     "icon": "reset",
+     "set": {
+      "g": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "kk",
+     "expr": "if(chk, k*0.15, k)"
+    },
+    {
+     "name": "reach",
+     "expr": "if(abs(kk - 1) < 0.001, g + 1, (kk^(g + 1) - 1)/(kk - 1))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     15.6
+    ],
+    "y": [
+     0,
+     11.2
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 400,
+     "x": "mod(i, 25)*0.6 + 0.6",
+     "y": "floor(i/25)*0.6 + 0.6",
+     "r": 0.22,
+     "color": {
+      "by": "if(i < 1, 1, 0.5)",
+      "scale": [
+       "white",
+       "orange",
+       "red"
+      ]
+     },
+     "visibleIf": "i < reach"
+    },
+    {
+     "shape": "text",
+     "x": 7.8,
+     "y": 10.6,
+     "text": {
+      "en": "Each dot is one person who saw the message",
+      "kn": "ಪ್ರತಿ ಚುಕ್ಕೆ ಸಂದೇಶ ನೋಡಿದ ಒಬ್ಬ ವ್ಯಕ್ತಿ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": 7.8,
+     "y": 5,
+     "text": {
+      "en": "More than 400 people!",
+      "kn": "400ಕ್ಕೂ ಹೆಚ್ಚು ಜನ!"
+     },
+     "size": 30,
+     "color": "red",
+     "visibleIf": "reach > 400"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Round",
+      "kn": "ಸುತ್ತು"
+     },
+     "expr": "g",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "People reached",
+      "kn": "ತಲುಪಿದ ಜನ"
+     },
+     "expr": "reach",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With 4 forwards each, how many rounds until 300 people have seen it?",
+     "kn": "ಪ್ರತಿಯೊಬ್ಬರೂ 4 ಜನರಿಗೆ ಕಳುಹಿಸಿದರೆ, 300 ಜನ ನೋಡಲು ಎಷ್ಟು ಸುತ್ತು?"
+    },
+    {
+     "en": "Switch on \"check before forwarding\". What happens to the spread?",
+     "kn": "\"ಫಾರ್ವರ್ಡ್ ಮೊದಲು ಪರಿಶೀಲಿಸಿ\" ಆನ್ ಮಾಡಿ. ಹರಡುವಿಕೆ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {
