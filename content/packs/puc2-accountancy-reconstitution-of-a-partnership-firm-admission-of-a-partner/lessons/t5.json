@@ -369,6 +369,371 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Adjusting capitals on admission",
+    "kn": "ಪ್ರವೇಶದಲ್ಲಿ ಬಂಡವಾಳ ಹೊಂದಾಣಿಕೆ"
+   },
+   "caption": {
+    "en": "A and B share 3 : 2 and C joins. Either C's capital is fixed from the old partners' adjusted capitals, or the old partners' capitals are set in the new ratio from C's capital, bringing in or withdrawing cash.",
+    "kn": "A ಮತ್ತು B 3 : 2, C ಸೇರುತ್ತಾನೆ. ಹಳೆಯ ಪಾಲುದಾರರ ಬಂಡವಾಳದಿಂದ C ಬಂಡವಾಳ, ಅಥವಾ C ಬಂಡವಾಳದಿಂದ ಹೊಸ ಅನುಪಾತದಲ್ಲಿ ಹಳೆಯವರ ಬಂಡವಾಳ ನಿಗದಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "ca",
+     "label": {
+      "en": "A's adjusted capital"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 10,
+     "value": 180,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "cb",
+     "label": {
+      "en": "B's adjusted capital"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 10,
+     "value": 120,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "cc",
+     "label": {
+      "en": "C's capital"
+     },
+     "min": 20,
+     "max": 300,
+     "step": 10,
+     "value": 100,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "C's share"
+     },
+     "min": 10,
+     "max": 50,
+     "step": 5,
+     "value": 20,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "cs",
+     "label": {
+      "en": "Case",
+      "kn": "ಸಂದರ್ಭ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Find C's capital",
+        "kn": "C ಬಂಡವಾಳ ಕಂಡುಹಿಡಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Adjust A and B",
+        "kn": "A ಮತ್ತು B ಹೊಂದಿಸಿ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "tot",
+     "expr": "if(cs == 1, (ca + cb)/(1 - c/100), cc/(c/100))"
+    },
+    {
+     "name": "nA",
+     "expr": "if(cs == 1, ca, tot*0.6*(1 - c/100))"
+    },
+    {
+     "name": "nB",
+     "expr": "if(cs == 1, cb, tot*0.4*(1 - c/100))"
+    },
+    {
+     "name": "cC",
+     "expr": "if(cs == 1, tot*c/100, cc)"
+    },
+    {
+     "name": "b0",
+     "expr": "ca"
+    },
+    {
+     "name": "b1",
+     "expr": "nA"
+    },
+    {
+     "name": "b2",
+     "expr": "cb"
+    },
+    {
+     "name": "b3",
+     "expr": "nB"
+    },
+    {
+     "name": "b4",
+     "expr": "cC"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(100, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bk",
+     "expr": "6.8/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.684,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 2.232,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.8,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.8,
+     "y": 0.5,
+     "text": {
+      "en": "A has"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 5.284,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 2.232,
+     "h": "abs(b1)*bk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6.4,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.4,
+     "y": 0.5,
+     "text": {
+      "en": "A needs"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.884,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 2.232,
+     "h": "abs(b2)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 0.5,
+     "text": {
+      "en": "B has"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 12.484,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 2.232,
+     "h": "abs(b3)*bk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 13.6,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.6,
+     "y": 0.5,
+     "text": {
+      "en": "B needs"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.084,
+     "y": "1.2 + (min(0, b4) - blo)*bk",
+     "w": 2.232,
+     "h": "abs(b4)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 17.2,
+     "y": "1.2 + (max(0, b4) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b4:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.2,
+     "y": 0.5,
+     "text": {
+      "en": "C's capital"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "Total capital = ({ca} + {cb}) ÷ {100 - c}% = {tot:1}"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "cs == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "Total capital = {cc} ÷ {c}% = {tot:1};  A brings {nA - ca:1}, B brings {nB - cb:1}"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "cs == 2"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Total capital of the new firm"
+     },
+     "expr": "tot",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "A brings (+) / withdraws (−)"
+     },
+     "expr": "nA - ca",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "B brings (+) / withdraws (−)"
+     },
+     "expr": "nB - cb",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "C's capital"
+     },
+     "expr": "cC",
+     "digits": 1,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "A ₹1,80,000 and B ₹1,20,000, C gets 1/5: check C's capital of ₹75,000."
+    },
+    {
+     "en": "Switch to Adjust A and B with C bringing ₹1,00,000. Who brings cash and who takes it out?"
+    },
+    {
+     "en": "Why are the capitals said to be in the new profit sharing ratio after adjustment?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

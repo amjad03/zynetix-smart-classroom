@@ -291,6 +291,281 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "New ratio and gaining ratio",
+    "kn": "ಹೊಸ ಅನುಪಾತ ಮತ್ತು ಲಾಭದ ಅನುಪಾತ"
+   },
+   "caption": {
+    "en": "When C retires, A and B take over C's share. Each partner's gain is his new share minus his old share.",
+    "kn": "C ನಿವೃತ್ತನಾದಾಗ A ಮತ್ತು B, C ಪಾಲನ್ನು ಪಡೆಯುತ್ತಾರೆ. ಪ್ರತಿಯೊಬ್ಬರ ಲಾಭ = ಹೊಸ ಪಾಲು − ಹಳೆಯ ಪಾಲು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "A's old share"
+     },
+     "min": 10,
+     "max": 60,
+     "step": 5,
+     "value": 50,
+     "unit": "%"
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "B's old share"
+     },
+     "min": 10,
+     "max": 35,
+     "step": 5,
+     "value": 30,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "how",
+     "label": {
+      "en": "A and B take C's share",
+      "kn": "ಪಾಲು ಹಂಚಿಕೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "In their old ratio",
+        "kn": "ಹಳೆಯ ಅನುಪಾತದಲ್ಲಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Equally",
+        "kn": "ಸಮವಾಗಿ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "All to A",
+        "kn": "ಎಲ್ಲವೂ A ಗೆ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "cc",
+     "expr": "100 - a - b"
+    },
+    {
+     "name": "ga",
+     "expr": "if(how == 1, cc*a/(a + b), if(how == 2, cc/2, cc))"
+    },
+    {
+     "name": "gb",
+     "expr": "cc - ga"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     2.5,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 3.8,
+     "y": 7.3,
+     "text": {
+      "en": "Old"
+     },
+     "size": 24,
+     "color": "white",
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 3.8,
+     "y": 4.3,
+     "text": {
+      "en": "New"
+     },
+     "size": 24,
+     "color": "white",
+     "align": "right"
+    },
+    {
+     "shape": "rect",
+     "x": "4 + (0)*0.14",
+     "y": 7,
+     "w": "max(a, 0)*0.14",
+     "h": 1.1,
+     "color": "blue",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": "4 + ((0) + (a)/2)*0.14",
+     "y": 7.38,
+     "text": {
+      "en": "A {a:1}%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "a > 6"
+    },
+    {
+     "shape": "rect",
+     "x": "4 + (0 + max(a, 0))*0.14",
+     "y": 7,
+     "w": "max(b, 0)*0.14",
+     "h": 1.1,
+     "color": "orange",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": "4 + ((0 + max(a, 0)) + (b)/2)*0.14",
+     "y": 7.38,
+     "text": {
+      "en": "B {b:1}%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "b > 6"
+    },
+    {
+     "shape": "rect",
+     "x": "4 + (0 + max(a, 0) + max(b, 0))*0.14",
+     "y": 7,
+     "w": "max(100 - a - b, 0)*0.14",
+     "h": 1.1,
+     "color": "red",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": "4 + ((0 + max(a, 0) + max(b, 0)) + (100 - a - b)/2)*0.14",
+     "y": 7.38,
+     "text": {
+      "en": "C {100 - a - b:1}%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "100 - a - b > 6"
+    },
+    {
+     "shape": "rect",
+     "x": "4 + (0)*0.14",
+     "y": 4,
+     "w": "max(a + ga, 0)*0.14",
+     "h": 1.1,
+     "color": "blue",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": "4 + ((0) + (a + ga)/2)*0.14",
+     "y": 4.38,
+     "text": {
+      "en": "A {a + ga:1}%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "a + ga > 6"
+    },
+    {
+     "shape": "rect",
+     "x": "4 + (0 + max(a + ga, 0))*0.14",
+     "y": 4,
+     "w": "max(b + gb, 0)*0.14",
+     "h": 1.1,
+     "color": "orange",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": "4 + ((0 + max(a + ga, 0)) + (b + gb)/2)*0.14",
+     "y": 4.38,
+     "text": {
+      "en": "B {b + gb:1}%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "b + gb > 6"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 9.3,
+     "text": {
+      "en": "C retires. Gaining ratio A : B = {ga:2} : {gb:2}"
+     },
+     "size": 26,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "A's new share"
+     },
+     "expr": "a + ga",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "B's new share"
+     },
+     "expr": "b + gb",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "A's gain"
+     },
+     "expr": "ga",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "B's gain"
+     },
+     "expr": "gb",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Old ratio 5 : 3 : 2 and C retires: check the new ratio 5 : 3."
+    },
+    {
+     "en": "Switch to equally. When does the gaining ratio differ from the old ratio of A and B?"
+    },
+    {
+     "en": "Compare with admission: why is it a gaining ratio now, not a sacrificing ratio?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

@@ -540,6 +540,341 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Forfeit and reissue shares",
+    "kn": "ಷೇರು ಮುಟ್ಟುಗೋಲು ಮತ್ತು ಮರುವಿತರಣೆ"
+   },
+   "caption": {
+    "en": "Fully called ₹10 shares are forfeited after the holder paid part of the money. They are reissued at a discount, which cannot exceed the amount forfeited; the gain left on reissued shares goes to capital reserve.",
+    "kn": "ಭಾಗ ಹಣ ಪಾವತಿಸಿದ ನಂತರ ₹10 ಷೇರುಗಳನ್ನು ಮುಟ್ಟುಗೋಲು ಹಾಕಲಾಗಿದೆ. ರಿಯಾಯಿತಿಯಲ್ಲಿ ಮರುವಿತರಣೆ; ರಿಯಾಯಿತಿ ಮುಟ್ಟುಗೋಲು ಮೊತ್ತ ಮೀರಬಾರದು; ಉಳಿದ ಲಾಭ ಬಂಡವಾಳ ಮೀಸಲಿಗೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "nf",
+     "label": {
+      "en": "Shares forfeited"
+     },
+     "min": 100,
+     "max": 2000,
+     "step": 100,
+     "value": 1000,
+     "unit": "shares"
+    },
+    {
+     "name": "pd",
+     "label": {
+      "en": "Paid per share before forfeiture"
+     },
+     "min": 1,
+     "max": 9,
+     "step": 1,
+     "value": 6,
+     "unit": "₹"
+    },
+    {
+     "name": "nr",
+     "label": {
+      "en": "Shares reissued"
+     },
+     "min": 0,
+     "max": 2000,
+     "step": 100,
+     "value": 800,
+     "unit": "shares"
+    },
+    {
+     "name": "rp",
+     "label": {
+      "en": "Reissue price"
+     },
+     "min": 5,
+     "max": 10,
+     "step": 0.5,
+     "value": 8,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "je",
+     "label": {
+      "en": "Show the reissue entry",
+      "kn": "ಮರುವಿತರಣೆ ನಮೂದು"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "nrE",
+     "expr": "min(nr, nf)"
+    },
+    {
+     "name": "b0",
+     "expr": "nf*pd"
+    },
+    {
+     "name": "b1",
+     "expr": "nrE*pd"
+    },
+    {
+     "name": "b2",
+     "expr": "nrE*(10 - rp)"
+    },
+    {
+     "name": "b3",
+     "expr": "nrE*(pd - 10 + rp)"
+    },
+    {
+     "name": "b4",
+     "expr": "(nf - nrE)*pd"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(2000, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bk",
+     "expr": "6.8/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19.5,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.222,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": 0.5,
+     "text": {
+      "en": "Forfeited on all shares"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 5.022,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b1)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": 0.5,
+     "text": {
+      "en": "On reissued shares"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.822,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b2)*bk",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 0.5,
+     "text": {
+      "en": "Discount on reissue"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 12.622,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b3)*bk",
+     "color": {
+      "by": "step(0, b3)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": 0.5,
+     "text": {
+      "en": "To capital reserve"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.422,
+     "y": "1.2 + (min(0, b4) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b4)*bk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": "1.2 + (max(0, b4) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b4}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": 0.5,
+     "text": {
+      "en": "Left in forfeiture A/c"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "Not allowed: the discount ₹{10 - rp:1} per share exceeds the ₹{pd} forfeited"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "10 - rp > pd"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "Bank A/c Dr {nrE*rp}, Share Forfeiture A/c Dr {nrE*(10 - rp)}, To Share Capital A/c {nrE*10}"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "je && 10 - rp <= pd"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Amount forfeited"
+     },
+     "expr": "nf*pd",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Capital reserve"
+     },
+     "expr": "nrE*(pd - 10 + rp)",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Left in share forfeiture"
+     },
+     "expr": "(nf - nrE)*pd",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "1,000 shares forfeited after ₹6 paid; 800 reissued at ₹8: check capital reserve ₹3,200."
+    },
+    {
+     "en": "Lower the reissue price until a warning appears. Why is that discount not allowed?"
+    },
+    {
+     "en": "Why does the forfeiture on shares not yet reissued stay in the share forfeiture account?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

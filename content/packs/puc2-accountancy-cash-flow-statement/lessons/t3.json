@@ -525,6 +525,537 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Cash from operations: the indirect method",
+    "kn": "ಕಾರ್ಯಾಚರಣೆಯ ನಗದು: ಪರೋಕ್ಷ ವಿಧಾನ"
+   },
+   "caption": {
+    "en": "Start from net profit before tax, add back non-cash charges such as depreciation, adjust for changes in working capital, then deduct tax paid (₹40,000).",
+    "kn": "ತೆರಿಗೆ ಪೂರ್ವ ನಿವ್ವಳ ಲಾಭದಿಂದ ಆರಂಭಿಸಿ, ಸವಕಳಿಯಂತಹ ನಗದಲ್ಲದ ಖರ್ಚು ಸೇರಿಸಿ, ದುಡಿಯುವ ಬಂಡವಾಳದ ಬದಲಾವಣೆ ಹೊಂದಿಸಿ, ನಂತರ ಪಾವತಿಸಿದ ತೆರಿಗೆ (₹40,000) ಕಳೆಯಿರಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "np",
+     "label": {
+      "en": "Net profit before tax"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 10,
+     "value": 200,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "dp",
+     "label": {
+      "en": "Depreciation"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 40,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "dr",
+     "label": {
+      "en": "Increase in trade receivables"
+     },
+     "min": -50,
+     "max": 50,
+     "step": 5,
+     "value": 20,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "dpy",
+     "label": {
+      "en": "Increase in trade payables"
+     },
+     "min": -50,
+     "max": 50,
+     "step": 5,
+     "value": 10,
+     "unit": "₹ '000"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ls",
+     "label": {
+      "en": "Loss on sale of machinery ₹15k",
+      "kn": "ಯಂತ್ರ ಮಾರಾಟದ ನಷ್ಟ ₹15k"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "wd0",
+     "expr": "np"
+    },
+    {
+     "name": "wc0",
+     "expr": "wd0"
+    },
+    {
+     "name": "wd1",
+     "expr": "dp"
+    },
+    {
+     "name": "wc1",
+     "expr": "wc0 + wd1"
+    },
+    {
+     "name": "wd2",
+     "expr": "15*ls"
+    },
+    {
+     "name": "wc2",
+     "expr": "wc1 + wd2"
+    },
+    {
+     "name": "wc3",
+     "expr": "wc2"
+    },
+    {
+     "name": "wd3",
+     "expr": "wc3"
+    },
+    {
+     "name": "wd4",
+     "expr": "-dr"
+    },
+    {
+     "name": "wc4",
+     "expr": "wc3 + wd4"
+    },
+    {
+     "name": "wd5",
+     "expr": "dpy"
+    },
+    {
+     "name": "wc5",
+     "expr": "wc4 + wd5"
+    },
+    {
+     "name": "wd6",
+     "expr": "-40"
+    },
+    {
+     "name": "wc6",
+     "expr": "wc5 + wd6"
+    },
+    {
+     "name": "wc7",
+     "expr": "wc6"
+    },
+    {
+     "name": "wd7",
+     "expr": "wc7"
+    },
+    {
+     "name": "wlo",
+     "expr": "min(0, wc0, wc1, wc2, wc3, wc4, wc5, wc6, wc7)"
+    },
+    {
+     "name": "whi",
+     "expr": "max(1, wc0, wc1, wc2, wc3, wc4, wc5, wc6, wc7)"
+    },
+    {
+     "name": "wk",
+     "expr": "7.6/(whi - wlo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.5,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.3,
+     "y1": "1 + (0 - wlo)*wk",
+     "x2": 19.7,
+     "y2": "1 + (0 - wlo)*wk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 0.785,
+     "y": "1 + (min(0, wc0) - wlo)*wk",
+     "w": 1.455,
+     "h": "abs(wc0)*wk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 1.512,
+     "y": "1 + (max(0, wc0) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.512,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Profit before tax"
+     },
+     "size": 17,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 2.24,
+     "y1": "1 + (wc0 - wlo)*wk",
+     "x2": 3.21,
+     "y2": "1 + (wc0 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 3.21,
+     "y": "1 + (min(wc0, wc1) - wlo)*wk",
+     "w": 1.455,
+     "h": "abs(wd1)*wk",
+     "color": {
+      "by": "step(0, wd1)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 3.937,
+     "y": "1 + (max(wc0, wc1) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.937,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Depreciation"
+     },
+     "size": 17,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 4.665,
+     "y1": "1 + (wc1 - wlo)*wk",
+     "x2": 5.635,
+     "y2": "1 + (wc1 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 5.635,
+     "y": "1 + (min(wc1, wc2) - wlo)*wk",
+     "w": 1.455,
+     "h": "abs(wd2)*wk",
+     "color": {
+      "by": "step(0, wd2)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 6.362,
+     "y": "1 + (max(wc1, wc2) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.362,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Loss on sale"
+     },
+     "size": 17,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 7.09,
+     "y1": "1 + (wc2 - wlo)*wk",
+     "x2": 8.06,
+     "y2": "1 + (wc2 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 8.06,
+     "y": "1 + (min(0, wc3) - wlo)*wk",
+     "w": 1.455,
+     "h": "abs(wc3)*wk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 8.787,
+     "y": "1 + (max(0, wc3) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.787,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Before WC changes"
+     },
+     "size": 17,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 9.515,
+     "y1": "1 + (wc3 - wlo)*wk",
+     "x2": 10.485,
+     "y2": "1 + (wc3 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 10.485,
+     "y": "1 + (min(wc3, wc4) - wlo)*wk",
+     "w": 1.455,
+     "h": "abs(wd4)*wk",
+     "color": {
+      "by": "step(0, wd4)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 11.213,
+     "y": "1 + (max(wc3, wc4) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd4}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.213,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Receivables change"
+     },
+     "size": 17,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 11.94,
+     "y1": "1 + (wc4 - wlo)*wk",
+     "x2": 12.91,
+     "y2": "1 + (wc4 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 12.91,
+     "y": "1 + (min(wc4, wc5) - wlo)*wk",
+     "w": 1.455,
+     "h": "abs(wd5)*wk",
+     "color": {
+      "by": "step(0, wd5)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 13.637,
+     "y": "1 + (max(wc4, wc5) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd5}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.637,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Payables change"
+     },
+     "size": 17,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 14.365,
+     "y1": "1 + (wc5 - wlo)*wk",
+     "x2": 15.335,
+     "y2": "1 + (wc5 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 15.335,
+     "y": "1 + (min(wc5, wc6) - wlo)*wk",
+     "w": 1.455,
+     "h": "abs(wd6)*wk",
+     "color": {
+      "by": "step(0, wd6)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 16.062,
+     "y": "1 + (max(wc5, wc6) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd6}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 16.062,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Tax paid"
+     },
+     "size": 17,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 16.79,
+     "y1": "1 + (wc6 - wlo)*wk",
+     "x2": 17.76,
+     "y2": "1 + (wc6 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 17.76,
+     "y": "1 + (min(0, wc7) - wlo)*wk",
+     "w": 1.455,
+     "h": "abs(wc7)*wk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 18.488,
+     "y": "1 + (max(0, wc7) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd7}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 18.488,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Net operating cash"
+     },
+     "size": 17,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Operating profit before WC changes"
+     },
+     "expr": "wc3",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Cash generated from operations"
+     },
+     "expr": "wc5",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Net cash from operating activities"
+     },
+     "expr": "wc7",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why is depreciation added back when it is an expense?"
+    },
+    {
+     "en": "Make the increase in receivables negative (a decrease). Does cash go up or down?"
+    },
+    {
+     "en": "Turn on the loss on sale. Why is it added back here and the sale proceeds shown under investing?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

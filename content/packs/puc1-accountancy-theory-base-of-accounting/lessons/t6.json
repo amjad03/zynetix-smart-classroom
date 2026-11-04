@@ -459,6 +459,368 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "GST on a sale",
+    "kn": "ಮಾರಾಟದ ಮೇಲಿನ GST"
+   },
+   "caption": {
+    "en": "A supply within the state carries CGST and SGST at half the rate each; a supply to another state carries IGST at the full rate. Tax paid on purchases is set off as input tax credit.",
+    "kn": "ರಾಜ್ಯದೊಳಗಿನ ಪೂರೈಕೆಗೆ CGST ಮತ್ತು SGST ತಲಾ ಅರ್ಧ ದರ; ಬೇರೆ ರಾಜ್ಯಕ್ಕೆ ಪೂರೈಕೆಗೆ ಪೂರ್ಣ ದರದ IGST. ಖರೀದಿಯ ಮೇಲೆ ಕಟ್ಟಿದ ತೆರಿಗೆ ಇನ್‌ಪುಟ್ ತೆರಿಗೆ ಜಮೆಯಾಗಿ ಹೊಂದಾಣಿಕೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "sv",
+     "label": {
+      "en": "Value of the sale"
+     },
+     "min": 10,
+     "max": 500,
+     "step": 10,
+     "value": 100,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "rt",
+     "label": {
+      "en": "GST rate"
+     },
+     "min": 0,
+     "max": 40,
+     "step": 1,
+     "value": 18,
+     "unit": "%"
+    },
+    {
+     "name": "ip",
+     "label": {
+      "en": "Purchases (same rate)"
+     },
+     "min": 0,
+     "max": 400,
+     "step": 10,
+     "value": 60,
+     "unit": "₹ '000"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ic",
+     "label": {
+      "en": "Claim input tax credit",
+      "kn": "ಇನ್‌ಪುಟ್ ತೆರಿಗೆ ಜಮೆ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "st",
+     "label": {
+      "en": "Supply",
+      "kn": "ಪೂರೈಕೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Within the state",
+        "kn": "ರಾಜ್ಯದೊಳಗೆ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "To another state",
+        "kn": "ಬೇರೆ ರಾಜ್ಯಕ್ಕೆ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "cg",
+     "expr": "if(st == 1, sv*rt/200, 0)"
+    },
+    {
+     "name": "sg",
+     "expr": "cg"
+    },
+    {
+     "name": "ig",
+     "expr": "if(st == 2, sv*rt/100, 0)"
+    },
+    {
+     "name": "itc",
+     "expr": "ic*ip*rt/100"
+    },
+    {
+     "name": "b0",
+     "expr": "cg"
+    },
+    {
+     "name": "b1",
+     "expr": "sg"
+    },
+    {
+     "name": "b2",
+     "expr": "ig"
+    },
+    {
+     "name": "b3",
+     "expr": "itc"
+    },
+    {
+     "name": "b4",
+     "expr": "cg + sg + ig - itc"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(20, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bk",
+     "expr": "7.2/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19.5,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.222,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": 0.5,
+     "text": {
+      "en": "CGST"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 5.022,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b1)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": 0.5,
+     "text": {
+      "en": "SGST"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.822,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b2)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 0.5,
+     "text": {
+      "en": "IGST"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 12.622,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b3)*bk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": 0.5,
+     "text": {
+      "en": "Input tax credit"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.422,
+     "y": "1.2 + (min(0, b4) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b4)*bk",
+     "color": {
+      "by": "step(0, b4)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": "1.2 + (max(0, b4) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b4:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": 0.5,
+     "text": {
+      "en": "Net GST payable"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Within the state: CGST + SGST, each half the rate"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "st == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "To another state: IGST at the full rate"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "st == 2"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Output tax"
+     },
+     "expr": "cg + sg + ig",
+     "digits": 2,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Input tax credit"
+     },
+     "expr": "itc",
+     "digits": 2,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Net GST payable"
+     },
+     "expr": "cg + sg + ig - itc",
+     "digits": 2,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "A sale of ₹1,00,000 at 18% within Karnataka: check CGST ₹9,000 and SGST ₹9,000."
+    },
+    {
+     "en": "Switch to another state. Does the total tax change, or only its name?"
+    },
+    {
+     "en": "Raise purchases until the net payable is negative. What happens to the extra credit?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

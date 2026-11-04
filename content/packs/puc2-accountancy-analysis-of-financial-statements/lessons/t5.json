@@ -439,6 +439,350 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Common size statement of profit and loss",
+    "kn": "ಸಾಮಾನ್ಯ ಗಾತ್ರದ ಲಾಭ ನಷ್ಟ ಪಟ್ಟಿ"
+   },
+   "caption": {
+    "en": "Every item is shown as a percentage of revenue from operations, so a small firm and a large firm can be compared side by side.",
+    "kn": "ಪ್ರತಿ ಅಂಶವನ್ನು ಕಾರ್ಯಾಚರಣೆಯ ಆದಾಯದ ಶೇಕಡಾ ಆಗಿ ತೋರಿಸಲಾಗುತ್ತದೆ; ಸಣ್ಣ ಮತ್ತು ದೊಡ್ಡ ಸಂಸ್ಥೆಗಳನ್ನು ಅಕ್ಕಪಕ್ಕ ಹೋಲಿಸಬಹುದು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "rv",
+     "label": {
+      "en": "Revenue from operations"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 10,
+     "value": 500,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "cm",
+     "label": {
+      "en": "Cost of materials"
+     },
+     "min": 0,
+     "max": 600,
+     "step": 10,
+     "value": 250,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "eb",
+     "label": {
+      "en": "Employee benefits"
+     },
+     "min": 0,
+     "max": 300,
+     "step": 5,
+     "value": 80,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "ox",
+     "label": {
+      "en": "Other expenses"
+     },
+     "min": 0,
+     "max": 300,
+     "step": 5,
+     "value": 70,
+     "unit": "₹ '000"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cmp",
+     "label": {
+      "en": "Compare with a rival firm",
+      "kn": "ಪ್ರತಿಸ್ಪರ್ಧಿಯೊಂದಿಗೆ ಹೋಲಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "pf",
+     "expr": "rv - cm - eb - ox"
+    },
+    {
+     "name": "s",
+     "expr": "8/max(rv, cm + eb + ox)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.4,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": "0.6 + (0)*s",
+     "w": 5,
+     "h": "max(cm, 0)*s",
+     "color": "orange",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": "0.6 + ((0) + max(cm, 0)/2)*s - 0.15",
+     "text": {
+      "en": "Materials {cm/rv*100:1}%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "max(cm, 0)*s > 0.55"
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": "0.6 + (0 + max(cm, 0))*s",
+     "w": 5,
+     "h": "max(eb, 0)*s",
+     "color": "blue",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": "0.6 + ((0 + max(cm, 0)) + max(eb, 0)/2)*s - 0.15",
+     "text": {
+      "en": "Employees {eb/rv*100:1}%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "max(eb, 0)*s > 0.55"
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": "0.6 + (0 + max(cm, 0) + max(eb, 0))*s",
+     "w": 5,
+     "h": "max(ox, 0)*s",
+     "color": "red",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": "0.6 + ((0 + max(cm, 0) + max(eb, 0)) + max(ox, 0)/2)*s - 0.15",
+     "text": {
+      "en": "Other {ox/rv*100:1}%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "max(ox, 0)*s > 0.55"
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": "0.6 + (0 + max(cm, 0) + max(eb, 0) + max(ox, 0))*s",
+     "w": 5,
+     "h": "max(pf, 0)*s",
+     "color": "green",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": "0.6 + ((0 + max(cm, 0) + max(eb, 0) + max(ox, 0)) + max(pf, 0)/2)*s - 0.15",
+     "text": {
+      "en": "Profit {pf/rv*100:1}%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "max(pf, 0)*s > 0.55"
+    },
+    {
+     "shape": "rect",
+     "x": 12,
+     "y": "0.6 + (0)*0.08",
+     "w": 5,
+     "h": 4.4,
+     "color": "orange",
+     "visibleIf": "cmp",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": "0.6 + (0 + 27.5)*0.08 - 0.15",
+     "text": {
+      "en": "Materials 55%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "rect",
+     "x": 12,
+     "y": "0.6 + (0 + 55)*0.08",
+     "w": 5,
+     "h": 1.2,
+     "color": "blue",
+     "visibleIf": "cmp",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": "0.6 + (0 + 55 + 7.5)*0.08 - 0.15",
+     "text": {
+      "en": "Employees 15%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "rect",
+     "x": 12,
+     "y": "0.6 + (0 + 55 + 15)*0.08",
+     "w": 5,
+     "h": 0.8,
+     "color": "red",
+     "visibleIf": "cmp",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": "0.6 + (0 + 55 + 15 + 5.0)*0.08 - 0.15",
+     "text": {
+      "en": "Other 10%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "rect",
+     "x": 12,
+     "y": "0.6 + (0 + 55 + 15 + 10)*0.08",
+     "w": 5,
+     "h": 1.6,
+     "color": "green",
+     "visibleIf": "cmp",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": "0.6 + (0 + 55 + 15 + 10 + 10.0)*0.08 - 0.15",
+     "text": {
+      "en": "Profit 20%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": 0.1,
+     "text": {
+      "en": "Our firm: revenue {rv}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": 0.1,
+     "text": {
+      "en": "Rival firm: revenue 2000"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.6,
+     "text": {
+      "en": "Revenue from operations = 100%"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": 9.0,
+     "text": {
+      "en": "Loss {-pf/rv*100:1}% of revenue"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "pf < 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Materials"
+     },
+     "expr": "cm/rv*100",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Employee benefits"
+     },
+     "expr": "eb/rv*100",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Other expenses"
+     },
+     "expr": "ox/rv*100",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Profit"
+     },
+     "expr": "pf/rv*100",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Our revenue is a quarter of the rival's. Which firm is more profitable per rupee of revenue?"
+    },
+    {
+     "en": "Change the materials cost so our material % equals the rival's 55%."
+    },
+    {
+     "en": "Why are absolute amounts alone not enough to compare these two firms?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

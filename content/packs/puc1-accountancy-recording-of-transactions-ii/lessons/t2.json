@@ -659,6 +659,259 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Cash book with a bank column",
+    "kn": "ಬ್ಯಾಂಕ್ ಕಾಲಂ ಇರುವ ನಗದು ಪುಸ್ತಕ"
+   },
+   "caption": {
+    "en": "Deposit cash or withdraw cash for office use: these contra entries appear on both sides of the cash book and leave the total unchanged. Cash sales and cheque payments change the total.",
+    "kn": "ನಗದನ್ನು ಬ್ಯಾಂಕಿಗೆ ಜಮೆ ಮಾಡಿ ಅಥವಾ ಕಚೇರಿ ಬಳಕೆಗೆ ತೆಗೆಯಿರಿ: ಈ ಕಾಂಟ್ರಾ ನಮೂದುಗಳು ಎರಡೂ ಬದಿಯಲ್ಲಿ ಬರುತ್ತವೆ, ಒಟ್ಟು ಬದಲಾಗುವುದಿಲ್ಲ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Amount"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 5,
+     "unit": "₹ '000"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "tot",
+     "label": {
+      "en": "Show the total",
+      "kn": "ಒಟ್ಟು ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "counters": [
+    {
+     "name": "cs",
+     "value": 20,
+     "min": 0,
+     "max": 100000
+    },
+    {
+     "name": "bk",
+     "value": 50,
+     "min": 0,
+     "max": 100000
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Deposit cash in bank (contra)",
+      "kn": "ನಗದು ಬ್ಯಾಂಕಿಗೆ (ಕಾಂಟ್ರಾ)"
+     },
+     "icon": "flip",
+     "set": {
+      "cs": "cs - min(k, cs)",
+      "bk": "bk + min(k, cs)"
+     }
+    },
+    {
+     "label": {
+      "en": "Withdraw cash for office (contra)",
+      "kn": "ಕಚೇರಿಗೆ ನಗದು ತೆಗೆಯಿರಿ (ಕಾಂಟ್ರಾ)"
+     },
+     "icon": "flip",
+     "set": {
+      "bk": "bk - min(k, bk)",
+      "cs": "cs + min(k, bk)"
+     }
+    },
+    {
+     "label": {
+      "en": "Cash sales",
+      "kn": "ನಗದು ಮಾರಾಟ"
+     },
+     "icon": "add",
+     "set": {
+      "cs": "cs + k"
+     }
+    },
+    {
+     "label": {
+      "en": "Pay a supplier by cheque",
+      "kn": "ಚೆಕ್ ಮೂಲಕ ಪಾವತಿ"
+     },
+     "icon": "remove",
+     "set": {
+      "bk": "bk - min(k, bk)"
+     }
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -1,
+     10.3
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 2.5,
+     "y": 0.5,
+     "w": 4,
+     "h": "cs*8/max(cs + bk, 40)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": -0.4,
+     "text": {
+      "en": "Cash"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": "0.9 + cs*8/max(cs + bk, 40)",
+     "text": {
+      "en": "{cs}"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.5,
+     "y": 0.5,
+     "w": 4,
+     "h": "bk*8/max(cs + bk, 40)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 10.5,
+     "y": -0.4,
+     "text": {
+      "en": "Bank"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.5,
+     "y": "0.9 + bk*8/max(cs + bk, 40)",
+     "text": {
+      "en": "{bk}"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 14.5,
+     "y": 0.5,
+     "w": 4,
+     "h": "cs*8/max(cs + bk, 40)",
+     "color": "green",
+     "visibleIf": "tot",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": 14.5,
+     "y": "0.5 + cs*8/max(cs + bk, 40)",
+     "w": 4,
+     "h": "bk*8/max(cs + bk, 40)",
+     "color": "blue",
+     "visibleIf": "tot",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 16.5,
+     "y": -0.4,
+     "text": {
+      "en": "Cash + bank"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "tot"
+    },
+    {
+     "shape": "text",
+     "x": 16.5,
+     "y": "0.9 + (cs + bk)*8/max(cs + bk, 40)",
+     "text": {
+      "en": "{cs + bk}"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "tot"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.7,
+     "text": {
+      "en": "Contra entries move money between the two columns; the total does not change."
+     },
+     "size": 22,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cash balance"
+     },
+     "expr": "cs",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Bank balance"
+     },
+     "expr": "bk",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Cash + bank"
+     },
+     "expr": "cs + bk",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Deposit cash into the bank. Which column is debited and which credited?"
+    },
+    {
+     "en": "Press the two contra buttons in turn. Does the total ever change?"
+    },
+    {
+     "en": "Why is a contra entry marked C in the L.F. column instead of being posted to the ledger?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

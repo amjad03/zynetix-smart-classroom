@@ -416,6 +416,337 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Adjust for goods taken by the owner",
+    "kn": "ಮಾಲೀಕ ತೆಗೆದ ಸರಕಿನ ಹೊಂದಾಣಿಕೆ"
+   },
+   "caption": {
+    "en": "Goods taken by the owner for personal use are deducted from purchases and added to drawings. Closing stock given outside the trial balance goes to the credit of the trading account.",
+    "kn": "ಸ್ವಂತ ಬಳಕೆಗೆ ಮಾಲೀಕ ತೆಗೆದ ಸರಕನ್ನು ಖರೀದಿಯಿಂದ ಕಳೆದು ಸೆಳೆತಕ್ಕೆ ಸೇರಿಸಲಾಗುತ್ತದೆ. ತಾಳೆಪಟ್ಟಿಯ ಹೊರಗೆ ಕೊಟ್ಟ ಅಂತಿಮ ದಾಸ್ತಾನು ವ್ಯಾಪಾರ ಖಾತೆಯ ಜಮಾ ಬದಿಗೆ ಹೋಗುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "Sl",
+     "label": {
+      "en": "Sales"
+     },
+     "min": 150,
+     "max": 300,
+     "step": 5,
+     "value": 220,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "P",
+     "label": {
+      "en": "Purchases"
+     },
+     "min": 100,
+     "max": 250,
+     "step": 5,
+     "value": 150,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "cs",
+     "label": {
+      "en": "Closing stock"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 1,
+     "value": 30,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "dw",
+     "label": {
+      "en": "Goods taken by the owner"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 8,
+     "unit": "₹ '000"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "rec",
+     "label": {
+      "en": "Record the goods taken",
+      "kn": "ತೆಗೆದ ಸರಕನ್ನು ದಾಖಲಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "netP",
+     "expr": "P - dw*rec"
+    },
+    {
+     "name": "gp",
+     "expr": "Sl + cs - 20 - netP"
+    },
+    {
+     "name": "b0",
+     "expr": "20"
+    },
+    {
+     "name": "b1",
+     "expr": "netP"
+    },
+    {
+     "name": "b2",
+     "expr": "cs"
+    },
+    {
+     "name": "b3",
+     "expr": "Sl"
+    },
+    {
+     "name": "b4",
+     "expr": "gp"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(100, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bk",
+     "expr": "7.3999999999999995/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19.5,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.222,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": 0.5,
+     "text": {
+      "en": "Opening stock"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 5.022,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b1)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": 0.5,
+     "text": {
+      "en": "Purchases used"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.822,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b2)*bk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 0.5,
+     "text": {
+      "en": "Closing stock"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 12.622,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b3)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": 0.5,
+     "text": {
+      "en": "Sales"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.422,
+     "y": "1.2 + (min(0, b4) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b4)*bk",
+     "color": {
+      "by": "step(0, gp)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": "1.2 + (max(0, b4) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b4}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": 0.5,
+     "text": {
+      "en": "Gross profit"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.6,
+     "text": {
+      "en": "Drawings A/c Dr {dw}   To Purchases A/c {dw}"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "rec"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.6,
+     "text": {
+      "en": "Not recorded: gross profit is understated by {dw}"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "!rec && dw > 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Gross profit"
+     },
+     "expr": "gp",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Added to drawings"
+     },
+     "expr": "dw*rec",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn off the adjustment. Does gross profit go up or down, and by how much?"
+    },
+    {
+     "en": "Raise the closing stock by ₹5,000. What happens to gross profit?"
+    },
+    {
+     "en": "Why are the goods recorded at cost and not at their selling price?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

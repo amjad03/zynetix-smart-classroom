@@ -295,6 +295,297 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Clear the suspense account",
+    "kn": "ಸಸ್ಪೆನ್ಸ್ ಖಾತೆಯನ್ನು ಮುಚ್ಚಿ"
+   },
+   "caption": {
+    "en": "Three one-sided errors made the trial balance disagree, and the difference was put in a suspense account. Rectify each error through suspense and watch the balance close to zero.",
+    "kn": "ಮೂರು ಏಕಪಕ್ಷೀಯ ದೋಷಗಳಿಂದ ತಾಳೆಪಟ್ಟಿ ತಾಳೆಯಾಗಲಿಲ್ಲ; ವ್ಯತ್ಯಾಸವನ್ನು ಸಸ್ಪೆನ್ಸ್ ಖಾತೆಗೆ ಹಾಕಲಾಗಿದೆ. ಪ್ರತಿ ದೋಷವನ್ನು ಸರಿಪಡಿಸಿ ಶಿಲ್ಕು ಸೊನ್ನೆಯಾಗುವುದನ್ನು ನೋಡಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "s",
+     "label": {
+      "en": "Sales book undercast by"
+     },
+     "min": 200,
+     "max": 2000,
+     "step": 100,
+     "value": 1000,
+     "unit": "₹"
+    }
+   ],
+   "counters": [
+    {
+     "name": "f1",
+     "value": 0,
+     "min": 0,
+     "max": 1
+    },
+    {
+     "name": "f2",
+     "value": 0,
+     "min": 0,
+     "max": 1
+    },
+    {
+     "name": "f3",
+     "value": 0,
+     "min": 0,
+     "max": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Rectify (a)",
+      "kn": "(a) ಸರಿಪಡಿಸಿ"
+     },
+     "icon": "check",
+     "set": {
+      "f1": 1
+     }
+    },
+    {
+     "label": {
+      "en": "Rectify (b)",
+      "kn": "(b) ಸರಿಪಡಿಸಿ"
+     },
+     "icon": "check",
+     "set": {
+      "f2": 1
+     }
+    },
+    {
+     "label": {
+      "en": "Rectify (c)",
+      "kn": "(c) ಸರಿಪಡಿಸಿ"
+     },
+     "icon": "check",
+     "set": {
+      "f3": 1
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "f1": 0,
+      "f2": 0,
+      "f3": 0
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "su",
+     "expr": "1200 - s + f1*s - f2*1000 - f3*200"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 4.5,
+     "x2": 12,
+     "y2": 4.5,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 8.5,
+     "y": "4.5 + min(su, 0)*4/2200",
+     "w": 3,
+     "h": "abs(su)*4/2200",
+     "color": {
+      "by": "step(0, su)",
+      "scale": [
+       "orange",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.6,
+     "text": {
+      "en": "Suspense account"
+     },
+     "size": 28,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": "4.5 + max(su, 0)*4/2200 + 0.4",
+     "text": {
+      "en": "Debit balance {su}"
+     },
+     "size": 24,
+     "color": "blue",
+     "visibleIf": "su > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": "4.5 + min(su, 0)*4/2200 - 0.5",
+     "text": {
+      "en": "Credit balance {-su}"
+     },
+     "size": 24,
+     "color": "orange",
+     "visibleIf": "su < 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.0,
+     "text": {
+      "en": "Closed: all errors found"
+     },
+     "size": 24,
+     "color": "green",
+     "visibleIf": "su == 0"
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 8.6,
+     "text": {
+      "en": "(a) Sales book undercast by {s}"
+     },
+     "size": 21,
+     "color": {
+      "by": "f1",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 7.8,
+     "text": {
+      "en": "(b) ₹500 paid to Raju credited to his account"
+     },
+     "size": 21,
+     "color": {
+      "by": "f2",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 7.0,
+     "text": {
+      "en": "(c) Discount allowed ₹200 not posted"
+     },
+     "size": 21,
+     "color": {
+      "by": "f3",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 19.6,
+     "y": 2.4,
+     "text": {
+      "en": "(a) Suspense Dr {s}, To Sales"
+     },
+     "size": 20,
+     "color": "green",
+     "align": "right",
+     "visibleIf": "f1"
+    },
+    {
+     "shape": "text",
+     "x": 19.6,
+     "y": 1.6,
+     "text": {
+      "en": "(b) Raju Dr 1000, To Suspense"
+     },
+     "size": 20,
+     "color": "green",
+     "align": "right",
+     "visibleIf": "f2"
+    },
+    {
+     "shape": "text",
+     "x": 19.6,
+     "y": 0.8,
+     "text": {
+      "en": "(c) Discount allowed Dr 200, To Suspense"
+     },
+     "size": 20,
+     "color": "green",
+     "align": "right",
+     "visibleIf": "f3"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Suspense balance (+ debit, − credit)"
+     },
+     "expr": "su",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Errors still to rectify"
+     },
+     "expr": "3 - f1 - f2 - f3",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With the sales book undercast by ₹1,000, why does the suspense account open with a debit of ₹200?"
+    },
+    {
+     "en": "Why does error (b) need ₹1,000 and not ₹500 to correct?"
+    },
+    {
+     "en": "Set the undercasting to ₹1,200. What is the opening suspense balance? Does that mean there were no errors?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

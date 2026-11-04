@@ -203,6 +203,420 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Straight line method over the years",
+    "kn": "ವರ್ಷಗಳಲ್ಲಿ ನೇರ ರೇಖಾ ವಿಧಾನ"
+   },
+   "caption": {
+    "en": "The same amount, (cost − residual value) ÷ life, is charged every year, so the book value falls in a straight line to the residual value. Orange shows depreciation charged so far.",
+    "kn": "ಪ್ರತಿ ವರ್ಷ ಒಂದೇ ಮೊತ್ತ, (ವೆಚ್ಚ − ಉಳಿಕೆ ಮೌಲ್ಯ) ÷ ಆಯುಷ್ಯ, ವಿಧಿಸಲಾಗುತ್ತದೆ; ಪುಸ್ತಕ ಮೌಲ್ಯ ನೇರ ರೇಖೆಯಲ್ಲಿ ಉಳಿಕೆ ಮೌಲ್ಯಕ್ಕೆ ಇಳಿಯುತ್ತದೆ. ಕಿತ್ತಳೆ ಬಣ್ಣ ಈವರೆಗಿನ ಸವಕಳಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "C",
+     "label": {
+      "en": "Cost of the asset"
+     },
+     "min": 60,
+     "max": 500,
+     "step": 10,
+     "value": 200,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "Sv",
+     "label": {
+      "en": "Residual value"
+     },
+     "min": 0,
+     "max": 50,
+     "step": 5,
+     "value": 20,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "Useful life"
+     },
+     "min": 2,
+     "max": 10,
+     "step": 1,
+     "value": 6,
+     "unit": "years"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "acc",
+     "label": {
+      "en": "Show depreciation so far",
+      "kn": "ಈವರೆಗಿನ ಸವಕಳಿ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run the years",
+      "kn": "ವರ್ಷಗಳನ್ನು ಓಡಿಸಿ"
+     },
+     "icon": "play",
+     "set": {},
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 10.5,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "yr"
+   },
+   "vars": [
+    {
+     "name": "dep",
+     "expr": "(C - Sv)/n"
+    },
+    {
+     "name": "yr",
+     "expr": "min(floor(t), 10)"
+    },
+    {
+     "name": "bv",
+     "expr": "C - dep*min(yr, n)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.6,
+     10.6
+    ],
+    "y": [
+     0,
+     520
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "Years",
+    "yLabel": "Book value (₹ '000)"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "Sv",
+     "x2": 10,
+     "y2": "Sv",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 9.9,
+     "y": "Sv + 12",
+     "text": {
+      "en": "residual value"
+     },
+     "size": 18,
+     "color": "white",
+     "align": "right"
+    },
+    {
+     "shape": "rect",
+     "x": -0.3,
+     "y": 0,
+     "w": 0.6,
+     "h": "C - dep*min(0, n)",
+     "color": "blue",
+     "visibleIf": "t >= 0"
+    },
+    {
+     "shape": "rect",
+     "x": -0.3,
+     "y": "C - dep*min(0, n)",
+     "w": 0.6,
+     "h": "dep*min(0, n)",
+     "color": "orange",
+     "visibleIf": "acc && t >= 0",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 0.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "C - dep*min(1, n)",
+     "color": "blue",
+     "visibleIf": "t >= 1"
+    },
+    {
+     "shape": "rect",
+     "x": 0.7,
+     "y": "C - dep*min(1, n)",
+     "w": 0.6,
+     "h": "dep*min(1, n)",
+     "color": "orange",
+     "visibleIf": "acc && t >= 1",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 1.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "C - dep*min(2, n)",
+     "color": "blue",
+     "visibleIf": "t >= 2"
+    },
+    {
+     "shape": "rect",
+     "x": 1.7,
+     "y": "C - dep*min(2, n)",
+     "w": 0.6,
+     "h": "dep*min(2, n)",
+     "color": "orange",
+     "visibleIf": "acc && t >= 2",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 2.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "C - dep*min(3, n)",
+     "color": "blue",
+     "visibleIf": "t >= 3"
+    },
+    {
+     "shape": "rect",
+     "x": 2.7,
+     "y": "C - dep*min(3, n)",
+     "w": 0.6,
+     "h": "dep*min(3, n)",
+     "color": "orange",
+     "visibleIf": "acc && t >= 3",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 3.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "C - dep*min(4, n)",
+     "color": "blue",
+     "visibleIf": "t >= 4"
+    },
+    {
+     "shape": "rect",
+     "x": 3.7,
+     "y": "C - dep*min(4, n)",
+     "w": 0.6,
+     "h": "dep*min(4, n)",
+     "color": "orange",
+     "visibleIf": "acc && t >= 4",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 4.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "C - dep*min(5, n)",
+     "color": "blue",
+     "visibleIf": "t >= 5"
+    },
+    {
+     "shape": "rect",
+     "x": 4.7,
+     "y": "C - dep*min(5, n)",
+     "w": 0.6,
+     "h": "dep*min(5, n)",
+     "color": "orange",
+     "visibleIf": "acc && t >= 5",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 5.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "C - dep*min(6, n)",
+     "color": "blue",
+     "visibleIf": "t >= 6"
+    },
+    {
+     "shape": "rect",
+     "x": 5.7,
+     "y": "C - dep*min(6, n)",
+     "w": 0.6,
+     "h": "dep*min(6, n)",
+     "color": "orange",
+     "visibleIf": "acc && t >= 6",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 6.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "C - dep*min(7, n)",
+     "color": "blue",
+     "visibleIf": "t >= 7"
+    },
+    {
+     "shape": "rect",
+     "x": 6.7,
+     "y": "C - dep*min(7, n)",
+     "w": 0.6,
+     "h": "dep*min(7, n)",
+     "color": "orange",
+     "visibleIf": "acc && t >= 7",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 7.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "C - dep*min(8, n)",
+     "color": "blue",
+     "visibleIf": "t >= 8"
+    },
+    {
+     "shape": "rect",
+     "x": 7.7,
+     "y": "C - dep*min(8, n)",
+     "w": 0.6,
+     "h": "dep*min(8, n)",
+     "color": "orange",
+     "visibleIf": "acc && t >= 8",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 8.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "C - dep*min(9, n)",
+     "color": "blue",
+     "visibleIf": "t >= 9"
+    },
+    {
+     "shape": "rect",
+     "x": 8.7,
+     "y": "C - dep*min(9, n)",
+     "w": 0.6,
+     "h": "dep*min(9, n)",
+     "color": "orange",
+     "visibleIf": "acc && t >= 9",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 9.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "C - dep*min(10, n)",
+     "color": "blue",
+     "visibleIf": "t >= 10"
+    },
+    {
+     "shape": "rect",
+     "x": 9.7,
+     "y": "C - dep*min(10, n)",
+     "w": 0.6,
+     "h": "dep*min(10, n)",
+     "color": "orange",
+     "visibleIf": "acc && t >= 10",
+     "opacity": 0.6
+    },
+    {
+     "shape": "path",
+     "fn": "C - dep*min(max(x, 0), n)",
+     "from": 0,
+     "to": 10,
+     "dashed": true,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "min(t, 10)",
+     "y": "C - dep*min(t, n)",
+     "r": 0.18,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 9.8,
+     "y": 505,
+     "text": {
+      "en": "Year {yr}: book value {bv:1}"
+     },
+     "size": 24,
+     "color": "yellow",
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Depreciation per year"
+     },
+     "expr": "dep",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Rate on original cost"
+     },
+     "expr": "dep/C*100",
+     "digits": 2,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Book value now"
+     },
+     "expr": "bv",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Accumulated depreciation"
+     },
+     "expr": "C - bv",
+     "digits": 1,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Cost ₹2,00,000, residual ₹20,000, life 6 years: check that the charge is ₹30,000 a year."
+    },
+    {
+     "en": "Halve the life. What happens to the yearly charge and to the slope of the line?"
+    },
+    {
+     "en": "After the life ends, why does the book value stop falling?"
+    }
+   ]
+  },
+  {
    "id": "sim-lab.graph-plotter",
    "type": "simulation",
    "source": "kinetix_sim",

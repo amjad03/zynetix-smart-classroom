@@ -527,6 +527,319 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The imprest petty cash book",
+    "kn": "ಇಂಪ್ರೆಸ್ಟ್ ಚಿಲ್ಲರೆ ನಗದು ಪುಸ್ತಕ"
+   },
+   "caption": {
+    "en": "The petty cashier starts with a fixed imprest and records small payments in analysis columns. At the end of the period the main cashier pays back exactly what was spent, so the imprest is restored.",
+    "kn": "ಚಿಲ್ಲರೆ ಕ್ಯಾಷಿಯರ್ ನಿಗದಿತ ಇಂಪ್ರೆಸ್ಟ್‌ನಿಂದ ಆರಂಭಿಸಿ ಸಣ್ಣ ಪಾವತಿಗಳನ್ನು ವಿಶ್ಲೇಷಣಾ ಕಾಲಂಗಳಲ್ಲಿ ಬರೆಯುತ್ತಾನೆ. ಅವಧಿಯ ಕೊನೆಯಲ್ಲಿ ಖರ್ಚಾದಷ್ಟೇ ಮರುಪಾವತಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "imp",
+     "label": {
+      "en": "Imprest amount"
+     },
+     "min": 2000,
+     "max": 10000,
+     "step": 500,
+     "value": 5000,
+     "unit": "₹"
+    },
+    {
+     "name": "a",
+     "label": {
+      "en": "Each payment"
+     },
+     "min": 50,
+     "max": 1000,
+     "step": 50,
+     "value": 200,
+     "unit": "₹"
+    }
+   ],
+   "counters": [
+    {
+     "name": "po",
+     "value": 0,
+     "min": 0,
+     "max": 100000
+    },
+    {
+     "name": "st",
+     "value": 0,
+     "min": 0,
+     "max": 100000
+    },
+    {
+     "name": "cv",
+     "value": 0,
+     "min": 0,
+     "max": 100000
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Pay postage",
+      "kn": "ಅಂಚೆ ವೆಚ್ಚ"
+     },
+     "icon": "remove",
+     "set": {
+      "po": "po + max(0, min(a, imp - po - st - cv))"
+     }
+    },
+    {
+     "label": {
+      "en": "Buy stationery",
+      "kn": "ಲೇಖನ ಸಾಮಗ್ರಿ"
+     },
+     "icon": "remove",
+     "set": {
+      "st": "st + max(0, min(a, imp - po - st - cv))"
+     }
+    },
+    {
+     "label": {
+      "en": "Pay conveyance",
+      "kn": "ಸಾರಿಗೆ ವೆಚ್ಚ"
+     },
+     "icon": "remove",
+     "set": {
+      "cv": "cv + max(0, min(a, imp - po - st - cv))"
+     }
+    },
+    {
+     "label": {
+      "en": "Reimburse (period ends)",
+      "kn": "ಮರುಪಾವತಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "po": 0,
+      "st": 0,
+      "cv": 0
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "po"
+    },
+    {
+     "name": "b1",
+     "expr": "st"
+    },
+    {
+     "name": "b2",
+     "expr": "cv"
+    },
+    {
+     "name": "b3",
+     "expr": "imp - po - st - cv"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(imp, b0, b1, b2, b3)"
+    },
+    {
+     "name": "bk",
+     "expr": "7.4/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.5,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": "1 + (0 - blo)*bk",
+     "x2": 19,
+     "y2": "1 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.855,
+     "y": "1 + (min(0, b0) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": "1 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Postage"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 6.355,
+     "y": "1 + (min(0, b1) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b1)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 7.75,
+     "y": "1 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.75,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Stationery"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.855,
+     "y": "1 + (min(0, b2) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b2)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 12.25,
+     "y": "1 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.25,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Conveyance"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 15.355,
+     "y": "1 + (min(0, b3) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b3)*bk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 16.75,
+     "y": "1 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 16.75,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Cash in hand"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Imprest {imp}: spent {po + st + cv}, so the main cashier reimburses {po + st + cv}"
+     },
+     "size": 22,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Total spent"
+     },
+     "expr": "po + st + cv",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Cash with the petty cashier"
+     },
+     "expr": "imp - po - st - cv",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Cash after reimbursement"
+     },
+     "expr": "imp",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make five payments. How much must the main cashier reimburse?"
+    },
+    {
+     "en": "After reimbursing, how much cash does the petty cashier hold? Why is that always the imprest?"
+    },
+    {
+     "en": "Only the column totals are posted to the ledger. Which accounts are debited?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -495,6 +495,365 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Debentures to a vendor",
+    "kn": "ಮಾರಾಟಗಾರನಿಗೆ ಸಾಲಪತ್ರಗಳು"
+   },
+   "caption": {
+    "en": "A company takes over assets and liabilities and pays the vendor in ₹100 debentures. If it pays more than the net assets, the excess is goodwill; if less, the difference is capital reserve.",
+    "kn": "ಕಂಪನಿ ಆಸ್ತಿ ಹೊಣೆಗಳನ್ನು ವಹಿಸಿ ಮಾರಾಟಗಾರನಿಗೆ ₹100 ಸಾಲಪತ್ರಗಳಲ್ಲಿ ಪಾವತಿಸುತ್ತದೆ. ನಿವ್ವಳ ಆಸ್ತಿಗಿಂತ ಹೆಚ್ಚು ಕೊಟ್ಟರೆ ಸುನಾಮ; ಕಡಿಮೆ ಕೊಟ್ಟರೆ ಬಂಡವಾಳ ಮೀಸಲು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "as",
+     "label": {
+      "en": "Assets taken over"
+     },
+     "min": 200,
+     "max": 1000,
+     "step": 10,
+     "value": 600,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "lb",
+     "label": {
+      "en": "Liabilities taken over"
+     },
+     "min": 0,
+     "max": 300,
+     "step": 10,
+     "value": 100,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "pc",
+     "label": {
+      "en": "Purchase consideration"
+     },
+     "min": 200,
+     "max": 900,
+     "step": 10,
+     "value": 550,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "ip",
+     "label": {
+      "en": "Issue price per ₹100"
+     },
+     "min": 90,
+     "max": 120,
+     "step": 5,
+     "value": 110,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "col",
+     "label": {
+      "en": "Also give debentures as collateral",
+      "kn": "ಆಧಾರ ಭದ್ರತೆಯಾಗಿ ಸಾಲಪತ್ರಗಳು"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "nd",
+     "expr": "floor(pc*1000/ip + 0.000001)"
+    },
+    {
+     "name": "b0",
+     "expr": "as - lb"
+    },
+    {
+     "name": "b1",
+     "expr": "pc"
+    },
+    {
+     "name": "b2",
+     "expr": "max(0, pc - as + lb)"
+    },
+    {
+     "name": "b3",
+     "expr": "max(0, as - lb - pc)"
+    },
+    {
+     "name": "b4",
+     "expr": "nd*100/1000"
+    },
+    {
+     "name": "b5",
+     "expr": "nd*(ip - 100)/1000"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3, b4, b5)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(100, b0, b1, b2, b3, b4, b5)"
+    },
+    {
+     "name": "bk",
+     "expr": "6.8/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19.5,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.102,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.083,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.083,
+     "y": 0.5,
+     "text": {
+      "en": "Net assets"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 4.268,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b1)*bk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": 0.5,
+     "text": {
+      "en": "Purchase consideration"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 7.435,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b2)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 8.417,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.417,
+     "y": 0.5,
+     "text": {
+      "en": "Goodwill"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.602,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b3)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 11.583,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.583,
+     "y": 0.5,
+     "text": {
+      "en": "Capital reserve"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 13.768,
+     "y": "1.2 + (min(0, b4) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b4)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": "1.2 + (max(0, b4) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b4:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": 0.5,
+     "text": {
+      "en": "Debentures (face)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.935,
+     "y": "1.2 + (min(0, b5) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b5)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 17.917,
+     "y": "1.2 + (max(0, b5) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b5:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.917,
+     "y": 0.5,
+     "text": {
+      "en": "Securities premium"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "Debentures issued = {pc*1000} ÷ {ip} = {nd} (cash for any fraction: {pc - nd*ip/1000:2})"
+     },
+     "size": 21,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.8,
+     "text": {
+      "en": "Plus ₹2,00,000 debentures as collateral for a bank loan: no entry, shown as a note"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "col"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Goodwill (+) / capital reserve (−)"
+     },
+     "expr": "pc - as + lb",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Debentures issued"
+     },
+     "expr": "nd",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Securities premium"
+     },
+     "expr": "nd*(ip - 100)/1000",
+     "digits": 1,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Net assets ₹5,00,000 bought for ₹5,50,000 in debentures at ₹110: check goodwill ₹50,000 and 5,000 debentures."
+    },
+    {
+     "en": "Lower the purchase consideration below net assets. What appears instead of goodwill?"
+    },
+    {
+     "en": "Turn on the collateral. Why is no journal entry needed under the first method?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

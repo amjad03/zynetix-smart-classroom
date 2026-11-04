@@ -363,6 +363,292 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Cash basis or accrual basis?",
+    "kn": "ನಗದು ಆಧಾರವೇ ಸಂಚಯ ಆಧಾರವೇ?"
+   },
+   "caption": {
+    "en": "The same year can show two different profits. The cash basis counts only cash received and paid; the accrual basis counts what was earned and incurred, whether or not cash moved.",
+    "kn": "ಒಂದೇ ವರ್ಷ ಎರಡು ಬೇರೆ ಲಾಭ ತೋರಿಸಬಹುದು. ನಗದು ಆಧಾರ ಪಡೆದ ಮತ್ತು ಪಾವತಿಸಿದ ಹಣವನ್ನು ಮಾತ್ರ ಎಣಿಸುತ್ತದೆ; ಸಂಚಯ ಆಧಾರ ಗಳಿಸಿದ ಮತ್ತು ಉಂಟಾದದ್ದನ್ನು ಎಣಿಸುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "er",
+     "label": {
+      "en": "Revenue earned"
+     },
+     "min": 100,
+     "max": 300,
+     "step": 10,
+     "value": 200,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "rc",
+     "label": {
+      "en": "Cash received from customers"
+     },
+     "min": 50,
+     "max": 300,
+     "step": 10,
+     "value": 160,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "ei",
+     "label": {
+      "en": "Expenses incurred"
+     },
+     "min": 50,
+     "max": 250,
+     "step": 10,
+     "value": 150,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "pd",
+     "label": {
+      "en": "Expenses paid"
+     },
+     "min": 50,
+     "max": 250,
+     "step": 10,
+     "value": 170,
+     "unit": "₹ '000"
+    }
+   ],
+   "choices": [
+    {
+     "name": "bs",
+     "label": {
+      "en": "Basis",
+      "kn": "ಆಧಾರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Cash",
+        "kn": "ನಗದು"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Accrual",
+        "kn": "ಸಂಚಯ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "if(bs == 1, rc, er)"
+    },
+    {
+     "name": "b1",
+     "expr": "if(bs == 1, pd, ei)"
+    },
+    {
+     "name": "b2",
+     "expr": "if(bs == 1, rc - pd, er - ei)"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(100, b0, b1, b2)"
+    },
+    {
+     "name": "bk",
+     "expr": "6.799999999999999/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": "1.4 + (0 - blo)*bk",
+     "x2": 18,
+     "y2": "1.4 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 3.013,
+     "y": "1.4 + (min(0, b0) - blo)*bk",
+     "w": 3.307,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 4.667,
+     "y": "1.4 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 4.667,
+     "y": 0.7,
+     "text": {
+      "en": "Revenue counted"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.347,
+     "y": "1.4 + (min(0, b1) - blo)*bk",
+     "w": 3.307,
+     "h": "abs(b1)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": "1.4 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 0.7,
+     "text": {
+      "en": "Expenses counted"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 13.68,
+     "y": "1.4 + (min(0, b2) - blo)*bk",
+     "w": 3.307,
+     "h": "abs(b2)*bk",
+     "color": {
+      "by": "step(0, b2)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 15.333,
+     "y": "1.4 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.333,
+     "y": 0.7,
+     "text": {
+      "en": "Profit"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.6,
+     "text": {
+      "en": "Cash basis: only money received and paid"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "bs == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.6,
+     "text": {
+      "en": "Accrual basis: revenue earned and expenses incurred"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "bs == 2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.0,
+     "text": {
+      "en": "Earned but not received {er - rc}   Incurred but not paid {ei - pd}"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "bs == 2"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Profit on cash basis"
+     },
+     "expr": "rc - pd",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Profit on accrual basis"
+     },
+     "expr": "er - ei",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With the default figures, which basis shows the higher profit? Why?"
+    },
+    {
+     "en": "Make cash received equal to revenue earned and expenses paid equal to expenses incurred. What happens?"
+    },
+    {
+     "en": "Which basis does the Companies Act require, and why is it fairer?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

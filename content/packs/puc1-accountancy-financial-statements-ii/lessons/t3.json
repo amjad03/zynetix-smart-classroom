@@ -310,6 +310,391 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Accrued income and income received in advance",
+    "kn": "ಬರಬೇಕಾದ ಆದಾಯ ಮತ್ತು ಮುಂಗಡ ಪಡೆದ ಆದಾಯ"
+   },
+   "caption": {
+    "en": "A tenant pays rent to us every quarter. The income of the year is always four quarters: quarters earned but not received are accrued income; quarters received for next year are income received in advance.",
+    "kn": "ಬಾಡಿಗೆದಾರ ಪ್ರತಿ ತ್ರೈಮಾಸಿಕ ಬಾಡಿಗೆ ಕೊಡುತ್ತಾನೆ. ವರ್ಷದ ಆದಾಯ ಯಾವಾಗಲೂ ನಾಲ್ಕು ತ್ರೈಮಾಸಿಕ: ಗಳಿಸಿ ಪಡೆಯದದ್ದು ಬರಬೇಕಾದ ಆದಾಯ; ಮುಂದಿನ ವರ್ಷಕ್ಕೆ ಪಡೆದದ್ದು ಮುಂಗಡ ಆದಾಯ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "qr",
+     "label": {
+      "en": "Rent per quarter"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 5,
+     "value": 15,
+     "unit": "₹ '000"
+    }
+   ],
+   "counters": [
+    {
+     "name": "k",
+     "value": 3,
+     "min": 0,
+     "max": 6
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Receive a quarter",
+      "kn": "ಒಂದು ತ್ರೈಮಾಸಿಕ ಪಡೆಯಿರಿ"
+     },
+     "icon": "add",
+     "set": {
+      "k": "k + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Undo a quarter",
+      "kn": "ಹಿಂತೆಗೆಯಿರಿ"
+     },
+     "icon": "remove",
+     "set": {
+      "k": "k - 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "acr",
+     "expr": "max(4 - k, 0)*qr"
+    },
+    {
+     "name": "adv",
+     "expr": "max(k - 4, 0)*qr"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     19.5
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.6,
+     "y": 4,
+     "w": 2.9,
+     "h": 2.2,
+     "color": "red",
+     "opacity": 0.35
+    },
+    {
+     "shape": "rect",
+     "x": 0.6,
+     "y": 4,
+     "w": 2.9,
+     "h": 2.2,
+     "color": "green",
+     "visibleIf": "k > 0",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": 2.05,
+     "y": 3.4,
+     "text": {
+      "en": "Apr–Jun"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 3.65,
+     "y": 4,
+     "w": 2.9,
+     "h": 2.2,
+     "color": "red",
+     "opacity": 0.35
+    },
+    {
+     "shape": "rect",
+     "x": 3.65,
+     "y": 4,
+     "w": 2.9,
+     "h": 2.2,
+     "color": "green",
+     "visibleIf": "k > 1",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": 5.1,
+     "y": 3.4,
+     "text": {
+      "en": "Jul–Sep"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 6.7,
+     "y": 4,
+     "w": 2.9,
+     "h": 2.2,
+     "color": "red",
+     "opacity": 0.35
+    },
+    {
+     "shape": "rect",
+     "x": 6.7,
+     "y": 4,
+     "w": 2.9,
+     "h": 2.2,
+     "color": "green",
+     "visibleIf": "k > 2",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": 8.15,
+     "y": 3.4,
+     "text": {
+      "en": "Oct–Dec"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 9.75,
+     "y": 4,
+     "w": 2.9,
+     "h": 2.2,
+     "color": "red",
+     "opacity": 0.35
+    },
+    {
+     "shape": "rect",
+     "x": 9.75,
+     "y": 4,
+     "w": 2.9,
+     "h": 2.2,
+     "color": "green",
+     "visibleIf": "k > 3",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": 11.2,
+     "y": 3.4,
+     "text": {
+      "en": "Jan–Mar"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 12.8,
+     "y": 4,
+     "w": 2.9,
+     "h": 2.2,
+     "color": "white",
+     "fill": false,
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 12.8,
+     "y": 4,
+     "w": 2.9,
+     "h": 2.2,
+     "color": "orange",
+     "visibleIf": "k > 4",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": 14.25,
+     "y": 3.4,
+     "text": {
+      "en": "Apr–Jun"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 15.85,
+     "y": 4,
+     "w": 2.9,
+     "h": 2.2,
+     "color": "white",
+     "fill": false,
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 15.85,
+     "y": 4,
+     "w": 2.9,
+     "h": 2.2,
+     "color": "orange",
+     "visibleIf": "k > 5",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": 17.3,
+     "y": 3.4,
+     "text": {
+      "en": "Jul–Sep"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 12.725,
+     "y1": 2.8,
+     "x2": 12.725,
+     "y2": 7.2,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 12.525,
+     "y": 7.5,
+     "text": {
+      "en": "31 March: year ends"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 12.924999999999999,
+     "y": 7.5,
+     "text": {
+      "en": "next year"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "Rent income of the year = 4 × {qr} = {4*qr}"
+     },
+     "size": 26,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.6,
+     "text": {
+      "en": "Accrued income {acr}: add to income, show as a current asset"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "acr > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.6,
+     "text": {
+      "en": "Received in advance {adv}: deduct from income, show as a current liability"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "adv > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.6,
+     "text": {
+      "en": "Received exactly for the year: no adjustment"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "k == 4"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.6,
+     "text": {
+      "en": "Received {k*qr}  (green = this year received, red = earned not received, orange = received in advance)"
+     },
+     "size": 18,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Rent income in profit and loss"
+     },
+     "expr": "4*qr",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Received"
+     },
+     "expr": "k*qr",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Accrued (asset)"
+     },
+     "expr": "acr",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Received in advance (liability)"
+     },
+     "expr": "adv",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Receive only 3 quarters. Write the entry for the accrued income."
+    },
+    {
+     "en": "Receive 6 quarters. Why is the extra money a liability and not income?"
+    },
+    {
+     "en": "Compare with outstanding expenses: which is an asset and which a liability?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

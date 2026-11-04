@@ -266,6 +266,431 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Liquidity dashboard",
+    "kn": "ದ್ರವ್ಯತೆ ಫಲಕ"
+   },
+   "caption": {
+    "en": "Current ratio = current assets ÷ current liabilities; quick ratio leaves out inventory. Press a transaction and see which ratio moves.",
+    "kn": "ಚಾಲ್ತಿ ಅನುಪಾತ = ಚಾಲ್ತಿ ಆಸ್ತಿ ÷ ಚಾಲ್ತಿ ಹೊಣೆ; ತ್ವರಿತ ಅನುಪಾತ ದಾಸ್ತಾನನ್ನು ಬಿಡುತ್ತದೆ. ವ್ಯವಹಾರ ಒತ್ತಿ ಯಾವ ಅನುಪಾತ ಬದಲಾಗುತ್ತದೆ ನೋಡಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "inv",
+     "label": {
+      "en": "Inventory"
+     },
+     "min": 0,
+     "max": 200,
+     "step": 5,
+     "value": 60,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "rec",
+     "label": {
+      "en": "Trade receivables"
+     },
+     "min": 0,
+     "max": 200,
+     "step": 5,
+     "value": 50,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "cash",
+     "label": {
+      "en": "Cash and bank"
+     },
+     "min": 0,
+     "max": 200,
+     "step": 5,
+     "value": 40,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "cl",
+     "label": {
+      "en": "Current liabilities"
+     },
+     "min": 20,
+     "max": 200,
+     "step": 5,
+     "value": 75,
+     "unit": "₹ '000"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Pay creditors ₹10k in cash",
+      "kn": "ಸಾಲಿಗರಿಗೆ ನಗದು ಪಾವತಿ"
+     },
+     "icon": "remove",
+     "set": {
+      "cash": "cash - min(10, cash, cl - 20)",
+      "cl": "cl - min(10, cash, cl - 20)"
+     }
+    },
+    {
+     "label": {
+      "en": "Buy inventory ₹10k for cash",
+      "kn": "ನಗದಿಗೆ ದಾಸ್ತಾನು"
+     },
+     "icon": "flip",
+     "set": {
+      "inv": "inv + min(10, cash, 200 - inv)",
+      "cash": "cash - min(10, cash, 200 - inv)"
+     }
+    },
+    {
+     "label": {
+      "en": "Buy inventory ₹10k on credit",
+      "kn": "ಸಾಲಕ್ಕೆ ದಾಸ್ತಾನು"
+     },
+     "icon": "add",
+     "set": {
+      "inv": "inv + min(10, 200 - inv, 200 - cl)",
+      "cl": "cl + min(10, 200 - inv, 200 - cl)"
+     }
+    },
+    {
+     "label": {
+      "en": "Collect ₹10k from debtors",
+      "kn": "ಸಾಲಗಾರರಿಂದ ವಸೂಲಿ"
+     },
+     "icon": "flip",
+     "set": {
+      "rec": "rec - min(10, rec, 200 - cash)",
+      "cash": "cash + min(10, rec, 200 - cash)"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "CR",
+     "expr": "(inv + rec + cash)/cl"
+    },
+    {
+     "name": "QR",
+     "expr": "(rec + cash)/cl"
+    },
+    {
+     "name": "b0",
+     "expr": "inv"
+    },
+    {
+     "name": "b1",
+     "expr": "rec"
+    },
+    {
+     "name": "b2",
+     "expr": "cash"
+    },
+    {
+     "name": "b3",
+     "expr": "cl"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(200, b0, b1, b2, b3)"
+    },
+    {
+     "name": "bk",
+     "expr": "4/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 4.3,
+     "y": 8.700000000000001,
+     "text": {
+      "en": "Current ratio"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "right"
+    },
+    {
+     "shape": "rect",
+     "x": 4.6,
+     "y": 8.4,
+     "w": 14,
+     "h": 0.8,
+     "color": "white",
+     "fill": false,
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 4.6,
+     "y": 8.4,
+     "w": "min(CR, 4)*3.5",
+     "h": 0.8,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 11.6,
+     "y1": 8.200000000000001,
+     "x2": 11.6,
+     "y2": 9.4,
+     "color": "yellow",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "5 + min(CR, 4)*3.5",
+     "y": 8.700000000000001,
+     "text": {
+      "en": "{CR:2} : 1"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 4.3,
+     "y": 6.8999999999999995,
+     "text": {
+      "en": "Quick ratio"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "right"
+    },
+    {
+     "shape": "rect",
+     "x": 4.6,
+     "y": 6.6,
+     "w": 14,
+     "h": 0.8,
+     "color": "white",
+     "fill": false,
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 4.6,
+     "y": 6.6,
+     "w": "min(QR, 4)*3.5",
+     "h": 0.8,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": 8.1,
+     "y1": 6.3999999999999995,
+     "x2": 8.1,
+     "y2": 7.6,
+     "color": "yellow",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "5 + min(QR, 4)*3.5",
+     "y": 6.8999999999999995,
+     "text": {
+      "en": "{QR:2} : 1"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": 9.6,
+     "text": {
+      "en": "Yellow marks: 2 : 1 and 1 : 1, the usual norms"
+     },
+     "size": 20,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": "1 + (0 - blo)*bk",
+     "x2": 18,
+     "y2": "1 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 2.76,
+     "y": "1 + (min(0, b0) - blo)*bk",
+     "w": 2.48,
+     "h": "abs(b0)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 4.0,
+     "y": "1 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 4.0,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Inventory"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 6.76,
+     "y": "1 + (min(0, b1) - blo)*bk",
+     "w": 2.48,
+     "h": "abs(b1)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 8.0,
+     "y": "1 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.0,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Receivables"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.76,
+     "y": "1 + (min(0, b2) - blo)*bk",
+     "w": 2.48,
+     "h": "abs(b2)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 12.0,
+     "y": "1 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.0,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Cash"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 14.76,
+     "y": "1 + (min(0, b3) - blo)*bk",
+     "w": 2.48,
+     "h": "abs(b3)*bk",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 16.0,
+     "y": "1 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 16.0,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Current liabilities"
+     },
+     "size": 20,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Current ratio"
+     },
+     "expr": "CR",
+     "digits": 2,
+     "unit": ": 1"
+    },
+    {
+     "label": {
+      "en": "Quick ratio"
+     },
+     "expr": "QR",
+     "digits": 2,
+     "unit": ": 1"
+    },
+    {
+     "label": {
+      "en": "Working capital"
+     },
+     "expr": "inv + rec + cash - cl",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Buy inventory for cash. Why does the current ratio stay the same while the quick ratio falls?"
+    },
+    {
+     "en": "With a current ratio of 2 : 1, pay creditors in cash. Does the ratio rise or fall?"
+    },
+    {
+     "en": "Which transaction changes neither ratio?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

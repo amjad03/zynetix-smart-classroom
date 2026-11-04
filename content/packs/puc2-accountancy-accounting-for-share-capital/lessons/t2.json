@@ -546,6 +546,385 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Issue of shares, stage by stage",
+    "kn": "ಹಂತ ಹಂತವಾಗಿ ಷೇರುಗಳ ವಿತರಣೆ"
+   },
+   "caption": {
+    "en": "Shares of ₹10 are payable ₹3 on application, ₹4 on allotment, ₹2 on first call and ₹1 on final call. Some holders do not pay the calls: the unpaid money is calls in arrears.",
+    "kn": "₹10 ಷೇರು: ಅರ್ಜಿಗೆ ₹3, ಹಂಚಿಕೆಗೆ ₹4, ಮೊದಲ ಕರೆಗೆ ₹2, ಅಂತಿಮ ಕರೆಗೆ ₹1. ಕೆಲವರು ಕರೆ ಹಣ ಕೊಡುವುದಿಲ್ಲ: ಅದು ಬಾಕಿ ಕರೆಗಳು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Shares issued"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "thousand"
+    },
+    {
+     "name": "dn",
+     "label": {
+      "en": "Shares whose holders skip the calls"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 2,
+     "unit": "thousand"
+    }
+   ],
+   "counters": [
+    {
+     "name": "st",
+     "value": 0,
+     "min": 0,
+     "max": 4
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Next stage",
+      "kn": "ಮುಂದಿನ ಹಂತ"
+     },
+     "icon": "next",
+     "set": {
+      "st": "st + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "st": 0
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "cps",
+     "expr": "3*(st >= 1) + 4*(st >= 2) + 2*(st >= 3) + (st >= 4)"
+    },
+    {
+     "name": "cap",
+     "expr": "n*cps"
+    },
+    {
+     "name": "arr",
+     "expr": "dn*(2*(st >= 3) + (st >= 4))"
+    },
+    {
+     "name": "bank",
+     "expr": "cap - arr"
+    },
+    {
+     "name": "b0",
+     "expr": "cap"
+    },
+    {
+     "name": "b1",
+     "expr": "bank"
+    },
+    {
+     "name": "b2",
+     "expr": "arr"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(100, b0, b1, b2)"
+    },
+    {
+     "name": "bk",
+     "expr": "4.6/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.7,
+     "text": {
+      "en": "One share of ₹10"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 7.4,
+     "w": 4.700000000000001,
+     "h": 1.4,
+     "color": "white",
+     "fill": false,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 7.4,
+     "w": 4.700000000000001,
+     "h": 1.4,
+     "color": "blue",
+     "visibleIf": "st >= 1"
+    },
+    {
+     "shape": "text",
+     "x": 4.4,
+     "y": 6.9,
+     "text": {
+      "en": "Application ₹3"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 6.800000000000001,
+     "y": 7.4,
+     "w": 6.300000000000001,
+     "h": 1.4,
+     "color": "white",
+     "fill": false,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 6.800000000000001,
+     "y": 7.4,
+     "w": 6.300000000000001,
+     "h": 1.4,
+     "color": "green",
+     "visibleIf": "st >= 2"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 6.9,
+     "text": {
+      "en": "Allotment ₹4"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 13.200000000000001,
+     "y": 7.4,
+     "w": 3.1,
+     "h": 1.4,
+     "color": "white",
+     "fill": false,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 13.200000000000001,
+     "y": 7.4,
+     "w": 3.1,
+     "h": 1.4,
+     "color": "orange",
+     "visibleIf": "st >= 3"
+    },
+    {
+     "shape": "text",
+     "x": 14.8,
+     "y": 6.9,
+     "text": {
+      "en": "First call ₹2"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.400000000000002,
+     "y": 7.4,
+     "w": 1.5,
+     "h": 1.4,
+     "color": "white",
+     "fill": false,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 16.400000000000002,
+     "y": 7.4,
+     "w": 1.5,
+     "h": 1.4,
+     "color": "yellow",
+     "visibleIf": "st >= 4"
+    },
+    {
+     "shape": "text",
+     "x": 17.200000000000003,
+     "y": 6.9,
+     "text": {
+      "en": "Final call ₹1"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": "1 + (0 - blo)*bk",
+     "x2": 18,
+     "y2": "1 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 3.013,
+     "y": "1 + (min(0, b0) - blo)*bk",
+     "w": 3.307,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 4.667,
+     "y": "1 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 4.667,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Share capital (called up)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.347,
+     "y": "1 + (min(0, b1) - blo)*bk",
+     "w": 3.307,
+     "h": "abs(b1)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": "1 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Received in bank"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 13.68,
+     "y": "1 + (min(0, b2) - blo)*bk",
+     "w": 3.307,
+     "h": "abs(b2)*bk",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 15.333,
+     "y": "1 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.333,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Calls in arrears"
+     },
+     "size": 20,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Called-up capital"
+     },
+     "expr": "cap",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Received in bank"
+     },
+     "expr": "bank",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Calls in arrears"
+     },
+     "expr": "arr",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Go through all four stages. After which stage do calls in arrears first appear?"
+    },
+    {
+     "en": "With 50 thousand shares and 2 thousand defaulters, check calls in arrears of ₹6,000 at the end."
+    },
+    {
+     "en": "Where are calls in arrears shown in the company's balance sheet?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

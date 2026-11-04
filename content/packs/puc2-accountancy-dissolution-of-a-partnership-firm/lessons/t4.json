@@ -800,6 +800,410 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The realisation account",
+    "kn": "ಸಾಕ್ಷಾತ್ಕಾರ ಖಾತೆ"
+   },
+   "caption": {
+    "en": "Assets are sold and creditors paid. Realisation profit or loss = cash from assets + creditors' book value − assets' book value − creditors paid − expenses, shared in the profit sharing ratio.",
+    "kn": "ಆಸ್ತಿಗಳ ಮಾರಾಟ, ಸಾಲಿಗರ ಪಾವತಿ. ಸಾಕ್ಷಾತ್ಕಾರ ಲಾಭ/ನಷ್ಟ = ಆಸ್ತಿಯ ನಗದು + ಸಾಲಿಗರ ಪುಸ್ತಕ ಮೌಲ್ಯ − ಆಸ್ತಿಯ ಪುಸ್ತಕ ಮೌಲ್ಯ − ಪಾವತಿ − ವೆಚ್ಚ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "as",
+     "label": {
+      "en": "Assets at book value"
+     },
+     "min": 100,
+     "max": 500,
+     "step": 10,
+     "value": 300,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "rp",
+     "label": {
+      "en": "Assets realise"
+     },
+     "min": 50,
+     "max": 120,
+     "step": 5,
+     "value": 80,
+     "unit": "% of book"
+    },
+    {
+     "name": "lb",
+     "label": {
+      "en": "Creditors at book value"
+     },
+     "min": 20,
+     "max": 200,
+     "step": 10,
+     "value": 100,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "ex",
+     "label": {
+      "en": "Realisation expenses"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 6,
+     "unit": "₹ '000"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "dc",
+     "label": {
+      "en": "Creditors accept 5% less",
+      "kn": "ಸಾಲಿಗರು 5% ಕಡಿಮೆ ಸ್ವೀಕರಿಸುತ್ತಾರೆ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "ra",
+     "label": {
+      "en": "Ratio A : B",
+      "kn": "ಅನುಪಾತ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "1 : 1"
+       },
+       "value": 0.5
+      },
+      {
+       "label": {
+        "en": "3 : 2"
+       },
+       "value": 0.6
+      },
+      {
+       "label": {
+        "en": "2 : 1"
+       },
+       "value": 0.6666666667
+      }
+     ],
+     "value": 0.5
+    }
+   ],
+   "vars": [
+    {
+     "name": "rv",
+     "expr": "as*rp/100"
+    },
+    {
+     "name": "pd",
+     "expr": "lb*(1 - 0.05*dc)"
+    },
+    {
+     "name": "pl",
+     "expr": "rv + lb - as - pd - ex"
+    },
+    {
+     "name": "b0",
+     "expr": "as"
+    },
+    {
+     "name": "b1",
+     "expr": "rv"
+    },
+    {
+     "name": "b2",
+     "expr": "lb"
+    },
+    {
+     "name": "b3",
+     "expr": "pd"
+    },
+    {
+     "name": "b4",
+     "expr": "ex"
+    },
+    {
+     "name": "b5",
+     "expr": "pl"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3, b4, b5)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(100, b0, b1, b2, b3, b4, b5)"
+    },
+    {
+     "name": "bk",
+     "expr": "6.999999999999999/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10.1
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19.5,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.102,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.083,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.083,
+     "y": 0.5,
+     "text": {
+      "en": "Assets (book)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 4.268,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b1)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": 0.5,
+     "text": {
+      "en": "Cash from assets"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 7.435,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b2)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 8.417,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.417,
+     "y": 0.5,
+     "text": {
+      "en": "Creditors (book)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.602,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b3)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 11.583,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.583,
+     "y": 0.5,
+     "text": {
+      "en": "Creditors paid"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 13.768,
+     "y": "1.2 + (min(0, b4) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b4)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": "1.2 + (max(0, b4) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b4}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": 0.5,
+     "text": {
+      "en": "Expenses"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.935,
+     "y": "1.2 + (min(0, b5) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b5)*bk",
+     "color": {
+      "by": "step(0, b5)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 17.917,
+     "y": "1.2 + (max(0, b5) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b5}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.917,
+     "y": 0.5,
+     "text": {
+      "en": "Profit (+) / loss (−)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Debit: assets, creditors paid, expenses.  Credit: creditors, cash from assets."
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.9,
+     "text": {
+      "en": "A gets {pl*ra:1}, B gets {pl*(1 - ra):1}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "pl != 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Realisation profit (+) / loss (−)"
+     },
+     "expr": "pl",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "A's share"
+     },
+     "expr": "pl*ra",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "B's share"
+     },
+     "expr": "pl*(1 - ra)",
+     "digits": 1,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Assets ₹3,00,000 realise 80% with ₹6,000 expenses: check a loss of ₹66,000."
+    },
+    {
+     "en": "Let the creditors accept 5% less. Why is that a gain on realisation?"
+    },
+    {
+     "en": "What percentage must the assets realise for no profit and no loss?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

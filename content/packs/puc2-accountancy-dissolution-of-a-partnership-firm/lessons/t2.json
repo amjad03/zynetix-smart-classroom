@@ -292,6 +292,331 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Who gets paid first? Section 48",
+    "kn": "ಮೊದಲು ಯಾರಿಗೆ ಪಾವತಿ? ಸೆಕ್ಷನ್ 48"
+   },
+   "caption": {
+    "en": "Cash from the sale of assets flows out in a fixed order: outside creditors first, then partners' loans, then partners' capitals, and any surplus is shared as profit. Press Pay out.",
+    "kn": "ಆಸ್ತಿ ಮಾರಾಟದ ನಗದು ನಿಗದಿತ ಕ್ರಮದಲ್ಲಿ ಹೋಗುತ್ತದೆ: ಮೊದಲು ಹೊರಗಿನ ಸಾಲಿಗರು, ನಂತರ ಪಾಲುದಾರರ ಸಾಲ, ನಂತರ ಬಂಡವಾಳ; ಉಳಿದದ್ದು ಲಾಭವಾಗಿ ಹಂಚಿಕೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "cash",
+     "label": {
+      "en": "Cash from assets sold"
+     },
+     "min": 20,
+     "max": 300,
+     "step": 10,
+     "value": 180,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "cr",
+     "label": {
+      "en": "Outside creditors"
+     },
+     "min": 10,
+     "max": 150,
+     "step": 10,
+     "value": 80,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "loan",
+     "label": {
+      "en": "Partners' loans"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 5,
+     "value": 30,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "cp",
+     "label": {
+      "en": "Partners' capitals"
+     },
+     "min": 20,
+     "max": 200,
+     "step": 10,
+     "value": 100,
+     "unit": "₹ '000"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Pay out",
+      "kn": "ಪಾವತಿಸಿ"
+     },
+     "icon": "launch",
+     "set": {},
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 9,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "rel",
+     "expr": "cash*min(t, 8)/8"
+    },
+    {
+     "name": "p1",
+     "expr": "min(rel, cr)"
+    },
+    {
+     "name": "p2",
+     "expr": "min(rel - p1, loan)"
+    },
+    {
+     "name": "p3",
+     "expr": "min(rel - p1 - p2, cp)"
+    },
+    {
+     "name": "su",
+     "expr": "rel - p1 - p2 - p3"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.3,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0.8,
+     "w": 3.6,
+     "h": "cr*7.4/max(cr, loan, cp, cash - cr - loan - cp, 1)",
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0.8,
+     "w": 3.6,
+     "h": "p1*7.4/max(cr, loan, cp, cash - cr - loan - cp, 1)",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 2.8,
+     "y": 0.2,
+     "text": {
+      "en": "1 Outside creditors"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.8,
+     "y": "1.2 + cr*7.4/max(cr, loan, cp, cash - cr - loan - cp, 1)",
+     "text": {
+      "en": "{p1:0} of {cr}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 5.8,
+     "y": 0.8,
+     "w": 3.6,
+     "h": "loan*7.4/max(cr, loan, cp, cash - cr - loan - cp, 1)",
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 5.8,
+     "y": 0.8,
+     "w": 3.6,
+     "h": "p2*7.4/max(cr, loan, cp, cash - cr - loan - cp, 1)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 7.6,
+     "y": 0.2,
+     "text": {
+      "en": "2 Partners' loans"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.6,
+     "y": "1.2 + loan*7.4/max(cr, loan, cp, cash - cr - loan - cp, 1)",
+     "text": {
+      "en": "{p2:0} of {loan}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": 0.8,
+     "w": 3.6,
+     "h": "cp*7.4/max(cr, loan, cp, cash - cr - loan - cp, 1)",
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": 0.8,
+     "w": 3.6,
+     "h": "p3*7.4/max(cr, loan, cp, cash - cr - loan - cp, 1)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 12.4,
+     "y": 0.2,
+     "text": {
+      "en": "3 Partners' capitals"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.4,
+     "y": "1.2 + cp*7.4/max(cr, loan, cp, cash - cr - loan - cp, 1)",
+     "text": {
+      "en": "{p3:0} of {cp}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 15.6,
+     "y": 0.8,
+     "w": 3.6,
+     "h": "su*7.4/max(cr, loan, cp, cash - cr - loan - cp, 1)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 17.4,
+     "y": 0.2,
+     "text": {
+      "en": "4 Surplus: profit"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.4,
+     "y": "1.2 + su*7.4/max(cr, loan, cp, cash - cr - loan - cp, 1)",
+     "text": {
+      "en": "{su:0}"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "su > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.7,
+     "text": {
+      "en": "Cash paid out: {rel:0} of {cash}"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.1,
+     "text": {
+      "en": "Shortfall {cr + loan + cp - cash}: a loss shared by the partners in their profit sharing ratio"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "t >= 8 && cash < cr + loan + cp"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Paid to creditors"
+     },
+     "expr": "p1",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Paid on partners' loans"
+     },
+     "expr": "p2",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Paid on capitals"
+     },
+     "expr": "p3",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Surplus (+) / shortfall (−)"
+     },
+     "expr": "cash - cr - loan - cp",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Lower the cash below the creditors' claim. Who gets nothing at all?"
+    },
+    {
+     "en": "Why are partners' loans repaid before their capitals?"
+    },
+    {
+     "en": "Find the cash that pays everyone exactly with no surplus."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

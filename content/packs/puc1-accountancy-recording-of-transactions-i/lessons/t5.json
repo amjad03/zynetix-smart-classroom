@@ -569,6 +569,311 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Post and balance a ledger account",
+    "kn": "ಖಾತೆಗೆ ನಮೂದಿಸಿ ಶಿಲ್ಕು ತೆಗೆಯಿರಿ"
+   },
+   "caption": {
+    "en": "Deposits go on the debit side, payments by cheque on the credit side. The balance c/d is written on the smaller side to make both sides equal.",
+    "kn": "ಜಮೆಗಳು ಖರ್ಚು ಬದಿಗೆ, ಚೆಕ್ ಪಾವತಿಗಳು ಜಮಾ ಬದಿಗೆ. ಎರಡೂ ಬದಿ ಸಮ ಮಾಡಲು ಶಿಲ್ಕನ್ನು ಚಿಕ್ಕ ಬದಿಯಲ್ಲಿ ಬರೆಯಲಾಗುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Amount of each entry"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 5,
+     "value": 20,
+     "unit": "₹ '000"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "bc",
+     "label": {
+      "en": "Show balance c/d",
+      "kn": "ಶಿಲ್ಕು ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "counters": [
+    {
+     "name": "dr",
+     "value": 50,
+     "min": 0,
+     "max": 100000
+    },
+    {
+     "name": "cr",
+     "value": 0,
+     "min": 0,
+     "max": 100000
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Deposit (debit)",
+      "kn": "ಜಮೆ (ಖರ್ಚು ಬದಿ)"
+     },
+     "icon": "add",
+     "set": {
+      "dr": "dr + k"
+     }
+    },
+    {
+     "label": {
+      "en": "Pay by cheque (credit)",
+      "kn": "ಚೆಕ್ ಪಾವತಿ (ಜಮಾ ಬದಿ)"
+     },
+     "icon": "remove",
+     "set": {
+      "cr": "cr + k"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "dr": 50,
+      "cr": 0
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "s",
+     "expr": "7.8/max(dr, cr, 50)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -1.2,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Bank Account"
+     },
+     "size": 30,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 9.0,
+     "text": {
+      "en": "Dr"
+     },
+     "size": 26,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 9.0,
+     "text": {
+      "en": "Cr"
+     },
+     "size": 26,
+     "color": "white",
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 8.6,
+     "x2": 18,
+     "y2": 8.6,
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 0,
+     "x2": 10,
+     "y2": 8.6,
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": 0.3,
+     "w": 6,
+     "h": "dr*s",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": "0.3 + dr*s/2",
+     "text": {
+      "en": "Receipts {dr}"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "dr*s > 0.6"
+    },
+    {
+     "shape": "rect",
+     "x": 11,
+     "y": 0.3,
+     "w": 6,
+     "h": "cr*s",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": "0.3 + cr*s/2",
+     "text": {
+      "en": "Payments {cr}"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "cr*s > 0.6"
+    },
+    {
+     "shape": "rect",
+     "x": 11,
+     "y": "0.3 + cr*s",
+     "w": 6,
+     "h": "(dr - cr)*s",
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "bc && dr > cr",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": "0.3 + (cr + dr)*s/2",
+     "text": {
+      "en": "Balance c/d {dr - cr}"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "bc && dr - cr > 0"
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": "0.3 + dr*s",
+     "w": 6,
+     "h": "(cr - dr)*s",
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "bc && cr > dr",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": "0.3 + (cr + dr)*s/2",
+     "text": {
+      "en": "Balance c/d {cr - dr}"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "bc && cr - dr > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": -0.6,
+     "text": {
+      "en": "Debit balance (money in the bank) {dr - cr}"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "dr > cr"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": -0.6,
+     "text": {
+      "en": "Credit balance: an overdraft of {cr - dr}"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "cr > dr"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": -0.6,
+     "text": {
+      "en": "The account is closed: no balance"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "cr == dr"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Debit total"
+     },
+     "expr": "dr",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Credit total"
+     },
+     "expr": "cr",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Balance (+ debit, − credit)"
+     },
+     "expr": "dr - cr",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "The account opens with ₹50,000 brought down. Pay three cheques. On which side is the balance c/d now?"
+    },
+    {
+     "en": "Make the credit side larger. What does a credit balance in a bank account mean?"
+    },
+    {
+     "en": "Why do both columns end with the same total once the balance is written in?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

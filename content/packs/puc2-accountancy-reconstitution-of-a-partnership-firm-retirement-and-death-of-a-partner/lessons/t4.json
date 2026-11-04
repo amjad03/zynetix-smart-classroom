@@ -525,6 +525,568 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Settle the retiring partner",
+    "kn": "ನಿವೃತ್ತ ಪಾಲುದಾರನ ಇತ್ಯರ್ಥ"
+   },
+   "caption": {
+    "en": "The amount due = capital + share of goodwill + share of reserves and revaluation profit − drawings. It is moved to his loan account and paid in three equal yearly instalments with interest on the unpaid balance.",
+    "kn": "ಬಾಕಿ ಮೊತ್ತ = ಬಂಡವಾಳ + ಸುನಾಮದ ಪಾಲು + ಮೀಸಲು ಮತ್ತು ಮರುಮೌಲ್ಯ ಲಾಭದ ಪಾಲು − ಸೆಳೆತ. ಅದನ್ನು ಸಾಲ ಖಾತೆಗೆ ವರ್ಗಾಯಿಸಿ ಉಳಿದ ಬಾಕಿಯ ಮೇಲೆ ಬಡ್ಡಿಯೊಂದಿಗೆ ಮೂರು ಸಮ ಕಂತುಗಳಲ್ಲಿ ಪಾವತಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "cap",
+     "label": {
+      "en": "Retiring partner's capital"
+     },
+     "min": 50,
+     "max": 300,
+     "step": 10,
+     "value": 150,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "gw",
+     "label": {
+      "en": "Share of goodwill"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 5,
+     "value": 30,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "rs",
+     "label": {
+      "en": "Share of reserves and revaluation"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 5,
+     "value": 20,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "dw",
+     "label": {
+      "en": "Drawings"
+     },
+     "min": 0,
+     "max": 50,
+     "step": 5,
+     "value": 20,
+     "unit": "₹ '000"
+    }
+   ],
+   "choices": [
+    {
+     "name": "ir",
+     "label": {
+      "en": "Interest on the loan",
+      "kn": "ಸಾಲದ ಬಡ್ಡಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "6% (Section 37)"
+       },
+       "value": 6
+      },
+      {
+       "label": {
+        "en": "10% (agreed)"
+       },
+       "value": 10
+      }
+     ],
+     "value": 10
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run the years",
+      "kn": "ವರ್ಷಗಳನ್ನು ಓಡಿಸಿ"
+     },
+     "icon": "play",
+     "set": {},
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 3,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "yr"
+   },
+   "vars": [
+    {
+     "name": "wd0",
+     "expr": "cap"
+    },
+    {
+     "name": "wc0",
+     "expr": "wd0"
+    },
+    {
+     "name": "wd1",
+     "expr": "gw"
+    },
+    {
+     "name": "wc1",
+     "expr": "wc0 + wd1"
+    },
+    {
+     "name": "wd2",
+     "expr": "rs"
+    },
+    {
+     "name": "wc2",
+     "expr": "wc1 + wd2"
+    },
+    {
+     "name": "wd3",
+     "expr": "-dw"
+    },
+    {
+     "name": "wc3",
+     "expr": "wc2 + wd3"
+    },
+    {
+     "name": "wc4",
+     "expr": "wc3"
+    },
+    {
+     "name": "wd4",
+     "expr": "wc4"
+    },
+    {
+     "name": "wlo",
+     "expr": "min(0, wc0, wc1, wc2, wc3, wc4)"
+    },
+    {
+     "name": "whi",
+     "expr": "max(1, wc0, wc1, wc2, wc3, wc4)"
+    },
+    {
+     "name": "wk",
+     "expr": "7.4/(whi - wlo)"
+    },
+    {
+     "name": "du",
+     "expr": "wc4"
+    },
+    {
+     "name": "ks",
+     "expr": "7/max(du, 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.5,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.3,
+     "y1": "1 + (0 - wlo)*wk",
+     "x2": 11.5,
+     "y2": "1 + (0 - wlo)*wk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 0.748,
+     "y": "1 + (min(0, wc0) - wlo)*wk",
+     "w": 1.344,
+     "h": "abs(wc0)*wk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 1.42,
+     "y": "1 + (max(0, wc0) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd0}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.42,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Capital"
+     },
+     "size": 17,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 2.092,
+     "y1": "1 + (wc0 - wlo)*wk",
+     "x2": 2.988,
+     "y2": "1 + (wc0 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 2.988,
+     "y": "1 + (min(wc0, wc1) - wlo)*wk",
+     "w": 1.344,
+     "h": "abs(wd1)*wk",
+     "color": {
+      "by": "step(0, wd1)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 3.66,
+     "y": "1 + (max(wc0, wc1) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd1}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.66,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Goodwill share"
+     },
+     "size": 17,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 4.332,
+     "y1": "1 + (wc1 - wlo)*wk",
+     "x2": 5.228,
+     "y2": "1 + (wc1 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 5.228,
+     "y": "1 + (min(wc1, wc2) - wlo)*wk",
+     "w": 1.344,
+     "h": "abs(wd2)*wk",
+     "color": {
+      "by": "step(0, wd2)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 5.9,
+     "y": "1 + (max(wc1, wc2) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd2}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.9,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Reserves, revaluation"
+     },
+     "size": 17,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 6.572,
+     "y1": "1 + (wc2 - wlo)*wk",
+     "x2": 7.468,
+     "y2": "1 + (wc2 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 7.468,
+     "y": "1 + (min(wc2, wc3) - wlo)*wk",
+     "w": 1.344,
+     "h": "abs(wd3)*wk",
+     "color": {
+      "by": "step(0, wd3)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 8.14,
+     "y": "1 + (max(wc2, wc3) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd3}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.14,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Drawings"
+     },
+     "size": 17,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 8.812,
+     "y1": "1 + (wc3 - wlo)*wk",
+     "x2": 9.708,
+     "y2": "1 + (wc3 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 9.708,
+     "y": "1 + (min(0, wc4) - wlo)*wk",
+     "w": 1.344,
+     "h": "abs(wc4)*wk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10.38,
+     "y": "1 + (max(0, wc4) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd4}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.38,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Amount due"
+     },
+     "size": 17,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.6,
+     "y": 9.5,
+     "text": {
+      "en": "Loan repaid in 3 years"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 12.0,
+     "y": 1,
+     "w": 1.0,
+     "h": "du*(1 - (1 - 1)/3)*ks",
+     "color": "blue",
+     "visibleIf": "t >= 0"
+    },
+    {
+     "shape": "rect",
+     "x": 13.1,
+     "y": 1,
+     "w": 1.0,
+     "h": "(du/3 + du*(1 - (1 - 1)/3)*ir/100)*ks",
+     "color": "green",
+     "visibleIf": "t >= 1"
+    },
+    {
+     "shape": "text",
+     "x": 13.05,
+     "y": 0.3,
+     "text": {
+      "en": "Year 1"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.6,
+     "y": "1.4 + (du/3 + du*(1 - (1 - 1)/3)*ir/100)*ks",
+     "text": {
+      "en": "{du/3 + du*(1 - (1 - 1)/3)*ir/100:1}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "t >= 1"
+    },
+    {
+     "shape": "rect",
+     "x": 14.6,
+     "y": 1,
+     "w": 1.0,
+     "h": "du*(1 - (2 - 1)/3)*ks",
+     "color": "blue",
+     "visibleIf": "t >= 1"
+    },
+    {
+     "shape": "rect",
+     "x": 15.7,
+     "y": 1,
+     "w": 1.0,
+     "h": "(du/3 + du*(1 - (2 - 1)/3)*ir/100)*ks",
+     "color": "green",
+     "visibleIf": "t >= 2"
+    },
+    {
+     "shape": "text",
+     "x": 15.65,
+     "y": 0.3,
+     "text": {
+      "en": "Year 2"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 16.2,
+     "y": "1.4 + (du/3 + du*(1 - (2 - 1)/3)*ir/100)*ks",
+     "text": {
+      "en": "{du/3 + du*(1 - (2 - 1)/3)*ir/100:1}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "t >= 2"
+    },
+    {
+     "shape": "rect",
+     "x": 17.2,
+     "y": 1,
+     "w": 1.0,
+     "h": "du*(1 - (3 - 1)/3)*ks",
+     "color": "blue",
+     "visibleIf": "t >= 2"
+    },
+    {
+     "shape": "rect",
+     "x": 18.3,
+     "y": 1,
+     "w": 1.0,
+     "h": "(du/3 + du*(1 - (3 - 1)/3)*ir/100)*ks",
+     "color": "green",
+     "visibleIf": "t >= 3"
+    },
+    {
+     "shape": "text",
+     "x": 18.25,
+     "y": 0.3,
+     "text": {
+      "en": "Year 3"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 18.8,
+     "y": "1.4 + (du/3 + du*(1 - (3 - 1)/3)*ir/100)*ks",
+     "text": {
+      "en": "{du/3 + du*(1 - (3 - 1)/3)*ir/100:1}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "t >= 3"
+    },
+    {
+     "shape": "text",
+     "x": 15.6,
+     "y": 8.8,
+     "text": {
+      "en": "Blue: loan at start of year.  Green: instalment paid"
+     },
+     "size": 18,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Amount due"
+     },
+     "expr": "du",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "First instalment"
+     },
+     "expr": "du/3 + du*ir/100",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Total interest"
+     },
+     "expr": "du*ir/100*2",
+     "digits": 1,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Capital ₹1,50,000, goodwill ₹30,000, reserves ₹20,000, drawings ₹20,000: check ₹1,80,000 due."
+    },
+    {
+     "en": "Why does each instalment get smaller even though the principal part is the same?"
+    },
+    {
+     "en": "Switch to 6%. How much interest does the firm save over the three years?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

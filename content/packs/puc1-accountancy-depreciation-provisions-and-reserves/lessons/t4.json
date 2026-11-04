@@ -336,6 +336,376 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Selling a used asset",
+    "kn": "ಬಳಸಿದ ಆಸ್ತಿಯ ಮಾರಾಟ"
+   },
+   "caption": {
+    "en": "An asset bought at the start of year 1 is sold at the end of the chosen year. Profit or loss on sale = sale price − book value (cost − depreciation to date).",
+    "kn": "1ನೇ ವರ್ಷದ ಆರಂಭದಲ್ಲಿ ಕೊಂಡ ಆಸ್ತಿಯನ್ನು ಆಯ್ಕೆಯ ವರ್ಷದ ಕೊನೆಯಲ್ಲಿ ಮಾರಲಾಗಿದೆ. ಮಾರಾಟದ ಲಾಭ ಅಥವಾ ನಷ್ಟ = ಮಾರಾಟ ಬೆಲೆ − ಪುಸ್ತಕ ಮೌಲ್ಯ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "C",
+     "label": {
+      "en": "Cost"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 10,
+     "value": 200,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "Years used"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 1,
+     "value": 3,
+     "unit": "years"
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Rate of depreciation"
+     },
+     "min": 5,
+     "max": 30,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    },
+    {
+     "name": "sp",
+     "label": {
+      "en": "Sale price"
+     },
+     "min": 0,
+     "max": 500,
+     "step": 5,
+     "value": 120,
+     "unit": "₹ '000"
+    }
+   ],
+   "choices": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Method",
+      "kn": "ವಿಧಾನ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Straight line",
+        "kn": "ನೇರ ರೇಖೆ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Written down value",
+        "kn": "ಇಳಿಕೆ ಮೌಲ್ಯ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "acc",
+     "expr": "if(m == 1, min(C*r/100*n, C), C - C*(1 - r/100)^n)"
+    },
+    {
+     "name": "bv",
+     "expr": "C - acc"
+    },
+    {
+     "name": "pl",
+     "expr": "sp - bv"
+    },
+    {
+     "name": "b0",
+     "expr": "C"
+    },
+    {
+     "name": "b1",
+     "expr": "acc"
+    },
+    {
+     "name": "b2",
+     "expr": "bv"
+    },
+    {
+     "name": "b3",
+     "expr": "sp"
+    },
+    {
+     "name": "b4",
+     "expr": "pl"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(100, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bk",
+     "expr": "7.6000000000000005/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10.3
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19.5,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.222,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": 0.5,
+     "text": {
+      "en": "Cost"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 5.022,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b1)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": 0.5,
+     "text": {
+      "en": "Depreciation to date"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.822,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b2)*bk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 0.5,
+     "text": {
+      "en": "Book value"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 12.622,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b3)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": 0.5,
+     "text": {
+      "en": "Sale price"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.422,
+     "y": "1.2 + (min(0, b4) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b4)*bk",
+     "color": {
+      "by": "step(0, pl)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": "1.2 + (max(0, b4) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b4}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": 0.5,
+     "text": {
+      "en": "Profit (+) / loss (−)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.7,
+     "text": {
+      "en": "Profit on sale {pl:1}: transferred to the profit and loss account"
+     },
+     "size": 24,
+     "color": "green",
+     "visibleIf": "pl > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.7,
+     "text": {
+      "en": "Loss on sale {-pl:1}: transferred to the profit and loss account"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "pl < 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.7,
+     "text": {
+      "en": "Sold exactly at book value: no profit or loss"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "pl == 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Depreciation to date"
+     },
+     "expr": "acc",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Book value on sale"
+     },
+     "expr": "bv",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Profit (+) or loss (−)"
+     },
+     "expr": "pl",
+     "digits": 1,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Cost ₹2,00,000, 10% SLM, sold after 3 years for ₹1,20,000: check the loss of ₹20,000."
+    },
+    {
+     "en": "Switch to WDV with the same rate. Is the book value higher or lower? Why?"
+    },
+    {
+     "en": "Find the sale price that gives neither profit nor loss."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

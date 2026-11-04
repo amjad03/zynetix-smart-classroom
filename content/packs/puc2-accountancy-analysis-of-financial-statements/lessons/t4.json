@@ -501,6 +501,375 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Comparative statement of profit and loss",
+    "kn": "ತುಲನಾತ್ಮಕ ಲಾಭ ನಷ್ಟ ಪಟ್ಟಿ"
+   },
+   "caption": {
+    "en": "Absolute change = current year − previous year; percentage change = absolute change ÷ previous year × 100. A small rise in revenue can mean a large rise in profit.",
+    "kn": "ನಿರಪೇಕ್ಷ ಬದಲಾವಣೆ = ಪ್ರಸಕ್ತ ವರ್ಷ − ಹಿಂದಿನ ವರ್ಷ; ಶೇಕಡಾ ಬದಲಾವಣೆ = ಬದಲಾವಣೆ ÷ ಹಿಂದಿನ ವರ್ಷ × 100."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "r1",
+     "label": {
+      "en": "Revenue, previous year"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 10,
+     "value": 500,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "r2",
+     "label": {
+      "en": "Revenue, current year"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 10,
+     "value": 600,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "e1",
+     "label": {
+      "en": "Expenses, previous year"
+     },
+     "min": 50,
+     "max": 900,
+     "step": 10,
+     "value": 400,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "e2",
+     "label": {
+      "en": "Expenses, current year"
+     },
+     "min": 50,
+     "max": 900,
+     "step": 10,
+     "value": 450,
+     "unit": "₹ '000"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "pc",
+     "label": {
+      "en": "Show changes",
+      "kn": "ಬದಲಾವಣೆ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "r1"
+    },
+    {
+     "name": "b1",
+     "expr": "r2"
+    },
+    {
+     "name": "b2",
+     "expr": "e1"
+    },
+    {
+     "name": "b3",
+     "expr": "e2"
+    },
+    {
+     "name": "b4",
+     "expr": "r1 - e1"
+    },
+    {
+     "name": "b5",
+     "expr": "r2 - e2"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3, b4, b5)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(100, b0, b1, b2, b3, b4, b5)"
+    },
+    {
+     "name": "bk",
+     "expr": "6.6/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19.5,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.102,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.083,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.083,
+     "y": 0.5,
+     "text": {
+      "en": "Revenue PY"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 4.268,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b1)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": 0.5,
+     "text": {
+      "en": "Revenue CY"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 7.435,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b2)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 8.417,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.417,
+     "y": 0.5,
+     "text": {
+      "en": "Expenses PY"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.602,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b3)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 11.583,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.583,
+     "y": 0.5,
+     "text": {
+      "en": "Expenses CY"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 13.768,
+     "y": "1.2 + (min(0, b4) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b4)*bk",
+     "color": {
+      "by": "step(0, b4)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": "1.2 + (max(0, b4) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b4}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": 0.5,
+     "text": {
+      "en": "Profit PY"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.935,
+     "y": "1.2 + (min(0, b5) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b5)*bk",
+     "color": {
+      "by": "step(0, b5)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 17.917,
+     "y": "1.2 + (max(0, b5) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b5}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.917,
+     "y": 0.5,
+     "text": {
+      "en": "Profit CY"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.6,
+     "text": {
+      "en": "Revenue: {r2 - r1} ({(r2 - r1)/r1*100:1}%)   Expenses: {e2 - e1} ({(e2 - e1)/e1*100:1}%)"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "pc"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.9,
+     "text": {
+      "en": "Profit: {(r2 - e2) - (r1 - e1)} ({((r2 - e2) - (r1 - e1))/(r1 - e1)*100:1}%)"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "pc && r1 - e1 > 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Change in revenue"
+     },
+     "expr": "(r2 - r1)/r1*100",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Change in expenses"
+     },
+     "expr": "(e2 - e1)/e1*100",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Change in profit (₹ '000)"
+     },
+     "expr": "(r2 - e2) - (r1 - e1)",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Revenue up 20%, expenses up 12.5%: by what percent did profit rise?"
+    },
+    {
+     "en": "Make revenue and expenses both rise by 10%. What happens to the profit percentage change?"
+    },
+    {
+     "en": "Why is the percentage change of profit meaningless when last year's profit was a loss?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

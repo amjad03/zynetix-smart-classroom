@@ -497,6 +497,469 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Build a bank reconciliation statement",
+    "kn": "ಬ್ಯಾಂಕ್ ಹೊಂದಾಣಿಕೆ ಪಟ್ಟಿ ರಚಿಸಿ"
+   },
+   "caption": {
+    "en": "Start from one balance of ₹50,000, add the plus items and deduct the minus items to reach the other balance. Switch the starting book: every sign flips.",
+    "kn": "₹50,000 ಶಿಲ್ಕಿನಿಂದ ಆರಂಭಿಸಿ, ಕೂಡುವ ಅಂಶಗಳನ್ನು ಕೂಡಿಸಿ ಮತ್ತು ಕಳೆಯುವ ಅಂಶಗಳನ್ನು ಕಳೆಯಿರಿ. ಆರಂಭದ ಪುಸ್ತಕ ಬದಲಿಸಿದರೆ ಪ್ರತಿ ಚಿಹ್ನೆ ತಿರುಗುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "U",
+     "label": {
+      "en": "Cheques issued, not presented"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 12,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "Dp",
+     "label": {
+      "en": "Cheques deposited, not credited"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 8,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "bc",
+     "label": {
+      "en": "Bank charges (pass book only)"
+     },
+     "min": 0,
+     "max": 5,
+     "step": 0.5,
+     "value": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "ic",
+     "label": {
+      "en": "Interest credited (pass book only)"
+     },
+     "min": 0,
+     "max": 5,
+     "step": 0.5,
+     "value": 2,
+     "unit": "₹ '000"
+    }
+   ],
+   "choices": [
+    {
+     "name": "s",
+     "label": {
+      "en": "Start from",
+      "kn": "ಆರಂಭ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Cash book",
+        "kn": "ನಗದು ಪುಸ್ತಕ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Pass book",
+        "kn": "ಪಾಸ್ ಪುಸ್ತಕ"
+       },
+       "value": -1
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "wd0",
+     "expr": "50"
+    },
+    {
+     "name": "wc0",
+     "expr": "wd0"
+    },
+    {
+     "name": "wd1",
+     "expr": "s*U"
+    },
+    {
+     "name": "wc1",
+     "expr": "wc0 + wd1"
+    },
+    {
+     "name": "wd2",
+     "expr": "-s*Dp"
+    },
+    {
+     "name": "wc2",
+     "expr": "wc1 + wd2"
+    },
+    {
+     "name": "wd3",
+     "expr": "-s*bc"
+    },
+    {
+     "name": "wc3",
+     "expr": "wc2 + wd3"
+    },
+    {
+     "name": "wd4",
+     "expr": "s*ic"
+    },
+    {
+     "name": "wc4",
+     "expr": "wc3 + wd4"
+    },
+    {
+     "name": "wc5",
+     "expr": "wc4"
+    },
+    {
+     "name": "wd5",
+     "expr": "wc5"
+    },
+    {
+     "name": "wlo",
+     "expr": "min(0, wc0, wc1, wc2, wc3, wc4, wc5)"
+    },
+    {
+     "name": "whi",
+     "expr": "max(60, wc0, wc1, wc2, wc3, wc4, wc5)"
+    },
+    {
+     "name": "wk",
+     "expr": "7.6/(whi - wlo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.5,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1 + (0 - wlo)*wk",
+     "x2": 19.5,
+     "y2": "1 + (0 - wlo)*wk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.133,
+     "y": "1 + (min(0, wc0) - wlo)*wk",
+     "w": 1.9,
+     "h": "abs(wc0)*wk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.083,
+     "y": "1 + (max(0, wc0) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.083,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Starting balance"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 3.033,
+     "y1": "1 + (wc0 - wlo)*wk",
+     "x2": 4.3,
+     "y2": "1 + (wc0 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 4.3,
+     "y": "1 + (min(wc0, wc1) - wlo)*wk",
+     "w": 1.9,
+     "h": "abs(wd1)*wk",
+     "color": {
+      "by": "step(0, wd1)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": "1 + (max(wc0, wc1) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Unpresented cheques"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 6.2,
+     "y1": "1 + (wc1 - wlo)*wk",
+     "x2": 7.467,
+     "y2": "1 + (wc1 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 7.467,
+     "y": "1 + (min(wc1, wc2) - wlo)*wk",
+     "w": 1.9,
+     "h": "abs(wd2)*wk",
+     "color": {
+      "by": "step(0, wd2)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 8.417,
+     "y": "1 + (max(wc1, wc2) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.417,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Uncleared deposits"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 9.367,
+     "y1": "1 + (wc2 - wlo)*wk",
+     "x2": 10.633,
+     "y2": "1 + (wc2 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 10.633,
+     "y": "1 + (min(wc2, wc3) - wlo)*wk",
+     "w": 1.9,
+     "h": "abs(wd3)*wk",
+     "color": {
+      "by": "step(0, wd3)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 11.583,
+     "y": "1 + (max(wc2, wc3) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.583,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Bank charges"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 12.533,
+     "y1": "1 + (wc3 - wlo)*wk",
+     "x2": 13.8,
+     "y2": "1 + (wc3 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 13.8,
+     "y": "1 + (min(wc3, wc4) - wlo)*wk",
+     "w": 1.9,
+     "h": "abs(wd4)*wk",
+     "color": {
+      "by": "step(0, wd4)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": "1 + (max(wc3, wc4) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd4}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Interest credited"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 15.7,
+     "y1": "1 + (wc4 - wlo)*wk",
+     "x2": 16.967,
+     "y2": "1 + (wc4 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 16.967,
+     "y": "1 + (min(0, wc5) - wlo)*wk",
+     "w": 1.9,
+     "h": "abs(wc5)*wk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 17.917,
+     "y": "1 + (max(0, wc5) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd5}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.917,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Result"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.6,
+     "text": {
+      "en": "Start: cash book 50. Result = balance as per pass book"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "s == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.6,
+     "text": {
+      "en": "Start: pass book 50. Result = balance as per cash book"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "s == -1"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Balance as per cash book"
+     },
+     "expr": "if(s == 1, 50, wc5)",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Balance as per pass book"
+     },
+     "expr": "if(s == 1, wc5, 50)",
+     "digits": 1,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With the cash book as the start, which items push the pass book balance above ₹50,000?"
+    },
+    {
+     "en": "Switch to Pass book as the start. What happens to the sign of each item?"
+    },
+    {
+     "en": "Find settings where the two balances are equal even though there are pending items."
+    }
+   ]
+  },
+  {
    "id": "ex1",
    "type": "example",
    "problem": {

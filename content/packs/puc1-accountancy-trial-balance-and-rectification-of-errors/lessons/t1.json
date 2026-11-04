@@ -491,6 +491,275 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Does the trial balance agree?",
+    "kn": "ತಾಳೆಪಟ್ಟಿ ತಾಳೆಯಾಗುತ್ತದೆಯೇ?"
+   },
+   "caption": {
+    "en": "Both columns start at ₹1,00,000. Some errors make the totals differ; others, like omitting a transaction completely, leave them equal. Agreement proves arithmetic accuracy, not complete accuracy.",
+    "kn": "ಎರಡೂ ಕಾಲಂ ₹1,00,000 ದಿಂದ ಆರಂಭ. ಕೆಲವು ದೋಷಗಳು ಮೊತ್ತಗಳನ್ನು ಬೇರೆ ಮಾಡುತ್ತವೆ; ವ್ಯವಹಾರ ಸಂಪೂರ್ಣ ಬಿಟ್ಟುಹೋಗುವಂತಹವು ಸಮವಾಗಿಯೇ ಇಡುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Amount of the error"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 5,
+     "unit": "₹ '000"
+    }
+   ],
+   "counters": [
+    {
+     "name": "dd",
+     "value": 0,
+     "min": -60,
+     "max": 0
+    },
+    {
+     "name": "cd",
+     "value": 0,
+     "min": -60,
+     "max": 60
+    },
+    {
+     "name": "hid",
+     "value": 0,
+     "min": 0,
+     "max": 20
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Post a debit to the credit side",
+      "kn": "ಖರ್ಚನ್ನು ಜಮಾ ಬದಿಗೆ"
+     },
+     "icon": "flip",
+     "set": {
+      "dd": "dd - k",
+      "cd": "cd + k"
+     }
+    },
+    {
+     "label": {
+      "en": "Undercast the sales book",
+      "kn": "ಮಾರಾಟ ಪುಸ್ತಕ ಕಡಿಮೆ ಕೂಡಿಕೆ"
+     },
+     "icon": "remove",
+     "set": {
+      "cd": "cd - k"
+     }
+    },
+    {
+     "label": {
+      "en": "Omit a transaction completely",
+      "kn": "ವ್ಯವಹಾರ ಸಂಪೂರ್ಣ ಬಿಟ್ಟುಹೋಗಿದೆ"
+     },
+     "icon": "remove",
+     "set": {
+      "hid": "hid + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Correct all errors",
+      "kn": "ಎಲ್ಲ ದೋಷ ಸರಿಪಡಿಸಿ"
+     },
+     "icon": "check",
+     "set": {
+      "dd": 0,
+      "cd": 0,
+      "hid": 0
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "dr",
+     "expr": "100 + dd"
+    },
+    {
+     "name": "cr",
+     "expr": "100 + cd"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -1,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       10,
+       7.6
+      ],
+      [
+       9.5,
+       6.6
+      ],
+      [
+       10.5,
+       6.6
+      ]
+     ],
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "7.6 - clamp((dr - cr)/8, -1.5, 1.5)",
+     "x2": 16,
+     "y2": "7.6 + clamp((dr - cr)/8, -1.5, 1.5)",
+     "color": "yellow",
+     "width": 6
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": "8.3 - clamp((dr - cr)/8, -1.5, 1.5)",
+     "text": {
+      "en": "Debit {dr}"
+     },
+     "size": 26,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 16,
+     "y": "8.3 + clamp((dr - cr)/8, -1.5, 1.5)",
+     "text": {
+      "en": "Credit {cr}"
+     },
+     "size": 26,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": 0.3,
+     "w": 5,
+     "h": "dr*0.05",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 12,
+     "y": 0.3,
+     "w": 5,
+     "h": "cr*0.05",
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 2.5,
+     "y1": 5.3,
+     "x2": 17.5,
+     "y2": 5.3,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.4
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": 5.5,
+     "text": {
+      "en": "100"
+     },
+     "size": 18,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.6,
+     "text": {
+      "en": "Totals agree"
+     },
+     "size": 28,
+     "color": "green",
+     "visibleIf": "dr == cr"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.6,
+     "text": {
+      "en": "Totals differ by {abs(dr - cr)}: look for errors"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "dr != cr"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": -0.5,
+     "text": {
+      "en": "Errors the trial balance cannot show: {hid}"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "hid > 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Debit total"
+     },
+     "expr": "dr",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Credit total"
+     },
+     "expr": "cr",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Difference"
+     },
+     "expr": "dr - cr",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Post ₹5,000 to the wrong side. Why is the difference ₹10,000, not ₹5,000?"
+    },
+    {
+     "en": "Omit a transaction. Does the trial balance notice?"
+    },
+    {
+     "en": "Can you make two errors that cancel out so the totals agree again? What is such an error called?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -455,6 +455,393 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Terms of issue and redemption",
+    "kn": "ವಿತರಣೆ ಮತ್ತು ವಿಮೋಚನೆಯ ನಿಯಮಗಳು"
+   },
+   "caption": {
+    "en": "Set the issue price and the premium payable on redemption to see which of the six cases you have. Discount on issue plus premium on redemption is the loss on issue; it is written off first from securities premium, the rest to profit and loss.",
+    "kn": "ವಿತರಣಾ ಬೆಲೆ ಮತ್ತು ವಿಮೋಚನಾ ಪ್ರೀಮಿಯಂ ಹೊಂದಿಸಿ ಆರು ಸಂದರ್ಭಗಳಲ್ಲಿ ಯಾವುದು ನೋಡಿ. ವಿತರಣಾ ರಿಯಾಯಿತಿ + ವಿಮೋಚನಾ ಪ್ರೀಮಿಯಂ = ವಿತರಣಾ ನಷ್ಟ; ಮೊದಲು ಭದ್ರತಾ ಪ್ರೀಮಿಯಂನಿಂದ, ಉಳಿದದ್ದು ಲಾಭ ನಷ್ಟಕ್ಕೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Debentures of ₹100"
+     },
+     "min": 100,
+     "max": 5000,
+     "step": 100,
+     "value": 1000
+    },
+    {
+     "name": "ip",
+     "label": {
+      "en": "Issue price"
+     },
+     "min": 90,
+     "max": 110,
+     "step": 1,
+     "value": 95,
+     "unit": "₹"
+    },
+    {
+     "name": "rp",
+     "label": {
+      "en": "Premium on redemption"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 5,
+     "unit": "%"
+    },
+    {
+     "name": "cr",
+     "label": {
+      "en": "Coupon rate"
+     },
+     "min": 5,
+     "max": 15,
+     "step": 0.5,
+     "value": 9,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ie",
+     "label": {
+      "en": "Show the interest entry",
+      "kn": "ಬಡ್ಡಿ ನಮೂದು"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "lo",
+     "expr": "n*(max(0, 100 - ip) + rp)/1000"
+    },
+    {
+     "name": "spm",
+     "expr": "n*max(0, ip - 100)/1000"
+    },
+    {
+     "name": "b0",
+     "expr": "n*max(0, 100 - ip)/1000"
+    },
+    {
+     "name": "b1",
+     "expr": "n*rp/1000"
+    },
+    {
+     "name": "b2",
+     "expr": "lo"
+    },
+    {
+     "name": "b3",
+     "expr": "spm"
+    },
+    {
+     "name": "b4",
+     "expr": "lo - min(lo, spm)"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(10, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bk",
+     "expr": "6.6/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10.1
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19.5,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.222,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b0)*bk",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": 0.5,
+     "text": {
+      "en": "Discount on issue"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 5.022,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b1)*bk",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": 0.5,
+     "text": {
+      "en": "Premium on redemption"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.822,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b2)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 0.5,
+     "text": {
+      "en": "Loss on issue (total)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 12.622,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b3)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": 0.5,
+     "text": {
+      "en": "Securities premium"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.422,
+     "y": "1.2 + (min(0, b4) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b4)*bk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": "1.2 + (max(0, b4) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b4:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": 0.5,
+     "text": {
+      "en": "Written off to P&L"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Issued at par, redeemable at par"
+     },
+     "size": 26,
+     "color": "yellow",
+     "visibleIf": "ip == 100 && rp == 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Issued at a discount, redeemable at par"
+     },
+     "size": 26,
+     "color": "yellow",
+     "visibleIf": "ip < 100 && rp == 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Issued at a premium, redeemable at par"
+     },
+     "size": 26,
+     "color": "yellow",
+     "visibleIf": "ip > 100 && rp == 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Issued at par, redeemable at a premium"
+     },
+     "size": 26,
+     "color": "yellow",
+     "visibleIf": "ip == 100 && rp > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Issued at a discount, redeemable at a premium"
+     },
+     "size": 26,
+     "color": "yellow",
+     "visibleIf": "ip < 100 && rp > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Issued at a premium, redeemable at a premium"
+     },
+     "size": 26,
+     "color": "yellow",
+     "visibleIf": "ip > 100 && rp > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.8,
+     "text": {
+      "en": "Yearly interest: Debenture Interest A/c Dr {n*cr/1000:1}, To Debentureholders"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "ie"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Loss on issue"
+     },
+     "expr": "lo",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Securities premium"
+     },
+     "expr": "spm",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Annual interest"
+     },
+     "expr": "n*cr/1000",
+     "digits": 2,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "1,000 debentures issued at ₹95, redeemable at 5% premium: check a loss on issue of ₹10,000."
+    },
+    {
+     "en": "Issue at ₹105 and redeem at 5% premium. How much of the loss is left for profit and loss?"
+    },
+    {
+     "en": "Is interest worked out on the issue price or the face value?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

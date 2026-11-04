@@ -207,6 +207,352 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Value goodwill four ways",
+    "kn": "ಸುನಾಮವನ್ನು ನಾಲ್ಕು ರೀತಿ ಮೌಲ್ಯಮಾಪನ"
+   },
+   "caption": {
+    "en": "Average profit method: average profit × years' purchase. Super profit method: (average − normal profit) × years' purchase. Capitalisation: capitalised value minus capital employed. The yellow bar is the method chosen.",
+    "kn": "ಸರಾಸರಿ ಲಾಭ ವಿಧಾನ: ಸರಾಸರಿ ಲಾಭ × ಖರೀದಿ ವರ್ಷಗಳು. ಅಧಿಕ ಲಾಭ ವಿಧಾನ: (ಸರಾಸರಿ − ಸಾಮಾನ್ಯ ಲಾಭ) × ವರ್ಷಗಳು. ಬಂಡವಾಳೀಕರಣ ವಿಧಾನ: ಬಂಡವಾಳೀಕೃತ ಮೌಲ್ಯ − ಬಳಸಿದ ಬಂಡವಾಳ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "ap",
+     "label": {
+      "en": "Average profit"
+     },
+     "min": 20,
+     "max": 200,
+     "step": 5,
+     "value": 80,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "nr",
+     "label": {
+      "en": "Normal rate of return"
+     },
+     "min": 5,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    },
+    {
+     "name": "ce",
+     "label": {
+      "en": "Capital employed"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 20,
+     "value": 500,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "yp",
+     "label": {
+      "en": "Years' purchase"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 0.5,
+     "value": 3,
+     "unit": "years"
+    }
+   ],
+   "choices": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Method",
+      "kn": "ವಿಧಾನ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Average profit"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Super profit"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Capitalise average"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Capitalise super"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "np",
+     "expr": "ce*nr/100"
+    },
+    {
+     "name": "b0",
+     "expr": "ap*yp"
+    },
+    {
+     "name": "b1",
+     "expr": "(ap - np)*yp"
+    },
+    {
+     "name": "b2",
+     "expr": "ap*100/nr - ce"
+    },
+    {
+     "name": "b3",
+     "expr": "(ap - np)*100/nr"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(100, b0, b1, b2, b3)"
+    },
+    {
+     "name": "bk",
+     "expr": "6.8/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.855,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b0)*bk",
+     "color": {
+      "by": "m == 1",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": 0.5,
+     "text": {
+      "en": "Average profit"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 6.355,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b1)*bk",
+     "color": {
+      "by": "m == 2",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 7.75,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.75,
+     "y": 0.5,
+     "text": {
+      "en": "Super profit"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.855,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b2)*bk",
+     "color": {
+      "by": "m == 3",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 12.25,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.25,
+     "y": 0.5,
+     "text": {
+      "en": "Capitalising average profit"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 15.355,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b3)*bk",
+     "color": {
+      "by": "m == 4",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 16.75,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 16.75,
+     "y": 0.5,
+     "text": {
+      "en": "Capitalising super profit"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "Normal profit {np} = {ce} × {nr}%.  Super profit = {ap} − {np} = {ap - np}"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.8,
+     "text": {
+      "en": "Negative goodwill: no goodwill (a capital reserve)"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "ap < np"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Normal profit"
+     },
+     "expr": "np",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Super profit"
+     },
+     "expr": "ap - np",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Goodwill by the chosen method"
+     },
+     "expr": "if(m == 1, ap*yp, if(m == 2, (ap - np)*yp, if(m == 3, ap*100/nr - ce, (ap - np)*100/nr)))",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Average profit ₹80,000, 10% normal return on ₹5,00,000, 3 years: check ₹2,40,000 and ₹90,000."
+    },
+    {
+     "en": "Compare the two capitalisation bars. Are they ever different? Why?"
+    },
+    {
+     "en": "Raise the capital employed until there is no super profit. What does that say about the firm?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

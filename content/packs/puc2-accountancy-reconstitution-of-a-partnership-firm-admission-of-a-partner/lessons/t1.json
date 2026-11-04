@@ -285,6 +285,296 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "New ratio and sacrificing ratio",
+    "kn": "ಹೊಸ ಅನುಪಾತ ಮತ್ತು ತ್ಯಾಗದ ಅನುಪಾತ"
+   },
+   "caption": {
+    "en": "C joins A and B. Choose how C acquires the share: each old partner's sacrifice is his old share minus his new share.",
+    "kn": "C, A ಮತ್ತು B ಜೊತೆ ಸೇರುತ್ತಾನೆ. C ಪಾಲು ಹೇಗೆ ಪಡೆಯುತ್ತಾನೆ ಆರಿಸಿ: ಪ್ರತಿ ಹಳೆಯ ಪಾಲುದಾರನ ತ್ಯಾಗ = ಹಳೆಯ ಪಾಲು − ಹೊಸ ಪಾಲು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "A's old share"
+     },
+     "min": 10,
+     "max": 90,
+     "step": 5,
+     "value": 60,
+     "unit": "%"
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "C's share"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 5,
+     "value": 20,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "how",
+     "label": {
+      "en": "C takes the share",
+      "kn": "ಪಾಲು ಪಡೆಯುವ ರೀತಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "In the old ratio",
+        "kn": "ಹಳೆಯ ಅನುಪಾತದಲ್ಲಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Equally from A and B",
+        "kn": "A ಮತ್ತು B ಯಿಂದ ಸಮವಾಗಿ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Only from A",
+        "kn": "A ಯಿಂದ ಮಾತ್ರ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "sr",
+     "expr": "if(how == 1, c*a/100, if(how == 2, c/2, c))"
+    },
+    {
+     "name": "ok",
+     "expr": "sr <= a && c - sr <= 100 - a"
+    },
+    {
+     "name": "sa",
+     "expr": "min(sr, a)"
+    },
+    {
+     "name": "sb",
+     "expr": "min(c - sa, 100 - a)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     1.5,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 3.8,
+     "y": 7.3,
+     "text": {
+      "en": "Old"
+     },
+     "size": 24,
+     "color": "white",
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 3.8,
+     "y": 4.3,
+     "text": {
+      "en": "New"
+     },
+     "size": 24,
+     "color": "white",
+     "align": "right"
+    },
+    {
+     "shape": "rect",
+     "x": "4 + (0)*0.14",
+     "y": 7,
+     "w": "max(a, 0)*0.14",
+     "h": 1.1,
+     "color": "blue",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": "4 + ((0) + (a)/2)*0.14",
+     "y": 7.38,
+     "text": {
+      "en": "A {a:1}%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "a > 6"
+    },
+    {
+     "shape": "rect",
+     "x": "4 + (0 + max(a, 0))*0.14",
+     "y": 7,
+     "w": "max(100 - a, 0)*0.14",
+     "h": 1.1,
+     "color": "orange",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": "4 + ((0 + max(a, 0)) + (100 - a)/2)*0.14",
+     "y": 7.38,
+     "text": {
+      "en": "B {100 - a:1}%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "100 - a > 6"
+    },
+    {
+     "shape": "rect",
+     "x": "4 + (0)*0.14",
+     "y": 4,
+     "w": "max(a - sa, 0)*0.14",
+     "h": 1.1,
+     "color": "blue",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": "4 + ((0) + (a - sa)/2)*0.14",
+     "y": 4.38,
+     "text": {
+      "en": "A {a - sa:1}%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "a - sa > 6"
+    },
+    {
+     "shape": "rect",
+     "x": "4 + (0 + max(a - sa, 0))*0.14",
+     "y": 4,
+     "w": "max(100 - a - sb, 0)*0.14",
+     "h": 1.1,
+     "color": "orange",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": "4 + ((0 + max(a - sa, 0)) + (100 - a - sb)/2)*0.14",
+     "y": 4.38,
+     "text": {
+      "en": "B {100 - a - sb:1}%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "100 - a - sb > 6"
+    },
+    {
+     "shape": "rect",
+     "x": "4 + (0 + max(a - sa, 0) + max(100 - a - sb, 0))*0.14",
+     "y": 4,
+     "w": "max(c, 0)*0.14",
+     "h": 1.1,
+     "color": "green",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": "4 + ((0 + max(a - sa, 0) + max(100 - a - sb, 0)) + (c)/2)*0.14",
+     "y": 4.38,
+     "text": {
+      "en": "C {c:1}%"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "c > 6"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 9.3,
+     "text": {
+      "en": "Sacrificing ratio A : B = {sa:2} : {sb:2}"
+     },
+     "size": 26,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 2.2,
+     "text": {
+      "en": "Not possible: a partner cannot give more than his whole share"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "!ok"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "A's new share"
+     },
+     "expr": "a - sa",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "B's new share"
+     },
+     "expr": "100 - a - sb",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "A's sacrifice"
+     },
+     "expr": "sa",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "B's sacrifice"
+     },
+     "expr": "sb",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Old ratio 3 : 2 and C gets 1/5 in the old ratio: check the new ratio 12 : 8 : 5."
+    },
+    {
+     "en": "Switch to equally. When is the sacrificing ratio different from the old ratio?"
+    },
+    {
+     "en": "Take the share only from A while A's share is small. What goes wrong?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

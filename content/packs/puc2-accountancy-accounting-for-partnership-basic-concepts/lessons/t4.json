@@ -752,6 +752,543 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Interest on drawings: the average period",
+    "kn": "ಸೆಳೆತದ ಮೇಲಿನ ಬಡ್ಡಿ: ಸರಾಸರಿ ಅವಧಿ"
+   },
+   "caption": {
+    "en": "Each drawing earns interest from the day it is taken until the year end. Average those periods and charge interest once on the total drawings: total × rate × average months ÷ 12.",
+    "kn": "ಪ್ರತಿ ಸೆಳೆತಕ್ಕೆ ತೆಗೆದ ದಿನದಿಂದ ವರ್ಷದ ಕೊನೆಯವರೆಗೆ ಬಡ್ಡಿ. ಆ ಅವಧಿಗಳ ಸರಾಸರಿ ತೆಗೆದು ಒಟ್ಟು ಸೆಳೆತದ ಮೇಲೆ ಒಮ್ಮೆ ಬಡ್ಡಿ: ಒಟ್ಟು × ದರ × ಸರಾಸರಿ ತಿಂಗಳು ÷ 12."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "amt",
+     "label": {
+      "en": "Each drawing"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 5,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Rate of interest"
+     },
+     "min": 1,
+     "max": 12,
+     "step": 1,
+     "value": 6,
+     "unit": "% p.a."
+    }
+   ],
+   "choices": [
+    {
+     "name": "ch",
+     "label": {
+      "en": "Drawings are made",
+      "kn": "ಸೆಳೆತದ ಸಮಯ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Monthly, at the beginning"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Monthly, in the middle"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Monthly, at the end"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Quarterly, at the beginning"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "Quarterly, at the end"
+       },
+       "value": 5
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "q",
+     "expr": "ch >= 4"
+    },
+    {
+     "name": "avg",
+     "expr": "if(ch == 1, 6.5, if(ch == 2, 6, if(ch == 3, 5.5, if(ch == 4, 7.5, 4.5))))"
+    },
+    {
+     "name": "off",
+     "expr": "if(ch == 1, 0, if(ch == 2, 0.5, if(ch == 3, 1, if(ch == 4, 0, 3))))"
+    },
+    {
+     "name": "tot",
+     "expr": "amt*if(q, 4, 12)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     16
+    ],
+    "y": [
+     0,
+     12
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "if(q, 0 + off, 0 + off)",
+     "y": 10.2,
+     "w": "12 - (if(q, 0 + off, 0 + off))",
+     "h": 0.5,
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(q, 0 + off, 0 + off)",
+     "y": 10.45,
+     "r": 0.14,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": "if(q, 3 + off, 1 + off)",
+     "y": 9.48,
+     "w": "12 - (if(q, 3 + off, 1 + off))",
+     "h": 0.5,
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(q, 3 + off, 1 + off)",
+     "y": 9.73,
+     "r": 0.14,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": "if(q, 6 + off, 2 + off)",
+     "y": 8.76,
+     "w": "12 - (if(q, 6 + off, 2 + off))",
+     "h": 0.5,
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(q, 6 + off, 2 + off)",
+     "y": 9.01,
+     "r": 0.14,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": "if(q, 9 + off, 3 + off)",
+     "y": 8.04,
+     "w": "12 - (if(q, 9 + off, 3 + off))",
+     "h": 0.5,
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(q, 9 + off, 3 + off)",
+     "y": 8.29,
+     "r": 0.14,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": "if(q, 12 + off, 4 + off)",
+     "y": 7.32,
+     "w": "12 - (if(q, 12 + off, 4 + off))",
+     "h": 0.5,
+     "color": "orange",
+     "visibleIf": "q == 0",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(q, 12 + off, 4 + off)",
+     "y": 7.57,
+     "r": 0.14,
+     "color": "yellow",
+     "visibleIf": "q == 0"
+    },
+    {
+     "shape": "rect",
+     "x": "if(q, 15 + off, 5 + off)",
+     "y": 6.6,
+     "w": "12 - (if(q, 15 + off, 5 + off))",
+     "h": 0.5,
+     "color": "orange",
+     "visibleIf": "q == 0",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(q, 15 + off, 5 + off)",
+     "y": 6.85,
+     "r": 0.14,
+     "color": "yellow",
+     "visibleIf": "q == 0"
+    },
+    {
+     "shape": "rect",
+     "x": "if(q, 18 + off, 6 + off)",
+     "y": 5.88,
+     "w": "12 - (if(q, 18 + off, 6 + off))",
+     "h": 0.5,
+     "color": "orange",
+     "visibleIf": "q == 0",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(q, 18 + off, 6 + off)",
+     "y": 6.13,
+     "r": 0.14,
+     "color": "yellow",
+     "visibleIf": "q == 0"
+    },
+    {
+     "shape": "rect",
+     "x": "if(q, 21 + off, 7 + off)",
+     "y": 5.16,
+     "w": "12 - (if(q, 21 + off, 7 + off))",
+     "h": 0.5,
+     "color": "orange",
+     "visibleIf": "q == 0",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(q, 21 + off, 7 + off)",
+     "y": 5.41,
+     "r": 0.14,
+     "color": "yellow",
+     "visibleIf": "q == 0"
+    },
+    {
+     "shape": "rect",
+     "x": "if(q, 24 + off, 8 + off)",
+     "y": 4.44,
+     "w": "12 - (if(q, 24 + off, 8 + off))",
+     "h": 0.5,
+     "color": "orange",
+     "visibleIf": "q == 0",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(q, 24 + off, 8 + off)",
+     "y": 4.69,
+     "r": 0.14,
+     "color": "yellow",
+     "visibleIf": "q == 0"
+    },
+    {
+     "shape": "rect",
+     "x": "if(q, 27 + off, 9 + off)",
+     "y": 3.72,
+     "w": "12 - (if(q, 27 + off, 9 + off))",
+     "h": 0.5,
+     "color": "orange",
+     "visibleIf": "q == 0",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(q, 27 + off, 9 + off)",
+     "y": 3.97,
+     "r": 0.14,
+     "color": "yellow",
+     "visibleIf": "q == 0"
+    },
+    {
+     "shape": "rect",
+     "x": "if(q, 30 + off, 10 + off)",
+     "y": 3.0,
+     "w": "12 - (if(q, 30 + off, 10 + off))",
+     "h": 0.5,
+     "color": "orange",
+     "visibleIf": "q == 0",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(q, 30 + off, 10 + off)",
+     "y": 3.25,
+     "r": 0.14,
+     "color": "yellow",
+     "visibleIf": "q == 0"
+    },
+    {
+     "shape": "rect",
+     "x": "if(q, 33 + off, 11 + off)",
+     "y": 2.28,
+     "w": "12 - (if(q, 33 + off, 11 + off))",
+     "h": 0.5,
+     "color": "orange",
+     "visibleIf": "q == 0",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(q, 33 + off, 11 + off)",
+     "y": 2.53,
+     "r": 0.14,
+     "color": "yellow",
+     "visibleIf": "q == 0"
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 0.6,
+     "text": {
+      "en": "A"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 0.6,
+     "text": {
+      "en": "M"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 0.6,
+     "text": {
+      "en": "J"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 0.6,
+     "text": {
+      "en": "J"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 0.6,
+     "text": {
+      "en": "A"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": 0.6,
+     "text": {
+      "en": "S"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 0.6,
+     "text": {
+      "en": "O"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 0.6,
+     "text": {
+      "en": "N"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.5,
+     "y": 0.6,
+     "text": {
+      "en": "D"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.5,
+     "y": 0.6,
+     "text": {
+      "en": "J"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.5,
+     "y": 0.6,
+     "text": {
+      "en": "F"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 0.6,
+     "text": {
+      "en": "M"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 1.1,
+     "x2": 0,
+     "y2": 10.9,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 1.1,
+     "x2": 12,
+     "y2": 10.9,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 12.2,
+     "y": 10.2,
+     "text": {
+      "en": "31 March"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 12.2,
+     "y": 6.5,
+     "text": {
+      "en": "Average"
+     },
+     "size": 22,
+     "color": "yellow",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 12.2,
+     "y": 5.8,
+     "text": {
+      "en": "{avg:1} months"
+     },
+     "size": 22,
+     "color": "yellow",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 11.6,
+     "text": {
+      "en": "Each bar: how long one drawing stays out before the year ends"
+     },
+     "size": 20,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Total drawings"
+     },
+     "expr": "tot",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Average period"
+     },
+     "expr": "avg",
+     "digits": 1,
+     "unit": "months"
+    },
+    {
+     "label": {
+      "en": "Interest on drawings"
+     },
+     "expr": "tot*r/100*avg/12",
+     "digits": 3,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Monthly drawings of ₹5,000 at the beginning at 6%: check the interest of ₹1,950."
+    },
+    {
+     "en": "Why is the average 6.5 months for the beginning but 5.5 months for the end of each month?"
+    },
+    {
+     "en": "Switch to quarterly at the end. Why is one bar of zero length?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

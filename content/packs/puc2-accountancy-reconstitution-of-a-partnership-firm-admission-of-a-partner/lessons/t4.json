@@ -397,6 +397,449 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The revaluation account",
+    "kn": "ಮರುಮೌಲ್ಯಮಾಪನ ಖಾತೆ"
+   },
+   "caption": {
+    "en": "Gains (assets up, liabilities down) are credited and losses (assets down, liabilities up) debited. The result goes to the old partners A and B in their old ratio 3 : 2.",
+    "kn": "ಲಾಭಗಳನ್ನು (ಆಸ್ತಿ ಏರಿಕೆ, ಹೊಣೆ ಇಳಿಕೆ) ಜಮಾ, ನಷ್ಟಗಳನ್ನು ಖರ್ಚು ಮಾಡಲಾಗುತ್ತದೆ. ಫಲಿತಾಂಶ ಹಳೆಯ ಪಾಲುದಾರರಿಗೆ 3 : 2 ಹಳೆಯ ಅನುಪಾತದಲ್ಲಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "bi",
+     "label": {
+      "en": "Increase in building"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 40,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "sd",
+     "label": {
+      "en": "Decrease in stock"
+     },
+     "min": 0,
+     "max": 50,
+     "step": 5,
+     "value": 15,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "pdd",
+     "label": {
+      "en": "Provision for doubtful debts"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 5,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "ul",
+     "label": {
+      "en": "Unrecorded liability"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 5,
+     "value": 10,
+     "unit": "₹ '000"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "iv",
+     "label": {
+      "en": "Unrecorded investment ₹12k found",
+      "kn": "ದಾಖಲಾಗದ ಹೂಡಿಕೆ ₹12k"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "wd0",
+     "expr": "bi"
+    },
+    {
+     "name": "wc0",
+     "expr": "wd0"
+    },
+    {
+     "name": "wd1",
+     "expr": "12*iv"
+    },
+    {
+     "name": "wc1",
+     "expr": "wc0 + wd1"
+    },
+    {
+     "name": "wd2",
+     "expr": "-sd"
+    },
+    {
+     "name": "wc2",
+     "expr": "wc1 + wd2"
+    },
+    {
+     "name": "wd3",
+     "expr": "-pdd"
+    },
+    {
+     "name": "wc3",
+     "expr": "wc2 + wd3"
+    },
+    {
+     "name": "wd4",
+     "expr": "-ul"
+    },
+    {
+     "name": "wc4",
+     "expr": "wc3 + wd4"
+    },
+    {
+     "name": "wc5",
+     "expr": "wc4"
+    },
+    {
+     "name": "wd5",
+     "expr": "wc5"
+    },
+    {
+     "name": "wlo",
+     "expr": "min(0, wc0, wc1, wc2, wc3, wc4, wc5)"
+    },
+    {
+     "name": "whi",
+     "expr": "max(1, wc0, wc1, wc2, wc3, wc4, wc5)"
+    },
+    {
+     "name": "wk",
+     "expr": "7.4/(whi - wlo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.5,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1 + (0 - wlo)*wk",
+     "x2": 19.5,
+     "y2": "1 + (0 - wlo)*wk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.133,
+     "y": "1 + (min(0, wc0) - wlo)*wk",
+     "w": 1.9,
+     "h": "abs(wc0)*wk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.083,
+     "y": "1 + (max(0, wc0) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.083,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Building up"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 3.033,
+     "y1": "1 + (wc0 - wlo)*wk",
+     "x2": 4.3,
+     "y2": "1 + (wc0 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 4.3,
+     "y": "1 + (min(wc0, wc1) - wlo)*wk",
+     "w": 1.9,
+     "h": "abs(wd1)*wk",
+     "color": {
+      "by": "step(0, wd1)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": "1 + (max(wc0, wc1) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Investment found"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 6.2,
+     "y1": "1 + (wc1 - wlo)*wk",
+     "x2": 7.467,
+     "y2": "1 + (wc1 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 7.467,
+     "y": "1 + (min(wc1, wc2) - wlo)*wk",
+     "w": 1.9,
+     "h": "abs(wd2)*wk",
+     "color": {
+      "by": "step(0, wd2)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 8.417,
+     "y": "1 + (max(wc1, wc2) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.417,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Stock down"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 9.367,
+     "y1": "1 + (wc2 - wlo)*wk",
+     "x2": 10.633,
+     "y2": "1 + (wc2 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 10.633,
+     "y": "1 + (min(wc2, wc3) - wlo)*wk",
+     "w": 1.9,
+     "h": "abs(wd3)*wk",
+     "color": {
+      "by": "step(0, wd3)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 11.583,
+     "y": "1 + (max(wc2, wc3) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.583,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Doubtful debts"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 12.533,
+     "y1": "1 + (wc3 - wlo)*wk",
+     "x2": 13.8,
+     "y2": "1 + (wc3 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 13.8,
+     "y": "1 + (min(wc3, wc4) - wlo)*wk",
+     "w": 1.9,
+     "h": "abs(wd4)*wk",
+     "color": {
+      "by": "step(0, wd4)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": "1 + (max(wc3, wc4) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd4}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Unrecorded liability"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 15.7,
+     "y1": "1 + (wc4 - wlo)*wk",
+     "x2": 16.967,
+     "y2": "1 + (wc4 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 16.967,
+     "y": "1 + (min(0, wc5) - wlo)*wk",
+     "w": 1.9,
+     "h": "abs(wc5)*wk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 17.917,
+     "y": "1 + (max(0, wc5) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd5}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.917,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Profit / loss"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Revaluation {wc5}: A (3/5) {wc5*0.6:1}, B (2/5) {wc5*0.4:1}"
+     },
+     "size": 24,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Revaluation profit (+) / loss (−)"
+     },
+     "expr": "wc5",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "A's share"
+     },
+     "expr": "wc5*0.6",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "B's share"
+     },
+     "expr": "wc5*0.4",
+     "digits": 1,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why is the new partner C given no share of the revaluation profit?"
+    },
+    {
+     "en": "Make the losses larger than the gains. Which side of the revaluation account has the balance?"
+    },
+    {
+     "en": "Turn on the unrecorded investment. Is it a gain or a loss, and why?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

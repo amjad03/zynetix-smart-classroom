@@ -293,6 +293,423 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Trend analysis",
+    "kn": "ಪ್ರವೃತ್ತಿ ವಿಶ್ಲೇಷಣೆ"
+   },
+   "caption": {
+    "en": "Choose a base year and call it 100; every other year is shown as a percentage of it. Trend percentages make growth easy to see even when the amounts are large.",
+    "kn": "ಆಧಾರ ವರ್ಷವನ್ನು 100 ಎಂದು ಆರಿಸಿ; ಉಳಿದ ವರ್ಷಗಳು ಅದರ ಶೇಕಡಾ. ಮೊತ್ತಗಳು ದೊಡ್ಡದಿದ್ದರೂ ಬೆಳವಣಿಗೆ ಸುಲಭವಾಗಿ ಕಾಣುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "rs",
+     "label": {
+      "en": "Revenue in 2021"
+     },
+     "min": 100,
+     "max": 500,
+     "step": 10,
+     "value": 200,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "g",
+     "label": {
+      "en": "Growth each year"
+     },
+     "min": -10,
+     "max": 30,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "bad",
+     "label": {
+      "en": "2023 is a bad year (−25%)",
+      "kn": "2023 ಕೆಟ್ಟ ವರ್ಷ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "bs",
+     "label": {
+      "en": "Base year",
+      "kn": "ಆಧಾರ ವರ್ಷ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "2021"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "2022"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "2023"
+       },
+       "value": 2
+      }
+     ],
+     "value": 0
+    }
+   ],
+   "vars": [
+    {
+     "name": "r0",
+     "expr": "rs*(1 + g/100)^0"
+    },
+    {
+     "name": "r1",
+     "expr": "rs*(1 + g/100)^1"
+    },
+    {
+     "name": "r2",
+     "expr": "rs*(1 + g/100)^2 *(1 - 0.25*bad)"
+    },
+    {
+     "name": "r3",
+     "expr": "rs*(1 + g/100)^3"
+    },
+    {
+     "name": "r4",
+     "expr": "rs*(1 + g/100)^4"
+    },
+    {
+     "name": "rb",
+     "expr": "if(bs == 0, r0, if(bs == 1, r1, r2))"
+    },
+    {
+     "name": "b0",
+     "expr": "r0"
+    },
+    {
+     "name": "b1",
+     "expr": "r1"
+    },
+    {
+     "name": "b2",
+     "expr": "r2"
+    },
+    {
+     "name": "b3",
+     "expr": "r3"
+    },
+    {
+     "name": "b4",
+     "expr": "r4"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(100, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bk",
+     "expr": "6.799999999999999/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.4,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": "1.4 + (0 - blo)*bk",
+     "x2": 19,
+     "y2": "1.4 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.684,
+     "y": "1.4 + (min(0, b0) - blo)*bk",
+     "w": 2.232,
+     "h": "abs(b0)*bk",
+     "color": {
+      "by": "bs == 0",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 2.8,
+     "y": "1.4 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.8,
+     "y": 0.7,
+     "text": {
+      "en": "2021"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 5.284,
+     "y": "1.4 + (min(0, b1) - blo)*bk",
+     "w": 2.232,
+     "h": "abs(b1)*bk",
+     "color": {
+      "by": "bs == 1",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 6.4,
+     "y": "1.4 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.4,
+     "y": 0.7,
+     "text": {
+      "en": "2022"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.884,
+     "y": "1.4 + (min(0, b2) - blo)*bk",
+     "w": 2.232,
+     "h": "abs(b2)*bk",
+     "color": {
+      "by": "bs == 2",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": "1.4 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 0.7,
+     "text": {
+      "en": "2023"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 12.484,
+     "y": "1.4 + (min(0, b3) - blo)*bk",
+     "w": 2.232,
+     "h": "abs(b3)*bk",
+     "color": {
+      "by": "bs == 3",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 13.6,
+     "y": "1.4 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.6,
+     "y": 0.7,
+     "text": {
+      "en": "2024"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.084,
+     "y": "1.4 + (min(0, b4) - blo)*bk",
+     "w": 2.232,
+     "h": "abs(b4)*bk",
+     "color": {
+      "by": "bs == 4",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 17.2,
+     "y": "1.4 + (max(0, b4) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b4}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.2,
+     "y": 0.7,
+     "text": {
+      "en": "2025"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.8,
+     "y": 0.2,
+     "text": {
+      "en": "{r0/rb*100:0}%"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6.4,
+     "y": 0.2,
+     "text": {
+      "en": "{r1/rb*100:0}%"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 0.2,
+     "text": {
+      "en": "{r2/rb*100:0}%"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 13.6,
+     "y": 0.2,
+     "text": {
+      "en": "{r3/rb*100:0}%"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 17.2,
+     "y": 0.2,
+     "text": {
+      "en": "{r4/rb*100:0}%"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Bars: revenue (₹ lakh). Yellow: trend % with the base year = 100"
+     },
+     "size": 22,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Revenue in 2025"
+     },
+     "expr": "r4",
+     "digits": 1,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Trend % of 2025"
+     },
+     "expr": "r4/rb*100",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At 10% growth, why is the 2025 trend 146% and not 140%?"
+    },
+    {
+     "en": "Make 2023 a bad year and choose it as the base. What goes wrong with the other trend percentages?"
+    },
+    {
+     "en": "Set a negative growth rate. What do trend percentages below 100 tell you?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

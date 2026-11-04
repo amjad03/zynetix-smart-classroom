@@ -527,6 +527,306 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Find the hidden purchase of machinery",
+    "kn": "ಮರೆಯಾದ ಯಂತ್ರ ಖರೀದಿಯನ್ನು ಹುಡುಕಿ"
+   },
+   "caption": {
+    "en": "The machinery account balances: opening + purchase = depreciation + book value of the machine sold + closing. The purchase is the balancing figure; purchase is an outflow and the sale proceeds an inflow of investing activities.",
+    "kn": "ಯಂತ್ರ ಖಾತೆ: ಆರಂಭ + ಖರೀದಿ = ಸವಕಳಿ + ಮಾರಿದ ಯಂತ್ರದ ಪುಸ್ತಕ ಮೌಲ್ಯ + ಅಂತಿಮ. ಖರೀದಿ ಸಮತೋಲನದ ಅಂಕಿ; ಅದು ಹೂಡಿಕೆಯ ಹೊರಹರಿವು, ಮಾರಾಟದ ಹಣ ಒಳಹರಿವು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "om",
+     "label": {
+      "en": "Opening machinery (net)"
+     },
+     "min": 100,
+     "max": 500,
+     "step": 10,
+     "value": 300,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "cm",
+     "label": {
+      "en": "Closing machinery (net)"
+     },
+     "min": 100,
+     "max": 600,
+     "step": 10,
+     "value": 380,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "dp",
+     "label": {
+      "en": "Depreciation for the year"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 40,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "bv",
+     "label": {
+      "en": "Book value of machine sold"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 30,
+     "unit": "₹ '000"
+    }
+   ],
+   "choices": [
+    {
+     "name": "gl",
+     "label": {
+      "en": "Machine sold at",
+      "kn": "ಮಾರಾಟ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "a loss of 10"
+       },
+       "value": -10
+      },
+      {
+       "label": {
+        "en": "book value"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "a profit of 10"
+       },
+       "value": 10
+      }
+     ],
+     "value": 0
+    }
+   ],
+   "vars": [
+    {
+     "name": "pur",
+     "expr": "cm + dp + bv - om"
+    },
+    {
+     "name": "sp",
+     "expr": "bv + gl"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.5,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": 9.6,
+     "text": {
+      "en": "Dr  Machinery account"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": 9.6,
+     "text": {
+      "en": "Cr"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 0.5,
+     "x2": 10,
+     "y2": 9.2,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": "0.5 + (0)*7.6/max(om + max(pur, 0), dp + bv + cm, 1)",
+     "w": 5,
+     "h": "(om)*7.6/max(om + max(pur, 0), dp + bv + cm, 1)",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": "0.5 + ((0) + (om)/2)*7.6/max(om + max(pur, 0), dp + bv + cm, 1) - 0.15",
+     "text": {
+      "en": "Opening {om}"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "(om)*7.6/max(om + max(pur, 0), dp + bv + cm, 1) > 0.5"
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": "0.5 + (0 + om)*7.6/max(om + max(pur, 0), dp + bv + cm, 1)",
+     "w": 5,
+     "h": "(max(pur, 0))*7.6/max(om + max(pur, 0), dp + bv + cm, 1)",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": "0.5 + ((0 + om) + (max(pur, 0))/2)*7.6/max(om + max(pur, 0), dp + bv + cm, 1) - 0.15",
+     "text": {
+      "en": "Purchase {max(pur, 0)}"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "(max(pur, 0))*7.6/max(om + max(pur, 0), dp + bv + cm, 1) > 0.5"
+    },
+    {
+     "shape": "rect",
+     "x": 12,
+     "y": "0.5 + (0)*7.6/max(om + max(pur, 0), dp + bv + cm, 1)",
+     "w": 5,
+     "h": "(dp)*7.6/max(om + max(pur, 0), dp + bv + cm, 1)",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": "0.5 + ((0) + (dp)/2)*7.6/max(om + max(pur, 0), dp + bv + cm, 1) - 0.15",
+     "text": {
+      "en": "Depreciation {dp}"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "(dp)*7.6/max(om + max(pur, 0), dp + bv + cm, 1) > 0.5"
+    },
+    {
+     "shape": "rect",
+     "x": 12,
+     "y": "0.5 + (0 + dp)*7.6/max(om + max(pur, 0), dp + bv + cm, 1)",
+     "w": 5,
+     "h": "(bv)*7.6/max(om + max(pur, 0), dp + bv + cm, 1)",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": "0.5 + ((0 + dp) + (bv)/2)*7.6/max(om + max(pur, 0), dp + bv + cm, 1) - 0.15",
+     "text": {
+      "en": "Sold (book value) {bv}"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "(bv)*7.6/max(om + max(pur, 0), dp + bv + cm, 1) > 0.5"
+    },
+    {
+     "shape": "rect",
+     "x": 12,
+     "y": "0.5 + (0 + dp + bv)*7.6/max(om + max(pur, 0), dp + bv + cm, 1)",
+     "w": 5,
+     "h": "(cm)*7.6/max(om + max(pur, 0), dp + bv + cm, 1)",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": "0.5 + ((0 + dp + bv) + (cm)/2)*7.6/max(om + max(pur, 0), dp + bv + cm, 1) - 0.15",
+     "text": {
+      "en": "Closing {cm}"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "(cm)*7.6/max(om + max(pur, 0), dp + bv + cm, 1) > 0.5"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0,
+     "text": {
+      "en": "Purchase (balancing figure) = {pur}   Investing cash = {sp} − {pur} = {sp - pur}"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.0,
+     "text": {
+      "en": "These figures cannot all be true: closing is too low"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "pur < 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Purchase of machinery"
+     },
+     "expr": "pur",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Sale proceeds"
+     },
+     "expr": "sp",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Net cash from investing"
+     },
+     "expr": "sp - pur",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Opening ₹3,00,000, closing ₹3,80,000, depreciation ₹40,000, sold at book value ₹30,000: check a purchase of ₹1,50,000."
+    },
+    {
+     "en": "Sell at a profit of ₹10,000. Does the purchase change? What does?"
+    },
+    {
+     "en": "Where does the profit on sale go in the cash flow statement?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

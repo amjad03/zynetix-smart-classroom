@@ -414,6 +414,415 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Correct an omitted interest on capital",
+    "kn": "ಬಿಟ್ಟುಹೋದ ಬಂಡವಾಳ ಬಡ್ಡಿಯ ಸರಿಪಡಿಸುವಿಕೆ"
+   },
+   "caption": {
+    "en": "Interest on capital was left out, and the whole profit was already shared. Each partner should get his interest, but the same total must come back out of profit in the profit sharing ratio. Only the net difference is adjusted.",
+    "kn": "ಬಂಡವಾಳ ಬಡ್ಡಿ ಬಿಟ್ಟುಹೋಗಿದೆ, ಲಾಭ ಈಗಾಗಲೇ ಹಂಚಲಾಗಿದೆ. ಪ್ರತಿಯೊಬ್ಬರಿಗೂ ಬಡ್ಡಿ ಸಿಗಬೇಕು, ಅದೇ ಮೊತ್ತ ಲಾಭ ಹಂಚಿಕೆ ಅನುಪಾತದಲ್ಲಿ ಹಿಂತಿರುಗಬೇಕು. ನಿವ್ವಳ ವ್ಯತ್ಯಾಸ ಮಾತ್ರ ಹೊಂದಿಸಲಾಗುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "ca",
+     "label": {
+      "en": "A's capital"
+     },
+     "min": 100,
+     "max": 500,
+     "step": 10,
+     "value": 300,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "cb",
+     "label": {
+      "en": "B's capital"
+     },
+     "min": 100,
+     "max": 500,
+     "step": 10,
+     "value": 200,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "ir",
+     "label": {
+      "en": "Interest on capital"
+     },
+     "min": 1,
+     "max": 12,
+     "step": 1,
+     "value": 6,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "ra",
+     "label": {
+      "en": "Profit sharing ratio A : B",
+      "kn": "ಲಾಭ ಹಂಚಿಕೆ ಅನುಪಾತ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "1 : 1"
+       },
+       "value": 0.5
+      },
+      {
+       "label": {
+        "en": "3 : 2"
+       },
+       "value": 0.6
+      },
+      {
+       "label": {
+        "en": "2 : 3"
+       },
+       "value": 0.4
+      }
+     ],
+     "value": 0.5
+    }
+   ],
+   "vars": [
+    {
+     "name": "ia",
+     "expr": "ca*ir/100"
+    },
+    {
+     "name": "ib",
+     "expr": "cb*ir/100"
+    },
+    {
+     "name": "ia2",
+     "expr": "(ia + ib)*ra"
+    },
+    {
+     "name": "ib2",
+     "expr": "(ia + ib)*(1 - ra)"
+    },
+    {
+     "name": "na",
+     "expr": "ia - ia2"
+    },
+    {
+     "name": "b0",
+     "expr": "ia"
+    },
+    {
+     "name": "b1",
+     "expr": "-ia2"
+    },
+    {
+     "name": "b2",
+     "expr": "na"
+    },
+    {
+     "name": "b3",
+     "expr": "ib"
+    },
+    {
+     "name": "b4",
+     "expr": "-ib2"
+    },
+    {
+     "name": "b5",
+     "expr": "-na"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3, b4, b5)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(10, b0, b1, b2, b3, b4, b5)"
+    },
+    {
+     "name": "bk",
+     "expr": "7.1000000000000005/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19.5,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.102,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b0)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 2.083,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.083,
+     "y": 0.5,
+     "text": {
+      "en": "A: interest due"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 4.268,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b1)*bk",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": 0.5,
+     "text": {
+      "en": "A: profit reversed"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 7.435,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b2)*bk",
+     "color": {
+      "by": "step(0, b2)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 8.417,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.417,
+     "y": 0.5,
+     "text": {
+      "en": "A: net"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.602,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b3)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 11.583,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.583,
+     "y": 0.5,
+     "text": {
+      "en": "B: interest due"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 13.768,
+     "y": "1.2 + (min(0, b4) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b4)*bk",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": "1.2 + (max(0, b4) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b4:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": 0.5,
+     "text": {
+      "en": "B: profit reversed"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.935,
+     "y": "1.2 + (min(0, b5) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b5)*bk",
+     "color": {
+      "by": "step(0, b5)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 17.917,
+     "y": "1.2 + (max(0, b5) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b5:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.917,
+     "y": 0.5,
+     "text": {
+      "en": "B: net"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "B's Capital A/c Dr {-na:2}, To A's Capital A/c"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "na > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "A's Capital A/c Dr {na:2}, To B's Capital A/c"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "na < 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "No adjustment needed"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "na == 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Total interest omitted"
+     },
+     "expr": "ia + ib",
+     "digits": 2,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Net adjustment for A (+ credit)"
+     },
+     "expr": "na",
+     "digits": 2,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Net adjustment for B (+ credit)"
+     },
+     "expr": "-na",
+     "digits": 2,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Capitals ₹3,00,000 and ₹2,00,000 at 6%, ratio 1 : 1: check that B pays A ₹3,000."
+    },
+    {
+     "en": "Make the capitals proportional to the profit sharing ratio. Why is no adjustment needed?"
+    },
+    {
+     "en": "Why does the profit and loss adjustment account not appear in the final entry?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

@@ -403,6 +403,382 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Written down value method over the years",
+    "kn": "ವರ್ಷಗಳಲ್ಲಿ ಇಳಿಕೆ ಮೌಲ್ಯ ವಿಧಾನ"
+   },
+   "caption": {
+    "en": "Each year the rate is applied to the opening book value, so the charge (orange bars) shrinks every year and the book value never reaches zero. Compare with the straight line method.",
+    "kn": "ಪ್ರತಿ ವರ್ಷ ದರವನ್ನು ಆರಂಭಿಕ ಪುಸ್ತಕ ಮೌಲ್ಯಕ್ಕೆ ಅನ್ವಯಿಸಲಾಗುತ್ತದೆ; ಸವಕಳಿ (ಕಿತ್ತಳೆ) ಪ್ರತಿ ವರ್ಷ ಕುಗ್ಗುತ್ತದೆ ಮತ್ತು ಪುಸ್ತಕ ಮೌಲ್ಯ ಎಂದೂ ಸೊನ್ನೆಯಾಗುವುದಿಲ್ಲ. ನೇರ ರೇಖಾ ವಿಧಾನದೊಂದಿಗೆ ಹೋಲಿಸಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "C",
+     "label": {
+      "en": "Cost of the asset"
+     },
+     "min": 100,
+     "max": 500,
+     "step": 10,
+     "value": 200,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Rate of depreciation"
+     },
+     "min": 5,
+     "max": 40,
+     "step": 1,
+     "value": 20,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "slm",
+     "label": {
+      "en": "Compare SLM",
+      "kn": "ನೇರ ರೇಖಾ ವಿಧಾನ ಹೋಲಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run the years",
+      "kn": "ವರ್ಷಗಳನ್ನು ಓಡಿಸಿ"
+     },
+     "icon": "play",
+     "set": {},
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 10.5,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "yr"
+   },
+   "vars": [
+    {
+     "name": "yr",
+     "expr": "min(floor(t), 10)"
+    },
+    {
+     "name": "bv",
+     "expr": "C*(1 - r/100)^yr"
+    },
+    {
+     "name": "dnow",
+     "expr": "if(yr >= 1, C*(1 - r/100)^(yr - 1)*r/100, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10.6
+    ],
+    "y": [
+     0,
+     520
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "Years",
+    "yLabel": "₹ '000"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5800000000000001,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*(1 - r/100)^0*r/100",
+     "color": "orange",
+     "visibleIf": "t >= 1"
+    },
+    {
+     "shape": "rect",
+     "x": 1.02,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*r/100",
+     "color": "green",
+     "visibleIf": "slm && t >= 1 && 1 <= 100/r",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 1.58,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*(1 - r/100)^1*r/100",
+     "color": "orange",
+     "visibleIf": "t >= 2"
+    },
+    {
+     "shape": "rect",
+     "x": 2.02,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*r/100",
+     "color": "green",
+     "visibleIf": "slm && t >= 2 && 2 <= 100/r",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 2.58,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*(1 - r/100)^2*r/100",
+     "color": "orange",
+     "visibleIf": "t >= 3"
+    },
+    {
+     "shape": "rect",
+     "x": 3.02,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*r/100",
+     "color": "green",
+     "visibleIf": "slm && t >= 3 && 3 <= 100/r",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 3.58,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*(1 - r/100)^3*r/100",
+     "color": "orange",
+     "visibleIf": "t >= 4"
+    },
+    {
+     "shape": "rect",
+     "x": 4.02,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*r/100",
+     "color": "green",
+     "visibleIf": "slm && t >= 4 && 4 <= 100/r",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 4.58,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*(1 - r/100)^4*r/100",
+     "color": "orange",
+     "visibleIf": "t >= 5"
+    },
+    {
+     "shape": "rect",
+     "x": 5.02,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*r/100",
+     "color": "green",
+     "visibleIf": "slm && t >= 5 && 5 <= 100/r",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 5.58,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*(1 - r/100)^5*r/100",
+     "color": "orange",
+     "visibleIf": "t >= 6"
+    },
+    {
+     "shape": "rect",
+     "x": 6.02,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*r/100",
+     "color": "green",
+     "visibleIf": "slm && t >= 6 && 6 <= 100/r",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 6.58,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*(1 - r/100)^6*r/100",
+     "color": "orange",
+     "visibleIf": "t >= 7"
+    },
+    {
+     "shape": "rect",
+     "x": 7.02,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*r/100",
+     "color": "green",
+     "visibleIf": "slm && t >= 7 && 7 <= 100/r",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 7.58,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*(1 - r/100)^7*r/100",
+     "color": "orange",
+     "visibleIf": "t >= 8"
+    },
+    {
+     "shape": "rect",
+     "x": 8.02,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*r/100",
+     "color": "green",
+     "visibleIf": "slm && t >= 8 && 8 <= 100/r",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 8.58,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*(1 - r/100)^8*r/100",
+     "color": "orange",
+     "visibleIf": "t >= 9"
+    },
+    {
+     "shape": "rect",
+     "x": 9.02,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*r/100",
+     "color": "green",
+     "visibleIf": "slm && t >= 9 && 9 <= 100/r",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 9.58,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*(1 - r/100)^9*r/100",
+     "color": "orange",
+     "visibleIf": "t >= 10"
+    },
+    {
+     "shape": "rect",
+     "x": 10.02,
+     "y": 0,
+     "w": 0.4,
+     "h": "C*r/100",
+     "color": "green",
+     "visibleIf": "slm && t >= 10 && 10 <= 100/r",
+     "opacity": 0.8
+    },
+    {
+     "shape": "path",
+     "fn": "C*(1 - r/100)^max(x, 0)",
+     "from": 0,
+     "to": 10,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "max(C - C*r/100*x, 0)",
+     "from": 0,
+     "to": 10,
+     "color": "green",
+     "dashed": true,
+     "width": 3,
+     "visibleIf": "slm"
+    },
+    {
+     "shape": "circle",
+     "x": "min(t, 10)",
+     "y": "C*(1 - r/100)^min(t, 10)",
+     "r": 0.15,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 9.9,
+     "y": 505,
+     "text": {
+      "en": "Blue: WDV book value   Orange: WDV depreciation each year"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 9.9,
+     "y": 470,
+     "text": {
+      "en": "Green: SLM at the same rate on cost"
+     },
+     "size": 20,
+     "color": "green",
+     "align": "right",
+     "visibleIf": "slm"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Depreciation in the latest year"
+     },
+     "expr": "dnow",
+     "digits": 2,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Book value at year end"
+     },
+     "expr": "bv",
+     "digits": 2,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Total depreciation so far"
+     },
+     "expr": "C - bv",
+     "digits": 2,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Cost ₹2,00,000 at 20%: check that year 2's charge is ₹32,000."
+    },
+    {
+     "en": "Turn on SLM. In which years is the WDV charge larger, and when does it become smaller?"
+    },
+    {
+     "en": "At 40%, roughly how many years until the book value is below 10% of cost? Does it ever reach zero?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

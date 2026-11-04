@@ -247,6 +247,297 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "How fast does inventory turn over?",
+    "kn": "ದಾಸ್ತಾನು ಎಷ್ಟು ವೇಗವಾಗಿ ತಿರುಗುತ್ತದೆ?"
+   },
+   "caption": {
+    "en": "Inventory turnover = cost of revenue from operations ÷ average inventory. Run the year: each lap of the dot is one round of buying, storing and selling the average stock.",
+    "kn": "ದಾಸ್ತಾನು ಆವರ್ತನ = ಕಾರ್ಯಾಚರಣೆಯ ಆದಾಯದ ವೆಚ್ಚ ÷ ಸರಾಸರಿ ದಾಸ್ತಾನು. ವರ್ಷ ಓಡಿಸಿ: ಚುಕ್ಕೆಯ ಪ್ರತಿ ಸುತ್ತು ಒಂದು ಖರೀದಿ-ಮಾರಾಟ ಚಕ್ರ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "rv",
+     "label": {
+      "en": "Revenue from operations"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 20,
+     "value": 600,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "gp",
+     "label": {
+      "en": "Gross profit ratio"
+     },
+     "min": 10,
+     "max": 50,
+     "step": 5,
+     "value": 25,
+     "unit": "%"
+    },
+    {
+     "name": "oi",
+     "label": {
+      "en": "Opening inventory"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 5,
+     "value": 60,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "ci",
+     "label": {
+      "en": "Closing inventory"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 5,
+     "value": 90,
+     "unit": "₹ '000"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "dy",
+     "label": {
+      "en": "Show days per round",
+      "kn": "ಪ್ರತಿ ಸುತ್ತಿನ ದಿನಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run the year",
+      "kn": "ವರ್ಷ ಓಡಿಸಿ"
+     },
+     "icon": "play",
+     "set": {},
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 12,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "month"
+   },
+   "vars": [
+    {
+     "name": "cogs",
+     "expr": "rv*(1 - gp/100)"
+    },
+    {
+     "name": "avg",
+     "expr": "(oi + ci)/2"
+    },
+    {
+     "name": "itr",
+     "expr": "cogs/avg"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 6,
+     "y": 5,
+     "r": 3.2,
+     "color": "white",
+     "fill": false
+    },
+    {
+     "shape": "text",
+     "x": 9.041,
+     "y": 8.041,
+     "text": {
+      "en": "Buy"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.959,
+     "y": 8.041,
+     "text": {
+      "en": "Store"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.959,
+     "y": 1.959,
+     "text": {
+      "en": "Sell"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.041,
+     "y": 1.959,
+     "text": {
+      "en": "Restock"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "circle",
+     "x": "6 + 3.2*cos(2*pi*itr*t/12)",
+     "y": "5 + 3.2*sin(2*pi*itr*t/12)",
+     "r": 0.45,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 5.3,
+     "text": {
+      "en": "Turned over"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 4.4,
+     "text": {
+      "en": "{floor(itr*t/12)} times"
+     },
+     "size": 26,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 8.5,
+     "text": {
+      "en": "Month {floor(t)}"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 6.8,
+     "text": {
+      "en": "Inventory turnover {itr:2} times"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 5.6,
+     "text": {
+      "en": "One round takes about {365/itr:0} days"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "dy"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 3.6,
+     "text": {
+      "en": "Cost of revenue {cogs:0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 2.6,
+     "text": {
+      "en": "Average inventory {avg:1}"
+     },
+     "size": 22,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cost of revenue"
+     },
+     "expr": "cogs",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Average inventory"
+     },
+     "expr": "avg",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Inventory turnover"
+     },
+     "expr": "itr",
+     "digits": 2,
+     "unit": "times"
+    },
+    {
+     "label": {
+      "en": "Days per round"
+     },
+     "expr": "365/itr",
+     "digits": 0,
+     "unit": "days"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Revenue ₹6,00,000 at 25% gross profit, inventory ₹60,000 and ₹90,000: check 6 times."
+    },
+    {
+     "en": "Double the closing inventory. Is a lower turnover good or bad news?"
+    },
+    {
+     "en": "Why does the formula use cost of revenue, not revenue itself?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

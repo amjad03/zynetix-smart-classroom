@@ -424,6 +424,308 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Paying a vendor in shares",
+    "kn": "ಮಾರಾಟಗಾರನಿಗೆ ಷೇರುಗಳಲ್ಲಿ ಪಾವತಿ"
+   },
+   "caption": {
+    "en": "A company buys assets and pays the vendor in shares. Number of shares = purchase consideration ÷ issue price; the premium goes to the securities premium account.",
+    "kn": "ಕಂಪನಿ ಆಸ್ತಿ ಖರೀದಿಸಿ ಮಾರಾಟಗಾರನಿಗೆ ಷೇರುಗಳಲ್ಲಿ ಪಾವತಿಸುತ್ತದೆ. ಷೇರುಗಳ ಸಂಖ್ಯೆ = ಖರೀದಿ ಪ್ರತಿಫಲ ÷ ವಿತರಣಾ ಬೆಲೆ; ಪ್ರೀಮಿಯಂ ಭದ್ರತಾ ಪ್ರೀಮಿಯಂ ಖಾತೆಗೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "pc",
+     "label": {
+      "en": "Purchase consideration"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 10,
+     "value": 330,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "pm",
+     "label": {
+      "en": "Premium, % of face value"
+     },
+     "min": 0,
+     "max": 50,
+     "step": 5,
+     "value": 10,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "fv",
+     "label": {
+      "en": "Face value",
+      "kn": "ಮುಖಬೆಲೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "₹10"
+       },
+       "value": 10
+      },
+      {
+       "label": {
+        "en": "₹100"
+       },
+       "value": 100
+      }
+     ],
+     "value": 10
+    }
+   ],
+   "vars": [
+    {
+     "name": "ip",
+     "expr": "fv*(1 + pm/100)"
+    },
+    {
+     "name": "ns",
+     "expr": "floor(pc*1000/ip + 0.000001)"
+    },
+    {
+     "name": "cap",
+     "expr": "ns*fv/1000"
+    },
+    {
+     "name": "prem",
+     "expr": "ns*(ip - fv)/1000"
+    },
+    {
+     "name": "csh",
+     "expr": "pc - ns*ip/1000"
+    },
+    {
+     "name": "b0",
+     "expr": "pc"
+    },
+    {
+     "name": "b1",
+     "expr": "cap"
+    },
+    {
+     "name": "b2",
+     "expr": "prem"
+    },
+    {
+     "name": "b3",
+     "expr": "csh"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(100, b0, b1, b2, b3)"
+    },
+    {
+     "name": "bk",
+     "expr": "6.8/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.855,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": 0.5,
+     "text": {
+      "en": "Purchase consideration"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 6.355,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b1)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 7.75,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.75,
+     "y": 0.5,
+     "text": {
+      "en": "Share capital"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.855,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b2)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 12.25,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.25,
+     "y": 0.5,
+     "text": {
+      "en": "Securities premium"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 15.355,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b3)*bk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 16.75,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 16.75,
+     "y": 0.5,
+     "text": {
+      "en": "Balance paid in cash"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "Shares issued = {pc*1000} ÷ {ip:1} = {ns} (whole shares only)"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.8,
+     "text": {
+      "en": "Vendor A/c Dr {cap + prem:2}, To Share Capital {cap:2}, To Securities Premium {prem:2}"
+     },
+     "size": 20,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Issue price"
+     },
+     "expr": "ip",
+     "digits": 2,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Number of shares"
+     },
+     "expr": "ns",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Securities premium"
+     },
+     "expr": "prem",
+     "digits": 2,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "₹3,30,000 paid in ₹10 shares at a 10% premium: check 30,000 shares."
+    },
+    {
+     "en": "Raise the premium. What happens to the number of shares and to share capital?"
+    },
+    {
+     "en": "For which uses may the securities premium be applied under Section 52?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

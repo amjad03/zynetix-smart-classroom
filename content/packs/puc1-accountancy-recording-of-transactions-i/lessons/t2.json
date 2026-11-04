@@ -594,6 +594,276 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Keep the accounting equation balanced",
+    "kn": "ಲೆಕ್ಕಪತ್ರ ಸಮೀಕರಣವನ್ನು ಸಮತೋಲನದಲ್ಲಿಡಿ"
+   },
+   "caption": {
+    "en": "Press a transaction and watch both sides move. Every transaction changes at least two items, so assets always equal liabilities plus capital.",
+    "kn": "ವ್ಯವಹಾರವನ್ನು ಒತ್ತಿ ಎರಡೂ ಬದಿ ಬದಲಾಗುವುದನ್ನು ನೋಡಿ. ಪ್ರತಿ ವ್ಯವಹಾರ ಕನಿಷ್ಠ ಎರಡು ಅಂಶಗಳನ್ನು ಬದಲಿಸುತ್ತದೆ; ಆಸ್ತಿ ಯಾವಾಗಲೂ ಹೊಣೆ ಮತ್ತು ಬಂಡವಾಳದ ಮೊತ್ತಕ್ಕೆ ಸಮ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Amount of each transaction"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 5,
+     "value": 20,
+     "unit": "₹ '000"
+    }
+   ],
+   "counters": [
+    {
+     "name": "A",
+     "value": 100,
+     "min": 0,
+     "max": 100000
+    },
+    {
+     "name": "Lb",
+     "value": 40,
+     "min": 0,
+     "max": 100000
+    },
+    {
+     "name": "Cp",
+     "value": 60,
+     "min": -100000,
+     "max": 100000
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Owner brings in capital",
+      "kn": "ಮಾಲೀಕ ಬಂಡವಾಳ ತರುತ್ತಾನೆ"
+     },
+     "icon": "add",
+     "set": {
+      "A": "A + k",
+      "Cp": "Cp + k"
+     }
+    },
+    {
+     "label": {
+      "en": "Buy goods on credit",
+      "kn": "ಸಾಲದ ಮೇಲೆ ಸರಕು ಖರೀದಿ"
+     },
+     "icon": "add",
+     "set": {
+      "A": "A + k",
+      "Lb": "Lb + k"
+     }
+    },
+    {
+     "label": {
+      "en": "Pay a creditor",
+      "kn": "ಸಾಲಿಗನಿಗೆ ಪಾವತಿ"
+     },
+     "icon": "remove",
+     "set": {
+      "A": "A - min(k, Lb, A)",
+      "Lb": "Lb - min(k, Lb, A)"
+     }
+    },
+    {
+     "label": {
+      "en": "Pay rent (an expense)",
+      "kn": "ಬಾಡಿಗೆ ಪಾವತಿ (ಖರ್ಚು)"
+     },
+     "icon": "remove",
+     "set": {
+      "A": "A - min(k, A)",
+      "Cp": "Cp - min(k, A)"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "s",
+     "expr": "7/max(A, Lb + max(Cp, 0), 50)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -1.2,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       10,
+       1.2
+      ],
+      [
+       9.3,
+       0
+      ],
+      [
+       10.7,
+       0
+      ]
+     ],
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 2.5,
+     "y1": 1.2,
+     "x2": 17.5,
+     "y2": 1.2,
+     "color": "white",
+     "width": 6
+    },
+    {
+     "shape": "rect",
+     "x": 3.5,
+     "y": 1.3,
+     "w": 4,
+     "h": "A*s",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": "1.6 + A*s",
+     "text": {
+      "en": "Assets {A}"
+     },
+     "size": 26,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 12.5,
+     "y": 1.3,
+     "w": 4,
+     "h": "Lb*s",
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 12.5,
+     "y": "1.3 + Lb*s",
+     "w": 4,
+     "h": "max(Cp, 0)*s",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": "1.6 + (Lb + max(Cp, 0))*s",
+     "text": {
+      "en": "Liabilities {Lb} + Capital {Cp}"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": "1.3 + Lb*s/2",
+     "text": {
+      "en": "Liabilities"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "Lb*s > 0.6"
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": "1.3 + Lb*s + max(Cp, 0)*s/2",
+     "text": {
+      "en": "Capital"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "Cp*s > 0.6"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.6,
+     "text": {
+      "en": "A = L + C:  {A} = {Lb} + {Cp}"
+     },
+     "size": 30,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": -0.6,
+     "text": {
+      "en": "Each button changes two figures, so the scale always balances."
+     },
+     "size": 20,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Assets"
+     },
+     "expr": "A",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Liabilities"
+     },
+     "expr": "Lb",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Capital"
+     },
+     "expr": "Cp",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Assets − (L + C)"
+     },
+     "expr": "A - Lb - Cp",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Which button changes only the assets side and the liabilities? Which changes capital?"
+    },
+    {
+     "en": "Pay rent twice. Why does capital fall even though the owner took nothing?"
+    },
+    {
+     "en": "Can you find any button that makes the scale tip? Why not?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "kind": "bar_chart",

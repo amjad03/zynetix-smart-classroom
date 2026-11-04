@@ -361,6 +361,251 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Premium for goodwill on admission",
+    "kn": "ಪ್ರವೇಶದಲ್ಲಿ ಸುನಾಮಕ್ಕೆ ಪ್ರೀಮಿಯಂ"
+   },
+   "caption": {
+    "en": "C pays for his share of the firm's goodwill. It goes to the old partners in their sacrificing ratio, here the old ratio. If C brings no cash for it, his current account is debited instead.",
+    "kn": "C ಸಂಸ್ಥೆಯ ಸುನಾಮದ ತನ್ನ ಪಾಲಿಗೆ ಪಾವತಿಸುತ್ತಾನೆ. ಅದು ಹಳೆಯ ಪಾಲುದಾರರಿಗೆ ತ್ಯಾಗದ ಅನುಪಾತದಲ್ಲಿ (ಇಲ್ಲಿ ಹಳೆಯ ಅನುಪಾತ) ಹೋಗುತ್ತದೆ. ನಗದು ತರದಿದ್ದರೆ ಅವನ ಚಾಲ್ತಿ ಖಾತೆಗೆ ಖರ್ಚು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "G",
+     "label": {
+      "en": "Firm's goodwill"
+     },
+     "min": 20,
+     "max": 300,
+     "step": 10,
+     "value": 120,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "C's share"
+     },
+     "min": 10,
+     "max": 50,
+     "step": 5,
+     "value": 25,
+     "unit": "%"
+    },
+    {
+     "name": "a",
+     "label": {
+      "en": "A's old share"
+     },
+     "min": 10,
+     "max": 90,
+     "step": 10,
+     "value": 60,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cs",
+     "label": {
+      "en": "C brings his share in cash",
+      "kn": "C ನಗದು ತರುತ್ತಾನೆ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "pr",
+     "expr": "G*c/100"
+    },
+    {
+     "name": "ga",
+     "expr": "pr*a/100"
+    },
+    {
+     "name": "gb",
+     "expr": "pr - ga"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     1,
+     10
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 4,
+     "y": 7,
+     "r": 1.1,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 7,
+     "text": {
+      "en": "C"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "circle",
+     "x": 14,
+     "y": 8.4,
+     "r": 1.1,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 8.4,
+     "text": {
+      "en": "A"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "circle",
+     "x": 14,
+     "y": 3.6,
+     "r": 1.1,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 3.6,
+     "text": {
+      "en": "B"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "arrow",
+     "x": 5.2,
+     "y": 7.2,
+     "dx": 7.6,
+     "dy": 1.0,
+     "color": "blue",
+     "width": "max(2, ga/4)"
+    },
+    {
+     "shape": "arrow",
+     "x": 5.2,
+     "y": 6.6,
+     "dx": 7.6,
+     "dy": -2.6,
+     "color": "orange",
+     "width": "max(2, gb/4)"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 8.6,
+     "text": {
+      "en": "{ga:1}"
+     },
+     "size": 24,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 4.6,
+     "text": {
+      "en": "{gb:1}"
+     },
+     "size": 24,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.6,
+     "text": {
+      "en": "Bank Dr {pr:1}, To Premium for Goodwill;  Premium for Goodwill Dr, To A {ga:1}, To B {gb:1}"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "cs"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.6,
+     "text": {
+      "en": "C's Current A/c Dr {pr:1}, To A's Capital {ga:1}, To B's Capital {gb:1}"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "!cs"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 5.3,
+     "text": {
+      "en": "C's share of goodwill {pr:1}"
+     },
+     "size": 22,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "C's share of goodwill"
+     },
+     "expr": "pr",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Credited to A"
+     },
+     "expr": "ga",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Credited to B"
+     },
+     "expr": "gb",
+     "digits": 1,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Goodwill ₹1,20,000, C gets 1/4, A and B 3 : 2: check A ₹18,000 and B ₹12,000."
+    },
+    {
+     "en": "Turn off the cash. Why is C's current account debited, not the goodwill account?"
+    },
+    {
+     "en": "Why is goodwill not raised in the books on admission (AS 26)?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

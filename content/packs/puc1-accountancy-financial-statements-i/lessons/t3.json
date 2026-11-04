@@ -505,6 +505,477 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "From gross profit to net profit",
+    "kn": "ಒಟ್ಟು ಲಾಭದಿಂದ ನಿವ್ವಳ ಲಾಭಕ್ಕೆ"
+   },
+   "caption": {
+    "en": "Deduct office and selling expenses from gross profit to get operating profit. Non-operating items, such as interest on loans, loss by fire or profit on sale of an asset, then give net profit.",
+    "kn": "ಒಟ್ಟು ಲಾಭದಿಂದ ಕಚೇರಿ ಮತ್ತು ಮಾರಾಟ ವೆಚ್ಚ ಕಳೆದರೆ ಕಾರ್ಯಾಚರಣೆಯ ಲಾಭ. ಕಾರ್ಯಾಚರಣೆಯೇತರ ಅಂಶಗಳನ್ನು ಸೇರಿಸಿದರೆ ನಿವ್ವಳ ಲಾಭ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "gp",
+     "label": {
+      "en": "Gross profit"
+     },
+     "min": 50,
+     "max": 300,
+     "step": 5,
+     "value": 150,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "ad",
+     "label": {
+      "en": "Office and administration"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 1,
+     "value": 40,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "se",
+     "label": {
+      "en": "Selling and distribution"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 1,
+     "value": 30,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "il",
+     "label": {
+      "en": "Interest on loan and loss by fire"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 1,
+     "value": 15,
+     "unit": "₹ '000"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "pa",
+     "label": {
+      "en": "Profit on sale of an asset ₹10,000",
+      "kn": "ಆಸ್ತಿ ಮಾರಾಟದ ಲಾಭ ₹10,000"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "wd0",
+     "expr": "gp"
+    },
+    {
+     "name": "wc0",
+     "expr": "wd0"
+    },
+    {
+     "name": "wd1",
+     "expr": "-ad"
+    },
+    {
+     "name": "wc1",
+     "expr": "wc0 + wd1"
+    },
+    {
+     "name": "wd2",
+     "expr": "-se"
+    },
+    {
+     "name": "wc2",
+     "expr": "wc1 + wd2"
+    },
+    {
+     "name": "wc3",
+     "expr": "wc2"
+    },
+    {
+     "name": "wd3",
+     "expr": "wc3"
+    },
+    {
+     "name": "wd4",
+     "expr": "-il"
+    },
+    {
+     "name": "wc4",
+     "expr": "wc3 + wd4"
+    },
+    {
+     "name": "wd5",
+     "expr": "10*pa"
+    },
+    {
+     "name": "wc5",
+     "expr": "wc4 + wd5"
+    },
+    {
+     "name": "wc6",
+     "expr": "wc5"
+    },
+    {
+     "name": "wd6",
+     "expr": "wc6"
+    },
+    {
+     "name": "wlo",
+     "expr": "min(0, wc0, wc1, wc2, wc3, wc4, wc5, wc6)"
+    },
+    {
+     "name": "whi",
+     "expr": "max(50, wc0, wc1, wc2, wc3, wc4, wc5, wc6)"
+    },
+    {
+     "name": "wk",
+     "expr": "7.800000000000001/(whi - wlo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.5,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1 + (0 - wlo)*wk",
+     "x2": 19.5,
+     "y2": "1 + (0 - wlo)*wk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.043,
+     "y": "1 + (min(0, wc0) - wlo)*wk",
+     "w": 1.629,
+     "h": "abs(wc0)*wk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 1.857,
+     "y": "1 + (max(0, wc0) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.857,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Gross profit"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 2.671,
+     "y1": "1 + (wc0 - wlo)*wk",
+     "x2": 3.757,
+     "y2": "1 + (wc0 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 3.757,
+     "y": "1 + (min(wc0, wc1) - wlo)*wk",
+     "w": 1.629,
+     "h": "abs(wd1)*wk",
+     "color": {
+      "by": "step(0, wd1)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 4.571,
+     "y": "1 + (max(wc0, wc1) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 4.571,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Office & admin."
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 5.386,
+     "y1": "1 + (wc1 - wlo)*wk",
+     "x2": 6.471,
+     "y2": "1 + (wc1 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 6.471,
+     "y": "1 + (min(wc1, wc2) - wlo)*wk",
+     "w": 1.629,
+     "h": "abs(wd2)*wk",
+     "color": {
+      "by": "step(0, wd2)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 7.286,
+     "y": "1 + (max(wc1, wc2) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.286,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Selling & distrib."
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 8.1,
+     "y1": "1 + (wc2 - wlo)*wk",
+     "x2": 9.186,
+     "y2": "1 + (wc2 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 9.186,
+     "y": "1 + (min(0, wc3) - wlo)*wk",
+     "w": 1.629,
+     "h": "abs(wc3)*wk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": "1 + (max(0, wc3) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Operating profit"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 10.814,
+     "y1": "1 + (wc3 - wlo)*wk",
+     "x2": 11.9,
+     "y2": "1 + (wc3 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 11.9,
+     "y": "1 + (min(wc3, wc4) - wlo)*wk",
+     "w": 1.629,
+     "h": "abs(wd4)*wk",
+     "color": {
+      "by": "step(0, wd4)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 12.714,
+     "y": "1 + (max(wc3, wc4) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd4}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.714,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Interest, losses"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 13.529,
+     "y1": "1 + (wc4 - wlo)*wk",
+     "x2": 14.614,
+     "y2": "1 + (wc4 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 14.614,
+     "y": "1 + (min(wc4, wc5) - wlo)*wk",
+     "w": 1.629,
+     "h": "abs(wd5)*wk",
+     "color": {
+      "by": "step(0, wd5)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 15.429,
+     "y": "1 + (max(wc4, wc5) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd5}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.429,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Profit on sale"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 16.243,
+     "y1": "1 + (wc5 - wlo)*wk",
+     "x2": 17.329,
+     "y2": "1 + (wc5 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 17.329,
+     "y": "1 + (min(0, wc6) - wlo)*wk",
+     "w": 1.629,
+     "h": "abs(wc6)*wk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 18.143,
+     "y": "1 + (max(0, wc6) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd6}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 18.143,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Net profit"
+     },
+     "size": 19,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Operating profit"
+     },
+     "expr": "wc3",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Net profit (+) / loss (−)"
+     },
+     "expr": "wc6",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn on the profit on sale. Does operating profit change? Why not?"
+    },
+    {
+     "en": "Raise interest on loan. Which total changes and which does not?"
+    },
+    {
+     "en": "Find settings where there is an operating profit but a net loss."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

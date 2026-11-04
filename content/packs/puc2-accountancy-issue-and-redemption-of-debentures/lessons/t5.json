@@ -482,6 +482,396 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Redeeming debentures in instalments",
+    "kn": "ಕಂತುಗಳಲ್ಲಿ ಸಾಲಪತ್ರ ವಿಮೋಚನೆ"
+   },
+   "caption": {
+    "en": "Debentures are redeemed in equal annual instalments by draw of lots. As the amount outstanding falls, so does the interest. Companies that must also invest at least 15% of the amount maturing in the next year can be shown with the toggle.",
+    "kn": "ಸಾಲಪತ್ರಗಳನ್ನು ಲಾಟರಿ ಮೂಲಕ ಸಮ ವಾರ್ಷಿಕ ಕಂತುಗಳಲ್ಲಿ ವಿಮೋಚಿಸಲಾಗುತ್ತದೆ. ಬಾಕಿ ಕಡಿಮೆಯಾದಂತೆ ಬಡ್ಡಿಯೂ ಕಡಿಮೆ. ಮುಂದಿನ ವರ್ಷ ಪಕ್ವವಾಗುವ ಮೊತ್ತದ ಕನಿಷ್ಠ 15% ಹೂಡಿಕೆಯನ್ನೂ ತೋರಿಸಬಹುದು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "tot",
+     "label": {
+      "en": "Debentures issued"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 10,
+     "value": 50,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "k",
+     "label": {
+      "en": "Number of annual instalments"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "cr",
+     "label": {
+      "en": "Coupon rate"
+     },
+     "min": 6,
+     "max": 14,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "inv",
+     "label": {
+      "en": "Show the 15% investment",
+      "kn": "15% ಹೂಡಿಕೆ ತೋರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run the years",
+      "kn": "ವರ್ಷಗಳನ್ನು ಓಡಿಸಿ"
+     },
+     "icon": "play",
+     "set": {},
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 5,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "yr"
+   },
+   "view": {
+    "x": [
+     0,
+     19
+    ],
+    "y": [
+     -0.2,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.0,
+     "y": 0.8,
+     "w": 1.6,
+     "h": "tot*max(0, 1 - (1 - 1)/k)*0.08",
+     "color": "blue",
+     "visibleIf": "t >= 0 && 1 <= k"
+    },
+    {
+     "shape": "rect",
+     "x": 2.7,
+     "y": 0.8,
+     "w": 1.2,
+     "h": "tot*max(0, 1 - (1 - 1)/k)*cr/100*0.08*3",
+     "color": "orange",
+     "visibleIf": "t >= 1 && 1 <= k"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 0.2,
+     "text": {
+      "en": "Year 1"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.8,
+     "y": "1.2 + tot*max(0, 1 - (1 - 1)/k)*0.08",
+     "text": {
+      "en": "{tot*max(0, 1 - (1 - 1)/k):1}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "t >= 0 && 1 <= k"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 9.0,
+     "text": {
+      "en": "Invest {0.15*tot/k:1}"
+     },
+     "size": 18,
+     "color": "green",
+     "visibleIf": "inv && t >= 0 && 1 <= k"
+    },
+    {
+     "shape": "rect",
+     "x": 4.6,
+     "y": 0.8,
+     "w": 1.6,
+     "h": "tot*max(0, 1 - (2 - 1)/k)*0.08",
+     "color": "blue",
+     "visibleIf": "t >= 1 && 2 <= k"
+    },
+    {
+     "shape": "rect",
+     "x": 6.3,
+     "y": 0.8,
+     "w": 1.2,
+     "h": "tot*max(0, 1 - (2 - 1)/k)*cr/100*0.08*3",
+     "color": "orange",
+     "visibleIf": "t >= 2 && 2 <= k"
+    },
+    {
+     "shape": "text",
+     "x": 6.1,
+     "y": 0.2,
+     "text": {
+      "en": "Year 2"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.3999999999999995,
+     "y": "1.2 + tot*max(0, 1 - (2 - 1)/k)*0.08",
+     "text": {
+      "en": "{tot*max(0, 1 - (2 - 1)/k):1}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "t >= 1 && 2 <= k"
+    },
+    {
+     "shape": "text",
+     "x": 6.1,
+     "y": 9.0,
+     "text": {
+      "en": "Invest {0.15*tot/k:1}"
+     },
+     "size": 18,
+     "color": "green",
+     "visibleIf": "inv && t >= 1 && 2 <= k"
+    },
+    {
+     "shape": "rect",
+     "x": 8.2,
+     "y": 0.8,
+     "w": 1.6,
+     "h": "tot*max(0, 1 - (3 - 1)/k)*0.08",
+     "color": "blue",
+     "visibleIf": "t >= 2 && 3 <= k"
+    },
+    {
+     "shape": "rect",
+     "x": 9.899999999999999,
+     "y": 0.8,
+     "w": 1.2,
+     "h": "tot*max(0, 1 - (3 - 1)/k)*cr/100*0.08*3",
+     "color": "orange",
+     "visibleIf": "t >= 3 && 3 <= k"
+    },
+    {
+     "shape": "text",
+     "x": 9.7,
+     "y": 0.2,
+     "text": {
+      "en": "Year 3"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.0,
+     "y": "1.2 + tot*max(0, 1 - (3 - 1)/k)*0.08",
+     "text": {
+      "en": "{tot*max(0, 1 - (3 - 1)/k):1}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "t >= 2 && 3 <= k"
+    },
+    {
+     "shape": "text",
+     "x": 9.7,
+     "y": 9.0,
+     "text": {
+      "en": "Invest {0.15*tot/k:1}"
+     },
+     "size": 18,
+     "color": "green",
+     "visibleIf": "inv && t >= 2 && 3 <= k"
+    },
+    {
+     "shape": "rect",
+     "x": 11.8,
+     "y": 0.8,
+     "w": 1.6,
+     "h": "tot*max(0, 1 - (4 - 1)/k)*0.08",
+     "color": "blue",
+     "visibleIf": "t >= 3 && 4 <= k"
+    },
+    {
+     "shape": "rect",
+     "x": 13.5,
+     "y": 0.8,
+     "w": 1.2,
+     "h": "tot*max(0, 1 - (4 - 1)/k)*cr/100*0.08*3",
+     "color": "orange",
+     "visibleIf": "t >= 4 && 4 <= k"
+    },
+    {
+     "shape": "text",
+     "x": 13.3,
+     "y": 0.2,
+     "text": {
+      "en": "Year 4"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.600000000000001,
+     "y": "1.2 + tot*max(0, 1 - (4 - 1)/k)*0.08",
+     "text": {
+      "en": "{tot*max(0, 1 - (4 - 1)/k):1}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "t >= 3 && 4 <= k"
+    },
+    {
+     "shape": "text",
+     "x": 13.3,
+     "y": 9.0,
+     "text": {
+      "en": "Invest {0.15*tot/k:1}"
+     },
+     "size": 18,
+     "color": "green",
+     "visibleIf": "inv && t >= 3 && 4 <= k"
+    },
+    {
+     "shape": "rect",
+     "x": 15.4,
+     "y": 0.8,
+     "w": 1.6,
+     "h": "tot*max(0, 1 - (5 - 1)/k)*0.08",
+     "color": "blue",
+     "visibleIf": "t >= 4 && 5 <= k"
+    },
+    {
+     "shape": "rect",
+     "x": 17.1,
+     "y": 0.8,
+     "w": 1.2,
+     "h": "tot*max(0, 1 - (5 - 1)/k)*cr/100*0.08*3",
+     "color": "orange",
+     "visibleIf": "t >= 5 && 5 <= k"
+    },
+    {
+     "shape": "text",
+     "x": 16.9,
+     "y": 0.2,
+     "text": {
+      "en": "Year 5"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 16.2,
+     "y": "1.2 + tot*max(0, 1 - (5 - 1)/k)*0.08",
+     "text": {
+      "en": "{tot*max(0, 1 - (5 - 1)/k):1}"
+     },
+     "size": 18,
+     "color": "white",
+     "visibleIf": "t >= 4 && 5 <= k"
+    },
+    {
+     "shape": "text",
+     "x": 16.9,
+     "y": 9.0,
+     "text": {
+      "en": "Invest {0.15*tot/k:1}"
+     },
+     "size": 18,
+     "color": "green",
+     "visibleIf": "inv && t >= 4 && 5 <= k"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.7,
+     "text": {
+      "en": "Blue: debentures outstanding at the start of the year.  Orange: interest for the year (×3 for visibility)"
+     },
+     "size": 20,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Redeemed each year"
+     },
+     "expr": "tot/k",
+     "digits": 1,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Outstanding now"
+     },
+     "expr": "tot*max(0, 1 - min(floor(t), k)/k)",
+     "digits": 1,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Total interest over the life"
+     },
+     "expr": "tot*cr/100*(k + 1)/2",
+     "digits": 2,
+     "unit": "₹ lakh"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "₹50 lakh at 10% in 5 instalments: check total interest of ₹15 lakh."
+    },
+    {
+     "en": "Change to a single instalment. How much more interest is paid in total?"
+    },
+    {
+     "en": "Turn on the investment. Why must the money be set aside before the year of redemption?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

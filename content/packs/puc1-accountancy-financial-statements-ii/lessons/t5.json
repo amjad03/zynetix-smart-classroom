@@ -191,6 +191,323 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Manager's commission and interest on capital",
+    "kn": "ವ್ಯವಸ್ಥಾಪಕರ ಕಮೀಷನ್ ಮತ್ತು ಬಂಡವಾಳದ ಮೇಲಿನ ಬಡ್ಡಿ"
+   },
+   "caption": {
+    "en": "Commission on profit before charging it is profit × rate ÷ 100; after charging it, profit × rate ÷ (100 + rate). Interest on the owner's capital is an expense added to capital.",
+    "kn": "ಕಮೀಷನ್ ವಿಧಿಸುವ ಮುನ್ನದ ಲಾಭದ ಮೇಲೆ: ಲಾಭ × ದರ ÷ 100; ನಂತರದ ಲಾಭದ ಮೇಲೆ: ಲಾಭ × ದರ ÷ (100 + ದರ). ಬಂಡವಾಳದ ಮೇಲಿನ ಬಡ್ಡಿ ಖರ್ಚು, ಅದು ಬಂಡವಾಳಕ್ಕೆ ಸೇರುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "np",
+     "label": {
+      "en": "Net profit before commission"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 10,
+     "value": 220,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Commission rate"
+     },
+     "min": 5,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    },
+    {
+     "name": "cap",
+     "label": {
+      "en": "Owner's capital"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 50,
+     "value": 500,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "ir",
+     "label": {
+      "en": "Interest on capital"
+     },
+     "min": 0,
+     "max": 12,
+     "step": 1,
+     "value": 6,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "bs",
+     "label": {
+      "en": "Commission is on",
+      "kn": "ಕಮೀಷನ್ ಆಧಾರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Profit before charging it",
+        "kn": "ವಿಧಿಸುವ ಮುನ್ನದ ಲಾಭ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Profit after charging it",
+        "kn": "ವಿಧಿಸಿದ ನಂತರದ ಲಾಭ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "com",
+     "expr": "if(bs == 1, np*r/100, np*r/(100 + r))"
+    },
+    {
+     "name": "ioc",
+     "expr": "cap*ir/100"
+    },
+    {
+     "name": "b0",
+     "expr": "np"
+    },
+    {
+     "name": "b1",
+     "expr": "com"
+    },
+    {
+     "name": "b2",
+     "expr": "np - com"
+    },
+    {
+     "name": "b3",
+     "expr": "ioc"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(50, b0, b1, b2, b3)"
+    },
+    {
+     "name": "bk",
+     "expr": "7.3999999999999995/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.855,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": 0.5,
+     "text": {
+      "en": "Profit before commission"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 6.355,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b1)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 7.75,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.75,
+     "y": 0.5,
+     "text": {
+      "en": "Manager's commission"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.855,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b2)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 12.25,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.25,
+     "y": 0.5,
+     "text": {
+      "en": "Profit after commission"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 15.355,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b3)*bk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 16.75,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 16.75,
+     "y": 0.5,
+     "text": {
+      "en": "Interest on capital"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.6,
+     "text": {
+      "en": "Commission = {np} × {r} ÷ 100"
+     },
+     "size": 24,
+     "color": "orange",
+     "visibleIf": "bs == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.6,
+     "text": {
+      "en": "Commission = {np} × {r} ÷ (100 + {r})"
+     },
+     "size": 24,
+     "color": "orange",
+     "visibleIf": "bs == 2"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Commission"
+     },
+     "expr": "com",
+     "digits": 2,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Check: commission ÷ profit after it"
+     },
+     "expr": "com/(np - com)*100",
+     "digits": 2,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Interest on capital"
+     },
+     "expr": "ioc",
+     "digits": 2,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Profit ₹2,20,000 at 10%: compare ₹22,000 before with ₹20,000 after charging."
+    },
+    {
+     "en": "Choose 'after charging it' and read the check: is the commission exactly 10% of the profit left?"
+    },
+    {
+     "en": "Where does unpaid commission appear in the balance sheet?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

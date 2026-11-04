@@ -392,6 +392,321 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Balance the trading account",
+    "kn": "ವ್ಯಾಪಾರ ಖಾತೆಯನ್ನು ತೂಗಿಸಿ"
+   },
+   "caption": {
+    "en": "Debit: opening stock ₹20,000, purchases, direct expenses. Credit: sales and closing stock. The figure that makes both sides equal is the gross profit (or gross loss).",
+    "kn": "ಖರ್ಚು: ಆರಂಭಿಕ ದಾಸ್ತಾನು ₹20,000, ಖರೀದಿ, ನೇರ ವೆಚ್ಚ. ಜಮಾ: ಮಾರಾಟ ಮತ್ತು ಅಂತಿಮ ದಾಸ್ತಾನು. ಎರಡೂ ಬದಿ ಸಮ ಮಾಡುವ ಅಂಕಿಯೇ ಒಟ್ಟು ಲಾಭ (ಅಥವಾ ನಷ್ಟ)."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "P",
+     "label": {
+      "en": "Purchases (net)"
+     },
+     "min": 50,
+     "max": 200,
+     "step": 5,
+     "value": 120,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "de",
+     "label": {
+      "en": "Direct expenses"
+     },
+     "min": 0,
+     "max": 40,
+     "step": 1,
+     "value": 15,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "Sl",
+     "label": {
+      "en": "Sales (net)"
+     },
+     "min": 100,
+     "max": 300,
+     "step": 5,
+     "value": 200,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "cs",
+     "label": {
+      "en": "Closing stock"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 1,
+     "value": 25,
+     "unit": "₹ '000"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sc",
+     "label": {
+      "en": "Show cost of goods sold",
+      "kn": "ಮಾರಾಟವಾದ ಸರಕಿನ ವೆಚ್ಚ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "cogs",
+     "expr": "20 + P + de - cs"
+    },
+    {
+     "name": "gp",
+     "expr": "Sl - cogs"
+    },
+    {
+     "name": "tot",
+     "expr": "20 + P + de + max(gp, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -1.2,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": 9.4,
+     "text": {
+      "en": "Dr  Trading account"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": 9.4,
+     "text": {
+      "en": "Cr"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": "(0)*8/tot",
+     "w": 5,
+     "h": "(20)*8/tot",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": "((0) + (20)/2)*8/tot - 0.15",
+     "text": {
+      "en": "Opening stock {20}"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "(20)*8/tot > 0.55"
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": "(0 + 20)*8/tot",
+     "w": 5,
+     "h": "(P)*8/tot",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": "((0 + 20) + (P)/2)*8/tot - 0.15",
+     "text": {
+      "en": "Purchases {P}"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "(P)*8/tot > 0.55"
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": "(0 + 20 + P)*8/tot",
+     "w": 5,
+     "h": "(de)*8/tot",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": "((0 + 20 + P) + (de)/2)*8/tot - 0.15",
+     "text": {
+      "en": "Direct expenses {de}"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "(de)*8/tot > 0.55"
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": "(0 + 20 + P + de)*8/tot",
+     "w": 5,
+     "h": "(max(gp, 0))*8/tot",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": "((0 + 20 + P + de) + (max(gp, 0))/2)*8/tot - 0.15",
+     "text": {
+      "en": "Gross profit {max(gp, 0)}"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "(max(gp, 0))*8/tot > 0.55"
+    },
+    {
+     "shape": "rect",
+     "x": 12,
+     "y": "(0)*8/tot",
+     "w": 5,
+     "h": "(Sl)*8/tot",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": "((0) + (Sl)/2)*8/tot - 0.15",
+     "text": {
+      "en": "Sales {Sl}"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "(Sl)*8/tot > 0.55"
+    },
+    {
+     "shape": "rect",
+     "x": 12,
+     "y": "(0 + Sl)*8/tot",
+     "w": 5,
+     "h": "(cs)*8/tot",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": "((0 + Sl) + (cs)/2)*8/tot - 0.15",
+     "text": {
+      "en": "Closing stock {cs}"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "(cs)*8/tot > 0.55"
+    },
+    {
+     "shape": "rect",
+     "x": 12,
+     "y": "(0 + Sl + cs)*8/tot",
+     "w": 5,
+     "h": "(max(-gp, 0))*8/tot",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": "((0 + Sl + cs) + (max(-gp, 0))/2)*8/tot - 0.15",
+     "text": {
+      "en": "Gross loss {max(-gp, 0)}"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "(max(-gp, 0))*8/tot > 0.55"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": -0.6,
+     "text": {
+      "en": "Both sides total {tot}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.9,
+     "text": {
+      "en": "Cost of goods sold = 20 + {P} + {de} − {cs} = {cogs}"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "sc"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cost of goods sold"
+     },
+     "expr": "cogs",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Gross profit (+) / loss (−)"
+     },
+     "expr": "gp",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Gross profit ratio"
+     },
+     "expr": "gp/Sl*100",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise the closing stock by ₹10,000. By how much does gross profit change? Why?"
+    },
+    {
+     "en": "Make the purchases so high that a gross loss appears. On which side does it go?"
+    },
+    {
+     "en": "Carriage inwards is a direct expense. What happens to gross profit when it rises?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

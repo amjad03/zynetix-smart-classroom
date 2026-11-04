@@ -436,6 +436,327 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Issue debentures at par, premium or discount",
+    "kn": "ಸಮ, ಪ್ರೀಮಿಯಂ ಅಥವಾ ರಿಯಾಯಿತಿಯಲ್ಲಿ ಸಾಲಪತ್ರ"
+   },
+   "caption": {
+    "en": "Debentures are always credited at face value. Extra money received is securities premium; money not received because of a discount is debited to discount on issue of debentures.",
+    "kn": "ಸಾಲಪತ್ರಗಳನ್ನು ಯಾವಾಗಲೂ ಮುಖಬೆಲೆಯಲ್ಲಿ ಜಮಾ ಮಾಡಲಾಗುತ್ತದೆ. ಹೆಚ್ಚುವರಿ ಹಣ ಭದ್ರತಾ ಪ್ರೀಮಿಯಂ; ರಿಯಾಯಿತಿ ಮೊತ್ತ ಸಾಲಪತ್ರ ವಿತರಣಾ ರಿಯಾಯಿತಿಗೆ ಖರ್ಚು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Number of debentures"
+     },
+     "min": 100,
+     "max": 5000,
+     "step": 100,
+     "value": 1000
+    },
+    {
+     "name": "ip",
+     "label": {
+      "en": "Issue price"
+     },
+     "min": 90,
+     "max": 110,
+     "step": 1,
+     "value": 105,
+     "unit": "% of face"
+    }
+   ],
+   "choices": [
+    {
+     "name": "fv",
+     "label": {
+      "en": "Face value",
+      "kn": "ಮುಖಬೆಲೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "₹100"
+       },
+       "value": 100
+      },
+      {
+       "label": {
+        "en": "₹1,000"
+       },
+       "value": 1000
+      }
+     ],
+     "value": 100
+    }
+   ],
+   "vars": [
+    {
+     "name": "face",
+     "expr": "n*fv/100000"
+    },
+    {
+     "name": "cash",
+     "expr": "face*ip/100"
+    },
+    {
+     "name": "prem",
+     "expr": "max(0, cash - face)"
+    },
+    {
+     "name": "disc",
+     "expr": "max(0, face - cash)"
+    },
+    {
+     "name": "b0",
+     "expr": "cash"
+    },
+    {
+     "name": "b1",
+     "expr": "face"
+    },
+    {
+     "name": "b2",
+     "expr": "prem"
+    },
+    {
+     "name": "b3",
+     "expr": "disc"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(10, b0, b1, b2, b3)"
+    },
+    {
+     "name": "bk",
+     "expr": "6.8/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -1.2,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.855,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b0)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": 0.5,
+     "text": {
+      "en": "Cash received"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 6.355,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b1)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 7.75,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.75,
+     "y": 0.5,
+     "text": {
+      "en": "Debentures (face value)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.855,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b2)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 12.25,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.25,
+     "y": 0.5,
+     "text": {
+      "en": "Securities premium"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 15.355,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b3)*bk",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 16.75,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3:2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 16.75,
+     "y": 0.5,
+     "text": {
+      "en": "Discount on issue"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "Bank Dr {cash:2}, To Debentures {face:2}, To Securities Premium {prem:2}"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "ip > 100"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "Bank Dr {cash:2}, Discount on Issue Dr {disc:2}, To Debentures {face:2}"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "ip < 100"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "Bank Dr {cash:2}, To Debentures {face:2}  (issued at par)"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "ip == 100"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": -0.6,
+     "text": {
+      "en": "Amounts in ₹ lakh"
+     },
+     "size": 20,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cash received"
+     },
+     "expr": "cash",
+     "digits": 2,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Credited to debentures"
+     },
+     "expr": "face",
+     "digits": 2,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Premium (+) / discount (−)"
+     },
+     "expr": "cash - face",
+     "digits": 2,
+     "unit": "₹ lakh"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "1,000 debentures of ₹100 at 5% premium: check the premium of ₹5,000."
+    },
+    {
+     "en": "Set the price below 100%. Which account now appears?"
+    },
+    {
+     "en": "Why are debentures never credited with the issue price?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

@@ -237,6 +237,379 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Profitability dashboard",
+    "kn": "ಲಾಭದಾಯಕತೆ ಫಲಕ"
+   },
+   "caption": {
+    "en": "Gross profit, operating and net profit ratios are percentages of revenue from operations; return on investment is profit before interest and tax as a percentage of capital employed.",
+    "kn": "ಒಟ್ಟು ಲಾಭ, ಕಾರ್ಯಾಚರಣೆ ಮತ್ತು ನಿವ್ವಳ ಲಾಭ ಅನುಪಾತಗಳು ಆದಾಯದ ಶೇಕಡಾ; ಹೂಡಿಕೆಯ ಮೇಲಿನ ಪ್ರತಿಫಲ ಬಡ್ಡಿ ತೆರಿಗೆ ಪೂರ್ವ ಲಾಭ ÷ ಬಳಸಿದ ಬಂಡವಾಳ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "rv",
+     "label": {
+      "en": "Revenue from operations"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 20,
+     "value": 500,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "cg",
+     "label": {
+      "en": "Cost of revenue"
+     },
+     "min": 50,
+     "max": 800,
+     "step": 10,
+     "value": 300,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "oe",
+     "label": {
+      "en": "Operating expenses"
+     },
+     "min": 0,
+     "max": 300,
+     "step": 5,
+     "value": 100,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "ce",
+     "label": {
+      "en": "Capital employed"
+     },
+     "min": 100,
+     "max": 2000,
+     "step": 50,
+     "value": 800,
+     "unit": "₹ '000"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ni",
+     "label": {
+      "en": "Non-operating income ₹20k",
+      "kn": "ಕಾರ್ಯಾಚರಣೆಯೇತರ ಆದಾಯ ₹20k"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "op",
+     "expr": "rv - cg - oe"
+    },
+    {
+     "name": "pbit",
+     "expr": "op + 20*ni"
+    },
+    {
+     "name": "gpr",
+     "expr": "(rv - cg)/rv*100"
+    },
+    {
+     "name": "opr",
+     "expr": "(cg + oe)/rv*100"
+    },
+    {
+     "name": "opp",
+     "expr": "op/rv*100"
+    },
+    {
+     "name": "npr",
+     "expr": "pbit/rv*100"
+    },
+    {
+     "name": "roi",
+     "expr": "pbit/ce*100"
+    },
+    {
+     "name": "b0",
+     "expr": "gpr"
+    },
+    {
+     "name": "b1",
+     "expr": "opr"
+    },
+    {
+     "name": "b2",
+     "expr": "opp"
+    },
+    {
+     "name": "b3",
+     "expr": "npr"
+    },
+    {
+     "name": "b4",
+     "expr": "roi"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(100, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bk",
+     "expr": "7.2/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19.5,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.222,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b0)*bk",
+     "color": {
+      "by": "step(0, b0)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": 0.5,
+     "text": {
+      "en": "Gross profit ratio"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 5.022,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b1)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": 0.5,
+     "text": {
+      "en": "Operating ratio"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.822,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b2)*bk",
+     "color": {
+      "by": "step(0, b2)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 0.5,
+     "text": {
+      "en": "Operating profit ratio"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 12.622,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b3)*bk",
+     "color": {
+      "by": "step(0, b3)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": 0.5,
+     "text": {
+      "en": "Net profit ratio"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.422,
+     "y": "1.2 + (min(0, b4) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b4)*bk",
+     "color": {
+      "by": "step(0, b4)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": "1.2 + (max(0, b4) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b4:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": 0.5,
+     "text": {
+      "en": "Return on investment"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "All in %. Operating ratio + operating profit ratio = 100"
+     },
+     "size": 22,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Gross profit ratio"
+     },
+     "expr": "gpr",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Operating ratio"
+     },
+     "expr": "opr",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Net profit ratio"
+     },
+     "expr": "npr",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Return on investment"
+     },
+     "expr": "roi",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Revenue ₹5,00,000, cost ₹3,00,000, expenses ₹1,00,000, capital ₹8,00,000: check 40%, 80% and 12.5% ROI."
+    },
+    {
+     "en": "Turn on the non-operating income. Which ratios move and which do not?"
+    },
+    {
+     "en": "Can the operating ratio be over 100%? What does that mean?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

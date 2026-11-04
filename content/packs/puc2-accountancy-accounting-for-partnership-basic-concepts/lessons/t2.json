@@ -671,6 +671,400 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Fixed or fluctuating capital?",
+    "kn": "ಸ್ಥಿರ ಅಥವಾ ಏರಿಳಿತದ ಬಂಡವಾಳ?"
+   },
+   "caption": {
+    "en": "Under the fixed capital method interest, profit share and drawings go to a separate current account; under the fluctuating method they all change the capital account.",
+    "kn": "ಸ್ಥಿರ ಬಂಡವಾಳ ವಿಧಾನದಲ್ಲಿ ಬಡ್ಡಿ, ಲಾಭದ ಪಾಲು ಮತ್ತು ಸೆಳೆತ ಪ್ರತ್ಯೇಕ ಚಾಲ್ತಿ ಖಾತೆಗೆ ಹೋಗುತ್ತವೆ; ಏರಿಳಿತ ವಿಧಾನದಲ್ಲಿ ಎಲ್ಲವೂ ಬಂಡವಾಳ ಖಾತೆಯನ್ನೇ ಬದಲಿಸುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "cap",
+     "label": {
+      "en": "Opening capital"
+     },
+     "min": 100,
+     "max": 500,
+     "step": 10,
+     "value": 300,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "ir",
+     "label": {
+      "en": "Interest on capital"
+     },
+     "min": 0,
+     "max": 12,
+     "step": 1,
+     "value": 6,
+     "unit": "%"
+    },
+    {
+     "name": "pr",
+     "label": {
+      "en": "Share of profit"
+     },
+     "min": 0,
+     "max": 150,
+     "step": 5,
+     "value": 60,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "dw",
+     "label": {
+      "en": "Drawings"
+     },
+     "min": 0,
+     "max": 150,
+     "step": 5,
+     "value": 80,
+     "unit": "₹ '000"
+    }
+   ],
+   "choices": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Method",
+      "kn": "ವಿಧಾನ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Fixed",
+        "kn": "ಸ್ಥಿರ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Fluctuating",
+        "kn": "ಏರಿಳಿತ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "ioc",
+     "expr": "cap*ir/100"
+    },
+    {
+     "name": "cb",
+     "expr": "if(m == 1, cap, cap + ioc + pr - dw)"
+    },
+    {
+     "name": "cu",
+     "expr": "if(m == 1, ioc + pr - dw, 0)"
+    },
+    {
+     "name": "b0",
+     "expr": "cap"
+    },
+    {
+     "name": "b1",
+     "expr": "ioc"
+    },
+    {
+     "name": "b2",
+     "expr": "pr"
+    },
+    {
+     "name": "b3",
+     "expr": "-dw"
+    },
+    {
+     "name": "b4",
+     "expr": "cb"
+    },
+    {
+     "name": "b5",
+     "expr": "cu"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3, b4, b5)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(100, b0, b1, b2, b3, b4, b5)"
+    },
+    {
+     "name": "bk",
+     "expr": "7.1000000000000005/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19.5,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.102,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.083,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.083,
+     "y": 0.5,
+     "text": {
+      "en": "Opening capital"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 4.268,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b1)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": 0.5,
+     "text": {
+      "en": "Interest on capital"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 7.435,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b2)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 8.417,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.417,
+     "y": 0.5,
+     "text": {
+      "en": "Share of profit"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.602,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b3)*bk",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 11.583,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.583,
+     "y": 0.5,
+     "text": {
+      "en": "Drawings"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 13.768,
+     "y": "1.2 + (min(0, b4) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b4)*bk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": "1.2 + (max(0, b4) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b4}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.75,
+     "y": 0.5,
+     "text": {
+      "en": "Capital A/c balance"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.935,
+     "y": "1.2 + (min(0, b5) - blo)*bk",
+     "w": 1.963,
+     "h": "abs(b5)*bk",
+     "color": {
+      "by": "step(0, b5)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 17.917,
+     "y": "1.2 + (max(0, b5) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b5}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.917,
+     "y": 0.5,
+     "text": {
+      "en": "Current A/c balance"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Fixed: capital stays {cap}; everything else goes to the current account"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "m == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Fluctuating: every item goes to the capital account"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "m == 2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.9,
+     "text": {
+      "en": "Current account has a debit balance"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "m == 1 && cu < 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Capital account balance"
+     },
+     "expr": "cb",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Current account balance"
+     },
+     "expr": "cu",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make drawings larger than interest plus profit under the fixed method. What balance does the current account show?"
+    },
+    {
+     "en": "Switch to fluctuating. Where did the current account balance go?"
+    },
+    {
+     "en": "Which method does the Act assume when the deed says nothing?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -442,6 +442,336 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Recording a credit purchase",
+    "kn": "ಸಾಲದ ಖರೀದಿಯ ದಾಖಲೆ"
+   },
+   "caption": {
+    "en": "The purchases book shows the invoice amount after trade discount. Goods sent back go to the purchases return book at the same net price.",
+    "kn": "ಖರೀದಿ ಪುಸ್ತಕದಲ್ಲಿ ವ್ಯಾಪಾರ ರಿಯಾಯಿತಿ ಕಳೆದ ಇನ್‌ವಾಯ್ಸ್ ಮೊತ್ತ ಬರೆಯಲಾಗುತ್ತದೆ. ಹಿಂತಿರುಗಿಸಿದ ಸರಕು ಅದೇ ನಿವ್ವಳ ಬೆಲೆಯಲ್ಲಿ ಖರೀದಿ ವಾಪಸಾತಿ ಪುಸ್ತಕಕ್ಕೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "q",
+     "label": {
+      "en": "Units bought"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 10,
+     "value": 100,
+     "unit": "units"
+    },
+    {
+     "name": "pr",
+     "label": {
+      "en": "List price per unit"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 10,
+     "value": 200,
+     "unit": "₹"
+    },
+    {
+     "name": "tdp",
+     "label": {
+      "en": "Trade discount"
+     },
+     "min": 0,
+     "max": 25,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    },
+    {
+     "name": "rq",
+     "label": {
+      "en": "Units returned"
+     },
+     "min": 0,
+     "max": 50,
+     "step": 5,
+     "value": 10,
+     "unit": "units"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cd",
+     "label": {
+      "en": "Supplier offers 2% cash discount",
+      "kn": "2% ನಗದು ರಿಯಾಯಿತಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "gr",
+     "expr": "q*pr"
+    },
+    {
+     "name": "td",
+     "expr": "gr*tdp/100"
+    },
+    {
+     "name": "nt",
+     "expr": "gr - td"
+    },
+    {
+     "name": "rt",
+     "expr": "min(rq, q)*pr*(1 - tdp/100)"
+    },
+    {
+     "name": "b0",
+     "expr": "gr"
+    },
+    {
+     "name": "b1",
+     "expr": "td"
+    },
+    {
+     "name": "b2",
+     "expr": "nt"
+    },
+    {
+     "name": "b3",
+     "expr": "rt"
+    },
+    {
+     "name": "b4",
+     "expr": "nt - rt"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(1000, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bk",
+     "expr": "7.2/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19.5,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.222,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": 0.5,
+     "text": {
+      "en": "Goods at list price"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 5.022,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b1)*bk",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": 0.5,
+     "text": {
+      "en": "Trade discount"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.822,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b2)*bk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 0.5,
+     "text": {
+      "en": "Purchases book entry"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 12.622,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b3)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": 0.5,
+     "text": {
+      "en": "Purchases returns"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.422,
+     "y": "1.2 + (min(0, b4) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b4)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": "1.2 + (max(0, b4) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b4}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": 0.5,
+     "text": {
+      "en": "Net purchases"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "Cash discount if paid within 7 days: {0.02*(nt - rt)}. It goes in the cash book when paid, never in the purchases book."
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "cd"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Entered in purchases book"
+     },
+     "expr": "nt",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Entered in purchases return book"
+     },
+     "expr": "rt",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Net purchases"
+     },
+     "expr": "nt - rt",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "100 units at ₹200 less 10% trade discount: check the entry of ₹18,000."
+    },
+    {
+     "en": "Return 10 units. Why are they valued at ₹180 each, not ₹200?"
+    },
+    {
+     "en": "Turn on the cash discount. Why is it not deducted in the purchases book?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

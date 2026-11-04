@@ -398,6 +398,311 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Value the closing stock",
+    "kn": "ಅಂತಿಮ ದಾಸ್ತಾನಿನ ಮೌಲ್ಯ"
+   },
+   "caption": {
+    "en": "Closing stock is valued at cost or net realisable value, whichever is lower. Change the NRV and watch the closing stock and the gross profit.",
+    "kn": "ಅಂತಿಮ ದಾಸ್ತಾನನ್ನು ವೆಚ್ಚ ಅಥವಾ ನಿವ್ವಳ ಸಾಕ್ಷಾತ್ಕಾರ ಮೌಲ್ಯ, ಯಾವುದು ಕಡಿಮೆಯೋ ಅದರಲ್ಲಿ ಮೌಲ್ಯಮಾಪನ ಮಾಡಲಾಗುತ್ತದೆ. NRV ಬದಲಿಸಿ ಒಟ್ಟು ಲಾಭ ನೋಡಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "q",
+     "label": {
+      "en": "Units unsold"
+     },
+     "min": 0,
+     "max": 500,
+     "step": 10,
+     "value": 200,
+     "unit": "units"
+    },
+    {
+     "name": "cu",
+     "label": {
+      "en": "Cost per unit"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 1,
+     "value": 50,
+     "unit": "₹"
+    },
+    {
+     "name": "nr",
+     "label": {
+      "en": "Net realisable value per unit"
+     },
+     "min": 0,
+     "max": 150,
+     "step": 1,
+     "value": 45,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ce",
+     "label": {
+      "en": "Show the closing entry",
+      "kn": "ಮುಕ್ತಾಯ ನಮೂದು ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "cv",
+     "expr": "q*cu/1000"
+    },
+    {
+     "name": "nv",
+     "expr": "q*nr/1000"
+    },
+    {
+     "name": "cs",
+     "expr": "min(cv, nv)"
+    },
+    {
+     "name": "gp",
+     "expr": "120 - (20 + 100 - cs)"
+    },
+    {
+     "name": "b0",
+     "expr": "cv"
+    },
+    {
+     "name": "b1",
+     "expr": "nv"
+    },
+    {
+     "name": "b2",
+     "expr": "cs"
+    },
+    {
+     "name": "b3",
+     "expr": "gp"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(40, b0, b1, b2, b3)"
+    },
+    {
+     "name": "bk",
+     "expr": "7.3999999999999995/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -2.2,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.855,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": 0.5,
+     "text": {
+      "en": "Unsold goods at cost"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 6.355,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b1)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 7.75,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.75,
+     "y": 0.5,
+     "text": {
+      "en": "At net realisable value"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.855,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b2)*bk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 12.25,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.25,
+     "y": 0.5,
+     "text": {
+      "en": "Closing stock taken"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 15.355,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 2.79,
+     "h": "abs(b3)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 16.75,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3:1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 16.75,
+     "y": 0.5,
+     "text": {
+      "en": "Gross profit"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.6,
+     "text": {
+      "en": "Closing Stock A/c Dr {cs:1}   To Trading A/c {cs:1}"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "ce"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": -1.6,
+     "text": {
+      "en": "Opening stock 20, purchases 100, sales 120 (₹ '000)"
+     },
+     "size": 20,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Value at cost"
+     },
+     "expr": "cv",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Value at NRV"
+     },
+     "expr": "nv",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Closing stock"
+     },
+     "expr": "cs",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Gross profit"
+     },
+     "expr": "gp",
+     "digits": 1,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set NRV above cost. Which value is used? Which accounting concept says so?"
+    },
+    {
+     "en": "Drop the NRV to ₹30 a unit. How much gross profit is lost?"
+    },
+    {
+     "en": "Why do we never value stock above cost, even when the NRV is higher?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

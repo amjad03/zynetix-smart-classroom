@@ -343,6 +343,306 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Why do the two balances differ?",
+    "kn": "ಎರಡು ಶಿಲ್ಕುಗಳು ಏಕೆ ಬೇರೆಯಾಗುತ್ತವೆ?"
+   },
+   "caption": {
+    "en": "Both records start equal. Issue or deposit cheques: the firm records them at once, the bank only when they clear. Press Bank clears all and the balances agree again.",
+    "kn": "ಎರಡೂ ದಾಖಲೆಗಳು ಸಮವಾಗಿ ಆರಂಭವಾಗುತ್ತವೆ. ಚೆಕ್ ನೀಡಿ ಅಥವಾ ಜಮೆ ಮಾಡಿ: ಸಂಸ್ಥೆ ತಕ್ಷಣ ದಾಖಲಿಸುತ್ತದೆ, ಬ್ಯಾಂಕ್ ಚೆಕ್ ತೀರುವಳಿಯಾದಾಗ ಮಾತ್ರ. ಬ್ಯಾಂಕ್ ಎಲ್ಲವನ್ನೂ ತೀರಿಸಿದಾಗ ಶಿಲ್ಕುಗಳು ಮತ್ತೆ ಸಮವಾಗುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "op",
+     "label": {
+      "en": "Opening balance (both)"
+     },
+     "min": 20,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "a",
+     "label": {
+      "en": "Each cheque issued"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 5,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "Each cheque deposited"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 4,
+     "unit": "₹ '000"
+    }
+   ],
+   "counters": [
+    {
+     "name": "I",
+     "value": 0,
+     "min": 0,
+     "max": 20
+    },
+    {
+     "name": "P",
+     "value": 0,
+     "min": 0,
+     "max": 20
+    },
+    {
+     "name": "D",
+     "value": 0,
+     "min": 0,
+     "max": 20
+    },
+    {
+     "name": "Cl",
+     "value": 0,
+     "min": 0,
+     "max": 20
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Issue a cheque",
+      "kn": "ಚೆಕ್ ನೀಡಿ"
+     },
+     "icon": "add",
+     "set": {
+      "I": "I + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Deposit a cheque",
+      "kn": "ಚೆಕ್ ಜಮೆ ಮಾಡಿ"
+     },
+     "icon": "add",
+     "set": {
+      "D": "D + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Bank clears all",
+      "kn": "ಬ್ಯಾಂಕ್ ತೀರುವಳಿ"
+     },
+     "icon": "check",
+     "set": {
+      "P": "I",
+      "Cl": "D"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "I": 0,
+      "P": 0,
+      "D": 0,
+      "Cl": 0
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "cb",
+     "expr": "op - a*I + d*D"
+    },
+    {
+     "name": "pb",
+     "expr": "op - a*P + d*Cl"
+    },
+    {
+     "name": "ui",
+     "expr": "I - P"
+    },
+    {
+     "name": "ud",
+     "expr": "D - Cl"
+    },
+    {
+     "name": "diff",
+     "expr": "pb - cb"
+    },
+    {
+     "name": "b0",
+     "expr": "cb"
+    },
+    {
+     "name": "b1",
+     "expr": "pb"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(100, b0, b1)"
+    },
+    {
+     "name": "bk",
+     "expr": "7.0/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -2.5,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": "1.5 + (0 - blo)*bk",
+     "x2": 17,
+     "y2": "1.5 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 4.33,
+     "y": "1.5 + (min(0, b0) - blo)*bk",
+     "w": 4.34,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": "1.5 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 0.8,
+     "text": {
+      "en": "Cash book (bank column)",
+      "kn": "ನಗದು ಪುಸ್ತಕ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 11.33,
+     "y": "1.5 + (min(0, b1) - blo)*bk",
+     "w": 4.34,
+     "h": "abs(b1)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 13.5,
+     "y": "1.5 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.5,
+     "y": 0.8,
+     "text": {
+      "en": "Pass book",
+      "kn": "ಪಾಸ್ ಪುಸ್ತಕ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Cheques issued, not yet presented: {ui}   Cheques deposited, not yet cleared: {ud}"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": -1.6,
+     "text": {
+      "en": "Pass book − cash book = {diff}"
+     },
+     "size": 26,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cash book balance"
+     },
+     "expr": "cb",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Pass book balance"
+     },
+     "expr": "pb",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Difference (PB − CB)"
+     },
+     "expr": "diff",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Issue two cheques. Which balance is higher now, and by how much?"
+    },
+    {
+     "en": "Deposit one cheque without issuing any. Which balance is higher now?"
+    },
+    {
+     "en": "Press Bank clears all. Why does the difference vanish?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

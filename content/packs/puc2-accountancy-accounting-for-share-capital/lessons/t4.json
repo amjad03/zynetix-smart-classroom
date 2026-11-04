@@ -312,6 +312,347 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Over-subscription and pro-rata allotment",
+    "kn": "ಅಧಿಕ ಚಂದಾ ಮತ್ತು ಅನುಪಾತ ಹಂಚಿಕೆ"
+   },
+   "caption": {
+    "en": "1,00,000 shares are offered. Some applications are rejected and refunded; the rest get shares pro-rata. Their excess application money is kept towards allotment, and any money beyond the allotment due is refunded.",
+    "kn": "1,00,000 ಷೇರುಗಳನ್ನು ನೀಡಲಾಗಿದೆ. ಕೆಲವು ಅರ್ಜಿಗಳು ತಿರಸ್ಕೃತ, ಹಣ ಹಿಂದಿರುಗಿಸಲಾಗುತ್ತದೆ; ಉಳಿದವರಿಗೆ ಅನುಪಾತದಲ್ಲಿ ಷೇರು. ಹೆಚ್ಚುವರಿ ಅರ್ಜಿ ಹಣ ಹಂಚಿಕೆಗೆ ಹೊಂದಿಸಲಾಗುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "ap",
+     "label": {
+      "en": "Shares applied for"
+     },
+     "min": 100,
+     "max": 300,
+     "step": 10,
+     "value": 200,
+     "unit": "thousand"
+    },
+    {
+     "name": "rj",
+     "label": {
+      "en": "Applications rejected"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 10,
+     "value": 20,
+     "unit": "thousand"
+    },
+    {
+     "name": "am",
+     "label": {
+      "en": "Application money per share"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 3,
+     "unit": "₹"
+    },
+    {
+     "name": "al",
+     "label": {
+      "en": "Allotment money per share"
+     },
+     "min": 2,
+     "max": 6,
+     "step": 1,
+     "value": 4,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "pr",
+     "label": {
+      "en": "Show the pro-rata ratio",
+      "kn": "ಅನುಪಾತ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "rjE",
+     "expr": "min(rj, ap - 100)"
+    },
+    {
+     "name": "ex",
+     "expr": "(ap - rjE - 100)*am"
+    },
+    {
+     "name": "adj",
+     "expr": "min(ex, 100*al)"
+    },
+    {
+     "name": "rf",
+     "expr": "rjE*am + ex - adj"
+    },
+    {
+     "name": "b0",
+     "expr": "ap*am"
+    },
+    {
+     "name": "b1",
+     "expr": "100*am"
+    },
+    {
+     "name": "b2",
+     "expr": "adj"
+    },
+    {
+     "name": "b3",
+     "expr": "rf"
+    },
+    {
+     "name": "b4",
+     "expr": "100*al - adj"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(300, b0, b1, b2, b3, b4)"
+    },
+    {
+     "name": "bk",
+     "expr": "6.8/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.2,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": "1.2 + (0 - blo)*bk",
+     "x2": 19.5,
+     "y2": "1.2 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 1.222,
+     "y": "1.2 + (min(0, b0) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": "1.2 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.4,
+     "y": 0.5,
+     "text": {
+      "en": "Application money"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 5.022,
+     "y": "1.2 + (min(0, b1) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b1)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": "1.2 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": 0.5,
+     "text": {
+      "en": "To share capital"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.822,
+     "y": "1.2 + (min(0, b2) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b2)*bk",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": "1.2 + (max(0, b2) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 0.5,
+     "text": {
+      "en": "Adjusted on allotment"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 12.622,
+     "y": "1.2 + (min(0, b3) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b3)*bk",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": "1.2 + (max(0, b3) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": 0.5,
+     "text": {
+      "en": "Refunded"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.422,
+     "y": "1.2 + (min(0, b4) - blo)*bk",
+     "w": 2.356,
+     "h": "abs(b4)*bk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": "1.2 + (max(0, b4) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b4}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": 0.5,
+     "text": {
+      "en": "Allotment still due"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "Pro-rata: {ap - rjE} thousand applicants get 100 thousand shares ({(ap - rjE)/100:2} : 1)"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "pr"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.8,
+     "text": {
+      "en": "Rejected: {rjE} thousand applications, money refunded"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "pr && rjE > 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Excess with pro-rata applicants"
+     },
+     "expr": "ex",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Adjusted towards allotment"
+     },
+     "expr": "adj",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Total refunded"
+     },
+     "expr": "rf",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "2,00,000 applied, 20,000 rejected, ₹3 and ₹4: check ₹2,40,000 adjusted towards allotment and ₹60,000 refunded."
+    },
+    {
+     "en": "Push applications to 3,00,000 with none rejected. Why does some money now have to be refunded?"
+    },
+    {
+     "en": "Why can rejected applicants' money never be adjusted towards allotment?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

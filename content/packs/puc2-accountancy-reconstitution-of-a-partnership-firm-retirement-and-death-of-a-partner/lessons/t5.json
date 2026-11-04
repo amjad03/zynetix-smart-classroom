@@ -339,6 +339,338 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Deceased partner's share of profit",
+    "kn": "ಮೃತ ಪಾಲುದಾರನ ಲಾಭದ ಪಾಲು"
+   },
+   "caption": {
+    "en": "Time basis: last year's profit × months to death ÷ 12 × his share. Turnover basis: last year's profit as a % of sales, applied to sales up to death, × his share.",
+    "kn": "ಸಮಯ ಆಧಾರ: ಕಳೆದ ವರ್ಷದ ಲಾಭ × ಮರಣದವರೆಗಿನ ತಿಂಗಳು ÷ 12 × ಅವನ ಪಾಲು. ವಹಿವಾಟು ಆಧಾರ: ಮಾರಾಟದ ಮೇಲಿನ ಲಾಭದ ಶೇಕಡಾ × ಮರಣದವರೆಗಿನ ಮಾರಾಟ × ಪಾಲು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "lp",
+     "label": {
+      "en": "Last year's profit"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 10,
+     "value": 240,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "m",
+     "label": {
+      "en": "Months to death"
+     },
+     "min": 1,
+     "max": 11,
+     "step": 1,
+     "value": 4,
+     "unit": "months"
+    },
+    {
+     "name": "ls",
+     "label": {
+      "en": "Last year's sales"
+     },
+     "min": 500,
+     "max": 3000,
+     "step": 100,
+     "value": 2000,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "sd",
+     "label": {
+      "en": "Sales up to death"
+     },
+     "min": 50,
+     "max": 1500,
+     "step": 50,
+     "value": 600,
+     "unit": "₹ '000"
+    }
+   ],
+   "choices": [
+    {
+     "name": "sh",
+     "label": {
+      "en": "Deceased partner's share",
+      "kn": "ಮೃತನ ಪಾಲು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "1/2"
+       },
+       "value": 0.5
+      },
+      {
+       "label": {
+        "en": "1/3"
+       },
+       "value": 0.3333333333
+      },
+      {
+       "label": {
+        "en": "1/4"
+       },
+       "value": 0.25
+      }
+     ],
+     "value": 0.5
+    }
+   ],
+   "vars": [
+    {
+     "name": "tb",
+     "expr": "lp*m/12*sh"
+    },
+    {
+     "name": "tv",
+     "expr": "sd*lp/ls*sh"
+    },
+    {
+     "name": "b0",
+     "expr": "tb"
+    },
+    {
+     "name": "b1",
+     "expr": "tv"
+    },
+    {
+     "name": "blo",
+     "expr": "min(0, b0, b1)"
+    },
+    {
+     "name": "bhi",
+     "expr": "max(10, b0, b1)"
+    },
+    {
+     "name": "bk",
+     "expr": "2.1/(bhi - blo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.6,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Year: 1 April to 31 March"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 7,
+     "w": 16,
+     "h": 0.9,
+     "color": "white",
+     "fill": false,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 7,
+     "w": "m*16/12",
+     "h": 0.9,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": "2 + m*16/12",
+     "y": 6.4,
+     "text": {
+      "en": "death after {m} months"
+     },
+     "size": 20,
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": "2 + m*16/12",
+     "y1": 6.8,
+     "x2": "2 + m*16/12",
+     "y2": 8.1,
+     "color": "red",
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 4,
+     "w": 16,
+     "h": 0.9,
+     "color": "white",
+     "fill": false,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 4,
+     "w": "min(sd/ls, 1)*16",
+     "h": 0.9,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 3.4,
+     "text": {
+      "en": "Sales up to the date of death {sd} of last year's {ls}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.8,
+     "y": 7.45,
+     "text": {
+      "en": "Time"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 1.8,
+     "y": 4.45,
+     "text": {
+      "en": "Sales"
+     },
+     "size": 20,
+     "color": "white",
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "0.3 + (0 - blo)*bk",
+     "x2": 16,
+     "y2": "0.3 + (0 - blo)*bk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 5.14,
+     "y": "0.3 + (min(0, b0) - blo)*bk",
+     "w": 3.72,
+     "h": "abs(b0)*bk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 7.0,
+     "y": "0.3 + (max(0, b0) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b0:1}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.0,
+     "y": -0.39999999999999997,
+     "text": {
+      "en": "Time basis"
+     },
+     "size": 18,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 11.14,
+     "y": "0.3 + (min(0, b1) - blo)*bk",
+     "w": 3.72,
+     "h": "abs(b1)*bk",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 13.0,
+     "y": "0.3 + (max(0, b1) - blo)*bk + 0.35",
+     "text": {
+      "en": "{b1:1}"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.0,
+     "y": -0.39999999999999997,
+     "text": {
+      "en": "Turnover basis"
+     },
+     "size": 18,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Time basis"
+     },
+     "expr": "tb",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Turnover basis"
+     },
+     "expr": "tv",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Profit as % of sales"
+     },
+     "expr": "lp/ls*100",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Profit ₹2,40,000, death after 4 months, share 1/2: check ₹40,000 on the time basis."
+    },
+    {
+     "en": "Sales up to death ₹6,00,000 against ₹20,00,000 last year: check ₹36,000 on the turnover basis."
+    },
+    {
+     "en": "When do the two methods give the same answer?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

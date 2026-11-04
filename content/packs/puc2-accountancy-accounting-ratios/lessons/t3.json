@@ -259,6 +259,401 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Solvency dashboard",
+    "kn": "ಪಾವತಿ ಸಾಮರ್ಥ್ಯ ಫಲಕ"
+   },
+   "caption": {
+    "en": "Move the long-term debt and shareholders' funds and watch the four solvency ratios. Yellow marks show common rules of thumb: debt-equity up to 2 : 1 is usually safe.",
+    "kn": "ದೀರ್ಘಾವಧಿ ಸಾಲ ಮತ್ತು ಷೇರುದಾರರ ನಿಧಿ ಬದಲಿಸಿ ನಾಲ್ಕು ಅನುಪಾತಗಳನ್ನು ನೋಡಿ. ಸಾಲ-ಈಕ್ವಿಟಿ 2 : 1 ರವರೆಗೆ ಸಾಮಾನ್ಯವಾಗಿ ಸುರಕ್ಷಿತ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "eq",
+     "label": {
+      "en": "Shareholders' funds"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 20,
+     "value": 400,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "dt",
+     "label": {
+      "en": "Long-term debt"
+     },
+     "min": 0,
+     "max": 1000,
+     "step": 20,
+     "value": 300,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "cl",
+     "label": {
+      "en": "Current liabilities"
+     },
+     "min": 0,
+     "max": 400,
+     "step": 10,
+     "value": 100,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "eb",
+     "label": {
+      "en": "Profit before interest and tax"
+     },
+     "min": 10,
+     "max": 300,
+     "step": 5,
+     "value": 90,
+     "unit": "₹ '000"
+    }
+   ],
+   "choices": [
+    {
+     "name": "irt",
+     "label": {
+      "en": "Interest rate on debt",
+      "kn": "ಬಡ್ಡಿ ದರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "8%"
+       },
+       "value": 8
+      },
+      {
+       "label": {
+        "en": "10%"
+       },
+       "value": 10
+      },
+      {
+       "label": {
+        "en": "12%"
+       },
+       "value": 12
+      }
+     ],
+     "value": 10
+    }
+   ],
+   "vars": [
+    {
+     "name": "TA",
+     "expr": "eq + dt + cl"
+    },
+    {
+     "name": "it",
+     "expr": "dt*irt/100"
+    },
+    {
+     "name": "DE",
+     "expr": "dt/eq"
+    },
+    {
+     "name": "TAD",
+     "expr": "if(dt > 0, TA/dt, 0)"
+    },
+    {
+     "name": "PR",
+     "expr": "eq/TA"
+    },
+    {
+     "name": "ICR",
+     "expr": "if(dt > 0, eb/it, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0.8,
+     10.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 4.3,
+     "y": 8.5,
+     "text": {
+      "en": "Debt-equity"
+     },
+     "size": 21,
+     "color": "white",
+     "align": "right"
+    },
+    {
+     "shape": "rect",
+     "x": 4.6,
+     "y": 8.2,
+     "w": 14,
+     "h": 0.8,
+     "color": "white",
+     "fill": false,
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 4.6,
+     "y": 8.2,
+     "w": "min(DE, 4)*3.5000",
+     "h": 0.8,
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": 11.6,
+     "y1": 7.999999999999999,
+     "x2": 11.6,
+     "y2": 9.2,
+     "color": "yellow",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "5 + min(DE, 4)*3.5000",
+     "y": 8.5,
+     "text": {
+      "en": "{DE:2}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 4.3,
+     "y": 6.5,
+     "text": {
+      "en": "Total assets to debt"
+     },
+     "size": 21,
+     "color": "white",
+     "align": "right"
+    },
+    {
+     "shape": "rect",
+     "x": 4.6,
+     "y": 6.2,
+     "w": 14,
+     "h": 0.8,
+     "color": "white",
+     "fill": false,
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 4.6,
+     "y": 6.2,
+     "w": "min(TAD, 10)*1.4000",
+     "h": 0.8,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 7.4,
+     "y1": 6.0,
+     "x2": 7.4,
+     "y2": 7.2,
+     "color": "yellow",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "5 + min(TAD, 10)*1.4000",
+     "y": 6.5,
+     "text": {
+      "en": "{TAD:2}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 4.3,
+     "y": 4.5,
+     "text": {
+      "en": "Proprietary ratio"
+     },
+     "size": 21,
+     "color": "white",
+     "align": "right"
+    },
+    {
+     "shape": "rect",
+     "x": 4.6,
+     "y": 4.2,
+     "w": 14,
+     "h": 0.8,
+     "color": "white",
+     "fill": false,
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 4.6,
+     "y": 4.2,
+     "w": "min(PR, 1)*14.0000",
+     "h": 0.8,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": 11.6,
+     "y1": 4.0,
+     "x2": 11.6,
+     "y2": 5.2,
+     "color": "yellow",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "5 + min(PR, 1)*14.0000",
+     "y": 4.5,
+     "text": {
+      "en": "{PR:2}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 4.3,
+     "y": 2.5,
+     "text": {
+      "en": "Interest coverage"
+     },
+     "size": 21,
+     "color": "white",
+     "align": "right"
+    },
+    {
+     "shape": "rect",
+     "x": 4.6,
+     "y": 2.2,
+     "w": 14,
+     "h": 0.8,
+     "color": "white",
+     "fill": false,
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 4.6,
+     "y": 2.2,
+     "w": "min(ICR, 20)*0.7000",
+     "h": 0.8,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 6.7,
+     "y1": 2.0,
+     "x2": 6.7,
+     "y2": 3.2,
+     "color": "yellow",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "5 + min(ICR, 20)*0.7000",
+     "y": 2.5,
+     "text": {
+      "en": "{ICR:2}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.7,
+     "text": {
+      "en": "Total assets {TA}   Interest {it:1}"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.2,
+     "text": {
+      "en": "No long-term debt: no interest to cover"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "dt == 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Debt-equity ratio"
+     },
+     "expr": "DE",
+     "digits": 2,
+     "unit": ": 1"
+    },
+    {
+     "label": {
+      "en": "Total assets to debt"
+     },
+     "expr": "TAD",
+     "digits": 2,
+     "unit": ": 1"
+    },
+    {
+     "label": {
+      "en": "Proprietary ratio"
+     },
+     "expr": "PR",
+     "digits": 2,
+     "unit": ": 1"
+    },
+    {
+     "label": {
+      "en": "Interest coverage"
+     },
+     "expr": "ICR",
+     "digits": 2,
+     "unit": "times"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double the debt. Which ratios get worse, and which one improves?"
+    },
+    {
+     "en": "Find the debt at which debt-equity reaches exactly 2 : 1 for ₹4,00,000 of equity."
+    },
+    {
+     "en": "Raise the interest rate. Which single ratio changes?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

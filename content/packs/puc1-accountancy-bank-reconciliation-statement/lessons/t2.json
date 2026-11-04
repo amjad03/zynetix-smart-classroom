@@ -482,6 +482,318 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Timing differences, day by day",
+    "kn": "ಸಮಯದ ವ್ಯತ್ಯಾಸಗಳು, ದಿನದಿಂದ ದಿನಕ್ಕೆ"
+   },
+   "caption": {
+    "en": "A cheque is issued on day 1 and one is deposited on day 2. The cash book (yellow) changes at once; the pass book (blue) changes only when the cheque is presented or cleared.",
+    "kn": "ದಿನ 1 ರಂದು ಚೆಕ್ ನೀಡಲಾಗುತ್ತದೆ, ದಿನ 2 ರಂದು ಒಂದು ಚೆಕ್ ಜಮೆಯಾಗುತ್ತದೆ. ನಗದು ಪುಸ್ತಕ (ಹಳದಿ) ತಕ್ಷಣ ಬದಲಾಗುತ್ತದೆ; ಪಾಸ್ ಪುಸ್ತಕ (ನೀಲಿ) ಚೆಕ್ ಹಾಜರಾದಾಗ ಅಥವಾ ತೀರುವಳಿಯಾದಾಗ ಮಾತ್ರ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "A1",
+     "label": {
+      "en": "Cheque issued"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 8,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "n1",
+     "label": {
+      "en": "Days until presented"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 1,
+     "value": 4,
+     "unit": "days"
+    },
+    {
+     "name": "A2",
+     "label": {
+      "en": "Cheque deposited"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 5,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "n2",
+     "label": {
+      "en": "Days until cleared"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 1,
+     "value": 2,
+     "unit": "days"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "mk",
+     "label": {
+      "en": "Event markers",
+      "kn": "ಘಟನೆ ಗುರುತುಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run the days",
+      "kn": "ದಿನಗಳನ್ನು ಓಡಿಸಿ"
+     },
+     "icon": "play",
+     "set": {},
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 12,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4
+    ],
+    "speed": 1,
+    "unit": "day"
+   },
+   "vars": [
+    {
+     "name": "cb",
+     "expr": "30 - A1*step(1, t) + A2*step(2, t)"
+    },
+    {
+     "name": "pb",
+     "expr": "30 - A1*step(1 + n1, t) + A2*step(2 + n2, t)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "Day",
+    "yLabel": "Balance (₹ '000)"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 0,
+     "x2": 1,
+     "y2": 60,
+     "color": "red",
+     "dashed": true,
+     "visibleIf": "mk",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 1.1,
+     "y": 57,
+     "text": {
+      "en": "cheque issued"
+     },
+     "size": 18,
+     "color": "red",
+     "align": "left",
+     "visibleIf": "mk"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 0,
+     "x2": 2,
+     "y2": 60,
+     "color": "green",
+     "dashed": true,
+     "visibleIf": "mk",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 2.1,
+     "y": 53,
+     "text": {
+      "en": "cheque deposited"
+     },
+     "size": 18,
+     "color": "green",
+     "align": "left",
+     "visibleIf": "mk"
+    },
+    {
+     "shape": "line",
+     "x1": "1 + n1",
+     "y1": 0,
+     "x2": "1 + n1",
+     "y2": 60,
+     "color": "red",
+     "dashed": true,
+     "visibleIf": "mk",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": "1.1 + n1",
+     "y": 49,
+     "text": {
+      "en": "presented"
+     },
+     "size": 18,
+     "color": "red",
+     "align": "left",
+     "visibleIf": "mk"
+    },
+    {
+     "shape": "line",
+     "x1": "2 + n2",
+     "y1": 0,
+     "x2": "2 + n2",
+     "y2": 60,
+     "color": "green",
+     "dashed": true,
+     "visibleIf": "mk",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": "2.1 + n2",
+     "y": 45,
+     "text": {
+      "en": "cleared"
+     },
+     "size": 18,
+     "color": "green",
+     "align": "left",
+     "visibleIf": "mk"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "cb",
+     "length": 1200,
+     "color": "yellow",
+     "width": 5
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "pb",
+     "length": 1200,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "cb",
+     "r": 0.14,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "pb",
+     "r": 0.1,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 11.8,
+     "y": 5,
+     "text": {
+      "en": "Cash book {cb}"
+     },
+     "size": 22,
+     "color": "yellow",
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 11.8,
+     "y": 9,
+     "text": {
+      "en": "Pass book {pb}"
+     },
+     "size": 22,
+     "color": "blue",
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 11.8,
+     "y": 13,
+     "text": {
+      "en": "Difference {pb - cb}"
+     },
+     "size": 22,
+     "color": "white",
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cash book"
+     },
+     "expr": "cb",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Pass book"
+     },
+     "expr": "pb",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Difference (PB − CB)"
+     },
+     "expr": "pb - cb",
+     "digits": 0,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Between day 1 and the day the cheque is presented, which balance is higher? Why?"
+    },
+    {
+     "en": "Make the deposited cheque take 8 days to clear. When do the balances agree?"
+    },
+    {
+     "en": "Can you set the sliders so that the two balances agree on day 3 even though both cheques are still pending?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -422,6 +422,490 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Statement of profit and loss",
+    "kn": "ಲಾಭ ನಷ್ಟದ ಪಟ್ಟಿ"
+   },
+   "caption": {
+    "en": "Revenue from operations plus other income is total income; deduct total expenses for profit before tax, then tax for the profit for the period. Earnings per share is that profit divided by the number of equity shares.",
+    "kn": "ಕಾರ್ಯಾಚರಣೆಯ ಆದಾಯ + ಇತರ ಆದಾಯ = ಒಟ್ಟು ಆದಾಯ; ವೆಚ್ಚ ಕಳೆದರೆ ತೆರಿಗೆ ಪೂರ್ವ ಲಾಭ; ತೆರಿಗೆ ಕಳೆದರೆ ಅವಧಿಯ ಲಾಭ. ಪ್ರತಿ ಷೇರಿನ ಗಳಿಕೆ = ಲಾಭ ÷ ಷೇರುಗಳ ಸಂಖ್ಯೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "sliders": [
+    {
+     "name": "rfo",
+     "label": {
+      "en": "Revenue from operations"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 10,
+     "value": 600,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "oi",
+     "label": {
+      "en": "Other income"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 20,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "ex",
+     "label": {
+      "en": "Total expenses"
+     },
+     "min": 50,
+     "max": 900,
+     "step": 10,
+     "value": 480,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "tx",
+     "label": {
+      "en": "Tax rate"
+     },
+     "min": 0,
+     "max": 40,
+     "step": 1,
+     "value": 25,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "eps",
+     "label": {
+      "en": "Show earnings per share",
+      "kn": "ಪ್ರತಿ ಷೇರಿನ ಗಳಿಕೆ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "wd0",
+     "expr": "rfo"
+    },
+    {
+     "name": "wc0",
+     "expr": "wd0"
+    },
+    {
+     "name": "wd1",
+     "expr": "oi"
+    },
+    {
+     "name": "wc1",
+     "expr": "wc0 + wd1"
+    },
+    {
+     "name": "wc2",
+     "expr": "wc1"
+    },
+    {
+     "name": "wd2",
+     "expr": "wc2"
+    },
+    {
+     "name": "wd3",
+     "expr": "-ex"
+    },
+    {
+     "name": "wc3",
+     "expr": "wc2 + wd3"
+    },
+    {
+     "name": "wc4",
+     "expr": "wc3"
+    },
+    {
+     "name": "wd4",
+     "expr": "wc4"
+    },
+    {
+     "name": "wd5",
+     "expr": "-max(0, rfo + oi - ex)*tx/100"
+    },
+    {
+     "name": "wc5",
+     "expr": "wc4 + wd5"
+    },
+    {
+     "name": "wc6",
+     "expr": "wc5"
+    },
+    {
+     "name": "wd6",
+     "expr": "wc6"
+    },
+    {
+     "name": "wlo",
+     "expr": "min(0, wc0, wc1, wc2, wc3, wc4, wc5, wc6)"
+    },
+    {
+     "name": "whi",
+     "expr": "max(1, wc0, wc1, wc2, wc3, wc4, wc5, wc6)"
+    },
+    {
+     "name": "wk",
+     "expr": "7.4/(whi - wlo)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -0.5,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.3,
+     "y1": "1 + (0 - wlo)*wk",
+     "x2": 19.7,
+     "y2": "1 + (0 - wlo)*wk",
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 0.854,
+     "y": "1 + (min(0, wc0) - wlo)*wk",
+     "w": 1.663,
+     "h": "abs(wc0)*wk",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 1.686,
+     "y": "1 + (max(0, wc0) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd0}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.686,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Revenue from ops"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 2.517,
+     "y1": "1 + (wc0 - wlo)*wk",
+     "x2": 3.626,
+     "y2": "1 + (wc0 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 3.626,
+     "y": "1 + (min(wc0, wc1) - wlo)*wk",
+     "w": 1.663,
+     "h": "abs(wd1)*wk",
+     "color": {
+      "by": "step(0, wd1)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 4.457,
+     "y": "1 + (max(wc0, wc1) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 4.457,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Other income"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 5.289,
+     "y1": "1 + (wc1 - wlo)*wk",
+     "x2": 6.397,
+     "y2": "1 + (wc1 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 6.397,
+     "y": "1 + (min(0, wc2) - wlo)*wk",
+     "w": 1.663,
+     "h": "abs(wc2)*wk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 7.229,
+     "y": "1 + (max(0, wc2) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd2}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.229,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Total income"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 8.06,
+     "y1": "1 + (wc2 - wlo)*wk",
+     "x2": 9.169,
+     "y2": "1 + (wc2 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 9.169,
+     "y": "1 + (min(wc2, wc3) - wlo)*wk",
+     "w": 1.663,
+     "h": "abs(wd3)*wk",
+     "color": {
+      "by": "step(0, wd3)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": "1 + (max(wc2, wc3) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Expenses"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 10.831,
+     "y1": "1 + (wc3 - wlo)*wk",
+     "x2": 11.94,
+     "y2": "1 + (wc3 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 11.94,
+     "y": "1 + (min(0, wc4) - wlo)*wk",
+     "w": 1.663,
+     "h": "abs(wc4)*wk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 12.771,
+     "y": "1 + (max(0, wc4) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd4}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.771,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Profit before tax"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 13.603,
+     "y1": "1 + (wc4 - wlo)*wk",
+     "x2": 14.711,
+     "y2": "1 + (wc4 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 14.711,
+     "y": "1 + (min(wc4, wc5) - wlo)*wk",
+     "w": 1.663,
+     "h": "abs(wd5)*wk",
+     "color": {
+      "by": "step(0, wd5)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 15.543,
+     "y": "1 + (max(wc4, wc5) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd5}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.543,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Tax"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 16.374,
+     "y1": "1 + (wc5 - wlo)*wk",
+     "x2": 17.483,
+     "y2": "1 + (wc5 - wlo)*wk",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 17.483,
+     "y": "1 + (min(0, wc6) - wlo)*wk",
+     "w": 1.663,
+     "h": "abs(wc6)*wk",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 18.314,
+     "y": "1 + (max(0, wc6) - wlo)*wk + 0.35",
+     "text": {
+      "en": "{wd6}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 18.314,
+     "y": 0.30000000000000004,
+     "text": {
+      "en": "Profit for the period"
+     },
+     "size": 19,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "Earnings per share (1 lakh shares): ₹{wc6*1000/100000:2}"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "eps"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Total income"
+     },
+     "expr": "wc2",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Profit before tax"
+     },
+     "expr": "wc4",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Profit for the period"
+     },
+     "expr": "wc6",
+     "digits": 1,
+     "unit": "₹ '000"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Revenue ₹6,00,000, other income ₹20,000, expenses ₹4,80,000 at 25% tax: check profit of ₹1,05,000."
+    },
+    {
+     "en": "Make expenses larger than total income. Is any tax charged?"
+    },
+    {
+     "en": "Dividend received appears where in this statement?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {
