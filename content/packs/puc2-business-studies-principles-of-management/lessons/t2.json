@@ -58,6 +58,348 @@
    }
   },
   {
+   "id": "scene-piece-wage",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Taylor's differential piece wage",
+    "kn": "ಟೇಲರ್‌ನ ವಿಭೇದಾತ್ಮಕ ತುಂಡು ವೇತನ"
+   },
+   "caption": {
+    "en": "Taylor set a standard output by time and motion study and paid a higher rate to those who reached it. Set the standard, the two rates and each worker's output to compare their wages.",
+    "kn": "ಟೇಲರ್ ಸಮಯ-ಚಲನ ಅಧ್ಯಯನದಿಂದ ಮಾನದಂಡ ನಿಗದಿಪಡಿಸಿ ತಲುಪಿದವರಿಗೆ ಹೆಚ್ಚು ದರ ನೀಡಿದ. ಮಾನದಂಡ, ಎರಡು ದರ ಮತ್ತು ಕಾರ್ಮಿಕರ ಉತ್ಪಾದನೆ ಹೊಂದಿಸಿ ವೇತನ ಹೋಲಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "std",
+     "label": {
+      "en": "Standard output",
+      "kn": "ಮಾನದಂಡ ಉತ್ಪಾದನೆ"
+     },
+     "min": 5,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "units/day"
+    },
+    {
+     "name": "qa",
+     "label": {
+      "en": "Worker A makes",
+      "kn": "A ತಯಾರಿಸುವುದು"
+     },
+     "min": 0,
+     "max": 25,
+     "step": 1,
+     "value": 12,
+     "unit": "units"
+    },
+    {
+     "name": "qb",
+     "label": {
+      "en": "Worker B makes",
+      "kn": "B ತಯಾರಿಸುವುದು"
+     },
+     "min": 0,
+     "max": 25,
+     "step": 1,
+     "value": 9,
+     "unit": "units"
+    },
+    {
+     "name": "hi",
+     "label": {
+      "en": "Higher rate",
+      "kn": "ಹೆಚ್ಚಿನ ದರ"
+     },
+     "min": 30,
+     "max": 60,
+     "step": 1,
+     "value": 50,
+     "unit": "₹/unit"
+    }
+   ],
+   "vars": [
+    {
+     "name": "lo",
+     "expr": "hi*0.8"
+    },
+    {
+     "name": "wa",
+     "expr": "qa*if(qa >= std, hi, lo)"
+    },
+    {
+     "name": "wb",
+     "expr": "qb*if(qb >= std, hi, lo)"
+    },
+    {
+     "name": "b0",
+     "expr": "qa"
+    },
+    {
+     "name": "b1",
+     "expr": "wa/10"
+    },
+    {
+     "name": "b2",
+     "expr": "qb"
+    },
+    {
+     "name": "b3",
+     "expr": "wb/10"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Units, and wage in ₹10s",
+      "kn": "ಘಟಕ, ಮತ್ತು ವೇತನ (₹10ಗಳಲ್ಲಿ)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/60, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/60, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Worker A output",
+      "kn": "A ಉತ್ಪಾದನೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/60, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/60, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Worker A wage",
+      "kn": "A ವೇತನ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/60, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/60, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Worker B output",
+      "kn": "B ಉತ್ಪಾದನೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/60, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/60, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Worker B wage",
+      "kn": "B ವೇತನ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "A earns the high rate; B the low",
+      "kn": "Aಗೆ ಹೆಚ್ಚು ದರ; Bಗೆ ಕಡಿಮೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "qa >= std && qb < std"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Both reach the standard",
+      "kn": "ಇಬ್ಬರೂ ಮಾನದಂಡ ತಲುಪಿದ್ದಾರೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "qa >= std && qb >= std"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "A misses the standard",
+      "kn": "A ಮಾನದಂಡ ತಪ್ಪಿಸಿದ"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "qa < std"
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": "12 + std/60*36",
+     "x2": 61,
+     "y2": "12 + std/60*36",
+     "dashed": true,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 62,
+     "y": "12 + std/60*36",
+     "text": {
+      "en": "standard",
+      "kn": "ಮಾನದಂಡ"
+     },
+     "size": 15,
+     "align": "left",
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Worker A wage",
+      "kn": "A ವೇತನ"
+     },
+     "expr": "wa",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Worker B wage",
+      "kn": "B ವೇತನ"
+     },
+     "expr": "wb",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Lower rate",
+      "kn": "ಕಡಿಮೆ ದರ"
+     },
+     "expr": "lo",
+     "digits": 0,
+     "unit": "₹/unit"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "B makes one unit less than the standard. How much does it cost him?",
+     "kn": "B ಮಾನದಂಡಕ್ಕಿಂತ ಒಂದು ಘಟಕ ಕಡಿಮೆ. ಎಷ್ಟು ನಷ್ಟ?"
+    },
+    {
+     "en": "Why must the standard be set by time and motion study?",
+     "kn": "ಮಾನದಂಡ ಸಮಯ-ಚಲನ ಅಧ್ಯಯನದಿಂದ ಏಕೆ?"
+    },
+    {
+     "en": "Which principle of Taylor does this incentive support?",
+     "kn": "ಈ ಪ್ರೋತ್ಸಾಹ ಟೇಲರ್‌ನ ಯಾವ ತತ್ವ ಬೆಂಬಲಿಸುತ್ತದೆ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Taylor set a standard output by time and motion study and paid a higher rate to those who reached it. Set the standard, the two rates and each worker's output to compare their wages.",
+    "kn": "ಟೇಲರ್ ಸಮಯ-ಚಲನ ಅಧ್ಯಯನದಿಂದ ಮಾನದಂಡ ನಿಗದಿಪಡಿಸಿ ತಲುಪಿದವರಿಗೆ ಹೆಚ್ಚು ದರ ನೀಡಿದ. ಮಾನದಂಡ, ಎರಡು ದರ ಮತ್ತು ಕಾರ್ಮಿಕರ ಉತ್ಪಾದನೆ ಹೊಂದಿಸಿ ವೇತನ ಹೋಲಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -59,6 +59,302 @@
    }
   },
   {
+   "id": "scene-wealth-max",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Wealth maximisation: does this project raise the share price?",
+    "kn": "ಸಂಪತ್ತು ಗರಿಷ್ಠೀಕರಣ: ಯೋಜನೆ ಷೇರು ಬೆಲೆ ಏರಿಸುತ್ತದೆಯೇ?"
+   },
+   "caption": {
+    "en": "Financial management aims to maximise shareholders' wealth, shown by the share price. A project adds value only if its return beats the cost of capital. Set the investment, its return and the cost of capital.",
+    "kn": "ಹಣಕಾಸು ನಿರ್ವಹಣೆಯ ಗುರಿ ಷೇರು ಬೆಲೆಯಿಂದ ತೋರುವ ಷೇರುದಾರರ ಸಂಪತ್ತಿನ ಗರಿಷ್ಠೀಕರಣ. ಯೋಜನೆಯ ಆದಾಯ ಬಂಡವಾಳ ವೆಚ್ಚ ಮೀರಿದರೆ ಮಾತ್ರ ಮೌಲ್ಯ ಸೇರುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "inv",
+     "label": {
+      "en": "Investment",
+      "kn": "ಹೂಡಿಕೆ"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 10,
+     "value": 100,
+     "unit": "₹ crore"
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Project return",
+      "kn": "ಯೋಜನಾ ಆದಾಯ"
+     },
+     "min": 4,
+     "max": 24,
+     "step": 1,
+     "value": 14,
+     "unit": "%"
+    },
+    {
+     "name": "k",
+     "label": {
+      "en": "Cost of capital",
+      "kn": "ಬಂಡವಾಳ ವೆಚ್ಚ"
+     },
+     "min": 6,
+     "max": 18,
+     "step": 1,
+     "value": 12,
+     "unit": "%"
+    }
+   ],
+   "vars": [
+    {
+     "name": "va",
+     "expr": "inv*(r - k)/k"
+    },
+    {
+     "name": "sh",
+     "expr": "1"
+    },
+    {
+     "name": "b0",
+     "expr": "100"
+    },
+    {
+     "name": "b1",
+     "expr": "max(100 + va/sh, 0)"
+    },
+    {
+     "name": "b2",
+     "expr": "max(va, 0)"
+    },
+    {
+     "name": "b3",
+     "expr": "max(-va, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Share price (₹, 1 crore shares)",
+      "kn": "ಷೇರು ಬೆಲೆ (₹, 1 ಕೋಟಿ ಷೇರು)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/200, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/200, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Price before",
+      "kn": "ಹಿಂದಿನ ಬೆಲೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/200, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/200, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Price after",
+      "kn": "ನಂತರದ ಬೆಲೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/200, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/200, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Value added (₹ crore)",
+      "kn": "ಸೇರಿದ ಮೌಲ್ಯ (₹ ಕೋಟಿ)"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/200, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/200, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Value lost (₹ crore)",
+      "kn": "ಕಳೆದ ಮೌಲ್ಯ (₹ ಕೋಟಿ)"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Accept: wealth rises",
+      "kn": "ಸ್ವೀಕರಿಸಿ: ಸಂಪತ್ತು ಏರುತ್ತದೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "r > k"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Reject: wealth falls",
+      "kn": "ತಿರಸ್ಕರಿಸಿ: ಸಂಪತ್ತು ಇಳಿಯುತ್ತದೆ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "r < k"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "No change in wealth",
+      "kn": "ಸಂಪತ್ತಿನಲ್ಲಿ ಬದಲಾವಣೆ ಇಲ್ಲ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "r == k"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Value added",
+      "kn": "ಸೇರಿದ ಮೌಲ್ಯ"
+     },
+     "expr": "va",
+     "digits": 1,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "New share price",
+      "kn": "ಹೊಸ ಷೇರು ಬೆಲೆ"
+     },
+     "expr": "max(100 + va, 0)",
+     "digits": 1,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Return 14%, cost 12%: accept or reject?",
+     "kn": "ಆದಾಯ 14%, ವೆಚ್ಚ 12%: ಸ್ವೀಕರಿಸುವಿರಾ?"
+    },
+    {
+     "en": "A project earns profit but below the cost of capital. Does it help shareholders?",
+     "kn": "ಲಾಭ ಇದ್ದರೂ ವೆಚ್ಚಕ್ಕಿಂತ ಕಡಿಮೆ. ಷೇರುದಾರರಿಗೆ ಸಹಾಯವೇ?"
+    },
+    {
+     "en": "Which financial decision is this: investment, financing or dividend?",
+     "kn": "ಇದು ಯಾವ ಹಣಕಾಸು ನಿರ್ಧಾರ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Financial management aims to maximise shareholders' wealth, shown by the share price. A project adds value only if its return beats the cost of capital. Set the investment, its return and the cost of capital.",
+    "kn": "ಹಣಕಾಸು ನಿರ್ವಹಣೆಯ ಗುರಿ ಷೇರು ಬೆಲೆಯಿಂದ ತೋರುವ ಷೇರುದಾರರ ಸಂಪತ್ತಿನ ಗರಿಷ್ಠೀಕರಣ. ಯೋಜನೆಯ ಆದಾಯ ಬಂಡವಾಳ ವೆಚ್ಚ ಮೀರಿದರೆ ಮಾತ್ರ ಮೌಲ್ಯ ಸೇರುತ್ತದೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

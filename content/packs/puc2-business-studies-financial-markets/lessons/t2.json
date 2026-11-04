@@ -65,6 +65,270 @@
    }
   },
   {
+   "id": "scene-primary-secondary",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Primary and secondary market",
+    "kn": "ಪ್ರಾಥಮಿಕ ಮತ್ತು ದ್ವಿತೀಯ ಮಾರುಕಟ್ಟೆ"
+   },
+   "caption": {
+    "en": "In the primary market a company sells new shares and the money goes to the company. In the secondary market investors trade existing shares among themselves: the company gets nothing. Switch markets and press Play.",
+    "kn": "ಪ್ರಾಥಮಿಕ ಮಾರುಕಟ್ಟೆಯಲ್ಲಿ ಕಂಪನಿ ಹೊಸ ಷೇರು ಮಾರುತ್ತದೆ, ಹಣ ಕಂಪನಿಗೆ. ದ್ವಿತೀಯ ಮಾರುಕಟ್ಟೆಯಲ್ಲಿ ಹೂಡಿಕೆದಾರರು ತಮ್ಮಲ್ಲೇ ವ್ಯಾಪಾರ ಮಾಡುತ್ತಾರೆ: ಕಂಪನಿಗೆ ಏನೂ ಇಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "pr",
+     "label": {
+      "en": "Price per share",
+      "kn": "ಷೇರು ಬೆಲೆ"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 10,
+     "value": 200,
+     "unit": "₹"
+    },
+    {
+     "name": "q",
+     "label": {
+      "en": "Shares sold",
+      "kn": "ಮಾರಿದ ಷೇರು"
+     },
+     "min": 1,
+     "max": 50,
+     "step": 1,
+     "value": 10,
+     "unit": "lakh"
+    }
+   ],
+   "choices": [
+    {
+     "name": "mk",
+     "label": {
+      "en": "Market",
+      "kn": "ಮಾರುಕಟ್ಟೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Primary (IPO)",
+        "kn": "ಪ್ರಾಥಮಿಕ (IPO)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Secondary (stock exchange)",
+        "kn": "ದ್ವಿತೀಯ (ಷೇರು ವಿನಿಮಯ)"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 20,
+    "loop": true,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 1,
+    "unit": "s"
+   },
+   "vars": [
+    {
+     "name": "raised",
+     "expr": "if(mk == 1, pr*q/100, 0)"
+    },
+    {
+     "name": "ph",
+     "expr": "mod(t, 4)/4"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 4,
+     "y": 38,
+     "w": 20,
+     "h": 12,
+     "color": "yellow",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 44,
+     "text": {
+      "en": "Company",
+      "kn": "ಕಂಪನಿ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 40,
+     "y": 6,
+     "w": 20,
+     "h": 10,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 11,
+     "text": {
+      "en": "Investor A",
+      "kn": "ಹೂಡಿಕೆದಾರ A"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 76,
+     "y": 38,
+     "w": 20,
+     "h": 12,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 86,
+     "y": 44,
+     "text": {
+      "en": "Investor B",
+      "kn": "ಹೂಡಿಕೆದಾರ B"
+     },
+     "size": 18
+    },
+    {
+     "shape": "particles",
+     "count": 4,
+     "x": "14 + 36*mod(ph + i/4, 1)",
+     "y": "38 - 22*mod(ph + i/4, 1)",
+     "r": 1,
+     "color": "green",
+     "visibleIf": "mk == 1"
+    },
+    {
+     "shape": "particles",
+     "count": 4,
+     "x": "50 - 36*mod(ph + i/4 + 0.12, 1)",
+     "y": "16 + 22*mod(ph + i/4 + 0.12, 1)",
+     "r": 1,
+     "color": "orange",
+     "visibleIf": "mk == 1"
+    },
+    {
+     "shape": "particles",
+     "count": 4,
+     "x": "50 + 36*mod(ph + i/4, 1)",
+     "y": "16 + 22*mod(ph + i/4, 1)",
+     "r": 1,
+     "color": "orange",
+     "visibleIf": "mk == 2"
+    },
+    {
+     "shape": "particles",
+     "count": 4,
+     "x": "86 - 36*mod(ph + i/4 + 0.12, 1)",
+     "y": "38 - 22*mod(ph + i/4 + 0.12, 1)",
+     "r": 1,
+     "color": "green",
+     "visibleIf": "mk == 2"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 56,
+     "text": {
+      "en": "green = shares, orange = money",
+      "kn": "ಹಸಿರು = ಷೇರು, ಕಿತ್ತಳೆ = ಹಣ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 30,
+     "text": {
+      "en": "Company raises ₹{raised:0} crore",
+      "kn": "ಕಂಪನಿಗೆ ₹{raised:0} ಕೋಟಿ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "mk == 1"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 30,
+     "text": {
+      "en": "Company gets nothing; shares change hands",
+      "kn": "ಕಂಪನಿಗೆ ಏನೂ ಇಲ್ಲ; ಷೇರು ಕೈ ಬದಲಾಯಿಸುತ್ತವೆ"
+     },
+     "size": 20,
+     "color": "orange",
+     "visibleIf": "mk == 2"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Funds to the company",
+      "kn": "ಕಂಪನಿಗೆ ಹಣ"
+     },
+     "expr": "raised",
+     "digits": 0,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "Value traded",
+      "kn": "ವ್ಯಾಪಾರ ಮೌಲ್ಯ"
+     },
+     "expr": "pr*q/100",
+     "digits": 0,
+     "unit": "₹ crore"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why is the primary market called the new issue market?",
+     "kn": "ಪ್ರಾಥಮಿಕ ಮಾರುಕಟ್ಟೆ ಹೊಸ ವಿತರಣಾ ಮಾರುಕಟ್ಟೆ ಏಕೆ?"
+    },
+    {
+     "en": "If the company gets nothing from trading, why does it care about its share price?",
+     "kn": "ವ್ಯಾಪಾರದಿಂದ ಏನೂ ಸಿಗದಿದ್ದರೆ ಕಂಪನಿ ಷೇರು ಬೆಲೆ ಬಗ್ಗೆ ಏಕೆ ಚಿಂತಿಸಬೇಕು?"
+    },
+    {
+     "en": "Name two methods of floatation in the primary market.",
+     "kn": "ಪ್ರಾಥಮಿಕ ಮಾರುಕಟ್ಟೆಯ ಎರಡು ವಿತರಣಾ ವಿಧಾನ ಹೇಳಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "In the primary market a company sells new shares and the money goes to the company. In the secondary market investors trade existing shares among themselves: the company gets nothing. Switch markets and press Play.",
+    "kn": "ಪ್ರಾಥಮಿಕ ಮಾರುಕಟ್ಟೆಯಲ್ಲಿ ಕಂಪನಿ ಹೊಸ ಷೇರು ಮಾರುತ್ತದೆ, ಹಣ ಕಂಪನಿಗೆ. ದ್ವಿತೀಯ ಮಾರುಕಟ್ಟೆಯಲ್ಲಿ ಹೂಡಿಕೆದಾರರು ತಮ್ಮಲ್ಲೇ ವ್ಯಾಪಾರ ಮಾಡುತ್ತಾರೆ: ಕಂಪನಿಗೆ ಏನೂ ಇಲ್ಲ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

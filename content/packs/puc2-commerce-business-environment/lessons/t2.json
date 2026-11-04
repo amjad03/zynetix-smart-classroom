@@ -59,6 +59,197 @@
    }
   },
   {
+   "id": "scene-demonetisation",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Demonetisation and the shift to digital payments"
+   },
+   "caption": {
+    "en": "In November 2016 the ₹500 and ₹1,000 notes, about 86% of cash by value, stopped being legal tender. Press Play: cash in circulation falls, digital payments jump, and cash slowly comes back. Change the share withdrawn and how fast new notes are printed."
+   },
+   "sliders": [
+    {
+     "name": "wd",
+     "label": {
+      "en": "Share of cash withdrawn"
+     },
+     "min": 20,
+     "max": 90,
+     "step": 2,
+     "value": 86,
+     "unit": "%"
+    },
+    {
+     "name": "rm",
+     "label": {
+      "en": "Remonetisation speed"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 4
+    },
+    {
+     "name": "dg",
+     "label": {
+      "en": "Digital adoption push"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "upi",
+     "label": {
+      "en": "UPI and wallets available"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 24,
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2,
+    "unit": "month"
+   },
+   "vars": [
+    {
+     "name": "shock",
+     "expr": "step(1, t)"
+    },
+    {
+     "name": "cash",
+     "expr": "if(t < 1, 100, 100 - wd*(1 - rem))"
+    }
+   ],
+   "state": [
+    {
+     "name": "rem",
+     "init": 0,
+     "rate": "shock*rm/40*(1 - rem)"
+    },
+    {
+     "name": "dig",
+     "init": 10,
+     "rate": "shock*(if(upi, 1, 0.3)*(0.3 + dg/20)*(100 - cash)/12 - 0.03*(dig - 10))"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     0,
+     24
+    ],
+    "y": [
+     0,
+     120
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "month (0 = Oct 2016)",
+    "yLabel": "index (before = 100)"
+   },
+   "shapes": [
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "cash",
+     "length": 800,
+     "color": "orange"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "min(dig, 118)",
+     "length": 800,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "cash",
+     "r": 0.3,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "min(dig, 118)",
+     "r": 0.3,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 0,
+     "x2": 1,
+     "y2": 120,
+     "dashed": true,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 1.3,
+     "y": 114,
+     "text": {
+      "en": "8 Nov 2016"
+     },
+     "size": 16,
+     "align": "left",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": 112,
+     "text": {
+      "en": "orange: cash   green: digital payments"
+     },
+     "size": 16
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cash in circulation"
+     },
+     "expr": "cash",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Digital payments"
+     },
+     "expr": "dig",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn UPI off. How does the digital shift change?"
+    },
+    {
+     "en": "Why did cash come back over the next year?"
+    },
+    {
+     "en": "Name two aims of demonetisation."
+    }
+   ],
+   "seconds": 120,
+   "narration": {
+    "en": "In November 2016 the ₹500 and ₹1,000 notes, about 86% of cash by value, stopped being legal tender. Press Play: cash in circulation falls, digital payments jump, and cash slowly comes back. Change the share withdrawn and how fast new notes are printed."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -68,6 +68,199 @@
    }
   },
   {
+   "id": "scene-control-cost",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "How much control is worth it?",
+    "kn": "ಎಷ್ಟು ನಿಯಂತ್ರಣ ಲಾಭದಾಯಕ?"
+   },
+   "caption": {
+    "en": "More control catches more waste and errors, but each extra check costs money and slows people down. Move the control effort and find where the net benefit is greatest. This is one limitation of controlling: it is costly.",
+    "kn": "ಹೆಚ್ಚು ನಿಯಂತ್ರಣ ಹೆಚ್ಚು ವ್ಯರ್ಥ, ತಪ್ಪು ಹಿಡಿಯುತ್ತದೆ, ಆದರೆ ಪ್ರತಿ ತಪಾಸಣೆಗೆ ವೆಚ್ಚ. ನಿಯಂತ್ರಣ ಪ್ರಯತ್ನ ಬದಲಿಸಿ ನಿವ್ವಳ ಲಾಭ ಗರಿಷ್ಠವಾಗುವ ಜಾಗ ಹುಡುಕಿ."
+   },
+   "sliders": [
+    {
+     "name": "c",
+     "label": {
+      "en": "Control effort",
+      "kn": "ನಿಯಂತ್ರಣ ಪ್ರಯತ್ನ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 0.25,
+     "value": 2
+    },
+    {
+     "name": "bmax",
+     "label": {
+      "en": "Losses that could be saved",
+      "kn": "ಉಳಿಸಬಹುದಾದ ನಷ್ಟ"
+     },
+     "min": 20,
+     "max": 100,
+     "step": 5,
+     "value": 60,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "cc",
+     "label": {
+      "en": "Cost per unit of control",
+      "kn": "ನಿಯಂತ್ರಣದ ಘಟಕ ವೆಚ್ಚ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 4,
+     "unit": "₹ lakh"
+    }
+   ],
+   "vars": [
+    {
+     "name": "ben",
+     "expr": "bmax*(1 - exp(-0.5*c))"
+    },
+    {
+     "name": "cost",
+     "expr": "cc*c"
+    },
+    {
+     "name": "net",
+     "expr": "ben - cost"
+    },
+    {
+     "name": "copt",
+     "expr": "if(bmax*0.5 > cc, 2*ln(bmax*0.5/cc), 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     -40,
+     100
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "control effort",
+    "yLabel": "₹ lakh"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "bmax*(1 - exp(-0.5*x))",
+     "color": "green"
+    },
+    {
+     "shape": "path",
+     "fn": "cc*x",
+     "color": "red"
+    },
+    {
+     "shape": "path",
+     "fn": "bmax*(1 - exp(-0.5*x)) - cc*x",
+     "width": 4,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": "c",
+     "y1": -40,
+     "x2": "c",
+     "y2": 100,
+     "dashed": true,
+     "color": "white"
+    },
+    {
+     "shape": "circle",
+     "x": "c",
+     "y": "net",
+     "r": 0.18,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "copt",
+     "y": "bmax*(1 - exp(-0.5*copt)) - cc*copt",
+     "r": 0.14,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 8.5,
+     "y": "bmax*(1 - exp(-4.25)) + 6",
+     "text": {
+      "en": "benefit",
+      "kn": "ಲಾಭ"
+     },
+     "size": 16,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": "cc*9 + 5",
+     "text": {
+      "en": "cost",
+      "kn": "ವೆಚ್ಚ"
+     },
+     "size": 16,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 5,
+     "y": 90,
+     "text": {
+      "en": "Net benefit ₹{net:1} lakh",
+      "kn": "ನಿವ್ವಳ ಲಾಭ ₹{net:1} ಲಕ್ಷ"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Net benefit",
+      "kn": "ನಿವ್ವಳ ಲಾಭ"
+     },
+     "expr": "net",
+     "digits": 1,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Best effort level",
+      "kn": "ಉತ್ತಮ ಪ್ರಯತ್ನ"
+     },
+     "expr": "copt",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the best effort. Why is maximum control not best?",
+     "kn": "ಉತ್ತಮ ಪ್ರಯತ್ನ ಹುಡುಕಿ. ಗರಿಷ್ಠ ನಿಯಂತ್ರಣ ಏಕೆ ಉತ್ತಮವಲ್ಲ?"
+    },
+    {
+     "en": "Why can a small firm not afford elaborate controls?",
+     "kn": "ಸಣ್ಣ ಸಂಸ್ಥೆ ವಿಸ್ತೃತ ನಿಯಂತ್ರಣ ಏಕೆ ಭರಿಸಲಾಗದು?"
+    },
+    {
+     "en": "Which importance of controlling is the green curve?",
+     "kn": "ಹಸಿರು ವಕ್ರ ನಿಯಂತ್ರಣದ ಯಾವ ಮಹತ್ವ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "More control catches more waste and errors, but each extra check costs money and slows people down. Move the control effort and find where the net benefit is greatest. This is one limitation of controlling: it is costly.",
+    "kn": "ಹೆಚ್ಚು ನಿಯಂತ್ರಣ ಹೆಚ್ಚು ವ್ಯರ್ಥ, ತಪ್ಪು ಹಿಡಿಯುತ್ತದೆ, ಆದರೆ ಪ್ರತಿ ತಪಾಸಣೆಗೆ ವೆಚ್ಚ. ನಿಯಂತ್ರಣ ಪ್ರಯತ್ನ ಬದಲಿಸಿ ನಿವ್ವಳ ಲಾಭ ಗರಿಷ್ಠವಾಗುವ ಜಾಗ ಹುಡುಕಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -71,6 +71,349 @@
    }
   },
   {
+   "id": "scene-incentives",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Mixing financial and non-financial incentives",
+    "kn": "ಆರ್ಥಿಕ ಮತ್ತು ಆರ್ಥಿಕೇತರ ಪ್ರೋತ್ಸಾಹ ಮಿಶ್ರಣ"
+   },
+   "caption": {
+    "en": "Split a fixed incentive budget between a bonus (financial), recognition, job enrichment and job security (non-financial). Different employees respond differently: choose who you are motivating.",
+    "kn": "ನಿಗದಿತ ಪ್ರೋತ್ಸಾಹ ಬಜೆಟ್‌ನ್ನು ಬೋನಸ್, ಮನ್ನಣೆ, ಉದ್ಯೋಗ ಸಮೃದ್ಧಿ, ಉದ್ಯೋಗ ಭದ್ರತೆಗೆ ಹಂಚಿ. ನೌಕರರು ಭಿನ್ನವಾಗಿ ಪ್ರತಿಕ್ರಿಯಿಸುತ್ತಾರೆ: ಯಾರನ್ನು ಪ್ರೇರೇಪಿಸುತ್ತೀರಿ ಆರಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "bn",
+     "label": {
+      "en": "Bonus",
+      "kn": "ಬೋನಸ್"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 7
+    },
+    {
+     "name": "rc",
+     "label": {
+      "en": "Recognition",
+      "kn": "ಮನ್ನಣೆ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "je",
+     "label": {
+      "en": "Job enrichment",
+      "kn": "ಉದ್ಯೋಗ ಸಮೃದ್ಧಿ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "js",
+     "label": {
+      "en": "Job security",
+      "kn": "ಉದ್ಯೋಗ ಭದ್ರತೆ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 1
+    }
+   ],
+   "choices": [
+    {
+     "name": "em",
+     "label": {
+      "en": "Employee",
+      "kn": "ನೌಕರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Low-paid worker",
+        "kn": "ಕಡಿಮೆ ವೇತನದ ಕಾರ್ಮಿಕ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Senior engineer",
+        "kn": "ಹಿರಿಯ ಎಂಜಿನಿಯರ್"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Mid-level clerk",
+        "kn": "ಮಧ್ಯಮ ಗುಮಾಸ್ತ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "tot",
+     "expr": "max(bn + rc + je + js, 1)"
+    },
+    {
+     "name": "b0",
+     "expr": "bn/tot*if(em == 1, 9, if(em == 2, 3, 5))*10"
+    },
+    {
+     "name": "b1",
+     "expr": "rc/tot*if(em == 1, 3, if(em == 2, 8, 6))*10"
+    },
+    {
+     "name": "b2",
+     "expr": "je/tot*if(em == 1, 2, if(em == 2, 9, 7))*10"
+    },
+    {
+     "name": "b3",
+     "expr": "js/tot*if(em == 1, 8, if(em == 2, 3, 6))*10"
+    },
+    {
+     "name": "b4",
+     "expr": "b0 + b1 + b2 + b3"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Motivation from each incentive",
+      "kn": "ಪ್ರತಿ ಪ್ರೋತ್ಸಾಹದ ಪ್ರೇರಣೆ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.05,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b0/100, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": "14.5 + clamp(b0/100, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": 8,
+     "text": {
+      "en": "Bonus",
+      "kn": "ಬೋನಸ್"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 18.85,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b1/100, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 22.2,
+     "y": "14.5 + clamp(b1/100, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 22.2,
+     "y": 8,
+     "text": {
+      "en": "Recognition",
+      "kn": "ಮನ್ನಣೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 29.65,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b2/100, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": "14.5 + clamp(b2/100, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 8,
+     "text": {
+      "en": "Job enrichment",
+      "kn": "ಉದ್ಯೋಗ ಸಮೃದ್ಧಿ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 40.45,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b3/100, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 43.8,
+     "y": "14.5 + clamp(b3/100, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 43.8,
+     "y": 8,
+     "text": {
+      "en": "Job security",
+      "kn": "ಉದ್ಯೋಗ ಭದ್ರತೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 51.25,
+     "y": 12,
+     "w": 6.7,
+     "h": "clamp(b4/100, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 54.6,
+     "y": "14.5 + clamp(b4/100, 0, 1)*36",
+     "text": {
+      "en": "{b4:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 54.6,
+     "y": 8,
+     "text": {
+      "en": "Total motivation",
+      "kn": "ಒಟ್ಟು ಪ್ರೇರಣೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Well matched to this employee",
+      "kn": "ಈ ನೌಕರನಿಗೆ ಸರಿಹೊಂದಿದೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "b4 >= 75"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Try another mix",
+      "kn": "ಬೇರೆ ಮಿಶ್ರಣ ಪ್ರಯತ್ನಿಸಿ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "b4 < 75"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Total motivation",
+      "kn": "ಒಟ್ಟು ಪ್ರೇರಣೆ"
+     },
+     "expr": "b4",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the best mix for the senior engineer.",
+     "kn": "ಹಿರಿಯ ಎಂಜಿನಿಯರ್‌ಗೆ ಉತ್ತಮ ಮಿಶ್ರಣ ಹುಡುಕಿ."
+    },
+    {
+     "en": "Why does a bonus work best for the low-paid worker?",
+     "kn": "ಕಡಿಮೆ ವೇತನದವರಿಗೆ ಬೋನಸ್ ಏಕೆ ಉತ್ತಮ?"
+    },
+    {
+     "en": "Name two more non-financial incentives.",
+     "kn": "ಇನ್ನೆರಡು ಆರ್ಥಿಕೇತರ ಪ್ರೋತ್ಸಾಹ ಹೇಳಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Split a fixed incentive budget between a bonus (financial), recognition, job enrichment and job security (non-financial). Different employees respond differently: choose who you are motivating.",
+    "kn": "ನಿಗದಿತ ಪ್ರೋತ್ಸಾಹ ಬಜೆಟ್‌ನ್ನು ಬೋನಸ್, ಮನ್ನಣೆ, ಉದ್ಯೋಗ ಸಮೃದ್ಧಿ, ಉದ್ಯೋಗ ಭದ್ರತೆಗೆ ಹಂಚಿ. ನೌಕರರು ಭಿನ್ನವಾಗಿ ಪ್ರತಿಕ್ರಿಯಿಸುತ್ತಾರೆ: ಯಾರನ್ನು ಪ್ರೇರೇಪಿಸುತ್ತೀರಿ ಆರಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

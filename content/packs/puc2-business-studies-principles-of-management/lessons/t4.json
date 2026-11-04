@@ -61,6 +61,194 @@
    }
   },
   {
+   "id": "scene-division-of-work",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Division of work: a pin factory",
+    "kn": "ಕೆಲಸದ ವಿಭಜನೆ: ಪಿನ್ ಕಾರ್ಖಾನೆ"
+   },
+   "caption": {
+    "en": "Making a pin takes several operations. If each worker does all of them, output is low; if each specialises in one, skill and speed rise. Set the workers and switch on division of work, then press Play.",
+    "kn": "ಪಿನ್ ತಯಾರಿಕೆಗೆ ಹಲವು ಕ್ರಿಯೆಗಳು. ಪ್ರತಿ ಕಾರ್ಮಿಕ ಎಲ್ಲವನ್ನೂ ಮಾಡಿದರೆ ಉತ್ಪಾದನೆ ಕಡಿಮೆ; ಒಂದರಲ್ಲಿ ವಿಶೇಷೀಕರಿಸಿದರೆ ಕೌಶಲ್ಯ, ವೇಗ ಏರುತ್ತದೆ. ಕಾರ್ಮಿಕರು ಹೊಂದಿಸಿ, ವಿಭಜನೆ ಆನ್ ಮಾಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "w",
+     "label": {
+      "en": "Workers",
+      "kn": "ಕಾರ್ಮಿಕರು"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "ops",
+     "label": {
+      "en": "Operations per pin",
+      "kn": "ಪಿನ್‌ಗೆ ಕ್ರಿಯೆಗಳು"
+     },
+     "min": 2,
+     "max": 10,
+     "step": 1,
+     "value": 6
+    }
+   ],
+   "toggles": [
+    {
+     "name": "dw",
+     "label": {
+      "en": "Division of work",
+      "kn": "ಕೆಲಸದ ವಿಭಜನೆ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 8,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4
+    ],
+    "speed": 1,
+    "unit": "h"
+   },
+   "vars": [
+    {
+     "name": "rate",
+     "expr": "if(dw, w*60/ops*(1 + 0.25*min(ops, w)), w*60/ops)"
+    },
+    {
+     "name": "made",
+     "expr": "rate*t"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     8
+    ],
+    "y": [
+     0,
+     3000
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "hours",
+    "yLabel": "pins made"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "w*60/ops*x",
+     "dashed": true,
+     "color": "red"
+    },
+    {
+     "shape": "path",
+     "fn": "w*60/ops*(1 + 0.25*min(ops, w))*x",
+     "dashed": true,
+     "color": "green"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "made",
+     "length": 600,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "made",
+     "r": 0.1,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 3,
+     "y": 2800,
+     "text": {
+      "en": "{made:0} pins so far",
+      "kn": "ಇದುವರೆಗೆ {made:0} ಪಿನ್"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 7,
+     "y": "w*60/ops*7 + 120",
+     "text": {
+      "en": "each does all",
+      "kn": "ಎಲ್ಲರೂ ಎಲ್ಲ"
+     },
+     "size": 14,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": "w*60/ops*(1 + 0.25*min(ops, w))*6 + 150",
+     "text": {
+      "en": "specialised",
+      "kn": "ವಿಶೇಷೀಕೃತ"
+     },
+     "size": 14,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Pins per hour",
+      "kn": "ಗಂಟೆಗೆ ಪಿನ್"
+     },
+     "expr": "rate",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Per worker per hour",
+      "kn": "ಪ್ರತಿ ಕಾರ್ಮಿಕ ಗಂಟೆಗೆ"
+     },
+     "expr": "rate/w",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Gain from division",
+      "kn": "ವಿಭಜನೆಯ ಲಾಭ"
+     },
+     "expr": "if(dw, 25*min(ops, w), 0)",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With 1 worker, does division of work help? Why?",
+     "kn": "1 ಕಾರ್ಮಿಕನೊಂದಿಗೆ ವಿಭಜನೆ ಸಹಾಯವೇ? ಏಕೆ?"
+    },
+    {
+     "en": "Name another of Fayol's principles from division of work to remuneration.",
+     "kn": "ವಿಭಜನೆಯಿಂದ ವೇತನದವರೆಗಿನ ಫಯೋಲ್‌ನ ಇನ್ನೊಂದು ತತ್ವ ಹೇಳಿ."
+    },
+    {
+     "en": "What is a drawback of too much specialisation?",
+     "kn": "ಅತಿಯಾದ ವಿಶೇಷೀಕರಣದ ದೋಷ ಏನು?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Making a pin takes several operations. If each worker does all of them, output is low; if each specialises in one, skill and speed rise. Set the workers and switch on division of work, then press Play.",
+    "kn": "ಪಿನ್ ತಯಾರಿಕೆಗೆ ಹಲವು ಕ್ರಿಯೆಗಳು. ಪ್ರತಿ ಕಾರ್ಮಿಕ ಎಲ್ಲವನ್ನೂ ಮಾಡಿದರೆ ಉತ್ಪಾದನೆ ಕಡಿಮೆ; ಒಂದರಲ್ಲಿ ವಿಶೇಷೀಕರಿಸಿದರೆ ಕೌಶಲ್ಯ, ವೇಗ ಏರುತ್ತದೆ. ಕಾರ್ಮಿಕರು ಹೊಂದಿಸಿ, ವಿಭಜನೆ ಆನ್ ಮಾಡಿ."
+   }
+  },
+  {
    "id": "activity-match-fayol",
    "type": "activity",
    "kind": "match",

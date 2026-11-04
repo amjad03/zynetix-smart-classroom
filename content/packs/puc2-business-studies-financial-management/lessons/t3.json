@@ -59,6 +59,253 @@
    }
   },
   {
+   "id": "scene-cash-budget",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A cash budget for the year",
+    "kn": "ವರ್ಷದ ನಗದು ಬಜೆಟ್"
+   },
+   "caption": {
+    "en": "Financial planning makes sure cash is there when needed. Receipts and payments flow every month, and a big machine payment falls in one month. Plan an overdraft in advance, or the firm runs out of cash.",
+    "kn": "ಅಗತ್ಯವಿದ್ದಾಗ ನಗದು ಲಭ್ಯವಿರುವಂತೆ ಹಣಕಾಸು ಯೋಜನೆ. ಪ್ರತಿ ತಿಂಗಳು ಸ್ವೀಕೃತಿ, ಪಾವತಿ; ಒಂದು ತಿಂಗಳಲ್ಲಿ ದೊಡ್ಡ ಯಂತ್ರ ಪಾವತಿ. ಮುಂಚಿತವಾಗಿ ಓವರ್‌ಡ್ರಾಫ್ಟ್ ಯೋಜಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "c0",
+     "label": {
+      "en": "Opening cash",
+      "kn": "ಆರಂಭಿಕ ನಗದು"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 5,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "rc",
+     "label": {
+      "en": "Receipts a month",
+      "kn": "ತಿಂಗಳ ಸ್ವೀಕೃತಿ"
+     },
+     "min": 5,
+     "max": 20,
+     "step": 0.5,
+     "value": 10,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "py",
+     "label": {
+      "en": "Payments a month",
+      "kn": "ತಿಂಗಳ ಪಾವತಿ"
+     },
+     "min": 5,
+     "max": 20,
+     "step": 0.5,
+     "value": 9,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "mc",
+     "label": {
+      "en": "Machine payment (month 5)",
+      "kn": "ಯಂತ್ರ ಪಾವತಿ (5ನೇ ತಿಂಗಳು)"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 15,
+     "unit": "₹ lakh"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "od",
+     "label": {
+      "en": "Overdraft arranged in advance",
+      "kn": "ಮುಂಚಿತ ಓವರ್‌ಡ್ರಾಫ್ಟ್"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 12,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "month"
+   },
+   "vars": [
+    {
+     "name": "raw",
+     "expr": "c0 + (rc - py)*t - mc*step(5, t)"
+    },
+    {
+     "name": "cash",
+     "expr": "if(od, max(raw, 0), raw)"
+    },
+    {
+     "name": "odu",
+     "expr": "if(od, max(-raw, 0), 0)"
+    },
+    {
+     "name": "low",
+     "expr": "c0 + (rc - py)*12 - mc"
+    },
+    {
+     "name": "short",
+     "expr": "raw < 0 && !od"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     -30,
+     40
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "month",
+    "yLabel": "₹ lakh"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": -30,
+     "w": 12,
+     "h": 30,
+     "color": "red",
+     "opacity": 0.1
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 12,
+     "y2": 0,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "path",
+     "fn": "c0 + (rc - py)*x - mc*step(5, x)",
+     "dashed": true,
+     "color": "white"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "cash",
+     "length": 600,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "cash",
+     "r": 0.15,
+     "color": {
+      "by": "if(short, 1, 0)",
+      "scale": [
+       "green",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "t - 0.2",
+     "y": 0,
+     "w": 0.4,
+     "h": "-odu",
+     "color": "orange",
+     "opacity": 0.7,
+     "visibleIf": "od"
+    },
+    {
+     "shape": "label",
+     "x": 6,
+     "y": 36,
+     "text": {
+      "en": "Cash shortage! Bills unpaid",
+      "kn": "ನಗದು ಕೊರತೆ! ಬಿಲ್ ಬಾಕಿ"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "short"
+    },
+    {
+     "shape": "label",
+     "x": 6,
+     "y": 36,
+     "text": {
+      "en": "Overdraft used ₹{odu:1} lakh",
+      "kn": "ಓವರ್‌ಡ್ರಾಫ್ಟ್ ₹{odu:1} ಲಕ್ಷ"
+     },
+     "size": 20,
+     "color": "orange",
+     "visibleIf": "od && odu > 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cash now",
+      "kn": "ಈಗಿನ ನಗದು"
+     },
+     "expr": "cash",
+     "digits": 1,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Overdraft in use",
+      "kn": "ಬಳಕೆಯ ಓವರ್‌ಡ್ರಾಫ್ಟ್"
+     },
+     "expr": "odu",
+     "digits": 1,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Cash at year end (before overdraft)",
+      "kn": "ವರ್ಷಾಂತ್ಯ ನಗದು"
+     },
+     "expr": "low",
+     "digits": 1,
+     "unit": "₹ lakh"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Without an overdraft, in which month does the firm run short?",
+     "kn": "ಓವರ್‌ಡ್ರಾಫ್ಟ್ ಇಲ್ಲದೆ ಯಾವ ತಿಂಗಳು ಕೊರತೆ?"
+    },
+    {
+     "en": "Why is it better to arrange the overdraft before the need?",
+     "kn": "ಅಗತ್ಯಕ್ಕೂ ಮುಂಚೆ ಓವರ್‌ಡ್ರಾಫ್ಟ್ ಏಕೆ ಉತ್ತಮ?"
+    },
+    {
+     "en": "How does planning avoid idle cash too?",
+     "kn": "ಯೋಜನೆ ನಿಷ್ಕ್ರಿಯ ನಗದನ್ನೂ ಹೇಗೆ ತಪ್ಪಿಸುತ್ತದೆ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Financial planning makes sure cash is there when needed. Receipts and payments flow every month, and a big machine payment falls in one month. Plan an overdraft in advance, or the firm runs out of cash.",
+    "kn": "ಅಗತ್ಯವಿದ್ದಾಗ ನಗದು ಲಭ್ಯವಿರುವಂತೆ ಹಣಕಾಸು ಯೋಜನೆ. ಪ್ರತಿ ತಿಂಗಳು ಸ್ವೀಕೃತಿ, ಪಾವತಿ; ಒಂದು ತಿಂಗಳಲ್ಲಿ ದೊಡ್ಡ ಯಂತ್ರ ಪಾವತಿ. ಮುಂಚಿತವಾಗಿ ಓವರ್‌ಡ್ರಾಫ್ಟ್ ಯೋಜಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

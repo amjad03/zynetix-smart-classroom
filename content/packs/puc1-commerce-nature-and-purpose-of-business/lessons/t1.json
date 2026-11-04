@@ -56,6 +56,244 @@
    }
   },
   {
+   "id": "scene-business-risk",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Profit, risk and uncertainty"
+   },
+   "caption": {
+    "en": "Business is an economic activity carried on for profit, under risk and uncertainty. Set the expected sales, margin and how uncertain demand is, then press Play to run a year. Insurance can cover the loss from a fire in month 7."
+   },
+   "sliders": [
+    {
+     "name": "q",
+     "label": {
+      "en": "Expected units a month"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 50,
+     "value": 500
+    },
+    {
+     "name": "m",
+     "label": {
+      "en": "Margin per unit"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 40,
+     "unit": "₹"
+    },
+    {
+     "name": "u",
+     "label": {
+      "en": "Uncertainty of demand"
+     },
+     "min": 0,
+     "max": 80,
+     "step": 5,
+     "value": 40,
+     "unit": "%"
+    },
+    {
+     "name": "fc",
+     "label": {
+      "en": "Fixed cost a month"
+     },
+     "min": 5000,
+     "max": 30000,
+     "step": 1000,
+     "value": 15000,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ins",
+     "label": {
+      "en": "Insure against fire (premium ₹1,500 a month)"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run the year"
+     },
+     "icon": "launch",
+     "set": {},
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 12,
+    "dt": 0.05,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "month"
+   },
+   "vars": [
+    {
+     "name": "mo",
+     "expr": "floor(t)"
+    },
+    {
+     "name": "dq",
+     "expr": "q*(1 + u/100*(2*rand(mo + 7) - 1))"
+    },
+    {
+     "name": "prof",
+     "expr": "dq*m - fc - if(ins, 1500, 0)"
+    },
+    {
+     "name": "cash",
+     "expr": "op - if(t >= 7 && !ins, 60000, 0)"
+    }
+   ],
+   "state": [
+    {
+     "name": "op",
+     "init": 0,
+     "rate": "prof"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     -6,
+     20
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "month",
+    "yLabel": "cash (₹ lakh)"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 12,
+     "y2": 0,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": "mo",
+     "y": 0,
+     "w": 0.8,
+     "h": "prof/100000",
+     "color": {
+      "by": "if(prof > 0, 1, 0)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "opacity": 0.5
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "cash/100000",
+     "length": 800,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "cash/100000",
+     "r": 0.15,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 7,
+     "y": 17,
+     "text": {
+      "en": "Fire! Stock worth ₹60,000 lost"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "t >= 7 && t < 8 && !ins"
+    },
+    {
+     "shape": "label",
+     "x": 7,
+     "y": 17,
+     "text": {
+      "en": "Fire! Insurance pays the loss"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "t >= 7 && t < 8 && ins"
+    },
+    {
+     "shape": "label",
+     "x": 3,
+     "y": 19,
+     "text": {
+      "en": "Cash ₹{cash/100000:2} lakh"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "This month's demand"
+     },
+     "expr": "dq",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "This month's profit"
+     },
+     "expr": "prof",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Cash so far"
+     },
+     "expr": "cash",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set uncertainty to 0, then 80%. How does the yearly result change?"
+    },
+    {
+     "en": "Is fire an insurable risk? Is a fall in demand?"
+    },
+    {
+     "en": "Why is profit the reward for bearing risk?"
+    }
+   ],
+   "seconds": 120,
+   "narration": {
+    "en": "Business is an economic activity carried on for profit, under risk and uncertainty. Set the expected sales, margin and how uncertain demand is, then press Play to run a year. Insurance can cover the loss from a fire in month 7."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

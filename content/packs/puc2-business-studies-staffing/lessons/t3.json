@@ -64,6 +64,332 @@
    }
   },
   {
+   "id": "scene-recruit-sources",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Choosing a source of recruitment",
+    "kn": "ನೇಮಕಾತಿ ಮೂಲದ ಆಯ್ಕೆ"
+   },
+   "caption": {
+    "en": "Internal sources (transfers, promotions) are cheap and quick but bring no fresh talent. External sources (advertisement, campus, placement agencies, employment exchange) bring more applicants at a higher cost. Choose a source and the vacancies.",
+    "kn": "ಆಂತರಿಕ ಮೂಲ (ವರ್ಗಾವಣೆ, ಬಡ್ತಿ) ಅಗ್ಗ, ಶೀಘ್ರ, ಆದರೆ ಹೊಸ ಪ್ರತಿಭೆ ಇಲ್ಲ. ಬಾಹ್ಯ ಮೂಲ ಹೆಚ್ಚು ಅರ್ಜಿದಾರರು, ಹೆಚ್ಚು ವೆಚ್ಚ. ಮೂಲ ಮತ್ತು ಖಾಲಿ ಹುದ್ದೆ ಆರಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "vc",
+     "label": {
+      "en": "Vacancies",
+      "kn": "ಖಾಲಿ ಹುದ್ದೆ"
+     },
+     "min": 1,
+     "max": 12,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sk",
+     "label": {
+      "en": "Job needs new skills not in the firm",
+      "kn": "ಸಂಸ್ಥೆಯಲ್ಲಿಲ್ಲದ ಹೊಸ ಕೌಶಲ್ಯ ಬೇಕು"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "sr",
+     "label": {
+      "en": "Source",
+      "kn": "ಮೂಲ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Transfer",
+        "kn": "ವರ್ಗಾವಣೆ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Promotion",
+        "kn": "ಬಡ್ತಿ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Advertisement",
+        "kn": "ಜಾಹೀರಾತು"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Campus",
+        "kn": "ಕ್ಯಾಂಪಸ್"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "Placement agency",
+        "kn": "ನೇಮಕ ಸಂಸ್ಥೆ"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "Employment exchange",
+        "kn": "ಉದ್ಯೋಗ ವಿನಿಮಯ"
+       },
+       "value": 6
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "vc*if(sr == 1, 2, if(sr == 2, 3, if(sr == 3, 25, if(sr == 4, 12, if(sr == 5, 15, 8)))))"
+    },
+    {
+     "name": "b1",
+     "expr": "if(sr == 1, 0, if(sr == 2, 0, if(sr == 3, 8, if(sr == 4, 9, if(sr == 5, 7, 5)))))"
+    },
+    {
+     "name": "b2",
+     "expr": "if(sr == 1, 2, if(sr == 2, 1, if(sr == 3, 15, if(sr == 4, 10, if(sr == 5, 30, 3)))))"
+    },
+    {
+     "name": "b3",
+     "expr": "if(sr == 1, 1, if(sr == 2, 2, if(sr == 3, 6, if(sr == 4, 10, if(sr == 5, 4, 8)))))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Compare sources",
+      "kn": "ಮೂಲಗಳ ಹೋಲಿಕೆ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/30, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/30, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Applicants",
+      "kn": "ಅರ್ಜಿದಾರರು"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/30, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/30, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Fresh talent",
+      "kn": "ಹೊಸ ಪ್ರತಿಭೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/30, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/30, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Cost per hire (₹'000)",
+      "kn": "ಪ್ರತಿ ನೇಮಕ ವೆಚ್ಚ (₹'000)"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/30, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/30, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Weeks to fill",
+      "kn": "ಭರ್ತಿಗೆ ವಾರ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Internal source cannot supply the new skills",
+      "kn": "ಆಂತರಿಕ ಮೂಲ ಹೊಸ ಕೌಶಲ್ಯ ನೀಡದು"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "sr <= 2 && sk"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Internal: cheap, quick, motivating",
+      "kn": "ಆಂತರಿಕ: ಅಗ್ಗ, ಶೀಘ್ರ, ಪ್ರೇರಕ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "sr <= 2 && !sk"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "External: wider choice",
+      "kn": "ಬಾಹ್ಯ: ವಿಸ್ತೃತ ಆಯ್ಕೆ"
+     },
+     "size": 22,
+     "color": "blue",
+     "visibleIf": "sr > 2"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Applicants per vacancy",
+      "kn": "ಪ್ರತಿ ಹುದ್ದೆಗೆ ಅರ್ಜಿದಾರರು"
+     },
+     "expr": "b0/vc",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Total cost",
+      "kn": "ಒಟ್ಟು ವೆಚ್ಚ"
+     },
+     "expr": "b2*vc*1000",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why do promotions motivate existing staff?",
+     "kn": "ಬಡ್ತಿ ಇರುವ ಸಿಬ್ಬಂದಿಯನ್ನು ಏಕೆ ಪ್ರೇರೇಪಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Which source suits filling 12 trainee posts with fresh graduates?",
+     "kn": "12 ಹೊಸ ಪದವೀಧರ ತರಬೇತಿ ಹುದ್ದೆಗೆ ಯಾವ ಮೂಲ?"
+    },
+    {
+     "en": "What is a drawback of advertising for a single post?",
+     "kn": "ಒಂದೇ ಹುದ್ದೆಗೆ ಜಾಹೀರಾತಿನ ದೋಷ ಏನು?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Internal sources (transfers, promotions) are cheap and quick but bring no fresh talent. External sources (advertisement, campus, placement agencies, employment exchange) bring more applicants at a higher cost. Choose a source and the vacancies.",
+    "kn": "ಆಂತರಿಕ ಮೂಲ (ವರ್ಗಾವಣೆ, ಬಡ್ತಿ) ಅಗ್ಗ, ಶೀಘ್ರ, ಆದರೆ ಹೊಸ ಪ್ರತಿಭೆ ಇಲ್ಲ. ಬಾಹ್ಯ ಮೂಲ ಹೆಚ್ಚು ಅರ್ಜಿದಾರರು, ಹೆಚ್ಚು ವೆಚ್ಚ. ಮೂಲ ಮತ್ತು ಖಾಲಿ ಹುದ್ದೆ ಆರಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -59,6 +59,586 @@
    }
   },
   {
+   "id": "scene-marketing-functions",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The functions of marketing"
+   },
+   "caption": {
+    "en": "Follow a new brand of ready-to-eat snacks through the functions of marketing, from finding out what buyers want to getting the product to them. Set the research effort and the number of outlets."
+   },
+   "sliders": [
+    {
+     "name": "rs",
+     "label": {
+      "en": "Market research time"
+     },
+     "min": 5,
+     "max": 60,
+     "step": 5,
+     "value": 20,
+     "unit": "days"
+    },
+    {
+     "name": "ot",
+     "label": {
+      "en": "Retail outlets"
+     },
+     "min": 50,
+     "max": 1000,
+     "step": 50,
+     "value": 300
+    }
+   ],
+   "counters": [
+    {
+     "name": "s",
+     "value": 0,
+     "min": 0,
+     "max": 6
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Previous step"
+     },
+     "icon": "remove",
+     "set": {
+      "s": "max(s - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Next step"
+     },
+     "icon": "next",
+     "set": {
+      "s": "min(s + 1, 6)"
+     },
+     "play": true
+    },
+    {
+     "label": {
+      "en": "Run the whole process"
+     },
+     "icon": "launch",
+     "set": {
+      "s": 6
+     },
+     "reset": true,
+     "play": true
+    },
+    {
+     "label": {
+      "en": "Start again"
+     },
+     "icon": "reset",
+     "set": {
+      "s": 0
+     },
+     "reset": true
+    }
+   ],
+   "time": {
+    "max": 6,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "step"
+   },
+   "vars": [
+    {
+     "name": "d0",
+     "expr": "rs"
+    },
+    {
+     "name": "d1",
+     "expr": "20"
+    },
+    {
+     "name": "d2",
+     "expr": "5"
+    },
+    {
+     "name": "d3",
+     "expr": "7"
+    },
+    {
+     "name": "d4",
+     "expr": "3"
+    },
+    {
+     "name": "d5",
+     "expr": "15"
+    },
+    {
+     "name": "d6",
+     "expr": "ceil(ot/50) + 5"
+    },
+    {
+     "name": "cum",
+     "expr": "d0 + if(s >= 1, d1, 0) + if(s >= 2, d2, 0) + if(s >= 3, d3, 0) + if(s >= 4, d4, 0) + if(s >= 5, d5, 0) + if(s >= 6, d6, 0)"
+    },
+    {
+     "name": "tot",
+     "expr": "d0 + d1 + d2 + d3 + d4 + d5 + d6"
+    },
+    {
+     "name": "pos",
+     "expr": "min(t, s)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 4.48,
+     "y": 28,
+     "w": 10.47,
+     "h": 14,
+     "color": {
+      "by": "if(s > 0, 1, if(s == 0, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 9.71,
+     "y": 36.5,
+     "text": {
+      "en": "Research"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 9.71,
+     "y": 31,
+     "text": {
+      "en": "{d0:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 15.15,
+     "y": 35,
+     "dx": 2.56,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 17.91,
+     "y": 28,
+     "w": 10.47,
+     "h": 14,
+     "color": {
+      "by": "if(s > 1, 1, if(s == 1, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 23.14,
+     "y": 36.5,
+     "text": {
+      "en": "Product"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 23.14,
+     "y": 31,
+     "text": {
+      "en": "{d1:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 28.58,
+     "y": 35,
+     "dx": 2.56,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 31.34,
+     "y": 28,
+     "w": 10.47,
+     "h": 14,
+     "color": {
+      "by": "if(s > 2, 1, if(s == 2, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 36.58,
+     "y": 36.5,
+     "text": {
+      "en": "Grading"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 36.58,
+     "y": 31,
+     "text": {
+      "en": "{d2:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 42.01,
+     "y": 35,
+     "dx": 2.56,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 44.77,
+     "y": 28,
+     "w": 10.47,
+     "h": 14,
+     "color": {
+      "by": "if(s > 3, 1, if(s == 3, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 50.01,
+     "y": 36.5,
+     "text": {
+      "en": "Pack & label"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 50.01,
+     "y": 31,
+     "text": {
+      "en": "{d3:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 55.44,
+     "y": 35,
+     "dx": 2.56,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 58.19,
+     "y": 28,
+     "w": 10.47,
+     "h": 14,
+     "color": {
+      "by": "if(s > 4, 1, if(s == 4, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 63.42,
+     "y": 36.5,
+     "text": {
+      "en": "Price"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 63.42,
+     "y": 31,
+     "text": {
+      "en": "{d4:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 68.86,
+     "y": 35,
+     "dx": 2.56,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 71.62,
+     "y": 28,
+     "w": 10.47,
+     "h": 14,
+     "color": {
+      "by": "if(s > 5, 1, if(s == 5, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 76.86,
+     "y": 36.5,
+     "text": {
+      "en": "Promote"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 76.86,
+     "y": 31,
+     "text": {
+      "en": "{d5:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 82.29,
+     "y": 35,
+     "dx": 2.56,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 85.05,
+     "y": 28,
+     "w": 10.47,
+     "h": 14,
+     "color": {
+      "by": "if(s > 6, 1, if(s == 6, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 90.28,
+     "y": 36.5,
+     "text": {
+      "en": "Distribute"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 90.28,
+     "y": 31,
+     "text": {
+      "en": "{d6:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Market research: what do buyers want?"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 0"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Product planning and design"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 1"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Standardisation and grading"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 2"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Packaging and labelling"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 3"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Pricing: cost, competition, demand"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 4"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Promotion: advertising, offers"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 5"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Distribution: transport, storage, outlets"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 6"
+    },
+    {
+     "shape": "circle",
+     "x": "9.71 + pos*13.429",
+     "y": 46,
+     "r": 1.6,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 54,
+     "text": {
+      "en": "Step {s + 1:0} of 7: {cum:0} of {tot:0} days so far"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Step"
+     },
+     "expr": "s + 1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Time so far (days)"
+     },
+     "expr": "cum",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Chance the product fits demand"
+     },
+     "expr": "min(40 + rs, 95)",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Outlets reached"
+     },
+     "expr": "ot",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why does marketing begin before the product is made?"
+    },
+    {
+     "en": "Which function removes the hindrance of place?"
+    },
+    {
+     "en": "Skip research (5 days). What risk rises?"
+    }
+   ],
+   "seconds": 120,
+   "narration": {
+    "en": "Follow a new brand of ready-to-eat snacks through the functions of marketing, from finding out what buyers want to getting the product to them. Set the research effort and the number of outlets."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

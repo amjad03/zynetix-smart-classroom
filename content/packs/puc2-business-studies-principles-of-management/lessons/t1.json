@@ -61,6 +61,161 @@
    }
   },
   {
+   "id": "scene-flexible-principles",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Principles are flexible guidelines",
+    "kn": "ತತ್ವಗಳು ನಮ್ಯ ಮಾರ್ಗಸೂಚಿಗಳು"
+   },
+   "caption": {
+    "en": "Management principles are not rigid rules: how strictly to apply them depends on the situation. Choose a firm and move the strictness. Results peak at a different point for each firm.",
+    "kn": "ನಿರ್ವಹಣಾ ತತ್ವಗಳು ಕಠಿಣ ನಿಯಮಗಳಲ್ಲ: ಎಷ್ಟು ಕಟ್ಟುನಿಟ್ಟಾಗಿ ಅನ್ವಯಿಸಬೇಕು ಎಂಬುದು ಸನ್ನಿವೇಶ ಅವಲಂಬಿತ. ಸಂಸ್ಥೆ ಆರಿಸಿ ಕಟ್ಟುನಿಟ್ಟು ಬದಲಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "x0",
+     "label": {
+      "en": "Strictness of applying principles",
+      "kn": "ತತ್ವ ಅನ್ವಯದ ಕಟ್ಟುನಿಟ್ಟು"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 0.5,
+     "value": 5
+    }
+   ],
+   "choices": [
+    {
+     "name": "fm",
+     "label": {
+      "en": "Firm",
+      "kn": "ಸಂಸ್ಥೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Car assembly plant",
+        "kn": "ಕಾರು ಜೋಡಣಾ ಘಟಕ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Software start-up",
+        "kn": "ಸಾಫ್ಟ್‌ವೇರ್ ಸ್ಟಾರ್ಟ್‌ಅಪ್"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Family shop",
+        "kn": "ಕುಟುಂಬದ ಅಂಗಡಿ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "pk",
+     "expr": "if(fm == 1, 8, if(fm == 2, 3, 5))"
+    },
+    {
+     "name": "res",
+     "expr": "100*exp(-((x0 - pk)^2)/8)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     110
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "strictness",
+    "yLabel": "results (%)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "100*exp(-((x - pk)^2)/8)",
+     "width": 4,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": "pk",
+     "y1": 0,
+     "x2": "pk",
+     "y2": 100,
+     "dashed": true,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": "x0",
+     "y": "res",
+     "r": 0.2,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 5,
+     "y": 104,
+     "text": {
+      "en": "Results {res:0}% (best at strictness {pk:0})",
+      "kn": "ಫಲಿತಾಂಶ {res:0}% (ಉತ್ತಮ ಕಟ್ಟುನಿಟ್ಟು {pk:0})"
+     },
+     "size": 18
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Results",
+      "kn": "ಫಲಿತಾಂಶ"
+     },
+     "expr": "res",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Best strictness for this firm",
+      "kn": "ಈ ಸಂಸ್ಥೆಗೆ ಉತ್ತಮ ಕಟ್ಟುನಿಟ್ಟು"
+     },
+     "expr": "pk",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why does the car plant need stricter principles than the start-up?",
+     "kn": "ಕಾರು ಘಟಕಕ್ಕೆ ಹೆಚ್ಚು ಕಟ್ಟುನಿಟ್ಟು ಏಕೆ?"
+    },
+    {
+     "en": "Which nature of principles does this show?",
+     "kn": "ಇದು ತತ್ವಗಳ ಯಾವ ಸ್ವರೂಪ ತೋರಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "How are principles of management unlike laws of physics?",
+     "kn": "ನಿರ್ವಹಣಾ ತತ್ವಗಳು ಭೌತಶಾಸ್ತ್ರ ನಿಯಮಗಳಿಂದ ಹೇಗೆ ಭಿನ್ನ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Management principles are not rigid rules: how strictly to apply them depends on the situation. Choose a firm and move the strictness. Results peak at a different point for each firm.",
+    "kn": "ನಿರ್ವಹಣಾ ತತ್ವಗಳು ಕಠಿಣ ನಿಯಮಗಳಲ್ಲ: ಎಷ್ಟು ಕಟ್ಟುನಿಟ್ಟಾಗಿ ಅನ್ವಯಿಸಬೇಕು ಎಂಬುದು ಸನ್ನಿವೇಶ ಅವಲಂಬಿತ. ಸಂಸ್ಥೆ ಆರಿಸಿ ಕಟ್ಟುನಿಟ್ಟು ಬದಲಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -61,6 +61,311 @@
    }
   },
   {
+   "id": "scene-manpower-plan",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Estimating manpower requirements",
+    "kn": "ಮಾನವ ಸಂಪನ್ಮೂಲ ಅಗತ್ಯದ ಅಂದಾಜು"
+   },
+   "caption": {
+    "en": "Staffing starts by working out how many people are needed: workload divided by output per worker. Compare with the present staff, after allowing for people who leave, to see a shortage or surplus.",
+    "kn": "ಸಿಬ್ಬಂದಿ ನೇಮಕ ಎಷ್ಟು ಜನ ಬೇಕು ಎಂಬ ಲೆಕ್ಕದಿಂದ ಆರಂಭ: ಕೆಲಸದ ಹೊರೆ ÷ ಪ್ರತಿ ಕಾರ್ಮಿಕನ ಉತ್ಪಾದನೆ. ತೊರೆಯುವವರನ್ನು ಕಳೆದು ಈಗಿನ ಸಿಬ್ಬಂದಿಯೊಂದಿಗೆ ಹೋಲಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "wl",
+     "label": {
+      "en": "Workload",
+      "kn": "ಕೆಲಸದ ಹೊರೆ"
+     },
+     "min": 1000,
+     "max": 10000,
+     "step": 250,
+     "value": 5000,
+     "unit": "units/day"
+    },
+    {
+     "name": "pw",
+     "label": {
+      "en": "Output per worker",
+      "kn": "ಪ್ರತಿ ಕಾರ್ಮಿಕನ ಉತ್ಪಾದನೆ"
+     },
+     "min": 50,
+     "max": 200,
+     "step": 10,
+     "value": 100,
+     "unit": "units/day"
+    },
+    {
+     "name": "cur",
+     "label": {
+      "en": "Present staff",
+      "kn": "ಈಗಿನ ಸಿಬ್ಬಂದಿ"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 1,
+     "value": 45
+    },
+    {
+     "name": "lv",
+     "label": {
+      "en": "Expected to leave",
+      "kn": "ತೊರೆಯುವ ನಿರೀಕ್ಷೆ"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    }
+   ],
+   "vars": [
+    {
+     "name": "need",
+     "expr": "ceil(wl/pw)"
+    },
+    {
+     "name": "avail",
+     "expr": "floor(cur*(1 - lv/100))"
+    },
+    {
+     "name": "b0",
+     "expr": "need"
+    },
+    {
+     "name": "b1",
+     "expr": "avail"
+    },
+    {
+     "name": "b2",
+     "expr": "max(need - avail, 0)"
+    },
+    {
+     "name": "b3",
+     "expr": "max(avail - need, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "People",
+      "kn": "ಜನರು"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/120, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/120, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Needed",
+      "kn": "ಬೇಕಾದವರು"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/120, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/120, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Available next year",
+      "kn": "ಮುಂದಿನ ವರ್ಷ ಲಭ್ಯ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/120, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/120, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "To recruit",
+      "kn": "ನೇಮಿಸಬೇಕಾದವರು"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/120, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/120, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Surplus",
+      "kn": "ಹೆಚ್ಚುವರಿ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Shortage: recruit {need - avail:0}",
+      "kn": "ಕೊರತೆ: {need - avail:0} ನೇಮಿಸಿ"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "need > avail"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Surplus: retrain or redeploy",
+      "kn": "ಹೆಚ್ಚುವರಿ: ಮರುತರಬೇತಿ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "need < avail"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Exactly right",
+      "kn": "ಸರಿಯಾಗಿದೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "need == avail"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Workers needed",
+      "kn": "ಬೇಕಾದ ಕಾರ್ಮಿಕರು"
+     },
+     "expr": "need",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Available next year",
+      "kn": "ಮುಂದಿನ ವರ್ಷ ಲಭ್ಯ"
+     },
+     "expr": "avail",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Training raises output per worker to 125. What happens to the need?",
+     "kn": "ತರಬೇತಿಯಿಂದ ಉತ್ಪಾದನೆ 125. ಅಗತ್ಯ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Why plan for people who will leave?",
+     "kn": "ತೊರೆಯುವವರಿಗಾಗಿ ಏಕೆ ಯೋಜಿಸಬೇಕು?"
+    },
+    {
+     "en": "Which is the first step of the staffing process?",
+     "kn": "ಸಿಬ್ಬಂದಿ ಪ್ರಕ್ರಿಯೆಯ ಮೊದಲ ಹಂತ ಯಾವುದು?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Staffing starts by working out how many people are needed: workload divided by output per worker. Compare with the present staff, after allowing for people who leave, to see a shortage or surplus.",
+    "kn": "ಸಿಬ್ಬಂದಿ ನೇಮಕ ಎಷ್ಟು ಜನ ಬೇಕು ಎಂಬ ಲೆಕ್ಕದಿಂದ ಆರಂಭ: ಕೆಲಸದ ಹೊರೆ ÷ ಪ್ರತಿ ಕಾರ್ಮಿಕನ ಉತ್ಪಾದನೆ. ತೊರೆಯುವವರನ್ನು ಕಳೆದು ಈಗಿನ ಸಿಬ್ಬಂದಿಯೊಂದಿಗೆ ಹೋಲಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

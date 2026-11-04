@@ -73,6 +73,263 @@
    }
   },
   {
+   "id": "scene-gang-plank",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Scalar chain and the gang plank",
+    "kn": "ಶ್ರೇಣಿ ಸರಪಳಿ ಮತ್ತು ಗ್ಯಾಂಗ್ ಪ್ಲ್ಯಾಂಕ್"
+   },
+   "caption": {
+    "en": "E in production must contact P in sales at the same level. The scalar chain sends the message up to the common boss and down again; Fayol's gang plank lets them talk directly in an emergency, keeping superiors informed. Launch the message.",
+    "kn": "ಉತ್ಪಾದನೆಯ E ಮಾರಾಟದ ಅದೇ ಹಂತದ P ಯನ್ನು ಸಂಪರ್ಕಿಸಬೇಕು. ಶ್ರೇಣಿ ಸರಪಳಿ ಮೇಲಕ್ಕೆ ಹೋಗಿ ಕೆಳಗೆ ಬರುತ್ತದೆ; ಗ್ಯಾಂಗ್ ಪ್ಲ್ಯಾಂಕ್ ತುರ್ತಿನಲ್ಲಿ ನೇರ ಸಂಪರ್ಕ."
+   },
+   "sliders": [
+    {
+     "name": "lv",
+     "label": {
+      "en": "Levels below the common boss",
+      "kn": "ಸಾಮಾನ್ಯ ಮೇಲಧಿಕಾರಿಯ ಕೆಳಗಿನ ಹಂತ"
+     },
+     "min": 2,
+     "max": 6,
+     "step": 1,
+     "value": 4
+    },
+    {
+     "name": "ht",
+     "label": {
+      "en": "Time per hop",
+      "kn": "ಪ್ರತಿ ಹೆಜ್ಜೆಯ ಸಮಯ"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 1,
+     "value": 4,
+     "unit": "h"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "gp",
+     "label": {
+      "en": "Use the gang plank",
+      "kn": "ಗ್ಯಾಂಗ್ ಪ್ಲ್ಯಾಂಕ್ ಬಳಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Send the message",
+      "kn": "ಸಂದೇಶ ಕಳುಹಿಸಿ"
+     },
+     "icon": "launch",
+     "set": {},
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 12,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "step",
+    "stopWhen": "t >= hops"
+   },
+   "vars": [
+    {
+     "name": "hops",
+     "expr": "if(gp, 1, 2*lv)"
+    },
+    {
+     "name": "k",
+     "expr": "min(t, hops)"
+    },
+    {
+     "name": "dy",
+     "expr": "40/lv"
+    },
+    {
+     "name": "mx",
+     "expr": "if(gp, 25 + 50*k, if(k <= lv, 25 + 25*k/lv, 50 + 25*(k - lv)/lv))"
+    },
+    {
+     "name": "my",
+     "expr": "if(gp, 10, if(k <= lv, 10 + dy*k, 50 - dy*(k - lv)))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 7,
+     "x": 25,
+     "y": "10 + 40/lv*i",
+     "r": 1.6,
+     "color": "blue",
+     "visibleIf": "i < lv"
+    },
+    {
+     "shape": "particles",
+     "count": 7,
+     "x": 75,
+     "y": "10 + 40/lv*i",
+     "r": 1.6,
+     "color": "green",
+     "visibleIf": "i < lv"
+    },
+    {
+     "shape": "circle",
+     "x": 50,
+     "y": 50,
+     "r": 2,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 55,
+     "text": {
+      "en": "Common boss A",
+      "kn": "ಸಾಮಾನ್ಯ ಮೇಲಧಿಕಾರಿ A"
+     },
+     "size": 16
+    },
+    {
+     "shape": "line",
+     "x1": 25,
+     "y1": 10,
+     "x2": 25,
+     "y2": "10 + 40/lv*(lv - 1)",
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 75,
+     "y1": 10,
+     "x2": 75,
+     "y2": "10 + 40/lv*(lv - 1)",
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": 25,
+     "y1": "10 + 40/lv*(lv - 1)",
+     "x2": 50,
+     "y2": 50,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 75,
+     "y1": "10 + 40/lv*(lv - 1)",
+     "x2": 50,
+     "y2": 50,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 10,
+     "text": {
+      "en": "E"
+     },
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 10,
+     "text": {
+      "en": "P"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 25,
+     "y1": 10,
+     "x2": 75,
+     "y2": 10,
+     "dashed": true,
+     "color": "orange",
+     "visibleIf": "gp"
+    },
+    {
+     "shape": "circle",
+     "x": "mx",
+     "y": "my",
+     "r": 1.2,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 30,
+     "text": {
+      "en": "{hops:0} hops, {hops*ht:0} h",
+      "kn": "{hops:0} ಹೆಜ್ಜೆ, {hops*ht:0} ಗಂ"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Hops",
+      "kn": "ಹೆಜ್ಜೆಗಳು"
+     },
+     "expr": "hops",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Time taken",
+      "kn": "ತೆಗೆದುಕೊಂಡ ಸಮಯ"
+     },
+     "expr": "hops*ht",
+     "digits": 0,
+     "unit": "h"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With 6 levels, how much time does the gang plank save?",
+     "kn": "6 ಹಂತದಲ್ಲಿ ಗ್ಯಾಂಗ್ ಪ್ಲ್ಯಾಂಕ್ ಎಷ್ಟು ಸಮಯ ಉಳಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Why must superiors still be informed?",
+     "kn": "ಮೇಲಧಿಕಾರಿಗಳಿಗೆ ಏಕೆ ತಿಳಿಸಬೇಕು?"
+    },
+    {
+     "en": "How does Fayol's approach differ from Taylor's?",
+     "kn": "ಫಯೋಲ್ ಮತ್ತು ಟೇಲರ್ ದೃಷ್ಟಿ ಹೇಗೆ ಭಿನ್ನ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "E in production must contact P in sales at the same level. The scalar chain sends the message up to the common boss and down again; Fayol's gang plank lets them talk directly in an emergency, keeping superiors informed. Launch the message.",
+    "kn": "ಉತ್ಪಾದನೆಯ E ಮಾರಾಟದ ಅದೇ ಹಂತದ P ಯನ್ನು ಸಂಪರ್ಕಿಸಬೇಕು. ಶ್ರೇಣಿ ಸರಪಳಿ ಮೇಲಕ್ಕೆ ಹೋಗಿ ಕೆಳಗೆ ಬರುತ್ತದೆ; ಗ್ಯಾಂಗ್ ಪ್ಲ್ಯಾಂಕ್ ತುರ್ತಿನಲ್ಲಿ ನೇರ ಸಂಪರ್ಕ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

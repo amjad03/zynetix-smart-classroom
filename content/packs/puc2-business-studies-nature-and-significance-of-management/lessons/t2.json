@@ -73,6 +73,215 @@
    }
   },
   {
+   "id": "scene-eff-eff",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Effective, efficient, or both?",
+    "kn": "ಪರಿಣಾಮಕಾರಿ, ದಕ್ಷ, ಅಥವಾ ಎರಡೂ?"
+   },
+   "caption": {
+    "en": "Effectiveness is reaching the target on time; efficiency is doing it with the least resources. A factory must make 1,000 units with a budget of ₹10 lakh. Set the output achieved and the cost used: the dot moves to its quadrant.",
+    "kn": "ಪರಿಣಾಮಕಾರಿತ್ವ ಎಂದರೆ ಸಮಯಕ್ಕೆ ಗುರಿ ತಲುಪುವುದು; ದಕ್ಷತೆ ಕನಿಷ್ಠ ಸಂಪನ್ಮೂಲ ಬಳಕೆ. 1,000 ಘಟಕ, ₹10 ಲಕ್ಷ ಬಜೆಟ್. ಸಾಧಿಸಿದ ಉತ್ಪಾದನೆ, ಬಳಸಿದ ವೆಚ್ಚ ಹೊಂದಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "out",
+     "label": {
+      "en": "Units made",
+      "kn": "ತಯಾರಿಸಿದ ಘಟಕ"
+     },
+     "min": 500,
+     "max": 1200,
+     "step": 25,
+     "value": 900
+    },
+    {
+     "name": "cost",
+     "label": {
+      "en": "Cost used",
+      "kn": "ಬಳಸಿದ ವೆಚ್ಚ"
+     },
+     "min": 5,
+     "max": 15,
+     "step": 0.25,
+     "value": 12,
+     "unit": "₹ lakh"
+    }
+   ],
+   "vars": [
+    {
+     "name": "efv",
+     "expr": "100*out/1000"
+    },
+    {
+     "name": "eff",
+     "expr": "(out/cost)/(1000/10)*100"
+    }
+   ],
+   "view": {
+    "x": [
+     40,
+     160
+    ],
+    "y": [
+     40,
+     140
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "efficiency (% of planned output per ₹)",
+    "yLabel": "effectiveness (% of target)"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 100,
+     "y": 100,
+     "w": 60,
+     "h": 40,
+     "color": "green",
+     "opacity": 0.15
+    },
+    {
+     "shape": "rect",
+     "x": 40,
+     "y": 100,
+     "w": 60,
+     "h": 40,
+     "color": "yellow",
+     "opacity": 0.12
+    },
+    {
+     "shape": "rect",
+     "x": 100,
+     "y": 40,
+     "w": 60,
+     "h": 60,
+     "color": "orange",
+     "opacity": 0.12
+    },
+    {
+     "shape": "rect",
+     "x": 40,
+     "y": 40,
+     "w": 60,
+     "h": 60,
+     "color": "red",
+     "opacity": 0.12
+    },
+    {
+     "shape": "text",
+     "x": 130,
+     "y": 135,
+     "text": {
+      "en": "Effective and efficient",
+      "kn": "ಪರಿಣಾಮಕಾರಿ ಮತ್ತು ದಕ್ಷ"
+     },
+     "size": 16,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 70,
+     "y": 135,
+     "text": {
+      "en": "Effective, not efficient",
+      "kn": "ಪರಿಣಾಮಕಾರಿ, ದಕ್ಷವಲ್ಲ"
+     },
+     "size": 16,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 130,
+     "y": 45,
+     "text": {
+      "en": "Efficient, not effective",
+      "kn": "ದಕ್ಷ, ಪರಿಣಾಮಕಾರಿಯಲ್ಲ"
+     },
+     "size": 16,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 70,
+     "y": 45,
+     "text": {
+      "en": "Neither",
+      "kn": "ಎರಡೂ ಅಲ್ಲ"
+     },
+     "size": 16,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "x": "clamp(eff, 40, 160)",
+     "y": "clamp(efv, 40, 140)",
+     "r": 2.5,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": 100,
+     "y": 120,
+     "text": {
+      "en": "{out:0} units at ₹{cost:1} lakh",
+      "kn": "{out:0} ಘಟಕ ₹{cost:1} ಲಕ್ಷಕ್ಕೆ"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Effectiveness",
+      "kn": "ಪರಿಣಾಮಕಾರಿತ್ವ"
+     },
+     "expr": "efv",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Efficiency",
+      "kn": "ದಕ್ಷತೆ"
+     },
+     "expr": "eff",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Cost per unit",
+      "kn": "ಘಟಕ ವೆಚ್ಚ"
+     },
+     "expr": "cost*100000/out",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make 1,000 units for ₹12 lakh. Which quadrant?",
+     "kn": "₹12 ಲಕ್ಷಕ್ಕೆ 1,000 ಘಟಕ. ಯಾವ ಚತುರ್ಭಾಗ?"
+    },
+    {
+     "en": "Why is it not enough to be only efficient?",
+     "kn": "ಕೇವಲ ದಕ್ಷರಾಗಿರುವುದು ಏಕೆ ಸಾಕಾಗದು?"
+    },
+    {
+     "en": "Reach the top-right quadrant with the least cost.",
+     "kn": "ಕನಿಷ್ಠ ವೆಚ್ಚದಲ್ಲಿ ಮೇಲಿನ ಬಲ ಚತುರ್ಭಾಗ ತಲುಪಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Effectiveness is reaching the target on time; efficiency is doing it with the least resources. A factory must make 1,000 units with a budget of ₹10 lakh. Set the output achieved and the cost used: the dot moves to its quadrant.",
+    "kn": "ಪರಿಣಾಮಕಾರಿತ್ವ ಎಂದರೆ ಸಮಯಕ್ಕೆ ಗುರಿ ತಲುಪುವುದು; ದಕ್ಷತೆ ಕನಿಷ್ಠ ಸಂಪನ್ಮೂಲ ಬಳಕೆ. 1,000 ಘಟಕ, ₹10 ಲಕ್ಷ ಬಜೆಟ್. ಸಾಧಿಸಿದ ಉತ್ಪಾದನೆ, ಬಳಸಿದ ವೆಚ್ಚ ಹೊಂದಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

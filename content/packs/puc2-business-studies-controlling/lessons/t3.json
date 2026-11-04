@@ -59,6 +59,296 @@
    }
   },
   {
+   "id": "scene-plan-control",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Planning and controlling go together",
+    "kn": "ಯೋಜನೆ ಮತ್ತು ನಿಯಂತ್ರಣ ಜೊತೆಜೊತೆಗೆ"
+   },
+   "caption": {
+    "en": "Planning sets the standards; controlling checks performance against them and feeds back into the next plan. Set the quality of planning and of control: goal achievement needs both, so either at zero fails.",
+    "kn": "ಯೋಜನೆ ಮಾನದಂಡ ನಿಗದಿಪಡಿಸುತ್ತದೆ; ನಿಯಂತ್ರಣ ಸಾಧನೆ ಪರಿಶೀಲಿಸಿ ಮುಂದಿನ ಯೋಜನೆಗೆ ಪ್ರತಿಕ್ರಿಯೆ ಕೊಡುತ್ತದೆ. ಎರಡೂ ಬೇಕು; ಯಾವುದು ಶೂನ್ಯವಾದರೂ ವಿಫಲ."
+   },
+   "sliders": [
+    {
+     "name": "pl",
+     "label": {
+      "en": "Quality of planning",
+      "kn": "ಯೋಜನೆಯ ಗುಣಮಟ್ಟ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 7
+    },
+    {
+     "name": "ct",
+     "label": {
+      "en": "Strength of control",
+      "kn": "ನಿಯಂತ್ರಣದ ಬಲ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fb",
+     "label": {
+      "en": "Feedback used to revise the next plan",
+      "kn": "ಮುಂದಿನ ಯೋಜನೆಗೆ ಪ್ರತಿಕ್ರಿಯೆ ಬಳಕೆ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "pl*10"
+    },
+    {
+     "name": "b1",
+     "expr": "ct*10"
+    },
+    {
+     "name": "b2",
+     "expr": "sqrt(pl*ct)*10*if(fb, 1, 0.8)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Percent",
+      "kn": "ಶೇಕಡಾ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 9.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b0/100, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 15.0,
+     "y": "14.5 + clamp(b0/100, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 15.0,
+     "y": 8,
+     "text": {
+      "en": "Planning",
+      "kn": "ಯೋಜನೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 27.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b1/100, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": "14.5 + clamp(b1/100, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 8,
+     "text": {
+      "en": "Controlling",
+      "kn": "ನಿಯಂತ್ರಣ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 45.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b2/100, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 51.0,
+     "y": "14.5 + clamp(b2/100, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 51.0,
+     "y": 8,
+     "text": {
+      "en": "Goal achieved",
+      "kn": "ಗುರಿ ಸಾಧನೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Control has no standard",
+      "kn": "ನಿಯಂತ್ರಣಕ್ಕೆ ಮಾನದಂಡವಿಲ್ಲ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "pl == 0"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Plan is never checked",
+      "kn": "ಯೋಜನೆ ಪರಿಶೀಲನೆ ಇಲ್ಲ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "ct == 0 && pl > 0"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Achieved {b2:0}%",
+      "kn": "ಸಾಧನೆ {b2:0}%"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "pl > 0 && ct > 0"
+    },
+    {
+     "shape": "arrow",
+     "x": 66,
+     "y": 40,
+     "dx": 24,
+     "dy": 0,
+     "label": "plan",
+     "color": "blue"
+    },
+    {
+     "shape": "arrow",
+     "x": 90,
+     "y": 36,
+     "dx": 0,
+     "dy": -12,
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "x": 90,
+     "y": 22,
+     "dx": -24,
+     "dy": 0,
+     "label": "check",
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "x": 66,
+     "y": 26,
+     "dx": 0,
+     "dy": 12,
+     "color": "green",
+     "visibleIf": "fb"
+    },
+    {
+     "shape": "text",
+     "x": 78,
+     "y": 31,
+     "text": {
+      "en": "feedback",
+      "kn": "ಪ್ರತಿಕ್ರಿಯೆ"
+     },
+     "size": 16,
+     "color": "green",
+     "visibleIf": "fb"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Goal achieved",
+      "kn": "ಗುರಿ ಸಾಧನೆ"
+     },
+     "expr": "b2",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set planning 10 and control 0. Why is the result zero?",
+     "kn": "ಯೋಜನೆ 10, ನಿಯಂತ್ರಣ 0. ಫಲಿತಾಂಶ ಶೂನ್ಯ ಏಕೆ?"
+    },
+    {
+     "en": "Why is planning called looking ahead and controlling looking back?",
+     "kn": "ಯೋಜನೆ ಮುಂದೆ ನೋಡುವುದು, ನಿಯಂತ್ರಣ ಹಿಂದೆ ನೋಡುವುದು ಏಕೆ?"
+    },
+    {
+     "en": "What does the feedback arrow carry?",
+     "kn": "ಪ್ರತಿಕ್ರಿಯೆ ಬಾಣ ಏನು ಒಯ್ಯುತ್ತದೆ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Planning sets the standards; controlling checks performance against them and feeds back into the next plan. Set the quality of planning and of control: goal achievement needs both, so either at zero fails.",
+    "kn": "ಯೋಜನೆ ಮಾನದಂಡ ನಿಗದಿಪಡಿಸುತ್ತದೆ; ನಿಯಂತ್ರಣ ಸಾಧನೆ ಪರಿಶೀಲಿಸಿ ಮುಂದಿನ ಯೋಜನೆಗೆ ಪ್ರತಿಕ್ರಿಯೆ ಕೊಡುತ್ತದೆ. ಎರಡೂ ಬೇಕು; ಯಾವುದು ಶೂನ್ಯವಾದರೂ ವಿಫಲ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -65,6 +65,251 @@
    }
   },
   {
+   "id": "scene-consumer-duties",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A responsible consumer",
+    "kn": "ಜವಾಬ್ದಾರಿಯುತ ಗ್ರಾಹಕ"
+   },
+   "caption": {
+    "en": "Turn on the habits of a responsible consumer: look for ISI, Agmark or FSSAI marks, read the label, ask for a cash memo and file a complaint when cheated. See the risk of loss fall and the chance of redress rise.",
+    "kn": "ಜವಾಬ್ದಾರಿಯುತ ಗ್ರಾಹಕನ ಅಭ್ಯಾಸ ಆನ್ ಮಾಡಿ: ISI, ಅಗ್‌ಮಾರ್ಕ್ ಗುರುತು, ಲೇಬಲ್ ಓದು, ನಗದು ರಸೀದಿ, ದೂರು. ನಷ್ಟದ ಅಪಾಯ ಇಳಿದು ಪರಿಹಾರದ ಸಾಧ್ಯತೆ ಏರುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "pr",
+     "label": {
+      "en": "Price of the product",
+      "kn": "ಉತ್ಪನ್ನ ಬೆಲೆ"
+     },
+     "min": 100,
+     "max": 5000,
+     "step": 100,
+     "value": 1000,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "mk",
+     "label": {
+      "en": "Looks for ISI / Agmark / FSSAI",
+      "kn": "ISI / ಅಗ್‌ಮಾರ್ಕ್ / FSSAI ನೋಡುತ್ತಾನೆ"
+     },
+     "value": false
+    },
+    {
+     "name": "lb",
+     "label": {
+      "en": "Reads the label",
+      "kn": "ಲೇಬಲ್ ಓದುತ್ತಾನೆ"
+     },
+     "value": false
+    },
+    {
+     "name": "cm",
+     "label": {
+      "en": "Asks for a cash memo",
+      "kn": "ನಗದು ರಸೀದಿ ಕೇಳುತ್ತಾನೆ"
+     },
+     "value": false
+    },
+    {
+     "name": "cf",
+     "label": {
+      "en": "Files a complaint",
+      "kn": "ದೂರು ಸಲ್ಲಿಸುತ್ತಾನೆ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "40 - 15*mk - 10*lb"
+    },
+    {
+     "name": "b1",
+     "expr": "5 + 40*cm*cf + 10*cf"
+    },
+    {
+     "name": "b2",
+     "expr": "pr*(40 - 15*mk - 10*lb)/100*(1 - (5 + 40*cm*cf + 10*cf)/100)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Percent / ₹ (expected loss)",
+      "kn": "ಶೇಕಡಾ / ₹ (ನಿರೀಕ್ಷಿತ ನಷ್ಟ)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 9.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b0/60, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 15.0,
+     "y": "14.5 + clamp(b0/60, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 15.0,
+     "y": 8,
+     "text": {
+      "en": "Risk of a bad buy",
+      "kn": "ಕೆಟ್ಟ ಖರೀದಿ ಅಪಾಯ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 27.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b1/60, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": "14.5 + clamp(b1/60, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 8,
+     "text": {
+      "en": "Chance of redress",
+      "kn": "ಪರಿಹಾರ ಸಾಧ್ಯತೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 45.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b2/60, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 51.0,
+     "y": "14.5 + clamp(b2/60, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 51.0,
+     "y": 8,
+     "text": {
+      "en": "Expected loss",
+      "kn": "ನಿರೀಕ್ಷಿತ ನಷ್ಟ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Fully responsible consumer",
+      "kn": "ಪೂರ್ಣ ಜವಾಬ್ದಾರಿಯುತ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "mk + lb + cm + cf == 4"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "{4 - mk - lb - cm - cf:0} habits missing",
+      "kn": "{4 - mk - lb - cm - cf:0} ಅಭ್ಯಾಸ ಕೊರತೆ"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "mk + lb + cm + cf < 4"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Expected loss",
+      "kn": "ನಿರೀಕ್ಷಿತ ನಷ್ಟ"
+     },
+     "expr": "b2",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why is a complaint without a cash memo weak?",
+     "kn": "ನಗದು ರಸೀದಿ ಇಲ್ಲದ ದೂರು ಏಕೆ ದುರ್ಬಲ?"
+    },
+    {
+     "en": "Which habit cuts the risk of a bad buy most?",
+     "kn": "ಯಾವ ಅಭ್ಯಾಸ ಅಪಾಯ ಹೆಚ್ಚು ಕಡಿಮೆ ಮಾಡುತ್ತದೆ?"
+    },
+    {
+     "en": "Name two more responsibilities of a consumer.",
+     "kn": "ಗ್ರಾಹಕನ ಇನ್ನೆರಡು ಜವಾಬ್ದಾರಿ ಹೇಳಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Turn on the habits of a responsible consumer: look for ISI, Agmark or FSSAI marks, read the label, ask for a cash memo and file a complaint when cheated. See the risk of loss fall and the chance of redress rise.",
+    "kn": "ಜವಾಬ್ದಾರಿಯುತ ಗ್ರಾಹಕನ ಅಭ್ಯಾಸ ಆನ್ ಮಾಡಿ: ISI, ಅಗ್‌ಮಾರ್ಕ್ ಗುರುತು, ಲೇಬಲ್ ಓದು, ನಗದು ರಸೀದಿ, ದೂರು. ನಷ್ಟದ ಅಪಾಯ ಇಳಿದು ಪರಿಹಾರದ ಸಾಧ್ಯತೆ ಏರುತ್ತದೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -67,6 +67,281 @@
    }
   },
   {
+   "id": "scene-plan-limits",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "When planning backfires",
+    "kn": "ಯೋಜನೆ ವಿರುದ್ಧ ಪರಿಣಾಮ ಬೀರುವಾಗ"
+   },
+   "caption": {
+    "en": "Planning has limits: rigid plans fail in a fast-changing world, planning costs time and money, and it does not guarantee success. Set how rigid the plan is, how fast the environment changes and how much is spent on planning.",
+    "kn": "ಯೋಜನೆಗೆ ಮಿತಿಗಳಿವೆ: ವೇಗವಾಗಿ ಬದಲಾಗುವ ಜಗತ್ತಿನಲ್ಲಿ ಕಠಿಣ ಯೋಜನೆ ವಿಫಲ, ಸಮಯ ಮತ್ತು ಹಣ ವೆಚ್ಚ, ಯಶಸ್ಸಿನ ಖಾತರಿ ಇಲ್ಲ. ಕಠಿಣತೆ, ಬದಲಾವಣೆ ವೇಗ, ವೆಚ್ಚ ಹೊಂದಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "rg",
+     "label": {
+      "en": "Rigidity of the plan",
+      "kn": "ಯೋಜನೆಯ ಕಠಿಣತೆ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 6
+    },
+    {
+     "name": "ch",
+     "label": {
+      "en": "Speed of change outside",
+      "kn": "ಹೊರಗಿನ ಬದಲಾವಣೆ ವೇಗ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "ef",
+     "label": {
+      "en": "Effort spent planning",
+      "kn": "ಯೋಜನೆಯ ಪ್ರಯತ್ನ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "10*sqrt(ef)*(1 - rg*ch/120)"
+    },
+    {
+     "name": "b1",
+     "expr": "3*ef"
+    },
+    {
+     "name": "b2",
+     "expr": "rg*ch/4"
+    },
+    {
+     "name": "b3",
+     "expr": "b0 - b1 - b2"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Value (illustrative units)",
+      "kn": "ಮೌಲ್ಯ (ಉದಾಹರಣೆ ಘಟಕ)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/30, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/30, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Benefit of the plan",
+      "kn": "ಯೋಜನೆಯ ಲಾಭ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/30, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/30, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Cost of planning",
+      "kn": "ಯೋಜನಾ ವೆಚ್ಚ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/30, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/30, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Missed opportunities",
+      "kn": "ತಪ್ಪಿದ ಅವಕಾಶ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/30, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/30, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Net value",
+      "kn": "ನಿವ್ವಳ ಮೌಲ್ಯ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Planning pays",
+      "kn": "ಯೋಜನೆ ಲಾಭದಾಯಕ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "b3 > 5"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Marginal",
+      "kn": "ಅಲ್ಪ ಲಾಭ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "b3 <= 5 && b3 > 0"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Plan does more harm than good",
+      "kn": "ಯೋಜನೆಯಿಂದ ಹಾನಿ ಹೆಚ್ಚು"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "b3 <= 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Net value of planning",
+      "kn": "ಯೋಜನೆಯ ನಿವ್ವಳ ಮೌಲ್ಯ"
+     },
+     "expr": "b3",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set change to 10 and rigidity to 10. What is the net value?",
+     "kn": "ಬದಲಾವಣೆ 10, ಕಠಿಣತೆ 10. ನಿವ್ವಳ ಮೌಲ್ಯ?"
+    },
+    {
+     "en": "How can a firm keep the benefit but reduce rigidity?",
+     "kn": "ಲಾಭ ಉಳಿಸಿ ಕಠಿಣತೆ ಹೇಗೆ ಕಡಿಮೆ?"
+    },
+    {
+     "en": "Name the limitation shown by the red bar.",
+     "kn": "ಕೆಂಪು ಸ್ತಂಭ ತೋರುವ ಮಿತಿ ಹೆಸರಿಸಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Planning has limits: rigid plans fail in a fast-changing world, planning costs time and money, and it does not guarantee success. Set how rigid the plan is, how fast the environment changes and how much is spent on planning.",
+    "kn": "ಯೋಜನೆಗೆ ಮಿತಿಗಳಿವೆ: ವೇಗವಾಗಿ ಬದಲಾಗುವ ಜಗತ್ತಿನಲ್ಲಿ ಕಠಿಣ ಯೋಜನೆ ವಿಫಲ, ಸಮಯ ಮತ್ತು ಹಣ ವೆಚ್ಚ, ಯಶಸ್ಸಿನ ಖಾತರಿ ಇಲ್ಲ. ಕಠಿಣತೆ, ಬದಲಾವಣೆ ವೇಗ, ವೆಚ್ಚ ಹೊಂದಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

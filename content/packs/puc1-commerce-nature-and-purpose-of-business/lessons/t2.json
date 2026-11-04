@@ -56,6 +56,541 @@
    }
   },
   {
+   "id": "scene-cotton-chain",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "From cotton field to your shirt"
+   },
+   "caption": {
+    "en": "Follow a shirt through the classes of business activity: industry makes it, and commerce (trade plus aids to trade) brings it to you. Change the transport and storage days."
+   },
+   "sliders": [
+    {
+     "name": "tp",
+     "label": {
+      "en": "Transport time"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 5,
+     "unit": "days"
+    },
+    {
+     "name": "wh",
+     "label": {
+      "en": "Time in warehouse"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 5,
+     "value": 30,
+     "unit": "days"
+    }
+   ],
+   "counters": [
+    {
+     "name": "s",
+     "value": 0,
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Previous step"
+     },
+     "icon": "remove",
+     "set": {
+      "s": "max(s - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Next step"
+     },
+     "icon": "next",
+     "set": {
+      "s": "min(s + 1, 5)"
+     },
+     "play": true
+    },
+    {
+     "label": {
+      "en": "Run the whole process"
+     },
+     "icon": "launch",
+     "set": {
+      "s": 5
+     },
+     "reset": true,
+     "play": true
+    },
+    {
+     "label": {
+      "en": "Start again"
+     },
+     "icon": "reset",
+     "set": {
+      "s": 0
+     },
+     "reset": true
+    }
+   ],
+   "time": {
+    "max": 5,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "step"
+   },
+   "vars": [
+    {
+     "name": "d0",
+     "expr": "120"
+    },
+    {
+     "name": "d1",
+     "expr": "30"
+    },
+    {
+     "name": "d2",
+     "expr": "tp"
+    },
+    {
+     "name": "d3",
+     "expr": "wh"
+    },
+    {
+     "name": "d4",
+     "expr": "2"
+    },
+    {
+     "name": "d5",
+     "expr": "7"
+    },
+    {
+     "name": "cum",
+     "expr": "d0 + if(s >= 1, d1, 0) + if(s >= 2, d2, 0) + if(s >= 3, d3, 0) + if(s >= 4, d4, 0) + if(s >= 5, d5, 0)"
+    },
+    {
+     "name": "tot",
+     "expr": "d0 + d1 + d2 + d3 + d4 + d5"
+    },
+    {
+     "name": "pos",
+     "expr": "min(t, s)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 4.72,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 0, 1, if(s == 0, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 10.83,
+     "y": 36.5,
+     "text": {
+      "en": "Extractive"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 10.83,
+     "y": 31,
+     "text": {
+      "en": "{d0:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 17.14,
+     "y": 35,
+     "dx": 3.05,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 20.39,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 1, 1, if(s == 1, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 26.5,
+     "y": 36.5,
+     "text": {
+      "en": "Manufacturing"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 26.5,
+     "y": 31,
+     "text": {
+      "en": "{d1:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 32.81,
+     "y": 35,
+     "dx": 3.05,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 36.06,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 2, 1, if(s == 2, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 42.17,
+     "y": 36.5,
+     "text": {
+      "en": "Transport"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 42.17,
+     "y": 31,
+     "text": {
+      "en": "{d2:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 48.48,
+     "y": 35,
+     "dx": 3.05,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 51.72,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 3, 1, if(s == 3, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 57.83,
+     "y": 36.5,
+     "text": {
+      "en": "Warehousing"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 57.83,
+     "y": 31,
+     "text": {
+      "en": "{d3:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 64.14,
+     "y": 35,
+     "dx": 3.05,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 67.39,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 4, 1, if(s == 4, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 73.5,
+     "y": 36.5,
+     "text": {
+      "en": "Banking & insurance"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 73.5,
+     "y": 31,
+     "text": {
+      "en": "{d4:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 79.81,
+     "y": 35,
+     "dx": 3.05,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 83.06,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 5, 1, if(s == 5, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 89.17,
+     "y": 36.5,
+     "text": {
+      "en": "Trade"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 89.17,
+     "y": 31,
+     "text": {
+      "en": "{d5:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Primary industry: cotton is grown and picked"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 0"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Secondary industry: yarn, cloth, then shirts"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 1"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Aid to trade: removes hindrance of place"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 2"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Aid to trade: removes hindrance of time"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 3"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Aids: finance and risk cover"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 4"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Wholesaler and retailer sell to you"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 5"
+    },
+    {
+     "shape": "circle",
+     "x": "10.83 + pos*15.667",
+     "y": 46,
+     "r": 1.6,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 54,
+     "text": {
+      "en": "Step {s + 1:0} of 6: {cum:0} of {tot:0} days so far"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 25,
+     "y": 47,
+     "text": {
+      "en": "INDUSTRY"
+     },
+     "size": 18,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 66,
+     "y": 47,
+     "text": {
+      "en": "COMMERCE"
+     },
+     "size": 18,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Step"
+     },
+     "expr": "s + 1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Time so far (days)"
+     },
+     "expr": "cum",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Days in commerce"
+     },
+     "expr": "tp + wh + 9",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Which steps are industry and which are commerce?"
+    },
+    {
+     "en": "Which aid removes the hindrance of time?"
+    },
+    {
+     "en": "Where would advertising fit in this chain?"
+    }
+   ],
+   "seconds": 120,
+   "narration": {
+    "en": "Follow a shirt through the classes of business activity: industry makes it, and commerce (trade plus aids to trade) brings it to you. Change the transport and storage days."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

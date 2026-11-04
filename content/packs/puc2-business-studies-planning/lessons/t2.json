@@ -70,6 +70,201 @@
    }
   },
   {
+   "id": "scene-continuous-planning",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Planning is continuous and forward-looking",
+    "kn": "ಯೋಜನೆ ನಿರಂತರ ಮತ್ತು ಭವಿಷ್ಯದತ್ತ"
+   },
+   "caption": {
+    "en": "A plan is based on a forecast of demand. Demand changes, so the plan must be revised. Set how often the firm revises its plan and press Play: the plan line jumps to meet demand at each revision.",
+    "kn": "ಯೋಜನೆ ಬೇಡಿಕೆಯ ಮುನ್ಸೂಚನೆ ಆಧರಿಸಿದೆ. ಬೇಡಿಕೆ ಬದಲಾಗುತ್ತದೆ, ಯೋಜನೆ ಪರಿಷ್ಕರಿಸಬೇಕು. ಎಷ್ಟು ಬಾರಿ ಪರಿಷ್ಕರಿಸುತ್ತದೆ ಹೊಂದಿಸಿ Play ಒತ್ತಿ."
+   },
+   "sliders": [
+    {
+     "name": "rv",
+     "label": {
+      "en": "Revise the plan every",
+      "kn": "ಪ್ರತಿ ... ಪರಿಷ್ಕರಣೆ"
+     },
+     "min": 1,
+     "max": 12,
+     "step": 1,
+     "value": 3,
+     "unit": "months"
+    },
+    {
+     "name": "gr",
+     "label": {
+      "en": "Demand trend",
+      "kn": "ಬೇಡಿಕೆ ಪ್ರವೃತ್ತಿ"
+     },
+     "min": -4,
+     "max": 8,
+     "step": 1,
+     "value": 4,
+     "unit": "units/month"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sea",
+     "label": {
+      "en": "Seasonal swings",
+      "kn": "ಋತುಮಾನ ಏರಿಳಿತ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 24,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2,
+    "unit": "month"
+   },
+   "vars": [
+    {
+     "name": "tr",
+     "expr": "rv*floor(t/rv)"
+    },
+    {
+     "name": "dem",
+     "expr": "100 + gr*t + if(sea, 15*sin(pi*t/6), 0)"
+    },
+    {
+     "name": "plan",
+     "expr": "100 + gr*tr + if(sea, 15*sin(pi*tr/6), 0)"
+    },
+    {
+     "name": "err",
+     "expr": "abs(dem - plan)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     24
+    ],
+    "y": [
+     0,
+     320
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "month",
+    "yLabel": "units"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "100 + gr*x + if(sea, 15*sin(pi*x/6), 0)",
+     "dashed": true,
+     "color": "white"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "plan",
+     "length": 800,
+     "color": "green"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "dem",
+     "length": 800,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "dem",
+     "r": 0.25,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "plan",
+     "r": 0.25,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": "tr",
+     "y1": 0,
+     "x2": "tr",
+     "y2": 320,
+     "dashed": true,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 300,
+     "text": {
+      "en": "green: plan   yellow: actual demand",
+      "kn": "ಹಸಿರು: ಯೋಜನೆ   ಹಳದಿ: ವಾಸ್ತವ ಬೇಡಿಕೆ"
+     },
+     "size": 16,
+     "align": "left"
+    },
+    {
+     "shape": "label",
+     "x": 18,
+     "y": 300,
+     "text": {
+      "en": "Gap {err:0} units",
+      "kn": "ಅಂತರ {err:0} ಘಟಕ"
+     },
+     "size": 18
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Plan vs demand gap",
+      "kn": "ಯೋಜನೆ-ಬೇಡಿಕೆ ಅಂತರ"
+     },
+     "expr": "err",
+     "digits": 0,
+     "unit": "units"
+    },
+    {
+     "label": {
+      "en": "Last revised in month",
+      "kn": "ಕೊನೆಯ ಪರಿಷ್ಕರಣೆ ತಿಂಗಳು"
+     },
+     "expr": "tr",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Revise every 12 months. How large does the gap grow?",
+     "kn": "12 ತಿಂಗಳಿಗೊಮ್ಮೆ ಪರಿಷ್ಕರಣೆ. ಅಂತರ ಎಷ್ಟು?"
+    },
+    {
+     "en": "Why is planning called a continuous process?",
+     "kn": "ಯೋಜನೆ ನಿರಂತರ ಪ್ರಕ್ರಿಯೆ ಏಕೆ?"
+    },
+    {
+     "en": "Does revising often have a cost too?",
+     "kn": "ಆಗಾಗ ಪರಿಷ್ಕರಣೆಗೂ ವೆಚ್ಚವಿದೆಯೇ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "A plan is based on a forecast of demand. Demand changes, so the plan must be revised. Set how often the firm revises its plan and press Play: the plan line jumps to meet demand at each revision.",
+    "kn": "ಯೋಜನೆ ಬೇಡಿಕೆಯ ಮುನ್ಸೂಚನೆ ಆಧರಿಸಿದೆ. ಬೇಡಿಕೆ ಬದಲಾಗುತ್ತದೆ, ಯೋಜನೆ ಪರಿಷ್ಕರಿಸಬೇಕು. ಎಷ್ಟು ಬಾರಿ ಪರಿಷ್ಕರಿಸುತ್ತದೆ ಹೊಂದಿಸಿ Play ಒತ್ತಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

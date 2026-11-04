@@ -62,6 +62,314 @@
    }
   },
   {
+   "id": "scene-brand-pack",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Branding, packaging and labelling",
+    "kn": "ಬ್ರ್ಯಾಂಡಿಂಗ್, ಪ್ಯಾಕೇಜಿಂಗ್, ಲೇಬಲಿಂಗ್"
+   },
+   "caption": {
+    "en": "A strong brand lets a product command a price premium; good packaging protects and sells; a full label informs and builds trust. Set each for a packet of tea and see the price it can charge and the repeat buyers it gets.",
+    "kn": "ಬಲವಾದ ಬ್ರ್ಯಾಂಡ್ ಹೆಚ್ಚು ಬೆಲೆ ತರುತ್ತದೆ; ಉತ್ತಮ ಪ್ಯಾಕೇಜಿಂಗ್ ರಕ್ಷಿಸಿ ಮಾರುತ್ತದೆ; ಪೂರ್ಣ ಲೇಬಲ್ ಮಾಹಿತಿ ಮತ್ತು ವಿಶ್ವಾಸ ನೀಡುತ್ತದೆ. ಚಹಾ ಪ್ಯಾಕೆಟ್‌ಗೆ ಹೊಂದಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "br",
+     "label": {
+      "en": "Brand building",
+      "kn": "ಬ್ರ್ಯಾಂಡ್ ನಿರ್ಮಾಣ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 3
+    },
+    {
+     "name": "pk",
+     "label": {
+      "en": "Packaging quality",
+      "kn": "ಪ್ಯಾಕೇಜಿಂಗ್ ಗುಣಮಟ್ಟ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 4
+    },
+    {
+     "name": "lb",
+     "label": {
+      "en": "Label information",
+      "kn": "ಲೇಬಲ್ ಮಾಹಿತಿ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "mk",
+     "label": {
+      "en": "FSSAI mark on the label",
+      "kn": "ಲೇಬಲ್ ಮೇಲೆ FSSAI ಗುರುತು"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "100 + 4*br + 2*pk"
+    },
+    {
+     "name": "b1",
+     "expr": "12 - pk"
+    },
+    {
+     "name": "b2",
+     "expr": "20 + 4*lb + 3*br + if(mk, 20, 0)"
+    },
+    {
+     "name": "b3",
+     "expr": "10 + 3*br + 2*pk + 2*lb + if(mk, 10, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Effect on a ₹100 packet of tea",
+      "kn": "₹100 ಚಹಾ ಪ್ಯಾಕೆಟ್ ಮೇಲೆ ಪರಿಣಾಮ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/160, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/160, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Price (₹)",
+      "kn": "ಬೆಲೆ (₹)"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/160, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/160, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Damaged in transit (%)",
+      "kn": "ಸಾಗಣೆ ಹಾನಿ (%)"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/160, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/160, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Trust",
+      "kn": "ವಿಶ್ವಾಸ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/160, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/160, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Repeat buyers (%)",
+      "kn": "ಪುನರ್ ಖರೀದಿದಾರರು (%)"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 72,
+     "y": 30,
+     "w": 16,
+     "h": "10 + pk",
+     "color": {
+      "by": "pk/10",
+      "scale": [
+       "white",
+       "orange",
+       "green"
+      ]
+     },
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": "34 + pk/2",
+     "text": {
+      "en": "TEA",
+      "kn": "ಚಹಾ"
+     },
+     "size": 22,
+     "visibleIf": "br > 0"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 27,
+     "text": {
+      "en": "MRP, weight, date, FSSAI",
+      "kn": "MRP, ತೂಕ, ದಿನಾಂಕ, FSSAI"
+     },
+     "size": 13,
+     "visibleIf": "lb >= 5 && mk"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 27,
+     "text": {
+      "en": "MRP, weight, date",
+      "kn": "MRP, ತೂಕ, ದಿನಾಂಕ"
+     },
+     "size": 13,
+     "visibleIf": "lb >= 5 && !mk"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Price it can charge",
+      "kn": "ವಿಧಿಸಬಹುದಾದ ಬೆಲೆ"
+     },
+     "expr": "b0",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Repeat buyers",
+      "kn": "ಪುನರ್ ಖರೀದಿದಾರರು"
+     },
+     "expr": "b3",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Which of the three raises the price most?",
+     "kn": "ಮೂರರಲ್ಲಿ ಯಾವುದು ಬೆಲೆ ಹೆಚ್ಚು ಏರಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Why is packaging called the silent salesman?",
+     "kn": "ಪ್ಯಾಕೇಜಿಂಗ್ ಮೌನ ಮಾರಾಟಗಾರ ಏಕೆ?"
+    },
+    {
+     "en": "What must a food label show by law?",
+     "kn": "ಆಹಾರ ಲೇಬಲ್ ಕಾನೂನಿನಂತೆ ಏನು ತೋರಿಸಬೇಕು?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "A strong brand lets a product command a price premium; good packaging protects and sells; a full label informs and builds trust. Set each for a packet of tea and see the price it can charge and the repeat buyers it gets.",
+    "kn": "ಬಲವಾದ ಬ್ರ್ಯಾಂಡ್ ಹೆಚ್ಚು ಬೆಲೆ ತರುತ್ತದೆ; ಉತ್ತಮ ಪ್ಯಾಕೇಜಿಂಗ್ ರಕ್ಷಿಸಿ ಮಾರುತ್ತದೆ; ಪೂರ್ಣ ಲೇಬಲ್ ಮಾಹಿತಿ ಮತ್ತು ವಿಶ್ವಾಸ ನೀಡುತ್ತದೆ. ಚಹಾ ಪ್ಯಾಕೆಟ್‌ಗೆ ಹೊಂದಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -59,6 +59,214 @@
    }
   },
   {
+   "id": "scene-control-loop",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Standard, actual and corrective action"
+   },
+   "caption": {
+    "en": "A plant plans to make a standard output each day, but breakdowns and absences push actual output away. Set the standard, the disturbance and the tolerance. Turn on corrective action: when the deviation passes the tolerance the manager acts."
+   },
+   "sliders": [
+    {
+     "name": "sd",
+     "label": {
+      "en": "Standard output"
+     },
+     "min": 50,
+     "max": 150,
+     "step": 5,
+     "value": 100,
+     "unit": "units/day"
+    },
+    {
+     "name": "dist",
+     "label": {
+      "en": "Disturbance"
+     },
+     "min": 0,
+     "max": 40,
+     "step": 2,
+     "value": 20,
+     "unit": "units"
+    },
+    {
+     "name": "tol",
+     "label": {
+      "en": "Tolerance"
+     },
+     "min": 2,
+     "max": 20,
+     "step": 1,
+     "value": 6,
+     "unit": "units"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ca",
+     "label": {
+      "en": "Corrective action"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2,
+    "unit": "day"
+   },
+   "vars": [
+    {
+     "name": "shock",
+     "expr": "dist*(2*rand(floor(t)) - 1.2)"
+    },
+    {
+     "name": "dev",
+     "expr": "act - sd"
+    },
+    {
+     "name": "big",
+     "expr": "abs(dev) > tol"
+    }
+   ],
+   "state": [
+    {
+     "name": "act",
+     "init": "sd",
+     "rate": "shock - if(ca && abs(act - sd) > tol, 1.2*(act - sd), 0.05*(act - sd))"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     0,
+     60
+    ],
+    "y": [
+     0,
+     200
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "day",
+    "yLabel": "units"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": "sd - tol",
+     "w": 60,
+     "h": "2*tol",
+     "color": "green",
+     "opacity": 0.15
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "sd",
+     "x2": 60,
+     "y2": "sd",
+     "dashed": true,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 55,
+     "y": "sd + tol + 6",
+     "text": {
+      "en": "standard"
+     },
+     "size": 16,
+     "color": "green"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "act",
+     "length": 1200,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "act",
+     "r": 0.6,
+     "color": {
+      "by": "if(big, 1, 0)",
+      "scale": [
+       "green",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 190,
+     "text": {
+      "en": "Deviation {dev:0}: act!"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "big"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 190,
+     "text": {
+      "en": "Within tolerance"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "!big"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Actual output"
+     },
+     "expr": "act",
+     "digits": 0,
+     "unit": "units"
+    },
+    {
+     "label": {
+      "en": "Deviation"
+     },
+     "expr": "dev",
+     "digits": 0,
+     "unit": "units"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn corrective action off. What happens to the gap over time?"
+    },
+    {
+     "en": "Why act only on deviations beyond the tolerance (management by exception)?"
+    },
+    {
+     "en": "Name the steps of the controlling process shown here."
+    }
+   ],
+   "seconds": 120,
+   "narration": {
+    "en": "A plant plans to make a standard output each day, but breakdowns and absences push actual output away. Set the standard, the disturbance and the tolerance. Turn on corrective action: when the deviation passes the tolerance the manager acts."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -68,6 +68,341 @@
    }
   },
   {
+   "id": "scene-marketing-philosophies",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Five marketing philosophies",
+    "kn": "ಐದು ಮಾರುಕಟ್ಟೆ ತತ್ವಗಳು"
+   },
+   "caption": {
+    "en": "Choose a philosophy and set how much competition there is and how much society cares about the environment. The production concept works when goods are scarce; the marketing and societal concepts win when buyers have choice.",
+    "kn": "ಒಂದು ತತ್ವ ಆರಿಸಿ ಸ್ಪರ್ಧೆ ಮತ್ತು ಪರಿಸರ ಕಾಳಜಿ ಹೊಂದಿಸಿ. ಸರಕು ಕೊರತೆಯಲ್ಲಿ ಉತ್ಪಾದನಾ ತತ್ವ; ಆಯ್ಕೆ ಇದ್ದಾಗ ಮಾರುಕಟ್ಟೆ ಮತ್ತು ಸಾಮಾಜಿಕ ತತ್ವ ಗೆಲ್ಲುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "cp",
+     "label": {
+      "en": "Competition",
+      "kn": "ಸ್ಪರ್ಧೆ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 7
+    },
+    {
+     "name": "so",
+     "label": {
+      "en": "Society's concern for environment",
+      "kn": "ಸಮಾಜದ ಪರಿಸರ ಕಾಳಜಿ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "choices": [
+    {
+     "name": "ph",
+     "label": {
+      "en": "Philosophy",
+      "kn": "ತತ್ವ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Production",
+        "kn": "ಉತ್ಪಾದನೆ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Product",
+        "kn": "ಉತ್ಪನ್ನ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Selling",
+        "kn": "ಮಾರಾಟ"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Marketing",
+        "kn": "ಮಾರುಕಟ್ಟೆ"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "Societal marketing",
+        "kn": "ಸಾಮಾಜಿಕ ಮಾರುಕಟ್ಟೆ"
+       },
+       "value": 5
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "if(ph == 1, 10 - 0.8*cp, if(ph == 2, 8 - 0.5*cp, if(ph == 3, 6 + 0.1*cp, if(ph == 4, 6 + 0.3*cp, 5 + 0.3*cp + 0.1*so))))"
+    },
+    {
+     "name": "b1",
+     "expr": "if(ph == 1, 2, if(ph == 2, 4, if(ph == 3, 3, if(ph == 4, 9, 9))))"
+    },
+    {
+     "name": "b2",
+     "expr": "if(ph == 1, 2, if(ph == 2, 3, if(ph == 3, 2, if(ph == 4, 4, 9))))"
+    },
+    {
+     "name": "b3",
+     "expr": "clamp(0.4*b0 + 0.04*cp*b1 + 0.04*so*b2 + 0.2*b1, 0, 10)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Score 0 to 10",
+      "kn": "ಅಂಕ 0–10"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/10, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/10, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Sales now",
+      "kn": "ಈಗಿನ ಮಾರಾಟ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/10, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/10, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Customer satisfaction",
+      "kn": "ಗ್ರಾಹಕ ತೃಪ್ತಿ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/10, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/10, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Social welfare",
+      "kn": "ಸಾಮಾಜಿಕ ಕಲ್ಯಾಣ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/10, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/10, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Long-run success",
+      "kn": "ದೀರ್ಘಾವಧಿ ಯಶಸ್ಸು"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Focus: cheap, plentiful output",
+      "kn": "ಗಮನ: ಅಗ್ಗ, ಹೆಚ್ಚು ಉತ್ಪಾದನೆ"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "ph == 1"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Focus: product quality",
+      "kn": "ಗಮನ: ಉತ್ಪನ್ನ ಗುಣಮಟ್ಟ"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "ph == 2"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Focus: aggressive selling",
+      "kn": "ಗಮನ: ತೀವ್ರ ಮಾರಾಟ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "ph == 3"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Focus: customer needs",
+      "kn": "ಗಮನ: ಗ್ರಾಹಕ ಅಗತ್ಯ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "ph == 4"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Focus: customers and society",
+      "kn": "ಗಮನ: ಗ್ರಾಹಕ ಮತ್ತು ಸಮಾಜ"
+     },
+     "size": 22,
+     "color": "blue",
+     "visibleIf": "ph == 5"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Long-run success",
+      "kn": "ದೀರ್ಘಾವಧಿ ಯಶಸ್ಸು"
+     },
+     "expr": "b3",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set competition to 0. Which philosophy does well?",
+     "kn": "ಸ್ಪರ್ಧೆ 0. ಯಾವ ತತ್ವ ಉತ್ತಮ?"
+    },
+    {
+     "en": "Why does the selling concept fade in the long run?",
+     "kn": "ಮಾರಾಟ ತತ್ವ ದೀರ್ಘಾವಧಿಯಲ್ಲಿ ಏಕೆ ಮಸುಕಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Give an example of the societal marketing concept.",
+     "kn": "ಸಾಮಾಜಿಕ ಮಾರುಕಟ್ಟೆ ತತ್ವದ ಉದಾಹರಣೆ ಕೊಡಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Choose a philosophy and set how much competition there is and how much society cares about the environment. The production concept works when goods are scarce; the marketing and societal concepts win when buyers have choice.",
+    "kn": "ಒಂದು ತತ್ವ ಆರಿಸಿ ಸ್ಪರ್ಧೆ ಮತ್ತು ಪರಿಸರ ಕಾಳಜಿ ಹೊಂದಿಸಿ. ಸರಕು ಕೊರತೆಯಲ್ಲಿ ಉತ್ಪಾದನಾ ತತ್ವ; ಆಯ್ಕೆ ಇದ್ದಾಗ ಮಾರುಕಟ್ಟೆ ಮತ್ತು ಸಾಮಾಜಿಕ ತತ್ವ ಗೆಲ್ಲುತ್ತವೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

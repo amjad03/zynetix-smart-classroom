@@ -61,6 +61,281 @@
    }
   },
   {
+   "id": "scene-delegation",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "How much authority to delegate?",
+    "kn": "ಎಷ್ಟು ಅಧಿಕಾರ ಪ್ರತ್ಯಾಯೋಜಿಸಬೇಕು?"
+   },
+   "caption": {
+    "en": "Delegating authority frees the manager and speeds decisions, but too much without accountability risks loss of control. Set the authority delegated and the number of subordinates; insist that responsibility matches authority.",
+    "kn": "ಅಧಿಕಾರ ಪ್ರತ್ಯಾಯೋಜನೆ ವ್ಯವಸ್ಥಾಪಕನನ್ನು ಮುಕ್ತಗೊಳಿಸಿ ನಿರ್ಧಾರ ವೇಗಗೊಳಿಸುತ್ತದೆ, ಆದರೆ ಹೊಣೆಗಾರಿಕೆ ಇಲ್ಲದೆ ಹೆಚ್ಚು ನಿಯಂತ್ರಣ ನಷ್ಟ. ಅಧಿಕಾರ ಮತ್ತು ಅಧೀನರ ಸಂಖ್ಯೆ ಹೊಂದಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "dl",
+     "label": {
+      "en": "Authority delegated",
+      "kn": "ಪ್ರತ್ಯಾಯೋಜಿತ ಅಧಿಕಾರ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 30,
+     "unit": "%"
+    },
+    {
+     "name": "ns",
+     "label": {
+      "en": "Subordinates",
+      "kn": "ಅಧೀನರು"
+     },
+     "min": 1,
+     "max": 12,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ac",
+     "label": {
+      "en": "Accountability and matching responsibility",
+      "kn": "ಹೊಣೆಗಾರಿಕೆ ಮತ್ತು ಸಮಾನ ಜವಾಬ್ದಾರಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "100 - 0.8*dl"
+    },
+    {
+     "name": "b1",
+     "expr": "20 + 0.7*dl"
+    },
+    {
+     "name": "b2",
+     "expr": "10 + 0.6*dl + 2*ns"
+    },
+    {
+     "name": "b3",
+     "expr": "if(ac, 0.2, 0.8)*dl*(0.6 + ns/20)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Index",
+      "kn": "ಸೂಚ್ಯಂಕ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/100, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/100, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Manager's workload",
+      "kn": "ವ್ಯವಸ್ಥಾಪಕನ ಹೊರೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/100, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/100, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Decision speed",
+      "kn": "ನಿರ್ಧಾರ ವೇಗ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/100, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/100, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Staff growth",
+      "kn": "ಸಿಬ್ಬಂದಿ ಬೆಳವಣಿಗೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/100, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/100, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Control risk",
+      "kn": "ನಿಯಂತ್ರಣ ಅಪಾಯ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Decentralised",
+      "kn": "ವಿಕೇಂದ್ರೀಕೃತ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "dl > 70"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Centralised",
+      "kn": "ಕೇಂದ್ರೀಕೃತ"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "dl < 30"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Balanced",
+      "kn": "ಸಮತೋಲಿತ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "dl >= 30 && dl <= 70"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Control risk",
+      "kn": "ನಿಯಂತ್ರಣ ಅಪಾಯ"
+     },
+     "expr": "b3",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Delegate 90% with accountability off. What rises?",
+     "kn": "ಹೊಣೆಗಾರಿಕೆ ಆಫ್ ಮಾಡಿ 90% ಪ್ರತ್ಯಾಯೋಜಿಸಿ. ಏನು ಏರುತ್ತದೆ?"
+    },
+    {
+     "en": "Can accountability be delegated?",
+     "kn": "ಹೊಣೆಗಾರಿಕೆಯನ್ನು ಪ್ರತ್ಯಾಯೋಜಿಸಬಹುದೇ?"
+    },
+    {
+     "en": "Is decentralisation delegation at every level?",
+     "kn": "ವಿಕೇಂದ್ರೀಕರಣ ಪ್ರತಿ ಹಂತದ ಪ್ರತ್ಯಾಯೋಜನೆಯೇ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Delegating authority frees the manager and speeds decisions, but too much without accountability risks loss of control. Set the authority delegated and the number of subordinates; insist that responsibility matches authority.",
+    "kn": "ಅಧಿಕಾರ ಪ್ರತ್ಯಾಯೋಜನೆ ವ್ಯವಸ್ಥಾಪಕನನ್ನು ಮುಕ್ತಗೊಳಿಸಿ ನಿರ್ಧಾರ ವೇಗಗೊಳಿಸುತ್ತದೆ, ಆದರೆ ಹೊಣೆಗಾರಿಕೆ ಇಲ್ಲದೆ ಹೆಚ್ಚು ನಿಯಂತ್ರಣ ನಷ್ಟ. ಅಧಿಕಾರ ಮತ್ತು ಅಧೀನರ ಸಂಖ್ಯೆ ಹೊಂದಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

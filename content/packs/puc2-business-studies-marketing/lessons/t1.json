@@ -65,6 +65,243 @@
    }
   },
   {
+   "id": "scene-price-profit",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Setting the price: demand, revenue and profit",
+    "kn": "ಬೆಲೆ ನಿಗದಿ: ಬೇಡಿಕೆ, ಆದಾಯ, ಲಾಭ"
+   },
+   "caption": {
+    "en": "Marketing management must find a price that satisfies customers and earns profit. Drag the price handle along the axis. Demand falls as price rises; profit is greatest somewhere in between.",
+    "kn": "ಮಾರುಕಟ್ಟೆ ನಿರ್ವಹಣೆ ಗ್ರಾಹಕ ತೃಪ್ತಿ ಮತ್ತು ಲಾಭ ಎರಡನ್ನೂ ಕೊಡುವ ಬೆಲೆ ಹುಡುಕಬೇಕು. ಬೆಲೆ ಹಿಡಿಕೆ ಎಳೆಯಿರಿ. ಬೆಲೆ ಏರಿದಂತೆ ಬೇಡಿಕೆ ಇಳಿಯುತ್ತದೆ; ಲಾಭ ನಡುವೆ ಗರಿಷ್ಠ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Customers at zero price",
+      "kn": "ಶೂನ್ಯ ಬೆಲೆಯಲ್ಲಿ ಗ್ರಾಹಕರು"
+     },
+     "min": 100,
+     "max": 300,
+     "step": 10,
+     "value": 200,
+     "unit": "'000"
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "Cost per unit",
+      "kn": "ಘಟಕ ವೆಚ್ಚ"
+     },
+     "min": 10,
+     "max": 60,
+     "step": 2,
+     "value": 30,
+     "unit": "₹"
+    },
+    {
+     "name": "F",
+     "label": {
+      "en": "Fixed costs",
+      "kn": "ಸ್ಥಿರ ವೆಚ್ಚ"
+     },
+     "min": 0,
+     "max": 2000,
+     "step": 100,
+     "value": 800,
+     "unit": "₹ '000"
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "price",
+     "x": 60,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       0,
+       150
+      ],
+      "y": [
+       0,
+       0
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "Q",
+     "expr": "max(a - 2*P_x, 0)"
+    },
+    {
+     "name": "rev",
+     "expr": "P_x*Q"
+    },
+    {
+     "name": "prof",
+     "expr": "(P_x - c)*Q - F"
+    },
+    {
+     "name": "pbest",
+     "expr": "(a/2 + c)/2"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     150
+    ],
+    "y": [
+     -3000,
+     6000
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "price (₹)",
+    "yLabel": "₹ '000"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "x*max(a - 2*x, 0)",
+     "color": "blue"
+    },
+    {
+     "shape": "path",
+     "fn": "(x - c)*max(a - 2*x, 0) - F",
+     "width": 4,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 150,
+     "y2": 0,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": "P_x",
+     "y1": -3000,
+     "x2": "P_x",
+     "y2": 6000,
+     "dashed": true,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "P_x",
+     "y": "prof",
+     "r": 1.5,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": "P_x",
+     "y": "rev",
+     "r": 1.5,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": "pbest",
+     "y1": -3000,
+     "x2": "pbest",
+     "y2": "(pbest - c)*max(a - 2*pbest, 0) - F",
+     "dashed": true,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 130,
+     "y": 5500,
+     "text": {
+      "en": "blue: revenue",
+      "kn": "ನೀಲಿ: ಆದಾಯ"
+     },
+     "size": 16,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 130,
+     "y": 5000,
+     "text": {
+      "en": "green: profit",
+      "kn": "ಹಸಿರು: ಲಾಭ"
+     },
+     "size": 16,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 75,
+     "y": 5600,
+     "text": {
+      "en": "Price ₹{P_x:0}: sells {Q:0}k, profit ₹{prof:0}k",
+      "kn": "ಬೆಲೆ ₹{P_x:0}: ಮಾರಾಟ {Q:0}k, ಲಾಭ ₹{prof:0}k"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Units sold",
+      "kn": "ಮಾರಿದ ಘಟಕ"
+     },
+     "expr": "Q",
+     "digits": 0,
+     "unit": "'000"
+    },
+    {
+     "label": {
+      "en": "Profit",
+      "kn": "ಲಾಭ"
+     },
+     "expr": "prof",
+     "digits": 0,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Best price",
+      "kn": "ಉತ್ತಮ ಬೆಲೆ"
+     },
+     "expr": "pbest",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Drag the price to the top of the green curve.",
+     "kn": "ಬೆಲೆಯನ್ನು ಹಸಿರು ವಕ್ರದ ತುದಿಗೆ ಎಳೆಯಿರಿ."
+    },
+    {
+     "en": "Raise the cost per unit. Does the best price rise by the full amount?",
+     "kn": "ಘಟಕ ವೆಚ್ಚ ಏರಿಸಿ. ಉತ್ತಮ ಬೆಲೆ ಪೂರ್ಣ ಏರುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Which element of the marketing mix is this?",
+     "kn": "ಇದು ಮಾರುಕಟ್ಟೆ ಮಿಶ್ರಣದ ಯಾವ ಅಂಶ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Marketing management must find a price that satisfies customers and earns profit. Drag the price handle along the axis. Demand falls as price rises; profit is greatest somewhere in between.",
+    "kn": "ಮಾರುಕಟ್ಟೆ ನಿರ್ವಹಣೆ ಗ್ರಾಹಕ ತೃಪ್ತಿ ಮತ್ತು ಲಾಭ ಎರಡನ್ನೂ ಕೊಡುವ ಬೆಲೆ ಹುಡುಕಬೇಕು. ಬೆಲೆ ಹಿಡಿಕೆ ಎಳೆಯಿರಿ. ಬೆಲೆ ಏರಿದಂತೆ ಬೇಡಿಕೆ ಇಳಿಯುತ್ತದೆ; ಲಾಭ ನಡುವೆ ಗರಿಷ್ಠ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -62,6 +62,258 @@
    }
   },
   {
+   "id": "scene-comm-noise",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A message through a chain",
+    "kn": "ಸರಪಳಿಯ ಮೂಲಕ ಸಂದೇಶ"
+   },
+   "caption": {
+    "en": "A message passes from sender to receiver through several people. Each link adds noise and loses some meaning. Set the number of links and the noise, turn on feedback, and launch the message.",
+    "kn": "ಸಂದೇಶ ಹಲವರ ಮೂಲಕ ಕಳುಹಿಸುವವನಿಂದ ಸ್ವೀಕರಿಸುವವನಿಗೆ ಹೋಗುತ್ತದೆ. ಪ್ರತಿ ಕೊಂಡಿ ಗದ್ದಲ ಸೇರಿಸಿ ಅರ್ಥ ಕಳೆಯುತ್ತದೆ. ಕೊಂಡಿ, ಗದ್ದಲ ಹೊಂದಿಸಿ, ಪ್ರತಿಕ್ರಿಯೆ ಆನ್ ಮಾಡಿ, ಕಳುಹಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Links in the chain",
+      "kn": "ಸರಪಳಿಯ ಕೊಂಡಿಗಳು"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 1,
+     "value": 4
+    },
+    {
+     "name": "nz",
+     "label": {
+      "en": "Noise at each link",
+      "kn": "ಪ್ರತಿ ಕೊಂಡಿಯ ಗದ್ದಲ"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 12,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fb",
+     "label": {
+      "en": "Two-way: receiver repeats back",
+      "kn": "ದ್ವಿಮುಖ: ಸ್ವೀಕರಿಸುವವನು ಪುನರಾವರ್ತಿಸುತ್ತಾನೆ"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Send the message",
+      "kn": "ಸಂದೇಶ ಕಳುಹಿಸಿ"
+     },
+     "icon": "launch",
+     "set": {},
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 8,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "s",
+    "stopWhen": "t >= n"
+   },
+   "vars": [
+    {
+     "name": "loss",
+     "expr": "nz/100*if(fb, 0.35, 1)"
+    },
+    {
+     "name": "hop",
+     "expr": "min(floor(t), n)"
+    },
+    {
+     "name": "acc",
+     "expr": "100*(1 - loss)^hop"
+    },
+    {
+     "name": "fin",
+     "expr": "100*(1 - loss)^n"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 9,
+     "x": "8 + 84*i/max(n, 1)",
+     "y": 34,
+     "r": 2.2,
+     "color": {
+      "by": "if(i <= hop, 1, 0)",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     },
+     "visibleIf": "i <= n"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 28,
+     "text": {
+      "en": "Sender",
+      "kn": "ಕಳುಹಿಸುವವನು"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 92,
+     "y": 28,
+     "text": {
+      "en": "Receiver",
+      "kn": "ಸ್ವೀಕರಿಸುವವನು"
+     },
+     "size": 16
+    },
+    {
+     "shape": "circle",
+     "x": "8 + 84*min(t, n)/max(n, 1)",
+     "y": 40,
+     "r": 1.2,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 20,
+     "y": 8,
+     "w": "0.6*acc",
+     "h": 4,
+     "color": {
+      "by": "acc/100",
+      "scale": [
+       "red",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 10,
+     "text": {
+      "en": "Meaning kept",
+      "kn": "ಉಳಿದ ಅರ್ಥ"
+     },
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": "22 + 0.6*acc",
+     "y": 10,
+     "text": {
+      "en": "{acc:0}%"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "arrow",
+     "x": 92,
+     "y": 46,
+     "dx": -84,
+     "dy": 0,
+     "color": "green",
+     "visibleIf": "fb"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 49,
+     "text": {
+      "en": "feedback",
+      "kn": "ಪ್ರತಿಕ್ರಿಯೆ"
+     },
+     "size": 16,
+     "color": "green",
+     "visibleIf": "fb"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 22,
+     "text": {
+      "en": "Too much lost: message distorted",
+      "kn": "ಹೆಚ್ಚು ನಷ್ಟ: ಸಂದೇಶ ವಿಕೃತ"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "t >= n && fin < 60"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Meaning kept now",
+      "kn": "ಈಗ ಉಳಿದ ಅರ್ಥ"
+     },
+     "expr": "acc",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "At the receiver",
+      "kn": "ಸ್ವೀಕರಿಸುವವನಲ್ಲಿ"
+     },
+     "expr": "fin",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With 8 links at 12% noise, how much meaning reaches the receiver?",
+     "kn": "8 ಕೊಂಡಿ, 12% ಗದ್ದಲ: ಎಷ್ಟು ಅರ್ಥ ತಲುಪುತ್ತದೆ?"
+    },
+    {
+     "en": "Why does feedback make communication two-way and better?",
+     "kn": "ಪ್ರತಿಕ್ರಿಯೆ ಸಂವಹನವನ್ನು ಏಕೆ ಉತ್ತಮಗೊಳಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Name a semantic and an organisational barrier.",
+     "kn": "ಒಂದು ಅರ್ಥಸಂಬಂಧಿ ಮತ್ತು ಸಾಂಸ್ಥಿಕ ಅಡಚಣೆ ಹೇಳಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "A message passes from sender to receiver through several people. Each link adds noise and loses some meaning. Set the number of links and the noise, turn on feedback, and launch the message.",
+    "kn": "ಸಂದೇಶ ಹಲವರ ಮೂಲಕ ಕಳುಹಿಸುವವನಿಂದ ಸ್ವೀಕರಿಸುವವನಿಗೆ ಹೋಗುತ್ತದೆ. ಪ್ರತಿ ಕೊಂಡಿ ಗದ್ದಲ ಸೇರಿಸಿ ಅರ್ಥ ಕಳೆಯುತ್ತದೆ. ಕೊಂಡಿ, ಗದ್ದಲ ಹೊಂದಿಸಿ, ಪ್ರತಿಕ್ರಿಯೆ ಆನ್ ಮಾಡಿ, ಕಳುಹಿಸಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -58,6 +58,167 @@
    }
   },
   {
+   "id": "scene-grapevine",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Formal channel or grapevine?",
+    "kn": "ಔಪಚಾರಿಕ ಮಾರ್ಗ ಅಥವಾ ದ್ರಾಕ್ಷಿಬಳ್ಳಿ?"
+   },
+   "caption": {
+    "en": "News of a bonus starts at the top. Through the formal organisation it moves level by level along the chain of command. Through the informal grapevine it spreads fast, person to person, but may get distorted. Press Play.",
+    "kn": "ಬೋನಸ್ ಸುದ್ದಿ ಮೇಲಿನಿಂದ ಆರಂಭ. ಔಪಚಾರಿಕವಾಗಿ ಹಂತ ಹಂತವಾಗಿ ಆದೇಶ ಸರಪಳಿಯಲ್ಲಿ ಹೋಗುತ್ತದೆ. ಅನೌಪಚಾರಿಕ ದ್ರಾಕ್ಷಿಬಳ್ಳಿಯಲ್ಲಿ ವೇಗವಾಗಿ ಹರಡುತ್ತದೆ, ಆದರೆ ವಿಕೃತವಾಗಬಹುದು."
+   },
+   "sliders": [
+    {
+     "name": "N",
+     "label": {
+      "en": "Employees",
+      "kn": "ನೌಕರರು"
+     },
+     "min": 20,
+     "max": 200,
+     "step": 10,
+     "value": 100
+    },
+    {
+     "name": "lv",
+     "label": {
+      "en": "Levels in the hierarchy",
+      "kn": "ಶ್ರೇಣಿಯ ಹಂತಗಳು"
+     },
+     "min": 2,
+     "max": 6,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "toggles": [
+    {
+     "name": "gv",
+     "label": {
+      "en": "Grapevine active",
+      "kn": "ದ್ರಾಕ್ಷಿಬಳ್ಳಿ ಸಕ್ರಿಯ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 10,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "day"
+   },
+   "vars": [
+    {
+     "name": "ff",
+     "expr": "clamp(t/(1.5*lv), 0, 1)"
+    },
+    {
+     "name": "fi",
+     "expr": "if(gv, 1 - exp(-1.2*t), 0)"
+    },
+    {
+     "name": "fr",
+     "expr": "max(ff, fi)"
+    },
+    {
+     "name": "dist",
+     "expr": "if(gv, 100*fi*0.25*(1 - ff), 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 200,
+     "x": "4 + 92*rand(i)",
+     "y": "6 + 40*rand(i + 300)",
+     "r": 0.7,
+     "color": {
+      "by": "if(i < N*ff, 1, if(i < N*fr, 0.5, 0))",
+      "scale": [
+       "white",
+       "orange",
+       "green"
+      ]
+     },
+     "visibleIf": "i < N"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 53,
+     "text": {
+      "en": "green: heard officially   orange: heard on the grapevine",
+      "kn": "ಹಸಿರು: ಅಧಿಕೃತ   ಕಿತ್ತಳೆ: ದ್ರಾಕ್ಷಿಬಳ್ಳಿ"
+     },
+     "size": 16
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Heard officially",
+      "kn": "ಅಧಿಕೃತವಾಗಿ ಕೇಳಿದವರು"
+     },
+     "expr": "100*ff",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Heard by any route",
+      "kn": "ಯಾವುದಾದರೂ ಮಾರ್ಗ"
+     },
+     "expr": "100*fr",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Rumour risk",
+      "kn": "ವದಂತಿ ಅಪಾಯ"
+     },
+     "expr": "dist",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn the grapevine off. How long does official news take with 6 levels?",
+     "kn": "ದ್ರಾಕ್ಷಿಬಳ್ಳಿ ಆಫ್. 6 ಹಂತದಲ್ಲಿ ಅಧಿಕೃತ ಸುದ್ದಿ ಎಷ್ಟು ಸಮಯ?"
+    },
+    {
+     "en": "How can managers use the informal organisation well?",
+     "kn": "ಅನೌಪಚಾರಿಕ ಸಂಘಟನೆಯನ್ನು ವ್ಯವಸ್ಥಾಪಕರು ಹೇಗೆ ಬಳಸಬಹುದು?"
+    },
+    {
+     "en": "Why does fewer levels help formal communication?",
+     "kn": "ಕಡಿಮೆ ಹಂತ ಔಪಚಾರಿಕ ಸಂವಹನಕ್ಕೆ ಹೇಗೆ ಸಹಾಯ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "News of a bonus starts at the top. Through the formal organisation it moves level by level along the chain of command. Through the informal grapevine it spreads fast, person to person, but may get distorted. Press Play.",
+    "kn": "ಬೋನಸ್ ಸುದ್ದಿ ಮೇಲಿನಿಂದ ಆರಂಭ. ಔಪಚಾರಿಕವಾಗಿ ಹಂತ ಹಂತವಾಗಿ ಆದೇಶ ಸರಪಳಿಯಲ್ಲಿ ಹೋಗುತ್ತದೆ. ಅನೌಪಚಾರಿಕ ದ್ರಾಕ್ಷಿಬಳ್ಳಿಯಲ್ಲಿ ವೇಗವಾಗಿ ಹರಡುತ್ತದೆ, ಆದರೆ ವಿಕೃತವಾಗಬಹುದು."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

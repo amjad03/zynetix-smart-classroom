@@ -64,6 +64,527 @@
    }
   },
   {
+   "id": "scene-mgmt-functions",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The functions of management, in sequence",
+    "kn": "ನಿರ್ವಹಣಾ ಕಾರ್ಯಗಳು, ಕ್ರಮವಾಗಿ"
+   },
+   "caption": {
+    "en": "A school is organising its annual day. Step through the five functions of management. Set the time spent planning and directing; controlling feeds back into the next plan.",
+    "kn": "ಶಾಲೆ ವಾರ್ಷಿಕೋತ್ಸವ ಆಯೋಜಿಸುತ್ತಿದೆ. ನಿರ್ವಹಣೆಯ ಐದು ಕಾರ್ಯಗಳ ಮೂಲಕ ಹೆಜ್ಜೆ ಹಾಕಿ. ಯೋಜನೆ ಮತ್ತು ನಿರ್ದೇಶನದ ಸಮಯ ಹೊಂದಿಸಿ; ನಿಯಂತ್ರಣ ಮುಂದಿನ ಯೋಜನೆಗೆ ಪ್ರತಿಕ್ರಿಯೆ."
+   },
+   "sliders": [
+    {
+     "name": "f1",
+     "label": {
+      "en": "Care in planning",
+      "kn": "ಯೋಜನೆಯ ಕಾಳಜಿ"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 2
+    },
+    {
+     "name": "f2",
+     "label": {
+      "en": "Care in directing",
+      "kn": "ನಿರ್ದೇಶನದ ಕಾಳಜಿ"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 2
+    }
+   ],
+   "counters": [
+    {
+     "name": "s",
+     "value": 0,
+     "min": 0,
+     "max": 4
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Previous step",
+      "kn": "ಹಿಂದಿನ ಹಂತ"
+     },
+     "icon": "remove",
+     "set": {
+      "s": "max(s - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Next step",
+      "kn": "ಮುಂದಿನ ಹಂತ"
+     },
+     "icon": "next",
+     "set": {
+      "s": "min(s + 1, 4)"
+     },
+     "play": true
+    },
+    {
+     "label": {
+      "en": "Run the whole process",
+      "kn": "ಇಡೀ ಪ್ರಕ್ರಿಯೆ ನಡೆಸಿ"
+     },
+     "icon": "launch",
+     "set": {
+      "s": 4
+     },
+     "reset": true,
+     "play": true
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "s": 0
+     },
+     "reset": true
+    }
+   ],
+   "time": {
+    "max": 4,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "step"
+   },
+   "vars": [
+    {
+     "name": "d0",
+     "expr": "2*f1"
+    },
+    {
+     "name": "d1",
+     "expr": "2"
+    },
+    {
+     "name": "d2",
+     "expr": "3"
+    },
+    {
+     "name": "d3",
+     "expr": "2*f2"
+    },
+    {
+     "name": "d4",
+     "expr": "1"
+    },
+    {
+     "name": "cum",
+     "expr": "d0 + if(s >= 1, d1, 0) + if(s >= 2, d2, 0) + if(s >= 3, d3, 0) + if(s >= 4, d4, 0)"
+    },
+    {
+     "name": "tot",
+     "expr": "d0 + d1 + d2 + d3 + d4"
+    },
+    {
+     "name": "pos",
+     "expr": "min(t, s)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 5.07,
+     "y": 28,
+     "w": 14.66,
+     "h": 14,
+     "color": {
+      "by": "if(s > 0, 1, if(s == 0, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 12.4,
+     "y": 36.5,
+     "text": {
+      "en": "Planning",
+      "kn": "ಯೋಜನೆ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 12.4,
+     "y": 31,
+     "text": {
+      "en": "{d0:0} weeks",
+      "kn": "{d0:0} ವಾರಗಳು"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 19.93,
+     "y": 35,
+     "dx": 3.74,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 23.87,
+     "y": 28,
+     "w": 14.66,
+     "h": 14,
+     "color": {
+      "by": "if(s > 1, 1, if(s == 1, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 31.2,
+     "y": 36.5,
+     "text": {
+      "en": "Organising",
+      "kn": "ಸಂಘಟನೆ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 31.2,
+     "y": 31,
+     "text": {
+      "en": "{d1:0} weeks",
+      "kn": "{d1:0} ವಾರಗಳು"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 38.73,
+     "y": 35,
+     "dx": 3.74,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 42.67,
+     "y": 28,
+     "w": 14.66,
+     "h": 14,
+     "color": {
+      "by": "if(s > 2, 1, if(s == 2, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 50.0,
+     "y": 36.5,
+     "text": {
+      "en": "Staffing",
+      "kn": "ಸಿಬ್ಬಂದಿ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 50.0,
+     "y": 31,
+     "text": {
+      "en": "{d2:0} weeks",
+      "kn": "{d2:0} ವಾರಗಳು"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 57.53,
+     "y": 35,
+     "dx": 3.74,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 61.47,
+     "y": 28,
+     "w": 14.66,
+     "h": 14,
+     "color": {
+      "by": "if(s > 3, 1, if(s == 3, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 68.8,
+     "y": 36.5,
+     "text": {
+      "en": "Directing",
+      "kn": "ನಿರ್ದೇಶನ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 68.8,
+     "y": 31,
+     "text": {
+      "en": "{d3:0} weeks",
+      "kn": "{d3:0} ವಾರಗಳು"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 76.33,
+     "y": 35,
+     "dx": 3.74,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 80.27,
+     "y": 28,
+     "w": 14.66,
+     "h": 14,
+     "color": {
+      "by": "if(s > 4, 1, if(s == 4, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 87.6,
+     "y": 36.5,
+     "text": {
+      "en": "Controlling",
+      "kn": "ನಿಯಂತ್ರಣ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 87.6,
+     "y": 31,
+     "text": {
+      "en": "{d4:0} weeks",
+      "kn": "{d4:0} ವಾರಗಳು"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Decide in advance what to do: goals",
+      "kn": "ಏನು ಮಾಡಬೇಕೆಂದು ಮುಂಚಿತ ನಿರ್ಧಾರ: ಗುರಿ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 0"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Divide work, assign duties, set authority",
+      "kn": "ಕೆಲಸ ವಿಭಜನೆ, ಕರ್ತವ್ಯ, ಅಧಿಕಾರ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 1"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Right people in the right jobs",
+      "kn": "ಸರಿಯಾದ ಕೆಲಸಕ್ಕೆ ಸರಿಯಾದ ಜನ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 2"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Lead, motivate, communicate",
+      "kn": "ನಾಯಕತ್ವ, ಪ್ರೇರಣೆ, ಸಂವಹನ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 3"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Compare actual with plan; correct",
+      "kn": "ವಾಸ್ತವ ಯೋಜನೆಯೊಂದಿಗೆ ಹೋಲಿಸಿ ತಿದ್ದಿ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 4"
+    },
+    {
+     "shape": "circle",
+     "x": "12.4 + pos*18.8",
+     "y": 46,
+     "r": 1.6,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 54,
+     "text": {
+      "en": "Step {s + 1:0} of 5: {cum:0} of {tot:0} weeks so far",
+      "kn": "ಹಂತ {s + 1:0} / 5: ಇದುವರೆಗೆ {cum:0} / {tot:0} ವಾರಗಳು"
+     },
+     "size": 20
+    },
+    {
+     "shape": "path",
+     "points": [
+      [
+       93.5,
+       26
+      ],
+      [
+       93.5,
+       22
+      ],
+      [
+       12.4,
+       22
+      ],
+      [
+       12.4,
+       26
+      ]
+     ],
+     "dashed": true,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 24,
+     "text": {
+      "en": "feedback to planning",
+      "kn": "ಯೋಜನೆಗೆ ಪ್ರತಿಕ್ರಿಯೆ"
+     },
+     "size": 14,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಹಂತ"
+     },
+     "expr": "s + 1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Time so far (weeks)",
+      "kn": "ಇದುವರೆಗಿನ ಸಮಯ (ವಾರಗಳು)"
+     },
+     "expr": "cum",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Chance of a smooth event",
+      "kn": "ಸುಗಮ ಕಾರ್ಯಕ್ರಮದ ಸಾಧ್ಯತೆ"
+     },
+     "expr": "min(40 + 10*f1 + 8*f2, 100)",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why does planning come first?",
+     "kn": "ಯೋಜನೆ ಮೊದಲು ಏಕೆ?"
+    },
+    {
+     "en": "Is management only a sequence, or do functions overlap?",
+     "kn": "ಕಾರ್ಯಗಳು ಕೇವಲ ಕ್ರಮವೇ ಅಥವಾ ಒಂದರೊಳಗೊಂದು?"
+    },
+    {
+     "en": "What would controlling find if planning were skipped?",
+     "kn": "ಯೋಜನೆ ಬಿಟ್ಟರೆ ನಿಯಂತ್ರಣ ಏನು ಕಂಡೀತು?"
+    }
+   ],
+   "seconds": 120,
+   "narration": {
+    "en": "A school is organising its annual day. Step through the five functions of management. Set the time spent planning and directing; controlling feeds back into the next plan.",
+    "kn": "ಶಾಲೆ ವಾರ್ಷಿಕೋತ್ಸವ ಆಯೋಜಿಸುತ್ತಿದೆ. ನಿರ್ವಹಣೆಯ ಐದು ಕಾರ್ಯಗಳ ಮೂಲಕ ಹೆಜ್ಜೆ ಹಾಕಿ. ಯೋಜನೆ ಮತ್ತು ನಿರ್ದೇಶನದ ಸಮಯ ಹೊಂದಿಸಿ; ನಿಯಂತ್ರಣ ಮುಂದಿನ ಯೋಜನೆಗೆ ಪ್ರತಿಕ್ರಿಯೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

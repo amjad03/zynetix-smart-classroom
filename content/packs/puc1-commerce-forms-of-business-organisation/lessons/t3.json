@@ -62,6 +62,368 @@
    }
   },
   {
+   "id": "scene-coop-surplus",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "How a cooperative shares its surplus"
+   },
+   "caption": {
+    "en": "Choose the kind of cooperative. Its surplus first goes to the reserve fund, then a limited dividend on shares, and the rest back to members in proportion to their dealings (a patronage bonus). Set the surplus and the member's purchases."
+   },
+   "sliders": [
+    {
+     "name": "sur",
+     "label": {
+      "en": "Surplus"
+     },
+     "min": 0,
+     "max": 400,
+     "step": 10,
+     "value": 200,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "sc",
+     "label": {
+      "en": "Share capital"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 50,
+     "value": 500,
+     "unit": "₹ '000"
+    },
+    {
+     "name": "mp",
+     "label": {
+      "en": "This member's share of dealings"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 0.5,
+     "value": 2,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "lc",
+     "label": {
+      "en": "Dividend capped by law"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "ty",
+     "label": {
+      "en": "Kind of cooperative"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Consumers'"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Producers'"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Marketing"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Credit"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "Housing"
+       },
+       "value": 5
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "cap",
+     "expr": "if(lc, 15, 100)"
+    },
+    {
+     "name": "b0",
+     "expr": "sur*0.25"
+    },
+    {
+     "name": "b1",
+     "expr": "min(sur*0.75, cap*sc/100)"
+    },
+    {
+     "name": "b2",
+     "expr": "max(sur*0.75 - cap*sc/100, 0)"
+    },
+    {
+     "name": "b3",
+     "expr": "max(sur*0.75 - cap*sc/100, 0)*mp/100*10"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "₹ '000 (member's bonus ×10)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/400, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/400, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Reserve fund"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/400, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/400, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Dividend on shares"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/400, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/400, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Patronage bonus pool"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/400, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/400, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "This member's bonus"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Members, not capital, get most"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "lc"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Capital takes most: not cooperative"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "!lc"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 46,
+     "text": {
+      "en": "e.g. Apna Bazar: buys for members"
+     },
+     "size": 15,
+     "visibleIf": "ty == 1"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 46,
+     "text": {
+      "en": "e.g. handloom weavers' society"
+     },
+     "size": 15,
+     "visibleIf": "ty == 2"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 46,
+     "text": {
+      "en": "e.g. AMUL: sells members' milk"
+     },
+     "size": 15,
+     "visibleIf": "ty == 3"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 46,
+     "text": {
+      "en": "e.g. a primary credit society"
+     },
+     "size": 15,
+     "visibleIf": "ty == 4"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 46,
+     "text": {
+      "en": "e.g. a society building flats"
+     },
+     "size": 15,
+     "visibleIf": "ty == 5"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "This member's bonus"
+     },
+     "expr": "max(sur*0.75 - cap*sc/100, 0)*mp/100",
+     "digits": 1,
+     "unit": "₹ '000"
+    },
+    {
+     "label": {
+      "en": "Dividend rate"
+     },
+     "expr": "100*min(sur*0.75, cap*sc/100)/sc",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why is the bonus shared by dealings, not by shares?"
+    },
+    {
+     "en": "Turn the cap off. What changes?"
+    },
+    {
+     "en": "Which kind of cooperative is AMUL?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Choose the kind of cooperative. Its surplus first goes to the reserve fund, then a limited dividend on shares, and the rest back to members in proportion to their dealings (a patronage bonus). Set the surplus and the member's purchases."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

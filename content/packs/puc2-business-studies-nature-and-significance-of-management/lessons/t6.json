@@ -67,6 +67,213 @@
    }
   },
   {
+   "id": "scene-coordination",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Coordination between production and sales",
+    "kn": "ಉತ್ಪಾದನೆ ಮತ್ತು ಮಾರಾಟದ ಸಮನ್ವಯ"
+   },
+   "caption": {
+    "en": "Production makes goods at its own rate while sales sells at another. Without coordination, unsold stock piles up or shelves run empty. Turn on coordination: production adjusts to sales week by week.",
+    "kn": "ಉತ್ಪಾದನೆ ತನ್ನ ದರದಲ್ಲಿ, ಮಾರಾಟ ಇನ್ನೊಂದು ದರದಲ್ಲಿ. ಸಮನ್ವಯ ಇಲ್ಲದೆ ದಾಸ್ತಾನು ಹೆಚ್ಚುತ್ತದೆ ಅಥವಾ ಖಾಲಿಯಾಗುತ್ತದೆ. ಸಮನ್ವಯ ಆನ್ ಮಾಡಿ: ಉತ್ಪಾದನೆ ಮಾರಾಟಕ್ಕೆ ಹೊಂದಿಕೊಳ್ಳುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "pr",
+     "label": {
+      "en": "Production plan",
+      "kn": "ಉತ್ಪಾದನಾ ಯೋಜನೆ"
+     },
+     "min": 50,
+     "max": 150,
+     "step": 5,
+     "value": 120,
+     "unit": "units/week"
+    },
+    {
+     "name": "sl",
+     "label": {
+      "en": "Sales achieved",
+      "kn": "ಸಾಧಿಸಿದ ಮಾರಾಟ"
+     },
+     "min": 50,
+     "max": 150,
+     "step": 5,
+     "value": 90,
+     "unit": "units/week"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "co",
+     "label": {
+      "en": "Coordination",
+      "kn": "ಸಮನ್ವಯ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 26,
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2,
+    "unit": "week"
+   },
+   "vars": [
+    {
+     "name": "dem",
+     "expr": "sl*(1 + 0.15*sin(t/2))"
+    },
+    {
+     "name": "make",
+     "expr": "if(co, dem + 0.5*(100 - stk), pr)"
+    }
+   ],
+   "state": [
+    {
+     "name": "stk",
+     "init": 100,
+     "rate": "if(stk <= 0 && make < dem, 0, make - dem)"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     0,
+     26
+    ],
+    "y": [
+     -200,
+     1200
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "week",
+    "yLabel": "units in stock"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 50,
+     "w": 26,
+     "h": 150,
+     "color": "green",
+     "opacity": 0.15
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 26,
+     "y2": 0,
+     "color": "white"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "stk",
+     "length": 800,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "stk",
+     "r": 0.3,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 13,
+     "y": 1120,
+     "text": {
+      "en": "Stock piling up: money locked",
+      "kn": "ದಾಸ್ತಾನು ಹೆಚ್ಚು: ಹಣ ಸಿಲುಕಿದೆ"
+     },
+     "size": 18,
+     "color": "red",
+     "visibleIf": "stk > 400"
+    },
+    {
+     "shape": "label",
+     "x": 13,
+     "y": 1120,
+     "text": {
+      "en": "Shelves empty: sales lost",
+      "kn": "ಖಾಲಿ ಶೆಲ್ಫ್: ಮಾರಾಟ ನಷ್ಟ"
+     },
+     "size": 18,
+     "color": "red",
+     "visibleIf": "stk <= 0"
+    },
+    {
+     "shape": "label",
+     "x": 13,
+     "y": 1120,
+     "text": {
+      "en": "In balance",
+      "kn": "ಸಮತೋಲನ"
+     },
+     "size": 18,
+     "color": "green",
+     "visibleIf": "stk > 0 && stk <= 400"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Stock",
+      "kn": "ದಾಸ್ತಾನು"
+     },
+     "expr": "stk",
+     "digits": 0,
+     "unit": "units"
+    },
+    {
+     "label": {
+      "en": "Made this week",
+      "kn": "ಈ ವಾರ ತಯಾರಿ"
+     },
+     "expr": "make",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Sold this week",
+      "kn": "ಈ ವಾರ ಮಾರಾಟ"
+     },
+     "expr": "dem",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Without coordination, what happens in 26 weeks?",
+     "kn": "ಸಮನ್ವಯ ಇಲ್ಲದೆ 26 ವಾರದಲ್ಲಿ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Why is coordination called the essence of management?",
+     "kn": "ಸಮನ್ವಯ ನಿರ್ವಹಣೆಯ ಸಾರ ಏಕೆ?"
+    },
+    {
+     "en": "Set production below sales. What problem appears?",
+     "kn": "ಉತ್ಪಾದನೆ ಮಾರಾಟಕ್ಕಿಂತ ಕಡಿಮೆ ಮಾಡಿ. ಯಾವ ಸಮಸ್ಯೆ?"
+    }
+   ],
+   "seconds": 120,
+   "narration": {
+    "en": "Production makes goods at its own rate while sales sells at another. Without coordination, unsold stock piles up or shelves run empty. Turn on coordination: production adjusts to sales week by week.",
+    "kn": "ಉತ್ಪಾದನೆ ತನ್ನ ದರದಲ್ಲಿ, ಮಾರಾಟ ಇನ್ನೊಂದು ದರದಲ್ಲಿ. ಸಮನ್ವಯ ಇಲ್ಲದೆ ದಾಸ್ತಾನು ಹೆಚ್ಚುತ್ತದೆ ಅಥವಾ ಖಾಲಿಯಾಗುತ್ತದೆ. ಸಮನ್ವಯ ಆನ್ ಮಾಡಿ: ಉತ್ಪಾದನೆ ಮಾರಾಟಕ್ಕೆ ಹೊಂದಿಕೊಳ್ಳುತ್ತದೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

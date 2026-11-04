@@ -56,6 +56,314 @@
    }
   },
   {
+   "id": "scene-retailer-types",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Itinerant or fixed shop?"
+   },
+   "caption": {
+    "en": "Pick a small retailer and the customers he gets a day. Compare investment, rent, reach and variety, and his daily profit after costs."
+   },
+   "sliders": [
+    {
+     "name": "cu",
+     "label": {
+      "en": "Customers a day"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 10,
+     "value": 60
+    },
+    {
+     "name": "mg",
+     "label": {
+      "en": "Margin per customer"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 5,
+     "value": 15,
+     "unit": "₹"
+    }
+   ],
+   "choices": [
+    {
+     "name": "ty",
+     "label": {
+      "en": "Retailer"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Hawker"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Pedlar (cycle)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Periodic market"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Cheap jack"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "General store"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "Speciality shop"
+       },
+       "value": 6
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "dc",
+     "expr": "if(ty == 1, 20, if(ty == 2, 40, if(ty == 3, 120, if(ty == 4, 80, if(ty == 5, 400, 700)))))"
+    },
+    {
+     "name": "pr",
+     "expr": "cu*mg - dc"
+    },
+    {
+     "name": "b0",
+     "expr": "if(ty == 1, 1, if(ty == 2, 2, if(ty == 3, 3, if(ty == 4, 2, if(ty == 5, 7, 9)))))"
+    },
+    {
+     "name": "b1",
+     "expr": "if(ty == 1, 0, if(ty == 2, 1, if(ty == 3, 3, if(ty == 4, 2, if(ty == 5, 6, 8)))))"
+    },
+    {
+     "name": "b2",
+     "expr": "if(ty == 1, 10, if(ty == 2, 9, if(ty == 3, 6, if(ty == 4, 7, if(ty == 5, 0, 0)))))"
+    },
+    {
+     "name": "b3",
+     "expr": "if(ty == 1, 2, if(ty == 2, 3, if(ty == 3, 5, if(ty == 4, 3, if(ty == 5, 8, 6)))))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Score 0 to 10"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/10, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/10, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Investment"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/10, 0, 1)*36",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/10, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Rent / fees"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/10, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/10, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Mobility"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/10, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/10, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Variety"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Daily profit ₹{pr:0}"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "pr > 0"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Daily loss ₹{-pr:0}"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "pr <= 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Daily fixed cost"
+     },
+     "expr": "dc",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Daily profit"
+     },
+     "expr": "pr",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Customers to break even"
+     },
+     "expr": "ceil(dc/mg)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why can a hawker survive with very few customers?"
+    },
+    {
+     "en": "How many customers does a speciality shop need at ₹15 margin?"
+    },
+    {
+     "en": "What does a fixed shop offer that a pedlar cannot?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Pick a small retailer and the customers he gets a day. Compare investment, rent, reach and variety, and his daily profit after costs."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

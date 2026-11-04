@@ -65,6 +65,294 @@
    }
   },
   {
+   "id": "scene-redressal",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Where to file, and where to appeal",
+    "kn": "ಎಲ್ಲಿ ದೂರು, ಎಲ್ಲಿ ಮೇಲ್ಮನವಿ"
+   },
+   "caption": {
+    "en": "Slide the value of goods or services paid. The commission that hears the complaint lights up (District up to ₹1 crore, State up to ₹10 crore, National above). Press Appeal to move the case up within the time limit.",
+    "kn": "ಪಾವತಿಸಿದ ಸರಕು ಅಥವಾ ಸೇವೆಯ ಮೌಲ್ಯ ಬದಲಿಸಿ. ದೂರು ಕೇಳುವ ಆಯೋಗ ಬೆಳಗುತ್ತದೆ (ಜಿಲ್ಲೆ ₹1 ಕೋಟಿವರೆಗೆ, ರಾಜ್ಯ ₹10 ಕೋಟಿವರೆಗೆ, ರಾಷ್ಟ್ರೀಯ ಮೇಲೆ). ಮೇಲ್ಮನವಿ ಒತ್ತಿ ಪ್ರಕರಣ ಮೇಲಕ್ಕೆ."
+   },
+   "sliders": [
+    {
+     "name": "v",
+     "label": {
+      "en": "Value of goods or services paid",
+      "kn": "ಪಾವತಿಸಿದ ಮೌಲ್ಯ"
+     },
+     "min": 0.5,
+     "max": 20,
+     "step": 0.5,
+     "value": 0.5,
+     "unit": "₹ crore"
+    }
+   ],
+   "counters": [
+    {
+     "name": "ap",
+     "value": 0,
+     "min": 0,
+     "max": 3
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Appeal to the next level",
+      "kn": "ಮುಂದಿನ ಹಂತಕ್ಕೆ ಮೇಲ್ಮನವಿ"
+     },
+     "icon": "next",
+     "set": {
+      "ap": "ap + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "New complaint",
+      "kn": "ಹೊಸ ದೂರು"
+     },
+     "icon": "reset",
+     "set": {
+      "ap": 0
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "first",
+     "expr": "if(v <= 1, 0, if(v <= 10, 1, 2))"
+    },
+    {
+     "name": "lvl",
+     "expr": "min(first + ap, 3)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 6,
+     "w": 50,
+     "h": 9,
+     "color": {
+      "by": "if(lvl == 0, 1, if(first == 0, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 18,
+     "w": 50,
+     "h": 9,
+     "color": {
+      "by": "if(lvl == 1, 1, if(first == 1, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 30,
+     "w": 50,
+     "h": 9,
+     "color": {
+      "by": "if(lvl == 2, 1, if(first == 2, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 42,
+     "w": 50,
+     "h": 9,
+     "color": {
+      "by": "if(lvl == 3, 1, if(first == 3, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 35,
+     "y": 10.5,
+     "text": {
+      "en": "District Commission",
+      "kn": "ಜಿಲ್ಲಾ ಆಯೋಗ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 35,
+     "y": 22.5,
+     "text": {
+      "en": "State Commission",
+      "kn": "ರಾಜ್ಯ ಆಯೋಗ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 35,
+     "y": 34.5,
+     "text": {
+      "en": "National Commission",
+      "kn": "ರಾಷ್ಟ್ರೀಯ ಆಯೋಗ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 35,
+     "y": 46.5,
+     "text": {
+      "en": "Supreme Court",
+      "kn": "ಸರ್ವೋಚ್ಚ ನ್ಯಾಯಾಲಯ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": 35,
+     "y": 15.2,
+     "dx": 0,
+     "dy": 2.6,
+     "color": "white"
+    },
+    {
+     "shape": "arrow",
+     "x": 35,
+     "y": 27.2,
+     "dx": 0,
+     "dy": 2.6,
+     "color": "white"
+    },
+    {
+     "shape": "arrow",
+     "x": 35,
+     "y": 39.2,
+     "dx": 0,
+     "dy": 2.6,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 46,
+     "text": {
+      "en": "Value ₹{v:1} crore",
+      "kn": "ಮೌಲ್ಯ ₹{v:1} ಕೋಟಿ"
+     },
+     "size": 22
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 34,
+     "text": {
+      "en": "Appeal within 45 days",
+      "kn": "45 ದಿನಗಳಲ್ಲಿ ಮೇಲ್ಮನವಿ"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "lvl < 3"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 34,
+     "text": {
+      "en": "Final: Supreme Court",
+      "kn": "ಅಂತಿಮ: ಸರ್ವೋಚ್ಚ ನ್ಯಾಯಾಲಯ"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "lvl == 3"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Case now at level {lvl + 1:0} of 4",
+      "kn": "ಪ್ರಕರಣ ಈಗ ಹಂತ {lvl + 1:0} / 4"
+     },
+     "size": 18
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Complaint first filed at level",
+      "kn": "ಮೊದಲ ದೂರಿನ ಹಂತ"
+     },
+     "expr": "first + 1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Appeals made",
+      "kn": "ಮೇಲ್ಮನವಿಗಳು"
+     },
+     "expr": "lvl - first",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "A ₹40 lakh car is defective. Where is the complaint filed?",
+     "kn": "₹40 ಲಕ್ಷದ ಕಾರು ದೋಷ. ದೂರು ಎಲ್ಲಿ?"
+    },
+    {
+     "en": "A ₹15 crore case: how many appeals can follow?",
+     "kn": "₹15 ಕೋಟಿ ಪ್ರಕರಣ: ಎಷ್ಟು ಮೇಲ್ಮನವಿ ಸಾಧ್ಯ?"
+    },
+    {
+     "en": "Name two reliefs a commission can order.",
+     "kn": "ಆಯೋಗ ನೀಡಬಹುದಾದ ಎರಡು ಪರಿಹಾರ ಹೇಳಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Slide the value of goods or services paid. The commission that hears the complaint lights up (District up to ₹1 crore, State up to ₹10 crore, National above). Press Appeal to move the case up within the time limit.",
+    "kn": "ಪಾವತಿಸಿದ ಸರಕು ಅಥವಾ ಸೇವೆಯ ಮೌಲ್ಯ ಬದಲಿಸಿ. ದೂರು ಕೇಳುವ ಆಯೋಗ ಬೆಳಗುತ್ತದೆ (ಜಿಲ್ಲೆ ₹1 ಕೋಟಿವರೆಗೆ, ರಾಜ್ಯ ₹10 ಕೋಟಿವರೆಗೆ, ರಾಷ್ಟ್ರೀಯ ಮೇಲೆ). ಮೇಲ್ಮನವಿ ಒತ್ತಿ ಪ್ರಕರಣ ಮೇಲಕ್ಕೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -59,6 +59,306 @@
    }
   },
   {
+   "id": "scene-env-dimensions",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Reading the business environment"
+   },
+   "caption": {
+    "en": "The environment has economic, social, technological and political-legal dimensions, all outside the firm's control. Choose a firm and set the changes; each change is an opportunity or a threat depending on the firm."
+   },
+   "sliders": [
+    {
+     "name": "ec",
+     "label": {
+      "en": "Incomes rise"
+     },
+     "min": -10,
+     "max": 10,
+     "step": 1,
+     "value": 4
+    },
+    {
+     "name": "so",
+     "label": {
+      "en": "Health and convenience trend"
+     },
+     "min": -10,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "te",
+     "label": {
+      "en": "Smartphone spread"
+     },
+     "min": -10,
+     "max": 10,
+     "step": 1,
+     "value": 6
+    },
+    {
+     "name": "pl",
+     "label": {
+      "en": "New regulation"
+     },
+     "min": -10,
+     "max": 10,
+     "step": 1,
+     "value": 2
+    }
+   ],
+   "choices": [
+    {
+     "name": "fm",
+     "label": {
+      "en": "Firm"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Online grocery app"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Gold loan company"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Film camera maker"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "ec*if(fm == 1, 1, if(fm == 2, -1, 0.5))"
+    },
+    {
+     "name": "b1",
+     "expr": "so*if(fm == 1, 1, if(fm == 2, 0.5, -1))"
+    },
+    {
+     "name": "b2",
+     "expr": "te*if(fm == 1, 1, if(fm == 2, 0.5, -1))"
+    },
+    {
+     "name": "b3",
+     "expr": "pl*if(fm == 1, -1, if(fm == 2, 1, -0.5))"
+    },
+    {
+     "name": "net",
+     "expr": "b0 + b1 + b2 + b3"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 30,
+     "x2": 61,
+     "y2": 30,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Effect on this firm (bars above 0 are opportunities)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": "30 + min(clamp(b0/10, -1, 1)*18, 0)",
+     "w": 8.37,
+     "h": "abs(clamp(b0/10, -1, 1)*18)",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "30 + clamp(b0/10, -1, 1)*18 + if(b0 >= 0, 2.5, -2.5)",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Economic"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": "30 + min(clamp(b1/10, -1, 1)*18, 0)",
+     "w": 8.37,
+     "h": "abs(clamp(b1/10, -1, 1)*18)",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "30 + clamp(b1/10, -1, 1)*18 + if(b1 >= 0, 2.5, -2.5)",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Social"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": "30 + min(clamp(b2/10, -1, 1)*18, 0)",
+     "w": 8.37,
+     "h": "abs(clamp(b2/10, -1, 1)*18)",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "30 + clamp(b2/10, -1, 1)*18 + if(b2 >= 0, 2.5, -2.5)",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Technological"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": "30 + min(clamp(b3/10, -1, 1)*18, 0)",
+     "w": 8.37,
+     "h": "abs(clamp(b3/10, -1, 1)*18)",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "30 + clamp(b3/10, -1, 1)*18 + if(b3 >= 0, 2.5, -2.5)",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "Political-legal"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Mostly opportunities"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "net > 3"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Mostly threats"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "net < -3"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Mixed signals"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "abs(net) <= 3"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Net effect"
+     },
+     "expr": "net",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "The same smartphone trend: why is it an opportunity for one firm and a threat to another?"
+    },
+    {
+     "en": "Which feature of the environment is 'relativity'?"
+    },
+    {
+     "en": "Can the firm change any of these sliders itself?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "The environment has economic, social, technological and political-legal dimensions, all outside the firm's control. Choose a firm and set the changes; each change is an opportunity or a threat depending on the firm."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

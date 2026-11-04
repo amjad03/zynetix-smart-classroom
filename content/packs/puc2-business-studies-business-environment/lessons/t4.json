@@ -61,6 +61,298 @@
    }
   },
   {
+   "id": "scene-lpg",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "What LPG did to Indian markets",
+    "kn": "LPG ಭಾರತೀಯ ಮಾರುಕಟ್ಟೆಗೆ ಮಾಡಿದ್ದು"
+   },
+   "caption": {
+    "en": "Switch on the 1991 reforms one by one: liberalisation (licences abolished), privatisation (disinvestment), globalisation (lower tariffs, more FDI). Watch competition, consumer choice, prices and foreign investment change.",
+    "kn": "1991ರ ಸುಧಾರಣೆಗಳನ್ನು ಒಂದೊಂದಾಗಿ ಆನ್ ಮಾಡಿ: ಉದಾರೀಕರಣ, ಖಾಸಗೀಕರಣ, ಜಾಗತೀಕರಣ. ಸ್ಪರ್ಧೆ, ಗ್ರಾಹಕ ಆಯ್ಕೆ, ಬೆಲೆ, ವಿದೇಶಿ ಹೂಡಿಕೆ ಬದಲಾವಣೆ ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "tf",
+     "label": {
+      "en": "Import tariff",
+      "kn": "ಆಮದು ಸುಂಕ"
+     },
+     "min": 10,
+     "max": 150,
+     "step": 10,
+     "value": 100,
+     "unit": "%"
+    },
+    {
+     "name": "fdi",
+     "label": {
+      "en": "FDI cap",
+      "kn": "FDI ಮಿತಿ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 40,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "lib",
+     "label": {
+      "en": "Liberalisation",
+      "kn": "ಉದಾರೀಕರಣ"
+     },
+     "value": false
+    },
+    {
+     "name": "pri",
+     "label": {
+      "en": "Privatisation",
+      "kn": "ಖಾಸಗೀಕರಣ"
+     },
+     "value": false
+    },
+    {
+     "name": "glo",
+     "label": {
+      "en": "Globalisation",
+      "kn": "ಜಾಗತೀಕರಣ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "b0",
+     "expr": "3 + 6*lib + 2*pri + 5*glo*fdi/100"
+    },
+    {
+     "name": "b1",
+     "expr": "2 + 4*lib + 1*pri + 6*glo*(1 - tf/150)"
+    },
+    {
+     "name": "b2",
+     "expr": "10 - 2*lib - 1*pri - 3*glo*(1 - tf/150)"
+    },
+    {
+     "name": "b3",
+     "expr": "1 + 10*glo*fdi/100 + 1*lib"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Index (illustrative)",
+      "kn": "ಸೂಚ್ಯಂಕ (ಉದಾಹರಣೆ)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b0/16, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": "14.5 + clamp(b0/16, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 8,
+     "text": {
+      "en": "Competitors",
+      "kn": "ಸ್ಪರ್ಧಿಗಳು"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 22.07,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b1/16, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": "14.5 + clamp(b1/16, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.25,
+     "y": 8,
+     "text": {
+      "en": "Consumer choice",
+      "kn": "ಗ್ರಾಹಕ ಆಯ್ಕೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 35.56,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b2/16, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": "14.5 + clamp(b2/16, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 39.75,
+     "y": 8,
+     "text": {
+      "en": "Price index",
+      "kn": "ಬೆಲೆ ಸೂಚ್ಯಂಕ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 49.06,
+     "y": 12,
+     "w": 8.37,
+     "h": "clamp(b3/16, 0, 1)*36",
+     "color": "yellow",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": "14.5 + clamp(b3/16, 0, 1)*36",
+     "text": {
+      "en": "{b3:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 53.25,
+     "y": 8,
+     "text": {
+      "en": "FDI inflow",
+      "kn": "FDI ಒಳಹರಿವು"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Before 1991: licence raj",
+      "kn": "1991ಕ್ಕೂ ಮುಂಚೆ: ಲೈಸೆನ್ಸ್ ರಾಜ್"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "lib + pri + glo == 0"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "New economic policy in full",
+      "kn": "ಪೂರ್ಣ ಹೊಸ ಆರ್ಥಿಕ ನೀತಿ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "lib + pri + glo == 3"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Partly reformed",
+      "kn": "ಭಾಗಶಃ ಸುಧಾರಣೆ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "lib + pri + glo > 0 && lib + pri + glo < 3"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Reforms on",
+      "kn": "ಜಾರಿಯಾದ ಸುಧಾರಣೆ"
+     },
+     "expr": "lib + pri + glo",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn on only globalisation with a 100% tariff. Why does little change?",
+     "kn": "100% ಸುಂಕದಲ್ಲಿ ಜಾಗತೀಕರಣ ಮಾತ್ರ. ಕಡಿಮೆ ಬದಲಾವಣೆ ಏಕೆ?"
+    },
+    {
+     "en": "Which reform added the most competitors?",
+     "kn": "ಯಾವ ಸುಧಾರಣೆ ಹೆಚ್ಚು ಸ್ಪರ್ಧಿಗಳನ್ನು ತಂದಿತು?"
+    },
+    {
+     "en": "Why did Indian firms have to become more customer-focused?",
+     "kn": "ಭಾರತೀಯ ಸಂಸ್ಥೆಗಳು ಗ್ರಾಹಕ-ಕೇಂದ್ರಿತವಾಗಬೇಕಾಯಿತು ಏಕೆ?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Switch on the 1991 reforms one by one: liberalisation (licences abolished), privatisation (disinvestment), globalisation (lower tariffs, more FDI). Watch competition, consumer choice, prices and foreign investment change.",
+    "kn": "1991ರ ಸುಧಾರಣೆಗಳನ್ನು ಒಂದೊಂದಾಗಿ ಆನ್ ಮಾಡಿ: ಉದಾರೀಕರಣ, ಖಾಸಗೀಕರಣ, ಜಾಗತೀಕರಣ. ಸ್ಪರ್ಧೆ, ಗ್ರಾಹಕ ಆಯ್ಕೆ, ಬೆಲೆ, ವಿದೇಶಿ ಹೂಡಿಕೆ ಬದಲಾವಣೆ ನೋಡಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

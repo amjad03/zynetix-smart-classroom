@@ -68,6 +68,564 @@
    }
   },
   {
+   "id": "scene-trading-steps",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Buying shares on a stock exchange",
+    "kn": "ಷೇರು ವಿನಿಮಯದಲ್ಲಿ ಷೇರು ಖರೀದಿ"
+   },
+   "caption": {
+    "en": "Follow the screen-based trading procedure: choose a broker, open demat and trading accounts, place the order, the order is matched, a contract note is issued and the deal is settled on T+1. Set the shares and price.",
+    "kn": "ಪರದೆ ಆಧಾರಿತ ವ್ಯಾಪಾರ ಕ್ರಮ ಅನುಸರಿಸಿ: ದಲ್ಲಾಳಿ ಆಯ್ಕೆ, ಡಿಮ್ಯಾಟ್ ಮತ್ತು ವ್ಯಾಪಾರ ಖಾತೆ, ಆದೇಶ, ಹೊಂದಾಣಿಕೆ, ಒಪ್ಪಂದ ಪತ್ರ, T+1 ರಂದು ಇತ್ಯರ್ಥ."
+   },
+   "sliders": [
+    {
+     "name": "q",
+     "label": {
+      "en": "Shares",
+      "kn": "ಷೇರುಗಳು"
+     },
+     "min": 10,
+     "max": 500,
+     "step": 10,
+     "value": 100
+    },
+    {
+     "name": "pr",
+     "label": {
+      "en": "Price",
+      "kn": "ಬೆಲೆ"
+     },
+     "min": 50,
+     "max": 2000,
+     "step": 50,
+     "value": 500,
+     "unit": "₹"
+    }
+   ],
+   "counters": [
+    {
+     "name": "s",
+     "value": 0,
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Previous step",
+      "kn": "ಹಿಂದಿನ ಹಂತ"
+     },
+     "icon": "remove",
+     "set": {
+      "s": "max(s - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Next step",
+      "kn": "ಮುಂದಿನ ಹಂತ"
+     },
+     "icon": "next",
+     "set": {
+      "s": "min(s + 1, 5)"
+     },
+     "play": true
+    },
+    {
+     "label": {
+      "en": "Run the whole process",
+      "kn": "ಇಡೀ ಪ್ರಕ್ರಿಯೆ ನಡೆಸಿ"
+     },
+     "icon": "launch",
+     "set": {
+      "s": 5
+     },
+     "reset": true,
+     "play": true
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "s": 0
+     },
+     "reset": true
+    }
+   ],
+   "time": {
+    "max": 5,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "step"
+   },
+   "vars": [
+    {
+     "name": "d0",
+     "expr": "1"
+    },
+    {
+     "name": "d1",
+     "expr": "2"
+    },
+    {
+     "name": "d2",
+     "expr": "0"
+    },
+    {
+     "name": "d3",
+     "expr": "0"
+    },
+    {
+     "name": "d4",
+     "expr": "0"
+    },
+    {
+     "name": "d5",
+     "expr": "1"
+    },
+    {
+     "name": "cum",
+     "expr": "d0 + if(s >= 1, d1, 0) + if(s >= 2, d2, 0) + if(s >= 3, d3, 0) + if(s >= 4, d4, 0) + if(s >= 5, d5, 0)"
+    },
+    {
+     "name": "tot",
+     "expr": "d0 + d1 + d2 + d3 + d4 + d5"
+    },
+    {
+     "name": "pos",
+     "expr": "min(t, s)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 4.72,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 0, 1, if(s == 0, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 10.83,
+     "y": 36.5,
+     "text": {
+      "en": "Broker",
+      "kn": "ದಲ್ಲಾಳಿ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 10.83,
+     "y": 31,
+     "text": {
+      "en": "{d0:0} days",
+      "kn": "{d0:0} ದಿನಗಳು"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 17.14,
+     "y": 35,
+     "dx": 3.05,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 20.39,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 1, 1, if(s == 1, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 26.5,
+     "y": 36.5,
+     "text": {
+      "en": "Demat a/c",
+      "kn": "ಡಿಮ್ಯಾಟ್ ಖಾತೆ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 26.5,
+     "y": 31,
+     "text": {
+      "en": "{d1:0} days",
+      "kn": "{d1:0} ದಿನಗಳು"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 32.81,
+     "y": 35,
+     "dx": 3.05,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 36.06,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 2, 1, if(s == 2, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 42.17,
+     "y": 36.5,
+     "text": {
+      "en": "Place order",
+      "kn": "ಆದೇಶ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 42.17,
+     "y": 31,
+     "text": {
+      "en": "{d2:0} days",
+      "kn": "{d2:0} ದಿನಗಳು"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 48.48,
+     "y": 35,
+     "dx": 3.05,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 51.72,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 3, 1, if(s == 3, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 57.83,
+     "y": 36.5,
+     "text": {
+      "en": "Matched",
+      "kn": "ಹೊಂದಾಣಿಕೆ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 57.83,
+     "y": 31,
+     "text": {
+      "en": "{d3:0} days",
+      "kn": "{d3:0} ದಿನಗಳು"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 64.14,
+     "y": 35,
+     "dx": 3.05,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 67.39,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 4, 1, if(s == 4, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 73.5,
+     "y": 36.5,
+     "text": {
+      "en": "Contract note",
+      "kn": "ಒಪ್ಪಂದ ಪತ್ರ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 73.5,
+     "y": 31,
+     "text": {
+      "en": "{d4:0} days",
+      "kn": "{d4:0} ದಿನಗಳು"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 79.81,
+     "y": 35,
+     "dx": 3.05,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 83.06,
+     "y": 28,
+     "w": 12.22,
+     "h": 14,
+     "color": {
+      "by": "if(s > 5, 1, if(s == 5, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 89.17,
+     "y": 36.5,
+     "text": {
+      "en": "Settlement",
+      "kn": "ಇತ್ಯರ್ಥ"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 89.17,
+     "y": 31,
+     "text": {
+      "en": "{d5:0} days",
+      "kn": "{d5:0} ದಿನಗಳು"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Choose a SEBI-registered broker",
+      "kn": "SEBI ನೋಂದಾಯಿತ ದಲ್ಲಾಳಿ ಆರಿಸಿ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 0"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Open demat and trading accounts with KYC and PAN",
+      "kn": "KYC, PAN ನೊಂದಿಗೆ ಡಿಮ್ಯಾಟ್, ವ್ಯಾಪಾರ ಖಾತೆ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 1"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Place a buy order: quantity and price",
+      "kn": "ಖರೀದಿ ಆದೇಶ: ಪ್ರಮಾಣ, ಬೆಲೆ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 2"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "The exchange matches it with a sell order on screen",
+      "kn": "ಪರದೆಯ ಮೇಲೆ ಮಾರಾಟ ಆದೇಶದೊಂದಿಗೆ ಹೊಂದಾಣಿಕೆ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 3"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Broker issues a contract note the same day",
+      "kn": "ಅದೇ ದಿನ ಒಪ್ಪಂದ ಪತ್ರ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 4"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Pay in; shares credited to demat on T+1",
+      "kn": "ಹಣ ಪಾವತಿ; T+1 ರಂದು ಷೇರು ಡಿಮ್ಯಾಟ್‌ಗೆ"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 5"
+    },
+    {
+     "shape": "circle",
+     "x": "10.83 + pos*15.667",
+     "y": 46,
+     "r": 1.6,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 54,
+     "text": {
+      "en": "Step {s + 1:0} of 6: {cum:0} of {tot:0} days so far",
+      "kn": "ಹಂತ {s + 1:0} / 6: ಇದುವರೆಗೆ {cum:0} / {tot:0} ದಿನಗಳು"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಹಂತ"
+     },
+     "expr": "s + 1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Time so far (days)",
+      "kn": "ಇದುವರೆಗಿನ ಸಮಯ (ದಿನಗಳು)"
+     },
+     "expr": "cum",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Trade value",
+      "kn": "ವ್ಯಾಪಾರ ಮೌಲ್ಯ"
+     },
+     "expr": "q*pr",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Brokerage at 0.3%",
+      "kn": "0.3% ದಲ್ಲಾಳಿ ಶುಲ್ಕ"
+     },
+     "expr": "q*pr*0.003",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why must shares now be held in demat form?",
+     "kn": "ಷೇರುಗಳು ಡಿಮ್ಯಾಟ್ ರೂಪದಲ್ಲಿರಬೇಕು ಏಕೆ?"
+    },
+    {
+     "en": "What does T+1 mean?",
+     "kn": "T+1 ಎಂದರೇನು?"
+    },
+    {
+     "en": "Who holds your shares: the broker or the depository?",
+     "kn": "ನಿಮ್ಮ ಷೇರು ಯಾರಲ್ಲಿ: ದಲ್ಲಾಳಿ ಅಥವಾ ಠೇವಣಿ ಸಂಸ್ಥೆ?"
+    }
+   ],
+   "seconds": 120,
+   "narration": {
+    "en": "Follow the screen-based trading procedure: choose a broker, open demat and trading accounts, place the order, the order is matched, a contract note is issued and the deal is settled on T+1. Set the shares and price.",
+    "kn": "ಪರದೆ ಆಧಾರಿತ ವ್ಯಾಪಾರ ಕ್ರಮ ಅನುಸರಿಸಿ: ದಲ್ಲಾಳಿ ಆಯ್ಕೆ, ಡಿಮ್ಯಾಟ್ ಮತ್ತು ವ್ಯಾಪಾರ ಖಾತೆ, ಆದೇಶ, ಹೊಂದಾಣಿಕೆ, ಒಪ್ಪಂದ ಪತ್ರ, T+1 ರಂದು ಇತ್ಯರ್ಥ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

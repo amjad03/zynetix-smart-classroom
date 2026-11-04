@@ -62,6 +62,206 @@
    }
   },
   {
+   "id": "scene-sebi-watch",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "SEBI stops a price rigging",
+    "kn": "SEBI ಬೆಲೆ ತಿರುಚುವಿಕೆ ತಡೆಯುತ್ತದೆ"
+   },
+   "caption": {
+    "en": "A group buys heavily to push a share far above its fair value, then sells to small investors. Set the rigging pressure and turn on SEBI's surveillance: it detects the unusual trading, halts the scheme and the price returns to fair value.",
+    "kn": "ಒಂದು ಗುಂಪು ಹೆಚ್ಚು ಖರೀದಿಸಿ ಷೇರು ಬೆಲೆಯನ್ನು ನ್ಯಾಯ ಮೌಲ್ಯಕ್ಕಿಂತ ಬಹಳ ಮೇಲೆ ತಳ್ಳಿ ಸಣ್ಣ ಹೂಡಿಕೆದಾರರಿಗೆ ಮಾರುತ್ತದೆ. SEBI ನಿಗಾ ಆನ್ ಮಾಡಿ: ಅಸಹಜ ವ್ಯಾಪಾರ ಪತ್ತೆ, ಬೆಲೆ ಮರಳುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "fv",
+     "label": {
+      "en": "Fair value",
+      "kn": "ನ್ಯಾಯ ಮೌಲ್ಯ"
+     },
+     "min": 50,
+     "max": 150,
+     "step": 5,
+     "value": 100,
+     "unit": "₹"
+    },
+    {
+     "name": "pump",
+     "label": {
+      "en": "Rigging pressure",
+      "kn": "ತಿರುಚುವ ಒತ್ತಡ"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 15
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sebi",
+     "label": {
+      "en": "SEBI surveillance on",
+      "kn": "SEBI ನಿಗಾ ಆನ್"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2,
+    "unit": "day"
+   },
+   "vars": [
+    {
+     "name": "caught",
+     "expr": "sebi && t > 12"
+    },
+    {
+     "name": "push",
+     "expr": "if(t < 25 && !caught, pump, 0)"
+    }
+   ],
+   "state": [
+    {
+     "name": "p",
+     "init": "fv",
+     "rate": "push - if(t >= 25 && !caught, 0.6, 0.25)*(p - fv)"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     0,
+     60
+    ],
+    "y": [
+     0,
+     600
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "day",
+    "yLabel": "share price (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "fv",
+     "x2": 60,
+     "y2": "fv",
+     "dashed": true,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 55,
+     "y": "fv + 18",
+     "text": {
+      "en": "fair value",
+      "kn": "ನ್ಯಾಯ ಮೌಲ್ಯ"
+     },
+     "size": 16,
+     "color": "green"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "p",
+     "length": 1200,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "p",
+     "r": 0.6,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 0,
+     "x2": 12,
+     "y2": 600,
+     "dashed": true,
+     "color": "blue",
+     "visibleIf": "sebi"
+    },
+    {
+     "shape": "label",
+     "x": 30,
+     "y": 560,
+     "text": {
+      "en": "SEBI acts on day 12: trading probe, penalty",
+      "kn": "12ನೇ ದಿನ SEBI ಕ್ರಮ: ತನಿಖೆ, ದಂಡ"
+     },
+     "size": 18,
+     "color": "blue",
+     "visibleIf": "caught"
+    },
+    {
+     "shape": "label",
+     "x": 30,
+     "y": 560,
+     "text": {
+      "en": "Riggers dump shares on small investors",
+      "kn": "ಸಣ್ಣ ಹೂಡಿಕೆದಾರರ ಮೇಲೆ ಷೇರು ಸುರಿತ"
+     },
+     "size": 18,
+     "color": "red",
+     "visibleIf": "!sebi && t >= 25"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Share price",
+      "kn": "ಷೇರು ಬೆಲೆ"
+     },
+     "expr": "p",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Above fair value",
+      "kn": "ನ್ಯಾಯ ಮೌಲ್ಯಕ್ಕಿಂತ ಮೇಲೆ"
+     },
+     "expr": "p - fv",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn surveillance off. Who loses when the price crashes?",
+     "kn": "ನಿಗಾ ಆಫ್ ಮಾಡಿ. ಬೆಲೆ ಕುಸಿದಾಗ ಯಾರಿಗೆ ನಷ್ಟ?"
+    },
+    {
+     "en": "Is this SEBI's protective, regulatory or development function?",
+     "kn": "ಇದು SEBIಯ ಯಾವ ಕಾರ್ಯ?"
+    },
+    {
+     "en": "Name two other unfair practices SEBI prohibits.",
+     "kn": "SEBI ನಿಷೇಧಿಸುವ ಇನ್ನೆರಡು ಅನ್ಯಾಯ ಪದ್ಧತಿ ಹೇಳಿ."
+    }
+   ],
+   "seconds": 120,
+   "narration": {
+    "en": "A group buys heavily to push a share far above its fair value, then sells to small investors. Set the rigging pressure and turn on SEBI's surveillance: it detects the unusual trading, halts the scheme and the price returns to fair value.",
+    "kn": "ಒಂದು ಗುಂಪು ಹೆಚ್ಚು ಖರೀದಿಸಿ ಷೇರು ಬೆಲೆಯನ್ನು ನ್ಯಾಯ ಮೌಲ್ಯಕ್ಕಿಂತ ಬಹಳ ಮೇಲೆ ತಳ್ಳಿ ಸಣ್ಣ ಹೂಡಿಕೆದಾರರಿಗೆ ಮಾರುತ್ತದೆ. SEBI ನಿಗಾ ಆನ್ ಮಾಡಿ: ಅಸಹಜ ವ್ಯಾಪಾರ ಪತ್ತೆ, ಬೆಲೆ ಮರಳುತ್ತದೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

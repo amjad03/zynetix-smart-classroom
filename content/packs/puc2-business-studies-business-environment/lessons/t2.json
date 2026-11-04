@@ -55,6 +55,212 @@
    }
   },
   {
+   "id": "scene-first-mover",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Spotting a trend early: the first-mover advantage",
+    "kn": "ಪ್ರವೃತ್ತಿಯನ್ನು ಬೇಗ ಗುರುತಿಸುವುದು: ಮೊದಲಿಗನ ಲಾಭ"
+   },
+   "caption": {
+    "en": "A new trend opens a market at month 0. Set how many months each firm takes to notice and act. Press Play: the firm that scans the environment first grabs a larger share.",
+    "kn": "ತಿಂಗಳು 0ರಲ್ಲಿ ಹೊಸ ಪ್ರವೃತ್ತಿ ಮಾರುಕಟ್ಟೆ ತೆರೆಯುತ್ತದೆ. ಪ್ರತಿ ಸಂಸ್ಥೆ ಗಮನಿಸಲು ಎಷ್ಟು ತಿಂಗಳು ಎಂದು ಹೊಂದಿಸಿ. ಮೊದಲು ಪರಿಸರ ಪರಿಶೀಲಿಸಿದ ಸಂಸ್ಥೆ ಹೆಚ್ಚು ಪಾಲು ಪಡೆಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "la",
+     "label": {
+      "en": "Our firm acts after",
+      "kn": "ನಮ್ಮ ಸಂಸ್ಥೆ ಕ್ರಮ"
+     },
+     "min": 0,
+     "max": 18,
+     "step": 1,
+     "value": 6,
+     "unit": "months"
+    },
+    {
+     "name": "lb",
+     "label": {
+      "en": "Rival acts after",
+      "kn": "ಪ್ರತಿಸ್ಪರ್ಧಿ ಕ್ರಮ"
+     },
+     "min": 0,
+     "max": 18,
+     "step": 1,
+     "value": 3,
+     "unit": "months"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "scan",
+     "label": {
+      "en": "We scan the environment regularly (acts 3 months sooner)",
+      "kn": "ನಿಯಮಿತ ಪರಿಸರ ಪರಿಶೀಲನೆ (3 ತಿಂಗಳು ಮುಂಚೆ)"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 36,
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2,
+    "unit": "month"
+   },
+   "vars": [
+    {
+     "name": "ea",
+     "expr": "max(la - if(scan, 3, 0), 0)"
+    },
+    {
+     "name": "ga",
+     "expr": "step(ea, t)"
+    },
+    {
+     "name": "gb",
+     "expr": "step(lb, t)"
+    }
+   ],
+   "state": [
+    {
+     "name": "A",
+     "init": 0,
+     "rate": "ga*0.25*(100 - A - B)*(0.3 + A/100)"
+    },
+    {
+     "name": "B",
+     "init": 0,
+     "rate": "gb*0.25*(100 - A - B)*(0.3 + B/100)"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     0,
+     36
+    ],
+    "y": [
+     0,
+     100
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "month",
+    "yLabel": "market share (%)"
+   },
+   "shapes": [
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "A",
+     "length": 800,
+     "color": "green"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "B",
+     "length": 800,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "A",
+     "r": 0.4,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "B",
+     "r": 0.4,
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": "ea",
+     "y1": 0,
+     "x2": "ea",
+     "y2": 100,
+     "dashed": true,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": "lb",
+     "y1": 0,
+     "x2": "lb",
+     "y2": 100,
+     "dashed": true,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 26,
+     "y": 90,
+     "text": {
+      "en": "Us {A:0}%  Rival {B:0}%",
+      "kn": "ನಾವು {A:0}%  ಪ್ರತಿಸ್ಪರ್ಧಿ {B:0}%"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Our share",
+      "kn": "ನಮ್ಮ ಪಾಲು"
+     },
+     "expr": "A",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Rival's share",
+      "kn": "ಪ್ರತಿಸ್ಪರ್ಧಿ ಪಾಲು"
+     },
+     "expr": "B",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "We act at month",
+      "kn": "ನಾವು ಕ್ರಮ ತಿಂಗಳು"
+     },
+     "expr": "ea",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Act 3 months before the rival. Who ends with more share?",
+     "kn": "ಪ್ರತಿಸ್ಪರ್ಧಿಗಿಂತ 3 ತಿಂಗಳು ಮುಂಚೆ ಕ್ರಮ. ಯಾರಿಗೆ ಹೆಚ್ಚು ಪಾಲು?"
+    },
+    {
+     "en": "Turn on scanning. Which importance of the environment does this show?",
+     "kn": "ಪರಿಶೀಲನೆ ಆನ್ ಮಾಡಿ. ಇದು ಪರಿಸರದ ಯಾವ ಮಹತ್ವ ತೋರಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Give a real example of a first mover in India.",
+     "kn": "ಭಾರತದಲ್ಲಿ ಮೊದಲಿಗನ ನೈಜ ಉದಾಹರಣೆ ಕೊಡಿ."
+    }
+   ],
+   "seconds": 120,
+   "narration": {
+    "en": "A new trend opens a market at month 0. Set how many months each firm takes to notice and act. Press Play: the firm that scans the environment first grabs a larger share.",
+    "kn": "ತಿಂಗಳು 0ರಲ್ಲಿ ಹೊಸ ಪ್ರವೃತ್ತಿ ಮಾರುಕಟ್ಟೆ ತೆರೆಯುತ್ತದೆ. ಪ್ರತಿ ಸಂಸ್ಥೆ ಗಮನಿಸಲು ಎಷ್ಟು ತಿಂಗಳು ಎಂದು ಹೊಂದಿಸಿ. ಮೊದಲು ಪರಿಸರ ಪರಿಶೀಲಿಸಿದ ಸಂಸ್ಥೆ ಹೆಚ್ಚು ಪಾಲು ಪಡೆಯುತ್ತದೆ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

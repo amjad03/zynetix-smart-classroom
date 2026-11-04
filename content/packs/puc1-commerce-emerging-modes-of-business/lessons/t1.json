@@ -59,6 +59,253 @@
    }
   },
   {
+   "id": "scene-online-vs-shop",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Online store or physical shop?"
+   },
+   "caption": {
+    "en": "An e-commerce seller saves on rent and staff but pays for the platform, delivery and returns. Set the orders a month and the costs to compare the profit of an online store with a physical shop."
+   },
+   "sliders": [
+    {
+     "name": "orders",
+     "label": {
+      "en": "Orders a month"
+     },
+     "min": 200,
+     "max": 5000,
+     "step": 100,
+     "value": 1500
+    },
+    {
+     "name": "mg",
+     "label": {
+      "en": "Margin per order"
+     },
+     "min": 50,
+     "max": 300,
+     "step": 10,
+     "value": 120,
+     "unit": "₹"
+    },
+    {
+     "name": "dl",
+     "label": {
+      "en": "Delivery cost per order"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 40,
+     "unit": "₹"
+    },
+    {
+     "name": "cm",
+     "label": {
+      "en": "Platform commission"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 12,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "rt",
+     "label": {
+      "en": "Returns"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Low (2%)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Medium (10%)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "High (25%)"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "rtp",
+     "expr": "if(rt == 1, 2, if(rt == 2, 10, 25))"
+    },
+    {
+     "name": "b0",
+     "expr": "orders*mg - 60000"
+    },
+    {
+     "name": "b1",
+     "expr": "orders*(mg - dl - mg*cm/100 - mg*rtp/100) - 15000"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 30,
+     "x2": 61,
+     "y2": 30,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Monthly profit (₹)"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 11.13,
+     "y": "30 + min(clamp(b0/300000, -1, 1)*18, 0)",
+     "w": 16.74,
+     "h": "abs(clamp(b0/300000, -1, 1)*18)",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 19.5,
+     "y": "30 + clamp(b0/300000, -1, 1)*18 + if(b0 >= 0, 2.5, -2.5)",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 19.5,
+     "y": 8,
+     "text": {
+      "en": "Shop profit"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 38.13,
+     "y": "30 + min(clamp(b1/300000, -1, 1)*18, 0)",
+     "w": 16.74,
+     "h": "abs(clamp(b1/300000, -1, 1)*18)",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 46.5,
+     "y": "30 + clamp(b1/300000, -1, 1)*18 + if(b1 >= 0, 2.5, -2.5)",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 46.5,
+     "y": 8,
+     "text": {
+      "en": "Online profit"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Online is more profitable"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "b1 > b0"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "The shop is more profitable"
+     },
+     "size": 22,
+     "color": "blue",
+     "visibleIf": "b1 <= b0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Shop profit"
+     },
+     "expr": "b0",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Online profit"
+     },
+     "expr": "b1",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Online cost per order"
+     },
+     "expr": "dl + mg*cm/100 + mg*rtp/100",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At 500 orders a month, which wins? Why?"
+    },
+    {
+     "en": "Which costs of a shop disappear online?"
+    },
+    {
+     "en": "Why do high returns hurt online fashion sellers?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "An e-commerce seller saves on rent and staff but pays for the platform, delivery and returns. Set the orders a month and the costs to compare the profit of an online store with a physical shop."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

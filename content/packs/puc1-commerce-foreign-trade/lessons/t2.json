@@ -62,6 +62,739 @@
    }
   },
   {
+   "id": "scene-export-import-steps",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Export and import procedure"
+   },
+   "caption": {
+    "en": "Step through the export procedure from receiving an order to getting paid. Switch to import to see the importer's side. A letter of credit adds a week but makes payment safe and fast."
+   },
+   "sliders": [
+    {
+     "name": "pd",
+     "label": {
+      "en": "Production time"
+     },
+     "min": 5,
+     "max": 60,
+     "step": 5,
+     "value": 20,
+     "unit": "days"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "imp",
+     "label": {
+      "en": "Show the import side"
+     },
+     "value": false
+    },
+    {
+     "name": "lc",
+     "label": {
+      "en": "Use a letter of credit"
+     },
+     "value": true
+    }
+   ],
+   "counters": [
+    {
+     "name": "s",
+     "value": 0,
+     "min": 0,
+     "max": 6
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Previous step"
+     },
+     "icon": "remove",
+     "set": {
+      "s": "max(s - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Next step"
+     },
+     "icon": "next",
+     "set": {
+      "s": "min(s + 1, 6)"
+     },
+     "play": true
+    },
+    {
+     "label": {
+      "en": "Run the whole process"
+     },
+     "icon": "launch",
+     "set": {
+      "s": 6
+     },
+     "reset": true,
+     "play": true
+    },
+    {
+     "label": {
+      "en": "Start again"
+     },
+     "icon": "reset",
+     "set": {
+      "s": 0
+     },
+     "reset": true
+    }
+   ],
+   "time": {
+    "max": 6,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "unit": "step"
+   },
+   "vars": [
+    {
+     "name": "d0",
+     "expr": "2"
+    },
+    {
+     "name": "d1",
+     "expr": "if(lc, 7, 0)"
+    },
+    {
+     "name": "d2",
+     "expr": "10"
+    },
+    {
+     "name": "d3",
+     "expr": "pd"
+    },
+    {
+     "name": "d4",
+     "expr": "3"
+    },
+    {
+     "name": "d5",
+     "expr": "2"
+    },
+    {
+     "name": "d6",
+     "expr": "if(lc, 5, 20)"
+    },
+    {
+     "name": "cum",
+     "expr": "d0 + if(s >= 1, d1, 0) + if(s >= 2, d2, 0) + if(s >= 3, d3, 0) + if(s >= 4, d4, 0) + if(s >= 5, d5, 0) + if(s >= 6, d6, 0)"
+    },
+    {
+     "name": "tot",
+     "expr": "d0 + d1 + d2 + d3 + d4 + d5 + d6"
+    },
+    {
+     "name": "pos",
+     "expr": "min(t, s)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 4.48,
+     "y": 28,
+     "w": 10.47,
+     "h": 14,
+     "color": {
+      "by": "if(s > 0, 1, if(s == 0, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 9.71,
+     "y": 36.5,
+     "text": {
+      "en": "Order"
+     },
+     "size": 16,
+     "visibleIf": "!(imp)"
+    },
+    {
+     "shape": "text",
+     "x": 9.71,
+     "y": 36.5,
+     "text": {
+      "en": "Trade enquiry"
+     },
+     "size": 16,
+     "visibleIf": "imp"
+    },
+    {
+     "shape": "text",
+     "x": 9.71,
+     "y": 31,
+     "text": {
+      "en": "{d0:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 15.15,
+     "y": 35,
+     "dx": 2.56,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 17.91,
+     "y": 28,
+     "w": 10.47,
+     "h": 14,
+     "color": {
+      "by": "if(s > 1, 1, if(s == 1, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 23.14,
+     "y": 36.5,
+     "text": {
+      "en": "Letter of credit"
+     },
+     "size": 16,
+     "visibleIf": "!(imp)"
+    },
+    {
+     "shape": "text",
+     "x": 23.14,
+     "y": 36.5,
+     "text": {
+      "en": "Letter of credit"
+     },
+     "size": 16,
+     "visibleIf": "imp"
+    },
+    {
+     "shape": "text",
+     "x": 23.14,
+     "y": 31,
+     "text": {
+      "en": "{d1:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 28.58,
+     "y": 35,
+     "dx": 2.56,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 31.34,
+     "y": 28,
+     "w": 10.47,
+     "h": 14,
+     "color": {
+      "by": "if(s > 2, 1, if(s == 2, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 36.58,
+     "y": 36.5,
+     "text": {
+      "en": "IEC & licence"
+     },
+     "size": 16,
+     "visibleIf": "!(imp)"
+    },
+    {
+     "shape": "text",
+     "x": 36.58,
+     "y": 36.5,
+     "text": {
+      "en": "IEC & licence"
+     },
+     "size": 16,
+     "visibleIf": "imp"
+    },
+    {
+     "shape": "text",
+     "x": 36.58,
+     "y": 31,
+     "text": {
+      "en": "{d2:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 42.01,
+     "y": 35,
+     "dx": 2.56,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 44.77,
+     "y": 28,
+     "w": 10.47,
+     "h": 14,
+     "color": {
+      "by": "if(s > 3, 1, if(s == 3, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 50.01,
+     "y": 36.5,
+     "text": {
+      "en": "Produce & inspect"
+     },
+     "size": 16,
+     "visibleIf": "!(imp)"
+    },
+    {
+     "shape": "text",
+     "x": 50.01,
+     "y": 36.5,
+     "text": {
+      "en": "Foreign exchange"
+     },
+     "size": 16,
+     "visibleIf": "imp"
+    },
+    {
+     "shape": "text",
+     "x": 50.01,
+     "y": 31,
+     "text": {
+      "en": "{d3:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 55.44,
+     "y": 35,
+     "dx": 2.56,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 58.19,
+     "y": 28,
+     "w": 10.47,
+     "h": 14,
+     "color": {
+      "by": "if(s > 4, 1, if(s == 4, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 63.42,
+     "y": 36.5,
+     "text": {
+      "en": "Customs"
+     },
+     "size": 16,
+     "visibleIf": "!(imp)"
+    },
+    {
+     "shape": "text",
+     "x": 63.42,
+     "y": 36.5,
+     "text": {
+      "en": "Place order"
+     },
+     "size": 16,
+     "visibleIf": "imp"
+    },
+    {
+     "shape": "text",
+     "x": 63.42,
+     "y": 31,
+     "text": {
+      "en": "{d4:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 68.86,
+     "y": 35,
+     "dx": 2.56,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 71.62,
+     "y": 28,
+     "w": 10.47,
+     "h": 14,
+     "color": {
+      "by": "if(s > 5, 1, if(s == 5, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 76.86,
+     "y": 36.5,
+     "text": {
+      "en": "Ship"
+     },
+     "size": 16,
+     "visibleIf": "!(imp)"
+    },
+    {
+     "shape": "text",
+     "x": 76.86,
+     "y": 36.5,
+     "text": {
+      "en": "Bill of entry"
+     },
+     "size": 16,
+     "visibleIf": "imp"
+    },
+    {
+     "shape": "text",
+     "x": 76.86,
+     "y": 31,
+     "text": {
+      "en": "{d5:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 82.29,
+     "y": 35,
+     "dx": 2.56,
+     "dy": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 85.05,
+     "y": 28,
+     "w": 10.47,
+     "h": 14,
+     "color": {
+      "by": "if(s > 6, 1, if(s == 6, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 90.28,
+     "y": 36.5,
+     "text": {
+      "en": "Get paid"
+     },
+     "size": 16,
+     "visibleIf": "!(imp)"
+    },
+    {
+     "shape": "text",
+     "x": 90.28,
+     "y": 36.5,
+     "text": {
+      "en": "Take delivery"
+     },
+     "size": 16,
+     "visibleIf": "imp"
+    },
+    {
+     "shape": "text",
+     "x": 90.28,
+     "y": 31,
+     "text": {
+      "en": "{d6:0} days"
+     },
+     "size": 14,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Receive the order or indent from the buyer"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 0 && !(imp)"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Ask exporters for prices and terms"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 0 && (imp)"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Ask for a letter of credit from the importer's bank"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 1 && !(imp)"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Open a letter of credit at your bank"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 1 && (imp)"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Get the IEC number and register with the export council"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 2 && !(imp)"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Get the IEC number and any import licence"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 2 && (imp)"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Produce the goods; pre-shipment inspection"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 3 && !(imp)"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Arrange foreign exchange through the bank"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 3 && (imp)"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "File the shipping bill; customs clearance"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 4 && !(imp)"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Send the import order"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 4 && (imp)"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Load the ship; get the bill of lading"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 5 && !(imp)"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "File the bill of entry; pay customs duty"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 5 && (imp)"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Send documents through the bank; receive payment"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 6 && !(imp)"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 16,
+     "text": {
+      "en": "Clear the goods and take delivery"
+     },
+     "size": 21,
+     "color": "white",
+     "visibleIf": "s == 6 && (imp)"
+    },
+    {
+     "shape": "circle",
+     "x": "9.71 + pos*13.429",
+     "y": 46,
+     "r": 1.6,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 54,
+     "text": {
+      "en": "Step {s + 1:0} of 7: {cum:0} of {tot:0} days so far"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Step"
+     },
+     "expr": "s + 1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Time so far (days)"
+     },
+     "expr": "cum",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Payment risk"
+     },
+     "expr": "if(lc, 1, 10)",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Which document proves the goods were loaded on the ship?"
+    },
+    {
+     "en": "Turn off the letter of credit. Why does payment take longer and feel riskier?"
+    },
+    {
+     "en": "Shipping bill or bill of entry: who files which?"
+    }
+   ],
+   "seconds": 120,
+   "narration": {
+    "en": "Step through the export procedure from receiving an order to getting paid. Switch to import to see the importer's side. A letter of credit adds a week but makes payment safe and fast."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

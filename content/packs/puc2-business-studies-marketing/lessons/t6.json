@@ -59,6 +59,306 @@
    }
   },
   {
+   "id": "scene-promotion-mix",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Designing the promotion mix",
+    "kn": "ಪ್ರಚಾರ ಮಿಶ್ರಣ ವಿನ್ಯಾಸ"
+   },
+   "caption": {
+    "en": "Split the promotion budget between advertising, personal selling, sales promotion and public relations. Each works differently for a soap, an industrial machine or a new phone launch.",
+    "kn": "ಪ್ರಚಾರ ಬಜೆಟ್‌ನ್ನು ಜಾಹೀರಾತು, ವೈಯಕ್ತಿಕ ಮಾರಾಟ, ಮಾರಾಟ ಉತ್ತೇಜನ, ಸಾರ್ವಜನಿಕ ಸಂಪರ್ಕಕ್ಕೆ ಹಂಚಿ. ಸಾಬೂನು, ಕೈಗಾರಿಕಾ ಯಂತ್ರ, ಹೊಸ ಫೋನ್‌ಗೆ ಪ್ರತಿಯೊಂದೂ ಭಿನ್ನ."
+   },
+   "sliders": [
+    {
+     "name": "ad",
+     "label": {
+      "en": "Advertising",
+      "kn": "ಜಾಹೀರಾತು"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 4
+    },
+    {
+     "name": "ps",
+     "label": {
+      "en": "Personal selling",
+      "kn": "ವೈಯಕ್ತಿಕ ಮಾರಾಟ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 2
+    },
+    {
+     "name": "sp",
+     "label": {
+      "en": "Sales promotion",
+      "kn": "ಮಾರಾಟ ಉತ್ತೇಜನ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 2
+    },
+    {
+     "name": "pr",
+     "label": {
+      "en": "Public relations",
+      "kn": "ಸಾರ್ವಜನಿಕ ಸಂಪರ್ಕ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 2
+    }
+   ],
+   "choices": [
+    {
+     "name": "pd",
+     "label": {
+      "en": "Product",
+      "kn": "ಉತ್ಪನ್ನ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Bath soap",
+        "kn": "ಸ್ನಾನದ ಸಾಬೂನು"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Industrial machine",
+        "kn": "ಕೈಗಾರಿಕಾ ಯಂತ್ರ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "New phone launch",
+        "kn": "ಹೊಸ ಫೋನ್ ಬಿಡುಗಡೆ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "tot",
+     "expr": "max(ad + ps + sp + pr, 1)"
+    },
+    {
+     "name": "b0",
+     "expr": "(ad*if(pd == 1, 10, if(pd == 2, 3, 9)) + ps*if(pd == 1, 1, if(pd == 2, 2, 2)) + sp*if(pd == 1, 6, if(pd == 2, 1, 4)) + pr*if(pd == 1, 4, if(pd == 2, 3, 6)))/tot*10"
+    },
+    {
+     "name": "b1",
+     "expr": "(ad*if(pd == 1, 4, if(pd == 2, 2, 5)) + ps*if(pd == 1, 5, if(pd == 2, 10, 7)) + sp*if(pd == 1, 8, if(pd == 2, 2, 6)) + pr*if(pd == 1, 3, if(pd == 2, 4, 5)))/tot*10"
+    },
+    {
+     "name": "b2",
+     "expr": "(b0 + b1)/2"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 12,
+     "x2": 61,
+     "y2": 12,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 55,
+     "text": {
+      "en": "Effect of the budget split",
+      "kn": "ಬಜೆಟ್ ಹಂಚಿಕೆಯ ಪರಿಣಾಮ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 9.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b0/100, 0, 1)*36",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 15.0,
+     "y": "14.5 + clamp(b0/100, 0, 1)*36",
+     "text": {
+      "en": "{b0:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 15.0,
+     "y": 8,
+     "text": {
+      "en": "Reach",
+      "kn": "ವ್ಯಾಪ್ತಿ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 27.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b1/100, 0, 1)*36",
+     "color": "orange",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": "14.5 + clamp(b1/100, 0, 1)*36",
+     "text": {
+      "en": "{b1:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 8,
+     "text": {
+      "en": "Persuasion",
+      "kn": "ಮನವೊಲಿಕೆ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 45.42,
+     "y": 12,
+     "w": 11.16,
+     "h": "clamp(b2/100, 0, 1)*36",
+     "color": "green",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 51.0,
+     "y": "14.5 + clamp(b2/100, 0, 1)*36",
+     "text": {
+      "en": "{b2:0}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 51.0,
+     "y": 8,
+     "text": {
+      "en": "Sales",
+      "kn": "ಮಾರಾಟ"
+     },
+     "size": 15
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Effective mix",
+      "kn": "ಪರಿಣಾಮಕಾರಿ ಮಿಶ್ರಣ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "b2 >= 70"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Could be better",
+      "kn": "ಇನ್ನೂ ಉತ್ತಮಗೊಳಿಸಬಹುದು"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "b2 < 70 && b2 >= 50"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 22,
+     "text": {
+      "en": "Poorly matched",
+      "kn": "ಹೊಂದಿಕೆಯಿಲ್ಲ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "b2 < 50"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Sales index",
+      "kn": "ಮಾರಾಟ ಸೂಚ್ಯಂಕ"
+     },
+     "expr": "b2",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Advertising share",
+      "kn": "ಜಾಹೀರಾತು ಪಾಲು"
+     },
+     "expr": "100*ad/tot",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the best mix for the industrial machine.",
+     "kn": "ಕೈಗಾರಿಕಾ ಯಂತ್ರಕ್ಕೆ ಉತ್ತಮ ಮಿಶ್ರಣ ಹುಡುಕಿ."
+    },
+    {
+     "en": "Why does a soap rely on advertising more than personal selling?",
+     "kn": "ಸಾಬೂನಿಗೆ ಜಾಹೀರಾತು ಏಕೆ ಹೆಚ್ಚು?"
+    },
+    {
+     "en": "Give two sales promotion techniques.",
+     "kn": "ಎರಡು ಮಾರಾಟ ಉತ್ತೇಜನ ತಂತ್ರ ಹೇಳಿ."
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Split the promotion budget between advertising, personal selling, sales promotion and public relations. Each works differently for a soap, an industrial machine or a new phone launch.",
+    "kn": "ಪ್ರಚಾರ ಬಜೆಟ್‌ನ್ನು ಜಾಹೀರಾತು, ವೈಯಕ್ತಿಕ ಮಾರಾಟ, ಮಾರಾಟ ಉತ್ತೇಜನ, ಸಾರ್ವಜನಿಕ ಸಂಪರ್ಕಕ್ಕೆ ಹಂಚಿ. ಸಾಬೂನು, ಕೈಗಾರಿಕಾ ಯಂತ್ರ, ಹೊಸ ಫೋನ್‌ಗೆ ಪ್ರತಿಯೊಂದೂ ಭಿನ್ನ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {
