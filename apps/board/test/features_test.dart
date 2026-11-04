@@ -301,14 +301,14 @@ void main() {
       await pumpBoard(t, s, home: LessonPlayerScreen(pack: p, lesson: p.lessons['$motion.t1']!));
       await t.tap(find.byKey(const ValueKey('next')));
       await t.pump();
-      expect(find.text('2 / ${p.lessons['$motion.t1']!.blocks.length}'), findsOneWidget);
+      expect(find.text('Step 2 of ${p.lessons['$motion.t1']!.blocks.length}'), findsOneWidget);
       await t.tap(find.byKey(const ValueKey('smartboard')));
       await settle(t);
       expect(find.byType(SmartboardScreen), findsOneWidget);
       expect(find.text('Resume', skipOffstage: false), findsOneWidget, reason: 'the lesson is paused underneath');
       await t.tap(find.byKey(const ValueKey('closeSmartboard')));
       await settle(t);
-      expect(find.text('2 / ${p.lessons['$motion.t1']!.blocks.length}'), findsOneWidget);
+      expect(find.text('Step 2 of ${p.lessons['$motion.t1']!.blocks.length}'), findsOneWidget);
       expect(find.text('Resume'), findsNothing);
     });
 

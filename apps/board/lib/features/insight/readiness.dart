@@ -21,9 +21,9 @@ ExamScope examScopeOf(Services s) {
 
 Color bandColor(Band b) => switch (b) {
   Band.ready => Z.correct,
-  Band.onTrack => const Color(0xFF1565C0),
+  Band.onTrack => Z.primary,
   Band.needsWork => Z.wrong,
-  Band.noData => const Color(0xFF616161),
+  Band.noData => Z.muted,
 };
 
 String bandLabel(Band b, Lang l) => it(switch (b) {
@@ -130,7 +130,7 @@ class ExamReadinessScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text('${s.config.sectionLabel} · ${it('classCol', l)}', style: text.headlineMedium?.copyWith(color: Z.accent)),
+                    Text('${s.config.sectionLabel} · ${it('classCol', l)}', style: text.headlineSmall),
                     const SizedBox(height: 16),
                     const ReadinessList(),
                     const SizedBox(height: 32),

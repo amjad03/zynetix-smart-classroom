@@ -26,6 +26,7 @@ import 'dart:math';
 import 'package:zynetix_board/engine/mastery.dart';
 import 'package:zynetix_board/features/game/game_hub.dart';
 import 'package:zynetix_board/features/home.dart';
+import 'package:zynetix_board/main.dart';
 import 'package:zynetix_board/features/insight/mastery_map.dart';
 import 'package:zynetix_board/features/live/live_quiz_screen.dart';
 import 'package:zynetix_board/features/live/live_server.dart';
@@ -54,6 +55,11 @@ Future<void> loadFonts() async {
     if (files.isNotEmpty) await family(n, files);
   }
   await family('MaterialIcons', ['/home/user/sdk/flutter/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf']);
+  // The board's own fonts (assets/fonts): Inter, Poppins, Noto Sans Kannada.
+  final own = Directory('assets/fonts').listSync().whereType<File>().map((f) => f.path).where((p) => p.endsWith('.ttf')).toList();
+  for (final fam in {for (final p in own) base(p).split('-').first}) {
+    await family(fam, own.where((p) => base(p).startsWith('$fam-')).toList());
+  }
   // flutter_math_fork's KaTeX fonts, so formulas render as on the board.
   final katex = Directory(katexDir).listSync().whereType<File>().map((f) => f.path).toList();
   for (final fam in {for (final p in katex) base(p).split('-').first}) {
@@ -61,8 +67,16 @@ Future<void> loadFonts() async {
   }
 }
 
-/// Real labs; a labelled card for WebView content.
+/// Real labs; a labelled card for WebView content, or, for the v4 shots, a real render of the
+/// Kinetix 3D page made in headless Chromium (screenshots/renders/, see renders/render.js).
 class ShotEmbeds extends KinetixEmbeds {
+  static bool realRenders = false;
+  Widget? _render(String name) {
+    final f = File('screenshots/renders/$name.png');
+    if (!realRenders || !f.existsSync()) return null;
+    return Image.memory(f.readAsBytesSync(), fit: BoxFit.cover, gaplessPlayback: true);
+  }
+
   Widget _card(IconData i, String t, String s) => Container(
         color: const Color(0xFF0F2A22),
         alignment: Alignment.center,
@@ -74,7 +88,7 @@ class ShotEmbeds extends KinetixEmbeds {
         ]),
       );
   @override
-  Widget model3d(Block b, Lang lang) => _card(Icons.view_in_ar, 'Kinetix 3D model: ${b.s('modelId')}${b.s('variant') != null ? ' (${b.s('variant')})' : ''}', 'Rotates, zooms and labels parts on the board (WebView)');
+  Widget model3d(Block b, Lang lang) => _render('3d-${b.s('modelId')}-${b.s('variant') ?? 'default'}') ?? _card(Icons.view_in_ar, 'Kinetix 3D model: ${b.s('modelId')}${b.s('variant') != null ? ' (${b.s('variant')})' : ''}', 'Rotates, zooms and labels parts on the board (WebView)');
   @override
   Widget simulation(Block b, InstalledPack pack, Lang lang) => b.s('source') == 'phet'
       ? _card(Icons.science_outlined, 'PhET simulation: ${b.s('simId')}', 'Runs offline from the content pack (WebView)')
@@ -343,11 +357,142 @@ void main() {
   testWidgets('30 label the heart', (t) => sim(t, 'puc1-biology-15-body-fluids-and-circulation.t3', 'act1', '30-activity-label-heart'));
   testWidgets('31 kinetics', (t) => sim(t, 'puc2-chemistry-03-chemical-kinetics.t5', 'sim1', '31-sim-arrhenius'));
   testWidgets('32 bubble sort', (t) => sim(t, 'puc2-computer-science-05-sorting.t1', 'sim1', '32-sim-bubble-sort'));
+  // Version 4: the approved visual design ("Option B"), one sample of each kind of screen, on a
+  // 1080p board at the classroom display size and on a 390 × 844 phone.
+  group('v4', () {
+    setUp(() => ShotEmbeds.realRenders = true);
+    tearDown(() => ShotEmbeds.realRenders = false);
+    const sizes = {'board': (Size(1920, 1080), 'classroom'), 'phone': (Size(390, 844), 'normal')};
+
+    Future<Services> v4Services(String display, {Map<String, Object> prefs = const {}}) async {
+      final s = await shotServices(prefs: {'displaySize': display, 'rollCount': 48, ...prefs}, taught: ['$motion.t1', '$motion.t2', 'puc1-physics-03-motion-in-a-plane.t1', 'puc1-physics-03-motion-in-a-plane.t2', 'puc1-physics-03-motion-in-a-plane.t3']);
+      return s;
+    }
+
+    Future<void> pumpAt(WidgetTester t, Services s, Size size, Widget home) async {
+      t.view.physicalSize = size;
+      t.view.devicePixelRatio = 1;
+      addTearDown(t.view.reset);
+      await t.pumpWidget(ZynetixBoardApp(services: s, home: home));
+      await t.pump();
+    }
+
+    /// Opens [topicId]'s lesson and steps forward to [blockId].
+    Future<void> lessonAt(WidgetTester t, Services s, Size size, String topicId, String blockId) async {
+      final hit = s.lessonFor(topicId)!;
+      await pumpAt(t, s, size, LessonPlayerScreen(pack: hit.pack, lesson: hit.lesson));
+      for (var i = 0; i < 30 && find.byKey(ValueKey('block:$blockId')).evaluate().isEmpty; i++) {
+        await t.tap(find.byKey(const ValueKey('next')));
+        await t.pump(const Duration(milliseconds: 300));
+      }
+      await t.pump(const Duration(milliseconds: 500));
+    }
+
+    Future<void> v4(WidgetTester t, String name) async {
+      await t.pump(const Duration(milliseconds: 400));
+      await expectLater(find.byType(MaterialApp), matchesGoldenFile('v4/$name.png'));
+    }
+
+    for (final e in sizes.entries) {
+      final (size, display) = e.value;
+      final tag = e.key;
+
+      testWidgets('a home $tag', (t) async {
+        await pumpAt(t, await v4Services(display), size, const HomeScreen());
+        await v4(t, 'a-home-$tag');
+      });
+
+      testWidgets('b teacher mode $tag', (t) async {
+        await pumpAt(t, await v4Services(display), size, const TeacherModeScreen());
+        await t.pump(const Duration(seconds: 1));
+        await v4(t, 'b-teacher-mode-$tag');
+      });
+
+      testWidgets('c projectile $tag', (t) async {
+        final s = await v4Services(display);
+        await lessonAt(t, s, size, 'puc1-physics-03-motion-in-a-plane.t4', 'scene-projectile');
+        final play = find.byKey(const ValueKey('timePlay'));
+        if (play.evaluate().isNotEmpty) {
+          await t.tap(play.first);
+          for (var i = 0; i < 12; i++) {
+            await t.pump(const Duration(milliseconds: 100));
+          }
+        }
+        await v4(t, 'c-projectile-$tag');
+      });
+
+      testWidgets('d 3d model $tag', (t) async {
+        final s = await v4Services(display);
+        await lessonAt(t, s, size, 'puc1-chemistry-04-chemical-bonding-and-molecular-structure.t4', '3d-hybridisation');
+        // Decode the real render (image decoding runs outside the test's fake clock).
+        await t.runAsync(() async {
+          for (final e in find.byType(Image).evaluate()) {
+            await precacheImage((e.widget as Image).image, e);
+          }
+        });
+        await t.pump();
+        await v4(t, 'd-3d-sp3-$tag');
+      });
+
+      testWidgets('e ohms law lab $tag', (t) async {
+        final s = await v4Services(display, prefs: {'year': 'puc2'});
+        await lessonAt(t, s, size, 'puc2-physics-03-current-electricity.t1', 'sim-lab.ohms-law');
+        await t.pump(const Duration(seconds: 1));
+        await v4(t, 'e-ohms-law-lab-$tag');
+      });
+
+      testWidgets('f jee mcq $tag', (t) async {
+        final s = await v4Services(display);
+        await lessonAt(t, s, size, 'puc1-physics-03-motion-in-a-plane.t4', 'exam');
+        await t.tap(find.byKey(const ValueKey('option-0')));
+        await t.pump();
+        await t.tap(find.byKey(const ValueKey('hands')));
+        await t.pumpAndSettle();
+        for (final r in [3, 7, 11, 14, 19, 22, 26, 30, 33, 37, 41, 45, 47]) {
+          await t.tap(find.byKey(ValueKey('roll-$r')));
+        }
+        await t.tap(find.byKey(const ValueKey('tapAbsent')));
+        await t.pump();
+        for (final r in [9, 28, 39, 44]) {
+          await t.tap(find.byKey(ValueKey('roll-$r')));
+        }
+        await t.tap(find.byKey(const ValueKey('handsSave')));
+        await t.pumpAndSettle();
+        await v4(t, 'f-jee-mcq-results-$tag');
+      });
+
+      testWidgets('g accountancy sort $tag', (t) async {
+        final s = await v4Services(display, prefs: {'subjects': ['accountancy', 'business_studies', 'economics', 'english']});
+        await lessonAt(t, s, size, 'puc1-accountancy-01-introduction-to-accounting.t5', 'activity-sort-alc');
+        await sortSome(t);
+        await v4(t, 'g-accountancy-sort-$tag');
+      });
+    }
+  });
+
   testWidgets('33 accounting equation', (t) => sim(t, 'puc1-accountancy-03-recording-of-transactions-i.t2', 'sim1', '33-sim-accounting-equation'));
 }
 
+/// Places a few of the sort activity's items (tap an item, then a column), leaving one selected.
+Future<void> sortSome(WidgetTester t) async {
+  for (final (item, bucket) in [(0, 'asset'), (1, 'asset'), (4, 'liability'), (3, 'asset'), (8, 'capital'), (5, 'liability')]) {
+    final chip = find.byKey(ValueKey('item-$item'));
+    final col = find.byKey(ValueKey('bucket-$bucket'));
+    if (chip.evaluate().isEmpty || col.evaluate().isEmpty) continue;
+    await t.tap(chip, warnIfMissed: false);
+    await t.pump();
+    await t.tap(col, warnIfMissed: false);
+    await t.pump();
+  }
+  final next = find.byKey(const ValueKey('item-6'));
+  if (next.evaluate().isNotEmpty) {
+    await t.tap(next);
+    await t.pump();
+  }
+}
+
 int _index(WidgetTester t) {
-  final txt = (find.textContaining(RegExp(r'^\d+ / \d+$')).evaluate().first.widget as Text).data!;
-  return int.parse(txt.split(' / ').first) - 1;
+  final txt = (find.byKey(const ValueKey('stepOf')).evaluate().first.widget as Text).data!;
+  return int.parse(RegExp(r'\d+').firstMatch(txt)!.group(0)!) - 1;
 
 }

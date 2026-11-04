@@ -42,7 +42,7 @@ class SelfLearningStartScreen extends StatelessWidget {
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(scheduled != null ? tr('scheduled', l) : tr('nextTopic', l), style: text.headlineMedium?.copyWith(color: Z.accent)),
+                  Text(scheduled != null ? tr('scheduled', l) : tr('nextTopic', l), style: text.headlineSmall),
                   const SizedBox(height: 16),
                   Text('${yearLabel(next.pack.chapter.year, s.config.board, l)} · ${subjectName(next.pack.chapter.subject, l)} · ${next.pack.chapter.title.t(l)}', style: text.bodyLarge),
                   Text(next.lesson.title.t(l), style: text.displayLarge),
@@ -53,7 +53,6 @@ class SelfLearningStartScreen extends StatelessWidget {
                     key: const ValueKey('startSelf'),
                     icon: Icons.play_arrow,
                     label: tr('start', l),
-                    color: const Color(0xFF6A1B9A),
                     onPressed: () => startSelfLearning(context, next.pack, next.lesson, periodSeconds: booked?.secondsLeft(s.clock()) ?? s.config.periodMinutes * 60),
                   ),
                 ],
@@ -132,17 +131,13 @@ class SelfLearningScreenState extends State<SelfLearningScreen> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(32, 16, 16, 8),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.smart_display_outlined, size: 52, color: Color(0xFFCE93D8)),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Text(widget.lesson.title.t(l), style: text.headlineMedium, overflow: TextOverflow.ellipsis),
-                        ),
-                        Text('${context.narrow ? '' : '${tr('periodEnds', l)} '}${left ~/ 60}:${(left % 60).toString().padLeft(2, '0')}', style: text.headlineMedium),
-                        const SizedBox(width: 16),
-                        IconButton(key: const ValueKey('lockExit'), iconSize: 56, icon: const Icon(Icons.lock_outline), onPressed: _exit),
+                    padding: EdgeInsets.fromLTRB(context.narrow ? 20 : 32, context.narrow ? 20 : 32, context.narrow ? 20 : 32, 20),
+                    child: ZTopBar(
+                      crumbs: [tr('selfLearning', l), subjectName(widget.pack.chapter.subject, l)],
+                      title: widget.lesson.title.t(l),
+                      trailing: [
+                        Text('${context.narrow ? '' : '${tr('periodEnds', l)} '}${left ~/ 60}:${(left % 60).toString().padLeft(2, '0')}', style: zText(context.narrow ? 30 : 36, FontWeight.w600)),
+                        ZIconSquare(key: const ValueKey('lockExit'), icon: Icons.lock_outline, tooltip: tr('exit', l), onPressed: _exit),
                       ],
                     ),
                   ),
@@ -160,9 +155,9 @@ class SelfLearningScreenState extends State<SelfLearningScreen> {
                                 if (runner.paused)
                                   Positioned.fill(
                                     child: Container(
-                                      color: Colors.black54,
+                                      decoration: BoxDecoration(color: Z.stage.withValues(alpha: 0.82), borderRadius: BorderRadius.circular(Z.stageRadius)),
                                       alignment: Alignment.center,
-                                      child: Text(tr('pause', l), style: text.displayLarge?.copyWith(color: Colors.white)),
+                                      child: Text(tr('pause', l), style: text.displayLarge?.copyWith(color: Z.onStage)),
                                     ),
                                   ),
                               ],
@@ -216,17 +211,13 @@ class _PhaseStrip extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 6),
               padding: const EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
-                color: p == phase ? const Color(0xFF6A1B9A) : (p.index < phase.index ? Z.correct : Theme.of(context).colorScheme.surfaceContainerHighest),
-                borderRadius: BorderRadius.circular(16),
+                color: p == phase ? Z.primary : (p.index < phase.index ? Z.correctBg : Z.panel),
+                borderRadius: BorderRadius.circular(Z.pill),
               ),
               alignment: Alignment.center,
               child: Text(
                 p == Phase.lesson ? (lang == Lang.kn ? 'ಪಾಠ' : 'Lesson') : tr(_labels[p]!, lang),
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: p == phase ? FontWeight.w700 : FontWeight.w500,
-                  color: p.index <= phase.index ? Colors.white : Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+                style: zText(26, p == phase ? FontWeight.w600 : FontWeight.w500).copyWith(color: p == phase ? Colors.white : (p.index < phase.index ? Z.correctLabel : Z.muted)),
               ),
             ),
           ),
@@ -250,7 +241,7 @@ class _Homework extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Icon(Icons.menu_book_outlined, size: 64, color: Z.accent),
+            const Icon(Icons.menu_book_outlined, size: 64, color: Z.primary),
             const SizedBox(width: 16),
             Text(tr('homework', l), style: text.displayLarge),
           ],

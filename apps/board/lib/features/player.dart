@@ -35,7 +35,7 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
   );
   late final ClassRoom room = ClassRoom(rollCount: s.config.rollCount);
   final ink = InkController(
-    style: const InkStyle(tool: InkTool.pen, color: Color(0xFFFFEB3B), width: 6),
+    style: const InkStyle(tool: InkTool.pen, color: Z.vermillion, width: 6),
   );
   bool _done = false;
 
@@ -89,21 +89,23 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
     showDialog<void>(
       context: context,
       builder: (ctx) => Dialog.fullscreen(
-        child: Padding(
-          padding: const EdgeInsets.all(40),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Text(tr('quiz', c.lang), style: Theme.of(ctx).textTheme.headlineLarge),
-                  const Spacer(),
-                  IconButton(iconSize: 64, icon: const Icon(Icons.close), onPressed: () => Navigator.pop(ctx)),
-                ],
-              ),
-              Expanded(
-                child: QuizRunner(questions: qs.take(3).toList(), mode: QuizMode.monitor, lang: c.lang, recorder: c.recorder, room: room, onDone: () => Navigator.pop(ctx)),
-              ),
-            ],
+        backgroundColor: Z.page,
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(ctx.narrow ? 20 : 32),
+            child: Column(
+              children: [
+                ZTopBar(
+                  title: widget.lesson.title.t(c.lang),
+                  crumbs: [tr('quickQuiz', c.lang)],
+                  trailing: [ZIconSquare(icon: Icons.close, tooltip: tr('close', c.lang), onPressed: () => Navigator.pop(ctx))],
+                ),
+                SizedBox(height: ctx.narrow ? 20 : 32),
+                Expanded(
+                  child: QuizRunner(questions: qs.take(3).toList(), mode: QuizMode.monitor, lang: c.lang, recorder: c.recorder, room: room, onDone: () => Navigator.pop(ctx)),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -116,58 +118,65 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
       listenable: c,
       builder: (context, _) {
         final l = c.lang, text = Theme.of(context).textTheme;
+        final narrow = context.narrow, pad = narrow ? 20.0 : 32.0;
+        // A phone held upright: the top bar keeps only the lesson and Close (Smartboard and the
+        // language are on Home), as in the approved phone layout.
+        final phone = narrow && context.portrait && MediaQuery.sizeOf(context).width < 1000;
+        final chapter = widget.pack.chapter;
+        final step = trf('stepOf', l, {'n': c.index + 1, 'm': c.blocks.length});
         return Scaffold(
           body: SafeArea(
-            child: Column(
-              children: [
-                // Top: lesson, position, language, close.
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(32, 16, 16, 0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(widget.lesson.title.t(l), style: text.headlineMedium, overflow: TextOverflow.ellipsis, maxLines: 1),
-                      ),
-                      const SizedBox(width: 16),
-                      Text('${c.index + 1} / ${c.blocks.length}', style: text.headlineMedium),
-                      const SizedBox(width: 16),
-                      SmartboardButton(onOpen: _boardOpened, onClose: _boardClosed),
-                      const SizedBox(width: 16),
-                      TextButton(
-                        onPressed: () => c.setLang(l == Lang.en ? Lang.kn : Lang.en),
-                        child: Text(l == Lang.en ? 'ಕನ್ನಡ' : 'EN', style: const TextStyle(fontSize: 32)),
-                      ),
-                      IconButton(key: const ValueKey('close'), iconSize: 64, icon: const Icon(Icons.close), onPressed: () => Navigator.pop(context)),
+            child: Padding(
+              padding: EdgeInsets.all(pad),
+              child: Column(
+                children: [
+                  // Top: where this is, the lesson, the step, Smartboard, language, close.
+                  ZTopBar(
+                    crumbs: [
+                      subjectName(chapter.subject, l),
+                      if (!narrow) yearLabel(chapter.id.startsWith('puc2') ? 'puc2' : 'puc1', s.config.board, l),
+                      if (!phone) chapter.title.t(l) else trf('stepOf', l, {'n': c.index + 1, 'm': c.blocks.length}),
+                    ],
+                    title: widget.lesson.title.t(l),
+                    trailing: [
+                      if (phone)
+                        const SizedBox.shrink()
+                      else if (!narrow) ...[
+                        Text(step, key: const ValueKey('stepOf'), style: zText(28, FontWeight.w400).copyWith(color: Z.muted)),
+                        ZProgress(value: c.progress, width: 280),
+                      ] else
+                        Text('${c.index + 1}/${c.blocks.length}', key: const ValueKey('stepOf'), style: zText(28, FontWeight.w500).copyWith(color: Z.muted)),
+                      if (!phone) SmartboardButton(onOpen: _boardOpened, onClose: _boardClosed),
+                      if (!phone) ZSmallButton(key: const ValueKey('lang'), label: l == Lang.en ? 'ಕನ್ನಡ' : 'English', onPressed: () => c.setLang(l == Lang.en ? Lang.kn : Lang.en)),
+                      ZIconSquare(key: const ValueKey('close'), icon: Icons.close, tooltip: tr('closeLesson', l), onPressed: () => Navigator.pop(context)),
                     ],
                   ),
-                ),
-                LinearProgressIndicator(value: c.progress, minHeight: 8),
-                Expanded(
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                        child: Padding(
-                          padding: EdgeInsets.all(context.narrow ? 20 : 40),
+                  SizedBox(height: pad),
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
                           child: BlockView(c: c, embeds: s.embeds, room: room, onFinished: () => teacherQuizDone(context, c)),
                         ),
-                      ),
-                      if (c.pen) ...[Positioned.fill(child: InkCanvas(controller: ink, transparent: true)), Positioned(right: 24, top: 24, child: _PenPalette(ink: ink))],
-                      if (c.paused)
-                        Positioned.fill(
-                          child: GestureDetector(
-                            onTap: () => c.setPaused(false),
-                            child: Container(
-                              color: Colors.black54,
-                              alignment: Alignment.center,
-                              child: Text(tr('pause', l), style: text.displayLarge?.copyWith(color: Colors.white)),
+                        if (c.pen) ...[Positioned.fill(child: InkCanvas(controller: ink, transparent: true)), Positioned(right: 24, top: 24, child: _PenPalette(ink: ink))],
+                        if (c.paused)
+                          Positioned.fill(
+                            child: GestureDetector(
+                              onTap: () => c.setPaused(false),
+                              child: Container(
+                                decoration: BoxDecoration(color: Z.stage.withValues(alpha: 0.82), borderRadius: BorderRadius.circular(Z.stageRadius)),
+                                alignment: Alignment.center,
+                                child: Text(tr('pause', l), style: text.displayLarge?.copyWith(color: Z.onStage)),
+                              ),
                             ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                _Controls(c: c, onQuiz: _quickQuiz, onFinish: _finish),
-              ],
+                  SizedBox(height: pad),
+                  _Controls(c: c, onQuiz: _quickQuiz, onFinish: _finish),
+                ],
+              ),
             ),
           ),
         );
@@ -176,6 +185,8 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
   }
 }
 
+/// The footer panel: Back, Pause, Pen, Read aloud, Quick quiz, and the primary Next (named for
+/// the block it goes to).
 class _Controls extends StatelessWidget {
   const _Controls({required this.c, required this.onQuiz, required this.onFinish});
   final LessonController c;
@@ -183,45 +194,68 @@ class _Controls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l = c.lang;
-    final gap = SizedBox(width: context.narrow ? 12 : 20);
+    final l = c.lang, narrow = context.narrow;
+    final phone = narrow && context.portrait && MediaQuery.sizeOf(context).width < 1000;
+    final gap = SizedBox(width: narrow ? 12 : 20);
+    Widget square(Key key, IconData icon, String label, VoidCallback? onPressed, {bool on = false}) => Tooltip(
+      message: label,
+      child: SizedBox.square(
+        dimension: Z.tap,
+        child: on
+            ? FilledButton(key: key, onPressed: onPressed, style: FilledButton.styleFrom(padding: EdgeInsets.zero), child: Icon(icon, size: 40, semanticLabel: label))
+            : OutlinedButton(key: key, onPressed: onPressed, style: OutlinedButton.styleFrom(padding: EdgeInsets.zero), child: Icon(icon, size: 40, semanticLabel: label)),
+      ),
+    );
+    final next = c.isLast ? null : c.blocks[c.index + 1];
+    // A block with its own primary action (Next question, Check, Lock in) keeps the only blue
+    // button; the lesson's Next steps back to secondary.
+    final own = const {BlockType.classQuiz, BlockType.pyq, BlockType.activity, BlockType.challenge}.contains(c.current.type);
     return Container(
-      color: Theme.of(context).colorScheme.surfaceContainer,
-      padding: EdgeInsets.symmetric(horizontal: context.narrow ? 16 : 32, vertical: 16),
+      padding: EdgeInsets.all(narrow ? 16 : 24),
+      decoration: BoxDecoration(color: Z.panel, borderRadius: BorderRadius.circular(Z.panelRadius)),
       child: Row(
         children: [
           BigButton(collapse: true, key: const ValueKey('back'), icon: Icons.arrow_back, label: tr('back', l), filled: false, onPressed: c.isFirst ? null : c.back),
+          if (!phone) ...[
+            gap,
+            // Paused, it says so: a labelled Resume.
+            if (c.paused)
+              BigButton(collapse: true, key: const ValueKey('pause'), icon: Icons.play_arrow, label: tr('resume', l), onPressed: () => c.setPaused(false))
+            else
+              square(const ValueKey('pause'), Icons.pause, tr('pause', l), () => c.setPaused(true)),
+          ],
           gap,
-          BigButton(
-            collapse: true,
-            key: const ValueKey('pause'),
-            icon: c.paused ? Icons.play_arrow : Icons.pause,
-            label: tr(c.paused ? 'resume' : 'pause', l),
-            filled: false,
-            onPressed: () => c.setPaused(!c.paused),
-          ),
-          gap,
-          BigButton(collapse: true, key: const ValueKey('pen'), icon: Icons.edit, label: tr('pen', l), filled: c.pen, onPressed: c.togglePen),
-          gap,
-          BigButton(collapse: true, key: const ValueKey('quiz'), icon: Icons.quiz_outlined, label: tr('quiz', l), filled: false, onPressed: onQuiz),
-          gap,
-          if (c.canReadAloud)
-            BigButton(
-              collapse: true,
-              key: const ValueKey('read'),
-              icon: c.speaking ? Icons.volume_up : Icons.record_voice_over_outlined,
-              label: tr('readAloud', l),
-              filled: false,
-              onPressed: c.speaking ? null : c.readAloud,
-            ),
+          square(const ValueKey('pen'), Icons.edit_outlined, tr('pen', l), c.togglePen, on: c.pen),
+          if (c.canReadAloud) ...[
+            gap,
+            square(const ValueKey('read'), c.speaking ? Icons.volume_up : Icons.volume_up_outlined, tr('readAloud', l), c.speaking ? null : c.readAloud, on: c.speaking),
+          ],
+          if (!phone) ...[
+            gap,
+            BigButton(collapse: true, key: const ValueKey('quiz'), icon: Icons.quiz_outlined, label: tr('quickQuiz', l), filled: false, onPressed: onQuiz),
+          ],
           gap,
           // Takes the space left, so its label shortens rather than overflowing on a phone.
           Expanded(
             child: Align(
               alignment: Alignment.centerRight,
-              child: c.isLast
-                  ? BigButton(key: const ValueKey('finish'), icon: Icons.done_all, label: tr('finish', l), color: Z.correct, onPressed: onFinish)
-                  : BigButton(key: const ValueKey('next'), icon: Icons.arrow_forward, label: tr('next', l), onPressed: c.next),
+              child: phone
+                  ? SizedBox(
+                      width: double.infinity,
+                      child: c.isLast
+                          ? BigButton(key: const ValueKey('finish'), icon: Icons.done_all, label: tr('finish', l), trailingIcon: true, filled: !own, onPressed: onFinish)
+                          : BigButton(key: const ValueKey('next'), icon: Icons.arrow_forward, label: tr('nextStep', l), trailingIcon: true, filled: !own, onPressed: c.next),
+                    )
+                  : c.isLast
+                  ? BigButton(key: const ValueKey('finish'), icon: Icons.done_all, label: tr('finish', l), trailingIcon: true, filled: !own, onPressed: onFinish)
+                  : BigButton(
+                      key: const ValueKey('next'),
+                      icon: Icons.arrow_forward,
+                      trailingIcon: true,
+                      filled: !own,
+                      label: narrow || next == null ? tr('next', l) : '${tr('next', l)}: ${blockName(next.type, l)}',
+                      onPressed: c.next,
+                    ),
             ),
           ),
         ],
@@ -233,10 +267,11 @@ class _Controls extends StatelessWidget {
 class _PenPalette extends StatelessWidget {
   const _PenPalette({required this.ink});
   final InkController ink;
-  static const colors = [Color(0xFFFFEB3B), Color(0xFFFFFFFF), Color(0xFFFF5252), Color(0xFF69F0AE), Color(0xFF40C4FF)];
+  static const colors = [Z.yellow, Color(0xFFFFFFFF), Z.vermillion, Z.green, Z.sky, Z.ink];
 
   @override
-  Widget build(BuildContext context) => Card(
+  Widget build(BuildContext context) => ZPanel(
+    padding: EdgeInsets.zero,
     child: Padding(
       padding: const EdgeInsets.all(12),
       child: Column(
@@ -246,7 +281,7 @@ class _PenPalette extends StatelessWidget {
               padding: const EdgeInsets.all(6),
               child: InkWell(
                 onTap: () => ink.style = ink.style.copyWith(tool: InkTool.pen, color: col),
-                child: CircleAvatar(radius: 32, backgroundColor: col),
+                child: Container(width: 64, height: 64, decoration: BoxDecoration(color: col, shape: BoxShape.circle, border: Border.all(color: Z.line, width: 2))),
               ),
             ),
           IconButton(iconSize: 56, icon: const Icon(Icons.undo), onPressed: ink.undo),

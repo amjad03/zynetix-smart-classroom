@@ -6,24 +6,25 @@ import '../../core/theme.dart';
 import '../../engine/model.dart';
 import '../scene/scene_painter.dart';
 import '../scene/strings.dart';
-import '../whiteboard_view.dart' show chalkboardColor;
 import 'activity_logic.dart';
 
 /// Runs a change to the activity and clears the old feedback (ActivityViewState.update).
 typedef ActivityChange = void Function(VoidCallback);
 
-const _pairColors = [Color(0xFF42A5F5), Color(0xFFFFA726), Color(0xFFAB47BC), Color(0xFF26A69A), Color(0xFFEC407A), Color(0xFF9CCC65), Color(0xFF8D6E63), Color(0xFF78909C)];
+/// Pairs in a match activity: Okabe–Ito colours, told apart by colour-blind eyes too.
+const _pairColors = [Color(0xFF0072B2), Color(0xFFD55E00), Color(0xFF009E73), Color(0xFFCC79A7), Color(0xFFE69F00), Color(0xFF56B4E9), Color(0xFF8A6D00), Color(0xFF5B6369)];
 
-/// A card the class drags or taps: big text, a coloured edge for selection and for the
-/// right/wrong mark after Check.
+/// A card the class drags or taps: white with a hairline and the 1 px lift, a grip; blue when
+/// selected, green or orange after Check. [placed] is the flat row it becomes inside a column.
 class ActivityCard extends StatelessWidget {
-  const ActivityCard({super.key, required this.text, this.mark, this.selected = false, this.onTap, this.leading, this.compact = false});
+  const ActivityCard({super.key, required this.text, this.mark, this.selected = false, this.onTap, this.leading, this.compact = false, this.placed = false});
   final String text;
   final bool? mark;
   final bool selected;
   final VoidCallback? onTap;
   final Widget? leading;
   final bool compact;
+  final bool placed;
 
   @override
   Widget build(BuildContext context) {
@@ -32,35 +33,35 @@ class ActivityCard extends StatelessWidget {
         : mark == false
         ? Z.wrong
         : selected
-        ? Z.accent
-        : Colors.white38;
-    // A chalk-dark chip with white text on any page background; the state tints it.
-    const base = Color(0xFF263A33);
-    return Material(
-      color: mark == true
-          ? Color.alphaBlend(Z.correct.withValues(alpha: 0.35), base)
-          : mark == false
-          ? Color.alphaBlend(Z.wrong.withValues(alpha: 0.35), base)
-          : selected
-          ? Color.alphaBlend(Z.accent.withValues(alpha: 0.3), base)
-          : base,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-        side: BorderSide(color: edge, width: selected || mark != null ? 4 : 2),
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(20),
-        onTap: onTap,
-        child: Container(
-          constraints: BoxConstraints(minHeight: compact ? 64 : 80, minWidth: 80),
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (leading != null) ...[leading!, const SizedBox(width: 12)],
-              Flexible(child: Text(text, style: zText(compact ? 26 : 30).copyWith(color: Colors.white))),
-              if (mark != null) ...[const SizedBox(width: 8), Icon(mark! ? Icons.check_circle : Icons.cancel, size: 36, color: mark! ? Z.correct : Z.wrong)],
-            ],
+        ? Z.primary
+        : (placed ? Colors.transparent : Z.line);
+    final bg = mark == true
+        ? Z.correctBg
+        : mark == false
+        ? Z.wrongBg
+        : selected
+        ? Z.tagBg
+        : Z.panel;
+    final strong = selected || mark != null;
+    return Container(
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(Z.radius), boxShadow: placed || strong ? null : Z.lift),
+      child: Material(
+        color: bg,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Z.radius), side: BorderSide(color: edge, width: strong ? 4 : 2)),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(Z.radius),
+          onTap: onTap,
+          child: Container(
+            constraints: BoxConstraints(minHeight: context.narrow ? 72 : (compact || placed ? 92 : 96), minWidth: 80),
+            padding: EdgeInsets.fromLTRB(placed || leading != null ? 28 : 24, 10, 32, 10),
+            child: Row(
+              mainAxisSize: placed ? MainAxisSize.max : MainAxisSize.min,
+              children: [
+                if (leading != null) ...[leading!, const SizedBox(width: 16)] else if (!placed) ...[_Grip(color: selected ? Z.primary : Z.ghost), const SizedBox(width: 20)],
+                Flexible(child: Text(text, style: zText(context.narrow ? 27 : (compact || placed ? 30 : 32), strong && !placed ? FontWeight.w600 : FontWeight.w500).copyWith(color: Z.ink))),
+                if (mark != null) ...[const SizedBox(width: 12), Icon(mark! ? Icons.check_circle : Icons.cancel, size: 36, color: mark! ? Z.correct : Z.wrong)],
+              ],
+            ),
           ),
         ),
       ),
@@ -68,11 +69,75 @@ class ActivityCard extends StatelessWidget {
   }
 }
 
+/// Six dots: "this can be dragged".
+class _Grip extends StatelessWidget {
+  const _Grip({required this.color});
+  final Color color;
+  @override
+  Widget build(BuildContext context) => SizedBox(
+    width: 20,
+    height: 32,
+    child: CustomPaint(painter: _GripPainter(color)),
+  );
+}
+
+class _GripPainter extends CustomPainter {
+  _GripPainter(this.color);
+  final Color color;
+  @override
+  void paint(Canvas canvas, Size size) {
+    final p = Paint()..color = color;
+    for (final x in [4.0, 16.0]) {
+      for (final y in [6.0, 16.0, 26.0]) {
+        canvas.drawCircle(Offset(x, y), 2.8, p);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_GripPainter old) => old.color != color;
+}
+
+/// A rounded rectangle with a dashed border (the tray, a "Drop here" slot).
+class DashedBox extends StatelessWidget {
+  const DashedBox({super.key, required this.child, this.color = Z.line, this.radius = Z.panelRadius, this.width = 4, this.fill});
+  final Widget child;
+  final Color color;
+  final double radius, width;
+  final Color? fill;
+  @override
+  Widget build(BuildContext context) => CustomPaint(painter: _DashPainter(color, radius, width, fill), child: child);
+}
+
+class _DashPainter extends CustomPainter {
+  _DashPainter(this.color, this.radius, this.width, this.fill);
+  final Color color;
+  final double radius, width;
+  final Color? fill;
+  @override
+  void paint(Canvas canvas, Size size) {
+    final r = RRect.fromRectAndRadius((Offset.zero & size).deflate(width / 2), Radius.circular(radius));
+    if (fill != null) canvas.drawRRect(r, Paint()..color = fill!);
+    final p = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = width;
+    for (final m in (Path()..addRRect(r)).computeMetrics()) {
+      for (var d = 0.0; d < m.length; d += 22) {
+        canvas.drawPath(m.extractPath(d, math.min(d + 12, m.length)), p);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_DashPainter old) => old.color != color || old.fill != fill;
+}
+
 Widget _draggable(int data, Widget card) => Draggable<int>(
   data: data,
   feedback: Material(
     color: Colors.transparent,
-    child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 480), child: card),
+    child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 560), child: card),
   ),
   childWhenDragging: Opacity(opacity: 0.3, child: card),
   child: card,
@@ -97,7 +162,7 @@ class _SortBoardState extends State<SortBoard> {
     selected = null;
   });
 
-  Widget _chip(int i) {
+  Widget _chip(int i, {bool placed = false}) {
     final g = widget.logic;
     return _draggable(
       i,
@@ -106,6 +171,7 @@ class _SortBoardState extends State<SortBoard> {
         text: g.items[i].text.t(widget.lang),
         mark: g.marks.isEmpty ? null : g.marks[i],
         selected: selected == i,
+        placed: placed && selected != i,
         onTap: () => setState(() => selected = selected == i ? null : i),
         compact: true,
       ),
@@ -114,7 +180,8 @@ class _SortBoardState extends State<SortBoard> {
 
   @override
   Widget build(BuildContext context) {
-    final g = widget.logic;
+    final g = widget.logic, l = widget.lang;
+    final narrow = context.narrow;
     final tray = [
       for (final i in g.trayOrder)
         if (g.placed[i] == null) i,
@@ -127,39 +194,47 @@ class _SortBoardState extends State<SortBoard> {
           final b = g.buckets[k];
           return DragTarget<int>(
             onAcceptWithDetails: (d) => _place(d.data, b.id),
-            builder: (context, cand, _) => InkWell(
-              key: ValueKey('bucket-${b.id}'),
-              onTap: selected == null ? null : () => _place(selected!, b.id),
-              borderRadius: BorderRadius.circular(Z.radius),
-              child: Container(
-                margin: const EdgeInsets.all(6),
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: cand.isNotEmpty ? Z.accent.withValues(alpha: 0.15) : chalkboardColor,
-                  border: Border.all(color: cand.isNotEmpty || selected != null ? Z.accent : Colors.white38, width: 3),
-                  borderRadius: BorderRadius.circular(Z.radius),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(b.label.t(widget.lang), textAlign: TextAlign.center, style: zText(32, FontWeight.w800).copyWith(color: Z.accent)),
-                    const SizedBox(height: 8),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: [
-                            for (var i = 0; i < g.items.length; i++)
-                              if (g.placed[i] == b.id) _chip(i),
-                          ],
+            builder: (context, cand, _) {
+              // A dragged item over the column lights it up; a tapped item shows a slot in each.
+              final hot = cand.isNotEmpty;
+              final slot = hot || selected != null;
+              return Material(
+                color: hot ? Z.tagBg : Z.tile,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Z.panelRadius), side: hot ? const BorderSide(color: Z.primary, width: 4) : BorderSide.none),
+                child: InkWell(
+                  key: ValueKey('bucket-${b.id}'),
+                  onTap: selected == null ? null : () => _place(selected!, b.id),
+                  borderRadius: BorderRadius.circular(Z.panelRadius),
+                  child: Padding(
+                    padding: EdgeInsets.all(narrow ? 16 : 32),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(b.label.t(l), style: zTitle(narrow ? 30 : 34), maxLines: 1, overflow: TextOverflow.ellipsis),
+                        SizedBox(height: narrow ? 10 : 20),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                for (var i = 0; i < g.items.length; i++)
+                                  if (g.placed[i] == b.id) Padding(padding: const EdgeInsets.only(bottom: 20), child: _chip(i, placed: true)),
+                                if (slot)
+                                  DashedBox(
+                                    color: Z.primary,
+                                    radius: Z.radius,
+                                    child: SizedBox(height: 92, child: Center(child: Text(st('dropHere', l), style: zText(28, FontWeight.w600).copyWith(color: Z.primary)))),
+                                  ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           );
         }
 
@@ -168,26 +243,44 @@ class _SortBoardState extends State<SortBoard> {
           children: [
             DragTarget<int>(
               onAcceptWithDetails: (d) => _place(d.data, null),
-              builder: (context, cand, _) => ConstrainedBox(
-                constraints: BoxConstraints(minHeight: tray.isEmpty ? 0 : 88, maxHeight: box.maxHeight * 0.4),
-                child: SingleChildScrollView(
-                  child: Wrap(spacing: 10, runSpacing: 10, children: [for (final i in tray) _chip(i)]),
-                ),
-              ),
+              builder: (context, cand, _) => tray.isEmpty
+                  ? const SizedBox.shrink()
+                  : ConstrainedBox(
+                      constraints: BoxConstraints(maxHeight: box.maxHeight * 0.4),
+                      child: DashedBox(
+                        fill: Z.well,
+                        child: Padding(
+                          padding: EdgeInsets.all(narrow ? 16 : 28),
+                          child: SingleChildScrollView(
+                            child: Wrap(
+                              spacing: narrow ? 12 : 20,
+                              runSpacing: narrow ? 12 : 20,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [for (final i in tray) _chip(i)],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: tray.isEmpty ? 0 : (narrow ? 16 : 40)),
             Expanded(
               child: Column(
                 children: [
-                  for (var r = 0; r < rows; r++)
+                  for (var r = 0; r < rows; r++) ...[
+                    if (r > 0) SizedBox(height: narrow ? 12 : 28),
                     Expanded(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          for (var c = 0; c < cols; c++) Expanded(child: r * cols + c < g.buckets.length ? bucket(r * cols + c) : const SizedBox.shrink()),
+                          for (var c = 0; c < cols; c++) ...[
+                            if (c > 0) SizedBox(width: narrow ? 12 : 28),
+                            Expanded(child: r * cols + c < g.buckets.length ? bucket(r * cols + c) : const SizedBox.shrink()),
+                          ],
                         ],
                       ),
                     ),
+                  ],
                 ],
               ),
             ),
@@ -226,7 +319,7 @@ class OrderBoard extends StatelessWidget {
               leading: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  CircleAvatar(radius: 26, backgroundColor: Z.accent, child: Text('${k + 1}', style: zText(28, FontWeight.w800).copyWith(color: Colors.black))),
+                  CircleAvatar(radius: 28, backgroundColor: Z.primary, child: Text('${k + 1}', style: zText(28, FontWeight.w600).copyWith(color: Colors.white))),
                   const SizedBox(width: 4),
                   IconButton(key: ValueKey('up-$step'), tooltip: st('moveUp', lang), iconSize: 44, constraints: const BoxConstraints(minWidth: 72, minHeight: 72), onPressed: k == 0 ? null : () => onChange(() => g.move(k, k - 1)), icon: const Icon(Icons.arrow_upward)),
                   IconButton(key: ValueKey('down-$step'), tooltip: st('moveDown', lang), iconSize: 44, constraints: const BoxConstraints(minWidth: 72, minHeight: 72), onPressed: k == g.order.length - 1 ? null : () => onChange(() => g.move(k, k + 1)), icon: const Icon(Icons.arrow_downward)),
@@ -257,7 +350,7 @@ class _MatchBoardState extends State<MatchBoard> {
   Widget _badge(int left) => CircleAvatar(
     radius: 24,
     backgroundColor: _pairColors[left % _pairColors.length],
-    child: Text('${left + 1}', style: zText(26, FontWeight.w800).copyWith(color: Colors.white)),
+    child: Text('${left + 1}', style: zText(26, FontWeight.w600).copyWith(color: Colors.white)),
   );
 
   @override
@@ -294,7 +387,7 @@ class _MatchBoardState extends State<MatchBoard> {
               return ActivityCard(
                 key: ValueKey('right-$r'),
                 text: g.pairs[r].right.t(l),
-                leading: owner < 0 ? const CircleAvatar(radius: 24, backgroundColor: Colors.white12, child: Icon(Icons.link, size: 28)) : _badge(owner),
+                leading: owner < 0 ? const CircleAvatar(radius: 24, backgroundColor: Z.segTrack, child: Icon(Icons.link, size: 28, color: Z.muted)) : _badge(owner),
                 selected: cand.isNotEmpty,
                 onTap: selected == null
                     ? null
@@ -396,7 +489,7 @@ class _DiagramBoardState extends State<DiagramBoard> {
                       : mark == false
                       ? Z.wrong
                       : picked
-                      ? Z.accent
+                      ? Z.stageAccent
                       : Colors.white54;
                   Widget inner;
                   if (label != null) {
@@ -484,8 +577,8 @@ class _DiagramBoardState extends State<DiagramBoard> {
         if (label != null) const SizedBox(height: 8),
         Expanded(
           child: Container(
-            decoration: BoxDecoration(color: chalkboardColor, borderRadius: BorderRadius.circular(Z.radius)),
-            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(color: Z.stage, borderRadius: BorderRadius.circular(Z.stageRadius)),
+            padding: const EdgeInsets.all(24),
             child: diagram,
           ),
         ),
@@ -517,7 +610,7 @@ class _FillBoardState extends State<FillBoard> {
     for (final p in pieces) {
       if (p is String) {
         for (final w in p.split(RegExp(r'\s+')).where((w) => w.isNotEmpty)) {
-          words.add(Text(w, style: zText(34, FontWeight.w500)));
+          words.add(Text(w, style: zText(36, FontWeight.w400).copyWith(color: Z.ink)));
         }
       } else if (p is int && p >= 0 && p < g.blanks.length) {
         final c = g.chosen[p];

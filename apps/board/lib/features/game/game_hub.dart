@@ -114,13 +114,13 @@ class _Pill extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-    decoration: BoxDecoration(color: Z.accent.withValues(alpha: 0.18), border: Border.all(color: Z.accent, width: 3), borderRadius: BorderRadius.circular(Z.radius)),
+    decoration: BoxDecoration(color: Z.panel, borderRadius: BorderRadius.circular(Z.pill)),
     child: Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 36, color: Z.accent),
-        const SizedBox(width: 6),
-        Text(label, style: zText(30, FontWeight.w800)),
+        Icon(icon, size: 36, color: Z.star),
+        const SizedBox(width: 8),
+        Text(label, style: zText(30, FontWeight.w600)),
       ],
     ),
   );
@@ -143,22 +143,22 @@ class _MissionNode extends StatelessWidget {
     final st = chapterStars(s.mastery, game, topics);
     final boss = game.bossBeaten(chapter.id);
     final done = st.of > 0 && st.got == st.of;
-    final color = boss ? Z.correct : (st.got > 0 ? Z.accent : Colors.white38);
+    final color = boss ? Z.correct : (st.got > 0 ? Z.primary : Z.segTrack);
     final card = Card(
       margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Z.radius), side: BorderSide(color: color, width: 4)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Z.panelRadius)),
       child: InkWell(
         key: ValueKey('mission:${chapter.id}'),
-        borderRadius: BorderRadius.circular(Z.radius),
+        borderRadius: BorderRadius.circular(Z.panelRadius),
         onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => ChapterMissionScreen(pack: pack))),
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(28),
           child: Row(
             children: [
               CircleAvatar(
                 radius: 40,
                 backgroundColor: color,
-                child: boss ? const Icon(Icons.shield, size: 44, color: Colors.white) : Text('${chapter.number}', style: zText(34, FontWeight.w800).copyWith(color: Colors.black)),
+                child: boss ? const Icon(Icons.shield, size: 44, color: Colors.white) : Text('${chapter.number}', style: zText(34, FontWeight.w600).copyWith(color: st.got > 0 ? Colors.white : Z.ink2)),
               ),
               const SizedBox(width: 20),
               Expanded(
@@ -169,17 +169,17 @@ class _MissionNode extends StatelessWidget {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        const Icon(Icons.star_rounded, size: 36, color: Z.accent),
+                        const Icon(Icons.star_rounded, size: 36, color: Z.star),
                         const SizedBox(width: 6),
-                        Text('${st.got} / ${st.of}', style: zText(28, FontWeight.w700)),
+                        Text('${st.got} / ${st.of}', style: zText(28, FontWeight.w600)),
                         const SizedBox(width: 16),
                         Expanded(
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8),
-                            child: LinearProgressIndicator(value: st.of == 0 ? 0 : st.got / st.of, minHeight: 14, color: Z.accent, backgroundColor: Colors.white12),
+                            child: LinearProgressIndicator(value: st.of == 0 ? 0 : st.got / st.of, minHeight: 12, color: Z.primary, backgroundColor: Z.track),
                           ),
                         ),
-                        if (done || boss) ...[const SizedBox(width: 12), Icon(boss ? Icons.emoji_events : Icons.check_circle, size: 40, color: boss ? Z.accent : Z.correct)],
+                        if (done || boss) ...[const SizedBox(width: 12), Icon(boss ? Icons.emoji_events : Icons.check_circle, size: 40, color: boss ? Z.star : Z.correct)],
                       ],
                     ),
                   ],
@@ -260,14 +260,14 @@ class ChapterMissionScreen extends StatelessWidget {
             padding: EdgeInsets.all(context.narrow ? 16 : 32),
             children: [
               Card(
-                color: const Color(0xFF4A148C),
+                color: Z.stage,
                 child: Padding(
                   padding: const EdgeInsets.all(24),
                   child: Flex(
                     direction: context.portrait ? Axis.vertical : Axis.horizontal,
                     crossAxisAlignment: context.portrait ? CrossAxisAlignment.start : CrossAxisAlignment.center,
                     children: [
-                      Icon(game.bossBeaten(pack.chapter.id) ? Icons.emoji_events : Icons.shield_outlined, size: 72, color: Z.accent),
+                      Icon(game.bossBeaten(pack.chapter.id) ? Icons.emoji_events : Icons.shield_outlined, size: 72, color: Z.stageAccent),
                       const SizedBox(width: 20, height: 12),
                       _flexIf(
                         !context.portrait,
@@ -284,7 +284,7 @@ class ChapterMissionScreen extends StatelessWidget {
                         spacing: 16,
                         runSpacing: 12,
                         children: [
-                          BigButton(key: const ValueKey('boss:team'), icon: Icons.groups_outlined, label: '${gt('fight', l)}: ${gt('teams', l)}', color: Z.wrong, onPressed: () => boss(QuizMode.team)),
+                          BigButton(key: const ValueKey('boss:team'), icon: Icons.groups_outlined, label: '${gt('fight', l)}: ${gt('teams', l)}', onPressed: () => boss(QuizMode.team)),
                           BigButton(key: const ValueKey('boss:roll'), icon: Icons.casino_outlined, label: gt('rollCall', l), filled: false, onPressed: () => boss(QuizMode.rollCall)),
                         ],
                       ),
@@ -328,7 +328,7 @@ class _BadgesTab extends StatelessWidget {
     Widget stat(IconData i, String v, String label) => Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(mainAxisSize: MainAxisSize.min, children: [Icon(i, size: 40, color: Z.accent), const SizedBox(width: 8), Text(v, style: zText(44, FontWeight.w800))]),
+        Row(mainAxisSize: MainAxisSize.min, children: [Icon(i, size: 40, color: Z.star), const SizedBox(width: 8), Text(v, style: zText(44, FontWeight.w600))]),
         Text(label, style: text.bodyMedium),
       ],
     );
@@ -376,16 +376,16 @@ class BadgeTile extends StatelessWidget {
     width: width,
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: earned ? Z.accent.withValues(alpha: 0.2) : Colors.white.withValues(alpha: 0.04),
-      border: Border.all(color: earned ? Z.accent : Colors.white24, width: 3),
+      color: earned ? Z.panel : Z.well,
+      border: Border.all(color: earned ? Z.star : Z.track, width: earned ? 4 : 2),
       borderRadius: BorderRadius.circular(Z.radius),
     ),
     child: Row(
       children: [
-        Icon(badge.icon, size: 48, color: earned ? Z.accent : Colors.white30),
+        Icon(badge.icon, size: 48, color: earned ? Z.star : Z.ghost),
         const SizedBox(width: 12),
         Expanded(
-          child: Text(gt(badge.key, lang), style: zText(24, FontWeight.w600).copyWith(color: earned ? null : Colors.white38), maxLines: 3, overflow: TextOverflow.ellipsis),
+          child: Text(gt(badge.key, lang), style: zText(24, FontWeight.w600).copyWith(color: earned ? Z.ink : Z.faint), maxLines: 3, overflow: TextOverflow.ellipsis),
         ),
       ],
     ),
@@ -428,15 +428,15 @@ class _RollCard extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(child: Text('${tr('rollNo', l)} ${r.roll}', style: zText(32, FontWeight.w800))),
-                    Text('${r.points}', style: zText(32, FontWeight.w800).copyWith(color: Z.accent)),
+                    Text('${r.points}', style: zText(32, FontWeight.w600).copyWith(color: Z.ink)),
                   ],
                 ),
                 const SizedBox(height: 6),
                 Row(
                   children: [
-                    Icon(Icons.local_fire_department, size: 32, color: r.currentStreak >= 3 ? Z.accent : Colors.white38),
+                    Icon(Icons.local_fire_department, size: 32, color: r.currentStreak >= 3 ? Z.vermillion : Z.ghost),
                     Expanded(child: Text(' ${r.currentStreak} ${gt('inARow', l)}', style: zText(22), maxLines: 1, overflow: TextOverflow.ellipsis)),
-                    const Icon(Icons.star_rounded, size: 30, color: Z.accent),
+                    const Icon(Icons.star_rounded, size: 30, color: Z.star),
                     Text('${r.stars}', style: zText(22)),
                   ],
                 ),
@@ -448,7 +448,7 @@ class _RollCard extends StatelessWidget {
                       for (final b in GameBadge.forRoll.where(r.badges.contains).take(7))
                         Padding(
                           padding: const EdgeInsets.only(right: 4),
-                          child: Icon(b.icon, size: 36, color: Z.accent),
+                          child: Icon(b.icon, size: 36, color: Z.star),
                         ),
                     ],
                   ),
@@ -483,7 +483,7 @@ class _LeagueTab extends StatelessWidget {
               key: const ValueKey('leagueOffline'),
               padding: const EdgeInsets.all(16),
               margin: const EdgeInsets.only(bottom: Z.gap),
-              decoration: BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(Z.radius)),
+              decoration: BoxDecoration(color: Z.tile, borderRadius: BorderRadius.circular(Z.radius)),
               child: Row(
                 children: [
                   const Icon(Icons.cloud_off, size: 44),
@@ -498,20 +498,20 @@ class _LeagueTab extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 12),
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               decoration: BoxDecoration(
-                color: r.sectionId == sectionId ? Z.accent.withValues(alpha: 0.22) : Theme.of(context).colorScheme.surfaceContainerHighest,
-                border: r.sectionId == sectionId ? Border.all(color: Z.accent, width: 4) : null,
+                color: r.sectionId == sectionId ? Z.tagBg : Z.panel,
+                border: r.sectionId == sectionId ? Border.all(color: Z.primary, width: 4) : null,
                 borderRadius: BorderRadius.circular(Z.radius),
               ),
               child: Row(
                 children: [
                   SizedBox(
                     width: 80,
-                    child: i < 3 ? Icon(Icons.emoji_events, size: 48, color: [Z.accent, const Color(0xFFB0BEC5), const Color(0xFFBF8A5A)][i]) : Text('${i + 1}', style: zText(36, FontWeight.w800)),
+                    child: i < 3 ? Icon(Icons.emoji_events, size: 48, color: [Z.star, const Color(0xFFA9B0B4), const Color(0xFFB07A4F)][i]) : Text('${i + 1}', style: zText(36, FontWeight.w800)),
                   ),
                   Expanded(
                     child: Text(r.sectionId == sectionId ? '${r.label} · ${gt('you', l)}' : r.label, style: text.headlineMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
                   ),
-                  Text('${r.points}', style: zText(40, FontWeight.w800).copyWith(color: Z.accent)),
+                  Text('${r.points}', style: zText(40, FontWeight.w600).copyWith(color: Z.ink)),
                 ],
               ),
             ),

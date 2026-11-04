@@ -244,7 +244,7 @@ class ExamPracticeScreenState extends State<ExamPracticeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(tr('chooseExam', l), style: text.headlineMedium?.copyWith(color: Z.accent)),
+        Text(tr('chooseExam', l), style: text.headlineSmall),
         const SizedBox(height: Z.gap),
         Expanded(
           child: GridView(
@@ -337,7 +337,7 @@ class ExamPracticeScreenState extends State<ExamPracticeScreen> {
       children: [
         Row(
           children: [
-            Text(tr('chooseSubject', l), style: text.headlineMedium?.copyWith(color: Z.accent)),
+            Text(tr('chooseSubject', l), style: text.headlineSmall),
             const SizedBox(width: Z.gap),
             Expanded(
               child: SingleChildScrollView(
@@ -375,12 +375,12 @@ class ExamPracticeScreenState extends State<ExamPracticeScreen> {
                               padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
                               child: Row(
                                 children: [
-                                  Text(yearLabel(p.chapter.year, s.config.board, l), style: text.bodyMedium?.copyWith(color: Z.accent)),
+                                  Text(yearLabel(p.chapter.year, s.config.board, l), style: text.bodyMedium?.copyWith(color: Z.muted)),
                                   const SizedBox(width: 24),
                                   Expanded(child: Text('${p.chapter.number}. ${p.chapter.title.t(l)}', style: text.headlineMedium)),
                                   Text('${counts[p.chapter.id]} ${tr('questions', l)}', style: text.bodyMedium),
                                   const SizedBox(width: 16),
-                                  const Icon(Icons.play_circle_fill, size: 64, color: Z.accent),
+                                  const Icon(Icons.play_circle_fill, size: 64, color: Z.primary),
                                 ],
                               ),
                             ),
@@ -406,19 +406,15 @@ class _Clock extends StatelessWidget {
     return Container(
       key: const ValueKey('examClock'),
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-      decoration: BoxDecoration(
-        color: (low ? Z.wrong : Z.accent).withValues(alpha: 0.2),
-        border: Border.all(color: low ? Z.wrong : Z.accent, width: 3),
-        borderRadius: BorderRadius.circular(Z.radius),
-      ),
+      decoration: BoxDecoration(color: low ? Z.wrongBg : Z.panel, borderRadius: BorderRadius.circular(Z.radius)),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.timer_outlined, size: 48, color: low ? Z.wrong : Z.accent),
+          Icon(Icons.timer_outlined, size: 44, color: low ? Z.wrongText : Z.ink2),
           const SizedBox(width: 12),
           Text(
             '${left ~/ 60}:${(left % 60).toString().padLeft(2, '0')}',
-            style: TextStyle(fontSize: 48, fontWeight: FontWeight.w800, color: low ? Z.wrong : null),
+            style: zText(44, FontWeight.w600).copyWith(color: low ? Z.wrongText : Z.ink),
           ),
         ],
       ),
@@ -426,6 +422,8 @@ class _Clock extends StatelessWidget {
   }
 }
 
+/// A choice card: a white panel, its icon on a pale blue tile, a Poppins name and one line.
+/// [color] is ignored (kept so callers read the same); colour is only for meaning.
 class _BigCard extends StatelessWidget {
   const _BigCard({super.key, required this.color, required this.title, required this.sub, this.icon, this.onTap});
   final Color color;
@@ -434,18 +432,24 @@ class _BigCard extends StatelessWidget {
   final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) => Opacity(
-    opacity: onTap == null ? 0.45 : 1,
+    opacity: onTap == null ? 0.5 : 1,
     child: Material(
-      color: color,
-      borderRadius: BorderRadius.circular(40),
+      color: Z.panel,
+      borderRadius: BorderRadius.circular(Z.panelRadius),
       child: InkWell(
-        borderRadius: BorderRadius.circular(40),
+        borderRadius: BorderRadius.circular(Z.panelRadius),
         onTap: onTap,
         child: Padding(
-          padding: EdgeInsets.all(context.narrow ? 24 : 32),
+          padding: EdgeInsets.all(context.narrow ? 28 : 44),
           child: Row(
             children: [
-              if (icon != null) ...[Icon(icon, size: context.narrow ? 88 : 120, color: Colors.white), SizedBox(width: context.narrow ? 20 : 32)],
+              Container(
+                width: context.narrow ? 104 : 128,
+                height: context.narrow ? 104 : 128,
+                decoration: BoxDecoration(color: Z.tagBg, borderRadius: BorderRadius.circular(32)),
+                child: Icon(icon ?? Icons.emoji_events_outlined, size: context.narrow ? 56 : 68, color: Z.primary),
+              ),
+              SizedBox(width: context.narrow ? 24 : 36),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -455,18 +459,10 @@ class _BigCard extends StatelessWidget {
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        title,
-                        style: const TextStyle(fontSize: 56, fontWeight: FontWeight.w800, color: Colors.white),
-                      ),
+                      child: Text(title, style: zTitle(context.narrow ? 42 : 48)),
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      sub,
-                      style: const TextStyle(fontSize: 28, color: Colors.white70),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    Text(sub, style: zText(context.narrow ? 26 : 28, FontWeight.w400).copyWith(color: Z.muted), maxLines: 2, overflow: TextOverflow.ellipsis),
                   ],
                 ),
               ),
@@ -520,7 +516,7 @@ class _Results extends StatelessWidget {
               Text(
                 '$score / ${items.length}',
                 key: const ValueKey('examScore'),
-                style: text.displayLarge?.copyWith(fontSize: 120, color: Z.accent),
+                style: text.displayLarge?.copyWith(fontSize: 120, color: Z.ink),
               ),
               Text('${items.isEmpty ? 0 : (score * 100 / items.length).round()}%', style: text.headlineLarge),
               const SizedBox(height: 32),
@@ -545,7 +541,7 @@ class _Results extends StatelessWidget {
                   ),
                 ),
               const Spacer(),
-              BigButton(key: const ValueKey('examDone'), icon: Icons.done_all, label: tr('done', l), color: Z.correct, onPressed: () => Navigator.pop(context)),
+              BigButton(key: const ValueKey('examDone'), icon: Icons.done_all, label: tr('done', l), onPressed: () => Navigator.pop(context)),
             ],
           ),
         ),
@@ -564,7 +560,7 @@ class _Results extends StatelessWidget {
                         Icon(
                           byId[i.q.id] == null ? Icons.remove_circle_outline : (byId[i.q.id]! ? Icons.check_circle : Icons.cancel),
                           size: 52,
-                          color: byId[i.q.id] == null ? Colors.white54 : (byId[i.q.id]! ? Z.correct : Z.wrong),
+                          color: byId[i.q.id] == null ? Z.track : (byId[i.q.id]! ? Z.correct : Z.wrong),
                         ),
                         const SizedBox(width: 20),
                         Expanded(

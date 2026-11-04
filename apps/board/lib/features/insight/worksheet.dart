@@ -253,7 +253,7 @@ class _WorksheetScreenState extends State<WorksheetScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     MathText(q.stem.t(l), style: text.bodyLarge),
-                                    Text(names[q.topicId] ?? '', style: text.bodyMedium?.copyWith(color: Z.accent)),
+                                    Text(names[q.topicId] ?? '', style: text.bodyMedium?.copyWith(color: Z.muted)),
                                   ],
                                 ),
                               ),

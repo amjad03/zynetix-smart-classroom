@@ -148,7 +148,7 @@ class HandsUpScreenState extends State<HandsUpScreen> {
             ),
           Padding(
             padding: const EdgeInsets.only(right: 24),
-            child: BigButton(key: const ValueKey('handsSave'), icon: Icons.check, label: ltr('save', l), color: Z.correct, onPressed: save),
+            child: BigButton(key: const ValueKey('handsSave'), icon: Icons.check, label: ltr('save', l), onPressed: save),
           ),
         ],
       ),
@@ -234,7 +234,7 @@ class HandsUpScreenState extends State<HandsUpScreen> {
         : skipped
         ? Z.accent.withValues(alpha: 0.4)
         : ok == true
-        ? Z.correct
+        ? Z.correctBg
         : Z.wrong;
     return Material(
       color: bg,
@@ -250,10 +250,8 @@ class HandsUpScreenState extends State<HandsUpScreen> {
               padding: const EdgeInsets.all(4),
               child: Text(
                 '$roll',
-                style: TextStyle(
-                  fontSize: max(24, side * 0.42),
-                  fontWeight: FontWeight.w800,
-                  color: isAbsent ? scheme.onSurface.withValues(alpha: 0.35) : Colors.white,
+                style: zText(max(24, side * 0.42), FontWeight.w600).copyWith(
+                  color: isAbsent ? Z.ghost : (ok == true && !skipped ? Z.correct : Colors.white),
                   decoration: isAbsent ? TextDecoration.lineThrough : null,
                 ),
               ),

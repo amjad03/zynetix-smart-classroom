@@ -162,12 +162,12 @@ void paintSceneFrame(Canvas canvas, SceneFrame frame, Map<String, dynamic> viewR
   final (x0, x1, y0, y1) = frame.view;
   if (viewRaw['axes'] == true || viewRaw['grid'] == true) {
     if (viewRaw['axes'] == true) {
-      paintAxes(canvas, frame.rect, [x0, x1], [y0, y1], Colors.white60, strokeWidth: 3, font: 24, xLabel: viewRaw['xLabel'] as String?, yLabel: viewRaw['yLabel'] as String?, grid: viewRaw['grid'] == true);
+      paintAxes(canvas, frame.rect, [x0, x1], [y0, y1], const Color(0xFF4A5459), strokeWidth: 3, font: 26, xLabel: viewRaw['xLabel'] as String?, yLabel: viewRaw['yLabel'] as String?, grid: viewRaw['grid'] == true, gridColor: const Color(0xFF20282C), labelColor: const Color(0xFF8E979C));
     } else {
       // Grid alone: faint lines at whole units (or a nicer step).
       final g = Paint()
-        ..color = Colors.white.withValues(alpha: 0.1)
-        ..strokeWidth = 1;
+        ..color = const Color(0xFF20282C)
+        ..strokeWidth = 2;
       final step = _niceStep(x1 - x0);
       for (var x = (x0 / step).ceil() * step; x <= x1; x += step) {
         canvas.drawLine(frame.toScreen(x, y0), frame.toScreen(x, y1), g);
@@ -206,7 +206,7 @@ void _text(Canvas canvas, String s, Offset at, double size, Color color, {TextAl
   final tp = TextPainter(
     text: TextSpan(
       text: s,
-      style: zText(size, FontWeight.w700).copyWith(color: color),
+      style: zText(size, FontWeight.w500).copyWith(color: color),
     ),
     textDirection: TextDirection.ltr,
   )..layout();
@@ -217,15 +217,8 @@ void _text(Canvas canvas, String s, Offset at, double size, Color color, {TextAl
   };
   final o = at - Offset(dx, tp.height / 2);
   if (pill) {
-    final r = RRect.fromRectAndRadius((o & tp.size).inflate(8), const Radius.circular(10));
-    canvas.drawRRect(r, Paint()..color = const Color(0xDD0E1A16));
-    canvas.drawRRect(
-      r,
-      Paint()
-        ..color = color.withValues(alpha: 0.7)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2,
-    );
+    final r = RRect.fromRectAndRadius(Rect.fromLTRB(o.dx - 20, o.dy - 10, o.dx + tp.width + 20, o.dy + tp.height + 10), Radius.circular(tp.height / 2 + 10));
+    canvas.drawRRect(r, Paint()..color = const Color(0xFF232C30));
   }
   tp.paint(canvas, o);
 }

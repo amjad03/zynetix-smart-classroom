@@ -25,12 +25,11 @@ class SmartboardButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = ServicesScope.of(context).config.lang;
-    return BigButton(
+    return ZSmallButton(
       key: const ValueKey('smartboard'),
-      collapse: true,
-      icon: Icons.draw_outlined,
+      iconOnly: context.narrow,
+      icon: Icons.desktop_windows_outlined,
       label: tr('smartboard', l),
-      filled: false,
       onPressed: () async {
         onOpen?.call();
         await openSmartboard(context);
@@ -65,7 +64,7 @@ class SmartboardScreen extends StatefulWidget {
   State<SmartboardScreen> createState() => SmartboardScreenState();
 }
 
-const _chalk = [Color(0xFFFFFFFF), Color(0xFFFFE45C), Color(0xFFFF7A70), Color(0xFF8BE88F), Color(0xFF7CC4FF), Color(0xFFFFB25C)];
+const _chalk = [Color(0xFFFFFFFF), Color(0xFFF0E442), Color(0xFFE8613C), Color(0xFF3CC08E), Color(0xFF56B4E9), Color(0xFFF2A93B)];
 const _widths = [3.0, 6.0, 12.0];
 
 class SmartboardScreenState extends State<SmartboardScreen> {
@@ -134,9 +133,14 @@ class SmartboardScreenState extends State<SmartboardScreen> {
               Expanded(
                 child: LayoutBuilder(
                   builder: (context, box) {
+                    // The board is the stage: rounded, inset in the page like a lesson's stage.
                     final canvas = Expanded(
-                      child: ClipRect(
-                        child: WhiteboardCanvas(key: const ValueKey('smartboardCanvas'), controller: board, editMath: _editMath),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: context.narrow ? 12 : 24),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(Z.stageRadius),
+                          child: WhiteboardCanvas(key: const ValueKey('smartboardCanvas'), controller: board, editMath: _editMath),
+                        ),
                       ),
                     );
                     final panel = InsertPanel(board: this, lang: l, kinetixInstalled: _kinetixInstalled);
@@ -146,7 +150,7 @@ class SmartboardScreenState extends State<SmartboardScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           canvas,
-                          if (insertOpen) SizedBox(height: box.maxHeight * 0.5, child: panel),
+                          if (insertOpen) SizedBox(height: box.maxHeight * 0.5, child: ColoredBox(color: Z.panel, child: panel)),
                         ],
                       );
                     }
@@ -161,9 +165,15 @@ class SmartboardScreenState extends State<SmartboardScreen> {
                             key: const ValueKey('panelHandle'),
                             behavior: HitTestBehavior.opaque,
                             onHorizontalDragUpdate: (d) => setState(() => panelWidth = (panelWidth - d.delta.dx).clamp(480.0, box.maxWidth - 480)),
-                            child: Container(width: 36, color: Theme.of(context).colorScheme.surfaceContainerHighest, alignment: Alignment.center, child: const Icon(Icons.drag_indicator, size: 36)),
+                            child: Container(width: 36, alignment: Alignment.center, child: const Icon(Icons.drag_indicator, size: 36, color: Z.faint)),
                           ),
-                          SizedBox(width: w, child: panel),
+                          SizedBox(
+                            width: w,
+                            child: Padding(
+                              padding: EdgeInsets.only(right: context.narrow ? 12 : 24),
+                              child: ClipRRect(borderRadius: BorderRadius.circular(Z.panelRadius), child: ColoredBox(color: Z.panel, child: panel)),
+                            ),
+                          ),
                         ],
                       ],
                     );
@@ -179,18 +189,16 @@ class SmartboardScreenState extends State<SmartboardScreen> {
   }
 
   Widget _topBar(Lang l) {
-    final text = Theme.of(context).textTheme;
     return Container(
-      color: Theme.of(context).colorScheme.surfaceContainer,
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      margin: EdgeInsets.fromLTRB(context.narrow ? 12 : 24, context.narrow ? 12 : 16, context.narrow ? 12 : 24, context.narrow ? 12 : 16),
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+      decoration: BoxDecoration(color: Z.panel, borderRadius: BorderRadius.circular(Z.panelRadius)),
       child: Row(
         children: [
           BigButton(collapse: true, key: const ValueKey('closeSmartboard'), icon: Icons.close, label: tr('close', l), filled: false, onPressed: () => Navigator.pop(context)),
           if (!context.narrow) ...[
-            const SizedBox(width: 24),
-            const Icon(Icons.draw_outlined, size: 52, color: Z.accent),
-            const SizedBox(width: 12),
-            Text(tr('smartboard', l), style: text.headlineLarge),
+            const SizedBox(width: 28),
+            Text(tr('smartboard', l), style: zTitle(Z.title)),
           ],
           const Spacer(),
           IconButton.filledTonal(key: const ValueKey('prevPage'), iconSize: 56, onPressed: board.hasPrevious ? board.previous : null, icon: const Icon(Icons.chevron_left)),
@@ -199,7 +207,7 @@ class SmartboardScreenState extends State<SmartboardScreen> {
             child: Text(
               context.narrow ? '${board.pageIndex + 1} / ${board.pageCount}' : '${tr('page', l)} ${board.pageIndex + 1} / ${board.pageCount}',
               key: const ValueKey('pageNo'),
-              style: text.headlineMedium,
+              style: zText(context.narrow ? 28 : 32, FontWeight.w500),
             ),
           ),
           IconButton.filledTonal(key: const ValueKey('nextPage'), iconSize: 56, onPressed: board.hasNext ? board.next : null, icon: const Icon(Icons.chevron_right)),
@@ -217,11 +225,12 @@ class SmartboardScreenState extends State<SmartboardScreen> {
     final hl = t == BoardTool.highlighter;
     final color = hl ? board.highlighterColor : board.penColor;
     final width = hl ? board.highlighterWidth : board.penWidth;
-    Widget sep() => Container(width: 2, height: 72, margin: const EdgeInsets.symmetric(horizontal: 10), color: Colors.white24);
+    Widget sep() => Container(width: 2, height: 72, margin: const EdgeInsets.symmetric(horizontal: 10), color: Z.track);
     return Container(
       key: const ValueKey('smartboardToolbar'),
-      color: Theme.of(context).colorScheme.surfaceContainer,
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      margin: EdgeInsets.fromLTRB(context.narrow ? 12 : 24, context.narrow ? 12 : 16, context.narrow ? 12 : 24, context.narrow ? 12 : 16),
+      decoration: BoxDecoration(color: Z.panel, borderRadius: BorderRadius.circular(Z.panelRadius)),
+      padding: const EdgeInsets.symmetric(vertical: 12),
       // Scrolls sideways when the screen is narrower than the tools.
       child: LayoutBuilder(
         builder: (context, box) => SingleChildScrollView(
@@ -279,7 +288,7 @@ class SmartboardScreenState extends State<SmartboardScreen> {
                     child: Container(
                       width: 40,
                       height: w * 1.6 + 2,
-                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+                      decoration: BoxDecoration(color: Z.ink, borderRadius: BorderRadius.circular(8)),
                     ),
                   ),
                 sep(),
@@ -310,7 +319,7 @@ class _Tool extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 3),
       child: Material(
-        color: on ? Z.accent : Colors.transparent,
+        color: on ? Z.tagBg : Colors.transparent,
         borderRadius: BorderRadius.circular(20),
         child: InkWell(
           borderRadius: BorderRadius.circular(20),
@@ -323,13 +332,13 @@ class _Tool extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  child ?? Icon(icon, size: 42, color: on ? Colors.black : null),
+                  child ?? Icon(icon, size: 42, color: on ? Z.primary : Z.ink),
                   const SizedBox(height: 4),
                   Text(
                     label,
                     maxLines: 1,
                     overflow: TextOverflow.clip,
-                    style: zText(18, FontWeight.w600).copyWith(color: on ? Colors.black : null, height: 1.1),
+                    style: zText(20, on ? FontWeight.w600 : FontWeight.w500).copyWith(color: on ? Z.primary : Z.ink2, height: 1.1),
                   ),
                 ],
               ),
@@ -358,7 +367,7 @@ class _Swatch extends StatelessWidget {
         decoration: BoxDecoration(
           color: color,
           shape: BoxShape.circle,
-          border: Border.all(color: on ? Z.accent : Colors.white24, width: on ? 7 : 2),
+          border: Border.all(color: on ? Z.primary : Z.line, width: on ? 7 : 2),
         ),
       ),
     ),
@@ -558,7 +567,7 @@ class _InsertPanelState extends State<InsertPanel> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: zText(30, FontWeight.w700).copyWith(color: Z.accent)),
+          Text(title, style: zTitle(30)),
           const SizedBox(height: 10),
           Wrap(
             spacing: 12,
@@ -603,7 +612,7 @@ class _InsertPanelState extends State<InsertPanel> {
       Container(
         height: 160,
         alignment: Alignment.center,
-        decoration: BoxDecoration(color: const Color(0xFF1C2B26), borderRadius: BorderRadius.circular(Z.radius)),
+        decoration: BoxDecoration(color: Z.stage, borderRadius: BorderRadius.circular(Z.radius)),
         child: FittedBox(
           fit: BoxFit.scaleDown,
           child: Padding(

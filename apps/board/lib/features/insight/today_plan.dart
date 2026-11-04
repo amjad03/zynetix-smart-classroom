@@ -117,7 +117,7 @@ class TodayPlanCard extends StatelessWidget {
       builder: (context, _) {
         final plan = TodayPlan.of(s);
         if (plan == null) return const SizedBox.shrink();
-        final l = s.config.lang, text = Theme.of(context).textTheme;
+        final l = s.config.lang;
         final at = plan.at;
         final when = switch (plan.source) {
           PlanSource.timetable => '${it('fromTimetable', l)}${at == null ? '' : ' · ${at.hour.toString().padLeft(2, '0')}:${at.minute.toString().padLeft(2, '0')}'}',
@@ -133,22 +133,27 @@ class TodayPlanCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('${it('todayPlan', l)} · $when', style: text.bodyMedium?.copyWith(color: Z.accent), maxLines: 1, overflow: TextOverflow.ellipsis),
+            Text('${it('todayPlan', l)} · $when', style: zText(28, FontWeight.w400).copyWith(color: Z.muted), maxLines: 1, overflow: TextOverflow.ellipsis),
             const SizedBox(height: 6),
-            Text(steps.join(', ${it('thenTeach', l)} '), style: text.headlineMedium, maxLines: 3, overflow: TextOverflow.ellipsis),
+            Text(steps.join(', ${it('thenTeach', l)} '), style: zTitle(context.narrow ? 32 : 36, FontWeight.w500), maxLines: 3, overflow: TextOverflow.ellipsis),
           ],
         );
         final button = BigButton(key: const ValueKey('startPlan'), icon: Icons.play_arrow, label: it('startPlan', l), onPressed: () => plan.start(context));
         return Card(
           key: const ValueKey('todayPlan'),
           child: Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.symmetric(horizontal: context.narrow ? 28 : 44, vertical: context.narrow ? 24 : 32),
             child: context.portrait
                 ? Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [body, const SizedBox(height: 16), button])
                 : Row(
                     children: [
-                      const Icon(Icons.event_note_outlined, size: 64, color: Z.accent),
-                      const SizedBox(width: 20),
+                      Container(
+                        width: 112,
+                        height: 112,
+                        decoration: BoxDecoration(color: Z.segTrack, borderRadius: BorderRadius.circular(28)),
+                        child: const Icon(Icons.event_note_outlined, size: 56, color: Z.ink2),
+                      ),
+                      const SizedBox(width: 36),
                       Expanded(child: body),
                       const SizedBox(width: 20),
                       button,

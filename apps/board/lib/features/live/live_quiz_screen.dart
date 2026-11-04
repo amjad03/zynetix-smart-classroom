@@ -266,7 +266,7 @@ class LiveQuizScreenState extends State<LiveQuizScreen> {
           alignment: Alignment.centerRight,
           child: revealed
               ? BigButton(key: const ValueKey('liveNext'), icon: i + 1 >= questions.length ? Icons.done_all : Icons.arrow_forward, label: i + 1 >= questions.length ? tr('finish', l) : tr('nextQuestion', l), onPressed: next)
-              : BigButton(key: const ValueKey('liveReveal'), icon: Icons.visibility_outlined, label: tr('reveal', l), color: Z.correct, onPressed: reveal),
+              : BigButton(key: const ValueKey('liveReveal'), icon: Icons.visibility_outlined, label: tr('reveal', l), onPressed: reveal),
         ),
       ],
     );
@@ -286,7 +286,7 @@ class LiveQuizScreenState extends State<LiveQuizScreen> {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: revealed && q.correctSet.contains(k) ? Z.correct : scheme.surfaceContainerHighest,
-                  child: Text('ABCD'[k], style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800, color: revealed && q.correctSet.contains(k) ? Colors.white : scheme.onSurface)),
+                  child: Text('ABCD'[k], style: zText(30, FontWeight.w600).copyWith(color: revealed && q.correctSet.contains(k) ? Colors.white : Z.ink2)),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -302,7 +302,7 @@ class LiveQuizScreenState extends State<LiveQuizScreen> {
                           duration: const Duration(milliseconds: 250),
                           width: c.maxWidth * h[k] / top,
                           decoration: BoxDecoration(
-                            color: !revealed ? Z.accent.withValues(alpha: 0.8) : (q.correctSet.contains(k) ? Z.correct : Z.wrong.withValues(alpha: 0.7)),
+                            color: !revealed ? const Color(0xFFC9D7FA) : (q.correctSet.contains(k) ? const Color(0xFFBFE5D3) : Z.wrongBg),
                             borderRadius: BorderRadius.circular(16),
                           ),
                         ),
@@ -316,7 +316,7 @@ class LiveQuizScreenState extends State<LiveQuizScreen> {
                 ),
                 SizedBox(
                   width: 100,
-                  child: Text('${h[k]}', key: ValueKey('bar-$k'), textAlign: TextAlign.end, style: const TextStyle(fontSize: 44, fontWeight: FontWeight.w800)),
+                  child: Text('${h[k]}', key: ValueKey('bar-$k'), textAlign: TextAlign.end, style: zText(44, FontWeight.w600)),
                 ),
               ],
             ),
@@ -368,7 +368,7 @@ class LiveQuizScreenState extends State<LiveQuizScreen> {
         ),
         Align(
           alignment: Alignment.centerRight,
-          child: BigButton(key: const ValueKey('liveDone'), icon: Icons.done_all, label: tr('done', l), color: Z.correct, onPressed: () => Navigator.pop(context)),
+          child: BigButton(key: const ValueKey('liveDone'), icon: Icons.done_all, label: tr('done', l), onPressed: () => Navigator.pop(context)),
         ),
       ],
     );

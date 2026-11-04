@@ -243,7 +243,7 @@ class PaperMarksScreenState extends State<PaperMarksScreen> {
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             Text(ltr('paperHelp', l), style: text.bodyMedium),
-            Text('${m.entered.length} / ${m.rollCount} ${ltr('entered', l)}', key: const ValueKey('enteredCount'), style: text.bodyLarge?.copyWith(color: Z.accent)),
+            Text('${m.entered.length} / ${m.rollCount} ${ltr('entered', l)}', key: const ValueKey('enteredCount'), style: text.bodyLarge?.copyWith(color: Z.muted)),
           ],
         ),
         const SizedBox(height: 12),

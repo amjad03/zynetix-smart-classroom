@@ -11,10 +11,12 @@ import '../engine/lesson_controller.dart';
 import '../engine/model.dart';
 
 /// Board ink names (schema `ink`) on the chalkboard.
-const boardInk = <String, Color>{'white': Color(0xFFF4F4EC), 'yellow': Color(0xFFFFE45C), 'red': Color(0xFFFF7A70), 'green': Color(0xFF8BE88F), 'blue': Color(0xFF7CC4FF), 'orange': Color(0xFFFFB25C)};
+/// Okabe–Ito colours in their bright cut, readable on the dark stage and by colour-blind eyes.
+const boardInk = <String, Color>{'white': Color(0xFFE7EAE6), 'yellow': Color(0xFFF0E442), 'red': Color(0xFFE8613C), 'green': Color(0xFF3CC08E), 'blue': Color(0xFF56B4E9), 'orange': Color(0xFFF2A93B)};
 Color inkColor(Object? name) => boardInk[name] ?? boardInk['white']!;
 
-const chalkboardColor = Color(0xFF1C2B26);
+/// The dark stage.
+const chalkboardColor = Color(0xFF141A1D);
 
 /// A whiteboard block: a dark chalkboard where steps appear one at a time, each drawn with a
 /// short animation (strokes drawn progressively, text fading in). Teacher Mode: "Next step"
@@ -114,67 +116,59 @@ class WhiteboardViewState extends State<WhiteboardView> with SingleTickerProvide
     final l = widget.c.lang, text = Theme.of(context).textTheme;
     if (steps.isEmpty) return const SizedBox.shrink();
     final say = steps[shown].say;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          child: Center(
-            child: AspectRatio(
-              aspectRatio: 100 / 60,
-              child: Container(
-                key: const ValueKey('chalkboard'),
-                decoration: BoxDecoration(
-                  color: chalkboardColor,
-                  borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: const Color(0xFF6D4C2F), width: 12),
-                  boxShadow: const [BoxShadow(color: Colors.black45, blurRadius: 18, offset: Offset(0, 6))],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: AnimatedBuilder(
-                    animation: _draw,
-                    builder: (context, _) => _Board(items: _visible, current: shown, t: _draw.value, lang: l),
-                  ),
-                ),
-              ),
+    final narrow = context.narrow;
+    final board = Container(
+      decoration: BoxDecoration(color: Z.stage, borderRadius: BorderRadius.circular(Z.stageRadius)),
+      padding: EdgeInsets.all(narrow ? 12 : 24),
+      child: Center(
+        child: AspectRatio(
+          aspectRatio: 100 / 60,
+          child: Container(
+            key: const ValueKey('chalkboard'),
+            color: chalkboardColor,
+            child: AnimatedBuilder(
+              animation: _draw,
+              builder: (context, _) => _Board(items: _visible, current: shown, t: _draw.value, lang: l),
             ),
           ),
         ),
-        const SizedBox(width: Z.gap),
-        SizedBox(
-          width: 380,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      ),
+    );
+    final rail = Container(
+      padding: EdgeInsets.fromLTRB(narrow ? 28 : 44, narrow ? 24 : 40, narrow ? 28 : 44, narrow ? 24 : 40),
+      decoration: BoxDecoration(color: Z.panel, borderRadius: BorderRadius.circular(Z.panelRadius)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  const Icon(Icons.draw_outlined, size: 48, color: Z.accent),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(widget.block.title?.t(l) ?? tr('whiteboard', l), style: text.headlineMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Text(
-                '${tr('step', l)} ${shown + 1} / ${steps.length}',
-                key: const ValueKey('wbStep'),
-                style: text.bodyLarge?.copyWith(color: Z.accent, fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(height: 12),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    child: Text(say?.t(l) ?? '', key: ValueKey(shown), style: text.bodyLarge),
-                  ),
-                ),
-              ),
-              if (!widget.auto) ...[const SizedBox(height: 12), BigButton(key: const ValueKey('wbNext'), icon: Icons.skip_next, label: tr('nextStep', l), onPressed: atEnd ? null : nextStep)],
+              Expanded(child: Text(widget.block.title?.t(l) ?? tr('whiteboard', l), style: zTitle(narrow ? 30 : 34), maxLines: 2, overflow: TextOverflow.ellipsis)),
+              const SizedBox(width: 16),
+              Text('${tr('step', l)} ${shown + 1} / ${steps.length}', key: const ValueKey('wbStep'), style: zText(26, FontWeight.w500).copyWith(color: Z.muted)),
             ],
           ),
-        ),
-      ],
+          const SizedBox(height: 16),
+          ZProgress(value: (shown + 1) / steps.length),
+          SizedBox(height: narrow ? 16 : 28),
+          Expanded(
+            child: SingleChildScrollView(
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: Text(say?.t(l) ?? '', key: ValueKey(shown), style: text.bodyLarge?.copyWith(fontSize: narrow ? 30 : 34, color: Z.ink2)),
+              ),
+            ),
+          ),
+          if (!widget.auto) ...[const SizedBox(height: 16), BigButton(key: const ValueKey('wbNext'), icon: Icons.skip_next, label: tr('nextStep', l), onPressed: atEnd ? null : nextStep)],
+        ],
+      ),
+    );
+    final gap = narrow ? 20.0 : Z.gap;
+    if (context.portrait) {
+      return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [Expanded(flex: 3, child: board), SizedBox(height: gap), Expanded(flex: 2, child: rail)]);
+    }
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [Expanded(child: board), SizedBox(width: gap), SizedBox(width: narrow ? 520 : 680, child: rail)],
     );
   }
 }
@@ -369,7 +363,7 @@ void _label(Canvas canvas, String s, Offset at, double size, Color color, {Align
 
 /// Axes in [box] for ranges [xr] × [yr]: the axis lines (at 0 when in range, else at the
 /// box edge), ticks with labels, and the axis names. Shared by whiteboards and interactives.
-void paintAxes(Canvas canvas, Rect box, List<double> xr, List<double> yr, Color color, {double t = 1, double strokeWidth = 3, double font = 22, String? xLabel, String? yLabel, bool grid = false}) {
+void paintAxes(Canvas canvas, Rect box, List<double> xr, List<double> yr, Color color, {double t = 1, double strokeWidth = 3, double font = 22, String? xLabel, String? yLabel, bool grid = false, Color? gridColor, Color? labelColor}) {
   Offset map(double x, double y) => Offset(box.left + (x - xr[0]) / (xr[1] - xr[0]) * box.width, box.bottom - (y - yr[0]) / (yr[1] - yr[0]) * box.height);
   final double x0 = (0.0).clamp(math.min(xr[0], xr[1]), math.max(xr[0], xr[1])), y0 = (0.0).clamp(math.min(yr[0], yr[1]), math.max(yr[0], yr[1]));
   final paint = Paint()
@@ -380,8 +374,8 @@ void paintAxes(Canvas canvas, Rect box, List<double> xr, List<double> yr, Color 
   final sx = niceStep(xr[1] - xr[0]), sy = niceStep(yr[1] - yr[0]);
   if (grid) {
     final g = Paint()
-      ..color = color.withValues(alpha: 0.12 * t)
-      ..strokeWidth = 1;
+      ..color = gridColor ?? color.withValues(alpha: 0.12 * t)
+      ..strokeWidth = gridColor == null ? 1 : 2;
     for (var x = (xr[0] / sx).ceil() * sx; x <= xr[1] + 1e-9; x += sx) {
       canvas.drawLine(map(x, yr[0]), map(x, yr[1]), g);
     }
@@ -398,7 +392,7 @@ void paintAxes(Canvas canvas, Rect box, List<double> xr, List<double> yr, Color 
     canvas.drawLine(b, b - dir * k + n * k * 0.6, paint);
     canvas.drawLine(b, b - dir * k - n * k * 0.6, paint);
   }
-  final tick = font * 0.3, lc = color.withValues(alpha: 0.85);
+  final tick = font * 0.3, lc = labelColor ?? color.withValues(alpha: 0.85);
   for (var x = (xr[0] / sx).ceil() * sx; x <= xr[1] + 1e-9; x += sx) {
     if (x.abs() < sx * 1e-6 || (xr[1] - x).abs() < sx * 0.3) continue;
     final at = map(x, y0);
@@ -411,8 +405,8 @@ void paintAxes(Canvas canvas, Rect box, List<double> xr, List<double> yr, Color 
     canvas.drawLine(at - Offset(tick, 0), at + Offset(tick, 0), paint);
     _label(canvas, tickLabel(y), at - Offset(tick + font * 0.25, 0), font * 0.8, lc, align: Alignment.centerRight);
   }
-  if (xLabel != null) _label(canvas, xLabel, xe + Offset(-font * 0.2, -font * 0.9), font, color, align: Alignment.centerRight);
-  if (yLabel != null) _label(canvas, yLabel, ye + Offset(font * 0.5, font * 0.3), font, color, align: Alignment.centerLeft);
+  if (xLabel != null) _label(canvas, xLabel, xe + Offset(-font * 0.2, -font * 0.9), font, labelColor ?? color, align: Alignment.centerRight);
+  if (yLabel != null) _label(canvas, yLabel, ye + Offset(font * 0.5, font * 0.3), font, labelColor ?? color, align: Alignment.centerLeft);
 }
 
 /// y = f(x) in [box], sampled across [xr], drawn up to [t] from the left; breaks where f is

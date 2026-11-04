@@ -46,13 +46,13 @@ class Formula extends StatelessWidget {
   final String tex;
   @override
   Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 32),
-    decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerHighest, borderRadius: BorderRadius.circular(24)),
+    padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 44),
+    decoration: BoxDecoration(color: const Color(0xFFF4F6F3), borderRadius: BorderRadius.circular(24)),
     child: SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Math.tex(
         tex,
-        textStyle: const TextStyle(fontSize: 44),
+        textStyle: const TextStyle(fontSize: 46, color: Color(0xFF15191C)),
         onErrorFallback: (_) => Text(tex, style: const TextStyle(fontSize: 36)),
       ),
     ),

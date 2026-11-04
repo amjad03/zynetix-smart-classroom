@@ -11,6 +11,7 @@ import 'math_text.dart';
 import 'scene/controls.dart';
 import 'scene/play_model.dart';
 import 'scene/scene_painter.dart';
+import 'scene/strings.dart';
 import 'whiteboard_view.dart' show chalkboardColor, inkColor, niceStep, paintAxes, paintFunction, tickLabel;
 
 export 'scene/play_model.dart' show SliderSpec;
@@ -107,21 +108,21 @@ class InteractiveViewState extends State<InteractiveView> with SingleTickerProvi
   }
 
   /// Read-outs: the block's, or sin/cos/tan for a unit circle that has none.
-  List<({String label, String value})> readouts() {
+  List<({String label, String value, String? unit})> readouts() {
     final l = widget.lang;
-    final out = <({String label, String value})>[];
+    final out = <({String label, String value, String? unit})>[];
     final list = (raw['readouts'] as List?) ?? const [];
     for (final r in list) {
       if (r is! Map) continue;
       final v = _expr(r['expr'] as String? ?? '')?.call(rt.env) ?? double.nan;
       final digits = (r['digits'] as int?) ?? 2;
       final unit = r['unit'] as String?;
-      out.add((label: L10n.of(r['label']).t(l), value: v.isFinite ? '${v.toStringAsFixed(digits)}${unit == null ? '' : ' $unit'}' : '—'));
+      out.add((label: L10n.of(r['label']).t(l), value: v.isFinite ? v.toStringAsFixed(digits) : '—', unit: v.isFinite ? unit : null));
     }
     if (out.isEmpty && kind == 'unit_circle') {
       final th = _theta * math.pi / 180;
       String f(double v) => v.abs() > 1e6 || !v.isFinite ? '∞' : v.toStringAsFixed(3);
-      out.addAll([(label: 'sin θ', value: f(math.sin(th))), (label: 'cos θ', value: f(math.cos(th))), (label: 'tan θ', value: f(math.tan(th)))]);
+      out.addAll([(label: 'sin θ', value: f(math.sin(th)), unit: null), (label: 'cos θ', value: f(math.cos(th)), unit: null), (label: 'tan θ', value: f(math.tan(th)), unit: null)]);
     }
     return out;
   }
@@ -170,7 +171,8 @@ class InteractiveViewState extends State<InteractiveView> with SingleTickerProvi
 
   @override
   Widget build(BuildContext context) {
-    final l = widget.lang, text = Theme.of(context).textTheme;
+    final l = widget.lang;
+    final narrow = context.narrow;
     final chart = kind == 'readouts'
         ? ListenableBuilder(
             listenable: rt,
@@ -180,7 +182,7 @@ class InteractiveViewState extends State<InteractiveView> with SingleTickerProvi
                   spacing: 32,
                   runSpacing: 32,
                   alignment: WrapAlignment.center,
-                  children: [for (final (i, r) in readouts().indexed) _Readout(key: ValueKey('readout-$i'), label: r.label, value: r.value, big: true)],
+                  children: [for (final (i, r) in readouts().indexed) _StageReadout(key: ValueKey('readout-$i'), label: r.label, value: r.value, unit: r.unit)],
                 ),
               ),
             ),
@@ -188,190 +190,172 @@ class InteractiveViewState extends State<InteractiveView> with SingleTickerProvi
         : kind == 'scene'
         ? _scene()
         : CustomPaint(key: const ValueKey('interactiveChart'), painter: _ChartPainter(this), child: const SizedBox.expand());
-    final portrait = context.portrait;
+    final showTime = model.hasTime && widget.showTime;
+    // The model's buttons (Launch…) sit in the transport, or in the Controls panel when there is
+    // no transport or no room for them in it.
+    final buttonsInTransport = showTime && !narrow && model.buttons.length == 1;
+    final hasControls = sliders.isNotEmpty || model.toggles.isNotEmpty || model.choices.isNotEmpty || (model.buttons.isNotEmpty && !buttonsInTransport);
     final controls = ListenableBuilder(
       listenable: rt,
       builder: (context, _) => Column(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ExtraControls(rt: rt, lang: l),
-          for (final s in sliders) _BigSlider(spec: s, value: values[s.name] ?? s.value, lang: l, onChanged: (v) => setValue(s.name, v)),
+          for (final (i, s) in sliders.indexed) ...[if (i > 0) SizedBox(height: narrow ? 24 : 40), _RailSlider(spec: s, value: values[s.name] ?? s.value, lang: l, onChanged: (v) => setValue(s.name, v))],
+          if (sliders.isNotEmpty && (model.choices.isNotEmpty || model.toggles.isNotEmpty || (model.buttons.isNotEmpty && !buttonsInTransport))) SizedBox(height: narrow ? 24 : 40),
+          ExtraControls(rt: rt, lang: l, buttons: !buttonsInTransport),
         ],
       ),
     );
-    final hasControls = sliders.isNotEmpty || model.toggles.isNotEmpty || model.choices.isNotEmpty || model.buttons.isNotEmpty;
-    return Flex(
-      direction: portrait ? Axis.vertical : Axis.horizontal,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          flex: 3,
-          child: LayoutBuilder(
-            builder: (context, box) => Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(color: chalkboardColor, borderRadius: BorderRadius.circular(Z.radius)),
-                    padding: const EdgeInsets.all(20),
-                    child: chart,
-                  ),
+    final caption = widget.block.f('caption').t(l);
+    final hint = model.handles.isNotEmpty ? st('dragPoint', l) : null;
+    return StageLayout(
+      stage: ZStage(
+        title: widget.block.title?.t(l),
+        hint: hint,
+        padding: EdgeInsets.fromLTRB(narrow ? 12 : 24, narrow ? 8 : 16, narrow ? 12 : 24, narrow ? 8 : 16),
+        transport: showTime || (model.buttons.isNotEmpty && showTime)
+            ? ListenableBuilder(
+                listenable: rt,
+                builder: (context, _) => TimeBar(rt: rt, lang: l, buttons: buttonsInTransport),
+              )
+            : null,
+        child: chart,
+      ),
+      rail: [
+        if (!context.portrait) ...[
+          if (hasControls) RailPanel(title: tr('controls', l), gap: narrow ? 24 : 40, children: [controls]),
+        ],
+        RailPanel(
+          title: kind == 'readouts' ? tr('about', l) : tr('readouts', l),
+          children: [
+            if (kind != 'readouts')
+              ListenableBuilder(
+                listenable: rt,
+                builder: (context, _) {
+                  final reads = readouts();
+                  if (reads.isEmpty) return const SizedBox.shrink();
+                  return ZTileGrid(
+                    columns: reads.length == 1 ? 1 : 2,
+                    children: [for (final (i, r) in reads.indexed) ZReadout(key: ValueKey('readout-$i'), label: r.label, value: r.value, unit: r.unit)],
+                  );
+                },
+              ),
+            if (caption.isNotEmpty) MathText(caption, style: zText(28, FontWeight.w400).copyWith(color: Z.ink2, height: 1.55)),
+          ],
+        ),
+        if (context.portrait && hasControls) RailPanel(title: tr('controls', l), gap: 24, children: [controls]),
+        if (widget.block.list('tryThis').isNotEmpty)
+          RailPanel(
+            title: tr('tryThis', l),
+            gap: 20,
+            children: [
+              for (final p in widget.block.list('tryThis'))
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(padding: EdgeInsets.only(top: 4), child: Icon(Icons.touch_app_outlined, size: 36, color: Z.primary)),
+                    const SizedBox(width: 16),
+                    Expanded(child: MathText(p.t(l), style: zText(28, FontWeight.w400).copyWith(color: Z.ink2, height: 1.5))),
+                  ],
                 ),
-                if (model.hasTime && widget.showTime)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: ListenableBuilder(
-                      listenable: rt,
-                      builder: (context, _) => TimeBar(rt: rt, lang: l),
-                    ),
-                  ),
-                // The controls take at most half the height and scroll on a short screen.
-                if (hasControls)
-                  ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: box.maxHeight * (model.hasTime ? 0.32 : 0.5)),
-                    child: SingleChildScrollView(child: controls),
-                  ),
-              ],
-            ),
+            ],
           ),
-        ),
-        portrait ? const SizedBox(height: Z.gap) : const SizedBox(width: Z.gap),
-        Expanded(
-          flex: portrait ? 2 : 1,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                MathText(widget.block.f('caption').t(l), style: text.bodyLarge),
-                if (kind != 'readouts')
-                  ListenableBuilder(
-                    listenable: rt,
-                    builder: (context, _) {
-                      final reads = readouts();
-                      if (reads.isEmpty) return const SizedBox.shrink();
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: Z.gap),
-                          for (final (i, r) in reads.indexed)
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 12),
-                              child: _Readout(key: ValueKey('readout-$i'), label: r.label, value: r.value),
-                            ),
-                        ],
-                      );
-                    },
-                  ),
-                if (widget.block.list('tryThis').isNotEmpty) ...[
-                  const SizedBox(height: Z.gap),
-                  Text(tr('tryThis', l), style: text.headlineMedium),
-                  const SizedBox(height: 8),
-                  for (final p in widget.block.list('tryThis'))
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Icon(Icons.touch_app_outlined, size: 40, color: Z.accent),
-                          const SizedBox(width: 12),
-                          Expanded(child: MathText(p.t(l), style: text.bodyLarge?.copyWith(fontSize: 30))),
-                        ],
-                      ),
-                    ),
-                ],
-              ],
-            ),
-          ),
-        ),
       ],
     );
   }
 }
 
-class _Readout extends StatelessWidget {
-  const _Readout({super.key, required this.label, required this.value, this.big = false});
+/// A big readout on the stage (an interactive that is only read-outs).
+class _StageReadout extends StatelessWidget {
+  const _StageReadout({super.key, required this.label, required this.value, this.unit});
   final String label, value;
-  final bool big;
+  final String? unit;
   @override
   Widget build(BuildContext context) => Container(
-    padding: EdgeInsets.symmetric(horizontal: big ? 40 : 20, vertical: big ? 28 : 14),
-    decoration: BoxDecoration(
-      color: Z.accent.withValues(alpha: 0.14),
-      border: Border.all(color: Z.accent, width: 3),
-      borderRadius: BorderRadius.circular(Z.radius),
-    ),
+    padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 32),
+    decoration: BoxDecoration(color: Z.transport, borderRadius: BorderRadius.circular(Z.panelRadius)),
     child: Column(
-      crossAxisAlignment: big ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          label,
-          style: TextStyle(fontSize: big ? 34 : 26, color: big ? Colors.white : null),
-        ),
-        Text(
-          value,
-          style: TextStyle(fontSize: big ? 64 : 42, fontWeight: FontWeight.w800, color: Z.accent),
+        Text(label, style: zText(30, FontWeight.w400).copyWith(color: Z.onStage2)),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
+          children: [
+            Text(value, style: zText(64, FontWeight.w600).copyWith(color: Z.stageAccent)),
+            if (unit != null) Text(' $unit', style: zText(32, FontWeight.w500).copyWith(color: Z.onStage2)),
+          ],
         ),
       ],
     ),
   );
 }
 
-/// A slider sized for the board: a 60 px thumb, a thick track, and its value in big type.
-class _BigSlider extends StatelessWidget {
-  const _BigSlider({required this.spec, required this.value, required this.lang, required this.onChanged});
+/// A control slider in the rail: its name and value with the unit, a round-thumb track, and the
+/// scale under it.
+class _RailSlider extends StatelessWidget {
+  const _RailSlider({required this.spec, required this.value, required this.lang, required this.onChanged});
   final SliderSpec spec;
   final double value;
   final Lang lang;
   final ValueChanged<double> onChanged;
 
+  static String _fmt(double v, int decimals) => v.toStringAsFixed(decimals);
+
   @override
   Widget build(BuildContext context) {
     final divisions = ((spec.max - spec.min) / spec.step).round();
     final decimals = spec.step >= 1 ? 0 : (math.log(1 / spec.step) / math.ln10).ceil().clamp(1, 4);
-    return Padding(
-      padding: const EdgeInsets.only(top: 12),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 260,
-            child: MathText(spec.label.t(lang), style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w600)),
-          ),
-          Expanded(
-            child: SliderTheme(
-              data: SliderTheme.of(context).copyWith(
-                trackHeight: 14,
-                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 30, elevation: 4),
-                overlayShape: const RoundSliderOverlayShape(overlayRadius: 48),
-                activeTrackColor: Z.accent,
-                thumbColor: Z.accent,
-                inactiveTrackColor: Colors.white24,
-                showValueIndicator: ShowValueIndicator.never,
-                tickMarkShape: SliderTickMarkShape.noTickMark,
-              ),
-              child: SizedBox(
-                height: Z.tap,
-                child: Slider(
-                  key: ValueKey('slider-${spec.name}'),
-                  min: spec.min,
-                  max: spec.max,
-                  divisions: divisions > 0 && divisions <= 2000 ? divisions : null,
-                  value: value.clamp(spec.min, spec.max),
-                  onChanged: onChanged,
-                ),
-              ),
+    final tickDecimals = [spec.min, spec.max, (spec.max - spec.min) / 4].every((v) => (v - v.roundToDouble()).abs() < 1e-9) ? 0 : decimals;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
+          children: [
+            Expanded(child: MathText(spec.label.t(lang), style: zText(30, FontWeight.w500).copyWith(color: Z.ink))),
+            const SizedBox(width: 16),
+            Text(_fmt(value, decimals), style: zText(36, FontWeight.w600).copyWith(color: Z.ink)),
+            if (spec.unit != null) Text(' ${spec.unit}', style: zText(28, FontWeight.w500).copyWith(color: Z.muted)),
+          ],
+        ),
+        SizedBox(
+          height: 72,
+          child: SliderTheme(
+            data: SliderTheme.of(context).copyWith(overlayShape: const RoundSliderOverlayShape(overlayRadius: 36), padding: const EdgeInsets.symmetric(horizontal: 24)),
+            child: Slider(
+              key: ValueKey('slider-${spec.name}'),
+              min: spec.min,
+              max: spec.max,
+              divisions: divisions > 0 && divisions <= 2000 ? divisions : null,
+              value: value.clamp(spec.min, spec.max),
+              onChanged: onChanged,
             ),
           ),
-          SizedBox(
-            width: 220,
-            child: Text(
-              '${value.toStringAsFixed(decimals)}${spec.unit == null ? '' : ' ${spec.unit}'}',
-              textAlign: TextAlign.right,
-              style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w800, color: Z.accent),
-            ),
-          ),
-        ],
-      ),
+        ),
+        // The scale: five marks, or three when the numbers are long; each shrinks to fit.
+        Builder(
+          builder: (context) {
+            String tick(int k, int n) => tickLabel(double.parse(_fmt(spec.min + (spec.max - spec.min) * k / n, tickDecimals)));
+            final n = [for (var k = 0; k <= 4; k++) tick(k, 4)].join().length > 20 ? 2 : 4;
+            return Row(
+              children: [
+                for (var k = 0; k <= n; k++)
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: k == 0 ? Alignment.centerLeft : (k == n ? Alignment.centerRight : Alignment.center),
+                      child: Text(tick(k, n), style: zText(24, FontWeight.w400).copyWith(color: Z.faint)),
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+      ],
     );
   }
 }

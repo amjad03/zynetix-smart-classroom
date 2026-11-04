@@ -32,6 +32,15 @@ const _s = <String, (String, String)>{
   'moveUp': ('Move up', 'ಮೇಲೆ ಸರಿಸಿ'),
   'moveDown': ('Move down', 'ಕೆಳಗೆ ಸರಿಸಿ'),
   'items': ('Items', 'ಐಟಂಗಳು'),
+  'placed': ('placed', 'ಇರಿಸಲಾಗಿದೆ'),
+  'dropHere': ('Drop here', 'ಇಲ್ಲಿ ಇಡಿ'),
+  'checkHint': ('Check marks each item right or wrong.', 'ಪರಿಶೀಲಿಸಿ ಪ್ರತಿ ಐಟಂ ಸರಿ ಅಥವಾ ತಪ್ಪು ಎಂದು ತೋರಿಸುತ್ತದೆ.'),
+  'kind.sort': ('Sort', 'ವಿಂಗಡಿಸಿ'),
+  'kind.order': ('Order', 'ಕ್ರಮಗೊಳಿಸಿ'),
+  'kind.match': ('Match', 'ಹೊಂದಿಸಿ'),
+  'kind.label': ('Label', 'ಹೆಸರಿಸಿ'),
+  'kind.hotspot': ('Find', 'ಹುಡುಕಿ'),
+  'kind.fill': ('Fill in', 'ತುಂಬಿಸಿ'),
 };
 
 /// The string [key] in [lang] (English when Kannada is missing).

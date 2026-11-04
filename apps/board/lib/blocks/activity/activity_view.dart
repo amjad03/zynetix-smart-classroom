@@ -82,10 +82,20 @@ class ActivityViewState extends State<ActivityView> {
     _ => 'tapThenPlace',
   };
 
+  /// How many items are placed so far, for the progress bar (null when it means nothing).
+  (int, int)? get _progress => switch (logic) {
+    final SortLogic g => (g.placed.where((p) => p != null).length, g.total),
+    final MatchLogic g => (g.link.where((p) => p != null).length, g.total),
+    final LabelLogic g => (g.onTarget.where((p) => p != null).length, g.total),
+    final FillLogic g => (g.chosen.where((p) => p != null).length, g.total),
+    _ => null,
+  };
+
   @override
   Widget build(BuildContext context) {
-    final l = widget.lang, text = Theme.of(context).textTheme;
+    final l = widget.lang;
     final b = widget.block;
+    final narrow = context.narrow, portrait = context.portrait;
     final body = switch (logic) {
       final SortLogic s => SortBoard(logic: s, lang: l, onChange: update),
       final OrderLogic o => OrderBoard(logic: o, lang: l, onChange: update),
@@ -97,61 +107,79 @@ class ActivityViewState extends State<ActivityView> {
     };
     final ok = logic.marks.isNotEmpty && logic.allRight;
     final explanation = b.maybe('explanation');
-    return LayoutBuilder(
-      builder: (context, box) => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: box.maxHeight * 0.22),
-            child: SingleChildScrollView(
+    final progress = _progress;
+    final kind = b.raw['kind'] as String? ?? 'sort';
+    final progressW = progress == null
+        ? null
+        : Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (!narrow) ...[ZProgress(value: progress.$2 == 0 ? 0 : progress.$1 / progress.$2, width: 320, height: 16, track: Z.segTrack), const SizedBox(width: 24)],
+              Text('${progress.$1} ${st('of', l)} ${progress.$2} ${st('placed', l)}', key: const ValueKey('activityProgress'), style: zText(narrow ? 26 : 30, FontWeight.w600)),
+            ],
+          );
+    return Container(
+      padding: EdgeInsets.fromLTRB(narrow ? 24 : 56, narrow ? 24 : 52, narrow ? 24 : 56, narrow ? 20 : 44),
+      decoration: BoxDecoration(color: Z.panel, borderRadius: BorderRadius.circular(Z.panelRadius)),
+      child: LayoutBuilder(
+        builder: (context, box) => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: box.maxHeight * 0.24),
+              child: SingleChildScrollView(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (!narrow || !portrait) ...[ZTag('${st('activity', l)} · ${st('kind.$kind', l)}'), SizedBox(height: narrow ? 10 : 16)],
+                          MathText(b.f('prompt').t(l), style: zTitle(narrow ? 34 : 52)),
+                        ],
+                      ),
+                    ),
+                    if (progressW != null && !portrait) ...[const SizedBox(width: 48), progressW],
+                  ],
+                ),
+              ),
+            ),
+            if (progressW != null && portrait) ...[const SizedBox(height: 8), Align(alignment: Alignment.centerLeft, child: progressW)],
+            SizedBox(height: narrow ? 16 : 40),
+            Expanded(child: body),
+            SizedBox(height: narrow ? 12 : 40),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: math.max(box.maxHeight * 0.3, Z.tap + 8)),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Icon(Icons.extension_outlined, size: 52, color: Z.accent),
-                  const SizedBox(width: 12),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        MathText(b.f('prompt').t(l), style: text.headlineMedium),
-                        Text(st(_hint, l), style: text.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant)),
-                      ],
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (message != null)
+                            Text(message!, key: const ValueKey('activityResult'), style: zText(narrow ? 28 : 32, FontWeight.w600).copyWith(color: ok || revealed ? Z.correct : (logic.marks.isEmpty ? Z.ink : Z.wrongText)))
+                          else if (!narrow)
+                            Text('${st(_hint, l)} ${st('checkHint', l)}', style: zText(28, FontWeight.w400).copyWith(color: Z.muted)),
+                          if (explanation != null && (ok || revealed)) ...[const SizedBox(height: 8), MathText('${st('why', l)}: ${explanation.t(l)}', style: zText(narrow ? 26 : 30, FontWeight.w400).copyWith(color: Z.ink2, height: 1.5))],
+                        ],
+                      ),
                     ),
                   ),
+                  const SizedBox(width: 20),
+                  BigButton(key: const ValueKey('activityReset'), collapse: true, icon: Icons.replay, label: st('resetActivity', l), filled: false, onPressed: reset),
+                  const SizedBox(width: 20),
+                  BigButton(key: const ValueKey('activityShow'), collapse: true, icon: Icons.visibility_outlined, label: st('showAnswer', l), filled: false, onPressed: showAnswer),
+                  const SizedBox(width: 20),
+                  BigButton(key: const ValueKey('activityCheck'), icon: Icons.check, label: st('check', l), onPressed: check),
                 ],
               ),
             ),
-          ),
-          const SizedBox(height: 12),
-          Expanded(child: body),
-          const SizedBox(height: 12),
-          ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: math.max(box.maxHeight * 0.3, Z.tap + 8)),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (message != null) Text(message!, key: const ValueKey('activityResult'), style: text.headlineMedium?.copyWith(color: ok || revealed ? Z.correct : Z.accent)),
-                        if (explanation != null && (ok || revealed)) MathText('${st('why', l)}: ${explanation.t(l)}', style: text.bodyLarge),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                BigButton(key: const ValueKey('activityReset'), collapse: true, icon: Icons.replay, label: st('resetActivity', l), filled: false, onPressed: reset),
-                const SizedBox(width: 12),
-                BigButton(key: const ValueKey('activityShow'), collapse: true, icon: Icons.visibility_outlined, label: st('showAnswer', l), filled: false, onPressed: showAnswer),
-                const SizedBox(width: 12),
-                BigButton(key: const ValueKey('activityCheck'), icon: Icons.check, label: st('check', l), color: Z.correct, onPressed: check),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

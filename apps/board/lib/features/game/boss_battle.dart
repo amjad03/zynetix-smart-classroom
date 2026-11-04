@@ -121,7 +121,7 @@ class BossBattleScreenState extends State<BossBattleScreen> with TickerProviderS
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(won! ? Icons.emoji_events : Icons.directions_run, size: 160, color: won! ? Z.accent : Z.wrong),
+              Icon(won! ? Icons.emoji_events : Icons.directions_run, size: 160, color: won! ? Z.star : Z.wrong),
               const SizedBox(height: Z.gap),
               Text(won! ? gt('victory', l) : gt('bossEscaped', l), key: const ValueKey('bossResult'), style: text.displayLarge, textAlign: TextAlign.center),
               const SizedBox(height: 12),

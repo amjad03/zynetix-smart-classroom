@@ -95,7 +95,54 @@ const _s = <String, (String, String)>{
   'close': ('Close', 'ಮುಚ್ಚಿ'),
   'timeUp': ('Time is up', 'ಸಮಯ ಮುಗಿಯಿತು'),
   'addToBoard': ('Add to board', 'ಬೋರ್ಡ್‌ಗೆ ಸೇರಿಸಿ'),
+  'stepOf': ('Step {n} of {m}', 'ಹಂತ {n} / {m}'),
+  'questionOf': ('Question {n} of {m}', 'ಪ್ರಶ್ನೆ {n} / {m}'),
+  'quickQuiz': ('Quick quiz', 'ತ್ವರಿತ ರಸಪ್ರಶ್ನೆ'),
+  'classTools': ('Class tools', 'ತರಗತಿ ಸಾಧನಗಳು'),
+  'closeLesson': ('Close lesson', 'ಪಾಠ ಮುಚ್ಚಿ'),
+  'controls': ('Controls', 'ನಿಯಂತ್ರಣಗಳು'),
+  'readouts': ('Readouts', 'ಅಳತೆಗಳು'),
+  'about': ('About this', 'ಇದರ ಬಗ್ಗೆ'),
+  'responses': ('Responses', 'ಉತ್ತರಗಳು'),
+  'answered': ('Answered', 'ಉತ್ತರಿಸಿದವರು'),
+  'needHelp': ('Need help', 'ಸಹಾಯ ಬೇಕು'),
+  'rollNumbers': ('roll numbers', 'ರೋಲ್ ಸಂಖ್ಯೆಗಳು'),
+  'why': ('Why', 'ಏಕೆ'),
+  'reteach': ('Re-teach another way', 'ಬೇರೆ ರೀತಿಯಲ್ಲಿ ಮತ್ತೆ ಕಲಿಸಿ'),
+  'countHands': ('Count hands to see who needs help', 'ಯಾರಿಗೆ ಸಹಾಯ ಬೇಕು ಎಂದು ನೋಡಲು ಕೈಗಳನ್ನು ಎಣಿಸಿ'),
+  'allRight': ('Everyone present got it right.', 'ಹಾಜರಿದ್ದ ಎಲ್ಲರೂ ಸರಿಯಾಗಿ ಉತ್ತರಿಸಿದರು.'),
+  'handsUpN': ('Hands up', 'ಕೈ ಎತ್ತಿದವರು'),
+  'model3dHint': ('Drag to rotate · pinch to zoom · tap a part to name it', 'ತಿರುಗಿಸಲು ಎಳೆಯಿರಿ · ಹಿಗ್ಗಿಸಲು ಚಿವುಟಿ · ಹೆಸರಿಗಾಗಿ ಭಾಗ ಒತ್ತಿ'),
+  'labHint': ('Change the setup, then record the readings', 'ಜೋಡಣೆ ಬದಲಿಸಿ, ನಂತರ ಅಳತೆಗಳನ್ನು ದಾಖಲಿಸಿ'),
+  'simHint': ('Change a control and watch what happens', 'ನಿಯಂತ್ರಣ ಬದಲಿಸಿ, ಏನಾಗುತ್ತದೆ ನೋಡಿ'),
+  'concept': ('Concept', 'ಪರಿಕಲ್ಪನೆ'),
+  'block.intro': ('Introduction', 'ಪರಿಚಯ'),
+  'block.concept': ('Concept', 'ಪರಿಕಲ್ಪನೆ'),
+  'block.3d_model': ('3D model', '3D ಮಾದರಿ'),
+  'block.simulation': ('Simulation', 'ಸಿಮ್ಯುಲೇಶನ್'),
+  'block.virtual_lab': ('Virtual lab', 'ವರ್ಚುವಲ್ ಪ್ರಯೋಗಾಲಯ'),
+  'block.example': ('Worked example', 'ಬಿಡಿಸಿದ ಉದಾಹರಣೆ'),
+  'block.class_quiz': ('Class quiz', 'ತರಗತಿ ರಸಪ್ರಶ್ನೆ'),
+  'block.pyq': ('Exam questions', 'ಪರೀಕ್ಷಾ ಪ್ರಶ್ನೆಗಳು'),
+  'block.trick': ('Trick', 'ತಂತ್ರ'),
+  'block.recap': ('Recap', 'ಪುನರಾವರ್ತನೆ'),
+  'block.whiteboard': ('On the board', 'ಬೋರ್ಡ್ ಮೇಲೆ'),
+  'block.interactive': ('Simulation', 'ಸಿಮ್ಯುಲೇಶನ್'),
+  'block.challenge': ('Challenge', 'ಸವಾಲು'),
+  'block.activity': ('Activity', 'ಚಟುವಟಿಕೆ'),
 };
+
+/// A string with {n}, {m}… filled in.
+String trf(String key, Lang lang, Map<String, Object> args) {
+  var s = tr(key, lang);
+  for (final e in args.entries) {
+    s = s.replaceAll('{${e.key}}', '${e.value}');
+  }
+  return s;
+}
+
+/// The name of a kind of block ("Worked example"), for "Next: …".
+String blockName(BlockType t, Lang lang) => tr('block.${t.wire}', lang);
 
 String tr(String key, Lang lang) {
   final v = _s[key];

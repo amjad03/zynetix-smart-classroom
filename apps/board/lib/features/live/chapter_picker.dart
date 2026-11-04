@@ -73,7 +73,7 @@ class _ChapterTestPickerState extends State<ChapterTestPicker> {
           ],
         ),
         const SizedBox(height: 12),
-        Text(ltr('chooseTest', l), style: text.bodyLarge?.copyWith(color: Z.accent)),
+        Text(ltr('chooseTest', l), style: text.bodyLarge?.copyWith(color: Z.muted)),
         const SizedBox(height: 8),
         Expanded(
           child: ListView(

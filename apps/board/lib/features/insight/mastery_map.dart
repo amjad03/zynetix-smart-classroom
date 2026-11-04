@@ -15,9 +15,9 @@ import 'worksheet.dart';
 
 Color levelColor(Level l, {int n = 0}) => switch (l) {
   Level.mastered => Z.correct,
-  Level.learning => const Color(0xFFF9A825),
+  Level.learning => const Color(0xFFE69F00),
   Level.stuck => Z.wrong,
-  Level.unknown => n == 0 ? const Color(0x22FFFFFF) : const Color(0x66FFFFFF),
+  Level.unknown => n == 0 ? Z.segTrack : Z.line,
 };
 
 String levelLabel(Level v, Lang l) => it(switch (v) {
@@ -315,7 +315,7 @@ class _HeatGridState extends State<HeatGrid> {
                           onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => TopicInsightScreen(topicId: t.id))),
                           child: Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(t.topic.title.t(l), style: text.bodyMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
+                            child: Text(t.topic.title.t(l), style: text.bodyMedium?.copyWith(height: 1.2), maxLines: 2, overflow: TextOverflow.ellipsis),
                           ),
                         ),
                       ),
@@ -455,7 +455,7 @@ class TopicInsightScreen extends StatelessWidget {
           return ListView(
             padding: EdgeInsets.all(context.narrow ? 24 : 40),
             children: [
-              if (ref != null) Text('${subjectName(ref.subject, l)} · ${ref.chapter.title.t(l)}', style: text.bodyLarge?.copyWith(color: Z.accent)),
+              if (ref != null) Text('${subjectName(ref.subject, l)} · ${ref.chapter.title.t(l)}', style: text.bodyLarge?.copyWith(color: Z.muted)),
               const SizedBox(height: 12),
               Wrap(
                 spacing: 24,
@@ -532,7 +532,7 @@ class RollReportScreen extends StatelessWidget {
           Widget topicList(String label, List<MapEntry<String, Estimate>> es) => Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(label, style: text.headlineMedium?.copyWith(color: Z.accent)),
+              Text(label, style: text.headlineSmall),
               const SizedBox(height: 8),
               if (es.isEmpty) Text(it('nobody', l), style: text.bodyMedium),
               for (final e in es.take(8))
@@ -563,11 +563,11 @@ class RollReportScreen extends StatelessWidget {
                 ...lists
               else
                 Row(crossAxisAlignment: CrossAxisAlignment.start, children: [Expanded(child: lists[0]), const SizedBox(width: 40), Expanded(child: lists[1])]),
-              Text(it('trend', l), style: text.headlineMedium?.copyWith(color: Z.accent)),
+              Text(it('trend', l), style: text.headlineSmall),
               const SizedBox(height: 12),
               TrendBars(points: trend, lang: l),
               const SizedBox(height: 32),
-              Text(it('examReadiness', l), style: text.headlineMedium?.copyWith(color: Z.accent)),
+              Text(it('examReadiness', l), style: text.headlineSmall),
               const SizedBox(height: 12),
               ReadinessList(roll: roll),
               const SizedBox(height: 24),

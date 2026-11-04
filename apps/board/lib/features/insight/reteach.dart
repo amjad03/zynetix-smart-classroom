@@ -59,6 +59,18 @@ Future<void> teacherQuizDone(BuildContext context, LessonController c) async {
   );
 }
 
+/// Re-teaches the topic now, another way (from a quiz's rail). Null when the lesson has no other
+/// approach left to show.
+Future<void> Function()? reteachNow(BuildContext context, LessonController c) {
+  final alt = reteachBlock(c.lesson, _shown(c));
+  if (alt == null) return null;
+  return () => Navigator.of(context).push(
+    MaterialPageRoute<void>(
+      builder: (_) => ReplayScreen(pack: c.pack, lesson: c.lesson, blocks: [alt], recorder: c.recorder, title: it('anotherWay', c.lang)),
+    ),
+  );
+}
+
 final _retaught = Expando<bool>('retaught');
 
 /// Self-Learning hook: a quiz block has finished. Under 60% right, re-teaches once by itself
@@ -123,7 +135,7 @@ class _ReteachCardState extends State<ReteachCard> {
     final buttons = widget.onCarryOn == null
         ? const <Widget>[]
         : [
-            BigButton(key: const ValueKey('reteach'), icon: Icons.replay_circle_filled_outlined, label: it('reteach', l), color: const Color(0xFF6A1B9A), onPressed: widget.onReteach),
+            BigButton(key: const ValueKey('reteach'), icon: Icons.replay_circle_filled_outlined, label: it('reteach', l), onPressed: widget.onReteach),
             BigButton(key: const ValueKey('pairUp'), icon: Icons.people_alt_outlined, label: it('pairUp', l), filled: false, onPressed: () => setState(() => showPairs = !showPairs)),
             BigButton(key: const ValueKey('carryOn'), icon: Icons.arrow_forward, label: it('carryOn', l), filled: false, onPressed: widget.onCarryOn),
           ];
@@ -143,7 +155,7 @@ class _ReteachCardState extends State<ReteachCard> {
           child: ListView(
             children: [
               if (widget.missed.isNotEmpty) ...[
-                Text(it('missed', l), style: text.headlineMedium?.copyWith(color: Z.accent)),
+                Text(it('missed', l), style: text.headlineSmall),
                 const SizedBox(height: 8),
                 for (final (i, q) in widget.missed.take(4).indexed)
                   Padding(
@@ -151,7 +163,7 @@ class _ReteachCardState extends State<ReteachCard> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CircleAvatar(radius: 24, backgroundColor: Z.wrong, child: Text('${i + 1}', style: const TextStyle(fontSize: 26, color: Colors.white))),
+                        CircleAvatar(radius: 24, backgroundColor: Z.wrongBg, child: Text('${i + 1}', style: zText(26, FontWeight.w600).copyWith(color: Z.wrongText))),
                         const SizedBox(width: 16),
                         Expanded(child: MathText(q.stem.t(l))),
                       ],
@@ -160,7 +172,7 @@ class _ReteachCardState extends State<ReteachCard> {
               ],
               if (showPairs) ...[
                 const SizedBox(height: 12),
-                Text(it('pairUp', l), style: text.headlineMedium?.copyWith(color: Z.accent)),
+                Text(it('pairUp', l), style: text.headlineSmall),
                 Text(widget.pairs.isEmpty ? it('noPairs', l) : it('pairsHint', l), style: text.bodyMedium),
                 const SizedBox(height: 12),
                 Wrap(
@@ -328,7 +340,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
                 padding: const EdgeInsets.fromLTRB(32, 16, 16, 8),
                 child: Row(
                   children: [
-                    const Icon(Icons.replay_circle_filled_outlined, size: 52, color: Color(0xFFCE93D8)),
+                    const Icon(Icons.replay_circle_filled_outlined, size: 52, color: Z.primary),
                     const SizedBox(width: 16),
                     Expanded(
                       child: Text(widget.title ?? widget.lesson.title.t(l), style: text.headlineMedium, overflow: TextOverflow.ellipsis, maxLines: 1),
@@ -359,7 +371,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
                       Expanded(
                         child: Align(
                           alignment: Alignment.centerRight,
-                          child: BigButton(key: const ValueKey('replayDone'), icon: Icons.done, label: widget.doneLabel ?? it('backToLesson', l), color: Z.correct, onPressed: _done),
+                          child: BigButton(key: const ValueKey('replayDone'), icon: Icons.done, label: widget.doneLabel ?? it('backToLesson', l), onPressed: _done),
                         ),
                       ),
                     ],

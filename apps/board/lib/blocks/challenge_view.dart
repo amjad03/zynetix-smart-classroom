@@ -250,8 +250,7 @@ class ChallengeViewState extends State<ChallengeView> with SingleTickerProviderS
       runSpacing: 12,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        const Icon(Icons.sports_esports_outlined, size: 52, color: Z.accent),
-        Text(gt('challenge', l), style: text.headlineLarge),
+        ZTag(gt('challenge', l)),
         _Chip(key: const ValueKey('target'), icon: Icons.track_changes, label: targetText, color: Z.accent),
         StarRow(key: const ValueKey('stars'), stars: onOffer, dim: !over),
         if (!over) _Chip(key: const ValueKey('triesLeft'), icon: Icons.replay, label: '$triesLeft ${gt('triesLeft', l)}'),
@@ -286,7 +285,7 @@ class ChallengeViewState extends State<ChallengeView> with SingleTickerProviderS
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(solved ? '${gt('hit', l)} ${feedback()}' : gt('outOfTries', l), key: const ValueKey('result'), style: text.headlineMedium?.copyWith(color: solved ? Z.correct : Z.accent)),
+                  Text(solved ? '${gt('hit', l)} ${feedback()}' : gt('outOfTries', l), key: const ValueKey('result'), style: zTitle(36).copyWith(color: solved ? Z.correct : Z.wrongText)),
                   const SizedBox(height: 8),
                   MathText('${gt('solution', l)}: $sol', style: text.bodyLarge),
                   const SizedBox(height: 8),
@@ -309,7 +308,7 @@ class ChallengeViewState extends State<ChallengeView> with SingleTickerProviderS
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(feedback(), key: const ValueKey('feedback'), style: last == null ? text.bodyMedium : text.headlineMedium?.copyWith(color: Z.wrong)),
+                  Text(feedback(), key: const ValueKey('feedback'), style: last == null ? text.bodyMedium?.copyWith(color: Z.muted) : zTitle(34).copyWith(color: last.hit ? Z.correct : Z.wrongText)),
                   if (last != null && spec.hint != null) MathText('${gt('hint', l)}: ${spec.hint!.t(l)}', style: text.bodyLarge),
                 ],
               ),
@@ -318,7 +317,7 @@ class ChallengeViewState extends State<ChallengeView> with SingleTickerProviderS
           const SizedBox(width: 16),
           if (mode == QuizMode.rollCall && roll != null) ...[BigButton(collapse: true, icon: Icons.person_off_outlined, label: tr('absent', l), filled: false, onPressed: _absent), const SizedBox(width: 16)],
           if (!widget.auto) ...[BigButton(key: const ValueKey('giveUp'), collapse: true, icon: Icons.visibility_outlined, label: gt('revealSolution', l), filled: false, onPressed: giveUp), const SizedBox(width: 16)],
-          BigButton(key: const ValueKey('lockIn'), icon: Icons.lock_outline, label: gt('lockIn', l), color: Z.correct, onPressed: lockIn),
+          BigButton(key: const ValueKey('lockIn'), icon: Icons.lock_outline, label: gt('lockIn', l), onPressed: lockIn),
         ],
       );
     }
@@ -326,8 +325,8 @@ class ChallengeViewState extends State<ChallengeView> with SingleTickerProviderS
       builder: (context, box) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          header,
-          const SizedBox(height: 12),
+          ZPanel(padding: EdgeInsets.symmetric(horizontal: context.narrow ? 24 : 40, vertical: context.narrow ? 16 : 24), child: header),
+          SizedBox(height: context.narrow ? 16 : Z.gap),
           Expanded(
             child: Stack(
               children: [
@@ -340,10 +339,10 @@ class ChallengeViewState extends State<ChallengeView> with SingleTickerProviderS
               ],
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: context.narrow ? 16 : Z.gap),
           ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: math.max(box.maxHeight * 0.3, Z.tap + 8)),
-            child: footer,
+            constraints: BoxConstraints(maxHeight: math.max(box.maxHeight * 0.3, Z.tap + 8 + (context.narrow ? 32 : 48))),
+            child: ZPanel(padding: EdgeInsets.all(context.narrow ? 16 : 24), child: footer),
           ),
         ],
       ),
@@ -367,21 +366,17 @@ class _Chip extends StatelessWidget {
   final Color? color;
   @override
   Widget build(BuildContext context) {
-    final c = color ?? Theme.of(context).colorScheme.onSurface;
+    final c = color ?? Z.ink2;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      decoration: BoxDecoration(
-        color: c.withValues(alpha: 0.15),
-        border: Border.all(color: c, width: 3),
-        borderRadius: BorderRadius.circular(Z.radius),
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      decoration: BoxDecoration(color: color == null ? Z.segTrack : Color.alphaBlend(c.withValues(alpha: 0.1), Z.panel), borderRadius: BorderRadius.circular(Z.pill)),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 36, color: c),
           const SizedBox(width: 10),
           Flexible(
-            child: MathText(label, style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w700)),
+            child: MathText(label, style: zText(28, FontWeight.w600).copyWith(color: color == null ? Z.ink2 : c)),
           ),
         ],
       ),
@@ -399,12 +394,13 @@ class StarRow extends StatelessWidget {
   Widget build(BuildContext context) => Row(
     mainAxisSize: MainAxisSize.min,
     children: [
-      for (var i = 0; i < 3; i++) Icon(i < stars ? Icons.star_rounded : Icons.star_outline_rounded, size: size, color: i < stars ? Z.accent.withValues(alpha: dim ? 0.55 : 1) : Colors.white38),
+      for (var i = 0; i < 3; i++) Icon(i < stars ? Icons.star_rounded : Icons.star_outline_rounded, size: size, color: i < stars ? Z.star.withValues(alpha: dim ? 0.55 : 1) : Z.ghost),
     ],
   );
 }
 
-/// Confetti and the stars won, played once by [controller]; invisible when it is not running.
+/// The stars won, shown once by [controller]: a calm card that fades in and out over the
+/// playfield (no confetti, no bounce).
 class Celebration extends StatelessWidget {
   const Celebration({super.key, required this.controller, required this.stars, required this.label});
   final AnimationController controller;
@@ -417,24 +413,22 @@ class Celebration extends StatelessWidget {
     builder: (context, _) {
       final t = controller.value;
       if (t == 0 || t == 1) return const SizedBox.expand();
-      final pop = Curves.elasticOut.transform(math.min(1, t * 2.5));
-      final fade = t < 0.8 ? 1.0 : (1 - t) / 0.2;
+      final fade = t < 0.15 ? t / 0.15 : (t < 0.8 ? 1.0 : (1 - t) / 0.2);
       return Opacity(
         opacity: fade.clamp(0, 1),
-        child: CustomPaint(
-          painter: _ConfettiPainter(t),
-          child: Center(
-            child: Transform.scale(
-              scale: 0.3 + 0.7 * pop,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    StarRow(stars: stars, size: 120),
-                    Text(label, style: zText(72, FontWeight.w800).copyWith(color: Z.accent, shadows: const [Shadow(blurRadius: 12)])),
-                  ],
-                ),
+        child: Center(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 56),
+              decoration: BoxDecoration(color: Z.panel, borderRadius: BorderRadius.circular(Z.panelRadius)),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  StarRow(stars: stars, size: 112),
+                  const SizedBox(height: 16),
+                  Text(label, style: zTitle(64).copyWith(color: Z.correct)),
+                ],
               ),
             ),
           ),
@@ -442,29 +436,4 @@ class Celebration extends StatelessWidget {
       );
     },
   );
-}
-
-class _ConfettiPainter extends CustomPainter {
-  _ConfettiPainter(this.t);
-  final double t;
-  static final _bits = List.generate(70, (i) {
-    final r = math.Random(i * 7919);
-    return (x: r.nextDouble(), speed: 0.6 + r.nextDouble() * 0.8, spin: r.nextDouble() * 6, drift: (r.nextDouble() - 0.5) * 0.2, color: [Z.accent, Z.correct, ...Z.teamColors][i % 6]);
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    for (final b in _bits) {
-      final y = (t * b.speed * 1.3 - 0.15) * size.height;
-      final x = (b.x + b.drift * t) * size.width;
-      canvas.save();
-      canvas.translate(x, y);
-      canvas.rotate(b.spin + t * 10);
-      canvas.drawRect(const Rect.fromLTWH(-10, -5, 20, 10), Paint()..color = b.color);
-      canvas.restore();
-    }
-  }
-
-  @override
-  bool shouldRepaint(_ConfettiPainter old) => old.t != t;
 }

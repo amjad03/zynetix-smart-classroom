@@ -67,23 +67,24 @@ class _PinDialogState extends State<PinDialog> {
       child: SizedBox(
         width: 130,
         height: Z.tap,
-        child: OutlinedButton(
+        child: FilledButton(
           key: ValueKey('pin-$k'),
+          style: FilledButton.styleFrom(backgroundColor: Z.tile, foregroundColor: Z.ink, padding: EdgeInsets.zero),
           onPressed: () => _key(k),
-          child: Text(k, style: const TextStyle(fontSize: 44)),
+          child: Text(k, style: zText(44, FontWeight.w500)),
         ),
       ),
     );
     return Dialog(
       child: SingleChildScrollView(
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(56),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(tr('enterPin', l), style: text.headlineLarge),
             const SizedBox(height: 16),
-            Text(pin.isEmpty ? '—' : '●' * pin.length, style: const TextStyle(fontSize: 56, letterSpacing: 12)),
-            if (error || locked) Text(locked ? '${tr('wrongPin', l)} · 60s' : tr('wrongPin', l), style: const TextStyle(fontSize: 30, color: Z.wrong)),
+            Text(pin.isEmpty ? '—' : '●' * pin.length, style: zText(56, FontWeight.w600).copyWith(letterSpacing: 12)),
+            if (error || locked) Text(locked ? '${tr('wrongPin', l)} · 60s' : tr('wrongPin', l), style: zText(30, FontWeight.w500).copyWith(color: Z.wrongText)),
             const SizedBox(height: 16),
             for (final row in const [
               ['1', '2', '3'],

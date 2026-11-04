@@ -6,6 +6,7 @@ import '../core/strings.dart';
 import '../core/theme.dart';
 import '../engine/lesson_controller.dart';
 import '../engine/model.dart';
+import '../features/insight/reteach.dart' show reteachNow;
 import '../features/participation.dart';
 import 'activity/activity_view.dart';
 import 'challenge_view.dart';
@@ -28,118 +29,136 @@ class BlockView extends StatelessWidget {
   Widget build(BuildContext context) {
     final b = c.current, l = c.lang;
     final text = Theme.of(context).textTheme;
-    Widget heading(String s, {IconData? icon}) => Padding(
-      padding: const EdgeInsets.only(bottom: Z.gap),
-      child: Row(
-        children: [
-          if (icon != null) ...[Icon(icon, size: 56, color: Z.accent), const SizedBox(width: 16)],
-          Expanded(child: Text(s, style: text.headlineLarge)),
-        ],
-      ),
+    final narrow = context.narrow;
+    final big = text.bodyLarge!.copyWith(fontSize: narrow ? 32 : 36, height: 1.55);
+    Widget heading(String s) => Padding(
+      padding: const EdgeInsets.only(bottom: 28),
+      child: Text(s, style: zTitle(narrow ? 44 : 52)),
     );
-    List<Widget> bullets(List<L10n> items, {IconData icon = Icons.check_circle_outline}) => [
+    List<Widget> bullets(List<L10n> items, {IconData icon = Icons.check_circle_outline, TextStyle? style}) => [
       for (final p in items)
         Padding(
-          padding: const EdgeInsets.only(bottom: 14),
+          padding: const EdgeInsets.only(bottom: 20),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, size: 40, color: Z.accent),
-              const SizedBox(width: 16),
-              Expanded(child: MathText(p.t(l))),
+              Padding(padding: const EdgeInsets.only(top: 6), child: Icon(icon, size: 40, color: Z.primary)),
+              const SizedBox(width: 20),
+              Expanded(child: MathText(p.t(l), style: style ?? big)),
             ],
           ),
         ),
     ];
-    Widget withSide(Widget main, List<Widget> side) => Row(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          flex: 3,
-          child: ClipRRect(borderRadius: BorderRadius.circular(Z.radius), child: main),
-        ),
-        const SizedBox(width: Z.gap),
-        Expanded(
-          flex: 1,
-          child: SingleChildScrollView(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: side),
-          ),
-        ),
-      ],
+    // A Kinetix embed on the dark stage, its caption and notes in the rail.
+    Widget staged(Widget main, {required String? title, required String? hint, required List<Widget> rail}) => StageLayout(
+      stage: ZStage(
+        title: title,
+        hint: hint,
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        child: ClipRRect(borderRadius: BorderRadius.circular(Z.panelRadius), child: main),
+      ),
+      rail: rail,
     );
+    String caption(String key) => b.f(key).t(l);
 
     final Widget body = switch (b.type) {
-      BlockType.intro => _scrollCentered(
-        Column(
+      BlockType.intro => ContentPanel(
+        center: true,
+        tag: blockName(b.type, l),
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(c.lesson.title.t(l), style: text.headlineMedium?.copyWith(color: Z.accent)),
+            Text(c.lesson.title.t(l), style: zText(30, FontWeight.w500).copyWith(color: Z.muted)),
             const SizedBox(height: 12),
-            Text(b.f('heading').t(l), style: text.displayLarge),
-            const SizedBox(height: Z.gap),
-            Text(b.f('hook').t(l), style: text.bodyLarge?.copyWith(fontSize: 40)),
-            if (b.list('objectives').isNotEmpty) ...[const SizedBox(height: Z.gap), Text(tr('whatYouLearn', l), style: text.headlineMedium), ...bullets(b.list('objectives'))],
+            Text(b.f('heading').t(l), style: zTitle(narrow ? 52 : 68)),
+            const SizedBox(height: 28),
+            Text(b.f('hook').t(l), style: big.copyWith(fontSize: narrow ? 34 : 40)),
+            if (b.list('objectives').isNotEmpty) ...[
+              const SizedBox(height: 48),
+              ZSectionTitle(tr('whatYouLearn', l), size: 34),
+              const SizedBox(height: 24),
+              ...bullets(b.list('objectives')),
+            ],
           ],
         ),
       ),
-      BlockType.concept => SingleChildScrollView(
+      BlockType.concept => ContentPanel(
+        tag: blockName(b.type, l),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            heading(b.title?.t(l) ?? '', icon: Icons.lightbulb_outline),
-            MathText(b.f('body').t(l)),
-            if (b.s('formula') != null) ...[const SizedBox(height: Z.gap), Center(child: Formula(b.s('formula')!))],
-            const SizedBox(height: Z.gap),
+            heading(b.title?.t(l) ?? ''),
+            MathText(b.f('body').t(l), style: big),
+            if (b.s('formula') != null) ...[const SizedBox(height: 36), Formula(b.s('formula')!)],
+            const SizedBox(height: 36),
             ...bullets(b.list('points')),
           ],
         ),
       ),
-      BlockType.model3d => withSide(embeds.model3d(b, l), [Text(b.f('caption').t(l), style: text.bodyLarge)]),
-      BlockType.simulation => withSide(embeds.simulation(b, c.pack, l), [
-        Text(b.f('caption').t(l), style: text.bodyLarge),
-        if (b.list('tryThis').isNotEmpty) ...[const SizedBox(height: Z.gap), Text(tr('tryThis', l), style: text.headlineMedium), ...bullets(b.list('tryThis'), icon: Icons.touch_app_outlined)],
-      ]),
-      BlockType.virtualLab => withSide(embeds.lab(b.s('labId')!, b.s('preset'), l), [
-        Text(tr('aim', l), style: text.headlineMedium),
-        const SizedBox(height: 8),
-        Text(b.f('aim').t(l), style: text.bodyLarge),
-      ]),
+      BlockType.model3d => staged(
+        embeds.model3d(b, l),
+        title: b.title?.t(l) ?? blockName(b.type, l),
+        hint: tr('model3dHint', l),
+        rail: [
+          RailPanel(title: tr('about', l), children: [RailNote(caption('caption'))]),
+        ],
+      ),
+      // Kinetix labs and players draw their own title and controls: no heading over them.
+      BlockType.simulation => staged(
+        embeds.simulation(b, c.pack, l),
+        title: b.s('source') == 'phet' ? (b.title?.t(l) ?? blockName(b.type, l)) : null,
+        hint: b.s('source') == 'phet' ? tr('simHint', l) : null,
+        rail: [
+          RailPanel(title: tr('about', l), children: [RailNote(caption('caption'))]),
+          if (b.list('tryThis').isNotEmpty) RailPanel(title: tr('tryThis', l), gap: 20, children: bullets(b.list('tryThis'), icon: Icons.touch_app_outlined, style: zText(28, FontWeight.w400).copyWith(color: Z.ink2, height: 1.5))),
+        ],
+      ),
+      BlockType.virtualLab => staged(
+        embeds.lab(b.s('labId')!, b.s('preset'), l),
+        title: null,
+        hint: null,
+        rail: [
+          RailPanel(title: tr('aim', l), children: [RailNote(caption('aim'))]),
+        ],
+      ),
       BlockType.example => ExampleView(key: ValueKey(b.id), block: b, lang: l, auto: auto),
-      BlockType.classQuiz => _quiz(b, b.ids('questionIds'), b.quizMode, false, l, text, Icons.groups_outlined, tr('classQuiz', l)),
-      BlockType.pyq => _quiz(b, b.ids('questionIds'), QuizMode.monitor, true, l, text, Icons.emoji_events_outlined, tr('pyq', l)),
-      BlockType.trick => _scrollCentered(
-        Container(
-          padding: const EdgeInsets.all(48),
-          decoration: BoxDecoration(
-            color: Z.accent.withValues(alpha: 0.15),
-            border: Border.all(color: Z.accent, width: 4),
-            borderRadius: BorderRadius.circular(Z.radius),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              heading('${tr('trick', l)}: ${b.f('heading').t(l)}', icon: Icons.auto_awesome),
-              MathText(b.f('body').t(l), style: text.bodyLarge?.copyWith(fontSize: 40)),
-              if (b.maybe('mnemonic') != null) ...[const SizedBox(height: Z.gap), Text('“${b.maybe('mnemonic')!.t(l)}”', style: text.headlineMedium?.copyWith(fontStyle: FontStyle.italic))],
+      BlockType.classQuiz => _quiz(b, b.ids('questionIds'), b.quizMode, false, l, tr('classQuiz', l)),
+      BlockType.pyq => _quiz(b, b.ids('questionIds'), QuizMode.monitor, true, l, tr('pyq', l)),
+      BlockType.trick => ContentPanel(
+        center: true,
+        tag: tr('trick', l),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            heading(b.f('heading').t(l)),
+            MathText(b.f('body').t(l), style: big.copyWith(fontSize: narrow ? 34 : 40)),
+            if (b.maybe('mnemonic') != null) ...[
+              const SizedBox(height: 36),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 44, vertical: 36),
+                decoration: BoxDecoration(color: Z.tile, borderRadius: BorderRadius.circular(Z.radius)),
+                child: Text('“${b.maybe('mnemonic')!.t(l)}”', style: zTitle(narrow ? 36 : 42, FontWeight.w500)),
+              ),
             ],
-          ),
+          ],
         ),
       ),
       BlockType.whiteboard => WhiteboardView(key: ValueKey('wb:${b.id}'), c: c, block: b, auto: auto),
       BlockType.interactive => InteractiveView(key: ValueKey('ia:${b.id}'), block: b, lang: l),
       BlockType.challenge => ChallengeView(key: ValueKey('ch:${b.id}'), block: b, lang: l, room: room, recorder: c.recorder, auto: auto, onFinished: onFinished),
       BlockType.activity => ActivityView(key: ValueKey('act:${b.id}'), block: b, lang: l, recorder: c.recorder),
-      BlockType.recap => SingleChildScrollView(
+      BlockType.recap => ContentPanel(
+        tag: tr('recap', l),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            heading(tr('recap', l), icon: Icons.replay),
             ...bullets(b.list('points')),
             if (b.list('homework').isNotEmpty || b.ids('homeworkQuestionIds').isNotEmpty) ...[
-              const SizedBox(height: Z.gap),
-              heading(tr('homework', l), icon: Icons.menu_book_outlined),
+              const SizedBox(height: 36),
+              ZSectionTitle(tr('homework', l), size: 36),
+              const SizedBox(height: 24),
               ...bullets(b.list('homework'), icon: Icons.edit_note),
               for (final q in c.pack.questionsFor(b.ids('homeworkQuestionIds'))) ...bullets([q.stem], icon: Icons.edit_note),
             ],
@@ -150,46 +169,20 @@ class BlockView extends StatelessWidget {
     return KeyedSubtree(key: ValueKey('block:${b.id}'), child: body);
   }
 
-  /// Centred when it fits, scrollable when the screen is too short.
-  static Widget _scrollCentered(Widget child) => LayoutBuilder(
-    builder: (context, box) => SingleChildScrollView(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(minHeight: box.maxHeight),
-        child: Align(alignment: Alignment.centerLeft, child: child),
-      ),
-    ),
+  Widget _quiz(Block b, List<String> ids, QuizMode mode, bool exams, Lang l, String label) => QuizRunner(
+    key: ValueKey('quiz:${b.id}'),
+    questions: c.pack.questionsFor(ids),
+    mode: mode,
+    lang: l,
+    recorder: c.recorder,
+    room: room,
+    auto: auto,
+    secondsPerQuestion: b.secondsPerQuestion,
+    showExams: exams,
+    label: label,
+    onDone: onFinished,
+    onReteach: auto ? null : (ctx) => reteachNow(ctx, c),
   );
-
-  Widget _quiz(Block b, List<String> ids, QuizMode mode, bool exams, Lang l, TextTheme text, IconData icon, String label) {
-    final qs = c.pack.questionsFor(ids);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          children: [
-            Icon(icon, size: 52, color: Z.accent),
-            const SizedBox(width: 12),
-            Text(label, style: text.headlineLarge),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Expanded(
-          child: QuizRunner(
-            key: ValueKey('quiz:${b.id}'),
-            questions: qs,
-            mode: mode,
-            lang: l,
-            recorder: c.recorder,
-            room: room,
-            auto: auto,
-            secondsPerQuestion: b.secondsPerQuestion,
-            showExams: exams,
-            onDone: onFinished,
-          ),
-        ),
-      ],
-    );
-  }
 }
 
 /// A worked example: the problem, then one step at a time (tap, or by itself in Self-Learning).
@@ -224,44 +217,52 @@ class _ExampleViewState extends State<ExampleView> {
 
   @override
   Widget build(BuildContext context) {
-    final l = widget.lang, text = Theme.of(context).textTheme;
-    return SingleChildScrollView(
+    final l = widget.lang, narrow = context.narrow;
+    final body = Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: narrow ? 32 : 36, height: 1.55);
+    return ContentPanel(
+      tag: blockName(BlockType.example, l),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const Icon(Icons.calculate_outlined, size: 56, color: Z.accent),
-              const SizedBox(width: 16),
-              Text(tr('example', l), style: text.headlineLarge),
-            ],
-          ),
-          const SizedBox(height: Z.gap),
-          MathText(widget.block.f('problem').t(l), style: text.headlineMedium),
-          const SizedBox(height: Z.gap),
+          MathText(widget.block.f('problem').t(l), style: zTitle(narrow ? 38 : 44, FontWeight.w500).copyWith(height: 1.4)),
+          const SizedBox(height: 40),
           for (var i = 0; i < shown && i < steps.length; i++)
             Padding(
-              padding: const EdgeInsets.only(bottom: 14),
+              padding: const EdgeInsets.only(bottom: 24),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(radius: 26, child: Text('${i + 1}', style: const TextStyle(fontSize: 28))),
-                  const SizedBox(width: 16),
-                  Expanded(child: MathText(steps[i].t(l))),
+                  Container(
+                    width: 64,
+                    height: 64,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(color: i == shown - 1 && !all ? Z.primary : Z.segTrack, shape: BoxShape.circle),
+                    child: Text('${i + 1}', style: zText(28, FontWeight.w600).copyWith(color: i == shown - 1 && !all ? Colors.white : Z.ink2)),
+                  ),
+                  const SizedBox(width: 24),
+                  Expanded(child: Padding(padding: const EdgeInsets.only(top: 4), child: MathText(steps[i].t(l), style: body))),
                 ],
               ),
             ),
           if (all)
             Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(color: Z.correct, borderRadius: BorderRadius.circular(Z.radius)),
-              child: Text(
-                '${tr('answer', l)}: ${widget.block.f('answer').t(l)}',
-                style: const TextStyle(fontSize: 40, color: Colors.white, fontWeight: FontWeight.w700),
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 28),
+              decoration: BoxDecoration(color: Z.correctBg, borderRadius: BorderRadius.circular(Z.radius)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(tr('answer', l), style: zText(26, FontWeight.w500).copyWith(color: Z.correctLabel)),
+                  const SizedBox(height: 4),
+                  MathText(widget.block.f('answer').t(l), style: zText(narrow ? 36 : 44, FontWeight.w600).copyWith(color: Z.correct)),
+                ],
               ),
             )
           else if (!widget.auto)
-            BigButton(icon: Icons.expand_more, label: tr('showStep', l), onPressed: () => setState(() => shown++)),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: BigButton(icon: Icons.expand_more, label: tr('showStep', l), filled: false, onPressed: () => setState(() => shown++)),
+            ),
         ],
       ),
     );
