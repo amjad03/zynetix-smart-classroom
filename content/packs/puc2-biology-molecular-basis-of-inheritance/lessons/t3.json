@@ -441,6 +441,352 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The Meselson–Stahl experiment",
+    "kn": "ಮೆಸೆಲ್ಸನ್–ಸ್ಟಾಲ್ ಪ್ರಯೋಗ"
+   },
+   "narration": {
+    "en": "Choose a model of replication and grow the bacteria in light nitrogen one generation at a time. Which model gives the bands that Meselson and Stahl actually saw?"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "E. coli grown in ¹⁵N have heavy DNA. After moving them to ¹⁴N, DNA is spun in a caesium chloride gradient: denser DNA settles lower. Semiconservative copying gives all hybrid DNA after one generation (20 min) and half hybrid, half light after two, exactly what Meselson and Stahl saw in 1958.",
+    "kn": "¹⁵N ನಲ್ಲಿ ಬೆಳೆದ E. coli ಯ DNA ಭಾರ. ¹⁴N ಗೆ ವರ್ಗಾಯಿಸಿದ ನಂತರ CsCl ಸಾಂದ್ರತಾ ಶ್ರೇಣಿಯಲ್ಲಿ ತಿರುಗಿಸಿದಾಗ ಸಾಂದ್ರ DNA ಕೆಳಗೆ ನಿಲ್ಲುತ್ತದೆ. ಅರೆ-ಸಂರಕ್ಷಣಾ ಪ್ರತಿಕರಣದಲ್ಲಿ ಒಂದು ಪೀಳಿಗೆಯ ನಂತರ ಎಲ್ಲವೂ ಸಂಕರ, ಎರಡರ ನಂತರ ಅರ್ಧ ಸಂಕರ ಅರ್ಧ ಹಗುರ."
+   },
+   "choices": [
+    {
+     "name": "model",
+     "label": {
+      "en": "Model of replication",
+      "kn": "ಪ್ರತಿಕರಣದ ಮಾದರಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Semiconservative",
+        "kn": "ಅರೆ-ಸಂರಕ್ಷಣಾ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Conservative",
+        "kn": "ಸಂರಕ್ಷಣಾ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Dispersive",
+        "kn": "ಚದುರಿದ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "counters": [
+    {
+     "name": "g",
+     "value": 0,
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Next generation (20 min)",
+      "kn": "ಮುಂದಿನ ಪೀಳಿಗೆ (20 ನಿಮಿಷ)"
+     },
+     "icon": "next",
+     "set": {
+      "g": "g + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Back to ¹⁵N",
+      "kn": "¹⁵N ಗೆ ಹಿಂದಕ್ಕೆ"
+     },
+     "icon": "reset",
+     "set": {
+      "g": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "fh",
+     "expr": "if(model == 1, g == 0, if(model == 2, 1/2^g, 0))"
+    },
+    {
+     "name": "fy",
+     "expr": "if(model == 1, if(g == 0, 0, 2/2^g), 0)"
+    },
+    {
+     "name": "fl",
+     "expr": "if(model == 3, 0, 1 - fh - fy)"
+    },
+    {
+     "name": "hd",
+     "expr": "1/2^g"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     62
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 35,
+     "y": 6,
+     "w": 30,
+     "h": 50,
+     "color": "blue",
+     "opacity": 0.1
+    },
+    {
+     "shape": "rect",
+     "x": 35,
+     "y": 6,
+     "w": 30,
+     "h": 50,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 59,
+     "text": {
+      "en": "CsCl density gradient",
+      "kn": "CsCl ಸಾಂದ್ರತಾ ಶ್ರೇಣಿ"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 33,
+     "y": 40,
+     "text": {
+      "en": "light (¹⁴N/¹⁴N)",
+      "kn": "ಹಗುರ"
+     },
+     "size": 18,
+     "align": "right",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 33,
+     "y": 30,
+     "text": {
+      "en": "hybrid (¹⁵N/¹⁴N)",
+      "kn": "ಸಂಕರ"
+     },
+     "size": 18,
+     "align": "right",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 33,
+     "y": 20,
+     "text": {
+      "en": "heavy (¹⁵N/¹⁵N)",
+      "kn": "ಭಾರ"
+     },
+     "size": 18,
+     "align": "right",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": 37,
+     "y": 19.2,
+     "w": 26,
+     "h": 1.6,
+     "color": "orange",
+     "opacity": "0.2 + 0.8*fh",
+     "visibleIf": "fh > 0 && model != 3"
+    },
+    {
+     "shape": "rect",
+     "x": 37,
+     "y": 29.2,
+     "w": 26,
+     "h": 1.6,
+     "color": "orange",
+     "opacity": "0.2 + 0.8*fy",
+     "visibleIf": "fy > 0 && model != 3"
+    },
+    {
+     "shape": "rect",
+     "x": 37,
+     "y": 39.2,
+     "w": 26,
+     "h": 1.6,
+     "color": "orange",
+     "opacity": "0.2 + 0.8*fl",
+     "visibleIf": "fl > 0 && model != 3"
+    },
+    {
+     "shape": "rect",
+     "x": 37,
+     "y": "39.2 - 20*hd",
+     "w": 26,
+     "h": 1.6,
+     "color": "orange",
+     "visibleIf": "model == 3"
+    },
+    {
+     "shape": "text",
+     "x": 66,
+     "y": 20,
+     "text": {
+      "en": "{100*fh:0}%"
+     },
+     "size": 20,
+     "align": "left",
+     "visibleIf": "model != 3"
+    },
+    {
+     "shape": "text",
+     "x": 66,
+     "y": 30,
+     "text": {
+      "en": "{100*fy:0}%"
+     },
+     "size": 20,
+     "align": "left",
+     "visibleIf": "model != 3"
+    },
+    {
+     "shape": "text",
+     "x": 66,
+     "y": 40,
+     "text": {
+      "en": "{100*fl:0}%"
+     },
+     "size": 20,
+     "align": "left",
+     "visibleIf": "model != 3"
+    },
+    {
+     "shape": "text",
+     "x": 66,
+     "y": "40 - 20*hd",
+     "text": {
+      "en": "100%"
+     },
+     "size": 20,
+     "align": "left",
+     "visibleIf": "model == 3"
+    },
+    {
+     "shape": "label",
+     "x": 84,
+     "y": 50,
+     "text": {
+      "en": "Generation {g}",
+      "kn": "ಪೀಳಿಗೆ {g}"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 84,
+     "y": 43,
+     "text": {
+      "en": "{20*g} min in ¹⁴N",
+      "kn": "¹⁴N ನಲ್ಲಿ {20*g} ನಿಮಿಷ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "label",
+     "x": 84,
+     "y": 12,
+     "text": {
+      "en": "Matches the 1958 result",
+      "kn": "1958 ರ ಫಲಿತಾಂಶಕ್ಕೆ ಹೊಂದುತ್ತದೆ"
+     },
+     "size": 18,
+     "color": "green",
+     "visibleIf": "model == 1 && g > 0"
+    },
+    {
+     "shape": "label",
+     "x": 84,
+     "y": 12,
+     "text": {
+      "en": "Not what was seen",
+      "kn": "ಕಂಡದ್ದು ಇದಲ್ಲ"
+     },
+     "size": 18,
+     "color": "red",
+     "visibleIf": "model != 1 && g > 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Heavy",
+      "kn": "ಭಾರ"
+     },
+     "expr": "100*if(model == 3, g == 0, fh)",
+     "unit": "%",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Hybrid",
+      "kn": "ಸಂಕರ"
+     },
+     "expr": "100*if(model == 3, g > 0, fy)",
+     "unit": "%",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Light",
+      "kn": "ಹಗುರ"
+     },
+     "expr": "100*if(model == 3, 0, fl)",
+     "unit": "%",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "In the semiconservative model, what fraction is hybrid after 3 generations?",
+     "kn": "ಅರೆ-ಸಂರಕ್ಷಣಾ ಮಾದರಿಯಲ್ಲಿ 3 ಪೀಳಿಗೆಯ ನಂತರ ಎಷ್ಟು ಭಾಗ ಸಂಕರ?"
+    },
+    {
+     "en": "Which result after one generation rules out the conservative model?",
+     "kn": "ಒಂದು ಪೀಳಿಗೆಯ ನಂತರದ ಯಾವ ಫಲಿತಾಂಶ ಸಂರಕ್ಷಣಾ ಮಾದರಿಯನ್ನು ತಳ್ಳಿಹಾಕುತ್ತದೆ?"
+    },
+    {
+     "en": "Which generation tells semiconservative and dispersive apart?",
+     "kn": "ಯಾವ ಪೀಳಿಗೆ ಅರೆ-ಸಂರಕ್ಷಣಾ ಮತ್ತು ಚದುರಿದ ಮಾದರಿಗಳನ್ನು ಬೇರ್ಪಡಿಸುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

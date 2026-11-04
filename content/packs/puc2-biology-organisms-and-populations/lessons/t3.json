@@ -234,6 +234,304 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Phases of logistic growth",
+    "kn": "ತಾರ್ಕಿಕ ಬೆಳವಣಿಗೆಯ ಹಂತಗಳು"
+   },
+   "narration": {
+    "en": "Play the growth and read the phase. Turn on the growth-rate curve to see where the population grows fastest."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "With limited resources, dN/dt = rN(K − N)/K. Growth is slow at first (lag), speeds up (acceleration), is fastest at N = K/2, slows (deceleration) and levels off at the carrying capacity K (asymptote): the Verhulst–Pearl sigmoid curve.",
+    "kn": "ಸೀಮಿತ ಸಂಪನ್ಮೂಲದಲ್ಲಿ dN/dt = rN(K − N)/K. ಮೊದಲು ನಿಧಾನ (ವಿಳಂಬ), ನಂತರ ವೇಗ (ತ್ವರಣ), N = K/2 ನಲ್ಲಿ ಅತಿ ವೇಗ, ನಂತರ ನಿಧಾನ (ಮಂದನ), ಕೊನೆಗೆ K ನಲ್ಲಿ ಸ್ಥಿರ (ಅನಂತಸ್ಪರ್ಶಿ)."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "r (per day)",
+      "kn": "r (ಪ್ರತಿ ದಿನ)"
+     },
+     "min": 0.1,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.3
+    },
+    {
+     "name": "K",
+     "label": {
+      "en": "Carrying capacity K",
+      "kn": "ಧಾರಣಾ ಸಾಮರ್ಥ್ಯ K"
+     },
+     "min": 100,
+     "max": 400,
+     "step": 10,
+     "value": 300
+    },
+    {
+     "name": "N0",
+     "label": {
+      "en": "Starting number N0",
+      "kn": "ಆರಂಭಿಕ ಸಂಖ್ಯೆ N0"
+     },
+     "min": 2,
+     "max": 40,
+     "step": 2,
+     "value": 4
+    }
+   ],
+   "toggles": [
+    {
+     "name": "rate",
+     "label": {
+      "en": "Show growth rate dN/dt",
+      "kn": "ಬೆಳವಣಿಗೆ ದರ dN/dt"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 50,
+    "unit": "day",
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2
+   },
+   "vars": [
+    {
+     "name": "N",
+     "expr": "K/(1 + (K - N0)/N0*exp(-r*t))"
+    },
+    {
+     "name": "dN",
+     "expr": "r*N*(K - N)/K"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 6,
+     "x2": 92,
+     "y2": 6,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 6,
+     "x2": 10,
+     "y2": 54,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 51,
+     "y": 2,
+     "text": {
+      "en": "time (days)",
+      "kn": "ಸಮಯ (ದಿನ)"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 56,
+     "text": {
+      "en": "N"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": "6 + 48*K/400",
+     "x2": 92,
+     "y2": "6 + 48*K/400",
+     "color": "green",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 93,
+     "y": "6 + 48*K/400",
+     "text": {
+      "en": "K"
+     },
+     "size": 22,
+     "align": "left",
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": "6 + 24*K/400",
+     "x2": 92,
+     "y2": "6 + 24*K/400",
+     "color": "green",
+     "dashed": true,
+     "opacity": 0.4,
+     "visibleIf": "rate"
+    },
+    {
+     "shape": "text",
+     "x": 93,
+     "y": "6 + 24*K/400",
+     "text": {
+      "en": "K/2"
+     },
+     "size": 18,
+     "align": "left",
+     "color": "green",
+     "visibleIf": "rate"
+    },
+    {
+     "shape": "path",
+     "fn": "6 + 48/400*K/(1 + (K - N0)/N0*exp(-r*(x - 10)*50/82))",
+     "from": 10,
+     "to": 92,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.3
+    },
+    {
+     "shape": "path",
+     "fn": "6 + 30*(K/(1 + (K - N0)/N0*exp(-r*(x - 10)*50/82)))*(K - K/(1 + (K - N0)/N0*exp(-r*(x - 10)*50/82)))*4/K^2",
+     "from": 10,
+     "to": 92,
+     "color": "orange",
+     "width": 3,
+     "visibleIf": "rate"
+    },
+    {
+     "shape": "trail",
+     "x": "10 + 82*t/50",
+     "y": "6 + 48*N/400",
+     "length": 1500,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "10 + 82*t/50",
+     "y": "6 + 48*N/400",
+     "r": 1,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 40,
+     "y": 57,
+     "text": {
+      "en": "Lag phase",
+      "kn": "ವಿಳಂಬ ಹಂತ"
+     },
+     "size": 22,
+     "visibleIf": "N < 0.1*K"
+    },
+    {
+     "shape": "label",
+     "x": 40,
+     "y": 57,
+     "text": {
+      "en": "Acceleration",
+      "kn": "ತ್ವರಣ ಹಂತ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "N >= 0.1*K && N < 0.5*K"
+    },
+    {
+     "shape": "label",
+     "x": 40,
+     "y": 57,
+     "text": {
+      "en": "Deceleration",
+      "kn": "ಮಂದನ ಹಂತ"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "N >= 0.5*K && N < 0.95*K"
+    },
+    {
+     "shape": "label",
+     "x": 40,
+     "y": 57,
+     "text": {
+      "en": "Asymptote: N ≈ K",
+      "kn": "ಅನಂತಸ್ಪರ್ಶಿ: N ≈ K"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "N >= 0.95*K"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "N",
+      "kn": "N"
+     },
+     "expr": "N",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "dN/dt",
+      "kn": "dN/dt"
+     },
+     "expr": "dN",
+     "unit": "per day",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Fastest growth rK/4",
+      "kn": "ಅತಿ ವೇಗ rK/4"
+     },
+     "expr": "r*K/4",
+     "unit": "per day",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At what value of N is the growth rate highest?",
+     "kn": "N ನ ಯಾವ ಮೌಲ್ಯದಲ್ಲಿ ಬೆಳವಣಿಗೆ ದರ ಅತಿ ಹೆಚ್ಚು?"
+    },
+    {
+     "en": "Raise K. Which phases change, and which do not?",
+     "kn": "K ಏರಿಸಿ. ಯಾವ ಹಂತಗಳು ಬದಲಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Raise r. Does the population end up larger, or just get there sooner?",
+     "kn": "r ಏರಿಸಿ. ಸಂಖ್ಯೆ ದೊಡ್ಡದಾಗುತ್ತದೆಯೇ ಅಥವಾ ಬೇಗ ತಲುಪುತ್ತದೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "lab-microbial-growth",
    "type": "virtual_lab",
    "labId": "microbial-growth",

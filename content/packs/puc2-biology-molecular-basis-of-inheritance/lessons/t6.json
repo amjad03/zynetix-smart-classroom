@@ -628,6 +628,443 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Switching the lac operon",
+    "kn": "lac ಆಪರಾನ್ ಸ್ವಿಚ್"
+   },
+   "narration": {
+    "en": "Start with no lactose: the operon stays off. Add lactose and press play. Watch the repressor let go, RNA polymerase run along the genes, and the operon switch off again once the lactose is used up."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Without lactose the repressor (made by gene i) binds the operator and blocks RNA polymerase. Lactose, the inducer, binds the repressor and inactivates it, so z, y and a are transcribed and the enzymes are made. As β-galactosidase uses up the lactose, the repressor binds again: negative regulation. Numbers are schematic.",
+    "kn": "ಲ್ಯಾಕ್ಟೋಸ್ ಇಲ್ಲದಿದ್ದರೆ ದಮನಕ ಆಪರೇಟರ್‌ಗೆ ಅಂಟಿ RNA ಪಾಲಿಮರೇಸ್ ತಡೆಯುತ್ತದೆ. ಪ್ರಚೋದಕ ಲ್ಯಾಕ್ಟೋಸ್ ದಮನಕವನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿದಾಗ z, y, a ಪ್ರತಿಲೇಖನಗೊಳ್ಳುತ್ತವೆ. ಲ್ಯಾಕ್ಟೋಸ್ ಮುಗಿದಂತೆ ದಮನಕ ಮತ್ತೆ ಅಂಟುತ್ತದೆ: ಋಣಾತ್ಮಕ ನಿಯಂತ್ರಣ."
+   },
+   "sliders": [
+    {
+     "name": "L0",
+     "label": {
+      "en": "Lactose added",
+      "kn": "ಸೇರಿಸಿದ ಲ್ಯಾಕ್ಟೋಸ್"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 0.5,
+     "value": 0,
+     "unit": "units"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Add lactose",
+      "kn": "ಲ್ಯಾಕ್ಟೋಸ್ ಸೇರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "L0": "10"
+     },
+     "reset": true,
+     "play": true
+    },
+    {
+     "label": {
+      "en": "No lactose",
+      "kn": "ಲ್ಯಾಕ್ಟೋಸ್ ಇಲ್ಲ"
+     },
+     "icon": "remove",
+     "set": {
+      "L0": "0"
+     },
+     "reset": true
+    }
+   ],
+   "time": {
+    "max": 80,
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2
+   },
+   "vars": [
+    {
+     "name": "fi",
+     "expr": "L/(L + 1)"
+    },
+    {
+     "name": "free",
+     "expr": "fi >= 0.5"
+    },
+    {
+     "name": "rx",
+     "expr": "if(free, 22 + mod(8*t, 70), 22)"
+    }
+   ],
+   "state": [
+    {
+     "name": "L",
+     "init": "L0",
+     "rate": "-0.06*E*L/(L + 1)"
+    },
+    {
+     "name": "E",
+     "init": "0",
+     "rate": "2*fi - 0.2*E"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 30,
+     "x2": 96,
+     "y2": 30,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 4,
+     "y": 28,
+     "w": 11.5,
+     "h": 4,
+     "color": "blue",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 24.5,
+     "text": {
+      "en": "i"
+     },
+     "size": 24
+    },
+    {
+     "shape": "rect",
+     "x": 18,
+     "y": 28,
+     "w": 7.5,
+     "h": 4,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 22.0,
+     "y": 24.5,
+     "text": {
+      "en": "p"
+     },
+     "size": 24
+    },
+    {
+     "shape": "rect",
+     "x": 26,
+     "y": 28,
+     "w": 5.5,
+     "h": 4,
+     "color": "red",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 29.0,
+     "y": 24.5,
+     "text": {
+      "en": "o"
+     },
+     "size": 24
+    },
+    {
+     "shape": "rect",
+     "x": 32,
+     "y": 28,
+     "w": 23.5,
+     "h": 4,
+     "color": "green",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 44.0,
+     "y": 24.5,
+     "text": {
+      "en": "z"
+     },
+     "size": 24
+    },
+    {
+     "shape": "rect",
+     "x": 56,
+     "y": 28,
+     "w": 17.5,
+     "h": 4,
+     "color": "green",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 65.0,
+     "y": 24.5,
+     "text": {
+      "en": "y"
+     },
+     "size": 24
+    },
+    {
+     "shape": "rect",
+     "x": 74,
+     "y": 28,
+     "w": 17.5,
+     "h": 4,
+     "color": "green",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 83.0,
+     "y": 24.5,
+     "text": {
+      "en": "a"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 44,
+     "y": 20,
+     "text": {
+      "en": "β-galactosidase"
+     },
+     "size": 16,
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 65,
+     "y": 20,
+     "text": {
+      "en": "permease"
+     },
+     "size": 16,
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 83,
+     "y": 20,
+     "text": {
+      "en": "transacetylase"
+     },
+     "size": 16,
+     "opacity": 0.7
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       26,
+       32
+      ],
+      [
+       32,
+       32
+      ],
+      [
+       33,
+       37
+      ],
+      [
+       29,
+       39
+      ],
+      [
+       25,
+       37
+      ]
+     ],
+     "color": "orange",
+     "visibleIf": "!free"
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       12,
+       46
+      ],
+      [
+       18,
+       46
+      ],
+      [
+       19,
+       51
+      ],
+      [
+       15,
+       53
+      ],
+      [
+       11,
+       51
+      ]
+     ],
+     "color": "orange",
+     "opacity": 0.6,
+     "visibleIf": "free"
+    },
+    {
+     "shape": "circle",
+     "x": 15,
+     "y": 54.5,
+     "r": 1.2,
+     "color": "yellow",
+     "visibleIf": "free"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 58,
+     "text": {
+      "en": "repressor + inducer",
+      "kn": "ದಮನಕ + ಪ್ರಚೋದಕ"
+     },
+     "size": 16,
+     "visibleIf": "free"
+    },
+    {
+     "shape": "circle",
+     "x": "rx",
+     "y": 34,
+     "r": 3,
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": "rx",
+     "y": 33.3,
+     "text": {
+      "en": "RNA pol"
+     },
+     "size": 14
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "40 + 55*rand(i)",
+     "y": "42 + 16*rand(i + 100)",
+     "r": 0.9,
+     "color": "yellow",
+     "visibleIf": "i < 4*L"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 8,
+     "text": {
+      "en": "Operon OFF: repressor sits on the operator",
+      "kn": "ಆಪರಾನ್ ಆಫ್: ದಮನಕ ಆಪರೇಟರ್ ಮೇಲೆ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "!free"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 8,
+     "text": {
+      "en": "Operon ON: z, y and a are transcribed",
+      "kn": "ಆಪರಾನ್ ಆನ್: z, y, a ಪ್ರತಿಲೇಖನ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "free"
+    },
+    {
+     "shape": "rect",
+     "x": 4,
+     "y": 2,
+     "w": "2.5*E",
+     "h": 2,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 0.2,
+     "text": {
+      "en": "enzymes",
+      "kn": "ಕಿಣ್ವಗಳು"
+     },
+     "size": 14,
+     "align": "left",
+     "opacity": 0.7
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Lactose left",
+      "kn": "ಉಳಿದ ಲ್ಯಾಕ್ಟೋಸ್"
+     },
+     "expr": "L",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Repressors inactivated",
+      "kn": "ನಿಷ್ಕ್ರಿಯ ದಮನಕಗಳು"
+     },
+     "expr": "100*fi",
+     "unit": "%",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Enzyme level (relative)",
+      "kn": "ಕಿಣ್ವ ಮಟ್ಟ"
+     },
+     "expr": "E",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With no lactose, can RNA polymerase pass the operator?",
+     "kn": "ಲ್ಯಾಕ್ಟೋಸ್ ಇಲ್ಲದಿದ್ದಾಗ RNA ಪಾಲಿಮರೇಸ್ ಆಪರೇಟರ್ ದಾಟುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Add lactose and play. Why does the operon switch itself off later?",
+     "kn": "ಲ್ಯಾಕ್ಟೋಸ್ ಸೇರಿಸಿ ಚಲಾಯಿಸಿ. ಆಪರಾನ್ ನಂತರ ತಾನೇ ಏಕೆ ಆಫ್ ಆಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Why is this called negative regulation?",
+     "kn": "ಇದನ್ನು ಋಣಾತ್ಮಕ ನಿಯಂತ್ರಣ ಎಂದು ಏಕೆ ಕರೆಯುತ್ತಾರೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

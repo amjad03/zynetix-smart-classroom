@@ -420,6 +420,234 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Frameshift: RAM HAS RED CAP",
+    "kn": "ಚೌಕಟ್ಟು ಸ್ಥಳಾಂತರ: RAM HAS RED CAP"
+   },
+   "narration": {
+    "en": "Treat each three-letter word as a codon. Insert or delete letters just before RED and read the sentence again in threes."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The code is read in triplets with no commas. Inserting or deleting one or two bases shifts the reading frame from that point on (a frameshift mutation). Inserting or deleting three bases adds or removes one codon and the rest reads correctly again. Here three-letter words stand in for codons.",
+    "kn": "ಸಂಕೇತವನ್ನು ಅಲ್ಪವಿರಾಮವಿಲ್ಲದೆ ತ್ರಿವಳಿಗಳಾಗಿ ಓದಲಾಗುತ್ತದೆ. ಒಂದು ಅಥವಾ ಎರಡು ಕ್ಷಾರಗಳನ್ನು ಸೇರಿಸಿದರೆ ಅಥವಾ ತೆಗೆದರೆ ಓದುವ ಚೌಕಟ್ಟು ಸ್ಥಳಾಂತರವಾಗುತ್ತದೆ. ಮೂರು ಸೇರಿಸಿದರೆ/ತೆಗೆದರೆ ಒಂದು ಸಂಕೇತ ಹೆಚ್ಚು/ಕಡಿಮೆ, ಉಳಿದದ್ದು ಸರಿ."
+   },
+   "counters": [
+    {
+     "name": "k",
+     "value": 0,
+     "min": -3,
+     "max": 3
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Insert a letter",
+      "kn": "ಅಕ್ಷರ ಸೇರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "k": "k + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Delete a letter",
+      "kn": "ಅಕ್ಷರ ತೆಗೆಯಿರಿ"
+     },
+     "icon": "remove",
+     "set": {
+      "k": "k - 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 52,
+     "text": {
+      "en": "Read in threes, without commas:",
+      "kn": "ಅಲ್ಪವಿರಾಮವಿಲ್ಲದೆ ಮೂರು ಮೂರಾಗಿ ಓದಿ:"
+     },
+     "size": 24
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 38,
+     "text": {
+      "en": "RAM HAS RED CAP"
+     },
+     "size": 44,
+     "color": "green",
+     "visibleIf": "k == 0"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 38,
+     "text": {
+      "en": "RAM HAS BRE DCA P"
+     },
+     "size": 44,
+     "color": "red",
+     "visibleIf": "k == 1"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 38,
+     "text": {
+      "en": "RAM HAS BIR EDC AP"
+     },
+     "size": 44,
+     "color": "red",
+     "visibleIf": "k == 2"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 38,
+     "text": {
+      "en": "RAM HAS BIG RED CAP"
+     },
+     "size": 44,
+     "color": "green",
+     "visibleIf": "k == 3"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 38,
+     "text": {
+      "en": "RAM HAS EDC AP"
+     },
+     "size": 44,
+     "color": "red",
+     "visibleIf": "k == -1"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 38,
+     "text": {
+      "en": "RAM HAS DCA P"
+     },
+     "size": 44,
+     "color": "red",
+     "visibleIf": "k == -2"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 38,
+     "text": {
+      "en": "RAM HAS CAP"
+     },
+     "size": 44,
+     "color": "green",
+     "visibleIf": "k == -3"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 24,
+     "text": {
+      "en": "Reading frame intact",
+      "kn": "ಓದುವ ಚೌಕಟ್ಟು ಸರಿಯಾಗಿದೆ"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "k == 0"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 24,
+     "text": {
+      "en": "Frameshift: every codon after the change is misread",
+      "kn": "ಚೌಕಟ್ಟು ಸ್ಥಳಾಂತರ: ನಂತರದ ಎಲ್ಲ ಸಂಕೇತಗಳು ತಪ್ಪಾಗಿ ಓದಲ್ಪಡುತ್ತವೆ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "k == 1 || k == 2 || k == -1 || k == -2"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 24,
+     "text": {
+      "en": "Three bases changed: frame restored, one codon gained or lost",
+      "kn": "ಮೂರು ಕ್ಷಾರಗಳು: ಚೌಕಟ್ಟು ಮರುಸ್ಥಾಪನೆ"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "k == 3 || k == -3"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 12,
+     "text": {
+      "en": "Letters inserted: {max(k, 0)}    Letters deleted: {max(-k, 0)}",
+      "kn": "ಸೇರಿಸಿದವು: {max(k, 0)}    ತೆಗೆದವು: {max(-k, 0)}"
+     },
+     "size": 22,
+     "opacity": 0.8
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Net change in bases",
+      "kn": "ಕ್ಷಾರಗಳ ನಿವ್ವಳ ಬದಲಾವಣೆ"
+     },
+     "expr": "k",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Insert one letter. How many words after the change still make sense?",
+     "kn": "ಒಂದು ಅಕ್ಷರ ಸೇರಿಸಿ. ನಂತರದ ಎಷ್ಟು ಪದಗಳಿಗೆ ಅರ್ಥವಿದೆ?"
+    },
+    {
+     "en": "Insert three letters. Why does the rest of the sentence read correctly again?",
+     "kn": "ಮೂರು ಅಕ್ಷರ ಸೇರಿಸಿ. ಉಳಿದ ವಾಕ್ಯ ಮತ್ತೆ ಸರಿಯಾಗಿ ಏಕೆ ಓದಲ್ಪಡುತ್ತದೆ?"
+    },
+    {
+     "en": "What did experiments like this tell us about the size of a codon?",
+     "kn": "ಇಂತಹ ಪ್ರಯೋಗಗಳು ಸಂಕೇತದ ಗಾತ್ರದ ಬಗ್ಗೆ ಏನು ಹೇಳಿದವು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

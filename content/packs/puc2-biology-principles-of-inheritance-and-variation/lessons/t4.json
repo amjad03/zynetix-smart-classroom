@@ -580,6 +580,495 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Polygenic inheritance: skin colour",
+    "kn": "ಬಹುಜೀನೀಯ ಅನುವಂಶೀಯತೆ: ಚರ್ಮದ ಬಣ್ಣ"
+   },
+   "narration": {
+    "en": "Add genes one at a time and watch the offspring of two heterozygous parents spread into more and more classes, until the bars look like a bell curve."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "When several genes each add a small effect, the children of two heterozygous parents (AaBbCc × AaBbCc) fall into many classes by the number of dominant alleles they carry: 2n + 1 classes for n genes. Most are in the middle; the extremes are rare (1 in 4^n each). With more genes the bars approach a smooth bell curve.",
+    "kn": "ಹಲವು ಜೀನ್‌ಗಳು ಸಣ್ಣ ಸಣ್ಣ ಪರಿಣಾಮ ಸೇರಿಸಿದಾಗ, AaBbCc × AaBbCc ಮಕ್ಕಳು ಪ್ರಬಲ ಆಲೀಲ್‌ಗಳ ಸಂಖ್ಯೆಯ ಪ್ರಕಾರ 2n + 1 ವರ್ಗಗಳಲ್ಲಿ ಬೀಳುತ್ತಾರೆ. ಹೆಚ್ಚಿನವರು ಮಧ್ಯದಲ್ಲಿ; ತೀವ್ರ ರೂಪಗಳು ಅಪರೂಪ."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Number of genes",
+      "kn": "ಜೀನ್‌ಗಳ ಸಂಖ್ಯೆ"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "toggles": [
+    {
+     "name": "curve",
+     "label": {
+      "en": "Show the bell curve",
+      "kn": "ಗಂಟೆ ವಕ್ರ ತೋರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "wb",
+     "expr": "80/(2*n + 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     56
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 5,
+     "x2": 92,
+     "y2": 5,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "x": "10 + 0*wb + 0.1*wb",
+     "y": 5,
+     "w": "0.8*wb",
+     "h": "if(n == 1, 20.0, if(n == 2, 6.6667, if(n == 3, 2.0, if(n == 4, 0.5714, if(n == 5, 0.1587, 0.0433)))))",
+     "color": {
+      "by": "0/(2*n)",
+      "scale": [
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "visibleIf": "0 <= 2*n"
+    },
+    {
+     "shape": "text",
+     "x": "10 + 0*wb + 0.5*wb",
+     "y": 2,
+     "text": {
+      "en": "0"
+     },
+     "size": 16,
+     "visibleIf": "0 <= 2*n",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "10 + 1*wb + 0.1*wb",
+     "y": 5,
+     "w": "0.8*wb",
+     "h": "if(n == 1, 40.0, if(n == 2, 26.6667, if(n == 3, 12.0, if(n == 4, 4.5714, if(n == 5, 1.5873, 0.5195)))))",
+     "color": {
+      "by": "1/(2*n)",
+      "scale": [
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "visibleIf": "1 <= 2*n"
+    },
+    {
+     "shape": "text",
+     "x": "10 + 1*wb + 0.5*wb",
+     "y": 2,
+     "text": {
+      "en": "1"
+     },
+     "size": 16,
+     "visibleIf": "1 <= 2*n",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "10 + 2*wb + 0.1*wb",
+     "y": 5,
+     "w": "0.8*wb",
+     "h": "if(n == 1, 20.0, if(n == 2, 40.0, if(n == 3, 30.0, if(n == 4, 16.0, if(n == 5, 7.1429, 2.8571)))))",
+     "color": {
+      "by": "2/(2*n)",
+      "scale": [
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "visibleIf": "2 <= 2*n"
+    },
+    {
+     "shape": "text",
+     "x": "10 + 2*wb + 0.5*wb",
+     "y": 2,
+     "text": {
+      "en": "2"
+     },
+     "size": 16,
+     "visibleIf": "2 <= 2*n",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "10 + 3*wb + 0.1*wb",
+     "y": 5,
+     "w": "0.8*wb",
+     "h": "if(n == 1, 0.0, if(n == 2, 26.6667, if(n == 3, 40.0, if(n == 4, 32.0, if(n == 5, 19.0476, 9.5238)))))",
+     "color": {
+      "by": "3/(2*n)",
+      "scale": [
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "visibleIf": "3 <= 2*n"
+    },
+    {
+     "shape": "text",
+     "x": "10 + 3*wb + 0.5*wb",
+     "y": 2,
+     "text": {
+      "en": "3"
+     },
+     "size": 16,
+     "visibleIf": "3 <= 2*n",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "10 + 4*wb + 0.1*wb",
+     "y": 5,
+     "w": "0.8*wb",
+     "h": "if(n == 1, 0.0, if(n == 2, 6.6667, if(n == 3, 30.0, if(n == 4, 40.0, if(n == 5, 33.3333, 21.4286)))))",
+     "color": {
+      "by": "4/(2*n)",
+      "scale": [
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "visibleIf": "4 <= 2*n"
+    },
+    {
+     "shape": "text",
+     "x": "10 + 4*wb + 0.5*wb",
+     "y": 2,
+     "text": {
+      "en": "4"
+     },
+     "size": 16,
+     "visibleIf": "4 <= 2*n",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "10 + 5*wb + 0.1*wb",
+     "y": 5,
+     "w": "0.8*wb",
+     "h": "if(n == 1, 0.0, if(n == 2, 0.0, if(n == 3, 12.0, if(n == 4, 32.0, if(n == 5, 40.0, 34.2857)))))",
+     "color": {
+      "by": "5/(2*n)",
+      "scale": [
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "visibleIf": "5 <= 2*n"
+    },
+    {
+     "shape": "text",
+     "x": "10 + 5*wb + 0.5*wb",
+     "y": 2,
+     "text": {
+      "en": "5"
+     },
+     "size": 16,
+     "visibleIf": "5 <= 2*n",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "10 + 6*wb + 0.1*wb",
+     "y": 5,
+     "w": "0.8*wb",
+     "h": "if(n == 1, 0.0, if(n == 2, 0.0, if(n == 3, 2.0, if(n == 4, 16.0, if(n == 5, 33.3333, 40.0)))))",
+     "color": {
+      "by": "6/(2*n)",
+      "scale": [
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "visibleIf": "6 <= 2*n"
+    },
+    {
+     "shape": "text",
+     "x": "10 + 6*wb + 0.5*wb",
+     "y": 2,
+     "text": {
+      "en": "6"
+     },
+     "size": 16,
+     "visibleIf": "6 <= 2*n",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "10 + 7*wb + 0.1*wb",
+     "y": 5,
+     "w": "0.8*wb",
+     "h": "if(n == 1, 0.0, if(n == 2, 0.0, if(n == 3, 0.0, if(n == 4, 4.5714, if(n == 5, 19.0476, 34.2857)))))",
+     "color": {
+      "by": "7/(2*n)",
+      "scale": [
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "visibleIf": "7 <= 2*n"
+    },
+    {
+     "shape": "text",
+     "x": "10 + 7*wb + 0.5*wb",
+     "y": 2,
+     "text": {
+      "en": "7"
+     },
+     "size": 16,
+     "visibleIf": "7 <= 2*n",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "10 + 8*wb + 0.1*wb",
+     "y": 5,
+     "w": "0.8*wb",
+     "h": "if(n == 1, 0.0, if(n == 2, 0.0, if(n == 3, 0.0, if(n == 4, 0.5714, if(n == 5, 7.1429, 21.4286)))))",
+     "color": {
+      "by": "8/(2*n)",
+      "scale": [
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "visibleIf": "8 <= 2*n"
+    },
+    {
+     "shape": "text",
+     "x": "10 + 8*wb + 0.5*wb",
+     "y": 2,
+     "text": {
+      "en": "8"
+     },
+     "size": 16,
+     "visibleIf": "8 <= 2*n",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "10 + 9*wb + 0.1*wb",
+     "y": 5,
+     "w": "0.8*wb",
+     "h": "if(n == 1, 0.0, if(n == 2, 0.0, if(n == 3, 0.0, if(n == 4, 0.0, if(n == 5, 1.5873, 9.5238)))))",
+     "color": {
+      "by": "9/(2*n)",
+      "scale": [
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "visibleIf": "9 <= 2*n"
+    },
+    {
+     "shape": "text",
+     "x": "10 + 9*wb + 0.5*wb",
+     "y": 2,
+     "text": {
+      "en": "9"
+     },
+     "size": 16,
+     "visibleIf": "9 <= 2*n",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "10 + 10*wb + 0.1*wb",
+     "y": 5,
+     "w": "0.8*wb",
+     "h": "if(n == 1, 0.0, if(n == 2, 0.0, if(n == 3, 0.0, if(n == 4, 0.0, if(n == 5, 0.1587, 2.8571)))))",
+     "color": {
+      "by": "10/(2*n)",
+      "scale": [
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "visibleIf": "10 <= 2*n"
+    },
+    {
+     "shape": "text",
+     "x": "10 + 10*wb + 0.5*wb",
+     "y": 2,
+     "text": {
+      "en": "10"
+     },
+     "size": 16,
+     "visibleIf": "10 <= 2*n",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "10 + 11*wb + 0.1*wb",
+     "y": 5,
+     "w": "0.8*wb",
+     "h": "if(n == 1, 0.0, if(n == 2, 0.0, if(n == 3, 0.0, if(n == 4, 0.0, if(n == 5, 0.0, 0.5195)))))",
+     "color": {
+      "by": "11/(2*n)",
+      "scale": [
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "visibleIf": "11 <= 2*n"
+    },
+    {
+     "shape": "text",
+     "x": "10 + 11*wb + 0.5*wb",
+     "y": 2,
+     "text": {
+      "en": "11"
+     },
+     "size": 16,
+     "visibleIf": "11 <= 2*n",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "10 + 12*wb + 0.1*wb",
+     "y": 5,
+     "w": "0.8*wb",
+     "h": "if(n == 1, 0.0, if(n == 2, 0.0, if(n == 3, 0.0, if(n == 4, 0.0, if(n == 5, 0.0, 0.0433)))))",
+     "color": {
+      "by": "12/(2*n)",
+      "scale": [
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "visibleIf": "12 <= 2*n"
+    },
+    {
+     "shape": "text",
+     "x": "10 + 12*wb + 0.5*wb",
+     "y": 2,
+     "text": {
+      "en": "12"
+     },
+     "size": 16,
+     "visibleIf": "12 <= 2*n",
+     "opacity": 0.8
+    },
+    {
+     "shape": "path",
+     "fn": "5 + 40*exp(-((x - 10)/wb - 0.5 - n)^2/n)",
+     "from": 10,
+     "to": 90,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "curve"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 52,
+     "text": {
+      "en": "{2*n + 1} skin-colour classes from {n} gene(s)",
+      "kn": "{n} ಜೀನ್‌ನಿಂದ {2*n + 1} ವರ್ಗಗಳು"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 47,
+     "text": {
+      "en": "Number of dominant alleles: lightest (0) to darkest ({2*n})",
+      "kn": "ಪ್ರಬಲ ಆಲೀಲ್‌ಗಳ ಸಂಖ್ಯೆ"
+     },
+     "size": 18,
+     "opacity": 0.7
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Phenotype classes",
+      "kn": "ಲಕ್ಷಣರೂಪ ವರ್ಗಗಳು"
+     },
+     "expr": "2*n + 1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Genotypes possible",
+      "kn": "ಸಾಧ್ಯ ಜೀನೋಟೈಪ್‌ಗಳು"
+     },
+     "expr": "3^n",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Darkest type: 1 in",
+      "kn": "ಅತಿ ಗಾಢ: ಇಷ್ಟರಲ್ಲಿ 1"
+     },
+     "expr": "4^n",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With one gene, what ratio do you get? Which law is that?",
+     "kn": "ಒಂದು ಜೀನ್‌ನಿಂದ ಯಾವ ಅನುಪಾತ? ಅದು ಯಾವ ನಿಯಮ?"
+    },
+    {
+     "en": "With three genes (AaBbCc), how many classes are there, and how rare is the darkest?",
+     "kn": "ಮೂರು ಜೀನ್‌ಗಳಲ್ಲಿ ಎಷ್ಟು ವರ್ಗ? ಅತಿ ಗಾಢ ಎಷ್ಟು ಅಪರೂಪ?"
+    },
+    {
+     "en": "Why does the environment make the real distribution even smoother?",
+     "kn": "ಪರಿಸರ ನಿಜವಾದ ಹಂಚಿಕೆಯನ್ನು ಇನ್ನಷ್ಟು ನಯಗೊಳಿಸುವುದು ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

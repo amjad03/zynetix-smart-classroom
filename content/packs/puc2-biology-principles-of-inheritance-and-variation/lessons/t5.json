@@ -584,6 +584,575 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Sex-linked inheritance",
+    "kn": "ಲಿಂಗ-ಸಂಬಂಧಿತ ಅನುವಂಶೀಯತೆ"
+   },
+   "narration": {
+    "en": "Choose the mother and the father. The Punnett square shows daughters in the top row and sons in the bottom row; the bars give the chances."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Colour blindness and haemophilia are caused by a recessive allele on the X chromosome. A son gets his only X from his mother, so a carrier mother passes the disorder to half her sons. A daughter is affected only if both her X chromosomes carry the allele, so the disorder is far more common in males.",
+    "kn": "ವರ್ಣಾಂಧತೆ ಮತ್ತು ಹಿಮೋಫಿಲಿಯಾ X ವರ್ಣತಂತುವಿನ ಮೇಲಿನ ಅಪ್ರಬಲ ಆಲೀಲ್‌ನಿಂದ. ಮಗನಿಗೆ ಏಕೈಕ X ತಾಯಿಯಿಂದ, ಆದ್ದರಿಂದ ವಾಹಕ ತಾಯಿಯ ಅರ್ಧ ಗಂಡುಮಕ್ಕಳು ಬಾಧಿತರು. ಮಗಳು ಬಾಧಿತಳಾಗಲು ಎರಡೂ X ಗಳಲ್ಲಿ ಆಲೀಲ್ ಇರಬೇಕು."
+   },
+   "choices": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Mother",
+      "kn": "ತಾಯಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Normal XX",
+        "kn": "ಸಾಮಾನ್ಯ XX"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Carrier XX*",
+        "kn": "ವಾಹಕ XX*"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Affected X*X*",
+        "kn": "ಬಾಧಿತ X*X*"
+       },
+       "value": 3
+      }
+     ],
+     "value": 2
+    },
+    {
+     "name": "f",
+     "label": {
+      "en": "Father",
+      "kn": "ತಂದೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Normal XY",
+        "kn": "ಸಾಮಾನ್ಯ XY"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Affected X*Y",
+        "kn": "ಬಾಧಿತ X*Y"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    },
+    {
+     "name": "trait",
+     "label": {
+      "en": "Disorder",
+      "kn": "ರೋಗ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Colour blindness",
+        "kn": "ವರ್ಣಾಂಧತೆ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Haemophilia",
+        "kn": "ಹಿಮೋಫಿಲಿಯಾ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "ga",
+     "expr": "m == 3"
+    },
+    {
+     "name": "gb",
+     "expr": "m >= 2"
+    },
+    {
+     "name": "fx",
+     "expr": "f == 2"
+    },
+    {
+     "name": "pm",
+     "expr": "(ga + gb)/2"
+    },
+    {
+     "name": "sa",
+     "expr": "pm"
+    },
+    {
+     "name": "da",
+     "expr": "pm*fx"
+    },
+    {
+     "name": "dc",
+     "expr": "pm*(1 - fx) + (1 - pm)*fx"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 25,
+     "y": 57,
+     "text": {
+      "en": "Mother's eggs",
+      "kn": "ತಾಯಿಯ ಅಂಡಗಳು"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 32,
+     "text": {
+      "en": "Father's sperm",
+      "kn": "ತಂದೆಯ ವೀರ್ಯ"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 51,
+     "text": {
+      "en": "X"
+     },
+     "size": 28,
+     "visibleIf": "!ga"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 51,
+     "text": {
+      "en": "X*"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "ga"
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 51,
+     "text": {
+      "en": "X"
+     },
+     "size": 28,
+     "visibleIf": "!gb"
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 51,
+     "text": {
+      "en": "X*"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "gb"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 38.5,
+     "text": {
+      "en": "X"
+     },
+     "size": 28,
+     "visibleIf": "!fx"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 38.5,
+     "text": {
+      "en": "X*"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "fx"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 23.5,
+     "text": {
+      "en": "Y"
+     },
+     "size": 28
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 32,
+     "w": 14.5,
+     "h": 14.5,
+     "color": {
+      "by": "(ga + fx)/2",
+      "scale": [
+       "green",
+       "yellow",
+       "red"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 38,
+     "text": {
+      "en": "XX"
+     },
+     "size": 26,
+     "visibleIf": "(ga + fx) == 0"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 38,
+     "text": {
+      "en": "XX*"
+     },
+     "size": 26,
+     "visibleIf": "(ga + fx) == 1"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 38,
+     "text": {
+      "en": "X*X*"
+     },
+     "size": 26,
+     "visibleIf": "(ga + fx) == 2"
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 17,
+     "w": 14.5,
+     "h": 14.5,
+     "color": {
+      "by": "ga",
+      "scale": [
+       "green",
+       "red"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 23,
+     "text": {
+      "en": "XY"
+     },
+     "size": 26,
+     "visibleIf": "!ga"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 23,
+     "text": {
+      "en": "X*Y"
+     },
+     "size": 26,
+     "visibleIf": "ga"
+    },
+    {
+     "shape": "rect",
+     "x": 25,
+     "y": 32,
+     "w": 14.5,
+     "h": 14.5,
+     "color": {
+      "by": "(gb + fx)/2",
+      "scale": [
+       "green",
+       "yellow",
+       "red"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 38,
+     "text": {
+      "en": "XX"
+     },
+     "size": 26,
+     "visibleIf": "(gb + fx) == 0"
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 38,
+     "text": {
+      "en": "XX*"
+     },
+     "size": 26,
+     "visibleIf": "(gb + fx) == 1"
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 38,
+     "text": {
+      "en": "X*X*"
+     },
+     "size": 26,
+     "visibleIf": "(gb + fx) == 2"
+    },
+    {
+     "shape": "rect",
+     "x": 25,
+     "y": 17,
+     "w": 14.5,
+     "h": 14.5,
+     "color": {
+      "by": "gb",
+      "scale": [
+       "green",
+       "red"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 23,
+     "text": {
+      "en": "XY"
+     },
+     "size": 26,
+     "visibleIf": "!gb"
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 23,
+     "text": {
+      "en": "X*Y"
+     },
+     "size": 26,
+     "visibleIf": "gb"
+    },
+    {
+     "shape": "rect",
+     "x": 50,
+     "y": 10,
+     "w": 11,
+     "h": "max(36*sa, 0.2)",
+     "color": "red",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 55.5,
+     "y": 6,
+     "text": {
+      "en": "Sons affected",
+      "kn": "ಬಾಧಿತ ಗಂಡುಮಕ್ಕಳು"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 55.5,
+     "y": "12 + 36*sa",
+     "text": {
+      "en": "{100*sa:0}%"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 66,
+     "y": 10,
+     "w": 11,
+     "h": "max(36*dc, 0.2)",
+     "color": "yellow",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 71.5,
+     "y": 6,
+     "text": {
+      "en": "Daughters carriers",
+      "kn": "ವಾಹಕ ಹೆಣ್ಣುಮಕ್ಕಳು"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 71.5,
+     "y": "12 + 36*dc",
+     "text": {
+      "en": "{100*dc:0}%"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 82,
+     "y": 10,
+     "w": 11,
+     "h": "max(36*da, 0.2)",
+     "color": "red",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 87.5,
+     "y": 6,
+     "text": {
+      "en": "Daughters affected",
+      "kn": "ಬಾಧಿತ ಹೆಣ್ಣುಮಕ್ಕಳು"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 87.5,
+     "y": "12 + 36*da",
+     "text": {
+      "en": "{100*da:0}%"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 10,
+     "text": {
+      "en": "* = allele for the disorder (recessive)",
+      "kn": "* = ರೋಗದ ಆಲೀಲ್"
+     },
+     "size": 16,
+     "align": "left",
+     "opacity": 0.8
+    },
+    {
+     "shape": "label",
+     "x": 74,
+     "y": 55,
+     "text": {
+      "en": "Colour blindness",
+      "kn": "ವರ್ಣಾಂಧತೆ"
+     },
+     "size": 22,
+     "visibleIf": "trait == 1"
+    },
+    {
+     "shape": "label",
+     "x": 74,
+     "y": 55,
+     "text": {
+      "en": "Haemophilia",
+      "kn": "ಹಿಮೋಫಿಲಿಯಾ"
+     },
+     "size": 22,
+     "visibleIf": "trait == 2"
+    },
+    {
+     "shape": "text",
+     "x": 74,
+     "y": 2,
+     "text": {
+      "en": "Haemophilic daughters are extremely rare in real life",
+      "kn": "ಹಿಮೋಫಿಲಿಕ್ ಹೆಣ್ಣುಮಕ್ಕಳು ಅತಿ ವಿರಳ"
+     },
+     "size": 16,
+     "color": "orange",
+     "visibleIf": "trait == 2 && da > 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Sons affected",
+      "kn": "ಬಾಧಿತ ಗಂಡುಮಕ್ಕಳು"
+     },
+     "expr": "100*sa",
+     "unit": "%",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Daughters carriers",
+      "kn": "ವಾಹಕ ಹೆಣ್ಣುಮಕ್ಕಳು"
+     },
+     "expr": "100*dc",
+     "unit": "%",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Daughters affected",
+      "kn": "ಬಾಧಿತ ಹೆಣ್ಣುಮಕ್ಕಳು"
+     },
+     "expr": "100*da",
+     "unit": "%",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Carrier mother and normal father: what share of sons and of daughters are affected?",
+     "kn": "ವಾಹಕ ತಾಯಿ, ಸಾಮಾನ್ಯ ತಂದೆ: ಎಷ್ಟು ಗಂಡು ಮತ್ತು ಹೆಣ್ಣು ಮಕ್ಕಳು ಬಾಧಿತರು?"
+    },
+    {
+     "en": "Normal mother and affected father: can any son be affected? Who carries the allele?",
+     "kn": "ಸಾಮಾನ್ಯ ತಾಯಿ, ಬಾಧಿತ ತಂದೆ: ಯಾವ ಮಗನಾದರೂ ಬಾಧಿತನೇ? ಆಲೀಲ್ ಯಾರಲ್ಲಿ?"
+    },
+    {
+     "en": "What must both parents be for a daughter to be affected?",
+     "kn": "ಮಗಳು ಬಾಧಿತಳಾಗಲು ಪೋಷಕರು ಹೇಗಿರಬೇಕು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

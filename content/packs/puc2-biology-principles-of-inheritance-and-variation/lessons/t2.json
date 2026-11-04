@@ -357,6 +357,722 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "ABO blood groups: who can the child be?",
+    "kn": "ABO ರಕ್ತ ಗುಂಪುಗಳು: ಮಗು ಯಾವ ಗುಂಪು?"
+   },
+   "narration": {
+    "en": "Choose the genotypes of the mother and the father. The Punnett square and the bars show the chance of each blood group in their children."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The gene I has three alleles: Iᴬ and Iᴮ are codominant, and both are dominant over i. Six genotypes give four blood groups. Each parent passes one allele, so a Punnett square predicts the chance of each blood group in their children.",
+    "kn": "I ಜೀನ್‌ಗೆ ಮೂರು ಆಲೀಲ್‌ಗಳು: Iᴬ ಮತ್ತು Iᴮ ಸಹಪ್ರಬಲ, ಎರಡೂ i ಮೇಲೆ ಪ್ರಬಲ. ಆರು ಜೀನೋಟೈಪ್, ನಾಲ್ಕು ರಕ್ತ ಗುಂಪು. ಪನೆಟ್ ಚೌಕ ಮಕ್ಕಳ ರಕ್ತ ಗುಂಪಿನ ಸಂಭವನೀಯತೆ ತೋರಿಸುತ್ತದೆ."
+   },
+   "choices": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Mother",
+      "kn": "ತಾಯಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "IᴬIᴬ (A)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Iᴬi (A)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "IᴮIᴮ (B)"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Iᴮi (B)"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "IᴬIᴮ (AB)"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "ii (O)"
+       },
+       "value": 6
+      }
+     ],
+     "value": 2
+    },
+    {
+     "name": "f",
+     "label": {
+      "en": "Father",
+      "kn": "ತಂದೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "IᴬIᴬ (A)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Iᴬi (A)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "IᴮIᴮ (B)"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Iᴮi (B)"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "IᴬIᴮ (AB)"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "ii (O)"
+       },
+       "value": 6
+      }
+     ],
+     "value": 4
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Swap parents",
+      "kn": "ಪೋಷಕರನ್ನು ಅದಲುಬದಲು"
+     },
+     "icon": "flip",
+     "set": {
+      "m": "f",
+      "f": "m"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "ma1",
+     "expr": "if(m == 1 || m == 2 || m == 5, 1, if(m == 3 || m == 4, 2, 0))"
+    },
+    {
+     "name": "ma2",
+     "expr": "if(m == 1, 1, if(m == 3 || m == 5, 2, 0))"
+    },
+    {
+     "name": "fa1",
+     "expr": "if(f == 1 || f == 2 || f == 5, 1, if(f == 3 || f == 4, 2, 0))"
+    },
+    {
+     "name": "fa2",
+     "expr": "if(f == 1, 1, if(f == 3 || f == 5, 2, 0))"
+    },
+    {
+     "name": "c00",
+     "expr": "((ma1 == 1 || fa1 == 1) + 2*(ma1 == 2 || fa1 == 2))"
+    },
+    {
+     "name": "c10",
+     "expr": "((ma2 == 1 || fa1 == 1) + 2*(ma2 == 2 || fa1 == 2))"
+    },
+    {
+     "name": "c01",
+     "expr": "((ma1 == 1 || fa2 == 1) + 2*(ma1 == 2 || fa2 == 2))"
+    },
+    {
+     "name": "c11",
+     "expr": "((ma2 == 1 || fa2 == 1) + 2*(ma2 == 2 || fa2 == 2))"
+    },
+    {
+     "name": "pA",
+     "expr": "((c00 == 1) + (c10 == 1) + (c01 == 1) + (c11 == 1))/4"
+    },
+    {
+     "name": "pB",
+     "expr": "((c00 == 2) + (c10 == 2) + (c01 == 2) + (c11 == 2))/4"
+    },
+    {
+     "name": "pAB",
+     "expr": "((c00 == 3) + (c10 == 3) + (c01 == 3) + (c11 == 3))/4"
+    },
+    {
+     "name": "pO",
+     "expr": "((c00 == 0) + (c10 == 0) + (c01 == 0) + (c11 == 0))/4"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 23,
+     "y": 57,
+     "text": {
+      "en": "Mother's gametes",
+      "kn": "ತಾಯಿಯ ಗ್ಯಾಮೀಟ್‌ಗಳು"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 32,
+     "text": {
+      "en": "Father's",
+      "kn": "ತಂದೆಯ"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 51,
+     "text": {
+      "en": "Iᴬ"
+     },
+     "size": 28,
+     "visibleIf": "ma1 == 1"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 51,
+     "text": {
+      "en": "Iᴮ"
+     },
+     "size": 28,
+     "visibleIf": "ma1 == 2"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 51,
+     "text": {
+      "en": "i"
+     },
+     "size": 28,
+     "visibleIf": "ma1 == 0"
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": 51,
+     "text": {
+      "en": "Iᴬ"
+     },
+     "size": 28,
+     "visibleIf": "ma2 == 1"
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": 51,
+     "text": {
+      "en": "Iᴮ"
+     },
+     "size": 28,
+     "visibleIf": "ma2 == 2"
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": 51,
+     "text": {
+      "en": "i"
+     },
+     "size": 28,
+     "visibleIf": "ma2 == 0"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 38.5,
+     "text": {
+      "en": "Iᴬ"
+     },
+     "size": 28,
+     "visibleIf": "fa1 == 1"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 38.5,
+     "text": {
+      "en": "Iᴮ"
+     },
+     "size": 28,
+     "visibleIf": "fa1 == 2"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 38.5,
+     "text": {
+      "en": "i"
+     },
+     "size": 28,
+     "visibleIf": "fa1 == 0"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 23.5,
+     "text": {
+      "en": "Iᴬ"
+     },
+     "size": 28,
+     "visibleIf": "fa2 == 1"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 23.5,
+     "text": {
+      "en": "Iᴮ"
+     },
+     "size": 28,
+     "visibleIf": "fa2 == 2"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 23.5,
+     "text": {
+      "en": "i"
+     },
+     "size": 28,
+     "visibleIf": "fa2 == 0"
+    },
+    {
+     "shape": "rect",
+     "x": 8,
+     "y": 32,
+     "w": 14.5,
+     "h": 14.5,
+     "color": {
+      "by": "c00/3",
+      "scale": [
+       "white",
+       "red",
+       "blue",
+       "orange"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 38,
+     "text": {
+      "en": "O"
+     },
+     "size": 30,
+     "visibleIf": "c00 == 0"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 38,
+     "text": {
+      "en": "A"
+     },
+     "size": 30,
+     "visibleIf": "c00 == 1"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 38,
+     "text": {
+      "en": "B"
+     },
+     "size": 30,
+     "visibleIf": "c00 == 2"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 38,
+     "text": {
+      "en": "AB"
+     },
+     "size": 30,
+     "visibleIf": "c00 == 3"
+    },
+    {
+     "shape": "rect",
+     "x": 23,
+     "y": 32,
+     "w": 14.5,
+     "h": 14.5,
+     "color": {
+      "by": "c10/3",
+      "scale": [
+       "white",
+       "red",
+       "blue",
+       "orange"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": 38,
+     "text": {
+      "en": "O"
+     },
+     "size": 30,
+     "visibleIf": "c10 == 0"
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": 38,
+     "text": {
+      "en": "A"
+     },
+     "size": 30,
+     "visibleIf": "c10 == 1"
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": 38,
+     "text": {
+      "en": "B"
+     },
+     "size": 30,
+     "visibleIf": "c10 == 2"
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": 38,
+     "text": {
+      "en": "AB"
+     },
+     "size": 30,
+     "visibleIf": "c10 == 3"
+    },
+    {
+     "shape": "rect",
+     "x": 8,
+     "y": 17,
+     "w": 14.5,
+     "h": 14.5,
+     "color": {
+      "by": "c01/3",
+      "scale": [
+       "white",
+       "red",
+       "blue",
+       "orange"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 23,
+     "text": {
+      "en": "O"
+     },
+     "size": 30,
+     "visibleIf": "c01 == 0"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 23,
+     "text": {
+      "en": "A"
+     },
+     "size": 30,
+     "visibleIf": "c01 == 1"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 23,
+     "text": {
+      "en": "B"
+     },
+     "size": 30,
+     "visibleIf": "c01 == 2"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 23,
+     "text": {
+      "en": "AB"
+     },
+     "size": 30,
+     "visibleIf": "c01 == 3"
+    },
+    {
+     "shape": "rect",
+     "x": 23,
+     "y": 17,
+     "w": 14.5,
+     "h": 14.5,
+     "color": {
+      "by": "c11/3",
+      "scale": [
+       "white",
+       "red",
+       "blue",
+       "orange"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": 23,
+     "text": {
+      "en": "O"
+     },
+     "size": 30,
+     "visibleIf": "c11 == 0"
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": 23,
+     "text": {
+      "en": "A"
+     },
+     "size": 30,
+     "visibleIf": "c11 == 1"
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": 23,
+     "text": {
+      "en": "B"
+     },
+     "size": 30,
+     "visibleIf": "c11 == 2"
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": 23,
+     "text": {
+      "en": "AB"
+     },
+     "size": 30,
+     "visibleIf": "c11 == 3"
+    },
+    {
+     "shape": "rect",
+     "x": 50,
+     "y": 8,
+     "w": 9,
+     "h": "max(40*pA, 0.2)",
+     "color": "red",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 54.5,
+     "y": 4,
+     "text": {
+      "en": "A"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 54.5,
+     "y": "10 + 40*pA",
+     "text": {
+      "en": "{100*pA:0}%"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 62,
+     "y": 8,
+     "w": 9,
+     "h": "max(40*pB, 0.2)",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 66.5,
+     "y": 4,
+     "text": {
+      "en": "B"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 66.5,
+     "y": "10 + 40*pB",
+     "text": {
+      "en": "{100*pB:0}%"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 74,
+     "y": 8,
+     "w": 9,
+     "h": "max(40*pAB, 0.2)",
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 78.5,
+     "y": 4,
+     "text": {
+      "en": "AB"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 78.5,
+     "y": "10 + 40*pAB",
+     "text": {
+      "en": "{100*pAB:0}%"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 86,
+     "y": 8,
+     "w": 9,
+     "h": "max(40*pO, 0.2)",
+     "color": "white",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 90.5,
+     "y": 4,
+     "text": {
+      "en": "O"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 90.5,
+     "y": "10 + 40*pO",
+     "text": {
+      "en": "{100*pO:0}%"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Group A",
+      "kn": "A ಗುಂಪು"
+     },
+     "expr": "100*pA",
+     "unit": "%",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Group B",
+      "kn": "B ಗುಂಪು"
+     },
+     "expr": "100*pB",
+     "unit": "%",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Group AB",
+      "kn": "AB ಗುಂಪು"
+     },
+     "expr": "100*pAB",
+     "unit": "%",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Group O",
+      "kn": "O ಗುಂಪು"
+     },
+     "expr": "100*pO",
+     "unit": "%",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Iᴬi × Iᴮi: can this couple have children of all four blood groups?",
+     "kn": "Iᴬi × Iᴮi: ಈ ದಂಪತಿಗೆ ನಾಲ್ಕೂ ರಕ್ತ ಗುಂಪಿನ ಮಕ್ಕಳಾಗಬಹುದೇ?"
+    },
+    {
+     "en": "Can an AB parent ever have a child of group O? Check.",
+     "kn": "AB ಪೋಷಕನಿಗೆ O ಗುಂಪಿನ ಮಗು ಸಾಧ್ಯವೇ? ಪರಿಶೀಲಿಸಿ."
+    },
+    {
+     "en": "Which pair of parents gives only group AB children?",
+     "kn": "ಯಾವ ಪೋಷಕ ಜೋಡಿ ಕೇವಲ AB ಮಕ್ಕಳನ್ನು ಕೊಡುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

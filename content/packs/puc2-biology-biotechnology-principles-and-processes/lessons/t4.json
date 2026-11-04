@@ -339,6 +339,441 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "PCR in a thermal cycler",
+    "kn": "ಥರ್ಮಲ್ ಸೈಕ್ಲರ್‌ನಲ್ಲಿ PCR"
+   },
+   "narration": {
+    "en": "Start the thermal cycler. Watch the temperature jump between three steps, the two strands separate and get copied, and the number of copies double with every cycle."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Each cycle has three steps: denaturation (about 94 °C) separates the strands, annealing (about 55 °C here) lets primers bind, and extension (72 °C) lets Taq polymerase copy each strand. Every cycle doubles the target DNA, so n cycles give 2^n copies. An ordinary polymerase is destroyed by the first heating.",
+    "kn": "ಪ್ರತಿ ಚಕ್ರದಲ್ಲಿ ಮೂರು ಹಂತಗಳು: ವಿಸ್ವಭಾವೀಕರಣ (ಸುಮಾರು 94 °C), ಪ್ರೈಮರ್ ಜೋಡಣೆ (ಇಲ್ಲಿ ಸುಮಾರು 55 °C), ವಿಸ್ತರಣೆ (72 °C). ಪ್ರತಿ ಚಕ್ರ DNA ಯನ್ನು ದ್ವಿಗುಣಗೊಳಿಸುತ್ತದೆ: n ಚಕ್ರಗಳಲ್ಲಿ 2^n ಪ್ರತಿಗಳು. ಸಾಮಾನ್ಯ ಪಾಲಿಮರೇಸ್ ಮೊದಲ ಬಿಸಿಯಲ್ಲೇ ನಾಶವಾಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "N0",
+     "label": {
+      "en": "Starting copies",
+      "kn": "ಆರಂಭಿಕ ಪ್ರತಿಗಳು"
+     },
+     "min": 1,
+     "max": 50,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "nc",
+     "label": {
+      "en": "Number of cycles",
+      "kn": "ಚಕ್ರಗಳ ಸಂಖ್ಯೆ"
+     },
+     "min": 5,
+     "max": 35,
+     "step": 1,
+     "value": 30
+    }
+   ],
+   "choices": [
+    {
+     "name": "taq",
+     "label": {
+      "en": "Polymerase",
+      "kn": "ಪಾಲಿಮರೇಸ್"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Taq (heat-stable)",
+        "kn": "Taq (ಶಾಖ-ಸ್ಥಿರ)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "E. coli polymerase",
+        "kn": "E. coli ಪಾಲಿಮರೇಸ್"
+       },
+       "value": 0
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Start the cycler",
+      "kn": "ಸೈಕ್ಲರ್ ಆರಂಭಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 105,
+    "unit": "step",
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2,
+    "stopWhen": "t >= 3*nc"
+   },
+   "vars": [
+    {
+     "name": "cyc",
+     "expr": "min(floor(t/3), nc)"
+    },
+    {
+     "name": "ph",
+     "expr": "mod(t, 3)"
+    },
+    {
+     "name": "ext",
+     "expr": "clamp(ph - 2, 0, 1)"
+    },
+    {
+     "name": "Tc",
+     "expr": "if(ph < 1, 94, if(ph < 2, 55, 72))"
+    },
+    {
+     "name": "sep",
+     "expr": "min(ph, 1)"
+    },
+    {
+     "name": "yt",
+     "expr": "44 + 6*sep"
+    },
+    {
+     "name": "yb",
+     "expr": "44 - 6*sep"
+    },
+    {
+     "name": "cop",
+     "expr": "if(taq, N0*2^cyc, N0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     62
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 25,
+     "y": 58,
+     "text": {
+      "en": "Target DNA",
+      "kn": "ಗುರಿ DNA"
+     },
+     "size": 22
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": "yt",
+     "x2": 42,
+     "y2": "yt",
+     "color": "blue",
+     "width": 6
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": "yb",
+     "x2": 42,
+     "y2": "yb",
+     "color": "blue",
+     "width": 6
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": "yt - 3",
+     "x2": 14,
+     "y2": "yt - 3",
+     "color": "yellow",
+     "width": 6,
+     "visibleIf": "ph >= 1"
+    },
+    {
+     "shape": "line",
+     "x1": 36,
+     "y1": "yb + 3",
+     "x2": 42,
+     "y2": "yb + 3",
+     "color": "yellow",
+     "width": 6,
+     "visibleIf": "ph >= 1"
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": "yt - 3",
+     "x2": "14 + 28*ext",
+     "y2": "yt - 3",
+     "color": "green",
+     "width": 6,
+     "visibleIf": "ph >= 2 && taq"
+    },
+    {
+     "shape": "line",
+     "x1": "36 - 28*ext",
+     "y1": "yb + 3",
+     "x2": 36,
+     "y2": "yb + 3",
+     "color": "green",
+     "width": 6,
+     "visibleIf": "ph >= 2 && taq"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 33,
+     "text": {
+      "en": "Denaturation",
+      "kn": "ವಿಸ್ವಭಾವೀಕರಣ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "ph < 1"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 33,
+     "text": {
+      "en": "Annealing of primers",
+      "kn": "ಪ್ರೈಮರ್ ಜೋಡಣೆ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "ph >= 1 && ph < 2"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 33,
+     "text": {
+      "en": "Extension by Taq",
+      "kn": "Taq ನಿಂದ ವಿಸ್ತರಣೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "ph >= 2 && taq"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 33,
+     "text": {
+      "en": "Polymerase destroyed by heat",
+      "kn": "ಶಾಖದಿಂದ ಪಾಲಿಮರೇಸ್ ನಾಶ"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "ph >= 2 && !taq"
+    },
+    {
+     "shape": "line",
+     "x1": 55,
+     "y1": 35,
+     "x2": 98,
+     "y2": 35,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 55,
+     "y1": 35,
+     "x2": 55,
+     "y2": 58,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 76,
+     "y": 59,
+     "text": {
+      "en": "Temperature",
+      "kn": "ತಾಪಮಾನ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 55,
+     "y1": 53,
+     "x2": 98,
+     "y2": 53,
+     "color": "red",
+     "dashed": true,
+     "opacity": 0.4
+    },
+    {
+     "shape": "text",
+     "x": 54,
+     "y": 53,
+     "text": {
+      "en": "94"
+     },
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 55,
+     "y1": 45.7,
+     "x2": 98,
+     "y2": 45.7,
+     "color": "green",
+     "dashed": true,
+     "opacity": 0.4
+    },
+    {
+     "shape": "text",
+     "x": 54,
+     "y": 45.7,
+     "text": {
+      "en": "72"
+     },
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 55,
+     "y1": 40,
+     "x2": 98,
+     "y2": 40,
+     "color": "yellow",
+     "dashed": true,
+     "opacity": 0.4
+    },
+    {
+     "shape": "text",
+     "x": 54,
+     "y": 40,
+     "text": {
+      "en": "55"
+     },
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "shape": "trail",
+     "x": "55 + 43*t/105",
+     "y": "35 + (Tc - 40)/60*20",
+     "length": 2000,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 10,
+     "w": 90,
+     "h": 6,
+     "fill": false,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 10,
+     "w": "max(90*log(cop)/13, 0.4)",
+     "h": 6,
+     "color": {
+      "by": "min(log(cop)/12, 1)",
+      "scale": [
+       "blue",
+       "green",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 5,
+     "text": {
+      "en": "Copies (log scale bar): {cop:0}",
+      "kn": "ಪ್ರತಿಗಳು: {cop:0}"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 21,
+     "text": {
+      "en": "Cycle {cyc} of {nc}",
+      "kn": "ಚಕ್ರ {cyc} / {nc}"
+     },
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cycles done",
+      "kn": "ಮುಗಿದ ಚಕ್ರಗಳು"
+     },
+     "expr": "cyc",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Copies",
+      "kn": "ಪ್ರತಿಗಳು"
+     },
+     "expr": "cop",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪಮಾನ"
+     },
+     "expr": "Tc",
+     "unit": "°C",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "How many copies does one DNA molecule give after 10 cycles? After 30?",
+     "kn": "ಒಂದು DNA ಅಣು 10 ಚಕ್ರಗಳ ನಂತರ ಎಷ್ಟು ಪ್ರತಿ ಕೊಡುತ್ತದೆ? 30 ರ ನಂತರ?"
+    },
+    {
+     "en": "Switch to the E. coli polymerase. Why does the copying stop?",
+     "kn": "E. coli ಪಾಲಿಮರೇಸ್‌ಗೆ ಬದಲಿಸಿ. ಪ್ರತಿ ಮಾಡುವಿಕೆ ಏಕೆ ನಿಲ್ಲುತ್ತದೆ?"
+    },
+    {
+     "en": "Start with 8 copies instead of 1. How many fewer cycles reach the same number?",
+     "kn": "1 ರ ಬದಲು 8 ಪ್ರತಿಗಳಿಂದ ಆರಂಭಿಸಿ. ಎಷ್ಟು ಕಡಿಮೆ ಚಕ್ರಗಳು ಸಾಕು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

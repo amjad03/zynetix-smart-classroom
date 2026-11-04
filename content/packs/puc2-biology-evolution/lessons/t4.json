@@ -417,6 +417,326 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Hardy–Weinberg, then selection",
+    "kn": "ಹಾರ್ಡಿ–ವೈನ್‌ಬರ್ಗ್, ನಂತರ ಆಯ್ಕೆ"
+   },
+   "narration": {
+    "en": "Set the starting frequency of the recessive allele and step through the generations. First with no selection, then with every aa individual removed before breeding."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "With no selection, allele frequencies stay the same every generation and the genotypes stay at p², 2pq and q². If every aa individual fails to breed, q falls as q0/(1 + n q0): fast at first, then very slowly, because rare a alleles hide in Aa carriers.",
+    "kn": "ಆಯ್ಕೆ ಇಲ್ಲದಿದ್ದರೆ ಆಲೀಲ್ ಆವರ್ತನಗಳು ಪ್ರತಿ ಪೀಳಿಗೆಯಲ್ಲೂ ಸ್ಥಿರ: p², 2pq, q². ಎಲ್ಲ aa ವ್ಯಕ್ತಿಗಳು ಸಂತಾನ ಮಾಡದಿದ್ದರೆ q = q0/(1 + n q0): ಮೊದಲು ವೇಗ, ನಂತರ ತುಂಬಾ ನಿಧಾನ, ಏಕೆಂದರೆ ಅಪರೂಪದ a ಆಲೀಲ್‌ಗಳು Aa ವಾಹಕಗಳಲ್ಲಿ ಅಡಗಿರುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "q0",
+     "label": {
+      "en": "Starting q (allele a)",
+      "kn": "ಆರಂಭಿಕ q (a ಆಲೀಲ್)"
+     },
+     "min": 0.02,
+     "max": 0.98,
+     "step": 0.02,
+     "value": 0.5
+    }
+   ],
+   "choices": [
+    {
+     "name": "sel",
+     "label": {
+      "en": "Selection",
+      "kn": "ಆಯ್ಕೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "None (equilibrium)",
+        "kn": "ಇಲ್ಲ (ಸಮತೋಲನ)"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "Against aa",
+        "kn": "aa ವಿರುದ್ಧ"
+       },
+       "value": 1
+      }
+     ],
+     "value": 0
+    }
+   ],
+   "counters": [
+    {
+     "name": "gen",
+     "value": 0,
+     "min": 0,
+     "max": 100
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Next generation",
+      "kn": "ಮುಂದಿನ ಪೀಳಿಗೆ"
+     },
+     "icon": "next",
+     "set": {
+      "gen": "gen + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "10 generations",
+      "kn": "10 ಪೀಳಿಗೆಗಳು"
+     },
+     "icon": "add",
+     "set": {
+      "gen": "gen + 10"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "gen": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "q",
+     "expr": "if(sel, q0/(1 + gen*q0), q0)"
+    },
+    {
+     "name": "p",
+     "expr": "1 - q"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     62
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 8,
+     "x2": 75,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 8,
+     "w": 14,
+     "h": "45*p^2",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 32,
+     "y": 8,
+     "w": 14,
+     "h": "45*2*p*q",
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 54,
+     "y": 8,
+     "w": 14,
+     "h": "45*q^2",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 17,
+     "y": 4,
+     "text": {
+      "en": "AA"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 39,
+     "y": 4,
+     "text": {
+      "en": "Aa"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 61,
+     "y": 4,
+     "text": {
+      "en": "aa"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 17,
+     "y": "10 + 45*p^2",
+     "text": {
+      "en": "{p^2:3}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 39,
+     "y": "10 + 90*p*q",
+     "text": {
+      "en": "{2*p*q:3}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 61,
+     "y": "10 + 45*q^2",
+     "text": {
+      "en": "{q^2:3}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "label",
+     "x": 88,
+     "y": 50,
+     "text": {
+      "en": "Generation {gen}",
+      "kn": "ಪೀಳಿಗೆ {gen}"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 88,
+     "y": 42,
+     "text": {
+      "en": "p = {p:3}"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 88,
+     "y": 36,
+     "text": {
+      "en": "q = {q:3}"
+     },
+     "size": 24
+    },
+    {
+     "shape": "rect",
+     "x": 80,
+     "y": 8,
+     "w": 6,
+     "h": "25*p",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 90,
+     "y": 8,
+     "w": 6,
+     "h": "25*q",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 83,
+     "y": 4,
+     "text": {
+      "en": "A"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 93,
+     "y": 4,
+     "text": {
+      "en": "a"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 88,
+     "y": 58,
+     "text": {
+      "en": "aa removed each generation",
+      "kn": "ಪ್ರತಿ ಪೀಳಿಗೆ aa ತೆಗೆಯಲಾಗಿದೆ"
+     },
+     "size": 18,
+     "color": "red",
+     "visibleIf": "sel"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "p² + 2pq + q²",
+      "kn": "p² + 2pq + q²"
+     },
+     "expr": "p^2 + 2*p*q + q^2",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "aa per 10,000",
+      "kn": "10,000 ಕ್ಕೆ aa"
+     },
+     "expr": "10000*q^2",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Carriers (Aa) per aa",
+      "kn": "aa ಒಂದಕ್ಕೆ Aa ವಾಹಕರು"
+     },
+     "expr": "2*p/q",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With no selection, press Next generation several times. Does anything change?",
+     "kn": "ಆಯ್ಕೆ ಇಲ್ಲದೆ ಹಲವು ಬಾರಿ ಮುಂದಿನ ಪೀಳಿಗೆ ಒತ್ತಿ. ಏನಾದರೂ ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "With selection against aa, how many generations halve q from 0.5? From 0.1?",
+     "kn": "aa ವಿರುದ್ಧ ಆಯ್ಕೆಯಲ್ಲಿ q ಅರ್ಧವಾಗಲು ಎಷ್ಟು ಪೀಳಿಗೆ? 0.5 ರಿಂದ? 0.1 ರಿಂದ?"
+    },
+    {
+     "en": "When q is small, compare carriers (Aa) with aa. Where do most a alleles hide?",
+     "kn": "q ಚಿಕ್ಕದಾಗಿದ್ದಾಗ Aa ಮತ್ತು aa ಹೋಲಿಸಿ. ಹೆಚ್ಚಿನ a ಆಲೀಲ್‌ಗಳು ಎಲ್ಲಿ ಅಡಗಿವೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

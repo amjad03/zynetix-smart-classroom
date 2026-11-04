@@ -531,6 +531,422 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Run an agarose gel",
+    "kn": "ಅಗರೋಸ್ ಜೆಲ್ ಓಡಿಸಿ"
+   },
+   "narration": {
+    "en": "Load three lanes and switch on the current. Nothing seems to happen except the blue dye moving, until you stain the gel. Then compare how far each band has travelled."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "DNA is negatively charged, so it moves towards the anode (+) through the agarose sieve. Smaller fragments move farther. The DNA cannot be seen until the gel is stained with ethidium bromide and shown UV light; the blue line is only the loading dye. Lane L is a size ladder; A and B are digests (sizes illustrative).",
+    "kn": "DNA ಋಣ ಆವೇಶದ್ದು, ಆದ್ದರಿಂದ ಅಗರೋಸ್ ಜರಡಿಯ ಮೂಲಕ ಧನಧ್ರುವದ (+) ಕಡೆಗೆ ಸಾಗುತ್ತದೆ. ಚಿಕ್ಕ ತುಂಡುಗಳು ಹೆಚ್ಚು ದೂರ ಹೋಗುತ್ತವೆ. ಎಥಿಡಿಯಂ ಬ್ರೋಮೈಡ್ ಮತ್ತು UV ಬೆಳಕು ಇಲ್ಲದೆ DNA ಕಾಣುವುದಿಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "V",
+     "label": {
+      "en": "Voltage",
+      "kn": "ವೋಲ್ಟೇಜ್"
+     },
+     "min": 50,
+     "max": 150,
+     "step": 5,
+     "value": 100,
+     "unit": "V"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "stain",
+     "label": {
+      "en": "Stain with EtBr and view under UV",
+      "kn": "EtBr ಬಣ್ಣ ಹಾಕಿ UV ನಲ್ಲಿ ನೋಡಿ"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run the gel",
+      "kn": "ಜೆಲ್ ಓಡಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "unit": "min",
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 4
+   },
+   "vars": [
+    {
+     "name": "run",
+     "expr": "0.0035*V*t"
+    },
+    {
+     "name": "dye",
+     "expr": "run*1.9"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     -3,
+     65
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 20,
+     "y": 4,
+     "w": 60,
+     "h": 54,
+     "color": "blue",
+     "opacity": 0.12
+    },
+    {
+     "shape": "rect",
+     "x": 20,
+     "y": 4,
+     "w": 60,
+     "h": 54,
+     "fill": false,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 62,
+     "text": {
+      "en": "− cathode",
+      "kn": "− ಋಣಧ್ರುವ"
+     },
+     "size": 22,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 0,
+     "text": {
+      "en": "+ anode",
+      "kn": "+ ಧನಧ್ರುವ"
+     },
+     "size": 22,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 6.5,
+     "text": {
+      "en": "ran off the gel",
+      "kn": "ಜೆಲ್‌ನಿಂದ ಹೊರಹೋಯಿತು"
+     },
+     "size": 16,
+     "opacity": 0.6,
+     "visibleIf": "stain && run*2.4 > 48"
+    },
+    {
+     "shape": "rect",
+     "x": 25,
+     "y": 54,
+     "w": 10,
+     "h": 2.2,
+     "fill": false,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 59,
+     "text": {
+      "en": "L"
+     },
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": 25.5,
+     "y": "53.4 - min(dye, 47)",
+     "w": 9,
+     "h": 0.8,
+     "color": "blue",
+     "opacity": 0.8,
+     "visibleIf": "dye <= 48"
+    },
+    {
+     "shape": "rect",
+     "x": 25.5,
+     "y": "53.6 - run*(4.4 - 2.0000)",
+     "w": 9,
+     "h": 1.2,
+     "color": "orange",
+     "visibleIf": "stain && run*(4.4 - 2.0000) <= 48"
+    },
+    {
+     "shape": "rect",
+     "x": 25.5,
+     "y": "53.6 - run*(4.4 - 2.3979)",
+     "w": 9,
+     "h": 1.2,
+     "color": "orange",
+     "visibleIf": "stain && run*(4.4 - 2.3979) <= 48"
+    },
+    {
+     "shape": "rect",
+     "x": 25.5,
+     "y": "53.6 - run*(4.4 - 2.6990)",
+     "w": 9,
+     "h": 1.2,
+     "color": "orange",
+     "visibleIf": "stain && run*(4.4 - 2.6990) <= 48"
+    },
+    {
+     "shape": "rect",
+     "x": 25.5,
+     "y": "53.6 - run*(4.4 - 3.0000)",
+     "w": 9,
+     "h": 1.2,
+     "color": "orange",
+     "visibleIf": "stain && run*(4.4 - 3.0000) <= 48"
+    },
+    {
+     "shape": "rect",
+     "x": 25.5,
+     "y": "53.6 - run*(4.4 - 3.3979)",
+     "w": 9,
+     "h": 1.2,
+     "color": "orange",
+     "visibleIf": "stain && run*(4.4 - 3.3979) <= 48"
+    },
+    {
+     "shape": "rect",
+     "x": 25.5,
+     "y": "53.6 - run*(4.4 - 3.6990)",
+     "w": 9,
+     "h": 1.2,
+     "color": "orange",
+     "visibleIf": "stain && run*(4.4 - 3.6990) <= 48"
+    },
+    {
+     "shape": "rect",
+     "x": 25.5,
+     "y": "53.6 - run*(4.4 - 4.0000)",
+     "w": 9,
+     "h": 1.2,
+     "color": "orange",
+     "visibleIf": "stain && run*(4.4 - 4.0000) <= 48"
+    },
+    {
+     "shape": "rect",
+     "x": 45,
+     "y": 54,
+     "w": 10,
+     "h": 2.2,
+     "fill": false,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 59,
+     "text": {
+      "en": "A"
+     },
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": 45.5,
+     "y": "53.4 - min(dye, 47)",
+     "w": 9,
+     "h": 0.8,
+     "color": "blue",
+     "opacity": 0.8,
+     "visibleIf": "dye <= 48"
+    },
+    {
+     "shape": "rect",
+     "x": 45.5,
+     "y": "53.6 - run*(4.4 - 2.6021)",
+     "w": 9,
+     "h": 1.2,
+     "color": "orange",
+     "visibleIf": "stain && run*(4.4 - 2.6021) <= 48"
+    },
+    {
+     "shape": "rect",
+     "x": 45.5,
+     "y": "53.6 - run*(4.4 - 3.1761)",
+     "w": 9,
+     "h": 1.2,
+     "color": "orange",
+     "visibleIf": "stain && run*(4.4 - 3.1761) <= 48"
+    },
+    {
+     "shape": "rect",
+     "x": 45.5,
+     "y": "53.6 - run*(4.4 - 3.5441)",
+     "w": 9,
+     "h": 1.2,
+     "color": "orange",
+     "visibleIf": "stain && run*(4.4 - 3.5441) <= 48"
+    },
+    {
+     "shape": "rect",
+     "x": 65,
+     "y": 54,
+     "w": 10,
+     "h": 2.2,
+     "fill": false,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 70,
+     "y": 59,
+     "text": {
+      "en": "B"
+     },
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": 65.5,
+     "y": "53.4 - min(dye, 47)",
+     "w": 9,
+     "h": 0.8,
+     "color": "blue",
+     "opacity": 0.8,
+     "visibleIf": "dye <= 48"
+    },
+    {
+     "shape": "rect",
+     "x": 65.5,
+     "y": "53.6 - run*(4.4 - 2.8451)",
+     "w": 9,
+     "h": 1.2,
+     "color": "orange",
+     "visibleIf": "stain && run*(4.4 - 2.8451) <= 48"
+    },
+    {
+     "shape": "rect",
+     "x": 65.5,
+     "y": "53.6 - run*(4.4 - 3.3010)",
+     "w": 9,
+     "h": 1.2,
+     "color": "orange",
+     "visibleIf": "stain && run*(4.4 - 3.3010) <= 48"
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": "54 - run*(4.4 - 2.0000)",
+     "text": {
+      "en": "100"
+     },
+     "size": 16,
+     "align": "right",
+     "opacity": 0.7,
+     "visibleIf": "stain && run*(4.4 - 2.0000) <= 48"
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": "54 - run*(4.4 - 2.6990)",
+     "text": {
+      "en": "500"
+     },
+     "size": 16,
+     "align": "right",
+     "opacity": 0.7,
+     "visibleIf": "stain && run*(4.4 - 2.6990) <= 48"
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": "54 - run*(4.4 - 3.0000)",
+     "text": {
+      "en": "1000"
+     },
+     "size": 16,
+     "align": "right",
+     "opacity": 0.7,
+     "visibleIf": "stain && run*(4.4 - 3.0000) <= 48"
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": "54 - run*(4.4 - 3.6990)",
+     "text": {
+      "en": "5000"
+     },
+     "size": 16,
+     "align": "right",
+     "opacity": 0.7,
+     "visibleIf": "stain && run*(4.4 - 3.6990) <= 48"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "500 bp band moved",
+      "kn": "500 bp ಪಟ್ಟಿ ಸಾಗಿದ ದೂರ"
+     },
+     "expr": "min(run*(4.4 - 2.699), 48)",
+     "unit": "mm",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "5000 bp band moved",
+      "kn": "5000 bp ಪಟ್ಟಿ ಸಾಗಿದ ದೂರ"
+     },
+     "expr": "min(run*(4.4 - 3.699), 48)",
+     "unit": "mm",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Run the gel without staining. What can you see?",
+     "kn": "ಬಣ್ಣ ಹಾಕದೆ ಜೆಲ್ ಓಡಿಸಿ. ಏನು ಕಾಣುತ್ತದೆ?"
+    },
+    {
+     "en": "Use the ladder to estimate the sizes of the bands in lane A.",
+     "kn": "ಏಣಿಯ ಸಹಾಯದಿಂದ ಲೇನ್ A ಯ ಪಟ್ಟಿಗಳ ಗಾತ್ರ ಅಂದಾಜಿಸಿ."
+    },
+    {
+     "en": "Run at 150 V for the full hour. What happens to the smallest fragments?",
+     "kn": "150 V ನಲ್ಲಿ ಪೂರ್ಣ ಗಂಟೆ ಓಡಿಸಿ. ಚಿಕ್ಕ ತುಂಡುಗಳಿಗೆ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

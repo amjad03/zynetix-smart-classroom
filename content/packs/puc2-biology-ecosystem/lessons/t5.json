@@ -356,6 +356,349 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Build an ecological pyramid",
+    "kn": "ಪರಿಸರೀಯ ಪಿರಮಿಡ್ ರಚಿಸಿ"
+   },
+   "narration": {
+    "en": "Switch between four pyramids. Which ones stand on their tip, and which one can never be turned upside down? Try the bar widths on a plain scale too."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Pyramids of number and biomass are usually upright but can be inverted: one tree feeds thousands of insects, and in the sea a small standing crop of phytoplankton supports a larger biomass of consumers. The pyramid of energy is always upright, because energy is lost as heat at every step.",
+    "kn": "ಸಂಖ್ಯೆ ಮತ್ತು ಜೀವರಾಶಿಯ ಪಿರಮಿಡ್‌ಗಳು ಸಾಮಾನ್ಯವಾಗಿ ನೇರ, ಆದರೆ ತಲೆಕೆಳಗಾಗಬಹುದು. ಶಕ್ತಿಯ ಪಿರಮಿಡ್ ಯಾವಾಗಲೂ ನೇರ, ಏಕೆಂದರೆ ಪ್ರತಿ ಹಂತದಲ್ಲಿ ಶಕ್ತಿ ಶಾಖವಾಗಿ ನಷ್ಟವಾಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "eff",
+     "label": {
+      "en": "Energy passed on (energy pyramid)",
+      "kn": "ಮುಂದೆ ಸಾಗುವ ಶಕ್ತಿ"
+     },
+     "min": 5,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "logw",
+     "label": {
+      "en": "Log-scale widths",
+      "kn": "ಲಾಗ್ ಮಾಪಕ ಅಗಲ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "pt",
+     "label": {
+      "en": "Pyramid",
+      "kn": "ಪಿರಮಿಡ್"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Numbers: grassland",
+        "kn": "ಸಂಖ್ಯೆ: ಹುಲ್ಲುಗಾವಲು"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Numbers: tree",
+        "kn": "ಸಂಖ್ಯೆ: ಮರ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Biomass: sea",
+        "kn": "ಜೀವರಾಶಿ: ಸಮುದ್ರ"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Energy",
+        "kn": "ಶಕ್ತಿ"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Next pyramid",
+      "kn": "ಮುಂದಿನ ಪಿರಮಿಡ್"
+     },
+     "icon": "next",
+     "set": {
+      "pt": "mod(pt, 4) + 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "v0",
+     "expr": "if(pt == 1, 5842424, if(pt == 2, 1, if(pt == 3, 4, 20000*(eff/100)^0)))"
+    },
+    {
+     "name": "v1",
+     "expr": "if(pt == 1, 708624, if(pt == 2, 5000, if(pt == 3, 21, 20000*(eff/100)^1)))"
+    },
+    {
+     "name": "v2",
+     "expr": "if(pt == 1, 354904, if(pt == 2, 40, if(pt == 3, 24, 20000*(eff/100)^2)))"
+    },
+    {
+     "name": "v3",
+     "expr": "if(pt == 1, 3, if(pt == 2, 2, if(pt == 3, 0, 20000*(eff/100)^3)))"
+    },
+    {
+     "name": "vmax",
+     "expr": "max(v0, v1, v2, v3)"
+    },
+    {
+     "name": "w0",
+     "expr": "if(v0 > 0, if(logw, 6 + 12*log(v0), 90*v0/vmax), 0)"
+    },
+    {
+     "name": "w1",
+     "expr": "if(v1 > 0, if(logw, 6 + 12*log(v1), 90*v1/vmax), 0)"
+    },
+    {
+     "name": "w2",
+     "expr": "if(v2 > 0, if(logw, 6 + 12*log(v2), 90*v2/vmax), 0)"
+    },
+    {
+     "name": "w3",
+     "expr": "if(v3 > 0, if(logw, 6 + 12*log(v3), 90*v3/vmax), 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     58
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "50 - w0/2",
+     "y": 6,
+     "w": "max(w0, 0.3)",
+     "h": 9,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": "52 + w0/2",
+     "y": 10,
+     "text": {
+      "en": "{v0:0}"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": "48 - w0/2",
+     "y": 10,
+     "text": {
+      "en": "Producers",
+      "kn": "ಉತ್ಪಾದಕರು"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "rect",
+     "x": "50 - w1/2",
+     "y": 17,
+     "w": "max(w1, 0.3)",
+     "h": 9,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": "52 + w1/2",
+     "y": 21,
+     "text": {
+      "en": "{v1:0}"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": "48 - w1/2",
+     "y": 21,
+     "text": {
+      "en": "Primary consumers",
+      "kn": "ಪ್ರಾಥಮಿಕ ಭಕ್ಷಕರು"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "rect",
+     "x": "50 - w2/2",
+     "y": 28,
+     "w": "max(w2, 0.3)",
+     "h": 9,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": "52 + w2/2",
+     "y": 32,
+     "text": {
+      "en": "{v2:0}"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": "48 - w2/2",
+     "y": 32,
+     "text": {
+      "en": "Secondary consumers",
+      "kn": "ದ್ವಿತೀಯ ಭಕ್ಷಕರು"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "rect",
+     "x": "50 - w3/2",
+     "y": 39,
+     "w": "max(w3, 0.3)",
+     "h": 9,
+     "color": "red",
+     "visibleIf": "v3 > 0"
+    },
+    {
+     "shape": "text",
+     "x": "52 + w3/2",
+     "y": 43,
+     "text": {
+      "en": "{v3:0}"
+     },
+     "size": 20,
+     "align": "left",
+     "visibleIf": "v3 > 0"
+    },
+    {
+     "shape": "text",
+     "x": "48 - w3/2",
+     "y": 43,
+     "text": {
+      "en": "Tertiary consumers",
+      "kn": "ತೃತೀಯ ಭಕ್ಷಕರು"
+     },
+     "size": 18,
+     "align": "right",
+     "visibleIf": "v3 > 0"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 54,
+     "text": {
+      "en": "Numbers: grassland (NCERT)",
+      "kn": "ಸಂಖ್ಯೆ: ಹುಲ್ಲುಗಾವಲು"
+     },
+     "size": 22,
+     "visibleIf": "pt == 1"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 54,
+     "text": {
+      "en": "Numbers: one big tree (illustrative)",
+      "kn": "ಸಂಖ್ಯೆ: ಒಂದು ದೊಡ್ಡ ಮರ"
+     },
+     "size": 22,
+     "visibleIf": "pt == 2"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 54,
+     "text": {
+      "en": "Biomass in the sea, g/m² (illustrative)",
+      "kn": "ಸಮುದ್ರದ ಜೀವರಾಶಿ"
+     },
+     "size": 22,
+     "visibleIf": "pt == 3"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 54,
+     "text": {
+      "en": "Energy, kJ/m²/yr (illustrative)",
+      "kn": "ಶಕ್ತಿ"
+     },
+     "size": 22,
+     "visibleIf": "pt == 4"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 1.5,
+     "text": {
+      "en": "Bar widths on a log scale",
+      "kn": "ಪಟ್ಟಿಗಳ ಅಗಲ ಲಾಗ್ ಮಾಪಕದಲ್ಲಿ"
+     },
+     "size": 16,
+     "opacity": 0.6,
+     "visibleIf": "logw"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Producers : top level",
+      "kn": "ಉತ್ಪಾದಕರು : ಮೇಲಿನ ಸ್ತರ"
+     },
+     "expr": "if(pt == 3, v0/v2, v0/v3)",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Which pyramids are inverted? What makes them so?",
+     "kn": "ಯಾವ ಪಿರಮಿಡ್‌ಗಳು ತಲೆಕೆಳಗಾಗಿವೆ? ಏಕೆ?"
+    },
+    {
+     "en": "Turn off log-scale widths for the grassland. Why can you barely see the top?",
+     "kn": "ಹುಲ್ಲುಗಾವಲಿಗೆ ಲಾಗ್ ಮಾಪಕ ಆಫ್ ಮಾಡಿ. ಮೇಲ್ಭಾಗ ಏಕೆ ಕಾಣುವುದಿಲ್ಲ?"
+    },
+    {
+     "en": "In the energy pyramid, change the share passed on. Can you ever make it inverted?",
+     "kn": "ಶಕ್ತಿ ಪಿರಮಿಡ್‌ನಲ್ಲಿ ಪಾಲು ಬದಲಿಸಿ. ಅದನ್ನು ತಲೆಕೆಳಗಾಗಿಸಬಹುದೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

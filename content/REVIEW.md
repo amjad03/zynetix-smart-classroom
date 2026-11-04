@@ -653,3 +653,12 @@ No text is reproduced. Check these plot details against the texts:
 - **FPO mark:** used for fruit products, although it has been replaced by FSSAI.
 - **NCERT-convention classifications:** public deposits as medium term; employee recommendations as an external source of recruitment.
 - **Simplified models:** the span-of-control, working-capital and linear-demand scenes are simplifications.
+
+## Biology 2nd PUC simulations and activities (66 lessons)
+
+- **Illustrative values (labelled on screen):** the tree and sea pyramid numbers, the gel mobility model, and the lac-operon and hormone curves (LH peak day 14, progesterone peak around day 21).
+- **PCR scene:** an ordinary polymerase dies after the first 94 C step.
+- **Exponential and logistic scenes:** use a generic r.
+- **Sorts that follow NCERT:** STI curability, and the order of splicing before capping and tailing.
+- **Diagrams:** the pBR322 map and the reproductive-system diagrams are schematic.
+- **Kannada:** needs a native-speaker review.

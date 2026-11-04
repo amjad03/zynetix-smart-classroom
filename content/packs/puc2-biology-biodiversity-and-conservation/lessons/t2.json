@@ -432,6 +432,321 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Species–area relationship",
+    "kn": "ಪ್ರಭೇದ–ವಿಸ್ತೀರ್ಣ ಸಂಬಂಧ"
+   },
+   "narration": {
+    "en": "Humboldt saw that more area holds more species, but only up to a point. Move the area and watch the species count. Then switch to log–log axes: the curve straightens into a line whose slope is Z."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Species richness S rises with area A but more and more slowly: S = C × A^Z. On ordinary axes this is a curve; on log–log axes it is a straight line of slope Z. Z is about 0.1–0.2 for most regions, but 0.6–1.2 for very large areas such as whole continents.",
+    "kn": "ವಿಸ್ತೀರ್ಣ ಹೆಚ್ಚಿದಂತೆ ಪ್ರಭೇದ ಸಮೃದ್ಧಿ ಹೆಚ್ಚುತ್ತದೆ ಆದರೆ ನಿಧಾನವಾಗಿ: S = C × A^Z. ಲಾಗ್–ಲಾಗ್ ಅಕ್ಷಗಳಲ್ಲಿ ಇದು Z ಇಳಿಜಾರಿನ ನೇರ ರೇಖೆ. ಹೆಚ್ಚಿನ ಪ್ರದೇಶಗಳಿಗೆ Z ಸುಮಾರು 0.1–0.2; ಖಂಡಗಳಂತಹ ದೊಡ್ಡ ಪ್ರದೇಶಗಳಿಗೆ 0.6–1.2."
+   },
+   "sliders": [
+    {
+     "name": "lA",
+     "label": {
+      "en": "Area: log10 A",
+      "kn": "ವಿಸ್ತೀರ್ಣ: log10 A"
+     },
+     "min": 0,
+     "max": 6,
+     "step": 0.1,
+     "value": 3
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "C (species in 1 km²)",
+      "kn": "C (1 km² ನಲ್ಲಿ ಪ್ರಭೇದಗಳು)"
+     },
+     "min": 2,
+     "max": 20,
+     "step": 1,
+     "value": 10
+    }
+   ],
+   "toggles": [
+    {
+     "name": "logax",
+     "label": {
+      "en": "Log–log axes",
+      "kn": "ಲಾಗ್–ಲಾಗ್ ಅಕ್ಷಗಳು"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "Z",
+     "label": {
+      "en": "Z (slope)",
+      "kn": "Z (ಇಳಿಜಾರು)"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "0.1 (small region)",
+        "kn": "0.1 (ಸಣ್ಣ ಪ್ರದೇಶ)"
+       },
+       "value": 0.1
+      },
+      {
+       "label": {
+        "en": "0.15"
+       },
+       "value": 0.15
+      },
+      {
+       "label": {
+        "en": "0.2"
+       },
+       "value": 0.2
+      },
+      {
+       "label": {
+        "en": "0.6 (continent)",
+        "kn": "0.6 (ಖಂಡ)"
+       },
+       "value": 0.6
+      },
+      {
+       "label": {
+        "en": "1.15 (tropical fruit-eaters)",
+        "kn": "1.15"
+       },
+       "value": 1.15
+      }
+     ],
+     "value": 0.15
+    }
+   ],
+   "vars": [
+    {
+     "name": "A",
+     "expr": "10^lA"
+    },
+    {
+     "name": "S",
+     "expr": "C*A^Z"
+    },
+    {
+     "name": "Smax",
+     "expr": "C*1000000^Z"
+    },
+    {
+     "name": "px",
+     "expr": "if(logax, 10*lA, 60*A/1000000)"
+    },
+    {
+     "name": "py",
+     "expr": "if(logax, 50*log(S)/8.3, 50*(A/1000000)^Z)"
+    }
+   ],
+   "view": {
+    "x": [
+     -8,
+     70
+    ],
+    "y": [
+     -8,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 62,
+     "y2": 0,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 0,
+     "y2": 52,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 31,
+     "y": -5,
+     "text": {
+      "en": "Area A (km²)",
+      "kn": "ವಿಸ್ತೀರ್ಣ A (km²)"
+     },
+     "size": 22,
+     "visibleIf": "!logax"
+    },
+    {
+     "shape": "text",
+     "x": 31,
+     "y": -5,
+     "text": {
+      "en": "log A"
+     },
+     "size": 22,
+     "visibleIf": "logax"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 55,
+     "text": {
+      "en": "Species S",
+      "kn": "ಪ್ರಭೇದಗಳು S"
+     },
+     "size": 22,
+     "align": "left",
+     "visibleIf": "!logax"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 55,
+     "text": {
+      "en": "log S"
+     },
+     "size": 22,
+     "align": "left",
+     "visibleIf": "logax"
+    },
+    {
+     "shape": "text",
+     "x": 60,
+     "y": -2.5,
+     "text": {
+      "en": "10 lakh"
+     },
+     "size": 18,
+     "visibleIf": "!logax",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 60,
+     "y": -2.5,
+     "text": {
+      "en": "6"
+     },
+     "size": 18,
+     "visibleIf": "logax",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -2.5,
+     "text": {
+      "en": "0"
+     },
+     "size": 18,
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": -1,
+     "y": 50,
+     "text": {
+      "en": "{Smax:0}"
+     },
+     "size": 18,
+     "align": "right",
+     "visibleIf": "!logax",
+     "opacity": 0.7
+    },
+    {
+     "shape": "path",
+     "fn": "if(logax, 50*(log(C) + Z*x/10)/8.3, 50*(x/60)^Z)",
+     "from": 0,
+     "to": 60,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "px",
+     "y1": 0,
+     "x2": "px",
+     "y2": "py",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 1.3,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 46,
+     "y": 10,
+     "text": {
+      "en": "S = {S:0} species",
+      "kn": "{S:0} ಪ್ರಭೇದಗಳು"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 46,
+     "y": 4,
+     "text": {
+      "en": "slope on log–log axes = Z = {Z}"
+     },
+     "size": 20,
+     "visibleIf": "logax"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Area",
+      "kn": "ವಿಸ್ತೀರ್ಣ"
+     },
+     "expr": "A",
+     "unit": "km²",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Species",
+      "kn": "ಪ್ರಭೇದಗಳು"
+     },
+     "expr": "S",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With Z = 0.15, how many times more species does a 1000 times larger area hold?",
+     "kn": "Z = 0.15 ಆದಾಗ 1000 ಪಟ್ಟು ದೊಡ್ಡ ವಿಸ್ತೀರ್ಣದಲ್ಲಿ ಎಷ್ಟು ಪಟ್ಟು ಹೆಚ್ಚು ಪ್ರಭೇದಗಳು?"
+    },
+    {
+     "en": "Turn on log–log axes. What does the slope of the line equal?",
+     "kn": "ಲಾಗ್–ಲಾಗ್ ಅಕ್ಷ ಆನ್ ಮಾಡಿ. ರೇಖೆಯ ಇಳಿಜಾರು ಯಾವುದಕ್ಕೆ ಸಮ?"
+    },
+    {
+     "en": "Compare Z = 0.15 and Z = 1.15 at the largest area. Why are continents so different?",
+     "kn": "ದೊಡ್ಡ ವಿಸ್ತೀರ್ಣದಲ್ಲಿ Z = 0.15 ಮತ್ತು 1.15 ಹೋಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "3d-globe",
    "type": "3d_model",
    "modelId": "globe",

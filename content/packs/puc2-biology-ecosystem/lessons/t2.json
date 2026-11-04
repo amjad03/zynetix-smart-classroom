@@ -361,6 +361,331 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "From sunlight to food",
+    "kn": "ಸೂರ್ಯಬೆಳಕಿನಿಂದ ಆಹಾರಕ್ಕೆ"
+   },
+   "narration": {
+    "en": "Follow 1000 units of sunlight down to the food a herbivore can use. Change how much PAR plants capture and how much they burn in respiration."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Less than half of sunlight is PAR, and plants capture only 2–10 per cent of the PAR as GPP. Respiration uses part of the GPP; what is left is the NPP, available to herbivores and decomposers. Consumers turn a small part of what they eat into new biomass: secondary productivity.",
+    "kn": "ಸೂರ್ಯಬೆಳಕಿನ ಅರ್ಧಕ್ಕಿಂತ ಕಡಿಮೆ PAR; ಸಸ್ಯಗಳು PAR ನ 2–10% ಮಾತ್ರ GPP ಆಗಿ ಹಿಡಿಯುತ್ತವೆ. ಉಸಿರಾಟದ ನಂತರ ಉಳಿದದ್ದು NPP. ಭಕ್ಷಕರು ಅದರ ಸಣ್ಣ ಭಾಗವನ್ನು ಹೊಸ ಜೀವರಾಶಿಯಾಗಿಸುತ್ತಾರೆ."
+   },
+   "sliders": [
+    {
+     "name": "eff",
+     "label": {
+      "en": "PAR captured by plants",
+      "kn": "ಸಸ್ಯಗಳು ಹಿಡಿಯುವ PAR"
+     },
+     "min": 2,
+     "max": 10,
+     "step": 0.5,
+     "value": 5,
+     "unit": "%"
+    },
+    {
+     "name": "rp",
+     "label": {
+      "en": "Respiration (share of GPP)",
+      "kn": "ಉಸಿರಾಟ (GPP ಯ ಪಾಲು)"
+     },
+     "min": 20,
+     "max": 80,
+     "step": 5,
+     "value": 50,
+     "unit": "%"
+    },
+    {
+     "name": "ce",
+     "label": {
+      "en": "NPP turned into consumer biomass",
+      "kn": "ಭಕ್ಷಕ ಜೀವರಾಶಿಯಾಗುವ NPP"
+     },
+     "min": 5,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "showsec",
+     "label": {
+      "en": "Show secondary productivity",
+      "kn": "ದ್ವಿತೀಯ ಉತ್ಪಾದಕತೆ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "Isun",
+     "expr": "1000"
+    },
+    {
+     "name": "par",
+     "expr": "450"
+    },
+    {
+     "name": "gpp",
+     "expr": "par*eff/100"
+    },
+    {
+     "name": "res",
+     "expr": "gpp*rp/100"
+    },
+    {
+     "name": "npp",
+     "expr": "gpp - res"
+    },
+    {
+     "name": "sec",
+     "expr": "npp*ce/100"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 32,
+     "y": 50,
+     "w": "max(16*log(1 + Isun), 0.3)",
+     "h": 6,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 31,
+     "y": 52,
+     "text": {
+      "en": "Sunlight reaching plants",
+      "kn": "ಸಸ್ಯ ತಲುಪುವ ಸೂರ್ಯಬೆಳಕು"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": "34 + 16*log(1 + Isun)",
+     "y": 52,
+     "text": {
+      "en": "{Isun:1}"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 32,
+     "y": 40,
+     "w": "max(16*log(1 + par), 0.3)",
+     "h": 6,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 31,
+     "y": 42,
+     "text": {
+      "en": "PAR (photosynthetically active)",
+      "kn": "PAR"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": "34 + 16*log(1 + par)",
+     "y": 42,
+     "text": {
+      "en": "{par:1}"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 32,
+     "y": 30,
+     "w": "max(16*log(1 + gpp), 0.3)",
+     "h": 6,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 31,
+     "y": 32,
+     "text": {
+      "en": "GPP (fixed in photosynthesis)",
+      "kn": "GPP"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": "34 + 16*log(1 + gpp)",
+     "y": 32,
+     "text": {
+      "en": "{gpp:1}"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 32,
+     "y": 20,
+     "w": "max(16*log(1 + npp), 0.3)",
+     "h": 6,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 31,
+     "y": 22,
+     "text": {
+      "en": "NPP (left after respiration)",
+      "kn": "NPP"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": "34 + 16*log(1 + npp)",
+     "y": 22,
+     "text": {
+      "en": "{npp:1}"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 32,
+     "y": 10,
+     "w": "max(16*log(1 + sec), 0.3)",
+     "h": 6,
+     "color": "blue",
+     "visibleIf": "showsec"
+    },
+    {
+     "shape": "text",
+     "x": 31,
+     "y": 12,
+     "text": {
+      "en": "Secondary productivity",
+      "kn": "ದ್ವಿತೀಯ ಉತ್ಪಾದಕತೆ"
+     },
+     "size": 20,
+     "align": "right",
+     "visibleIf": "showsec"
+    },
+    {
+     "shape": "text",
+     "x": "34 + 16*log(1 + sec)",
+     "y": 12,
+     "text": {
+      "en": "{sec:1}"
+     },
+     "size": 20,
+     "align": "left",
+     "visibleIf": "showsec"
+    },
+    {
+     "shape": "arrow",
+     "x": "34 + 16*log(1 + npp)",
+     "y": 33,
+     "dx": 8,
+     "dy": 5,
+     "color": "red",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "50 + 16*log(1 + npp)",
+     "y": 37,
+     "text": {
+      "en": "R = {res:1} lost in respiration",
+      "kn": "ಉಸಿರಾಟದಲ್ಲಿ ನಷ್ಟ {res:1}"
+     },
+     "size": 18,
+     "align": "left",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 60,
+     "y": 3,
+     "text": {
+      "en": "Bar lengths on a log scale; units per 1000 units of sunlight",
+      "kn": "ಪಟ್ಟಿಗಳು ಲಾಗ್ ಮಾಪಕದಲ್ಲಿ"
+     },
+     "size": 18,
+     "opacity": 0.7
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "GPP",
+      "kn": "GPP"
+     },
+     "expr": "gpp",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "NPP = GPP − R",
+      "kn": "NPP = GPP − R"
+     },
+     "expr": "npp",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "NPP as % of sunlight",
+      "kn": "ಸೂರ್ಯಬೆಳಕಿನ % ಆಗಿ NPP"
+     },
+     "expr": "npp/10",
+     "unit": "%",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At best (10 per cent capture, low respiration), what share of sunlight becomes NPP?",
+     "kn": "ಅತ್ಯುತ್ತಮ ಸ್ಥಿತಿಯಲ್ಲಿ ಸೂರ್ಯಬೆಳಕಿನ ಎಷ್ಟು ಪಾಲು NPP ಆಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Raise respiration to 80 per cent. What happens to the food for herbivores?",
+     "kn": "ಉಸಿರಾಟವನ್ನು 80% ಗೆ ಏರಿಸಿ. ಸಸ್ಯಾಹಾರಿಗಳ ಆಹಾರಕ್ಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Why can NPP never be larger than GPP?",
+     "kn": "NPP ಎಂದಿಗೂ GPP ಗಿಂತ ದೊಡ್ಡದಾಗದು, ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "sim-photosynthesis",
    "type": "simulation",
    "source": "animation",

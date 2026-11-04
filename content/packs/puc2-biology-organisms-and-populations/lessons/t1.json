@@ -300,6 +300,274 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A pond of lotus plants, year by year",
+    "kn": "ವರ್ಷದಿಂದ ವರ್ಷಕ್ಕೆ ಕಮಲದ ಕೊಳ"
+   },
+   "narration": {
+    "en": "Set the per capita birth and death rates and the number of plants arriving and leaving each year. Press Next year and watch the population change."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Next year's population is N + B + I − D − E. Birth and death rates are per capita: births b × N and deaths d × N. Start with 20 lotus plants and a birth rate of 0.4 per plant per year, as in NCERT, and watch the pond fill or empty.",
+    "kn": "ಮುಂದಿನ ವರ್ಷದ ಸಂಖ್ಯೆ N + B + I − D − E. ಜನನ ಮತ್ತು ಮರಣ ದರಗಳು ತಲಾವಾರು: ಜನನ b × N, ಮರಣ d × N. 20 ಕಮಲ ಸಸ್ಯಗಳು ಮತ್ತು 0.4 ಜನನ ದರದಿಂದ ಆರಂಭಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "b",
+     "label": {
+      "en": "Birth rate b (per plant per year)",
+      "kn": "ಜನನ ದರ b"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.4
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "Death rate d (per plant per year)",
+      "kn": "ಮರಣ ದರ d"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.1
+    },
+    {
+     "name": "I",
+     "label": {
+      "en": "Immigration I (plants per year)",
+      "kn": "ವಲಸೆ ಬರುವಿಕೆ I"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 0
+    },
+    {
+     "name": "E",
+     "label": {
+      "en": "Emigration E (plants per year)",
+      "kn": "ವಲಸೆ ಹೋಗುವಿಕೆ E"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 0
+    }
+   ],
+   "counters": [
+    {
+     "name": "N",
+     "value": 20,
+     "min": 0,
+     "max": 400
+    },
+    {
+     "name": "yr",
+     "value": 0,
+     "min": 0,
+     "max": 100
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Next year",
+      "kn": "ಮುಂದಿನ ವರ್ಷ"
+     },
+     "icon": "next",
+     "set": {
+      "N": "max(round(N + b*N + I - d*N - E), 0)",
+      "yr": "yr + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Back to 20 plants",
+      "kn": "ಮತ್ತೆ 20 ಸಸ್ಯಗಳು"
+     },
+     "icon": "reset",
+     "set": {
+      "N": "20",
+      "yr": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "B",
+     "expr": "b*N"
+    },
+    {
+     "name": "D",
+     "expr": "d*N"
+    },
+    {
+     "name": "Nn",
+     "expr": "max(N + B + I - D - E, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     58
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 5,
+     "w": 60,
+     "h": 50,
+     "color": "blue",
+     "opacity": 0.18
+    },
+    {
+     "shape": "particles",
+     "count": 400,
+     "x": "7 + 56*rand(i)",
+     "y": "7 + 46*rand(i + 500)",
+     "r": 0.9,
+     "color": "green",
+     "visibleIf": "i < N"
+    },
+    {
+     "shape": "label",
+     "x": 83,
+     "y": 52,
+     "text": {
+      "en": "Year {yr}",
+      "kn": "ವರ್ಷ {yr}"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 83,
+     "y": 44,
+     "text": {
+      "en": "N = {N}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 83,
+     "y": 36,
+     "text": {
+      "en": "+ B = {B:0}"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 83,
+     "y": 31,
+     "text": {
+      "en": "+ I = {I}"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 83,
+     "y": 26,
+     "text": {
+      "en": "− D = {D:0}"
+     },
+     "size": 22,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 83,
+     "y": 21,
+     "text": {
+      "en": "− E = {E}"
+     },
+     "size": 22,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 83,
+     "y": 13,
+     "text": {
+      "en": "Next year: {Nn:0}",
+      "kn": "ಮುಂದಿನ ವರ್ಷ: {Nn:0}"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 35,
+     "y": 1.5,
+     "text": {
+      "en": "Pond full at 400 plants",
+      "kn": "ಕೊಳ 400 ಕ್ಕೆ ಭರ್ತಿ"
+     },
+     "size": 16,
+     "opacity": 0.6,
+     "visibleIf": "N >= 400"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Births this year",
+      "kn": "ಈ ವರ್ಷದ ಜನನಗಳು"
+     },
+     "expr": "B",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Deaths this year",
+      "kn": "ಈ ವರ್ಷದ ಮರಣಗಳು"
+     },
+     "expr": "D",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Change this year",
+      "kn": "ಈ ವರ್ಷದ ಬದಲಾವಣೆ"
+     },
+     "expr": "Nn - N",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With b = 0.4 and d = 0.1, how many years until the pond has more than 100 plants?",
+     "kn": "b = 0.4, d = 0.1 ಆದಾಗ 100 ಕ್ಕಿಂತ ಹೆಚ್ಚು ಸಸ್ಯಗಳಾಗಲು ಎಷ್ಟು ವರ್ಷ?"
+    },
+    {
+     "en": "Make b equal to d. What keeps the population steady, and what upsets it?",
+     "kn": "b = d ಮಾಡಿ. ಸಂಖ್ಯೆ ಸ್ಥಿರವಾಗಿರಲು ಏನು ಕಾರಣ? ಏನು ಬದಲಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Can a population with more deaths than births still grow? Try immigration.",
+     "kn": "ಜನನಕ್ಕಿಂತ ಮರಣ ಹೆಚ್ಚಿದ್ದರೂ ಸಂಖ್ಯೆ ಬೆಳೆಯಬಹುದೇ? ವಲಸೆ ಪ್ರಯತ್ನಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

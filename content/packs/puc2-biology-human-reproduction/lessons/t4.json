@@ -427,6 +427,490 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Through the menstrual cycle",
+    "kn": "ಋತುಚಕ್ರದ ಉದ್ದಕ್ಕೂ"
+   },
+   "narration": {
+    "en": "Play a 28-day cycle. Watch the follicle grow and burst, the hormones rise and fall, and the uterine lining build up. Then turn on fertilisation and play it again."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Under FSH and LH a follicle grows and estrogen rises; the LH surge (with FSH) at about day 14 causes ovulation. The corpus luteum then secretes progesterone, which keeps the endometrium thick. Without fertilisation it degenerates, progesterone falls and menstruation starts. With fertilisation the corpus luteum and the endometrium are maintained. Curves are schematic.",
+    "kn": "FSH ಮತ್ತು LH ಅಡಿ ಕೋಶಕ ಬೆಳೆಯುತ್ತದೆ, ಈಸ್ಟ್ರೊಜನ್ ಏರುತ್ತದೆ; ಸುಮಾರು 14ನೇ ದಿನ LH ಉಲ್ಬಣದಿಂದ ಅಂಡೋತ್ಸರ್ಗ. ನಂತರ ಕಾರ್ಪಸ್ ಲೂಟಿಯಂನ ಪ್ರೊಜೆಸ್ಟರಾನ್ ಎಂಡೋಮೆಟ್ರಿಯಂ ಅನ್ನು ದಪ್ಪವಾಗಿಡುತ್ತದೆ. ನಿಷೇಚನವಿಲ್ಲದಿದ್ದರೆ ಋತುಸ್ರಾವ; ನಿಷೇಚನವಾದರೆ ಕಾರ್ಪಸ್ ಲೂಟಿಯಂ ಉಳಿಯುತ್ತದೆ."
+   },
+   "toggles": [
+    {
+     "name": "preg",
+     "label": {
+      "en": "Fertilisation happens",
+      "kn": "ನಿಷೇಚನ ಆಗುತ್ತದೆ"
+     },
+     "value": false
+    },
+    {
+     "name": "curves",
+     "label": {
+      "en": "Show hormone curves",
+      "kn": "ಹಾರ್ಮೋನ್ ವಕ್ರಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Start the cycle",
+      "kn": "ಚಕ್ರ ಆರಂಭಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 28,
+    "unit": "day",
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2
+   },
+   "vars": [
+    {
+     "name": "mx",
+     "expr": "10 + t*80/28"
+    },
+    {
+     "name": "th",
+     "expr": "if(t < 5, 1 - 0.8*t/5, if(t < 14, 0.2 + 0.5*(t - 5)/9, 0.7 + 0.3*min((t - 14)/10, 1)))"
+    },
+    {
+     "name": "fol",
+     "expr": "1 + 6*t/14"
+    },
+    {
+     "name": "cl",
+     "expr": "if(preg || t < 22, 5, 5 - 4*(t - 22)/6)"
+    },
+    {
+     "name": "lh",
+     "expr": "0.1 + 0.85*exp(-((t - 14)/1.1)^2)"
+    },
+    {
+     "name": "pg",
+     "expr": "if(preg, 0.05 + 0.85*if(t < 21, exp(-((t - 21)/3.5)^2), 1), 0.05 + 0.85*exp(-((t - 21)/3.5)^2))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     58
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "30 + 18*(0.25 + 0.15*exp(-((((x - 10)*28/80) - 3)/3)^2) + 0.35*exp(-((((x - 10)*28/80) - 14)/1.1)^2))",
+     "from": 10,
+     "to": 90,
+     "color": "blue",
+     "width": 3,
+     "visibleIf": "curves"
+    },
+    {
+     "shape": "path",
+     "fn": "30 + 18*(0.1 + 0.85*exp(-((((x - 10)*28/80) - 14)/1.1)^2))",
+     "from": 10,
+     "to": 90,
+     "color": "yellow",
+     "width": 3,
+     "visibleIf": "curves"
+    },
+    {
+     "shape": "path",
+     "fn": "30 + 18*(0.1 + 0.7*exp(-((((x - 10)*28/80) - 12.5)/2.2)^2) + 0.3*exp(-((((x - 10)*28/80) - 21)/3.5)^2))",
+     "from": 10,
+     "to": 90,
+     "color": "green",
+     "width": 3,
+     "visibleIf": "curves"
+    },
+    {
+     "shape": "path",
+     "fn": "30 + 18*(0.05 + 0.85*exp(-((((x - 10)*28/80) - 21)/3.5)^2))",
+     "from": 10,
+     "to": 90,
+     "color": "orange",
+     "width": 3,
+     "visibleIf": "curves && !preg"
+    },
+    {
+     "shape": "path",
+     "fn": "30 + 18*(0.05 + 0.85*if(((x - 10)*28/80) < 21, exp(-((((x - 10)*28/80) - 21)/3.5)^2), 1))",
+     "from": 10,
+     "to": 90,
+     "color": "orange",
+     "width": 3,
+     "visibleIf": "curves && preg"
+    },
+    {
+     "shape": "text",
+     "x": 92,
+     "y": 47,
+     "text": {
+      "en": "LH"
+     },
+     "size": 18,
+     "align": "left",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 92,
+     "y": 43,
+     "text": {
+      "en": "FSH"
+     },
+     "size": 18,
+     "align": "left",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 92,
+     "y": 39,
+     "text": {
+      "en": "Estrogen"
+     },
+     "size": 18,
+     "align": "left",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 92,
+     "y": 35,
+     "text": {
+      "en": "Progesterone"
+     },
+     "size": 18,
+     "align": "left",
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 29,
+     "x2": 90,
+     "y2": 29,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": "mx",
+     "y1": 29,
+     "x2": "mx",
+     "y2": 50,
+     "color": "white",
+     "width": 2,
+     "opacity": 0.6
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 55,
+     "text": {
+      "en": "Day {floor(t) + 1}: menstrual phase",
+      "kn": "ದಿನ {floor(t) + 1}: ಋತುಸ್ರಾವ ಹಂತ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "t < 5 || (t >= 27.99 && !preg)"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 55,
+     "text": {
+      "en": "Day {floor(t) + 1}: follicular phase",
+      "kn": "ದಿನ {floor(t) + 1}: ಕೋಶಕ ಹಂತ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "t >= 5 && t < 13"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 55,
+     "text": {
+      "en": "Day {floor(t) + 1}: ovulation (LH surge)",
+      "kn": "ದಿನ {floor(t) + 1}: ಅಂಡೋತ್ಸರ್ಗ"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "t >= 13 && t < 15"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 55,
+     "text": {
+      "en": "Day {floor(t) + 1}: luteal phase",
+      "kn": "ದಿನ {floor(t) + 1}: ಲೂಟಿಯಲ್ ಹಂತ"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "t >= 15 && t < 27.99"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 55,
+     "text": {
+      "en": "Pregnancy: corpus luteum kept, no menstruation",
+      "kn": "ಗರ್ಭ: ಋತುಸ್ರಾವ ಇಲ್ಲ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "t >= 27.99 && preg"
+    },
+    {
+     "shape": "text",
+     "x": 25,
+     "y": 23,
+     "text": {
+      "en": "Ovary",
+      "kn": "ಅಂಡಾಶಯ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       38.0,
+       12.0
+      ],
+      [
+       37.56,
+       14.07
+      ],
+      [
+       36.26,
+       16.0
+      ],
+      [
+       34.19,
+       17.66
+      ],
+      [
+       31.5,
+       18.93
+      ],
+      [
+       28.36,
+       19.73
+      ],
+      [
+       25.0,
+       20.0
+      ],
+      [
+       21.64,
+       19.73
+      ],
+      [
+       18.5,
+       18.93
+      ],
+      [
+       15.81,
+       17.66
+      ],
+      [
+       13.74,
+       16.0
+      ],
+      [
+       12.44,
+       14.07
+      ],
+      [
+       12.0,
+       12.0
+      ],
+      [
+       12.44,
+       9.93
+      ],
+      [
+       13.74,
+       8.0
+      ],
+      [
+       15.81,
+       6.34
+      ],
+      [
+       18.5,
+       5.07
+      ],
+      [
+       21.64,
+       4.27
+      ],
+      [
+       25.0,
+       4.0
+      ],
+      [
+       28.36,
+       4.27
+      ],
+      [
+       31.5,
+       5.07
+      ],
+      [
+       34.19,
+       6.34
+      ],
+      [
+       36.26,
+       8.0
+      ],
+      [
+       37.56,
+       9.93
+      ]
+     ],
+     "color": "white",
+     "opacity": 0.15
+    },
+    {
+     "shape": "circle",
+     "x": 25,
+     "y": 12,
+     "r": "fol",
+     "color": "yellow",
+     "opacity": 0.8,
+     "visibleIf": "t < 14"
+    },
+    {
+     "shape": "circle",
+     "x": 25,
+     "y": 12,
+     "r": "cl",
+     "color": "orange",
+     "opacity": 0.9,
+     "visibleIf": "t >= 14"
+    },
+    {
+     "shape": "text",
+     "x": 25,
+     "y": 2,
+     "text": {
+      "en": "Graafian follicle",
+      "kn": "ಗ್ರಾಫಿಯನ್ ಕೋಶಕ"
+     },
+     "size": 16,
+     "visibleIf": "t >= 10 && t < 14"
+    },
+    {
+     "shape": "text",
+     "x": 25,
+     "y": 2,
+     "text": {
+      "en": "Corpus luteum",
+      "kn": "ಕಾರ್ಪಸ್ ಲೂಟಿಯಂ"
+     },
+     "size": 16,
+     "visibleIf": "t >= 14"
+    },
+    {
+     "shape": "text",
+     "x": 70,
+     "y": 23,
+     "text": {
+      "en": "Endometrium",
+      "kn": "ಎಂಡೋಮೆಟ್ರಿಯಂ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 50,
+     "y": 4,
+     "w": 40,
+     "h": 3,
+     "color": "red",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 50,
+     "y": 7,
+     "w": 40,
+     "h": "12*th",
+     "color": "red",
+     "opacity": 0.85
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Day of cycle",
+      "kn": "ಚಕ್ರದ ದಿನ"
+     },
+     "expr": "floor(t) + 1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "LH (relative)",
+      "kn": "LH (ಸಾಪೇಕ್ಷ)"
+     },
+     "expr": "lh",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Progesterone (relative)",
+      "kn": "ಪ್ರೊಜೆಸ್ಟರಾನ್"
+     },
+     "expr": "pg",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "On which day does LH peak? What happens in the ovary at that moment?",
+     "kn": "LH ಯಾವ ದಿನ ಶಿಖರ ತಲುಪುತ್ತದೆ? ಆಗ ಅಂಡಾಶಯದಲ್ಲಿ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Which hormone is highest in the luteal phase, and what does it do to the endometrium?",
+     "kn": "ಲೂಟಿಯಲ್ ಹಂತದಲ್ಲಿ ಯಾವ ಹಾರ್ಮೋನ್ ಅತಿ ಹೆಚ್ಚು? ಅದು ಎಂಡೋಮೆಟ್ರಿಯಂಗೆ ಏನು ಮಾಡುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on fertilisation. Why does menstruation not happen?",
+     "kn": "ನಿಷೇಚನ ಆನ್ ಮಾಡಿ. ಋತುಸ್ರಾವ ಏಕೆ ಆಗುವುದಿಲ್ಲ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

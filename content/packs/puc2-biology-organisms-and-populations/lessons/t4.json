@@ -557,6 +557,250 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Predator and prey",
+    "kn": "ಪರಭಕ್ಷಕ ಮತ್ತು ಬೇಟೆ"
+   },
+   "narration": {
+    "en": "Release predators into a population of prey and watch both numbers over time. Then turn the predators off and compare."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Prey grow towards their carrying capacity; predators eat them and multiply. The prey peak comes first and the predator peak follows, and the swings settle down. Without predators, prey rise to the limit set by food: predators keep prey populations in check, as the cactus moth did for the prickly pear in Australia. A simple model.",
+    "kn": "ಬೇಟೆ ಜೀವಿಗಳು ಧಾರಣಾ ಸಾಮರ್ಥ್ಯದ ಕಡೆಗೆ ಬೆಳೆಯುತ್ತವೆ; ಪರಭಕ್ಷಕರು ಅವನ್ನು ತಿಂದು ಹೆಚ್ಚುತ್ತಾರೆ. ಮೊದಲು ಬೇಟೆಯ ಶಿಖರ, ನಂತರ ಪರಭಕ್ಷಕರ ಶಿಖರ. ಪರಭಕ್ಷಕರಿಲ್ಲದಿದ್ದರೆ ಬೇಟೆ ಆಹಾರದ ಮಿತಿಯವರೆಗೆ ಏರುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Prey growth rate",
+      "kn": "ಬೇಟೆಯ ಬೆಳವಣಿಗೆ ದರ"
+     },
+     "min": 0.5,
+     "max": 1.5,
+     "step": 0.05,
+     "value": 1
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "Attack rate",
+      "kn": "ದಾಳಿ ದರ"
+     },
+     "min": 0.01,
+     "max": 0.04,
+     "step": 0.001,
+     "value": 0.02
+    },
+    {
+     "name": "m",
+     "label": {
+      "en": "Predator death rate",
+      "kn": "ಪರಭಕ್ಷಕ ಮರಣ ದರ"
+     },
+     "min": 0.2,
+     "max": 0.8,
+     "step": 0.05,
+     "value": 0.5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "pred",
+     "label": {
+      "en": "Predators present",
+      "kn": "ಪರಭಕ್ಷಕರು ಇದ್ದಾರೆ"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run",
+      "kn": "ಚಲಾಯಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "dt": 0.01,
+    "unit": "month",
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2
+   },
+   "state": [
+    {
+     "name": "H",
+     "init": "100",
+     "rate": "a*H*(1 - H/300) - b*H*P"
+    },
+    {
+     "name": "P",
+     "init": "if(pred, 10, 0)",
+     "rate": "0.5*b*H*P - m*P"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 6,
+     "x2": 96,
+     "y2": 6,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 6,
+     "x2": 6,
+     "y2": 56,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 51,
+     "y": 2,
+     "text": {
+      "en": "time",
+      "kn": "ಸಮಯ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 51,
+     "x2": 96,
+     "y2": 51,
+     "color": "green",
+     "dashed": true,
+     "opacity": 0.35
+    },
+    {
+     "shape": "text",
+     "x": 97,
+     "y": 51,
+     "text": {
+      "en": "K"
+     },
+     "size": 18,
+     "align": "left",
+     "color": "green"
+    },
+    {
+     "shape": "trail",
+     "x": "6 + 90*t/60",
+     "y": "6 + 45*H/300",
+     "length": 2000,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "trail",
+     "x": "6 + 90*t/60",
+     "y": "6 + 45*P/300",
+     "length": 2000,
+     "color": "red",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "6 + 90*t/60",
+     "y": "6 + 45*H/300",
+     "r": 1,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": "6 + 90*t/60",
+     "y": "6 + 45*P/300",
+     "r": 1,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 58,
+     "text": {
+      "en": "Prey {H:0}",
+      "kn": "ಬೇಟೆ {H:0}"
+     },
+     "size": 22,
+     "align": "right",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 82,
+     "y": 58,
+     "text": {
+      "en": "Predators {P:0}",
+      "kn": "ಪರಭಕ್ಷಕ {P:0}"
+     },
+     "size": 22,
+     "align": "left",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Prey",
+      "kn": "ಬೇಟೆ"
+     },
+     "expr": "H",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Predators",
+      "kn": "ಪರಭಕ್ಷಕರು"
+     },
+     "expr": "P",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Which peaks first, prey or predators? Why?",
+     "kn": "ಯಾವುದು ಮೊದಲು ಶಿಖರ ತಲುಪುತ್ತದೆ, ಬೇಟೆಯೋ ಪರಭಕ್ಷಕವೋ? ಏಕೆ?"
+    },
+    {
+     "en": "Turn the predators off. How large does the prey population become?",
+     "kn": "ಪರಭಕ್ಷಕರನ್ನು ಆಫ್ ಮಾಡಿ. ಬೇಟೆ ಸಂಖ್ಯೆ ಎಷ್ಟು ದೊಡ್ಡದಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Raise the attack rate. What happens to the number of prey the system settles at?",
+     "kn": "ದಾಳಿ ದರ ಏರಿಸಿ. ಬೇಟೆ ಸ್ಥಿರಗೊಳ್ಳುವ ಸಂಖ್ಯೆಗೆ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

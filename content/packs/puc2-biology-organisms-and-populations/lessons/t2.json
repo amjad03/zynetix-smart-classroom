@@ -367,6 +367,241 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Unlimited resources: exponential growth",
+    "kn": "ಅಪರಿಮಿತ ಸಂಪನ್ಮೂಲ: ಘಾತೀಯ ಬೆಳವಣಿಗೆ"
+   },
+   "narration": {
+    "en": "Set the intrinsic rate of natural increase r and the starting number, then let the population grow. Watch the dots multiply and the J-shaped curve appear."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "With unlimited food and space, dN/dt = rN, so N = N0 e^(rt): a J-shaped curve. The bigger the population, the faster it grows. The doubling time is ln 2 / r, about 0.69 / r, whatever the size. The run stops when the habitat shown is full (400 individuals).",
+    "kn": "ಅಪರಿಮಿತ ಆಹಾರ ಮತ್ತು ಸ್ಥಳದಲ್ಲಿ dN/dt = rN, ಆದ್ದರಿಂದ N = N0 e^(rt): J-ಆಕಾರದ ವಕ್ರ. ದ್ವಿಗುಣ ಸಮಯ ln 2 / r, ಸುಮಾರು 0.69 / r."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "r (per day)",
+      "kn": "r (ಪ್ರತಿ ದಿನ)"
+     },
+     "min": 0.02,
+     "max": 0.3,
+     "step": 0.01,
+     "value": 0.1
+    },
+    {
+     "name": "N0",
+     "label": {
+      "en": "Starting number N0",
+      "kn": "ಆರಂಭಿಕ ಸಂಖ್ಯೆ N0"
+     },
+     "min": 2,
+     "max": 50,
+     "step": 2,
+     "value": 10
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ghost",
+     "label": {
+      "en": "Show the full curve and slope",
+      "kn": "ಪೂರ್ಣ ವಕ್ರ ಮತ್ತು ಇಳಿಜಾರು"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Grow",
+      "kn": "ಬೆಳೆಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 100,
+    "unit": "day",
+    "stopWhen": "N >= 400",
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 4
+   },
+   "vars": [
+    {
+     "name": "N",
+     "expr": "min(N0*exp(r*t), 400)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 4,
+     "y": 4,
+     "w": 44,
+     "h": 50,
+     "color": "green",
+     "opacity": 0.12
+    },
+    {
+     "shape": "particles",
+     "count": 400,
+     "x": "5 + 42*rand(i)",
+     "y": "5 + 48*rand(i + 700)",
+     "r": 0.7,
+     "color": "yellow",
+     "visibleIf": "i < N"
+    },
+    {
+     "shape": "line",
+     "x1": 55,
+     "y1": 6,
+     "x2": 97,
+     "y2": 6,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 55,
+     "y1": 6,
+     "x2": 55,
+     "y2": 54,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 76,
+     "y": 2,
+     "text": {
+      "en": "time (days)",
+      "kn": "ಸಮಯ (ದಿನ)"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 56,
+     "y": 56,
+     "text": {
+      "en": "N"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "path",
+     "fn": "6 + 48*min(N0*exp(r*(x - 55)*100/42)/400, 1)",
+     "from": 55,
+     "to": 97,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.35,
+     "visibleIf": "ghost"
+    },
+    {
+     "shape": "trail",
+     "x": "55 + 42*t/100",
+     "y": "6 + 48*N/400",
+     "length": 1500,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "55 + 42*t/100",
+     "y": "6 + 48*N/400",
+     "r": 1,
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "x": "55 + 42*t/100",
+     "y": "6 + 48*N/400",
+     "dx": 4,
+     "dy": "min(r*N*(4*100/42)*48/400, 30)",
+     "color": "red",
+     "width": 3,
+     "visibleIf": "ghost"
+    },
+    {
+     "shape": "label",
+     "x": 26,
+     "y": 57,
+     "text": {
+      "en": "N = {N:0}"
+     },
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "N",
+      "kn": "N"
+     },
+     "expr": "N",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Growth rate dN/dt = rN",
+      "kn": "ಬೆಳವಣಿಗೆ ದರ dN/dt = rN"
+     },
+     "expr": "r*N",
+     "unit": "per day",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Doubling time",
+      "kn": "ದ್ವಿಗುಣ ಸಮಯ"
+     },
+     "expr": "ln(2)/r",
+     "unit": "day",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Read the doubling time. Does it change as N grows?",
+     "kn": "ದ್ವಿಗುಣ ಸಮಯ ಓದಿ. N ಬೆಳೆದಂತೆ ಅದು ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Double r. What happens to the doubling time?",
+     "kn": "r ಅನ್ನು ದ್ವಿಗುಣಗೊಳಿಸಿ. ದ್ವಿಗುಣ ಸಮಯಕ್ಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Why can no real population keep growing like this for long?",
+     "kn": "ಯಾವ ನಿಜವಾದ ಜನಸಂಖ್ಯೆಯೂ ಹೀಗೆ ಬಹುಕಾಲ ಬೆಳೆಯಲಾರದು, ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

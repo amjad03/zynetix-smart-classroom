@@ -300,6 +300,506 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Punnett square: tall and dwarf",
+    "kn": "ಪನೆಟ್ ಚೌಕ: ಎತ್ತರ ಮತ್ತು ಕುಬ್ಜ"
+   },
+   "narration": {
+    "en": "Choose the genotypes of the two parents. The Punnett square shows every way their gametes can meet. Then grow a batch of offspring and compare it with the expected ratio."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Each parent gives one allele to each gamete (segregation), and gametes meet at random. Tt × Tt gives 1 TT : 2 Tt : 1 tt, so 3 tall : 1 dwarf, because T is dominant. A test cross with tt shows whether a tall plant is TT (all tall) or Tt (1 : 1). Real batches scatter around the expected ratio.",
+    "kn": "ಪ್ರತಿ ಪೋಷಕ ಪ್ರತಿ ಗ್ಯಾಮೀಟ್‌ಗೆ ಒಂದು ಆಲೀಲ್ ಕೊಡುತ್ತದೆ (ಪ್ರತ್ಯೇಕತೆ). Tt × Tt ನಿಂದ 1 TT : 2 Tt : 1 tt, ಅಂದರೆ 3 ಎತ್ತರ : 1 ಕುಬ್ಜ. tt ಯೊಂದಿಗೆ ಪರೀಕ್ಷಾ ಸಂಕರಣ TT ಅಥವಾ Tt ಎಂದು ತೋರಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Offspring in a batch",
+      "kn": "ಒಂದು ಗುಂಪಿನ ಸಂತತಿ"
+     },
+     "min": 4,
+     "max": 200,
+     "step": 4,
+     "value": 100
+    }
+   ],
+   "choices": [
+    {
+     "name": "g1",
+     "label": {
+      "en": "Parent 1",
+      "kn": "ಪೋಷಕ 1"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "TT"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Tt"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "tt"
+       },
+       "value": 0
+      }
+     ],
+     "value": 1
+    },
+    {
+     "name": "g2",
+     "label": {
+      "en": "Parent 2",
+      "kn": "ಪೋಷಕ 2"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "TT"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Tt"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "tt"
+       },
+       "value": 0
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 1000
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Grow a new batch",
+      "kn": "ಹೊಸ ಗುಂಪು ಬೆಳೆಸಿ"
+     },
+     "icon": "next",
+     "set": {
+      "seed": "seed + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Test cross (× tt)",
+      "kn": "ಪರೀಕ್ಷಾ ಸಂಕರಣ (× tt)"
+     },
+     "icon": "flip",
+     "set": {
+      "g2": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "a1",
+     "expr": "g1 >= 1"
+    },
+    {
+     "name": "a2",
+     "expr": "g1 == 2"
+    },
+    {
+     "name": "b1",
+     "expr": "g2 >= 1"
+    },
+    {
+     "name": "b2",
+     "expr": "g2 == 2"
+    },
+    {
+     "name": "pT",
+     "expr": "(min(a1 + b1, 1) + min(a2 + b1, 1) + min(a1 + b2, 1) + min(a2 + b2, 1))/4"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 25,
+     "y": 56,
+     "text": {
+      "en": "Gametes of parent 1",
+      "kn": "ಪೋಷಕ 1 ರ ಗ್ಯಾಮೀಟ್‌ಗಳು"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 30,
+     "text": {
+      "en": "Parent 2",
+      "kn": "ಪೋಷಕ 2"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 50,
+     "text": {
+      "en": "T"
+     },
+     "size": 30,
+     "visibleIf": "a1"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 50,
+     "text": {
+      "en": "t"
+     },
+     "size": 30,
+     "visibleIf": "!a1"
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 50,
+     "text": {
+      "en": "T"
+     },
+     "size": 30,
+     "visibleIf": "a2"
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 50,
+     "text": {
+      "en": "t"
+     },
+     "size": 30,
+     "visibleIf": "!a2"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 36.5,
+     "text": {
+      "en": "T"
+     },
+     "size": 30,
+     "visibleIf": "b1"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 36.5,
+     "text": {
+      "en": "t"
+     },
+     "size": 30,
+     "visibleIf": "!b1"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 21.5,
+     "text": {
+      "en": "T"
+     },
+     "size": 30,
+     "visibleIf": "b2"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 21.5,
+     "text": {
+      "en": "t"
+     },
+     "size": 30,
+     "visibleIf": "!b2"
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 30,
+     "w": 14.5,
+     "h": 14.5,
+     "color": {
+      "by": "min((a1 + b1), 1)",
+      "scale": [
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 36,
+     "text": {
+      "en": "TT"
+     },
+     "size": 30,
+     "visibleIf": "(a1 + b1) == 2"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 36,
+     "text": {
+      "en": "Tt"
+     },
+     "size": 30,
+     "visibleIf": "(a1 + b1) == 1"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 36,
+     "text": {
+      "en": "tt"
+     },
+     "size": 30,
+     "visibleIf": "(a1 + b1) == 0"
+    },
+    {
+     "shape": "rect",
+     "x": 25,
+     "y": 30,
+     "w": 14.5,
+     "h": 14.5,
+     "color": {
+      "by": "min((a2 + b1), 1)",
+      "scale": [
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 36,
+     "text": {
+      "en": "TT"
+     },
+     "size": 30,
+     "visibleIf": "(a2 + b1) == 2"
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 36,
+     "text": {
+      "en": "Tt"
+     },
+     "size": 30,
+     "visibleIf": "(a2 + b1) == 1"
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 36,
+     "text": {
+      "en": "tt"
+     },
+     "size": 30,
+     "visibleIf": "(a2 + b1) == 0"
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 15,
+     "w": 14.5,
+     "h": 14.5,
+     "color": {
+      "by": "min((a1 + b2), 1)",
+      "scale": [
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 21,
+     "text": {
+      "en": "TT"
+     },
+     "size": 30,
+     "visibleIf": "(a1 + b2) == 2"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 21,
+     "text": {
+      "en": "Tt"
+     },
+     "size": 30,
+     "visibleIf": "(a1 + b2) == 1"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 21,
+     "text": {
+      "en": "tt"
+     },
+     "size": 30,
+     "visibleIf": "(a1 + b2) == 0"
+    },
+    {
+     "shape": "rect",
+     "x": 25,
+     "y": 15,
+     "w": 14.5,
+     "h": 14.5,
+     "color": {
+      "by": "min((a2 + b2), 1)",
+      "scale": [
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 21,
+     "text": {
+      "en": "TT"
+     },
+     "size": 30,
+     "visibleIf": "(a2 + b2) == 2"
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 21,
+     "text": {
+      "en": "Tt"
+     },
+     "size": 30,
+     "visibleIf": "(a2 + b2) == 1"
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 21,
+     "text": {
+      "en": "tt"
+     },
+     "size": 30,
+     "visibleIf": "(a2 + b2) == 0"
+    },
+    {
+     "shape": "particles",
+     "count": 200,
+     "x": "52 + 2.3*mod(i, 20)",
+     "y": "8 + 4.6*floor(i/20)",
+     "r": "if(rand(i + 1000*seed) < pT, 1.1, 0.6)",
+     "visibleIf": "i < n",
+     "color": {
+      "by": "rand(i + 1000*seed) < pT",
+      "scale": [
+       "yellow",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 75,
+     "y": 56,
+     "text": {
+      "en": "Offspring: green tall, yellow dwarf",
+      "kn": "ಸಂತತಿ: ಹಸಿರು ಎತ್ತರ, ಹಳದಿ ಕುಬ್ಜ"
+     },
+     "size": 18
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Expected tall",
+      "kn": "ನಿರೀಕ್ಷಿತ ಎತ್ತರ"
+     },
+     "expr": "n*pT",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Expected dwarf",
+      "kn": "ನಿರೀಕ್ಷಿತ ಕುಬ್ಜ"
+     },
+     "expr": "n*(1 - pT)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Expected tall share",
+      "kn": "ನಿರೀಕ್ಷಿತ ಎತ್ತರದ ಪಾಲು"
+     },
+     "expr": "100*pT",
+     "unit": "%",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Cross Tt with Tt. Which genotypes appear, and in what ratio?",
+     "kn": "Tt × Tt ಮಾಡಿ. ಯಾವ ಜೀನೋಟೈಪ್‌ಗಳು ಯಾವ ಅನುಪಾತದಲ್ಲಿ?"
+    },
+    {
+     "en": "Use the test cross on a TT plant and on a Tt plant. How do the results differ?",
+     "kn": "TT ಮತ್ತು Tt ಸಸ್ಯಗಳ ಮೇಲೆ ಪರೀಕ್ಷಾ ಸಂಕರಣ ಮಾಡಿ. ಫಲಿತಾಂಶ ಹೇಗೆ ಬೇರೆ?"
+    },
+    {
+     "en": "Grow several batches of 12. Is the ratio always exactly 3 : 1? Why did Mendel use large samples?",
+     "kn": "12 ರ ಹಲವು ಗುಂಪು ಬೆಳೆಸಿ. ಅನುಪಾತ ಯಾವಾಗಲೂ 3 : 1 ಆಗಿದೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
