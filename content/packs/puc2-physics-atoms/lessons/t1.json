@@ -289,6 +289,278 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Alpha particles meet a nucleus",
+    "kn": "ಆಲ್ಫಾ ಕಣಗಳು ನ್ಯೂಕ್ಲಿಯಸ್ ಎದುರಿಸಿದಾಗ"
+   },
+   "narration": {
+    "en": "Set the impact parameter b (how far off-centre the alpha particle is aimed) and press Fire. The nucleus repels it with a Coulomb force. Large b: hardly deflected. Small b: thrown back. Distances are in femtometres (1 fm = 10⁻¹⁵ m)."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Set the impact parameter b (how far off-centre the alpha particle is aimed) and press Fire. The nucleus repels it with a Coulomb force. Large b: hardly deflected. Small b: thrown back. Distances are in femtometres (1 fm = 10⁻¹⁵ m).",
+    "kn": "ಸಂಘಟ್ಟ ಪ್ರಾಚಲ b (ಕೇಂದ್ರದಿಂದ ಎಷ್ಟು ದೂರ ಗುರಿ) ಹೊಂದಿಸಿ ಹಾರಿಸಿ ಒತ್ತಿ. ನ್ಯೂಕ್ಲಿಯಸ್ ಕೂಲಂಬ್ ಬಲದಿಂದ ವಿಕರ್ಷಿಸುತ್ತದೆ. ದೊಡ್ಡ b: ಸ್ವಲ್ಪ ವಿಚಲನೆ. ಚಿಕ್ಕ b: ಹಿಂದಕ್ಕೆ ಎಸೆಯಲ್ಪಡುತ್ತದೆ. ದೂರಗಳು ಫೆಮ್ಟೋಮೀಟರ್‌ಗಳಲ್ಲಿ."
+   },
+   "sliders": [
+    {
+     "name": "b",
+     "label": {
+      "en": "Impact parameter b",
+      "kn": "ಸಂಘಟ್ಟ ಪ್ರಾಚಲ b"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 30,
+     "unit": "fm"
+    },
+    {
+     "name": "K",
+     "label": {
+      "en": "Alpha energy",
+      "kn": "ಆಲ್ಫಾ ಶಕ್ತಿ"
+     },
+     "min": 2,
+     "max": 10,
+     "step": 0.5,
+     "value": 5,
+     "unit": "MeV"
+    }
+   ],
+   "choices": [
+    {
+     "name": "Z",
+     "label": {
+      "en": "Target",
+      "kn": "ಗುರಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Gold (79)",
+        "kn": "ಚಿನ್ನ (79)"
+       },
+       "value": 79
+      },
+      {
+       "label": {
+        "en": "Silver (47)",
+        "kn": "ಬೆಳ್ಳಿ (47)"
+       },
+       "value": 47
+      },
+      {
+       "label": {
+        "en": "Aluminium (13)",
+        "kn": "ಅಲ್ಯೂಮಿನಿಯಂ (13)"
+       },
+       "value": 13
+      }
+     ],
+     "value": 79
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Fire",
+      "kn": "ಹಾರಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 40,
+    "dt": 0.01,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 4,
+    "stopWhen": "abs(px) > 160 || py > 130 || py < -100",
+    "unit": ""
+   },
+   "state": [
+    {
+     "name": "px",
+     "init": -150,
+     "rate": "vx"
+    },
+    {
+     "name": "py",
+     "init": "b",
+     "rate": "vy"
+    },
+    {
+     "name": "vx",
+     "init": "10*sqrt(1 - 2*Z*1.44/K/hypot(150, b))",
+     "rate": "Cc*px/rr^3"
+    },
+    {
+     "name": "vy",
+     "init": 0,
+     "rate": "Cc*py/rr^3"
+    }
+   ],
+   "integrator": "rk2",
+   "vars": [
+    {
+     "name": "Cc",
+     "expr": "100*Z*1.44/K"
+    },
+    {
+     "name": "rr",
+     "expr": "max(hypot(px, py), 0.5)"
+    },
+    {
+     "name": "r0",
+     "expr": "2*Z*1.44/K"
+    },
+    {
+     "name": "RN",
+     "expr": "if(Z == 79, 7, if(Z == 47, 5.7, 3.6))"
+    }
+   ],
+   "view": {
+    "x": [
+     -150,
+     150
+    ],
+    "y": [
+     -90,
+     110
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -150,
+     "y1": "b",
+     "x2": 150,
+     "y2": "b",
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.25,
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": "r0",
+     "fill": false,
+     "color": "green",
+     "opacity": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": "RN",
+     "color": "red"
+    },
+    {
+     "shape": "trail",
+     "x": "px",
+     "y": "py",
+     "length": 2000,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 3,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": -145,
+     "y": 102,
+     "text": {
+      "en": "distance of closest approach (head-on) shown green",
+      "kn": "ಮುಖಾಮುಖಿ ಸಮೀಪತಮ ದೂರ: ಹಸಿರು ವೃತ್ತ"
+     },
+     "size": 22,
+     "color": "green",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": "-RN - 8",
+     "text": {
+      "en": "nucleus Z = {Z}",
+      "kn": "ನ್ಯೂಕ್ಲಿಯಸ್ Z = {Z}"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Closest approach (head-on)",
+      "kn": "ಸಮೀಪತಮ ದೂರ (ಮುಖಾಮುಖಿ)"
+     },
+     "expr": "r0",
+     "unit": "fm",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Rutherford's angle (far away)",
+      "kn": "ರುದರ್‌ಫೋರ್ಡ್ ಕೋನ (ದೂರದಲ್ಲಿ)"
+     },
+     "expr": "2*deg(atan2(r0, 2*b))",
+     "unit": "°",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Direction of travel now",
+      "kn": "ಈಗಿನ ಚಲನೆಯ ದಿಕ್ಕು"
+     },
+     "expr": "deg(atan2(vy, vx))",
+     "unit": "°",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Distance from nucleus",
+      "kn": "ನ್ಯೂಕ್ಲಿಯಸ್‌ನಿಂದ ದೂರ"
+     },
+     "expr": "hypot(px, py)",
+     "unit": "fm",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Fire with b = 0. How close does the alpha get before it turns back?",
+     "kn": "b = 0 ನಲ್ಲಿ ಹಾರಿಸಿ. ಹಿಂದಿರುಗುವ ಮೊದಲು ಆಲ್ಫಾ ಎಷ್ಟು ಹತ್ತಿರ ಬರುತ್ತದೆ?"
+    },
+    {
+     "en": "Fire with b = 10, 30 and 80 fm. How does the final direction change?",
+     "kn": "b = 10, 30, 80 fm ನಲ್ಲಿ ಹಾರಿಸಿ. ಅಂತಿಮ ದಿಕ್ಕು ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Switch gold to aluminium (Z = 13). Why is the scattering weaker?",
+     "kn": "ಚಿನ್ನದ ಬದಲು ಅಲ್ಯೂಮಿನಿಯಂ (Z = 13) ಆರಿಸಿ. ಚದುರುವಿಕೆ ಏಕೆ ದುರ್ಬಲ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

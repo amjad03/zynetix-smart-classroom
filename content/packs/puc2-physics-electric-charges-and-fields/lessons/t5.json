@@ -485,6 +485,283 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Gauss's law: only the charge inside counts",
+    "kn": "ಗೌಸ್ ನಿಯಮ: ಒಳಗಿನ ಆವೇಶ ಮಾತ್ರ ಲೆಕ್ಕ"
+   },
+   "narration": {
+    "en": "Drag the centre of the closed Gaussian surface and change its size. The total flux through it is Φ = q(enclosed)/ε0, whatever its shape or size. A charge outside sends in as many field lines as go out, so it adds nothing. Charges in nC."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the centre of the closed Gaussian surface and change its size. The total flux through it is Φ = q(enclosed)/ε0, whatever its shape or size. A charge outside sends in as many field lines as go out, so it adds nothing. Charges in nC.",
+    "kn": "ಮುಚ್ಚಿದ ಗೌಸಿಯನ್ ಮೇಲ್ಮೈಯ ಕೇಂದ್ರ ಎಳೆದು ಗಾತ್ರ ಬದಲಿಸಿ. ಅದರ ಮೂಲಕ ಒಟ್ಟು ಅಭಿವಾಹ Φ = q(ಒಳಗಿನ)/ε0, ಆಕಾರ, ಗಾತ್ರ ಏನೇ ಇರಲಿ. ಹೊರಗಿನ ಆವೇಶ ಎಷ್ಟು ರೇಖೆ ಒಳಗೆ ಕಳುಹಿಸುತ್ತದೋ ಅಷ್ಟೇ ಹೊರಬರುತ್ತವೆ; ಅದು ಏನೂ ಸೇರಿಸದು."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Surface radius",
+      "kn": "ಮೇಲ್ಮೈ ತ್ರಿಜ್ಯ"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 0.5,
+     "value": 3,
+     "unit": "cm"
+    },
+    {
+     "name": "q1",
+     "label": {
+      "en": "Charge A",
+      "kn": "ಆವೇಶ A"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 1,
+     "value": 3,
+     "unit": "nC"
+    },
+    {
+     "name": "q2",
+     "label": {
+      "en": "Charge B",
+      "kn": "ಆವೇಶ B"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 1,
+     "value": -2,
+     "unit": "nC"
+    },
+    {
+     "name": "q3",
+     "label": {
+      "en": "Charge C",
+      "kn": "ಆವೇಶ C"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 1,
+     "value": 1,
+     "unit": "nC"
+    }
+   ],
+   "handles": [
+    {
+     "name": "G",
+     "label": "centre",
+     "x": 0,
+     "y": 0,
+     "box": {
+      "x": [
+       -8,
+       8
+      ],
+      "y": [
+       -6,
+       6
+      ]
+     },
+     "snap": 0.5,
+     "color": "green"
+    }
+   ],
+   "vars": [
+    {
+     "name": "in1",
+     "expr": "hypot(G_x + 3, G_y - 1) < r"
+    },
+    {
+     "name": "in2",
+     "expr": "hypot(G_x - 2, G_y - 2) < r"
+    },
+    {
+     "name": "in3",
+     "expr": "hypot(G_x - 1, G_y + 2) < r"
+    },
+    {
+     "name": "qin",
+     "expr": "q1*in1 + q2*in2 + q3*in3"
+    }
+   ],
+   "view": {
+    "x": [
+     -10,
+     10
+    ],
+    "y": [
+     -8,
+     8
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": "G_x",
+     "y": "G_y",
+     "r": "r",
+     "color": "green",
+     "opacity": 0.12
+    },
+    {
+     "shape": "circle",
+     "x": "G_x",
+     "y": "G_y",
+     "r": "r",
+     "fill": false,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": -3,
+     "y": 1,
+     "r": 0.55,
+     "color": {
+      "by": "q1 > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": -3,
+     "y": 2.1,
+     "text": {
+      "en": "A {q1}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "circle",
+     "x": 2,
+     "y": 2,
+     "r": 0.55,
+     "color": {
+      "by": "q2 > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 3.1,
+     "text": {
+      "en": "B {q2}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "circle",
+     "x": 1,
+     "y": -2,
+     "r": 0.55,
+     "color": {
+      "by": "q3 > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": -3.2,
+     "text": {
+      "en": "C {q3}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "in1",
+     "x": -3,
+     "y": 1,
+     "r": 0.9,
+     "fill": false,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "in2",
+     "x": 2,
+     "y": 2,
+     "r": 0.9,
+     "fill": false,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "in3",
+     "x": 1,
+     "y": -2,
+     "r": 0.9,
+     "fill": false,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": -9.5,
+     "y": 7.2,
+     "text": {
+      "en": "q inside = {qin} nC   Φ = {qin*112.94:1} N m²/C",
+      "kn": "ಒಳಗಿನ q = {qin} nC   Φ = {qin*112.94:1} N m²/C"
+     },
+     "size": 24,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Charge enclosed",
+      "kn": "ಆವರಿಸಿದ ಆವೇಶ"
+     },
+     "expr": "qin",
+     "unit": "nC",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Total flux q/ε0",
+      "kn": "ಒಟ್ಟು ಅಭಿವಾಹ q/ε0"
+     },
+     "expr": "qin*112.94",
+     "unit": "N m²/C",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Enclose only the +3 charge. Now make the surface bigger without taking in another charge. Does the flux change?",
+     "kn": "+3 ಆವೇಶ ಮಾತ್ರ ಆವರಿಸಿ. ಬೇರೆ ಆವೇಶ ಸೇರದಂತೆ ಮೇಲ್ಮೈ ದೊಡ್ಡದು ಮಾಡಿ. ಅಭಿವಾಹ ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Find a surface that holds charges but has zero total flux.",
+     "kn": "ಆವೇಶಗಳಿದ್ದರೂ ಒಟ್ಟು ಅಭಿವಾಹ ಶೂನ್ಯವಿರುವ ಮೇಲ್ಮೈ ಹುಡುಕಿ."
+    },
+    {
+     "en": "Does a charge just outside the surface change the field on it? Does it change the flux?",
+     "kn": "ಮೇಲ್ಮೈಯ ಹೊರಗಿನ ಆವೇಶ ಅದರ ಮೇಲಿನ ಕ್ಷೇತ್ರ ಬದಲಿಸುತ್ತದೆಯೇ? ಅಭಿವಾಹ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -508,6 +508,289 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A dielectric in a capacitor",
+    "kn": "ಧಾರಕದಲ್ಲಿ ಪರಾವಿದ್ಯುತ್"
+   },
+   "narration": {
+    "en": "A slab of dielectric constant K gets polarised: bound charges on its faces weaken the field inside. With the battery kept connected, V stays fixed and the charge grows to K times. With the battery removed first, Q stays fixed and V and E drop to 1/K. Either way C = K C0. Plates: 0.01 m², 1 mm apart."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A slab of dielectric constant K gets polarised: bound charges on its faces weaken the field inside. With the battery kept connected, V stays fixed and the charge grows to K times. With the battery removed first, Q stays fixed and V and E drop to 1/K. Either way C = K C0. Plates: 0.01 m², 1 mm apart.",
+    "kn": "K ಪರಾವಿದ್ಯುತ್ ಸ್ಥಿರಾಂಕದ ಹಲಗೆ ಧ್ರುವೀಕರಣಗೊಳ್ಳುತ್ತದೆ: ಅದರ ಮುಖಗಳ ಬದ್ಧ ಆವೇಶಗಳು ಒಳಗಿನ ಕ್ಷೇತ್ರ ದುರ್ಬಲಗೊಳಿಸುತ್ತವೆ. ಬ್ಯಾಟರಿ ಜೋಡಿಸಿದ್ದರೆ V ಸ್ಥಿರ, ಆವೇಶ K ಪಟ್ಟು. ಮೊದಲೇ ಬ್ಯಾಟರಿ ತೆಗೆದರೆ Q ಸ್ಥಿರ, V ಮತ್ತು E 1/K ಗೆ. ಎರಡರಲ್ಲೂ C = K C0."
+   },
+   "sliders": [
+    {
+     "name": "K",
+     "label": {
+      "en": "Dielectric constant K",
+      "kn": "ಪರಾವಿದ್ಯುತ್ ಸ್ಥಿರಾಂಕ K"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 4
+    },
+    {
+     "name": "V0",
+     "label": {
+      "en": "Battery voltage",
+      "kn": "ಬ್ಯಾಟರಿ ವೋಲ್ಟೇಜ್"
+     },
+     "min": 2,
+     "max": 12,
+     "step": 1,
+     "value": 6,
+     "unit": "V"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "slab",
+     "label": {
+      "en": "Slab inserted",
+      "kn": "ಹಲಗೆ ಸೇರಿಸಲಾಗಿದೆ"
+     },
+     "value": true
+    },
+    {
+     "name": "bat",
+     "label": {
+      "en": "Battery kept connected",
+      "kn": "ಬ್ಯಾಟರಿ ಜೋಡಣೆಯಲ್ಲಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "Ke",
+     "expr": "if(slab, K, 1)"
+    },
+    {
+     "name": "C0",
+     "expr": "8.854e-12*0.01/1e-3*1e12"
+    },
+    {
+     "name": "Cc",
+     "expr": "Ke*C0"
+    },
+    {
+     "name": "Q",
+     "expr": "if(bat, Cc*V0, C0*V0)/1000"
+    },
+    {
+     "name": "V",
+     "expr": "Q*1000/Cc"
+    },
+    {
+     "name": "Ef",
+     "expr": "V/1e-3/1000"
+    }
+   ],
+   "view": {
+    "x": [
+     -10,
+     10
+    ],
+    "y": [
+     -6.5,
+     6.5
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -4,
+     "y": -4.5,
+     "w": 0.6,
+     "h": 9,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": 3.4,
+     "y": -4.5,
+     "w": 0.6,
+     "h": 9,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "slab",
+     "x": -2.6,
+     "y": -4.2,
+     "w": 5.2,
+     "h": 8.4,
+     "color": "green",
+     "opacity": 0.3
+    },
+    {
+     "shape": "arrow",
+     "x": -3.2,
+     "y": -3,
+     "dx": "clamp(6.4*Ef/12, 0.3, 6.4)",
+     "dy": 0,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": -3.2,
+     "y": -1,
+     "dx": "clamp(6.4*Ef/12, 0.3, 6.4)",
+     "dy": 0,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": -3.2,
+     "y": 1,
+     "dx": "clamp(6.4*Ef/12, 0.3, 6.4)",
+     "dy": 0,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": -3.2,
+     "y": 3,
+     "dx": "clamp(6.4*Ef/12, 0.3, 6.4)",
+     "dy": 0,
+     "color": "yellow"
+    },
+    {
+     "shape": "particles",
+     "visibleIf": "slab && K > 1",
+     "count": 8,
+     "x": -2.3,
+     "y": "-3.7 + i*1.05",
+     "r": 0.18,
+     "color": "blue"
+    },
+    {
+     "shape": "particles",
+     "visibleIf": "slab && K > 1",
+     "count": 8,
+     "x": 2.3,
+     "y": "-3.7 + i*1.05",
+     "r": 0.18,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": -3.7,
+     "y": 5.2,
+     "text": {
+      "en": "+Q"
+     },
+     "size": 24,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 3.7,
+     "y": 5.2,
+     "text": {
+      "en": "−Q"
+     },
+     "size": 24,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -5.6,
+     "text": {
+      "en": "induced (bound) charges on the slab",
+      "kn": "ಹಲಗೆಯ ಮೇಲಿನ ಪ್ರೇರಿತ (ಬದ್ಧ) ಆವೇಶ"
+     },
+     "size": 20,
+     "visibleIf": "slab"
+    },
+    {
+     "shape": "label",
+     "x": -9.5,
+     "y": 6,
+     "text": {
+      "en": "Battery connected: V fixed",
+      "kn": "ಬ್ಯಾಟರಿ ಜೋಡಣೆ: V ಸ್ಥಿರ"
+     },
+     "size": 22,
+     "visibleIf": "bat",
+     "align": "left"
+    },
+    {
+     "shape": "label",
+     "x": -9.5,
+     "y": 6,
+     "text": {
+      "en": "Battery removed: Q fixed",
+      "kn": "ಬ್ಯಾಟರಿ ತೆಗೆದಿದೆ: Q ಸ್ಥಿರ"
+     },
+     "size": 22,
+     "visibleIf": "!bat",
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Capacitance",
+      "kn": "ಧಾರಕತೆ"
+     },
+     "expr": "Cc",
+     "unit": "pF",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Charge",
+      "kn": "ಆವೇಶ"
+     },
+     "expr": "Q",
+     "unit": "nC",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Voltage",
+      "kn": "ವೋಲ್ಟೇಜ್"
+     },
+     "expr": "V",
+     "unit": "V",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Field in the gap",
+      "kn": "ಅಂತರದಲ್ಲಿ ಕ್ಷೇತ್ರ"
+     },
+     "expr": "Ef",
+     "unit": "kV/m",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Battery connected: insert the slab. Which readouts change?",
+     "kn": "ಬ್ಯಾಟರಿ ಜೋಡಿಸಿದೆ: ಹಲಗೆ ಸೇರಿಸಿ. ಯಾವ ಓದುಗಳು ಬದಲಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Battery removed: insert the slab. Now which ones change?",
+     "kn": "ಬ್ಯಾಟರಿ ತೆಗೆದಿದೆ: ಹಲಗೆ ಸೇರಿಸಿ. ಈಗ ಯಾವುವು ಬದಲಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Why does a dielectric let a capacitor store more charge at the same voltage?",
+     "kn": "ಅದೇ ವೋಲ್ಟೇಜ್‌ನಲ್ಲಿ ಪರಾವಿದ್ಯುತ್ ಹೆಚ್ಚು ಆವೇಶ ಸಂಗ್ರಹಕ್ಕೆ ಏಕೆ ಅವಕಾಶ ನೀಡುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

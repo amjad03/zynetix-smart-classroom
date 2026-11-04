@@ -387,6 +387,350 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Bulbs in series and in parallel",
+    "kn": "ಶ್ರೇಣಿ ಮತ್ತು ಸಮಾಂತರದಲ್ಲಿ ಬಲ್ಬ್‌ಗಳು"
+   },
+   "narration": {
+    "en": "Each bulb is rated for 220 V, so its resistance is R = V²/P. In parallel each bulb gets the full voltage and gives its rated power. In series the same current flows through both, P = I²R, so the bulb with the lower wattage (higher R) glows brighter."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Each bulb is rated for 220 V, so its resistance is R = V²/P. In parallel each bulb gets the full voltage and gives its rated power. In series the same current flows through both, P = I²R, so the bulb with the lower wattage (higher R) glows brighter.",
+    "kn": "ಪ್ರತಿ ಬಲ್ಬ್ 220 V ಗೆ ದರ ಹೊಂದಿದೆ, ಆದ್ದರಿಂದ R = V²/P. ಸಮಾಂತರದಲ್ಲಿ ಪ್ರತಿ ಬಲ್ಬ್ ಪೂರ್ಣ ವೋಲ್ಟೇಜ್ ಪಡೆದು ದರದ ಸಾಮರ್ಥ್ಯ ನೀಡುತ್ತದೆ. ಶ್ರೇಣಿಯಲ್ಲಿ ಒಂದೇ ಪ್ರವಾಹ, P = I²R, ಆದ್ದರಿಂದ ಕಡಿಮೆ ವ್ಯಾಟ್ (ಹೆಚ್ಚು R) ಬಲ್ಬ್ ಹೆಚ್ಚು ಉಜ್ವಲ."
+   },
+   "sliders": [
+    {
+     "name": "V",
+     "label": {
+      "en": "Supply voltage",
+      "kn": "ಆಕರ ವೋಲ್ಟೇಜ್"
+     },
+     "min": 0,
+     "max": 240,
+     "step": 10,
+     "value": 220,
+     "unit": "V"
+    },
+    {
+     "name": "Pr1",
+     "label": {
+      "en": "Bulb 1 rating",
+      "kn": "ಬಲ್ಬ್ 1 ದರ"
+     },
+     "min": 25,
+     "max": 200,
+     "step": 5,
+     "value": 100,
+     "unit": "W"
+    },
+    {
+     "name": "Pr2",
+     "label": {
+      "en": "Bulb 2 rating",
+      "kn": "ಬಲ್ಬ್ 2 ದರ"
+     },
+     "min": 25,
+     "max": 200,
+     "step": 5,
+     "value": 40,
+     "unit": "W"
+    }
+   ],
+   "choices": [
+    {
+     "name": "par",
+     "label": {
+      "en": "Connection",
+      "kn": "ಜೋಡಣೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Series",
+        "kn": "ಶ್ರೇಣಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Parallel",
+        "kn": "ಸಮಾಂತರ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "R1",
+     "expr": "48400/Pr1"
+    },
+    {
+     "name": "R2",
+     "expr": "48400/Pr2"
+    },
+    {
+     "name": "Is",
+     "expr": "V/(R1 + R2)"
+    },
+    {
+     "name": "P1",
+     "expr": "if(par == 1, Is^2*R1, V^2/R1)"
+    },
+    {
+     "name": "P2",
+     "expr": "if(par == 1, Is^2*R2, V^2/R2)"
+    },
+    {
+     "name": "b1",
+     "expr": "clamp(P1/100, 0, 1)"
+    },
+    {
+     "name": "b2",
+     "expr": "clamp(P2/100, 0, 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     -1,
+     17
+    ],
+    "y": [
+     -1,
+     11
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "visibleIf": "par == 1",
+     "x1": 1,
+     "y1": 1,
+     "x2": 1,
+     "y2": 7,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 1",
+     "x1": 1,
+     "y1": 7,
+     "x2": 15,
+     "y2": 7,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 1",
+     "x1": 15,
+     "y1": 7,
+     "x2": 15,
+     "y2": 1,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 1",
+     "x1": 15,
+     "y1": 1,
+     "x2": 1,
+     "y2": 1,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "visibleIf": "par == 1",
+     "icon": "bulb",
+     "x": 5,
+     "y": 7,
+     "size": 3,
+     "on": "b1"
+    },
+    {
+     "shape": "icon",
+     "visibleIf": "par == 1",
+     "icon": "bulb",
+     "x": 11,
+     "y": 7,
+     "size": 3,
+     "on": "b2"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 9.2,
+     "text": {
+      "en": "{Pr1} W bulb"
+     },
+     "size": 22,
+     "visibleIf": "par == 1"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 9.2,
+     "text": {
+      "en": "{Pr2} W bulb"
+     },
+     "size": 22,
+     "visibleIf": "par == 1"
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 2",
+     "x1": 1,
+     "y1": 1,
+     "x2": 1,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 2",
+     "x1": 15,
+     "y1": 1,
+     "x2": 15,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 2",
+     "x1": 1,
+     "y1": 1,
+     "x2": 15,
+     "y2": 1,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 2",
+     "x1": 1,
+     "y1": 9,
+     "x2": 15,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 2",
+     "x1": 1,
+     "y1": 5,
+     "x2": 15,
+     "y2": 5,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "visibleIf": "par == 2",
+     "icon": "bulb",
+     "x": 8,
+     "y": 9,
+     "size": 3,
+     "on": "b1"
+    },
+    {
+     "shape": "icon",
+     "visibleIf": "par == 2",
+     "icon": "bulb",
+     "x": 8,
+     "y": 5,
+     "size": 3,
+     "on": "b2"
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 9.6,
+     "text": {
+      "en": "{Pr1} W"
+     },
+     "size": 22,
+     "visibleIf": "par == 2"
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 5.6,
+     "text": {
+      "en": "{Pr2} W"
+     },
+     "size": 22,
+     "visibleIf": "par == 2"
+    },
+    {
+     "shape": "icon",
+     "icon": "battery",
+     "x": 1,
+     "y": 3,
+     "size": 2.2,
+     "angle": 90,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": -0.3,
+     "text": {
+      "en": "{V} V supply",
+      "kn": "{V} V ಆಕರ"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Power in bulb 1",
+      "kn": "ಬಲ್ಬ್ 1 ಸಾಮರ್ಥ್ಯ"
+     },
+     "expr": "P1",
+     "unit": "W",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Power in bulb 2",
+      "kn": "ಬಲ್ಬ್ 2 ಸಾಮರ್ಥ್ಯ"
+     },
+     "expr": "P2",
+     "unit": "W",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Energy in one hour",
+      "kn": "ಒಂದು ಗಂಟೆಯ ಶಕ್ತಿ"
+     },
+     "expr": "(P1 + P2)/1000",
+     "unit": "kWh",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "In series, which bulb is brighter: the 100 W or the 40 W one?",
+     "kn": "ಶ್ರೇಣಿಯಲ್ಲಿ ಯಾವುದು ಹೆಚ್ಚು ಉಜ್ವಲ: 100 W ಅಥವಾ 40 W?"
+    },
+    {
+     "en": "Switch to parallel. Which arrangement uses more energy in an hour?",
+     "kn": "ಸಮಾಂತರಕ್ಕೆ ಬದಲಿಸಿ. ಒಂದು ಗಂಟೆಯಲ್ಲಿ ಯಾವ ಜೋಡಣೆ ಹೆಚ್ಚು ಶಕ್ತಿ ಬಳಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Lower the supply to 110 V. Why does the power fall to a quarter in parallel?",
+     "kn": "ಆಕರವನ್ನು 110 V ಗೆ ಇಳಿಸಿ. ಸಮಾಂತರದಲ್ಲಿ ಸಾಮರ್ಥ್ಯ ಕಾಲು ಭಾಗ ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

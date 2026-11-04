@@ -399,6 +399,337 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Emf and terminal voltage",
+    "kn": "emf ಮತ್ತು ಟರ್ಮಿನಲ್ ವೋಲ್ಟೇಜ್"
+   },
+   "narration": {
+    "en": "A real cell has an emf E and an internal resistance r. With a current I flowing, the terminal voltage is V = E − Ir. On the V–I graph the line starts at E (open circuit) and its slope is −r. The yellow dot is your circuit."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A real cell has an emf E and an internal resistance r. With a current I flowing, the terminal voltage is V = E − Ir. On the V–I graph the line starts at E (open circuit) and its slope is −r. The yellow dot is your circuit.",
+    "kn": "ನೈಜ ಕೋಶಕ್ಕೆ emf E ಮತ್ತು ಆಂತರಿಕ ರೋಧ r ಇವೆ. ಪ್ರವಾಹ I ಹರಿಯುವಾಗ ಟರ್ಮಿನಲ್ ವೋಲ್ಟೇಜ್ V = E − Ir. V–I ನಕ್ಷೆಯಲ್ಲಿ ಗೆರೆ E ಯಿಂದ ಆರಂಭ, ಇಳಿಜಾರು −r. ಹಳದಿ ಬಿಂದು ನಿಮ್ಮ ಪರಿಪಥ."
+   },
+   "sliders": [
+    {
+     "name": "E",
+     "label": {
+      "en": "Emf E",
+      "kn": "emf E"
+     },
+     "min": 1,
+     "max": 12,
+     "step": 0.5,
+     "value": 6,
+     "unit": "V"
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Internal resistance r",
+      "kn": "ಆಂತರಿಕ ರೋಧ r"
+     },
+     "min": 0.25,
+     "max": 5,
+     "step": 0.25,
+     "value": 1,
+     "unit": "Ω"
+    },
+    {
+     "name": "R",
+     "label": {
+      "en": "External resistance R",
+      "kn": "ಬಾಹ್ಯ ರೋಧ R"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 0.5,
+     "value": 5,
+     "unit": "Ω"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sw",
+     "label": {
+      "en": "Switch closed",
+      "kn": "ಸ್ವಿಚ್ ಮುಚ್ಚಿದೆ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "I",
+     "expr": "if(sw, E/(R + r), 0)"
+    },
+    {
+     "name": "Vt",
+     "expr": "E - I*r"
+    }
+   ],
+   "view": {
+    "x": [
+     -1,
+     31
+    ],
+    "y": [
+     -1,
+     11
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 0.5,
+     "w": 4.5,
+     "h": 4,
+     "fill": false,
+     "color": "white",
+     "width": 2,
+     "opacity": 0.5
+    },
+    {
+     "shape": "icon",
+     "icon": "cell",
+     "x": 2.7,
+     "y": 3.2,
+     "size": 2.5,
+     "color": "yellow"
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 2.7,
+     "y": 1.4,
+     "size": 2.5,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 2.7,
+     "y": 0,
+     "text": {
+      "en": "cell: E, r",
+      "kn": "ಕೋಶ: E, r"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 2.7,
+     "y1": 4.5,
+     "x2": 2.7,
+     "y2": 8,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 2.7,
+     "y1": 8,
+     "x2": 9,
+     "y2": 8,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 9,
+     "y1": 8,
+     "x2": 9,
+     "y2": 1,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 9,
+     "y1": 1,
+     "x2": 5,
+     "y2": 1,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 9,
+     "y": 4.5,
+     "size": 3,
+     "angle": 90
+    },
+    {
+     "shape": "text",
+     "x": 10.2,
+     "y": 4.5,
+     "text": {
+      "en": "R"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "icon",
+     "icon": "switch",
+     "x": 5.8,
+     "y": 8,
+     "size": 2.5,
+     "on": "sw"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "sw",
+     "x": 6.5,
+     "y": 9,
+     "dx": 2,
+     "dy": 0,
+     "color": "yellow",
+     "label": "I"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 1,
+     "x2": 30,
+     "y2": 1,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 1,
+     "x2": 12,
+     "y2": 10,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 0.3,
+     "text": {
+      "en": "I"
+     },
+     "size": 24,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 12.3,
+     "y": 10.3,
+     "text": {
+      "en": "V"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 9,
+     "x2": 28,
+     "y2": 1,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 11.7,
+     "y": 9,
+     "text": {
+      "en": "E"
+     },
+     "size": 22,
+     "color": "blue",
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 28,
+     "y": 0.3,
+     "text": {
+      "en": "E/r"
+     },
+     "size": 22,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "x": "12 + 16*I/(E/r)",
+     "y": "1 + 8*Vt/E",
+     "r": 0.4,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 29,
+     "y": 10,
+     "text": {
+      "en": "V = {Vt:2} V, I = {I:2} A"
+     },
+     "size": 24,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Current I",
+      "kn": "ಪ್ರವಾಹ I"
+     },
+     "expr": "I",
+     "unit": "A",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Terminal voltage V",
+      "kn": "ಟರ್ಮಿನಲ್ ವೋಲ್ಟೇಜ್ V"
+     },
+     "expr": "Vt",
+     "unit": "V",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Power in R",
+      "kn": "R ನಲ್ಲಿ ಸಾಮರ್ಥ್ಯ"
+     },
+     "expr": "I^2*R",
+     "unit": "W",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Efficiency",
+      "kn": "ದಕ್ಷತೆ"
+     },
+     "expr": "if(sw, 100*R/(R + r), 0)",
+     "unit": "%",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Open the switch. What does the voltmeter read now?",
+     "kn": "ಸ್ವಿಚ್ ತೆರೆಯಿರಿ. ಈಗ ವೋಲ್ಟ್‌ಮೀಟರ್ ಏನು ತೋರಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Make R very small. What limits the current?",
+     "kn": "R ತುಂಬಾ ಕಡಿಮೆ ಮಾಡಿ. ಪ್ರವಾಹವನ್ನು ಯಾವುದು ಮಿತಿಗೊಳಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Set R equal to r. Compare the power in R with other values of R.",
+     "kn": "R = r ಮಾಡಿ. R ನ ಇತರ ಮೌಲ್ಯಗಳೊಂದಿಗೆ R ನಲ್ಲಿನ ಸಾಮರ್ಥ್ಯ ಹೋಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

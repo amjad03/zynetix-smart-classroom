@@ -348,6 +348,236 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The binding energy curve",
+    "kn": "ಬಂಧನ ಶಕ್ತಿ ವಕ್ರ"
+   },
+   "narration": {
+    "en": "Binding energy per nucleon rises fast for light nuclei, peaks near A = 56 (iron, about 8.8 MeV) and falls slowly for heavy ones. So joining light nuclei (fusion) or splitting heavy ones (fission) moves towards the peak and releases energy. Curve: semi-empirical mass formula; dots: measured values."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Binding energy per nucleon rises fast for light nuclei, peaks near A = 56 (iron, about 8.8 MeV) and falls slowly for heavy ones. So joining light nuclei (fusion) or splitting heavy ones (fission) moves towards the peak and releases energy. Curve: semi-empirical mass formula; dots: measured values.",
+    "kn": "ಪ್ರತಿ ನ್ಯೂಕ್ಲಿಯಾನ್ ಬಂಧನ ಶಕ್ತಿ ಹಗುರ ನ್ಯೂಕ್ಲಿಯಸ್‌ಗಳಿಗೆ ವೇಗವಾಗಿ ಏರಿ, A = 56 (ಕಬ್ಬಿಣ, ಸುಮಾರು 8.8 MeV) ಬಳಿ ಗರಿಷ್ಠ, ಭಾರವಾದವುಗಳಿಗೆ ನಿಧಾನವಾಗಿ ಇಳಿಯುತ್ತದೆ. ಹಗುರಗಳನ್ನು ಸೇರಿಸುವುದು (ಸಮ್ಮಿಲನ) ಅಥವಾ ಭಾರವನ್ನು ಒಡೆಯುವುದು (ವಿದಳನ) ಶಕ್ತಿ ಬಿಡುಗಡೆ ಮಾಡುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Mass number A",
+      "kn": "ದ್ರವ್ಯರಾಶಿ ಸಂಖ್ಯೆ A"
+     },
+     "min": 8,
+     "max": 240,
+     "step": 4,
+     "value": 56
+    }
+   ],
+   "toggles": [
+    {
+     "name": "meas",
+     "label": {
+      "en": "Measured values",
+      "kn": "ಅಳೆದ ಮೌಲ್ಯಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "ba",
+     "expr": "(15.75*A - 17.8*A^(2/3) - 0.711*(A/(1.98 + 0.0155*A^(2/3)))*((A/(1.98 + 0.0155*A^(2/3))) - 1)/A^(1/3) - 23.7*(A - 2*(A/(1.98 + 0.0155*A^(2/3))))^2/A)/A"
+    },
+    {
+     "name": "bh",
+     "expr": "(15.75*(A/2) - 17.8*(A/2)^(2/3) - 0.711*((A/2)/(1.98 + 0.0155*(A/2)^(2/3)))*(((A/2)/(1.98 + 0.0155*(A/2)^(2/3))) - 1)/(A/2)^(1/3) - 23.7*((A/2) - 2*((A/2)/(1.98 + 0.0155*(A/2)^(2/3))))^2/(A/2))/(A/2)"
+    },
+    {
+     "name": "Q",
+     "expr": "A*(bh - ba)"
+    }
+   ],
+   "view": {
+    "x": [
+     -10,
+     250
+    ],
+    "y": [
+     0,
+     10.5
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "A",
+    "yLabel": "B/A (MeV)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "(15.75*max(x, 4) - 17.8*max(x, 4)^(2/3) - 0.711*(max(x, 4)/(1.98 + 0.0155*max(x, 4)^(2/3)))*((max(x, 4)/(1.98 + 0.0155*max(x, 4)^(2/3))) - 1)/max(x, 4)^(1/3) - 23.7*(max(x, 4) - 2*(max(x, 4)/(1.98 + 0.0155*max(x, 4)^(2/3))))^2/max(x, 4))/max(x, 4)",
+     "from": 8,
+     "to": 240,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "meas",
+     "x": 4,
+     "y": 7.07,
+     "r": 2.5,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "meas",
+     "x": 12,
+     "y": 7.68,
+     "r": 2.5,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "meas",
+     "x": 16,
+     "y": 7.98,
+     "r": 2.5,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "meas",
+     "x": 56,
+     "y": 8.79,
+     "r": 2.5,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "meas",
+     "x": 238,
+     "y": 7.57,
+     "r": 2.5,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 6.4,
+     "text": {
+      "en": "He"
+     },
+     "size": 20,
+     "visibleIf": "meas",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 56,
+     "y": 9.4,
+     "text": {
+      "en": "Fe"
+     },
+     "size": 20,
+     "visibleIf": "meas",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 238,
+     "y": 8.2,
+     "text": {
+      "en": "U"
+     },
+     "size": 20,
+     "visibleIf": "meas",
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": "A",
+     "y1": 0,
+     "x2": "A",
+     "y2": "ba",
+     "dashed": true,
+     "color": "yellow",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "A",
+     "y": "ba",
+     "r": 3,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "A/2",
+     "y": "bh",
+     "r": 2.5,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": "A/2",
+     "y": "bh + 0.6",
+     "text": {
+      "en": "halves",
+      "kn": "ಅರ್ಧಗಳು"
+     },
+     "size": 20,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "B/A (model)",
+      "kn": "B/A (ಮಾದರಿ)"
+     },
+     "expr": "ba",
+     "unit": "MeV",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Total binding energy",
+      "kn": "ಒಟ್ಟು ಬಂಧನ ಶಕ್ತಿ"
+     },
+     "expr": "ba*A",
+     "unit": "MeV",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Energy if split into two halves",
+      "kn": "ಎರಡು ಅರ್ಧಗಳಾಗಿ ಒಡೆದರೆ ಶಕ್ತಿ"
+     },
+     "expr": "Q",
+     "unit": "MeV",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the peak of the curve. Which element is there?",
+     "kn": "ವಕ್ರದ ಶಿಖರ ಹುಡುಕಿ. ಅಲ್ಲಿ ಯಾವ ಧಾತು?"
+    },
+    {
+     "en": "Set A = 236 and read the energy for splitting it in half. Is it close to 200 MeV?",
+     "kn": "A = 236 ಮಾಡಿ, ಅರ್ಧಕ್ಕೆ ಒಡೆಯುವ ಶಕ್ತಿ ಓದಿ. ಅದು 200 MeV ಗೆ ಹತ್ತಿರವೇ?"
+    },
+    {
+     "en": "For a light nucleus the split energy is negative. What does that tell you?",
+     "kn": "ಹಗುರ ನ್ಯೂಕ್ಲಿಯಸ್‌ಗೆ ಒಡೆಯುವ ಶಕ್ತಿ ಋಣ. ಅದು ಏನು ಹೇಳುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

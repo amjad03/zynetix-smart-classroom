@@ -477,6 +477,280 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "An electric dipole in a uniform field",
+    "kn": "ಏಕರೂಪ ಕ್ಷೇತ್ರದಲ್ಲಿ ವಿದ್ಯುತ್ ದ್ವಿಧ್ರುವ"
+   },
+   "narration": {
+    "en": "The forces +qE and −qE are equal and opposite, so the net force is zero, but they form a couple. The torque τ = pE sin θ turns the dipole towards the field. With damping it settles at θ = 0, the position of least energy U = −pE cos θ. The turning speed is not to scale."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The forces +qE and −qE are equal and opposite, so the net force is zero, but they form a couple. The torque τ = pE sin θ turns the dipole towards the field. With damping it settles at θ = 0, the position of least energy U = −pE cos θ. The turning speed is not to scale.",
+    "kn": "+qE ಮತ್ತು −qE ಬಲಗಳು ಸಮ ಮತ್ತು ವಿರುದ್ಧ, ಒಟ್ಟು ಬಲ ಶೂನ್ಯ, ಆದರೆ ಯುಗ್ಮ ರಚಿಸುತ್ತವೆ. ಟಾರ್ಕ್ τ = pE sin θ ದ್ವಿಧ್ರುವವನ್ನು ಕ್ಷೇತ್ರದತ್ತ ತಿರುಗಿಸುತ್ತದೆ. ಅವಮಂದನದೊಂದಿಗೆ θ = 0 ನಲ್ಲಿ ನಿಲ್ಲುತ್ತದೆ, ಕನಿಷ್ಠ ಶಕ್ತಿ U = −pE cos θ."
+   },
+   "sliders": [
+    {
+     "name": "q",
+     "label": {
+      "en": "Charge q",
+      "kn": "ಆವೇಶ q"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 4,
+     "unit": "nC"
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "Separation 2a",
+      "kn": "ಅಂತರ 2a"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 4,
+     "unit": "cm"
+    },
+    {
+     "name": "E",
+     "label": {
+      "en": "Field E",
+      "kn": "ಕ್ಷೇತ್ರ E"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 5,
+     "unit": "×10⁴ N/C"
+    },
+    {
+     "name": "th0",
+     "label": {
+      "en": "Start angle θ",
+      "kn": "ಆರಂಭ ಕೋನ θ"
+     },
+     "min": 0,
+     "max": 180,
+     "step": 5,
+     "value": 60,
+     "unit": "°"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "dmp",
+     "label": {
+      "en": "Damping",
+      "kn": "ಅವಮಂದನ"
+     },
+     "value": true
+    },
+    {
+     "name": "pv",
+     "label": {
+      "en": "Dipole moment arrow",
+      "kn": "ದ್ವಿಧ್ರುವ ಭ್ರಾಮಕ ಬಾಣ"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Release",
+      "kn": "ಬಿಡಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 20,
+    "dt": 0.005
+   },
+   "state": [
+    {
+     "name": "th",
+     "init": "rad(th0)",
+     "rate": "w"
+    },
+    {
+     "name": "w",
+     "init": 0,
+     "rate": "-12*pE/8*sin(th) - if(dmp, 1.2, 0)*w"
+    }
+   ],
+   "integrator": "rk2",
+   "vars": [
+    {
+     "name": "pE",
+     "expr": "q*d*E/10"
+    }
+   ],
+   "view": {
+    "x": [
+     -10,
+     10
+    ],
+    "y": [
+     -6,
+     6
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "arrow",
+     "x": -9.5,
+     "y": -4.5,
+     "dx": 19,
+     "dy": 0,
+     "color": "white",
+     "opacity": 0.25
+    },
+    {
+     "shape": "arrow",
+     "x": -9.5,
+     "y": 4.5,
+     "dx": 19,
+     "dy": 0,
+     "color": "white",
+     "opacity": 0.25
+    },
+    {
+     "shape": "arrow",
+     "x": -9.5,
+     "y": 0,
+     "dx": 19,
+     "dy": 0,
+     "color": "white",
+     "opacity": 0.15
+    },
+    {
+     "shape": "text",
+     "x": 9.5,
+     "y": 5.2,
+     "text": {
+      "en": "E"
+     },
+     "size": 26,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": "-3*cos(th)",
+     "y1": "-3*sin(th)",
+     "x2": "3*cos(th)",
+     "y2": "3*sin(th)",
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "3*cos(th)",
+     "y": "3*sin(th)",
+     "r": 0.6,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "x": "-3*cos(th)",
+     "y": "-3*sin(th)",
+     "r": 0.6,
+     "color": "blue"
+    },
+    {
+     "shape": "arrow",
+     "x": "3*cos(th)",
+     "y": "3*sin(th)",
+     "dx": "0.25*E",
+     "dy": 0,
+     "color": "orange",
+     "label": "+qE"
+    },
+    {
+     "shape": "arrow",
+     "x": "-3*cos(th)",
+     "y": "-3*sin(th)",
+     "dx": "-0.25*E",
+     "dy": 0,
+     "color": "orange",
+     "label": "−qE"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "pv",
+     "x": 0,
+     "y": 0,
+     "dx": "2*cos(th)",
+     "dy": "2*sin(th)",
+     "color": "green",
+     "label": "p"
+    },
+    {
+     "shape": "text",
+     "x": -9.5,
+     "y": -5.6,
+     "text": {
+      "en": "θ = {deg(th):0}°"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Torque now",
+      "kn": "ಈಗಿನ ಟಾರ್ಕ್"
+     },
+     "expr": "pE*sin(th)",
+     "unit": "µN m",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Maximum torque pE",
+      "kn": "ಗರಿಷ್ಠ ಟಾರ್ಕ್ pE"
+     },
+     "expr": "pE",
+     "unit": "µN m",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Potential energy U",
+      "kn": "ಸ್ಥಿತಿ ಶಕ್ತಿ U"
+     },
+     "expr": "-pE*cos(th)",
+     "unit": "µJ",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Release from 90°. Where is the torque largest, and where is it zero?",
+     "kn": "90° ನಿಂದ ಬಿಡಿ. ಟಾರ್ಕ್ ಎಲ್ಲಿ ಗರಿಷ್ಠ, ಎಲ್ಲಿ ಶೂನ್ಯ?"
+    },
+    {
+     "en": "Set θ = 180° exactly. Why does nothing happen, and why is that unstable?",
+     "kn": "θ = 180° ಮಾಡಿ. ಏಕೆ ಏನೂ ಆಗುವುದಿಲ್ಲ, ಅದು ಏಕೆ ಅಸ್ಥಿರ?"
+    },
+    {
+     "en": "Turn on damping. What is U at the end?",
+     "kn": "ಅವಮಂದನ ಆನ್ ಮಾಡಿ. ಕೊನೆಯಲ್ಲಿ U ಎಷ್ಟು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

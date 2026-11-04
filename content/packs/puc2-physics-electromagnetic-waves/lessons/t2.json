@@ -250,6 +250,259 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "An electromagnetic wave",
+    "kn": "ವಿದ್ಯುತ್ಕಾಂತೀಯ ತರಂಗ"
+   },
+   "narration": {
+    "en": "Oscillating electric (E) and magnetic (B) fields travel together, in phase, at right angles to each other and to the direction of travel. In vacuum the speed is c = fλ = 3 × 10⁸ m/s and B0 = E0/c. In a medium the wave slows to c/n and its wavelength shortens; the frequency stays the same."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Oscillating electric (E) and magnetic (B) fields travel together, in phase, at right angles to each other and to the direction of travel. In vacuum the speed is c = fλ = 3 × 10⁸ m/s and B0 = E0/c. In a medium the wave slows to c/n and its wavelength shortens; the frequency stays the same.",
+    "kn": "ದೋಲಿಸುವ ವಿದ್ಯುತ್ (E) ಮತ್ತು ಕಾಂತ (B) ಕ್ಷೇತ್ರಗಳು ಒಂದೇ ಹಂತದಲ್ಲಿ, ಪರಸ್ಪರ ಮತ್ತು ಚಲನೆಯ ದಿಕ್ಕಿಗೆ ಲಂಬವಾಗಿ ಸಾಗುತ್ತವೆ. ನಿರ್ವಾತದಲ್ಲಿ c = fλ = 3 × 10⁸ m/s, B0 = E0/c. ಮಾಧ್ಯಮದಲ್ಲಿ ವೇಗ c/n ಗೆ ಇಳಿದು ತರಂಗಾಂತರ ಕುಗ್ಗುತ್ತದೆ; ಆವೃತ್ತಿ ಬದಲಾಗದು."
+   },
+   "sliders": [
+    {
+     "name": "lam",
+     "label": {
+      "en": "Wavelength in vacuum",
+      "kn": "ನಿರ್ವಾತದಲ್ಲಿ ತರಂಗಾಂತರ"
+     },
+     "min": 400,
+     "max": 700,
+     "step": 10,
+     "value": 500,
+     "unit": "nm"
+    },
+    {
+     "name": "E0",
+     "label": {
+      "en": "Field amplitude E0",
+      "kn": "ಕ್ಷೇತ್ರ ಆಯಾಮ E0"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "V/m"
+    }
+   ],
+   "choices": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Right-hand medium",
+      "kn": "ಬಲಭಾಗದ ಮಾಧ್ಯಮ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Vacuum",
+        "kn": "ನಿರ್ವಾತ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Water (1.33)",
+        "kn": "ನೀರು (1.33)"
+       },
+       "value": 1.33
+      },
+      {
+       "label": {
+        "en": "Glass (1.5)",
+        "kn": "ಗಾಜು (1.5)"
+       },
+       "value": 1.5
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -9,
+     9
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 3,
+     "x2": 30,
+     "y2": 3,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -5,
+     "x2": 30,
+     "y2": -5,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 1",
+     "x": 10,
+     "y": -9,
+     "w": 20,
+     "h": 18,
+     "color": "blue",
+     "opacity": 0.12
+    },
+    {
+     "shape": "wave",
+     "fn": "3 + 0.05*E0*sin(2*pi*(x - 3*t)/(lam/100))",
+     "from": 0,
+     "to": 10,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "wave",
+     "fn": "3 + 0.05*E0*sin(2*pi*((x - 10)*n - 3*t + 10)/(lam/100))",
+     "from": 10,
+     "to": 30,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "wave",
+     "fn": "-5 + 0.05*E0*sin(2*pi*(x - 3*t)/(lam/100))",
+     "from": 0,
+     "to": 10,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "wave",
+     "fn": "-5 + 0.05*E0*sin(2*pi*((x - 10)*n - 3*t + 10)/(lam/100))",
+     "from": 10,
+     "to": 30,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 0.3,
+     "y": 8,
+     "text": {
+      "en": "E (up and down, in the screen)",
+      "kn": "E (ಮೇಲೆ-ಕೆಳಗೆ, ಪರದೆಯಲ್ಲಿ)"
+     },
+     "size": 22,
+     "color": "yellow",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0.3,
+     "y": -0.5,
+     "text": {
+      "en": "B (in and out of the screen, drawn flat)",
+      "kn": "B (ಪರದೆಯ ಒಳ-ಹೊರಗೆ, ಸಮತಟ್ಟಾಗಿ)"
+     },
+     "size": 22,
+     "color": "blue",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 8,
+     "text": {
+      "en": "medium n = {n}",
+      "kn": "ಮಾಧ್ಯಮ n = {n}"
+     },
+     "size": 22,
+     "visibleIf": "n > 1"
+    },
+    {
+     "shape": "arrow",
+     "x": 24,
+     "y": -8,
+     "dx": 5,
+     "dy": 0,
+     "color": "white",
+     "label": "c/n"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Frequency",
+      "kn": "ಆವೃತ್ತಿ"
+     },
+     "expr": "3000/lam",
+     "unit": "×10¹⁴ Hz",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Speed in the medium",
+      "kn": "ಮಾಧ್ಯಮದಲ್ಲಿ ವೇಗ"
+     },
+     "expr": "300/n",
+     "unit": "×10⁶ m/s",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Wavelength in the medium",
+      "kn": "ಮಾಧ್ಯಮದಲ್ಲಿ ತರಂಗಾಂತರ"
+     },
+     "expr": "lam/n",
+     "unit": "nm",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "B0",
+      "kn": "B0"
+     },
+     "expr": "E0*n/30",
+     "unit": "×10⁻⁷ T",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Do E and B reach their peaks at the same moment?",
+     "kn": "E ಮತ್ತು B ಒಂದೇ ಕ್ಷಣದಲ್ಲಿ ಗರಿಷ್ಠ ತಲುಪುತ್ತವೆಯೇ?"
+    },
+    {
+     "en": "Switch to glass. What changes: frequency, wavelength or speed?",
+     "kn": "ಗಾಜಿಗೆ ಬದಲಿಸಿ. ಯಾವುದು ಬದಲಾಗುತ್ತದೆ: ಆವೃತ್ತಿ, ತರಂಗಾಂತರ, ವೇಗ?"
+    },
+    {
+     "en": "Double E0. What is the new B0?",
+     "kn": "E0 ದ್ವಿಗುಣಗೊಳಿಸಿ. ಹೊಸ B0 ಎಷ್ಟು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

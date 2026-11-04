@@ -711,6 +711,192 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Electrons and holes in pure silicon",
+    "kn": "ಶುದ್ಧ ಸಿಲಿಕಾನ್‌ನಲ್ಲಿ ಎಲೆಕ್ಟ್ರಾನ್ ಮತ್ತು ರಂಧ್ರ"
+   },
+   "narration": {
+    "en": "Heat breaks a few covalent bonds. Each break frees an electron and leaves a hole, so in an intrinsic semiconductor ne = nh = ni. ni rises steeply with temperature: about 1.5 × 10¹⁶ m⁻³ for Si at 300 K. In a field, electrons drift one way and holes the other; both carry current. Dot numbers grow on a log scale."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Heat breaks a few covalent bonds. Each break frees an electron and leaves a hole, so in an intrinsic semiconductor ne = nh = ni. ni rises steeply with temperature: about 1.5 × 10¹⁶ m⁻³ for Si at 300 K. In a field, electrons drift one way and holes the other; both carry current. Dot numbers grow on a log scale.",
+    "kn": "ಉಷ್ಣ ಕೆಲವು ಸಹಸಂಯೋಜಕ ಬಂಧಗಳನ್ನು ಮುರಿಯುತ್ತದೆ. ಪ್ರತಿ ಮುರಿತ ಒಂದು ಎಲೆಕ್ಟ್ರಾನ್ ಬಿಡುಗಡೆ ಮಾಡಿ ರಂಧ್ರ ಬಿಡುತ್ತದೆ; ಸಹಜ ಅರೆವಾಹಕದಲ್ಲಿ ne = nh = ni. ni ತಾಪದೊಂದಿಗೆ ತೀವ್ರವಾಗಿ ಏರುತ್ತದೆ: 300 K ನಲ್ಲಿ Si ಗೆ ಸುಮಾರು 1.5 × 10¹⁶ m⁻³. ಕ್ಷೇತ್ರದಲ್ಲಿ ಎಲೆಕ್ಟ್ರಾನ್ ಒಂದು ಕಡೆ, ರಂಧ್ರ ಇನ್ನೊಂದು ಕಡೆ."
+   },
+   "sliders": [
+    {
+     "name": "T",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪ"
+     },
+     "min": 200,
+     "max": 500,
+     "step": 10,
+     "value": 300,
+     "unit": "K"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fld",
+     "label": {
+      "en": "Apply a field",
+      "kn": "ಕ್ಷೇತ್ರ ಹಾಕಿ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "mat",
+     "label": {
+      "en": "Crystal",
+      "kn": "ಸ್ಫಟಿಕ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Silicon",
+        "kn": "ಸಿಲಿಕಾನ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Germanium",
+        "kn": "ಜರ್ಮೇನಿಯಂ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "Eg",
+     "expr": "if(mat == 1, 1.1, 0.71)"
+    },
+    {
+     "name": "n3",
+     "expr": "if(mat == 1, 1.5, 2400)"
+    },
+    {
+     "name": "ni",
+     "expr": "n3*(T/300)^1.5*exp(-Eg/(2*8.617e-5)*(1/T - 1/300))"
+    },
+    {
+     "name": "np",
+     "expr": "clamp(round(4 + 3*log(ni/1.5)), 0, 40)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     24
+    ],
+    "y": [
+     0,
+     12
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "1.5 + mod(i, 8)*3",
+     "y": "1.5 + floor(i/8)*2.2",
+     "r": 0.45,
+     "color": "white",
+     "opacity": 0.25
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "visibleIf": "i < np",
+     "x": "mod(2 + 20*rand(i) - fld*1.2*t + 0.4*sin(6*t + 6*rand(i + 5)), 24)",
+     "y": "1 + 10*rand(i + 50) + 0.3*cos(5*t + 6*rand(i + 8))",
+     "r": 0.22,
+     "color": "blue"
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "visibleIf": "i < np",
+     "x": "mod(2 + 20*rand(i + 300) + fld*0.6*t + 0.3*sin(4*t + 6*rand(i + 15)), 24)",
+     "y": "1 + 10*rand(i + 350)",
+     "r": 0.26,
+     "color": "red"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "fld",
+     "x": 2,
+     "y": 11.4,
+     "dx": 6,
+     "dy": 0,
+     "color": "yellow",
+     "label": "E"
+    },
+    {
+     "shape": "text",
+     "x": 22,
+     "y": 11.4,
+     "text": {
+      "en": "blue: electrons   red rings: holes",
+      "kn": "ನೀಲಿ: ಎಲೆಕ್ಟ್ರಾನ್   ಕೆಂಪು: ರಂಧ್ರ"
+     },
+     "size": 20,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "ni",
+      "kn": "ni"
+     },
+     "expr": "ni",
+     "unit": "×10¹⁶ m⁻³",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Energy gap",
+      "kn": "ಶಕ್ತಿ ಅಂತರ"
+     },
+     "expr": "Eg",
+     "unit": "eV",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise T from 300 K to 400 K. By roughly what factor does ni grow?",
+     "kn": "T ಅನ್ನು 300 K ನಿಂದ 400 K ಗೆ ಏರಿಸಿ. ni ಸುಮಾರು ಎಷ್ಟು ಪಟ್ಟು?"
+    },
+    {
+     "en": "Turn on the field. Which way do the holes move?",
+     "kn": "ಕ್ಷೇತ್ರ ಆನ್ ಮಾಡಿ. ರಂಧ್ರಗಳು ಯಾವ ಕಡೆ ಚಲಿಸುತ್ತವೆ?"
+    },
+    {
+     "en": "Why does germanium have far more carriers than silicon at room temperature?",
+     "kn": "ಕೊಠಡಿ ತಾಪದಲ್ಲಿ ಜರ್ಮೇನಿಯಂನಲ್ಲಿ ಸಿಲಿಕಾನ್‌ಗಿಂತ ಹೆಚ್ಚು ವಾಹಕಗಳು ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

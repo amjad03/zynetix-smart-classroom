@@ -370,6 +370,243 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Refraction through a glass slab",
+    "kn": "ಗಾಜಿನ ಹಲಗೆಯ ಮೂಲಕ ವಕ್ರೀಭವನ"
+   },
+   "narration": {
+    "en": "Entering the denser slab the ray bends towards the normal (sin i = n sin r); leaving it bends away by the same amount. So it comes out parallel to the incident ray, but shifted sideways by d = t sin(i − r)/cos r."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Entering the denser slab the ray bends towards the normal (sin i = n sin r); leaving it bends away by the same amount. So it comes out parallel to the incident ray, but shifted sideways by d = t sin(i − r)/cos r.",
+    "kn": "ಸಾಂದ್ರ ಹಲಗೆಯನ್ನು ಪ್ರವೇಶಿಸುವಾಗ ಕಿರಣ ಲಂಬದತ್ತ ಬಾಗುತ್ತದೆ (sin i = n sin r); ಹೊರಬರುವಾಗ ಅಷ್ಟೇ ದೂರ ಬಾಗುತ್ತದೆ. ಆದ್ದರಿಂದ ಆಪತನ ಕಿರಣಕ್ಕೆ ಸಮಾಂತರವಾಗಿ, ಆದರೆ d = t sin(i − r)/cos r ಪಕ್ಕಕ್ಕೆ ಸರಿದು ಹೊರಬರುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "i",
+     "label": {
+      "en": "Angle of incidence",
+      "kn": "ಆಪತನ ಕೋನ"
+     },
+     "min": 0,
+     "max": 80,
+     "step": 2,
+     "value": 40,
+     "unit": "°"
+    },
+    {
+     "name": "ts",
+     "label": {
+      "en": "Slab thickness",
+      "kn": "ಹಲಗೆಯ ದಪ್ಪ"
+     },
+     "min": 2,
+     "max": 10,
+     "step": 0.5,
+     "value": 6,
+     "unit": "cm"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "nrm",
+     "label": {
+      "en": "Normals",
+      "kn": "ಲಂಬಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Slab",
+      "kn": "ಹಲಗೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Water (1.33)",
+        "kn": "ನೀರು (1.33)"
+       },
+       "value": 1.33
+      },
+      {
+       "label": {
+        "en": "Glass (1.5)",
+        "kn": "ಗಾಜು (1.5)"
+       },
+       "value": 1.5
+      },
+      {
+       "label": {
+        "en": "Diamond (2.42)",
+        "kn": "ವಜ್ರ (2.42)"
+       },
+       "value": 2.42
+      }
+     ],
+     "value": 1.5
+    }
+   ],
+   "vars": [
+    {
+     "name": "rr",
+     "expr": "asin(sin(rad(i))/n)"
+    },
+    {
+     "name": "dsh",
+     "expr": "ts*sin(rad(i) - rr)/cos(rr)"
+    }
+   ],
+   "view": {
+    "x": [
+     -14,
+     22
+    ],
+    "y": [
+     -16,
+     10
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -14,
+     "y": "-ts",
+     "w": 36,
+     "h": "ts",
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "line",
+     "visibleIf": "nrm",
+     "x1": 0,
+     "y1": -16,
+     "x2": 0,
+     "y2": 9,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "nrm",
+     "x1": "ts*tan(rr)",
+     "y1": -16,
+     "x2": "ts*tan(rr)",
+     "y2": 9,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": "-10*sin(rad(i))",
+     "y1": "10*cos(rad(i))",
+     "x2": 0,
+     "y2": 0,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "ts*tan(rr)",
+     "y2": "-ts",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "ts*tan(rr)",
+     "y1": "-ts",
+     "x2": "ts*tan(rr) + 9*sin(rad(i))",
+     "y2": "-ts - 9*cos(rad(i))",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "(ts + 9*cos(rad(i)))*tan(rad(i))",
+     "y2": "-ts - 9*cos(rad(i))",
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.6,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 21,
+     "y": 9,
+     "text": {
+      "en": "i = {i}°   r = {deg(rr):1}°"
+     },
+     "size": 26,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 21,
+     "y": 7.4,
+     "text": {
+      "en": "shift d = {dsh:2} cm",
+      "kn": "ಸ್ಥಳಾಂತರ d = {dsh:2} cm"
+     },
+     "size": 26,
+     "color": "green",
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Angle of refraction r",
+      "kn": "ವಕ್ರೀಭವನ ಕೋನ r"
+     },
+     "expr": "deg(rr)",
+     "unit": "°",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Lateral shift d",
+      "kn": "ಪಾರ್ಶ್ವ ಸ್ಥಳಾಂತರ d"
+     },
+     "expr": "dsh",
+     "unit": "cm",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set i = 0. Is there any shift?",
+     "kn": "i = 0 ಮಾಡಿ. ಸ್ಥಳಾಂತರ ಇದೆಯೇ?"
+    },
+    {
+     "en": "Double the thickness. What happens to the shift?",
+     "kn": "ದಪ್ಪ ದ್ವಿಗುಣಗೊಳಿಸಿ. ಸ್ಥಳಾಂತರ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Compare water, glass and diamond at the same angle.",
+     "kn": "ಒಂದೇ ಕೋನದಲ್ಲಿ ನೀರು, ಗಾಜು, ವಜ್ರ ಹೋಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

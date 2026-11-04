@@ -505,6 +505,274 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A rod sliding on rails in a magnetic field",
+    "kn": "ಕಾಂತ ಕ್ಷೇತ್ರದಲ್ಲಿ ಹಳಿಗಳ ಮೇಲೆ ಜಾರುವ ಸರಳು"
+   },
+   "narration": {
+    "en": "The moving rod cuts the field: emf ε = Blv drives a current I = ε/R round the circuit. The field then pushes on the current with F = BIl, opposing the motion. Keep pushing and the force you apply supplies the power εI. Let go and the rod slows down, as Lenz's law says. Rod mass 0.1 kg."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The moving rod cuts the field: emf ε = Blv drives a current I = ε/R round the circuit. The field then pushes on the current with F = BIl, opposing the motion. Keep pushing and the force you apply supplies the power εI. Let go and the rod slows down, as Lenz's law says. Rod mass 0.1 kg.",
+    "kn": "ಚಲಿಸುವ ಸರಳು ಕ್ಷೇತ್ರವನ್ನು ಕತ್ತರಿಸುತ್ತದೆ: emf ε = Blv, ಪ್ರವಾಹ I = ε/R. ಕ್ಷೇತ್ರ ಪ್ರವಾಹದ ಮೇಲೆ F = BIl ಬಲ ಹಾಕಿ ಚಲನೆಯನ್ನು ವಿರೋಧಿಸುತ್ತದೆ. ತಳ್ಳುತ್ತಿದ್ದರೆ ನಿಮ್ಮ ಬಲ εI ಸಾಮರ್ಥ್ಯ ನೀಡುತ್ತದೆ. ಬಿಟ್ಟರೆ ಸರಳು ನಿಧಾನವಾಗುತ್ತದೆ. ಸರಳಿನ ದ್ರವ್ಯರಾಶಿ 0.1 kg."
+   },
+   "sliders": [
+    {
+     "name": "B",
+     "label": {
+      "en": "Field B",
+      "kn": "ಕ್ಷೇತ್ರ B"
+     },
+     "min": 0.1,
+     "max": 2,
+     "step": 0.1,
+     "value": 0.5,
+     "unit": "T"
+    },
+    {
+     "name": "l",
+     "label": {
+      "en": "Rod length l",
+      "kn": "ಸರಳಿನ ಉದ್ದ l"
+     },
+     "min": 0.1,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.5,
+     "unit": "m"
+    },
+    {
+     "name": "v0",
+     "label": {
+      "en": "Speed v",
+      "kn": "ವೇಗ v"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 4,
+     "unit": "m/s"
+    },
+    {
+     "name": "R",
+     "label": {
+      "en": "Resistance R",
+      "kn": "ರೋಧ R"
+     },
+     "min": 0.5,
+     "max": 10,
+     "step": 0.5,
+     "value": 2,
+     "unit": "Ω"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "push",
+     "label": {
+      "en": "Keep pushing at constant speed",
+      "kn": "ಸ್ಥಿರ ವೇಗದಲ್ಲಿ ತಳ್ಳುತ್ತಿರು"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 10,
+    "dt": 0.005,
+    "stopWhen": "xr > 20.5"
+   },
+   "state": [
+    {
+     "name": "xr",
+     "init": 0.5,
+     "rate": "v"
+    },
+    {
+     "name": "v",
+     "init": "v0",
+     "rate": "if(push, 0, -F/0.1)"
+    }
+   ],
+   "integrator": "rk2",
+   "vars": [
+    {
+     "name": "emf",
+     "expr": "B*l*v"
+    },
+    {
+     "name": "Ic",
+     "expr": "emf/R"
+    },
+    {
+     "name": "F",
+     "expr": "B*Ic*l"
+    }
+   ],
+   "view": {
+    "x": [
+     -1.5,
+     21
+    ],
+    "y": [
+     -0.45,
+     1.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 33,
+     "x": "0.5 + 1.9*mod(i, 11)",
+     "y": "0.15 + 0.4*floor(i/11)",
+     "r": 0.07,
+     "color": "white",
+     "opacity": 0.35
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 21,
+     "y2": 0,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "l",
+     "x2": 21,
+     "y2": "l",
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 0,
+     "y2": "l",
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 0,
+     "y": "l/2",
+     "size": 1.2,
+     "angle": 90,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": "xr",
+     "y1": -0.05,
+     "x2": "xr",
+     "y2": "l + 0.05",
+     "color": "yellow",
+     "width": 8
+    },
+    {
+     "shape": "arrow",
+     "x": "xr",
+     "y": "l + 0.15",
+     "dx": "0.25*v",
+     "dy": 0,
+     "color": "white",
+     "label": "v"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "Ic > 0.001",
+     "x": "xr + 0.3",
+     "y": "0.2*l",
+     "dx": 0,
+     "dy": "0.6*l",
+     "color": "blue",
+     "label": "I"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "F > 0.0005",
+     "x": "xr",
+     "y": "l/2",
+     "dx": "-clamp(F*8, 0.4, 6)",
+     "dy": 0,
+     "color": "red",
+     "label": "BIl"
+    },
+    {
+     "shape": "text",
+     "x": 20.5,
+     "y": 1.35,
+     "text": {
+      "en": "B out of the screen (dots)",
+      "kn": "B ಪರದೆಯಿಂದ ಹೊರಕ್ಕೆ (ಚುಕ್ಕೆಗಳು)"
+     },
+     "size": 22,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Emf Blv",
+      "kn": "emf Blv"
+     },
+     "expr": "emf",
+     "unit": "V",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Current",
+      "kn": "ಪ್ರವಾಹ"
+     },
+     "expr": "Ic",
+     "unit": "A",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Opposing force BIl",
+      "kn": "ವಿರೋಧ ಬಲ BIl"
+     },
+     "expr": "F",
+     "unit": "N",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "Power εI",
+      "kn": "ಸಾಮರ್ಥ್ಯ εI"
+     },
+     "expr": "emf*Ic",
+     "unit": "W",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Keep pushing and double B. By what factor does the opposing force grow?",
+     "kn": "ತಳ್ಳುತ್ತಿರಿ, B ದ್ವಿಗುಣಗೊಳಿಸಿ. ವಿರೋಧ ಬಲ ಎಷ್ಟು ಪಟ್ಟು?"
+    },
+    {
+     "en": "Turn off pushing and play. How long until the speed halves?",
+     "kn": "ತಳ್ಳುವುದು ಆಫ್ ಮಾಡಿ ಪ್ರಾರಂಭಿಸಿ. ವೇಗ ಅರ್ಧವಾಗಲು ಎಷ್ಟು ಸಮಯ?"
+    },
+    {
+     "en": "Make R very large. Why does the rod hardly slow down then?",
+     "kn": "R ತುಂಬಾ ದೊಡ್ಡದು ಮಾಡಿ. ಆಗ ಸರಳು ಏಕೆ ನಿಧಾನವಾಗುವುದಿಲ್ಲ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

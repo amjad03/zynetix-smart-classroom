@@ -409,6 +409,255 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Light knocks out electrons",
+    "kn": "ಬೆಳಕು ಎಲೆಕ್ಟ್ರಾನ್‌ಗಳನ್ನು ಹೊರಹಾಕುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "Each photon carries energy hν. If hν is more than the work function φ0 of the metal, an electron can escape with kinetic energy up to hν − φ0. Below the threshold frequency nothing comes out, however bright the light. Brighter light (same ν) only frees more electrons."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Each photon carries energy hν. If hν is more than the work function φ0 of the metal, an electron can escape with kinetic energy up to hν − φ0. Below the threshold frequency nothing comes out, however bright the light. Brighter light (same ν) only frees more electrons.",
+    "kn": "ಪ್ರತಿ ಫೋಟಾನ್ hν ಶಕ್ತಿ ಹೊಂದಿದೆ. hν ಲೋಹದ ಕಾರ್ಯ ಫಲನ φ0 ಗಿಂತ ಹೆಚ್ಚಿದ್ದರೆ ಎಲೆಕ್ಟ್ರಾನ್ hν − φ0 ವರೆಗಿನ ಚಲನ ಶಕ್ತಿಯೊಂದಿಗೆ ಹೊರಬರುತ್ತದೆ. ಆರಂಭ ಆವೃತ್ತಿಗಿಂತ ಕಡಿಮೆಯಾದರೆ ಎಷ್ಟೇ ಪ್ರಕಾಶಮಾನ ಬೆಳಕಿದ್ದರೂ ಏನೂ ಹೊರಬರದು. ಹೆಚ್ಚು ತೀವ್ರತೆ ಹೆಚ್ಚು ಎಲೆಕ್ಟ್ರಾನ್ ಮಾತ್ರ."
+   },
+   "sliders": [
+    {
+     "name": "nu",
+     "label": {
+      "en": "Frequency",
+      "kn": "ಆವೃತ್ತಿ"
+     },
+     "min": 4,
+     "max": 15,
+     "step": 0.5,
+     "value": 8,
+     "unit": "×10¹⁴ Hz"
+    },
+    {
+     "name": "Int",
+     "label": {
+      "en": "Intensity",
+      "kn": "ತೀವ್ರತೆ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "choices": [
+    {
+     "name": "W",
+     "label": {
+      "en": "Metal",
+      "kn": "ಲೋಹ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Caesium (2.14 eV)",
+        "kn": "ಸೀಸಿಯಂ (2.14 eV)"
+       },
+       "value": 2.14
+      },
+      {
+       "label": {
+        "en": "Sodium (2.75 eV)",
+        "kn": "ಸೋಡಿಯಂ (2.75 eV)"
+       },
+       "value": 2.75
+      },
+      {
+       "label": {
+        "en": "Copper (4.65 eV)",
+        "kn": "ತಾಮ್ರ (4.65 eV)"
+       },
+       "value": 4.65
+      }
+     ],
+     "value": 2.75
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "Eph",
+     "expr": "0.41357*nu"
+    },
+    {
+     "name": "emit",
+     "expr": "Eph > W"
+    },
+    {
+     "name": "Kmax",
+     "expr": "max(Eph - W, 0)"
+    },
+    {
+     "name": "vmax",
+     "expr": "sqrt(2*Kmax*1.602e-19/9.109e-31)/1e5"
+    },
+    {
+     "name": "spd",
+     "expr": "2 + 3*sqrt(Kmax)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     24
+    ],
+    "y": [
+     0,
+     13.5
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 1,
+     "w": 1.2,
+     "h": 11,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 1.6,
+     "y": 0.3,
+     "text": {
+      "en": "metal",
+      "kn": "ಲೋಹ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "particles",
+     "count": 30,
+     "visibleIf": "i < 3*Int",
+     "x": "2.4 + 0.9*mod(10*rand(i) - 6*t, 10)",
+     "y": "1.5 + 6*rand(i + 40) + 0.5*mod(10*rand(i) - 6*t, 10)",
+     "r": 0.18,
+     "color": {
+      "by": "clamp((nu - 4.3)/3.2, 0, 1)",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "particles",
+     "count": 30,
+     "visibleIf": "emit && i < 3*Int",
+     "x": "2.3 + mod(spd*t + 12*rand(i + 7), 20)",
+     "y": "1.5 + 8*rand(i + 70) + 0.15*mod(spd*t + 12*rand(i + 7), 20)",
+     "r": 0.25,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 23.5,
+     "y": 12.8,
+     "text": {
+      "en": "photon hν = {Eph:2} eV"
+     },
+     "size": 24,
+     "color": "yellow",
+     "align": "right"
+    },
+    {
+     "shape": "label",
+     "x": 14,
+     "y": 0.8,
+     "text": {
+      "en": "No electrons: hν < φ0",
+      "kn": "ಎಲೆಕ್ಟ್ರಾನ್ ಇಲ್ಲ: hν < φ0"
+     },
+     "size": 24,
+     "visibleIf": "!emit",
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 14,
+     "y": 0.8,
+     "text": {
+      "en": "Electrons emitted",
+      "kn": "ಎಲೆಕ್ಟ್ರಾನ್‌ಗಳ ಉತ್ಸರ್ಜನೆ"
+     },
+     "size": 24,
+     "visibleIf": "emit",
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Photon energy hν",
+      "kn": "ಫೋಟಾನ್ ಶಕ್ತಿ hν"
+     },
+     "expr": "Eph",
+     "unit": "eV",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Threshold frequency",
+      "kn": "ಆರಂಭ ಆವೃತ್ತಿ"
+     },
+     "expr": "W/0.41357",
+     "unit": "×10¹⁴ Hz",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Max kinetic energy",
+      "kn": "ಗರಿಷ್ಠ ಚಲನ ಶಕ್ತಿ"
+     },
+     "expr": "Kmax",
+     "unit": "eV",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Max speed",
+      "kn": "ಗರಿಷ್ಠ ವೇಗ"
+     },
+     "expr": "vmax",
+     "unit": "×10⁵ m/s",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Choose copper and turn the intensity to maximum at 8 × 10¹⁴ Hz. Does anything come out?",
+     "kn": "ತಾಮ್ರ ಆರಿಸಿ, 8 × 10¹⁴ Hz ನಲ್ಲಿ ತೀವ್ರತೆ ಗರಿಷ್ಠ ಮಾಡಿ. ಏನಾದರೂ ಹೊರಬರುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "For sodium, find the lowest frequency that frees electrons.",
+     "kn": "ಸೋಡಿಯಂಗೆ ಎಲೆಕ್ಟ್ರಾನ್ ಬಿಡುಗಡೆ ಮಾಡುವ ಕನಿಷ್ಠ ಆವೃತ್ತಿ ಹುಡುಕಿ."
+    },
+    {
+     "en": "Double the intensity. Which readout changes: Kmax or nothing?",
+     "kn": "ತೀವ್ರತೆ ದ್ವಿಗುಣಗೊಳಿಸಿ. ಯಾವ ಓದು ಬದಲಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

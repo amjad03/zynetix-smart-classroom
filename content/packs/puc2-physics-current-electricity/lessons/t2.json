@@ -340,6 +340,230 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Resistivity changes with temperature",
+    "kn": "ತಾಪದೊಂದಿಗೆ ರೋಧಕತೆ ಬದಲಾವಣೆ"
+   },
+   "narration": {
+    "en": "For a metal ρ = ρ0[1 + α(T − T0)]: hotter atoms vibrate more and scatter electrons more often. Silver and tungsten change a lot; nichrome little; manganin hardly at all, which is why it is used in standard resistors. R = ρL/A. Values at 20 °C from the NCERT table."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "For a metal ρ = ρ0[1 + α(T − T0)]: hotter atoms vibrate more and scatter electrons more often. Silver and tungsten change a lot; nichrome little; manganin hardly at all, which is why it is used in standard resistors. R = ρL/A. Values at 20 °C from the NCERT table.",
+    "kn": "ಲೋಹಕ್ಕೆ ρ = ρ0[1 + α(T − T0)]: ಬಿಸಿ ಪರಮಾಣುಗಳು ಹೆಚ್ಚು ಕಂಪಿಸಿ ಎಲೆಕ್ಟ್ರಾನ್‌ಗಳನ್ನು ಹೆಚ್ಚು ಚದುರಿಸುತ್ತವೆ. ಬೆಳ್ಳಿ, ಟಂಗ್‌ಸ್ಟನ್ ಹೆಚ್ಚು ಬದಲಾಗುತ್ತವೆ; ನಿಕ್ರೋಮ್ ಸ್ವಲ್ಪ; ಮ್ಯಾಂಗನಿನ್ ಬಹುತೇಕ ಇಲ್ಲ, ಆದ್ದರಿಂದ ಪ್ರಮಾಣಿತ ರೋಧಕಗಳಲ್ಲಿ ಬಳಕೆ. R = ρL/A."
+   },
+   "sliders": [
+    {
+     "name": "T",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪ"
+     },
+     "min": 0,
+     "max": 500,
+     "step": 10,
+     "value": 20,
+     "unit": "°C"
+    },
+    {
+     "name": "Lw",
+     "label": {
+      "en": "Length",
+      "kn": "ಉದ್ದ"
+     },
+     "min": 0.5,
+     "max": 5,
+     "step": 0.5,
+     "value": 1,
+     "unit": "m"
+    },
+    {
+     "name": "Aw",
+     "label": {
+      "en": "Cross-section",
+      "kn": "ಅಡ್ಡಛೇದ"
+     },
+     "min": 0.1,
+     "max": 2,
+     "step": 0.1,
+     "value": 0.5,
+     "unit": "mm²"
+    }
+   ],
+   "choices": [
+    {
+     "name": "mat",
+     "label": {
+      "en": "Material",
+      "kn": "ವಸ್ತು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Silver",
+        "kn": "ಬೆಳ್ಳಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Tungsten",
+        "kn": "ಟಂಗ್‌ಸ್ಟನ್"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Nichrome",
+        "kn": "ನಿಕ್ರೋಮ್"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Manganin",
+        "kn": "ಮ್ಯಾಂಗನಿನ್"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "r0",
+     "expr": "if(mat == 1, 1.6, if(mat == 2, 5.6, if(mat == 3, 100, 48)))"
+    },
+    {
+     "name": "al",
+     "expr": "if(mat == 1, 0.0041, if(mat == 2, 0.0045, if(mat == 3, 0.0004, 0.000002)))"
+    },
+    {
+     "name": "rho",
+     "expr": "r0*(1 + al*(T - 20))"
+    },
+    {
+     "name": "Rw",
+     "expr": "rho*1e-8*Lw/(Aw*1e-6)"
+    }
+   ],
+   "view": {
+    "x": [
+     -60,
+     520
+    ],
+    "y": [
+     -1.2,
+     3.6
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "T (°C)",
+    "yLabel": "ρ / ρ(20 °C)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "1 + al*(x - 20)",
+     "from": 0,
+     "to": 500,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "T",
+     "y1": 0,
+     "x2": "T",
+     "y2": "1 + al*(T - 20)",
+     "dashed": true,
+     "color": "yellow",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "T",
+     "y": "1 + al*(T - 20)",
+     "r": 6,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 40,
+     "y": -0.9,
+     "w": "440*Lw/5",
+     "h": "0.12 + 0.12*Aw",
+     "color": {
+      "by": "T/500",
+      "scale": [
+       "white",
+       "orange",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 40,
+     "y": -0.4,
+     "text": {
+      "en": "wire",
+      "kn": "ತಂತಿ"
+     },
+     "size": 20,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Resistivity ρ",
+      "kn": "ರೋಧಕತೆ ρ"
+     },
+     "expr": "rho",
+     "unit": "×10⁻⁸ Ω m",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Resistance of the wire",
+      "kn": "ತಂತಿಯ ರೋಧ"
+     },
+     "expr": "Rw",
+     "unit": "Ω",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "Temperature coefficient α",
+      "kn": "ತಾಪ ಗುಣಾಂಕ α"
+     },
+     "expr": "al*1000",
+     "unit": "×10⁻³ /°C",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Heat silver from 20 °C to 270 °C. By what factor does ρ grow?",
+     "kn": "ಬೆಳ್ಳಿಯನ್ನು 20 °C ನಿಂದ 270 °C ಗೆ ಬಿಸಿ ಮಾಡಿ. ρ ಎಷ್ಟು ಪಟ್ಟು ಹೆಚ್ಚುತ್ತದೆ?"
+    },
+    {
+     "en": "Compare the slopes for nichrome and manganin.",
+     "kn": "ನಿಕ್ರೋಮ್ ಮತ್ತು ಮ್ಯಾಂಗನಿನ್ ಇಳಿಜಾರುಗಳನ್ನು ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Double the length, then double the area. What happens to R?",
+     "kn": "ಉದ್ದ ದ್ವಿಗುಣ, ನಂತರ ಅಡ್ಡಛೇದ ದ್ವಿಗುಣ. R ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

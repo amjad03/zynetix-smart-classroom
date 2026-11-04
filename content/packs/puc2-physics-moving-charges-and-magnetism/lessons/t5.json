@@ -366,6 +366,260 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Two parallel currents",
+    "kn": "ಎರಡು ಸಮಾಂತರ ಪ್ರವಾಹಗಳು"
+   },
+   "narration": {
+    "en": "Wire 1 makes a field B = μ0 I1 / 2πd at wire 2, and that field pushes on the current in wire 2. The force per metre is f = μ0 I1 I2 / 2πd. Currents in the same direction attract; opposite directions repel. One ampere is the current that gives 2 × 10⁻⁷ N per metre for wires 1 m apart."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Wire 1 makes a field B = μ0 I1 / 2πd at wire 2, and that field pushes on the current in wire 2. The force per metre is f = μ0 I1 I2 / 2πd. Currents in the same direction attract; opposite directions repel. One ampere is the current that gives 2 × 10⁻⁷ N per metre for wires 1 m apart.",
+    "kn": "ತಂತಿ 1 ತಂತಿ 2 ರ ಬಳಿ B = μ0 I1 / 2πd ಕ್ಷೇತ್ರ ಉಂಟುಮಾಡುತ್ತದೆ; ಅದು ತಂತಿ 2 ರ ಪ್ರವಾಹದ ಮೇಲೆ ಬಲ ಹಾಕುತ್ತದೆ. ಮೀಟರ್‌ಗೆ ಬಲ f = μ0 I1 I2 / 2πd. ಒಂದೇ ದಿಕ್ಕಿನ ಪ್ರವಾಹಗಳು ಆಕರ್ಷಿಸುತ್ತವೆ; ವಿರುದ್ಧ ದಿಕ್ಕಿನವು ವಿಕರ್ಷಿಸುತ್ತವೆ. 1 m ಅಂತರದ ತಂತಿಗಳಲ್ಲಿ ಮೀಟರ್‌ಗೆ 2 × 10⁻⁷ N ಕೊಡುವ ಪ್ರವಾಹವೇ 1 ಆಂಪಿಯರ್."
+   },
+   "sliders": [
+    {
+     "name": "I1",
+     "label": {
+      "en": "Current I1 (up +)",
+      "kn": "ಪ್ರವಾಹ I1 (ಮೇಲೆ +)"
+     },
+     "min": -10,
+     "max": 10,
+     "step": 1,
+     "value": 5,
+     "unit": "A"
+    },
+    {
+     "name": "I2",
+     "label": {
+      "en": "Current I2 (up +)",
+      "kn": "ಪ್ರವಾಹ I2 (ಮೇಲೆ +)"
+     },
+     "min": -10,
+     "max": 10,
+     "step": 1,
+     "value": 5,
+     "unit": "A"
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "Separation",
+      "kn": "ಅಂತರ"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 5,
+     "unit": "cm"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fld",
+     "label": {
+      "en": "Field circles of wire 1",
+      "kn": "ತಂತಿ 1 ರ ಕ್ಷೇತ್ರ ವೃತ್ತಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Reverse I2",
+      "kn": "I2 ಹಿಮ್ಮುಖ"
+     },
+     "icon": "flip",
+     "set": {
+      "I2": "-I2"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "f",
+     "expr": "2e-7*abs(I1*I2)/(d/100)*1e6"
+    },
+    {
+     "name": "B12",
+     "expr": "2e-7*abs(I1)/(d/100)*1e6"
+    },
+    {
+     "name": "att",
+     "expr": "I1*I2 > 0"
+    }
+   ],
+   "view": {
+    "x": [
+     -14,
+     14
+    ],
+    "y": [
+     -9,
+     9
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": "-d/2",
+     "y1": -8,
+     "x2": "-d/2",
+     "y2": 8,
+     "color": "orange",
+     "width": 6
+    },
+    {
+     "shape": "line",
+     "x1": "d/2",
+     "y1": -8,
+     "x2": "d/2",
+     "y2": 8,
+     "color": "orange",
+     "width": 6
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "I1 != 0",
+     "x": "-d/2 - 1",
+     "y": 0,
+     "dx": 0,
+     "dy": "sign(I1)*(1 + abs(I1)/2.5)",
+     "color": "yellow",
+     "label": "I1"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "I2 != 0",
+     "x": "d/2 + 1",
+     "y": 0,
+     "dx": 0,
+     "dy": "sign(I2)*(1 + abs(I2)/2.5)",
+     "color": "yellow",
+     "label": "I2"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "f > 0",
+     "x": "-d/2",
+     "y": 5,
+     "dx": "if(att, 1, -1)*clamp(0.02*f, 0.6, 5)",
+     "dy": 0,
+     "color": "green",
+     "label": "F"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "f > 0",
+     "x": "d/2",
+     "y": 5,
+     "dx": "if(att, -1, 1)*clamp(0.02*f, 0.6, 5)",
+     "dy": 0,
+     "color": "green",
+     "label": "F"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "fld",
+     "x": "-d/2",
+     "y": 0,
+     "r": "d/2",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "fld",
+     "x": "-d/2",
+     "y": 0,
+     "r": "d",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "fld",
+     "x": "-d/2",
+     "y": 0,
+     "r": "1.5*d",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.4
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": -8.3,
+     "text": {
+      "en": "Attract",
+      "kn": "ಆಕರ್ಷಣೆ"
+     },
+     "size": 26,
+     "visibleIf": "f > 0 && att",
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": -8.3,
+     "text": {
+      "en": "Repel",
+      "kn": "ವಿಕರ್ಷಣೆ"
+     },
+     "size": 26,
+     "visibleIf": "f > 0 && !att",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Force per metre",
+      "kn": "ಮೀಟರ್‌ಗೆ ಬಲ"
+     },
+     "expr": "f",
+     "unit": "µN/m",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "B of wire 1 at wire 2",
+      "kn": "ತಂತಿ 2 ರಲ್ಲಿ ತಂತಿ 1 ರ B"
+     },
+     "expr": "B12",
+     "unit": "µT",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Reverse I2. What happens to the force arrows?",
+     "kn": "I2 ಹಿಮ್ಮುಖ ಮಾಡಿ. ಬಲ ಬಾಣಗಳು ಏನಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Halve the distance. By what factor does the force change?",
+     "kn": "ಅಂತರ ಅರ್ಧ ಮಾಡಿ. ಬಲ ಎಷ್ಟು ಪಟ್ಟು ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Is the force on wire 1 the same size as on wire 2, even if I1 ≠ I2?",
+     "kn": "I1 ≠ I2 ಆದರೂ ತಂತಿ 1 ಮತ್ತು 2 ರ ಮೇಲಿನ ಬಲ ಸಮವೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

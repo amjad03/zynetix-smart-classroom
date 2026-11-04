@@ -808,6 +808,266 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Doping: n-type and p-type",
+    "kn": "ಮಿಶ್ರಣ: n-ವಿಧ ಮತ್ತು p-ವಿಧ"
+   },
+   "narration": {
+    "en": "Add a pentavalent atom (P, As) and its fifth electron is free: n-type, electrons are the majority carriers. Add a trivalent atom (B, Al) and a bond is left short: p-type, holes are the majority. Even tiny doping swamps the intrinsic carriers, yet ne × nh = ni² always holds. Silicon at 300 K, ni = 1.5 × 10¹⁶ m⁻³."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Add a pentavalent atom (P, As) and its fifth electron is free: n-type, electrons are the majority carriers. Add a trivalent atom (B, Al) and a bond is left short: p-type, holes are the majority. Even tiny doping swamps the intrinsic carriers, yet ne × nh = ni² always holds. Silicon at 300 K, ni = 1.5 × 10¹⁶ m⁻³.",
+    "kn": "ಪಂಚವೇಲೆನ್ಸಿ ಪರಮಾಣು (P, As) ಸೇರಿಸಿದರೆ ಐದನೇ ಎಲೆಕ್ಟ್ರಾನ್ ಮುಕ್ತ: n-ವಿಧ, ಎಲೆಕ್ಟ್ರಾನ್ ಬಹುಸಂಖ್ಯಾತ. ತ್ರಿವೇಲೆನ್ಸಿ ಪರಮಾಣು (B, Al) ಸೇರಿಸಿದರೆ ಒಂದು ಬಂಧ ಕೊರತೆ: p-ವಿಧ, ರಂಧ್ರ ಬಹುಸಂಖ್ಯಾತ. ಅಲ್ಪ ಮಿಶ್ರಣವೂ ಸಹಜ ವಾಹಕಗಳನ್ನು ಮೀರಿಸುತ್ತದೆ; ne × nh = ni² ಯಾವಾಗಲೂ."
+   },
+   "sliders": [
+    {
+     "name": "s",
+     "label": {
+      "en": "Dopant density, log₁₀ (m⁻³)",
+      "kn": "ಮಿಶ್ರಕ ಸಾಂದ್ರತೆ, log₁₀ (m⁻³)"
+     },
+     "min": 18,
+     "max": 24,
+     "step": 0.25,
+     "value": 21
+    }
+   ],
+   "choices": [
+    {
+     "name": "ty",
+     "label": {
+      "en": "Crystal",
+      "kn": "ಸ್ಫಟಿಕ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Pure (intrinsic)",
+        "kn": "ಶುದ್ಧ (ಸಹಜ)"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "n-type (phosphorus)",
+        "kn": "n-ವಿಧ (ರಂಜಕ)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "p-type (boron)",
+        "kn": "p-ವಿಧ (ಬೋರಾನ್)"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "Nd",
+     "expr": "if(ty == 0, 0, 10^s)"
+    },
+    {
+     "name": "maj",
+     "expr": "Nd/2 + sqrt((Nd/2)^2 + 2.25e32)"
+    },
+    {
+     "name": "mnr",
+     "expr": "2.25e32/maj"
+    },
+    {
+     "name": "ne",
+     "expr": "if(ty == 2, mnr, maj)"
+    },
+    {
+     "name": "nh",
+     "expr": "if(ty == 2, maj, mnr)"
+    },
+    {
+     "name": "ee",
+     "expr": "floor(log(ne))"
+    },
+    {
+     "name": "em",
+     "expr": "ne/10^ee"
+    },
+    {
+     "name": "he",
+     "expr": "floor(log(nh))"
+    },
+    {
+     "name": "hm",
+     "expr": "nh/10^he"
+    },
+    {
+     "name": "nd",
+     "expr": "clamp(round(s - 16), 1, 8)"
+    },
+    {
+     "name": "nE",
+     "expr": "clamp(round(4 + 4*log(ne/1.5e16)), 0, 40)"
+    },
+    {
+     "name": "nH",
+     "expr": "clamp(round(4 + 4*log(nh/1.5e16)), 0, 40)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     24
+    ],
+    "y": [
+     0,
+     13
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 32,
+     "x": "1.5 + mod(i, 8)*3",
+     "y": "1.5 + floor(i/8)*2.6",
+     "r": 0.45,
+     "color": "white",
+     "opacity": 0.25
+    },
+    {
+     "shape": "particles",
+     "count": 8,
+     "visibleIf": "ty > 0 && i < nd",
+     "x": "1.5 + mod(3*i + 1, 8)*3",
+     "y": "1.5 + floor(mod(5*i + 2, 32)/8)*2.6",
+     "r": 0.5,
+     "color": {
+      "by": "ty - 1",
+      "scale": [
+       "green",
+       "orange"
+      ]
+     }
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "visibleIf": "i < nE",
+     "x": "mod(1 + 22*rand(i) + 0.4*sin(4*t + 6*rand(i + 3)), 24)",
+     "y": "0.8 + 10*rand(i + 60)",
+     "r": 0.22,
+     "color": "blue"
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "visibleIf": "i < nH",
+     "x": "mod(1 + 22*rand(i + 200) + 0.3*cos(3*t + 6*rand(i + 7)), 24)",
+     "y": "0.8 + 10*rand(i + 260)",
+     "r": 0.26,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 12.4,
+     "text": {
+      "en": "ne = {em:2} × 10^{ee}"
+     },
+     "size": 24,
+     "color": "blue",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 23.5,
+     "y": 12.4,
+     "text": {
+      "en": "nh = {hm:2} × 10^{he} m⁻³"
+     },
+     "size": 24,
+     "color": "red",
+     "align": "right"
+    },
+    {
+     "shape": "label",
+     "x": 12,
+     "y": 11.2,
+     "text": {
+      "en": "n-type: donor atoms (green)",
+      "kn": "n-ವಿಧ: ದಾನಿ ಪರಮಾಣು (ಹಸಿರು)"
+     },
+     "size": 20,
+     "visibleIf": "ty == 1",
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 12,
+     "y": 11.2,
+     "text": {
+      "en": "p-type: acceptor atoms (orange)",
+      "kn": "p-ವಿಧ: ಸ್ವೀಕಾರಿ ಪರಮಾಣು (ಕಿತ್ತಳೆ)"
+     },
+     "size": 20,
+     "visibleIf": "ty == 2",
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "log₁₀ ne",
+      "kn": "log₁₀ ne"
+     },
+     "expr": "log(ne)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "log₁₀ nh",
+      "kn": "log₁₀ nh"
+     },
+     "expr": "log(nh)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "ne × nh / ni²",
+      "kn": "ne × nh / ni²"
+     },
+     "expr": "ne*nh/2.25e32",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Switch from intrinsic to n-type. What happens to the number of holes?",
+     "kn": "ಸಹಜದಿಂದ n-ವಿಧಕ್ಕೆ ಬದಲಿಸಿ. ರಂಧ್ರಗಳ ಸಂಖ್ಯೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Raise the doping by 10 times. What happens to the minority carriers?",
+     "kn": "ಮಿಶ್ರಣ 10 ಪಟ್ಟು ಹೆಚ್ಚಿಸಿ. ಅಲ್ಪಸಂಖ್ಯಾತ ವಾಹಕಗಳು ಏನಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Is a doped crystal electrically charged? Why not?",
+     "kn": "ಮಿಶ್ರಿತ ಸ್ಫಟಿಕ ವಿದ್ಯುದಾವೇಶಿತವೇ? ಏಕೆ ಇಲ್ಲ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -510,6 +510,287 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A compass around a bar magnet",
+    "kn": "ಕಾಂತ ಸರಳಿನ ಸುತ್ತ ದಿಕ್ಸೂಚಿ"
+   },
+   "narration": {
+    "en": "Drag the compass: its needle lines up with the field B there. Press Trace to follow the needle and draw a field line from N round to S. Turn on the Earth's field (40 µT towards geographic north, to the right) and find the neutral points where the two fields cancel. Model: two poles 10 cm apart."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the compass: its needle lines up with the field B there. Press Trace to follow the needle and draw a field line from N round to S. Turn on the Earth's field (40 µT towards geographic north, to the right) and find the neutral points where the two fields cancel. Model: two poles 10 cm apart.",
+    "kn": "ದಿಕ್ಸೂಚಿಯನ್ನು ಎಳೆಯಿರಿ: ಅದರ ಸೂಜಿ ಅಲ್ಲಿನ B ಕ್ಷೇತ್ರದ ದಿಕ್ಕಿಗೆ ನಿಲ್ಲುತ್ತದೆ. ಸೂಜಿಯನ್ನು ಅನುಸರಿಸಿ N ನಿಂದ S ವರೆಗೆ ಕ್ಷೇತ್ರ ರೇಖೆ ಎಳೆಯಲು ಎಳೆ ಒತ್ತಿ. ಭೂಕ್ಷೇತ್ರ (40 µT, ಬಲಕ್ಕೆ ಉತ್ತರ) ಆನ್ ಮಾಡಿ, ಎರಡೂ ಕ್ಷೇತ್ರಗಳು ರದ್ದಾಗುವ ತಟಸ್ಥ ಬಿಂದುಗಳನ್ನು ಹುಡುಕಿ."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Magnetic moment",
+      "kn": "ಕಾಂತೀಯ ಭ್ರಾಮಕ"
+     },
+     "min": 0.5,
+     "max": 5,
+     "step": 0.5,
+     "value": 2,
+     "unit": "A m²"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "earth",
+     "label": {
+      "en": "Earth's field",
+      "kn": "ಭೂಕಾಂತ ಕ್ಷೇತ್ರ"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Trace",
+      "kn": "ಎಳೆ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "compass",
+     "x": 0,
+     "y": 10,
+     "box": {
+      "x": [
+       -28,
+       28
+      ],
+      "y": [
+       -16,
+       16
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    }
+   ],
+   "time": {
+    "max": 30,
+    "dt": 0.02,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2,
+    "stopWhen": "t > 0.1 && (hypot(sx - 5, sy) < 0.8 || hypot(sx + 5, sy) < 0.8 || abs(sx) > 30 || abs(sy) > 18 || Gs < 0.5)"
+   },
+   "state": [
+    {
+     "name": "sx",
+     "init": "P_x",
+     "rate": "4*Gx/max(Gs, 1e-9)"
+    },
+    {
+     "name": "sy",
+     "init": "P_y",
+     "rate": "4*Gy/max(Gs, 1e-9)"
+    }
+   ],
+   "integrator": "rk2",
+   "vars": [
+    {
+     "name": "rN",
+     "expr": "max(hypot(P_x - 5, P_y), 0.5)"
+    },
+    {
+     "name": "rS",
+     "expr": "max(hypot(P_x + 5, P_y), 0.5)"
+    },
+    {
+     "name": "Bx",
+     "expr": "1e4*m*((P_x - 5)/rN^3 - (P_x + 5)/rS^3) + 40*earth"
+    },
+    {
+     "name": "By",
+     "expr": "1e4*m*(P_y/rN^3 - P_y/rS^3)"
+    },
+    {
+     "name": "Bm",
+     "expr": "hypot(Bx, By)"
+    },
+    {
+     "name": "ux",
+     "expr": "Bx/max(Bm, 1e-9)"
+    },
+    {
+     "name": "uy",
+     "expr": "By/max(Bm, 1e-9)"
+    },
+    {
+     "name": "dN",
+     "expr": "max(hypot(sx - 5, sy), 0.05)"
+    },
+    {
+     "name": "dS",
+     "expr": "max(hypot(sx + 5, sy), 0.05)"
+    },
+    {
+     "name": "Gx",
+     "expr": "1e4*m*((sx - 5)/dN^3 - (sx + 5)/dS^3) + 40*earth"
+    },
+    {
+     "name": "Gy",
+     "expr": "1e4*m*(sy/dN^3 - sy/dS^3)"
+    },
+    {
+     "name": "Gs",
+     "expr": "hypot(Gx, Gy)"
+    }
+   ],
+   "view": {
+    "x": [
+     -30,
+     30
+    ],
+    "y": [
+     -18,
+     18
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "trail",
+     "x": "sx",
+     "y": "sy",
+     "length": 2000,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": -6,
+     "y": -1.2,
+     "w": 6,
+     "h": 2.4,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": -1.2,
+     "w": 6,
+     "h": 2.4,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": -3,
+     "y": 0,
+     "text": {
+      "en": "S"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 0,
+     "text": {
+      "en": "N"
+     },
+     "size": 26
+    },
+    {
+     "shape": "circle",
+     "x": "P_x",
+     "y": "P_y",
+     "r": 2.2,
+     "fill": false,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "arrow",
+     "x": "P_x - 1.8*ux",
+     "y": "P_y - 1.8*uy",
+     "dx": "3.6*ux",
+     "dy": "3.6*uy",
+     "color": "red",
+     "width": 5
+    },
+    {
+     "shape": "circle",
+     "x": "sx",
+     "y": "sy",
+     "r": 0.5,
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "earth",
+     "x": 18,
+     "y": 15,
+     "dx": 8,
+     "dy": 0,
+     "color": "green",
+     "label": "B Earth"
+    },
+    {
+     "shape": "text",
+     "x": -29,
+     "y": 16.5,
+     "text": {
+      "en": "B = {Bm:1} µT"
+     },
+     "size": 24,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Field at the compass",
+      "kn": "ದಿಕ್ಸೂಚಿಯಲ್ಲಿ ಕ್ಷೇತ್ರ"
+     },
+     "expr": "Bm",
+     "unit": "µT",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Needle direction",
+      "kn": "ಸೂಜಿಯ ದಿಕ್ಕು"
+     },
+     "expr": "deg(atan2(By, Bx))",
+     "unit": "°",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Trace field lines from points near the N pole. Where do they end?",
+     "kn": "N ಧ್ರುವದ ಬಳಿಯ ಬಿಂದುಗಳಿಂದ ರೇಖೆ ಎಳೆಯಿರಿ. ಅವು ಎಲ್ಲಿ ಮುಗಿಯುತ್ತವೆ?"
+    },
+    {
+     "en": "Compare B at the same distance on the axis and on the equator. Which is larger?",
+     "kn": "ಅಕ್ಷ ಮತ್ತು ಸಮಭಾಜಕದ ಮೇಲೆ ಒಂದೇ ದೂರದಲ್ಲಿ B ಹೋಲಿಸಿ. ಯಾವುದು ಹೆಚ್ಚು?"
+    },
+    {
+     "en": "With the Earth's field on, find a point where the compass has no preferred direction.",
+     "kn": "ಭೂಕ್ಷೇತ್ರ ಆನ್ ಇರುವಾಗ ದಿಕ್ಸೂಚಿಗೆ ನಿರ್ದಿಷ್ಟ ದಿಕ್ಕಿಲ್ಲದ ಬಿಂದು ಹುಡುಕಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -422,6 +422,314 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "An ideal transformer",
+    "kn": "ಆದರ್ಶ ಪರಿವರ್ತಕ"
+   },
+   "narration": {
+    "en": "The changing flux in the iron core links both coils, so each turn gets the same emf: Vs/Vp = Ns/Np. In an ideal transformer no power is lost, so Vp Ip = Vs Is: stepping the voltage up steps the current down."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The changing flux in the iron core links both coils, so each turn gets the same emf: Vs/Vp = Ns/Np. In an ideal transformer no power is lost, so Vp Ip = Vs Is: stepping the voltage up steps the current down.",
+    "kn": "ಕಬ್ಬಿಣದ ತಿರುಳಿನಲ್ಲಿ ಬದಲಾಗುವ ಅಭಿವಾಹ ಎರಡೂ ಸುರುಳಿಗಳನ್ನು ಜೋಡಿಸುತ್ತದೆ; ಪ್ರತಿ ಸುತ್ತಿಗೂ ಒಂದೇ emf: Vs/Vp = Ns/Np. ಆದರ್ಶ ಪರಿವರ್ತಕದಲ್ಲಿ ಸಾಮರ್ಥ್ಯ ನಷ್ಟವಿಲ್ಲ, Vp Ip = Vs Is: ವೋಲ್ಟೇಜ್ ಏರಿಸಿದರೆ ಪ್ರವಾಹ ಇಳಿಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "Np",
+     "label": {
+      "en": "Primary turns",
+      "kn": "ಪ್ರಾಥಮಿಕ ಸುತ್ತುಗಳು"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 50,
+     "value": 500
+    },
+    {
+     "name": "Ns",
+     "label": {
+      "en": "Secondary turns",
+      "kn": "ದ್ವಿತೀಯ ಸುತ್ತುಗಳು"
+     },
+     "min": 50,
+     "max": 2000,
+     "step": 50,
+     "value": 1000
+    },
+    {
+     "name": "Vp",
+     "label": {
+      "en": "Primary voltage",
+      "kn": "ಪ್ರಾಥಮಿಕ ವೋಲ್ಟೇಜ್"
+     },
+     "min": 50,
+     "max": 250,
+     "step": 10,
+     "value": 220,
+     "unit": "V"
+    },
+    {
+     "name": "RL",
+     "label": {
+      "en": "Load resistance",
+      "kn": "ಹೊರೆ ರೋಧ"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 10,
+     "value": 100,
+     "unit": "Ω"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "flux",
+     "label": {
+      "en": "Show flux",
+      "kn": "ಅಭಿವಾಹ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 20,
+    "loop": true,
+    "speeds": [
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.5,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "th",
+     "expr": "2*pi*t"
+    },
+    {
+     "name": "Vs",
+     "expr": "Vp*Ns/Np"
+    },
+    {
+     "name": "Is",
+     "expr": "Vs/RL"
+    },
+    {
+     "name": "Ip",
+     "expr": "Vs*Is/Vp"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     32
+    ],
+    "y": [
+     0,
+     12
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": 1,
+     "w": 8,
+     "h": 10,
+     "fill": false,
+     "color": "white",
+     "width": 10,
+     "opacity": 0.6
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "visibleIf": "i < Np/50",
+     "x": "1.6 + 0.9*mod(i, 2)",
+     "y": "2.2 + 6.6*floor(i/2)/max(Np/100 - 1, 1)",
+     "r": 0.35
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "visibleIf": "i < Ns/50",
+     "x": "10.6 + 0.9*mod(i, 2)",
+     "y": "2.2 + 6.6*floor(i/2)/max(Ns/100 - 1, 1)",
+     "r": 0.35
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "flux",
+     "x": 7,
+     "y": "6 - 2.5*sin(th)",
+     "dx": 0,
+     "dy": "5*sin(th)",
+     "color": "green"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "flux",
+     "x": 3,
+     "y": "6 + 2.5*sin(th)",
+     "dx": 0,
+     "dy": "-5*sin(th)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 7,
+     "y": 6,
+     "text": {
+      "en": "Φ"
+     },
+     "size": 30,
+     "color": "green",
+     "visibleIf": "flux"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 0.2,
+     "text": {
+      "en": "primary",
+      "kn": "ಪ್ರಾಥಮಿಕ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 0.2,
+     "text": {
+      "en": "secondary",
+      "kn": "ದ್ವಿತೀಯ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "path",
+     "fn": "9 + 2*Vp/max(Vp, Vs)*sin(2*pi*(x - 14)/6 - 2*pi*t)",
+     "from": 14,
+     "to": 30,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "fn": "3 + 2*Vs/max(Vp, Vs)*sin(2*pi*(x - 14)/6 - 2*pi*t)",
+     "from": 14,
+     "to": 30,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 11.5,
+     "text": {
+      "en": "Vp = {Vp} V"
+     },
+     "size": 22,
+     "color": "yellow",
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 5.5,
+     "text": {
+      "en": "Vs = {Vs:0} V"
+     },
+     "size": 22,
+     "color": "blue",
+     "align": "right"
+    },
+    {
+     "shape": "label",
+     "x": 22,
+     "y": 0.6,
+     "text": {
+      "en": "Step-up",
+      "kn": "ಏರಿಕೆ"
+     },
+     "size": 24,
+     "visibleIf": "Ns > Np",
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 22,
+     "y": 0.6,
+     "text": {
+      "en": "Step-down",
+      "kn": "ಇಳಿಕೆ"
+     },
+     "size": 24,
+     "visibleIf": "Ns < Np",
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Secondary voltage",
+      "kn": "ದ್ವಿತೀಯ ವೋಲ್ಟೇಜ್"
+     },
+     "expr": "Vs",
+     "unit": "V",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Secondary current",
+      "kn": "ದ್ವಿತೀಯ ಪ್ರವಾಹ"
+     },
+     "expr": "Is",
+     "unit": "A",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Primary current",
+      "kn": "ಪ್ರಾಥಮಿಕ ಪ್ರವಾಹ"
+     },
+     "expr": "Ip",
+     "unit": "A",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Power delivered",
+      "kn": "ನೀಡಿದ ಸಾಮರ್ಥ್ಯ"
+     },
+     "expr": "Vs*Is",
+     "unit": "W",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make Ns twice Np. What happens to the secondary voltage and to the primary current?",
+     "kn": "Ns ಅನ್ನು Np ಯ ಎರಡರಷ್ಟು ಮಾಡಿ. ದ್ವಿತೀಯ ವೋಲ್ಟೇಜ್, ಪ್ರಾಥಮಿಕ ಪ್ರವಾಹ ಏನಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Find a setting that steps 220 V down to 110 V.",
+     "kn": "220 V ಅನ್ನು 110 V ಗೆ ಇಳಿಸುವ ಹೊಂದಿಕೆ ಹುಡುಕಿ."
+    },
+    {
+     "en": "Halve the load resistance. Which currents change?",
+     "kn": "ಹೊರೆ ರೋಧ ಅರ್ಧ ಮಾಡಿ. ಯಾವ ಪ್ರವಾಹಗಳು ಬದಲಾಗುತ್ತವೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

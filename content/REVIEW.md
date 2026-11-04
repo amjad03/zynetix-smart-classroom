@@ -700,3 +700,12 @@ No text is reproduced. Check these plot details against the texts:
 - **Henry constants:** the NCERT CH4 value was left out.
 - **Simplified models:** Morse curve, Rutherford deflection, generic Le Chatelier, Kohlrausch at high c, approximate colours.
 - **Kannada:** needs a native-speaker review.
+
+## Physics 2nd PUC simulations (70 lessons)
+
+- **Resistivity table:** NCERT values; copper left out because its NCERT alpha differs from the real value.
+- **Ge band gap:** 0.71 eV (NCERT figure).
+- **Data to check:** susceptibilities and measured binding energies.
+- **Schematic or illustrative (labelled):** the nuclear potential, the photocurrent model, and the flux and damping magnitudes.
+- **Rutherford window:** the edge angle differs slightly from the formula (a readout shows the formula value).
+- **Kannada:** needs a native-speaker review.

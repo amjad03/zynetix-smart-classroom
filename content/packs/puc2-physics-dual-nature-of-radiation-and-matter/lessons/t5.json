@@ -236,6 +236,206 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Matter waves: de Broglie wavelength",
+    "kn": "ದ್ರವ್ಯ ತರಂಗಗಳು: ಡಿ ಬ್ರೋಗ್ಲಿ ತರಂಗಾಂತರ"
+   },
+   "narration": {
+    "en": "A particle of momentum p has a wavelength λ = h/p. Accelerated through V volts, p = √(2mqV), so λ = h/√(2mqV). For an electron λ = 1.227/√V nm. Heavier particles have much shorter wavelengths. The drawn wave uses a log scale so all three fit."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A particle of momentum p has a wavelength λ = h/p. Accelerated through V volts, p = √(2mqV), so λ = h/√(2mqV). For an electron λ = 1.227/√V nm. Heavier particles have much shorter wavelengths. The drawn wave uses a log scale so all three fit.",
+    "kn": "p ಸಂವೇಗದ ಕಣಕ್ಕೆ λ = h/p ತರಂಗಾಂತರ. V ವೋಲ್ಟ್ ಮೂಲಕ ವೇಗಗೊಳಿಸಿದರೆ p = √(2mqV), λ = h/√(2mqV). ಎಲೆಕ್ಟ್ರಾನ್‌ಗೆ λ = 1.227/√V nm. ಭಾರವಾದ ಕಣಗಳ ತರಂಗಾಂತರ ತುಂಬಾ ಚಿಕ್ಕದು. ಚಿತ್ರದ ತರಂಗ ಲಾಗ್ ಮಾಪನದಲ್ಲಿದೆ."
+   },
+   "sliders": [
+    {
+     "name": "V",
+     "label": {
+      "en": "Accelerating voltage",
+      "kn": "ವೇಗವರ್ಧಕ ವೋಲ್ಟೇಜ್"
+     },
+     "min": 20,
+     "max": 1000,
+     "step": 20,
+     "value": 100,
+     "unit": "V"
+    }
+   ],
+   "choices": [
+    {
+     "name": "pt",
+     "label": {
+      "en": "Particle",
+      "kn": "ಕಣ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Electron",
+        "kn": "ಎಲೆಕ್ಟ್ರಾನ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Proton",
+        "kn": "ಪ್ರೋಟಾನ್"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Alpha particle",
+        "kn": "ಆಲ್ಫಾ ಕಣ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "m",
+     "expr": "if(pt == 1, 9.109e-31, if(pt == 2, 1.673e-27, 6.645e-27))"
+    },
+    {
+     "name": "q",
+     "expr": "if(pt == 3, 2, 1)*1.602e-19"
+    },
+    {
+     "name": "pp",
+     "expr": "sqrt(2*m*q*V)"
+    },
+    {
+     "name": "lpm",
+     "expr": "6.626e-34/pp*1e12"
+    },
+    {
+     "name": "vk",
+     "expr": "pp/m/1000"
+    },
+    {
+     "name": "wv",
+     "expr": "0.6 + 0.8*(log(lpm) + 1.1)"
+    },
+    {
+     "name": "xc",
+     "expr": "mod(3*t, 30) - 3"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     24
+    ],
+    "y": [
+     0,
+     10
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "wave",
+     "fn": "5 + 1.6*sin(2*pi*(x - 3*t)/wv)*exp(-((x - xc)/3)^2)",
+     "from": 0,
+     "to": 24,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "xc",
+     "y": 5,
+     "r": "if(pt == 1, 0.25, if(pt == 2, 0.45, 0.6))",
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": "xc - wv/2",
+     "y1": 7.8,
+     "x2": "xc + wv/2",
+     "y2": 7.8,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "xc",
+     "y": 8.4,
+     "text": {
+      "en": "λ (log scale)",
+      "kn": "λ (ಲಾಗ್ ಮಾಪನ)"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 1,
+     "text": {
+      "en": "λ = {lpm:3} pm"
+     },
+     "size": 28
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "de Broglie wavelength",
+      "kn": "ಡಿ ಬ್ರೋಗ್ಲಿ ತರಂಗಾಂತರ"
+     },
+     "expr": "lpm",
+     "unit": "pm",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Speed",
+      "kn": "ವೇಗ"
+     },
+     "expr": "vk",
+     "unit": "km/s",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Momentum",
+      "kn": "ಸಂವೇಗ"
+     },
+     "expr": "pp*1e24",
+     "unit": "×10⁻²⁴ kg m/s",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "For an electron, set V = 100 V. Is λ close to the spacing of atoms in a crystal (about 100 pm)?",
+     "kn": "ಎಲೆಕ್ಟ್ರಾನ್‌ಗೆ V = 100 V ಮಾಡಿ. λ ಸ್ಫಟಿಕದ ಪರಮಾಣು ಅಂತರಕ್ಕೆ (ಸುಮಾರು 100 pm) ಹತ್ತಿರವೇ?"
+    },
+    {
+     "en": "Make V four times bigger. What happens to λ?",
+     "kn": "V ನಾಲ್ಕು ಪಟ್ಟು ಮಾಡಿ. λ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Switch to a proton at the same V. How many times shorter is λ?",
+     "kn": "ಅದೇ V ನಲ್ಲಿ ಪ್ರೋಟಾನ್‌ಗೆ ಬದಲಿಸಿ. λ ಎಷ್ಟು ಪಟ್ಟು ಚಿಕ್ಕದು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

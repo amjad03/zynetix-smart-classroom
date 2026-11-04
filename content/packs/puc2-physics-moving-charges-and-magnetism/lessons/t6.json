@@ -485,6 +485,348 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A moving coil galvanometer",
+    "kn": "ಚಲಿಸುವ ಸುರುಳಿ ಗ್ಯಾಲ್ವನೋಮೀಟರ್"
+   },
+   "narration": {
+    "en": "The current in the coil feels a torque NIAB. A spring twists back with torque kφ, so the needle settles where φ = (NAB/k) I. The curved pole pieces make the field radial, so the torque does not depend on the angle and the scale is even. Coil area 5 cm²."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The current in the coil feels a torque NIAB. A spring twists back with torque kφ, so the needle settles where φ = (NAB/k) I. The curved pole pieces make the field radial, so the torque does not depend on the angle and the scale is even. Coil area 5 cm².",
+    "kn": "ಸುರುಳಿಯ ಪ್ರವಾಹ NIAB ಟಾರ್ಕ್ ಅನುಭವಿಸುತ್ತದೆ. ಸುರುಳಿ ಸ್ಪ್ರಿಂಗ್ kφ ಟಾರ್ಕ್‌ನಿಂದ ಹಿಂದಕ್ಕೆ ತಿರುಚುತ್ತದೆ; ಸೂಜಿ φ = (NAB/k) I ನಲ್ಲಿ ನಿಲ್ಲುತ್ತದೆ. ಬಾಗಿದ ಧ್ರುವ ತುಂಡುಗಳು ಕ್ಷೇತ್ರವನ್ನು ತ್ರಿಜ್ಯೀಯವಾಗಿಸುತ್ತವೆ; ಟಾರ್ಕ್ ಕೋನವನ್ನು ಅವಲಂಬಿಸದು, ಮಾಪಕ ಸಮ. ಸುರುಳಿ ವಿಸ್ತೀರ್ಣ 5 cm²."
+   },
+   "sliders": [
+    {
+     "name": "I",
+     "label": {
+      "en": "Current",
+      "kn": "ಪ್ರವಾಹ"
+     },
+     "min": -50,
+     "max": 50,
+     "step": 5,
+     "value": 30,
+     "unit": "µA"
+    },
+    {
+     "name": "N",
+     "label": {
+      "en": "Turns N",
+      "kn": "ಸುತ್ತುಗಳು N"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 50,
+     "value": 200
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "Field B",
+      "kn": "ಕ್ಷೇತ್ರ B"
+     },
+     "min": 0.1,
+     "max": 1,
+     "step": 0.1,
+     "value": 0.5,
+     "unit": "T"
+    },
+    {
+     "name": "k",
+     "label": {
+      "en": "Spring constant k",
+      "kn": "ಸ್ಪ್ರಿಂಗ್ ಸ್ಥಿರಾಂಕ k"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 3,
+     "unit": "×10⁻⁶ N m/rad"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "radial",
+     "label": {
+      "en": "Radial field (curved poles)",
+      "kn": "ತ್ರಿಜ್ಯೀಯ ಕ್ಷೇತ್ರ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 20,
+    "dt": 0.005,
+    "autoplay": true
+   },
+   "state": [
+    {
+     "name": "ph",
+     "init": 0,
+     "rate": "w"
+    },
+    {
+     "name": "w",
+     "init": 0,
+     "rate": "(tq*if(radial, 1, cos(ph))/1e6 - k*1e-6*ph)/(1e-6/3) - 2.2*sqrt(3*k)*w"
+    }
+   ],
+   "integrator": "rk2",
+   "vars": [
+    {
+     "name": "NAB",
+     "expr": "N*5e-4*B"
+    },
+    {
+     "name": "tq",
+     "expr": "NAB*I"
+    },
+    {
+     "name": "peq",
+     "expr": "tq/k"
+    },
+    {
+     "name": "phd",
+     "expr": "clamp(ph, rad(-85), rad(85))"
+    }
+   ],
+   "view": {
+    "x": [
+     -10,
+     10
+    ],
+    "y": [
+     -4,
+     10
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "points": [
+      [
+       "7.5*sin(rad(-80))",
+       "7.5*cos(rad(-80))"
+      ],
+      [
+       "7.5*sin(rad(-70))",
+       "7.5*cos(rad(-70))"
+      ],
+      [
+       "7.5*sin(rad(-60))",
+       "7.5*cos(rad(-60))"
+      ],
+      [
+       "7.5*sin(rad(-50))",
+       "7.5*cos(rad(-50))"
+      ],
+      [
+       "7.5*sin(rad(-40))",
+       "7.5*cos(rad(-40))"
+      ],
+      [
+       "7.5*sin(rad(-30))",
+       "7.5*cos(rad(-30))"
+      ],
+      [
+       "7.5*sin(rad(-20))",
+       "7.5*cos(rad(-20))"
+      ],
+      [
+       "7.5*sin(rad(-10))",
+       "7.5*cos(rad(-10))"
+      ],
+      [
+       "7.5*sin(rad(0))",
+       "7.5*cos(rad(0))"
+      ],
+      [
+       "7.5*sin(rad(10))",
+       "7.5*cos(rad(10))"
+      ],
+      [
+       "7.5*sin(rad(20))",
+       "7.5*cos(rad(20))"
+      ],
+      [
+       "7.5*sin(rad(30))",
+       "7.5*cos(rad(30))"
+      ],
+      [
+       "7.5*sin(rad(40))",
+       "7.5*cos(rad(40))"
+      ],
+      [
+       "7.5*sin(rad(50))",
+       "7.5*cos(rad(50))"
+      ],
+      [
+       "7.5*sin(rad(60))",
+       "7.5*cos(rad(60))"
+      ],
+      [
+       "7.5*sin(rad(70))",
+       "7.5*cos(rad(70))"
+      ],
+      [
+       "7.5*sin(rad(80))",
+       "7.5*cos(rad(80))"
+      ]
+     ],
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "7*sin(phd)",
+     "y2": "7*cos(phd)",
+     "color": "red",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 0.5,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 8.4,
+     "text": {
+      "en": "0"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": -7.6,
+     "y": 1.6,
+     "text": {
+      "en": "−90°"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 7.6,
+     "y": 1.6,
+     "text": {
+      "en": "+90°"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": -9.5,
+     "y": -3.5,
+     "w": 2.5,
+     "h": 3,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": 7,
+     "y": -3.5,
+     "w": 2.5,
+     "h": 3,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": -8.25,
+     "y": -2,
+     "text": {
+      "en": "N"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 8.25,
+     "y": -2,
+     "text": {
+      "en": "S"
+     },
+     "size": 24
+    },
+    {
+     "shape": "line",
+     "x1": "-3*cos(ph)",
+     "y1": "-2 + 0.6*sin(ph)",
+     "x2": "3*cos(ph)",
+     "y2": "-2 - 0.6*sin(ph)",
+     "color": "orange",
+     "width": 8
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": -3.6,
+     "text": {
+      "en": "off scale",
+      "kn": "ಮಾಪಕದ ಹೊರಗೆ"
+     },
+     "size": 22,
+     "visibleIf": "abs(ph) > rad(80)",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Deflection",
+      "kn": "ವಿಚಲನೆ"
+     },
+     "expr": "deg(ph)",
+     "unit": "°",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Current sensitivity NAB/k",
+      "kn": "ಪ್ರವಾಹ ಸಂವೇದನೆ NAB/k"
+     },
+     "expr": "NAB/k*180/pi",
+     "unit": "°/µA",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Coil torque NIAB",
+      "kn": "ಸುರುಳಿ ಟಾರ್ಕ್ NIAB"
+     },
+     "expr": "tq",
+     "unit": "µN m",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double the current. Does the deflection double?",
+     "kn": "ಪ್ರವಾಹ ದ್ವಿಗುಣಗೊಳಿಸಿ. ವಿಚಲನೆ ದ್ವಿಗುಣವೇ?"
+    },
+    {
+     "en": "Switch the radial field off (plain uniform field). Is the scale still even?",
+     "kn": "ತ್ರಿಜ್ಯೀಯ ಕ್ಷೇತ್ರ ಆಫ್ ಮಾಡಿ. ಮಾಪಕ ಇನ್ನೂ ಸಮವೇ?"
+    },
+    {
+     "en": "How would you make the meter more sensitive?",
+     "kn": "ಮೀಟರ್ ಹೆಚ್ಚು ಸಂವೇದನಾಶೀಲವಾಗಿಸುವುದು ಹೇಗೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

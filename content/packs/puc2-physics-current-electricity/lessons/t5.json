@@ -633,6 +633,397 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Balance a Wheatstone bridge",
+    "kn": "ವ್ಹೀಟ್‌ಸ್ಟೋನ್ ಸೇತುವೆಯನ್ನು ಸಮತೋಲನಗೊಳಿಸಿ"
+   },
+   "narration": {
+    "en": "Four resistors P, Q, R, S form a bridge with a galvanometer G across the middle. When P/Q = R/S, points B and D are at the same potential and no current flows through G: the bridge is balanced. Then an unknown S = R·Q/P. Battery 6 V, G = 20 Ω."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Four resistors P, Q, R, S form a bridge with a galvanometer G across the middle. When P/Q = R/S, points B and D are at the same potential and no current flows through G: the bridge is balanced. Then an unknown S = R·Q/P. Battery 6 V, G = 20 Ω.",
+    "kn": "P, Q, R, S ನಾಲ್ಕು ರೋಧಕಗಳು ಮಧ್ಯದಲ್ಲಿ ಗ್ಯಾಲ್ವನೋಮೀಟರ್ G ಇರುವ ಸೇತುವೆ ರಚಿಸುತ್ತವೆ. P/Q = R/S ಆದಾಗ B ಮತ್ತು D ಒಂದೇ ವಿಭವದಲ್ಲಿದ್ದು G ಮೂಲಕ ಪ್ರವಾಹ ಇಲ್ಲ: ಸೇತುವೆ ಸಮತೋಲನ. ಆಗ ಅಜ್ಞಾತ S = R·Q/P. ಬ್ಯಾಟರಿ 6 V, G = 20 Ω."
+   },
+   "sliders": [
+    {
+     "name": "P",
+     "label": {
+      "en": "P",
+      "kn": "P"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "Ω"
+    },
+    {
+     "name": "Q",
+     "label": {
+      "en": "Q",
+      "kn": "Q"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "Ω"
+    },
+    {
+     "name": "Rr",
+     "label": {
+      "en": "R",
+      "kn": "R"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 5,
+     "unit": "Ω"
+    },
+    {
+     "name": "S",
+     "label": {
+      "en": "S",
+      "kn": "S"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 8,
+     "unit": "Ω"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "key",
+     "label": {
+      "en": "Battery key closed",
+      "kn": "ಬ್ಯಾಟರಿ ಕೀಲಿ ಮುಚ್ಚಿದೆ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "VB",
+     "expr": "6*Q/(P + Q)"
+    },
+    {
+     "name": "VD",
+     "expr": "6*S/(Rr + S)"
+    },
+    {
+     "name": "Rth",
+     "expr": "P*Q/(P + Q) + Rr*S/(Rr + S)"
+    },
+    {
+     "name": "Ig",
+     "expr": "if(key, 1000*(VB - VD)/(Rth + 20), 0)"
+    },
+    {
+     "name": "nd",
+     "expr": "clamp(rad(Ig*3), -1.2, 1.2)"
+    }
+   ],
+   "view": {
+    "x": [
+     -2,
+     22
+    ],
+    "y": [
+     -1,
+     13
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 6,
+     "x2": 10,
+     "y2": 11,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 11,
+     "x2": 18,
+     "y2": 6,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 6,
+     "x2": 10,
+     "y2": 1,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 1,
+     "x2": 18,
+     "y2": 6,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 6,
+     "y": 8.5,
+     "size": 3,
+     "angle": 32,
+     "color": "orange"
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 14,
+     "y": 8.5,
+     "size": 3,
+     "angle": -32,
+     "color": "orange"
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 6,
+     "y": 3.5,
+     "size": 3,
+     "angle": -32,
+     "color": "orange"
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 14,
+     "y": 3.5,
+     "size": 3,
+     "angle": 32,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 10.2,
+     "text": {
+      "en": "P = {P}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 10.2,
+     "text": {
+      "en": "Q = {Q}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 1.8,
+     "text": {
+      "en": "R = {Rr}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 1.8,
+     "text": {
+      "en": "S = {S}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 1.3,
+     "y": 6,
+     "text": {
+      "en": "A"
+     },
+     "size": 24,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 11.7,
+     "text": {
+      "en": "B"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 18.7,
+     "y": 6,
+     "text": {
+      "en": "C"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0,
+     "text": {
+      "en": "D"
+     },
+     "size": 24
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 11,
+     "x2": 10,
+     "y2": 7.3,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 4.7,
+     "x2": 10,
+     "y2": 1,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 10,
+     "y": 6,
+     "r": 1.3,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 6,
+     "x2": "10 + 1.1*sin(nd)",
+     "y2": "6 + 1.1*cos(nd)",
+     "color": "red",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": 6,
+     "text": {
+      "en": "G"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 6,
+     "x2": 2,
+     "y2": 12.5,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 18,
+     "y1": 6,
+     "x2": 18,
+     "y2": 12.5,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 12.5,
+     "x2": 8.8,
+     "y2": 12.5,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 11.2,
+     "y1": 12.5,
+     "x2": 18,
+     "y2": 12.5,
+     "width": 3
+    },
+    {
+     "shape": "icon",
+     "icon": "battery",
+     "x": 10,
+     "y": 12.5,
+     "size": 2.4
+    },
+    {
+     "shape": "label",
+     "x": 10,
+     "y": -0.6,
+     "text": {
+      "en": "Balanced: no current through G",
+      "kn": "ಸಮತೋಲನ: G ಮೂಲಕ ಪ್ರವಾಹ ಇಲ್ಲ"
+     },
+     "size": 24,
+     "visibleIf": "abs(Ig) < 0.01",
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Galvanometer current",
+      "kn": "ಗ್ಯಾಲ್ವನೋಮೀಟರ್ ಪ್ರವಾಹ"
+     },
+     "expr": "Ig",
+     "unit": "mA",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "P/Q",
+      "kn": "P/Q"
+     },
+     "expr": "P/Q",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "R/S",
+      "kn": "R/S"
+     },
+     "expr": "Rr/S",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Adjust S until the needle reads zero. Check that P/Q = R/S.",
+     "kn": "ಸೂಜಿ ಶೂನ್ಯ ತೋರುವವರೆಗೆ S ಹೊಂದಿಸಿ. P/Q = R/S ಎಂದು ಪರಿಶೀಲಿಸಿ."
+    },
+    {
+     "en": "At balance, swap the battery and galvanometer in your head. Would it still be balanced?",
+     "kn": "ಸಮತೋಲನದಲ್ಲಿ ಬ್ಯಾಟರಿ-ಗ್ಯಾಲ್ವನೋಮೀಟರ್ ಸ್ಥಾನ ಬದಲಿಸಿದರೆ ಸಮತೋಲನ ಉಳಿಯುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Make S too big, then too small. Which way does the needle swing each time?",
+     "kn": "S ಅತಿ ದೊಡ್ಡದು, ನಂತರ ಅತಿ ಚಿಕ್ಕದು ಮಾಡಿ. ಸೂಜಿ ಪ್ರತಿ ಬಾರಿ ಯಾವ ಕಡೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

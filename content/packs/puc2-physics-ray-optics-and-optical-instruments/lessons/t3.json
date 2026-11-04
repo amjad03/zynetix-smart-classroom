@@ -381,6 +381,231 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Total internal reflection",
+    "kn": "ಪೂರ್ಣ ಆಂತರಿಕ ಪ್ರತಿಫಲನ"
+   },
+   "narration": {
+    "en": "Light going from a denser medium into air bends away from the normal: n sin i = sin r. As i grows, r reaches 90° at the critical angle, sin ic = 1/n. Beyond that no light gets out: all of it is reflected. This keeps light inside optical fibres and makes diamonds sparkle."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Light going from a denser medium into air bends away from the normal: n sin i = sin r. As i grows, r reaches 90° at the critical angle, sin ic = 1/n. Beyond that no light gets out: all of it is reflected. This keeps light inside optical fibres and makes diamonds sparkle.",
+    "kn": "ಸಾಂದ್ರ ಮಾಧ್ಯಮದಿಂದ ಗಾಳಿಗೆ ಹೋಗುವ ಬೆಳಕು ಲಂಬದಿಂದ ದೂರ ಬಾಗುತ್ತದೆ: n sin i = sin r. i ಹೆಚ್ಚಿದಂತೆ ಕ್ರಾಂತಿ ಕೋನದಲ್ಲಿ r = 90°, sin ic = 1/n. ಅದರ ಆಚೆ ಬೆಳಕು ಹೊರಬರದು: ಎಲ್ಲವೂ ಪ್ರತಿಫಲಿಸುತ್ತದೆ. ಇದು ದ್ಯುತಿ ತಂತುಗಳಲ್ಲಿ ಬೆಳಕನ್ನು ಹಿಡಿದಿಡುತ್ತದೆ, ವಜ್ರ ಮಿನುಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "i",
+     "label": {
+      "en": "Angle in the medium",
+      "kn": "ಮಾಧ್ಯಮದಲ್ಲಿ ಕೋನ"
+     },
+     "min": 0,
+     "max": 89,
+     "step": 1,
+     "value": 30,
+     "unit": "°"
+    }
+   ],
+   "choices": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Medium",
+      "kn": "ಮಾಧ್ಯಮ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Water (1.33)",
+        "kn": "ನೀರು (1.33)"
+       },
+       "value": 1.33
+      },
+      {
+       "label": {
+        "en": "Glass (1.5)",
+        "kn": "ಗಾಜು (1.5)"
+       },
+       "value": 1.5
+      },
+      {
+       "label": {
+        "en": "Diamond (2.42)",
+        "kn": "ವಜ್ರ (2.42)"
+       },
+       "value": 2.42
+      }
+     ],
+     "value": 1.5
+    }
+   ],
+   "vars": [
+    {
+     "name": "tir",
+     "expr": "n*sin(rad(i)) >= 1"
+    },
+    {
+     "name": "rr",
+     "expr": "if(tir, pi/2, asin(n*sin(rad(i))))"
+    }
+   ],
+   "view": {
+    "x": [
+     -14,
+     14
+    ],
+    "y": [
+     -10,
+     9
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -14,
+     "y": -10,
+     "w": 28,
+     "h": 10,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": -13.5,
+     "y": -9.3,
+     "text": {
+      "en": "denser medium",
+      "kn": "ಸಾಂದ್ರ ಮಾಧ್ಯಮ"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": -13.5,
+     "y": 8.3,
+     "text": {
+      "en": "air",
+      "kn": "ಗಾಳಿ"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -10,
+     "x2": 0,
+     "y2": 9,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": "-11*sin(rad(i))",
+     "y1": "-11*cos(rad(i))",
+     "x2": 0,
+     "y2": 0,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "11*sin(rad(i))",
+     "y2": "-11*cos(rad(i))",
+     "color": "yellow",
+     "width": 4,
+     "opacity": "if(tir, 1, 0.3)"
+    },
+    {
+     "shape": "line",
+     "visibleIf": "!tir",
+     "x1": 0,
+     "y1": 0,
+     "x2": "11*sin(rr)",
+     "y2": "11*cos(rr)",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "-11*sin(asin(1/n))",
+     "y2": "-11*cos(asin(1/n))",
+     "dashed": true,
+     "color": "green",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": "-11.5*sin(asin(1/n))",
+     "y": "-11.5*cos(asin(1/n)) + 0.6",
+     "text": {
+      "en": "ic"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 7.5,
+     "text": {
+      "en": "Total internal reflection!",
+      "kn": "ಪೂರ್ಣ ಆಂತರಿಕ ಪ್ರತಿಫಲನ!"
+     },
+     "size": 28,
+     "visibleIf": "tir",
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Critical angle",
+      "kn": "ಕ್ರಾಂತಿ ಕೋನ"
+     },
+     "expr": "deg(asin(1/n))",
+     "unit": "°",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Angle in air",
+      "kn": "ಗಾಳಿಯಲ್ಲಿ ಕೋನ"
+     },
+     "expr": "if(tir, 90, deg(rr))",
+     "unit": "°",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Slowly increase i. At what angle does the refracted ray skim the surface?",
+     "kn": "i ನಿಧಾನವಾಗಿ ಹೆಚ್ಚಿಸಿ. ಯಾವ ಕೋನದಲ್ಲಿ ವಕ್ರೀಭವನ ಕಿರಣ ಮೇಲ್ಮೈಯನ್ನು ಸವರುತ್ತದೆ?"
+    },
+    {
+     "en": "Compare the critical angles of water, glass and diamond.",
+     "kn": "ನೀರು, ಗಾಜು, ವಜ್ರದ ಕ್ರಾಂತಿ ಕೋನಗಳನ್ನು ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Why is the reflected ray faint below the critical angle but bright above it?",
+     "kn": "ಕ್ರಾಂತಿ ಕೋನಕ್ಕಿಂತ ಕೆಳಗೆ ಪ್ರತಿಫಲಿತ ಕಿರಣ ಮಂದ, ಮೇಲೆ ಪ್ರಕಾಶಮಾನ ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

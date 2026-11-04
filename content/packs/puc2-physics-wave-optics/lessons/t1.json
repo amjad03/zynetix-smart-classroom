@@ -704,6 +704,449 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Huygens' construction",
+    "kn": "ಹೈಗೆನ್ಸ್ ರಚನೆ"
+   },
+   "narration": {
+    "en": "Every point on a wavefront acts as a source of secondary wavelets that spread at the speed of the wave. After a time t each wavelet has radius vt, and the surface touching all of them in front, their envelope, is the new wavefront. A plane wavefront stays plane; a spherical one grows."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Every point on a wavefront acts as a source of secondary wavelets that spread at the speed of the wave. After a time t each wavelet has radius vt, and the surface touching all of them in front, their envelope, is the new wavefront. A plane wavefront stays plane; a spherical one grows.",
+    "kn": "ತರಂಗಮುಖದ ಪ್ರತಿ ಬಿಂದು ತರಂಗದ ವೇಗದಲ್ಲಿ ಹರಡುವ ದ್ವಿತೀಯ ತರಂಗಿಕೆಗಳ ಆಕರ. t ಸಮಯದ ನಂತರ ಪ್ರತಿ ತರಂಗಿಕೆಯ ತ್ರಿಜ್ಯ vt; ಮುಂದೆ ಅವೆಲ್ಲವನ್ನೂ ಸ್ಪರ್ಶಿಸುವ ಮೇಲ್ಮೈ, ಅವುಗಳ ಆವರಣ, ಹೊಸ ತರಂಗಮುಖ. ಸಮತಲ ತರಂಗಮುಖ ಸಮತಲವಾಗಿಯೇ; ಗೋಳೀಯ ಬೆಳೆಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "v",
+     "label": {
+      "en": "Wave speed",
+      "kn": "ತರಂಗ ವೇಗ"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 0.5,
+     "value": 3,
+     "unit": "cm/s"
+    },
+    {
+     "name": "k",
+     "label": {
+      "en": "Number of wavelets",
+      "kn": "ತರಂಗಿಕೆಗಳ ಸಂಖ್ಯೆ"
+     },
+     "min": 3,
+     "max": 9,
+     "step": 1,
+     "value": 7
+    }
+   ],
+   "toggles": [
+    {
+     "name": "env",
+     "label": {
+      "en": "Show new wavefront",
+      "kn": "ಹೊಸ ತರಂಗಮುಖ ತೋರಿಸು"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "pw",
+     "label": {
+      "en": "Wavefront",
+      "kn": "ತರಂಗಮುಖ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Plane",
+        "kn": "ಸಮತಲ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Spherical",
+        "kn": "ಗೋಳೀಯ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Restart",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 3,
+    "speeds": [
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.5
+   },
+   "vars": [
+    {
+     "name": "x0",
+     "expr": "if(pw == 1, 2, -2 + 4*cos(rad(-60 + 120*0/max(k - 1, 1))))"
+    },
+    {
+     "name": "y0",
+     "expr": "if(pw == 1, -8 + 16*0/max(k - 1, 1), 4*sin(rad(-60 + 120*0/max(k - 1, 1))))"
+    },
+    {
+     "name": "x1",
+     "expr": "if(pw == 1, 2, -2 + 4*cos(rad(-60 + 120*1/max(k - 1, 1))))"
+    },
+    {
+     "name": "y1",
+     "expr": "if(pw == 1, -8 + 16*1/max(k - 1, 1), 4*sin(rad(-60 + 120*1/max(k - 1, 1))))"
+    },
+    {
+     "name": "x2",
+     "expr": "if(pw == 1, 2, -2 + 4*cos(rad(-60 + 120*2/max(k - 1, 1))))"
+    },
+    {
+     "name": "y2",
+     "expr": "if(pw == 1, -8 + 16*2/max(k - 1, 1), 4*sin(rad(-60 + 120*2/max(k - 1, 1))))"
+    },
+    {
+     "name": "x3",
+     "expr": "if(pw == 1, 2, -2 + 4*cos(rad(-60 + 120*3/max(k - 1, 1))))"
+    },
+    {
+     "name": "y3",
+     "expr": "if(pw == 1, -8 + 16*3/max(k - 1, 1), 4*sin(rad(-60 + 120*3/max(k - 1, 1))))"
+    },
+    {
+     "name": "x4",
+     "expr": "if(pw == 1, 2, -2 + 4*cos(rad(-60 + 120*4/max(k - 1, 1))))"
+    },
+    {
+     "name": "y4",
+     "expr": "if(pw == 1, -8 + 16*4/max(k - 1, 1), 4*sin(rad(-60 + 120*4/max(k - 1, 1))))"
+    },
+    {
+     "name": "x5",
+     "expr": "if(pw == 1, 2, -2 + 4*cos(rad(-60 + 120*5/max(k - 1, 1))))"
+    },
+    {
+     "name": "y5",
+     "expr": "if(pw == 1, -8 + 16*5/max(k - 1, 1), 4*sin(rad(-60 + 120*5/max(k - 1, 1))))"
+    },
+    {
+     "name": "x6",
+     "expr": "if(pw == 1, 2, -2 + 4*cos(rad(-60 + 120*6/max(k - 1, 1))))"
+    },
+    {
+     "name": "y6",
+     "expr": "if(pw == 1, -8 + 16*6/max(k - 1, 1), 4*sin(rad(-60 + 120*6/max(k - 1, 1))))"
+    },
+    {
+     "name": "x7",
+     "expr": "if(pw == 1, 2, -2 + 4*cos(rad(-60 + 120*7/max(k - 1, 1))))"
+    },
+    {
+     "name": "y7",
+     "expr": "if(pw == 1, -8 + 16*7/max(k - 1, 1), 4*sin(rad(-60 + 120*7/max(k - 1, 1))))"
+    },
+    {
+     "name": "x8",
+     "expr": "if(pw == 1, 2, -2 + 4*cos(rad(-60 + 120*8/max(k - 1, 1))))"
+    },
+    {
+     "name": "y8",
+     "expr": "if(pw == 1, -8 + 16*8/max(k - 1, 1), 4*sin(rad(-60 + 120*8/max(k - 1, 1))))"
+    }
+   ],
+   "view": {
+    "x": [
+     -8,
+     16
+    ],
+    "y": [
+     -10,
+     10
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "visibleIf": "pw == 1",
+     "x1": 2,
+     "y1": -9,
+     "x2": 2,
+     "y2": 9,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "pw == 2",
+     "x": -2,
+     "y": 0,
+     "r": 4,
+     "fill": false,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "pw == 2",
+     "x": -2,
+     "y": 0,
+     "r": 0.4,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "0 < k",
+     "x": "x0",
+     "y": "y0",
+     "r": "v*t",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "0 < k",
+     "x": "x0",
+     "y": "y0",
+     "r": 0.25,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "1 < k",
+     "x": "x1",
+     "y": "y1",
+     "r": "v*t",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "1 < k",
+     "x": "x1",
+     "y": "y1",
+     "r": 0.25,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "2 < k",
+     "x": "x2",
+     "y": "y2",
+     "r": "v*t",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "2 < k",
+     "x": "x2",
+     "y": "y2",
+     "r": 0.25,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "3 < k",
+     "x": "x3",
+     "y": "y3",
+     "r": "v*t",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "3 < k",
+     "x": "x3",
+     "y": "y3",
+     "r": 0.25,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "4 < k",
+     "x": "x4",
+     "y": "y4",
+     "r": "v*t",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "4 < k",
+     "x": "x4",
+     "y": "y4",
+     "r": 0.25,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "5 < k",
+     "x": "x5",
+     "y": "y5",
+     "r": "v*t",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "5 < k",
+     "x": "x5",
+     "y": "y5",
+     "r": 0.25,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "6 < k",
+     "x": "x6",
+     "y": "y6",
+     "r": "v*t",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "6 < k",
+     "x": "x6",
+     "y": "y6",
+     "r": 0.25,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "7 < k",
+     "x": "x7",
+     "y": "y7",
+     "r": "v*t",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "7 < k",
+     "x": "x7",
+     "y": "y7",
+     "r": 0.25,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "8 < k",
+     "x": "x8",
+     "y": "y8",
+     "r": "v*t",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "8 < k",
+     "x": "x8",
+     "y": "y8",
+     "r": 0.25,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "visibleIf": "pw == 1 && env",
+     "x1": "2 + v*t",
+     "y1": -9,
+     "x2": "2 + v*t",
+     "y2": 9,
+     "color": "green",
+     "width": 4,
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "pw == 2 && env",
+     "x": -2,
+     "y": 0,
+     "r": "4 + v*t",
+     "fill": false,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 9.2,
+     "text": {
+      "en": "new wavefront = envelope (green)",
+      "kn": "ಹೊಸ ತರಂಗಮುಖ = ಆವರಣ (ಹಸಿರು)"
+     },
+     "size": 22,
+     "color": "green",
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Wavelet radius vt",
+      "kn": "ತರಂಗಿಕೆ ತ್ರಿಜ್ಯ vt"
+     },
+     "expr": "v*t",
+     "unit": "cm",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Use 3 wavelets, then 9. Does the envelope become clearer?",
+     "kn": "3 ತರಂಗಿಕೆ, ನಂತರ 9 ಬಳಸಿ. ಆವರಣ ಸ್ಪಷ್ಟವಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Why do we ignore the backward half of each wavelet?",
+     "kn": "ಪ್ರತಿ ತರಂಗಿಕೆಯ ಹಿಂದಿನ ಅರ್ಧವನ್ನು ಏಕೆ ಕಡೆಗಣಿಸುತ್ತೇವೆ?"
+    },
+    {
+     "en": "Double the speed. How far does the wavefront move in the same time?",
+     "kn": "ವೇಗ ದ್ವಿಗುಣಗೊಳಿಸಿ. ಅದೇ ಸಮಯದಲ್ಲಿ ತರಂಗಮುಖ ಎಷ್ಟು ಸರಿಯುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

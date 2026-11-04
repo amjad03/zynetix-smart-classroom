@@ -411,6 +411,310 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "An astronomical telescope",
+    "kn": "ಖಗೋಳ ದೂರದರ್ಶಕ"
+   },
+   "narration": {
+    "en": "Parallel light from a distant star is focused by the objective (focal length fo) to an image at its focus. The eyepiece (fe) acts as a magnifier. In normal adjustment the final rays come out parallel and M = fo/fe, tube length fo + fe. With the final image at 25 cm, M = (fo/fe)(1 + fe/25). Angles are exaggerated."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Parallel light from a distant star is focused by the objective (focal length fo) to an image at its focus. The eyepiece (fe) acts as a magnifier. In normal adjustment the final rays come out parallel and M = fo/fe, tube length fo + fe. With the final image at 25 cm, M = (fo/fe)(1 + fe/25). Angles are exaggerated.",
+    "kn": "ದೂರದ ನಕ್ಷತ್ರದ ಸಮಾಂತರ ಬೆಳಕನ್ನು ವಸ್ತು ಮಸೂರ (fo) ತನ್ನ ನಾಭಿಯಲ್ಲಿ ಬಿಂಬವಾಗಿಸುತ್ತದೆ. ನೇತ್ರ ಮಸೂರ (fe) ವರ್ಧಕದಂತೆ. ಸಾಮಾನ್ಯ ಹೊಂದಾಣಿಕೆಯಲ್ಲಿ ಅಂತಿಮ ಕಿರಣಗಳು ಸಮಾಂತರ, M = fo/fe, ನಳಿಕೆ ಉದ್ದ fo + fe. ಅಂತಿಮ ಬಿಂಬ 25 cm ನಲ್ಲಿದ್ದರೆ M = (fo/fe)(1 + fe/25)."
+   },
+   "sliders": [
+    {
+     "name": "fo",
+     "label": {
+      "en": "Objective focal length fo",
+      "kn": "ವಸ್ತು ಮಸೂರ ನಾಭಿ fo"
+     },
+     "min": 50,
+     "max": 150,
+     "step": 5,
+     "value": 100,
+     "unit": "cm"
+    },
+    {
+     "name": "fe",
+     "label": {
+      "en": "Eyepiece focal length fe",
+      "kn": "ನೇತ್ರ ಮಸೂರ ನಾಭಿ fe"
+     },
+     "min": 2,
+     "max": 20,
+     "step": 1,
+     "value": 5,
+     "unit": "cm"
+    },
+    {
+     "name": "al",
+     "label": {
+      "en": "Angle of the star",
+      "kn": "ನಕ್ಷತ್ರದ ಕೋನ"
+     },
+     "min": 0.5,
+     "max": 3,
+     "step": 0.5,
+     "value": 1,
+     "unit": "°"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "near",
+     "label": {
+      "en": "Final image at 25 cm (near point)",
+      "kn": "ಅಂತಿಮ ಬಿಂಬ 25 cm (ಸಮೀಪ ಬಿಂದು)"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "ta",
+     "expr": "tan(rad(al))"
+    },
+    {
+     "name": "yI",
+     "expr": "-fo*ta"
+    },
+    {
+     "name": "ue",
+     "expr": "if(near, 25*fe/(25 + fe), fe)"
+    },
+    {
+     "name": "xe",
+     "expr": "fo + ue"
+    },
+    {
+     "name": "Lt",
+     "expr": "xe"
+    },
+    {
+     "name": "M",
+     "expr": "if(near, fo/fe*(1 + fe/25), fo/fe)"
+    }
+   ],
+   "view": {
+    "x": [
+     -20,
+     220
+    ],
+    "y": [
+     -15,
+     15
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -20,
+     "y1": 0,
+     "x2": 220,
+     "y2": 0,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -5,
+     "x2": 0,
+     "y2": 5,
+     "color": "blue",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": "xe",
+     "y1": -3,
+     "x2": "xe",
+     "y2": 3,
+     "color": "blue",
+     "width": 8
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 6.3,
+     "text": {
+      "en": "objective",
+      "kn": "ವಸ್ತು ಮಸೂರ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": "xe",
+     "y": 4.3,
+     "text": {
+      "en": "eyepiece",
+      "kn": "ನೇತ್ರ ಮಸೂರ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": -20,
+     "y1": "-3 + 20*ta",
+     "x2": 0,
+     "y2": -3,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -3,
+     "x2": "xe",
+     "y2": "(-3 + (yI - -3)*xe/fo)",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "xe",
+     "y1": "(-3 + (yI - -3)*xe/fo)",
+     "x2": "xe + 40",
+     "y2": "(-3 + (yI - -3)*xe/fo) + 40*if(near, ((-3 + (yI - -3)*xe/fo) - yI*25/ue)/25, -yI/fe)",
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": -20,
+     "y1": "0 + 20*ta",
+     "x2": 0,
+     "y2": 0,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "xe",
+     "y2": "(0 + (yI - 0)*xe/fo)",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "xe",
+     "y1": "(0 + (yI - 0)*xe/fo)",
+     "x2": "xe + 40",
+     "y2": "(0 + (yI - 0)*xe/fo) + 40*if(near, ((0 + (yI - 0)*xe/fo) - yI*25/ue)/25, -yI/fe)",
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": -20,
+     "y1": "3 + 20*ta",
+     "x2": 0,
+     "y2": 3,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 3,
+     "x2": "xe",
+     "y2": "(3 + (yI - 3)*xe/fo)",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "xe",
+     "y1": "(3 + (yI - 3)*xe/fo)",
+     "x2": "xe + 40",
+     "y2": "(3 + (yI - 3)*xe/fo) + 40*if(near, ((3 + (yI - 3)*xe/fo) - yI*25/ue)/25, -yI/fe)",
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "fo",
+     "y1": 0,
+     "x2": "fo",
+     "y2": "yI",
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "fo",
+     "y": "yI",
+     "r": 1.2,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": "fo",
+     "y": "yI - 1.8",
+     "text": {
+      "en": "image",
+      "kn": "ಬಿಂಬ"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 218,
+     "y": 13.5,
+     "text": {
+      "en": "M = {M:1}   L = {Lt:1} cm"
+     },
+     "size": 26,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Angular magnification M",
+      "kn": "ಕೋನೀಯ ವರ್ಧನೆ M"
+     },
+     "expr": "M",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Tube length",
+      "kn": "ನಳಿಕೆ ಉದ್ದ"
+     },
+     "expr": "Lt",
+     "unit": "cm",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make fo larger. What happens to M and to the tube length?",
+     "kn": "fo ಹೆಚ್ಚಿಸಿ. M ಮತ್ತು ನಳಿಕೆ ಉದ್ದ ಏನಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Why do telescopes use a long-focus objective and a short-focus eyepiece?",
+     "kn": "ದೂರದರ್ಶಕಗಳು ದೀರ್ಘ-ನಾಭಿ ವಸ್ತು ಮಸೂರ, ಕಿರು-ನಾಭಿ ನೇತ್ರ ಮಸೂರ ಏಕೆ ಬಳಸುತ್ತವೆ?"
+    },
+    {
+     "en": "Switch to the near-point setting. Does M go up or down?",
+     "kn": "ಸಮೀಪ ಬಿಂದು ಹೊಂದಾಣಿಕೆಗೆ ಬದಲಿಸಿ. M ಹೆಚ್ಚುತ್ತದೆಯೇ ಕಡಿಮೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

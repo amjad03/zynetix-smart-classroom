@@ -459,6 +459,290 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Lenz's law: the coil fights back",
+    "kn": "ಲೆಂಜ್ ನಿಯಮ: ಸುರುಳಿ ವಿರೋಧಿಸುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "The induced current always opposes the change that causes it. Push a N pole in and the near face of the coil becomes a N pole, pushing back. Pull it out and that face becomes S, pulling back. You must do work against this force, and that work becomes electrical energy."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The induced current always opposes the change that causes it. Push a N pole in and the near face of the coil becomes a N pole, pushing back. Pull it out and that face becomes S, pulling back. You must do work against this force, and that work becomes electrical energy.",
+    "kn": "ಪ್ರೇರಿತ ಪ್ರವಾಹ ಯಾವಾಗಲೂ ತನ್ನನ್ನು ಉಂಟುಮಾಡುವ ಬದಲಾವಣೆಯನ್ನು ವಿರೋಧಿಸುತ್ತದೆ. N ಧ್ರುವ ಒಳಗೆ ತಳ್ಳಿದರೆ ಸುರುಳಿಯ ಹತ್ತಿರದ ಮುಖ N ಆಗಿ ಹಿಂದೆ ತಳ್ಳುತ್ತದೆ. ಹೊರಗೆ ಎಳೆದರೆ ಆ ಮುಖ S ಆಗಿ ಹಿಂದಕ್ಕೆ ಎಳೆಯುತ್ತದೆ. ಈ ಬಲದ ವಿರುದ್ಧ ಮಾಡಿದ ಕೆಲಸವೇ ವಿದ್ಯುತ್ ಶಕ್ತಿ."
+   },
+   "sliders": [
+    {
+     "name": "sp",
+     "label": {
+      "en": "Speed of the magnet",
+      "kn": "ಕಾಂತದ ವೇಗ"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 1,
+     "value": 4,
+     "unit": "cm/s"
+    },
+    {
+     "name": "N",
+     "label": {
+      "en": "Turns",
+      "kn": "ಸುತ್ತುಗಳು"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 50,
+     "value": 200
+    }
+   ],
+   "toggles": [
+    {
+     "name": "inw",
+     "label": {
+      "en": "Push in (off: pull out)",
+      "kn": "ಒಳಗೆ ತಳ್ಳು (ಆಫ್: ಹೊರಗೆ ಎಳೆ)"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "pol",
+     "label": {
+      "en": "Pole facing the coil",
+      "kn": "ಸುರುಳಿಯತ್ತ ಧ್ರುವ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "N",
+        "kn": "N"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "S",
+        "kn": "S"
+       },
+       "value": -1
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Move",
+      "kn": "ಚಲಿಸು"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 8,
+    "stopWhen": "!moving"
+   },
+   "vars": [
+    {
+     "name": "xm",
+     "expr": "if(inw, max(12 - sp*t, 2), min(2 + sp*t, 12))"
+    },
+    {
+     "name": "moving",
+     "expr": "if(inw, xm > 2, xm < 12)"
+    },
+    {
+     "name": "face",
+     "expr": "pol*if(inw, 1, -1)"
+    },
+    {
+     "name": "emf",
+     "expr": "if(moving, N*0.1*0.75*xm*(1 + (xm/2)^2)^(-2.5)*sp, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     -6,
+     18
+    ],
+    "y": [
+     -6,
+     7
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -0.6,
+     "y": -2.6,
+     "w": 1.2,
+     "h": 5.2,
+     "fill": false,
+     "color": "orange",
+     "width": 5
+    },
+    {
+     "shape": "label",
+     "x": -2.2,
+     "y": 3.6,
+     "text": {
+      "en": "N"
+     },
+     "size": 30,
+     "visibleIf": "face > 0 && moving",
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": -2.2,
+     "y": 3.6,
+     "text": {
+      "en": "S"
+     },
+     "size": 30,
+     "visibleIf": "face < 0 && moving",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": -2.2,
+     "y": 5.2,
+     "text": {
+      "en": "coil face",
+      "kn": "ಸುರುಳಿ ಮುಖ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": "xm",
+     "y": -0.7,
+     "w": 1.6,
+     "h": 1.4,
+     "color": {
+      "by": "pol > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "xm + 1.6",
+     "y": -0.7,
+     "w": 1.6,
+     "h": 1.4,
+     "color": {
+      "by": "pol > 0",
+      "scale": [
+       "red",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": "xm + 0.8",
+     "y": 1.4,
+     "text": {
+      "en": "N"
+     },
+     "size": 22,
+     "visibleIf": "pol > 0"
+    },
+    {
+     "shape": "text",
+     "x": "xm + 0.8",
+     "y": 1.4,
+     "text": {
+      "en": "S"
+     },
+     "size": 22,
+     "visibleIf": "pol < 0"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "moving",
+     "x": "xm + 1.6",
+     "y": -1.8,
+     "dx": "if(inw, -2, 2)",
+     "dy": 0,
+     "color": "white",
+     "label": "v"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "moving",
+     "x": "xm + 1.6",
+     "y": -3.2,
+     "dx": "if(inw, 1, -1)*clamp(emf/3, 0.3, 4)",
+     "dy": 0,
+     "color": "green",
+     "label": "force on magnet"
+    },
+    {
+     "shape": "label",
+     "x": 6,
+     "y": -5.2,
+     "text": {
+      "en": "Current: anticlockwise (seen from the magnet)",
+      "kn": "ಪ್ರವಾಹ: ಅಪ್ರದಕ್ಷಿಣ (ಕಾಂತದ ಕಡೆಯಿಂದ)"
+     },
+     "size": 22,
+     "visibleIf": "face > 0 && moving",
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 6,
+     "y": -5.2,
+     "text": {
+      "en": "Current: clockwise (seen from the magnet)",
+      "kn": "ಪ್ರವಾಹ: ಪ್ರದಕ್ಷಿಣ (ಕಾಂತದ ಕಡೆಯಿಂದ)"
+     },
+     "size": 22,
+     "visibleIf": "face < 0 && moving",
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Induced emf",
+      "kn": "ಪ್ರೇರಿತ emf"
+     },
+     "expr": "emf",
+     "unit": "mV",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Push the N pole in. What pole appears on the near face of the coil?",
+     "kn": "N ಧ್ರುವ ಒಳಗೆ ತಳ್ಳಿ. ಸುರುಳಿಯ ಹತ್ತಿರದ ಮುಖದಲ್ಲಿ ಯಾವ ಧ್ರುವ?"
+    },
+    {
+     "en": "Now pull it out. Which way does the force on the magnet point?",
+     "kn": "ಈಗ ಹೊರಗೆ ಎಳೆಯಿರಿ. ಕಾಂತದ ಮೇಲಿನ ಬಲ ಯಾವ ಕಡೆ?"
+    },
+    {
+     "en": "If the coil attracted an approaching magnet, what would happen to energy?",
+     "kn": "ಸುರುಳಿ ಬರುತ್ತಿರುವ ಕಾಂತವನ್ನು ಆಕರ್ಷಿಸಿದರೆ ಶಕ್ತಿಗೆ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

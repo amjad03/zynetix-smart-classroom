@@ -324,6 +324,348 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Current and voltage in an inductor and a capacitor",
+    "kn": "ಪ್ರೇರಕ ಮತ್ತು ಧಾರಕದಲ್ಲಿ ಪ್ರವಾಹ ಮತ್ತು ವೋಲ್ಟೇಜ್"
+   },
+   "narration": {
+    "en": "Pick an inductor or a capacitor. In an inductor the current lags the voltage by a quarter cycle (90°); in a capacitor it leads by 90°. The reactance XL = ωL grows with frequency, XC = 1/ωC falls. The curves are scaled to fit; read the sizes below."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Pick an inductor or a capacitor. In an inductor the current lags the voltage by a quarter cycle (90°); in a capacitor it leads by 90°. The reactance XL = ωL grows with frequency, XC = 1/ωC falls. The curves are scaled to fit; read the sizes below.",
+    "kn": "ಪ್ರೇರಕ ಅಥವಾ ಧಾರಕ ಆರಿಸಿ. ಪ್ರೇರಕದಲ್ಲಿ ಪ್ರವಾಹ ವೋಲ್ಟೇಜ್‌ಗಿಂತ 90° ಹಿಂದೆ; ಧಾರಕದಲ್ಲಿ 90° ಮುಂದೆ. XL = ωL ಆವೃತ್ತಿಯೊಂದಿಗೆ ಹೆಚ್ಚುತ್ತದೆ, XC = 1/ωC ಕಡಿಮೆಯಾಗುತ್ತದೆ. ವಕ್ರಗಳನ್ನು ಹೊಂದಿಸಲು ಮಾಪನ ಬದಲಿಸಲಾಗಿದೆ."
+   },
+   "sliders": [
+    {
+     "name": "f",
+     "label": {
+      "en": "Frequency",
+      "kn": "ಆವೃತ್ತಿ"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 5,
+     "value": 50,
+     "unit": "Hz"
+    },
+    {
+     "name": "Lm",
+     "label": {
+      "en": "Inductance",
+      "kn": "ಪ್ರೇರಕತೆ"
+     },
+     "min": 10,
+     "max": 500,
+     "step": 10,
+     "value": 100,
+     "unit": "mH"
+    },
+    {
+     "name": "Cu",
+     "label": {
+      "en": "Capacitance",
+      "kn": "ಧಾರಕತೆ"
+     },
+     "min": 10,
+     "max": 500,
+     "step": 10,
+     "value": 100,
+     "unit": "µF"
+    },
+    {
+     "name": "Vr",
+     "label": {
+      "en": "rms voltage",
+      "kn": "rms ವೋಲ್ಟೇಜ್"
+     },
+     "min": 50,
+     "max": 250,
+     "step": 10,
+     "value": 220,
+     "unit": "V"
+    }
+   ],
+   "choices": [
+    {
+     "name": "el",
+     "label": {
+      "en": "Element",
+      "kn": "ಘಟಕ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Inductor",
+        "kn": "ಪ್ರೇರಕ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Capacitor",
+        "kn": "ಧಾರಕ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 40,
+    "loop": true,
+    "speeds": [
+     1,
+     2,
+     5,
+     10
+    ],
+    "speed": 2,
+    "unit": "ms"
+   },
+   "vars": [
+    {
+     "name": "w",
+     "expr": "2*pi*f/1000"
+    },
+    {
+     "name": "th",
+     "expr": "w*t"
+    },
+    {
+     "name": "ph",
+     "expr": "if(el == 1, -pi/2, pi/2)"
+    },
+    {
+     "name": "X",
+     "expr": "if(el == 1, 2*pi*f*Lm/1000, 1e6/(2*pi*f*Cu))"
+    },
+    {
+     "name": "Irms",
+     "expr": "Vr/X"
+    },
+    {
+     "name": "gx",
+     "expr": "mod(t, 40)"
+    }
+   ],
+   "view": {
+    "x": [
+     -22,
+     42
+    ],
+    "y": [
+     -11,
+     11
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": -11,
+     "y": 0,
+     "r": 8,
+     "fill": false,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 41,
+     "y2": 0,
+     "color": "white",
+     "opacity": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -10.5,
+     "x2": 0,
+     "y2": 10.5,
+     "color": "white",
+     "opacity": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "8*sin(w*x)",
+     "from": 0,
+     "to": 40,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "fn": "6*sin(w*x + ph)",
+     "from": 0,
+     "to": 40,
+     "color": "blue",
+     "width": 3,
+     "dashed": true
+    },
+    {
+     "shape": "arrow",
+     "x": -11,
+     "y": 0,
+     "dx": "8*cos(th)",
+     "dy": "8*sin(th)",
+     "color": "yellow",
+     "label": "V"
+    },
+    {
+     "shape": "arrow",
+     "x": -11,
+     "y": 0,
+     "dx": "6*cos(th + ph)",
+     "dy": "6*sin(th + ph)",
+     "color": "blue",
+     "label": "I"
+    },
+    {
+     "shape": "circle",
+     "x": "gx",
+     "y": "8*sin(th)",
+     "r": 0.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "gx",
+     "y": "6*sin(th + ph)",
+     "r": 0.5,
+     "color": "blue"
+    },
+    {
+     "shape": "icon",
+     "visibleIf": "el == 1",
+     "icon": "resistor",
+     "x": -11,
+     "y": -9.5,
+     "size": 5,
+     "color": "orange"
+    },
+    {
+     "shape": "icon",
+     "visibleIf": "el == 2",
+     "icon": "capacitor",
+     "x": -11,
+     "y": -9.5,
+     "size": 3,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 1,
+     "y": 10,
+     "text": {
+      "en": "Inductor: current lags voltage by 90°",
+      "kn": "ಪ್ರೇರಕ: ಪ್ರವಾಹ 90° ಹಿಂದೆ"
+     },
+     "size": 24,
+     "visibleIf": "el == 1",
+     "color": "blue",
+     "align": "left"
+    },
+    {
+     "shape": "label",
+     "x": 1,
+     "y": 10,
+     "text": {
+      "en": "Capacitor: current leads voltage by 90°",
+      "kn": "ಧಾರಕ: ಪ್ರವಾಹ 90° ಮುಂದೆ"
+     },
+     "size": 24,
+     "visibleIf": "el == 2",
+     "color": "blue",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 41,
+     "y": -10,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": -21,
+     "y": -9.8,
+     "text": {
+      "en": "coil",
+      "kn": "ಸುರುಳಿ"
+     },
+     "size": 20,
+     "visibleIf": "el == 1",
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Reactance",
+      "kn": "ಪ್ರತಿಘಾತ"
+     },
+     "expr": "X",
+     "unit": "Ω",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "rms current",
+      "kn": "rms ಪ್ರವಾಹ"
+     },
+     "expr": "Irms",
+     "unit": "A",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Peak current",
+      "kn": "ಗರಿಷ್ಠ ಪ್ರವಾಹ"
+     },
+     "expr": "Irms*sqrt(2)",
+     "unit": "A",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Average power",
+      "kn": "ಸರಾಸರಿ ಸಾಮರ್ಥ್ಯ"
+     },
+     "expr": "0",
+     "unit": "W",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With the inductor, does the blue current peak before or after the yellow voltage?",
+     "kn": "ಪ್ರೇರಕದಲ್ಲಿ ನೀಲಿ ಪ್ರವಾಹ ಹಳದಿ ವೋಲ್ಟೇಜ್‌ಗಿಂತ ಮೊದಲು ಗರಿಷ್ಠವೇ ನಂತರವೇ?"
+    },
+    {
+     "en": "Double the frequency for each element. Which one lets more current through?",
+     "kn": "ಪ್ರತಿಯೊಂದಕ್ಕೂ ಆವೃತ್ತಿ ದ್ವಿಗುಣಗೊಳಿಸಿ. ಯಾವುದು ಹೆಚ್ಚು ಪ್ರವಾಹ ಬಿಡುತ್ತದೆ?"
+    },
+    {
+     "en": "At what frequency is XL equal to XC for these values?",
+     "kn": "ಈ ಮೌಲ್ಯಗಳಿಗೆ ಯಾವ ಆವೃತ್ತಿಯಲ್ಲಿ XL = XC?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -392,6 +392,263 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Potential energy of two charges",
+    "kn": "ಎರಡು ಆವೇಶಗಳ ಸ್ಥಿತಿ ಶಕ್ತಿ"
+   },
+   "narration": {
+    "en": "Drag q2. The system's potential energy U = k q1 q2 / r is the work done to assemble the charges from far apart. Like charges: U is positive and grows as they come closer. Unlike charges: U is negative and the system is bound. The graph shows U against r."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag q2. The system's potential energy U = k q1 q2 / r is the work done to assemble the charges from far apart. Like charges: U is positive and grows as they come closer. Unlike charges: U is negative and the system is bound. The graph shows U against r.",
+    "kn": "q2 ಎಳೆಯಿರಿ. ವ್ಯವಸ್ಥೆಯ ಸ್ಥಿತಿ ಶಕ್ತಿ U = k q1 q2 / r ಎಂದರೆ ದೂರದಿಂದ ಆವೇಶಗಳನ್ನು ಜೋಡಿಸಲು ಮಾಡಿದ ಕೆಲಸ. ಸಜಾತೀಯ: U ಧನ, ಹತ್ತಿರವಾದಂತೆ ಹೆಚ್ಚು. ವಿಜಾತೀಯ: U ಋಣ, ವ್ಯವಸ್ಥೆ ಬಂಧಿತ. ನಕ್ಷೆ U ಮತ್ತು r."
+   },
+   "sliders": [
+    {
+     "name": "q1",
+     "label": {
+      "en": "q1",
+      "kn": "q1"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 1,
+     "value": 3,
+     "unit": "µC"
+    },
+    {
+     "name": "q2",
+     "label": {
+      "en": "q2",
+      "kn": "q2"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 1,
+     "value": -2,
+     "unit": "µC"
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "q2",
+     "x": 5,
+     "y": 0,
+     "box": {
+      "x": [
+       -11,
+       11
+      ],
+      "y": [
+       -10,
+       10
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "r",
+     "expr": "max(hypot(P_x, P_y), 0.5)"
+    },
+    {
+     "name": "U",
+     "expr": "0.9*q1*q2/r"
+    },
+    {
+     "name": "F",
+     "expr": "9e9*abs(q1*q2)*1e-12/(r/100)^2"
+    },
+    {
+     "name": "Us",
+     "expr": "max(0.45*abs(q1*q2), 0.01)"
+    }
+   ],
+   "view": {
+    "x": [
+     -12,
+     30
+    ],
+    "y": [
+     -11,
+     11
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 0.7,
+     "color": {
+      "by": "q1 > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -1.6,
+     "text": {
+      "en": "q1"
+     },
+     "size": 22
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "P_x",
+     "y2": "P_y",
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "F > 0.01",
+     "x": "P_x",
+     "y": "P_y",
+     "dx": "sign(q1*q2)*2.5*P_x/r",
+     "dy": "sign(q1*q2)*2.5*P_y/r",
+     "color": "green",
+     "label": "F"
+    },
+    {
+     "shape": "circle",
+     "x": "P_x",
+     "y": "P_y",
+     "r": 0.6,
+     "color": {
+      "by": "q2 > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 0,
+     "x2": 29.5,
+     "y2": 0,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": -10,
+     "x2": 14,
+     "y2": 10,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": -0.8,
+     "text": {
+      "en": "r"
+     },
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 14.3,
+     "y": 10.3,
+     "text": {
+      "en": "U"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "path",
+     "fn": "clamp(4*0.9*q1*q2/max(x - 14, 0.3)/Us, -9.5, 9.5)",
+     "from": 14.6,
+     "to": 29.5,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "14 + r",
+     "y": "clamp(4*U/Us, -9.5, 9.5)",
+     "r": 0.4,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 22,
+     "y": -10.3,
+     "text": {
+      "en": "graph scaled to fit",
+      "kn": "ನಕ್ಷೆ ಹೊಂದಿಸಲಾಗಿದೆ"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Potential energy U",
+      "kn": "ಸ್ಥಿತಿ ಶಕ್ತಿ U"
+     },
+     "expr": "U",
+     "unit": "J",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Force between them",
+      "kn": "ಅವುಗಳ ನಡುವಿನ ಬಲ"
+     },
+     "expr": "F",
+     "unit": "N",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Separation",
+      "kn": "ಅಂತರ"
+     },
+     "expr": "r",
+     "unit": "cm",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With unlike charges, how much work must you do to pull q2 far away?",
+     "kn": "ವಿಜಾತೀಯ ಆವೇಶಗಳಲ್ಲಿ q2 ಅನ್ನು ದೂರಕ್ಕೆ ಎಳೆಯಲು ಎಷ್ಟು ಕೆಲಸ ಬೇಕು?"
+    },
+    {
+     "en": "Halve the distance. What happens to U and to the force?",
+     "kn": "ದೂರ ಅರ್ಧ ಮಾಡಿ. U ಮತ್ತು ಬಲ ಏನಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Move q2 in a circle around q1. Does U change? Why?",
+     "kn": "q2 ಅನ್ನು q1 ಸುತ್ತ ವೃತ್ತದಲ್ಲಿ ಸರಿಸಿ. U ಬದಲಾಗುತ್ತದೆಯೇ? ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

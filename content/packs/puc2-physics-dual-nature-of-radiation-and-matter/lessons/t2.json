@@ -466,6 +466,250 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Photocurrent and stopping potential",
+    "kn": "ದ್ಯುತಿ ಪ್ರವಾಹ ಮತ್ತು ನಿಲುಗಡೆ ವಿಭವ"
+   },
+   "narration": {
+    "en": "Drag the yellow point to set the anode potential. With a large positive potential every emitted electron is collected: the saturation current, which grows with intensity. Make the anode negative and only fast electrons get through; at −V0 the current stops. V0 depends on frequency, not intensity. (Simplified straight-line model.)"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the yellow point to set the anode potential. With a large positive potential every emitted electron is collected: the saturation current, which grows with intensity. Make the anode negative and only fast electrons get through; at −V0 the current stops. V0 depends on frequency, not intensity. (Simplified straight-line model.)",
+    "kn": "ಆನೋಡ್ ವಿಭವ ಹೊಂದಿಸಲು ಹಳದಿ ಬಿಂದು ಎಳೆಯಿರಿ. ಹೆಚ್ಚು ಧನ ವಿಭವದಲ್ಲಿ ಎಲ್ಲ ಎಲೆಕ್ಟ್ರಾನ್ ಸಂಗ್ರಹ: ಸಂತೃಪ್ತ ಪ್ರವಾಹ, ತೀವ್ರತೆಯೊಂದಿಗೆ ಹೆಚ್ಚುತ್ತದೆ. ಆನೋಡ್ ಋಣ ಮಾಡಿದರೆ ವೇಗದ ಎಲೆಕ್ಟ್ರಾನ್ ಮಾತ್ರ; −V0 ನಲ್ಲಿ ಪ್ರವಾಹ ನಿಲ್ಲುತ್ತದೆ. V0 ಆವೃತ್ತಿಯನ್ನು ಅವಲಂಬಿಸುತ್ತದೆ, ತೀವ್ರತೆಯನ್ನಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "Int",
+     "label": {
+      "en": "Intensity",
+      "kn": "ತೀವ್ರತೆ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "nu",
+     "label": {
+      "en": "Frequency",
+      "kn": "ಆವೃತ್ತಿ"
+     },
+     "min": 6,
+     "max": 15,
+     "step": 0.5,
+     "value": 10,
+     "unit": "×10¹⁴ Hz"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cmp",
+     "label": {
+      "en": "Compare: half intensity",
+      "kn": "ಹೋಲಿಕೆ: ಅರ್ಧ ತೀವ್ರತೆ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "W",
+     "label": {
+      "en": "Metal",
+      "kn": "ಲೋಹ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Caesium (2.14 eV)",
+        "kn": "ಸೀಸಿಯಂ (2.14 eV)"
+       },
+       "value": 2.14
+      },
+      {
+       "label": {
+        "en": "Sodium (2.75 eV)",
+        "kn": "ಸೋಡಿಯಂ (2.75 eV)"
+       },
+       "value": 2.75
+      },
+      {
+       "label": {
+        "en": "Copper (4.65 eV)",
+        "kn": "ತಾಮ್ರ (4.65 eV)"
+       },
+       "value": 4.65
+      }
+     ],
+     "value": 2.75
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "anode V",
+     "x": 2,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       -6,
+       6
+      ],
+      "y": [
+       0,
+       0
+      ]
+     },
+     "snap": 0.1,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "V0",
+     "expr": "max(0.41357*nu - W, 0)"
+    },
+    {
+     "name": "Ip",
+     "expr": "Int*clamp((P_x + V0)/(V0 + 1), 0, 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     -6,
+     6
+    ],
+    "y": [
+     -1,
+     12
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "anode potential (V)",
+    "yLabel": "current (µA)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "Int*clamp((x + V0)/(V0 + 1), 0, 1)",
+     "from": -6,
+     "to": 6,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "visibleIf": "cmp",
+     "fn": "0.5*Int*clamp((x + V0)/(V0 + 1), 0, 1)",
+     "from": -6,
+     "to": 6,
+     "color": "green",
+     "width": 3,
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": "-V0",
+     "y1": -0.6,
+     "x2": "-V0",
+     "y2": 11,
+     "dashed": true,
+     "color": "orange",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": "-V0",
+     "y": 11.4,
+     "text": {
+      "en": "−V0"
+     },
+     "size": 24,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": "P_x",
+     "y1": 0,
+     "x2": "P_x",
+     "y2": "Ip",
+     "dashed": true,
+     "color": "yellow",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "P_x",
+     "y": "Ip",
+     "r": 0.15,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": -5.8,
+     "y": 11.3,
+     "text": {
+      "en": "Half intensity (green)",
+      "kn": "ಅರ್ಧ ತೀವ್ರತೆ (ಹಸಿರು)"
+     },
+     "size": 22,
+     "visibleIf": "cmp",
+     "color": "green",
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Stopping potential V0",
+      "kn": "ನಿಲುಗಡೆ ವಿಭವ V0"
+     },
+     "expr": "V0",
+     "unit": "V",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Current at the point",
+      "kn": "ಬಿಂದುವಿನಲ್ಲಿ ಪ್ರವಾಹ"
+     },
+     "expr": "Ip",
+     "unit": "µA",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Saturation current",
+      "kn": "ಸಂತೃಪ್ತ ಪ್ರವಾಹ"
+     },
+     "expr": "if(V0 > 0, Int, 0)",
+     "unit": "µA",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double the intensity. Does the stopping potential move?",
+     "kn": "ತೀವ್ರತೆ ದ್ವಿಗುಣಗೊಳಿಸಿ. ನಿಲುಗಡೆ ವಿಭವ ಸರಿಯುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Raise the frequency. Which way does the point where the current stops move?",
+     "kn": "ಆವೃತ್ತಿ ಹೆಚ್ಚಿಸಿ. ಪ್ರವಾಹ ನಿಲ್ಲುವ ಬಿಂದು ಯಾವ ಕಡೆ ಸರಿಯುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on the comparison curve. What is the same for both curves?",
+     "kn": "ಹೋಲಿಕೆ ವಕ್ರ ಆನ್ ಮಾಡಿ. ಎರಡೂ ವಕ್ರಗಳಲ್ಲಿ ಏನು ಒಂದೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

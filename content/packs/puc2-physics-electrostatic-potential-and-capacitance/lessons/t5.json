@@ -526,6 +526,402 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Capacitors in series and parallel",
+    "kn": "ಶ್ರೇಣಿ ಮತ್ತು ಸಮಾಂತರದಲ್ಲಿ ಧಾರಕಗಳು"
+   },
+   "narration": {
+    "en": "In series every capacitor carries the same charge and the voltages add: 1/C = 1/C1 + 1/C2. In parallel every capacitor has the same voltage and the charges add: C = C1 + C2. The bars show the charge on each. Stored energy U = ½CV²."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "In series every capacitor carries the same charge and the voltages add: 1/C = 1/C1 + 1/C2. In parallel every capacitor has the same voltage and the charges add: C = C1 + C2. The bars show the charge on each. Stored energy U = ½CV².",
+    "kn": "ಶ್ರೇಣಿಯಲ್ಲಿ ಪ್ರತಿ ಧಾರಕಕ್ಕೂ ಒಂದೇ ಆವೇಶ, ವೋಲ್ಟೇಜ್‌ಗಳು ಕೂಡುತ್ತವೆ: 1/C = 1/C1 + 1/C2. ಸಮಾಂತರದಲ್ಲಿ ಒಂದೇ ವೋಲ್ಟೇಜ್, ಆವೇಶಗಳು ಕೂಡುತ್ತವೆ: C = C1 + C2. ಪಟ್ಟಿಗಳು ಪ್ರತಿಯೊಂದರ ಆವೇಶ. ಸಂಗ್ರಹ ಶಕ್ತಿ U = ½CV²."
+   },
+   "sliders": [
+    {
+     "name": "C1",
+     "label": {
+      "en": "C1",
+      "kn": "C1"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 6,
+     "unit": "µF"
+    },
+    {
+     "name": "C2",
+     "label": {
+      "en": "C2",
+      "kn": "C2"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 3,
+     "unit": "µF"
+    },
+    {
+     "name": "V",
+     "label": {
+      "en": "Battery",
+      "kn": "ಬ್ಯಾಟರಿ"
+     },
+     "min": 1,
+     "max": 24,
+     "step": 1,
+     "value": 12,
+     "unit": "V"
+    }
+   ],
+   "choices": [
+    {
+     "name": "par",
+     "label": {
+      "en": "Connection",
+      "kn": "ಜೋಡಣೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Series",
+        "kn": "ಶ್ರೇಣಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Parallel",
+        "kn": "ಸಮಾಂತರ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "Ceq",
+     "expr": "if(par == 1, C1*C2/(C1 + C2), C1 + C2)"
+    },
+    {
+     "name": "Q1",
+     "expr": "if(par == 1, Ceq*V, C1*V)"
+    },
+    {
+     "name": "Q2",
+     "expr": "if(par == 1, Ceq*V, C2*V)"
+    },
+    {
+     "name": "V1",
+     "expr": "Q1/C1"
+    },
+    {
+     "name": "V2",
+     "expr": "Q2/C2"
+    }
+   ],
+   "view": {
+    "x": [
+     -1,
+     25
+    ],
+    "y": [
+     -1,
+     12
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "visibleIf": "par == 1",
+     "x1": 1,
+     "y1": 2,
+     "x2": 1,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 1",
+     "x1": 1,
+     "y1": 9,
+     "x2": 13,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 1",
+     "x1": 13,
+     "y1": 9,
+     "x2": 13,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 1",
+     "x1": 13,
+     "y1": 2,
+     "x2": 1,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "visibleIf": "par == 1",
+     "icon": "capacitor",
+     "x": 5,
+     "y": 9,
+     "size": 2.4,
+     "color": "blue"
+    },
+    {
+     "shape": "icon",
+     "visibleIf": "par == 1",
+     "icon": "capacitor",
+     "x": 9,
+     "y": 9,
+     "size": 2.4,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 10.6,
+     "text": {
+      "en": "C1: {V1:2} V"
+     },
+     "size": 22,
+     "visibleIf": "par == 1"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 7.4,
+     "text": {
+      "en": "C2: {V2:2} V"
+     },
+     "size": 22,
+     "visibleIf": "par == 1"
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 2",
+     "x1": 1,
+     "y1": 2,
+     "x2": 1,
+     "y2": 10,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 2",
+     "x1": 13,
+     "y1": 2,
+     "x2": 13,
+     "y2": 10,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 2",
+     "x1": 1,
+     "y1": 10,
+     "x2": 13,
+     "y2": 10,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 2",
+     "x1": 1,
+     "y1": 6,
+     "x2": 13,
+     "y2": 6,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "par == 2",
+     "x1": 1,
+     "y1": 2,
+     "x2": 13,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "visibleIf": "par == 2",
+     "icon": "capacitor",
+     "x": 7,
+     "y": 10,
+     "size": 2.4,
+     "color": "blue"
+    },
+    {
+     "shape": "icon",
+     "visibleIf": "par == 2",
+     "icon": "capacitor",
+     "x": 7,
+     "y": 6,
+     "size": 2.4,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 11,
+     "text": {
+      "en": "C1: {V1:2} V"
+     },
+     "size": 22,
+     "visibleIf": "par == 2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7,
+     "text": {
+      "en": "C2: {V2:2} V"
+     },
+     "size": 22,
+     "visibleIf": "par == 2"
+    },
+    {
+     "shape": "icon",
+     "icon": "battery",
+     "x": 1,
+     "y": 4,
+     "size": 2.2,
+     "angle": 90,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 0.4,
+     "text": {
+      "en": "{V} V"
+     },
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": 16,
+     "y": 1,
+     "w": 2.5,
+     "h": "clamp(Q1/48, 0, 10)",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 20,
+     "y": 1,
+     "w": 2.5,
+     "h": "clamp(Q2/48, 0, 10)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 17.25,
+     "y": 0.2,
+     "text": {
+      "en": "Q1"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 21.25,
+     "y": 0.2,
+     "text": {
+      "en": "Q2"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 17.25,
+     "y": "1.5 + clamp(Q1/48, 0, 10)",
+     "text": {
+      "en": "{Q1:0} µC"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 21.25,
+     "y": "1.5 + clamp(Q2/48, 0, 10)",
+     "text": {
+      "en": "{Q2:0} µC"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Equivalent capacitance",
+      "kn": "ಸಮಾನ ಧಾರಕತೆ"
+     },
+     "expr": "Ceq",
+     "unit": "µF",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Charge on C1",
+      "kn": "C1 ಆವೇಶ"
+     },
+     "expr": "Q1",
+     "unit": "µC",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Charge on C2",
+      "kn": "C2 ಆವೇಶ"
+     },
+     "expr": "Q2",
+     "unit": "µC",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Energy stored",
+      "kn": "ಸಂಗ್ರಹ ಶಕ್ತಿ"
+     },
+     "expr": "0.5*Ceq*V^2",
+     "unit": "µJ",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "In series, which capacitor has the larger voltage across it: the bigger or the smaller one?",
+     "kn": "ಶ್ರೇಣಿಯಲ್ಲಿ ಯಾವ ಧಾರಕದ ಮೇಲೆ ಹೆಚ್ಚು ವೋಲ್ಟೇಜ್: ದೊಡ್ಡದೇ ಚಿಕ್ಕದೇ?"
+    },
+    {
+     "en": "Is the series total ever bigger than the smallest capacitor?",
+     "kn": "ಶ್ರೇಣಿಯ ಒಟ್ಟು ಎಂದಾದರೂ ಚಿಕ್ಕ ಧಾರಕಕ್ಕಿಂತ ದೊಡ್ಡದೇ?"
+    },
+    {
+     "en": "Same two capacitors, same battery: which connection stores more energy?",
+     "kn": "ಅದೇ ಎರಡು ಧಾರಕ, ಅದೇ ಬ್ಯಾಟರಿ: ಯಾವ ಜೋಡಣೆ ಹೆಚ್ಚು ಶಕ್ತಿ ಸಂಗ್ರಹಿಸುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

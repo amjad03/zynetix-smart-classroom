@@ -268,6 +268,327 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Self-inductance slows the current",
+    "kn": "ಸ್ವಪ್ರೇರಕತೆ ಪ್ರವಾಹವನ್ನು ನಿಧಾನಿಸುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "When the switch closes, the coil's back emf L dI/dt opposes the rise of current, so I grows as E/R (1 − e^(−Rt/L)). Open the switch (current through R continues) and the coil opposes the fall. The time constant is L/R. The energy stored is ½LI²."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "When the switch closes, the coil's back emf L dI/dt opposes the rise of current, so I grows as E/R (1 − e^(−Rt/L)). Open the switch (current through R continues) and the coil opposes the fall. The time constant is L/R. The energy stored is ½LI².",
+    "kn": "ಸ್ವಿಚ್ ಮುಚ್ಚಿದಾಗ ಸುರುಳಿಯ ಹಿಮ್ಮುಖ emf L dI/dt ಪ್ರವಾಹದ ಏರಿಕೆಯನ್ನು ವಿರೋಧಿಸುತ್ತದೆ, I = E/R (1 − e^(−Rt/L)). ಸ್ವಿಚ್ ತೆರೆದರೆ (R ಮೂಲಕ ಪ್ರವಾಹ ಮುಂದುವರಿಯುತ್ತದೆ) ಸುರುಳಿ ಇಳಿಕೆಯನ್ನು ವಿರೋಧಿಸುತ್ತದೆ. ಕಾಲ ಸ್ಥಿರಾಂಕ L/R. ಸಂಗ್ರಹ ಶಕ್ತಿ ½LI²."
+   },
+   "sliders": [
+    {
+     "name": "E",
+     "label": {
+      "en": "Battery emf",
+      "kn": "ಬ್ಯಾಟರಿ emf"
+     },
+     "min": 2,
+     "max": 12,
+     "step": 1,
+     "value": 6,
+     "unit": "V"
+    },
+    {
+     "name": "R",
+     "label": {
+      "en": "Resistance",
+      "kn": "ರೋಧ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 10,
+     "unit": "Ω"
+    },
+    {
+     "name": "L",
+     "label": {
+      "en": "Inductance",
+      "kn": "ಪ್ರೇರಕತೆ"
+     },
+     "min": 0.1,
+     "max": 2,
+     "step": 0.1,
+     "value": 1,
+     "unit": "H"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sw",
+     "label": {
+      "en": "Battery connected",
+      "kn": "ಬ್ಯಾಟರಿ ಜೋಡಣೆ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 10,
+    "dt": 0.001,
+    "speeds": [
+     0.1,
+     0.25,
+     0.5,
+     1,
+     2
+    ],
+    "speed": 0.5
+   },
+   "state": [
+    {
+     "name": "I",
+     "init": 0,
+     "rate": "(Vin - R*I)/L"
+    }
+   ],
+   "integrator": "rk2",
+   "vars": [
+    {
+     "name": "Vin",
+     "expr": "if(sw, E, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     32
+    ],
+    "y": [
+     0,
+     11
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 2,
+     "x2": 1,
+     "y2": 8,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 8,
+     "x2": 9,
+     "y2": 8,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 9,
+     "y1": 8,
+     "x2": 9,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 9,
+     "y1": 2,
+     "x2": 1,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "battery",
+     "x": 1,
+     "y": 5,
+     "size": 2.4,
+     "angle": 90,
+     "color": "yellow"
+    },
+    {
+     "shape": "icon",
+     "icon": "switch",
+     "x": 5,
+     "y": 2,
+     "size": 2.6,
+     "on": "sw"
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 5,
+     "y": 8,
+     "size": 3
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 9.3,
+     "text": {
+      "en": "R"
+     },
+     "size": 24
+    },
+    {
+     "shape": "rect",
+     "x": 8.3,
+     "y": 3.6,
+     "w": 1.4,
+     "h": 2.8,
+     "fill": false,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 10.3,
+     "y": 5,
+     "text": {
+      "en": "L"
+     },
+     "size": 26,
+     "color": "orange",
+     "align": "left"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "I > 0.01",
+     "x": 3.5,
+     "y": 6.9,
+     "dx": "3*I*R/E",
+     "dy": 0,
+     "color": "yellow",
+     "label": "I"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 1,
+     "x2": 31,
+     "y2": 1,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 1,
+     "x2": 12,
+     "y2": 10,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 31,
+     "y": 0.4,
+     "text": {
+      "en": "t (s)"
+     },
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 12.3,
+     "y": 10.4,
+     "text": {
+      "en": "I"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 9,
+     "x2": 31,
+     "y2": 9,
+     "dashed": true,
+     "color": "yellow",
+     "opacity": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 31,
+     "y": 9.4,
+     "text": {
+      "en": "E/R"
+     },
+     "size": 22,
+     "color": "yellow",
+     "align": "right"
+    },
+    {
+     "shape": "trail",
+     "x": "12 + 1.9*t",
+     "y": "1 + 8*I*R/E",
+     "length": 2000,
+     "color": "blue",
+     "width": 4
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Current",
+      "kn": "ಪ್ರವಾಹ"
+     },
+     "expr": "I",
+     "unit": "A",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Back emf L dI/dt",
+      "kn": "ಹಿಮ್ಮುಖ emf L dI/dt"
+     },
+     "expr": "Vin - R*I",
+     "unit": "V",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Time constant L/R",
+      "kn": "ಕಾಲ ಸ್ಥಿರಾಂಕ L/R"
+     },
+     "expr": "L/R",
+     "unit": "s",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Energy ½LI²",
+      "kn": "ಶಕ್ತಿ ½LI²"
+     },
+     "expr": "0.5*L*I^2",
+     "unit": "J",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Play and read I when t = L/R. Is it about 63% of E/R?",
+     "kn": "ಪ್ರಾರಂಭಿಸಿ, t = L/R ನಲ್ಲಿ I ಓದಿ. ಅದು E/R ನ ಸುಮಾರು 63% ಆಗಿದೆಯೇ?"
+    },
+    {
+     "en": "Double L. What happens to the time to reach the final current?",
+     "kn": "L ದ್ವಿಗುಣಗೊಳಿಸಿ. ಅಂತಿಮ ಪ್ರವಾಹ ತಲುಪುವ ಸಮಯ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "When is the back emf largest: at the start or at the end?",
+     "kn": "ಹಿಮ್ಮುಖ emf ಯಾವಾಗ ಗರಿಷ್ಠ: ಆರಂಭದಲ್ಲೇ ಕೊನೆಯಲ್ಲೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

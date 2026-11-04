@@ -397,6 +397,335 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Refraction explained by wavelets",
+    "kn": "ತರಂಗಿಕೆಗಳಿಂದ ವಕ್ರೀಭವನ ವಿವರಣೆ"
+   },
+   "narration": {
+    "en": "A plane wavefront AC reaches the surface at A first. While its other end C travels to B in medium 1 (distance v1τ), the wavelet from A grows only to v2τ in the slower medium. The new wavefront is the tangent from B to that wavelet. The geometry gives sin i / sin r = v1/v2 = n, which is Snell's law."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A plane wavefront AC reaches the surface at A first. While its other end C travels to B in medium 1 (distance v1τ), the wavelet from A grows only to v2τ in the slower medium. The new wavefront is the tangent from B to that wavelet. The geometry gives sin i / sin r = v1/v2 = n, which is Snell's law.",
+    "kn": "ಸಮತಲ ತರಂಗಮುಖ AC ಮೊದಲು A ಯಲ್ಲಿ ಮೇಲ್ಮೈ ತಲುಪುತ್ತದೆ. ಅದರ ಇನ್ನೊಂದು ತುದಿ C ಮಾಧ್ಯಮ 1 ರಲ್ಲಿ B ಗೆ (v1τ) ಸಾಗುವಾಗ, A ಯ ತರಂಗಿಕೆ ನಿಧಾನ ಮಾಧ್ಯಮದಲ್ಲಿ v2τ ವರೆಗೆ ಮಾತ್ರ. ಹೊಸ ತರಂಗಮುಖ B ಯಿಂದ ಆ ತರಂಗಿಕೆಗೆ ಸ್ಪರ್ಶಕ. sin i / sin r = v1/v2 = n, ಸ್ನೆಲ್ ನಿಯಮ."
+   },
+   "sliders": [
+    {
+     "name": "i",
+     "label": {
+      "en": "Angle of incidence",
+      "kn": "ಆಪತನ ಕೋನ"
+     },
+     "min": 10,
+     "max": 70,
+     "step": 5,
+     "value": 40,
+     "unit": "°"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "wl",
+     "label": {
+      "en": "Wavelet from A",
+      "kn": "A ಯ ತರಂಗಿಕೆ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Medium 2",
+      "kn": "ಮಾಧ್ಯಮ 2"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Water (1.33)",
+        "kn": "ನೀರು (1.33)"
+       },
+       "value": 1.33
+      },
+      {
+       "label": {
+        "en": "Glass (1.5)",
+        "kn": "ಗಾಜು (1.5)"
+       },
+       "value": 1.5
+      },
+      {
+       "label": {
+        "en": "Diamond (2.42)",
+        "kn": "ವಜ್ರ (2.42)"
+       },
+       "value": 2.42
+      }
+     ],
+     "value": 1.5
+    }
+   ],
+   "time": {
+    "max": 8,
+    "loop": true,
+    "speeds": [
+     0.25,
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "ri",
+     "expr": "rad(i)"
+    },
+    {
+     "name": "rr",
+     "expr": "asin(sin(ri)/n)"
+    },
+    {
+     "name": "v2",
+     "expr": "2/n"
+    },
+    {
+     "name": "Tb",
+     "expr": "10*sin(ri)/2"
+    },
+    {
+     "name": "qx",
+     "expr": "min(2*t/sin(ri), 10)"
+    },
+    {
+     "name": "cx",
+     "expr": "10*cos(ri)^2 + 2*t*sin(ri)"
+    },
+    {
+     "name": "cy",
+     "expr": "10*cos(ri)*sin(ri) - 2*t*cos(ri)"
+    },
+    {
+     "name": "ax",
+     "expr": "v2*t*sin(rr)"
+    },
+    {
+     "name": "ay",
+     "expr": "-v2*t*cos(rr)"
+    },
+    {
+     "name": "ex",
+     "expr": "if(t < Tb, qx, 10 + v2*(t - Tb)*sin(rr))"
+    },
+    {
+     "name": "ey",
+     "expr": "if(t < Tb, 0, -v2*(t - Tb)*cos(rr))"
+    }
+   ],
+   "view": {
+    "x": [
+     -6,
+     16
+    ],
+    "y": [
+     -12,
+     10
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -6,
+     "y": -12,
+     "w": 22,
+     "h": 12,
+     "color": "blue",
+     "opacity": 0.22
+    },
+    {
+     "shape": "line",
+     "x1": -6,
+     "y1": 0,
+     "x2": 16,
+     "y2": 0,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": -5.5,
+     "y": 9,
+     "text": {
+      "en": "medium 1 (air)",
+      "kn": "ಮಾಧ್ಯಮ 1 (ಗಾಳಿ)"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": -5.5,
+     "y": -11.3,
+     "text": {
+      "en": "medium 2, n = {n}",
+      "kn": "ಮಾಧ್ಯಮ 2, n = {n}"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 0.3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": -0.6,
+     "y": 0.7,
+     "text": {
+      "en": "A"
+     },
+     "size": 22
+    },
+    {
+     "shape": "circle",
+     "x": 10,
+     "y": 0,
+     "r": 0.3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.4,
+     "y": 0.7,
+     "text": {
+      "en": "B"
+     },
+     "size": 22
+    },
+    {
+     "shape": "line",
+     "visibleIf": "t < Tb",
+     "x1": "qx",
+     "y1": 0,
+     "x2": "cx",
+     "y2": "cy",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "t < Tb",
+     "x1": "10*cos(ri)^2",
+     "y1": "10*cos(ri)*sin(ri)",
+     "x2": "cx",
+     "y2": "cy",
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": "ex",
+     "y1": "ey",
+     "x2": "ax",
+     "y2": "ay",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "wl",
+     "x": 0,
+     "y": 0,
+     "r": "v2*t",
+     "fill": false,
+     "color": "green",
+     "width": 2,
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": "-6*sin(ri)",
+     "y1": "6*cos(ri)",
+     "x2": 0,
+     "y2": 0,
+     "color": "orange",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "9*sin(rr)",
+     "y2": "-9*cos(rr)",
+     "color": "orange",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 9,
+     "text": {
+      "en": "r = {deg(rr):1}°"
+     },
+     "size": 24,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Angle of refraction r",
+      "kn": "ವಕ್ರೀಭವನ ಕೋನ r"
+     },
+     "expr": "deg(rr)",
+     "unit": "°",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "sin i / sin r",
+      "kn": "sin i / sin r"
+     },
+     "expr": "sin(ri)/sin(rr)",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Speed ratio v1/v2",
+      "kn": "ವೇಗ ಅನುಪಾತ v1/v2"
+     },
+     "expr": "n",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Pause when the incident wavefront has just reached B. Compare the wavelet radius with CB.",
+     "kn": "ಆಪತನ ತರಂಗಮುಖ B ತಲುಪಿದಾಗ ನಿಲ್ಲಿಸಿ. ತರಂಗಿಕೆ ತ್ರಿಜ್ಯ ಮತ್ತು CB ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Choose diamond. Is the refracted wavefront closer to the surface?",
+     "kn": "ವಜ್ರ ಆರಿಸಿ. ವಕ್ರೀಭವನ ತರಂಗಮುಖ ಮೇಲ್ಮೈಗೆ ಹತ್ತಿರವೇ?"
+    },
+    {
+     "en": "Why does the wavelength get shorter in the denser medium?",
+     "kn": "ಸಾಂದ್ರ ಮಾಧ್ಯಮದಲ್ಲಿ ತರಂಗಾಂತರ ಏಕೆ ಕುಗ್ಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

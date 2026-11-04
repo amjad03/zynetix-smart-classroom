@@ -556,6 +556,231 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Tune an LCR circuit to resonance",
+    "kn": "LCR ಪರಿಪಥವನ್ನು ಅನುನಾದಕ್ಕೆ ಹೊಂದಿಸಿ"
+   },
+   "narration": {
+    "en": "Drag the yellow point along the frequency axis. The current is largest at the resonant frequency f0 = 1/(2π√LC), where XL = XC and Z = R. A small R gives a tall, sharp peak (high Q). Supply: 220 V rms."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the yellow point along the frequency axis. The current is largest at the resonant frequency f0 = 1/(2π√LC), where XL = XC and Z = R. A small R gives a tall, sharp peak (high Q). Supply: 220 V rms.",
+    "kn": "ಹಳದಿ ಬಿಂದುವನ್ನು ಆವೃತ್ತಿ ಅಕ್ಷದಲ್ಲಿ ಎಳೆಯಿರಿ. ಅನುನಾದ ಆವೃತ್ತಿ f0 = 1/(2π√LC) ನಲ್ಲಿ XL = XC, Z = R ಆಗಿ ಪ್ರವಾಹ ಗರಿಷ್ಠ. ಕಡಿಮೆ R ಎತ್ತರದ, ತೀಕ್ಷ್ಣ ಶಿಖರ ಕೊಡುತ್ತದೆ (ಹೆಚ್ಚು Q). ಆಕರ: 220 V rms."
+   },
+   "sliders": [
+    {
+     "name": "Lm",
+     "label": {
+      "en": "Inductance",
+      "kn": "ಪ್ರೇರಕತೆ"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 10,
+     "value": 200,
+     "unit": "mH"
+    },
+    {
+     "name": "Cu",
+     "label": {
+      "en": "Capacitance",
+      "kn": "ಧಾರಕತೆ"
+     },
+     "min": 5,
+     "max": 100,
+     "step": 5,
+     "value": 20,
+     "unit": "µF"
+    },
+    {
+     "name": "R",
+     "label": {
+      "en": "Resistance",
+      "kn": "ರೋಧ"
+     },
+     "min": 5,
+     "max": 100,
+     "step": 5,
+     "value": 20,
+     "unit": "Ω"
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "frequency",
+     "x": 50,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       10,
+       400
+      ],
+      "y": [
+       0,
+       0
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "XL",
+     "expr": "2*pi*P_x*Lm/1000"
+    },
+    {
+     "name": "XC",
+     "expr": "1e6/(2*pi*P_x*Cu)"
+    },
+    {
+     "name": "Z",
+     "expr": "sqrt(R^2 + (XL - XC)^2)"
+    },
+    {
+     "name": "Irms",
+     "expr": "220/Z"
+    },
+    {
+     "name": "f0",
+     "expr": "1/(2*pi*sqrt(Lm/1000*Cu/1e6))"
+    },
+    {
+     "name": "Q",
+     "expr": "sqrt(Lm/1000/(Cu/1e6))/R"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     400
+    ],
+    "y": [
+     0,
+     48
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "f (Hz)",
+    "yLabel": "I rms (A)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "220/sqrt(R^2 + (2*pi*max(x, 1)*Lm/1000 - 1e6/(2*pi*max(x, 1)*Cu))^2)",
+     "from": 2,
+     "to": 400,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "f0",
+     "y1": 0,
+     "x2": "f0",
+     "y2": 46,
+     "dashed": true,
+     "color": "green",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": "f0",
+     "y": 46.5,
+     "text": {
+      "en": "f0"
+     },
+     "size": 24,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": "P_x",
+     "y1": 0,
+     "x2": "P_x",
+     "y2": "Irms",
+     "dashed": true,
+     "color": "yellow",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "P_x",
+     "y": "Irms",
+     "r": 4,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 395,
+     "y": 44,
+     "text": {
+      "en": "XL = {XL:1} Ω   XC = {XC:1} Ω   Z = {Z:1} Ω"
+     },
+     "size": 24,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Resonant frequency f0",
+      "kn": "ಅನುನಾದ ಆವೃತ್ತಿ f0"
+     },
+     "expr": "f0",
+     "unit": "Hz",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Impedance Z",
+      "kn": "ಪ್ರತಿರೋಧ Z"
+     },
+     "expr": "Z",
+     "unit": "Ω",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "rms current",
+      "kn": "rms ಪ್ರವಾಹ"
+     },
+     "expr": "Irms",
+     "unit": "A",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Quality factor Q",
+      "kn": "ಗುಣಮಟ್ಟ ಅಂಶ Q"
+     },
+     "expr": "Q",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the peak by dragging. Does it match the f0 readout?",
+     "kn": "ಎಳೆದು ಶಿಖರ ಹುಡುಕಿ. ಅದು f0 ಓದಿಗೆ ಹೊಂದುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Make R four times bigger. What happens to the height and width of the peak?",
+     "kn": "R ನಾಲ್ಕು ಪಟ್ಟು ಮಾಡಿ. ಶಿಖರದ ಎತ್ತರ, ಅಗಲ ಏನಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Increase C. Which way does the peak move?",
+     "kn": "C ಹೆಚ್ಚಿಸಿ. ಶಿಖರ ಯಾವ ಕಡೆ ಸರಿಯುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

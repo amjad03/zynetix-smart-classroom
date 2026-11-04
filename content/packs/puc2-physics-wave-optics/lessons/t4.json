@@ -291,6 +291,271 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Diffraction at a single slit",
+    "kn": "ಏಕ ಸೀಳಿನಲ್ಲಿ ವಿವರ್ತನೆ"
+   },
+   "narration": {
+    "en": "Light through a slit of width a spreads out. The screen shows a bright central maximum with dark minima at a sin θ = nλ, i.e. at y = nλD/a, and much fainter side maxima. A narrower slit or a longer wavelength gives a wider pattern. The central maximum is twice as wide as the others."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Light through a slit of width a spreads out. The screen shows a bright central maximum with dark minima at a sin θ = nλ, i.e. at y = nλD/a, and much fainter side maxima. A narrower slit or a longer wavelength gives a wider pattern. The central maximum is twice as wide as the others.",
+    "kn": "a ಅಗಲದ ಸೀಳಿನ ಮೂಲಕ ಬೆಳಕು ಹರಡುತ್ತದೆ. ಪರದೆಯಲ್ಲಿ ಪ್ರಕಾಶಮಾನ ಕೇಂದ್ರ ಗರಿಷ್ಠ, a sin θ = nλ ಅಂದರೆ y = nλD/a ನಲ್ಲಿ ಕನಿಷ್ಠಗಳು, ತುಂಬಾ ಮಂದ ಪಕ್ಕದ ಗರಿಷ್ಠಗಳು. ಕಿರಿದಾದ ಸೀಳು ಅಥವಾ ದೀರ್ಘ ತರಂಗಾಂತರ ಅಗಲ ಮಾದರಿ ಕೊಡುತ್ತದೆ. ಕೇಂದ್ರ ಗರಿಷ್ಠ ಇತರಗಳಿಗಿಂತ ಎರಡು ಪಟ್ಟು ಅಗಲ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Slit width a",
+      "kn": "ಸೀಳು ಅಗಲ a"
+     },
+     "min": 0.05,
+     "max": 0.5,
+     "step": 0.01,
+     "value": 0.2,
+     "unit": "mm"
+    },
+    {
+     "name": "lam",
+     "label": {
+      "en": "Wavelength",
+      "kn": "ತರಂಗಾಂತರ"
+     },
+     "min": 400,
+     "max": 700,
+     "step": 10,
+     "value": 600,
+     "unit": "nm"
+    },
+    {
+     "name": "D",
+     "label": {
+      "en": "Screen distance D",
+      "kn": "ಪರದೆ ದೂರ D"
+     },
+     "min": 0.5,
+     "max": 2,
+     "step": 0.1,
+     "value": 1,
+     "unit": "m"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "mins",
+     "label": {
+      "en": "Mark the minima",
+      "kn": "ಕನಿಷ್ಠಗಳನ್ನು ಗುರುತಿಸು"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "y1",
+     "expr": "lam*1e-9*D/(a*1e-3)*1000"
+    }
+   ],
+   "view": {
+    "x": [
+     -15,
+     15
+    ],
+    "y": [
+     -2.6,
+     5.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -15,
+     "y1": 0,
+     "x2": 15,
+     "y2": 0,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "4*if(abs(pi*a*x*1000/(lam*D)) < 1e-6, 1, (sin(pi*a*x*1000/(lam*D))/(pi*a*x*1000/(lam*D)))^2)",
+     "from": -15,
+     "to": 15,
+     "color": {
+      "by": "clamp((lam - 400)/300, 0, 1)",
+      "scale": [
+       "blue",
+       "blue",
+       "green",
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "particles",
+     "count": 300,
+     "x": "-15 + 0.1*i",
+     "y": -1.3,
+     "r": "0.01 + 0.09*sqrt(if(abs(pi*a*(-15 + 0.1*i)*1000/(lam*D)) < 1e-6, 1, (sin(pi*a*(-15 + 0.1*i)*1000/(lam*D))/(pi*a*(-15 + 0.1*i)*1000/(lam*D)))^2))",
+     "color": {
+      "by": "clamp((lam - 400)/300, 0, 1)",
+      "scale": [
+       "blue",
+       "blue",
+       "green",
+       "yellow",
+       "orange",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "visibleIf": "mins && 1*y1 < 15",
+     "x1": "1*y1",
+     "y1": -0.3,
+     "x2": "1*y1",
+     "y2": 4.5,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "mins && 1*y1 < 15",
+     "x1": "-1*y1",
+     "y1": -0.3,
+     "x2": "-1*y1",
+     "y2": 4.5,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "mins && 2*y1 < 15",
+     "x1": "2*y1",
+     "y1": -0.3,
+     "x2": "2*y1",
+     "y2": 4.5,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "mins && 2*y1 < 15",
+     "x1": "-2*y1",
+     "y1": -0.3,
+     "x2": "-2*y1",
+     "y2": 4.5,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "mins && 3*y1 < 15",
+     "x1": "3*y1",
+     "y1": -0.3,
+     "x2": "3*y1",
+     "y2": 4.5,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "mins && 3*y1 < 15",
+     "x1": "-3*y1",
+     "y1": -0.3,
+     "x2": "-3*y1",
+     "y2": 4.5,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": "y1",
+     "y": 4.8,
+     "text": {
+      "en": "λD/a"
+     },
+     "size": 20,
+     "visibleIf": "mins && y1 < 14"
+    },
+    {
+     "shape": "text",
+     "x": 14.9,
+     "y": -2.3,
+     "text": {
+      "en": "position on screen (mm)",
+      "kn": "ಪರದೆಯ ಮೇಲಿನ ಸ್ಥಾನ (mm)"
+     },
+     "size": 20,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "First minimum at λD/a",
+      "kn": "ಮೊದಲ ಕನಿಷ್ಠ λD/a"
+     },
+     "expr": "y1",
+     "unit": "mm",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Width of central maximum",
+      "kn": "ಕೇಂದ್ರ ಗರಿಷ್ಠದ ಅಗಲ"
+     },
+     "expr": "2*y1",
+     "unit": "mm",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Angle of first minimum λ/a",
+      "kn": "ಮೊದಲ ಕನಿಷ್ಠದ ಕೋನ λ/a"
+     },
+     "expr": "lam/a*1e-3",
+     "unit": "mrad",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Halve the slit width. What happens to the central maximum?",
+     "kn": "ಸೀಳು ಅಗಲ ಅರ್ಧ ಮಾಡಿ. ಕೇಂದ್ರ ಗರಿಷ್ಠ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Is the first side maximum anywhere near as bright as the centre?",
+     "kn": "ಮೊದಲ ಪಕ್ಕದ ಗರಿಷ್ಠ ಕೇಂದ್ರದಷ್ಟು ಪ್ರಕಾಶಮಾನವೇ?"
+    },
+    {
+     "en": "Compare red and violet light for the same slit.",
+     "kn": "ಒಂದೇ ಸೀಳಿಗೆ ಕೆಂಪು ಮತ್ತು ನೇರಳೆ ಬೆಳಕು ಹೋಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

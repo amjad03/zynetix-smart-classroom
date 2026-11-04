@@ -535,6 +535,221 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A fission chain reaction",
+    "kn": "ವಿದಳನ ಸರಪಳಿ ಕ್ರಿಯೆ"
+   },
+   "narration": {
+    "en": "Each U-235 fission releases about 200 MeV and 2 to 3 neutrons. If on average k of them cause another fission, the number grows as k per generation. k > 1: the reaction runs away (a bomb). k = 1: steady (a reactor, held there by control rods). k < 1: it dies out."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Each U-235 fission releases about 200 MeV and 2 to 3 neutrons. If on average k of them cause another fission, the number grows as k per generation. k > 1: the reaction runs away (a bomb). k = 1: steady (a reactor, held there by control rods). k < 1: it dies out.",
+    "kn": "ಪ್ರತಿ U-235 ವಿದಳನ ಸುಮಾರು 200 MeV ಮತ್ತು 2–3 ನ್ಯೂಟ್ರಾನ್ ಬಿಡುಗಡೆ ಮಾಡುತ್ತದೆ. ಸರಾಸರಿ k ಮತ್ತೊಂದು ವಿದಳನ ಉಂಟುಮಾಡಿದರೆ ಪ್ರತಿ ಪೀಳಿಗೆಗೆ k ಪಟ್ಟು. k > 1: ನಿಯಂತ್ರಣ ತಪ್ಪುತ್ತದೆ (ಬಾಂಬ್). k = 1: ಸ್ಥಿರ (ರಿಯಾಕ್ಟರ್, ನಿಯಂತ್ರಣ ಸರಳುಗಳಿಂದ). k < 1: ನಿಂತುಹೋಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Neutrons causing new fissions (k)",
+      "kn": "ಹೊಸ ವಿದಳನ ಉಂಟುಮಾಡುವ ನ್ಯೂಟ್ರಾನ್ (k)"
+     },
+     "min": 0.5,
+     "max": 3,
+     "step": 0.1,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "rods",
+     "label": {
+      "en": "Control rods in (k = 1)",
+      "kn": "ನಿಯಂತ್ರಣ ಸರಳುಗಳು (k = 1)"
+     },
+     "value": false
+    }
+   ],
+   "counters": [
+    {
+     "name": "g",
+     "value": 0,
+     "min": 0,
+     "max": 20
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Next generation",
+      "kn": "ಮುಂದಿನ ಪೀಳಿಗೆ"
+     },
+     "icon": "next",
+     "set": {
+      "g": "g + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "g": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "ke",
+     "expr": "if(rods, 1, k)"
+    },
+    {
+     "name": "Nn",
+     "expr": "ke^g"
+    },
+    {
+     "name": "fis",
+     "expr": "if(abs(ke - 1) < 1e-6, g, (ke^g - 1)/(ke - 1))"
+    }
+   ],
+   "view": {
+    "x": [
+     -12,
+     12
+    ],
+    "y": [
+     -7,
+     7
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 400,
+     "visibleIf": "i < Nn",
+     "x": "0.32*sqrt(i + 0.5)*cos(2.39996*i)",
+     "y": "0.32*sqrt(i + 0.5)*sin(2.39996*i)",
+     "r": 0.18,
+     "color": {
+      "by": "rand(i)",
+      "scale": [
+       "orange",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "rods",
+     "x": -9,
+     "y": -6.5,
+     "w": 0.6,
+     "h": 13,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "rods",
+     "x": 8.4,
+     "y": -6.5,
+     "w": 0.6,
+     "h": 13,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": -11.5,
+     "y": 6.2,
+     "text": {
+      "en": "generation {g}",
+      "kn": "ಪೀಳಿಗೆ {g}"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 6.2,
+     "text": {
+      "en": "k = {ke:1}"
+     },
+     "size": 26,
+     "align": "right"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": -6.4,
+     "text": {
+      "en": "more than 400 neutrons: not all drawn",
+      "kn": "400 ಕ್ಕಿಂತ ಹೆಚ್ಚು: ಎಲ್ಲವನ್ನೂ ತೋರಿಸಿಲ್ಲ"
+     },
+     "size": 20,
+     "visibleIf": "Nn > 400"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Neutrons in this generation",
+      "kn": "ಈ ಪೀಳಿಗೆಯ ನ್ಯೂಟ್ರಾನ್‌ಗಳು"
+     },
+     "expr": "Nn",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Fissions so far",
+      "kn": "ಇದುವರೆಗಿನ ವಿದಳನಗಳು"
+     },
+     "expr": "fis",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Energy released",
+      "kn": "ಬಿಡುಗಡೆಯಾದ ಶಕ್ತಿ"
+     },
+     "expr": "200*fis",
+     "unit": "MeV",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Energy released (joules)",
+      "kn": "ಬಿಡುಗಡೆಯಾದ ಶಕ್ತಿ (ಜೂಲ್)"
+     },
+     "expr": "200*fis*1.602e-13*1e9",
+     "unit": "nJ",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With k = 2, press Next generation ten times. How many fissions so far?",
+     "kn": "k = 2 ನಲ್ಲಿ ಮುಂದಿನ ಪೀಳಿಗೆ ಹತ್ತು ಬಾರಿ ಒತ್ತಿ. ಇದುವರೆಗೆ ಎಷ್ಟು ವಿದಳನ?"
+    },
+    {
+     "en": "Put the control rods in. What happens to the growth?",
+     "kn": "ನಿಯಂತ್ರಣ ಸರಳುಗಳನ್ನು ಹಾಕಿ. ಬೆಳವಣಿಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Set k = 0.8. Why does the reaction die out?",
+     "kn": "k = 0.8 ಮಾಡಿ. ಕ್ರಿಯೆ ಏಕೆ ನಿಂತುಹೋಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

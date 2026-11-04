@@ -328,6 +328,395 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Images in a spherical mirror",
+    "kn": "ಗೋಳೀಯ ದರ್ಪಣದಲ್ಲಿ ಬಿಂಬಗಳು"
+   },
+   "narration": {
+    "en": "Drag the tip of the object. A ray parallel to the axis reflects through the focus F (or seems to come from it, for a convex mirror); a ray to the pole reflects at an equal angle. They meet at the image: 1/v + 1/u = 1/f, m = −v/u. Cartesian signs: distances to the left of the mirror are negative."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the tip of the object. A ray parallel to the axis reflects through the focus F (or seems to come from it, for a convex mirror); a ray to the pole reflects at an equal angle. They meet at the image: 1/v + 1/u = 1/f, m = −v/u. Cartesian signs: distances to the left of the mirror are negative.",
+    "kn": "ವಸ್ತುವಿನ ತುದಿ ಎಳೆಯಿರಿ. ಅಕ್ಷಕ್ಕೆ ಸಮಾಂತರ ಕಿರಣ ನಾಭಿ F ಮೂಲಕ ಪ್ರತಿಫಲಿಸುತ್ತದೆ (ಪೀನ ದರ್ಪಣದಲ್ಲಿ ಅಲ್ಲಿಂದ ಬಂದಂತೆ); ಧ್ರುವಕ್ಕೆ ಹೋಗುವ ಕಿರಣ ಸಮ ಕೋನದಲ್ಲಿ ಪ್ರತಿಫಲಿಸುತ್ತದೆ. ಅವು ಬಿಂಬದಲ್ಲಿ ಸೇರುತ್ತವೆ: 1/v + 1/u = 1/f, m = −v/u."
+   },
+   "sliders": [
+    {
+     "name": "F",
+     "label": {
+      "en": "Focal length |f|",
+      "kn": "ನಾಭಿ ದೂರ |f|"
+     },
+     "min": 5,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "cm"
+    }
+   ],
+   "choices": [
+    {
+     "name": "cv",
+     "label": {
+      "en": "Mirror",
+      "kn": "ದರ್ಪಣ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Concave",
+        "kn": "ನಿಮ್ನ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Convex",
+        "kn": "ಪೀನ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "handles": [
+    {
+     "name": "O",
+     "label": "object",
+     "x": -30,
+     "y": 4,
+     "box": {
+      "x": [
+       -45,
+       -2
+      ],
+      "y": [
+       1,
+       8
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "f",
+     "expr": "if(cv == 1, -F, F)"
+    },
+    {
+     "name": "sg",
+     "expr": "if(cv == 1, -1, 1)"
+    },
+    {
+     "name": "R",
+     "expr": "2*F"
+    },
+    {
+     "name": "u",
+     "expr": "O_x"
+    },
+    {
+     "name": "h",
+     "expr": "O_y"
+    },
+    {
+     "name": "den",
+     "expr": "u - f"
+    },
+    {
+     "name": "nearF",
+     "expr": "abs(den) < 0.3"
+    },
+    {
+     "name": "v",
+     "expr": "if(nearF, -1000, f*u/den)"
+    },
+    {
+     "name": "m",
+     "expr": "-v/u"
+    },
+    {
+     "name": "hi",
+     "expr": "m*h"
+    },
+    {
+     "name": "virt",
+     "expr": "v > 0"
+    }
+   ],
+   "view": {
+    "x": [
+     -50,
+     30
+    ],
+    "y": [
+     -20,
+     14
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -50,
+     "y1": 0,
+     "x2": 30,
+     "y2": 0,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "points": [
+      [
+       "sg*(R - sqrt(R^2 - -8^2))",
+       -8
+      ],
+      [
+       "sg*(R - sqrt(R^2 - -6^2))",
+       -6
+      ],
+      [
+       "sg*(R - sqrt(R^2 - -4^2))",
+       -4
+      ],
+      [
+       "sg*(R - sqrt(R^2 - -2^2))",
+       -2
+      ],
+      [
+       "sg*(R - sqrt(R^2 - 0^2))",
+       0
+      ],
+      [
+       "sg*(R - sqrt(R^2 - 2^2))",
+       2
+      ],
+      [
+       "sg*(R - sqrt(R^2 - 4^2))",
+       4
+      ],
+      [
+       "sg*(R - sqrt(R^2 - 6^2))",
+       6
+      ],
+      [
+       "sg*(R - sqrt(R^2 - 8^2))",
+       8
+      ]
+     ],
+     "color": "blue",
+     "width": 6
+    },
+    {
+     "shape": "circle",
+     "x": "f",
+     "y": 0,
+     "r": 0.6,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": "f",
+     "y": -2,
+     "text": {
+      "en": "F"
+     },
+     "size": 26
+    },
+    {
+     "shape": "circle",
+     "x": "2*f",
+     "y": 0,
+     "r": 0.5,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": "2*f",
+     "y": -2,
+     "text": {
+      "en": "C"
+     },
+     "size": 24,
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": "u",
+     "y1": "h",
+     "x2": 0,
+     "y2": "h",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "h",
+     "x2": -50,
+     "y2": "h + 50*h/f",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "u",
+     "y1": "h",
+     "x2": 0,
+     "y2": 0,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": -50,
+     "y2": "50*h/u",
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "virt && !nearF",
+     "x1": 0,
+     "y1": "h",
+     "x2": "v",
+     "y2": "hi",
+     "dashed": true,
+     "color": "yellow",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "virt && !nearF",
+     "x1": 0,
+     "y1": 0,
+     "x2": "v",
+     "y2": "hi",
+     "dashed": true,
+     "color": "orange",
+     "width": 2
+    },
+    {
+     "shape": "arrow",
+     "x": "u",
+     "y": 0,
+     "dx": 0,
+     "dy": "h",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "!nearF && abs(v) < 200",
+     "x": "v",
+     "y": 0,
+     "dx": 0,
+     "dy": "hi",
+     "color": {
+      "by": "virt",
+      "scale": [
+       "green",
+       "orange"
+      ]
+     },
+     "label": "image"
+    },
+    {
+     "shape": "text",
+     "x": -48,
+     "y": 12.5,
+     "text": {
+      "en": "u = {u:1} cm   v = {v:1} cm   m = {m:2}"
+     },
+     "size": 26,
+     "visibleIf": "!nearF",
+     "align": "left"
+    },
+    {
+     "shape": "label",
+     "x": -48,
+     "y": 9.5,
+     "text": {
+      "en": "Real, inverted",
+      "kn": "ನೈಜ, ತಲೆಕೆಳಗು"
+     },
+     "size": 24,
+     "visibleIf": "!nearF && !virt",
+     "color": "green",
+     "align": "left"
+    },
+    {
+     "shape": "label",
+     "x": -48,
+     "y": 9.5,
+     "text": {
+      "en": "Virtual, upright",
+      "kn": "ಮಿಥ್ಯ, ನೇರ"
+     },
+     "size": 24,
+     "visibleIf": "!nearF && virt",
+     "color": "orange",
+     "align": "left"
+    },
+    {
+     "shape": "label",
+     "x": -48,
+     "y": 9.5,
+     "text": {
+      "en": "Object at F: image at infinity",
+      "kn": "ವಸ್ತು F ನಲ್ಲಿ: ಬಿಂಬ ಅನಂತದಲ್ಲಿ"
+     },
+     "size": 24,
+     "visibleIf": "nearF",
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Image distance v",
+      "kn": "ಬಿಂಬ ದೂರ v"
+     },
+     "expr": "v",
+     "unit": "cm",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Magnification m",
+      "kn": "ವರ್ಧನೆ m"
+     },
+     "expr": "m",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Concave mirror: bring the object from far away to F. How does the image change?",
+     "kn": "ನಿಮ್ನ ದರ್ಪಣ: ವಸ್ತುವನ್ನು ದೂರದಿಂದ F ಗೆ ತನ್ನಿ. ಬಿಂಬ ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Put the object between F and the mirror. Where is the image and is it real?",
+     "kn": "ವಸ್ತುವನ್ನು F ಮತ್ತು ದರ್ಪಣದ ನಡುವೆ ಇಡಿ. ಬಿಂಬ ಎಲ್ಲಿ, ನೈಜವೇ?"
+    },
+    {
+     "en": "Switch to convex. Can you ever get a real image?",
+     "kn": "ಪೀನಕ್ಕೆ ಬದಲಿಸಿ. ನೈಜ ಬಿಂಬ ಎಂದಾದರೂ ಸಿಗುತ್ತದೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

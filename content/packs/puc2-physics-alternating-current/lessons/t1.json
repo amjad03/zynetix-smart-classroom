@@ -535,6 +535,322 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "AC through a resistor: phasors and rms",
+    "kn": "ರೋಧಕದಲ್ಲಿ AC: ಫೇಸರ್ ಮತ್ತು rms"
+   },
+   "narration": {
+    "en": "The arrow (phasor) turns once every cycle; its height is the voltage at that instant. In a resistor the current phasor points the same way, so v and i rise and fall together. The rms value is the peak divided by √2."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The arrow (phasor) turns once every cycle; its height is the voltage at that instant. In a resistor the current phasor points the same way, so v and i rise and fall together. The rms value is the peak divided by √2.",
+    "kn": "ಬಾಣ (ಫೇಸರ್) ಪ್ರತಿ ಚಕ್ರಕ್ಕೆ ಒಮ್ಮೆ ತಿರುಗುತ್ತದೆ; ಅದರ ಎತ್ತರವೇ ಆ ಕ್ಷಣದ ವೋಲ್ಟೇಜ್. ರೋಧಕದಲ್ಲಿ ಪ್ರವಾಹದ ಫೇಸರ್ ಅದೇ ದಿಕ್ಕಿನಲ್ಲಿರುತ್ತದೆ, ಆದ್ದರಿಂದ v ಮತ್ತು i ಒಟ್ಟಿಗೆ ಏರಿಳಿಯುತ್ತವೆ. rms ಮೌಲ್ಯ = ಗರಿಷ್ಠ ÷ √2."
+   },
+   "sliders": [
+    {
+     "name": "Vm",
+     "label": {
+      "en": "Peak voltage",
+      "kn": "ಗರಿಷ್ಠ ವೋಲ್ಟೇಜ್"
+     },
+     "min": 50,
+     "max": 350,
+     "step": 10,
+     "value": 310,
+     "unit": "V"
+    },
+    {
+     "name": "R",
+     "label": {
+      "en": "Resistance",
+      "kn": "ರೋಧ"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "Ω"
+    },
+    {
+     "name": "f",
+     "label": {
+      "en": "Frequency",
+      "kn": "ಆವೃತ್ತಿ"
+     },
+     "min": 25,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "Hz"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "showI",
+     "label": {
+      "en": "Current",
+      "kn": "ಪ್ರವಾಹ"
+     },
+     "value": true
+    },
+    {
+     "name": "rms",
+     "label": {
+      "en": "rms lines",
+      "kn": "rms ಗೆರೆಗಳು"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 40,
+    "loop": true,
+    "speeds": [
+     1,
+     2,
+     5,
+     10
+    ],
+    "speed": 2,
+    "unit": "ms"
+   },
+   "vars": [
+    {
+     "name": "w",
+     "expr": "2*pi*f/1000"
+    },
+    {
+     "name": "th",
+     "expr": "w*t"
+    },
+    {
+     "name": "vi",
+     "expr": "Vm*sin(th)"
+    },
+    {
+     "name": "Im",
+     "expr": "Vm/R"
+    },
+    {
+     "name": "Vrms",
+     "expr": "Vm/sqrt(2)"
+    },
+    {
+     "name": "Irms",
+     "expr": "Im/sqrt(2)"
+    },
+    {
+     "name": "gx",
+     "expr": "mod(t, 40)"
+    }
+   ],
+   "view": {
+    "x": [
+     -22,
+     42
+    ],
+    "y": [
+     -11,
+     11
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": -11,
+     "y": 0,
+     "r": "10*Vm/350",
+     "fill": false,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 41,
+     "y2": 0,
+     "color": "white",
+     "opacity": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -10.5,
+     "x2": 0,
+     "y2": 10.5,
+     "color": "white",
+     "opacity": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "rms",
+     "x1": 0,
+     "y1": "10*Vrms/350",
+     "x2": 40,
+     "y2": "10*Vrms/350",
+     "dashed": true,
+     "color": "green",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "rms",
+     "x1": 0,
+     "y1": "-10*Vrms/350",
+     "x2": 40,
+     "y2": "-10*Vrms/350",
+     "dashed": true,
+     "color": "green",
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "10*Vm*sin(w*x)/350",
+     "from": 0,
+     "to": 40,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "visibleIf": "showI",
+     "fn": "10*Vm/R*sin(w*x)/35",
+     "from": 0,
+     "to": 40,
+     "color": "blue",
+     "width": 3,
+     "dashed": true
+    },
+    {
+     "shape": "arrow",
+     "x": -11,
+     "y": 0,
+     "dx": "10*Vm/350*cos(th)",
+     "dy": "10*Vm/350*sin(th)",
+     "color": "yellow",
+     "label": "V"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "showI",
+     "x": -11,
+     "y": 0,
+     "dx": "10*Im/35*cos(th)",
+     "dy": "10*Im/35*sin(th)",
+     "color": "blue",
+     "label": "I"
+    },
+    {
+     "shape": "line",
+     "x1": "-11 + 10*Vm/350*cos(th)",
+     "y1": "10*vi/350",
+     "x2": "gx",
+     "y2": "10*vi/350",
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "gx",
+     "y": "10*vi/350",
+     "r": 0.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "showI",
+     "x": "gx",
+     "y": "10*vi/R/35",
+     "r": 0.5,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 41,
+     "y": -10,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 10.3,
+     "text": {
+      "en": "v = {vi:0} V   i = {vi/R:2} A"
+     },
+     "size": 24,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "rms voltage",
+      "kn": "rms ವೋಲ್ಟೇಜ್"
+     },
+     "expr": "Vrms",
+     "unit": "V",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "rms current",
+      "kn": "rms ಪ್ರವಾಹ"
+     },
+     "expr": "Irms",
+     "unit": "A",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Average power",
+      "kn": "ಸರಾಸರಿ ಸಾಮರ್ಥ್ಯ"
+     },
+     "expr": "Vrms*Irms",
+     "unit": "W",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Period",
+      "kn": "ಆವರ್ತ ಕಾಲ"
+     },
+     "expr": "1000/f",
+     "unit": "ms",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Play at 2×. Is the current ever at its peak when the voltage is not?",
+     "kn": "2× ನಲ್ಲಿ ಪ್ರಾರಂಭಿಸಿ. ವೋಲ್ಟೇಜ್ ಗರಿಷ್ಠವಿಲ್ಲದಾಗ ಪ್ರವಾಹ ಗರಿಷ್ಠವಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Set the peak to 310 V. Is the rms close to the 220 V of house mains?",
+     "kn": "ಗರಿಷ್ಠವನ್ನು 310 V ಮಾಡಿ. rms ಮನೆಯ 220 V ಗೆ ಹತ್ತಿರವಿದೆಯೇ?"
+    },
+    {
+     "en": "Double the frequency. What happens to the time for one cycle?",
+     "kn": "ಆವೃತ್ತಿ ದ್ವಿಗುಣಗೊಳಿಸಿ. ಒಂದು ಚಕ್ರದ ಸಮಯ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

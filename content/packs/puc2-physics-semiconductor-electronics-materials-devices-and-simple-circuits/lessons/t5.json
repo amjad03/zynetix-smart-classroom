@@ -502,6 +502,274 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Half-wave and full-wave rectifiers",
+    "kn": "ಅರ್ಧ-ತರಂಗ ಮತ್ತು ಪೂರ್ಣ-ತರಂಗ ದಿಷ್ಟಕಾರಿಗಳು"
+   },
+   "narration": {
+    "en": "A diode passes only one half of each AC cycle: half-wave output has gaps, at 50 pulses a second. Two diodes and a centre-tapped transformer pass both halves: full-wave, 100 pulses a second. A capacitor across the load fills the gaps: it charges at each peak and discharges slowly through R = 1 kΩ. Ideal diodes, 50 Hz input."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A diode passes only one half of each AC cycle: half-wave output has gaps, at 50 pulses a second. Two diodes and a centre-tapped transformer pass both halves: full-wave, 100 pulses a second. A capacitor across the load fills the gaps: it charges at each peak and discharges slowly through R = 1 kΩ. Ideal diodes, 50 Hz input.",
+    "kn": "ಡಯೋಡ್ ಪ್ರತಿ AC ಚಕ್ರದ ಅರ್ಧ ಮಾತ್ರ ಬಿಡುತ್ತದೆ: ಅರ್ಧ-ತರಂಗ ನಿರ್ಗಮದಲ್ಲಿ ಅಂತರ, ಸೆಕೆಂಡಿಗೆ 50 ಸ್ಪಂದನ. ಎರಡು ಡಯೋಡ್ ಮತ್ತು ಮಧ್ಯ-ಟ್ಯಾಪ್ ಪರಿವರ್ತಕ ಎರಡೂ ಅರ್ಧಗಳನ್ನು: ಪೂರ್ಣ-ತರಂಗ, 100 ಸ್ಪಂದನ. ಹೊರೆಯ ಅಡ್ಡ ಧಾರಕ ಅಂತರ ತುಂಬುತ್ತದೆ: ಶಿಖರದಲ್ಲಿ ಆವೇಶಗೊಂಡು R = 1 kΩ ಮೂಲಕ ನಿಧಾನವಾಗಿ ವಿಸರ್ಜಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "Vm",
+     "label": {
+      "en": "Peak input voltage",
+      "kn": "ಗರಿಷ್ಠ ನಿವೇಶ ವೋಲ್ಟೇಜ್"
+     },
+     "min": 5,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "V"
+    },
+    {
+     "name": "Cf",
+     "label": {
+      "en": "Filter capacitor",
+      "kn": "ಸೋಸುವ ಧಾರಕ"
+     },
+     "min": 20,
+     "max": 1000,
+     "step": 20,
+     "value": 100,
+     "unit": "µF"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "flt",
+     "label": {
+      "en": "Filter capacitor",
+      "kn": "ಸೋಸುವ ಧಾರಕ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "fw",
+     "label": {
+      "en": "Rectifier",
+      "kn": "ದಿಷ್ಟಕಾರಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Half-wave",
+        "kn": "ಅರ್ಧ-ತರಂಗ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Full-wave",
+        "kn": "ಪೂರ್ಣ-ತರಂಗ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 100,
+    "dt": 0.02,
+    "speeds": [
+     2,
+     5,
+     10,
+     16
+    ],
+    "speed": 10,
+    "unit": "ms"
+   },
+   "state": [
+    {
+     "name": "Vc",
+     "init": 0,
+     "rate": "if(vr > Vc, (vr - Vc)/0.2, -Vc/Cf)"
+    }
+   ],
+   "integrator": "rk2",
+   "vars": [
+    {
+     "name": "vs",
+     "expr": "Vm*sin(2*pi*t/20)"
+    },
+    {
+     "name": "vr",
+     "expr": "if(fw == 2, abs(vs), max(vs, 0))"
+    },
+    {
+     "name": "out",
+     "expr": "if(flt, Vc, vr)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     -21,
+     21
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 10,
+     "x2": 100,
+     "y2": 10,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -20,
+     "x2": 100,
+     "y2": -20,
+     "color": "white",
+     "opacity": 0.6,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "10 + 0.45*Vm*sin(2*pi*x/20)",
+     "from": 0,
+     "to": 100,
+     "color": "yellow",
+     "width": 3,
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 20,
+     "text": {
+      "en": "input (AC)",
+      "kn": "ನಿವೇಶ (AC)"
+     },
+     "size": 22,
+     "color": "yellow",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": -1.5,
+     "text": {
+      "en": "output across the load",
+      "kn": "ಹೊರೆಯ ಅಡ್ಡ ನಿರ್ಗಮ"
+     },
+     "size": 22,
+     "color": "blue",
+     "align": "left"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "-20 + 0.9*out",
+     "length": 2000,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "-20 + 0.9*out",
+     "r": 0.8,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": "t",
+     "y1": -20,
+     "x2": "t",
+     "y2": 20,
+     "color": "white",
+     "opacity": 0.2,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 99,
+     "y": -3,
+     "text": {
+      "en": "{if(fw == 1, 50, 100)} pulses per second",
+      "kn": "ಸೆಕೆಂಡಿಗೆ {if(fw == 1, 50, 100)} ಸ್ಪಂದನ"
+     },
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 99,
+     "y": -20.8,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 20,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Output now",
+      "kn": "ಈಗಿನ ನಿರ್ಗಮ"
+     },
+     "expr": "out",
+     "unit": "V",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Average (no filter)",
+      "kn": "ಸರಾಸರಿ (ಸೋಸಿಲ್ಲದೆ)"
+     },
+     "expr": "2*Vm/pi*(fw == 2) + Vm/pi*(fw == 1)",
+     "unit": "V",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Time constant RC",
+      "kn": "ಕಾಲ ಸ್ಥಿರಾಂಕ RC"
+     },
+     "expr": "Cf",
+     "unit": "ms",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Compare the gaps in half-wave and full-wave output.",
+     "kn": "ಅರ್ಧ-ತರಂಗ ಮತ್ತು ಪೂರ್ಣ-ತರಂಗ ನಿರ್ಗಮದ ಅಂತರ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Turn on the filter capacitor. Make C bigger: what happens to the ripple?",
+     "kn": "ಸೋಸುವ ಧಾರಕ ಆನ್ ಮಾಡಿ. C ಹೆಚ್ಚಿಸಿ: ಏರಿಳಿತ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Why is the ripple smaller for full-wave with the same capacitor?",
+     "kn": "ಅದೇ ಧಾರಕದಲ್ಲಿ ಪೂರ್ಣ-ತರಂಗಕ್ಕೆ ಏರಿಳಿತ ಏಕೆ ಕಡಿಮೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

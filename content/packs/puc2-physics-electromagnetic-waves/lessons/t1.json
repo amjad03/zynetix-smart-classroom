@@ -344,6 +344,310 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Displacement current in a capacitor",
+    "kn": "ಧಾರಕದಲ್ಲಿ ಸ್ಥಾನಾಂತರ ಪ್ರವಾಹ"
+   },
+   "narration": {
+    "en": "While the capacitor charges, a conduction current i flows in the wires but no charge crosses the gap. There the electric field is changing, and Maxwell's displacement current i_d = ε0 dΦE/dt equals i. That is why the magnetic field (circles) is the same around the wire and around the gap."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "While the capacitor charges, a conduction current i flows in the wires but no charge crosses the gap. There the electric field is changing, and Maxwell's displacement current i_d = ε0 dΦE/dt equals i. That is why the magnetic field (circles) is the same around the wire and around the gap.",
+    "kn": "ಧಾರಕ ಆವೇಶಗೊಳ್ಳುವಾಗ ತಂತಿಗಳಲ್ಲಿ ವಹನ ಪ್ರವಾಹ i ಹರಿಯುತ್ತದೆ, ಆದರೆ ಅಂತರದಲ್ಲಿ ಆವೇಶ ದಾಟುವುದಿಲ್ಲ. ಅಲ್ಲಿ ವಿದ್ಯುತ್ ಕ್ಷೇತ್ರ ಬದಲಾಗುತ್ತಿದೆ; ಮ್ಯಾಕ್ಸ್‌ವೆಲ್‌ನ ಸ್ಥಾನಾಂತರ ಪ್ರವಾಹ i_d = ε0 dΦE/dt = i. ಆದ್ದರಿಂದ ಕಾಂತ ಕ್ಷೇತ್ರ (ವೃತ್ತಗಳು) ತಂತಿಯ ಸುತ್ತ ಮತ್ತು ಅಂತರದ ಸುತ್ತ ಒಂದೇ."
+   },
+   "sliders": [
+    {
+     "name": "E",
+     "label": {
+      "en": "Battery",
+      "kn": "ಬ್ಯಾಟರಿ"
+     },
+     "min": 2,
+     "max": 12,
+     "step": 1,
+     "value": 6,
+     "unit": "V"
+    },
+    {
+     "name": "R",
+     "label": {
+      "en": "Resistance",
+      "kn": "ರೋಧ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 5,
+     "unit": "kΩ"
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "Capacitance",
+      "kn": "ಧಾರಕತೆ"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 100,
+     "value": 500,
+     "unit": "µF"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sw",
+     "label": {
+      "en": "Battery connected",
+      "kn": "ಬ್ಯಾಟರಿ ಜೋಡಣೆ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 40,
+    "dt": 0.01,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4
+    ],
+    "speed": 1
+   },
+   "state": [
+    {
+     "name": "Vc",
+     "init": 0,
+     "rate": "dV"
+    }
+   ],
+   "integrator": "rk2",
+   "vars": [
+    {
+     "name": "Vin",
+     "expr": "if(sw, E, 0)"
+    },
+    {
+     "name": "dV",
+     "expr": "(Vin - Vc)/(R*C/1000)"
+    },
+    {
+     "name": "ic",
+     "expr": "(Vin - Vc)/R"
+    },
+    {
+     "name": "id",
+     "expr": "C*dV/1000"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     12
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 6,
+     "x2": 12.5,
+     "y2": 6,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 15.5,
+     "y1": 6,
+     "x2": 29,
+     "y2": 6,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 12.5,
+     "y1": 3,
+     "x2": 12.5,
+     "y2": 9,
+     "width": 6,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 15.5,
+     "y1": 3,
+     "x2": 15.5,
+     "y2": 9,
+     "width": 6,
+     "color": "blue"
+    },
+    {
+     "shape": "icon",
+     "icon": "battery",
+     "x": 4,
+     "y": 6,
+     "size": 2.5,
+     "color": {
+      "by": "sw",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 24,
+     "y": 6,
+     "size": 3
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "abs(ic) > 0.01",
+     "x": "if(ic > 0, 7, 10)",
+     "y": 6.8,
+     "dx": "clamp(3*ic*R/E, -3, 3)",
+     "dy": 0,
+     "color": "yellow",
+     "label": "i"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "abs(Vc) > 0.05",
+     "x": 13,
+     "y": 4,
+     "dx": "2*Vc/12",
+     "dy": 0,
+     "color": "green"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "abs(Vc) > 0.05",
+     "x": 13,
+     "y": 6,
+     "dx": "2*Vc/12",
+     "dy": 0,
+     "color": "green"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "abs(Vc) > 0.05",
+     "x": 13,
+     "y": 8,
+     "dx": "2*Vc/12",
+     "dy": 0,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 14,
+     "y": 10.5,
+     "text": {
+      "en": "i_d = ε0 dΦE/dt"
+     },
+     "size": 22,
+     "visibleIf": "abs(id) > 0.01",
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": 7.5,
+     "y": 6,
+     "r": "0.4 + 1.6*abs(ic)*R/E",
+     "fill": false,
+     "color": "orange",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": 14,
+     "y": 6,
+     "r": "0.4 + 1.6*abs(id)*R/E",
+     "fill": false,
+     "color": "orange",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 1.2,
+     "text": {
+      "en": "B around wire",
+      "kn": "ತಂತಿ ಸುತ್ತ B"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 1.2,
+     "text": {
+      "en": "B around gap",
+      "kn": "ಅಂತರದ ಸುತ್ತ B"
+     },
+     "size": 20,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Conduction current i",
+      "kn": "ವಹನ ಪ್ರವಾಹ i"
+     },
+     "expr": "ic",
+     "unit": "mA",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Displacement current i_d",
+      "kn": "ಸ್ಥಾನಾಂತರ ಪ್ರವಾಹ i_d"
+     },
+     "expr": "id",
+     "unit": "mA",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Capacitor voltage",
+      "kn": "ಧಾರಕ ವೋಲ್ಟೇಜ್"
+     },
+     "expr": "Vc",
+     "unit": "V",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Compare the two current readouts at several moments. Are they ever different?",
+     "kn": "ಹಲವು ಕ್ಷಣಗಳಲ್ಲಿ ಎರಡು ಪ್ರವಾಹ ಓದುಗಳನ್ನು ಹೋಲಿಸಿ. ಎಂದಾದರೂ ಬೇರೆಯೇ?"
+    },
+    {
+     "en": "When the capacitor is full, is there any displacement current?",
+     "kn": "ಧಾರಕ ತುಂಬಿದಾಗ ಸ್ಥಾನಾಂತರ ಪ್ರವಾಹ ಇದೆಯೇ?"
+    },
+    {
+     "en": "Disconnect the battery while charging. Which way do both currents flow now?",
+     "kn": "ಆವೇಶಗೊಳ್ಳುವಾಗ ಬ್ಯಾಟರಿ ತೆಗೆಯಿರಿ. ಈಗ ಎರಡೂ ಪ್ರವಾಹ ಯಾವ ದಿಕ್ಕಿನಲ್ಲಿ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

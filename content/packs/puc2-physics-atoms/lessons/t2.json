@@ -371,6 +371,362 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Emission and absorption spectra",
+    "kn": "ಉತ್ಸರ್ಜನೆ ಮತ್ತು ಹೀರಿಕೆ ರೋಹಿತಗಳು"
+   },
+   "narration": {
+    "en": "Each element gives out light only at its own wavelengths: its line spectrum is a fingerprint. Shine white light through the cool gas and the same wavelengths go missing, leaving dark lines. Move the pointer to read a photon's energy, E = hc/λ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Each element gives out light only at its own wavelengths: its line spectrum is a fingerprint. Shine white light through the cool gas and the same wavelengths go missing, leaving dark lines. Move the pointer to read a photon's energy, E = hc/λ.",
+    "kn": "ಪ್ರತಿ ಧಾತುವೂ ತನ್ನದೇ ತರಂಗಾಂತರಗಳಲ್ಲಿ ಬೆಳಕು ನೀಡುತ್ತದೆ: ರೇಖಾ ರೋಹಿತ ಅದರ ಬೆರಳಚ್ಚು. ಬಿಳಿ ಬೆಳಕನ್ನು ತಣ್ಣನೆಯ ಅನಿಲದ ಮೂಲಕ ಹಾಯಿಸಿದರೆ ಅದೇ ತರಂಗಾಂತರಗಳು ಕಾಣೆಯಾಗಿ ಕಪ್ಪು ಗೆರೆಗಳು ಉಳಿಯುತ್ತವೆ. ಸೂಚಕವನ್ನು ಸರಿಸಿ ಫೋಟಾನ್ ಶಕ್ತಿ E = hc/λ ಓದಿ."
+   },
+   "sliders": [
+    {
+     "name": "lam",
+     "label": {
+      "en": "Pointer wavelength",
+      "kn": "ಸೂಚಕ ತರಂಗಾಂತರ"
+     },
+     "min": 400,
+     "max": 700,
+     "step": 2,
+     "value": 500,
+     "unit": "nm"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "emis",
+     "label": {
+      "en": "Emission spectrum",
+      "kn": "ಉತ್ಸರ್ಜನಾ ರೋಹಿತ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "el",
+     "label": {
+      "en": "Element",
+      "kn": "ಧಾತು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Hydrogen",
+        "kn": "ಹೈಡ್ರೋಜನ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Sodium",
+        "kn": "ಸೋಡಿಯಂ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Mercury",
+        "kn": "ಪಾದರಸ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "onl",
+     "expr": "if(el == 1, abs(lam - 656.3) <= 2 || abs(lam - 486.1) <= 2 || abs(lam - 434.0) <= 2 || abs(lam - 410.2) <= 2, if(el == 2, abs(lam - 589.0) <= 2 || abs(lam - 589.6) <= 2, abs(lam - 404.7) <= 2 || abs(lam - 435.8) <= 2 || abs(lam - 546.1) <= 2 || abs(lam - 577.0) <= 2 || abs(lam - 579.1) <= 2))"
+    }
+   ],
+   "view": {
+    "x": [
+     380,
+     720
+    ],
+    "y": [
+     -30,
+     70
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 400,
+     "visibleIf": "!emis && if(el == 1, abs(400 + 0.75*i - 656.3) > 5 && abs(400 + 0.75*i - 486.1) > 5 && abs(400 + 0.75*i - 434.0) > 5 && abs(400 + 0.75*i - 410.2) > 5, if(el == 2, abs(400 + 0.75*i - 589.0) > 5 && abs(400 + 0.75*i - 589.6) > 5, abs(400 + 0.75*i - 404.7) > 5 && abs(400 + 0.75*i - 435.8) > 5 && abs(400 + 0.75*i - 546.1) > 5 && abs(400 + 0.75*i - 577.0) > 5 && abs(400 + 0.75*i - 579.1) > 5))",
+     "x": "400 + 0.75*i",
+     "y": 20,
+     "r": 4,
+     "color": {
+      "by": "0.75*i/300",
+      "scale": [
+       "blue",
+       "blue",
+       "green",
+       "yellow",
+       "orange",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "emis && el == 1",
+     "x": 655.3,
+     "y": 14,
+     "w": 2,
+     "h": 12,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "emis && el == 1",
+     "x": 485.1,
+     "y": 14,
+     "w": 2,
+     "h": 12,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "emis && el == 1",
+     "x": 433.0,
+     "y": 14,
+     "w": 2,
+     "h": 12,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "emis && el == 1",
+     "x": 409.2,
+     "y": 14,
+     "w": 2,
+     "h": 12,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "emis && el == 2",
+     "x": 588.0,
+     "y": 14,
+     "w": 2,
+     "h": 12,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "emis && el == 2",
+     "x": 588.6,
+     "y": 14,
+     "w": 2,
+     "h": 12,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "emis && el == 3",
+     "x": 403.7,
+     "y": 14,
+     "w": 2,
+     "h": 12,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "emis && el == 3",
+     "x": 434.8,
+     "y": 14,
+     "w": 2,
+     "h": 12,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "emis && el == 3",
+     "x": 545.1,
+     "y": 14,
+     "w": 2,
+     "h": 12,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "emis && el == 3",
+     "x": 576.0,
+     "y": 14,
+     "w": 2,
+     "h": 12,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "emis && el == 3",
+     "x": 578.1,
+     "y": 14,
+     "w": 2,
+     "h": 12,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 400,
+     "y1": 8,
+     "x2": 700,
+     "y2": 8,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 400,
+     "y": 2,
+     "text": {
+      "en": "400"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 500,
+     "y": 2,
+     "text": {
+      "en": "500"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 600,
+     "y": 2,
+     "text": {
+      "en": "600"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 700,
+     "y": 2,
+     "text": {
+      "en": "700"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 550,
+     "y": -6,
+     "text": {
+      "en": "wavelength (nm)",
+      "kn": "ತರಂಗಾಂತರ (nm)"
+     },
+     "size": 22
+    },
+    {
+     "shape": "line",
+     "x1": "lam",
+     "y1": 8,
+     "x2": "lam",
+     "y2": 32,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "arrow",
+     "x": "lam",
+     "y": 40,
+     "dx": 0,
+     "dy": -7,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": 390,
+     "y": 55,
+     "text": {
+      "en": "Emission: bright lines on dark",
+      "kn": "ಉತ್ಸರ್ಜನೆ: ಕತ್ತಲಲ್ಲಿ ಪ್ರಕಾಶಮಾನ ಗೆರೆಗಳು"
+     },
+     "size": 24,
+     "visibleIf": "emis",
+     "color": "yellow",
+     "align": "left"
+    },
+    {
+     "shape": "label",
+     "x": 390,
+     "y": 55,
+     "text": {
+      "en": "Absorption: dark gaps in a rainbow",
+      "kn": "ಹೀರಿಕೆ: ಕಾಮನಬಿಲ್ಲಿನಲ್ಲಿ ಕಪ್ಪು ಅಂತರಗಳು"
+     },
+     "size": 24,
+     "visibleIf": "!emis",
+     "color": "yellow",
+     "align": "left"
+    },
+    {
+     "shape": "label",
+     "x": "lam",
+     "y": 46,
+     "text": {
+      "en": "on a line of this element",
+      "kn": "ಈ ಧಾತುವಿನ ಗೆರೆಯ ಮೇಲೆ"
+     },
+     "size": 22,
+     "visibleIf": "onl",
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Photon energy at the pointer",
+      "kn": "ಸೂಚಕದಲ್ಲಿ ಫೋಟಾನ್ ಶಕ್ತಿ"
+     },
+     "expr": "1240/lam",
+     "unit": "eV",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Frequency",
+      "kn": "ಆವೃತ್ತಿ"
+     },
+     "expr": "3e5/lam",
+     "unit": "×10¹² Hz",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Switch between emission and absorption for hydrogen. Are the lines at the same places?",
+     "kn": "ಹೈಡ್ರೋಜನ್‌ಗೆ ಉತ್ಸರ್ಜನೆ-ಹೀರಿಕೆ ಬದಲಿಸಿ. ಗೆರೆಗಳು ಅದೇ ಸ್ಥಳಗಳಲ್ಲಿವೆಯೇ?"
+    },
+    {
+     "en": "Put the pointer on the red hydrogen line. What is the photon energy?",
+     "kn": "ಸೂಚಕವನ್ನು ಕೆಂಪು ಹೈಡ್ರೋಜನ್ ಗೆರೆಯ ಮೇಲಿಡಿ. ಫೋಟಾನ್ ಶಕ್ತಿ ಎಷ್ಟು?"
+    },
+    {
+     "en": "Which element gives the yellow street-lamp colour?",
+     "kn": "ಬೀದಿದೀಪದ ಹಳದಿ ಬಣ್ಣ ಯಾವ ಧಾತುವಿನದು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

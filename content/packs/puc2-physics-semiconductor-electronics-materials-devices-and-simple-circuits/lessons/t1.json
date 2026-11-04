@@ -351,6 +351,241 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Energy bands: metal, semiconductor, insulator",
+    "kn": "ಶಕ್ತಿ ಪಟ್ಟಿಗಳು: ಲೋಹ, ಅರೆವಾಹಕ, ನಿರೋಧಕ"
+   },
+   "narration": {
+    "en": "Electrons fill the valence band. To conduct, some must reach the conduction band across the gap Eg. In a metal the bands overlap. In a semiconductor (Si 1.1 eV, Ge 0.71 eV) heat lifts a few electrons across, more as T rises. In an insulator such as diamond (5.4 eV) almost none make it. Dot counts are not to scale."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Electrons fill the valence band. To conduct, some must reach the conduction band across the gap Eg. In a metal the bands overlap. In a semiconductor (Si 1.1 eV, Ge 0.71 eV) heat lifts a few electrons across, more as T rises. In an insulator such as diamond (5.4 eV) almost none make it. Dot counts are not to scale.",
+    "kn": "ಎಲೆಕ್ಟ್ರಾನ್‌ಗಳು ಸಂಯೋಜಕ ಪಟ್ಟಿ ತುಂಬುತ್ತವೆ. ವಹನಕ್ಕೆ ಕೆಲವು ಅಂತರ Eg ದಾಟಿ ವಹನ ಪಟ್ಟಿ ತಲುಪಬೇಕು. ಲೋಹದಲ್ಲಿ ಪಟ್ಟಿಗಳು ಅತಿಕ್ರಮಿಸುತ್ತವೆ. ಅರೆವಾಹಕದಲ್ಲಿ (Si 1.1 eV, Ge 0.71 eV) ಉಷ್ಣ ಕೆಲವನ್ನು ದಾಟಿಸುತ್ತದೆ, T ಹೆಚ್ಚಿದಂತೆ ಹೆಚ್ಚು. ವಜ್ರದಂತಹ ನಿರೋಧಕದಲ್ಲಿ (5.4 eV) ಬಹುತೇಕ ಯಾವುದೂ ಇಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "T",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪ"
+     },
+     "min": 50,
+     "max": 600,
+     "step": 10,
+     "value": 300,
+     "unit": "K"
+    }
+   ],
+   "choices": [
+    {
+     "name": "Eg",
+     "label": {
+      "en": "Material",
+      "kn": "ವಸ್ತು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Metal (copper)",
+        "kn": "ಲೋಹ (ತಾಮ್ರ)"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "Germanium",
+        "kn": "ಜರ್ಮೇನಿಯಂ"
+       },
+       "value": 0.71
+      },
+      {
+       "label": {
+        "en": "Silicon",
+        "kn": "ಸಿಲಿಕಾನ್"
+       },
+       "value": 1.1
+      },
+      {
+       "label": {
+        "en": "Diamond",
+        "kn": "ವಜ್ರ"
+       },
+       "value": 5.4
+      }
+     ],
+     "value": 1.1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "kB",
+     "expr": "8.617e-5"
+    },
+    {
+     "name": "cb",
+     "expr": "if(Eg == 0, 3.5, 4.5 + 1.2*Eg)"
+    },
+    {
+     "name": "nc",
+     "expr": "if(Eg == 0, 30, clamp(round(3 + 1.2*(-Eg/(2*kB*T) + 1.1/(2*kB*300))), 0, 30))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     24
+    ],
+    "y": [
+     0,
+     13
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": 1,
+     "w": 12,
+     "h": 3.5,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 0.4,
+     "text": {
+      "en": "valence band",
+      "kn": "ಸಂಯೋಜಕ ಪಟ್ಟಿ"
+     },
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": "cb",
+     "w": 12,
+     "h": 3,
+     "color": "orange",
+     "opacity": 0.35
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": "cb + 3.5",
+     "text": {
+      "en": "conduction band",
+      "kn": "ವಹನ ಪಟ್ಟಿ"
+     },
+     "size": 22
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "Eg > 0",
+     "x": 17,
+     "y": 4.5,
+     "dx": 0,
+     "dy": "cb - 4.5",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": "(cb + 4.5)/2",
+     "text": {
+      "en": "Eg = {Eg} eV"
+     },
+     "size": 24,
+     "visibleIf": "Eg > 0",
+     "align": "left"
+    },
+    {
+     "shape": "label",
+     "x": 19,
+     "y": 6.5,
+     "text": {
+      "en": "bands overlap",
+      "kn": "ಪಟ್ಟಿಗಳು ಅತಿಕ್ರಮಿಸುತ್ತವೆ"
+     },
+     "size": 22,
+     "visibleIf": "Eg == 0",
+     "color": "green"
+    },
+    {
+     "shape": "particles",
+     "count": 30,
+     "visibleIf": "i < nc",
+     "x": "3.5 + 11*rand(i) + 0.2*sin(5*t + 6*rand(i + 9))",
+     "y": "cb + 0.4 + 2.2*rand(i + 40)",
+     "r": 0.2,
+     "color": "blue"
+    },
+    {
+     "shape": "particles",
+     "count": 30,
+     "visibleIf": "i < nc && Eg > 0",
+     "x": "3.5 + 11*rand(i + 70)",
+     "y": "3.6 + 0.6*rand(i + 99)",
+     "r": 0.22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 23.5,
+     "y": 12.4,
+     "text": {
+      "en": "kT = {kB*T:4} eV"
+     },
+     "size": 22,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Thermal energy kT",
+      "kn": "ಉಷ್ಣ ಶಕ್ತಿ kT"
+     },
+     "expr": "kB*T",
+     "unit": "eV",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "log₁₀ of e^(−Eg/2kT)",
+      "kn": "e^(−Eg/2kT) ನ log₁₀"
+     },
+     "expr": "-Eg/(2*kB*T)/ln(10)",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Silicon: warm it from 300 K to 500 K. What happens in the conduction band?",
+     "kn": "ಸಿಲಿಕಾನ್: 300 K ನಿಂದ 500 K ಗೆ ಬಿಸಿ ಮಾಡಿ. ವಹನ ಪಟ್ಟಿಯಲ್ಲಿ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Compare silicon and germanium at the same temperature.",
+     "kn": "ಒಂದೇ ತಾಪದಲ್ಲಿ ಸಿಲಿಕಾನ್, ಜರ್ಮೇನಿಯಂ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Why does a semiconductor conduct better when hot, but a metal worse?",
+     "kn": "ಅರೆವಾಹಕ ಬಿಸಿಯಾದಾಗ ಉತ್ತಮ ವಾಹಕ, ಲೋಹ ಕಳಪೆ ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

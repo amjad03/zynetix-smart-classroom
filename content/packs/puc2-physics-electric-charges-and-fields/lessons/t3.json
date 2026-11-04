@@ -617,6 +617,284 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Trace an electric field line",
+    "kn": "ವಿದ್ಯುತ್ ಕ್ಷೇತ್ರ ರೇಖೆ ಎಳೆಯಿರಿ"
+   },
+   "narration": {
+    "en": "Drag the yellow probe to read the field E = kq/r² (added as vectors) and press Trace: a dot follows the direction of E at every point, drawing a field line. Lines start on positive charges and end on negative ones. Distances in cm, charges in nC."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the yellow probe to read the field E = kq/r² (added as vectors) and press Trace: a dot follows the direction of E at every point, drawing a field line. Lines start on positive charges and end on negative ones. Distances in cm, charges in nC.",
+    "kn": "ಹಳದಿ ಶೋಧಕವನ್ನು ಎಳೆದು ಕ್ಷೇತ್ರ E = kq/r² (ಸದಿಶ ಮೊತ್ತ) ಓದಿ, ಎಳೆ ಒತ್ತಿ: ಒಂದು ಚುಕ್ಕೆ ಪ್ರತಿ ಬಿಂದುವಿನಲ್ಲಿ E ದಿಕ್ಕನ್ನು ಅನುಸರಿಸಿ ಕ್ಷೇತ್ರ ರೇಖೆ ಎಳೆಯುತ್ತದೆ. ರೇಖೆಗಳು ಧನ ಆವೇಶದಲ್ಲಿ ಆರಂಭ, ಋಣದಲ್ಲಿ ಅಂತ್ಯ. ದೂರ cm, ಆವೇಶ nC."
+   },
+   "sliders": [
+    {
+     "name": "q1",
+     "label": {
+      "en": "Left charge",
+      "kn": "ಎಡ ಆವೇಶ"
+     },
+     "min": -4,
+     "max": 4,
+     "step": 1,
+     "value": 2,
+     "unit": "nC"
+    },
+    {
+     "name": "q2",
+     "label": {
+      "en": "Right charge",
+      "kn": "ಬಲ ಆವೇಶ"
+     },
+     "min": -4,
+     "max": 4,
+     "step": 1,
+     "value": -2,
+     "unit": "nC"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "back",
+     "label": {
+      "en": "Trace backwards (against E)",
+      "kn": "ಹಿಂದಕ್ಕೆ ಎಳೆ (E ವಿರುದ್ಧ)"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Trace",
+      "kn": "ಎಳೆ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "probe",
+     "x": 0,
+     "y": 3,
+     "box": {
+      "x": [
+       -11,
+       11
+      ],
+      "y": [
+       -7,
+       7
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    }
+   ],
+   "time": {
+    "max": 20,
+    "dt": 0.02,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2,
+    "stopWhen": "t > 0.1 && (d1 < 0.5 || d2 < 0.5 || abs(sx) > 12 || abs(sy) > 8 || Es < 0.5)"
+   },
+   "state": [
+    {
+     "name": "sx",
+     "init": "P_x",
+     "rate": "if(back, -2, 2)*Esx/max(Es, 1e-9)"
+    },
+    {
+     "name": "sy",
+     "init": "P_y",
+     "rate": "if(back, -2, 2)*Esy/max(Es, 1e-9)"
+    }
+   ],
+   "integrator": "rk2",
+   "vars": [
+    {
+     "name": "r1",
+     "expr": "max(hypot(P_x + 4, P_y), 0.3)"
+    },
+    {
+     "name": "r2",
+     "expr": "max(hypot(P_x - 4, P_y), 0.3)"
+    },
+    {
+     "name": "Ex",
+     "expr": "9e4*(q1*(P_x + 4)/r1^3 + q2*(P_x - 4)/r2^3)"
+    },
+    {
+     "name": "Ey",
+     "expr": "9e4*(q1*P_y/r1^3 + q2*P_y/r2^3)"
+    },
+    {
+     "name": "Em",
+     "expr": "hypot(Ex, Ey)"
+    },
+    {
+     "name": "d1",
+     "expr": "max(hypot(sx + 4, sy), 0.05)"
+    },
+    {
+     "name": "d2",
+     "expr": "max(hypot(sx - 4, sy), 0.05)"
+    },
+    {
+     "name": "Esx",
+     "expr": "q1*(sx + 4)/d1^3 + q2*(sx - 4)/d2^3"
+    },
+    {
+     "name": "Esy",
+     "expr": "q1*sy/d1^3 + q2*sy/d2^3"
+    },
+    {
+     "name": "Es",
+     "expr": "9e4*hypot(Esx, Esy)"
+    }
+   ],
+   "view": {
+    "x": [
+     -12,
+     12
+    ],
+    "y": [
+     -8,
+     8
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "trail",
+     "x": "sx",
+     "y": "sy",
+     "length": 2000,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": -4,
+     "y": 0,
+     "r": 0.6,
+     "color": {
+      "by": "q1 > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": -4,
+     "y": -1.4,
+     "text": {
+      "en": "{q1} nC"
+     },
+     "size": 22
+    },
+    {
+     "shape": "circle",
+     "x": 4,
+     "y": 0,
+     "r": 0.6,
+     "color": {
+      "by": "q2 > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": -1.4,
+     "text": {
+      "en": "{q2} nC"
+     },
+     "size": 22
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "Em > 1",
+     "x": "P_x",
+     "y": "P_y",
+     "dx": "2.5*Ex/Em",
+     "dy": "2.5*Ey/Em",
+     "color": "green",
+     "label": "E"
+    },
+    {
+     "shape": "circle",
+     "x": "sx",
+     "y": "sy",
+     "r": 0.25,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": -11.5,
+     "y": 7.3,
+     "text": {
+      "en": "E at probe = {Em:0} N/C",
+      "kn": "ಶೋಧಕದಲ್ಲಿ E = {Em:0} N/C"
+     },
+     "size": 24,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Field at probe",
+      "kn": "ಶೋಧಕದಲ್ಲಿ ಕ್ಷೇತ್ರ"
+     },
+     "expr": "Em",
+     "unit": "N/C",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Direction of E",
+      "kn": "E ದಿಕ್ಕು"
+     },
+     "expr": "deg(atan2(Ey, Ex))",
+     "unit": "°",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With +2 and −2, trace lines from several points. Where do they all end?",
+     "kn": "+2 ಮತ್ತು −2 ನೊಂದಿಗೆ ಹಲವು ಬಿಂದುಗಳಿಂದ ಎಳೆಯಿರಿ. ಎಲ್ಲವೂ ಎಲ್ಲಿ ಮುಗಿಯುತ್ತವೆ?"
+    },
+    {
+     "en": "Make both charges +2. Find the point between them where E is zero.",
+     "kn": "ಎರಡೂ +2 ಮಾಡಿ. ನಡುವೆ E ಶೂನ್ಯವಾಗುವ ಬಿಂದು ಹುಡುಕಿ."
+    },
+    {
+     "en": "Can two field lines ever cross? Try to make them.",
+     "kn": "ಎರಡು ಕ್ಷೇತ್ರ ರೇಖೆಗಳು ಛೇದಿಸಬಹುದೇ? ಪ್ರಯತ್ನಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

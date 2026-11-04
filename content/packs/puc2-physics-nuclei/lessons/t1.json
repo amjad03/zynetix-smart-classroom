@@ -392,6 +392,424 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Build a nucleus",
+    "kn": "ನ್ಯೂಕ್ಲಿಯಸ್ ರಚಿಸಿ"
+   },
+   "narration": {
+    "en": "A nucleus has Z protons and N neutrons; the mass number is A = Z + N. Z alone fixes the element. Nuclei with the same Z but different N are isotopes (¹²C and ¹⁴C); the same A but different Z are isobars. The radius is about 1.2 A^(1/3) fm."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A nucleus has Z protons and N neutrons; the mass number is A = Z + N. Z alone fixes the element. Nuclei with the same Z but different N are isotopes (¹²C and ¹⁴C); the same A but different Z are isobars. The radius is about 1.2 A^(1/3) fm.",
+    "kn": "ನ್ಯೂಕ್ಲಿಯಸ್‌ನಲ್ಲಿ Z ಪ್ರೋಟಾನ್ ಮತ್ತು N ನ್ಯೂಟ್ರಾನ್; ದ್ರವ್ಯರಾಶಿ ಸಂಖ್ಯೆ A = Z + N. Z ಮಾತ್ರ ಧಾತುವನ್ನು ನಿರ್ಧರಿಸುತ್ತದೆ. ಒಂದೇ Z, ಬೇರೆ N: ಸಮಸ್ಥಾನಿಗಳು (¹²C, ¹⁴C); ಒಂದೇ A, ಬೇರೆ Z: ಸಮಭಾರಿಗಳು. ತ್ರಿಜ್ಯ ಸುಮಾರು 1.2 A^(1/3) fm."
+   },
+   "sliders": [
+    {
+     "name": "Z",
+     "label": {
+      "en": "Protons Z",
+      "kn": "ಪ್ರೋಟಾನ್ Z"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 6
+    },
+    {
+     "name": "N",
+     "label": {
+      "en": "Neutrons N",
+      "kn": "ನ್ಯೂಟ್ರಾನ್ N"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 6
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Add proton",
+      "kn": "ಪ್ರೋಟಾನ್ ಸೇರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "Z": "Z + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Add neutron",
+      "kn": "ನ್ಯೂಟ್ರಾನ್ ಸೇರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "N": "N + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Remove neutron",
+      "kn": "ನ್ಯೂಟ್ರಾನ್ ತೆಗೆಯಿರಿ"
+     },
+     "icon": "remove",
+     "set": {
+      "N": "N - 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "A",
+     "expr": "Z + N"
+    }
+   ],
+   "view": {
+    "x": [
+     -12,
+     12
+    ],
+    "y": [
+     -6,
+     6
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 50,
+     "visibleIf": "i < A",
+     "x": "-6 + 0.62*sqrt(i + 0.5)*cos(2.39996*i)",
+     "y": "0.62*sqrt(i + 0.5)*sin(2.39996*i)",
+     "r": 0.36,
+     "color": {
+      "by": "floor((i + 1)*Z/A) - floor(i*Z/A)",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "H"
+     },
+     "size": 80,
+     "visibleIf": "Z == 1",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "He"
+     },
+     "size": 80,
+     "visibleIf": "Z == 2",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "Li"
+     },
+     "size": 80,
+     "visibleIf": "Z == 3",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "Be"
+     },
+     "size": 80,
+     "visibleIf": "Z == 4",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "B"
+     },
+     "size": 80,
+     "visibleIf": "Z == 5",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "C"
+     },
+     "size": 80,
+     "visibleIf": "Z == 6",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "N"
+     },
+     "size": 80,
+     "visibleIf": "Z == 7",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "O"
+     },
+     "size": 80,
+     "visibleIf": "Z == 8",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "F"
+     },
+     "size": 80,
+     "visibleIf": "Z == 9",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "Ne"
+     },
+     "size": 80,
+     "visibleIf": "Z == 10",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "Na"
+     },
+     "size": 80,
+     "visibleIf": "Z == 11",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "Mg"
+     },
+     "size": 80,
+     "visibleIf": "Z == 12",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "Al"
+     },
+     "size": 80,
+     "visibleIf": "Z == 13",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "Si"
+     },
+     "size": 80,
+     "visibleIf": "Z == 14",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "P"
+     },
+     "size": 80,
+     "visibleIf": "Z == 15",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "S"
+     },
+     "size": 80,
+     "visibleIf": "Z == 16",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "Cl"
+     },
+     "size": 80,
+     "visibleIf": "Z == 17",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "Ar"
+     },
+     "size": 80,
+     "visibleIf": "Z == 18",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "K"
+     },
+     "size": 80,
+     "visibleIf": "Z == 19",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.5,
+     "text": {
+      "en": "Ca"
+     },
+     "size": 80,
+     "visibleIf": "Z == 20",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 4.6,
+     "y": 3.2,
+     "text": {
+      "en": "{A}"
+     },
+     "size": 34,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 4.6,
+     "y": -0.4,
+     "text": {
+      "en": "{Z}"
+     },
+     "size": 34,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": -3.2,
+     "text": {
+      "en": "A = {A}   Z = {Z}   N = {N}"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": -6,
+     "y": -5,
+     "text": {
+      "en": "red: protons   blue: neutrons",
+      "kn": "ಕೆಂಪು: ಪ್ರೋಟಾನ್   ನೀಲಿ: ನ್ಯೂಟ್ರಾನ್"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mass number A",
+      "kn": "ದ್ರವ್ಯರಾಶಿ ಸಂಖ್ಯೆ A"
+     },
+     "expr": "A",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Nuclear charge Ze",
+      "kn": "ನ್ಯೂಕ್ಲಿಯರ್ ಆವೇಶ Ze"
+     },
+     "expr": "Z*1.602",
+     "unit": "×10⁻¹⁹ C",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Radius 1.2 A^(1/3)",
+      "kn": "ತ್ರಿಜ್ಯ 1.2 A^(1/3)"
+     },
+     "expr": "1.2*A^(1/3)",
+     "unit": "fm",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Approximate mass",
+      "kn": "ಅಂದಾಜು ದ್ರವ್ಯರಾಶಿ"
+     },
+     "expr": "A",
+     "unit": "u",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make carbon-12, then add two neutrons. Which element is it now?",
+     "kn": "ಕಾರ್ಬನ್-12 ಮಾಡಿ, ಎರಡು ನ್ಯೂಟ್ರಾನ್ ಸೇರಿಸಿ. ಈಗ ಯಾವ ಧಾತು?"
+    },
+    {
+     "en": "Add one proton to carbon-14 and remove one neutron. What do you get, and what is the same?",
+     "kn": "ಕಾರ್ಬನ್-14 ಗೆ ಒಂದು ಪ್ರೋಟಾನ್ ಸೇರಿಸಿ ಒಂದು ನ್ಯೂಟ್ರಾನ್ ತೆಗೆಯಿರಿ. ಏನು ದೊರೆಯುತ್ತದೆ, ಯಾವುದು ಒಂದೇ?"
+    },
+    {
+     "en": "Make three isotopes of hydrogen.",
+     "kn": "ಹೈಡ್ರೋಜನ್‌ನ ಮೂರು ಸಮಸ್ಥಾನಿಗಳನ್ನು ಮಾಡಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -435,6 +435,251 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The p-n junction diode",
+    "kn": "p-n ಸಂಧಿ ಡಯೋಡ್"
+   },
+   "narration": {
+    "en": "Forward bias (p to +) lowers the barrier and narrows the depletion layer: beyond the knee (about 0.7 V for Si, 0.3 V for Ge) the current shoots up, I = Is(e^(V/VT) − 1). Reverse bias widens the depletion layer and only a tiny saturation current Is flows. Ideal-diode model at room temperature, no breakdown shown."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Forward bias (p to +) lowers the barrier and narrows the depletion layer: beyond the knee (about 0.7 V for Si, 0.3 V for Ge) the current shoots up, I = Is(e^(V/VT) − 1). Reverse bias widens the depletion layer and only a tiny saturation current Is flows. Ideal-diode model at room temperature, no breakdown shown.",
+    "kn": "ಮುನ್ನಡೆ ಪಕ್ಷಪಾತ (p ಗೆ +) ತಡೆ ಇಳಿಸಿ ಕ್ಷೀಣ ಪದರ ಕಿರಿದಾಗಿಸುತ್ತದೆ: ಮೊಣಕಾಲು ವೋಲ್ಟೇಜ್ (Si ಗೆ ಸುಮಾರು 0.7 V, Ge ಗೆ 0.3 V) ಆಚೆ ಪ್ರವಾಹ ತೀವ್ರ ಏರಿಕೆ. ಹಿಮ್ಮುಖ ಪಕ್ಷಪಾತ ಕ್ಷೀಣ ಪದರ ಅಗಲಿಸುತ್ತದೆ, ಅತಿ ಸಣ್ಣ ಸಂತೃಪ್ತ ಪ್ರವಾಹ Is ಮಾತ್ರ."
+   },
+   "sliders": [
+    {
+     "name": "V",
+     "label": {
+      "en": "Applied voltage",
+      "kn": "ಅನ್ವಯಿತ ವೋಲ್ಟೇಜ್"
+     },
+     "min": -5,
+     "max": 0.8,
+     "step": 0.05,
+     "value": 0,
+     "unit": "V"
+    }
+   ],
+   "choices": [
+    {
+     "name": "Is",
+     "label": {
+      "en": "Diode",
+      "kn": "ಡಯೋಡ್"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Silicon",
+        "kn": "ಸಿಲಿಕಾನ್"
+       },
+       "value": 1e-14
+      },
+      {
+       "label": {
+        "en": "Germanium",
+        "kn": "ಜರ್ಮೇನಿಯಂ"
+       },
+       "value": 1e-07
+      }
+     ],
+     "value": 1e-14
+    }
+   ],
+   "vars": [
+    {
+     "name": "I",
+     "expr": "Is*(exp(V/0.02585) - 1)*1000"
+    },
+    {
+     "name": "V0",
+     "expr": "if(Is < 1e-10, 0.7, 0.3)"
+    },
+    {
+     "name": "W",
+     "expr": "sqrt(max(V0 - V, 0.05)/V0)"
+    }
+   ],
+   "view": {
+    "x": [
+     -5.5,
+     1.5
+    ],
+    "y": [
+     -4,
+     16
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -5.5,
+     "y1": 0,
+     "x2": 1.5,
+     "y2": 0,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -1,
+     "x2": 0,
+     "y2": 11,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 1.45,
+     "y": -0.8,
+     "text": {
+      "en": "V (volts)"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 0.05,
+     "y": 11,
+     "text": {
+      "en": "I (mA)"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "path",
+     "fn": "clamp(Is*(exp(x/0.02585) - 1)*1000, -1, 10.5)",
+     "from": -5.5,
+     "to": 1.2,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "V",
+     "y": "clamp(I, -1, 10.5)",
+     "r": 0.06,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": -5,
+     "y": 12.5,
+     "w": 2.6,
+     "h": 2.4,
+     "color": "red",
+     "opacity": 0.45
+    },
+    {
+     "shape": "rect",
+     "x": "-2.4 + W*0.8",
+     "y": 12.5,
+     "w": "2.6 - W*0.8",
+     "h": 2.4,
+     "color": "blue",
+     "opacity": 0.45
+    },
+    {
+     "shape": "rect",
+     "x": -2.4,
+     "y": 12.5,
+     "w": "W*0.8",
+     "h": 2.4,
+     "color": "white",
+     "opacity": 0.15
+    },
+    {
+     "shape": "text",
+     "x": -3.7,
+     "y": 13.7,
+     "text": {
+      "en": "p"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": -0.8,
+     "y": 13.7,
+     "text": {
+      "en": "n"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": -2.4,
+     "y": 15.5,
+     "text": {
+      "en": "depletion layer",
+      "kn": "ಕ್ಷೀಣ ಪದರ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 1.4,
+     "y": 14,
+     "text": {
+      "en": "I = {I:3} mA"
+     },
+     "size": 24,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Current",
+      "kn": "ಪ್ರವಾಹ"
+     },
+     "expr": "I",
+     "unit": "mA",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Current in µA",
+      "kn": "ಪ್ರವಾಹ µA ನಲ್ಲಿ"
+     },
+     "expr": "I*1000",
+     "unit": "µA",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "Barrier height",
+      "kn": "ತಡೆ ಎತ್ತರ"
+     },
+     "expr": "max(V0 - V, 0.05)",
+     "unit": "V",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the voltage where the Si current passes 1 mA. Then try Ge.",
+     "kn": "Si ಪ್ರವಾಹ 1 mA ದಾಟುವ ವೋಲ್ಟೇಜ್ ಹುಡುಕಿ. ನಂತರ Ge."
+    },
+    {
+     "en": "Go to −5 V. What happens to the depletion layer and to the current?",
+     "kn": "−5 V ಗೆ ಹೋಗಿ. ಕ್ಷೀಣ ಪದರ ಮತ್ತು ಪ್ರವಾಹ ಏನಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Why is a diode called a one-way valve for current?",
+     "kn": "ಡಯೋಡ್ ಅನ್ನು ಪ್ರವಾಹದ ಏಕಮುಖ ಕವಾಟ ಏಕೆ ಎನ್ನುತ್ತಾರೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

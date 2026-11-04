@@ -447,6 +447,313 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Polaroids and Malus's law",
+    "kn": "ಪೋಲರಾಯ್ಡ್ ಮತ್ತು ಮ್ಯಾಲಸ್ ನಿಯಮ"
+   },
+   "narration": {
+    "en": "Unpolarised light vibrates in all directions; a polaroid passes only the part along its axis, so half the intensity gets through. A second polaroid (the analyser) at angle θ passes I = I1 cos²θ: nothing when crossed at 90°. Slip a third polaroid between crossed ones and light gets through again!"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Unpolarised light vibrates in all directions; a polaroid passes only the part along its axis, so half the intensity gets through. A second polaroid (the analyser) at angle θ passes I = I1 cos²θ: nothing when crossed at 90°. Slip a third polaroid between crossed ones and light gets through again!",
+    "kn": "ಅಧ್ರುವೀಕೃತ ಬೆಳಕು ಎಲ್ಲ ದಿಕ್ಕಿನಲ್ಲಿ ಕಂಪಿಸುತ್ತದೆ; ಪೋಲರಾಯ್ಡ್ ತನ್ನ ಅಕ್ಷದ ಉದ್ದಕ್ಕಿನ ಭಾಗ ಮಾತ್ರ ಬಿಡುತ್ತದೆ, ಅರ್ಧ ತೀವ್ರತೆ. θ ಕೋನದ ಎರಡನೇ ಪೋಲರಾಯ್ಡ್ (ವಿಶ್ಲೇಷಕ) I = I1 cos²θ ಬಿಡುತ್ತದೆ: 90° ನಲ್ಲಿ ಏನೂ ಇಲ್ಲ. ಅಡ್ಡ ಪೋಲರಾಯ್ಡ್‌ಗಳ ನಡುವೆ ಮೂರನೆಯದನ್ನು ಇಟ್ಟರೆ ಮತ್ತೆ ಬೆಳಕು ಬರುತ್ತದೆ!"
+   },
+   "sliders": [
+    {
+     "name": "th",
+     "label": {
+      "en": "Analyser angle θ",
+      "kn": "ವಿಶ್ಲೇಷಕ ಕೋನ θ"
+     },
+     "min": 0,
+     "max": 180,
+     "step": 5,
+     "value": 30,
+     "unit": "°"
+    },
+    {
+     "name": "ph",
+     "label": {
+      "en": "Middle polaroid angle",
+      "kn": "ಮಧ್ಯ ಪೋಲರಾಯ್ಡ್ ಕೋನ"
+     },
+     "min": 0,
+     "max": 90,
+     "step": 5,
+     "value": 45,
+     "unit": "°"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "mid",
+     "label": {
+      "en": "Insert the middle polaroid",
+      "kn": "ಮಧ್ಯ ಪೋಲರಾಯ್ಡ್ ಸೇರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "I1",
+     "expr": "50"
+    },
+    {
+     "name": "Im",
+     "expr": "if(mid, I1*cos(rad(ph))^2, I1)"
+    },
+    {
+     "name": "I2",
+     "expr": "if(mid, Im*cos(rad(th - ph))^2, I1*cos(rad(th))^2)"
+    }
+   ],
+   "view": {
+    "x": [
+     -2,
+     34
+    ],
+    "y": [
+     -6,
+     7
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": -2.5,
+     "x2": 1,
+     "y2": 2.5,
+     "color": "white",
+     "width": 3,
+     "opacity": "0.3 + 0.7*abs(sin(5*t))"
+    },
+    {
+     "shape": "line",
+     "x1": -1.2,
+     "y1": -1.2,
+     "x2": 3.2,
+     "y2": 1.2,
+     "color": "white",
+     "width": 3,
+     "opacity": "0.3 + 0.7*abs(sin(5*t + 1))"
+    },
+    {
+     "shape": "line",
+     "x1": -1.2,
+     "y1": 1.2,
+     "x2": 3.2,
+     "y2": -1.2,
+     "color": "white",
+     "width": 3,
+     "opacity": "0.3 + 0.7*abs(sin(5*t + 2))"
+    },
+    {
+     "shape": "line",
+     "x1": -1.5,
+     "y1": 0,
+     "x2": 3.5,
+     "y2": 0,
+     "color": "white",
+     "width": 3,
+     "opacity": "0.3 + 0.7*abs(sin(5*t + 3))"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": -4.5,
+     "text": {
+      "en": "unpolarised",
+      "kn": "ಅಧ್ರುವೀಕೃತ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "circle",
+     "x": 8,
+     "y": 0,
+     "r": 3,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "8 - 2.6*sin(rad(0))",
+     "y1": "2.6*cos(rad(0))",
+     "x2": "8 + 2.6*sin(rad(0))",
+     "y2": "-2.6*cos(rad(0))",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 16,
+     "y": 0,
+     "r": 3,
+     "fill": false,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "mid"
+    },
+    {
+     "shape": "line",
+     "x1": "16 - 2.6*sin(rad(ph))",
+     "y1": "2.6*cos(rad(ph))",
+     "x2": "16 + 2.6*sin(rad(ph))",
+     "y2": "-2.6*cos(rad(ph))",
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "mid"
+    },
+    {
+     "shape": "circle",
+     "x": 24,
+     "y": 0,
+     "r": 3,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "24 - 2.6*sin(rad(th))",
+     "y1": "2.6*cos(rad(th))",
+     "x2": "24 + 2.6*sin(rad(th))",
+     "y2": "-2.6*cos(rad(th))",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "x": 12,
+     "y": 0,
+     "dx": 0,
+     "dy": "2.4*sqrt(I1/50)*sin(6*t)",
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "mid",
+     "x": 20,
+     "y": 0,
+     "dx": "-2.4*sqrt(Im/50)*sin(6*t)*sin(rad(ph))",
+     "dy": "2.4*sqrt(Im/50)*sin(6*t)*cos(rad(ph))",
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "x": 29,
+     "y": 0,
+     "dx": "-2.4*sqrt(I2/50)*sin(6*t)*sin(rad(th))",
+     "dy": "2.4*sqrt(I2/50)*sin(6*t)*cos(rad(th))",
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": 32.5,
+     "y": 0,
+     "r": 1.2,
+     "color": "yellow",
+     "opacity": "0.1 + 0.9*I2/50"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": -4.5,
+     "text": {
+      "en": "polariser",
+      "kn": "ಧ್ರುವಕ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 16,
+     "y": -4.5,
+     "text": {
+      "en": "middle",
+      "kn": "ಮಧ್ಯ"
+     },
+     "size": 20,
+     "visibleIf": "mid"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": -4.5,
+     "text": {
+      "en": "analyser",
+      "kn": "ವಿಶ್ಲೇಷಕ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": -2.5,
+     "text": {
+      "en": "{I2:1}%"
+     },
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "After the polariser",
+      "kn": "ಧ್ರುವಕದ ನಂತರ"
+     },
+     "expr": "I1",
+     "unit": "%",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "After the analyser",
+      "kn": "ವಿಶ್ಲೇಷಕದ ನಂತರ"
+     },
+     "expr": "I2",
+     "unit": "%",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "cos²θ",
+      "kn": "cos²θ"
+     },
+     "expr": "cos(rad(th))^2",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn the analyser from 0° to 90°. Where does the light vanish?",
+     "kn": "ವಿಶ್ಲೇಷಕವನ್ನು 0° ನಿಂದ 90° ಗೆ ತಿರುಗಿಸಿ. ಬೆಳಕು ಎಲ್ಲಿ ಮಾಯವಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "At what angle does exactly half of I1 get through?",
+     "kn": "ಯಾವ ಕೋನದಲ್ಲಿ I1 ನ ಸರಿಯಾಗಿ ಅರ್ಧ ಹೋಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Cross the polaroids, then insert the middle one at 45°. How can adding a filter let more light through?",
+     "kn": "ಪೋಲರಾಯ್ಡ್‌ಗಳನ್ನು ಅಡ್ಡ ಮಾಡಿ, ಮಧ್ಯದದನ್ನು 45° ನಲ್ಲಿ ಸೇರಿಸಿ. ಫಿಲ್ಟರ್ ಸೇರಿಸಿದರೆ ಹೆಚ್ಚು ಬೆಳಕು ಹೇಗೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

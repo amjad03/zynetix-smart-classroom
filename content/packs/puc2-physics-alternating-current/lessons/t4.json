@@ -404,6 +404,257 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Power factor: where the power goes",
+    "kn": "ಸಾಮರ್ಥ್ಯ ಅಂಶ: ಸಾಮರ್ಥ್ಯ ಎಲ್ಲಿ ಹೋಗುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "The orange curve is the power p = v × i at each instant. When the current is out of step with the voltage by φ, part of each cycle sends energy back to the source. The average power is Vrms Irms cos φ; cos φ is the power factor."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The orange curve is the power p = v × i at each instant. When the current is out of step with the voltage by φ, part of each cycle sends energy back to the source. The average power is Vrms Irms cos φ; cos φ is the power factor.",
+    "kn": "ಕಿತ್ತಳೆ ವಕ್ರ ಪ್ರತಿ ಕ್ಷಣದ ಸಾಮರ್ಥ್ಯ p = v × i. ಪ್ರವಾಹ ವೋಲ್ಟೇಜ್‌ಗಿಂತ φ ಹಂತ ವ್ಯತ್ಯಾಸದಲ್ಲಿದ್ದಾಗ ಚಕ್ರದ ಒಂದು ಭಾಗ ಶಕ್ತಿ ಆಕರಕ್ಕೆ ಹಿಂದಿರುಗುತ್ತದೆ. ಸರಾಸರಿ ಸಾಮರ್ಥ್ಯ Vrms Irms cos φ; cos φ ಸಾಮರ್ಥ್ಯ ಅಂಶ."
+   },
+   "sliders": [
+    {
+     "name": "phi",
+     "label": {
+      "en": "Phase difference φ",
+      "kn": "ಹಂತ ವ್ಯತ್ಯಾಸ φ"
+     },
+     "min": -90,
+     "max": 90,
+     "step": 5,
+     "value": 60,
+     "unit": "°"
+    },
+    {
+     "name": "Vr",
+     "label": {
+      "en": "rms voltage",
+      "kn": "rms ವೋಲ್ಟೇಜ್"
+     },
+     "min": 100,
+     "max": 240,
+     "step": 10,
+     "value": 220,
+     "unit": "V"
+    },
+    {
+     "name": "Ir",
+     "label": {
+      "en": "rms current",
+      "kn": "rms ಪ್ರವಾಹ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 5,
+     "unit": "A"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "showP",
+     "label": {
+      "en": "Power curve",
+      "kn": "ಸಾಮರ್ಥ್ಯ ವಕ್ರ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 40,
+    "loop": true,
+    "speeds": [
+     1,
+     2,
+     5,
+     10
+    ],
+    "speed": 2,
+    "unit": "ms"
+   },
+   "vars": [
+    {
+     "name": "P",
+     "expr": "Vr*Ir*cos(rad(phi))"
+    },
+    {
+     "name": "gx",
+     "expr": "mod(t, 40)"
+    }
+   ],
+   "view": {
+    "x": [
+     -2,
+     42
+    ],
+    "y": [
+     -10,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 41,
+     "y2": 0,
+     "color": "white",
+     "opacity": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -9.5,
+     "x2": 0,
+     "y2": 9.5,
+     "color": "white",
+     "opacity": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "7*sin(2*pi*x/20)",
+     "from": 0,
+     "to": 40,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "fn": "5*sin(2*pi*x/20 - rad(phi))",
+     "from": 0,
+     "to": 40,
+     "color": "blue",
+     "width": 3,
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "visibleIf": "showP",
+     "fn": "8*sin(2*pi*x/20)*sin(2*pi*x/20 - rad(phi))",
+     "from": 0,
+     "to": 40,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "showP",
+     "x1": 0,
+     "y1": "4*cos(rad(phi))",
+     "x2": 40,
+     "y2": "4*cos(rad(phi))",
+     "dashed": true,
+     "color": "green",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 40.5,
+     "y": "4*cos(rad(phi)) + 0.6",
+     "text": {
+      "en": "average",
+      "kn": "ಸರಾಸರಿ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "showP",
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": "gx",
+     "y1": -9,
+     "x2": "gx",
+     "y2": 9,
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "showP",
+     "x": "gx",
+     "y": "8*sin(2*pi*gx/20)*sin(2*pi*gx/20 - rad(phi))",
+     "r": 0.5,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 9.3,
+     "text": {
+      "en": "v (yellow)  i (blue)  p = v·i (orange)",
+      "kn": "v (ಹಳದಿ) i (ನೀಲಿ) p = v·i (ಕಿತ್ತಳೆ)"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 41,
+     "y": -9.5,
+     "text": {
+      "en": "t (ms), 50 Hz"
+     },
+     "size": 22,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Power factor cos φ",
+      "kn": "ಸಾಮರ್ಥ್ಯ ಅಂಶ cos φ"
+     },
+     "expr": "cos(rad(phi))",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Average power",
+      "kn": "ಸರಾಸರಿ ಸಾಮರ್ಥ್ಯ"
+     },
+     "expr": "P",
+     "unit": "W",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Vrms × Irms",
+      "kn": "Vrms × Irms"
+     },
+     "expr": "Vr*Ir",
+     "unit": "V·A",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set φ = 0. Does the power ever go negative?",
+     "kn": "φ = 0 ಮಾಡಿ. ಸಾಮರ್ಥ್ಯ ಎಂದಾದರೂ ಋಣವಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Set φ = 90° (a pure inductor). What is the average power now?",
+     "kn": "φ = 90° (ಶುದ್ಧ ಪ್ರೇರಕ) ಮಾಡಿ. ಈಗ ಸರಾಸರಿ ಸಾಮರ್ಥ್ಯ ಎಷ್ಟು?"
+    },
+    {
+     "en": "Keep Vrms and Irms fixed. Why do industries try to keep cos φ close to 1?",
+     "kn": "Vrms, Irms ಸ್ಥಿರವಾಗಿಡಿ. ಕೈಗಾರಿಕೆಗಳು cos φ ಅನ್ನು 1 ರ ಹತ್ತಿರ ಏಕೆ ಇಡುತ್ತವೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

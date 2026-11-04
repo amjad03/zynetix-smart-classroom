@@ -340,6 +340,273 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A magnetic needle swinging in a field",
+    "kn": "ಕ್ಷೇತ್ರದಲ್ಲಿ ತೂಗಾಡುವ ಕಾಂತ ಸೂಜಿ"
+   },
+   "narration": {
+    "en": "Turn a magnet away from the field and let go. The torque τ = −mB sin θ pulls it back, so it swings about the field direction like a pendulum. For small angles the period is T = 2π√(I/mB): a stronger field or a stronger magnet swings faster. This is how B can be measured."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Turn a magnet away from the field and let go. The torque τ = −mB sin θ pulls it back, so it swings about the field direction like a pendulum. For small angles the period is T = 2π√(I/mB): a stronger field or a stronger magnet swings faster. This is how B can be measured.",
+    "kn": "ಕಾಂತವನ್ನು ಕ್ಷೇತ್ರದಿಂದ ತಿರುಗಿಸಿ ಬಿಡಿ. ಟಾರ್ಕ್ τ = −mB sin θ ಹಿಂದಕ್ಕೆ ಎಳೆಯುತ್ತದೆ, ಲೋಲಕದಂತೆ ತೂಗುತ್ತದೆ. ಸಣ್ಣ ಕೋನಗಳಿಗೆ ಆವರ್ತ T = 2π√(I/mB): ಹೆಚ್ಚು ಕ್ಷೇತ್ರ ಅಥವಾ ಬಲವಾದ ಕಾಂತ ವೇಗವಾಗಿ ತೂಗುತ್ತದೆ. ಹೀಗೆ B ಅಳೆಯಬಹುದು."
+   },
+   "sliders": [
+    {
+     "name": "B",
+     "label": {
+      "en": "Field B",
+      "kn": "ಕ್ಷೇತ್ರ B"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 10,
+     "value": 50,
+     "unit": "µT"
+    },
+    {
+     "name": "m",
+     "label": {
+      "en": "Magnetic moment m",
+      "kn": "ಕಾಂತೀಯ ಭ್ರಾಮಕ m"
+     },
+     "min": 0.1,
+     "max": 1,
+     "step": 0.1,
+     "value": 0.5,
+     "unit": "A m²"
+    },
+    {
+     "name": "I",
+     "label": {
+      "en": "Moment of inertia I",
+      "kn": "ಜಡತ್ವ ಭ್ರಾಮಕ I"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 5,
+     "unit": "×10⁻⁶ kg m²"
+    },
+    {
+     "name": "th0",
+     "label": {
+      "en": "Start angle",
+      "kn": "ಆರಂಭ ಕೋನ"
+     },
+     "min": 5,
+     "max": 90,
+     "step": 5,
+     "value": 30,
+     "unit": "°"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "dmp",
+     "label": {
+      "en": "Air damping",
+      "kn": "ಗಾಳಿ ಅವಮಂದನ"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Release",
+      "kn": "ಬಿಡಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 20,
+    "dt": 0.005
+   },
+   "state": [
+    {
+     "name": "th",
+     "init": "rad(th0)",
+     "rate": "w"
+    },
+    {
+     "name": "w",
+     "init": 0,
+     "rate": "-m*B/I*sin(th) - if(dmp, 0.3, 0)*w"
+    }
+   ],
+   "integrator": "rk2",
+   "vars": [
+    {
+     "name": "T0",
+     "expr": "2*pi*sqrt(I/(m*B))"
+    }
+   ],
+   "view": {
+    "x": [
+     -8,
+     26
+    ],
+    "y": [
+     -8,
+     8
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "arrow",
+     "x": -7.5,
+     "y": -6.5,
+     "dx": 14,
+     "dy": 0,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "arrow",
+     "x": -7.5,
+     "y": 6.5,
+     "dx": 14,
+     "dy": 0,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 7.3,
+     "text": {
+      "en": "B"
+     },
+     "size": 26,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": "-5*cos(th)",
+     "y1": "-5*sin(th)",
+     "x2": 0,
+     "y2": 0,
+     "color": "blue",
+     "width": 12
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "5*cos(th)",
+     "y2": "5*sin(th)",
+     "color": "red",
+     "width": 12
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 0.4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 9,
+     "y1": 0,
+     "x2": 25.5,
+     "y2": 0,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 9,
+     "y1": -7,
+     "x2": 9,
+     "y2": 7,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 9.3,
+     "y": 7.3,
+     "text": {
+      "en": "θ"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 25.5,
+     "y": -0.7,
+     "text": {
+      "en": "t"
+     },
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "trail",
+     "x": "9 + 0.8*t",
+     "y": "6*th/rad(90)",
+     "length": 2000,
+     "color": "yellow",
+     "width": 3
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Period 2π√(I/mB)",
+      "kn": "ಆವರ್ತ 2π√(I/mB)"
+     },
+     "expr": "T0",
+     "unit": "s",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Angle now",
+      "kn": "ಈಗಿನ ಕೋನ"
+     },
+     "expr": "deg(th)",
+     "unit": "°",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Restoring torque",
+      "kn": "ಪುನಃಸ್ಥಾಪಕ ಟಾರ್ಕ್"
+     },
+     "expr": "m*B*sin(th)",
+     "unit": "µN m",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Time 5 swings and compare with the T readout.",
+     "kn": "5 ತೂಗಾಟಗಳ ಸಮಯ ಅಳೆದು T ಓದಿನೊಂದಿಗೆ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Make B four times bigger. What happens to the period?",
+     "kn": "B ನಾಲ್ಕು ಪಟ್ಟು ಮಾಡಿ. ಆವರ್ತ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Release from 90°. Is the period still close to the formula?",
+     "kn": "90° ನಿಂದ ಬಿಡಿ. ಆವರ್ತ ಇನ್ನೂ ಸೂತ್ರಕ್ಕೆ ಹತ್ತಿರವೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

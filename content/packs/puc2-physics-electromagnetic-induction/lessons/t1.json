@@ -429,6 +429,308 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Move a magnet near a coil",
+    "kn": "ಸುರುಳಿಯ ಬಳಿ ಕಾಂತವನ್ನು ಚಲಿಸಿ"
+   },
+   "narration": {
+    "en": "As the magnet moves, the flux Φ through the coil changes and an emf ε = −N dΦ/dt appears. The needle swings only while the magnet moves; it swings the other way when the magnet goes back. Faster motion or more turns give a bigger emf. The graph traces ε against time."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "As the magnet moves, the flux Φ through the coil changes and an emf ε = −N dΦ/dt appears. The needle swings only while the magnet moves; it swings the other way when the magnet goes back. Faster motion or more turns give a bigger emf. The graph traces ε against time.",
+    "kn": "ಕಾಂತ ಚಲಿಸುವಾಗ ಸುರುಳಿಯ ಮೂಲಕ ಅಭಿವಾಹ Φ ಬದಲಾಗಿ emf ε = −N dΦ/dt ಉಂಟಾಗುತ್ತದೆ. ಕಾಂತ ಚಲಿಸುವಾಗ ಮಾತ್ರ ಸೂಜಿ ಅಲುಗುತ್ತದೆ; ಹಿಂದಿರುಗುವಾಗ ವಿರುದ್ಧ ದಿಕ್ಕಿಗೆ. ಹೆಚ್ಚು ವೇಗ ಅಥವಾ ಹೆಚ್ಚು ಸುತ್ತುಗಳು ಹೆಚ್ಚು emf. ನಕ್ಷೆ ε ಅನ್ನು ಸಮಯದೊಂದಿಗೆ ಎಳೆಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "w",
+     "label": {
+      "en": "Speed of to-and-fro motion",
+      "kn": "ಹಿಂದೆ-ಮುಂದೆ ಚಲನೆಯ ವೇಗ"
+     },
+     "min": 0.5,
+     "max": 4,
+     "step": 0.5,
+     "value": 2,
+     "unit": "rad/s"
+    },
+    {
+     "name": "N",
+     "label": {
+      "en": "Turns in the coil",
+      "kn": "ಸುರುಳಿಯ ಸುತ್ತುಗಳು"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 50,
+     "value": 100
+    }
+   ],
+   "choices": [
+    {
+     "name": "pol",
+     "label": {
+      "en": "Magnet faces coil with",
+      "kn": "ಸುರುಳಿಯತ್ತ ಮುಖ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "N pole",
+        "kn": "N ಧ್ರುವ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "S pole",
+        "kn": "S ಧ್ರುವ"
+       },
+       "value": -1
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "xm",
+     "expr": "6 + 4*sin(w*t)"
+    },
+    {
+     "name": "vx",
+     "expr": "4*w*cos(w*t)"
+    },
+    {
+     "name": "Phi",
+     "expr": "pol*0.1*(1 + (xm/2)^2)^(-1.5)"
+    },
+    {
+     "name": "dPdx",
+     "expr": "pol*0.1*(-0.75*xm)*(1 + (xm/2)^2)^(-2.5)"
+    },
+    {
+     "name": "emf",
+     "expr": "-N*dPdx*vx"
+    },
+    {
+     "name": "sc",
+     "expr": "6/(N*0.1*0.2647*4*w)"
+    },
+    {
+     "name": "nd",
+     "expr": "clamp(emf*sc*0.2, -1.3, 1.3)"
+    }
+   ],
+   "view": {
+    "x": [
+     -4,
+     36
+    ],
+    "y": [
+     -8,
+     8
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -0.6,
+     "y": -2.6,
+     "w": 1.2,
+     "h": 5.2,
+     "fill": false,
+     "color": "orange",
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -3.6,
+     "text": {
+      "en": "coil",
+      "kn": "ಸುರುಳಿ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": "xm - 1.5",
+     "y": -0.6,
+     "w": 1.5,
+     "h": 1.2,
+     "color": {
+      "by": "pol > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "xm",
+     "y": -0.6,
+     "w": 1.5,
+     "h": 1.2,
+     "color": {
+      "by": "pol > 0",
+      "scale": [
+       "red",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": "xm - 0.75",
+     "y": 1.3,
+     "text": {
+      "en": "N"
+     },
+     "size": 22,
+     "visibleIf": "pol > 0"
+    },
+    {
+     "shape": "text",
+     "x": "xm - 0.75",
+     "y": 1.3,
+     "text": {
+      "en": "S"
+     },
+     "size": 22,
+     "visibleIf": "pol < 0"
+    },
+    {
+     "shape": "circle",
+     "x": 4,
+     "y": -6,
+     "r": 1.6,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": -6,
+     "x2": "4 + 1.4*sin(nd)",
+     "y2": "-6 + 1.4*cos(nd)",
+     "color": "red",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": -7.7,
+     "text": {
+      "en": "G"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": -6,
+     "x2": 35,
+     "y2": -6,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": -7.5,
+     "x2": 12,
+     "y2": 7.5,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 0,
+     "x2": 35,
+     "y2": 0,
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 12.3,
+     "y": 7.4,
+     "text": {
+      "en": "ε (mV)"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 35,
+     "y": -5.4,
+     "text": {
+      "en": "t"
+     },
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "trail",
+     "x": "12 + mod(t, 11.5)*2",
+     "y": "clamp(emf*sc, -7, 7)",
+     "length": 600,
+     "color": "yellow",
+     "width": 3
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Emf now",
+      "kn": "ಈಗಿನ emf"
+     },
+     "expr": "emf",
+     "unit": "mV",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Flux linkage NΦ",
+      "kn": "ಅಭಿವಾಹ ಸಂಬಂಧ NΦ"
+     },
+     "expr": "N*Phi*1000",
+     "unit": "µWb",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Where is the magnet when the emf is zero? Is it moving then?",
+     "kn": "emf ಶೂನ್ಯವಾದಾಗ ಕಾಂತ ಎಲ್ಲಿದೆ? ಆಗ ಅದು ಚಲಿಸುತ್ತಿದೆಯೇ?"
+    },
+    {
+     "en": "Double the speed. What happens to the peak emf?",
+     "kn": "ವೇಗ ದ್ವಿಗುಣಗೊಳಿಸಿ. ಗರಿಷ್ಠ emf ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Flip the magnet. What changes in the graph?",
+     "kn": "ಕಾಂತವನ್ನು ತಿರುಗಿಸಿ. ನಕ್ಷೆಯಲ್ಲಿ ಏನು ಬದಲಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

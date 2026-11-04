@@ -260,6 +260,206 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Light pushes: radiation pressure",
+    "kn": "ಬೆಳಕು ತಳ್ಳುತ್ತದೆ: ವಿಕಿರಣ ಒತ್ತಡ"
+   },
+   "narration": {
+    "en": "An EM wave carries momentum as well as energy: energy U delivers momentum U/c. A fully absorbing surface feels pressure I/c; a perfect mirror gets twice that, 2I/c, because the light bounces back. Sunlight near the Earth is about 1000 W/m² at the ground."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "An EM wave carries momentum as well as energy: energy U delivers momentum U/c. A fully absorbing surface feels pressure I/c; a perfect mirror gets twice that, 2I/c, because the light bounces back. Sunlight near the Earth is about 1000 W/m² at the ground.",
+    "kn": "ವಿದ್ಯುತ್ಕಾಂತೀಯ ತರಂಗ ಶಕ್ತಿಯೊಂದಿಗೆ ಸಂವೇಗವನ್ನೂ ಒಯ್ಯುತ್ತದೆ: U ಶಕ್ತಿ U/c ಸಂವೇಗ ನೀಡುತ್ತದೆ. ಪೂರ್ಣ ಹೀರುವ ಮೇಲ್ಮೈ I/c ಒತ್ತಡ ಅನುಭವಿಸುತ್ತದೆ; ಪರಿಪೂರ್ಣ ದರ್ಪಣ ಎರಡರಷ್ಟು 2I/c, ಏಕೆಂದರೆ ಬೆಳಕು ಹಿಂದಿರುಗುತ್ತದೆ. ಭೂಮಿಯ ಮೇಲೆ ಸೂರ್ಯನ ಬೆಳಕು ಸುಮಾರು 1000 W/m²."
+   },
+   "sliders": [
+    {
+     "name": "I",
+     "label": {
+      "en": "Intensity",
+      "kn": "ತೀವ್ರತೆ"
+     },
+     "min": 100,
+     "max": 2000,
+     "step": 100,
+     "value": 1000,
+     "unit": "W/m²"
+    },
+    {
+     "name": "A",
+     "label": {
+      "en": "Area",
+      "kn": "ವಿಸ್ತೀರ್ಣ"
+     },
+     "min": 0.5,
+     "max": 10,
+     "step": 0.5,
+     "value": 1,
+     "unit": "m²"
+    }
+   ],
+   "choices": [
+    {
+     "name": "refl",
+     "label": {
+      "en": "Surface",
+      "kn": "ಮೇಲ್ಮೈ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Absorbing (black)",
+        "kn": "ಹೀರುವ (ಕಪ್ಪು)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Reflecting (mirror)",
+        "kn": "ಪ್ರತಿಫಲಿಸುವ (ದರ್ಪಣ)"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "Pr",
+     "expr": "refl*I/3e8*1e6"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     24
+    ],
+    "y": [
+     0,
+     12
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 18,
+     "y": 1,
+     "w": 1,
+     "h": 10,
+     "color": {
+      "by": "refl - 1",
+      "scale": [
+       "orange",
+       "white"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 18.5,
+     "y": 0.3,
+     "text": {
+      "en": "surface",
+      "kn": "ಮೇಲ್ಮೈ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "visibleIf": "i < I/50",
+     "x": "if(refl == 2, 18 - abs(mod(17*rand(i) + 6*t, 34) - 17), 1 + mod(17*rand(i) + 6*t, 17))",
+     "y": "1.5 + 9*rand(i + 77)",
+     "r": 0.18,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 19,
+     "y": 6,
+     "dx": "clamp(0.25*Pr*A/1, 0.4, 5)",
+     "dy": 0,
+     "color": "green",
+     "label": "F"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 11.4,
+     "text": {
+      "en": "photons",
+      "kn": "ಫೋಟಾನ್‌ಗಳು"
+     },
+     "size": 22,
+     "color": "yellow",
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Radiation pressure",
+      "kn": "ವಿಕಿರಣ ಒತ್ತಡ"
+     },
+     "expr": "Pr",
+     "unit": "µPa",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Force on the surface",
+      "kn": "ಮೇಲ್ಮೈ ಮೇಲಿನ ಬಲ"
+     },
+     "expr": "Pr*A",
+     "unit": "µN",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Energy density I/c",
+      "kn": "ಶಕ್ತಿ ಸಾಂದ್ರತೆ I/c"
+     },
+     "expr": "I/3e8*1e6",
+     "unit": "µJ/m³",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Peak electric field E0",
+      "kn": "ಗರಿಷ್ಠ ವಿದ್ಯುತ್ ಕ್ಷೇತ್ರ E0"
+     },
+     "expr": "sqrt(2*I/(3e8*8.854e-12))",
+     "unit": "V/m",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Switch from absorbing to reflecting. By what factor does the force grow?",
+     "kn": "ಹೀರುವಿಕೆಯಿಂದ ಪ್ರತಿಫಲನಕ್ಕೆ ಬದಲಿಸಿ. ಬಲ ಎಷ್ಟು ಪಟ್ಟು?"
+    },
+    {
+     "en": "With full sunlight on 1 m², is the force bigger or smaller than the weight of a grain of sand (about 10⁻⁵ N)?",
+     "kn": "1 m² ಮೇಲೆ ಪೂರ್ಣ ಸೂರ್ಯಬೆಳಕು: ಬಲ ಮರಳಿನ ಕಣದ ತೂಕಕ್ಕಿಂತ (10⁻⁵ N) ಹೆಚ್ಚೇ?"
+    },
+    {
+     "en": "Why do solar sails for spacecraft need to be huge?",
+     "kn": "ಬಾಹ್ಯಾಕಾಶ ನೌಕೆಯ ಸೌರ ಪಟಗಳು ಏಕೆ ಬೃಹತ್?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

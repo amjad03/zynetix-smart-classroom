@@ -236,6 +236,284 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The nuclear force between two nucleons",
+    "kn": "ಎರಡು ನ್ಯೂಕ್ಲಿಯಾನ್‌ಗಳ ನಡುವಿನ ನ್ಯೂಕ್ಲಿಯರ್ ಬಲ"
+   },
+   "narration": {
+    "en": "The nuclear force is much stronger than the Coulomb force but acts only over a few femtometres. Closer than about 0.8 fm it becomes strongly repulsive; a little farther it attracts; beyond 2 to 3 fm it is almost zero. It is nearly the same for n–n, n–p and p–p pairs. The curve is schematic (shape, not exact values)."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The nuclear force is much stronger than the Coulomb force but acts only over a few femtometres. Closer than about 0.8 fm it becomes strongly repulsive; a little farther it attracts; beyond 2 to 3 fm it is almost zero. It is nearly the same for n–n, n–p and p–p pairs. The curve is schematic (shape, not exact values).",
+    "kn": "ನ್ಯೂಕ್ಲಿಯರ್ ಬಲ ಕೂಲಂಬ್ ಬಲಕ್ಕಿಂತ ತುಂಬಾ ಪ್ರಬಲ, ಆದರೆ ಕೆಲವು fm ವರೆಗೆ ಮಾತ್ರ. ಸುಮಾರು 0.8 fm ಗಿಂತ ಹತ್ತಿರ ಬಲವಾದ ವಿಕರ್ಷಣೆ; ಸ್ವಲ್ಪ ದೂರ ಆಕರ್ಷಣೆ; 2–3 fm ಆಚೆ ಬಹುತೇಕ ಶೂನ್ಯ. n–n, n–p, p–p ಜೋಡಿಗಳಿಗೆ ಬಹುತೇಕ ಒಂದೇ. ವಕ್ರ ಸ್ಕೀಮ್ಯಾಟಿಕ್."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Separation r",
+      "kn": "ಅಂತರ r"
+     },
+     "min": 0.5,
+     "max": 5,
+     "step": 0.1,
+     "value": 1.5,
+     "unit": "fm"
+    }
+   ],
+   "choices": [
+    {
+     "name": "pr",
+     "label": {
+      "en": "Pair",
+      "kn": "ಜೋಡಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "n–n",
+        "kn": "n–n"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "n–p",
+        "kn": "n–p"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "p–p",
+        "kn": "p–p"
+       },
+       "value": 3
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "vars": [
+    {
+     "name": "Un",
+     "expr": "40*((1 - exp(-3*(r - 0.8)))^2 - 1)"
+    },
+    {
+     "name": "Fn",
+     "expr": "-240*(1 - exp(-3*(r - 0.8)))*exp(-3*(r - 0.8))"
+    },
+    {
+     "name": "Uc",
+     "expr": "if(pr == 3, 1.44/r, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     5.2
+    ],
+    "y": [
+     -48,
+     55
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 5.2,
+     "y2": 0,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "40*((1 - exp(-3*(x - 0.8)))^2 - 1)",
+     "from": 0.5,
+     "to": 5,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "visibleIf": "pr == 3",
+     "fn": "1.44/x",
+     "from": 0.5,
+     "to": 5,
+     "color": "red",
+     "width": 3,
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": 0.8,
+     "y1": -46,
+     "x2": 0.8,
+     "y2": 50,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 0.8,
+     "y": -44,
+     "text": {
+      "en": "0.8 fm"
+     },
+     "size": 20
+    },
+    {
+     "shape": "circle",
+     "x": "r",
+     "y": "Un",
+     "r": 0.06,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "2.6 - r/2",
+     "y": 42,
+     "r": 0.22,
+     "color": {
+      "by": "pr >= 2",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "circle",
+     "x": "2.6 + r/2",
+     "y": 42,
+     "r": 0.22,
+     "color": {
+      "by": "pr == 3",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "abs(Fn) > 0.5",
+     "x": "2.6 + r/2",
+     "y": 34,
+     "dx": "clamp(Fn/120, -1.2, 1.2)",
+     "dy": 0,
+     "color": "green"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "abs(Fn) > 0.5",
+     "x": "2.6 - r/2",
+     "y": 34,
+     "dx": "-clamp(Fn/120, -1.2, 1.2)",
+     "dy": 0,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 2.6,
+     "y": 52,
+     "text": {
+      "en": "Repulsive",
+      "kn": "ವಿಕರ್ಷಣ"
+     },
+     "size": 24,
+     "visibleIf": "Fn > 0.5",
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 2.6,
+     "y": 52,
+     "text": {
+      "en": "Attractive",
+      "kn": "ಆಕರ್ಷಣ"
+     },
+     "size": 24,
+     "visibleIf": "Fn < -0.5",
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 2.6,
+     "y": 52,
+     "text": {
+      "en": "Almost no force",
+      "kn": "ಬಹುತೇಕ ಬಲವಿಲ್ಲ"
+     },
+     "size": 24,
+     "visibleIf": "abs(Fn) <= 0.5"
+    },
+    {
+     "shape": "text",
+     "x": 5.1,
+     "y": -30,
+     "text": {
+      "en": "nuclear PE (blue), Coulomb PE (red dashed), MeV",
+      "kn": "ನ್ಯೂಕ್ಲಿಯರ್ (ನೀಲಿ), ಕೂಲಂಬ್ (ಕೆಂಪು), MeV"
+     },
+     "size": 20,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Nuclear potential energy",
+      "kn": "ನ್ಯೂಕ್ಲಿಯರ್ ಸ್ಥಿತಿ ಶಕ್ತಿ"
+     },
+     "expr": "Un",
+     "unit": "MeV",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Coulomb energy (p–p only)",
+      "kn": "ಕೂಲಂಬ್ ಶಕ್ತಿ (p–p ಮಾತ್ರ)"
+     },
+     "expr": "Uc",
+     "unit": "MeV",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Force (+ repels, − attracts)",
+      "kn": "ಬಲ (+ ವಿಕರ್ಷಣ, − ಆಕರ್ಷಣ)"
+     },
+     "expr": "Fn",
+     "unit": "MeV/fm",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Move from 4 fm inwards. Where does the force change from attractive to repulsive?",
+     "kn": "4 fm ನಿಂದ ಒಳಗೆ ಸರಿಯಿರಿ. ಬಲ ಎಲ್ಲಿ ಆಕರ್ಷಣೆಯಿಂದ ವಿಕರ್ಷಣೆಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "For a p–p pair at 1.5 fm, compare the Coulomb energy with the nuclear one.",
+     "kn": "1.5 fm ನಲ್ಲಿ p–p ಜೋಡಿಗೆ ಕೂಲಂಬ್ ಮತ್ತು ನ್ಯೂಕ್ಲಿಯರ್ ಶಕ್ತಿ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Why can't a nucleon feel nucleons on the far side of a large nucleus?",
+     "kn": "ದೊಡ್ಡ ನ್ಯೂಕ್ಲಿಯಸ್‌ನ ಆಚೆ ಬದಿಯ ನ್ಯೂಕ್ಲಿಯಾನ್‌ಗಳನ್ನು ಒಂದು ನ್ಯೂಕ್ಲಿಯಾನ್ ಏಕೆ ಅನುಭವಿಸದು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

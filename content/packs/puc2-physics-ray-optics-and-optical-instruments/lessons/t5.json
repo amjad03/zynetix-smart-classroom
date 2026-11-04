@@ -296,6 +296,287 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Deviation by a prism",
+    "kn": "ಪಟ್ಟಕದಿಂದ ವಿಚಲನೆ"
+   },
+   "narration": {
+    "en": "The ray bends at both faces; the total deviation is δ = i + e − A, where r1 + r2 = A. As i increases, δ first falls and then rises: at minimum deviation the ray passes symmetrically and n = sin((A + δm)/2) / sin(A/2). If i is too small, the ray is trapped by total internal reflection at the second face."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The ray bends at both faces; the total deviation is δ = i + e − A, where r1 + r2 = A. As i increases, δ first falls and then rises: at minimum deviation the ray passes symmetrically and n = sin((A + δm)/2) / sin(A/2). If i is too small, the ray is trapped by total internal reflection at the second face.",
+    "kn": "ಕಿರಣ ಎರಡೂ ಮುಖಗಳಲ್ಲಿ ಬಾಗುತ್ತದೆ; ಒಟ್ಟು ವಿಚಲನೆ δ = i + e − A, r1 + r2 = A. i ಹೆಚ್ಚಿದಂತೆ δ ಮೊದಲು ಇಳಿದು ನಂತರ ಏರುತ್ತದೆ: ಕನಿಷ್ಠ ವಿಚಲನೆಯಲ್ಲಿ ಕಿರಣ ಸಮಮಿತಿಯಾಗಿ ಹಾದುಹೋಗುತ್ತದೆ, n = sin((A + δm)/2) / sin(A/2). i ತುಂಬಾ ಕಡಿಮೆಯಾದರೆ ಎರಡನೇ ಮುಖದಲ್ಲಿ ಪೂರ್ಣ ಆಂತರಿಕ ಪ್ರತಿಫಲನ."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Prism angle A",
+      "kn": "ಪಟ್ಟಕ ಕೋನ A"
+     },
+     "min": 30,
+     "max": 70,
+     "step": 1,
+     "value": 60,
+     "unit": "°"
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "Refractive index n",
+      "kn": "ವಕ್ರೀಭವನ ಸೂಚ್ಯಂಕ n"
+     },
+     "min": 1.3,
+     "max": 1.8,
+     "step": 0.01,
+     "value": 1.5
+    },
+    {
+     "name": "i",
+     "label": {
+      "en": "Angle of incidence i",
+      "kn": "ಆಪತನ ಕೋನ i"
+     },
+     "min": 20,
+     "max": 80,
+     "step": 1,
+     "value": 40,
+     "unit": "°"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ext",
+     "label": {
+      "en": "Show undeviated path",
+      "kn": "ವಿಚಲನೆಯಿಲ್ಲದ ಪಥ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "ha",
+     "expr": "rad(A)/2"
+    },
+    {
+     "name": "p1x",
+     "expr": "-5*tan(ha)"
+    },
+    {
+     "name": "r1",
+     "expr": "asin(sin(rad(i))/n)"
+    },
+    {
+     "name": "r2",
+     "expr": "rad(A) - r1"
+    },
+    {
+     "name": "out",
+     "expr": "n*sin(r2) < 1"
+    },
+    {
+     "name": "em",
+     "expr": "if(out, asin(n*sin(r2)), 0)"
+    },
+    {
+     "name": "sl",
+     "expr": "10*sin(ha)/cos(r2)"
+    },
+    {
+     "name": "p2x",
+     "expr": "p1x + sl*cos(r1 - ha)"
+    },
+    {
+     "name": "p2y",
+     "expr": "5 + sl*sin(r1 - ha)"
+    },
+    {
+     "name": "dl",
+     "expr": "i + deg(em) - A"
+    },
+    {
+     "name": "dm",
+     "expr": "2*deg(asin(min(n*sin(ha), 1))) - A"
+    }
+   ],
+   "view": {
+    "x": [
+     -16,
+     16
+    ],
+    "y": [
+     -4,
+     13
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       0,
+       10
+      ],
+      [
+       "-10*tan(ha)",
+       0
+      ],
+      [
+       "10*tan(ha)",
+       0
+      ]
+     ],
+     "color": "blue",
+     "opacity": 0.3
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       0,
+       10
+      ],
+      [
+       "-10*tan(ha)",
+       0
+      ],
+      [
+       "10*tan(ha)",
+       0
+      ]
+     ],
+     "fill": false,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "p1x - 12*cos(rad(i) - ha)",
+     "y1": "5 - 12*sin(rad(i) - ha)",
+     "x2": "p1x",
+     "y2": 5,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "out",
+     "x1": "p1x",
+     "y1": 5,
+     "x2": "p2x",
+     "y2": "p2y",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "!out",
+     "x1": "p1x",
+     "y1": 5,
+     "x2": "p1x + 5*cos(r1 - ha)",
+     "y2": "5 + 5*sin(r1 - ha)",
+     "color": "yellow",
+     "width": 4,
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "visibleIf": "out",
+     "x1": "p2x",
+     "y1": "p2y",
+     "x2": "p2x + 12*cos(ha - em)",
+     "y2": "p2y + 12*sin(ha - em)",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "out && ext",
+     "x1": "p1x",
+     "y1": 5,
+     "x2": "p1x + 20*cos(rad(i) - ha)",
+     "y2": "5 + 20*sin(rad(i) - ha)",
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 12,
+     "text": {
+      "en": "No emergent ray: total internal reflection at the second face",
+      "kn": "ಹೊರಬರುವ ಕಿರಣ ಇಲ್ಲ: ಎರಡನೇ ಮುಖದಲ್ಲಿ ಪೂರ್ಣ ಆಂತರಿಕ ಪ್ರತಿಫಲನ"
+     },
+     "size": 22,
+     "visibleIf": "!out",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": -1.5,
+     "text": {
+      "en": "δ = {dl:1}°   δm = {dm:1}°"
+     },
+     "size": 26,
+     "visibleIf": "out",
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Deviation δ",
+      "kn": "ವಿಚಲನೆ δ"
+     },
+     "expr": "if(out, dl, 0)",
+     "unit": "°",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Minimum deviation δm",
+      "kn": "ಕನಿಷ್ಠ ವಿಚಲನೆ δm"
+     },
+     "expr": "dm",
+     "unit": "°",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Angle of emergence e",
+      "kn": "ನಿರ್ಗಮನ ಕೋನ e"
+     },
+     "expr": "if(out, deg(em), 0)",
+     "unit": "°",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Change i slowly and find the smallest δ. Is the ray inside parallel to the base then?",
+     "kn": "i ನಿಧಾನವಾಗಿ ಬದಲಿಸಿ ಕನಿಷ್ಠ δ ಹುಡುಕಿ. ಆಗ ಒಳಗಿನ ಕಿರಣ ಪಾದಕ್ಕೆ ಸಮಾಂತರವೇ?"
+    },
+    {
+     "en": "Raise n. Does the prism deviate more or less?",
+     "kn": "n ಹೆಚ್ಚಿಸಿ. ಪಟ್ಟಕ ಹೆಚ್ಚು ವಿಚಲಿಸುತ್ತದೆಯೇ ಕಡಿಮೆಯೇ?"
+    },
+    {
+     "en": "Make i small. Why does no ray come out?",
+     "kn": "i ಕಡಿಮೆ ಮಾಡಿ. ಕಿರಣ ಏಕೆ ಹೊರಬರುವುದಿಲ್ಲ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

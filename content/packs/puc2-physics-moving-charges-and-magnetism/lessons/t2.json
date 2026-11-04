@@ -484,6 +484,254 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A charge circling in a magnetic field",
+    "kn": "ಕಾಂತ ಕ್ಷೇತ್ರದಲ್ಲಿ ಸುತ್ತುವ ಆವೇಶ"
+   },
+   "narration": {
+    "en": "The magnetic force qvB is always at right angles to the velocity, so it does no work: the speed stays the same and the path is a circle of radius r = mv/(qB). The period T = 2πm/(qB) does not depend on the speed, the idea behind the cyclotron. B points into the screen."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The magnetic force qvB is always at right angles to the velocity, so it does no work: the speed stays the same and the path is a circle of radius r = mv/(qB). The period T = 2πm/(qB) does not depend on the speed, the idea behind the cyclotron. B points into the screen.",
+    "kn": "ಕಾಂತ ಬಲ qvB ಯಾವಾಗಲೂ ವೇಗಕ್ಕೆ ಲಂಬ, ಆದ್ದರಿಂದ ಕೆಲಸ ಮಾಡದು: ವೇಗ ಒಂದೇ, ಪಥ r = mv/(qB) ತ್ರಿಜ್ಯದ ವೃತ್ತ. ಆವರ್ತ T = 2πm/(qB) ವೇಗವನ್ನು ಅವಲಂಬಿಸದು, ಇದೇ ಸೈಕ್ಲೋಟ್ರಾನ್ ತತ್ತ್ವ. B ಪರದೆಯ ಒಳಕ್ಕೆ."
+   },
+   "sliders": [
+    {
+     "name": "v",
+     "label": {
+      "en": "Speed",
+      "kn": "ವೇಗ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 5,
+     "unit": "×10⁵ m/s"
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "Field B",
+      "kn": "ಕ್ಷೇತ್ರ B"
+     },
+     "min": 0.1,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.5,
+     "unit": "T"
+    }
+   ],
+   "choices": [
+    {
+     "name": "pt",
+     "label": {
+      "en": "Particle",
+      "kn": "ಕಣ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Proton",
+        "kn": "ಪ್ರೋಟಾನ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Deuteron",
+        "kn": "ಡ್ಯೂಟರಾನ್"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Alpha particle",
+        "kn": "ಆಲ್ಫಾ ಕಣ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 3,
+    "loop": true,
+    "speeds": [
+     0.05,
+     0.1,
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.1,
+    "autoplay": true,
+    "unit": "µs"
+   },
+   "vars": [
+    {
+     "name": "mq",
+     "expr": "if(pt == 1, 1.6726e-27/1.602e-19, if(pt == 2, 3.3436e-27/1.602e-19, 6.6447e-27/3.204e-19))"
+    },
+    {
+     "name": "rc",
+     "expr": "mq*v*1e5/B*100"
+    },
+    {
+     "name": "Tp",
+     "expr": "2*pi*mq/B*1e6"
+    },
+    {
+     "name": "wt",
+     "expr": "2*pi*t/Tp"
+    },
+    {
+     "name": "px",
+     "expr": "rc*sin(wt)"
+    },
+    {
+     "name": "py",
+     "expr": "rc*(1 - cos(wt))"
+    },
+    {
+     "name": "KE",
+     "expr": "0.5*if(pt == 1, 1.6726e-27, if(pt == 2, 3.3436e-27, 6.6447e-27))*(v*1e5)^2/1.602e-19/1000"
+    }
+   ],
+   "view": {
+    "x": [
+     -24,
+     24
+    ],
+    "y": [
+     -2,
+     44
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 35,
+     "x": "-21 + mod(i, 7)*7",
+     "y": "1 + floor(i/7)*9.5",
+     "r": 0.25,
+     "color": "white",
+     "opacity": 0.25
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": "rc",
+     "r": "rc",
+     "fill": false,
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "trail",
+     "x": "px",
+     "y": "py",
+     "length": 600,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 0.6,
+     "color": "red"
+    },
+    {
+     "shape": "arrow",
+     "x": "px",
+     "y": "py",
+     "dx": "3*cos(wt)",
+     "dy": "3*sin(wt)",
+     "color": "green",
+     "label": "v"
+    },
+    {
+     "shape": "arrow",
+     "x": "px",
+     "y": "py",
+     "dx": "-3*sin(wt)",
+     "dy": "3*cos(wt)",
+     "color": "orange",
+     "label": "F"
+    },
+    {
+     "shape": "text",
+     "x": -23,
+     "y": 42.5,
+     "text": {
+      "en": "r = {rc:2} cm"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Radius",
+      "kn": "ತ್ರಿಜ್ಯ"
+     },
+     "expr": "rc",
+     "unit": "cm",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Period",
+      "kn": "ಆವರ್ತ"
+     },
+     "expr": "Tp",
+     "unit": "µs",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Frequency",
+      "kn": "ಆವೃತ್ತಿ"
+     },
+     "expr": "1/Tp",
+     "unit": "MHz",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Kinetic energy",
+      "kn": "ಚಲನ ಶಕ್ತಿ"
+     },
+     "expr": "KE",
+     "unit": "keV",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double the speed. What happens to the radius and to the period?",
+     "kn": "ವೇಗ ದ್ವಿಗುಣ ಮಾಡಿ. ತ್ರಿಜ್ಯ ಮತ್ತು ಆವರ್ತ ಏನಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Compare a proton and a deuteron at the same speed. Which circle is bigger?",
+     "kn": "ಒಂದೇ ವೇಗದಲ್ಲಿ ಪ್ರೋಟಾನ್ ಮತ್ತು ಡ್ಯೂಟರಾನ್ ಹೋಲಿಸಿ. ಯಾವ ವೃತ್ತ ದೊಡ್ಡದು?"
+    },
+    {
+     "en": "Why does the kinetic energy never change while it circles?",
+     "kn": "ಸುತ್ತುವಾಗ ಚಲನ ಶಕ್ತಿ ಏಕೆ ಬದಲಾಗದು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

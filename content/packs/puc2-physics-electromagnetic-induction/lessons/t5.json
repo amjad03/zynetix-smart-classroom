@@ -306,6 +306,316 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Inside an AC generator",
+    "kn": "AC ಜನಕದ ಒಳಗೆ"
+   },
+   "narration": {
+    "en": "A coil of N turns and area A spins at angular speed ω in a field B. The flux NBA cos ωt keeps changing, so the emf is ε = NBAω sin ωt. The emf is largest when the coil's plane is along the field (flux zero but changing fastest). Shown slowed down: real mains is 50 Hz."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A coil of N turns and area A spins at angular speed ω in a field B. The flux NBA cos ωt keeps changing, so the emf is ε = NBAω sin ωt. The emf is largest when the coil's plane is along the field (flux zero but changing fastest). Shown slowed down: real mains is 50 Hz.",
+    "kn": "N ಸುತ್ತು, A ವಿಸ್ತೀರ್ಣದ ಸುರುಳಿ B ಕ್ಷೇತ್ರದಲ್ಲಿ ω ಕೋನೀಯ ವೇಗದಲ್ಲಿ ತಿರುಗುತ್ತದೆ. ಅಭಿವಾಹ NBA cos ωt ಬದಲಾಗುತ್ತಿರುವುದರಿಂದ emf ε = NBAω sin ωt. ಸುರುಳಿಯ ಸಮತಲ ಕ್ಷೇತ್ರದ ಉದ್ದಕ್ಕೆ ಇದ್ದಾಗ emf ಗರಿಷ್ಠ (ಅಭಿವಾಹ ಶೂನ್ಯ, ಆದರೆ ಅತಿ ವೇಗವಾಗಿ ಬದಲಾಗುತ್ತಿದೆ). ನಿಧಾನಿಸಿ ತೋರಿಸಲಾಗಿದೆ."
+   },
+   "sliders": [
+    {
+     "name": "N",
+     "label": {
+      "en": "Turns N",
+      "kn": "ಸುತ್ತುಗಳು N"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 10,
+     "value": 100
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "Field B",
+      "kn": "ಕ್ಷೇತ್ರ B"
+     },
+     "min": 0.1,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.5,
+     "unit": "T"
+    },
+    {
+     "name": "A",
+     "label": {
+      "en": "Coil area",
+      "kn": "ಸುರುಳಿ ವಿಸ್ತೀರ್ಣ"
+     },
+     "min": 20,
+     "max": 400,
+     "step": 20,
+     "value": 100,
+     "unit": "cm²"
+    },
+    {
+     "name": "f",
+     "label": {
+      "en": "Rotation rate",
+      "kn": "ತಿರುಗುವಿಕೆ ದರ"
+     },
+     "min": 0.25,
+     "max": 2,
+     "step": 0.25,
+     "value": 1,
+     "unit": "rev/s"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "nrm",
+     "label": {
+      "en": "Show the coil's normal",
+      "kn": "ಸುರುಳಿಯ ಲಂಬ ತೋರಿಸು"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "speeds": [
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.5,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "th",
+     "expr": "2*pi*f*t"
+    },
+    {
+     "name": "e0",
+     "expr": "N*B*A*1e-4*2*pi*f"
+    },
+    {
+     "name": "emf",
+     "expr": "e0*sin(th)"
+    },
+    {
+     "name": "Phi",
+     "expr": "N*B*A*1e-4*cos(th)"
+    }
+   ],
+   "view": {
+    "x": [
+     -9,
+     33
+    ],
+    "y": [
+     -9,
+     9
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -8.5,
+     "y": -5,
+     "w": 2.5,
+     "h": 10,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": -7.25,
+     "y": 0,
+     "text": {
+      "en": "N"
+     },
+     "size": 30
+    },
+    {
+     "shape": "rect",
+     "x": 6,
+     "y": -5,
+     "w": 2.5,
+     "h": 10,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 7.25,
+     "y": 0,
+     "text": {
+      "en": "S"
+     },
+     "size": 30
+    },
+    {
+     "shape": "arrow",
+     "x": -5.5,
+     "y": -3.5,
+     "dx": 11,
+     "dy": 0,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "arrow",
+     "x": -5.5,
+     "y": 3.5,
+     "dx": 11,
+     "dy": 0,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "line",
+     "x1": "-4*sin(th)",
+     "y1": "4*cos(th)",
+     "x2": "4*sin(th)",
+     "y2": "-4*cos(th)",
+     "color": "orange",
+     "width": 8
+    },
+    {
+     "shape": "circle",
+     "x": "-4*sin(th)",
+     "y": "4*cos(th)",
+     "r": 0.5,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "4*sin(th)",
+     "y": "-4*cos(th)",
+     "r": 0.5,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "nrm",
+     "x": 0,
+     "y": 0,
+     "dx": "3*cos(th)",
+     "dy": "3*sin(th)",
+     "color": "green",
+     "label": "normal"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -8,
+     "text": {
+      "en": "coil seen end-on",
+      "kn": "ಸುರುಳಿಯ ಅಂಚಿನ ನೋಟ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 0,
+     "x2": 32,
+     "y2": 0,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": -8,
+     "x2": 11,
+     "y2": 8,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 11.3,
+     "y": 8.4,
+     "text": {
+      "en": "ε"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 32,
+     "y": -0.7,
+     "text": {
+      "en": "t"
+     },
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "trail",
+     "x": "11 + mod(t, 4)*5",
+     "y": "clamp(emf*7/6.4, -7.5, 7.5)",
+     "length": 800,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "11 + mod(t, 4)*5",
+     "y": "clamp(emf*7/6.4, -7.5, 7.5)",
+     "r": 0.35,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Emf now",
+      "kn": "ಈಗಿನ emf"
+     },
+     "expr": "emf",
+     "unit": "V",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Peak emf NBAω",
+      "kn": "ಗರಿಷ್ಠ emf NBAω"
+     },
+     "expr": "e0",
+     "unit": "V",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Flux linkage",
+      "kn": "ಅಭಿವಾಹ ಸಂಬಂಧ"
+     },
+     "expr": "Phi",
+     "unit": "Wb",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Pause when the emf is at its peak. Where is the coil pointing?",
+     "kn": "emf ಗರಿಷ್ಠವಾದಾಗ ನಿಲ್ಲಿಸಿ. ಸುರುಳಿ ಎಲ್ಲಿ ಮುಖ ಮಾಡಿದೆ?"
+    },
+    {
+     "en": "Double the rotation rate. What happens to the peak emf and to the period?",
+     "kn": "ತಿರುಗುವಿಕೆ ದ್ವಿಗುಣಗೊಳಿಸಿ. ಗರಿಷ್ಠ emf ಮತ್ತು ಆವರ್ತ ಏನಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Find two different settings that give the same peak emf.",
+     "kn": "ಒಂದೇ ಗರಿಷ್ಠ emf ಕೊಡುವ ಎರಡು ಹೊಂದಿಕೆ ಹುಡುಕಿ."
+    }
+   ]
+  },
+  {
    "id": "3d-ac_generator",
    "type": "3d_model",
    "modelId": "ac_generator",

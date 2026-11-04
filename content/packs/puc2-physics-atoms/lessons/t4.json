@@ -369,6 +369,388 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Hydrogen's spectral series",
+    "kn": "ಹೈಡ್ರೋಜನ್‌ನ ರೋಹಿತ ಶ್ರೇಣಿಗಳು"
+   },
+   "narration": {
+    "en": "An electron falling from level ni to level nf gives out one photon with 1/λ = R(1/nf² − 1/ni²), R = 1.097 × 10⁷ m⁻¹. Jumps down to n = 1 make the Lyman series (UV), to n = 2 the Balmer series (visible), to n = 3 the Paschen series (IR). Press Emit to send the photon."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "An electron falling from level ni to level nf gives out one photon with 1/λ = R(1/nf² − 1/ni²), R = 1.097 × 10⁷ m⁻¹. Jumps down to n = 1 make the Lyman series (UV), to n = 2 the Balmer series (visible), to n = 3 the Paschen series (IR). Press Emit to send the photon.",
+    "kn": "ni ಮಟ್ಟದಿಂದ nf ಗೆ ಬೀಳುವ ಎಲೆಕ್ಟ್ರಾನ್ ಒಂದು ಫೋಟಾನ್ ನೀಡುತ್ತದೆ: 1/λ = R(1/nf² − 1/ni²). n = 1 ಗೆ: ಲೈಮನ್ (UV), n = 2 ಗೆ: ಬಾಮರ್ (ಗೋಚರ), n = 3 ಗೆ: ಪಾಶನ್ (IR). ಫೋಟಾನ್ ಕಳುಹಿಸಲು ಹೊರಸೂಸು ಒತ್ತಿ."
+   },
+   "sliders": [
+    {
+     "name": "ni",
+     "label": {
+      "en": "Upper level ni",
+      "kn": "ಮೇಲಿನ ಮಟ್ಟ ni"
+     },
+     "min": 2,
+     "max": 7,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "choices": [
+    {
+     "name": "nf",
+     "label": {
+      "en": "Lower level (series)",
+      "kn": "ಕೆಳಗಿನ ಮಟ್ಟ (ಶ್ರೇಣಿ)"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "n = 1 Lyman",
+        "kn": "n = 1 ಲೈಮನ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "n = 2 Balmer",
+        "kn": "n = 2 ಬಾಮರ್"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "n = 3 Paschen",
+        "kn": "n = 3 ಪಾಶನ್"
+       },
+       "value": 3
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Emit",
+      "kn": "ಹೊರಸೂಸು"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 4,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "nu",
+     "expr": "max(ni, nf + 1)"
+    },
+    {
+     "name": "lam",
+     "expr": "1e9/(1.097e7*(1/nf^2 - 1/nu^2))"
+    },
+    {
+     "name": "Eu",
+     "expr": "-13.6/nu^2"
+    },
+    {
+     "name": "El",
+     "expr": "-13.6/nf^2"
+    },
+    {
+     "name": "xs",
+     "expr": "2 + 3*(nf - 1)"
+    },
+    {
+     "name": "xp",
+     "expr": "xs + 2 + 5*t"
+    },
+    {
+     "name": "ym",
+     "expr": "(Eu + El)/2"
+    },
+    {
+     "name": "wv",
+     "expr": "0.25 + lam/900"
+    },
+    {
+     "name": "inv",
+     "expr": "lam >= 400 && lam <= 700"
+    }
+   ],
+   "view": {
+    "x": [
+     -3,
+     30
+    ],
+    "y": [
+     -14.5,
+     2.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -13.6,
+     "x2": 11,
+     "y2": -13.6,
+     "color": "white",
+     "opacity": 0.6,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -3.4,
+     "x2": 11,
+     "y2": -3.4,
+     "color": "white",
+     "opacity": 0.6,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -1.511111111111111,
+     "x2": 11,
+     "y2": -1.511111111111111,
+     "color": "white",
+     "opacity": 0.6,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -0.85,
+     "x2": 11,
+     "y2": -0.85,
+     "color": "white",
+     "opacity": 0.6,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -0.544,
+     "x2": 11,
+     "y2": -0.544,
+     "color": "white",
+     "opacity": 0.6,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -0.37777777777777777,
+     "x2": 11,
+     "y2": -0.37777777777777777,
+     "color": "white",
+     "opacity": 0.6,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -0.27755102040816326,
+     "x2": 11,
+     "y2": -0.27755102040816326,
+     "color": "white",
+     "opacity": 0.6,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": -0.3,
+     "y": -13.6,
+     "text": {
+      "en": "n = 1"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": -0.3,
+     "y": -3.4,
+     "text": {
+      "en": "n = 2"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": -0.3,
+     "y": -1.511111111111111,
+     "text": {
+      "en": "n = 3"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": -0.3,
+     "y": -0.85,
+     "text": {
+      "en": "n = 4"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 11,
+     "y2": 0,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": -0.3,
+     "y": 0.3,
+     "text": {
+      "en": "n = ∞"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "arrow",
+     "x": "xs",
+     "y": "Eu",
+     "dx": 0,
+     "dy": "El - Eu",
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "wave",
+     "visibleIf": "inv",
+     "fn": "ym + 0.45*sin(2*pi*(x - xp)/wv)*exp(-((x - xp)/1.4)^2)",
+     "from": "xp - 3",
+     "to": "xp + 3",
+     "color": {
+      "by": "clamp((lam - 400)/300, 0, 1)",
+      "scale": [
+       "blue",
+       "blue",
+       "green",
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "width": 3
+    },
+    {
+     "shape": "wave",
+     "visibleIf": "!inv",
+     "fn": "ym + 0.45*sin(2*pi*(x - xp)/wv)*exp(-((x - xp)/1.4)^2)",
+     "from": "xp - 3",
+     "to": "xp + 3",
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "label",
+     "x": 13,
+     "y": -15,
+     "text": {
+      "en": "Lyman series: ultraviolet",
+      "kn": "ಲೈಮನ್ ಶ್ರೇಣಿ: ನೇರಳಾತೀತ"
+     },
+     "size": 22,
+     "visibleIf": "nf == 1",
+     "align": "left"
+    },
+    {
+     "shape": "label",
+     "x": 13,
+     "y": -15,
+     "text": {
+      "en": "Balmer series: visible",
+      "kn": "ಬಾಮರ್ ಶ್ರೇಣಿ: ಗೋಚರ"
+     },
+     "size": 22,
+     "visibleIf": "nf == 2",
+     "align": "left"
+    },
+    {
+     "shape": "label",
+     "x": 13,
+     "y": -15,
+     "text": {
+      "en": "Paschen series: infrared",
+      "kn": "ಪಾಶನ್ ಶ್ರೇಣಿ: ಅವಗೆಂಪು"
+     },
+     "size": 22,
+     "visibleIf": "nf == 3",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 1.2,
+     "text": {
+      "en": "{nu} → {nf}:  λ = {lam:1} nm"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Wavelength",
+      "kn": "ತರಂಗಾಂತರ"
+     },
+     "expr": "lam",
+     "unit": "nm",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Photon energy",
+      "kn": "ಫೋಟಾನ್ ಶಕ್ತಿ"
+     },
+     "expr": "1240/lam",
+     "unit": "eV",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the four visible Balmer lines. Which jump gives the red line?",
+     "kn": "ನಾಲ್ಕು ಗೋಚರ ಬಾಮರ್ ಗೆರೆಗಳನ್ನು ಹುಡುಕಿ. ಕೆಂಪು ಗೆರೆ ಯಾವ ಜಿಗಿತದಿಂದ?"
+    },
+    {
+     "en": "Within one series, raise ni. Do the lines get closer together?",
+     "kn": "ಒಂದೇ ಶ್ರೇಣಿಯಲ್ಲಿ ni ಹೆಚ್ಚಿಸಿ. ಗೆರೆಗಳು ಹತ್ತಿರವಾಗುತ್ತವೆಯೇ?"
+    },
+    {
+     "en": "Which single jump gives the most energetic photon shown here?",
+     "kn": "ಇಲ್ಲಿ ಅತಿ ಹೆಚ್ಚು ಶಕ್ತಿಯ ಫೋಟಾನ್ ಯಾವ ಜಿಗಿತದಿಂದ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

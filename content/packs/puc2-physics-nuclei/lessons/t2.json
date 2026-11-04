@@ -203,6 +203,217 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "How big is a nucleus?",
+    "kn": "ನ್ಯೂಕ್ಲಿಯಸ್ ಎಷ್ಟು ದೊಡ್ಡದು?"
+   },
+   "narration": {
+    "en": "Scattering experiments show R = R0 A^(1/3) with R0 ≈ 1.2 fm. So the volume grows in step with A: every nucleus has about the same density, about 2.3 × 10¹⁷ kg/m³, whatever its size. The circle is drawn to scale in femtometres."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Scattering experiments show R = R0 A^(1/3) with R0 ≈ 1.2 fm. So the volume grows in step with A: every nucleus has about the same density, about 2.3 × 10¹⁷ kg/m³, whatever its size. The circle is drawn to scale in femtometres.",
+    "kn": "ಚದುರುವಿಕೆ ಪ್ರಯೋಗಗಳು R = R0 A^(1/3), R0 ≈ 1.2 fm ತೋರಿಸುತ್ತವೆ. ಆದ್ದರಿಂದ ಗಾತ್ರ A ಗೆ ಅನುಗುಣವಾಗಿ ಹೆಚ್ಚುತ್ತದೆ: ಎಲ್ಲ ನ್ಯೂಕ್ಲಿಯಸ್‌ಗಳ ಸಾಂದ್ರತೆ ಸುಮಾರು 2.3 × 10¹⁷ kg/m³. ವೃತ್ತ fm ಮಾಪನದಲ್ಲಿದೆ."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Mass number A",
+      "kn": "ದ್ರವ್ಯರಾಶಿ ಸಂಖ್ಯೆ A"
+     },
+     "min": 4,
+     "max": 240,
+     "step": 4,
+     "value": 64
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cmp",
+     "label": {
+      "en": "Compare He-4 and U-238",
+      "kn": "He-4, U-238 ಹೋಲಿಕೆ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "Rn",
+     "expr": "1.2*A^(1/3)"
+    },
+    {
+     "name": "rho",
+     "expr": "A*1.6605e-27/(4/3*pi*(Rn*1e-15)^3)/1e17"
+    }
+   ],
+   "view": {
+    "x": [
+     -10,
+     30
+    ],
+    "y": [
+     -10,
+     10
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "visibleIf": "cmp",
+     "x": 0,
+     "y": 0,
+     "r": 1.9048812623618392,
+     "fill": false,
+     "color": "white",
+     "width": 2,
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "cmp",
+     "x": 0,
+     "y": 0,
+     "r": 7.436585321689351,
+     "fill": false,
+     "color": "white",
+     "width": 2,
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": "Rn",
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -9,
+     "text": {
+      "en": "radius {Rn:2} fm",
+      "kn": "ತ್ರಿಜ್ಯ {Rn:2} fm"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 9,
+     "text": {
+      "en": "dashed: He-4 and U-238",
+      "kn": "ಚುಕ್ಕೆ: He-4 ಮತ್ತು U-238"
+     },
+     "size": 20,
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": -8,
+     "x2": 29,
+     "y2": -8,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": -8,
+     "x2": 11,
+     "y2": 8,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 29,
+     "y": -8.8,
+     "text": {
+      "en": "A"
+     },
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 11.3,
+     "y": 8.4,
+     "text": {
+      "en": "R (fm)"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "path",
+     "fn": "-8 + 2*1.2*((x - 11)/18*240)^(1/3)",
+     "from": 11,
+     "to": 29,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "11 + 18*A/240",
+     "y": "-8 + 2*Rn",
+     "r": 0.4,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Radius",
+      "kn": "ತ್ರಿಜ್ಯ"
+     },
+     "expr": "Rn",
+     "unit": "fm",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Volume",
+      "kn": "ಗಾತ್ರ"
+     },
+     "expr": "4/3*pi*Rn^3",
+     "unit": "fm³",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Density",
+      "kn": "ಸಾಂದ್ರತೆ"
+     },
+     "expr": "rho",
+     "unit": "×10¹⁷ kg/m³",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Go from A = 27 to A = 216 (eight times). How many times bigger is the radius?",
+     "kn": "A = 27 ರಿಂದ A = 216 (ಎಂಟು ಪಟ್ಟು). ತ್ರಿಜ್ಯ ಎಷ್ಟು ಪಟ್ಟು?"
+    },
+    {
+     "en": "Does the density readout change with A?",
+     "kn": "ಸಾಂದ್ರತೆ ಓದು A ಯೊಂದಿಗೆ ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "A teaspoon (5 cm³) of nuclear matter: roughly how heavy?",
+     "kn": "ಒಂದು ಚಮಚ (5 cm³) ನ್ಯೂಕ್ಲಿಯರ್ ದ್ರವ್ಯ ಎಷ್ಟು ಭಾರ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

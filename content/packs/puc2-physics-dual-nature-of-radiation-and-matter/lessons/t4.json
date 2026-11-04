@@ -232,6 +232,235 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A beam is a stream of photons",
+    "kn": "ಕಿರಣಪುಂಜ ಫೋಟಾನ್‌ಗಳ ಪ್ರವಾಹ"
+   },
+   "narration": {
+    "en": "Light of wavelength λ comes in packets of energy E = hc/λ and momentum p = h/λ. A brighter beam of the same colour has more photons each second, not bigger ones. Switch to the wave picture: the same beam also behaves as a wave."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Light of wavelength λ comes in packets of energy E = hc/λ and momentum p = h/λ. A brighter beam of the same colour has more photons each second, not bigger ones. Switch to the wave picture: the same beam also behaves as a wave.",
+    "kn": "λ ತರಂಗಾಂತರದ ಬೆಳಕು E = hc/λ ಶಕ್ತಿ ಮತ್ತು p = h/λ ಸಂವೇಗದ ಪೊಟ್ಟಣಗಳಲ್ಲಿ ಬರುತ್ತದೆ. ಅದೇ ಬಣ್ಣದ ಹೆಚ್ಚು ಪ್ರಕಾಶಮಾನ ಕಿರಣದಲ್ಲಿ ಸೆಕೆಂಡಿಗೆ ಹೆಚ್ಚು ಫೋಟಾನ್‌ಗಳು, ದೊಡ್ಡವಲ್ಲ. ತರಂಗ ಚಿತ್ರಕ್ಕೆ ಬದಲಿಸಿ: ಅದೇ ಕಿರಣ ತರಂಗದಂತೆಯೂ ವರ್ತಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "lam",
+     "label": {
+      "en": "Wavelength",
+      "kn": "ತರಂಗಾಂತರ"
+     },
+     "min": 200,
+     "max": 1000,
+     "step": 20,
+     "value": 500,
+     "unit": "nm"
+    },
+    {
+     "name": "Pw",
+     "label": {
+      "en": "Beam power",
+      "kn": "ಕಿರಣದ ಸಾಮರ್ಥ್ಯ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 2,
+     "unit": "mW"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "wav",
+     "label": {
+      "en": "Wave picture",
+      "kn": "ತರಂಗ ಚಿತ್ರ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "Eph",
+     "expr": "1240/lam"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     24
+    ],
+    "y": [
+     0,
+     10
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 1.5,
+     "y": 5,
+     "r": 1.2,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 3,
+     "text": {
+      "en": "source",
+      "kn": "ಆಕರ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 21.5,
+     "y": 2.5,
+     "w": 1.2,
+     "h": 5,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 22.1,
+     "y": 1.8,
+     "text": {
+      "en": "detector",
+      "kn": "ಗ್ರಾಹಕ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "visibleIf": "!wav && i < 4*Pw",
+     "x": "3 + mod(18*rand(i) + 6*t, 18.4)",
+     "y": "3.2 + 3.6*rand(i + 100)",
+     "r": 0.2,
+     "color": {
+      "by": "clamp((lam - 400)/300, 0, 1)",
+      "scale": [
+       "blue",
+       "blue",
+       "green",
+       "yellow",
+       "orange",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "wave",
+     "visibleIf": "wav",
+     "fn": "5 + (0.6 + 0.12*Pw)*sin(2*pi*(x - 6*t)/(lam/250))",
+     "from": 3,
+     "to": 21.4,
+     "color": {
+      "by": "clamp((lam - 400)/300, 0, 1)",
+      "scale": [
+       "blue",
+       "blue",
+       "green",
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "width": 3
+    },
+    {
+     "shape": "label",
+     "x": 12,
+     "y": 9.2,
+     "text": {
+      "en": "ultraviolet (invisible)",
+      "kn": "ನೇರಳಾತೀತ (ಅಗೋಚರ)"
+     },
+     "size": 22,
+     "visibleIf": "lam < 400",
+     "color": "blue"
+    },
+    {
+     "shape": "label",
+     "x": 12,
+     "y": 9.2,
+     "text": {
+      "en": "infrared (invisible)",
+      "kn": "ಅವಗೆಂಪು (ಅಗೋಚರ)"
+     },
+     "size": 22,
+     "visibleIf": "lam > 700",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 0.6,
+     "text": {
+      "en": "E = {Eph:2} eV per photon",
+      "kn": "ಪ್ರತಿ ಫೋಟಾನ್ E = {Eph:2} eV"
+     },
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Photon energy",
+      "kn": "ಫೋಟಾನ್ ಶಕ್ತಿ"
+     },
+     "expr": "Eph",
+     "unit": "eV",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Photon momentum",
+      "kn": "ಫೋಟಾನ್ ಸಂವೇಗ"
+     },
+     "expr": "6.626e-34/(lam*1e-9)*1e27",
+     "unit": "×10⁻²⁷ kg m/s",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Photons per second",
+      "kn": "ಸೆಕೆಂಡಿಗೆ ಫೋಟಾನ್‌ಗಳು"
+     },
+     "expr": "Pw*1e-3/(Eph*1.602e-19)/1e15",
+     "unit": "×10¹⁵",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double the power. What happens to the photon energy and to the number per second?",
+     "kn": "ಸಾಮರ್ಥ್ಯ ದ್ವಿಗುಣಗೊಳಿಸಿ. ಫೋಟಾನ್ ಶಕ್ತಿ ಮತ್ತು ಸೆಕೆಂಡಿಗೆ ಸಂಖ್ಯೆ ಏನಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Compare a red (700 nm) and a violet (400 nm) photon. Which carries more energy?",
+     "kn": "ಕೆಂಪು (700 nm) ಮತ್ತು ನೇರಳೆ (400 nm) ಫೋಟಾನ್ ಹೋಲಿಸಿ. ಯಾವುದು ಹೆಚ್ಚು ಶಕ್ತಿ?"
+    },
+    {
+     "en": "Why can a dim ultraviolet lamp knock out electrons when a bright red lamp cannot?",
+     "kn": "ಮಂದ ನೇರಳಾತೀತ ದೀಪ ಎಲೆಕ್ಟ್ರಾನ್ ಹೊರಹಾಕುತ್ತದೆ, ಪ್ರಕಾಶಮಾನ ಕೆಂಪು ದೀಪ ಏಕೆ ಆಗದು?"
+    }
+   ]
+  },
+  {
    "id": "lab-planck-constant-led",
    "type": "virtual_lab",
    "labId": "planck-constant-led",

@@ -370,6 +370,280 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Potential around a point charge",
+    "kn": "ಬಿಂದು ಆವೇಶದ ಸುತ್ತ ವಿಭವ"
+   },
+   "narration": {
+    "en": "Drag the probe P. The potential V = kq/r is the work done per unit charge to bring a test charge from infinity to P. It is a scalar and falls as 1/r, while the field E = kq/r² falls faster. The dashed circles are where V is 300, 600, 1200 and 2400 V (for positive q)."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the probe P. The potential V = kq/r is the work done per unit charge to bring a test charge from infinity to P. It is a scalar and falls as 1/r, while the field E = kq/r² falls faster. The dashed circles are where V is 300, 600, 1200 and 2400 V (for positive q).",
+    "kn": "ಶೋಧಕ P ಎಳೆಯಿರಿ. ವಿಭವ V = kq/r ಎಂದರೆ ಅನಂತದಿಂದ P ಗೆ ಏಕಮಾನ ಪರೀಕ್ಷಾ ಆವೇಶ ತರಲು ಮಾಡುವ ಕೆಲಸ. ಅದು ಅದಿಶ, 1/r ನಂತೆ ಕುಗ್ಗುತ್ತದೆ; ಕ್ಷೇತ್ರ E = kq/r² ಇನ್ನೂ ವೇಗವಾಗಿ. ಚುಕ್ಕೆ ವೃತ್ತಗಳಲ್ಲಿ V = 300, 600, 1200, 2400 V."
+   },
+   "sliders": [
+    {
+     "name": "q",
+     "label": {
+      "en": "Charge q",
+      "kn": "ಆವೇಶ q"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 0.5,
+     "value": 2,
+     "unit": "nC"
+    },
+    {
+     "name": "q0",
+     "label": {
+      "en": "Test charge",
+      "kn": "ಪರೀಕ್ಷಾ ಆವೇಶ"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 1,
+     "unit": "nC"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "eq",
+     "label": {
+      "en": "Equipotential circles",
+      "kn": "ಸಮವಿಭವ ವೃತ್ತಗಳು"
+     },
+     "value": true
+    },
+    {
+     "name": "ef",
+     "label": {
+      "en": "Field arrow",
+      "kn": "ಕ್ಷೇತ್ರ ಬಾಣ"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "P",
+     "x": 4,
+     "y": 3,
+     "box": {
+      "x": [
+       -13,
+       13
+      ],
+      "y": [
+       -8,
+       8
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "r",
+     "expr": "max(hypot(P_x, P_y), 0.5)"
+    },
+    {
+     "name": "Vp",
+     "expr": "900*q/r"
+    },
+    {
+     "name": "Ep",
+     "expr": "9e4*abs(q)/r^2"
+    }
+   ],
+   "view": {
+    "x": [
+     -14,
+     14
+    ],
+    "y": [
+     -9,
+     9
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "visibleIf": "eq && 900*abs(q)/300 < 14",
+     "x": 0,
+     "y": 0,
+     "r": "900*abs(q)/300",
+     "fill": false,
+     "color": {
+      "by": "q > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     },
+     "width": 2,
+     "opacity": 0.6
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "eq && 900*abs(q)/600 < 14",
+     "x": 0,
+     "y": 0,
+     "r": "900*abs(q)/600",
+     "fill": false,
+     "color": {
+      "by": "q > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     },
+     "width": 2,
+     "opacity": 0.6
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "eq && 900*abs(q)/1200 < 14",
+     "x": 0,
+     "y": 0,
+     "r": "900*abs(q)/1200",
+     "fill": false,
+     "color": {
+      "by": "q > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     },
+     "width": 2,
+     "opacity": 0.6
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "eq && 900*abs(q)/2400 < 14",
+     "x": 0,
+     "y": 0,
+     "r": "900*abs(q)/2400",
+     "fill": false,
+     "color": {
+      "by": "q > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     },
+     "width": 2,
+     "opacity": 0.6
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 0.7,
+     "color": {
+      "by": "q > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "P_x",
+     "y2": "P_y",
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "ef",
+     "x": "P_x",
+     "y": "P_y",
+     "dx": "sign(q)*2.5*P_x/r",
+     "dy": "sign(q)*2.5*P_y/r",
+     "color": "green",
+     "label": "E"
+    },
+    {
+     "shape": "text",
+     "x": "P_x",
+     "y": "P_y + 1.2",
+     "text": {
+      "en": "V = {Vp:0} V"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": -13.5,
+     "y": 8.2,
+     "text": {
+      "en": "r = {r:1} cm"
+     },
+     "size": 24,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Potential at P",
+      "kn": "P ನಲ್ಲಿ ವಿಭವ"
+     },
+     "expr": "Vp",
+     "unit": "V",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Field at P",
+      "kn": "P ನಲ್ಲಿ ಕ್ಷೇತ್ರ"
+     },
+     "expr": "Ep",
+     "unit": "N/C",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Work to bring q0 from infinity",
+      "kn": "q0 ಅನ್ನು ಅನಂತದಿಂದ ತರಲು ಕೆಲಸ"
+     },
+     "expr": "q0*Vp",
+     "unit": "nJ",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double the distance of P. What happens to V, and to E?",
+     "kn": "P ದೂರ ದ್ವಿಗುಣಗೊಳಿಸಿ. V ಮತ್ತು E ಏನಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Move P around one dashed circle. Does V change?",
+     "kn": "P ಅನ್ನು ಒಂದು ಚುಕ್ಕೆ ವೃತ್ತದುದ್ದಕ್ಕೂ ಸರಿಸಿ. V ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Make q negative. What is the sign of the work needed to bring the test charge in?",
+     "kn": "q ಋಣ ಮಾಡಿ. ಪರೀಕ್ಷಾ ಆವೇಶ ತರಲು ಬೇಕಾದ ಕೆಲಸದ ಚಿಹ್ನೆ ಏನು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

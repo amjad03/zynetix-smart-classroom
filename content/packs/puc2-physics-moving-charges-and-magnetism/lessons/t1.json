@@ -601,6 +601,319 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A velocity selector: E and B together",
+    "kn": "ವೇಗ ಆಯ್ಕೆಕಾರ: E ಮತ್ತು B ಒಟ್ಟಿಗೆ"
+   },
+   "narration": {
+    "en": "A charge in crossed fields feels the Lorentz force F = q(E + v × B). Here the electric force qE pushes down and the magnetic force qvB pushes up. Only particles with v = E/B go straight through, whatever their charge or mass. Faster ones bend up, slower ones down."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A charge in crossed fields feels the Lorentz force F = q(E + v × B). Here the electric force qE pushes down and the magnetic force qvB pushes up. Only particles with v = E/B go straight through, whatever their charge or mass. Faster ones bend up, slower ones down.",
+    "kn": "ಅಡ್ಡ ಕ್ಷೇತ್ರಗಳಲ್ಲಿನ ಆವೇಶಕ್ಕೆ ಲೊರೆಂಟ್ಜ್ ಬಲ F = q(E + v × B). ಇಲ್ಲಿ ವಿದ್ಯುತ್ ಬಲ qE ಕೆಳಗೆ, ಕಾಂತ ಬಲ qvB ಮೇಲೆ. v = E/B ಇರುವ ಕಣಗಳು ಮಾತ್ರ ನೇರ ಹಾದುಹೋಗುತ್ತವೆ, ಆವೇಶ ಅಥವಾ ದ್ರವ್ಯರಾಶಿ ಏನೇ ಇರಲಿ. ವೇಗದವು ಮೇಲೆ, ನಿಧಾನದವು ಕೆಳಗೆ ಬಾಗುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "v",
+     "label": {
+      "en": "Speed",
+      "kn": "ವೇಗ"
+     },
+     "min": 2,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "×10⁵ m/s"
+    },
+    {
+     "name": "E",
+     "label": {
+      "en": "Electric field",
+      "kn": "ವಿದ್ಯುತ್ ಕ್ಷೇತ್ರ"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "kV/m"
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "Magnetic field",
+      "kn": "ಕಾಂತ ಕ್ಷೇತ್ರ"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "mT"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "eon",
+     "label": {
+      "en": "Electric field on",
+      "kn": "ವಿದ್ಯುತ್ ಕ್ಷೇತ್ರ ಆನ್"
+     },
+     "value": true
+    },
+    {
+     "name": "bon",
+     "label": {
+      "en": "Magnetic field on",
+      "kn": "ಕಾಂತ ಕ್ಷೇತ್ರ ಆನ್"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "pt",
+     "label": {
+      "en": "Particle",
+      "kn": "ಕಣ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Proton",
+        "kn": "ಪ್ರೋಟಾನ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Alpha particle",
+        "kn": "ಆಲ್ಫಾ ಕಣ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Fire",
+      "kn": "ಹಾರಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 15,
+    "dt": 0.01,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2,
+    "stopWhen": "px > 12 || abs(py) > 4",
+    "unit": "×10⁻⁸s"
+   },
+   "state": [
+    {
+     "name": "px",
+     "init": 0,
+     "rate": "0.1*vx"
+    },
+    {
+     "name": "py",
+     "init": 0,
+     "rate": "0.1*vy"
+    },
+    {
+     "name": "vx",
+     "init": "v",
+     "rate": "-9.58e-4*km*B*bon*vy"
+    },
+    {
+     "name": "vy",
+     "init": 0,
+     "rate": "-9.58e-3*km*E*eon + 9.58e-4*km*B*bon*vx"
+    }
+   ],
+   "integrator": "rk2",
+   "vars": [
+    {
+     "name": "km",
+     "expr": "if(pt == 1, 1, 0.503)"
+    },
+    {
+     "name": "qn",
+     "expr": "if(pt == 1, 1, 2)"
+    },
+    {
+     "name": "FE",
+     "expr": "0.1602*qn*E*eon"
+    },
+    {
+     "name": "FB",
+     "expr": "0.01602*qn*v*B*bon"
+    }
+   ],
+   "view": {
+    "x": [
+     -1,
+     13
+    ],
+    "y": [
+     -5,
+     5
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 4,
+     "w": 12,
+     "h": 0.4,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": -4.4,
+     "w": 12,
+     "h": 0.4,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 4.7,
+     "text": {
+      "en": "+ plate",
+      "kn": "+ ಫಲಕ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": -4.9,
+     "text": {
+      "en": "− plate",
+      "kn": "− ಫಲಕ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "particles",
+     "visibleIf": "bon",
+     "count": 24,
+     "x": "0.5 + mod(i, 8)*1.5",
+     "y": "-2.6 + floor(i/8)*2.6",
+     "r": 0.12,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "trail",
+     "x": "px",
+     "y": "py",
+     "length": 2000,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 0.22,
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "eon",
+     "x": "px",
+     "y": "py",
+     "dx": 0,
+     "dy": "-0.25*FE/qn",
+     "color": "red",
+     "label": "qE"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "bon",
+     "x": "px",
+     "y": "py",
+     "dx": "-0.25*0.01602*vy*B",
+     "dy": "0.25*0.01602*vx*B",
+     "color": "blue",
+     "label": "qv×B"
+    },
+    {
+     "shape": "text",
+     "x": 12.8,
+     "y": -3.3,
+     "text": {
+      "en": "B into the screen (×)",
+      "kn": "B ಪರದೆಯ ಒಳಕ್ಕೆ (×)"
+     },
+     "size": 20,
+     "visibleIf": "bon",
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Speed that goes straight E/B",
+      "kn": "ನೇರ ಹೋಗುವ ವೇಗ E/B"
+     },
+     "expr": "10*E/B",
+     "unit": "×10⁵ m/s",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Electric force qE",
+      "kn": "ವಿದ್ಯುತ್ ಬಲ qE"
+     },
+     "expr": "FE",
+     "unit": "fN",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Magnetic force qvB (at start)",
+      "kn": "ಕಾಂತ ಬಲ qvB (ಆರಂಭದಲ್ಲಿ)"
+     },
+     "expr": "FB",
+     "unit": "fN",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set v = E/B and fire. Then switch to an alpha particle. Does it still go straight?",
+     "kn": "v = E/B ಮಾಡಿ ಹಾರಿಸಿ. ನಂತರ ಆಲ್ಫಾ ಕಣ ಆರಿಸಿ. ಅದು ಇನ್ನೂ ನೇರವೇ?"
+    },
+    {
+     "en": "Turn off the magnetic field. Which way does the proton bend now?",
+     "kn": "ಕಾಂತ ಕ್ಷೇತ್ರ ಆಫ್ ಮಾಡಿ. ಈಗ ಪ್ರೋಟಾನ್ ಯಾವ ಕಡೆ ಬಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Double both E and B. Which speed is selected now?",
+     "kn": "E ಮತ್ತು B ಎರಡನ್ನೂ ದ್ವಿಗುಣಗೊಳಿಸಿ. ಈಗ ಯಾವ ವೇಗ ಆಯ್ಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

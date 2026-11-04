@@ -302,6 +302,258 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Einstein's equation on a graph",
+    "kn": "ಐನ್‌ಸ್ಟೈನ್ ಸಮೀಕರಣ ನಕ್ಷೆಯಲ್ಲಿ"
+   },
+   "narration": {
+    "en": "Kmax = hν − φ0 is a straight line. Every metal gives a line of the same slope h (Planck's constant, 4.14 × 10⁻¹⁵ eV s); only the intercept changes. The line cuts the frequency axis at the threshold ν0 = φ0/h and, extended back, the energy axis at −φ0."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Kmax = hν − φ0 is a straight line. Every metal gives a line of the same slope h (Planck's constant, 4.14 × 10⁻¹⁵ eV s); only the intercept changes. The line cuts the frequency axis at the threshold ν0 = φ0/h and, extended back, the energy axis at −φ0.",
+    "kn": "Kmax = hν − φ0 ಒಂದು ಸರಳ ರೇಖೆ. ಪ್ರತಿ ಲೋಹವೂ ಒಂದೇ ಇಳಿಜಾರು h (4.14 × 10⁻¹⁵ eV s) ಇರುವ ರೇಖೆ ನೀಡುತ್ತದೆ; ಅಂತಃಖಂಡ ಮಾತ್ರ ಬದಲಾಗುತ್ತದೆ. ರೇಖೆ ಆವೃತ್ತಿ ಅಕ್ಷವನ್ನು ν0 = φ0/h ನಲ್ಲಿ, ಹಿಂದಕ್ಕೆ ವಿಸ್ತರಿಸಿದರೆ ಶಕ್ತಿ ಅಕ್ಷವನ್ನು −φ0 ನಲ್ಲಿ ಕತ್ತರಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "nu",
+     "label": {
+      "en": "Frequency",
+      "kn": "ಆವೃತ್ತಿ"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 0.5,
+     "value": 10,
+     "unit": "×10¹⁴ Hz"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "allm",
+     "label": {
+      "en": "Show all metals",
+      "kn": "ಎಲ್ಲ ಲೋಹಗಳು"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "W",
+     "label": {
+      "en": "Metal",
+      "kn": "ಲೋಹ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Caesium (2.14 eV)",
+        "kn": "ಸೀಸಿಯಂ (2.14 eV)"
+       },
+       "value": 2.14
+      },
+      {
+       "label": {
+        "en": "Sodium (2.75 eV)",
+        "kn": "ಸೋಡಿಯಂ (2.75 eV)"
+       },
+       "value": 2.75
+      },
+      {
+       "label": {
+        "en": "Copper (4.65 eV)",
+        "kn": "ತಾಮ್ರ (4.65 eV)"
+       },
+       "value": 4.65
+      }
+     ],
+     "value": 2.14
+    }
+   ],
+   "vars": [
+    {
+     "name": "Kmax",
+     "expr": "max(0.41357*nu - W, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     -1,
+     16
+    ],
+    "y": [
+     -5.5,
+     4.5
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "ν (×10¹⁴ Hz)",
+    "yLabel": "Kmax (eV)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "allm",
+     "fn": "0.41357*x - 2.14",
+     "from": 0,
+     "to": 16,
+     "color": "yellow",
+     "width": 2,
+     "opacity": 0.5,
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "visibleIf": "allm",
+     "fn": "0.41357*x - 2.75",
+     "from": 0,
+     "to": 16,
+     "color": "green",
+     "width": 2,
+     "opacity": 0.5,
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "visibleIf": "allm",
+     "fn": "0.41357*x - 4.65",
+     "from": 0,
+     "to": 16,
+     "color": "orange",
+     "width": 2,
+     "opacity": 0.5,
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "fn": "0.41357*x - W",
+     "from": 0,
+     "to": "W/0.41357",
+     "color": "white",
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "fn": "0.41357*x - W",
+     "from": "W/0.41357",
+     "to": 16,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "W/0.41357",
+     "y": 0,
+     "r": 0.15,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": "W/0.41357",
+     "y": 0.5,
+     "text": {
+      "en": "ν0"
+     },
+     "size": 24,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": "-W",
+     "r": 0.15,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 0.3,
+     "y": "-W",
+     "text": {
+      "en": "−φ0"
+     },
+     "size": 24,
+     "color": "red",
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "visibleIf": "Kmax > 0",
+     "x1": "nu",
+     "y1": 0,
+     "x2": "nu",
+     "y2": "Kmax",
+     "dashed": true,
+     "color": "yellow",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "nu",
+     "y": "max(Kmax, 0)",
+     "r": 0.18,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Kmax",
+      "kn": "Kmax"
+     },
+     "expr": "Kmax",
+     "unit": "eV",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Stopping potential",
+      "kn": "ನಿಲುಗಡೆ ವಿಭವ"
+     },
+     "expr": "Kmax",
+     "unit": "V",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Threshold ν0",
+      "kn": "ಆರಂಭ ν0"
+     },
+     "expr": "W/0.41357",
+     "unit": "×10¹⁴ Hz",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Slope h",
+      "kn": "ಇಳಿಜಾರು h"
+     },
+     "expr": "4.1357",
+     "unit": "×10⁻¹⁵ eV s",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn on all metals. Are the lines parallel?",
+     "kn": "ಎಲ್ಲ ಲೋಹಗಳನ್ನು ಆನ್ ಮಾಡಿ. ರೇಖೆಗಳು ಸಮಾಂತರವೇ?"
+    },
+    {
+     "en": "Read the threshold frequency of caesium. Is it in the visible range (4 to 7.5 × 10¹⁴ Hz)?",
+     "kn": "ಸೀಸಿಯಂ ಆರಂಭ ಆವೃತ್ತಿ ಓದಿ. ಅದು ಗೋಚರ ವ್ಯಾಪ್ತಿಯಲ್ಲಿದೆಯೇ?"
+    },
+    {
+     "en": "Work out the slope from two points on one line. What constant is it?",
+     "kn": "ಒಂದು ರೇಖೆಯ ಎರಡು ಬಿಂದುಗಳಿಂದ ಇಳಿಜಾರು ಕಂಡುಹಿಡಿಯಿರಿ. ಅದು ಯಾವ ಸ್ಥಿರಾಂಕ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

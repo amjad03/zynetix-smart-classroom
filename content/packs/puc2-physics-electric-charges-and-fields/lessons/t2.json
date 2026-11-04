@@ -471,6 +471,313 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Forces on a charge add as vectors",
+    "kn": "ಆವೇಶದ ಮೇಲಿನ ಬಲಗಳು ಸದಿಶಗಳಾಗಿ ಕೂಡುತ್ತವೆ"
+   },
+   "narration": {
+    "en": "Drag the test charge q3. Each other charge pulls or pushes it with F = k q1 q3 / r² along the line joining them (k = 9 × 10⁹ N m²/C²). The net force (white) is the vector sum, not depending on the other charges being there. Distances in cm, charges in µC."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the test charge q3. Each other charge pulls or pushes it with F = k q1 q3 / r² along the line joining them (k = 9 × 10⁹ N m²/C²). The net force (white) is the vector sum, not depending on the other charges being there. Distances in cm, charges in µC.",
+    "kn": "ಪರೀಕ್ಷಾ ಆವೇಶ q3 ಎಳೆಯಿರಿ. ಪ್ರತಿ ಆವೇಶ ಅದನ್ನು ಜೋಡಿಸುವ ರೇಖೆಯ ಉದ್ದಕ್ಕೂ F = k q1 q3 / r² ಬಲದಿಂದ ಎಳೆಯುತ್ತದೆ ಅಥವಾ ತಳ್ಳುತ್ತದೆ. ಒಟ್ಟು ಬಲ (ಬಿಳಿ) ಸದಿಶ ಮೊತ್ತ. ದೂರ cm, ಆವೇಶ µC."
+   },
+   "sliders": [
+    {
+     "name": "q1",
+     "label": {
+      "en": "q1",
+      "kn": "q1"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 0.5,
+     "value": 2,
+     "unit": "µC"
+    },
+    {
+     "name": "q2",
+     "label": {
+      "en": "q2",
+      "kn": "q2"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 0.5,
+     "value": 2,
+     "unit": "µC"
+    },
+    {
+     "name": "q3",
+     "label": {
+      "en": "Test charge q3",
+      "kn": "ಪರೀಕ್ಷಾ ಆವೇಶ q3"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 0.5,
+     "value": 1,
+     "unit": "µC"
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "q3",
+     "x": 0,
+     "y": 4,
+     "box": {
+      "x": [
+       -11,
+       11
+      ],
+      "y": [
+       -6,
+       8
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "r1",
+     "expr": "max(hypot(P_x + 4, P_y), 0.5)"
+    },
+    {
+     "name": "r2",
+     "expr": "max(hypot(P_x - 4, P_y), 0.5)"
+    },
+    {
+     "name": "k1",
+     "expr": "90*q1*q3/r1^2"
+    },
+    {
+     "name": "k2",
+     "expr": "90*q2*q3/r2^2"
+    },
+    {
+     "name": "F1x",
+     "expr": "k1*(P_x + 4)/r1"
+    },
+    {
+     "name": "F1y",
+     "expr": "k1*P_y/r1"
+    },
+    {
+     "name": "F2x",
+     "expr": "k2*(P_x - 4)/r2"
+    },
+    {
+     "name": "F2y",
+     "expr": "k2*P_y/r2"
+    },
+    {
+     "name": "F1",
+     "expr": "abs(k1)"
+    },
+    {
+     "name": "F2",
+     "expr": "abs(k2)"
+    },
+    {
+     "name": "Fx",
+     "expr": "F1x + F2x"
+    },
+    {
+     "name": "Fy",
+     "expr": "F1y + F2y"
+    },
+    {
+     "name": "sc",
+     "expr": "6/max(F1, F2, hypot(Fx, Fy), 6)"
+    }
+   ],
+   "view": {
+    "x": [
+     -12,
+     12
+    ],
+    "y": [
+     -7,
+     9
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": -4,
+     "y": 0,
+     "r": 0.6,
+     "color": {
+      "by": "q1 > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": -4,
+     "y": -1.4,
+     "text": {
+      "en": "q1"
+     },
+     "size": 24
+    },
+    {
+     "shape": "circle",
+     "x": 4,
+     "y": 0,
+     "r": 0.6,
+     "color": {
+      "by": "q2 > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": -1.4,
+     "text": {
+      "en": "q2"
+     },
+     "size": 24
+    },
+    {
+     "shape": "line",
+     "x1": -4,
+     "y1": 0,
+     "x2": "P_x",
+     "y2": "P_y",
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": 0,
+     "x2": "P_x",
+     "y2": "P_y",
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "F1 > 0.01",
+     "x": "P_x",
+     "y": "P_y",
+     "dx": "sc*F1x",
+     "dy": "sc*F1y",
+     "color": "orange",
+     "label": "F13"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "F2 > 0.01",
+     "x": "P_x",
+     "y": "P_y",
+     "dx": "sc*F2x",
+     "dy": "sc*F2y",
+     "color": "green",
+     "label": "F23"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "hypot(Fx, Fy) > 0.01",
+     "x": "P_x",
+     "y": "P_y",
+     "dx": "sc*Fx",
+     "dy": "sc*Fy",
+     "color": "white",
+     "width": 5,
+     "label": "net"
+    },
+    {
+     "shape": "circle",
+     "x": "P_x",
+     "y": "P_y",
+     "r": 0.45,
+     "color": {
+      "by": "q3 > 0",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": -11.5,
+     "y": 8.3,
+     "text": {
+      "en": "red +, blue −",
+      "kn": "ಕೆಂಪು +, ನೀಲಿ −"
+     },
+     "size": 22,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Force from q1",
+      "kn": "q1 ನಿಂದ ಬಲ"
+     },
+     "expr": "F1",
+     "unit": "N",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Force from q2",
+      "kn": "q2 ನಿಂದ ಬಲ"
+     },
+     "expr": "F2",
+     "unit": "N",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Net force",
+      "kn": "ಒಟ್ಟು ಬಲ"
+     },
+     "expr": "hypot(Fx, Fy)",
+     "unit": "N",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make q1 and q2 equal and put q3 on the middle line. Which way does the net force point?",
+     "kn": "q1 = q2 ಮಾಡಿ, q3 ಅನ್ನು ಮಧ್ಯರೇಖೆಯಲ್ಲಿಡಿ. ಒಟ್ಟು ಬಲ ಯಾವ ಕಡೆ?"
+    },
+    {
+     "en": "Halve the distance from q1. By what factor does that force grow?",
+     "kn": "q1 ನಿಂದ ದೂರ ಅರ್ಧ ಮಾಡಿ. ಆ ಬಲ ಎಷ್ಟು ಪಟ್ಟು ಹೆಚ್ಚುತ್ತದೆ?"
+    },
+    {
+     "en": "Make q2 negative. Find a point where the net force is zero.",
+     "kn": "q2 ಋಣ ಮಾಡಿ. ಒಟ್ಟು ಬಲ ಶೂನ್ಯವಾಗುವ ಬಿಂದು ಹುಡುಕಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

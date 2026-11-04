@@ -372,6 +372,193 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Electrons drifting in a wire",
+    "kn": "ತಂತಿಯಲ್ಲಿ ಎಲೆಕ್ಟ್ರಾನ್‌ಗಳ ಅಲೆತ"
+   },
+   "narration": {
+    "en": "Free electrons dash about at random. The battery's field adds a slow drift against the field, opposite to the conventional current. The current I = V/R = n e A vd. For a copper wire of 1 mm² cross-section the drift speed is only a fraction of a millimetre per second."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Free electrons dash about at random. The battery's field adds a slow drift against the field, opposite to the conventional current. The current I = V/R = n e A vd. For a copper wire of 1 mm² cross-section the drift speed is only a fraction of a millimetre per second.",
+    "kn": "ಮುಕ್ತ ಎಲೆಕ್ಟ್ರಾನ್‌ಗಳು ಯಾದೃಚ್ಛಿಕವಾಗಿ ಓಡಾಡುತ್ತವೆ. ಬ್ಯಾಟರಿಯ ಕ್ಷೇತ್ರ ಕ್ಷೇತ್ರದ ವಿರುದ್ಧ ನಿಧಾನ ಅಲೆತ ಸೇರಿಸುತ್ತದೆ, ಸಾಂಪ್ರದಾಯಿಕ ಪ್ರವಾಹಕ್ಕೆ ವಿರುದ್ಧ. I = V/R = n e A vd. 1 mm² ತಾಮ್ರ ತಂತಿಯಲ್ಲಿ ಅಲೆತ ವೇಗ ಸೆಕೆಂಡಿಗೆ ಒಂದು ಮಿಲಿಮೀಟರ್‌ಗಿಂತ ಕಡಿಮೆ."
+   },
+   "sliders": [
+    {
+     "name": "V",
+     "label": {
+      "en": "Battery voltage",
+      "kn": "ಬ್ಯಾಟರಿ ವೋಲ್ಟೇಜ್"
+     },
+     "min": 0,
+     "max": 12,
+     "step": 0.5,
+     "value": 6,
+     "unit": "V"
+    },
+    {
+     "name": "R",
+     "label": {
+      "en": "Resistance",
+      "kn": "ರೋಧ"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 4,
+     "unit": "Ω"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "jit",
+     "label": {
+      "en": "Random motion",
+      "kn": "ಯಾದೃಚ್ಛಿಕ ಚಲನೆ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 120,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "I",
+     "expr": "V/R"
+    },
+    {
+     "name": "vd",
+     "expr": "I/(8.5e28*1.602e-19*1e-6)*1000"
+    },
+    {
+     "name": "dv",
+     "expr": "0.5*I"
+    }
+   ],
+   "view": {
+    "x": [
+     -2,
+     22
+    ],
+    "y": [
+     -3,
+     8
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 20,
+     "h": 4,
+     "fill": false,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "particles",
+     "count": 24,
+     "x": "1 + 3.6*mod(i, 6)",
+     "y": "0.6 + 0.95*floor(i/6)",
+     "r": 0.18,
+     "color": "white",
+     "opacity": 0.35
+    },
+    {
+     "shape": "particles",
+     "count": 50,
+     "x": "mod(20*rand(i) - dv*t + jit*0.35*sin(9*t + 6.3*rand(i + 50)), 20)",
+     "y": "bounce(0.3 + 3.4*rand(i + 150) + jit*0.35*cos(7*t + 6.3*rand(i + 90)), 0.25, 3.75)",
+     "r": 0.16,
+     "color": "blue"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "V > 0",
+     "x": 6,
+     "y": 5.3,
+     "dx": 8,
+     "dy": 0,
+     "color": "yellow",
+     "label": "I"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "V > 0",
+     "x": 14,
+     "y": -1.3,
+     "dx": -8,
+     "dy": 0,
+     "color": "blue",
+     "label": "electrons"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.3,
+     "text": {
+      "en": "field E →",
+      "kn": "ಕ್ಷೇತ್ರ E →"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": -2.6,
+     "text": {
+      "en": "I = {I:2} A"
+     },
+     "size": 26
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Current",
+      "kn": "ಪ್ರವಾಹ"
+     },
+     "expr": "I",
+     "unit": "A",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Drift speed (copper, 1 mm²)",
+      "kn": "ಅಲೆತ ವೇಗ (ತಾಮ್ರ, 1 mm²)"
+     },
+     "expr": "vd",
+     "unit": "mm/s",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set V to 0. Do the electrons stop moving?",
+     "kn": "V = 0 ಮಾಡಿ. ಎಲೆಕ್ಟ್ರಾನ್‌ಗಳು ಚಲನೆ ನಿಲ್ಲಿಸುತ್ತವೆಯೇ?"
+    },
+    {
+     "en": "Double V, then double R. What happens to the current and the drift speed each time?",
+     "kn": "V ದ್ವಿಗುಣ, ನಂತರ R ದ್ವಿಗುಣ. ಪ್ರತಿ ಬಾರಿ ಪ್ರವಾಹ ಮತ್ತು ಅಲೆತ ವೇಗ ಏನಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "If the drift is so slow, why does a bulb light at once when you close the switch?",
+     "kn": "ಅಲೆತ ಇಷ್ಟು ನಿಧಾನವಾದರೆ, ಸ್ವಿಚ್ ಹಾಕಿದ ತಕ್ಷಣ ಬಲ್ಬ್ ಏಕೆ ಉರಿಯುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
