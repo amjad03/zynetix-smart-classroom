@@ -549,6 +549,236 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Iodine, TSH and goitre",
+    "kn": "ಅಯೋಡಿನ್, TSH ಮತ್ತು ಗಳಗಂಡ"
+   },
+   "caption": {
+    "en": "The pituitary's TSH makes the thyroid produce thyroid hormones, which need iodine. When thyroid hormone is low, TSH rises; when it is high, TSH falls (negative feedback). With too little iodine, hormone stays low, TSH keeps stimulating the gland and it enlarges (goitre). In Graves' disease the gland is over-active. This is a simplified model.",
+    "kn": "ಪಿಟ್ಯುಟರಿಯ TSH ಥೈರಾಯ್ಡ್ ಹಾರ್ಮೋನ್ ತಯಾರಿಸಲು ಪ್ರೇರೇಪಿಸುತ್ತದೆ; ಅದಕ್ಕೆ ಅಯೋಡಿನ್ ಬೇಕು. ಹಾರ್ಮೋನ್ ಕಡಿಮೆಯಾದರೆ TSH ಏರುತ್ತದೆ (ಋಣಾತ್ಮಕ ಪ್ರತಿಪೋಷಣೆ). ಅಯೋಡಿನ್ ಕೊರತೆಯಲ್ಲಿ ಗ್ರಂಥಿ ಹಿಗ್ಗುತ್ತದೆ (ಗಳಗಂಡ)."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Change the iodine in the diet and watch the pituitary and thyroid adjust to each other over weeks."
+   },
+   "sliders": [
+    {
+     "name": "io",
+     "label": {
+      "en": "Iodine in diet",
+      "kn": "ಆಹಾರದಲ್ಲಿ ಅಯೋಡಿನ್"
+     },
+     "min": 0,
+     "max": 300,
+     "step": 10,
+     "value": 150,
+     "unit": "µg/day"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "gr",
+     "label": {
+      "en": "Graves' disease",
+      "kn": "ಗ್ರೇವ್ಸ್ ರೋಗ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 60,
+    "dt": 0.1,
+    "unit": "days",
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 4
+   },
+   "state": [
+    {
+     "name": "Th",
+     "init": 1,
+     "rate": "(io/(io + 50)/0.75*(Sh + 3*gr) - Th)/7"
+    },
+    {
+     "name": "Sh",
+     "init": 1,
+     "rate": "(4/(1 + 3*Th^2) - Sh)/2"
+    }
+   ],
+   "vars": [
+    {
+     "name": "stim",
+     "expr": "Sh + 3*gr"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 20,
+     "y": 48,
+     "r": 5,
+     "fill": true,
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 56,
+     "text": {
+      "en": "Pituitary",
+      "kn": "ಪಿಟ್ಯುಟರಿ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "circle",
+     "x": "40 - 1.5*sqrt(stim)",
+     "y": 20,
+     "r": "3 + 2.5*sqrt(stim)",
+     "fill": true,
+     "color": "red",
+     "opacity": 0.6
+    },
+    {
+     "shape": "circle",
+     "x": "60 + 1.5*sqrt(stim)",
+     "y": 20,
+     "r": "3 + 2.5*sqrt(stim)",
+     "fill": true,
+     "color": "red",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 46,
+     "y": 18,
+     "w": 8,
+     "h": 4,
+     "fill": true,
+     "color": "red",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 5,
+     "text": {
+      "en": "Thyroid",
+      "kn": "ಥೈರಾಯ್ಡ್"
+     },
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": 25,
+     "y": 45,
+     "dx": 15,
+     "dy": -16,
+     "color": "blue",
+     "width": "2 + 3*Sh",
+     "label": "TSH"
+    },
+    {
+     "shape": "arrow",
+     "x": 62,
+     "y": 30,
+     "dx": -35,
+     "dy": 16,
+     "color": "orange",
+     "width": "1 + 2*Th",
+     "label": "T4"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 50,
+     "text": {
+      "en": "Goitre",
+      "kn": "ಗಳಗಂಡ"
+     },
+     "size": 22,
+     "visibleIf": "stim > 1.5",
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 44,
+     "text": {
+      "en": "Hypothyroid",
+      "kn": "ಕಡಿಮೆ ಥೈರಾಯ್ಡ್"
+     },
+     "size": 20,
+     "visibleIf": "Th < 0.8",
+     "color": "blue"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 44,
+     "text": {
+      "en": "Hyperthyroid",
+      "kn": "ಹೆಚ್ಚು ಥೈರಾಯ್ಡ್"
+     },
+     "size": 20,
+     "visibleIf": "Th > 1.5",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Thyroid hormone (% of normal)",
+      "kn": "ಥೈರಾಯ್ಡ್ ಹಾರ್ಮೋನ್ (% ಸಾಮಾನ್ಯ)"
+     },
+     "expr": "100*Th",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "TSH (% of normal)",
+      "kn": "TSH (% ಸಾಮಾನ್ಯ)"
+     },
+     "expr": "100*Sh",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Cut iodine to 20 µg a day. What happens to TSH and to the size of the gland?",
+     "kn": "ಅಯೋಡಿನ್ ಅನ್ನು ದಿನಕ್ಕೆ 20 µg ಮಾಡಿ. TSH ಮತ್ತು ಗ್ರಂಥಿಯ ಗಾತ್ರಕ್ಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on Graves' disease. Why does TSH fall while the gland still enlarges?",
+     "kn": "ಗ್ರೇವ್ಸ್ ರೋಗ ಆನ್ ಮಾಡಿ. ಗ್ರಂಥಿ ಹಿಗ್ಗಿದರೂ TSH ಏಕೆ ಇಳಿಯುತ್ತದೆ?"
+    },
+    {
+     "en": "Why is iodised salt recommended?",
+     "kn": "ಅಯೋಡಿನ್ ಉಪ್ಪು ಏಕೆ ಶಿಫಾರಸು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -676,3 +676,11 @@ No text is reproduced. Check these plot details against the texts:
 - **GST:** the slider runs 0-40%.
 - **Simplifications:** full-year depreciation.
 - **Kannada:** accounting terms need a native-speaker review.
+
+## Biology 1st PUC simulations and activities (99 lessons)
+
+- **Illustrative models (labelled on screen):** heart-rate control, the thyroid feedback curve, glucose/insulin, photorespiration share, pigment spectra, chemiosmosis amounts, apical dominance.
+- **Values not from NCERT:** glycine pKa; cell-cycle phase hours; Bohr shift sizes; LAB stopping at 2% acid; malic acid RQ 1.33.
+- **Wording to confirm:** gram as the diadelphous example; the cilium linker label; callus as dedifferentiation.
+- **Diagrams:** the heart, brain and frog are schematic.
+- **Kannada:** needs a native-speaker review.

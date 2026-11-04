@@ -401,6 +401,224 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Bacteria dividing by fission",
+    "kn": "ವಿದಳನದಿಂದ ವಿಭಜಿಸುವ ಬ್ಯಾಕ್ಟೀರಿಯಾ"
+   },
+   "caption": {
+    "en": "Each bacterium splits into two once every generation time, so the number doubles again and again. With limited food the growth slows and levels off. The graph shows log2 of the number: a straight line means steady doubling.",
+    "kn": "ಪ್ರತಿ ಪೀಳಿಗೆ ಸಮಯದಲ್ಲಿ ಪ್ರತಿ ಬ್ಯಾಕ್ಟೀರಿಯಂ ಎರಡಾಗಿ ಒಡೆಯುತ್ತದೆ, ಆದ್ದರಿಂದ ಸಂಖ್ಯೆ ಮತ್ತೆ ಮತ್ತೆ ದ್ವಿಗುಣಗೊಳ್ಳುತ್ತದೆ. ಆಹಾರ ಸೀಮಿತವಾದರೆ ಬೆಳವಣಿಗೆ ನಿಧಾನವಾಗಿ ಸ್ಥಿರಗೊಳ್ಳುತ್ತದೆ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Watch a few bacteria grow by binary fission in a dish. Change the generation time and limit the food."
+   },
+   "sliders": [
+    {
+     "name": "g",
+     "label": {
+      "en": "Generation time",
+      "kn": "ಪೀಳಿಗೆ ಸಮಯ"
+     },
+     "min": 20,
+     "max": 60,
+     "step": 5,
+     "value": 20,
+     "unit": "min"
+    },
+    {
+     "name": "N0",
+     "label": {
+      "en": "Starting cells",
+      "kn": "ಆರಂಭಿಕ ಕೋಶಗಳು"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 1,
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "lim",
+     "label": {
+      "en": "Limited food",
+      "kn": "ಸೀಮಿತ ಆಹಾರ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 360,
+    "dt": 0.5,
+    "unit": "min",
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2
+   },
+   "state": [
+    {
+     "name": "N",
+     "init": "N0",
+     "rate": "0.693147*N/g*if(lim, 1 - N/256, 1)"
+    }
+   ],
+   "vars": [
+    {
+     "name": "lg",
+     "expr": "ln(N)/0.693147"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 25,
+     "y": 30,
+     "r": 23,
+     "fill": true,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "circle",
+     "x": 25,
+     "y": 30,
+     "r": 23,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 256,
+     "visibleIf": "i < N",
+     "x": "25 + 20*sqrt(rand(i))*cos(2*pi*rand(i + 300))",
+     "y": "30 + 20*sqrt(rand(i))*sin(2*pi*rand(i + 300))",
+     "r": 0.7,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": 55,
+     "y1": 8,
+     "x2": 97,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 55,
+     "y1": 8,
+     "x2": 55,
+     "y2": 54,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 76,
+     "y": 4,
+     "text": {
+      "en": "Time (0 to 6 h)",
+      "kn": "ಸಮಯ (0 ರಿಂದ 6 ಗಂ)"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 56,
+     "y": 56.5,
+     "text": {
+      "en": "log2 of number",
+      "kn": "ಸಂಖ್ಯೆಯ log2"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "trail",
+     "x": "55 + 42*t/360",
+     "y": "8 + 2*lg",
+     "length": 2000,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 3.5,
+     "text": {
+      "en": "{N:0} cells",
+      "kn": "{N:0} ಕೋಶಗಳು"
+     },
+     "size": 24
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 57,
+     "text": {
+      "en": "Dish full: only 256 shown",
+      "kn": "ತಟ್ಟೆ ತುಂಬಿದೆ: 256 ಮಾತ್ರ ತೋರಿಸಲಾಗಿದೆ"
+     },
+     "size": 20,
+     "visibleIf": "N > 256",
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Number of cells",
+      "kn": "ಕೋಶಗಳ ಸಂಖ್ಯೆ"
+     },
+     "expr": "N",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Generations so far",
+      "kn": "ಇಲ್ಲಿಯವರೆಗಿನ ಪೀಳಿಗೆಗಳು"
+     },
+     "expr": "t/g",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With a 20-minute generation time, how many cells does one cell give after 2 hours?",
+     "kn": "20 ನಿಮಿಷದ ಪೀಳಿಗೆ ಸಮಯದಲ್ಲಿ, 2 ಗಂಟೆಯ ನಂತರ ಒಂದು ಕೋಶದಿಂದ ಎಷ್ಟು ಕೋಶಗಳು?"
+    },
+    {
+     "en": "Turn on limited food. Where does the graph stop being a straight line?",
+     "kn": "ಸೀಮಿತ ಆಹಾರವನ್ನು ಆನ್ ಮಾಡಿ. ಗ್ರಾಫ್ ಎಲ್ಲಿ ಸರಳರೇಖೆಯಾಗಿರುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Double the generation time. What happens to the slope of the line?",
+     "kn": "ಪೀಳಿಗೆ ಸಮಯವನ್ನು ದ್ವಿಗುಣಗೊಳಿಸಿ. ರೇಖೆಯ ಇಳಿಜಾರು ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

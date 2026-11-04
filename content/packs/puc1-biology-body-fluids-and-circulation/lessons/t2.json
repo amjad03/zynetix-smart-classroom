@@ -979,6 +979,318 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Safe and unsafe transfusions",
+    "kn": "ಸುರಕ್ಷಿತ ಮತ್ತು ಅಸುರಕ್ಷಿತ ರಕ್ತ ವರ್ಗಾವಣೆ"
+   },
+   "caption": {
+    "en": "A donor's red cells are safe only if the recipient's plasma has no antibody against their antigens. If it does, the red cells clump (agglutinate). Group O cells carry no A or B antigen; group AB plasma has no anti-A or anti-B antibody.",
+    "kn": "ಸ್ವೀಕರಿಸುವವರ ಪ್ಲಾಸ್ಮಾದಲ್ಲಿ ದಾನಿಯ ಪ್ರತಿಜನಕಗಳ ವಿರುದ್ಧ ಪ್ರತಿಕಾಯ ಇಲ್ಲದಿದ್ದರೆ ಮಾತ್ರ ಸುರಕ್ಷಿತ. ಇಲ್ಲವಾದರೆ ಕೆಂಪು ಕೋಶಗಳು ಗುಂಪುಗೂಡುತ್ತವೆ. O ಗುಂಪಿನ ಕೋಶಗಳಲ್ಲಿ A ಅಥವಾ B ಪ್ರತಿಜನಕ ಇಲ್ಲ; AB ಪ್ಲಾಸ್ಮಾದಲ್ಲಿ ಪ್ರತಿಕಾಯ ಇಲ್ಲ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Choose a donor and a recipient, then mix. Watch whether the red cells stay apart or clump."
+   },
+   "sliders": [
+    {
+     "name": "drops",
+     "label": {
+      "en": "Drops of donor blood",
+      "kn": "ದಾನಿ ರಕ್ತದ ಹನಿಗಳು"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "choices": [
+    {
+     "name": "d",
+     "label": {
+      "en": "Donor group",
+      "kn": "ದಾನಿ ಗುಂಪು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "O"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "A"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "B"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "AB"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Recipient group",
+      "kn": "ಸ್ವೀಕರಿಸುವವರ ಗುಂಪು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "O"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "A"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "B"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "AB"
+       },
+       "value": 3
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Mix",
+      "kn": "ಮಿಶ್ರಮಾಡಿ"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 6,
+    "unit": "s"
+   },
+   "vars": [
+    {
+     "name": "clash",
+     "expr": "(mod(d, 2) == 1 && mod(r, 2) == 0) || (floor(d/2) == 1 && floor(r/2) == 0)"
+    },
+    {
+     "name": "s",
+     "expr": "clash*smoothstep(0.5, 4, t)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 50,
+     "y": 30,
+     "r": 24,
+     "fill": true,
+     "color": "yellow",
+     "opacity": 0.2
+    },
+    {
+     "shape": "circle",
+     "x": 50,
+     "y": 30,
+     "r": 24,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 200,
+     "visibleIf": "i < 20*drops",
+     "r": 1.1,
+     "color": "red",
+     "x": "(1 - s)*(50 + 21*sqrt(rand(i))*cos(2*pi*rand(i + 300)) + 0.6*sin(3*t + i)) + s*(50 + 12*cos(2*pi*floor(5*rand(i + 600))/5) + 3*sqrt(rand(i + 700))*cos(2*pi*rand(i + 800)))",
+     "y": "(1 - s)*(30 + 21*sqrt(rand(i))*sin(2*pi*rand(i + 300)) + 0.6*cos(3*t + i)) + s*(30 + 12*sin(2*pi*floor(5*rand(i + 600))/5) + 3*sqrt(rand(i + 700))*sin(2*pi*rand(i + 800)))"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 52,
+     "text": {
+      "en": "Donor cells carry",
+      "kn": "ದಾನಿ ಕೋಶಗಳಲ್ಲಿ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 47,
+     "text": {
+      "en": "no A, no B antigen",
+      "kn": "A, B ಪ್ರತಿಜನಕ ಇಲ್ಲ"
+     },
+     "size": 20,
+     "visibleIf": "d == 0"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 47,
+     "text": {
+      "en": "antigen A",
+      "kn": "ಪ್ರತಿಜನಕ A"
+     },
+     "size": 20,
+     "visibleIf": "d == 1"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 47,
+     "text": {
+      "en": "antigen B",
+      "kn": "ಪ್ರತಿಜನಕ B"
+     },
+     "size": 20,
+     "visibleIf": "d == 2"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 47,
+     "text": {
+      "en": "antigens A and B",
+      "kn": "ಪ್ರತಿಜನಕ A ಮತ್ತು B"
+     },
+     "size": 20,
+     "visibleIf": "d == 3"
+    },
+    {
+     "shape": "label",
+     "x": 85,
+     "y": 52,
+     "text": {
+      "en": "Recipient plasma has",
+      "kn": "ಸ್ವೀಕರಿಸುವವರ ಪ್ಲಾಸ್ಮಾದಲ್ಲಿ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "label",
+     "x": 85,
+     "y": 47,
+     "text": {
+      "en": "anti-A and anti-B",
+      "kn": "anti-A ಮತ್ತು anti-B"
+     },
+     "size": 20,
+     "visibleIf": "r == 0"
+    },
+    {
+     "shape": "label",
+     "x": 85,
+     "y": 47,
+     "text": {
+      "en": "anti-B",
+      "kn": "anti-B"
+     },
+     "size": 20,
+     "visibleIf": "r == 1"
+    },
+    {
+     "shape": "label",
+     "x": 85,
+     "y": 47,
+     "text": {
+      "en": "anti-A",
+      "kn": "anti-A"
+     },
+     "size": 20,
+     "visibleIf": "r == 2"
+    },
+    {
+     "shape": "label",
+     "x": 85,
+     "y": 47,
+     "text": {
+      "en": "no antibodies",
+      "kn": "ಪ್ರತಿಕಾಯ ಇಲ್ಲ"
+     },
+     "size": 20,
+     "visibleIf": "r == 3"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 2.5,
+     "text": {
+      "en": "Clumping: unsafe transfusion",
+      "kn": "ಗುಂಪುಗೂಡುವಿಕೆ: ಅಸುರಕ್ಷಿತ"
+     },
+     "size": 24,
+     "visibleIf": "clash && t > 2",
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 2.5,
+     "text": {
+      "en": "No clumping: compatible",
+      "kn": "ಗುಂಪುಗೂಡುವಿಕೆ ಇಲ್ಲ: ಹೊಂದಿಕೆ"
+     },
+     "size": 24,
+     "visibleIf": "!clash && t > 2",
+     "color": "green"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Which donor group is safe for every recipient? Why is it called the universal donor?",
+     "kn": "ಯಾವ ದಾನಿ ಗುಂಪು ಎಲ್ಲರಿಗೂ ಸುರಕ್ಷಿತ? ಅದನ್ನು ಸಾರ್ವತ್ರಿಕ ದಾನಿ ಎನ್ನುವುದೇಕೆ?"
+    },
+    {
+     "en": "Which recipient can take blood from all four groups?",
+     "kn": "ಯಾವ ಸ್ವೀಕರಿಸುವವರು ನಾಲ್ಕೂ ಗುಂಪುಗಳಿಂದ ರಕ್ತ ಪಡೆಯಬಹುದು?"
+    },
+    {
+     "en": "Give group A blood to a group B person. Which antibody causes the clumping?",
+     "kn": "B ಗುಂಪಿನವರಿಗೆ A ಗುಂಪಿನ ರಕ್ತ ನೀಡಿ. ಯಾವ ಪ್ರತಿಕಾಯ ಗುಂಪುಗೂಡಿಸುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

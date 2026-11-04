@@ -825,6 +825,346 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A spirometer trace",
+    "kn": "ಸ್ಪೈರೋಮೀಟರ್ ದಾಖಲೆ"
+   },
+   "caption": {
+    "en": "In quiet breathing about 500 mL (tidal volume) moves in and out with each breath. With effort you can breathe in 2500 to 3000 mL more (IRV) and breathe out 1000 to 1100 mL more (ERV). About 1100 to 1200 mL (residual volume) always stays in the lungs. Vital capacity = ERV + TV + IRV.",
+    "kn": "ಶಾಂತ ಉಸಿರಾಟದಲ್ಲಿ ಪ್ರತಿ ಉಸಿರಿಗೆ ಸುಮಾರು 500 mL (ಉಬ್ಬರ ಪರಿಮಾಣ). ಪ್ರಯತ್ನದಿಂದ 2500–3000 mL ಹೆಚ್ಚು ಒಳಕ್ಕೆ (IRV), 1000–1100 mL ಹೆಚ್ಚು ಹೊರಕ್ಕೆ (ERV). ಸುಮಾರು 1100–1200 mL ಶೇಷ ಪರಿಮಾಣ ಉಳಿಯುತ್ತದೆ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Breathe quietly, then take the deepest breath you can, and read the volumes from the trace."
+   },
+   "sliders": [
+    {
+     "name": "TV",
+     "label": {
+      "en": "Tidal volume",
+      "kn": "ಉಬ್ಬರ ಪರಿಮಾಣ"
+     },
+     "min": 400,
+     "max": 600,
+     "step": 10,
+     "value": 500,
+     "unit": "mL"
+    },
+    {
+     "name": "f",
+     "label": {
+      "en": "Breaths per minute",
+      "kn": "ನಿಮಿಷಕ್ಕೆ ಉಸಿರು"
+     },
+     "min": 8,
+     "max": 24,
+     "step": 1,
+     "value": 12
+    },
+    {
+     "name": "IRV",
+     "label": {
+      "en": "Inspiratory reserve volume",
+      "kn": "ಉಚ್ಛ್ವಾಸ ಮೀಸಲು ಪರಿಮಾಣ"
+     },
+     "min": 2500,
+     "max": 3000,
+     "step": 50,
+     "value": 2500,
+     "unit": "mL"
+    },
+    {
+     "name": "ERV",
+     "label": {
+      "en": "Expiratory reserve volume",
+      "kn": "ನಿಶ್ವಾಸ ಮೀಸಲು ಪರಿಮಾಣ"
+     },
+     "min": 1000,
+     "max": 1100,
+     "step": 10,
+     "value": 1000,
+     "unit": "mL"
+    }
+   ],
+   "choices": [
+    {
+     "name": "mode",
+     "label": {
+      "en": "Breathing",
+      "kn": "ಉಸಿರಾಟ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Quiet",
+        "kn": "ಶಾಂತ"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "Deepest breath",
+        "kn": "ಅತ್ಯಂತ ಆಳ"
+       },
+       "value": 1
+      }
+     ],
+     "value": 0
+    }
+   ],
+   "time": {
+    "max": 30,
+    "unit": "s",
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "RV",
+     "expr": "1200"
+    },
+    {
+     "name": "VC",
+     "expr": "ERV + TV + IRV"
+    },
+    {
+     "name": "TLC",
+     "expr": "VC + RV"
+    },
+    {
+     "name": "V",
+     "expr": "if(mode, RV + VC*(1 - cos(2*pi*t/10))/2, RV + ERV + TV*(1 - cos(2*pi*f*t/60))/2)"
+    },
+    {
+     "name": "yd",
+     "expr": "22 - 10*(V - 1200)/4500"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 14,
+     "y": 36,
+     "r": "5 + 6*V/6000",
+     "fill": true,
+     "color": "red",
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "x": 30,
+     "y": 36,
+     "r": "5 + 6*V/6000",
+     "fill": true,
+     "color": "red",
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 22,
+     "y1": 56,
+     "x2": 22,
+     "y2": 44,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "color": "orange",
+     "width": 5,
+     "from": 6,
+     "to": 38,
+     "fn": "yd + 3*(1 - ((x - 22)/16)^2)"
+    },
+    {
+     "shape": "text",
+     "x": 22,
+     "y": 4,
+     "text": {
+      "en": "Diaphragm",
+      "kn": "ವಪೆ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 45,
+     "y1": 6,
+     "x2": 97,
+     "y2": 6,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 45,
+     "y1": 6,
+     "x2": 45,
+     "y2": 57,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 45,
+     "y1": "6 + RV/120",
+     "x2": 97,
+     "y2": "6 + RV/120",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.4
+    },
+    {
+     "shape": "line",
+     "x1": 45,
+     "y1": "6 + (RV + ERV)/120",
+     "x2": 97,
+     "y2": "6 + (RV + ERV)/120",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.4
+    },
+    {
+     "shape": "line",
+     "x1": 45,
+     "y1": "6 + TLC/120",
+     "x2": 97,
+     "y2": "6 + TLC/120",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.4
+    },
+    {
+     "shape": "text",
+     "x": 96,
+     "y": "8 + RV/120",
+     "text": {
+      "en": "RV"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 96,
+     "y": "8 + (RV + ERV)/120",
+     "text": {
+      "en": "FRC"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 96,
+     "y": "8 + TLC/120",
+     "text": {
+      "en": "TLC"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 46,
+     "y": 58.5,
+     "text": {
+      "en": "Lung volume (mL), 0 to 6000",
+      "kn": "ಶ್ವಾಸಕೋಶ ಪರಿಮಾಣ (mL)"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 71,
+     "y": 2.5,
+     "text": {
+      "en": "Time: 0 to 30 s",
+      "kn": "ಸಮಯ: 0–30 ಸೆ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "trail",
+     "x": "45 + 52*t/30",
+     "y": "6 + V/120",
+     "length": 2000,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Lung volume",
+      "kn": "ಶ್ವಾಸಕೋಶ ಪರಿಮಾಣ"
+     },
+     "expr": "V",
+     "digits": 0,
+     "unit": "mL"
+    },
+    {
+     "label": {
+      "en": "Minute volume",
+      "kn": "ನಿಮಿಷ ಪರಿಮಾಣ"
+     },
+     "expr": "TV*f",
+     "digits": 0,
+     "unit": "mL/min"
+    },
+    {
+     "label": {
+      "en": "Vital capacity",
+      "kn": "ಜೀವಧಾರಣ ಸಾಮರ್ಥ್ಯ"
+     },
+     "expr": "VC",
+     "digits": 0,
+     "unit": "mL"
+    },
+    {
+     "label": {
+      "en": "Total lung capacity",
+      "kn": "ಒಟ್ಟು ಶ್ವಾಸಕೋಶ ಸಾಮರ್ಥ್ಯ"
+     },
+     "expr": "TLC",
+     "digits": 0,
+     "unit": "mL"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At 500 mL a breath and 12 breaths a minute, how much air moves each minute?",
+     "kn": "500 mL ಮತ್ತು ನಿಮಿಷಕ್ಕೆ 12 ಉಸಿರಿನಲ್ಲಿ ಪ್ರತಿ ನಿಮಿಷ ಎಷ್ಟು ಗಾಳಿ?"
+    },
+    {
+     "en": "Switch to the deepest breath. What is the lowest volume the trace reaches, and why is it not zero?",
+     "kn": "ಅತ್ಯಂತ ಆಳ ಉಸಿರಿಗೆ ಬದಲಿಸಿ. ಕನಿಷ್ಠ ಪರಿಮಾಣ ಎಷ್ಟು, ಅದು ಸೊನ್ನೆ ಏಕಲ್ಲ?"
+    },
+    {
+     "en": "Which volumes add up to the vital capacity?",
+     "kn": "ಯಾವ ಪರಿಮಾಣಗಳು ಸೇರಿ ಜೀವಧಾರಣ ಸಾಮರ್ಥ್ಯ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -439,6 +439,356 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Chemiosmosis in the thylakoid",
+    "kn": "ಥೈಲಕಾಯ್ಡ್‌ನಲ್ಲಿ ರಾಸಾಯನಿಕ ಪರಾಸರಣ"
+   },
+   "caption": {
+    "en": "Light drives electrons through the transport chain. Protons build up inside the thylakoid lumen: from splitting water, from the carrier that pumps them across, and because NADP reductase removes H+ in the stroma. Protons flow back through the CF0 channel of ATP synthase, and CF1 makes ATP. In cyclic flow only PS I works: ATP is made but no NADPH or O2.",
+    "kn": "ಬೆಳಕು ಎಲೆಕ್ಟ್ರಾನ್‌ಗಳನ್ನು ಸಾಗಣೆ ಸರಪಳಿಯಲ್ಲಿ ತಳ್ಳುತ್ತದೆ. ಪ್ರೋಟಾನ್‌ಗಳು ಲ್ಯೂಮೆನ್‌ನಲ್ಲಿ ಸಂಗ್ರಹವಾಗುತ್ತವೆ ಮತ್ತು ATP ಸಿಂಥೇಸ್‌ನ CF0 ಮೂಲಕ ಹಿಂತಿರುಗಿದಾಗ CF1 ATP ತಯಾರಿಸುತ್ತದೆ. ಚಕ್ರೀಯ ಹರಿವಿನಲ್ಲಿ ATP ಮಾತ್ರ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Shine light on a thylakoid and watch the protons pile up inside and stream out through ATP synthase."
+   },
+   "sliders": [
+    {
+     "name": "lt",
+     "label": {
+      "en": "Light",
+      "kn": "ಬೆಳಕು"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 70,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "nc",
+     "label": {
+      "en": "Electron flow",
+      "kn": "ಎಲೆಕ್ಟ್ರಾನ್ ಹರಿವು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Non-cyclic (PS II and PS I)",
+        "kn": "ಅಚಕ್ರೀಯ (PS II, PS I)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Cyclic (PS I only)",
+        "kn": "ಚಕ್ರೀಯ (PS I ಮಾತ್ರ)"
+       },
+       "value": 0
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "open",
+     "label": {
+      "en": "ATP synthase channel open",
+      "kn": "ATP ಸಿಂಥೇಸ್ ನಾಳ ತೆರೆದಿದೆ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "dt": 0.05,
+    "unit": "s"
+   },
+   "state": [
+    {
+     "name": "Hp",
+     "init": 0,
+     "rate": "lt/100*if(nc, 12, 6)*(1 - Hp/200) - if(open, 0.1*Hp, 0) - 0.01*Hp"
+    },
+    {
+     "name": "atp",
+     "init": 0,
+     "rate": "if(open, 0.1*Hp, 0)/3"
+    },
+    {
+     "name": "nadph",
+     "init": 0,
+     "rate": "if(nc, lt/100*2, 0)"
+    },
+    {
+     "name": "o2",
+     "init": 0,
+     "rate": "if(nc, lt/100*1, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 8,
+     "w": 90,
+     "h": 20,
+     "fill": true,
+     "color": "blue",
+     "opacity": 0.15
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 28,
+     "w": 90,
+     "h": 4,
+     "fill": true,
+     "color": "yellow",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 4,
+     "text": {
+      "en": "Lumen (inside the thylakoid)",
+      "kn": "ಲ್ಯೂಮೆನ್ (ಥೈಲಕಾಯ್ಡ್ ಒಳಗೆ)"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 57,
+     "text": {
+      "en": "Stroma",
+      "kn": "ಸ್ಟ್ರೋಮಾ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "circle",
+     "x": 20,
+     "y": 30,
+     "r": 4,
+     "fill": true,
+     "color": "green",
+     "opacity": "if(nc, 1, 0.25)"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 37,
+     "text": {
+      "en": "PS II"
+     },
+     "size": 20
+    },
+    {
+     "shape": "circle",
+     "x": 36,
+     "y": 30,
+     "r": 3,
+     "fill": true,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 36,
+     "y": 36,
+     "text": {
+      "en": "cyt b6f"
+     },
+     "size": 18
+    },
+    {
+     "shape": "circle",
+     "x": 52,
+     "y": 30,
+     "r": 4,
+     "fill": true,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 52,
+     "y": 37,
+     "text": {
+      "en": "PS I"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 66,
+     "y": 33,
+     "w": 6,
+     "h": 4,
+     "fill": true,
+     "color": "white",
+     "opacity": 0.6,
+     "visibleIf": "nc"
+    },
+    {
+     "shape": "text",
+     "x": 69,
+     "y": 39,
+     "text": {
+      "en": "NADP reductase",
+      "kn": "NADP ರಿಡಕ್ಟೇಸ್"
+     },
+     "size": 16,
+     "visibleIf": "nc"
+    },
+    {
+     "shape": "rect",
+     "x": 82,
+     "y": 26,
+     "w": 4,
+     "h": 8,
+     "fill": true,
+     "color": "red",
+     "opacity": "if(open, 0.9, 0.3)"
+    },
+    {
+     "shape": "circle",
+     "x": 84,
+     "y": 38,
+     "r": 3.5,
+     "fill": true,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 84,
+     "y": 44,
+     "text": {
+      "en": "ATP synthase",
+      "kn": "ATP ಸಿಂಥೇಸ್"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 22,
+     "text": {
+      "en": "2H2O → 4H+ + O2"
+     },
+     "size": 18,
+     "visibleIf": "nc && lt > 0"
+    },
+    {
+     "shape": "particles",
+     "count": 150,
+     "visibleIf": "i < Hp*0.75",
+     "x": "bounce(8 + 70*rand(i) + 2*t*cos(2*pi*rand(i + 300)), 7, 80)",
+     "y": "bounce(10 + 16*rand(i + 150) + 2*t*sin(2*pi*rand(i + 300)), 9, 27)",
+     "r": 0.5,
+     "color": "yellow"
+    },
+    {
+     "shape": "particles",
+     "count": 6,
+     "visibleIf": "open && Hp > 5",
+     "x": 84,
+     "y": "mod(26 + 2*i + 8*t, 14) + 24",
+     "r": 0.5,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 18,
+     "y": 50,
+     "text": {
+      "en": "ATP {atp:0}",
+      "kn": "ATP {atp:0}"
+     },
+     "size": 22,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 42,
+     "y": 50,
+     "text": {
+      "en": "NADPH {nadph:0}",
+      "kn": "NADPH {nadph:0}"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 64,
+     "y": 50,
+     "text": {
+      "en": "O2 {o2:0}",
+      "kn": "O2 {o2:0}"
+     },
+     "size": 22,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Protons in lumen (relative)",
+      "kn": "ಲ್ಯೂಮೆನ್ ಪ್ರೋಟಾನ್ (ಸಾಪೇಕ್ಷ)"
+     },
+     "expr": "Hp",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "ATP made",
+      "kn": "ತಯಾರಾದ ATP"
+     },
+     "expr": "atp",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "NADPH made",
+      "kn": "ತಯಾರಾದ NADPH"
+     },
+     "expr": "nadph",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Close the ATP synthase channel. What happens to the protons and to ATP?",
+     "kn": "ATP ಸಿಂಥೇಸ್ ನಾಳ ಮುಚ್ಚಿ. ಪ್ರೋಟಾನ್ ಮತ್ತು ATP ಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Switch to cyclic flow. Which products stop?",
+     "kn": "ಚಕ್ರೀಯ ಹರಿವಿಗೆ ಬದಲಿಸಿ. ಯಾವ ಉತ್ಪನ್ನಗಳು ನಿಲ್ಲುತ್ತವೆ?"
+    },
+    {
+     "en": "Turn the light to zero. Why does ATP synthesis soon stop?",
+     "kn": "ಬೆಳಕನ್ನು ಸೊನ್ನೆ ಮಾಡಿ. ATP ತಯಾರಿಕೆ ಏಕೆ ನಿಲ್ಲುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

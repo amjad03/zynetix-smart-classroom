@@ -302,6 +302,339 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The cell cycle clock",
+    "kn": "ಕೋಶ ಚಕ್ರದ ಗಡಿಯಾರ"
+   },
+   "caption": {
+    "en": "A human cell in culture divides about once in 24 hours. Interphase (G1, S, G2) takes more than 95% of the time; mitosis lasts about an hour. DNA doubles from 2C to 4C during S phase and halves again when the cell divides. A cell can leave G1 to rest in G0.",
+    "kn": "ಮಾನವ ಕೋಶ ಸುಮಾರು 24 ಗಂಟೆಗೊಮ್ಮೆ ವಿಭಜಿಸುತ್ತದೆ. ಅಂತರಾವಸ್ಥೆ (G1, S, G2) 95% ಕ್ಕಿಂತ ಹೆಚ್ಚು ಸಮಯ; ಸಮವಿಭಜನೆ ಸುಮಾರು ಒಂದು ಗಂಟೆ. S ಹಂತದಲ್ಲಿ DNA 2C ಯಿಂದ 4C ಆಗುತ್ತದೆ. ಕೋಶ G1 ನಿಂದ G0 ಗೆ ಹೋಗಬಹುದು."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Play three rounds of the cell cycle and watch the DNA content of one cell line."
+   },
+   "sliders": [
+    {
+     "name": "G1",
+     "label": {
+      "en": "G1 length",
+      "kn": "G1 ಅವಧಿ"
+     },
+     "min": 6,
+     "max": 16,
+     "step": 1,
+     "value": 11,
+     "unit": "h"
+    },
+    {
+     "name": "Sd",
+     "label": {
+      "en": "S length",
+      "kn": "S ಅವಧಿ"
+     },
+     "min": 6,
+     "max": 10,
+     "step": 1,
+     "value": 8,
+     "unit": "h"
+    },
+    {
+     "name": "G2",
+     "label": {
+      "en": "G2 length",
+      "kn": "G2 ಅವಧಿ"
+     },
+     "min": 2,
+     "max": 6,
+     "step": 1,
+     "value": 4,
+     "unit": "h"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "g0",
+     "label": {
+      "en": "Exit to G0 after G1",
+      "kn": "G1 ನಂತರ G0 ಗೆ ನಿರ್ಗಮನ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 72,
+    "unit": "h",
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 4
+   },
+   "vars": [
+    {
+     "name": "tot",
+     "expr": "G1 + Sd + G2 + 1"
+    },
+    {
+     "name": "tt",
+     "expr": "if(g0, min(t, G1), mod(t, tot))"
+    },
+    {
+     "name": "rest",
+     "expr": "g0 && t >= G1"
+    },
+    {
+     "name": "dna",
+     "expr": "if(tt < G1, 2, if(tt < G1 + Sd, 2 + 2*(tt - G1)/Sd, 4))"
+    },
+    {
+     "name": "w",
+     "expr": "90/tot"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 48,
+     "w": "G1*w",
+     "h": 5,
+     "fill": true,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": "5 + G1*w",
+     "y": 48,
+     "w": "Sd*w",
+     "h": 5,
+     "fill": true,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": "5 + (G1 + Sd)*w",
+     "y": 48,
+     "w": "G2*w",
+     "h": 5,
+     "fill": true,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": "5 + (tot - 1)*w",
+     "y": 48,
+     "w": "w",
+     "h": 5,
+     "fill": true,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": "5 + G1*w/2",
+     "y": 55.5,
+     "text": {
+      "en": "G1"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": "5 + (G1 + Sd/2)*w",
+     "y": 55.5,
+     "text": {
+      "en": "S"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": "5 + (G1 + Sd + G2/2)*w",
+     "y": 55.5,
+     "text": {
+      "en": "G2"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": "5 + (tot - 0.5)*w",
+     "y": 55.5,
+     "text": {
+      "en": "M"
+     },
+     "size": 24
+    },
+    {
+     "shape": "line",
+     "x1": "5 + tt*w",
+     "y1": 46,
+     "x2": "5 + tt*w",
+     "y2": 54.5,
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 8,
+     "x2": 95,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 8,
+     "x2": 5,
+     "y2": 40,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 20,
+     "x2": 95,
+     "y2": 20,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.3
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 32,
+     "x2": 95,
+     "y2": 32,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 20,
+     "text": {
+      "en": "2C"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 32,
+     "text": {
+      "en": "4C"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 3.5,
+     "text": {
+      "en": "Time: 0 to 72 h",
+      "kn": "ಸಮಯ: 0 ರಿಂದ 72 ಗಂ"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 42,
+     "text": {
+      "en": "DNA per cell",
+      "kn": "ಪ್ರತಿ ಕೋಶದ DNA"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "trail",
+     "x": "5 + 1.25*t",
+     "y": "8 + 6*dna",
+     "length": 2000,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 75,
+     "y": 42,
+     "text": {
+      "en": "G0: quiescent, not dividing",
+      "kn": "G0: ನಿಶ್ಚಲ, ವಿಭಜನೆ ಇಲ್ಲ"
+     },
+     "size": 22,
+     "visibleIf": "rest",
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cycle length",
+      "kn": "ಚಕ್ರದ ಅವಧಿ"
+     },
+     "expr": "tot",
+     "digits": 0,
+     "unit": "h"
+    },
+    {
+     "label": {
+      "en": "Time in interphase",
+      "kn": "ಅಂತರಾವಸ್ಥೆಯ ಸಮಯ"
+     },
+     "expr": "(tot - 1)/tot*100",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "DNA content",
+      "kn": "DNA ಪ್ರಮಾಣ"
+     },
+     "expr": "dna",
+     "digits": 1,
+     "unit": "C"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "During which phase does the DNA content rise from 2C to 4C?",
+     "kn": "ಯಾವ ಹಂತದಲ್ಲಿ DNA ಪ್ರಮಾಣ 2C ಯಿಂದ 4C ಗೆ ಏರುತ್ತದೆ?"
+    },
+    {
+     "en": "Lengthen G1. How does the share of time spent in interphase change?",
+     "kn": "G1 ಅನ್ನು ಉದ್ದಗೊಳಿಸಿ. ಅಂತರಾವಸ್ಥೆಯ ಪಾಲು ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on G0. What happens to the DNA content, and why is the cell still alive and active?",
+     "kn": "G0 ಆನ್ ಮಾಡಿ. DNA ಪ್ರಮಾಣಕ್ಕೆ ಏನಾಗುತ್ತದೆ? ಕೋಶ ಇನ್ನೂ ಸಕ್ರಿಯವಾಗಿರುವುದು ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

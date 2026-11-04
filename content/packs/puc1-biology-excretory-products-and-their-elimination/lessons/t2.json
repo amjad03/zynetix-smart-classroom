@@ -531,6 +531,280 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Filtration and reabsorption",
+    "kn": "ಸೋಸುವಿಕೆ ಮತ್ತು ಪುನರ್ಹೀರಿಕೆ"
+   },
+   "caption": {
+    "en": "The glomeruli filter about 125 mL of blood plasma a minute, about 180 L a day, but about 99% of the filtrate is reabsorbed, so only about 1.5 L of urine is made. If blood pressure and GFR fall, juxtaglomerular cells release renin, which brings the GFR back to normal.",
+    "kn": "ಗ್ಲಾಮರುಲಸ್‌ಗಳು ನಿಮಿಷಕ್ಕೆ ಸುಮಾರು 125 mL, ದಿನಕ್ಕೆ ಸುಮಾರು 180 L ಸೋಸುತ್ತವೆ; ಸುಮಾರು 99% ಮರುಹೀರಲ್ಪಡುತ್ತದೆ, ಮೂತ್ರ ಸುಮಾರು 1.5 L. GFR ಇಳಿದರೆ JG ಕೋಶಗಳು ರೆನಿನ್ ಬಿಡುಗಡೆ ಮಾಡಿ GFR ಅನ್ನು ಸರಿಪಡಿಸುತ್ತವೆ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Most of what the kidneys filter goes straight back into the blood. See how much."
+   },
+   "sliders": [
+    {
+     "name": "gfr",
+     "label": {
+      "en": "Glomerular filtration rate",
+      "kn": "ಗ್ಲಾಮರುಲಾರ್ ಸೋಸುವಿಕೆ ದರ"
+     },
+     "min": 60,
+     "max": 150,
+     "step": 5,
+     "value": 125,
+     "unit": "mL/min"
+    },
+    {
+     "name": "re",
+     "label": {
+      "en": "Filtrate reabsorbed",
+      "kn": "ಮರುಹೀರಿದ ಸೋಸುದ್ರವ"
+     },
+     "min": 97,
+     "max": 99.9,
+     "step": 0.1,
+     "value": 99.2,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "low",
+     "label": {
+      "en": "Low blood pressure",
+      "kn": "ಕಡಿಮೆ ರಕ್ತದೊತ್ತಡ"
+     },
+     "value": false
+    },
+    {
+     "name": "ren",
+     "label": {
+      "en": "JG cells release renin",
+      "kn": "JG ಕೋಶಗಳಿಂದ ರೆನಿನ್"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 30,
+    "loop": true,
+    "autoplay": true,
+    "unit": "s"
+   },
+   "vars": [
+    {
+     "name": "g",
+     "expr": "gfr*if(low && !ren, 0.7, 1)"
+    },
+    {
+     "name": "fday",
+     "expr": "g*1.44"
+    },
+    {
+     "name": "uday",
+     "expr": "fday*(1 - re/100)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 18,
+     "y": 30,
+     "r": 7,
+     "fill": true,
+     "color": "red",
+     "opacity": 0.6
+    },
+    {
+     "shape": "circle",
+     "x": 18,
+     "y": 30,
+     "r": 9,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": 18,
+     "text": {
+      "en": "Glomerulus",
+      "kn": "ಗ್ಲಾಮರುಲಸ್"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 27,
+     "y": 28,
+     "w": 52,
+     "h": 4,
+     "fill": true,
+     "color": "yellow",
+     "opacity": 0.35
+    },
+    {
+     "shape": "line",
+     "x1": 18,
+     "y1": 44,
+     "x2": 79,
+     "y2": 44,
+     "color": "red",
+     "width": 6
+    },
+    {
+     "shape": "text",
+     "x": 48,
+     "y": 48,
+     "text": {
+      "en": "Peritubular capillaries",
+      "kn": "ಪರಿನಾಳ ಲೋಮನಾಳಗಳು"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 79,
+     "y": 8,
+     "w": 4,
+     "h": 24,
+     "fill": true,
+     "color": "yellow",
+     "opacity": 0.35
+    },
+    {
+     "shape": "text",
+     "x": 81,
+     "y": 4,
+     "text": {
+      "en": "Urine",
+      "kn": "ಮೂತ್ರ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "particles",
+     "count": 60,
+     "r": 0.7,
+     "color": "yellow",
+     "x": "27 + mod(52*rand(i) + 6*t, 52)",
+     "y": "30 + if(rand(i + 3) < 1 - re/100, 0, clamp(1.6*(27 + mod(52*rand(i) + 6*t, 52) - 30 - 45*rand(i + 2)), 0, 14))"
+    },
+    {
+     "shape": "rect",
+     "x": 55,
+     "y": 8,
+     "w": 6,
+     "h": "fday/12",
+     "fill": true,
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 66,
+     "y": 8,
+     "w": 6,
+     "h": "max(uday*6, 0.3)",
+     "fill": true,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 58,
+     "y": 5,
+     "text": {
+      "en": "{fday:0} L",
+      "kn": "{fday:0} L"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 69,
+     "y": 5,
+     "text": {
+      "en": "{uday:1} L",
+      "kn": "{uday:1} L"
+     },
+     "size": 18
+    },
+    {
+     "shape": "label",
+     "x": 40,
+     "y": 56,
+     "text": {
+      "en": "GFR {g:0} mL/min",
+      "kn": "GFR {g:0} mL/ನಿಮಿಷ"
+     },
+     "size": 24
+    },
+    {
+     "shape": "label",
+     "x": 40,
+     "y": 12,
+     "text": {
+      "en": "Low GFR: JG cells sense the fall",
+      "kn": "ಕಡಿಮೆ GFR: JG ಕೋಶಗಳು ಗ್ರಹಿಸುತ್ತವೆ"
+     },
+     "size": 20,
+     "visibleIf": "low && !ren",
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Filtrate per day",
+      "kn": "ದಿನದ ಸೋಸುದ್ರವ"
+     },
+     "expr": "fday",
+     "digits": 0,
+     "unit": "L"
+    },
+    {
+     "label": {
+      "en": "Urine per day",
+      "kn": "ದಿನದ ಮೂತ್ರ"
+     },
+     "expr": "uday",
+     "digits": 2,
+     "unit": "L"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At 125 mL/min, how many litres are filtered in a day?",
+     "kn": "125 mL/ನಿಮಿಷದಲ್ಲಿ ದಿನಕ್ಕೆ ಎಷ್ಟು ಲೀಟರ್ ಸೋಸಲ್ಪಡುತ್ತದೆ?"
+    },
+    {
+     "en": "Lower reabsorption from 99% to 98%. What happens to the urine volume?",
+     "kn": "ಪುನರ್ಹೀರಿಕೆಯನ್ನು 99% ರಿಂದ 98% ಕ್ಕೆ ಇಳಿಸಿ. ಮೂತ್ರದ ಪ್ರಮಾಣಕ್ಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on low blood pressure, then the renin response. What does each do to the GFR?",
+     "kn": "ಕಡಿಮೆ ರಕ್ತದೊತ್ತಡ, ನಂತರ ರೆನಿನ್ ಆನ್ ಮಾಡಿ. GFR ಗೆ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

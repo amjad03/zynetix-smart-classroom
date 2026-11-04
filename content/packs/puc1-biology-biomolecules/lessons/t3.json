@@ -891,6 +891,253 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Chargaff's rule and the double helix",
+    "kn": "ಚಾರ್ಗಾಫ್ ನಿಯಮ ಮತ್ತು ದ್ವಿಸುರುಳಿ"
+   },
+   "caption": {
+    "en": "In double-stranded DNA, A pairs with T and G with C, so A = T and G = C, and purines equal pyrimidines. In B-DNA each base pair adds 0.34 nm and one turn holds about 10 base pairs (pitch 3.4 nm).",
+    "kn": "ದ್ವಿತಂತು DNA ಯಲ್ಲಿ A ಯು T ಯೊಂದಿಗೆ, G ಯು C ಯೊಂದಿಗೆ ಜೋಡಿಯಾಗುತ್ತವೆ; ಆದ್ದರಿಂದ A = T, G = C. B-DNA ಯಲ್ಲಿ ಪ್ರತಿ ಮೂಲಜೋಡಿ 0.34 nm, ಒಂದು ಸುತ್ತಿನಲ್ಲಿ ಸುಮಾರು 10 ಮೂಲಜೋಡಿಗಳು."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Set the share of adenine and the length of the DNA. The other bases and the size of the helix follow."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Adenine",
+      "kn": "ಅಡೆನಿನ್"
+     },
+     "min": 10,
+     "max": 40,
+     "step": 1,
+     "value": 30,
+     "unit": "%"
+    },
+    {
+     "name": "bp",
+     "label": {
+      "en": "Base pairs",
+      "kn": "ಮೂಲಜೋಡಿಗಳು"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 40
+    }
+   ],
+   "toggles": [
+    {
+     "name": "bars",
+     "label": {
+      "en": "Show base percentages",
+      "kn": "ಮೂಲಗಳ ಶೇಕಡ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 20,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "G",
+     "expr": "50 - A"
+    },
+    {
+     "name": "len",
+     "expr": "0.34*bp"
+    },
+    {
+     "name": "xe",
+     "expr": "5 + 0.85*bp"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "wave",
+     "fn": "46 + 5*sin(2*pi*(x - 5)/8.5 + t)",
+     "from": 5,
+     "to": "xe",
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "wave",
+     "fn": "46 - 5*sin(2*pi*(x - 5)/8.5 + t)",
+     "from": 5,
+     "to": "xe",
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "particles",
+     "count": 100,
+     "visibleIf": "i < bp",
+     "x": "5 + 0.85*(i + 0.5)",
+     "y": 46,
+     "r": 0.35,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 37,
+     "x2": "xe",
+     "y2": 37,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": "(5 + xe)/2",
+     "y": 34,
+     "text": {
+      "en": "{len:1} nm, {bp/10:1} turns",
+      "kn": "{len:1} nm, {bp/10:1} ಸುತ್ತು"
+     },
+     "size": 24
+    },
+    {
+     "shape": "rect",
+     "x": 15,
+     "y": 8,
+     "w": 8,
+     "h": "0.4*A",
+     "fill": true,
+     "color": "red",
+     "visibleIf": "bars"
+    },
+    {
+     "shape": "rect",
+     "x": 35,
+     "y": 8,
+     "w": 8,
+     "h": "0.4*A",
+     "fill": true,
+     "color": "yellow",
+     "visibleIf": "bars"
+    },
+    {
+     "shape": "rect",
+     "x": 55,
+     "y": 8,
+     "w": 8,
+     "h": "0.4*G",
+     "fill": true,
+     "color": "green",
+     "visibleIf": "bars"
+    },
+    {
+     "shape": "rect",
+     "x": 75,
+     "y": 8,
+     "w": 8,
+     "h": "0.4*G",
+     "fill": true,
+     "color": "blue",
+     "visibleIf": "bars"
+    },
+    {
+     "shape": "text",
+     "x": 19,
+     "y": 5,
+     "text": {
+      "en": "A {A}%"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 39,
+     "y": 5,
+     "text": {
+      "en": "T {A}%"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 59,
+     "y": 5,
+     "text": {
+      "en": "G {G}%"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 79,
+     "y": 5,
+     "text": {
+      "en": "C {G}%"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Guanine",
+      "kn": "ಗ್ವಾನಿನ್"
+     },
+     "expr": "G",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Purines (A + G)",
+      "kn": "ಪ್ಯೂರಿನ್‌ಗಳು (A + G)"
+     },
+     "expr": "A + G",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Length",
+      "kn": "ಉದ್ದ"
+     },
+     "expr": "len",
+     "digits": 1,
+     "unit": "nm"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "If a DNA has 20% adenine, what percent is guanine?",
+     "kn": "DNA ಯಲ್ಲಿ 20% ಅಡೆನಿನ್ ಇದ್ದರೆ ಗ್ವಾನಿನ್ ಎಷ್ಟು ಶೇಕಡ?"
+    },
+    {
+     "en": "How long is a stretch of 50 base pairs, and how many turns does it make?",
+     "kn": "50 ಮೂಲಜೋಡಿಗಳ ಉದ್ದ ಎಷ್ಟು, ಎಷ್ಟು ಸುತ್ತುಗಳು?"
+    },
+    {
+     "en": "Why is A + G always 50% in double-stranded DNA?",
+     "kn": "ದ್ವಿತಂತು DNA ಯಲ್ಲಿ A + G ಯಾವಾಗಲೂ 50% ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

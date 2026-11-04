@@ -308,6 +308,270 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Limiting factors",
+    "kn": "ಮಿತಿಗೊಳಿಸುವ ಅಂಶಗಳು"
+   },
+   "caption": {
+    "en": "By Blackman's law the rate is set by the factor in shortest supply. For a single leaf, light saturates at about 10% of full sunlight, so CO2 is often the limiting factor. C3 plants keep gaining from extra CO2 beyond about 450 ppm; C4 plants saturate at about 360 ppm. Each plant has an optimum temperature (higher for C4). Illustrative model.",
+    "kn": "ಬ್ಲ್ಯಾಕ್‌ಮನ್ ನಿಯಮದಂತೆ ಅತಿ ಕಡಿಮೆ ಲಭ್ಯ ಅಂಶ ದರ ನಿರ್ಧರಿಸುತ್ತದೆ. ಬೆಳಕು ಸುಮಾರು 10% ಸೂರ್ಯಬೆಳಕಿನಲ್ಲಿ ಸಂತೃಪ್ತ; CO2 ಹೆಚ್ಚಾಗಿ ಮಿತಿ. C3 ಸಸ್ಯಗಳು 450 ppm ನಂತರವೂ ಲಾಭ ಪಡೆಯುತ್ತವೆ; C4 ಸುಮಾರು 360 ppm ನಲ್ಲಿ ಸಂತೃಪ್ತ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Change light, carbon dioxide and temperature, and find which factor is holding photosynthesis back."
+   },
+   "sliders": [
+    {
+     "name": "I",
+     "label": {
+      "en": "Light",
+      "kn": "ಬೆಳಕು"
+     },
+     "min": 0,
+     "max": 40,
+     "step": 1,
+     "value": 5,
+     "unit": "% of sun"
+    },
+    {
+     "name": "co2",
+     "label": {
+      "en": "CO2",
+      "kn": "CO2"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 25,
+     "value": 400,
+     "unit": "ppm"
+    },
+    {
+     "name": "Tl",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪ"
+     },
+     "min": 10,
+     "max": 45,
+     "step": 1,
+     "value": 25,
+     "unit": "°C"
+    }
+   ],
+   "choices": [
+    {
+     "name": "c4",
+     "label": {
+      "en": "Plant",
+      "kn": "ಸಸ್ಯ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "C3",
+        "kn": "C3"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "C4",
+        "kn": "C4"
+       },
+       "value": 1
+      }
+     ],
+     "value": 0
+    }
+   ],
+   "vars": [
+    {
+     "name": "Lf",
+     "expr": "1 - exp(-I/3)"
+    },
+    {
+     "name": "Cf",
+     "expr": "if(c4, max(1 - exp(-(co2 - 10)/90), 0), max(1 - exp(-(co2 - 50)/150), 0))"
+    },
+    {
+     "name": "Tf",
+     "expr": "exp(-((Tl - if(c4, 35, 25))/12)^2)"
+    },
+    {
+     "name": "P",
+     "expr": "100*Tf*min(Lf, Cf)"
+    },
+    {
+     "name": "gx",
+     "expr": "10 + I*85/40"
+    },
+    {
+     "name": "gy",
+     "expr": "8 + 0.42*P"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 8,
+     "x2": 96,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 8,
+     "x2": 10,
+     "y2": 54,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 53,
+     "y": 3,
+     "text": {
+      "en": "Light intensity (% of full sunlight), 0 to 40",
+      "kn": "ಬೆಳಕಿನ ತೀವ್ರತೆ (% ಸೂರ್ಯಬೆಳಕು), 0–40"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 57,
+     "text": {
+      "en": "Rate of photosynthesis (relative)",
+      "kn": "ದ್ಯುತಿಸಂಶ್ಲೇಷಣೆ ದರ (ಸಾಪೇಕ್ಷ)"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": "8 + 42*Tf*Cf",
+     "x2": 95,
+     "y2": "8 + 42*Tf*Cf",
+     "color": "orange",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 94,
+     "y": "10 + 42*Tf*Cf",
+     "text": {
+      "en": "CO2 limit",
+      "kn": "CO2 ಮಿತಿ"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "path",
+     "fn": "8 + 42*Tf*min(1 - exp(-((x - 10)*40/85)/3), Cf)",
+     "from": 10,
+     "to": 95,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "gx",
+     "y1": 8,
+     "x2": "gx",
+     "y2": "gy",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "x": "gx",
+     "y": "gy",
+     "r": 1.3,
+     "fill": true,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 70,
+     "y": 30,
+     "text": {
+      "en": "Light is limiting",
+      "kn": "ಬೆಳಕು ಮಿತಿ"
+     },
+     "size": 22,
+     "visibleIf": "Lf < Cf",
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 70,
+     "y": 30,
+     "text": {
+      "en": "CO2 is limiting",
+      "kn": "CO2 ಮಿತಿ"
+     },
+     "size": 22,
+     "visibleIf": "Lf >= Cf",
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Rate",
+      "kn": "ದರ"
+     },
+     "expr": "P",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Temperature factor",
+      "kn": "ತಾಪ ಅಂಶ"
+     },
+     "expr": "Tf*100",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At 400 ppm CO2, raise the light from 2% to 30%. Where does the curve flatten, and what limits it there?",
+     "kn": "400 ppm ನಲ್ಲಿ ಬೆಳಕನ್ನು 2% ರಿಂದ 30% ಏರಿಸಿ. ವಕ್ರ ಎಲ್ಲಿ ಚಪ್ಪಟೆ? ಅಲ್ಲಿ ಮಿತಿ ಯಾವುದು?"
+    },
+    {
+     "en": "Now raise CO2 to 900 ppm. Which plant gains more, C3 or C4?",
+     "kn": "CO2 ಅನ್ನು 900 ppm ಗೆ ಏರಿಸಿ. C3 ಅಥವಾ C4, ಯಾವುದಕ್ಕೆ ಹೆಚ್ಚು ಲಾಭ?"
+    },
+    {
+     "en": "Why do greenhouse growers add CO2 for crops like tomato?",
+     "kn": "ಹಸಿರುಮನೆಯಲ್ಲಿ ಟೊಮೆಟೊಗೆ CO2 ಏಕೆ ಸೇರಿಸುತ್ತಾರೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

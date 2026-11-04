@@ -643,6 +643,365 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Gas exchange in an alveolus",
+    "kn": "ವಾಯುಕೋಶದಲ್ಲಿ ಅನಿಲ ವಿನಿಮಯ"
+   },
+   "caption": {
+    "en": "Gases diffuse from higher to lower partial pressure. Blood reaches the alveolus with pO2 40 and pCO2 45 mm Hg; alveolar air has pO2 104 and pCO2 40. Diffusion is faster with a larger surface and a thinner membrane. CO2 is 20 to 25 times more soluble than O2. Blood in the pulmonary veins reads about 95 because it mixes with a little blood that bypassed the alveoli.",
+    "kn": "ಅನಿಲಗಳು ಹೆಚ್ಚು ಆಂಶಿಕ ಒತ್ತಡದಿಂದ ಕಡಿಮೆಗೆ ಪ್ರಸರಿಸುತ್ತವೆ. ರಕ್ತ pO2 40, pCO2 45 ನೊಂದಿಗೆ ಬರುತ್ತದೆ; ವಾಯುಕೋಶದಲ್ಲಿ pO2 104, pCO2 40. ದೊಡ್ಡ ಮೇಲ್ಮೈ, ತೆಳು ಪೊರೆ ಪ್ರಸರಣ ವೇಗಗೊಳಿಸುತ್ತವೆ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Follow the blood along a capillary past the alveolus and watch its partial pressure change."
+   },
+   "sliders": [
+    {
+     "name": "th",
+     "label": {
+      "en": "Membrane thickness (times normal)",
+      "kn": "ಪೊರೆಯ ದಪ್ಪ (ಸಾಮಾನ್ಯದ ಪಟ್ಟು)"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 0.25,
+     "value": 1
+    },
+    {
+     "name": "A",
+     "label": {
+      "en": "Surface area",
+      "kn": "ಮೇಲ್ಮೈ ವಿಸ್ತೀರ್ಣ"
+     },
+     "min": 20,
+     "max": 100,
+     "step": 5,
+     "value": 100,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "gas",
+     "label": {
+      "en": "Gas",
+      "kn": "ಅನಿಲ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "O2"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "CO2"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 30,
+    "loop": true,
+    "autoplay": true,
+    "unit": "s"
+   },
+   "vars": [
+    {
+     "name": "pA",
+     "expr": "if(gas == 1, 104, 40)"
+    },
+    {
+     "name": "p0",
+     "expr": "if(gas == 1, 40, 45)"
+    },
+    {
+     "name": "k",
+     "expr": "if(gas == 1, 6, 8)*(A/100)/th"
+    },
+    {
+     "name": "pend",
+     "expr": "pA - (pA - p0)*exp(-k*0.75)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 38,
+     "w": 80,
+     "h": 18,
+     "fill": true,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 36.5,
+     "x2": 90,
+     "y2": 36.5,
+     "color": "yellow",
+     "width": "2 + 2*th"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50,
+     "text": {
+      "en": "Alveolar air: {pA} mm Hg",
+      "kn": "ವಾಯುಕೋಶದ ಗಾಳಿ: {pA} mm Hg"
+     },
+     "size": 24
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 26,
+     "w": 10,
+     "h": 8,
+     "fill": true,
+     "color": {
+      "by": "(pA - (pA - p0)*exp(-k*0.75*0.0625) - 38)/68",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 20,
+     "y": 26,
+     "w": 10,
+     "h": 8,
+     "fill": true,
+     "color": {
+      "by": "(pA - (pA - p0)*exp(-k*0.75*0.1875) - 38)/68",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 30,
+     "y": 26,
+     "w": 10,
+     "h": 8,
+     "fill": true,
+     "color": {
+      "by": "(pA - (pA - p0)*exp(-k*0.75*0.3125) - 38)/68",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 40,
+     "y": 26,
+     "w": 10,
+     "h": 8,
+     "fill": true,
+     "color": {
+      "by": "(pA - (pA - p0)*exp(-k*0.75*0.4375) - 38)/68",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 50,
+     "y": 26,
+     "w": 10,
+     "h": 8,
+     "fill": true,
+     "color": {
+      "by": "(pA - (pA - p0)*exp(-k*0.75*0.5625) - 38)/68",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 60,
+     "y": 26,
+     "w": 10,
+     "h": 8,
+     "fill": true,
+     "color": {
+      "by": "(pA - (pA - p0)*exp(-k*0.75*0.6875) - 38)/68",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 70,
+     "y": 26,
+     "w": 10,
+     "h": 8,
+     "fill": true,
+     "color": {
+      "by": "(pA - (pA - p0)*exp(-k*0.75*0.8125) - 38)/68",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 80,
+     "y": 26,
+     "w": 10,
+     "h": 8,
+     "fill": true,
+     "color": {
+      "by": "(pA - (pA - p0)*exp(-k*0.75*0.9375) - 38)/68",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "particles",
+     "count": 16,
+     "x": "10 + mod(80*rand(i) + 8*t, 80)",
+     "y": "28 + 4*rand(i + 50)",
+     "r": 0.9,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "arrow",
+     "x": 50,
+     "y": 42,
+     "dx": 0,
+     "dy": "-4*(gas == 1) + 4*(gas == 2)",
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 6,
+     "x2": 90,
+     "y2": 6,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 6,
+     "x2": 10,
+     "y2": 23,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "6 + 16*(pA - (pA - p0)*exp(-k*0.75*(x - 10)/80) - 38)/68",
+     "from": 10,
+     "to": 90,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 2.5,
+     "text": {
+      "en": "Along the capillary (0.75 s)",
+      "kn": "ಲೋಮನಾಳದ ಉದ್ದಕ್ಕೂ (0.75 ಸೆ)"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 24,
+     "text": {
+      "en": "Blood partial pressure",
+      "kn": "ರಕ್ತದ ಆಂಶಿಕ ಒತ್ತಡ"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 16,
+     "text": {
+      "en": "Leaves at {pend:0} mm Hg",
+      "kn": "{pend:0} mm Hg ನಲ್ಲಿ ಹೊರಕ್ಕೆ"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Partial pressure leaving",
+      "kn": "ಹೊರಡುವ ಆಂಶಿಕ ಒತ್ತಡ"
+     },
+     "expr": "pend",
+     "digits": 0,
+     "unit": "mm Hg"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With normal settings, how far along the capillary does the blood catch up with the alveolar pO2?",
+     "kn": "ಸಾಮಾನ್ಯ ಸ್ಥಿತಿಯಲ್ಲಿ ಲೋಮನಾಳದ ಎಷ್ಟು ದೂರದಲ್ಲಿ ರಕ್ತ ವಾಯುಕೋಶದ pO2 ತಲುಪುತ್ತದೆ?"
+    },
+    {
+     "en": "Thicken the membrane five times and shrink the surface to 20%. What pO2 leaves the lungs?",
+     "kn": "ಪೊರೆಯನ್ನು ಐದು ಪಟ್ಟು ದಪ್ಪ, ಮೇಲ್ಮೈ 20% ಮಾಡಿ. ಯಾವ pO2 ಹೊರಡುತ್ತದೆ?"
+    },
+    {
+     "en": "Why does CO2 cross well even though its pressure difference is only 5 mm Hg?",
+     "kn": "ಒತ್ತಡ ವ್ಯತ್ಯಾಸ 5 mm Hg ಮಾತ್ರ ಆದರೂ CO2 ಚೆನ್ನಾಗಿ ದಾಟುವುದೇಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

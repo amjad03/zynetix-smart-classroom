@@ -330,6 +330,358 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Fermentation in a flask",
+    "kn": "ಫ್ಲಾಸ್ಕ್‌ನಲ್ಲಿ ಹುದುಗುವಿಕೆ"
+   },
+   "caption": {
+    "en": "Without oxygen, yeast turns sugar into ethyl alcohol and CO2; some bacteria and our muscles make lactic acid instead. Only 2 ATP are gained per glucose, against up to 38 in aerobic respiration. Yeast poison themselves when alcohol reaches about 13%, so fermentation stops with sugar left over. Illustrative rates.",
+    "kn": "ಆಮ್ಲಜನಕವಿಲ್ಲದೆ ಯೀಸ್ಟ್ ಸಕ್ಕರೆಯನ್ನು ಈಥೈಲ್ ಆಲ್ಕೋಹಾಲ್ ಮತ್ತು CO2 ಆಗಿಸುತ್ತದೆ; ಕೆಲವು ಬ್ಯಾಕ್ಟೀರಿಯಾ ಮತ್ತು ಸ್ನಾಯುಗಳು ಲ್ಯಾಕ್ಟಿಕ್ ಆಮ್ಲ. ಗ್ಲೂಕೋಸ್‌ಗೆ 2 ATP ಮಾತ್ರ. ಆಲ್ಕೋಹಾಲ್ ಸುಮಾರು 13% ಆದಾಗ ಯೀಸ್ಟ್ ಸಾಯುತ್ತದೆ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Seal some sugar solution with yeast and watch what is made over three days."
+   },
+   "sliders": [
+    {
+     "name": "s0",
+     "label": {
+      "en": "Starting sugar",
+      "kn": "ಆರಂಭಿಕ ಸಕ್ಕರೆ"
+     },
+     "min": 5,
+     "max": 30,
+     "step": 1,
+     "value": 30,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "org",
+     "label": {
+      "en": "Organism",
+      "kn": "ಜೀವಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Yeast",
+        "kn": "ಯೀಸ್ಟ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Lactic acid bacteria",
+        "kn": "ಲ್ಯಾಕ್ಟಿಕ್ ಆಮ್ಲ ಬ್ಯಾಕ್ಟೀರಿಯಾ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "air",
+     "label": {
+      "en": "Oxygen let in",
+      "kn": "ಆಮ್ಲಜನಕ ಒಳಕ್ಕೆ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 72,
+    "dt": 0.1,
+    "unit": "h",
+    "speeds": [
+     2,
+     4,
+     8
+    ],
+    "speed": 4
+   },
+   "vars": [
+    {
+     "name": "aer",
+     "expr": "air && org == 1"
+    },
+    {
+     "name": "alive",
+     "expr": "if(aer, 1, if(org == 1, 1 - smoothstep(12, 13, E), 1 - smoothstep(1.5, 2, E)))"
+    }
+   ],
+   "state": [
+    {
+     "name": "Sg",
+     "init": "s0",
+     "rate": "-0.8*alive*Sg/(Sg + 0.5)"
+    },
+    {
+     "name": "E",
+     "init": 0,
+     "rate": "if(aer, 0, if(org == 1, 0.51, 1)*0.8*alive*Sg/(Sg + 0.5))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       18,
+       50
+      ],
+      [
+       26,
+       50
+      ],
+      [
+       26,
+       40
+      ],
+      [
+       38,
+       10
+      ],
+      [
+       6,
+       10
+      ],
+      [
+       18,
+       40
+      ]
+     ],
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       10,
+       20
+      ],
+      [
+       34,
+       20
+      ],
+      [
+       38,
+       10
+      ],
+      [
+       6,
+       10
+      ]
+     ],
+     "fill": true,
+     "color": "yellow",
+     "opacity": "0.2 + 0.6*Sg/30"
+    },
+    {
+     "shape": "particles",
+     "count": 30,
+     "visibleIf": "Sg > 0.3 && org == 1 && alive > 0.05",
+     "x": "10 + 24*rand(i)",
+     "y": "11 + mod(9*rand(i + 50) + 6*t, 36)",
+     "r": 0.6,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": 55,
+     "y": 8,
+     "w": 8,
+     "h": "1.5*Sg",
+     "fill": true,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 70,
+     "y": 8,
+     "w": 8,
+     "h": "1.5*E",
+     "fill": true,
+     "color": "orange",
+     "visibleIf": "!aer"
+    },
+    {
+     "shape": "text",
+     "x": 59,
+     "y": 4.5,
+     "text": {
+      "en": "Sugar",
+      "kn": "ಸಕ್ಕರೆ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 74,
+     "y": 4.5,
+     "text": {
+      "en": "Alcohol",
+      "kn": "ಆಲ್ಕೋಹಾಲ್"
+     },
+     "size": 18,
+     "visibleIf": "org == 1 && !aer"
+    },
+    {
+     "shape": "text",
+     "x": 74,
+     "y": 4.5,
+     "text": {
+      "en": "Lactic acid",
+      "kn": "ಲ್ಯಾಕ್ಟಿಕ್ ಆಮ್ಲ"
+     },
+     "size": 18,
+     "visibleIf": "org == 2"
+    },
+    {
+     "shape": "text",
+     "x": 59,
+     "y": "10 + 1.5*Sg",
+     "text": {
+      "en": "{Sg:1}%"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 74,
+     "y": "10 + 1.5*E",
+     "text": {
+      "en": "{E:1}%"
+     },
+     "size": 18,
+     "visibleIf": "!aer"
+    },
+    {
+     "shape": "line",
+     "x1": 68,
+     "y1": "8 + 1.5*13",
+     "x2": 80,
+     "y2": "8 + 1.5*13",
+     "color": "red",
+     "dashed": true,
+     "visibleIf": "org == 1 && !aer"
+    },
+    {
+     "shape": "text",
+     "x": 81,
+     "y": "8 + 1.5*13",
+     "text": {
+      "en": "13%"
+     },
+     "size": 18,
+     "align": "left",
+     "visibleIf": "org == 1 && !aer"
+    },
+    {
+     "shape": "label",
+     "x": 70,
+     "y": 56,
+     "text": {
+      "en": "Fermentation: 2 ATP per glucose",
+      "kn": "ಹುದುಗುವಿಕೆ: ಗ್ಲೂಕೋಸ್‌ಗೆ 2 ATP"
+     },
+     "size": 20,
+     "visibleIf": "!aer"
+    },
+    {
+     "shape": "label",
+     "x": 70,
+     "y": 56,
+     "text": {
+      "en": "Aerobic: up to 38 ATP per glucose, CO2 + H2O",
+      "kn": "ವಾಯುವಿಕ: ಗ್ಲೂಕೋಸ್‌ಗೆ 38 ATP ವರೆಗೆ"
+     },
+     "size": 20,
+     "visibleIf": "aer",
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 22,
+     "y": 54,
+     "text": {
+      "en": "Yeast stopped by alcohol",
+      "kn": "ಆಲ್ಕೋಹಾಲ್‌ನಿಂದ ಯೀಸ್ಟ್ ನಿಂತಿದೆ"
+     },
+     "size": 18,
+     "visibleIf": "alive < 0.05 && org == 1",
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 22,
+     "y": 54,
+     "text": {
+      "en": "Bacteria stopped by their own acid",
+      "kn": "ಸ್ವಂತ ಆಮ್ಲದಿಂದ ಬ್ಯಾಕ್ಟೀರಿಯಾ ನಿಂತಿವೆ"
+     },
+     "size": 18,
+     "visibleIf": "alive < 0.05 && org == 2",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Sugar left",
+      "kn": "ಉಳಿದ ಸಕ್ಕರೆ"
+     },
+     "expr": "Sg",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Product",
+      "kn": "ಉತ್ಪನ್ನ"
+     },
+     "expr": "E",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Start with 30% sugar. Why does fermentation stop before the sugar runs out?",
+     "kn": "30% ಸಕ್ಕರೆಯಿಂದ ಆರಂಭಿಸಿ. ಸಕ್ಕರೆ ಮುಗಿಯುವ ಮೊದಲೇ ಹುದುಗುವಿಕೆ ಏಕೆ ನಿಲ್ಲುತ್ತದೆ?"
+    },
+    {
+     "en": "Switch to lactic acid bacteria. Which product is missing now?",
+     "kn": "ಲ್ಯಾಕ್ಟಿಕ್ ಆಮ್ಲ ಬ್ಯಾಕ್ಟೀರಿಯಾಕ್ಕೆ ಬದಲಿಸಿ. ಯಾವ ಉತ್ಪನ್ನ ಈಗ ಇಲ್ಲ?"
+    },
+    {
+     "en": "Let air into the yeast flask. What happens to the products, and to the ATP gained?",
+     "kn": "ಗಾಳಿ ಒಳಗೆ ಬಿಡಿ. ಉತ್ಪನ್ನಗಳು ಮತ್ತು ATP ಗೆ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

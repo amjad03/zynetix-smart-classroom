@@ -454,6 +454,339 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Turning the Calvin cycle",
+    "kn": "ಕ್ಯಾಲ್ವಿನ್ ಚಕ್ರವನ್ನು ತಿರುಗಿಸಿ"
+   },
+   "caption": {
+    "en": "Each turn fixes one CO2. Carboxylation: RuBisCO joins CO2 to RuBP, giving two 3-PGA. Reduction: 2 ATP and 2 NADPH turn them into sugar phosphate. Regeneration: 1 more ATP remakes RuBP. So each CO2 costs 3 ATP and 2 NADPH, and six turns make one glucose (18 ATP, 12 NADPH).",
+    "kn": "ಪ್ರತಿ ಸುತ್ತು ಒಂದು CO2 ಸ್ಥಿರೀಕರಿಸುತ್ತದೆ: ಕಾರ್ಬಾಕ್ಸಿಲೀಕರಣ, ಅಪಕರ್ಷಣ (2 ATP, 2 NADPH), ಪುನರ್ನಿರ್ಮಾಣ (1 ATP). ಪ್ರತಿ CO2 ಗೆ 3 ATP, 2 NADPH; ಆರು ಸುತ್ತು ಒಂದು ಗ್ಲೂಕೋಸ್ (18 ATP, 12 NADPH)."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Choose how many CO2 molecules to fix and play the cycle. Count what it costs."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "CO2 molecules to fix",
+      "kn": "ಸ್ಥಿರೀಕರಿಸಬೇಕಾದ CO2 ಅಣುಗಳು"
+     },
+     "min": 1,
+     "max": 18,
+     "step": 1,
+     "value": 6
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cost",
+     "label": {
+      "en": "Show cost of each phase",
+      "kn": "ಪ್ರತಿ ಹಂತದ ವೆಚ್ಚ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run the cycle",
+      "kn": "ಚಕ್ರ ನಡೆಸಿ"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 37,
+    "unit": "s",
+    "stopWhen": "t >= 2*n"
+   },
+   "vars": [
+    {
+     "name": "done",
+     "expr": "min(floor(t/2), n)"
+    },
+    {
+     "name": "ph",
+     "expr": "mod(t, 2)/2"
+    },
+    {
+     "name": "run",
+     "expr": "t < 2*n"
+    },
+    {
+     "name": "ang",
+     "expr": "pi/2 - 2*pi*ph"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 35,
+     "y": 30,
+     "r": 18,
+     "fill": false,
+     "color": "white",
+     "width": 2,
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "x": 35,
+     "y": 48,
+     "r": 6,
+     "fill": true,
+     "color": "green",
+     "opacity": "if(run && ph < 0.333, 1, 0.35)"
+    },
+    {
+     "shape": "text",
+     "x": 35,
+     "y": 48,
+     "text": {
+      "en": "Carboxylation",
+      "kn": "ಕಾರ್ಬಾಕ್ಸಿಲೀಕರಣ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "circle",
+     "x": 50.6,
+     "y": 21,
+     "r": 6,
+     "fill": true,
+     "color": "blue",
+     "opacity": "if(run && ph >= 0.333 && ph < 0.667, 1, 0.35)"
+    },
+    {
+     "shape": "text",
+     "x": 50.6,
+     "y": 21,
+     "text": {
+      "en": "Reduction",
+      "kn": "ಅಪಕರ್ಷಣ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "circle",
+     "x": 19.4,
+     "y": 21,
+     "r": 6,
+     "fill": true,
+     "color": "orange",
+     "opacity": "if(run && ph >= 0.667, 1, 0.35)"
+    },
+    {
+     "shape": "text",
+     "x": 19.4,
+     "y": 21,
+     "text": {
+      "en": "Regeneration",
+      "kn": "ಪುನರ್ನಿರ್ಮಾಣ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "circle",
+     "x": "35 + 18*cos(ang)",
+     "y": "30 + 18*sin(ang)",
+     "r": 1.4,
+     "fill": true,
+     "color": "yellow",
+     "visibleIf": "run"
+    },
+    {
+     "shape": "arrow",
+     "x": 35,
+     "y": 59,
+     "dx": 0,
+     "dy": -4.5,
+     "color": "white",
+     "label": "CO2"
+    },
+    {
+     "shape": "text",
+     "x": 35,
+     "y": 40,
+     "text": {
+      "en": "RuBisCO"
+     },
+     "size": 16,
+     "visibleIf": "cost"
+    },
+    {
+     "shape": "text",
+     "x": 58,
+     "y": 13,
+     "text": {
+      "en": "2 ATP + 2 NADPH"
+     },
+     "size": 16,
+     "visibleIf": "cost"
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 13,
+     "text": {
+      "en": "1 ATP"
+     },
+     "size": 16,
+     "visibleIf": "cost"
+    },
+    {
+     "shape": "rect",
+     "x": 66,
+     "y": 8,
+     "w": 5,
+     "h": "done*3*45/54",
+     "fill": true,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": 76,
+     "y": 8,
+     "w": 5,
+     "h": "done*2*45/54",
+     "fill": true,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 86,
+     "y": 8,
+     "w": 5,
+     "h": "done/6*45/3",
+     "fill": true,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 68.5,
+     "y": 4,
+     "text": {
+      "en": "ATP"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 78.5,
+     "y": 4,
+     "text": {
+      "en": "NADPH"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 88.5,
+     "y": 4,
+     "text": {
+      "en": "glucose",
+      "kn": "ಗ್ಲೂಕೋಸ್"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 68.5,
+     "y": "10 + done*3*45/54",
+     "text": {
+      "en": "{done*3}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 78.5,
+     "y": "10 + done*2*45/54",
+     "text": {
+      "en": "{done*2}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 88.5,
+     "y": "10 + done/6*15",
+     "text": {
+      "en": "{done/6:1}"
+     },
+     "size": 18
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "CO2 fixed",
+      "kn": "ಸ್ಥಿರೀಕರಿಸಿದ CO2"
+     },
+     "expr": "done",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "ATP used",
+      "kn": "ಬಳಸಿದ ATP"
+     },
+     "expr": "3*done",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "NADPH used",
+      "kn": "ಬಳಸಿದ NADPH"
+     },
+     "expr": "2*done",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Glucose made",
+      "kn": "ತಯಾರಾದ ಗ್ಲೂಕೋಸ್"
+     },
+     "expr": "done/6",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "How many ATP and NADPH are used to make one glucose?",
+     "kn": "ಒಂದು ಗ್ಲೂಕೋಸ್‌ಗೆ ಎಷ್ಟು ATP ಮತ್ತು NADPH?"
+    },
+    {
+     "en": "Which phase uses ATP but no NADPH?",
+     "kn": "ಯಾವ ಹಂತ ATP ಬಳಸುತ್ತದೆ ಆದರೆ NADPH ಅಲ್ಲ?"
+    },
+    {
+     "en": "Why must RuBP be regenerated for the cycle to continue?",
+     "kn": "ಚಕ್ರ ಮುಂದುವರಿಯಲು RuBP ಏಕೆ ಪುನರ್ನಿರ್ಮಾಣವಾಗಬೇಕು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

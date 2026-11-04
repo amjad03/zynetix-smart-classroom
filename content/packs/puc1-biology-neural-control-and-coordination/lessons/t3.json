@@ -442,6 +442,341 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "An action potential",
+    "kn": "ಕ್ರಿಯಾ ವಿಭವ"
+   },
+   "caption": {
+    "en": "At rest the inside of the axon is negative (about −70 mV). A stimulus strong enough to reach threshold (about −55 mV) opens Na+ channels: Na+ rushes in and the inside becomes positive (depolarisation). Then K+ moves out and the resting state returns (repolarisation). Weaker stimuli give no impulse: it is all or none.",
+    "kn": "ವಿಶ್ರಾಂತಿಯಲ್ಲಿ ಆಕ್ಸಾನ್ ಒಳಭಾಗ ಋಣ (ಸುಮಾರು −70 mV). ಮಿತಿ (ಸುಮಾರು −55 mV) ತಲುಪುವ ಪ್ರಚೋದನೆ Na+ ನಾಳಗಳನ್ನು ತೆರೆಯುತ್ತದೆ: ಒಳಭಾಗ ಧನ (ವಿಧ್ರುವೀಕರಣ). ನಂತರ K+ ಹೊರಹೋಗಿ ವಿಶ್ರಾಂತಿ ಸ್ಥಿತಿ ಮರಳುತ್ತದೆ. ಎಲ್ಲಾ ಅಥವಾ ಏನೂ ಇಲ್ಲ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Set the stimulus strength and press Stimulate. Watch the membrane potential."
+   },
+   "sliders": [
+    {
+     "name": "st",
+     "label": {
+      "en": "Stimulus strength",
+      "kn": "ಪ್ರಚೋದನೆಯ ಬಲ"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 20,
+     "unit": "mV"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ions",
+     "label": {
+      "en": "Show ion movement",
+      "kn": "ಅಯಾನು ಚಲನೆ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Stimulate",
+      "kn": "ಪ್ರಚೋದಿಸಿ"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 8,
+    "unit": "ms",
+    "speeds": [
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.5
+   },
+   "vars": [
+    {
+     "name": "sup",
+     "expr": "st >= 15"
+    },
+    {
+     "name": "V",
+     "expr": "if(sup, if(t < 0.5, -70 + st*smoothstep(0.2, 0.5, t), -70 + st + (100 - st)*smoothstep(0.5, 1, t) - 110*smoothstep(1, 2.4, t) + 10*smoothstep(2.4, 5, t)), -70 + st*smoothstep(0.2, 0.5, t)*exp(-max(t - 0.5, 0)/0.8))"
+    },
+    {
+     "name": "naIn",
+     "expr": "sup && t > 0.5 && t < 1"
+    },
+    {
+     "name": "kOut",
+     "expr": "sup && t >= 1 && t < 2.6"
+    },
+    {
+     "name": "pos",
+     "expr": "V > 0"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 48,
+     "w": 80,
+     "h": 6,
+     "fill": true,
+     "color": "blue",
+     "opacity": 0.3
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 54,
+     "x2": 90,
+     "y2": 54,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 48,
+     "x2": 90,
+     "y2": 48,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 57.5,
+     "text": {
+      "en": "outside: + + + +",
+      "kn": "ಹೊರಗೆ: + + + +"
+     },
+     "size": 22,
+     "visibleIf": "!pos"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 57.5,
+     "text": {
+      "en": "outside: − − − −",
+      "kn": "ಹೊರಗೆ: − − − −"
+     },
+     "size": 22,
+     "visibleIf": "pos",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 51,
+     "text": {
+      "en": "inside: − − − −",
+      "kn": "ಒಳಗೆ: − − − −"
+     },
+     "size": 22,
+     "visibleIf": "!pos"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 51,
+     "text": {
+      "en": "inside: + + + +",
+      "kn": "ಒಳಗೆ: + + + +"
+     },
+     "size": 22,
+     "visibleIf": "pos",
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "x": 25,
+     "y": 58,
+     "dx": 0,
+     "dy": -9,
+     "color": "green",
+     "visibleIf": "ions && naIn",
+     "label": "Na+ in"
+    },
+    {
+     "shape": "arrow",
+     "x": 75,
+     "y": 49,
+     "dx": 0,
+     "dy": 9,
+     "color": "red",
+     "visibleIf": "ions && kOut",
+     "label": "K+ out"
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 6,
+     "x2": 90,
+     "y2": 6,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 6,
+     "x2": 10,
+     "y2": 44,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": "36 + 0.35*(-55)",
+     "x2": 90,
+     "y2": "36 + 0.35*(-55)",
+     "color": "orange",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 91,
+     "y": "36 + 0.35*(-55)",
+     "text": {
+      "en": "threshold",
+      "kn": "ಮಿತಿ"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 36,
+     "x2": 90,
+     "y2": 36,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 36,
+     "text": {
+      "en": "0"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": "36 + 0.35*(-70)",
+     "text": {
+      "en": "−70"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": "36 + 0.35*30",
+     "text": {
+      "en": "+30"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 2.5,
+     "text": {
+      "en": "Time (0 to 8 ms)",
+      "kn": "ಸಮಯ (0–8 ms)"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 45.5,
+     "text": {
+      "en": "Membrane potential (mV)",
+      "kn": "ಪೊರೆ ವಿಭವ (mV)"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "trail",
+     "x": "10 + 10*t",
+     "y": "36 + 0.35*V",
+     "length": 2000,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 70,
+     "y": 40,
+     "text": {
+      "en": "Below threshold: no impulse",
+      "kn": "ಮಿತಿಗಿಂತ ಕಡಿಮೆ: ಆವೇಗ ಇಲ್ಲ"
+     },
+     "size": 20,
+     "visibleIf": "!sup && t > 0.6",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Membrane potential",
+      "kn": "ಪೊರೆ ವಿಭವ"
+     },
+     "expr": "V",
+     "digits": 0,
+     "unit": "mV"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the weakest stimulus that gives an action potential.",
+     "kn": "ಕ್ರಿಯಾ ವಿಭವ ನೀಡುವ ಅತ್ಯಂತ ದುರ್ಬಲ ಪ್ರಚೋದನೆ ಕಂಡುಹಿಡಿಯಿರಿ."
+    },
+    {
+     "en": "Compare a stimulus of 16 mV with one of 30 mV. Is the spike any taller?",
+     "kn": "16 mV ಮತ್ತು 30 mV ಪ್ರಚೋದನೆ ಹೋಲಿಸಿ. ಶಿಖರ ಎತ್ತರವಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Which ion moves during the rising phase, and which during the falling phase?",
+     "kn": "ಏರುವ ಹಂತದಲ್ಲಿ ಯಾವ ಅಯಾನು, ಇಳಿಯುವ ಹಂತದಲ್ಲಿ ಯಾವುದು ಚಲಿಸುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

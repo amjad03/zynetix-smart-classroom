@@ -657,6 +657,194 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Why every gamete is different",
+    "kn": "ಪ್ರತಿ ಲಿಂಗಾಣು ಏಕೆ ಭಿನ್ನ"
+   },
+   "caption": {
+    "en": "At metaphase I each homologous pair lines up independently, so each gamete gets a random mix of maternal (red) and paternal (blue) chromosomes: 2 to the power n mixes for n pairs. Crossing over swaps pieces between homologues and adds even more variation.",
+    "kn": "ಮಧ್ಯಾವಸ್ಥೆ I ರಲ್ಲಿ ಪ್ರತಿ ಸಮರೂಪ ಜೋಡಿ ಸ್ವತಂತ್ರವಾಗಿ ಸಾಲಾಗುತ್ತದೆ; ಆದ್ದರಿಂದ n ಜೋಡಿಗಳಿಗೆ 2 ರ n ಘಾತ ಮಿಶ್ರಣಗಳು. ವಿನಿಮಯ (ಕ್ರಾಸಿಂಗ್ ಓವರ್) ಇನ್ನಷ್ಟು ವೈವಿಧ್ಯ ತರುತ್ತದೆ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Each press makes a new gamete from the same parent cell. See how many different ones are possible."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Pairs of chromosomes (n)",
+      "kn": "ವರ್ಣತಂತು ಜೋಡಿಗಳು (n)"
+     },
+     "min": 1,
+     "max": 23,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "toggles": [
+    {
+     "name": "co",
+     "label": {
+      "en": "Crossing over",
+      "kn": "ವಿನಿಮಯ (ಕ್ರಾಸಿಂಗ್ ಓವರ್)"
+     },
+     "value": false
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 1,
+     "min": 1,
+     "max": 999
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Make another gamete",
+      "kn": "ಇನ್ನೊಂದು ಲಿಂಗಾಣು"
+     },
+     "icon": "next",
+     "set": {
+      "seed": "seed + 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "combos",
+     "expr": "2^n"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 25,
+     "y": 30,
+     "r": 22,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 73,
+     "y": 30,
+     "r": 18,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 25,
+     "y": 4,
+     "text": {
+      "en": "Parent cell (2n)",
+      "kn": "ಪೋಷಕ ಕೋಶ (2n)"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 73,
+     "y": 4,
+     "text": {
+      "en": "Gamete (n)",
+      "kn": "ಲಿಂಗಾಣು (n)"
+     },
+     "size": 22
+    },
+    {
+     "shape": "particles",
+     "count": 23,
+     "visibleIf": "i < n",
+     "x": "11 + 5.5*mod(i, 6)",
+     "y": "45 - 8*floor(i/6)",
+     "r": 1.2,
+     "color": "red"
+    },
+    {
+     "shape": "particles",
+     "count": 23,
+     "visibleIf": "i < n",
+     "x": "13.4 + 5.5*mod(i, 6)",
+     "y": "45 - 8*floor(i/6)",
+     "r": 1.2,
+     "color": "blue"
+    },
+    {
+     "shape": "particles",
+     "count": 69,
+     "r": 1.1,
+     "color": "red",
+     "visibleIf": "floor(i/3) < n && ((rand(seed*50 + floor(i/3)) < 0.5) != (co && mod(i, 3) == 2 && rand(seed*70 + floor(i/3)) < 0.7))",
+     "x": "62 + 4.4*mod(floor(i/3), 6)",
+     "y": "43 - 7.5*floor(floor(i/3)/6) - 1.9*mod(i, 3)"
+    },
+    {
+     "shape": "particles",
+     "count": 69,
+     "r": 1.1,
+     "color": "blue",
+     "visibleIf": "floor(i/3) < n && ((rand(seed*50 + floor(i/3)) < 0.5) == (co && mod(i, 3) == 2 && rand(seed*70 + floor(i/3)) < 0.7))",
+     "x": "62 + 4.4*mod(floor(i/3), 6)",
+     "y": "43 - 7.5*floor(floor(i/3)/6) - 1.9*mod(i, 3)"
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 56.5,
+     "text": {
+      "en": "Gamete number {seed}",
+      "kn": "ಲಿಂಗಾಣು ಸಂಖ್ಯೆ {seed}"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Possible combinations (2^n)",
+      "kn": "ಸಾಧ್ಯ ಸಂಯೋಜನೆಗಳು (2^n)"
+     },
+     "expr": "combos",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With 2 pairs of chromosomes, how many different gametes can form? Check by pressing the button.",
+     "kn": "2 ಜೋಡಿ ವರ್ಣತಂತುಗಳಿಂದ ಎಷ್ಟು ಬಗೆಯ ಲಿಂಗಾಣುಗಳು? ಗುಂಡಿ ಒತ್ತಿ ಪರೀಕ್ಷಿಸಿ."
+    },
+    {
+     "en": "Set n to 23, as in humans. How many combinations are possible?",
+     "kn": "ಮಾನವರಂತೆ n = 23 ಮಾಡಿ. ಎಷ್ಟು ಸಂಯೋಜನೆಗಳು ಸಾಧ್ಯ?"
+    },
+    {
+     "en": "Turn on crossing over. Why are the chromosomes now two-coloured?",
+     "kn": "ವಿನಿಮಯವನ್ನು ಆನ್ ಮಾಡಿ. ವರ್ಣತಂತುಗಳು ಈಗ ಎರಡು ಬಣ್ಣ ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

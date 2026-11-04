@@ -496,6 +496,327 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "An amino acid changes with pH",
+    "kn": "pH ನೊಂದಿಗೆ ಬದಲಾಗುವ ಅಮೈನೋ ಆಮ್ಲ"
+   },
+   "caption": {
+    "en": "Amino acids have an amino group and a carboxyl group, both ionisable. In acid the amino group carries H+ (a cation); near neutral pH the molecule is a zwitterion with both charges; in alkali the carboxyl group has lost H+ (an anion). Numbers are for glycine.",
+    "kn": "ಅಮೈನೋ ಆಮ್ಲದಲ್ಲಿ ಅಮೈನೋ ಮತ್ತು ಕಾರ್ಬಾಕ್ಸಿಲ್ ಗುಂಪುಗಳು ಅಯಾನೀಕರಿಸಬಲ್ಲವು. ಆಮ್ಲದಲ್ಲಿ ಧನ ಅಯಾನು, ತಟಸ್ಥ pH ಬಳಿ ಜ್ವಿಟರ್ ಅಯಾನು, ಕ್ಷಾರದಲ್ಲಿ ಋಣ ಅಯಾನು. ಸಂಖ್ಯೆಗಳು ಗ್ಲೈಸಿನ್‌ಗೆ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Move the pH and watch the amino group and the carboxyl group gain or lose hydrogen ions."
+   },
+   "sliders": [
+    {
+     "name": "pH",
+     "label": {
+      "en": "pH",
+      "kn": "pH"
+     },
+     "min": 0,
+     "max": 14,
+     "step": 0.5,
+     "value": 7
+    }
+   ],
+   "toggles": [
+    {
+     "name": "curve",
+     "label": {
+      "en": "Show charge curve",
+      "kn": "ಆವೇಶ ವಕ್ರ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "fp",
+     "expr": "1/(1 + 10^(pH - 9.6))"
+    },
+    {
+     "name": "fc",
+     "expr": "1/(1 + 10^(2.34 - pH))"
+    },
+    {
+     "name": "net",
+     "expr": "fp - fc"
+    },
+    {
+     "name": "gx",
+     "expr": "55 + 3*pH"
+    },
+    {
+     "name": "gy",
+     "expr": "30 + 18*net"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 25,
+     "y": 30,
+     "text": {
+      "en": "Cα"
+     },
+     "size": 40
+    },
+    {
+     "shape": "line",
+     "x1": 25,
+     "y1": 33,
+     "x2": 25,
+     "y2": 40,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 25,
+     "y": 43,
+     "text": {
+      "en": "R"
+     },
+     "size": 34
+    },
+    {
+     "shape": "line",
+     "x1": 25,
+     "y1": 27,
+     "x2": 25,
+     "y2": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 25,
+     "y": 17,
+     "text": {
+      "en": "H"
+     },
+     "size": 34
+    },
+    {
+     "shape": "line",
+     "x1": 19,
+     "y1": 30,
+     "x2": 22,
+     "y2": 30,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 28,
+     "y1": 30,
+     "x2": 31,
+     "y2": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 30,
+     "text": {
+      "en": "H3N+"
+     },
+     "size": 34,
+     "visibleIf": "fp >= 0.5",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 30,
+     "text": {
+      "en": "H2N"
+     },
+     "size": 34,
+     "visibleIf": "fp < 0.5"
+    },
+    {
+     "shape": "text",
+     "x": 37,
+     "y": 30,
+     "text": {
+      "en": "COOH"
+     },
+     "size": 34,
+     "visibleIf": "fc < 0.5"
+    },
+    {
+     "shape": "text",
+     "x": 37,
+     "y": 30,
+     "text": {
+      "en": "COO−"
+     },
+     "size": 34,
+     "visibleIf": "fc >= 0.5",
+     "color": "blue"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 52,
+     "text": {
+      "en": "Cation (net +1)",
+      "kn": "ಧನ ಅಯಾನು (+1)"
+     },
+     "size": 26,
+     "visibleIf": "net > 0.5",
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 52,
+     "text": {
+      "en": "Zwitterion (net 0)",
+      "kn": "ಜ್ವಿಟರ್ ಅಯಾನು (0)"
+     },
+     "size": 26,
+     "visibleIf": "abs(net) <= 0.5",
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 52,
+     "text": {
+      "en": "Anion (net −1)",
+      "kn": "ಋಣ ಅಯಾನು (−1)"
+     },
+     "size": 26,
+     "visibleIf": "net < -0.5",
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 55,
+     "y1": 30,
+     "x2": 97,
+     "y2": 30,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 55,
+     "y1": 8,
+     "x2": 55,
+     "y2": 52,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 76,
+     "y": 4,
+     "text": {
+      "en": "pH 0 to 14"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 56,
+     "y": 55,
+     "text": {
+      "en": "Net charge",
+      "kn": "ನಿವ್ವಳ ಆವೇಶ"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 53,
+     "y": 48,
+     "text": {
+      "en": "+1"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 53,
+     "y": 12,
+     "text": {
+      "en": "−1"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "path",
+     "fn": "30 + 18*(1/(1 + 10^((x - 55)/3 - 9.6)) - 1/(1 + 10^(2.34 - (x - 55)/3)))",
+     "from": 55,
+     "to": 97,
+     "visibleIf": "curve",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "gx",
+     "y1": 8,
+     "x2": "gx",
+     "y2": 52,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "x": "gx",
+     "y": "gy",
+     "r": 1.2,
+     "fill": true,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Net charge",
+      "kn": "ನಿವ್ವಳ ಆವೇಶ"
+     },
+     "expr": "net",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At what pH is the net charge zero?",
+     "kn": "ಯಾವ pH ನಲ್ಲಿ ನಿವ್ವಳ ಆವೇಶ ಶೂನ್ಯ?"
+    },
+    {
+     "en": "Which group loses its H+ first as the pH rises?",
+     "kn": "pH ಏರಿದಂತೆ ಯಾವ ಗುಂಪು ಮೊದಲು H+ ಕಳೆದುಕೊಳ್ಳುತ್ತದೆ?"
+    },
+    {
+     "en": "Why does the structure of an amino acid depend on pH?",
+     "kn": "ಅಮೈನೋ ಆಮ್ಲದ ರಚನೆ pH ಮೇಲೆ ಏಕೆ ಅವಲಂಬಿಸಿದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

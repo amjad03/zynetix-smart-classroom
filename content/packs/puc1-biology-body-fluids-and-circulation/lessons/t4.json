@@ -541,6 +541,341 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The cardiac cycle and the ECG",
+    "kn": "ಹೃದಯ ಚಕ್ರ ಮತ್ತು ECG"
+   },
+   "caption": {
+    "en": "At 72 beats a minute one cardiac cycle lasts about 0.8 s: the atria contract (about 0.1 s), then the ventricles (about 0.3 s), then all chambers relax (about 0.4 s). The P wave marks atrial excitation, QRS ventricular excitation, and T the return of the ventricles to normal. Cardiac output is stroke volume times heart rate.",
+    "kn": "72 ಬಡಿತ/ನಿಮಿಷದಲ್ಲಿ ಒಂದು ಹೃದಯ ಚಕ್ರ ಸುಮಾರು 0.8 ಸೆ: ಹೃತ್ಕರ್ಣ ಸಂಕೋಚನ (0.1 ಸೆ), ಹೃತ್ಕುಕ್ಷಿ ಸಂಕೋಚನ (0.3 ಸೆ), ಸಂಪೂರ್ಣ ವಿಶ್ರಾಂತಿ (0.4 ಸೆ). P, QRS, T ತರಂಗಗಳು. ಹೃದಯ ಉತ್ಪಾದನೆ = ಪಾರ್ಶ್ವ ಪರಿಮಾಣ × ಹೃದಯ ಬಡಿತ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Watch the chambers contract in turn and match each event with a wave of the ECG."
+   },
+   "sliders": [
+    {
+     "name": "HR",
+     "label": {
+      "en": "Heart rate",
+      "kn": "ಹೃದಯ ಬಡಿತ"
+     },
+     "min": 50,
+     "max": 150,
+     "step": 2,
+     "value": 72,
+     "unit": "beats/min"
+    },
+    {
+     "name": "SV",
+     "label": {
+      "en": "Stroke volume",
+      "kn": "ಪಾರ್ಶ್ವ ಪರಿಮಾಣ"
+     },
+     "min": 50,
+     "max": 100,
+     "step": 5,
+     "value": 70,
+     "unit": "mL"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ecg",
+     "label": {
+      "en": "Show ECG",
+      "kn": "ECG ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 12,
+    "loop": true,
+    "autoplay": true,
+    "speeds": [
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.5,
+    "unit": "s"
+   },
+   "vars": [
+    {
+     "name": "Tc",
+     "expr": "60/HR"
+    },
+    {
+     "name": "tT",
+     "expr": "0.16 + 0.25*sqrt(Tc/0.8)"
+    },
+    {
+     "name": "u",
+     "expr": "mod(t, Tc)"
+    },
+    {
+     "name": "asys",
+     "expr": "u > 0.07 && u < 0.17"
+    },
+    {
+     "name": "vsys",
+     "expr": "u >= 0.16 && u < tT + 0.06"
+    },
+    {
+     "name": "ca",
+     "expr": "if(asys, sin(pi*(u - 0.07)/0.1), 0)"
+    },
+    {
+     "name": "cv",
+     "expr": "if(vsys, sin(pi*(u - 0.16)/(tT - 0.1)), 0)"
+    },
+    {
+     "name": "w",
+     "expr": "mod(t, 2.4)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "8 + 3*ca",
+     "y": "46 + 1.5*ca",
+     "w": "14 - 6*ca",
+     "h": "10 - 3*ca",
+     "fill": true,
+     "color": "blue",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": "26 + 3*ca",
+     "y": "46 + 1.5*ca",
+     "w": "14 - 6*ca",
+     "h": "10 - 3*ca",
+     "fill": true,
+     "color": "red",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": "8 + 3*cv",
+     "y": "24 + 3*cv",
+     "w": "14 - 6*cv",
+     "h": "20 - 6*cv",
+     "fill": true,
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "26 + 3*cv",
+     "y": "24 + 3*cv",
+     "w": "14 - 6*cv",
+     "h": "20 - 6*cv",
+     "fill": true,
+     "color": "red",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 58,
+     "text": {
+      "en": "RA",
+      "kn": "ಬಲ ಹೃತ್ಕರ್ಣ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 33,
+     "y": 58,
+     "text": {
+      "en": "LA",
+      "kn": "ಎಡ ಹೃತ್ಕರ್ಣ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 20,
+     "text": {
+      "en": "RV",
+      "kn": "ಬಲ ಹೃತ್ಕುಕ್ಷಿ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 33,
+     "y": 20,
+     "text": {
+      "en": "LV",
+      "kn": "ಎಡ ಹೃತ್ಕುಕ್ಷಿ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "label",
+     "x": 24,
+     "y": 13,
+     "text": {
+      "en": "Atrial systole",
+      "kn": "ಹೃತ್ಕರ್ಣ ಸಂಕೋಚನ"
+     },
+     "size": 22,
+     "visibleIf": "asys && !vsys",
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 24,
+     "y": 13,
+     "text": {
+      "en": "Ventricular systole",
+      "kn": "ಹೃತ್ಕುಕ್ಷಿ ಸಂಕೋಚನ"
+     },
+     "size": 22,
+     "visibleIf": "vsys",
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 24,
+     "y": 13,
+     "text": {
+      "en": "Joint diastole",
+      "kn": "ಸಂಪೂರ್ಣ ವಿಶ್ರಾಂತಿ"
+     },
+     "size": 22,
+     "visibleIf": "!asys && !vsys",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 7,
+     "text": {
+      "en": "AV valves closed: lub",
+      "kn": "AV ಕವಾಟ ಮುಚ್ಚಿದೆ: ಲಬ್"
+     },
+     "size": 20,
+     "visibleIf": "vsys"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 7,
+     "text": {
+      "en": "AV valves open",
+      "kn": "AV ಕವಾಟ ತೆರೆದಿದೆ"
+     },
+     "size": 20,
+     "visibleIf": "!vsys"
+    },
+    {
+     "shape": "line",
+     "x1": 48,
+     "y1": 30,
+     "x2": 97,
+     "y2": 30,
+     "color": "white",
+     "opacity": 0.3,
+     "visibleIf": "ecg"
+    },
+    {
+     "shape": "path",
+     "visibleIf": "ecg",
+     "color": "green",
+     "width": 3,
+     "from": 50,
+     "to": 96,
+     "fn": "30 + 18*(0.15*exp(-((mod((x - 50)/19.17, Tc) - 0.05)/0.02)^2) - 0.1*exp(-((mod((x - 50)/19.17, Tc) - 0.145)/0.01)^2) + exp(-((mod((x - 50)/19.17, Tc) - 0.16)/0.012)^2) - 0.25*exp(-((mod((x - 50)/19.17, Tc) - 0.178)/0.01)^2) + 0.3*exp(-((mod((x - 50)/19.17, Tc) - tT)/0.04)^2))"
+    },
+    {
+     "shape": "line",
+     "x1": "50 + 19.17*w",
+     "y1": 8,
+     "x2": "50 + 19.17*w",
+     "y2": 54,
+     "color": "yellow",
+     "visibleIf": "ecg",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 73,
+     "y": 56,
+     "text": {
+      "en": "ECG over 2.4 s",
+      "kn": "2.4 ಸೆ ECG"
+     },
+     "size": 22,
+     "visibleIf": "ecg"
+    },
+    {
+     "shape": "text",
+     "x": 73,
+     "y": 5,
+     "text": {
+      "en": "P: atria   QRS: ventricles   T: recovery",
+      "kn": "P: ಹೃತ್ಕರ್ಣ  QRS: ಹೃತ್ಕುಕ್ಷಿ  T: ಚೇತರಿಕೆ"
+     },
+     "size": 20,
+     "visibleIf": "ecg"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cycle length",
+      "kn": "ಚಕ್ರದ ಅವಧಿ"
+     },
+     "expr": "Tc",
+     "digits": 2,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Cardiac output",
+      "kn": "ಹೃದಯ ಉತ್ಪಾದನೆ"
+     },
+     "expr": "SV*HR/1000",
+     "digits": 2,
+     "unit": "L/min"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the cardiac output at 72 beats a minute and 70 mL a beat.",
+     "kn": "72 ಬಡಿತ ಮತ್ತು 70 mL ನಲ್ಲಿ ಹೃದಯ ಉತ್ಪಾದನೆ ಕಂಡುಹಿಡಿಯಿರಿ."
+    },
+    {
+     "en": "Which ECG wave comes just before the ventricles contract?",
+     "kn": "ಹೃತ್ಕುಕ್ಷಿಗಳು ಸಂಕುಚಿಸುವ ಮುನ್ನ ಯಾವ ECG ತರಂಗ ಬರುತ್ತದೆ?"
+    },
+    {
+     "en": "Raise the heart rate to 140. Which part of the cycle gets much shorter?",
+     "kn": "ಬಡಿತವನ್ನು 140 ಕ್ಕೆ ಏರಿಸಿ. ಚಕ್ರದ ಯಾವ ಭಾಗ ಹೆಚ್ಚು ಕಡಿಮೆಯಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

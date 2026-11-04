@@ -1068,6 +1068,242 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Crossing the plasma membrane",
+    "kn": "ಪ್ಲಾಸ್ಮಾ ಪೊರೆಯನ್ನು ದಾಟುವುದು"
+   },
+   "caption": {
+    "en": "Molecules move down their concentration gradient until both sides are equal (passive transport, no ATP). Small non-polar O2 passes through the lipid bilayer by simple diffusion. Glucose needs a carrier protein and ions need a channel protein (facilitated diffusion).",
+    "kn": "ಅಣುಗಳು ಸಾಂದ್ರತೆ ಇಳಿಜಾರಿನಲ್ಲಿ ಎರಡೂ ಬದಿ ಸಮವಾಗುವವರೆಗೆ ಚಲಿಸುತ್ತವೆ. O2 ಲಿಪಿಡ್ ದ್ವಿಪದರದ ಮೂಲಕ ಸರಳ ಪ್ರಸರಣದಿಂದ ಹಾದುಹೋಗುತ್ತದೆ. ಗ್ಲೂಕೋಸ್‌ಗೆ ವಾಹಕ ಪ್ರೋಟೀನ್, ಅಯಾನುಗಳಿಗೆ ನಾಳ ಪ್ರೋಟೀನ್ ಬೇಕು."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Pick a molecule and watch whether it can cross the membrane on its own or needs a protein."
+   },
+   "sliders": [
+    {
+     "name": "n0",
+     "label": {
+      "en": "Molecules starting on the left",
+      "kn": "ಎಡಬದಿಯಲ್ಲಿ ಆರಂಭಿಕ ಅಣುಗಳು"
+     },
+     "min": 50,
+     "max": 100,
+     "step": 2,
+     "value": 90
+    }
+   ],
+   "choices": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Molecule",
+      "kn": "ಅಣು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Oxygen (O2)",
+        "kn": "ಆಮ್ಲಜನಕ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Glucose",
+        "kn": "ಗ್ಲೂಕೋಸ್"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Sodium ions (Na+)",
+        "kn": "ಸೋಡಿಯಂ ಅಯಾನು"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "prot",
+     "label": {
+      "en": "Transport proteins in membrane",
+      "kn": "ಪೊರೆಯಲ್ಲಿ ಸಾಗಣೆ ಪ್ರೋಟೀನ್"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 40,
+    "dt": 0.05,
+    "unit": "s"
+   },
+   "vars": [
+    {
+     "name": "k",
+     "expr": "if(m == 1, 0.25, if(prot, if(m == 2, 0.12, 0.2), 0))"
+    }
+   ],
+   "state": [
+    {
+     "name": "nL",
+     "init": "n0",
+     "rate": "-k*(nL - 50)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 46.5,
+     "y": 2,
+     "w": 7,
+     "h": 56,
+     "fill": true,
+     "color": "yellow",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": 47,
+     "y": 24,
+     "w": 6,
+     "h": 6,
+     "fill": true,
+     "color": "blue",
+     "visibleIf": "prot && m == 2"
+    },
+    {
+     "shape": "rect",
+     "x": 47.5,
+     "y": 34,
+     "w": 5,
+     "h": 6,
+     "fill": true,
+     "color": "green",
+     "visibleIf": "prot && m == 3"
+    },
+    {
+     "shape": "rect",
+     "x": 48.5,
+     "y": 35,
+     "w": 3,
+     "h": 4,
+     "fill": true,
+     "color": "white",
+     "visibleIf": "prot && m == 3",
+     "opacity": 0.4
+    },
+    {
+     "shape": "particles",
+     "visibleIf": "m == 1",
+     "count": 100,
+     "r": 0.6,
+     "color": "red",
+     "x": "if(i < nL, bounce(5 + 40*rand(i) + 6*t*cos(2*pi*rand(i + 300)), 3, 45), bounce(55 + 40*rand(i) + 6*t*cos(2*pi*rand(i + 300)), 55, 97))",
+     "y": "bounce(5 + 50*rand(i + 150) + 6*t*sin(2*pi*rand(i + 300)), 3, 57)"
+    },
+    {
+     "shape": "particles",
+     "visibleIf": "m == 2",
+     "count": 100,
+     "r": 1,
+     "color": "orange",
+     "x": "if(i < nL, bounce(5 + 40*rand(i) + 3*t*cos(2*pi*rand(i + 300)), 3, 45), bounce(55 + 40*rand(i) + 3*t*cos(2*pi*rand(i + 300)), 55, 97))",
+     "y": "bounce(5 + 50*rand(i + 150) + 3*t*sin(2*pi*rand(i + 300)), 3, 57)"
+    },
+    {
+     "shape": "particles",
+     "visibleIf": "m == 3",
+     "count": 100,
+     "r": 0.5,
+     "color": "blue",
+     "x": "if(i < nL, bounce(5 + 40*rand(i) + 6*t*cos(2*pi*rand(i + 300)), 3, 45), bounce(55 + 40*rand(i) + 6*t*cos(2*pi*rand(i + 300)), 55, 97))",
+     "y": "bounce(5 + 50*rand(i + 150) + 6*t*sin(2*pi*rand(i + 300)), 3, 57)"
+    },
+    {
+     "shape": "label",
+     "x": 24,
+     "y": 56,
+     "text": {
+      "en": "Left: {round(nL)}",
+      "kn": "ಎಡ: {round(nL)}"
+     },
+     "size": 24
+    },
+    {
+     "shape": "label",
+     "x": 76,
+     "y": 56,
+     "text": {
+      "en": "Right: {100 - round(nL)}",
+      "kn": "ಬಲ: {100 - round(nL)}"
+     },
+     "size": 24
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 3,
+     "text": {
+      "en": "Cannot cross the lipid bilayer",
+      "kn": "ಲಿಪಿಡ್ ದ್ವಿಪದರ ದಾಟಲಾಗದು"
+     },
+     "size": 22,
+     "visibleIf": "k == 0",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Left side",
+      "kn": "ಎಡಬದಿ"
+     },
+     "expr": "round(nL)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Right side",
+      "kn": "ಬಲಬದಿ"
+     },
+     "expr": "100 - round(nL)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Choose glucose with no transport proteins. Does it cross?",
+     "kn": "ಸಾಗಣೆ ಪ್ರೋಟೀನ್ ಇಲ್ಲದೆ ಗ್ಲೂಕೋಸ್ ಆಯ್ಕೆಮಾಡಿ. ಅದು ದಾಟುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "When the two sides are equal, do the molecules stop moving?",
+     "kn": "ಎರಡೂ ಬದಿ ಸಮವಾದಾಗ ಅಣುಗಳು ಚಲಿಸುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತವೆಯೇ?"
+    },
+    {
+     "en": "Can passive transport ever make the right side more crowded than the left?",
+     "kn": "ನಿಷ್ಕ್ರಿಯ ಸಾಗಣೆ ಬಲಬದಿಯನ್ನು ಎಡಕ್ಕಿಂತ ಹೆಚ್ಚು ತುಂಬಿಸಬಲ್ಲದೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

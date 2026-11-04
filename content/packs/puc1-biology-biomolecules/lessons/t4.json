@@ -448,6 +448,250 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Enzymes lower the activation energy",
+    "kn": "ಕಿಣ್ವಗಳು ಸಕ್ರಿಯಗೊಳಿಸುವ ಶಕ್ತಿಯನ್ನು ತಗ್ಗಿಸುತ್ತವೆ"
+   },
+   "caption": {
+    "en": "A reaction must climb an energy hill (the activation energy) through a transition state. An enzyme binds the substrate at its active site and offers an easier path with a lower hill. It does not change the start or end energy, only the height of the hill.",
+    "kn": "ಕ್ರಿಯೆ ಸಂಕ್ರಮಣ ಸ್ಥಿತಿಯ ಮೂಲಕ ಶಕ್ತಿಯ ಬೆಟ್ಟವನ್ನು ಏರಬೇಕು. ಕಿಣ್ವ ಕಡಿಮೆ ಎತ್ತರದ ಸುಲಭ ದಾರಿ ನೀಡುತ್ತದೆ; ಆರಂಭ ಮತ್ತು ಅಂತ್ಯದ ಶಕ್ತಿ ಬದಲಾಗುವುದಿಲ್ಲ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Here is the energy hill of a reaction. Switch the enzyme on and see what it changes."
+   },
+   "sliders": [
+    {
+     "name": "Ea",
+     "label": {
+      "en": "Activation energy without enzyme",
+      "kn": "ಕಿಣ್ವವಿಲ್ಲದ ಸಕ್ರಿಯಗೊಳಿಸುವ ಶಕ್ತಿ"
+     },
+     "min": 40,
+     "max": 120,
+     "step": 5,
+     "value": 90,
+     "unit": "kJ/mol"
+    },
+    {
+     "name": "dG",
+     "label": {
+      "en": "Product minus substrate energy",
+      "kn": "ಉತ್ಪನ್ನ ಮೈನಸ್ ಆಧಾರ ಶಕ್ತಿ"
+     },
+     "min": -40,
+     "max": 20,
+     "step": 5,
+     "value": -30,
+     "unit": "kJ/mol"
+    },
+    {
+     "name": "cut",
+     "label": {
+      "en": "Lowering by the enzyme",
+      "kn": "ಕಿಣ್ವದಿಂದ ತಗ್ಗುವಿಕೆ"
+     },
+     "min": 10,
+     "max": 60,
+     "step": 5,
+     "value": 40,
+     "unit": "kJ/mol"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "enz",
+     "label": {
+      "en": "Enzyme present",
+      "kn": "ಕಿಣ್ವ ಇದೆ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "Ec",
+     "expr": "max(Ea - cut, max(dG, 0) + 5)"
+    },
+    {
+     "name": "Eu",
+     "expr": "if(enz, Ec, Ea)"
+    },
+    {
+     "name": "gain",
+     "expr": "(Ea - Ec)*1000/(8.314*310*2.302585)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 5,
+     "x2": 8,
+     "y2": 58,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 5,
+     "x2": 95,
+     "y2": 5,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 56.5,
+     "text": {
+      "en": "Energy",
+      "kn": "ಶಕ್ತಿ"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 52,
+     "y": 2,
+     "text": {
+      "en": "Progress of reaction",
+      "kn": "ಕ್ರಿಯೆಯ ಪ್ರಗತಿ"
+     },
+     "size": 22
+    },
+    {
+     "shape": "path",
+     "fn": "20 + 0.28*(dG*smoothstep(35, 65, x) + (Ea - dG/2)*exp(-((x - 50)/9)^2))",
+     "from": 10,
+     "to": 92,
+     "color": "red",
+     "width": 4,
+     "opacity": "if(enz, 0.35, 1)"
+    },
+    {
+     "shape": "path",
+     "visibleIf": "enz",
+     "fn": "20 + 0.28*(dG*smoothstep(35, 65, x) + (Ec - dG/2)*exp(-((x - 50)/9)^2))",
+     "from": 10,
+     "to": 92,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 20,
+     "x2": 30,
+     "y2": 20,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "arrow",
+     "x": 30,
+     "y": 20,
+     "dx": 0,
+     "dy": "0.28*Eu",
+     "color": "yellow",
+     "label": "Ea"
+    },
+    {
+     "shape": "label",
+     "x": 18,
+     "y": 15,
+     "text": {
+      "en": "Substrate",
+      "kn": "ಆಧಾರ ವಸ್ತು"
+     },
+     "size": 22
+    },
+    {
+     "shape": "label",
+     "x": 84,
+     "y": "20 + 0.28*dG - 5",
+     "text": {
+      "en": "Product",
+      "kn": "ಉತ್ಪನ್ನ"
+     },
+     "size": 22
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": "20 + 0.28*Eu + 4",
+     "text": {
+      "en": "Transition state",
+      "kn": "ಸಂಕ್ರಮಣ ಸ್ಥಿತಿ"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 72,
+     "y": 54,
+     "text": {
+      "en": "About 10^{gain:1} times faster",
+      "kn": "ಸುಮಾರು 10^{gain:1} ಪಟ್ಟು ವೇಗ"
+     },
+     "size": 24,
+     "visibleIf": "enz",
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Hill to climb",
+      "kn": "ಏರಬೇಕಾದ ಬೆಟ್ಟ"
+     },
+     "expr": "Eu",
+     "digits": 0,
+     "unit": "kJ/mol"
+    },
+    {
+     "label": {
+      "en": "Energy released (−) or taken (+)",
+      "kn": "ಬಿಡುಗಡೆ (−) ಅಥವಾ ಹೀರಿಕೆ (+)"
+     },
+     "expr": "dG",
+     "digits": 0,
+     "unit": "kJ/mol"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn the enzyme on. Which energies change and which stay the same?",
+     "kn": "ಕಿಣ್ವವನ್ನು ಆನ್ ಮಾಡಿ. ಯಾವ ಶಕ್ತಿಗಳು ಬದಲಾಗುತ್ತವೆ, ಯಾವುವು ಬದಲಾಗುವುದಿಲ್ಲ?"
+    },
+    {
+     "en": "Lowering the hill by 40 kJ/mol speeds the reaction by roughly how many powers of ten at body temperature?",
+     "kn": "ಬೆಟ್ಟವನ್ನು 40 kJ/mol ತಗ್ಗಿಸಿದರೆ ದೇಹದ ತಾಪದಲ್ಲಿ ಕ್ರಿಯೆ ಸುಮಾರು ಎಷ್ಟು ಪಟ್ಟು ವೇಗ?"
+    },
+    {
+     "en": "Make the product higher than the substrate. Can the enzyme make this reaction release energy?",
+     "kn": "ಉತ್ಪನ್ನವನ್ನು ಆಧಾರ ವಸ್ತುಗಿಂತ ಎತ್ತರ ಮಾಡಿ. ಕಿಣ್ವ ಇದನ್ನು ಶಕ್ತಿ ಬಿಡುಗಡೆ ಕ್ರಿಯೆಯಾಗಿಸಬಲ್ಲದೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

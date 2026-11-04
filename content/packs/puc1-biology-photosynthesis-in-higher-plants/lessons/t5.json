@@ -691,6 +691,374 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "RuBisCO, oxygen and the C4 trick",
+    "kn": "RuBisCO, ಆಮ್ಲಜನಕ ಮತ್ತು C4 ತಂತ್ರ"
+   },
+   "caption": {
+    "en": "RuBisCO can bind O2 as well as CO2. When it binds O2 (photorespiration), no sugar is made and energy is wasted. Higher CO2 favours carboxylation; higher temperature favours oxygenation. C4 plants fix CO2 first with PEPcase in mesophyll cells and release it in bundle-sheath cells, raising CO2 around RuBisCO, so they almost avoid photorespiration. Illustrative numbers.",
+    "kn": "RuBisCO, CO2 ಜೊತೆಗೆ O2 ಅನ್ನೂ ಬಂಧಿಸಬಲ್ಲದು (ದ್ಯುತಿ ಉಸಿರಾಟ): ಸಕ್ಕರೆ ಇಲ್ಲ, ಶಕ್ತಿ ವ್ಯರ್ಥ. C4 ಸಸ್ಯಗಳು PEP ಕೇಸ್‌ನಿಂದ CO2 ಹಿಡಿದು ಬಂಡಲ್ ಶೀತ್ ಕೋಶಗಳಲ್ಲಿ ಬಿಡುಗಡೆ ಮಾಡಿ RuBisCO ಸುತ್ತ CO2 ಹೆಚ್ಚಿಸುತ್ತವೆ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Compare how often RuBisCO grabs oxygen instead of carbon dioxide in C3 and C4 plants."
+   },
+   "sliders": [
+    {
+     "name": "co2",
+     "label": {
+      "en": "CO2 in air",
+      "kn": "ಗಾಳಿಯಲ್ಲಿ CO2"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 25,
+     "value": 400,
+     "unit": "ppm"
+    },
+    {
+     "name": "Tl",
+     "label": {
+      "en": "Leaf temperature",
+      "kn": "ಎಲೆಯ ತಾಪ"
+     },
+     "min": 15,
+     "max": 45,
+     "step": 1,
+     "value": 25,
+     "unit": "°C"
+    }
+   ],
+   "choices": [
+    {
+     "name": "c4",
+     "label": {
+      "en": "Plant",
+      "kn": "ಸಸ್ಯ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "C3 (wheat, rice)",
+        "kn": "C3 (ಗೋಧಿ, ಭತ್ತ)"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "C4 (maize, sugarcane)",
+        "kn": "C4 (ಮೆಕ್ಕೆಜೋಳ, ಕಬ್ಬು)"
+       },
+       "value": 1
+      }
+     ],
+     "value": 0
+    }
+   ],
+   "vars": [
+    {
+     "name": "ratio",
+     "expr": "3.5*(co2/400)*exp(-0.035*(Tl - 25))*if(c4, 10, 1)"
+    },
+    {
+     "name": "pr",
+     "expr": "100/(1 + ratio)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 30,
+     "y": 32,
+     "r": 6,
+     "fill": true,
+     "color": "yellow",
+     "opacity": 0.5,
+     "visibleIf": "!c4"
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 32,
+     "text": {
+      "en": "vein",
+      "kn": "ನಾಳ"
+     },
+     "size": 16,
+     "visibleIf": "!c4"
+    },
+    {
+     "shape": "circle",
+     "x": 18,
+     "y": 40,
+     "r": 4.5,
+     "fill": true,
+     "color": "green",
+     "visibleIf": "!c4"
+    },
+    {
+     "shape": "circle",
+     "x": 30,
+     "y": 45,
+     "r": 4.5,
+     "fill": true,
+     "color": "green",
+     "visibleIf": "!c4"
+    },
+    {
+     "shape": "circle",
+     "x": 42,
+     "y": 40,
+     "r": 4.5,
+     "fill": true,
+     "color": "green",
+     "visibleIf": "!c4"
+    },
+    {
+     "shape": "circle",
+     "x": 18,
+     "y": 24,
+     "r": 4.5,
+     "fill": true,
+     "color": "green",
+     "visibleIf": "!c4"
+    },
+    {
+     "shape": "circle",
+     "x": 30,
+     "y": 19,
+     "r": 4.5,
+     "fill": true,
+     "color": "green",
+     "visibleIf": "!c4"
+    },
+    {
+     "shape": "circle",
+     "x": 42,
+     "y": 24,
+     "r": 4.5,
+     "fill": true,
+     "color": "green",
+     "visibleIf": "!c4"
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 8,
+     "text": {
+      "en": "C3: RuBisCO in mesophyll cells",
+      "kn": "C3: ಮೀಸೋಫಿಲ್‌ನಲ್ಲಿ RuBisCO"
+     },
+     "size": 18,
+     "visibleIf": "!c4"
+    },
+    {
+     "shape": "circle",
+     "x": 30,
+     "y": 32,
+     "r": 9.5,
+     "fill": true,
+     "color": "green",
+     "visibleIf": "c4"
+    },
+    {
+     "shape": "circle",
+     "x": 30,
+     "y": 32,
+     "r": 5,
+     "fill": true,
+     "color": "yellow",
+     "visibleIf": "c4"
+    },
+    {
+     "shape": "circle",
+     "x": 14,
+     "y": 40,
+     "r": 3.5,
+     "fill": true,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "c4"
+    },
+    {
+     "shape": "circle",
+     "x": 30,
+     "y": 49,
+     "r": 3.5,
+     "fill": true,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "c4"
+    },
+    {
+     "shape": "circle",
+     "x": 46,
+     "y": 40,
+     "r": 3.5,
+     "fill": true,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "c4"
+    },
+    {
+     "shape": "circle",
+     "x": 14,
+     "y": 24,
+     "r": 3.5,
+     "fill": true,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "c4"
+    },
+    {
+     "shape": "circle",
+     "x": 30,
+     "y": 15,
+     "r": 3.5,
+     "fill": true,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "c4"
+    },
+    {
+     "shape": "circle",
+     "x": 46,
+     "y": 24,
+     "r": 3.5,
+     "fill": true,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "c4"
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 6,
+     "text": {
+      "en": "C4: Kranz anatomy; RuBisCO in bundle sheath",
+      "kn": "C4: ಕ್ರಾಂಜ್ ರಚನೆ; ಬಂಡಲ್ ಶೀತ್‌ನಲ್ಲಿ RuBisCO"
+     },
+     "size": 18,
+     "visibleIf": "c4"
+    },
+    {
+     "shape": "line",
+     "x1": 60,
+     "y1": 8,
+     "x2": 95,
+     "y2": 8,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "x": 64,
+     "y": 8,
+     "w": 10,
+     "h": "0.45*(100 - pr)",
+     "fill": true,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 80,
+     "y": 8,
+     "w": 10,
+     "h": "0.45*pr",
+     "fill": true,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 69,
+     "y": 4.5,
+     "text": {
+      "en": "CO2 fixed",
+      "kn": "CO2 ಸ್ಥಿರ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 85,
+     "y": 4.5,
+     "text": {
+      "en": "O2 bound",
+      "kn": "O2 ಬಂಧನ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 69,
+     "y": "10 + 0.45*(100 - pr)",
+     "text": {
+      "en": "{100 - pr:0}%"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 85,
+     "y": "10 + 0.45*pr",
+     "text": {
+      "en": "{pr:0}%"
+     },
+     "size": 18
+    },
+    {
+     "shape": "label",
+     "x": 77,
+     "y": 56,
+     "text": {
+      "en": "Photorespiration: {pr:0}% of reactions",
+      "kn": "ದ್ಯುತಿ ಉಸಿರಾಟ: {pr:0}%"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Photorespiration",
+      "kn": "ದ್ಯುತಿ ಉಸಿರಾಟ"
+     },
+     "expr": "pr",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "In a C3 plant at 25 °C and 400 ppm CO2, what share of RuBisCO reactions are wasted?",
+     "kn": "C3 ಸಸ್ಯದಲ್ಲಿ 25 °C, 400 ppm ನಲ್ಲಿ RuBisCO ಕ್ರಿಯೆಗಳ ಎಷ್ಟು ಪಾಲು ವ್ಯರ್ಥ?"
+    },
+    {
+     "en": "Warm the leaf to 40 °C. Which plant is hurt more?",
+     "kn": "ಎಲೆಯನ್ನು 40 °C ಗೆ ಬಿಸಿ ಮಾಡಿ. ಯಾವ ಸಸ್ಯಕ್ಕೆ ಹೆಚ್ಚು ಹಾನಿ?"
+    },
+    {
+     "en": "Why are maize and sugarcane so productive in hot climates?",
+     "kn": "ಬಿಸಿ ಹವಾಮಾನದಲ್ಲಿ ಮೆಕ್ಕೆಜೋಳ ಮತ್ತು ಕಬ್ಬು ಏಕೆ ಹೆಚ್ಚು ಉತ್ಪಾದಕ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

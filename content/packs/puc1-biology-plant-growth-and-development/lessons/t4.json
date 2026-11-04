@@ -640,6 +640,302 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Apical dominance and gibberellins",
+    "kn": "ಶಿಖರ ಪ್ರಾಬಲ್ಯ ಮತ್ತು ಜಿಬ್ಬರೆಲ್ಲಿನ್"
+   },
+   "caption": {
+    "en": "Auxin from the growing shoot tip keeps the lateral (axillary) buds from growing: apical dominance. Remove the tip and the buds grow into branches, as in tea plantations and hedges. Auxin paste on the cut stump keeps the buds inhibited. Gibberellins lengthen the internodes. Illustrative growth rates.",
+    "kn": "ಬೆಳೆಯುವ ಶಿಖರದ ಆಕ್ಸಿನ್ ಪಾರ್ಶ್ವ ಮೊಗ್ಗುಗಳನ್ನು ತಡೆಯುತ್ತದೆ: ಶಿಖರ ಪ್ರಾಬಲ್ಯ. ತುದಿ ತೆಗೆದರೆ ಮೊಗ್ಗುಗಳು ಕೊಂಬೆಗಳಾಗುತ್ತವೆ (ಚಹಾ ತೋಟ, ಬೇಲಿ). ಕತ್ತರಿಸಿದ ತುದಿಗೆ ಆಕ್ಸಿನ್ ಲೇಪ ಮೊಗ್ಗುಗಳನ್ನು ತಡೆಯುತ್ತದೆ. ಜಿಬ್ಬರೆಲ್ಲಿನ್ ಗೆಣ್ಣು ಮಧ್ಯಗಳನ್ನು ಉದ್ದಗೊಳಿಸುತ್ತದೆ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Grow a plant for a month. Try removing its tip, putting auxin on the cut, and spraying gibberellin."
+   },
+   "sliders": [
+    {
+     "name": "ga",
+     "label": {
+      "en": "Gibberellin sprayed",
+      "kn": "ಸಿಂಪಡಿಸಿದ ಜಿಬ್ಬರೆಲ್ಲಿನ್"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 10,
+     "value": 0,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cut",
+     "label": {
+      "en": "Shoot tip removed",
+      "kn": "ಶಿಖರ ತೆಗೆಯಲಾಗಿದೆ"
+     },
+     "value": false
+    },
+    {
+     "name": "paste",
+     "label": {
+      "en": "Auxin paste on the cut tip",
+      "kn": "ಕತ್ತರಿಸಿದ ತುದಿಗೆ ಆಕ್ಸಿನ್ ಲೇಪ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 30,
+    "unit": "days",
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2
+   },
+   "vars": [
+    {
+     "name": "f",
+     "expr": "1 + 0.8*(ga/100)*(t/30)"
+    },
+    {
+     "name": "H",
+     "expr": "(40 + if(cut, 0, 0.8*t))*f"
+    },
+    {
+     "name": "lb",
+     "expr": "if(cut && !paste, 1.1*t, 0.05*t)"
+    },
+    {
+     "name": "s",
+     "expr": "0.44"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 20,
+     "y": 0,
+     "w": 60,
+     "h": 4,
+     "fill": true,
+     "color": "orange",
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 50,
+     "y1": 4,
+     "x2": 50,
+     "y2": "4 + s*H",
+     "color": "green",
+     "width": 7
+    },
+    {
+     "shape": "line",
+     "x1": 50,
+     "y1": "4 + s*10*f",
+     "x2": "50 - 0.5*s*lb - 1",
+     "y2": "4 + s*10*f + 0.5*s*lb + 1",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 50,
+     "y1": "4 + s*20*f",
+     "x2": "50 + 0.5*s*lb + 1",
+     "y2": "4 + s*20*f + 0.5*s*lb + 1",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 50,
+     "y1": "4 + s*30*f",
+     "x2": "50 - 0.5*s*lb - 1",
+     "y2": "4 + s*30*f + 0.5*s*lb + 1",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       50,
+       "4 + s*10*f"
+      ],
+      [
+       40,
+       "6 + s*10*f"
+      ],
+      [
+       36,
+       "4 + s*10*f"
+      ]
+     ],
+     "fill": true,
+     "color": "green",
+     "opacity": 0.7
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       50,
+       "4 + s*20*f"
+      ],
+      [
+       60,
+       "6 + s*20*f"
+      ],
+      [
+       64,
+       "4 + s*20*f"
+      ]
+     ],
+     "fill": true,
+     "color": "green",
+     "opacity": 0.7
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       50,
+       "4 + s*30*f"
+      ],
+      [
+       40,
+       "6 + s*30*f"
+      ],
+      [
+       36,
+       "4 + s*30*f"
+      ]
+     ],
+     "fill": true,
+     "color": "green",
+     "opacity": 0.7
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       47.5,
+       "4 + s*H"
+      ],
+      [
+       52.5,
+       "4 + s*H"
+      ],
+      [
+       50,
+       "7 + s*H"
+      ]
+     ],
+     "fill": true,
+     "color": "green",
+     "visibleIf": "!cut"
+    },
+    {
+     "shape": "rect",
+     "x": 47.5,
+     "y": "4 + s*H",
+     "w": 5,
+     "h": 1.5,
+     "fill": true,
+     "color": "yellow",
+     "visibleIf": "cut && paste"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 54,
+     "text": {
+      "en": "Tip auxin keeps buds dormant",
+      "kn": "ಶಿಖರ ಆಕ್ಸಿನ್ ಮೊಗ್ಗುಗಳನ್ನು ಸುಪ್ತವಾಗಿಡುತ್ತದೆ"
+     },
+     "size": 18,
+     "visibleIf": "!cut"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 54,
+     "text": {
+      "en": "Tip removed: buds grow into branches",
+      "kn": "ಶಿಖರ ಇಲ್ಲ: ಮೊಗ್ಗುಗಳು ಕೊಂಬೆಗಳಾಗುತ್ತವೆ"
+     },
+     "size": 18,
+     "visibleIf": "cut && !paste",
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 80,
+     "y": 54,
+     "text": {
+      "en": "Auxin paste: buds stay dormant",
+      "kn": "ಆಕ್ಸಿನ್ ಲೇಪ: ಮೊಗ್ಗುಗಳು ಸುಪ್ತ"
+     },
+     "size": 18,
+     "visibleIf": "cut && paste",
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Stem height",
+      "kn": "ಕಾಂಡದ ಎತ್ತರ"
+     },
+     "expr": "H",
+     "digits": 0,
+     "unit": "cm"
+    },
+    {
+     "label": {
+      "en": "Each side branch",
+      "kn": "ಪ್ರತಿ ಪಾರ್ಶ್ವ ಕೊಂಬೆ"
+     },
+     "expr": "lb",
+     "digits": 1,
+     "unit": "cm"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Remove the shoot tip and play. What happens to the lateral buds?",
+     "kn": "ಶಿಖರ ತೆಗೆದು ಆಡಿಸಿ. ಪಾರ್ಶ್ವ ಮೊಗ್ಗುಗಳಿಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Now add auxin paste to the cut tip. Which hormone was the tip supplying?",
+     "kn": "ಕತ್ತರಿಸಿದ ತುದಿಗೆ ಆಕ್ಸಿನ್ ಲೇಪ ಹಚ್ಚಿ. ತುದಿ ಯಾವ ಹಾರ್ಮೋನ್ ನೀಡುತ್ತಿತ್ತು?"
+    },
+    {
+     "en": "Spray gibberellin. Which part of the stem gets longer?",
+     "kn": "ಜಿಬ್ಬರೆಲ್ಲಿನ್ ಸಿಂಪಡಿಸಿ. ಕಾಂಡದ ಯಾವ ಭಾಗ ಉದ್ದವಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

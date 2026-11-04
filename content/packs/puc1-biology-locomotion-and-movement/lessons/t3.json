@@ -956,6 +956,363 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The sliding filaments",
+    "kn": "ಜಾರುವ ತಂತುಗಳು"
+   },
+   "caption": {
+    "en": "When a nerve signal releases Ca2+, myosin heads bind actin, use ATP and pull the thin filaments toward the M line. The sarcomere shortens: the I band and H zone get shorter but the A band stays the same length. Without ATP the heads cannot let go and the muscle locks (rigor).",
+    "kn": "ನರ ಸಂಕೇತ Ca2+ ಬಿಡುಗಡೆ ಮಾಡಿದಾಗ ಮಯೋಸಿನ್ ತಲೆಗಳು ಆಕ್ಟಿನ್ ಹಿಡಿದು ATP ಬಳಸಿ ತೆಳು ತಂತುಗಳನ್ನು M ರೇಖೆಯತ್ತ ಎಳೆಯುತ್ತವೆ. I ಪಟ್ಟಿ ಮತ್ತು H ವಲಯ ಕಿರಿದಾಗುತ್ತವೆ; A ಪಟ್ಟಿ ಬದಲಾಗುವುದಿಲ್ಲ. ATP ಇಲ್ಲದಿದ್ದರೆ ಸ್ನಾಯು ಬಿಗಿಯುತ್ತದೆ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Send a nerve signal and watch the thin filaments slide past the thick ones."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Cross-bridge cycling rate",
+      "kn": "ಅಡ್ಡ ಸೇತುವೆ ಚಕ್ರ ದರ"
+     },
+     "min": 0.5,
+     "max": 3,
+     "step": 0.25,
+     "value": 1.5,
+     "unit": "/s"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ca",
+     "label": {
+      "en": "Nerve signal: Ca2+ released",
+      "kn": "ನರ ಸಂಕೇತ: Ca2+ ಬಿಡುಗಡೆ"
+     },
+     "value": false
+    },
+    {
+     "name": "atp",
+     "label": {
+      "en": "ATP available",
+      "kn": "ATP ಲಭ್ಯ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 20,
+    "dt": 0.02,
+    "unit": "s"
+   },
+   "state": [
+    {
+     "name": "Ls",
+     "init": 2.5,
+     "rate": "if(atp, if(ca, k*(1.9 - Ls), 1.5*(2.5 - Ls)), 0)"
+    }
+   ],
+   "vars": [
+    {
+     "name": "zl",
+     "expr": "50 - 15*Ls"
+    },
+    {
+     "name": "zr",
+     "expr": "50 + 15*Ls"
+    },
+    {
+     "name": "H",
+     "expr": "max(Ls - 2, 0)"
+    },
+    {
+     "name": "Ib",
+     "expr": "Ls - 1.6"
+    },
+    {
+     "name": "act",
+     "expr": "ca && atp && Ls > 1.91"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": "zl",
+     "y1": 8,
+     "x2": "zl",
+     "y2": 46,
+     "color": "white",
+     "width": 6
+    },
+    {
+     "shape": "line",
+     "x1": "zr",
+     "y1": 8,
+     "x2": "zr",
+     "y2": 46,
+     "color": "white",
+     "width": 6
+    },
+    {
+     "shape": "line",
+     "x1": 50,
+     "y1": 12,
+     "x2": 50,
+     "y2": 42,
+     "color": "yellow",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "x": 26,
+     "y": 20.7,
+     "w": 48,
+     "h": 2.6,
+     "fill": true,
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": 26,
+     "y": 28.7,
+     "w": 48,
+     "h": 2.6,
+     "fill": true,
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": 26,
+     "y": 36.7,
+     "w": 48,
+     "h": 2.6,
+     "fill": true,
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "line",
+     "x1": "zl",
+     "y1": 17,
+     "x2": "zl + 30",
+     "y2": 17,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "zr - 30",
+     "y1": 17,
+     "x2": "zr",
+     "y2": 17,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "zl",
+     "y1": 26,
+     "x2": "zl + 30",
+     "y2": 26,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "zr - 30",
+     "y1": 26,
+     "x2": "zr",
+     "y2": 26,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "zl",
+     "y1": 34,
+     "x2": "zl + 30",
+     "y2": 34,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "zr - 30",
+     "y1": 34,
+     "x2": "zr",
+     "y2": 34,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "zl",
+     "y1": 43,
+     "x2": "zl + 30",
+     "y2": 43,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "zr - 30",
+     "y1": 43,
+     "x2": "zr",
+     "y2": 43,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 24,
+     "visibleIf": "act",
+     "x": "28 + 44*(i + 0.5)/24 + 0.6*sin(12*t + i)",
+     "y": "if(mod(i, 2) == 0, 24.4, 27.6) + 8*floor(mod(i, 6)/2)",
+     "r": 0.5,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 26,
+     "y1": 52,
+     "x2": 74,
+     "y2": 52,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 54.5,
+     "text": {
+      "en": "A band 1.6 µm",
+      "kn": "A ಪಟ್ಟಿ 1.6 µm"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": "zl",
+     "y1": 49,
+     "x2": 26,
+     "y2": 49,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "(zl + 26)/2",
+     "y": 46.5,
+     "text": {
+      "en": "I"
+     },
+     "size": 22
+    },
+    {
+     "shape": "line",
+     "x1": "zl + 30",
+     "y1": 5,
+     "x2": "zr - 30",
+     "y2": 5,
+     "color": "yellow",
+     "width": 3,
+     "visibleIf": "H > 0.02"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 1.5,
+     "text": {
+      "en": "H zone",
+      "kn": "H ವಲಯ"
+     },
+     "size": 20,
+     "visibleIf": "H > 0.02"
+    },
+    {
+     "shape": "label",
+     "x": 85,
+     "y": 56,
+     "text": {
+      "en": "Rigor: no ATP",
+      "kn": "ಬಿಗಿತ: ATP ಇಲ್ಲ"
+     },
+     "size": 20,
+     "visibleIf": "!atp",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Sarcomere length",
+      "kn": "ಸಾರ್ಕೋಮಿಯರ್ ಉದ್ದ"
+     },
+     "expr": "Ls",
+     "digits": 2,
+     "unit": "µm"
+    },
+    {
+     "label": {
+      "en": "I band",
+      "kn": "I ಪಟ್ಟಿ"
+     },
+     "expr": "Ib",
+     "digits": 2,
+     "unit": "µm"
+    },
+    {
+     "label": {
+      "en": "H zone",
+      "kn": "H ವಲಯ"
+     },
+     "expr": "H",
+     "digits": 2,
+     "unit": "µm"
+    },
+    {
+     "label": {
+      "en": "A band",
+      "kn": "A ಪಟ್ಟಿ"
+     },
+     "expr": "1.6",
+     "digits": 1,
+     "unit": "µm"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Contract the muscle. Which band never changes length?",
+     "kn": "ಸ್ನಾಯುವನ್ನು ಸಂಕುಚಿಸಿ. ಯಾವ ಪಟ್ಟಿಯ ಉದ್ದ ಬದಲಾಗುವುದಿಲ್ಲ?"
+    },
+    {
+     "en": "At what sarcomere length does the H zone disappear?",
+     "kn": "ಸಾರ್ಕೋಮಿಯರ್ ಯಾವ ಉದ್ದದಲ್ಲಿ H ವಲಯ ಮಾಯವಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Contract, then switch off ATP and remove Ca2+. Why does the muscle not relax?",
+     "kn": "ಸಂಕುಚಿಸಿ, ನಂತರ ATP ಆಫ್ ಮಾಡಿ Ca2+ ತೆಗೆಯಿರಿ. ಸ್ನಾಯು ಏಕೆ ಸಡಿಲವಾಗುವುದಿಲ್ಲ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

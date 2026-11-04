@@ -509,6 +509,267 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Cytokinesis and growth by mitosis",
+    "kn": "ಕೋಶದ್ರವ್ಯ ವಿಭಜನೆ ಮತ್ತು ಸಮವಿಭಜನೆಯಿಂದ ಬೆಳವಣಿಗೆ"
+   },
+   "caption": {
+    "en": "In an animal cell a furrow in the plasma membrane deepens until it cuts the cell in two. A plant cell has a rigid wall, so a cell plate forms in the centre and grows outward to the side walls. Each round of mitosis doubles the number of cells.",
+    "kn": "ಪ್ರಾಣಿ ಕೋಶದಲ್ಲಿ ಪ್ಲಾಸ್ಮಾ ಪೊರೆಯ ಕಂದಕ ಆಳವಾಗಿ ಕೋಶವನ್ನು ಎರಡಾಗಿಸುತ್ತದೆ. ಸಸ್ಯ ಕೋಶದಲ್ಲಿ ಕೋಶ ಫಲಕ ಮಧ್ಯದಲ್ಲಿ ರೂಪುಗೊಂಡು ಹೊರಕ್ಕೆ ಬೆಳೆಯುತ್ತದೆ. ಪ್ರತಿ ಸಮವಿಭಜನೆ ಕೋಶಗಳನ್ನು ದ್ವಿಗುಣಗೊಳಿಸುತ್ತದೆ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Compare how animal and plant cells split their cytoplasm, then see how quickly mitosis builds a tissue."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Rounds of mitosis",
+      "kn": "ಸಮವಿಭಜನೆಯ ಸುತ್ತುಗಳು"
+     },
+     "min": 0,
+     "max": 8,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "choices": [
+    {
+     "name": "ct",
+     "label": {
+      "en": "Cell type",
+      "kn": "ಕೋಶದ ಬಗೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Animal cell",
+        "kn": "ಪ್ರಾಣಿ ಕೋಶ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Plant cell",
+        "kn": "ಸಸ್ಯ ಕೋಶ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 8,
+    "loop": true,
+    "autoplay": true,
+    "unit": "s"
+   },
+   "vars": [
+    {
+     "name": "p",
+     "expr": "clamp(t/6, 0, 1)"
+    },
+    {
+     "name": "d",
+     "expr": "11.5*p"
+    },
+    {
+     "name": "cells",
+     "expr": "2^n"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": "25 - d",
+     "y": 30,
+     "r": 12,
+     "fill": true,
+     "color": "blue",
+     "visibleIf": "ct == 1",
+     "opacity": 0.4
+    },
+    {
+     "shape": "circle",
+     "x": "25 + d",
+     "y": 30,
+     "r": 12,
+     "fill": true,
+     "color": "blue",
+     "visibleIf": "ct == 1",
+     "opacity": 0.4
+    },
+    {
+     "shape": "circle",
+     "x": "25 - max(d, 6)",
+     "y": 30,
+     "r": 2.5,
+     "fill": true,
+     "color": "orange",
+     "visibleIf": "ct == 1"
+    },
+    {
+     "shape": "circle",
+     "x": "25 + max(d, 6)",
+     "y": 30,
+     "r": 2.5,
+     "fill": true,
+     "color": "orange",
+     "visibleIf": "ct == 1"
+    },
+    {
+     "shape": "arrow",
+     "x": 25,
+     "y": 48,
+     "dx": 0,
+     "dy": -5,
+     "color": "yellow",
+     "visibleIf": "ct == 1 && p < 1"
+    },
+    {
+     "shape": "arrow",
+     "x": 25,
+     "y": 12,
+     "dx": 0,
+     "dy": 5,
+     "color": "yellow",
+     "visibleIf": "ct == 1 && p < 1"
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 18,
+     "w": 30,
+     "h": 24,
+     "fill": true,
+     "color": "green",
+     "visibleIf": "ct == 2",
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 18,
+     "w": 30,
+     "h": 24,
+     "fill": false,
+     "color": "green",
+     "width": 6,
+     "visibleIf": "ct == 2"
+    },
+    {
+     "shape": "circle",
+     "x": 17.5,
+     "y": 30,
+     "r": 2.5,
+     "fill": true,
+     "color": "orange",
+     "visibleIf": "ct == 2"
+    },
+    {
+     "shape": "circle",
+     "x": 32.5,
+     "y": 30,
+     "r": 2.5,
+     "fill": true,
+     "color": "orange",
+     "visibleIf": "ct == 2"
+    },
+    {
+     "shape": "line",
+     "x1": 25,
+     "y1": "30 - 12*p",
+     "x2": 25,
+     "y2": "30 + 12*p",
+     "color": "yellow",
+     "width": 7,
+     "visibleIf": "ct == 2"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 52,
+     "text": {
+      "en": "Cleavage furrow",
+      "kn": "ವಿಭಜನಾ ಕಂದಕ"
+     },
+     "size": 22,
+     "visibleIf": "ct == 1"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 52,
+     "text": {
+      "en": "Cell plate",
+      "kn": "ಕೋಶ ಫಲಕ"
+     },
+     "size": 22,
+     "visibleIf": "ct == 2"
+    },
+    {
+     "shape": "particles",
+     "count": 256,
+     "visibleIf": "i < cells",
+     "x": "57 + 2.5*mod(i, 16)",
+     "y": "10 + 2.5*floor(i/16)",
+     "r": 1,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 76,
+     "y": 54,
+     "text": {
+      "en": "{cells} cells after {n} rounds",
+      "kn": "{n} ಸುತ್ತಿನ ನಂತರ {cells} ಕೋಶಗಳು"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cells",
+      "kn": "ಕೋಶಗಳು"
+     },
+     "expr": "cells",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why can a plant cell not divide by a furrow?",
+     "kn": "ಸಸ್ಯ ಕೋಶ ಕಂದಕದಿಂದ ಏಕೆ ವಿಭಜಿಸಲಾರದು?"
+    },
+    {
+     "en": "Does the cell plate grow from the centre outward or from the walls inward?",
+     "kn": "ಕೋಶ ಫಲಕ ಮಧ್ಯದಿಂದ ಹೊರಕ್ಕೆ ಬೆಳೆಯುತ್ತದೆಯೇ ಅಥವಾ ಗೋಡೆಯಿಂದ ಒಳಕ್ಕೆ?"
+    },
+    {
+     "en": "How many rounds of mitosis turn one cell into 256 cells?",
+     "kn": "ಒಂದು ಕೋಶ 256 ಆಗಲು ಎಷ್ಟು ಸುತ್ತು ಸಮವಿಭಜನೆ ಬೇಕು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

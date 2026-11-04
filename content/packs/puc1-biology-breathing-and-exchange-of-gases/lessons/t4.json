@@ -333,6 +333,307 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The oxygen dissociation curve",
+    "kn": "ಆಮ್ಲಜನಕ ವಿಯೋಜನಾ ವಕ್ರ"
+   },
+   "caption": {
+    "en": "Haemoglobin saturation plotted against pO2 is sigmoid. In the lungs (high pO2, low pCO2, less H+, lower temperature) oxyhaemoglobin forms; in the tissues (low pO2, high pCO2, more H+, higher temperature) the curve shifts right and O2 is released. Normally 100 mL of oxygenated blood gives about 5 mL of O2 to the tissues.",
+    "kn": "pO2 ವಿರುದ್ಧ ಹೀಮೋಗ್ಲೋಬಿನ್ ಸಂತೃಪ್ತಿ ಸಿಗ್ಮಾ ಆಕಾರದ ವಕ್ರ. ಅಂಗಾಂಶಗಳಲ್ಲಿ (ಕಡಿಮೆ pO2, ಹೆಚ್ಚು pCO2, ಹೆಚ್ಚು H+, ಹೆಚ್ಚು ತಾಪ) ವಕ್ರ ಬಲಕ್ಕೆ ಸರಿದು O2 ಬಿಡುಗಡೆಯಾಗುತ್ತದೆ. 100 mL ರಕ್ತ ಸುಮಾರು 5 mL O2 ನೀಡುತ್ತದೆ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Move the oxygen pressure and change the conditions in the blood to see how much oxygen haemoglobin holds."
+   },
+   "sliders": [
+    {
+     "name": "p",
+     "label": {
+      "en": "pO2",
+      "kn": "pO2"
+     },
+     "min": 0,
+     "max": 120,
+     "step": 2,
+     "value": 100,
+     "unit": "mm Hg"
+    },
+    {
+     "name": "pH",
+     "label": {
+      "en": "Blood pH",
+      "kn": "ರಕ್ತದ pH"
+     },
+     "min": 7.2,
+     "max": 7.6,
+     "step": 0.02,
+     "value": 7.4
+    },
+    {
+     "name": "Tb",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪ"
+     },
+     "min": 35,
+     "max": 41,
+     "step": 0.5,
+     "value": 37,
+     "unit": "°C"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ref",
+     "label": {
+      "en": "Show normal curve",
+      "kn": "ಸಾಮಾನ್ಯ ವಕ್ರ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "P50",
+     "expr": "26.6*10^(0.48*(7.4 - pH) + 0.024*(Tb - 37))"
+    },
+    {
+     "name": "sat",
+     "expr": "p^2.7/(p^2.7 + P50^2.7)"
+    },
+    {
+     "name": "s100",
+     "expr": "100^2.7/(100^2.7 + P50^2.7)"
+    },
+    {
+     "name": "s40",
+     "expr": "40^2.7/(40^2.7 + P50^2.7)"
+    },
+    {
+     "name": "gx",
+     "expr": "10 + p*85/120"
+    },
+    {
+     "name": "gy",
+     "expr": "8 + 45*sat"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 8,
+     "x2": 96,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 8,
+     "x2": 10,
+     "y2": 55,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 53,
+     "x2": 96,
+     "y2": 53,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 53,
+     "y": 3,
+     "text": {
+      "en": "pO2 (mm Hg), 0 to 120",
+      "kn": "pO2 (mm Hg), 0 ರಿಂದ 120"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 57,
+     "text": {
+      "en": "Haemoglobin saturation (%)",
+      "kn": "ಹೀಮೋಗ್ಲೋಬಿನ್ ಸಂತೃಪ್ತಿ (%)"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 8.5,
+     "y": 53,
+     "text": {
+      "en": "100"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 8.5,
+     "y": 30.5,
+     "text": {
+      "en": "50"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 38.3,
+     "y1": 8,
+     "x2": 38.3,
+     "y2": 53,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.35
+    },
+    {
+     "shape": "text",
+     "x": 38.3,
+     "y": 10.5,
+     "text": {
+      "en": "tissues",
+      "kn": "ಅಂಗಾಂಶ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "line",
+     "x1": 80.8,
+     "y1": 8,
+     "x2": 80.8,
+     "y2": 53,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.35
+    },
+    {
+     "shape": "text",
+     "x": 80.8,
+     "y": 10.5,
+     "text": {
+      "en": "lungs",
+      "kn": "ಶ್ವಾಸಕೋಶ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "path",
+     "visibleIf": "ref",
+     "fn": "8 + 45*((x - 10)*120/85)^2.7/(((x - 10)*120/85)^2.7 + 26.6^2.7)",
+     "from": 10,
+     "to": 95,
+     "color": "white",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "8 + 45*((x - 10)*120/85)^2.7/(((x - 10)*120/85)^2.7 + P50^2.7)",
+     "from": 10,
+     "to": 95,
+     "color": "red",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "gx",
+     "y1": 8,
+     "x2": "gx",
+     "y2": "gy",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "x": "gx",
+     "y": "gy",
+     "r": 1.2,
+     "fill": true,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 70,
+     "y": 22,
+     "text": {
+      "en": "{sat*100:0}% saturated",
+      "kn": "{sat*100:0}% ಸಂತೃಪ್ತ"
+     },
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Saturation",
+      "kn": "ಸಂತೃಪ್ತಿ"
+     },
+     "expr": "sat*100",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "P50 (half saturated)",
+      "kn": "P50 (ಅರ್ಧ ಸಂತೃಪ್ತ)"
+     },
+     "expr": "P50",
+     "digits": 1,
+     "unit": "mm Hg"
+    },
+    {
+     "label": {
+      "en": "O2 given to tissues per 100 mL blood",
+      "kn": "ಪ್ರತಿ 100 mL ರಕ್ತ ನೀಡುವ O2"
+     },
+     "expr": "20*(s100 - s40)",
+     "digits": 1,
+     "unit": "mL"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Read the saturation at pO2 100 (lungs) and at 40 (tissues).",
+     "kn": "pO2 100 (ಶ್ವಾಸಕೋಶ) ಮತ್ತು 40 (ಅಂಗಾಂಶ) ನಲ್ಲಿ ಸಂತೃಪ್ತಿ ಓದಿ."
+    },
+    {
+     "en": "Lower the pH to 7.2 and warm to 40 °C. Which way does the curve move, and how does that help an exercising muscle?",
+     "kn": "pH 7.2 ಮತ್ತು 40 °C ಮಾಡಿ. ವಕ್ರ ಯಾವ ಕಡೆ ಸರಿಯುತ್ತದೆ? ವ್ಯಾಯಾಮ ಮಾಡುವ ಸ್ನಾಯುವಿಗೆ ಹೇಗೆ ಸಹಾಯ?"
+    },
+    {
+     "en": "Why is the steep middle part of the curve useful?",
+     "kn": "ವಕ್ರದ ಕಡಿದಾದ ಮಧ್ಯಭಾಗ ಏಕೆ ಉಪಯುಕ್ತ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -493,6 +493,310 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Xylem up, phloem to the sink",
+    "kn": "ಕ್ಸೈಲಮ್ ಮೇಲಕ್ಕೆ, ಫ್ಲೋಯಮ್ ಬಳಕೆ ಸ್ಥಳಕ್ಕೆ"
+   },
+   "caption": {
+    "en": "Xylem carries water and minerals one way, from roots to leaves; the pull comes from water evaporating through the leaves. Phloem carries food from where it is made or stored (source) to where it is needed (sink), up or down.",
+    "kn": "ಕ್ಸೈಲಮ್ ನೀರು ಮತ್ತು ಖನಿಜಗಳನ್ನು ಬೇರಿನಿಂದ ಎಲೆಗೆ ಒಂದೇ ದಿಕ್ಕಿನಲ್ಲಿ ಒಯ್ಯುತ್ತದೆ. ಫ್ಲೋಯಮ್ ಆಹಾರವನ್ನು ಮೂಲದಿಂದ ಬಳಕೆ ಸ್ಥಳಕ್ಕೆ, ಮೇಲೆ ಅಥವಾ ಕೆಳಗೆ, ಒಯ್ಯುತ್ತದೆ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Water rises in the xylem; food moves in the phloem towards wherever it is needed."
+   },
+   "sliders": [
+    {
+     "name": "pull",
+     "label": {
+      "en": "Sunlight and wind",
+      "kn": "ಬಿಸಿಲು ಮತ್ತು ಗಾಳಿ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "st",
+     "label": {
+      "en": "Stomata open",
+      "kn": "ಪತ್ರರಂಧ್ರಗಳು ತೆರೆದಿವೆ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "sink",
+     "label": {
+      "en": "Food goes to",
+      "kn": "ಆಹಾರ ಹೋಗುವುದು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Roots (storage)",
+        "kn": "ಬೇರು (ಸಂಗ್ರಹ)"
+       },
+       "value": -1
+      },
+      {
+       "label": {
+        "en": "Growing shoot tip",
+        "kn": "ಬೆಳೆಯುವ ಕಾಂಡದ ತುದಿ"
+       },
+       "value": 1
+      }
+     ],
+     "value": -1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true,
+    "unit": "s"
+   },
+   "vars": [
+    {
+     "name": "vx",
+     "expr": "if(st, 1 + 0.12*pull, 0.15)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 43,
+     "y": 8,
+     "w": 14,
+     "h": 42,
+     "fill": true,
+     "color": "green",
+     "opacity": 0.2
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       50,
+       50
+      ],
+      [
+       30,
+       56
+      ],
+      [
+       22,
+       52
+      ],
+      [
+       32,
+       49
+      ]
+     ],
+     "fill": true,
+     "color": "green"
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       50,
+       50
+      ],
+      [
+       70,
+       56
+      ],
+      [
+       78,
+       52
+      ],
+      [
+       68,
+       49
+      ]
+     ],
+     "fill": true,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 48.5,
+     "y": 50,
+     "w": 3,
+     "h": 7,
+     "fill": true,
+     "color": "yellow",
+     "visibleIf": "sink == 1",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 58.6,
+     "text": {
+      "en": "growing tip",
+      "kn": "ಬೆಳೆಯುವ ತುದಿ"
+     },
+     "size": 18,
+     "visibleIf": "sink == 1"
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       44,
+       8
+      ],
+      [
+       56,
+       8
+      ],
+      [
+       52,
+       1
+      ],
+      [
+       48,
+       1
+      ]
+     ],
+     "fill": true,
+     "color": "orange",
+     "opacity": "if(sink == -1, 0.9, 0.4)"
+    },
+    {
+     "shape": "rect",
+     "x": 44.5,
+     "y": 8,
+     "w": 4,
+     "h": 42,
+     "fill": true,
+     "color": "blue",
+     "opacity": 0.35
+    },
+    {
+     "shape": "rect",
+     "x": 51.5,
+     "y": 8,
+     "w": 4,
+     "h": 42,
+     "fill": true,
+     "color": "orange",
+     "opacity": 0.35
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "45.3 + 2.4*rand(i)",
+     "y": "8 + mod(42*rand(i + 100) + vx*t, 42)",
+     "r": 0.5,
+     "color": "blue"
+    },
+    {
+     "shape": "particles",
+     "count": 30,
+     "x": "52.3 + 2.4*rand(i + 7)",
+     "y": "if(sink > 0, 8 + mod(42*rand(i + 200) + 3*t, 42), 50 - mod(42*rand(i + 200) + 3*t, 42))",
+     "r": 0.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "visibleIf": "st",
+     "x": "26 + 48*rand(i + 50)",
+     "y": "52 + mod(8*rand(i + 60) + vx*t/2, 8)",
+     "r": 0.4,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "label",
+     "x": 22,
+     "y": 30,
+     "text": {
+      "en": "Xylem: water up only",
+      "kn": "ಕ್ಸೈಲಮ್: ನೀರು ಮೇಲಕ್ಕೆ ಮಾತ್ರ"
+     },
+     "size": 22,
+     "color": "blue"
+    },
+    {
+     "shape": "label",
+     "x": 78,
+     "y": 30,
+     "text": {
+      "en": "Phloem: food to the sink",
+      "kn": "ಫ್ಲೋಯಮ್: ಆಹಾರ ಬಳಕೆ ಸ್ಥಳಕ್ಕೆ"
+     },
+     "size": 22,
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "x": 57,
+     "y": 30,
+     "dx": 8,
+     "dy": 0,
+     "color": "orange",
+     "opacity": 0.5
+    },
+    {
+     "shape": "arrow",
+     "x": 43,
+     "y": 30,
+     "dx": -8,
+     "dy": 0,
+     "color": "blue",
+     "opacity": 0.5
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Water flow (relative)",
+      "kn": "ನೀರಿನ ಹರಿವು (ಸಾಪೇಕ್ಷ)"
+     },
+     "expr": "vx",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Close the stomata. What happens to the flow in the xylem?",
+     "kn": "ಪತ್ರರಂಧ್ರಗಳನ್ನು ಮುಚ್ಚಿ. ಕ್ಸೈಲಮ್ ಹರಿವಿಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Switch the sink from the roots to the growing tip. Which tube changes direction?",
+     "kn": "ಬಳಕೆ ಸ್ಥಳವನ್ನು ಬೇರಿನಿಂದ ಬೆಳೆಯುವ ತುದಿಗೆ ಬದಲಿಸಿ. ಯಾವ ನಳಿಕೆ ದಿಕ್ಕು ಬದಲಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Which tissue has living cells: the one that flows one way or the one that flows both ways?",
+     "kn": "ಯಾವ ಅಂಗಾಂಶದಲ್ಲಿ ಜೀವಂತ ಕೋಶಗಳಿವೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

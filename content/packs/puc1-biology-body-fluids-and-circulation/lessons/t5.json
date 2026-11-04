@@ -605,6 +605,238 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Nerves and hormones set the heart rate",
+    "kn": "ನರಗಳು ಮತ್ತು ಹಾರ್ಮೋನುಗಳು ಹೃದಯ ಬಡಿತ ನಿರ್ಧರಿಸುತ್ತವೆ"
+   },
+   "caption": {
+    "en": "The SA node sets the basic rhythm (about 70 to 75 beats a minute). Sympathetic nerves raise the rate and strength of the beat; parasympathetic (vagus) signals slow it. Adrenal medullary hormones also raise the cardiac output. This is a simple, illustrative model.",
+    "kn": "SA ಗ್ರಂಥಿ ಮೂಲ ಲಯ ನಿರ್ಧರಿಸುತ್ತದೆ (ನಿಮಿಷಕ್ಕೆ ಸುಮಾರು 70–75). ಅನುವೇದನಾ ನರಗಳು ಬಡಿತ ಹೆಚ್ಚಿಸುತ್ತವೆ; ಪರಾನುವೇದನಾ (ವೇಗಸ್) ಸಂಕೇತಗಳು ಕಡಿಮೆ ಮಾಡುತ್ತವೆ. ಅಡ್ರಿನಲ್ ಹಾರ್ಮೋನುಗಳೂ ಹೆಚ್ಚಿಸುತ್ತವೆ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "The heart beats on its own, but nerves and hormones speed it up or slow it down. Try them."
+   },
+   "sliders": [
+    {
+     "name": "sym",
+     "label": {
+      "en": "Sympathetic signals",
+      "kn": "ಅನುವೇದನಾ ಸಂಕೇತ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 0,
+     "unit": "%"
+    },
+    {
+     "name": "par",
+     "label": {
+      "en": "Parasympathetic (vagus) signals",
+      "kn": "ಪರಾನುವೇದನಾ (ವೇಗಸ್) ಸಂಕೇತ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 0,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "adr",
+     "label": {
+      "en": "Adrenal medullary hormones",
+      "kn": "ಅಡ್ರಿನಲ್ ಮೆಡುಲ್ಲಾ ಹಾರ್ಮೋನುಗಳು"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 30,
+    "loop": true,
+    "autoplay": true,
+    "unit": "s"
+   },
+   "vars": [
+    {
+     "name": "HR",
+     "expr": "clamp(72*(1 + 0.8*sym/100 + if(adr, 0.3, 0))*(1 - 0.45*par/100), 40, 180)"
+    },
+    {
+     "name": "SV",
+     "expr": "70*(1 + 0.3*sym/100 + if(adr, 0.15, 0))"
+    },
+    {
+     "name": "beat",
+     "expr": "exp(-(mod(t, 60/HR)/0.12)^2)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 30,
+     "y": 32,
+     "r": "11 - 2*beat",
+     "fill": true,
+     "color": "red",
+     "opacity": 0.8
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       21,
+       30
+      ],
+      [
+       39,
+       30
+      ],
+      [
+       30,
+       16
+      ]
+     ],
+     "fill": true,
+     "color": "red",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": 30,
+     "y": 32,
+     "r": 1.4,
+     "fill": true,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 52,
+     "text": {
+      "en": "SA node: pacemaker",
+      "kn": "SA ಗ್ರಂಥಿ: ಲಯಕಾರಕ"
+     },
+     "size": 22
+    },
+    {
+     "shape": "arrow",
+     "x": 62,
+     "y": 44,
+     "dx": -18,
+     "dy": -8,
+     "color": "orange",
+     "visibleIf": "sym > 0",
+     "opacity": "0.3 + 0.7*sym/100"
+    },
+    {
+     "shape": "arrow",
+     "x": 62,
+     "y": 22,
+     "dx": -18,
+     "dy": 6,
+     "color": "blue",
+     "visibleIf": "par > 0",
+     "opacity": "0.3 + 0.7*par/100"
+    },
+    {
+     "shape": "label",
+     "x": 78,
+     "y": 46,
+     "text": {
+      "en": "Sympathetic: faster, stronger",
+      "kn": "ಅನುವೇದನಾ: ವೇಗ, ಬಲ"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 78,
+     "y": 20,
+     "text": {
+      "en": "Vagus: slower",
+      "kn": "ವೇಗಸ್: ನಿಧಾನ"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "label",
+     "x": 78,
+     "y": 33,
+     "text": {
+      "en": "Adrenaline in blood",
+      "kn": "ರಕ್ತದಲ್ಲಿ ಅಡ್ರಿನಲಿನ್"
+     },
+     "size": 20,
+     "visibleIf": "adr",
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 30,
+     "y": 6,
+     "text": {
+      "en": "{HR:0} beats/min",
+      "kn": "{HR:0} ಬಡಿತ/ನಿಮಿಷ"
+     },
+     "size": 26
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Heart rate",
+      "kn": "ಹೃದಯ ಬಡಿತ"
+     },
+     "expr": "HR",
+     "digits": 0,
+     "unit": "beats/min"
+    },
+    {
+     "label": {
+      "en": "Cardiac output",
+      "kn": "ಹೃದಯ ಉತ್ಪಾದನೆ"
+     },
+     "expr": "HR*SV/1000",
+     "digits": 1,
+     "unit": "L/min"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise sympathetic signals. What happens to the cardiac output?",
+     "kn": "ಅನುವೇದನಾ ಸಂಕೇತ ಹೆಚ್ಚಿಸಿ. ಹೃದಯ ಉತ್ಪಾದನೆಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Which control slows the heart?",
+     "kn": "ಯಾವ ನಿಯಂತ್ರಣ ಹೃದಯವನ್ನು ನಿಧಾನಗೊಳಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "With both nerves off, why does the heart still beat?",
+     "kn": "ಎರಡೂ ನರಗಳು ಆಫ್ ಆದರೂ ಹೃದಯ ಏಕೆ ಬಡಿಯುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

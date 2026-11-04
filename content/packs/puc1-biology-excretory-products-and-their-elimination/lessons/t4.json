@@ -539,6 +539,307 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "ADH and concentrated urine",
+    "kn": "ADH ಮತ್ತು ಸಾಂದ್ರ ಮೂತ್ರ"
+   },
+   "caption": {
+    "en": "The counter-current mechanism builds an osmotic gradient in the medulla, from about 300 mOsm/L in the cortex to about 1200 mOsm/L in the inner medulla. ADH makes the collecting duct let water out into this salty medulla, so less, more concentrated urine is made. Without ADH (diabetes insipidus) large volumes of dilute urine are lost.",
+    "kn": "ಪ್ರತಿಪ್ರವಾಹ ಕ್ರಿಯಾವಿಧಾನ ಮೆಡುಲ್ಲಾದಲ್ಲಿ ಸುಮಾರು 300 ರಿಂದ 1200 mOsm/L ಇಳಿಜಾರು ನಿರ್ಮಿಸುತ್ತದೆ. ADH ಸಂಗ್ರಹ ನಾಳದಿಂದ ನೀರು ಹೊರಹೋಗಲು ಬಿಡುತ್ತದೆ, ಮೂತ್ರ ಕಡಿಮೆ ಮತ್ತು ಸಾಂದ್ರ. ADH ಇಲ್ಲದಿದ್ದರೆ (ಡಯಾಬಿಟಿಸ್ ಇನ್ಸಿಪಿಡಸ್) ಹೆಚ್ಚು ತೆಳು ಮೂತ್ರ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Set the ADH level and see how much water the collecting duct gives back to the body."
+   },
+   "sliders": [
+    {
+     "name": "adh",
+     "label": {
+      "en": "ADH level",
+      "kn": "ADH ಮಟ್ಟ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 30,
+     "unit": "%"
+    },
+    {
+     "name": "load",
+     "label": {
+      "en": "Solutes to remove",
+      "kn": "ಹೊರಹಾಕಬೇಕಾದ ದ್ರಾವ್ಯಗಳು"
+     },
+     "min": 400,
+     "max": 1200,
+     "step": 50,
+     "value": 600,
+     "unit": "mOsm/day"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "di",
+     "label": {
+      "en": "Diabetes insipidus (no ADH)",
+      "kn": "ಡಯಾಬಿಟಿಸ್ ಇನ್ಸಿಪಿಡಸ್ (ADH ಇಲ್ಲ)"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 20,
+    "loop": true,
+    "autoplay": true,
+    "unit": "s"
+   },
+   "vars": [
+    {
+     "name": "a",
+     "expr": "if(di, 0, adh/100)"
+    },
+    {
+     "name": "osm",
+     "expr": "100 + 1100*a"
+    },
+    {
+     "name": "vol",
+     "expr": "load/osm"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 44,
+     "w": 50,
+     "h": 12,
+     "fill": true,
+     "color": {
+      "by": "0",
+      "scale": [
+       "yellow",
+       "red"
+      ]
+     },
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 32,
+     "w": 50,
+     "h": 12,
+     "fill": true,
+     "color": {
+      "by": "0.33",
+      "scale": [
+       "yellow",
+       "red"
+      ]
+     },
+     "opacity": 0.35
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 20,
+     "w": 50,
+     "h": 12,
+     "fill": true,
+     "color": {
+      "by": "0.67",
+      "scale": [
+       "yellow",
+       "red"
+      ]
+     },
+     "opacity": 0.45
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 8,
+     "w": 50,
+     "h": 12,
+     "fill": true,
+     "color": {
+      "by": "1",
+      "scale": [
+       "yellow",
+       "red"
+      ]
+     },
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 50,
+     "text": {
+      "en": "300"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 38,
+     "text": {
+      "en": "600"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 26,
+     "text": {
+      "en": "900"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 14,
+     "text": {
+      "en": "1200"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 58,
+     "text": {
+      "en": "Medulla (mOsm/L)",
+      "kn": "ಮೆಡುಲ್ಲಾ (mOsm/L)"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 32,
+     "y": 4,
+     "w": 5,
+     "h": 52,
+     "fill": true,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "arrow",
+     "x": 34.5,
+     "y": 56,
+     "dx": 0,
+     "dy": -6,
+     "color": "white"
+    },
+    {
+     "shape": "particles",
+     "count": 30,
+     "x": "37 + mod(14*rand(i) + 3*t, 14)",
+     "y": "8 + 46*rand(i + 40)",
+     "r": 0.6,
+     "color": "blue",
+     "opacity": "a"
+    },
+    {
+     "shape": "text",
+     "x": 25,
+     "y": 2,
+     "text": {
+      "en": "Collecting duct",
+      "kn": "ಸಂಗ್ರಹ ನಾಳ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 70,
+     "y": 8,
+     "w": 10,
+     "h": "min(vol*7, 46)",
+     "fill": true,
+     "color": "yellow",
+     "opacity": "0.4 + 0.5*a"
+    },
+    {
+     "shape": "text",
+     "x": 75,
+     "y": 4,
+     "text": {
+      "en": "Urine/day",
+      "kn": "ದಿನದ ಮೂತ್ರ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "label",
+     "x": 78,
+     "y": 56,
+     "text": {
+      "en": "{vol:1} L at {osm:0} mOsm/L",
+      "kn": "{vol:1} L, {osm:0} mOsm/L"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Urine concentration",
+      "kn": "ಮೂತ್ರದ ಸಾಂದ್ರತೆ"
+     },
+     "expr": "osm",
+     "digits": 0,
+     "unit": "mOsm/L"
+    },
+    {
+     "label": {
+      "en": "Urine volume",
+      "kn": "ಮೂತ್ರದ ಪ್ರಮಾಣ"
+     },
+     "expr": "vol",
+     "digits": 1,
+     "unit": "L/day"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn ADH up to 100%. What is the most concentrated urine possible, and why can it not go higher?",
+     "kn": "ADH 100% ಮಾಡಿ. ಅತಿ ಸಾಂದ್ರ ಮೂತ್ರ ಎಷ್ಟು? ಅದಕ್ಕಿಂತ ಹೆಚ್ಚಾಗದು ಏಕೆ?"
+    },
+    {
+     "en": "Turn on diabetes insipidus. How much urine is made in a day?",
+     "kn": "ಡಯಾಬಿಟಿಸ್ ಇನ್ಸಿಪಿಡಸ್ ಆನ್ ಮಾಡಿ. ದಿನಕ್ಕೆ ಎಷ್ಟು ಮೂತ್ರ?"
+    },
+    {
+     "en": "You are dehydrated. Should ADH go up or down?",
+     "kn": "ನಿರ್ಜಲೀಕರಣವಾಗಿದೆ. ADH ಏರಬೇಕೇ ಇಳಿಯಬೇಕೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

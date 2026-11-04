@@ -359,6 +359,285 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Arithmetic, geometric and sigmoid growth",
+    "kn": "ಅಂಕಗಣಿತೀಯ, ಜ್ಯಾಮಿತೀಯ ಮತ್ತು ಸಿಗ್ಮಾಯ್ಡ್ ಬೆಳವಣಿಗೆ"
+   },
+   "caption": {
+    "en": "In arithmetic growth only one daughter cell keeps dividing, so size rises in a straight line (Lt = L0 + rt), as in a root growing at a constant rate. In geometric growth both daughters keep dividing, so size grows exponentially (W1 = W0 e^rt). With limited nutrients growth slows and stops, giving an S-shaped (sigmoid) curve.",
+    "kn": "ಅಂಕಗಣಿತೀಯ ಬೆಳವಣಿಗೆಯಲ್ಲಿ ಒಂದೇ ಮರಿಕೋಶ ವಿಭಜಿಸುತ್ತದೆ: ನೇರ ರೇಖೆ (Lt = L0 + rt). ಜ್ಯಾಮಿತೀಯದಲ್ಲಿ ಎರಡೂ ವಿಭಜಿಸುತ್ತವೆ: ಘಾತೀಯ (W1 = W0 e^rt). ಪೋಷಕಾಂಶ ಸೀಮಿತವಾದರೆ S ಆಕಾರದ ವಕ್ರ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Pick a pattern of growth and watch the size over twenty days. Compare the absolute and relative growth rates."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Growth rate r",
+      "kn": "ಬೆಳವಣಿಗೆ ದರ r"
+     },
+     "min": 0.1,
+     "max": 0.6,
+     "step": 0.02,
+     "value": 0.3,
+     "unit": "per day"
+    },
+    {
+     "name": "W0",
+     "label": {
+      "en": "Starting size",
+      "kn": "ಆರಂಭಿಕ ಗಾತ್ರ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 2
+    }
+   ],
+   "choices": [
+    {
+     "name": "mode",
+     "label": {
+      "en": "Pattern",
+      "kn": "ಮಾದರಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Arithmetic",
+        "kn": "ಅಂಕಗಣಿತೀಯ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Geometric",
+        "kn": "ಜ್ಯಾಮಿತೀಯ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Sigmoid (limited)",
+        "kn": "ಸಿಗ್ಮಾಯ್ಡ್ (ಸೀಮಿತ)"
+       },
+       "value": 3
+      }
+     ],
+     "value": 3
+    }
+   ],
+   "toggles": [
+    {
+     "name": "all",
+     "label": {
+      "en": "Show all three curves",
+      "kn": "ಮೂರೂ ವಕ್ರಗಳನ್ನು ತೋರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 20,
+    "unit": "days",
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4
+    ],
+    "speed": 2
+   },
+   "vars": [
+    {
+     "name": "Wa",
+     "expr": "W0 + 10*r*t"
+    },
+    {
+     "name": "Wg",
+     "expr": "W0*exp(r*t)"
+    },
+    {
+     "name": "Ws",
+     "expr": "100/(1 + (100/W0 - 1)*exp(-r*t))"
+    },
+    {
+     "name": "W",
+     "expr": "if(mode == 1, Wa, if(mode == 2, Wg, Ws))"
+    },
+    {
+     "name": "agr",
+     "expr": "if(mode == 1, 10*r, if(mode == 2, r*Wg, r*Ws*(1 - Ws/100)))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 8,
+     "x2": 95,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 8,
+     "x2": 10,
+     "y2": 56,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 53,
+     "x2": 95,
+     "y2": 53,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 52,
+     "y": 3.5,
+     "text": {
+      "en": "Time (0 to 20 days)",
+      "kn": "ಸಮಯ (0–20 ದಿನ)"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 58,
+     "text": {
+      "en": "Size (relative, 0 to 100)",
+      "kn": "ಗಾತ್ರ (ಸಾಪೇಕ್ಷ, 0–100)"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "path",
+     "visibleIf": "all",
+     "fn": "8 + 0.45*min(W0 + 10*r*(x - 10)*20/85, 105)",
+     "from": 10,
+     "to": 95,
+     "color": "blue",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "visibleIf": "all",
+     "fn": "8 + 0.45*min(W0*exp(r*(x - 10)*20/85), 105)",
+     "from": 10,
+     "to": 95,
+     "color": "red",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "visibleIf": "all",
+     "fn": "8 + 0.45*100/(1 + (100/W0 - 1)*exp(-r*(x - 10)*20/85))",
+     "from": 10,
+     "to": 95,
+     "color": "green",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "trail",
+     "x": "10 + 85*t/20",
+     "y": "8 + 0.45*min(W, 105)",
+     "length": 2000,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "10 + 85*t/20",
+     "y": "8 + 0.45*min(W, 105)",
+     "r": 1.2,
+     "fill": true,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 75,
+     "y": 18,
+     "text": {
+      "en": "Off the chart",
+      "kn": "ಚಾರ್ಟ್ ಮೀರಿದೆ"
+     },
+     "size": 20,
+     "visibleIf": "W > 105",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Size",
+      "kn": "ಗಾತ್ರ"
+     },
+     "expr": "W",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Absolute growth rate",
+      "kn": "ನಿರಪೇಕ್ಷ ಬೆಳವಣಿಗೆ ದರ"
+     },
+     "expr": "agr",
+     "digits": 2,
+     "unit": "per day"
+    },
+    {
+     "label": {
+      "en": "Relative growth rate",
+      "kn": "ಸಾಪೇಕ್ಷ ಬೆಳವಣಿಗೆ ದರ"
+     },
+     "expr": "agr/W",
+     "digits": 3,
+     "unit": "per day"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "In geometric growth, does the relative growth rate change with time?",
+     "kn": "ಜ್ಯಾಮಿತೀಯ ಬೆಳವಣಿಗೆಯಲ್ಲಿ ಸಾಪೇಕ್ಷ ಬೆಳವಣಿಗೆ ದರ ಸಮಯದೊಂದಿಗೆ ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Name the three phases of the sigmoid curve.",
+     "kn": "ಸಿಗ್ಮಾಯ್ಡ್ ವಕ್ರದ ಮೂರು ಹಂತಗಳನ್ನು ಹೆಸರಿಸಿ."
+    },
+    {
+     "en": "In arithmetic growth, what happens to the relative growth rate as the organ gets bigger?",
+     "kn": "ಅಂಕಗಣಿತೀಯ ಬೆಳವಣಿಗೆಯಲ್ಲಿ ಅಂಗ ದೊಡ್ಡದಾದಂತೆ ಸಾಪೇಕ್ಷ ದರಕ್ಕೆ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

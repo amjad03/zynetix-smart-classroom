@@ -764,6 +764,259 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Respiratory quotient",
+    "kn": "ಉಸಿರಾಟದ ಅನುಪಾತ"
+   },
+   "caption": {
+    "en": "RQ = volume of CO2 released / volume of O2 used. It depends on the substrate: about 1 for carbohydrates, about 0.7 for fats (which need more oxygen), about 0.9 for proteins and more than 1 for organic acids such as malic acid. In anaerobic respiration no O2 is used, so the RQ is infinite.",
+    "kn": "RQ = ಬಿಡುಗಡೆಯಾದ CO2 / ಬಳಸಿದ O2. ಕಾರ್ಬೋಹೈಡ್ರೇಟ್‌ಗೆ ಸುಮಾರು 1, ಕೊಬ್ಬಿಗೆ ಸುಮಾರು 0.7, ಪ್ರೋಟೀನ್‌ಗೆ ಸುಮಾರು 0.9, ಸಾವಯವ ಆಮ್ಲಗಳಿಗೆ 1 ಕ್ಕಿಂತ ಹೆಚ್ಚು. ಅವಾಯುವಿಕ ಉಸಿರಾಟದಲ್ಲಿ RQ ಅನಂತ."
+   },
+   "optional": true,
+   "seconds": 150,
+   "narration": {
+    "en": "Choose the substrate being respired and compare the oxygen used with the carbon dioxide released."
+   },
+   "sliders": [
+    {
+     "name": "o2",
+     "label": {
+      "en": "O2 used",
+      "kn": "ಬಳಸಿದ O2"
+     },
+     "min": 2,
+     "max": 20,
+     "step": 1,
+     "value": 12,
+     "unit": "mol"
+    }
+   ],
+   "choices": [
+    {
+     "name": "sub",
+     "label": {
+      "en": "Substrate",
+      "kn": "ಆಧಾರ ವಸ್ತು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Carbohydrate (glucose)",
+        "kn": "ಕಾರ್ಬೋಹೈಡ್ರೇಟ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Fat (tripalmitin)",
+        "kn": "ಕೊಬ್ಬು"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Protein",
+        "kn": "ಪ್ರೋಟೀನ್"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Malic acid",
+        "kn": "ಮ್ಯಾಲಿಕ್ ಆಮ್ಲ"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "eq",
+     "label": {
+      "en": "Show the equation",
+      "kn": "ಸಮೀಕರಣ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "rq",
+     "expr": "if(sub == 1, 1, if(sub == 2, 102/145, if(sub == 3, 0.9, 4/3)))"
+    },
+    {
+     "name": "co2",
+     "expr": "rq*o2"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 15,
+     "y1": 8,
+     "x2": 85,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 25,
+     "y": 8,
+     "w": 14,
+     "h": "1.6*o2",
+     "fill": true,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 55,
+     "y": 8,
+     "w": 14,
+     "h": "1.6*co2",
+     "fill": true,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 32,
+     "y": 4.5,
+     "text": {
+      "en": "O2 used",
+      "kn": "ಬಳಸಿದ O2"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 62,
+     "y": 4.5,
+     "text": {
+      "en": "CO2 released",
+      "kn": "ಬಿಡುಗಡೆ CO2"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 32,
+     "y": "10 + 1.6*o2",
+     "text": {
+      "en": "{o2}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 62,
+     "y": "10 + 1.6*co2",
+     "text": {
+      "en": "{co2:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 52,
+     "text": {
+      "en": "RQ = {rq:2}",
+      "kn": "RQ = {rq:2}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 45,
+     "text": {
+      "en": "C6H12O6 + 6O2 → 6CO2 + 6H2O"
+     },
+     "size": 20,
+     "visibleIf": "eq && sub == 1"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 45,
+     "text": {
+      "en": "2 C51H98O6 + 145 O2 → 102 CO2 + 98 H2O"
+     },
+     "size": 20,
+     "visibleIf": "eq && sub == 2"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 45,
+     "text": {
+      "en": "Proteins: RQ about 0.9",
+      "kn": "ಪ್ರೋಟೀನ್: RQ ಸುಮಾರು 0.9"
+     },
+     "size": 20,
+     "visibleIf": "eq && sub == 3"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 45,
+     "text": {
+      "en": "C4H6O5 + 3O2 → 4CO2 + 3H2O"
+     },
+     "size": 20,
+     "visibleIf": "eq && sub == 4"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "RQ",
+      "kn": "RQ"
+     },
+     "expr": "rq",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "CO2 released",
+      "kn": "ಬಿಡುಗಡೆ CO2"
+     },
+     "expr": "co2",
+     "digits": 1,
+     "unit": "mol"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why is the RQ of fat less than 1?",
+     "kn": "ಕೊಬ್ಬಿನ RQ 1 ಕ್ಕಿಂತ ಕಡಿಮೆ ಏಕೆ?"
+    },
+    {
+     "en": "With malic acid, does the plant give out more CO2 or take in more O2?",
+     "kn": "ಮ್ಯಾಲಿಕ್ ಆಮ್ಲದಲ್ಲಿ ಸಸ್ಯ ಹೆಚ್ಚು CO2 ಬಿಡುತ್ತದೆಯೇ ಅಥವಾ ಹೆಚ್ಚು O2 ತೆಗೆದುಕೊಳ್ಳುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "A germinating seed has an RQ of 0.7. What is it probably using?",
+     "kn": "ಮೊಳೆಯುವ ಬೀಜದ RQ 0.7. ಅದು ಬಹುಶಃ ಏನು ಬಳಸುತ್ತಿದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
