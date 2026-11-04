@@ -460,6 +460,447 @@
    ]
   },
   {
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The working capital cycle",
+    "kn": "ಕಾರ್ಯನಿರತ ಬಂಡವಾಳ ಚಕ್ರ"
+   },
+   "narration": {
+    "en": "Money spent on raw material comes back as cash only after production, storage and collection from debtors. The longer this operating cycle, the more working capital is tied up. Here running costs are ₹1 lakh a day.",
+    "kn": "ಕಚ್ಚಾ ವಸ್ತುವಿಗೆ ಖರ್ಚಾದ ಹಣ ಉತ್ಪಾದನೆ, ಸಂಗ್ರಹ ಮತ್ತು ಸಾಲಗಾರರಿಂದ ವಸೂಲಿಯ ನಂತರವೇ ನಗದಾಗಿ ಮರಳುತ್ತದೆ. ಈ ಚಕ್ರ ದೀರ್ಘವಾದಷ್ಟು ಹೆಚ್ಚು ಕಾರ್ಯನಿರತ ಬಂಡವಾಳ ಬೇಕು. ದಿನದ ವೆಚ್ಚ ₹1 ಲಕ್ಷ."
+   },
+   "seconds": 180,
+   "optional": true,
+   "caption": {
+    "en": "Money spent on raw material comes back as cash only after production, storage and collection from debtors. The longer this operating cycle, the more working capital is tied up. Here running costs are ₹1 lakh a day.",
+    "kn": "ಕಚ್ಚಾ ವಸ್ತುವಿಗೆ ಖರ್ಚಾದ ಹಣ ಉತ್ಪಾದನೆ, ಸಂಗ್ರಹ ಮತ್ತು ಸಾಲಗಾರರಿಂದ ವಸೂಲಿಯ ನಂತರವೇ ನಗದಾಗಿ ಮರಳುತ್ತದೆ. ಈ ಚಕ್ರ ದೀರ್ಘವಾದಷ್ಟು ಹೆಚ್ಚು ಕಾರ್ಯನಿರತ ಬಂಡವಾಳ ಬೇಕು. ದಿನದ ವೆಚ್ಚ ₹1 ಲಕ್ಷ."
+   },
+   "tryThis": [
+    {
+     "en": "Press Play and count how many times the rupee goes round in a year."
+    },
+    {
+     "en": "Cut the credit allowed to debtors from 30 to 15 days. How much working capital is freed?"
+    },
+    {
+     "en": "Take 30 days' credit from suppliers. Why does the firm now need less of its own money?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "rm",
+     "label": {
+      "en": "Raw material storage",
+      "kn": "ಕಚ್ಚಾ ವಸ್ತು ಸಂಗ್ರಹ"
+     },
+     "min": 5,
+     "max": 60,
+     "step": 5,
+     "value": 30,
+     "unit": "days"
+    },
+    {
+     "name": "wip",
+     "label": {
+      "en": "Production time",
+      "kn": "ಉತ್ಪಾದನಾ ಸಮಯ"
+     },
+     "min": 2,
+     "max": 30,
+     "step": 2,
+     "value": 10,
+     "unit": "days"
+    },
+    {
+     "name": "fg",
+     "label": {
+      "en": "Finished goods storage",
+      "kn": "ಸಿದ್ಧ ವಸ್ತು ಸಂಗ್ರಹ"
+     },
+     "min": 5,
+     "max": 60,
+     "step": 5,
+     "value": 20,
+     "unit": "days"
+    },
+    {
+     "name": "dr",
+     "label": {
+      "en": "Credit allowed to debtors",
+      "kn": "ಸಾಲಗಾರರಿಗೆ ನೀಡಿದ ಸಾಲ ಅವಧಿ"
+     },
+     "min": 0,
+     "max": 90,
+     "step": 5,
+     "value": 30,
+     "unit": "days"
+    }
+   ],
+   "choices": [
+    {
+     "name": "cr",
+     "label": {
+      "en": "Credit from suppliers",
+      "kn": "ಪೂರೈಕೆದಾರರಿಂದ ಸಾಲ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "None"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "15 days"
+       },
+       "value": 15
+      },
+      {
+       "label": {
+        "en": "30 days"
+       },
+       "value": 30
+      },
+      {
+       "label": {
+        "en": "45 days"
+       },
+       "value": 45
+      }
+     ],
+     "value": 0
+    }
+   ],
+   "time": {
+    "max": 365,
+    "unit": "days",
+    "speeds": [
+     4,
+     8,
+     16
+    ],
+    "speed": 8,
+    "dt": 0.05
+   },
+   "vars": [
+    {
+     "name": "oc",
+     "expr": "rm + wip + fg + dr"
+    },
+    {
+     "name": "net",
+     "expr": "max(oc - cr, 0)"
+    },
+    {
+     "name": "wc",
+     "expr": "net*1"
+    },
+    {
+     "name": "p",
+     "expr": "mod(t, oc)"
+    },
+    {
+     "name": "a",
+     "expr": "if(p < rm, 90*p/rm, if(p < rm + wip, 90 + 90*(p - rm)/wip, if(p < rm + wip + fg, 180 + 90*(p - rm - wip)/fg, 270 + 90*(p - rm - wip - fg)/max(dr, 1))))"
+    },
+    {
+     "name": "laps",
+     "expr": "floor(t/oc)"
+    }
+   ],
+   "view": {
+    "x": [
+     -14,
+     17
+    ],
+    "y": [
+     -9,
+     9
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": -6.5,
+     "y": 0,
+     "r": 6,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": -6.5,
+     "y": 6,
+     "r": 0.45,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": -0.5,
+     "y": 0,
+     "r": 0.45,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "x": -6.5,
+     "y": -6,
+     "r": 0.45,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "x": -12.5,
+     "y": 0,
+     "r": 0.45,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": -6.5,
+     "y": 7.1,
+     "text": {
+      "en": "Cash buys raw material"
+     },
+     "size": 22,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 0.30000000000000004,
+     "y": 0.9,
+     "text": {
+      "en": "Work in"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0.30000000000000004,
+     "y": -0.2,
+     "text": {
+      "en": "progress"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": -6.5,
+     "y": -7.2,
+     "text": {
+      "en": "Finished goods"
+     },
+     "size": 22,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": -13.3,
+     "y": 0.5,
+     "text": {
+      "en": "Debtors"
+     },
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "circle",
+     "x": "-6.5 + 6*cos(rad(90 - a))",
+     "y": "0 + 6*sin(rad(90 - a))",
+     "r": 0.75,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": -6.5,
+     "y": 0.6,
+     "text": {
+      "en": "₹"
+     },
+     "size": 60,
+     "align": "center",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": -6.5,
+     "y": -1.4,
+     "text": {
+      "en": "cycle {laps + 1}"
+     },
+     "size": 24,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 6.4,
+     "text": {
+      "en": "Operating cycle: {oc} days"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 4.6,
+     "w": "rm*0.05",
+     "h": 1,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": "2 + rm*0.05",
+     "y": 4.6,
+     "w": "wip*0.05",
+     "h": 1,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": "2 + (rm + wip)*0.05",
+     "y": 4.6,
+     "w": "fg*0.05",
+     "h": 1,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": "2 + (rm + wip + fg)*0.05",
+     "y": 4.6,
+     "w": "dr*0.05",
+     "h": 1,
+     "color": "red",
+     "visibleIf": "dr > 0"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 3.3,
+     "text": {
+      "en": "Credit from suppliers: {cr} days"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": "2 + max(oc - cr, 0)*0.05",
+     "y": 1.8,
+     "w": "min(cr, oc)*0.05",
+     "h": 1,
+     "color": "white",
+     "opacity": 0.5,
+     "visibleIf": "cr > 0"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 0.2,
+     "text": {
+      "en": "Days the firm funds itself: {net}"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": -1.6,
+     "w": "net*0.05",
+     "h": 1,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": -3.4,
+     "text": {
+      "en": "Working capital needed: ₹{wc} lakh"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": -5,
+     "text": {
+      "en": "Cycles a year: {365/oc:1}"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": -6.6,
+     "x2": 14,
+     "y2": -6.6,
+     "color": "white",
+     "opacity": 0.4
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": -7.5,
+     "text": {
+      "en": "0"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": -7.5,
+     "text": {
+      "en": "240 days"
+     },
+     "size": 18,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Operating cycle",
+      "kn": "ಕಾರ್ಯಾಚರಣಾ ಚಕ್ರ"
+     },
+     "expr": "oc",
+     "digits": 0,
+     "unit": "days"
+    },
+    {
+     "label": {
+      "en": "Net cycle after supplier credit",
+      "kn": "ನಿವ್ವಳ ಚಕ್ರ"
+     },
+     "expr": "net",
+     "digits": 0,
+     "unit": "days"
+    },
+    {
+     "label": {
+      "en": "Working capital needed",
+      "kn": "ಬೇಕಾದ ಕಾರ್ಯನಿರತ ಬಂಡವಾಳ"
+     },
+     "expr": "wc",
+     "digits": 0,
+     "unit": "₹ lakh"
+    }
+   ],
+   "id": "sim1"
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

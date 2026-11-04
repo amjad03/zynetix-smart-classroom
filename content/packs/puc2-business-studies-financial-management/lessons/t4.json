@@ -491,6 +491,289 @@
    ]
   },
   {
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Trading on equity: EPS and debt",
+    "kn": "ಈಕ್ವಿಟಿ ಮೇಲಿನ ವ್ಯಾಪಾರ: EPS ಮತ್ತು ಸಾಲ"
+   },
+   "narration": {
+    "en": "A company needs ₹50 lakh. Whatever it does not borrow is raised as ₹10 equity shares; tax is 30%. Change the debt, the return on investment and the interest rate, and watch earnings per share.",
+    "kn": "ಕಂಪನಿಗೆ ₹50 ಲಕ್ಷ ಬೇಕು. ಸಾಲ ಬಿಟ್ಟು ಉಳಿದದ್ದು ₹10ರ ಈಕ್ವಿಟಿ ಷೇರುಗಳಿಂದ; ತೆರಿಗೆ 30%. ಸಾಲ, ಹೂಡಿಕೆಯ ಮೇಲಿನ ಆದಾಯ ಮತ್ತು ಬಡ್ಡಿ ದರ ಬದಲಿಸಿ ಪ್ರತಿ ಷೇರಿನ ಗಳಿಕೆ ನೋಡಿ."
+   },
+   "seconds": 180,
+   "optional": true,
+   "caption": {
+    "en": "A company needs ₹50 lakh. Whatever it does not borrow is raised as ₹10 equity shares; tax is 30%. Change the debt, the return on investment and the interest rate, and watch earnings per share.",
+    "kn": "ಕಂಪನಿಗೆ ₹50 ಲಕ್ಷ ಬೇಕು. ಸಾಲ ಬಿಟ್ಟು ಉಳಿದದ್ದು ₹10ರ ಈಕ್ವಿಟಿ ಷೇರುಗಳಿಂದ; ತೆರಿಗೆ 30%. ಸಾಲ, ಹೂಡಿಕೆಯ ಮೇಲಿನ ಆದಾಯ ಮತ್ತು ಬಡ್ಡಿ ದರ ಬದಲಿಸಿ ಪ್ರತಿ ಷೇರಿನ ಗಳಿಕೆ ನೋಡಿ."
+   },
+   "tryThis": [
+    {
+     "en": "Keep ROI at 15% and interest at 10%. Raise the debt: does EPS rise?"
+    },
+    {
+     "en": "Now cut ROI below the interest rate. What happens to EPS as debt rises?"
+    },
+    {
+     "en": "Set ROI equal to the interest rate. Why does the curve go flat?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "D",
+     "label": {
+      "en": "Debt",
+      "kn": "ಸಾಲ"
+     },
+     "min": 0,
+     "max": 40,
+     "step": 2,
+     "value": 20,
+     "unit": "₹ lakh"
+    },
+    {
+     "name": "roi",
+     "label": {
+      "en": "Return on investment",
+      "kn": "ಹೂಡಿಕೆಯ ಮೇಲಿನ ಆದಾಯ"
+     },
+     "min": 4,
+     "max": 24,
+     "step": 1,
+     "value": 15,
+     "unit": "%"
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Interest rate on debt",
+      "kn": "ಸಾಲದ ಬಡ್ಡಿ ದರ"
+     },
+     "min": 6,
+     "max": 16,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cmp",
+     "label": {
+      "en": "Compare with an all-equity firm",
+      "kn": "ಸಂಪೂರ್ಣ ಈಕ್ವಿಟಿ ಸಂಸ್ಥೆಯೊಂದಿಗೆ ಹೋಲಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "ebit",
+     "expr": "roi*0.5"
+    },
+    {
+     "name": "intr",
+     "expr": "r*D/100"
+    },
+    {
+     "name": "ebt",
+     "expr": "ebit - intr"
+    },
+    {
+     "name": "eat",
+     "expr": "if(ebt > 0, 0.7*ebt, ebt)"
+    },
+    {
+     "name": "eps",
+     "expr": "eat/((50 - D)/10)"
+    },
+    {
+     "name": "eps0",
+     "expr": "0.7*ebit/5"
+    }
+   ],
+   "view": {
+    "x": [
+     -3,
+     62
+    ],
+    "y": [
+     -6,
+     8
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "Debt (₹ lakh)",
+    "yLabel": "EPS (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "eps0",
+     "x2": 40,
+     "y2": "eps0",
+     "dashed": true,
+     "color": "blue",
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "path",
+     "fn": "if(roi*0.5 - r*x/100 > 0, 0.7, 1)*(roi*0.5 - r*x/100)/((50 - x)/10)",
+     "from": 0,
+     "to": 40,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "D",
+     "y": "eps",
+     "r": 0.8,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 45,
+     "y": "min(0, eps0)",
+     "w": 5,
+     "h": "abs(eps0)",
+     "color": "blue",
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "text",
+     "x": 47.5,
+     "y": -1.2,
+     "text": {
+      "en": "all equity"
+     },
+     "size": 20,
+     "align": "center",
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "text",
+     "x": 47.5,
+     "y": "max(eps0, 0) + 0.5",
+     "text": {
+      "en": "₹{eps0:2}"
+     },
+     "size": 22,
+     "align": "center",
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "rect",
+     "x": 53,
+     "y": "min(0, eps)",
+     "w": 5,
+     "h": "abs(eps)",
+     "color": {
+      "by": "eps >= eps0",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 55.5,
+     "y": -1.2,
+     "text": {
+      "en": "with debt"
+     },
+     "size": 20,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 55.5,
+     "y": "max(eps, 0) + 0.5",
+     "text": {
+      "en": "₹{eps:2}"
+     },
+     "size": 22,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 7.2,
+     "text": {
+      "en": "ROI {roi}% is above interest {r}%: debt raises EPS"
+     },
+     "size": 24,
+     "align": "center",
+     "visibleIf": "roi > r",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 7.2,
+     "text": {
+      "en": "ROI {roi}% is below interest {r}%: debt lowers EPS"
+     },
+     "size": 24,
+     "align": "center",
+     "visibleIf": "roi < r",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 7.2,
+     "text": {
+      "en": "ROI equals interest: debt leaves EPS unchanged"
+     },
+     "size": 24,
+     "align": "center",
+     "visibleIf": "roi == r"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "EBIT",
+      "kn": "EBIT"
+     },
+     "expr": "ebit",
+     "digits": 2,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Interest",
+      "kn": "ಬಡ್ಡಿ"
+     },
+     "expr": "intr",
+     "digits": 2,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "EPS with debt",
+      "kn": "ಸಾಲದೊಂದಿಗೆ EPS"
+     },
+     "expr": "eps",
+     "digits": 2,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "EPS, all equity",
+      "kn": "ಸಂಪೂರ್ಣ ಈಕ್ವಿಟಿ EPS"
+     },
+     "expr": "eps0",
+     "digits": 2,
+     "unit": "₹"
+    }
+   ],
+   "id": "sim1"
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

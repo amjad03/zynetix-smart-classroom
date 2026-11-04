@@ -859,6 +859,431 @@
    ]
   },
   {
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "GST along the supply chain",
+    "kn": "ಪೂರೈಕೆ ಸರಪಳಿಯಲ್ಲಿ GST"
+   },
+   "narration": {
+    "en": "Goods pass from manufacturer to wholesaler to retailer. Each pays GST on its sale but takes credit for the GST it paid on purchases, so tax falls only on value added. Switch the credit off to see the old cascading effect.",
+    "kn": "ಸರಕು ತಯಾರಕರಿಂದ ಸಗಟು, ನಂತರ ಚಿಲ್ಲರೆ ವ್ಯಾಪಾರಿಗೆ ಹೋಗುತ್ತದೆ. ಪ್ರತಿಯೊಬ್ಬರೂ ಖರೀದಿಯ ಮೇಲೆ ಕಟ್ಟಿದ GSTಗೆ ಕ್ರೆಡಿಟ್ ಪಡೆಯುವುದರಿಂದ ಮೌಲ್ಯವರ್ಧನೆಯ ಮೇಲೆ ಮಾತ್ರ ತೆರಿಗೆ. ಕ್ರೆಡಿಟ್ ಆರಿಸಿ ಹಳೆಯ \"ತೆರಿಗೆ ಮೇಲೆ ತೆರಿಗೆ\" ನೋಡಿ."
+   },
+   "seconds": 180,
+   "optional": true,
+   "caption": {
+    "en": "Goods pass from manufacturer to wholesaler to retailer. Each pays GST on its sale but takes credit for the GST it paid on purchases, so tax falls only on value added. Switch the credit off to see the old cascading effect.",
+    "kn": "ಸರಕು ತಯಾರಕರಿಂದ ಸಗಟು, ನಂತರ ಚಿಲ್ಲರೆ ವ್ಯಾಪಾರಿಗೆ ಹೋಗುತ್ತದೆ. ಪ್ರತಿಯೊಬ್ಬರೂ ಖರೀದಿಯ ಮೇಲೆ ಕಟ್ಟಿದ GSTಗೆ ಕ್ರೆಡಿಟ್ ಪಡೆಯುವುದರಿಂದ ಮೌಲ್ಯವರ್ಧನೆಯ ಮೇಲೆ ಮಾತ್ರ ತೆರಿಗೆ. ಕ್ರೆಡಿಟ್ ಆರಿಸಿ ಹಳೆಯ \"ತೆರಿಗೆ ಮೇಲೆ ತೆರಿಗೆ\" ನೋಡಿ."
+   },
+   "tryThis": [
+    {
+     "en": "Turn input tax credit off: how much more does the consumer pay?"
+    },
+    {
+     "en": "Make the first sale inter-state (Karnataka to Tamil Nadu): the tax becomes IGST, but does the total change?"
+    },
+    {
+     "en": "With credit on, check that the total tax equals the rate times the final value before tax."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Manufacturer's price before tax",
+      "kn": "ತಯಾರಕರ ಬೆಲೆ (ತೆರಿಗೆ ಮೊದಲು)"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 50,
+     "value": 600,
+     "unit": "₹"
+    },
+    {
+     "name": "w",
+     "label": {
+      "en": "Wholesaler's value added",
+      "kn": "ಸಗಟು ವ್ಯಾಪಾರಿಯ ಮೌಲ್ಯವರ್ಧನೆ"
+     },
+     "min": 0,
+     "max": 500,
+     "step": 25,
+     "value": 150,
+     "unit": "₹"
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Retailer's value added",
+      "kn": "ಚಿಲ್ಲರೆ ವ್ಯಾಪಾರಿಯ ಮೌಲ್ಯವರ್ಧನೆ"
+     },
+     "min": 0,
+     "max": 500,
+     "step": 25,
+     "value": 250,
+     "unit": "₹"
+    }
+   ],
+   "choices": [
+    {
+     "name": "g",
+     "label": {
+      "en": "GST rate",
+      "kn": "GST ದರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "5%"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "18%"
+       },
+       "value": 18
+      },
+      {
+       "label": {
+        "en": "40%"
+       },
+       "value": 40
+      }
+     ],
+     "value": 18
+    }
+   ],
+   "toggles": [
+    {
+     "name": "itc",
+     "label": {
+      "en": "Input tax credit",
+      "kn": "ಇನ್‌ಪುಟ್ ತೆರಿಗೆ ಕ್ರೆಡಿಟ್"
+     },
+     "value": true
+    },
+    {
+     "name": "inter",
+     "label": {
+      "en": "First sale is inter-state",
+      "kn": "ಮೊದಲ ಮಾರಾಟ ಅಂತರರಾಜ್ಯ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "gg",
+     "expr": "g/100"
+    },
+    {
+     "name": "s1",
+     "expr": "m*(1 + gg)"
+    },
+    {
+     "name": "s2c",
+     "expr": "(s1 + w)*(1 + gg)"
+    },
+    {
+     "name": "T1",
+     "expr": "gg*m"
+    },
+    {
+     "name": "T2",
+     "expr": "if(itc, gg*w, gg*(s1 + w))"
+    },
+    {
+     "name": "T3",
+     "expr": "if(itc, gg*r, gg*(s2c + r))"
+    },
+    {
+     "name": "base",
+     "expr": "m + w + r"
+    },
+    {
+     "name": "tax",
+     "expr": "T1 + T2 + T3"
+    },
+    {
+     "name": "price",
+     "expr": "base + tax"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     38
+    ],
+    "y": [
+     -6,
+     92
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 0,
+     "w": 4,
+     "h": "T1*60/(g*32)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": -3,
+     "text": {
+      "en": "Manufacturer"
+     },
+     "size": 20,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": "T1*60/(g*32) + 3",
+     "text": {
+      "en": "₹{T1:0}"
+     },
+     "size": 22,
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 8,
+     "y": 0,
+     "w": 4,
+     "h": "T2*60/(g*32)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": -3,
+     "text": {
+      "en": "Wholesaler"
+     },
+     "size": 20,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": "T2*60/(g*32) + 3",
+     "text": {
+      "en": "₹{T2:0}"
+     },
+     "size": 22,
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": 14,
+     "y": 0,
+     "w": 4,
+     "h": "T3*60/(g*32)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 16,
+     "y": -3,
+     "text": {
+      "en": "Retailer"
+     },
+     "size": 20,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 16,
+     "y": "T3*60/(g*32) + 3",
+     "text": {
+      "en": "₹{T3:0}"
+     },
+     "size": 22,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 22.5,
+     "y": 40,
+     "text": {
+      "en": "Total tax"
+     },
+     "size": 22,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 22.5,
+     "y": 34,
+     "text": {
+      "en": "₹{tax:0}"
+     },
+     "size": 26,
+     "align": "center",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": "T1*60/(g*32) + 8",
+     "text": {
+      "en": "IGST"
+     },
+     "size": 20,
+     "align": "center",
+     "visibleIf": "inter",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": "T1*60/(g*32) + 8",
+     "text": {
+      "en": "CGST + SGST"
+     },
+     "size": 20,
+     "align": "center",
+     "visibleIf": "!inter",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": "T2*60/(g*32) + 8",
+     "text": {
+      "en": "CGST + SGST"
+     },
+     "size": 20,
+     "align": "center",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 16,
+     "y": "T3*60/(g*32) + 8",
+     "text": {
+      "en": "CGST + SGST"
+     },
+     "size": 20,
+     "align": "center",
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 29,
+     "y": 0,
+     "w": 7,
+     "h": "base*80/4500",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 29,
+     "y": "base*80/4500",
+     "w": 7,
+     "h": "tax*80/4500",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": -3,
+     "text": {
+      "en": "Consumer pays"
+     },
+     "size": 20,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": "price*80/4500 + 3",
+     "text": {
+      "en": "₹{price:0}"
+     },
+     "size": 24,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 86,
+     "text": {
+      "en": "Tax paid at each stage (scaled for the rate)"
+     },
+     "size": 22,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 79,
+     "text": {
+      "en": "With input tax credit, tax = {g}% of value added only"
+     },
+     "size": 22,
+     "align": "center",
+     "visibleIf": "itc",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 79,
+     "text": {
+      "en": "No credit: tax on tax, total {100*tax/base:1}% of value"
+     },
+     "size": 22,
+     "align": "center",
+     "visibleIf": "!itc",
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": 26.8,
+     "y1": -5,
+     "x2": 26.8,
+     "y2": 90,
+     "color": "white",
+     "opacity": 0.3
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Total GST collected",
+      "kn": "ಒಟ್ಟು GST"
+     },
+     "expr": "tax",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Consumer pays",
+      "kn": "ಗ್ರಾಹಕ ಪಾವತಿ"
+     },
+     "expr": "price",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Tax as % of value before tax",
+      "kn": "ಮೌಲ್ಯದ ಶೇಕಡಾ ತೆರಿಗೆ"
+     },
+     "expr": "100*tax/base",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "id": "sim1"
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

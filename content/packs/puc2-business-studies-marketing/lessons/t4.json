@@ -299,6 +299,265 @@
    ]
   },
   {
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Setting the price",
+    "kn": "ಬೆಲೆ ನಿಗದಿ"
+   },
+   "narration": {
+    "en": "A firm sells a mixer-grinder. Cost sets the lowest sensible price, demand sets the highest. Move the price and watch demand, profit and the break-even sales change.",
+    "kn": "ಒಂದು ಸಂಸ್ಥೆ ಮಿಕ್ಸರ್-ಗ್ರೈಂಡರ್ ಮಾರುತ್ತದೆ. ವೆಚ್ಚ ಕನಿಷ್ಠ ಬೆಲೆಯನ್ನು, ಬೇಡಿಕೆ ಗರಿಷ್ಠ ಬೆಲೆಯನ್ನು ನಿರ್ಧರಿಸುತ್ತವೆ. ಬೆಲೆ ಬದಲಿಸಿ ಬೇಡಿಕೆ, ಲಾಭ ಮತ್ತು ಸಮಚ್ಛೇದ ಮಾರಾಟ ಹೇಗೆ ಬದಲಾಗುತ್ತವೆ ನೋಡಿ."
+   },
+   "seconds": 180,
+   "optional": true,
+   "caption": {
+    "en": "A firm sells a mixer-grinder. Cost sets the lowest sensible price, demand sets the highest. Move the price and watch demand, profit and the break-even sales change.",
+    "kn": "ಒಂದು ಸಂಸ್ಥೆ ಮಿಕ್ಸರ್-ಗ್ರೈಂಡರ್ ಮಾರುತ್ತದೆ. ವೆಚ್ಚ ಕನಿಷ್ಠ ಬೆಲೆಯನ್ನು, ಬೇಡಿಕೆ ಗರಿಷ್ಠ ಬೆಲೆಯನ್ನು ನಿರ್ಧರಿಸುತ್ತವೆ. ಬೆಲೆ ಬದಲಿಸಿ ಬೇಡಿಕೆ, ಲಾಭ ಮತ್ತು ಸಮಚ್ಛೇದ ಮಾರಾಟ ಹೇಗೆ ಬದಲಾಗುತ್ತವೆ ನೋಡಿ."
+   },
+   "tryThis": [
+    {
+     "en": "Find the price that gives the most profit. Is it the highest possible price?"
+    },
+    {
+     "en": "Raise the variable cost: the cost floor and the best price both move up."
+    },
+    {
+     "en": "Switch to a strong rival: buyers will now pay at most ₹400, so the best price falls."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "P",
+     "label": {
+      "en": "Price per unit",
+      "kn": "ಪ್ರತಿ ಘಟಕದ ಬೆಲೆ"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 10,
+     "value": 450,
+     "unit": "₹"
+    },
+    {
+     "name": "v",
+     "label": {
+      "en": "Variable cost per unit",
+      "kn": "ಪ್ರತಿ ಘಟಕದ ಬದಲಾಗುವ ವೆಚ್ಚ"
+     },
+     "min": 40,
+     "max": 200,
+     "step": 10,
+     "value": 100,
+     "unit": "₹"
+    },
+    {
+     "name": "F",
+     "label": {
+      "en": "Fixed cost per month",
+      "kn": "ತಿಂಗಳ ಸ್ಥಿರ ವೆಚ್ಚ"
+     },
+     "min": 10,
+     "max": 60,
+     "step": 5,
+     "value": 30,
+     "unit": "₹ lakh"
+    }
+   ],
+   "choices": [
+    {
+     "name": "cap",
+     "label": {
+      "en": "Competition",
+      "kn": "ಸ್ಪರ್ಧೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "No close rival (buyers pay up to ₹500)",
+        "kn": "ಹತ್ತಿರದ ಪ್ರತಿಸ್ಪರ್ಧಿ ಇಲ್ಲ"
+       },
+       "value": 500
+      },
+      {
+       "label": {
+        "en": "Strong rival (buyers pay up to ₹400)",
+        "kn": "ಬಲವಾದ ಪ್ರತಿಸ್ಪರ್ಧಿ"
+       },
+       "value": 400
+      }
+     ],
+     "value": 500
+    }
+   ],
+   "vars": [
+    {
+     "name": "Q",
+     "expr": "max(0, 100*(1 - P/cap))"
+    },
+    {
+     "name": "profit",
+     "expr": "(P - v)*Q/100 - F"
+    },
+    {
+     "name": "bep",
+     "expr": "if(P > v, F*100/(P - v), 0)"
+    },
+    {
+     "name": "best",
+     "expr": "(cap + v)/2"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     520
+    ],
+    "y": [
+     -130,
+     125
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "Price (₹ per unit)",
+    "yLabel": "Profit (₹ lakh a month)"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": "v",
+     "y1": -130,
+     "x2": "v",
+     "y2": 125,
+     "dashed": true,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": "v + 6",
+     "y": 112,
+     "text": {
+      "en": "cost floor"
+     },
+     "size": 22,
+     "align": "left",
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": "cap",
+     "y1": -130,
+     "x2": "cap",
+     "y2": 125,
+     "dashed": true,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": "cap - 6",
+     "y": 112,
+     "text": {
+      "en": "demand ceiling"
+     },
+     "size": 22,
+     "align": "right",
+     "color": "blue"
+    },
+    {
+     "shape": "path",
+     "fn": "(x - v)*max(0, 100*(1 - x/cap))/100 - F",
+     "from": "max(v - 60, 0)",
+     "to": "cap",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "P",
+     "y1": 0,
+     "x2": "P",
+     "y2": "max(profit, -128)",
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "x": "P",
+     "y": "max(profit, -128)",
+     "r": 7,
+     "color": {
+      "by": "profit > 0",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "label",
+     "x": "clamp(P, 90, 430)",
+     "y": "clamp(profit + 22, -110, 100)",
+     "text": {
+      "en": "demand {Q:1} thousand, profit ₹{profit:1} lakh"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 260,
+     "y": -100,
+     "text": {
+      "en": "Break-even sales: {bep:1} thousand units a month"
+     },
+     "size": 24,
+     "align": "center",
+     "visibleIf": "P > v"
+    },
+    {
+     "shape": "text",
+     "x": 260,
+     "y": -100,
+     "text": {
+      "en": "Price below variable cost: every sale adds to the loss"
+     },
+     "size": 24,
+     "align": "center",
+     "visibleIf": "P <= v",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Demand",
+      "kn": "ಬೇಡಿಕೆ"
+     },
+     "expr": "Q",
+     "digits": 1,
+     "unit": "thousand units"
+    },
+    {
+     "label": {
+      "en": "Profit",
+      "kn": "ಲಾಭ"
+     },
+     "expr": "profit",
+     "digits": 1,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Best price for this demand",
+      "kn": "ಈ ಬೇಡಿಕೆಗೆ ಉತ್ತಮ ಬೆಲೆ"
+     },
+     "expr": "best",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "id": "sim1"
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

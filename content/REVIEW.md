@@ -645,3 +645,11 @@ No text is reproduced. Check these plot details against the texts:
 - **Distractors:** wrong-answer cards are invented.
 - **Language:** cards are English only.
 - **Real-board check:** the Interview t3 boxes and the Melon City label pills.
+
+## Business Studies simulations and activities (111 lessons)
+
+- **GST rates:** 5/18/40% (assumed Sept 2025 rationalisation); check against what the course teaches.
+- **Consumer limits:** NCERT limits, labelled as NCERT.
+- **FPO mark:** used for fruit products, although it has been replaced by FSSAI.
+- **NCERT-convention classifications:** public deposits as medium term; employee recommendations as an external source of recruitment.
+- **Simplified models:** the span-of-control, working-capital and linear-demand scenes are simplifications.

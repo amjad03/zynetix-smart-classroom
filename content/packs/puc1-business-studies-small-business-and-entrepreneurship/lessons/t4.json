@@ -470,6 +470,402 @@
    ]
   },
   {
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Micro, small or medium?",
+    "kn": "ಸೂಕ್ಷ್ಮ, ಸಣ್ಣ ಅಥವಾ ಮಧ್ಯಮ?"
+   },
+   "narration": {
+    "en": "Drag the firm to set its investment in plant and machinery and its annual turnover. An enterprise must be within both limits of a class; crossing either one moves it up.",
+    "kn": "ಸಂಸ್ಥೆಯನ್ನು ಎಳೆದು ಯಂತ್ರೋಪಕರಣ ಹೂಡಿಕೆ ಮತ್ತು ವಾರ್ಷಿಕ ವಹಿವಾಟು ನಿಗದಿಪಡಿಸಿ. ಒಂದು ವರ್ಗದ ಎರಡೂ ಮಿತಿಗಳ ಒಳಗಿರಬೇಕು; ಯಾವುದನ್ನು ದಾಟಿದರೂ ಮುಂದಿನ ವರ್ಗಕ್ಕೆ ಹೋಗುತ್ತದೆ."
+   },
+   "seconds": 180,
+   "optional": true,
+   "caption": {
+    "en": "Drag the firm to set its investment in plant and machinery and its annual turnover. An enterprise must be within both limits of a class; crossing either one moves it up.",
+    "kn": "ಸಂಸ್ಥೆಯನ್ನು ಎಳೆದು ಯಂತ್ರೋಪಕರಣ ಹೂಡಿಕೆ ಮತ್ತು ವಾರ್ಷಿಕ ವಹಿವಾಟು ನಿಗದಿಪಡಿಸಿ. ಒಂದು ವರ್ಗದ ಎರಡೂ ಮಿತಿಗಳ ಒಳಗಿರಬೇಕು; ಯಾವುದನ್ನು ದಾಟಿದರೂ ಮುಂದಿನ ವರ್ಗಕ್ಕೆ ಹೋಗುತ್ತದೆ."
+   },
+   "tryThis": [
+    {
+     "en": "A unit with ₹2 crore of machinery and ₹8 crore turnover: what is it under the 2020 limits, and under the 2025 limits?"
+    },
+    {
+     "en": "Keep investment small and raise only the turnover. When does the class change?"
+    },
+    {
+     "en": "Why do you think the limits were raised in 2025?"
+    }
+   ],
+   "handles": [
+    {
+     "name": "F",
+     "label": "the firm",
+     "x": 0.3,
+     "y": 0.9,
+     "box": {
+      "x": [
+       -1,
+       3
+      ],
+      "y": [
+       -1,
+       3
+      ]
+     },
+     "snap": 0.05,
+     "color": "yellow"
+    }
+   ],
+   "choices": [
+    {
+     "name": "yr",
+     "label": {
+      "en": "Limits",
+      "kn": "ಮಿತಿಗಳು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "2020 limits"
+       },
+       "value": 2020
+      },
+      {
+       "label": {
+        "en": "From April 2025"
+       },
+       "value": 2025
+      }
+     ],
+     "value": 2020
+    }
+   ],
+   "vars": [
+    {
+     "name": "inv",
+     "expr": "pow(10, F_x)"
+    },
+    {
+     "name": "to",
+     "expr": "pow(10, F_y)"
+    },
+    {
+     "name": "a1",
+     "expr": "if(yr == 2025, 2.5, 1)"
+    },
+    {
+     "name": "b1",
+     "expr": "if(yr == 2025, 10, 5)"
+    },
+    {
+     "name": "a2",
+     "expr": "if(yr == 2025, 25, 10)"
+    },
+    {
+     "name": "b2",
+     "expr": "if(yr == 2025, 100, 50)"
+    },
+    {
+     "name": "a3",
+     "expr": "if(yr == 2025, 125, 50)"
+    },
+    {
+     "name": "b3",
+     "expr": "if(yr == 2025, 500, 250)"
+    },
+    {
+     "name": "cat",
+     "expr": "if(inv <= a1 && to <= b1, 1, if(inv <= a2 && to <= b2, 2, if(inv <= a3 && to <= b3, 3, 4)))"
+    }
+   ],
+   "view": {
+    "x": [
+     -2,
+     3.2
+    ],
+    "y": [
+     -2,
+     3.4
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -1,
+     "y": -1,
+     "w": 4,
+     "h": 4,
+     "color": "red",
+     "opacity": 0.18
+    },
+    {
+     "shape": "rect",
+     "x": -1,
+     "y": -1,
+     "w": "log(a3) + 1",
+     "h": "log(b3) + 1",
+     "color": "orange",
+     "opacity": 0.35
+    },
+    {
+     "shape": "rect",
+     "x": -1,
+     "y": -1,
+     "w": "log(a2) + 1",
+     "h": "log(b2) + 1",
+     "color": "yellow",
+     "opacity": 0.4
+    },
+    {
+     "shape": "rect",
+     "x": -1,
+     "y": -1,
+     "w": "log(a1) + 1",
+     "h": "log(b1) + 1",
+     "color": "green",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 2.6,
+     "y": 2.75,
+     "text": {
+      "en": "Large"
+     },
+     "size": 22,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": "log(a3) - 0.1",
+     "y": "log(b3) - 0.2",
+     "text": {
+      "en": "Medium"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": "log(a2) - 0.1",
+     "y": "log(b2) - 0.2",
+     "text": {
+      "en": "Small"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": "log(a1) - 0.1",
+     "y": "log(b1) - 0.2",
+     "text": {
+      "en": "Micro"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": -1,
+     "y": -1.3,
+     "text": {
+      "en": "₹0.1 cr"
+     },
+     "size": 18,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": -1.08,
+     "y": -1,
+     "text": {
+      "en": "₹0.1 cr"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -1.3,
+     "text": {
+      "en": "₹1 cr"
+     },
+     "size": 18,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": -1.08,
+     "y": 0,
+     "text": {
+      "en": "₹1 cr"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": -1.3,
+     "text": {
+      "en": "₹10 cr"
+     },
+     "size": 18,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": -1.08,
+     "y": 1,
+     "text": {
+      "en": "₹10 cr"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": -1.3,
+     "text": {
+      "en": "₹100 cr"
+     },
+     "size": 18,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": -1.08,
+     "y": 2,
+     "text": {
+      "en": "₹100 cr"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": -1.3,
+     "text": {
+      "en": "₹1000 cr"
+     },
+     "size": 18,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": -1.08,
+     "y": 3,
+     "text": {
+      "en": "₹1000 cr"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": -1.75,
+     "text": {
+      "en": "Investment in plant and machinery (log scale)"
+     },
+     "size": 20,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": -1.08,
+     "y": 3.15,
+     "text": {
+      "en": "Turnover"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": -1,
+     "y1": -1,
+     "x2": 3,
+     "y2": -1,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": -1,
+     "y1": -1,
+     "x2": -1,
+     "y2": 3,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": "clamp(F_x, -0.4, 2.4)",
+     "y": "F_y + 0.3",
+     "text": {
+      "en": "Micro enterprise"
+     },
+     "size": 22,
+     "visibleIf": "cat == 1"
+    },
+    {
+     "shape": "label",
+     "x": "clamp(F_x, -0.4, 2.4)",
+     "y": "F_y + 0.3",
+     "text": {
+      "en": "Small enterprise"
+     },
+     "size": 22,
+     "visibleIf": "cat == 2"
+    },
+    {
+     "shape": "label",
+     "x": "clamp(F_x, -0.4, 2.4)",
+     "y": "F_y + 0.3",
+     "text": {
+      "en": "Medium enterprise"
+     },
+     "size": 22,
+     "visibleIf": "cat == 3"
+    },
+    {
+     "shape": "label",
+     "x": "clamp(F_x, -0.4, 2.4)",
+     "y": "F_y + 0.3",
+     "text": {
+      "en": "Large: not an MSME enterprise"
+     },
+     "size": 22,
+     "visibleIf": "cat == 4"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Investment",
+      "kn": "ಹೂಡಿಕೆ"
+     },
+     "expr": "inv",
+     "digits": 2,
+     "unit": "₹ crore"
+    },
+    {
+     "label": {
+      "en": "Turnover",
+      "kn": "ವಹಿವಾಟು"
+     },
+     "expr": "to",
+     "digits": 2,
+     "unit": "₹ crore"
+    }
+   ],
+   "id": "sim1"
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

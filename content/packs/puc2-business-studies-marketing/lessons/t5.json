@@ -474,6 +474,280 @@
    ]
   },
   {
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Why middlemen?",
+    "kn": "ಮಧ್ಯವರ್ತಿಗಳು ಏಕೆ?"
+   },
+   "narration": {
+    "en": "If every producer sold directly to every buyer, each pair would need its own contact. A middleman in the channel cuts the number of contacts from producers times consumers to producers plus consumers.",
+    "kn": "ಪ್ರತಿ ಉತ್ಪಾದಕ ಪ್ರತಿ ಗ್ರಾಹಕನಿಗೆ ನೇರವಾಗಿ ಮಾರಿದರೆ ಪ್ರತಿ ಜೋಡಿಗೂ ಒಂದು ಸಂಪರ್ಕ ಬೇಕು. ಮಧ್ಯವರ್ತಿ ಇದ್ದರೆ ಸಂಪರ್ಕಗಳು ಉತ್ಪಾದಕರು × ಗ್ರಾಹಕರು ಇಂದ ಉತ್ಪಾದಕರು + ಗ್ರಾಹಕರು ಆಗುತ್ತವೆ."
+   },
+   "seconds": 180,
+   "optional": true,
+   "caption": {
+    "en": "If every producer sold directly to every buyer, each pair would need its own contact. A middleman in the channel cuts the number of contacts from producers times consumers to producers plus consumers.",
+    "kn": "ಪ್ರತಿ ಉತ್ಪಾದಕ ಪ್ರತಿ ಗ್ರಾಹಕನಿಗೆ ನೇರವಾಗಿ ಮಾರಿದರೆ ಪ್ರತಿ ಜೋಡಿಗೂ ಒಂದು ಸಂಪರ್ಕ ಬೇಕು. ಮಧ್ಯವರ್ತಿ ಇದ್ದರೆ ಸಂಪರ್ಕಗಳು ಉತ್ಪಾದಕರು × ಗ್ರಾಹಕರು ಇಂದ ಉತ್ಪಾದಕರು + ಗ್ರಾಹಕರು ಆಗುತ್ತವೆ."
+   },
+   "tryThis": [
+    {
+     "en": "With 5 producers and 8 consumers, count the contacts with and without the wholesaler."
+    },
+    {
+     "en": "Set 1 producer and 2 consumers. Does a middleman still help?"
+    },
+    {
+     "en": "Why does direct selling (zero level) still suit a costly machine sold to a few buyers?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "M",
+     "label": {
+      "en": "Producers",
+      "kn": "ಉತ್ಪಾದಕರು"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 4
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "Consumers (shops)",
+      "kn": "ಗ್ರಾಹಕರು"
+     },
+     "min": 2,
+     "max": 8,
+     "step": 1,
+     "value": 6
+    }
+   ],
+   "toggles": [
+    {
+     "name": "w",
+     "label": {
+      "en": "Add a wholesaler",
+      "kn": "ಸಗಟು ವ್ಯಾಪಾರಿಯನ್ನು ಸೇರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 20,
+    "loop": true,
+    "autoplay": true
+   },
+   "view": {
+    "x": [
+     -13,
+     13
+    ],
+    "y": [
+     -7.8,
+     7.8
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 240,
+     "r": 0.14,
+     "color": "yellow",
+     "visibleIf": "!w && floor(floor(i/6)/8) < M && mod(floor(i/6), 8) < C",
+     "x": "-10 + 20*mod(mod(i, 6)/6 + 0.15*t, 1)",
+     "y": "(floor(floor(i/6)/8) - (M - 1)/2)*2.8 + ((mod(floor(i/6), 8) - (C - 1)/2)*1.6 - (floor(floor(i/6)/8) - (M - 1)/2)*2.8)*mod(mod(i, 6)/6 + 0.15*t, 1)"
+    },
+    {
+     "shape": "particles",
+     "count": 78,
+     "r": 0.14,
+     "color": "yellow",
+     "visibleIf": "w && if(floor(i/6) < 5, floor(i/6) < M, floor(i/6) - 5 < C)",
+     "x": "if(floor(i/6) < 5, -10 + 10*mod(mod(i, 6)/6 + 0.15*t, 1), 10*mod(mod(i, 6)/6 + 0.15*t, 1))",
+     "y": "if(floor(i/6) < 5, (floor(i/6) - (M - 1)/2)*2.8*(1 - mod(mod(i, 6)/6 + 0.15*t, 1)), ((floor(i/6) - 5) - (C - 1)/2)*1.6*mod(mod(i, 6)/6 + 0.15*t, 1))"
+    },
+    {
+     "shape": "rect",
+     "x": -1.4,
+     "y": -1,
+     "w": 2.8,
+     "h": 2,
+     "color": "green",
+     "visibleIf": "w"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 1.6,
+     "text": {
+      "en": "Wholesaler"
+     },
+     "size": 22,
+     "align": "center",
+     "visibleIf": "w",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": -11,
+     "y": 7,
+     "text": {
+      "en": "Producers"
+     },
+     "size": 24,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 7,
+     "text": {
+      "en": "Consumers"
+     },
+     "size": 24,
+     "align": "center"
+    },
+    {
+     "shape": "circle",
+     "x": -10.8,
+     "y": "(0 - (M - 1)/2)*2.8",
+     "r": 0.6,
+     "color": "orange",
+     "visibleIf": "M > 0"
+    },
+    {
+     "shape": "circle",
+     "x": -10.8,
+     "y": "(1 - (M - 1)/2)*2.8",
+     "r": 0.6,
+     "color": "orange",
+     "visibleIf": "M > 1"
+    },
+    {
+     "shape": "circle",
+     "x": -10.8,
+     "y": "(2 - (M - 1)/2)*2.8",
+     "r": 0.6,
+     "color": "orange",
+     "visibleIf": "M > 2"
+    },
+    {
+     "shape": "circle",
+     "x": -10.8,
+     "y": "(3 - (M - 1)/2)*2.8",
+     "r": 0.6,
+     "color": "orange",
+     "visibleIf": "M > 3"
+    },
+    {
+     "shape": "circle",
+     "x": -10.8,
+     "y": "(4 - (M - 1)/2)*2.8",
+     "r": 0.6,
+     "color": "orange",
+     "visibleIf": "M > 4"
+    },
+    {
+     "shape": "circle",
+     "x": 10.8,
+     "y": "(0 - (C - 1)/2)*1.6",
+     "r": 0.45,
+     "color": "blue",
+     "visibleIf": "C > 0"
+    },
+    {
+     "shape": "circle",
+     "x": 10.8,
+     "y": "(1 - (C - 1)/2)*1.6",
+     "r": 0.45,
+     "color": "blue",
+     "visibleIf": "C > 1"
+    },
+    {
+     "shape": "circle",
+     "x": 10.8,
+     "y": "(2 - (C - 1)/2)*1.6",
+     "r": 0.45,
+     "color": "blue",
+     "visibleIf": "C > 2"
+    },
+    {
+     "shape": "circle",
+     "x": 10.8,
+     "y": "(3 - (C - 1)/2)*1.6",
+     "r": 0.45,
+     "color": "blue",
+     "visibleIf": "C > 3"
+    },
+    {
+     "shape": "circle",
+     "x": 10.8,
+     "y": "(4 - (C - 1)/2)*1.6",
+     "r": 0.45,
+     "color": "blue",
+     "visibleIf": "C > 4"
+    },
+    {
+     "shape": "circle",
+     "x": 10.8,
+     "y": "(5 - (C - 1)/2)*1.6",
+     "r": 0.45,
+     "color": "blue",
+     "visibleIf": "C > 5"
+    },
+    {
+     "shape": "circle",
+     "x": 10.8,
+     "y": "(6 - (C - 1)/2)*1.6",
+     "r": 0.45,
+     "color": "blue",
+     "visibleIf": "C > 6"
+    },
+    {
+     "shape": "circle",
+     "x": 10.8,
+     "y": "(7 - (C - 1)/2)*1.6",
+     "r": 0.45,
+     "color": "blue",
+     "visibleIf": "C > 7"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -7,
+     "text": {
+      "en": "Contacts needed: {if(w, M + C, M*C)}"
+     },
+     "size": 26,
+     "align": "center",
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Contacts, direct",
+      "kn": "ನೇರ ಸಂಪರ್ಕಗಳು"
+     },
+     "expr": "M*C",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Contacts, through a wholesaler",
+      "kn": "ಸಗಟು ವ್ಯಾಪಾರಿಯ ಮೂಲಕ"
+     },
+     "expr": "M + C",
+     "digits": 0
+    }
+   ],
+   "id": "sim1"
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

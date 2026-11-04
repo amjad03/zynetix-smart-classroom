@@ -473,6 +473,407 @@
    ]
   },
   {
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Span of management and levels",
+    "kn": "ನಿರ್ವಹಣಾ ವ್ಯಾಪ್ತಿ ಮತ್ತು ಮಟ್ಟಗಳು"
+   },
+   "narration": {
+    "en": "Each manager directly supervises \"span\" people. Change the span and see how many levels of managers the organisation needs above its workers.",
+    "kn": "ಪ್ರತಿ ವ್ಯವಸ್ಥಾಪಕ ನೇರವಾಗಿ \"ವ್ಯಾಪ್ತಿ\" ಯಷ್ಟು ಜನರನ್ನು ನೋಡಿಕೊಳ್ಳುತ್ತಾನೆ. ವ್ಯಾಪ್ತಿ ಬದಲಿಸಿ, ಕೆಲಸಗಾರರ ಮೇಲೆ ಎಷ್ಟು ಮಟ್ಟದ ವ್ಯವಸ್ಥಾಪಕರು ಬೇಕು ನೋಡಿ."
+   },
+   "seconds": 180,
+   "optional": true,
+   "caption": {
+    "en": "Each manager directly supervises \"span\" people. Change the span and see how many levels of managers the organisation needs above its workers.",
+    "kn": "ಪ್ರತಿ ವ್ಯವಸ್ಥಾಪಕ ನೇರವಾಗಿ \"ವ್ಯಾಪ್ತಿ\" ಯಷ್ಟು ಜನರನ್ನು ನೋಡಿಕೊಳ್ಳುತ್ತಾನೆ. ವ್ಯಾಪ್ತಿ ಬದಲಿಸಿ, ಕೆಲಸಗಾರರ ಮೇಲೆ ಎಷ್ಟು ಮಟ್ಟದ ವ್ಯವಸ್ಥಾಪಕರು ಬೇಕು ನೋಡಿ."
+   },
+   "tryThis": [
+    {
+     "en": "With 1,000 workers, compare a span of 2 with a span of 10."
+    },
+    {
+     "en": "A wider span means fewer levels and faster communication. What is the risk if one supervisor has 12 people?"
+    },
+    {
+     "en": "Keep the span fixed and change the number of workers."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "s",
+     "label": {
+      "en": "Span of management",
+      "kn": "ನಿರ್ವಹಣಾ ವ್ಯಾಪ್ತಿ"
+     },
+     "min": 2,
+     "max": 12,
+     "step": 1,
+     "value": 4,
+     "unit": "people"
+    }
+   ],
+   "choices": [
+    {
+     "name": "N",
+     "label": {
+      "en": "Number of workers",
+      "kn": "ಕೆಲಸಗಾರರ ಸಂಖ್ಯೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "100"
+       },
+       "value": 100
+      },
+      {
+       "label": {
+        "en": "500"
+       },
+       "value": 500
+      },
+      {
+       "label": {
+        "en": "1,000"
+       },
+       "value": 1000
+      }
+     ],
+     "value": 1000
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cnt",
+     "label": {
+      "en": "Show how many at each level",
+      "kn": "ಪ್ರತಿ ಮಟ್ಟದ ಸಂಖ್ಯೆ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "c1",
+     "expr": "ceil(N/s)"
+    },
+    {
+     "name": "c2",
+     "expr": "ceil(c1/s)"
+    },
+    {
+     "name": "c3",
+     "expr": "ceil(c2/s)"
+    },
+    {
+     "name": "c4",
+     "expr": "ceil(c3/s)"
+    },
+    {
+     "name": "c5",
+     "expr": "ceil(c4/s)"
+    },
+    {
+     "name": "c6",
+     "expr": "ceil(c5/s)"
+    },
+    {
+     "name": "c7",
+     "expr": "ceil(c6/s)"
+    },
+    {
+     "name": "c8",
+     "expr": "ceil(c7/s)"
+    },
+    {
+     "name": "c9",
+     "expr": "ceil(c8/s)"
+    },
+    {
+     "name": "c10",
+     "expr": "ceil(c9/s)"
+    },
+    {
+     "name": "L",
+     "expr": "(N > 1) + (c1 > 1) + (c2 > 1) + (c3 > 1) + (c4 > 1) + (c5 > 1) + (c6 > 1) + (c7 > 1) + (c8 > 1) + (c9 > 1)"
+    },
+    {
+     "name": "mgr",
+     "expr": "if(N > 1, c1, 0) + if(c1 > 1, c2, 0) + if(c2 > 1, c3, 0) + if(c3 > 1, c4, 0) + if(c4 > 1, c5, 0) + if(c5 > 1, c6, 0) + if(c6 > 1, c7, 0) + if(c7 > 1, c8, 0) + if(c8 > 1, c9, 0) + if(c9 > 1, c10, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     -26,
+     26
+    ],
+    "y": [
+     -0.5,
+     12.3
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -23,
+     "y": 0,
+     "w": 46,
+     "h": 0.8,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 0.4,
+     "text": {
+      "en": "{N} workers"
+     },
+     "size": 22,
+     "align": "center"
+    },
+    {
+     "shape": "rect",
+     "x": "-(2 + 44*ln(c1)/ln(N))/2",
+     "y": 1.05,
+     "w": "2 + 44*ln(c1)/ln(N)",
+     "h": 0.8,
+     "color": "green",
+     "visibleIf": "N > 1"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 1.4500000000000002,
+     "text": {
+      "en": "{c1}"
+     },
+     "size": 20,
+     "align": "right",
+     "visibleIf": "cnt && N > 1"
+    },
+    {
+     "shape": "rect",
+     "x": "-(2 + 44*ln(c2)/ln(N))/2",
+     "y": 2.1,
+     "w": "2 + 44*ln(c2)/ln(N)",
+     "h": 0.8,
+     "color": "yellow",
+     "visibleIf": "c1 > 1"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 2.5,
+     "text": {
+      "en": "{c2}"
+     },
+     "size": 20,
+     "align": "right",
+     "visibleIf": "cnt && c1 > 1"
+    },
+    {
+     "shape": "rect",
+     "x": "-(2 + 44*ln(c3)/ln(N))/2",
+     "y": 3.1500000000000004,
+     "w": "2 + 44*ln(c3)/ln(N)",
+     "h": 0.8,
+     "color": "green",
+     "visibleIf": "c2 > 1"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 3.5500000000000003,
+     "text": {
+      "en": "{c3}"
+     },
+     "size": 20,
+     "align": "right",
+     "visibleIf": "cnt && c2 > 1"
+    },
+    {
+     "shape": "rect",
+     "x": "-(2 + 44*ln(c4)/ln(N))/2",
+     "y": 4.2,
+     "w": "2 + 44*ln(c4)/ln(N)",
+     "h": 0.8,
+     "color": "yellow",
+     "visibleIf": "c3 > 1"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 4.6000000000000005,
+     "text": {
+      "en": "{c4}"
+     },
+     "size": 20,
+     "align": "right",
+     "visibleIf": "cnt && c3 > 1"
+    },
+    {
+     "shape": "rect",
+     "x": "-(2 + 44*ln(c5)/ln(N))/2",
+     "y": 5.25,
+     "w": "2 + 44*ln(c5)/ln(N)",
+     "h": 0.8,
+     "color": "green",
+     "visibleIf": "c4 > 1"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 5.65,
+     "text": {
+      "en": "{c5}"
+     },
+     "size": 20,
+     "align": "right",
+     "visibleIf": "cnt && c4 > 1"
+    },
+    {
+     "shape": "rect",
+     "x": "-(2 + 44*ln(c6)/ln(N))/2",
+     "y": 6.300000000000001,
+     "w": "2 + 44*ln(c6)/ln(N)",
+     "h": 0.8,
+     "color": "yellow",
+     "visibleIf": "c5 > 1"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 6.700000000000001,
+     "text": {
+      "en": "{c6}"
+     },
+     "size": 20,
+     "align": "right",
+     "visibleIf": "cnt && c5 > 1"
+    },
+    {
+     "shape": "rect",
+     "x": "-(2 + 44*ln(c7)/ln(N))/2",
+     "y": 7.3500000000000005,
+     "w": "2 + 44*ln(c7)/ln(N)",
+     "h": 0.8,
+     "color": "green",
+     "visibleIf": "c6 > 1"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 7.750000000000001,
+     "text": {
+      "en": "{c7}"
+     },
+     "size": 20,
+     "align": "right",
+     "visibleIf": "cnt && c6 > 1"
+    },
+    {
+     "shape": "rect",
+     "x": "-(2 + 44*ln(c8)/ln(N))/2",
+     "y": 8.4,
+     "w": "2 + 44*ln(c8)/ln(N)",
+     "h": 0.8,
+     "color": "yellow",
+     "visibleIf": "c7 > 1"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 8.8,
+     "text": {
+      "en": "{c8}"
+     },
+     "size": 20,
+     "align": "right",
+     "visibleIf": "cnt && c7 > 1"
+    },
+    {
+     "shape": "rect",
+     "x": "-(2 + 44*ln(c9)/ln(N))/2",
+     "y": 9.450000000000001,
+     "w": "2 + 44*ln(c9)/ln(N)",
+     "h": 0.8,
+     "color": "green",
+     "visibleIf": "c8 > 1"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 9.850000000000001,
+     "text": {
+      "en": "{c9}"
+     },
+     "size": 20,
+     "align": "right",
+     "visibleIf": "cnt && c8 > 1"
+    },
+    {
+     "shape": "rect",
+     "x": "-(2 + 44*ln(c10)/ln(N))/2",
+     "y": 10.5,
+     "w": "2 + 44*ln(c10)/ln(N)",
+     "h": 0.8,
+     "color": "yellow",
+     "visibleIf": "c9 > 1"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 10.9,
+     "text": {
+      "en": "{c10}"
+     },
+     "size": 20,
+     "align": "right",
+     "visibleIf": "cnt && c9 > 1"
+    },
+    {
+     "shape": "text",
+     "x": -24,
+     "y": 11.6,
+     "text": {
+      "en": "Levels of managers: {L}"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Levels of managers",
+      "kn": "ವ್ಯವಸ್ಥಾಪಕರ ಮಟ್ಟಗಳು"
+     },
+     "expr": "L",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Total managers",
+      "kn": "ಒಟ್ಟು ವ್ಯವಸ್ಥಾಪಕರು"
+     },
+     "expr": "mgr",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Managers per 100 workers",
+      "kn": "100 ಕೆಲಸಗಾರರಿಗೆ ವ್ಯವಸ್ಥಾಪಕರು"
+     },
+     "expr": "mgr*100/N",
+     "digits": 1
+    }
+   ],
+   "id": "sim1"
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "kind": "function_plot",

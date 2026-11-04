@@ -724,6 +724,352 @@
    ]
   },
   {
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A warehouse bridges time",
+    "kn": "ಉಗ್ರಾಣ ಸಮಯದ ಅಂತರ ತುಂಬುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "Rice is harvested in three months but eaten all year. With a warehouse the surplus is stored and released month by month; without one, the market runs dry after the harvest.",
+    "kn": "ಅಕ್ಕಿ ಮೂರು ತಿಂಗಳಲ್ಲಿ ಕೊಯ್ಲಾಗುತ್ತದೆ ಆದರೆ ವರ್ಷವಿಡೀ ಬಳಕೆಯಾಗುತ್ತದೆ. ಉಗ್ರಾಣ ಇದ್ದರೆ ಹೆಚ್ಚುವರಿ ಸಂಗ್ರಹವಾಗಿ ತಿಂಗಳು ತಿಂಗಳು ಬಿಡುಗಡೆಯಾಗುತ್ತದೆ; ಇಲ್ಲದಿದ್ದರೆ ಕೊಯ್ಲಿನ ನಂತರ ಮಾರುಕಟ್ಟೆ ಖಾಲಿಯಾಗುತ್ತದೆ."
+   },
+   "seconds": 180,
+   "optional": true,
+   "caption": {
+    "en": "Rice is harvested in three months but eaten all year. With a warehouse the surplus is stored and released month by month; without one, the market runs dry after the harvest.",
+    "kn": "ಅಕ್ಕಿ ಮೂರು ತಿಂಗಳಲ್ಲಿ ಕೊಯ್ಲಾಗುತ್ತದೆ ಆದರೆ ವರ್ಷವಿಡೀ ಬಳಕೆಯಾಗುತ್ತದೆ. ಉಗ್ರಾಣ ಇದ್ದರೆ ಹೆಚ್ಚುವರಿ ಸಂಗ್ರಹವಾಗಿ ತಿಂಗಳು ತಿಂಗಳು ಬಿಡುಗಡೆಯಾಗುತ್ತದೆ; ಇಲ್ಲದಿದ್ದರೆ ಕೊಯ್ಲಿನ ನಂತರ ಮಾರುಕಟ್ಟೆ ಖಾಲಿಯಾಗುತ್ತದೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Press Play with the warehouse on. In which month does the stock run out?"
+    },
+    {
+     "en": "Turn the warehouse off. What happens to the surplus during the harvest, and to the market after it?"
+    },
+    {
+     "en": "Find the harvest that just lasts the whole year for this monthly demand."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "H",
+     "label": {
+      "en": "Harvest",
+      "kn": "ಕೊಯ್ಲು"
+     },
+     "min": 60,
+     "max": 600,
+     "step": 20,
+     "value": 400,
+     "unit": "tonnes"
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "Demand each month",
+      "kn": "ತಿಂಗಳ ಬೇಡಿಕೆ"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 40,
+     "unit": "tonnes"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "wh",
+     "label": {
+      "en": "Use a warehouse",
+      "kn": "ಉಗ್ರಾಣ ಬಳಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 12,
+    "unit": "months",
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "Pc",
+     "expr": "H*min(t, 3)/3"
+    },
+    {
+     "name": "S",
+     "expr": "if(wh, max(0, Pc - d*t), 0)"
+    },
+    {
+     "name": "waste",
+     "expr": "if(wh, 0, max(0, H/3 - d)*min(t, 3))"
+    },
+    {
+     "name": "short",
+     "expr": "if(t < 3, H/3 < d, if(wh, S <= 0, 1))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     31
+    ],
+    "y": [
+     -1.5,
+     19
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       1,
+       11
+      ],
+      [
+       5.5,
+       14
+      ],
+      [
+       10,
+       11
+      ]
+     ],
+     "color": "orange",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 1.5,
+     "y": 1,
+     "w": 8,
+     "h": 10,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 1.6,
+     "y": 1.1,
+     "w": 7.8,
+     "h": "S*9.8/600",
+     "color": "yellow",
+     "visibleIf": "S > 0"
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": 0,
+     "text": {
+      "en": "Warehouse"
+     },
+     "size": 22,
+     "align": "center",
+     "visibleIf": "wh"
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": 0,
+     "text": {
+      "en": "No warehouse"
+     },
+     "size": 22,
+     "align": "center",
+     "visibleIf": "!wh",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": 15.5,
+     "text": {
+      "en": "Stock {S:0} t"
+     },
+     "size": 26,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": 17.6,
+     "text": {
+      "en": "Surplus wasted or sold cheap: {waste:0} t"
+     },
+     "size": 20,
+     "align": "center",
+     "visibleIf": "!wh && waste > 0",
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 2,
+     "x2": 30,
+     "y2": 2,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 2,
+     "x2": 12,
+     "y2": 16.5,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 12,
+     "y": 2,
+     "w": 4.5,
+     "h": 14.5,
+     "color": "green",
+     "opacity": 0.12
+    },
+    {
+     "shape": "text",
+     "x": 14.25,
+     "y": 15.6,
+     "text": {
+      "en": "harvest"
+     },
+     "size": 18,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 21,
+     "y": 0.6,
+     "text": {
+      "en": "month"
+     },
+     "size": 20,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 12.6,
+     "y": 17.4,
+     "text": {
+      "en": "stock (t)"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 1.2,
+     "text": {
+      "en": "0"
+     },
+     "size": 18,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 21,
+     "y": 1.2,
+     "text": {
+      "en": "6"
+     },
+     "size": 18,
+     "align": "center"
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 1.2,
+     "text": {
+      "en": "12"
+     },
+     "size": 18,
+     "align": "center"
+    },
+    {
+     "shape": "trail",
+     "x": "12 + 1.5*t",
+     "y": "2 + 0.023333333333333334*S",
+     "length": 1200,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "12 + 1.5*t",
+     "y": "2 + 0.023333333333333334*S",
+     "r": 0.3,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": 27,
+     "y": 13,
+     "r": 1.2,
+     "color": {
+      "by": "short",
+      "scale": [
+       "green",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 27,
+     "y": 10.8,
+     "text": {
+      "en": "Market supplied"
+     },
+     "size": 20,
+     "align": "center",
+     "visibleIf": "!short",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 27,
+     "y": 10.8,
+     "text": {
+      "en": "Shortage: prices rise"
+     },
+     "size": 20,
+     "align": "center",
+     "visibleIf": "short",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Stock in warehouse",
+      "kn": "ಉಗ್ರಾಣದ ದಾಸ್ತಾನು"
+     },
+     "expr": "S",
+     "digits": 0,
+     "unit": "tonnes"
+    },
+    {
+     "label": {
+      "en": "Harvest covers",
+      "kn": "ಕೊಯ್ಲು ಸಾಕಾಗುವ ಅವಧಿ"
+     },
+     "expr": "H/d",
+     "digits": 1,
+     "unit": "months of demand"
+    }
+   ],
+   "id": "sim1"
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

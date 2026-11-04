@@ -446,6 +446,240 @@
    ]
   },
   {
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Management by exception",
+    "kn": "ಅಪವಾದದ ಮೂಲಕ ನಿರ್ವಹಣೆ"
+   },
+   "narration": {
+    "en": "Each week the actual cost is compared with the standard. Deviations inside the permissible limit are ignored; only those outside it (red) go to top management.",
+    "kn": "ಪ್ರತಿ ವಾರ ನಿಜವಾದ ವೆಚ್ಚವನ್ನು ಮಾನದಂಡದೊಂದಿಗೆ ಹೋಲಿಸಲಾಗುತ್ತದೆ. ಅನುಮತಿಸಿದ ಮಿತಿಯೊಳಗಿನ ವ್ಯತ್ಯಾಸ ನಿರ್ಲಕ್ಷಿಸಲಾಗುತ್ತದೆ; ಮಿತಿ ಮೀರಿದವು (ಕೆಂಪು) ಮಾತ್ರ ಉನ್ನತ ನಿರ್ವಹಣೆಗೆ ಹೋಗುತ್ತವೆ."
+   },
+   "seconds": 180,
+   "optional": true,
+   "caption": {
+    "en": "Each week the actual cost is compared with the standard. Deviations inside the permissible limit are ignored; only those outside it (red) go to top management.",
+    "kn": "ಪ್ರತಿ ವಾರ ನಿಜವಾದ ವೆಚ್ಚವನ್ನು ಮಾನದಂಡದೊಂದಿಗೆ ಹೋಲಿಸಲಾಗುತ್ತದೆ. ಅನುಮತಿಸಿದ ಮಿತಿಯೊಳಗಿನ ವ್ಯತ್ಯಾಸ ನಿರ್ಲಕ್ಷಿಸಲಾಗುತ್ತದೆ; ಮಿತಿ ಮೀರಿದವು (ಕೆಂಪು) ಮಾತ್ರ ಉನ್ನತ ನಿರ್ವಹಣೆಗೆ ಹೋಗುತ್ತವೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Press Play. With a 5% limit, how many weeks are reported?"
+    },
+    {
+     "en": "Turn on \"machine wearing out\": the deviations creep upward. When does the trend cross the limit?"
+    },
+    {
+     "en": "Compare labour cost with postage: a 5% deviation in a key result area costs far more rupees."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "tol",
+     "label": {
+      "en": "Permissible limit",
+      "kn": "ಅನುಮತಿಸಿದ ಮಿತಿ"
+     },
+     "min": 2,
+     "max": 15,
+     "step": 1,
+     "value": 5,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "drift",
+     "label": {
+      "en": "Machine wearing out",
+      "kn": "ಯಂತ್ರ ಸವೆಯುತ್ತಿದೆ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "item",
+     "label": {
+      "en": "Cost item",
+      "kn": "ವೆಚ್ಚದ ಅಂಶ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Labour cost: ₹10 lakh a week (key result area)",
+        "kn": "ಕಾರ್ಮಿಕ ವೆಚ್ಚ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Postage: ₹5,000 a week",
+        "kn": "ಅಂಚೆ ವೆಚ್ಚ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 26,
+    "unit": "weeks",
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4
+    ],
+    "speed": 2
+   },
+   "vars": [
+    {
+     "name": "wk",
+     "expr": "floor(t)"
+    },
+    {
+     "name": "dv",
+     "expr": "if(wk >= 1, 6*(rand(wk) + rand(wk + 50) - 1) + drift*0.5*wk, 0)"
+    },
+    {
+     "name": "base",
+     "expr": "if(item == 1, 1000000, 5000)"
+    },
+    {
+     "name": "rup",
+     "expr": "base*dv/100"
+    },
+    {
+     "name": "exc",
+     "expr": "wk >= 1 && abs(dv) > tol"
+    }
+   ],
+   "view": {
+    "x": [
+     -2,
+     27.5
+    ],
+    "y": [
+     -17,
+     22
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "Week",
+    "yLabel": "Deviation from standard (%)"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": "-tol",
+     "w": 27,
+     "h": "2*tol",
+     "color": "green",
+     "opacity": 0.12
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "tol",
+     "x2": 27,
+     "y2": "tol",
+     "dashed": true,
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "-tol",
+     "x2": 27,
+     "y2": "-tol",
+     "dashed": true,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 26.8,
+     "y": "tol + 1",
+     "text": {
+      "en": "permissible limit"
+     },
+     "size": 20,
+     "align": "right",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 26.8,
+     "y": 1,
+     "text": {
+      "en": "standard"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "particles",
+     "count": 26,
+     "r": 0.35,
+     "x": "i + 1",
+     "y": "6*(rand(i + 1) + rand(i + 51) - 1) + drift*0.5*(i + 1)",
+     "visibleIf": "i + 1 <= t",
+     "color": {
+      "by": "abs(6*(rand(i + 1) + rand(i + 51) - 1) + drift*0.5*(i + 1)) > tol",
+      "scale": [
+       "green",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "label",
+     "x": 13,
+     "y": 20,
+     "text": {
+      "en": "Week {wk}: deviation {dv:1}% is outside the limit: report it"
+     },
+     "size": 22,
+     "visibleIf": "exc",
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 13,
+     "y": 20,
+     "text": {
+      "en": "Week {wk}: deviation {dv:1}% is within the limit: ignore"
+     },
+     "size": 22,
+     "visibleIf": "wk >= 1 && !exc",
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "This week's deviation",
+      "kn": "ಈ ವಾರದ ವ್ಯತ್ಯಾಸ"
+     },
+     "expr": "dv",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "In rupees",
+      "kn": "ರೂಪಾಯಿಗಳಲ್ಲಿ"
+     },
+     "expr": "rup",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "id": "sim1"
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
