@@ -54,6 +54,15 @@ Board screens are 1920×1080 and rendered with the app's own fonts (`apps/board/
 | ![Challenge: land the projectile on the flag](apps/board/screenshots/png/23-challenge.png) | ![Game Zone missions](apps/board/screenshots/png/24-game-zone.png) |
 | ![Phone quiz over the board's own Wi-Fi](apps/board/screenshots/png/25-phone-quiz.png) | ![Paper test marks](apps/board/screenshots/png/26-paper-marks.png) |
 
+**Version 3: a simulation or activity in every lesson (1,332 lessons, 11 subjects).** Animated scenes with play, pause, speed, step and scrub; toggles, choices, buttons and draggable handles; sort, order, match, label, hotspot and fill activities. Authoring guide: [docs/simulations.md](docs/simulations.md).
+
+| | |
+|---|---|
+| ![Large-angle pendulum with energy bars](apps/board/screenshots/png/27-sim-pendulum.png) | ![Convex lens with a draggable object](apps/board/screenshots/png/28-sim-lens.png) |
+| ![Cardiac cycle and ECG](apps/board/screenshots/png/29-sim-cardiac-cycle.png) | ![Label the human heart](apps/board/screenshots/png/30-activity-label-heart.png) |
+| ![Arrhenius: temperature and rate](apps/board/screenshots/png/31-sim-arrhenius.png) | ![Bubble sort, step by step](apps/board/screenshots/png/32-sim-bubble-sort.png) |
+| ![Accounting equation with transaction buttons](apps/board/screenshots/png/33-sim-accounting-equation.png) | |
+
 | College Admin: outcomes | |
 |---|---|
 | ![Outcomes](docs/screenshots/admin-06-outcomes.png) | ![Section drill-down](docs/screenshots/admin-07-section-drilldown.png) |
@@ -90,9 +99,9 @@ Tests:
 | Package | Tests |
 |---|---|
 | lesson-schema | 4 (vitest) |
-| pack-builder | 5 (vitest) |
-| api | 10 end-to-end tests against PostgreSQL (jest) |
-| cms | 6 (vitest) |
-| board | 45 (flutter test) |
+| pack-builder | 85 (vitest) |
+| api | 19 (jest, against PostgreSQL) |
+| cms | 7 (vitest) |
+| board | 223 (flutter test) |
 
 The Admin and CMS apps were also smoke-tested end to end in Chromium against the seeded API.
