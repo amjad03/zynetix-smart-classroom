@@ -1,57 +1,103 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 import '../core/strings.dart';
 import '../core/theme.dart';
 import '../engine/expr.dart';
 import '../engine/model.dart';
 import 'math_text.dart';
+import 'scene/controls.dart';
+import 'scene/play_model.dart';
+import 'scene/scene_painter.dart';
 import 'whiteboard_view.dart' show chalkboardColor, inkColor, niceStep, paintAxes, paintFunction, tickLabel;
 
-/// A slider of an interactive block.
-class SliderSpec {
-  SliderSpec({required this.name, required this.label, required this.min, required this.max, required this.step, required this.value, this.unit});
-  final String name;
-  final L10n label;
-  final double min, max, step, value;
-  final String? unit;
-
-  factory SliderSpec.fromJson(Map<String, dynamic> j) {
-    double n(String k, double d) => (j[k] as num?)?.toDouble() ?? d;
-    final min = n('min', 0), max = math.max(n('max', 10), min + 1e-9);
-    return SliderSpec(name: j['name'] as String? ?? 'a', label: L10n.of(j['label']), min: min, max: max, step: n('step', 1), value: n('value', min).clamp(min, max), unit: j['unit'] as String?);
-  }
-}
+export 'scene/play_model.dart' show SliderSpec;
 
 const _series = ['yellow', 'blue', 'red', 'green', 'orange', 'white'];
 
-/// A data-driven interactive (schema `interactive`): a chart drawn with CustomPainter, huge
-/// sliders the monitor can drag, live read-outs, and the caption and "Try this" beside it.
+/// A data-driven interactive (schema `interactive`): a chart or an animated scene drawn with
+/// CustomPainter, huge sliders, toggles, choices and buttons the monitor can use, draggable
+/// points, model time (play, pause, speed, step, reset, scrubber), live read-outs, and the
+/// caption and "Try this" beside it. Time runs only while playing and while the block is on
+/// screen (the ticker is muted with its route), at most one 0.1 s jump per frame.
 class InteractiveView extends StatefulWidget {
-  const InteractiveView({super.key, required this.block, required this.lang});
+  const InteractiveView({super.key, required this.block, required this.lang, this.showTime = true});
   final Block block;
   final Lang lang;
+
+  /// Show the time bar (a challenge hides it until it is over, so the class reasons first).
+  final bool showTime;
   @override
   State<InteractiveView> createState() => InteractiveViewState();
 }
 
-class InteractiveViewState extends State<InteractiveView> {
+class InteractiveViewState extends State<InteractiveView> with SingleTickerProviderStateMixin {
   Map<String, dynamic> get raw => widget.block.raw;
   String get kind => raw['kind'] as String? ?? 'readouts';
-  late final List<SliderSpec> sliders = [
-    for (final s in (raw['sliders'] as List?) ?? const [])
-      if (s is Map) SliderSpec.fromJson(s.cast<String, dynamic>()),
-  ];
-  late final Map<String, double> values = {for (final s in sliders) s.name: s.value};
-  List<String> get names => [for (final s in sliders) s.name];
+  late final PlayModel model = PlayModel(raw);
 
-  void setValue(String name, double v) => setState(() => values[name] = v);
+  /// The running model: controls, time, state, vars. Listeners repaint.
+  late final PlayRuntime rt = PlayRuntime(model);
+  late final List<SceneShape> shapes = compileShapes(raw['shapes'], model.names);
+  late final Ticker _ticker = createTicker(_onTick);
+  Duration _last = Duration.zero;
+  HandleSpec? _drag;
 
-  /// A number, or an expression over the sliders (often just a slider's name).
+  List<SliderSpec> get sliders => model.sliders;
+
+  /// Every control's value by name (sliders, toggles, choices, counters, handle coordinates).
+  Map<String, double> get values => rt.controls;
+
+  /// The names expressions may use: controls, t, state and vars.
+  List<String> get names => model.names;
+
+  @override
+  void initState() {
+    super.initState();
+    rt.addListener(_syncTicker);
+    _syncTicker();
+  }
+
+  @override
+  void dispose() {
+    rt.removeListener(_syncTicker);
+    _ticker.dispose();
+    rt.dispose();
+    super.dispose();
+  }
+
+  void _syncTicker() {
+    if (rt.playing && !_ticker.isActive) {
+      _last = Duration.zero;
+      _ticker.start();
+    } else if (!rt.playing && _ticker.isActive) {
+      _ticker.stop();
+    }
+  }
+
+  void _onTick(Duration elapsed) {
+    final dt = (elapsed - _last).inMicroseconds / 1e6;
+    _last = elapsed;
+    rt.tick(dt);
+  }
+
+  void setValue(String name, double v) => rt.setControl(name, v);
+
+  /// Starts the model again from the beginning and plays it (a challenge's lock-in).
+  void replay() {
+    rt.reset();
+    rt.play();
+  }
+
+  final _compiled = <String, Expr?>{};
+  Expr? _expr(String src) => _compiled.putIfAbsent(src, () => tryCompileExpr(src, ['x', ...names]));
+
+  /// A number, or an expression over the controls and vars (often just a slider's name).
   double resolve(Object? v) {
     if (v is num) return v.toDouble();
-    if (v is String) return tryCompileExpr(v, names)?.call(values) ?? double.nan;
+    if (v is String) return _expr(v)?.call(rt.env) ?? double.nan;
     return double.nan;
   }
 
@@ -67,8 +113,7 @@ class InteractiveViewState extends State<InteractiveView> {
     final list = (raw['readouts'] as List?) ?? const [];
     for (final r in list) {
       if (r is! Map) continue;
-      final f = tryCompileExpr(r['expr'] as String? ?? '', names);
-      final v = f?.call(values) ?? double.nan;
+      final v = _expr(r['expr'] as String? ?? '')?.call(rt.env) ?? double.nan;
       final digits = (r['digits'] as int?) ?? 2;
       final unit = r['unit'] as String?;
       out.add((label: L10n.of(r['label']).t(l), value: v.isFinite ? '${v.toStringAsFixed(digits)}${unit == null ? '' : ' $unit'}' : '—'));
@@ -83,22 +128,78 @@ class InteractiveViewState extends State<InteractiveView> {
 
   double get _theta => values['theta'] ?? (sliders.isEmpty ? 30 : values[sliders.first.name]!);
 
+  SceneFrame _frame(Size size) {
+    final v = (raw['view'] as Map?) ?? const {};
+    return SceneFrame(size, model.view, axes: v['axes'] == true, equal: v['equal'] == true);
+  }
+
+  Widget _scene() => LayoutBuilder(
+    builder: (context, box) {
+      final size = box.biggest;
+      return GestureDetector(
+        key: const ValueKey('sceneCanvas'),
+        onPanStart: (d) {
+          final f = _frame(size);
+          HandleSpec? best;
+          var bestD = 80.0;
+          for (final h in model.handles) {
+            final p = f.toScreen(values[h.xName] ?? h.x, values[h.yName] ?? h.y);
+            final dd = (p - d.localPosition).distance;
+            if (dd < bestD) {
+              bestD = dd;
+              best = h;
+            }
+          }
+          setState(() => _drag = best);
+        },
+        onPanUpdate: (d) {
+          final h = _drag;
+          if (h == null) return;
+          final (wx, wy) = _frame(size).toWorld(d.localPosition);
+          rt.dragHandle(h, wx, wy);
+        },
+        onPanEnd: (_) => setState(() => _drag = null),
+        child: CustomPaint(
+          key: const ValueKey('interactiveChart'),
+          painter: ScenePainter(runtime: rt, shapes: shapes, lang: widget.lang, selectedHandle: _drag?.name),
+          child: const SizedBox.expand(),
+        ),
+      );
+    },
+  );
+
   @override
   Widget build(BuildContext context) {
     final l = widget.lang, text = Theme.of(context).textTheme;
-    final reads = readouts();
     final chart = kind == 'readouts'
-        ? Center(
-            child: Wrap(
-              spacing: 32,
-              runSpacing: 32,
-              alignment: WrapAlignment.center,
-              children: [for (final (i, r) in reads.indexed) _Readout(key: ValueKey('readout-$i'), label: r.label, value: r.value, big: true)],
+        ? ListenableBuilder(
+            listenable: rt,
+            builder: (context, _) => Center(
+              child: SingleChildScrollView(
+                child: Wrap(
+                  spacing: 32,
+                  runSpacing: 32,
+                  alignment: WrapAlignment.center,
+                  children: [for (final (i, r) in readouts().indexed) _Readout(key: ValueKey('readout-$i'), label: r.label, value: r.value, big: true)],
+                ),
+              ),
             ),
           )
+        : kind == 'scene'
+        ? _scene()
         : CustomPaint(key: const ValueKey('interactiveChart'), painter: _ChartPainter(this), child: const SizedBox.expand());
     final portrait = context.portrait;
-    final controls = [for (final s in sliders) _BigSlider(spec: s, value: values[s.name]!, lang: l, onChanged: (v) => setValue(s.name, v))];
+    final controls = ListenableBuilder(
+      listenable: rt,
+      builder: (context, _) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ExtraControls(rt: rt, lang: l),
+          for (final s in sliders) _BigSlider(spec: s, value: values[s.name] ?? s.value, lang: l, onChanged: (v) => setValue(s.name, v)),
+        ],
+      ),
+    );
+    final hasControls = sliders.isNotEmpty || model.toggles.isNotEmpty || model.choices.isNotEmpty || model.buttons.isNotEmpty;
     return Flex(
       direction: portrait ? Axis.vertical : Axis.horizontal,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -116,13 +217,20 @@ class InteractiveViewState extends State<InteractiveView> {
                     child: chart,
                   ),
                 ),
-                // The sliders take at most half the height and scroll on a short screen.
-                ConstrainedBox(
-                  constraints: BoxConstraints(maxHeight: box.maxHeight * 0.5),
-                  child: SingleChildScrollView(
-                    child: Column(mainAxisSize: MainAxisSize.min, children: controls),
+                if (model.hasTime && widget.showTime)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: ListenableBuilder(
+                      listenable: rt,
+                      builder: (context, _) => TimeBar(rt: rt, lang: l),
+                    ),
                   ),
-                ),
+                // The controls take at most half the height and scroll on a short screen.
+                if (hasControls)
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: box.maxHeight * (model.hasTime ? 0.32 : 0.5)),
+                    child: SingleChildScrollView(child: controls),
+                  ),
               ],
             ),
           ),
@@ -135,14 +243,25 @@ class InteractiveViewState extends State<InteractiveView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MathText(widget.block.f('caption').t(l), style: text.bodyLarge),
-                if (kind != 'readouts' && reads.isNotEmpty) ...[
-                  const SizedBox(height: Z.gap),
-                  for (final (i, r) in reads.indexed)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: _Readout(key: ValueKey('readout-$i'), label: r.label, value: r.value),
-                    ),
-                ],
+                if (kind != 'readouts')
+                  ListenableBuilder(
+                    listenable: rt,
+                    builder: (context, _) {
+                      final reads = readouts();
+                      if (reads.isEmpty) return const SizedBox.shrink();
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: Z.gap),
+                          for (final (i, r) in reads.indexed)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: _Readout(key: ValueKey('readout-$i'), label: r.label, value: r.value),
+                            ),
+                        ],
+                      );
+                    },
+                  ),
                 if (widget.block.list('tryThis').isNotEmpty) ...[
                   const SizedBox(height: Z.gap),
                   Text(tr('tryThis', l), style: text.headlineMedium),
@@ -258,9 +377,9 @@ class _BigSlider extends StatelessWidget {
 }
 
 class _ChartPainter extends CustomPainter {
-  _ChartPainter(this.s) : snapshot = Map.of(s.values);
+  _ChartPainter(this.s) : super(repaint: s.rt);
   final InteractiveViewState s;
-  final Map<String, double> snapshot;
+  Map<String, double> get snapshot => s.rt.env;
 
   Map<String, dynamic> get raw => s.raw;
   static const font = 26.0;
@@ -312,7 +431,7 @@ class _ChartPainter extends CustomPainter {
     var legendY = pb.top + 10;
     for (final (i, f) in fns.indexed) {
       if (f is! Map) continue;
-      final e = tryCompileExpr(f['fn'] as String? ?? '', ['x', ...s.names]);
+      final e = s._expr(f['fn'] as String? ?? '');
       final color = inkColor(f['color'] ?? _series[i % _series.length]);
       if (e != null) {
         final vars = Map.of(snapshot);

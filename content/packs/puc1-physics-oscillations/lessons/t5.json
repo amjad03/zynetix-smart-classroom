@@ -60,6 +60,279 @@
    "formula": "\\tau = -mgL\\sin\\theta \\approx -mgL\\theta"
   },
   {
+   "id": "scene-pendulum",
+   "type": "interactive",
+   "title": {
+    "en": "A real pendulum, step by step",
+    "kn": "ನಿಜವಾದ ಲೋಲಕ, ಹಂತ ಹಂತವಾಗಿ"
+   },
+   "narration": {
+    "en": "This pendulum is worked out a hundredth of a second at a time from the force of gravity, so it is right even at large angles. Watch the energy bars: kinetic and potential energy trade places, but their total stays the same until you turn on air resistance.",
+    "kn": "ಈ ಲೋಲಕವನ್ನು ಗುರುತ್ವ ಬಲದಿಂದ ಸೆಕೆಂಡಿನ ನೂರನೇ ಒಂದು ಭಾಗದಂತೆ ಲೆಕ್ಕಿಸಲಾಗಿದೆ, ಹಾಗಾಗಿ ದೊಡ್ಡ ಕೋನದಲ್ಲೂ ಸರಿ. ಶಕ್ತಿ ಪಟ್ಟಿಗಳನ್ನು ನೋಡಿ: ಚಲನ ಮತ್ತು ಸ್ಥಿತಿ ಶಕ್ತಿ ಜಾಗ ಬದಲಿಸುತ್ತವೆ, ಆದರೆ ಒಟ್ಟು ಒಂದೇ ಇರುತ್ತದೆ."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "The bob is pulled back towards the middle by $g \\sin\\theta$. Kinetic energy (green) and potential energy (blue) trade places; the total stays the same until air resistance is on. The faint ghost follows the small-angle formula θ₀ cos(√(g/L) t).",
+    "kn": "ಗೋಳವನ್ನು $g \\sin\\theta$ ಮಧ್ಯದ ಕಡೆಗೆ ಎಳೆಯುತ್ತದೆ. ಚಲನ ಶಕ್ತಿ (ಹಸಿರು) ಮತ್ತು ಸ್ಥಿತಿ ಶಕ್ತಿ (ನೀಲಿ) ಜಾಗ ಬದಲಿಸುತ್ತವೆ; ಗಾಳಿ ರೋಧ ಇಲ್ಲದಿದ್ದರೆ ಒಟ್ಟು ಒಂದೇ. ಮಸುಕಾದ ನೆರಳು ಸಣ್ಣ-ಕೋನ ಸೂತ್ರವನ್ನು ಅನುಸರಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "L",
+     "label": {
+      "en": "Length",
+      "kn": "ಉದ್ದ"
+     },
+     "min": 0.5,
+     "max": 2.5,
+     "step": 0.1,
+     "value": 1.5,
+     "unit": "m"
+    },
+    {
+     "name": "th0",
+     "label": {
+      "en": "Release angle",
+      "kn": "ಬಿಡುವ ಕೋನ"
+     },
+     "min": 5,
+     "max": 80,
+     "step": 5,
+     "value": 30,
+     "unit": "°"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "damp",
+     "label": {
+      "en": "Air resistance",
+      "kn": "ಗಾಳಿಯ ರೋಧ"
+     },
+     "value": false
+    },
+    {
+     "name": "ghost",
+     "label": {
+      "en": "Small-angle ghost",
+      "kn": "ಸಣ್ಣ-ಕೋನ ನೆರಳು"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 20,
+    "dt": 0.005
+   },
+   "state": [
+    {
+     "name": "th",
+     "init": "rad(th0)",
+     "rate": "w"
+    },
+    {
+     "name": "w",
+     "init": 0,
+     "rate": "-9.8/L*sin(th) - b*w"
+    }
+   ],
+   "integrator": "rk2",
+   "vars": [
+    {
+     "name": "b",
+     "expr": "if(damp, 0.3, 0)"
+    },
+    {
+     "name": "bx",
+     "expr": "L*sin(th)"
+    },
+    {
+     "name": "by",
+     "expr": "-L*cos(th)"
+    },
+    {
+     "name": "KE",
+     "expr": "0.5*(L*w)^2"
+    },
+    {
+     "name": "PE",
+     "expr": "9.8*L*(1 - cos(th))"
+    },
+    {
+     "name": "E0",
+     "expr": "9.8*L*(1 - cos(rad(th0)))"
+    },
+    {
+     "name": "gth",
+     "expr": "rad(th0)*cos(sqrt(9.8/L)*t)"
+    },
+    {
+     "name": "T0",
+     "expr": "2*pi*sqrt(L/9.8)"
+    }
+   ],
+   "view": {
+    "x": [
+     -2.8,
+     4.6
+    ],
+    "y": [
+     -3,
+     0.5
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -0.8,
+     "y1": 0,
+     "x2": 0.8,
+     "y2": 0,
+     "color": "white",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "visibleIf": "ghost",
+     "x1": 0,
+     "y1": 0,
+     "x2": "L*sin(gth)",
+     "y2": "-L*cos(gth)",
+     "color": "blue",
+     "opacity": 0.35,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "ghost",
+     "x": "L*sin(gth)",
+     "y": "-L*cos(gth)",
+     "r": 0.13,
+     "color": "blue",
+     "opacity": 0.45
+    },
+    {
+     "shape": "trail",
+     "x": "bx",
+     "y": "by",
+     "length": 160,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "bx",
+     "y2": "by",
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "bx",
+     "y": "by",
+     "r": 0.15,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 2.85,
+     "y": -2.6,
+     "w": 1.5,
+     "h": 2.4,
+     "fill": false,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "x": 3.0,
+     "y": -2.6,
+     "w": 0.5,
+     "h": "2.4*KE/E0",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 3.7,
+     "y": -2.6,
+     "w": 0.5,
+     "h": "2.4*PE/E0",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": -2.82,
+     "text": {
+      "en": "KE",
+      "kn": "ಚ.ಶ"
+     },
+     "size": 26,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 3.95,
+     "y": -2.82,
+     "text": {
+      "en": "PE",
+      "kn": "ಸ್ಥಿ.ಶ"
+     },
+     "size": 26,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 3.6,
+     "y": 0.2,
+     "text": {
+      "en": "{100*(KE + PE)/E0:0}% of the energy left",
+      "kn": "ಶಕ್ತಿಯ {100*(KE + PE)/E0:0}% ಉಳಿದಿದೆ"
+     },
+     "size": 24,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Period (small-angle formula)",
+      "kn": "ಆವರ್ತ ಕಾಲ (ಸಣ್ಣ-ಕೋನ ಸೂತ್ರ)"
+     },
+     "expr": "T0",
+     "digits": 2,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Angle now",
+      "kn": "ಈಗಿನ ಕೋನ"
+     },
+     "expr": "deg(th)",
+     "digits": 1,
+     "unit": "°"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Release at 10° and at 70°. Which one falls behind the ghost?",
+     "kn": "10° ಮತ್ತು 70° ನಲ್ಲಿ ಬಿಡಿ. ಯಾವುದು ನೆರಳಿಗಿಂತ ಹಿಂದೆ ಬೀಳುತ್ತದೆ?"
+    },
+    {
+     "en": "Make the string four times longer: what happens to the period?",
+     "kn": "ದಾರವನ್ನು ನಾಲ್ಕು ಪಟ್ಟು ಉದ್ದ ಮಾಡಿ: ಆವರ್ತ ಕಾಲ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on air resistance and watch the total energy fall.",
+     "kn": "ಗಾಳಿಯ ರೋಧ ಆನ್ ಮಾಡಿ, ಒಟ್ಟು ಶಕ್ತಿ ಇಳಿಯುವುದನ್ನು ನೋಡಿ."
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

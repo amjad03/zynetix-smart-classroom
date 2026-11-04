@@ -60,6 +60,218 @@
    "formula": "\\tfrac{1}{2} m \\overline{v^2} = \\tfrac{3}{2} k_B T"
   },
   {
+   "id": "scene-gas",
+   "type": "interactive",
+   "title": {
+    "en": "Molecules and temperature",
+    "kn": "ಅಣುಗಳು ಮತ್ತು ತಾಪಮಾನ"
+   },
+   "narration": {
+    "en": "Each dot is a gas molecule bouncing about its box. Raise the temperature and they move faster, because the average kinetic energy of a molecule is three halves of k T. At the same temperature, lighter molecules move faster.",
+    "kn": "ಪ್ರತಿ ಚುಕ್ಕೆ ಪೆಟ್ಟಿಗೆಯಲ್ಲಿ ಪುಟಿಯುವ ಅನಿಲ ಅಣು. ತಾಪಮಾನ ಏರಿಸಿದರೆ ವೇಗವಾಗಿ ಚಲಿಸುತ್ತವೆ, ಏಕೆಂದರೆ ಸರಾಸರಿ ಚಲನ ಶಕ್ತಿ (3/2) k T. ಒಂದೇ ತಾಪದಲ್ಲಿ ಹಗುರ ಅಣುಗಳು ವೇಗವಾಗಿ ಚಲಿಸುತ್ತವೆ."
+   },
+   "seconds": 90,
+   "kind": "scene",
+   "caption": {
+    "en": "Raise the temperature: the molecules speed up because the mean kinetic energy is $\\frac{3}{2}k_BT$, so v_rms = √(3RT/M). Change the gas: at the same temperature lighter molecules are faster.",
+    "kn": "ತಾಪಮಾನ ಏರಿಸಿ: ಸರಾಸರಿ ಚಲನ ಶಕ್ತಿ $\\frac{3}{2}k_BT$ ಆದ್ದರಿಂದ ಅಣುಗಳು ವೇಗ ಪಡೆಯುತ್ತವೆ, v_rms = √(3RT/M). ಅನಿಲ ಬದಲಿಸಿ: ಒಂದೇ ತಾಪದಲ್ಲಿ ಹಗುರ ಅಣುಗಳು ವೇಗ."
+   },
+   "sliders": [
+    {
+     "name": "T",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪಮಾನ"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 50,
+     "value": 300,
+     "unit": "K"
+    }
+   ],
+   "choices": [
+    {
+     "name": "M",
+     "label": {
+      "en": "Gas",
+      "kn": "ಅನಿಲ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "He"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "N₂"
+       },
+       "value": 28
+      },
+      {
+       "label": {
+        "en": "CO₂"
+       },
+       "value": 44
+      }
+     ],
+     "value": 28
+    }
+   ],
+   "toggles": [
+    {
+     "name": "track",
+     "label": {
+      "en": "Follow one molecule",
+      "kn": "ಒಂದು ಅಣು ಹಿಂಬಾಲಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true,
+    "dt": 0.02
+   },
+   "vars": [
+    {
+     "name": "vrms",
+     "expr": "sqrt(3*8.314*T/(M/1000))"
+    },
+    {
+     "name": "s",
+     "expr": "vrms/250"
+    },
+    {
+     "name": "x0",
+     "expr": "bounce(0.2 + 9.6*rand(0) + s*t*cos(2*pi*rand(300))*(0.4 + rand(300 + 600)), 0.2, 9.8)"
+    },
+    {
+     "name": "y0",
+     "expr": "bounce(0.2 + 9.6*rand(150) + s*t*sin(2*pi*rand(300))*(0.4 + rand(300 + 600)), 0.2, 9.8)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     13
+    ],
+    "y": [
+     -0.6,
+     10.6
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 10,
+     "h": 10,
+     "fill": false,
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "particles",
+     "count": 60,
+     "x": "bounce(0.2 + 9.6*rand(i) + s*t*cos(2*pi*rand(i + 300))*(0.4 + rand(i + 300 + 600)), 0.2, 9.8)",
+     "y": "bounce(0.2 + 9.6*rand(i + 150) + s*t*sin(2*pi*rand(i + 300))*(0.4 + rand(i + 300 + 600)), 0.2, 9.8)",
+     "r": 0.17,
+     "color": {
+      "by": "(T - 100)/900",
+      "scale": [
+       "blue",
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "trail",
+     "visibleIf": "track",
+     "x": "x0",
+     "y": "y0",
+     "length": 240,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "track",
+     "x": "x0",
+     "y": "y0",
+     "r": 0.3,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 11.2,
+     "y": 0,
+     "w": 0.8,
+     "h": 10,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 11.3,
+     "y": 0.1,
+     "w": 0.6,
+     "h": "9.8*T/1000",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": 10.35,
+     "size": 24,
+     "text": {
+      "en": "{T} K"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "rms speed",
+      "kn": "rms ವೇಗ"
+     },
+     "expr": "vrms",
+     "digits": 0,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Mean KE of a molecule",
+      "kn": "ಅಣುವಿನ ಸರಾಸರಿ ಚಲನ ಶಕ್ತಿ"
+     },
+     "expr": "1.5*1.381*T/1000",
+     "digits": 3,
+     "unit": "× 10⁻²⁰ J"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make the temperature four times higher. How many times faster is v_rms?",
+     "kn": "ತಾಪಮಾನವನ್ನು ನಾಲ್ಕು ಪಟ್ಟು ಮಾಡಿ. v_rms ಎಷ್ಟು ಪಟ್ಟು ವೇಗ?"
+    },
+    {
+     "en": "Compare helium and carbon dioxide at 300 K.",
+     "kn": "300 K ನಲ್ಲಿ ಹೀಲಿಯಂ ಮತ್ತು ಕಾರ್ಬನ್ ಡೈಆಕ್ಸೈಡ್ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Does the mean kinetic energy depend on which gas it is?",
+     "kn": "ಸರಾಸರಿ ಚಲನ ಶಕ್ತಿ ಅನಿಲದ ಮೇಲೆ ಅವಲಂಬಿತವೇ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

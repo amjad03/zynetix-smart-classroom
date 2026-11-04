@@ -58,6 +58,222 @@
    }
   },
   {
+   "id": "scene-demand-supply",
+   "type": "interactive",
+   "title": {
+    "en": "Shift demand and supply",
+    "kn": "ಬೇಡಿಕೆ ಮತ್ತು ಪೂರೈಕೆ ಸರಿಸಿ"
+   },
+   "narration": {
+    "en": "Drag the handle on the demand curve to shift demand, and use the slider to shift supply. The new equilibrium is where the two curves cross.",
+    "kn": "ಬೇಡಿಕೆ ವಕ್ರರೇಖೆಯ ಹಿಡಿಕೆಯನ್ನು ಎಳೆದು ಬೇಡಿಕೆ ಸರಿಸಿ, ಸ್ಲೈಡರ್‌ನಿಂದ ಪೂರೈಕೆ ಸರಿಸಿ. ಹೊಸ ಸಮತೋಲನ ಎರಡು ವಕ್ರರೇಖೆಗಳು ಸಂಧಿಸುವಲ್ಲಿ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Demand is 100 − 5p + d and supply is 5p − 20 + s. Drag the yellow ring to shift demand; move the slider to shift supply. Equilibrium E is where demand equals supply.",
+    "kn": "ಬೇಡಿಕೆ 100 − 5p + d, ಪೂರೈಕೆ 5p − 20 + s. ಹಳದಿ ಉಂಗುರ ಎಳೆದು ಬೇಡಿಕೆ ಸರಿಸಿ; ಸ್ಲೈಡರ್‌ನಿಂದ ಪೂರೈಕೆ ಸರಿಸಿ. ಬೇಡಿಕೆ = ಪೂರೈಕೆ ಆದಲ್ಲಿ ಸಮತೋಲನ E."
+   },
+   "sliders": [
+    {
+     "name": "s",
+     "label": {
+      "en": "Supply shift",
+      "kn": "ಪೂರೈಕೆ ಬದಲಾವಣೆ"
+     },
+     "min": -20,
+     "max": 20,
+     "step": 5,
+     "value": 0,
+     "unit": "units"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "old",
+     "label": {
+      "en": "Show the original curves",
+      "kn": "ಮೂಲ ವಕ್ರರೇಖೆಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "D",
+     "label": "demand",
+     "x": 40,
+     "y": 12,
+     "axis": "x",
+     "box": {
+      "x": [
+       15,
+       65
+      ],
+      "y": [
+       0,
+       25
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "d",
+     "expr": "D_x - 40"
+    },
+    {
+     "name": "pe",
+     "expr": "(120 + d - s)/10"
+    },
+    {
+     "name": "qe",
+     "expr": "100 - 5*pe + d"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     25
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "quantity",
+    "yLabel": "price (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "old",
+     "fn": "(100 - x)/5",
+     "dashed": true,
+     "color": "blue",
+     "opacity": 0.4,
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "visibleIf": "old",
+     "fn": "(x + 20)/5",
+     "dashed": true,
+     "color": "green",
+     "opacity": 0.4,
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "fn": "(100 + d - x)/5",
+     "color": "blue",
+     "width": 5
+    },
+    {
+     "shape": "path",
+     "fn": "(x + 20 - s)/5",
+     "color": "green",
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "x": "clamp(85 + d, 6, 96)",
+     "y": "clamp((100 + d - (85 + d))/5 + 1.4, 1, 24)",
+     "size": 26,
+     "color": "blue",
+     "text": {
+      "en": "D"
+     }
+    },
+    {
+     "shape": "text",
+     "x": "clamp(95 + s, 6, 96)",
+     "y": "clamp((95 + s + 20 - s)/5 - 1.4, 1, 24)",
+     "size": 26,
+     "color": "green",
+     "text": {
+      "en": "S"
+     }
+    },
+    {
+     "shape": "line",
+     "x1": "qe",
+     "y1": 0,
+     "x2": "qe",
+     "y2": "pe",
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.6,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "pe",
+     "x2": "qe",
+     "y2": "pe",
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.6,
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "qe",
+     "y": "pe",
+     "r": 1.4,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": "qe + 9",
+     "y": "pe + 2",
+     "size": 24,
+     "color": "orange",
+     "text": {
+      "en": "E: p = ₹{pe:1}, q = {qe:0}"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Equilibrium price",
+      "kn": "ಸಮತೋಲನ ಬೆಲೆ"
+     },
+     "expr": "pe",
+     "digits": 1,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Equilibrium quantity",
+      "kn": "ಸಮತೋಲನ ಪ್ರಮಾಣ"
+     },
+     "expr": "qe",
+     "digits": 0,
+     "unit": "units"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Drag demand to the right. Do price and quantity both rise?",
+     "kn": "ಬೇಡಿಕೆಯನ್ನು ಬಲಕ್ಕೆ ಎಳೆಯಿರಿ. ಬೆಲೆ ಮತ್ತು ಪ್ರಮಾಣ ಎರಡೂ ಏರುತ್ತವೆಯೇ?"
+    },
+    {
+     "en": "Increase supply. What happens to the price?",
+     "kn": "ಪೂರೈಕೆ ಹೆಚ್ಚಿಸಿ. ಬೆಲೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Shift both curves so that the price stays at ₹12 but more is sold.",
+     "kn": "ಬೆಲೆ ₹12 ಉಳಿದು ಹೆಚ್ಚು ಮಾರಾಟವಾಗುವಂತೆ ಎರಡೂ ವಕ್ರರೇಖೆ ಸರಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

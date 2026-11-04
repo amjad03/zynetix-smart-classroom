@@ -178,10 +178,117 @@ export const BoardStep = z.object({ say: L10n.optional(), draw: z.array(Draw).mi
 
 export const WhiteboardBlock = z.object({ ...base, type: z.literal('whiteboard'), steps: z.array(BoardStep).min(1).max(20) }).strict();
 
+const varName = z.string().regex(/^[a-zA-Z]\w*$/);
+/** A number, or an expression (a string) over the block's variables, e.g. "v*cos(rad(a))*t". */
+const num = z.union([z.number(), z.string().min(1)]);
+
 /** A slider the class (or monitor) moves; `name` is used in expressions. */
-export const Slider = z.object({ name: z.string().regex(/^[a-zA-Z]\w*$/), label: L10n, min: z.number(), max: z.number(), step: z.number().positive(), value: z.number(), unit: z.string().optional() }).strict();
-/** The fields of a slider playfield, shared by `interactive` and `challenge` (see InteractiveBlock). */
-const InteractiveKind = z.enum(['function_plot', 'vectors', 'bar_chart', 'pie_chart', 'unit_circle', 'number_line', 'readouts']);
+export const Slider = z.object({ name: varName, label: L10n, min: z.number(), max: z.number(), step: z.number().positive(), value: z.number(), unit: z.string().optional() }).strict();
+/** A named on/off switch: its name is 1 when on and 0 when off ("show forces", "friction on"). */
+export const Toggle = z.object({ name: varName, label: L10n, value: z.boolean().default(false) }).strict();
+/** A segmented selector: its name takes the chosen option's number (medium: air = 1, water = 1.33). */
+export const Choice = z
+  .object({ name: varName, label: L10n, options: z.array(z.object({ label: L10n, value: z.number() }).strict()).min(2).max(6), value: z.number() })
+  .strict();
+/** A named number that only buttons change (electrons added, generation number). Never reset by the time Reset. */
+export const Counter = z.object({ name: varName, value: z.number().default(0), min: z.number().optional(), max: z.number().optional() }).strict();
+/**
+ * A momentary button. `set` assigns expressions (evaluated with the values before the press) to
+ * sliders, toggles, choices or counters, e.g. {"n": "n + 1"}. `reset` rewinds time and the
+ * integrator first; `play` then starts time (a "Launch" button is reset + play).
+ */
+export const Button = z
+  .object({
+    label: L10n,
+    icon: z.enum(['play', 'add', 'remove', 'next', 'reset', 'launch', 'flip', 'check']).optional(),
+    set: z.record(varName, num).default({}),
+    reset: z.boolean().optional(),
+    play: z.boolean().optional(),
+  })
+  .strict();
+const range = z.tuple([z.number(), z.number()]);
+const xy = z.tuple([z.number(), z.number()]);
+/**
+ * A point the class drags on a scene. Its position is the variables `<name>_x` and `<name>_y`.
+ * It stays inside `box` (the view when absent), or moves only along `axis`, or slides on the
+ * segment `line`; `snap` rounds both coordinates to a grid.
+ */
+export const Handle = z
+  .object({
+    name: varName,
+    label: z.string().max(24).optional(),
+    x: z.number(),
+    y: z.number(),
+    axis: z.enum(['x', 'y']).optional(),
+    line: z.tuple([xy, xy]).optional(),
+    box: z.object({ x: range, y: range }).strict().optional(),
+    snap: z.number().positive().optional(),
+    color: ink,
+  })
+  .strict();
+/**
+ * Time: the variable `t` runs from `min` to `max` (seconds of the model) with Play/Pause, speed,
+ * Step, Reset and a scrubber. At `max` it stops, or starts again when `loop`. `stopWhen` pauses
+ * it when the expression becomes true (e.g. "landed"). `dt` is the integrator's fixed step.
+ */
+export const TimeSpec = z
+  .object({
+    min: z.number().default(0),
+    max: z.number(),
+    loop: z.boolean().default(false),
+    speeds: z.array(z.number().min(0.05).max(16)).min(1).max(6).default([0.25, 0.5, 1, 2, 4]),
+    speed: z.number().default(1),
+    autoplay: z.boolean().default(false),
+    stopWhen: z.string().min(1).optional(),
+    dt: z.number().positive().max(0.5).default(0.01),
+    unit: z.string().max(8).default('s'),
+  })
+  .strict();
+/** A derived variable: `name = expr`, evaluated in order (may use earlier vars, controls, state and t). */
+export const SceneVar = z.object({ name: varName, expr: z.string().min(1) }).strict();
+/** An integrated variable: starts at `init` (an expression of the controls) and changes at `rate` (d/dt). */
+export const StateVar = z.object({ name: varName, init: num, rate: z.string().min(1) }).strict();
+
+/** The world window of a scene: x and y ranges (x right, y up), optional axes and grid. */
+export const SceneView = z
+  .object({ x: range, y: range, axes: z.boolean().default(false), grid: z.boolean().default(false), xLabel: z.string().optional(), yLabel: z.string().optional(), equal: z.boolean().default(false) })
+  .strict();
+/** A colour: an ink name, or `scale` inks blended by `by` (0 = first, 1 = last), e.g. cold to hot. */
+const color = z.union([ink, z.object({ by: z.string().min(1), scale: z.array(z.enum(['white', 'yellow', 'red', 'green', 'blue', 'orange'])).min(2).max(6) }).strict()]);
+/** Fields every shape has: shown only when `visibleIf` is true; `opacity` 0..1. */
+const shapeBase = { visibleIf: z.string().min(1).optional(), color: color.optional(), opacity: num.optional() };
+const pts = z.array(z.tuple([num, num])).min(2).max(64);
+export const SceneIcon = z.enum(['bulb', 'battery', 'resistor', 'capacitor', 'switch', 'magnet', 'lens', 'mirror', 'cell', 'beaker']);
+/**
+ * Shapes of a scene, in world units (sizes too, except `width`, `size` and `amp`, which are
+ * screen points on the board). Every number may be an expression.
+ */
+export const Shape = z.discriminatedUnion('shape', [
+  z.object({ shape: z.literal('circle'), ...shapeBase, x: num, y: num, r: num, fill: z.boolean().default(true), width: num.optional() }).strict(),
+  z.object({ shape: z.literal('rect'), ...shapeBase, x: num, y: num, w: num, h: num, fill: z.boolean().default(true), width: num.optional() }).strict(),
+  z.object({ shape: z.literal('line'), ...shapeBase, x1: num, y1: num, x2: num, y2: num, dashed: z.boolean().optional(), width: num.optional() }).strict(),
+  /** A vector: from (x, y) by (dx, dy), with an optional label at its head. */
+  z.object({ shape: z.literal('arrow'), ...shapeBase, x: num, y: num, dx: num, dy: num, label: z.string().max(24).optional(), width: num.optional() }).strict(),
+  /** y = fn(x) from `from` to `to` (the view's x range by default), or a list of `points`. */
+  z.object({ shape: z.literal('path'), ...shapeBase, fn: z.string().min(1).optional(), from: num.optional(), to: num.optional(), points: pts.optional(), closed: z.boolean().optional(), dashed: z.boolean().optional(), width: num.optional() }).strict(),
+  z.object({ shape: z.literal('polygon'), ...shapeBase, points: pts.min(3), fill: z.boolean().default(true), width: num.optional() }).strict(),
+  /** A wave y = fn(x) (use t to move it), drawn smoothly across the view. */
+  z.object({ shape: z.literal('wave'), ...shapeBase, fn: z.string().min(1), from: num.optional(), to: num.optional(), width: num.optional() }).strict(),
+  /** Text at (x, y); `{expr}` or `{expr:2}` inside it shows a value (2 decimals). */
+  z.object({ shape: z.enum(['text', 'label']), ...shapeBase, x: num, y: num, text: L10n, size: num.optional(), align: z.enum(['left', 'center', 'right']).default('center') }).strict(),
+  /** A zig-zag spring between two points. */
+  z.object({ shape: z.literal('spring'), ...shapeBase, x1: num, y1: num, x2: num, y2: num, coils: z.number().int().min(2).max(40).default(10), amp: num.optional(), width: num.optional() }).strict(),
+  /** The past positions of a point while time runs (up to `length` points). */
+  z.object({ shape: z.literal('trail'), ...shapeBase, x: num, y: num, length: z.number().int().min(2).max(2000).default(300), width: num.optional() }).strict(),
+  /** `count` dots; x, y, r, visibleIf and colour may use `i` (0, 1, … count − 1). */
+  z.object({ shape: z.literal('particles'), ...shapeBase, count: z.number().int().min(1).max(400), x: num, y: num, r: num }).strict(),
+  /** A built-in vector icon `size` world units wide, turned by `angle` degrees; `on` lights a bulb or closes a switch. */
+  z.object({ shape: z.literal('icon'), ...shapeBase, icon: SceneIcon, x: num, y: num, size: num, angle: num.optional(), on: num.optional() }).strict(),
+]);
+export type Shape = z.infer<typeof Shape>;
+
+/** The fields of a playfield, shared by `interactive` and `challenge` (see InteractiveBlock). */
+const InteractiveKind = z.enum(['function_plot', 'vectors', 'bar_chart', 'pie_chart', 'unit_circle', 'number_line', 'readouts', 'scene']);
 const playfield = {
   kind: InteractiveKind,
   fns: z.array(z.object({ fn: z.string().min(1), label: z.string().optional(), color: ink }).strict()).max(4).optional(),
@@ -195,6 +302,22 @@ const playfield = {
   /** function_plot: fixed targets drawn as flags at (x, y), e.g. where a projectile must land. */
   marks: z.array(z.object({ x: z.number(), y: z.number().default(0), label: z.string().max(24).optional() }).strict()).max(4).optional(),
   readouts: z.array(z.object({ label: L10n, expr: z.string(), unit: z.string().optional(), digits: z.number().int().min(0).max(6).default(2) }).strict()).max(4).default([]),
+  // Controls beyond sliders (any kind). Handles need a scene.
+  toggles: z.array(Toggle).max(4).optional(),
+  choices: z.array(Choice).max(3).optional(),
+  counters: z.array(Counter).max(4).optional(),
+  buttons: z.array(Button).max(4).optional(),
+  handles: z.array(Handle).max(4).optional(),
+  /** Model time `t` with play/pause, speed, step, reset and a scrubber. */
+  time: TimeSpec.optional(),
+  /** Derived variables (any kind; readouts, fns and shapes may use them). */
+  vars: z.array(SceneVar).max(24).optional(),
+  /** Integrated variables (need `time`). */
+  state: z.array(StateVar).max(8).optional(),
+  integrator: z.enum(['euler', 'rk2']).default('rk2'),
+  /** scene: the world window and the shapes drawn in it, back to front. */
+  view: SceneView.optional(),
+  shapes: z.array(Shape).max(60).optional(),
 };
 /**
  * Generic, data-driven interactives (no code per topic):
@@ -204,6 +327,8 @@ const playfield = {
  * - unit_circle: angle slider `theta` (degrees) with sin/cos/tan read-outs
  * - number_line: `points` (values or slider names) on `x` range
  * - readouts: just computed values; `readouts` [{label, expr, unit}] work for every kind
+ * - scene: an animated drawing (`view`, `shapes`) driven by every control, `time`, `vars` and
+ *   `state` (docs/simulations.md is the authoring guide)
  */
 export const InteractiveBlock = z
   .object({
@@ -217,10 +342,13 @@ export const InteractiveBlock = z
   .strict();
 
 /**
- * A playable problem on a slider playfield (same fields as `interactive`): the class sets the
- * sliders so that `goal` (an expression over the slider names) lands within `tolerance` of
- * `target`, e.g. "land the projectile on x = 40 m", "set the price where Qd = Qs".
- * - `solution`: slider values that hit the target (the pack builder checks it really does).
+ * A playable problem on a playfield (same fields as `interactive`): the class sets the
+ * controls so that `goal` (an expression) lands within `tolerance` of `target`, e.g. "land the
+ * projectile on x = 40 m", "set the price where Qd = Qs".
+ * - `solution`: control values that hit the target (the pack builder checks it really does);
+ *   every slider must be in it, toggles, choices and handle coordinates (`P_x`) may be.
+ * - With `time`, locking in runs the model from the start until `stopWhen` or the end of time and
+ *   the goal is taken there (it may use vars, state and t), e.g. "where the ball landed".
  * - `attempts`: tries before the answer is revealed; stars are 3, 2, 1 for a hit on the 1st, 2nd,
  *   3rd-or-later try. `timeLimit`: seconds per try (none when absent).
  * - `mode`: who plays: the whole class (monitor), teams taking turns, or a picked roll number.
@@ -250,6 +378,44 @@ export const ChallengeBlock = z
   })
   .strict();
 
+// ---------------------------------------------------------------- activities (non-numeric)
+
+const itemId = z.string().regex(/^[a-z0-9][a-z0-9_-]*$/);
+/** A spot on an activity diagram (world units of `view`): a circle of radius `r`, or a `w` × `h` box centred at (x, y). */
+export const Target = z.object({ id: itemId, x: z.number(), y: z.number(), r: z.number().positive().optional(), w: z.number().positive().optional(), h: z.number().positive().optional(), label: L10n }).strict();
+/**
+ * A touch activity, checked with feedback (Check, Show answer, Reset), for any subject:
+ * - sort: drag `items` into 2–4 `buckets` (each item names its bucket in `answer`)
+ * - order: arrange `steps` (given in the right order; shown shuffled)
+ * - match: connect each `pairs` left to its right (rights shown shuffled)
+ * - label: drag each target's label onto its spot on a diagram (`view` + `shapes`, + `distractors`)
+ * - hotspot: tap the right spot(s) on a diagram: `targets`, the right ones in `answer`
+ * - fill: choose the word for each blank `__1__`, `__2__`… of `passage` from `blanks[n-1].options`
+ * With `questionId`, the class's first Check is recorded as an answer (source "activity").
+ */
+export const ActivityBlock = z
+  .object({
+    ...base,
+    type: z.literal('activity'),
+    kind: z.enum(['sort', 'order', 'match', 'label', 'hotspot', 'fill']),
+    prompt: L10n,
+    questionId: id.optional(),
+    buckets: z.array(z.object({ id: itemId, label: L10n }).strict()).min(2).max(4).optional(),
+    items: z.array(z.object({ text: L10n, answer: itemId }).strict()).min(2).max(16).optional(),
+    steps: z.array(L10n).min(3).max(10).optional(),
+    pairs: z.array(z.object({ left: L10n, right: L10n }).strict()).min(2).max(8).optional(),
+    view: SceneView.optional(),
+    shapes: z.array(Shape).max(60).optional(),
+    targets: z.array(Target).min(2).max(10).optional(),
+    distractors: z.array(L10n).max(4).optional(),
+    answer: z.array(itemId).min(1).optional(),
+    passage: L10n.optional(),
+    blanks: z.array(z.object({ options: z.array(L10n).min(2).max(5), answer: z.number().int().min(0).max(4) }).strict()).min(1).max(10).optional(),
+    /** Shown after Check or Show answer: why. */
+    explanation: L10n.optional(),
+  })
+  .strict();
+
 export const Block = z.discriminatedUnion('type', [
   IntroBlock,
   ConceptBlock,
@@ -264,10 +430,11 @@ export const Block = z.discriminatedUnion('type', [
   WhiteboardBlock,
   InteractiveBlock,
   ChallengeBlock,
+  ActivityBlock,
 ]);
 export type Block = z.infer<typeof Block>;
 export type BlockType = Block['type'];
-export const BLOCK_TYPES = ['intro', 'concept', '3d_model', 'simulation', 'virtual_lab', 'example', 'class_quiz', 'pyq', 'trick', 'recap', 'whiteboard', 'interactive', 'challenge'] as const satisfies readonly BlockType[];
+export const BLOCK_TYPES = ['intro', 'concept', '3d_model', 'simulation', 'virtual_lab', 'example', 'class_quiz', 'pyq', 'trick', 'recap', 'whiteboard', 'interactive', 'challenge', 'activity'] as const satisfies readonly BlockType[];
 
 // ---------------------------------------------------------------- syllabus & lessons
 

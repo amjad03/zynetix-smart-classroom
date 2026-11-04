@@ -57,6 +57,205 @@
    "formula": "v = \\sqrt{\\frac{T}{\\mu}}"
   },
   {
+   "id": "scene-wave",
+   "type": "interactive",
+   "title": {
+    "en": "A travelling wave on a string",
+    "kn": "ದಾರದ ಮೇಲೆ ಚಲಿಸುವ ತರಂಗ"
+   },
+   "narration": {
+    "en": "The shape moves along the string, but each bit of string only goes up and down. Watch the red bead. Change the frequency or the speed and see how the wavelength changes, because speed equals frequency times wavelength.",
+    "kn": "ಆಕಾರ ದಾರದ ಉದ್ದಕ್ಕೂ ಚಲಿಸುತ್ತದೆ, ಆದರೆ ದಾರದ ಪ್ರತಿ ಭಾಗ ಮೇಲೆ ಕೆಳಗೆ ಮಾತ್ರ ಹೋಗುತ್ತದೆ. ಕೆಂಪು ಮಣಿ ನೋಡಿ. ವೇಗ = ಆವೃತ್ತಿ × ತರಂಗದೂರ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "The string follows y = A sin(kx − ωt), with k = 2π/λ and ω = 2πf. The shape moves at v = fλ; the red bead only moves up and down.",
+    "kn": "ದಾರ y = A sin(kx − ωt) ಅನುಸರಿಸುತ್ತದೆ, k = 2π/λ, ω = 2πf. ಆಕಾರ v = fλ ವೇಗದಲ್ಲಿ ಚಲಿಸುತ್ತದೆ; ಕೆಂಪು ಮಣಿ ಮೇಲೆ ಕೆಳಗೆ ಮಾತ್ರ."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Amplitude",
+      "kn": "ಕಂಪನ ವಿಸ್ತಾರ"
+     },
+     "min": 0.5,
+     "max": 2,
+     "step": 0.1,
+     "value": 1,
+     "unit": "cm"
+    },
+    {
+     "name": "f",
+     "label": {
+      "en": "Frequency",
+      "kn": "ಆವೃತ್ತಿ"
+     },
+     "min": 0.5,
+     "max": 3,
+     "step": 0.1,
+     "value": 1,
+     "unit": "Hz"
+    },
+    {
+     "name": "v",
+     "label": {
+      "en": "Wave speed",
+      "kn": "ತರಂಗ ವೇಗ"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 0.5,
+     "value": 2,
+     "unit": "m/s"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "follow",
+     "label": {
+      "en": "Follow one crest",
+      "kn": "ಒಂದು ಶೃಂಗ ಹಿಂಬಾಲಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 12,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "lam",
+     "expr": "v/f"
+    },
+    {
+     "name": "k",
+     "expr": "2*pi/lam"
+    },
+    {
+     "name": "w",
+     "expr": "2*pi*f"
+    },
+    {
+     "name": "n",
+     "expr": "max(floor(11/lam), 1)"
+    },
+    {
+     "name": "cx",
+     "expr": "lam/4 + mod(v*t, n*lam)"
+    },
+    {
+     "name": "by",
+     "expr": "A*sin(k*3 - w*t)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     -3,
+     3
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x (m)",
+    "yLabel": "y (cm)"
+   },
+   "shapes": [
+    {
+     "shape": "wave",
+     "fn": "A*sin(k*x - w*t)",
+     "color": "yellow",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": -2.6,
+     "x2": 3,
+     "y2": 2.6,
+     "dashed": true,
+     "color": "red",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": 3,
+     "y": "by",
+     "r": 0.16,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "follow",
+     "x": "cx",
+     "y": "A",
+     "r": 0.16,
+     "color": "green"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "follow",
+     "x": "cx",
+     "y": "A + 0.6",
+     "dx": "v/4",
+     "dy": 0,
+     "color": "green",
+     "label": "v"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "lam < 11",
+     "x": 0.3,
+     "y": -2.5,
+     "dx": "lam",
+     "dy": 0,
+     "color": "blue",
+     "label": "λ"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Wavelength λ = v / f",
+      "kn": "ತರಂಗದೂರ λ = v / f"
+     },
+     "expr": "lam",
+     "digits": 2,
+     "unit": "m"
+    },
+    {
+     "label": {
+      "en": "Period T = 1 / f",
+      "kn": "ಆವರ್ತ ಕಾಲ T = 1 / f"
+     },
+     "expr": "1/f",
+     "digits": 2,
+     "unit": "s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double the frequency. What happens to the wavelength?",
+     "kn": "ಆವೃತ್ತಿ ದ್ವಿಗುಣಗೊಳಿಸಿ. ತರಂಗದೂರ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Pause, then scrub time slowly: does the red bead ever move sideways?",
+     "kn": "ವಿರಾಮ ಮಾಡಿ, ಸಮಯವನ್ನು ನಿಧಾನವಾಗಿ ಸರಿಸಿ: ಕೆಂಪು ಮಣಿ ಪಕ್ಕಕ್ಕೆ ಸರಿಯುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Follow one crest and time it over 4 m. Is it the speed you set?",
+     "kn": "ಒಂದು ಶೃಂಗ ಹಿಂಬಾಲಿಸಿ 4 m ಗೆ ಸಮಯ ಅಳೆಯಿರಿ. ನೀವು ಹೊಂದಿಸಿದ ವೇಗವೇ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -14,20 +14,20 @@ import '../features/game/strings.dart';
 import '../features/participation.dart';
 import 'interactive_view.dart';
 import 'math_text.dart';
+import 'scene/play_model.dart';
 
 /// What a challenge block asks (schema `challenge`): set the sliders so [goal] lands within
 /// [tolerance] of [target]. Pure, so it is unit-tested.
 class ChallengeSpec {
-  ChallengeSpec._(this.block, this.goal, this.sliderNames);
+  ChallengeSpec._(this.block, this.model, this.goal, this.sliderNames);
 
   factory ChallengeSpec.of(Block b) {
-    final names = [
-      for (final s in (b.raw['sliders'] as List?) ?? const [])
-        if (s is Map && s['name'] is String) s['name'] as String,
-    ];
-    return ChallengeSpec._(b, tryCompileExpr(b.s('goal') ?? '', names), names);
+    final model = PlayModel(b.raw);
+    return ChallengeSpec._(b, model, tryCompileExpr(b.s('goal') ?? '', model.names), [for (final s in model.sliders) s.name]);
   }
 
+  /// The playfield's model: controls, vars, state and time (a scene challenge runs it to the end).
+  final PlayModel model;
   final Block block;
   final Expr? goal;
   final List<String> sliderNames;
@@ -49,8 +49,12 @@ class ChallengeSpec {
   L10n get explanation => block.f('explanation');
   Map<String, double> get solution => {for (final e in ((raw['solution'] as Map?) ?? const {}).entries) e.key as String: (e.value as num).toDouble()};
 
-  /// The goal's value for these slider settings (NaN when it cannot be computed).
-  double value(Map<String, double> sliders) => goal?.call(sliders) ?? double.nan;
+  /// The goal's value for these control settings (NaN when it cannot be computed). With time,
+  /// the model runs from the start until stopWhen or the end, and the goal is taken there.
+  double value(Map<String, double> controls) {
+    final g = goal;
+    return g == null ? double.nan : model.outcome(g, controls);
+  }
   bool hits(double v) => v.isFinite && (v - target).abs() <= tolerance + 1e-9;
 
   /// Stars for a hit on the [tryNumber]th try (1-based): 3, 2, then 1.
@@ -134,15 +138,19 @@ class ChallengeViewState extends State<ChallengeView> with SingleTickerProviderS
     });
   }
 
-  /// The current slider settings.
-  Map<String, double> get values => Map.of(_playKey.currentState?.values ?? {for (final s in _sliders) s.name: s.value});
+  /// The current control settings.
+  Map<String, double> get values => Map.of(_playKey.currentState?.values ?? spec.model.defaults());
   List<SliderSpec> get _sliders => [
     for (final s in (widget.block.raw['sliders'] as List?) ?? const [])
       if (s is Map) SliderSpec.fromJson(s.cast<String, dynamic>()),
   ];
 
-  /// Locks in the sliders as they are now.
-  void lockIn() => _try(spec.value(values));
+  /// Locks in the controls as they are now. A timed playfield also plays the try from the start
+  /// (the result is the same model run, computed at once).
+  void lockIn() {
+    if (spec.model.hasTime) _playKey.currentState?.replay();
+    _try(spec.value(values));
+  }
 
   void _try(double? v) {
     if (over) return;
@@ -324,7 +332,7 @@ class ChallengeViewState extends State<ChallengeView> with SingleTickerProviderS
             child: Stack(
               children: [
                 Positioned.fill(
-                  child: InteractiveView(key: _playKey, block: _playfield, lang: l),
+                  child: InteractiveView(key: _playKey, block: _playfield, lang: l, showTime: over),
                 ),
                 Positioned.fill(
                   child: IgnorePointer(child: Celebration(controller: party, stars: stars, label: gt('hit', l))),

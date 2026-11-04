@@ -31,7 +31,10 @@ enum BlockType {
   interactive('interactive'),
 
   /// A playable problem on a slider playfield: hit a target, earn stars (lib/blocks/challenge_view.dart).
-  challenge('challenge');
+  challenge('challenge'),
+
+  /// A touch activity: sort, order, match, label, hotspot or fill (lib/blocks/activity/).
+  activity('activity');
 
   const BlockType(this.wire);
   final String wire;

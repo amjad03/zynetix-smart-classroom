@@ -60,6 +60,427 @@
    "formula": "C = \\frac{Q}{V},\\qquad C_0 = \\frac{\\varepsilon_0 A}{d}"
   },
   {
+   "id": "scene-rc",
+   "type": "interactive",
+   "title": {
+    "en": "Charging and discharging a capacitor",
+    "kn": "ಧಾರಕದ ಆವೇಶ ಮತ್ತು ವಿಸರ್ಜನೆ"
+   },
+   "narration": {
+    "en": "Connect the battery and the capacitor charges through the resistor: fast at first, then more and more slowly. After one time constant, R times C, it has gone 63 percent of the way. Disconnect it and it discharges the same way.",
+    "kn": "ಬ್ಯಾಟರಿ ಜೋಡಿಸಿದರೆ ಧಾರಕ ರೋಧಕದ ಮೂಲಕ ಆವೇಶಗೊಳ್ಳುತ್ತದೆ: ಮೊದಲು ವೇಗವಾಗಿ, ನಂತರ ನಿಧಾನವಾಗಿ. ಒಂದು ಕಾಲ ಸ್ಥಿರಾಂಕ R × C ನಂತರ 63 ಶೇಕಡಾ ತಲುಪುತ್ತದೆ."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "With the battery connected the capacitor charges through R; switch it off and the capacitor discharges through R. The current is largest at the start and dies away. After one time constant $\\tau = RC$ the voltage has gone 63% of the way.",
+    "kn": "ಬ್ಯಾಟರಿ ಜೋಡಿಸಿದಾಗ ಧಾರಕ R ಮೂಲಕ ಆವೇಶಗೊಳ್ಳುತ್ತದೆ; ಆಫ್ ಮಾಡಿದರೆ R ಮೂಲಕ ವಿಸರ್ಜಿಸುತ್ತದೆ. ಪ್ರವಾಹ ಆರಂಭದಲ್ಲಿ ಗರಿಷ್ಠ, ನಂತರ ಕುಗ್ಗುತ್ತದೆ. $\\tau = RC$ ನಂತರ ವೋಲ್ಟೇಜ್ 63% ತಲುಪುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "R",
+     "label": {
+      "en": "Resistance",
+      "kn": "ರೋಧ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 5,
+     "unit": "kΩ"
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "Capacitance",
+      "kn": "ಧಾರಕತೆ"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 100,
+     "value": 400,
+     "unit": "µF"
+    },
+    {
+     "name": "E",
+     "label": {
+      "en": "Battery",
+      "kn": "ಬ್ಯಾಟರಿ"
+     },
+     "min": 2,
+     "max": 12,
+     "step": 1,
+     "value": 6,
+     "unit": "V"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "charge",
+     "label": {
+      "en": "Battery connected",
+      "kn": "ಬ್ಯಾಟರಿ ಜೋಡಣೆ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 30,
+    "dt": 0.02,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 1
+   },
+   "state": [
+    {
+     "name": "Vc",
+     "init": 0,
+     "rate": "(Vin - Vc)/tau"
+    }
+   ],
+   "vars": [
+    {
+     "name": "Vin",
+     "expr": "if(charge, E, 0)"
+    },
+    {
+     "name": "tau",
+     "expr": "R*C/1000"
+    },
+    {
+     "name": "I",
+     "expr": "(Vin - Vc)/R"
+    },
+    {
+     "name": "Q",
+     "expr": "C*Vc/1000"
+    },
+    {
+     "name": "gx",
+     "expr": "12 + 0.62*t"
+    },
+    {
+     "name": "gy",
+     "expr": "1 + 0.62*Vc"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     32
+    ],
+    "y": [
+     0,
+     10.5
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 2,
+     "x2": 1,
+     "y2": 3.75,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 6.25,
+     "x2": 1,
+     "y2": 8,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 8,
+     "x2": 3.5,
+     "y2": 8,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 6.5,
+     "y1": 8,
+     "x2": 9,
+     "y2": 8,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 9,
+     "y1": 8,
+     "x2": 9,
+     "y2": 6.25,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 9,
+     "y1": 3.75,
+     "x2": 9,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 9,
+     "y1": 2,
+     "x2": 6.5,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 3.5,
+     "y1": 2,
+     "x2": 1,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "battery",
+     "x": 1,
+     "y": 5,
+     "size": 2.5,
+     "angle": 90,
+     "color": {
+      "by": "charge",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 5,
+     "y": 8,
+     "size": 3
+    },
+    {
+     "shape": "icon",
+     "icon": "capacitor",
+     "x": 9,
+     "y": 5,
+     "size": 2.5,
+     "angle": 90,
+     "color": "blue"
+    },
+    {
+     "shape": "icon",
+     "icon": "switch",
+     "x": 5,
+     "y": 2,
+     "size": 3,
+     "on": 1
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 9.4,
+     "size": 24,
+     "text": {
+      "en": "R = {R} kΩ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 10.6,
+     "y": 5,
+     "align": "left",
+     "size": 24,
+     "color": "blue",
+     "text": {
+      "en": "{Q:2} mC"
+     }
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "abs(I) > 0.02",
+     "x": "if(I > 0, 3.6, 6.4)",
+     "y": 6.9,
+     "dx": "2.8*I*R/E",
+     "dy": 0,
+     "color": "orange",
+     "label": "I"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 1,
+     "x2": 31.2,
+     "y2": 1,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 1,
+     "x2": 12,
+     "y2": 9.6,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 31.2,
+     "y": 0.4,
+     "align": "right",
+     "size": 22,
+     "text": {
+      "en": "t (s)"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 12.3,
+     "y": 10,
+     "align": "left",
+     "size": 22,
+     "text": {
+      "en": "Vc (V)"
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": "1 + 0.62*E",
+     "x2": 31,
+     "y2": "1 + 0.62*E",
+     "dashed": true,
+     "color": "yellow",
+     "opacity": 0.6,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 31,
+     "y": "1.4 + 0.62*E",
+     "align": "right",
+     "size": 22,
+     "color": "yellow",
+     "text": {
+      "en": "E"
+     }
+    },
+    {
+     "shape": "line",
+     "visibleIf": "tau < 30",
+     "x1": "12 + 0.62*tau",
+     "y1": 1,
+     "x2": "12 + 0.62*tau",
+     "y2": "1 + 0.62*0.632*E",
+     "dashed": true,
+     "color": "green",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "visibleIf": "tau < 30",
+     "x": "12 + 0.62*tau",
+     "y": 0.45,
+     "size": 22,
+     "color": "green",
+     "text": {
+      "en": "τ"
+     }
+    },
+    {
+     "shape": "trail",
+     "x": "gx",
+     "y": "gy",
+     "length": 2000,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "gx",
+     "y": "gy",
+     "r": 0.22,
+     "color": "blue"
+    },
+    {
+     "shape": "label",
+     "visibleIf": "charge",
+     "x": 5,
+     "y": 0.55,
+     "size": 24,
+     "color": "yellow",
+     "text": {
+      "en": "Charging",
+      "kn": "ಆವೇಶಗೊಳ್ಳುತ್ತಿದೆ"
+     }
+    },
+    {
+     "shape": "label",
+     "visibleIf": "!charge",
+     "x": 5,
+     "y": 0.55,
+     "size": 24,
+     "color": "blue",
+     "text": {
+      "en": "Discharging",
+      "kn": "ವಿಸರ್ಜಿಸುತ್ತಿದೆ"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Capacitor voltage",
+      "kn": "ಧಾರಕ ವೋಲ್ಟೇಜ್"
+     },
+     "expr": "Vc",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Current",
+      "kn": "ಪ್ರವಾಹ"
+     },
+     "expr": "I",
+     "digits": 2,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "Time constant RC",
+      "kn": "ಕಾಲ ಸ್ಥಿರಾಂಕ RC"
+     },
+     "expr": "tau",
+     "digits": 2,
+     "unit": "s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Play, then read Vc when t equals RC. Is it about 0.63 E?",
+     "kn": "ಪ್ರಾರಂಭಿಸಿ, t = RC ಆದಾಗ Vc ಓದಿ. ಅದು ಸುಮಾರು 0.63 E ಆಗಿದೆಯೇ?"
+    },
+    {
+     "en": "Double R and play again. What happens to the curve?",
+     "kn": "R ದ್ವಿಗುಣಗೊಳಿಸಿ ಮತ್ತೆ ಪ್ರಾರಂಭಿಸಿ. ವಕ್ರರೇಖೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "When it is nearly full, disconnect the battery. Which way does the current flow now?",
+     "kn": "ಬಹುತೇಕ ತುಂಬಿದಾಗ ಬ್ಯಾಟರಿ ತೆಗೆಯಿರಿ. ಈಗ ಪ್ರವಾಹ ಯಾವ ದಿಕ್ಕಿನಲ್ಲಿ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

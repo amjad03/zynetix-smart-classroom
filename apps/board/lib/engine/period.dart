@@ -45,7 +45,8 @@ abstract final class PeriodPlanner {
       BlockType.classQuiz || BlockType.pyq => read + b.ids('questionIds').length * (b.secondsPerQuestion + 8),
       BlockType.model3d || BlockType.simulation || BlockType.virtualLab => max(read, b.seconds ?? 90),
       BlockType.whiteboard => readingSeconds(b.narration) + whiteboardSeconds(b),
-      BlockType.interactive => max(read, b.seconds ?? 60),
+      BlockType.interactive => max(read, b.seconds ?? interactiveSeconds(b)),
+      BlockType.activity => max(read, b.seconds ?? activitySeconds(b)),
       BlockType.challenge => max(read, b.seconds ?? challengeSeconds(b)),
       _ => max(read, b.seconds ?? 0),
     };
@@ -57,6 +58,29 @@ abstract final class PeriodPlanner {
     final tries = (b.raw['attempts'] as num?)?.toInt() ?? 3;
     final perTry = (b.raw['timeLimit'] as num?)?.toInt() ?? 45;
     return readingSeconds(b.maybe('prompt')) + tries * perTry + 20;
+  }
+
+  /// An interactive: 60 s to explore; a timed model (scene) also plays through twice at 1×
+  /// (at most 3 minutes in all).
+  static int interactiveSeconds(Block b) {
+    final time = b.raw['time'];
+    if (time is! Map) return 60;
+    final span = ((time['max'] as num?) ?? 0) - ((time['min'] as num?) ?? 0);
+    return min(180, 60 + (2 * span).ceil());
+  }
+
+  /// An activity: the prompt read aloud, about 8 s an item (sort, match, label, order) or 12 s a
+  /// blank, and 20 s to check and talk about it.
+  static int activitySeconds(Block b) {
+    final items = switch (b.raw['kind']) {
+      'sort' => (b.raw['items'] as List?)?.length ?? 4,
+      'order' => (b.raw['steps'] as List?)?.length ?? 4,
+      'match' => (b.raw['pairs'] as List?)?.length ?? 4,
+      'label' || 'hotspot' => (b.raw['targets'] as List?)?.length ?? 4,
+      'fill' => ((b.raw['blanks'] as List?)?.length ?? 3) * 3 ~/ 2,
+      _ => 4,
+    };
+    return readingSeconds(b.maybe('prompt')) + items * 8 + 20;
   }
 
   /// A whiteboard block's steps: each step's line read aloud (at least 3 s of drawing) + 3 s to look.

@@ -52,6 +52,391 @@
    "formula": "y = x\\tan\\theta - \\frac{g x^2}{2u^2\\cos^2\\theta}"
   },
   {
+   "id": "scene-projectile",
+   "type": "interactive",
+   "title": {
+    "en": "Launch a projectile",
+    "kn": "ಉತ್ಕ್ಷೇಪಕವನ್ನು ಉಡಾಯಿಸಿ"
+   },
+   "narration": {
+    "en": "Set the speed and the angle, then press Launch. Watch the blue arrow: the horizontal velocity never changes. The red arrow, the vertical velocity, shrinks, turns round and grows again.",
+    "kn": "ವೇಗ ಮತ್ತು ಕೋನವನ್ನು ಹೊಂದಿಸಿ, ನಂತರ ಉಡಾಯಿಸಿ ಒತ್ತಿ. ನೀಲಿ ಬಾಣ ನೋಡಿ: ಅಡ್ಡ ವೇಗ ಬದಲಾಗುವುದಿಲ್ಲ. ಕೆಂಪು ಬಾಣ, ಲಂಬ ವೇಗ, ಕುಗ್ಗಿ, ತಿರುಗಿ, ಮತ್ತೆ ಬೆಳೆಯುತ್ತದೆ."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Set the speed and angle, then press Launch. Gravity changes only the vertical velocity (red); the horizontal velocity (blue) stays the same all the way.",
+    "kn": "ವೇಗ ಮತ್ತು ಕೋನ ಹೊಂದಿಸಿ, ನಂತರ ಉಡಾಯಿಸಿ ಒತ್ತಿ. ಗುರುತ್ವವು ಲಂಬ ವೇಗವನ್ನು (ಕೆಂಪು) ಮಾತ್ರ ಬದಲಾಯಿಸುತ್ತದೆ; ಅಡ್ಡ ವೇಗ (ನೀಲಿ) ಕೊನೆಯವರೆಗೂ ಒಂದೇ ಇರುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "v",
+     "label": {
+      "en": "Speed",
+      "kn": "ವೇಗ"
+     },
+     "min": 5,
+     "max": 25,
+     "step": 1,
+     "value": 15,
+     "unit": "m/s"
+    },
+    {
+     "name": "a",
+     "label": {
+      "en": "Angle",
+      "kn": "ಕೋನ"
+     },
+     "min": 10,
+     "max": 80,
+     "step": 1,
+     "value": 45,
+     "unit": "°"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "vec",
+     "label": {
+      "en": "Velocity arrows",
+      "kn": "ವೇಗದ ಬಾಣಗಳು"
+     },
+     "value": true
+    },
+    {
+     "name": "pred",
+     "label": {
+      "en": "Predicted path",
+      "kn": "ಊಹಿಸಿದ ಪಥ"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Launch",
+      "kn": "ಉಡಾಯಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 6,
+    "stopWhen": "landed"
+   },
+   "vars": [
+    {
+     "name": "vx",
+     "expr": "v*cos(rad(a))"
+    },
+    {
+     "name": "vy0",
+     "expr": "v*sin(rad(a))"
+    },
+    {
+     "name": "yraw",
+     "expr": "vy0*t - 4.9*t^2"
+    },
+    {
+     "name": "px",
+     "expr": "vx*t"
+    },
+    {
+     "name": "py",
+     "expr": "max(yraw, 0)"
+    },
+    {
+     "name": "vy",
+     "expr": "vy0 - 9.8*t"
+    },
+    {
+     "name": "landed",
+     "expr": "t > 0 && yraw <= 0"
+    },
+    {
+     "name": "R",
+     "expr": "v^2*sin(rad(2*a))/9.8"
+    },
+    {
+     "name": "H",
+     "expr": "vy0^2/19.6"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     65
+    ],
+    "y": [
+     0,
+     33
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x (m)",
+    "yLabel": "y (m)",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "pred",
+     "fn": "x*tan(rad(a)) - 9.8*x^2/(2*v^2*cos(rad(a))^2)",
+     "from": 0,
+     "to": "R",
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.6,
+     "width": 3
+    },
+    {
+     "shape": "trail",
+     "x": "px",
+     "y": "py",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "vec",
+     "x": "px",
+     "y": "py",
+     "dx": "vx/2",
+     "dy": 0,
+     "color": "blue",
+     "label": "vx"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "vec && !landed",
+     "x": "px",
+     "y": "py",
+     "dx": 0,
+     "dy": "vy/2",
+     "color": "red",
+     "label": "vy"
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 0.9,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 64,
+     "y": 31,
+     "align": "right",
+     "size": 28,
+     "text": {
+      "en": "t = {t:2} s   x = {px:1} m   y = {py:1} m"
+     },
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Range",
+      "kn": "ವ್ಯಾಪ್ತಿ"
+     },
+     "expr": "R",
+     "digits": 1,
+     "unit": "m"
+    },
+    {
+     "label": {
+      "en": "Greatest height",
+      "kn": "ಗರಿಷ್ಠ ಎತ್ತರ"
+     },
+     "expr": "H",
+     "digits": 1,
+     "unit": "m"
+    },
+    {
+     "label": {
+      "en": "Time of flight",
+      "kn": "ಹಾರಾಟದ ಸಮಯ"
+     },
+     "expr": "2*vy0/9.8",
+     "digits": 2,
+     "unit": "s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Launch at 30° and then at 60° with the same speed. Where does each land?",
+     "kn": "ಒಂದೇ ವೇಗದಲ್ಲಿ 30° ಮತ್ತು 60° ನಲ್ಲಿ ಉಡಾಯಿಸಿ. ಪ್ರತಿಯೊಂದೂ ಎಲ್ಲಿ ಬೀಳುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on the predicted path. Which angle throws farthest?",
+     "kn": "ಊಹಿಸಿದ ಪಥ ಆನ್ ಮಾಡಿ. ಯಾವ ಕೋನ ಅತಿ ದೂರ ಎಸೆಯುತ್ತದೆ?"
+    },
+    {
+     "en": "Slow time to 0.25× and watch the red arrow at the top of the path.",
+     "kn": "ಸಮಯವನ್ನು 0.25× ಗೆ ನಿಧಾನಿಸಿ, ಪಥದ ತುದಿಯಲ್ಲಿ ಕೆಂಪು ಬಾಣ ನೋಡಿ."
+    }
+   ]
+  },
+  {
+   "id": "challenge-launch",
+   "type": "challenge",
+   "title": {
+    "en": "Challenge: land on the flag",
+    "kn": "ಸವಾಲು: ಧ್ವಜದ ಮೇಲೆ ಇಳಿಸಿ"
+   },
+   "narration": {
+    "en": "The flag is 40 metres away. Work out a speed and an angle that will land the ball on it, set them, and lock in to launch.",
+    "kn": "ಧ್ವಜ 40 ಮೀಟರ್ ದೂರದಲ್ಲಿದೆ. ಚೆಂಡನ್ನು ಅದರ ಮೇಲೆ ಇಳಿಸುವ ವೇಗ ಮತ್ತು ಕೋನ ಲೆಕ್ಕ ಹಾಕಿ, ಹೊಂದಿಸಿ, ಉಡಾಯಿಸಲು ಖಚಿತಪಡಿಸಿ."
+   },
+   "kind": "scene",
+   "prompt": {
+    "en": "Land the ball on the flag at x = 40 m. Lock in to launch: the ball flies with your settings.",
+    "kn": "ಚೆಂಡನ್ನು x = 40 m ನಲ್ಲಿರುವ ಧ್ವಜದ ಮೇಲೆ ಇಳಿಸಿ. ಉಡಾಯಿಸಲು ಖಚಿತಪಡಿಸಿ: ನಿಮ್ಮ ಹೊಂದಿಕೆಯಲ್ಲಿ ಚೆಂಡು ಹಾರುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "v",
+     "label": {
+      "en": "Speed",
+      "kn": "ವೇಗ"
+     },
+     "min": 10,
+     "max": 30,
+     "step": 1,
+     "value": 15,
+     "unit": "m/s"
+    },
+    {
+     "name": "a",
+     "label": {
+      "en": "Angle",
+      "kn": "ಕೋನ"
+     },
+     "min": 10,
+     "max": 80,
+     "step": 1,
+     "value": 30,
+     "unit": "°"
+    }
+   ],
+   "time": {
+    "max": 6.5,
+    "stopWhen": "landed"
+   },
+   "vars": [
+    {
+     "name": "vx",
+     "expr": "v*cos(rad(a))"
+    },
+    {
+     "name": "vy0",
+     "expr": "v*sin(rad(a))"
+    },
+    {
+     "name": "yraw",
+     "expr": "vy0*t - 4.9*t^2"
+    },
+    {
+     "name": "px",
+     "expr": "vx*t"
+    },
+    {
+     "name": "py",
+     "expr": "max(yraw, 0)"
+    },
+    {
+     "name": "vy",
+     "expr": "vy0 - 9.8*t"
+    },
+    {
+     "name": "landed",
+     "expr": "t > 0 && yraw <= 0"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     70
+    ],
+    "y": [
+     0,
+     30
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x (m)",
+    "yLabel": "y (m)",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 40,
+     "y1": 0,
+     "x2": 40,
+     "y2": 6,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       40,
+       6
+      ],
+      [
+       44,
+       5
+      ],
+      [
+       40,
+       4
+      ]
+     ],
+     "color": "red"
+    },
+    {
+     "shape": "trail",
+     "x": "px",
+     "y": "py",
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 0.9,
+     "color": "orange"
+    }
+   ],
+   "goal": "px",
+   "goalLabel": {
+    "en": "Landing point",
+    "kn": "ಇಳಿಯುವ ಸ್ಥಳ"
+   },
+   "goalUnit": "m",
+   "target": 40,
+   "tolerance": 1.5,
+   "solution": {
+    "v": 20,
+    "a": 40
+   },
+   "hint": {
+    "en": "Range R = v² sin 2θ / g. At 45° a throw goes farthest for its speed.",
+    "kn": "ವ್ಯಾಪ್ತಿ R = v² sin 2θ / g. ಒಂದು ವೇಗಕ್ಕೆ 45° ನಲ್ಲಿ ಅತಿ ದೂರ ಹೋಗುತ್ತದೆ."
+   },
+   "explanation": {
+    "en": "R = v² sin 2θ / g: with 20 m/s at 40°, R = 400 × sin 80° / 9.8 ≈ 40.2 m. Other pairs work too, such as 20 m/s at 50°.",
+    "kn": "R = v² sin 2θ / g: 20 m/s, 40° ಗೆ R = 400 × sin 80° / 9.8 ≈ 40.2 m. 20 m/s, 50° ನಂತಹ ಬೇರೆ ಜೋಡಿಗಳೂ ಸರಿ."
+   }
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {
