@@ -192,12 +192,14 @@ class Readiness {
   final double coverage;
   final int evidenced, topics;
 
-  static const minTopics = 3, minCoverage = 0.1;
+  // The same rules as the college dashboard (services/api/src/outcomes.ts), so a section reads
+  // the same band on the board and on the principal's screen.
+  static const minTopics = 3, minCoverage = 0.2, readyCoverage = 0.6;
 
   Band get band {
     if (topics == 0 || evidenced < minTopics || coverage < minCoverage) return Band.noData;
-    if (score >= 0.75 && coverage >= 0.5) return Band.ready;
-    if (score >= 0.6) return Band.onTrack;
+    if (score >= 0.75 && coverage >= readyCoverage) return Band.ready;
+    if (score >= 0.5) return Band.onTrack;
     return Band.needsWork;
   }
 }
