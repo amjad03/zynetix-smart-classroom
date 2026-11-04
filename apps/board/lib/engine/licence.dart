@@ -10,6 +10,7 @@ class LicenceStatus {
   const LicenceStatus(this.state, {this.validUntil, this.daysLeft = 0});
   final LicenceState state;
   final DateTime? validUntil;
+
   /// Grace days left (grace), or days until expiry (valid).
   final int daysLeft;
 
@@ -26,7 +27,10 @@ abstract final class Licence {
     if (parts.length != 2) return const LicenceStatus(LicenceState.invalid);
     try {
       final body = _b64(parts[0]);
-      final ok = await Ed25519().verify(body, signature: Signature(_b64(parts[1]), publicKey: SimplePublicKey(publicKey, type: KeyPairType.ed25519)));
+      final ok = await Ed25519().verify(
+        body,
+        signature: Signature(_b64(parts[1]), publicKey: SimplePublicKey(publicKey, type: KeyPairType.ed25519)),
+      );
       if (!ok) return const LicenceStatus(LicenceState.invalid);
       final j = jsonDecode(utf8.decode(body)) as Map<String, dynamic>;
       // Valid through the whole last day.

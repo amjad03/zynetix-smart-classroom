@@ -19,7 +19,11 @@ class SyncClient {
 
   /// Registers this board with the code from Admin → Boards and the PIN chosen here.
   Future<void> activate({required String apiBase, required String code, required String name, required String pin}) async {
-    final r = await _http.post(Uri.parse('$apiBase/v1/devices/activate'), headers: {'content-type': 'application/json'}, body: jsonEncode({'code': code.trim().toUpperCase(), 'name': name, 'pin': pin}));
+    final r = await _http.post(
+      Uri.parse('$apiBase/v1/devices/activate'),
+      headers: {'content-type': 'application/json'},
+      body: jsonEncode({'code': code.trim().toUpperCase(), 'name': name, 'pin': pin}),
+    );
     if (r.statusCode != 201) throw SyncError('activation failed (${r.statusCode})');
     final j = jsonDecode(r.body) as Map<String, dynamic>;
     await config.apply({'apiBase': apiBase, 'deviceToken': j['deviceToken'] as String});
@@ -46,9 +50,9 @@ class SyncClient {
   }
 
   Future<void> _applyConfig(Map<String, dynamic> c) => config.apply({
-        for (final k in ['sectionId', 'sectionLabel', 'year', 'rollCount', 'periodMinutes', 'collegeName', 'pinHash', 'pinSalt', 'licenceToken']) k: ?c[k],
-        if (c['licence'] case {'validUntil': final String v}) 'licenceValidUntil': v,
-      });
+    for (final k in ['sectionId', 'sectionLabel', 'year', 'rollCount', 'periodMinutes', 'collegeName', 'pinHash', 'pinSalt', 'licenceToken']) k: ?c[k],
+    if (c['licence'] case {'validUntil': final String v}) 'licenceValidUntil': v,
+  });
 }
 
 class SyncError implements Exception {

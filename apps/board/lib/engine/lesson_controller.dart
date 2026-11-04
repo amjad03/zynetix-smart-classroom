@@ -8,8 +8,8 @@ import 'session_log.dart';
 /// Teacher Mode drives it with Back/Next; Self-Learning drives it from the PeriodRunner.
 class LessonController extends ChangeNotifier {
   LessonController({required this.pack, required this.lesson, required this.narrator, required this.recorder, required Lang lang, List<Block>? blocks})
-      : _lang = lang,
-        blocks = blocks ?? lesson.blocks {
+    : _lang = lang,
+      blocks = blocks ?? lesson.blocks {
     recorder.shown(current.id);
   }
 

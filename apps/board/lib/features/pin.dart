@@ -8,7 +8,12 @@ import '../engine/model.dart';
 /// Asks for the teacher PIN on a large keypad. Returns true when it is right.
 /// Five wrong tries lock the keypad for a minute (students will try).
 Future<bool> askPin(BuildContext context, BoardConfig config) async =>
-    await showDialog<bool>(context: context, barrierDismissible: false, builder: (_) => PinDialog(config: config)) ?? false;
+    await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => PinDialog(config: config),
+    ) ??
+    false;
 
 class PinDialog extends StatefulWidget {
   const PinDialog({super.key, required this.config});
@@ -58,30 +63,46 @@ class _PinDialogState extends State<PinDialog> {
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
     Widget key(String k) => Padding(
-          padding: const EdgeInsets.all(8),
-          child: SizedBox(
-            width: 130,
-            height: Z.tap,
-            child: OutlinedButton(key: ValueKey('pin-$k'), onPressed: () => _key(k), child: Text(k, style: const TextStyle(fontSize: 44))),
-          ),
-        );
+      padding: const EdgeInsets.all(8),
+      child: SizedBox(
+        width: 130,
+        height: Z.tap,
+        child: OutlinedButton(
+          key: ValueKey('pin-$k'),
+          onPressed: () => _key(k),
+          child: Text(k, style: const TextStyle(fontSize: 44)),
+        ),
+      ),
+    );
     return Dialog(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(32),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Text(tr('enterPin', l), style: text.headlineLarge),
-          const SizedBox(height: 16),
-          Text(pin.isEmpty ? '—' : '●' * pin.length, style: const TextStyle(fontSize: 56, letterSpacing: 12)),
-          if (error || locked) Text(locked ? '${tr('wrongPin', l)} · 60s' : tr('wrongPin', l), style: const TextStyle(fontSize: 30, color: Z.wrong)),
-          const SizedBox(height: 16),
-          for (final row in const [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9'], ['⌫', '0']]) Row(mainAxisSize: MainAxisSize.min, children: [for (final k in row) key(k)]),
-          const SizedBox(height: 16),
-          Row(mainAxisSize: MainAxisSize.min, children: [
-            BigButton(icon: Icons.close, label: tr('cancel', l), filled: false, onPressed: () => Navigator.pop(context, false)),
-            const SizedBox(width: 24),
-            BigButton(key: const ValueKey('pin-ok'), icon: Icons.lock_open, label: tr('exit', l), onPressed: pin.length >= 4 && !locked ? _ok : null),
-          ]),
-        ]),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(tr('enterPin', l), style: text.headlineLarge),
+            const SizedBox(height: 16),
+            Text(pin.isEmpty ? '—' : '●' * pin.length, style: const TextStyle(fontSize: 56, letterSpacing: 12)),
+            if (error || locked) Text(locked ? '${tr('wrongPin', l)} · 60s' : tr('wrongPin', l), style: const TextStyle(fontSize: 30, color: Z.wrong)),
+            const SizedBox(height: 16),
+            for (final row in const [
+              ['1', '2', '3'],
+              ['4', '5', '6'],
+              ['7', '8', '9'],
+              ['⌫', '0'],
+            ])
+              Row(mainAxisSize: MainAxisSize.min, children: [for (final k in row) key(k)]),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BigButton(icon: Icons.close, label: tr('cancel', l), filled: false, onPressed: () => Navigator.pop(context, false)),
+                const SizedBox(width: 24),
+                BigButton(key: const ValueKey('pin-ok'), icon: Icons.lock_open, label: tr('exit', l), onPressed: pin.length >= 4 && !locked ? _ok : null),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

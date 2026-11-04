@@ -13,16 +13,26 @@ import 'config.dart';
 
 /// Everything the screens need, created once at start-up (main.dart) or by a test.
 class Services {
-  Services({required this.config, required this.store, required this.outbox, required this.narrator, required this.syllabus, required this.embeds, this.licenceKey = const [], DateTime Function()? clock})
-      : clock = clock ?? DateTime.now;
+  Services({
+    required this.config,
+    required this.store,
+    required this.outbox,
+    required this.narrator,
+    required this.syllabus,
+    required this.embeds,
+    this.licenceKey = const [],
+    DateTime Function()? clock,
+  }) : clock = clock ?? DateTime.now;
 
   final BoardConfig config;
   final PackStore store;
   final Outbox outbox;
   final Narrator narrator;
+
   /// subject → year → chapters (the whole NCERT tree, including chapters with no pack yet).
   final Map<String, Map<String, List<Chapter>>> syllabus;
   final Embeds embeds;
+
   /// Ed25519 public key that signs licences (assets/keys/licence-key.json).
   final List<int> licenceKey;
 
@@ -31,17 +41,26 @@ class Services {
   late final SyncClient sync = SyncClient(config: config, store: store, outbox: outbox);
 
   /// Subjects shown on this board: the section's subjects that have a syllabus, in its order.
-  List<String> get subjects => [for (final s in config.subjects) if (syllabus.containsKey(s)) s];
+  List<String> get subjects => [
+    for (final s in config.subjects)
+      if (syllabus.containsKey(s)) s,
+  ];
 
   /// The section's chapters for [subject] and [year], as its curriculum (board) teaches them.
-  List<Chapter> chapters(String subject, String year) => [for (final c in syllabus[subject]?[year] ?? const <Chapter>[]) if (c.forBoard(config.board)) c];
+  List<Chapter> chapters(String subject, String year) => [
+    for (final c in syllabus[subject]?[year] ?? const <Chapter>[])
+      if (c.forBoard(config.board)) c,
+  ];
 
   /// The topic to continue with in this section: the next untaught topic in the chapter taught
   /// most recently, then the following chapters in syllabus order (this section's year first).
   ({InstalledPack pack, Lesson lesson})? nextTopic() {
     final taught = config.taught.toSet();
     final years = [config.year, config.year == 'puc1' ? 'puc2' : 'puc1'];
-    final order = <Chapter>[for (final y in years) for (final s in subjects) ...chapters(s, y)];
+    final order = <Chapter>[
+      for (final y in years)
+        for (final s in subjects) ...chapters(s, y),
+    ];
     var start = 0;
     if (config.taught.isNotEmpty) {
       final last = config.taught.last;

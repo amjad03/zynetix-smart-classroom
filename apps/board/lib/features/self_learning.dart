@@ -38,32 +38,36 @@ class SelfLearningStartScreen extends StatelessWidget {
         padding: const EdgeInsets.all(48),
         child: next == null
             ? Center(child: Text(tr('comingSoon', l), style: text.headlineMedium))
-            : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(scheduled != null ? tr('scheduled', l) : tr('nextTopic', l), style: text.headlineMedium?.copyWith(color: Z.accent)),
-                const SizedBox(height: 16),
-                Text('${yearLabel(next.pack.chapter.year, s.config.board, l)} · ${subjectName(next.pack.chapter.subject, l)} · ${next.pack.chapter.title.t(l)}', style: text.bodyLarge),
-                Text(next.lesson.title.t(l), style: text.displayLarge),
-                const SizedBox(height: 32),
-                Text('${tr('nowPlaying', l)}: ${s.config.periodMinutes} min · ${tr('periodEnds', l)} …', style: text.bodyMedium),
-                const SizedBox(height: 32),
-                BigButton(
-                  key: const ValueKey('startSelf'),
-                  icon: Icons.play_arrow,
-                  label: tr('start', l),
-                  color: const Color(0xFF6A1B9A),
-                  onPressed: () => startSelfLearning(context, next.pack, next.lesson, periodSeconds: booked?.secondsLeft(s.clock()) ?? s.config.periodMinutes * 60),
-                ),
-              ]),
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(scheduled != null ? tr('scheduled', l) : tr('nextTopic', l), style: text.headlineMedium?.copyWith(color: Z.accent)),
+                  const SizedBox(height: 16),
+                  Text('${yearLabel(next.pack.chapter.year, s.config.board, l)} · ${subjectName(next.pack.chapter.subject, l)} · ${next.pack.chapter.title.t(l)}', style: text.bodyLarge),
+                  Text(next.lesson.title.t(l), style: text.displayLarge),
+                  const SizedBox(height: 32),
+                  Text('${tr('nowPlaying', l)}: ${s.config.periodMinutes} min · ${tr('periodEnds', l)} …', style: text.bodyMedium),
+                  const SizedBox(height: 32),
+                  BigButton(
+                    key: const ValueKey('startSelf'),
+                    icon: Icons.play_arrow,
+                    label: tr('start', l),
+                    color: const Color(0xFF6A1B9A),
+                    onPressed: () => startSelfLearning(context, next.pack, next.lesson, periodSeconds: booked?.secondsLeft(s.clock()) ?? s.config.periodMinutes * 60),
+                  ),
+                ],
+              ),
       ),
     );
   }
 }
 
-void startSelfLearning(BuildContext context, InstalledPack pack, Lesson lesson, {required int periodSeconds}) =>
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (_) => SelfLearningScreen(pack: pack, lesson: lesson, periodSeconds: periodSeconds)),
-      (r) => r.isFirst,
-    );
+void startSelfLearning(BuildContext context, InstalledPack pack, Lesson lesson, {required int periodSeconds}) => Navigator.of(context).pushAndRemoveUntil(
+  MaterialPageRoute(
+    builder: (_) => SelfLearningScreen(pack: pack, lesson: lesson, periodSeconds: periodSeconds),
+  ),
+  (r) => r.isFirst,
+);
 
 /// A whole period with no teacher. The back button does nothing; only the teacher PIN exits.
 class SelfLearningScreen extends StatefulWidget {
@@ -124,41 +128,68 @@ class SelfLearningScreenState extends State<SelfLearningScreen> {
           final left = runner.secondsLeft;
           return Scaffold(
             body: SafeArea(
-              child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(32, 16, 16, 8),
-                  child: Row(children: [
-                    const Icon(Icons.smart_display_outlined, size: 52, color: Color(0xFFCE93D8)),
-                    const SizedBox(width: 16),
-                    Expanded(child: Text(widget.lesson.title.t(l), style: text.headlineMedium, overflow: TextOverflow.ellipsis)),
-                    Text('${tr('periodEnds', l)} ${left ~/ 60}:${(left % 60).toString().padLeft(2, '0')}', style: text.headlineMedium),
-                    const SizedBox(width: 16),
-                    IconButton(key: const ValueKey('lockExit'), iconSize: 56, icon: const Icon(Icons.lock_outline), onPressed: _exit),
-                  ]),
-                ),
-                _PhaseStrip(phase: runner.phase, lang: l),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(40),
-                    child: runner.homework
-                        ? _Homework(c: c, over: runner.over)
-                        : Stack(children: [
-                            Positioned.fill(child: BlockView(c: c, embeds: s.embeds, room: room, auto: true, onFinished: runner.onQuizFinished)),
-                            if (runner.paused) Positioned.fill(child: Container(color: Colors.black54, alignment: Alignment.center, child: Text(tr('pause', l), style: text.displayLarge?.copyWith(color: Colors.white)))),
-                          ]),
-                  ),
-                ),
-                if (!runner.homework)
+              child: Column(
+                children: [
                   Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(children: [
-                      // The monitor may pause (a doubt, a noise outside); nothing else.
-                      BigButton(key: const ValueKey('slPause'), icon: runner.paused ? Icons.play_arrow : Icons.pause, label: tr(runner.paused ? 'resume' : 'pause', l), filled: false, onPressed: () => runner.setPaused(!runner.paused)),
-                      const SizedBox(width: 24),
-                      Expanded(child: LinearProgressIndicator(value: (runner.step + 1) / plan.steps.length, minHeight: 16, borderRadius: BorderRadius.circular(8))),
-                    ]),
+                    padding: const EdgeInsets.fromLTRB(32, 16, 16, 8),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.smart_display_outlined, size: 52, color: Color(0xFFCE93D8)),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Text(widget.lesson.title.t(l), style: text.headlineMedium, overflow: TextOverflow.ellipsis),
+                        ),
+                        Text('${context.narrow ? '' : '${tr('periodEnds', l)} '}${left ~/ 60}:${(left % 60).toString().padLeft(2, '0')}', style: text.headlineMedium),
+                        const SizedBox(width: 16),
+                        IconButton(key: const ValueKey('lockExit'), iconSize: 56, icon: const Icon(Icons.lock_outline), onPressed: _exit),
+                      ],
+                    ),
                   ),
-              ]),
+                  _PhaseStrip(phase: runner.phase, lang: l),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(context.narrow ? 20 : 40),
+                      child: runner.homework
+                          ? _Homework(c: c, over: runner.over)
+                          : Stack(
+                              children: [
+                                Positioned.fill(
+                                  child: BlockView(c: c, embeds: s.embeds, room: room, auto: true, onFinished: runner.onQuizFinished),
+                                ),
+                                if (runner.paused)
+                                  Positioned.fill(
+                                    child: Container(
+                                      color: Colors.black54,
+                                      alignment: Alignment.center,
+                                      child: Text(tr('pause', l), style: text.displayLarge?.copyWith(color: Colors.white)),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                    ),
+                  ),
+                  if (!runner.homework)
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        children: [
+                          // The monitor may pause (a doubt, a noise outside); nothing else.
+                          BigButton(
+                            key: const ValueKey('slPause'),
+                            icon: runner.paused ? Icons.play_arrow : Icons.pause,
+                            label: tr(runner.paused ? 'resume' : 'pause', l),
+                            filled: false,
+                            onPressed: () => runner.setPaused(!runner.paused),
+                          ),
+                          const SizedBox(width: 24),
+                          Expanded(
+                            child: LinearProgressIndicator(value: (runner.step + 1) / plan.steps.length, minHeight: 16, borderRadius: BorderRadius.circular(8)),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
             ),
           );
         },
@@ -175,26 +206,32 @@ class _PhaseStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: Row(children: [
-          for (final p in Phase.values)
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 6),
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(
-                  color: p == phase ? const Color(0xFF6A1B9A) : (p.index < phase.index ? Z.correct : Theme.of(context).colorScheme.surfaceContainerHighest),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  p == Phase.lesson ? (lang == Lang.kn ? 'ಪಾಠ' : 'Lesson') : tr(_labels[p]!, lang),
-                  style: TextStyle(fontSize: 28, fontWeight: p == phase ? FontWeight.w700 : FontWeight.w500, color: p.index <= phase.index ? Colors.white : Theme.of(context).colorScheme.onSurfaceVariant),
+    padding: const EdgeInsets.symmetric(horizontal: 32),
+    child: Row(
+      children: [
+        for (final p in Phase.values)
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 6),
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                color: p == phase ? const Color(0xFF6A1B9A) : (p.index < phase.index ? Z.correct : Theme.of(context).colorScheme.surfaceContainerHighest),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                p == Phase.lesson ? (lang == Lang.kn ? 'ಪಾಠ' : 'Lesson') : tr(_labels[p]!, lang),
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: p == phase ? FontWeight.w700 : FontWeight.w500,
+                  color: p.index <= phase.index ? Colors.white : Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
             ),
-        ]),
-      );
+          ),
+      ],
+    ),
+  );
 }
 
 class _Homework extends StatelessWidget {
@@ -207,12 +244,28 @@ class _Homework extends StatelessWidget {
     final l = c.lang, text = Theme.of(context).textTheme;
     final recap = c.lesson.blocks.where((b) => b.type == BlockType.recap).firstOrNull;
     final items = [...?recap?.list('homework'), for (final q in c.pack.questionsFor(recap?.ids('homeworkQuestionIds') ?? const [])) q.stem];
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Row(children: [const Icon(Icons.menu_book_outlined, size: 64, color: Z.accent), const SizedBox(width: 16), Text(tr('homework', l), style: text.displayLarge)]),
-      const SizedBox(height: 32),
-      for (final (i, h) in items.indexed) Padding(padding: const EdgeInsets.only(bottom: 20), child: Text('${i + 1}.  ${h.t(l)}', style: text.headlineMedium)),
-      const Spacer(),
-      if (over) Center(child: Text(tr('periodOver', l), style: text.headlineLarge?.copyWith(color: Z.correct))),
-    ]);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Icon(Icons.menu_book_outlined, size: 64, color: Z.accent),
+            const SizedBox(width: 16),
+            Text(tr('homework', l), style: text.displayLarge),
+          ],
+        ),
+        const SizedBox(height: 32),
+        for (final (i, h) in items.indexed)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: Text('${i + 1}.  ${h.t(l)}', style: text.headlineMedium),
+          ),
+        const Spacer(),
+        if (over)
+          Center(
+            child: Text(tr('periodOver', l), style: text.headlineLarge?.copyWith(color: Z.correct)),
+          ),
+      ],
+    );
   }
 }

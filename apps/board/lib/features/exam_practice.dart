@@ -13,15 +13,7 @@ import 'participation.dart';
 import 'smartboard.dart';
 
 /// Exam names on the board. JEE is JEE Main.
-const examNames = <String, String>{
-  'KCET': 'KCET',
-  'COMEDK': 'COMEDK',
-  'NEET': 'NEET',
-  'JEE': 'JEE Main',
-  'JEE_ADV': 'JEE Advanced',
-  'PUC': 'II PUC Board',
-  'CBSE': 'CBSE Board',
-};
+const examNames = <String, String>{'KCET': 'KCET', 'COMEDK': 'COMEDK', 'NEET': 'NEET', 'JEE': 'JEE Main', 'JEE_ADV': 'JEE Advanced', 'PUC': 'II PUC Board', 'CBSE': 'CBSE Board'};
 
 /// The subjects each entrance exam tests (board exams test all of the section's subjects).
 const examSubjects = <String, List<String>>{
@@ -46,18 +38,14 @@ const _examColors = <String, Color>{
 /// of PCMB; the section's own board exam (PUC or CBSE) is always there.
 List<String> examsFor(List<String> subjects, String board) {
   bool has(String s) => subjects.contains(s);
-  return [
-    if (examSubjects['KCET']!.any(has)) 'KCET',
-    if (has('maths')) 'COMEDK',
-    if (has('biology')) 'NEET',
-    if (has('maths')) 'JEE',
-    if (has('maths')) 'JEE_ADV',
-    board == 'cbse' ? 'CBSE' : 'PUC',
-  ];
+  return [if (examSubjects['KCET']!.any(has)) 'KCET', if (has('maths')) 'COMEDK', if (has('biology')) 'NEET', if (has('maths')) 'JEE', if (has('maths')) 'JEE_ADV', board == 'cbse' ? 'CBSE' : 'PUC'];
 }
 
 /// The section's subjects that [exam] tests, in the section's order.
-List<String> examSubjectsFor(String exam, List<String> subjects) => [for (final s in subjects) if (examSubjects[exam]?.contains(s) ?? true) s];
+List<String> examSubjectsFor(String exam, List<String> subjects) => [
+  for (final s in subjects)
+    if (examSubjects[exam]?.contains(s) ?? true) s,
+];
 
 /// A question with the pack (chapter) it comes from.
 class ExamItem {
@@ -79,8 +67,10 @@ List<ExamItem> examPool(Services s, String exam) {
 }
 
 /// Chapter test: [count] questions from one chapter, shuffled.
-List<ExamItem> chapterTest(List<ExamItem> pool, String chapterId, Random rnd, {int count = 10}) =>
-    ([for (final i in pool) if (i.pack.chapter.id == chapterId) i]..shuffle(rnd)).take(count).toList();
+List<ExamItem> chapterTest(List<ExamItem> pool, String chapterId, Random rnd, {int count = 10}) => ([
+  for (final i in pool)
+    if (i.pack.chapter.id == chapterId) i,
+]..shuffle(rnd)).take(count).toList();
 
 /// Mock test: [count] questions mixed across subjects, taken in turn from each subject.
 List<ExamItem> mockTest(List<ExamItem> pool, Random rnd, {int count = 30}) {
@@ -138,10 +128,10 @@ class ExamPracticeScreenState extends State<ExamPracticeScreen> {
   }
 
   void pickExam(String e) => setState(() {
-        exam = e;
-        pool = poolOf(e);
-        stage = ExamStage.mode;
-      });
+    exam = e;
+    pool = poolOf(e);
+    stage = ExamStage.mode;
+  });
 
   void start(List<ExamItem> chosen, {required bool isMock}) {
     if (chosen.isEmpty) return;
@@ -214,12 +204,12 @@ class ExamPracticeScreenState extends State<ExamPracticeScreen> {
         appBar: AppBar(
           toolbarHeight: Z.tap + 16,
           leading: IconButton(key: const ValueKey('examBack'), iconSize: 56, icon: const Icon(Icons.arrow_back), onPressed: _back),
-          title: Text(title, style: text.headlineLarge),
+          title: Text(title, style: context.narrow ? text.headlineMedium : text.headlineLarge, maxLines: 1, overflow: TextOverflow.ellipsis),
           actions: [
             if (stage == ExamStage.run) ...[
               _Clock(secondsLeft: secondsLeft, lang: l),
               const SizedBox(width: 20),
-              BigButton(key: const ValueKey('endTest'), icon: Icons.flag_outlined, label: tr('endTest', l), filled: false, onPressed: finish),
+              BigButton(collapse: true, key: const ValueKey('endTest'), icon: Icons.flag_outlined, label: tr('endTest', l), filled: false, onPressed: finish),
               const SizedBox(width: 20),
             ],
             const SmartboardButton(),
@@ -227,20 +217,20 @@ class ExamPracticeScreenState extends State<ExamPracticeScreen> {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(40),
+          padding: EdgeInsets.all(context.narrow ? 20 : 40),
           child: switch (stage) {
             ExamStage.exam => _examPicker(l, text),
             ExamStage.mode => _modePicker(l, text),
             ExamStage.chapter => _chapterPicker(l, text),
             ExamStage.run => QuizRunner(
-                key: ValueKey('exam:${recorder.hashCode}'),
-                questions: [for (final i in items) i.q],
-                mode: QuizMode.monitor,
-                lang: l,
-                recorder: recorder!,
-                room: room,
-                onDone: finish,
-              ),
+              key: ValueKey('exam:${recorder.hashCode}'),
+              questions: [for (final i in items) i.q],
+              mode: QuizMode.monitor,
+              lang: l,
+              recorder: recorder!,
+              room: room,
+              onDone: finish,
+            ),
             ExamStage.results => _Results(items: items, answers: [for (final a in (recorder?.log['answers'] as List? ?? const [])) (a as Map).cast<String, dynamic>()], lang: l, timeUp: timeUp),
           },
         ),
@@ -250,72 +240,85 @@ class ExamPracticeScreenState extends State<ExamPracticeScreen> {
 
   Widget _examPicker(Lang l, TextTheme text) {
     final exams = examsFor(s.subjects, s.config.board);
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Text(tr('chooseExam', l), style: text.headlineMedium?.copyWith(color: Z.accent)),
-      const SizedBox(height: Z.gap),
-      Expanded(
-        child: GridView.count(
-          crossAxisCount: 3,
-          mainAxisSpacing: Z.gap,
-          crossAxisSpacing: Z.gap,
-          childAspectRatio: 1.9,
-          children: [
-            for (final e in exams)
-              _BigCard(
-                key: ValueKey('exam:$e'),
-                color: _examColors[e]!,
-                title: examNames[e]!,
-                sub: '${poolOf(e).length} ${tr('questions', l)} · ${examSubjectsFor(e, s.subjects).map((x) => subjectName(x, l)).join(', ')}',
-                onTap: poolOf(e).isEmpty ? null : () => pickExam(e),
-              ),
-          ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(tr('chooseExam', l), style: text.headlineMedium?.copyWith(color: Z.accent)),
+        const SizedBox(height: Z.gap),
+        Expanded(
+          child: GridView(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 700, mainAxisExtent: 250, mainAxisSpacing: Z.gap, crossAxisSpacing: Z.gap),
+            children: [
+              for (final e in exams)
+                _BigCard(
+                  key: ValueKey('exam:$e'),
+                  color: _examColors[e]!,
+                  title: examNames[e]!,
+                  sub: '${poolOf(e).length} ${tr('questions', l)} · ${examSubjectsFor(e, s.subjects).map((x) => subjectName(x, l)).join(', ')}',
+                  onTap: poolOf(e).isEmpty ? null : () => pickExam(e),
+                ),
+            ],
+          ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 
   Widget _modePicker(Lang l, TextTheme text) {
     if (pool.isEmpty) return Center(child: Text(tr('noQuestions', l), style: text.headlineMedium));
-    final mins = Row(children: [
-      Text(tr('minPerQuestion', l), style: text.bodyLarge),
-      const SizedBox(width: 24),
-      IconButton.filledTonal(key: const ValueKey('minus'), iconSize: 56, onPressed: minutesPerQuestion > 1 ? () => setState(() => minutesPerQuestion--) : null, icon: const Icon(Icons.remove)),
-      Padding(padding: const EdgeInsets.symmetric(horizontal: 28), child: Text('$minutesPerQuestion', key: const ValueKey('minutes'), style: text.displayLarge)),
-      IconButton.filledTonal(key: const ValueKey('plus'), iconSize: 56, onPressed: minutesPerQuestion < 2 ? () => setState(() => minutesPerQuestion++) : null, icon: const Icon(Icons.add)),
-    ]);
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      SizedBox(
-        height: 300,
-        child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Expanded(
-            child: _BigCard(
-              key: const ValueKey('chapterTest'),
-              icon: Icons.menu_book_outlined,
-              color: Theme.of(context).colorScheme.primary,
-              title: tr('chapterTest', l),
-              sub: tr('chapterTestSub', l),
-              onTap: () => setState(() {
-                subject ??= examSubjectsFor(exam!, s.subjects).firstOrNull;
-                stage = ExamStage.chapter;
-              }),
-            ),
+    final mins = Row(
+      children: [
+        Text(tr('minPerQuestion', l), style: text.bodyLarge),
+        const SizedBox(width: 24),
+        IconButton.filledTonal(key: const ValueKey('minus'), iconSize: 56, onPressed: minutesPerQuestion > 1 ? () => setState(() => minutesPerQuestion--) : null, icon: const Icon(Icons.remove)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 28),
+          child: Text('$minutesPerQuestion', key: const ValueKey('minutes'), style: text.displayLarge),
+        ),
+        IconButton.filledTonal(key: const ValueKey('plus'), iconSize: 56, onPressed: minutesPerQuestion < 2 ? () => setState(() => minutesPerQuestion++) : null, icon: const Icon(Icons.add)),
+      ],
+    );
+    final portrait = context.portrait;
+    Widget card(Widget c) => portrait ? SizedBox(height: 250, child: c) : Expanded(child: c);
+    return ListView(
+      children: [
+        SizedBox(
+          height: portrait ? null : 300,
+          child: Flex(
+            direction: portrait ? Axis.vertical : Axis.horizontal,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              card(
+                _BigCard(
+                  key: const ValueKey('chapterTest'),
+                  icon: Icons.menu_book_outlined,
+                  color: Theme.of(context).colorScheme.primary,
+                  title: tr('chapterTest', l),
+                  sub: tr('chapterTestSub', l),
+                  onTap: () => setState(() {
+                    subject ??= examSubjectsFor(exam!, s.subjects).firstOrNull;
+                    stage = ExamStage.chapter;
+                  }),
+                ),
+              ),
+              portrait ? const SizedBox(height: 32) : const SizedBox(width: 40),
+              card(
+                _BigCard(
+                  key: const ValueKey('mockTest'),
+                  icon: Icons.timer_outlined,
+                  color: _examColors[exam]!,
+                  title: tr('mockTest', l),
+                  sub: tr('mockTestSub', l),
+                  onTap: () => start(mockTest(pool, rnd), isMock: true),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: 40),
-          Expanded(
-            child: _BigCard(
-              key: const ValueKey('mockTest'),
-              icon: Icons.timer_outlined,
-              color: _examColors[exam]!,
-              title: tr('mockTest', l),
-              sub: tr('mockTestSub', l),
-              onTap: () => start(mockTest(pool, rnd), isMock: true),
-            ),
-          ),
-        ]),
-      ),
-      const SizedBox(height: 48),
-      mins,
-    ]);
+        ),
+        const SizedBox(height: 48),
+        FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerLeft, child: mins),
+      ],
+    );
   }
 
   Widget _chapterPicker(Lang l, TextTheme text) {
@@ -328,57 +331,66 @@ class ExamPracticeScreenState extends State<ExamPracticeScreen> {
       chapters[i.pack.chapter.id] = i.pack;
     }
     final list = chapters.values.toList()..sort((a, b) => a.chapter.year != b.chapter.year ? a.chapter.year.compareTo(b.chapter.year) : a.chapter.number.compareTo(b.chapter.number));
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Row(children: [
-        Text(tr('chooseSubject', l), style: text.headlineMedium?.copyWith(color: Z.accent)),
-        const SizedBox(width: Z.gap),
-        Expanded(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: SegmentedButton<String>(
-              style: SegmentedButton.styleFrom(minimumSize: const Size(200, Z.tap), textStyle: zText(30)),
-              segments: [for (final x in subjects) ButtonSegment(value: x, label: Text(subjectName(x, l)))],
-              selected: {?subject},
-              emptySelectionAllowed: true,
-              showSelectedIcon: false,
-              onSelectionChanged: (v) => setState(() => subject = v.firstOrNull ?? subject),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Text(tr('chooseSubject', l), style: text.headlineMedium?.copyWith(color: Z.accent)),
+            const SizedBox(width: Z.gap),
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: SegmentedButton<String>(
+                  style: SegmentedButton.styleFrom(minimumSize: const Size(200, Z.tap), textStyle: zText(30)),
+                  segments: [for (final x in subjects) ButtonSegment(value: x, label: Text(subjectName(x, l)))],
+                  selected: {?subject},
+                  emptySelectionAllowed: true,
+                  showSelectedIcon: false,
+                  onSelectionChanged: (v) => setState(() => subject = v.firstOrNull ?? subject),
+                ),
+              ),
             ),
-          ),
+          ],
         ),
-      ]),
-      const SizedBox(height: Z.gap),
-      Text(tr('chooseChapter', l), style: text.bodyLarge),
-      const SizedBox(height: 12),
-      Expanded(
-        child: list.isEmpty
-            ? Center(child: Text(tr('noQuestions', l), style: text.headlineMedium))
-            : ListView(children: [
-                for (final p in list)
-                  Card(
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                    child: InkWell(
-                      key: ValueKey('chapter:${p.chapter.id}'),
-                      borderRadius: BorderRadius.circular(12),
-                      onTap: () => start(chapterTest(pool, p.chapter.id, rnd), isMock: false),
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(minHeight: Z.tap),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
-                          child: Row(children: [
-                            Text(yearLabel(p.chapter.year, s.config.board, l), style: text.bodyMedium?.copyWith(color: Z.accent)),
-                            const SizedBox(width: 24),
-                            Expanded(child: Text('${p.chapter.number}. ${p.chapter.title.t(l)}', style: text.headlineMedium)),
-                            Text('${counts[p.chapter.id]} ${tr('questions', l)}', style: text.bodyMedium),
-                            const SizedBox(width: 16),
-                            const Icon(Icons.play_circle_fill, size: 64, color: Z.accent),
-                          ]),
+        const SizedBox(height: Z.gap),
+        Text(tr('chooseChapter', l), style: text.bodyLarge),
+        const SizedBox(height: 12),
+        Expanded(
+          child: list.isEmpty
+              ? Center(child: Text(tr('noQuestions', l), style: text.headlineMedium))
+              : ListView(
+                  children: [
+                    for (final p in list)
+                      Card(
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        child: InkWell(
+                          key: ValueKey('chapter:${p.chapter.id}'),
+                          borderRadius: BorderRadius.circular(12),
+                          onTap: () => start(chapterTest(pool, p.chapter.id, rnd), isMock: false),
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(minHeight: Z.tap),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
+                              child: Row(
+                                children: [
+                                  Text(yearLabel(p.chapter.year, s.config.board, l), style: text.bodyMedium?.copyWith(color: Z.accent)),
+                                  const SizedBox(width: 24),
+                                  Expanded(child: Text('${p.chapter.number}. ${p.chapter.title.t(l)}', style: text.headlineMedium)),
+                                  Text('${counts[p.chapter.id]} ${tr('questions', l)}', style: text.bodyMedium),
+                                  const SizedBox(width: 16),
+                                  const Icon(Icons.play_circle_fill, size: 64, color: Z.accent),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-              ]),
-      ),
-    ]);
+                  ],
+                ),
+        ),
+      ],
+    );
   }
 }
 
@@ -393,12 +405,22 @@ class _Clock extends StatelessWidget {
     return Container(
       key: const ValueKey('examClock'),
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-      decoration: BoxDecoration(color: (low ? Z.wrong : Z.accent).withValues(alpha: 0.2), border: Border.all(color: low ? Z.wrong : Z.accent, width: 3), borderRadius: BorderRadius.circular(Z.radius)),
-      child: Row(mainAxisSize: MainAxisSize.min, children: [
-        Icon(Icons.timer_outlined, size: 48, color: low ? Z.wrong : Z.accent),
-        const SizedBox(width: 12),
-        Text('${left ~/ 60}:${(left % 60).toString().padLeft(2, '0')}', style: TextStyle(fontSize: 48, fontWeight: FontWeight.w800, color: low ? Z.wrong : null)),
-      ]),
+      decoration: BoxDecoration(
+        color: (low ? Z.wrong : Z.accent).withValues(alpha: 0.2),
+        border: Border.all(color: low ? Z.wrong : Z.accent, width: 3),
+        borderRadius: BorderRadius.circular(Z.radius),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.timer_outlined, size: 48, color: low ? Z.wrong : Z.accent),
+          const SizedBox(width: 12),
+          Text(
+            '${left ~/ 60}:${(left % 60).toString().padLeft(2, '0')}',
+            style: TextStyle(fontSize: 48, fontWeight: FontWeight.w800, color: low ? Z.wrong : null),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -411,29 +433,48 @@ class _BigCard extends StatelessWidget {
   final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) => Opacity(
-        opacity: onTap == null ? 0.45 : 1,
-        child: Material(
-          color: color,
-          borderRadius: BorderRadius.circular(40),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(40),
-            onTap: onTap,
-            child: Padding(
-              padding: const EdgeInsets.all(32),
-              child: Row(children: [
-                if (icon != null) ...[Icon(icon, size: 120, color: Colors.white), const SizedBox(width: 32)],
-                Expanded(
-                  child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerLeft, child: Text(title, style: const TextStyle(fontSize: 56, fontWeight: FontWeight.w800, color: Colors.white))),
+    opacity: onTap == null ? 0.45 : 1,
+    child: Material(
+      color: color,
+      borderRadius: BorderRadius.circular(40),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(40),
+        onTap: onTap,
+        child: Padding(
+          padding: EdgeInsets.all(context.narrow ? 24 : 32),
+          child: Row(
+            children: [
+              if (icon != null) ...[Icon(icon, size: context.narrow ? 88 : 120, color: Colors.white), SizedBox(width: context.narrow ? 20 : 32)],
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        title,
+                        style: const TextStyle(fontSize: 56, fontWeight: FontWeight.w800, color: Colors.white),
+                      ),
+                    ),
                     const SizedBox(height: 8),
-                    Text(sub, style: const TextStyle(fontSize: 28, color: Colors.white70), maxLines: 2, overflow: TextOverflow.ellipsis),
-                  ]),
+                    Text(
+                      sub,
+                      style: const TextStyle(fontSize: 28, color: Colors.white70),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
-              ]),
-            ),
+              ),
+            ],
           ),
         ),
-      );
+      ),
+    ),
+  );
 }
 
 /// Score, accuracy per subject, and every question with its correct answer and explanation.
@@ -460,58 +501,88 @@ class _Results extends StatelessWidget {
       final (r, n) = subjects[i.subject] ?? (0, 0);
       subjects[i.subject] = (r + (byId[i.q.id] == true ? 1 : 0), n + 1);
     }
-    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SizedBox(
-        width: 560,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          if (timeUp) Text(tr('timeUp', l), style: text.bodyLarge?.copyWith(color: Z.wrong)),
-          Text(tr('score', l), style: text.headlineMedium),
-          Text('$score / ${items.length}', key: const ValueKey('examScore'), style: text.displayLarge?.copyWith(fontSize: 120, color: Z.accent)),
-          Text('${items.isEmpty ? 0 : (score * 100 / items.length).round()}%', style: text.headlineLarge),
-          const SizedBox(height: 32),
-          Text(tr('accuracy', l), style: text.headlineMedium),
-          const SizedBox(height: 12),
-          for (final e in subjects.entries)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 18),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text('${subjectName(e.key, l)}  ${e.value.$1} / ${e.value.$2}', style: text.bodyLarge),
-                const SizedBox(height: 6),
-                LinearProgressIndicator(value: e.value.$2 == 0 ? 0 : e.value.$1 / e.value.$2, minHeight: 22, borderRadius: BorderRadius.circular(11), color: Z.correct, backgroundColor: Z.wrong.withValues(alpha: 0.35)),
-              ]),
-            ),
-          const Spacer(),
-          BigButton(key: const ValueKey('examDone'), icon: Icons.done_all, label: tr('done', l), color: Z.correct, onPressed: () => Navigator.pop(context)),
-        ]),
-      ),
-      const SizedBox(width: 40),
-      Expanded(
-        child: ListView(children: [
-          for (final (n, i) in items.indexed)
-            Card(
-              margin: const EdgeInsets.only(bottom: 16),
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Icon(
-                    byId[i.q.id] == null ? Icons.remove_circle_outline : (byId[i.q.id]! ? Icons.check_circle : Icons.cancel),
-                    size: 52,
-                    color: byId[i.q.id] == null ? Colors.white54 : (byId[i.q.id]! ? Z.correct : Z.wrong),
-                  ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      MathText('${n + 1}. ${i.q.stem.t(l)}', style: text.bodyLarge?.copyWith(fontSize: 30)),
-                      const SizedBox(height: 8),
-                      Text('${tr('correctAnswer', l)}: ${correctAnswer(i.q, l)}', style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w700, color: Z.correct)),
-                      if (i.q.explanation != null) ...[const SizedBox(height: 6), MathText(i.q.explanation!.t(l), style: text.bodyMedium)],
-                    ]),
-                  ),
-                ]),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 560,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (timeUp) Text(tr('timeUp', l), style: text.bodyLarge?.copyWith(color: Z.wrong)),
+              Text(tr('score', l), style: text.headlineMedium),
+              Text(
+                '$score / ${items.length}',
+                key: const ValueKey('examScore'),
+                style: text.displayLarge?.copyWith(fontSize: 120, color: Z.accent),
               ),
-            ),
-        ]),
-      ),
-    ]);
+              Text('${items.isEmpty ? 0 : (score * 100 / items.length).round()}%', style: text.headlineLarge),
+              const SizedBox(height: 32),
+              Text(tr('accuracy', l), style: text.headlineMedium),
+              const SizedBox(height: 12),
+              for (final e in subjects.entries)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 18),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('${subjectName(e.key, l)}  ${e.value.$1} / ${e.value.$2}', style: text.bodyLarge),
+                      const SizedBox(height: 6),
+                      LinearProgressIndicator(
+                        value: e.value.$2 == 0 ? 0 : e.value.$1 / e.value.$2,
+                        minHeight: 22,
+                        borderRadius: BorderRadius.circular(11),
+                        color: Z.correct,
+                        backgroundColor: Z.wrong.withValues(alpha: 0.35),
+                      ),
+                    ],
+                  ),
+                ),
+              const Spacer(),
+              BigButton(key: const ValueKey('examDone'), icon: Icons.done_all, label: tr('done', l), color: Z.correct, onPressed: () => Navigator.pop(context)),
+            ],
+          ),
+        ),
+        const SizedBox(width: 40),
+        Expanded(
+          child: ListView(
+            children: [
+              for (final (n, i) in items.indexed)
+                Card(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          byId[i.q.id] == null ? Icons.remove_circle_outline : (byId[i.q.id]! ? Icons.check_circle : Icons.cancel),
+                          size: 52,
+                          color: byId[i.q.id] == null ? Colors.white54 : (byId[i.q.id]! ? Z.correct : Z.wrong),
+                        ),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              MathText('${n + 1}. ${i.q.stem.t(l)}', style: text.bodyLarge?.copyWith(fontSize: 30)),
+                              const SizedBox(height: 8),
+                              Text(
+                                '${tr('correctAnswer', l)}: ${correctAnswer(i.q, l)}',
+                                style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w700, color: Z.correct),
+                              ),
+                              if (i.q.explanation != null) ...[const SizedBox(height: 6), MathText(i.q.explanation!.t(l), style: text.bodyMedium)],
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -62,7 +62,10 @@ class PackStore {
     final manifest = jsonDecode(utf8.decode(manifestBytes)) as Map<String, dynamic>;
     final key = trustedKeys[manifest['keyId']];
     if (key == null) throw PackError('signed with an unknown key ${manifest['keyId']}');
-    final ok = await Ed25519().verify(manifestBytes, signature: Signature(sig, publicKey: SimplePublicKey(key, type: KeyPairType.ed25519)));
+    final ok = await Ed25519().verify(
+      manifestBytes,
+      signature: Signature(sig, publicKey: SimplePublicKey(key, type: KeyPairType.ed25519)),
+    );
     if (!ok) throw PackError('signature does not match');
 
     final id = manifest['id'] as String, version = manifest['version'] as String;

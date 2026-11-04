@@ -13,6 +13,7 @@ class PeriodStep {
   PeriodStep(this.block, this.phase, this.seconds);
   final Block block;
   final Phase phase;
+
   /// Planned time on screen. For narrated blocks it is at least the reading time, so the period
   /// still works on a board whose TTS voice is missing.
   int seconds;
@@ -53,16 +54,15 @@ abstract final class PeriodPlanner {
   static int whiteboardSeconds(Block b) => [for (final st in b.boardSteps) max(readingSeconds(st.say), 3) + 3].fold(0, (a, s) => a + s);
 
   static Phase phaseOf(Block b) => switch (b.type) {
-        BlockType.example => Phase.examples,
-        BlockType.classQuiz || BlockType.pyq => Phase.quiz,
-        BlockType.recap => Phase.recap,
-        _ => Phase.lesson,
-      };
+    BlockType.example => Phase.examples,
+    BlockType.classQuiz || BlockType.pyq => Phase.quiz,
+    BlockType.recap => Phase.recap,
+    _ => Phase.lesson,
+  };
 
   static PeriodPlan plan(Lesson lesson, {required int periodMinutes}) {
     final budget = periodMinutes * 60 - homeworkReserve;
-    final steps = [for (final b in lesson.blocks) PeriodStep(b, phaseOf(b), estimate(b))]
-      ..sort((a, b) => a.phase.index.compareTo(b.phase.index)); // stable: keeps lesson order inside a phase
+    final steps = [for (final b in lesson.blocks) PeriodStep(b, phaseOf(b), estimate(b))]..sort((a, b) => a.phase.index.compareTo(b.phase.index)); // stable: keeps lesson order inside a phase
     final dropped = <String>[];
     int total() => steps.fold(0, (a, s) => a + s.seconds);
 
@@ -202,8 +202,7 @@ class ScheduledPeriod {
   ScheduledPeriod({required this.date, required this.start, required this.end, required this.topicId});
   final String date, start, end, topicId; // yyyy-mm-dd, HH:mm, HH:mm
 
-  factory ScheduledPeriod.fromJson(Map<String, dynamic> j) =>
-      ScheduledPeriod(date: j['date'] as String, start: j['start'] as String, end: j['end'] as String, topicId: j['topicId'] as String);
+  factory ScheduledPeriod.fromJson(Map<String, dynamic> j) => ScheduledPeriod(date: j['date'] as String, start: j['start'] as String, end: j['end'] as String, topicId: j['topicId'] as String);
 
   DateTime _at(String hm) => DateTime.parse('${date}T$hm:00');
   DateTime get startsAt => _at(start);

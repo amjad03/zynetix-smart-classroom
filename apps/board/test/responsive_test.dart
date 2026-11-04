@@ -38,8 +38,11 @@ void main() {
       final problems = <String>[];
       var where = '';
       final old = FlutterError.onError;
-      FlutterError.onError = (e) => problems.add('$where: ${e.exceptionAsString().split('\n').first}');
-      addTearDown(() => FlutterError.onError = old);
+      FlutterError.onError = (e) {
+        final p = '$where: ${e.exceptionAsString().split('\n').first}';
+        if (!problems.contains(p)) debugPrint('PROBLEM $p');
+        problems.add(p);
+      };
       t.view.physicalSize = size;
       t.view.devicePixelRatio = 1;
       addTearDown(t.view.reset);
@@ -61,13 +64,15 @@ void main() {
         await show('player $topic', LessonPlayerScreen(pack: hit.pack, lesson: hit.lesson));
         for (var i = 1; i < hit.lesson.blocks.length; i++) {
           where = 'player $topic block ${hit.lesson.blocks[i].id} (${hit.lesson.blocks[i].type.wire})';
-          await t.tap(find.byKey(const ValueKey('next')), warnIfMissed: false);
+          if (find.byKey(const ValueKey('next')).evaluate().isEmpty) break;
+          await t.tap(find.byKey(const ValueKey('next')));
           await t.pump(const Duration(milliseconds: 400));
         }
       }
       final sl = s.lessonFor(topics.first)!;
       await show('self-learning', SelfLearningScreen(pack: sl.pack, lesson: sl.lesson, periodSeconds: 2400, autoTick: false));
       await t.pumpWidget(const SizedBox());
+      FlutterError.onError = old;
       expect(problems.toSet().toList(), isEmpty);
     });
   }

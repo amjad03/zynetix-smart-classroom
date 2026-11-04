@@ -11,14 +11,7 @@ import '../engine/lesson_controller.dart';
 import '../engine/model.dart';
 
 /// Board ink names (schema `ink`) on the chalkboard.
-const boardInk = <String, Color>{
-  'white': Color(0xFFF4F4EC),
-  'yellow': Color(0xFFFFE45C),
-  'red': Color(0xFFFF7A70),
-  'green': Color(0xFF8BE88F),
-  'blue': Color(0xFF7CC4FF),
-  'orange': Color(0xFFFFB25C),
-};
+const boardInk = <String, Color>{'white': Color(0xFFF4F4EC), 'yellow': Color(0xFFFFE45C), 'red': Color(0xFFFF7A70), 'green': Color(0xFF8BE88F), 'blue': Color(0xFF7CC4FF), 'orange': Color(0xFFFFB25C)};
 Color inkColor(Object? name) => boardInk[name] ?? boardInk['white']!;
 
 const chalkboardColor = Color(0xFF1C2B26);
@@ -110,7 +103,10 @@ class WhiteboardViewState extends State<WhiteboardView> with SingleTickerProvide
     for (var i = 0; i <= shown; i++) {
       if (steps[i].clear) from = i;
     }
-    return [for (var i = from; i <= shown; i++) for (final d in steps[i].draw) (d, i)];
+    return [
+      for (var i = from; i <= shown; i++)
+        for (final d in steps[i].draw) (d, i),
+    ];
   }
 
   @override
@@ -118,54 +114,68 @@ class WhiteboardViewState extends State<WhiteboardView> with SingleTickerProvide
     final l = widget.c.lang, text = Theme.of(context).textTheme;
     if (steps.isEmpty) return const SizedBox.shrink();
     final say = steps[shown].say;
-    return Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Expanded(
-        child: Center(
-          child: AspectRatio(
-            aspectRatio: 100 / 60,
-            child: Container(
-              key: const ValueKey('chalkboard'),
-              decoration: BoxDecoration(
-                color: chalkboardColor,
-                borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: const Color(0xFF6D4C2F), width: 12),
-                boxShadow: const [BoxShadow(color: Colors.black45, blurRadius: 18, offset: Offset(0, 6))],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: AnimatedBuilder(animation: _draw, builder: (context, _) => _Board(items: _visible, current: shown, t: _draw.value, lang: l)),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Expanded(
+          child: Center(
+            child: AspectRatio(
+              aspectRatio: 100 / 60,
+              child: Container(
+                key: const ValueKey('chalkboard'),
+                decoration: BoxDecoration(
+                  color: chalkboardColor,
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: const Color(0xFF6D4C2F), width: 12),
+                  boxShadow: const [BoxShadow(color: Colors.black45, blurRadius: 18, offset: Offset(0, 6))],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: AnimatedBuilder(
+                    animation: _draw,
+                    builder: (context, _) => _Board(items: _visible, current: shown, t: _draw.value, lang: l),
+                  ),
+                ),
               ),
             ),
           ),
         ),
-      ),
-      const SizedBox(width: Z.gap),
-      SizedBox(
-        width: 380,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(children: [
-            const Icon(Icons.draw_outlined, size: 48, color: Z.accent),
-            const SizedBox(width: 12),
-            Expanded(child: Text(widget.block.title?.t(l) ?? tr('whiteboard', l), style: text.headlineMedium, maxLines: 2, overflow: TextOverflow.ellipsis)),
-          ]),
-          const SizedBox(height: 12),
-          Text('${tr('step', l)} ${shown + 1} / ${steps.length}', key: const ValueKey('wbStep'), style: text.bodyLarge?.copyWith(color: Z.accent, fontWeight: FontWeight.w700)),
-          const SizedBox(height: 12),
-          Expanded(
-            child: SingleChildScrollView(
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                child: Text(say?.t(l) ?? '', key: ValueKey(shown), style: text.bodyLarge),
+        const SizedBox(width: Z.gap),
+        SizedBox(
+          width: 380,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(Icons.draw_outlined, size: 48, color: Z.accent),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(widget.block.title?.t(l) ?? tr('whiteboard', l), style: text.headlineMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
+                  ),
+                ],
               ),
-            ),
+              const SizedBox(height: 12),
+              Text(
+                '${tr('step', l)} ${shown + 1} / ${steps.length}',
+                key: const ValueKey('wbStep'),
+                style: text.bodyLarge?.copyWith(color: Z.accent, fontWeight: FontWeight.w700),
+              ),
+              const SizedBox(height: 12),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    child: Text(say?.t(l) ?? '', key: ValueKey(shown), style: text.bodyLarge),
+                  ),
+                ),
+              ),
+              if (!widget.auto) ...[const SizedBox(height: 12), BigButton(key: const ValueKey('wbNext'), icon: Icons.skip_next, label: tr('nextStep', l), onPressed: atEnd ? null : nextStep)],
+            ],
           ),
-          if (!widget.auto) ...[
-            const SizedBox(height: 12),
-            BigButton(key: const ValueKey('wbNext'), icon: Icons.skip_next, label: tr('nextStep', l), onPressed: atEnd ? null : nextStep),
-          ],
-        ]),
-      ),
-    ]);
+        ),
+      ],
+    );
   }
 }
 
@@ -179,35 +189,52 @@ class _Board extends StatelessWidget {
   final Lang lang;
 
   @override
-  Widget build(BuildContext context) => LayoutBuilder(builder: (context, box) {
-        final u = box.maxWidth / 100; // pixels per grid unit
-        final n = items.where((e) => e.$2 == current).length;
-        var k = 0;
-        final progress = <double>[
-          for (final e in items)
-            if (e.$2 != current) 1 else ((t * n) - k++).clamp(0.0, 1.0),
-        ];
-        final widgets = <Widget>[];
-        for (final (i, e) in items.indexed) {
-          final d = e.$1, p = progress[i];
-          if (d['kind'] != 'text' && d['kind'] != 'math') continue;
-          final at = _pt(d['at']);
-          final size = ((d['size'] as num?) ?? 3).toDouble() * u * 1.15;
-          final style = zText(size).copyWith(color: inkColor(d['color']), height: 1.15);
-          final child = d['kind'] == 'text'
-              ? Text(L10n.of(d['text']).t(lang), style: style)
-              : Math.tex(d['tex'] as String? ?? '', textStyle: style, onErrorFallback: (_) => Text(d['tex'] as String? ?? '', style: style));
-          widgets.add(Positioned(
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, box) {
+      final u = box.maxWidth / 100; // pixels per grid unit
+      final n = items.where((e) => e.$2 == current).length;
+      var k = 0;
+      final progress = <double>[
+        for (final e in items)
+          if (e.$2 != current) 1 else ((t * n) - k++).clamp(0.0, 1.0),
+      ];
+      final widgets = <Widget>[];
+      for (final (i, e) in items.indexed) {
+        final d = e.$1, p = progress[i];
+        if (d['kind'] != 'text' && d['kind'] != 'math') continue;
+        final at = _pt(d['at']);
+        final size = ((d['size'] as num?) ?? 3).toDouble() * u * 1.15;
+        final style = zText(size).copyWith(color: inkColor(d['color']), height: 1.15);
+        final child = d['kind'] == 'text'
+            ? Text(L10n.of(d['text']).t(lang), style: style)
+            : Math.tex(
+                d['tex'] as String? ?? '',
+                textStyle: style,
+                onErrorFallback: (_) => Text(d['tex'] as String? ?? '', style: style),
+              );
+        widgets.add(
+          Positioned(
             left: at.dx * u,
             top: at.dy * u,
-            child: Opacity(opacity: p, child: Transform.translate(offset: Offset(0, (1 - p) * 8), child: child)),
-          ));
-        }
-        return Stack(children: [
-          Positioned.fill(child: CustomPaint(painter: BoardPainter(items: [for (final e in items) e.$1], progress: progress))),
+            child: Opacity(
+              opacity: p,
+              child: Transform.translate(offset: Offset(0, (1 - p) * 8), child: child),
+            ),
+          ),
+        );
+      }
+      return Stack(
+        children: [
+          Positioned.fill(
+            child: CustomPaint(
+              painter: BoardPainter(items: [for (final e in items) e.$1], progress: progress),
+            ),
+          ),
           ...widgets,
-        ]);
-      });
+        ],
+      );
+    },
+  );
 }
 
 Offset _pt(Object? v) => v is List && v.length == 2 ? Offset((v[0] as num).toDouble(), (v[1] as num).toDouble()) : Offset.zero;
@@ -289,8 +316,7 @@ class BoardPainter extends CustomPainter {
     canvas.drawPath(head, paint);
   }
 
-  static List<double> _range(Object? v, List<double> fallback) =>
-      v is List && v.length == 2 ? [(v[0] as num).toDouble(), (v[1] as num).toDouble()] : fallback;
+  static List<double> _range(Object? v, List<double> fallback) => v is List && v.length == 2 ? [(v[0] as num).toDouble(), (v[1] as num).toDouble()] : fallback;
 
   void _axes(Canvas canvas, Map<String, dynamic> d, double t, Paint stroke, double u) {
     final box = Rect.fromPoints(_pt(d['from']) * u, _pt(d['to']) * u);
@@ -314,7 +340,14 @@ double niceStep(double span, [int target = 8]) {
   if (span <= 0 || !span.isFinite) return 1;
   final raw = span / target, mag = math.pow(10, (math.log(raw) / math.ln10).floor()).toDouble();
   final f = raw / mag;
-  return (f < 1.5 ? 1 : f < 3.5 ? 2 : f < 7.5 ? 5 : 10) * mag;
+  return (f < 1.5
+          ? 1
+          : f < 3.5
+          ? 2
+          : f < 7.5
+          ? 5
+          : 10) *
+      mag;
 }
 
 String tickLabel(double v) {
@@ -323,15 +356,20 @@ String tickLabel(double v) {
 }
 
 void _label(Canvas canvas, String s, Offset at, double size, Color color, {Alignment align = Alignment.center}) {
-  final tp = TextPainter(text: TextSpan(text: s, style: zText(size).copyWith(color: color)), textDirection: TextDirection.ltr)..layout();
+  final tp = TextPainter(
+    text: TextSpan(
+      text: s,
+      style: zText(size).copyWith(color: color),
+    ),
+    textDirection: TextDirection.ltr,
+  )..layout();
   final off = at - Offset(tp.width * (align.x + 1) / 2, tp.height * (align.y + 1) / 2);
   tp.paint(canvas, off);
 }
 
 /// Axes in [box] for ranges [xr] × [yr]: the axis lines (at 0 when in range, else at the
 /// box edge), ticks with labels, and the axis names. Shared by whiteboards and interactives.
-void paintAxes(Canvas canvas, Rect box, List<double> xr, List<double> yr, Color color,
-    {double t = 1, double strokeWidth = 3, double font = 22, String? xLabel, String? yLabel, bool grid = false}) {
+void paintAxes(Canvas canvas, Rect box, List<double> xr, List<double> yr, Color color, {double t = 1, double strokeWidth = 3, double font = 22, String? xLabel, String? yLabel, bool grid = false}) {
   Offset map(double x, double y) => Offset(box.left + (x - xr[0]) / (xr[1] - xr[0]) * box.width, box.bottom - (y - yr[0]) / (yr[1] - yr[0]) * box.height);
   final double x0 = (0.0).clamp(math.min(xr[0], xr[1]), math.max(xr[0], xr[1])), y0 = (0.0).clamp(math.min(yr[0], yr[1]), math.max(yr[0], yr[1]));
   final paint = Paint()

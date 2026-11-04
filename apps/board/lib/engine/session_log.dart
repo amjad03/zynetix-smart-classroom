@@ -9,25 +9,33 @@ import 'model.dart';
 /// Mirrors SessionLog in packages/lesson-schema.
 class SessionRecorder {
   SessionRecorder({required Outbox outbox, required String sectionId, required String mode, required InstalledPack pack, required Lesson lesson, DateTime Function()? now})
-      : this.raw(outbox: outbox, sectionId: sectionId, mode: mode, chapterId: lesson.chapterId, topicId: lesson.topicId, lessonId: lesson.id, packVersion: pack.version, now: now);
+    : this.raw(outbox: outbox, sectionId: sectionId, mode: mode, chapterId: lesson.chapterId, topicId: lesson.topicId, lessonId: lesson.id, packVersion: pack.version, now: now);
 
   /// A session that is not one lesson (Exam Practice): the caller names the chapter and topic.
-  SessionRecorder.raw({required this.outbox, required this.sectionId, required this.mode, required String chapterId, required String topicId, required String lessonId, required String packVersion, DateTime Function()? now})
-      : _now = now ?? DateTime.now,
-        _log = {
-          'id': const Uuid().v4(),
-          'sectionId': sectionId,
-          'mode': mode,
-          'chapterId': chapterId,
-          'topicId': topicId,
-          'lessonId': lessonId,
-          'packVersion': packVersion,
-          'startedAt': (now ?? DateTime.now)().toUtc().toIso8601String(),
-          'endedAt': null,
-          'blocksShown': <String>[],
-          'completed': false,
-          'answers': <Map<String, dynamic>>[],
-        };
+  SessionRecorder.raw({
+    required this.outbox,
+    required this.sectionId,
+    required this.mode,
+    required String chapterId,
+    required String topicId,
+    required String lessonId,
+    required String packVersion,
+    DateTime Function()? now,
+  }) : _now = now ?? DateTime.now,
+       _log = {
+         'id': const Uuid().v4(),
+         'sectionId': sectionId,
+         'mode': mode,
+         'chapterId': chapterId,
+         'topicId': topicId,
+         'lessonId': lessonId,
+         'packVersion': packVersion,
+         'startedAt': (now ?? DateTime.now)().toUtc().toIso8601String(),
+         'endedAt': null,
+         'blocksShown': <String>[],
+         'completed': false,
+         'answers': <Map<String, dynamic>>[],
+       };
 
   final Outbox outbox;
   final String sectionId, mode;
@@ -45,7 +53,11 @@ class SessionRecorder {
   void answer({required String questionId, required QuizMode mode, int? roll, int? team, required int? chosen, required bool correct}) {
     (_log['answers'] as List).add({
       'questionId': questionId,
-      'mode': switch (mode) { QuizMode.monitor => 'monitor', QuizMode.rollCall => 'roll_call', QuizMode.team => 'team' },
+      'mode': switch (mode) {
+        QuizMode.monitor => 'monitor',
+        QuizMode.rollCall => 'roll_call',
+        QuizMode.team => 'team',
+      },
       'roll': ?roll,
       'team': ?team,
       'chosen': chosen,
@@ -78,7 +90,10 @@ class Outbox {
 
   List<Map<String, dynamic>> pending() => !file.existsSync()
       ? []
-      : [for (final l in file.readAsLinesSync()) if (l.trim().isNotEmpty) jsonDecode(l) as Map<String, dynamic>];
+      : [
+          for (final l in file.readAsLinesSync())
+            if (l.trim().isNotEmpty) jsonDecode(l) as Map<String, dynamic>,
+        ];
 
   void remove(Set<String> ids) {
     final keep = pending().where((l) => !ids.contains(l['id'])).toList();

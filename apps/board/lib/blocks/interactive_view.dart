@@ -39,7 +39,10 @@ class InteractiveView extends StatefulWidget {
 class InteractiveViewState extends State<InteractiveView> {
   Map<String, dynamic> get raw => widget.block.raw;
   String get kind => raw['kind'] as String? ?? 'readouts';
-  late final List<SliderSpec> sliders = [for (final s in (raw['sliders'] as List?) ?? const []) if (s is Map) SliderSpec.fromJson(s.cast<String, dynamic>())];
+  late final List<SliderSpec> sliders = [
+    for (final s in (raw['sliders'] as List?) ?? const [])
+      if (s is Map) SliderSpec.fromJson(s.cast<String, dynamic>()),
+  ];
   late final Map<String, double> values = {for (final s in sliders) s.name: s.value};
   List<String> get names => [for (final s in sliders) s.name];
 
@@ -86,53 +89,83 @@ class InteractiveViewState extends State<InteractiveView> {
     final reads = readouts();
     final chart = kind == 'readouts'
         ? Center(
-            child: Wrap(spacing: 32, runSpacing: 32, alignment: WrapAlignment.center, children: [
-              for (final (i, r) in reads.indexed) _Readout(key: ValueKey('readout-$i'), label: r.label, value: r.value, big: true),
-            ]),
+            child: Wrap(
+              spacing: 32,
+              runSpacing: 32,
+              alignment: WrapAlignment.center,
+              children: [for (final (i, r) in reads.indexed) _Readout(key: ValueKey('readout-$i'), label: r.label, value: r.value, big: true)],
+            ),
           )
         : CustomPaint(key: const ValueKey('interactiveChart'), painter: _ChartPainter(this), child: const SizedBox.expand());
-    return Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Expanded(
-        flex: 3,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(color: chalkboardColor, borderRadius: BorderRadius.circular(Z.radius)),
-              padding: const EdgeInsets.all(20),
-              child: chart,
+    final portrait = context.portrait;
+    final controls = [for (final s in sliders) _BigSlider(spec: s, value: values[s.name]!, lang: l, onChanged: (v) => setValue(s.name, v))];
+    return Flex(
+      direction: portrait ? Axis.vertical : Axis.horizontal,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Expanded(
+          flex: 3,
+          child: LayoutBuilder(
+            builder: (context, box) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(color: chalkboardColor, borderRadius: BorderRadius.circular(Z.radius)),
+                    padding: const EdgeInsets.all(20),
+                    child: chart,
+                  ),
+                ),
+                // The sliders take at most half the height and scroll on a short screen.
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxHeight: box.maxHeight * 0.5),
+                  child: SingleChildScrollView(
+                    child: Column(mainAxisSize: MainAxisSize.min, children: controls),
+                  ),
+                ),
+              ],
             ),
           ),
-          for (final s in sliders) _BigSlider(spec: s, value: values[s.name]!, lang: l, onChanged: (v) => setValue(s.name, v)),
-        ]),
-      ),
-      const SizedBox(width: Z.gap),
-      Expanded(
-        flex: 1,
-        child: SingleChildScrollView(
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            MathText(widget.block.f('caption').t(l), style: text.bodyLarge),
-            if (kind != 'readouts' && reads.isNotEmpty) ...[
-              const SizedBox(height: Z.gap),
-              for (final (i, r) in reads.indexed) Padding(padding: const EdgeInsets.only(bottom: 12), child: _Readout(key: ValueKey('readout-$i'), label: r.label, value: r.value)),
-            ],
-            if (widget.block.list('tryThis').isNotEmpty) ...[
-              const SizedBox(height: Z.gap),
-              Text(tr('tryThis', l), style: text.headlineMedium),
-              const SizedBox(height: 8),
-              for (final p in widget.block.list('tryThis'))
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    const Icon(Icons.touch_app_outlined, size: 40, color: Z.accent),
-                    const SizedBox(width: 12),
-                    Expanded(child: MathText(p.t(l), style: text.bodyLarge?.copyWith(fontSize: 30))),
-                  ]),
-                ),
-            ],
-          ]),
         ),
-      ),
-    ]);
+        portrait ? const SizedBox(height: Z.gap) : const SizedBox(width: Z.gap),
+        Expanded(
+          flex: portrait ? 2 : 1,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                MathText(widget.block.f('caption').t(l), style: text.bodyLarge),
+                if (kind != 'readouts' && reads.isNotEmpty) ...[
+                  const SizedBox(height: Z.gap),
+                  for (final (i, r) in reads.indexed)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: _Readout(key: ValueKey('readout-$i'), label: r.label, value: r.value),
+                    ),
+                ],
+                if (widget.block.list('tryThis').isNotEmpty) ...[
+                  const SizedBox(height: Z.gap),
+                  Text(tr('tryThis', l), style: text.headlineMedium),
+                  const SizedBox(height: 8),
+                  for (final p in widget.block.list('tryThis'))
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(Icons.touch_app_outlined, size: 40, color: Z.accent),
+                          const SizedBox(width: 12),
+                          Expanded(child: MathText(p.t(l), style: text.bodyLarge?.copyWith(fontSize: 30))),
+                        ],
+                      ),
+                    ),
+                ],
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -142,13 +175,27 @@ class _Readout extends StatelessWidget {
   final bool big;
   @override
   Widget build(BuildContext context) => Container(
-        padding: EdgeInsets.symmetric(horizontal: big ? 40 : 20, vertical: big ? 28 : 14),
-        decoration: BoxDecoration(color: Z.accent.withValues(alpha: 0.14), border: Border.all(color: Z.accent, width: 3), borderRadius: BorderRadius.circular(Z.radius)),
-        child: Column(crossAxisAlignment: big ? CrossAxisAlignment.center : CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-          Text(label, style: TextStyle(fontSize: big ? 34 : 26, color: big ? Colors.white : null)),
-          Text(value, style: TextStyle(fontSize: big ? 64 : 42, fontWeight: FontWeight.w800, color: Z.accent)),
-        ]),
-      );
+    padding: EdgeInsets.symmetric(horizontal: big ? 40 : 20, vertical: big ? 28 : 14),
+    decoration: BoxDecoration(
+      color: Z.accent.withValues(alpha: 0.14),
+      border: Border.all(color: Z.accent, width: 3),
+      borderRadius: BorderRadius.circular(Z.radius),
+    ),
+    child: Column(
+      crossAxisAlignment: big ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          label,
+          style: TextStyle(fontSize: big ? 34 : 26, color: big ? Colors.white : null),
+        ),
+        Text(
+          value,
+          style: TextStyle(fontSize: big ? 64 : 42, fontWeight: FontWeight.w800, color: Z.accent),
+        ),
+      ],
+    ),
+  );
 }
 
 /// A slider sized for the board: a 60 px thumb, a thick track, and its value in big type.
@@ -165,39 +212,47 @@ class _BigSlider extends StatelessWidget {
     final decimals = spec.step >= 1 ? 0 : (math.log(1 / spec.step) / math.ln10).ceil().clamp(1, 4);
     return Padding(
       padding: const EdgeInsets.only(top: 12),
-      child: Row(children: [
-        SizedBox(width: 260, child: MathText(spec.label.t(lang), style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w600))),
-        Expanded(
-          child: SliderTheme(
-            data: SliderTheme.of(context).copyWith(
-              trackHeight: 14,
-              thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 30, elevation: 4),
-              overlayShape: const RoundSliderOverlayShape(overlayRadius: 48),
-              activeTrackColor: Z.accent,
-              thumbColor: Z.accent,
-              inactiveTrackColor: Colors.white24,
-              showValueIndicator: ShowValueIndicator.never,
-              tickMarkShape: SliderTickMarkShape.noTickMark,
-            ),
-            child: SizedBox(
-              height: Z.tap,
-              child: Slider(
-                key: ValueKey('slider-${spec.name}'),
-                min: spec.min,
-                max: spec.max,
-                divisions: divisions > 0 && divisions <= 2000 ? divisions : null,
-                value: value.clamp(spec.min, spec.max),
-                onChanged: onChanged,
+      child: Row(
+        children: [
+          SizedBox(
+            width: 260,
+            child: MathText(spec.label.t(lang), style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w600)),
+          ),
+          Expanded(
+            child: SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                trackHeight: 14,
+                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 30, elevation: 4),
+                overlayShape: const RoundSliderOverlayShape(overlayRadius: 48),
+                activeTrackColor: Z.accent,
+                thumbColor: Z.accent,
+                inactiveTrackColor: Colors.white24,
+                showValueIndicator: ShowValueIndicator.never,
+                tickMarkShape: SliderTickMarkShape.noTickMark,
+              ),
+              child: SizedBox(
+                height: Z.tap,
+                child: Slider(
+                  key: ValueKey('slider-${spec.name}'),
+                  min: spec.min,
+                  max: spec.max,
+                  divisions: divisions > 0 && divisions <= 2000 ? divisions : null,
+                  value: value.clamp(spec.min, spec.max),
+                  onChanged: onChanged,
+                ),
               ),
             ),
           ),
-        ),
-        SizedBox(
-          width: 220,
-          child: Text('${value.toStringAsFixed(decimals)}${spec.unit == null ? '' : ' ${spec.unit}'}',
-              textAlign: TextAlign.right, style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w800, color: Z.accent)),
-        ),
-      ]),
+          SizedBox(
+            width: 220,
+            child: Text(
+              '${value.toStringAsFixed(decimals)}${spec.unit == null ? '' : ' ${spec.unit}'}',
+              textAlign: TextAlign.right,
+              style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w800, color: Z.accent),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -218,7 +273,13 @@ class _ChartPainter extends CustomPainter {
     ..strokeJoin = StrokeJoin.round;
 
   void _text(Canvas canvas, String t, Offset at, {double size = font, Color color = Colors.white, Alignment align = Alignment.center, FontWeight weight = FontWeight.w600}) {
-    final tp = TextPainter(text: TextSpan(text: t, style: zText(size, weight).copyWith(color: color)), textDirection: TextDirection.ltr)..layout();
+    final tp = TextPainter(
+      text: TextSpan(
+        text: t,
+        style: zText(size, weight).copyWith(color: color),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
     tp.paint(canvas, at - Offset(tp.width * (align.x + 1) / 2, tp.height * (align.y + 1) / 2));
   }
 
@@ -270,7 +331,11 @@ class _ChartPainter extends CustomPainter {
         if (v is List && v.length == 2) Offset(s.resolve(v[0]), s.resolve(v[1])),
     ].where((o) => o.dx.isFinite && o.dy.isFinite).toList();
     final r = vs.fold(Offset.zero, (a, b) => a + b);
-    final reach = [for (final v in [...vs, r]) math.max(v.dx.abs(), v.dy.abs())].fold(1.0, math.max) * 1.2;
+    final reach =
+        [
+          for (final v in [...vs, r]) math.max(v.dx.abs(), v.dy.abs()),
+        ].fold(1.0, math.max) *
+        1.2;
     final xr = s._range('x') ?? [-reach, reach], yr = s._range('y') ?? [-reach, reach];
     // Equal scale on both axes, so angles look right.
     final pb0 = _plotBox(box);
@@ -303,9 +368,7 @@ class _ChartPainter extends CustomPainter {
 
   static double _round(double v) => (v * 100).roundToDouble() / 100;
 
-  List<(String, double)> get _data => [
-        for (final e in ((raw['data'] as Map?) ?? const {}).entries) (e.key.toString(), s.resolve(e.value)),
-      ];
+  List<(String, double)> get _data => [for (final e in ((raw['data'] as Map?) ?? const {}).entries) (e.key.toString(), s.resolve(e.value))];
 
   void _bars(Canvas canvas, Rect box) {
     final data = _data;
@@ -327,7 +390,10 @@ class _ChartPainter extends CustomPainter {
   }
 
   void _pie(Canvas canvas, Rect box) {
-    final data = [for (final d in _data) if (d.$2.isFinite && d.$2 > 0) d];
+    final data = [
+      for (final d in _data)
+        if (d.$2.isFinite && d.$2 > 0) d,
+    ];
     final total = data.fold(0.0, (a, d) => a + d.$2);
     if (total <= 0) return;
     final radius = math.min(box.height / 2 - 20, box.width * 0.3);
@@ -381,7 +447,10 @@ class _ChartPainter extends CustomPainter {
 
   void _numberLine(Canvas canvas, Rect box) {
     final pts = [for (final p in (raw['points'] as List?) ?? const []) (p is String ? p : null, s.resolve(p))];
-    final finite = [for (final p in pts) if (p.$2.isFinite) p.$2];
+    final finite = [
+      for (final p in pts)
+        if (p.$2.isFinite) p.$2,
+    ];
     final lo = finite.isEmpty ? -5.0 : finite.reduce(math.min), hi = finite.isEmpty ? 5.0 : finite.reduce(math.max);
     final xr = s._range('x') ?? [(lo - 1).floorToDouble(), (hi + 1).ceilToDouble()];
     final y = box.center.dy, left = box.left + 40, right = box.right - 40;

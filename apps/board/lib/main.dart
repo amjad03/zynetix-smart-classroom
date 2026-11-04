@@ -73,7 +73,11 @@ class _ZynetixBoardAppState extends State<ZynetixBoardApp> {
     final p = s.config.scheduledNow(s.clock());
     final l = p == null ? null : s.lessonFor(p.topicId);
     if (p == null || l == null) return;
-    nav.push(MaterialPageRoute(builder: (_) => SelfLearningScreen(pack: l.pack, lesson: l.lesson, periodSeconds: p.secondsLeft(s.clock()))));
+    nav.push(
+      MaterialPageRoute(
+        builder: (_) => SelfLearningScreen(pack: l.pack, lesson: l.lesson, periodSeconds: p.secondsLeft(s.clock())),
+      ),
+    );
   }
 
   @override
@@ -85,17 +89,17 @@ class _ZynetixBoardAppState extends State<ZynetixBoardApp> {
 
   @override
   Widget build(BuildContext context) => ServicesScope(
-        services: widget.services,
-        child: MaterialApp(
-          navigatorKey: _nav,
-          title: 'Zynetix Smart Classroom',
-          debugShowCheckedModeBanner: false,
-          theme: zynetixTheme(),
-          home: widget.home,
-          builder: (context, child) => ListenableBuilder(
-            listenable: widget.services.config,
-            builder: (context, _) => UiScale(scale: widget.services.config.uiScale, child: child!),
-          ),
-        ),
-      );
+    services: widget.services,
+    child: MaterialApp(
+      navigatorKey: _nav,
+      title: 'Zynetix Smart Classroom',
+      debugShowCheckedModeBanner: false,
+      theme: zynetixTheme(),
+      home: widget.home,
+      builder: (context, child) => ListenableBuilder(
+        listenable: widget.services.config,
+        builder: (context, _) => UiScale(scale: widget.services.config.uiScale, child: child!),
+      ),
+    ),
+  );
 }

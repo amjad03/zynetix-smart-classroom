@@ -52,10 +52,12 @@ class Unscaled extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = UiScale.of(context);
     if (s == 1) return child;
-    return LayoutBuilder(builder: (context, c) => FittedBox(
-          fit: BoxFit.fill,
-          child: SizedBox(width: c.maxWidth * s, height: c.maxHeight * s, child: child),
-        ));
+    return LayoutBuilder(
+      builder: (context, c) => FittedBox(
+        fit: BoxFit.fill,
+        child: SizedBox(width: c.maxWidth * s, height: c.maxHeight * s, child: child),
+      ),
+    );
   }
 }
 

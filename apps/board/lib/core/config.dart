@@ -23,11 +23,14 @@ class BoardConfig extends ChangeNotifier {
   String get collegeName => _p.getString('collegeName') ?? 'Zynetix PU College';
   String get sectionId => _p.getString('sectionId') ?? 'demo-1puc-a';
   String get sectionLabel => _p.getString('sectionLabel') ?? '1st PUC · A · PCMB';
+
   /// puc1 / puc2: which year's chapters to list first.
   String get year => _p.getString('year') ?? 'puc1';
+
   /// The curriculum this section follows: kar_pu (Karnataka PU) or cbse.
   String get board => _p.getString('board') ?? 'kar_pu';
   bool get isCbse => board == 'cbse';
+
   /// Subjects taught in this section, in tab order (from Admin → Sections).
   List<String> get subjects => _p.getStringList('subjects') ?? const ['physics', 'chemistry', 'maths', 'biology'];
   int get rollCount => _p.getInt('rollCount') ?? 60;
@@ -52,7 +55,11 @@ class BoardConfig extends ChangeNotifier {
   /// (a 75" board read from the back bench). The layouts are designed at classroom size and the
   /// whole app is scaled, so every screen keeps its proportions at any size.
   String get displaySize => _p.getString('displaySize') ?? 'normal';
-  double get uiScale => switch (displaySize) { 'classroom' => 1.0, 'large' => 0.7, _ => 0.5 };
+  double get uiScale => switch (displaySize) {
+    'classroom' => 1.0,
+    'large' => 0.7,
+    _ => 0.5,
+  };
   Future<void> setDisplaySize(String v) async {
     await _p.setString('displaySize', v);
     notifyListeners();

@@ -33,7 +33,9 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
     recorder: SessionRecorder(outbox: s.outbox, sectionId: s.config.sectionId, mode: 'teacher', pack: widget.pack, lesson: widget.lesson, now: s.clock),
   );
   late final ClassRoom room = ClassRoom(rollCount: s.config.rollCount);
-  final ink = InkController(style: const InkStyle(tool: InkTool.pen, color: Color(0xFFFFEB3B), width: 6));
+  final ink = InkController(
+    style: const InkStyle(tool: InkTool.pen, color: Color(0xFFFFEB3B), width: 6),
+  );
   bool _done = false;
 
   bool _listening = false;
@@ -88,16 +90,20 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
       builder: (ctx) => Dialog.fullscreen(
         child: Padding(
           padding: const EdgeInsets.all(40),
-          child: Column(children: [
-            Row(children: [
-              Text(tr('quiz', c.lang), style: Theme.of(ctx).textTheme.headlineLarge),
-              const Spacer(),
-              IconButton(iconSize: 64, icon: const Icon(Icons.close), onPressed: () => Navigator.pop(ctx)),
-            ]),
-            Expanded(
-              child: QuizRunner(questions: qs.take(3).toList(), mode: QuizMode.monitor, lang: c.lang, recorder: c.recorder, room: room, onDone: () => Navigator.pop(ctx)),
-            ),
-          ]),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Text(tr('quiz', c.lang), style: Theme.of(ctx).textTheme.headlineLarge),
+                  const Spacer(),
+                  IconButton(iconSize: 64, icon: const Icon(Icons.close), onPressed: () => Navigator.pop(ctx)),
+                ],
+              ),
+              Expanded(
+                child: QuizRunner(questions: qs.take(3).toList(), mode: QuizMode.monitor, lang: c.lang, recorder: c.recorder, room: room, onDone: () => Navigator.pop(ctx)),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -111,48 +117,57 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
         final l = c.lang, text = Theme.of(context).textTheme;
         return Scaffold(
           body: SafeArea(
-            child: Column(children: [
-              // Top: lesson, position, language, close.
-              Padding(
-                padding: const EdgeInsets.fromLTRB(32, 16, 16, 0),
-                child: Row(children: [
-                  Expanded(child: Text(widget.lesson.title.t(l), style: text.headlineMedium, overflow: TextOverflow.ellipsis)),
-                  Text('${c.index + 1} / ${c.blocks.length}', style: text.headlineMedium),
-                  const SizedBox(width: 16),
-                  SmartboardButton(onOpen: _boardOpened, onClose: _boardClosed),
-                  const SizedBox(width: 16),
-                  TextButton(onPressed: () => c.setLang(l == Lang.en ? Lang.kn : Lang.en), child: Text(l == Lang.en ? 'ಕನ್ನಡ' : 'EN', style: const TextStyle(fontSize: 32))),
-                  IconButton(key: const ValueKey('close'), iconSize: 64, icon: const Icon(Icons.close), onPressed: () => Navigator.pop(context)),
-                ]),
-              ),
-              LinearProgressIndicator(value: c.progress, minHeight: 8),
-              Expanded(
-                child: Stack(children: [
-                  Positioned.fill(
-                    child: Padding(
-                      padding: const EdgeInsets.all(40),
-                      child: BlockView(c: c, embeds: s.embeds, room: room),
-                    ),
+            child: Column(
+              children: [
+                // Top: lesson, position, language, close.
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(32, 16, 16, 0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(widget.lesson.title.t(l), style: text.headlineMedium, overflow: TextOverflow.ellipsis, maxLines: 1),
+                      ),
+                      const SizedBox(width: 16),
+                      Text('${c.index + 1} / ${c.blocks.length}', style: text.headlineMedium),
+                      const SizedBox(width: 16),
+                      SmartboardButton(onOpen: _boardOpened, onClose: _boardClosed),
+                      const SizedBox(width: 16),
+                      TextButton(
+                        onPressed: () => c.setLang(l == Lang.en ? Lang.kn : Lang.en),
+                        child: Text(l == Lang.en ? 'ಕನ್ನಡ' : 'EN', style: const TextStyle(fontSize: 32)),
+                      ),
+                      IconButton(key: const ValueKey('close'), iconSize: 64, icon: const Icon(Icons.close), onPressed: () => Navigator.pop(context)),
+                    ],
                   ),
-                  if (c.pen) ...[
-                    Positioned.fill(child: InkCanvas(controller: ink, transparent: true)),
-                    Positioned(right: 24, top: 24, child: _PenPalette(ink: ink)),
-                  ],
-                  if (c.paused)
-                    Positioned.fill(
-                      child: GestureDetector(
-                        onTap: () => c.setPaused(false),
-                        child: Container(
-                          color: Colors.black54,
-                          alignment: Alignment.center,
-                          child: Text(tr('pause', l), style: text.displayLarge?.copyWith(color: Colors.white)),
+                ),
+                LinearProgressIndicator(value: c.progress, minHeight: 8),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: Padding(
+                          padding: EdgeInsets.all(context.narrow ? 20 : 40),
+                          child: BlockView(c: c, embeds: s.embeds, room: room),
                         ),
                       ),
-                    ),
-                ]),
-              ),
-              _Controls(c: c, onQuiz: _quickQuiz, onFinish: _finish),
-            ]),
+                      if (c.pen) ...[Positioned.fill(child: InkCanvas(controller: ink, transparent: true)), Positioned(right: 24, top: 24, child: _PenPalette(ink: ink))],
+                      if (c.paused)
+                        Positioned.fill(
+                          child: GestureDetector(
+                            onTap: () => c.setPaused(false),
+                            child: Container(
+                              color: Colors.black54,
+                              alignment: Alignment.center,
+                              child: Text(tr('pause', l), style: text.displayLarge?.copyWith(color: Colors.white)),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                _Controls(c: c, onQuiz: _quickQuiz, onFinish: _finish),
+              ],
+            ),
           ),
         );
       },
@@ -168,25 +183,42 @@ class _Controls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = c.lang;
+    final gap = SizedBox(width: context.narrow ? 12 : 20);
     return Container(
       color: Theme.of(context).colorScheme.surfaceContainer,
-      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-      child: Row(children: [
-        BigButton(key: const ValueKey('back'), icon: Icons.arrow_back, label: tr('back', l), filled: false, onPressed: c.isFirst ? null : c.back),
-        const SizedBox(width: 20),
-        BigButton(key: const ValueKey('pause'), icon: c.paused ? Icons.play_arrow : Icons.pause, label: tr(c.paused ? 'resume' : 'pause', l), filled: false, onPressed: () => c.setPaused(!c.paused)),
-        const SizedBox(width: 20),
-        BigButton(key: const ValueKey('pen'), icon: Icons.edit, label: tr('pen', l), filled: c.pen, onPressed: c.togglePen),
-        const SizedBox(width: 20),
-        BigButton(key: const ValueKey('quiz'), icon: Icons.quiz_outlined, label: tr('quiz', l), filled: false, onPressed: onQuiz),
-        const SizedBox(width: 20),
-        if (c.canReadAloud)
-          BigButton(key: const ValueKey('read'), icon: c.speaking ? Icons.volume_up : Icons.record_voice_over_outlined, label: tr('readAloud', l), filled: false, onPressed: c.speaking ? null : c.readAloud),
-        const Spacer(),
-        c.isLast
-            ? BigButton(key: const ValueKey('finish'), icon: Icons.done_all, label: tr('finish', l), color: Z.correct, onPressed: onFinish)
-            : BigButton(key: const ValueKey('next'), icon: Icons.arrow_forward, label: tr('next', l), onPressed: c.next),
-      ]),
+      padding: EdgeInsets.symmetric(horizontal: context.narrow ? 16 : 32, vertical: 16),
+      child: Row(
+        children: [
+          BigButton(collapse: true, key: const ValueKey('back'), icon: Icons.arrow_back, label: tr('back', l), filled: false, onPressed: c.isFirst ? null : c.back),
+          gap,
+          BigButton(
+            collapse: true,
+            key: const ValueKey('pause'),
+            icon: c.paused ? Icons.play_arrow : Icons.pause,
+            label: tr(c.paused ? 'resume' : 'pause', l),
+            filled: false,
+            onPressed: () => c.setPaused(!c.paused),
+          ),
+          gap,
+          BigButton(collapse: true, key: const ValueKey('pen'), icon: Icons.edit, label: tr('pen', l), filled: c.pen, onPressed: c.togglePen),
+          gap,
+          BigButton(collapse: true, key: const ValueKey('quiz'), icon: Icons.quiz_outlined, label: tr('quiz', l), filled: false, onPressed: onQuiz),
+          gap,
+          if (c.canReadAloud)
+            BigButton(
+              collapse: true,
+              key: const ValueKey('read'),
+              icon: c.speaking ? Icons.volume_up : Icons.record_voice_over_outlined,
+              label: tr('readAloud', l),
+              filled: false,
+              onPressed: c.speaking ? null : c.readAloud,
+            ),
+          const Spacer(),
+          c.isLast
+              ? BigButton(key: const ValueKey('finish'), icon: Icons.done_all, label: tr('finish', l), color: Z.correct, onPressed: onFinish)
+              : BigButton(key: const ValueKey('next'), icon: Icons.arrow_forward, label: tr('next', l), onPressed: c.next),
+        ],
+      ),
     );
   }
 }
@@ -198,20 +230,22 @@ class _PenPalette extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(children: [
-            for (final col in colors)
-              Padding(
-                padding: const EdgeInsets.all(6),
-                child: InkWell(
-                  onTap: () => ink.style = ink.style.copyWith(tool: InkTool.pen, color: col),
-                  child: CircleAvatar(radius: 32, backgroundColor: col),
-                ),
+    child: Padding(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        children: [
+          for (final col in colors)
+            Padding(
+              padding: const EdgeInsets.all(6),
+              child: InkWell(
+                onTap: () => ink.style = ink.style.copyWith(tool: InkTool.pen, color: col),
+                child: CircleAvatar(radius: 32, backgroundColor: col),
               ),
-            IconButton(iconSize: 56, icon: const Icon(Icons.undo), onPressed: ink.undo),
-            IconButton(iconSize: 56, icon: const Icon(Icons.delete_sweep_outlined), onPressed: ink.clear),
-          ]),
-        ),
-      );
+            ),
+          IconButton(iconSize: 56, icon: const Icon(Icons.undo), onPressed: ink.undo),
+          IconButton(iconSize: 56, icon: const Icon(Icons.delete_sweep_outlined), onPressed: ink.clear),
+        ],
+      ),
+    ),
+  );
 }

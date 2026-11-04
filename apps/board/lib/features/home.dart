@@ -28,60 +28,82 @@ class HomeScreen extends StatelessWidget {
         final next = s.nextTopic();
         return Scaffold(
           body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(40),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                StatusBar(lang: l),
-                _LicenceBanner(services: s),
-                const Spacer(),
-                if (next != null)
-                  _ContinueCard(
-                    title: '${subjectName(next.pack.chapter.subject, l)} · ${next.pack.chapter.title.t(l)}',
-                    topic: next.lesson.title.t(l),
-                    lang: l,
-                    onTap: () => openLesson(context, next.pack, next.lesson),
+            child: LayoutBuilder(
+              builder: (context, box) {
+                final portrait = context.portrait, pad = context.narrow ? 24.0 : 40.0;
+                Widget mode(Widget b) => portrait ? SizedBox(height: 230, child: b) : Expanded(child: b);
+                final gap = portrait ? const SizedBox(height: 24) : const SizedBox(width: 32);
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: box.maxHeight),
+                    child: IntrinsicHeight(
+                      child: Padding(
+                        padding: EdgeInsets.all(pad),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            StatusBar(lang: l),
+                            _LicenceBanner(services: s),
+                            const Spacer(),
+                            if (next != null)
+                              _ContinueCard(
+                                title: '${subjectName(next.pack.chapter.subject, l)} · ${next.pack.chapter.title.t(l)}',
+                                topic: next.lesson.title.t(l),
+                                lang: l,
+                                onTap: () => openLesson(context, next.pack, next.lesson),
+                              ),
+                            const SizedBox(height: 40),
+                            SizedBox(
+                              height: portrait ? null : (box.maxHeight < 900 ? 220 : 300),
+                              child: Flex(
+                                direction: portrait ? Axis.vertical : Axis.horizontal,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  mode(
+                                    _ModeButton(
+                                      key: const ValueKey('teacherMode'),
+                                      icon: Icons.co_present_outlined,
+                                      title: tr('teacherMode', l),
+                                      sub: tr('teacherModeSub', l),
+                                      color: Theme.of(context).colorScheme.primary,
+                                      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const TeacherModeScreen())),
+                                    ),
+                                  ),
+                                  gap,
+                                  mode(
+                                    _ModeButton(
+                                      key: const ValueKey('selfLearning'),
+                                      icon: Icons.smart_display_outlined,
+                                      title: tr('selfLearning', l),
+                                      sub: tr('selfLearningSub', l),
+                                      color: const Color(0xFF6A1B9A),
+                                      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SelfLearningStartScreen())),
+                                    ),
+                                  ),
+                                  gap,
+                                  mode(
+                                    _ModeButton(
+                                      key: const ValueKey('examPractice'),
+                                      icon: Icons.emoji_events_outlined,
+                                      title: tr('examPractice', l),
+                                      sub: tr('examPracticeSub', l),
+                                      color: const Color(0xFFC62828),
+                                      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ExamPracticeScreen())),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Spacer(),
+                            const SizedBox(height: 16),
+                            Text('${s.config.collegeName} · ${tr('offlineOk', l)}', style: text.bodyMedium, textAlign: TextAlign.center),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                const SizedBox(height: 40),
-                SizedBox(
-                  height: 300,
-                  child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                    Expanded(
-                      child: _ModeButton(
-                        key: const ValueKey('teacherMode'),
-                        icon: Icons.co_present_outlined,
-                        title: tr('teacherMode', l),
-                        sub: tr('teacherModeSub', l),
-                        color: Theme.of(context).colorScheme.primary,
-                        onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const TeacherModeScreen())),
-                      ),
-                    ),
-                    const SizedBox(width: 32),
-                    Expanded(
-                      child: _ModeButton(
-                        key: const ValueKey('selfLearning'),
-                        icon: Icons.smart_display_outlined,
-                        title: tr('selfLearning', l),
-                        sub: tr('selfLearningSub', l),
-                        color: const Color(0xFF6A1B9A),
-                        onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SelfLearningStartScreen())),
-                      ),
-                    ),
-                    const SizedBox(width: 32),
-                    Expanded(
-                      child: _ModeButton(
-                        key: const ValueKey('examPractice'),
-                        icon: Icons.emoji_events_outlined,
-                        title: tr('examPractice', l),
-                        sub: tr('examPracticeSub', l),
-                        color: const Color(0xFFC62828),
-                        onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ExamPracticeScreen())),
-                      ),
-                    ),
-                  ]),
-                ),
-                const Spacer(),
-                Text('${s.config.collegeName} · ${tr('offlineOk', l)}', style: text.bodyMedium, textAlign: TextAlign.center),
-              ]),
+                );
+              },
             ),
           ),
         );
@@ -91,8 +113,11 @@ class HomeScreen extends StatelessWidget {
 }
 
 /// Opens the lesson player in Teacher Mode.
-void openLesson(BuildContext context, InstalledPack pack, Lesson lesson) =>
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => LessonPlayerScreen(pack: pack, lesson: lesson)));
+void openLesson(BuildContext context, InstalledPack pack, Lesson lesson) => Navigator.of(context).push(
+  MaterialPageRoute(
+    builder: (_) => LessonPlayerScreen(pack: pack, lesson: lesson),
+  ),
+);
 
 /// Section, Smartboard, clock and the EN / ಕನ್ನಡ switch, at the top of Home.
 class StatusBar extends StatefulWidget {
@@ -114,26 +139,34 @@ class _StatusBarState extends State<StatusBar> {
   Widget build(BuildContext context) {
     final s = ServicesScope.of(context), now = s.clock();
     final text = Theme.of(context).textTheme;
-    return Row(children: [
-      Text('Zynetix', style: text.headlineLarge?.copyWith(color: Z.accent)),
-      const SizedBox(width: 24),
-      Expanded(child: Text(s.config.sectionLabel, style: text.headlineMedium, maxLines: 1, overflow: TextOverflow.ellipsis)),
-      const SmartboardButton(),
-      const SizedBox(width: 24),
-      // Long press (IT / teacher only, behind the PIN): settings.
-      GestureDetector(
-        onLongPress: () => openSettings(context),
-        child: Text('${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}', style: text.headlineMedium),
-      ),
-      const SizedBox(width: 24),
-      SegmentedButton<Lang>(
-        style: SegmentedButton.styleFrom(minimumSize: const Size(140, Z.tap), textStyle: zText(30)),
-        segments: const [ButtonSegment(value: Lang.en, label: Text('EN')), ButtonSegment(value: Lang.kn, label: Text('ಕನ್ನಡ'))],
-        selected: {widget.lang},
-        showSelectedIcon: false,
-        onSelectionChanged: (v) => s.config.setLang(v.first),
-      ),
-    ]);
+    final narrow = context.narrow, gap = SizedBox(width: narrow ? 12 : 24);
+    return Row(
+      children: [
+        if (!context.portrait) ...[Text('Zynetix', style: text.headlineLarge?.copyWith(color: Z.accent)), gap],
+        Expanded(
+          child: Text(s.config.sectionLabel, style: text.headlineMedium, maxLines: 1, overflow: TextOverflow.ellipsis),
+        ),
+        gap,
+        const SmartboardButton(),
+        gap,
+        // Long press (IT / teacher only, behind the PIN): settings.
+        GestureDetector(
+          onLongPress: () => openSettings(context),
+          child: Text('${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}', style: text.headlineMedium),
+        ),
+        gap,
+        SegmentedButton<Lang>(
+          style: SegmentedButton.styleFrom(minimumSize: Size(narrow ? 90 : 140, Z.tap), textStyle: zText(30)),
+          segments: const [
+            ButtonSegment(value: Lang.en, label: Text('EN')),
+            ButtonSegment(value: Lang.kn, label: Text('ಕನ್ನಡ')),
+          ],
+          selected: {widget.lang},
+          showSelectedIcon: false,
+          onSelectionChanged: (v) => s.config.setLang(v.first),
+        ),
+      ],
+    );
   }
 }
 
@@ -154,16 +187,21 @@ class _ContinueCard extends StatelessWidget {
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(32),
-          child: Row(children: [
-            const Icon(Icons.play_circle_fill, size: 110, color: Z.accent),
-            const SizedBox(width: 32),
-            Expanded(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text('${tr('continue', lang)} · $title', style: text.bodyLarge),
-                Text(topic, style: text.headlineLarge, maxLines: 2, overflow: TextOverflow.ellipsis),
-              ]),
-            ),
-          ]),
+          child: Row(
+            children: [
+              Icon(Icons.play_circle_fill, size: context.narrow ? 72 : 110, color: Z.accent),
+              SizedBox(width: context.narrow ? 16 : 32),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('${tr('continue', lang)} · $title', style: text.bodyLarge),
+                    Text(topic, style: context.narrow ? text.headlineMedium : text.headlineLarge, maxLines: 2, overflow: TextOverflow.ellipsis),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -178,31 +216,40 @@ class _ModeButton extends StatelessWidget {
   final VoidCallback onTap;
   @override
   Widget build(BuildContext context) => Material(
-        color: color,
-        borderRadius: BorderRadius.circular(40),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(40),
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: Row(children: [
-              Icon(icon, size: 140, color: Colors.white),
-              const SizedBox(width: 32),
-              Expanded(
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(title, style: const TextStyle(fontSize: 60, fontWeight: FontWeight.w800, color: Colors.white)),
-                  const SizedBox(height: 8),
-                  Text(sub, style: const TextStyle(fontSize: 32, color: Colors.white70)),
-                ]),
+    color: color,
+    borderRadius: BorderRadius.circular(40),
+    child: InkWell(
+      borderRadius: BorderRadius.circular(40),
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Row(
+          children: [
+            Icon(icon, size: context.narrow ? 96 : 140, color: Colors.white),
+            SizedBox(width: context.narrow ? 20 : 32),
+            Expanded(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(fontSize: 60, fontWeight: FontWeight.w800, color: Colors.white),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(sub, style: const TextStyle(fontSize: 32, color: Colors.white70)),
+                  ],
                 ),
               ),
-            ]),
-          ),
+            ),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 }
 
 /// Shown only when something needs the college's attention. Teaching never stops.
@@ -212,23 +259,33 @@ class _LicenceBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => FutureBuilder<LicenceStatus>(
-        future: services.licence(),
-        builder: (context, snap) {
-          final st = snap.data;
-          final String? msg = switch (st?.state) {
-            LicenceState.grace => 'Licence expired. ${st!.daysLeft} days left to renew; lessons keep working.',
-            LicenceState.lapsed => 'Licence expired. Lessons keep working, but new content is paused until the college renews.',
-            LicenceState.invalid => 'This board\'s licence could not be verified. Please contact Zynetix support.',
-            _ => null,
-          };
-          if (msg == null) return const SizedBox.shrink();
-          return Container(
-            key: const ValueKey('licenceBanner'),
-            margin: const EdgeInsets.only(top: 16),
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(color: Z.accent.withValues(alpha: 0.2), border: Border.all(color: Z.accent, width: 3), borderRadius: BorderRadius.circular(Z.radius)),
-            child: Row(children: [const Icon(Icons.warning_amber_rounded, size: 48, color: Z.accent), const SizedBox(width: 16), Expanded(child: Text(msg, style: const TextStyle(fontSize: 30)))]),
-          );
-        },
+    future: services.licence(),
+    builder: (context, snap) {
+      final st = snap.data;
+      final String? msg = switch (st?.state) {
+        LicenceState.grace => 'Licence expired. ${st!.daysLeft} days left to renew; lessons keep working.',
+        LicenceState.lapsed => 'Licence expired. Lessons keep working, but new content is paused until the college renews.',
+        LicenceState.invalid => 'This board\'s licence could not be verified. Please contact Zynetix support.',
+        _ => null,
+      };
+      if (msg == null) return const SizedBox.shrink();
+      return Container(
+        key: const ValueKey('licenceBanner'),
+        margin: const EdgeInsets.only(top: 16),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Z.accent.withValues(alpha: 0.2),
+          border: Border.all(color: Z.accent, width: 3),
+          borderRadius: BorderRadius.circular(Z.radius),
+        ),
+        child: Row(
+          children: [
+            const Icon(Icons.warning_amber_rounded, size: 48, color: Z.accent),
+            const SizedBox(width: 16),
+            Expanded(child: Text(msg, style: const TextStyle(fontSize: 30))),
+          ],
+        ),
       );
+    },
+  );
 }

@@ -37,7 +37,11 @@ enum BlockType {
 
 enum QuizMode { monitor, rollCall, team }
 
-QuizMode _mode(Object? v) => switch (v) { 'roll_call' => QuizMode.rollCall, 'team' => QuizMode.team, _ => QuizMode.monitor };
+QuizMode _mode(Object? v) => switch (v) {
+  'roll_call' => QuizMode.rollCall,
+  'team' => QuizMode.team,
+  _ => QuizMode.monitor,
+};
 
 /// One lesson block. Common fields are typed; type-specific fields are read through getters.
 class Block {
@@ -50,6 +54,7 @@ class Block {
   L10n? get narration => L10n.maybe(raw['narration']);
   int? get seconds => raw['seconds'] as int?;
   bool get optional => raw['optional'] == true;
+
   /// Curricula this block is for (null = all).
   List<String>? get boards => (raw['boards'] as List?)?.cast<String>();
   bool forBoard(String board) => boards == null || boards!.contains(board);
@@ -61,8 +66,12 @@ class Block {
   List<String> ids(String key) => [for (final e in (raw[key] as List?) ?? const []) e as String];
   QuizMode get quizMode => _mode(raw['mode']);
   int get secondsPerQuestion => raw['secondsPerQuestion'] as int? ?? 45;
+
   /// Whiteboard steps, in order.
-  List<BoardStep> get boardSteps => [for (final s in (raw['steps'] as List?) ?? const []) if (s is Map) BoardStep.fromJson(s.cast<String, dynamic>())];
+  List<BoardStep> get boardSteps => [
+    for (final s in (raw['steps'] as List?) ?? const [])
+      if (s is Map) BoardStep.fromJson(s.cast<String, dynamic>()),
+  ];
 
   /// Blocks the board does not know (from a newer schema) are skipped, never fatal.
   static Block? fromJson(Map<String, dynamic> j) {
@@ -75,16 +84,21 @@ class Block {
 class BoardStep {
   BoardStep({this.say, required this.draw, this.clear = false});
   final L10n? say;
+
   /// Draw items as in the schema (`kind` text, math, line, arrow, rect, circle, path, axes, plot).
   final List<Map<String, dynamic>> draw;
+
   /// Wipe the board before this step.
   final bool clear;
 
   factory BoardStep.fromJson(Map<String, dynamic> j) => BoardStep(
-        say: L10n.maybe(j['say']),
-        draw: [for (final d in (j['draw'] as List?) ?? const []) if (d is Map) d.cast<String, dynamic>()],
-        clear: j['clear'] == true,
-      );
+    say: L10n.maybe(j['say']),
+    draw: [
+      for (final d in (j['draw'] as List?) ?? const [])
+        if (d is Map) d.cast<String, dynamic>(),
+    ],
+    clear: j['clear'] == true,
+  );
 }
 
 class Lesson {
@@ -95,25 +109,45 @@ class Lesson {
   final List<Block> blocks;
 
   factory Lesson.fromJson(Map<String, dynamic> j) => Lesson(
-        id: j['id'] as String,
-        chapterId: j['chapterId'] as String,
-        topicId: j['topicId'] as String,
-        title: L10n.of(j['title']),
-        minutes: j['minutes'] as int? ?? 40,
-        blocks: [for (final b in j['blocks'] as List) ?Block.fromJson(b as Map<String, dynamic>)],
-      );
+    id: j['id'] as String,
+    chapterId: j['chapterId'] as String,
+    topicId: j['topicId'] as String,
+    title: L10n.of(j['title']),
+    minutes: j['minutes'] as int? ?? 40,
+    blocks: [for (final b in j['blocks'] as List) ?Block.fromJson(b as Map<String, dynamic>)],
+  );
 }
 
 class Question {
-  Question({required this.id, this.chapterId, required this.topicId, required this.stem, required this.options, required this.answer, this.answers, this.numericAnswer, this.tolerance, this.explanation, required this.exams, required this.difficulty, this.pyqExam, this.pyqYear, this.pyqVerified = false, this.format = 'mcq', this.passage});
+  Question({
+    required this.id,
+    this.chapterId,
+    required this.topicId,
+    required this.stem,
+    required this.options,
+    required this.answer,
+    this.answers,
+    this.numericAnswer,
+    this.tolerance,
+    this.explanation,
+    required this.exams,
+    required this.difficulty,
+    this.pyqExam,
+    this.pyqYear,
+    this.pyqVerified = false,
+    this.format = 'mcq',
+    this.passage,
+  });
   final String id;
   final String? chapterId;
   final String? topicId;
   final L10n stem;
   final List<L10n> options;
   final int answer;
+
   /// multi_correct: every correct option (the set the class must pick exactly).
   final List<int>? answers;
+
   /// numeric: the value, accepted within ± [tolerance] (0 when absent).
   final double? numericAnswer;
   final double? tolerance;
@@ -123,12 +157,15 @@ class Question {
   final String? pyqExam;
   final int? pyqYear;
   final bool pyqVerified;
+
   /// mcq, assertion_reason, case_based, multi_correct or numeric.
   final String format;
   bool get isMulti => format == 'multi_correct';
   bool get isNumeric => format == 'numeric';
+
   /// The correct options of a multi_correct question (just [answer] for the others).
   Set<int> get correctSet => {...?answers, if (answers == null) answer};
+
   /// The case a case_based question is about.
   final L10n? passage;
 
@@ -161,6 +198,7 @@ class Topic {
   final String id;
   final L10n title;
   final String? ncert;
+
   /// Curricula that teach this topic; the chapter's when null.
   final List<String>? boards;
 }
@@ -171,20 +209,23 @@ class Chapter {
   final List<String> boards;
 
   bool forBoard(String board) => boards.contains(board);
-  List<Topic> topicsFor(String board) => [for (final t in topics) if ((t.boards ?? boards).contains(board)) t];
+  List<Topic> topicsFor(String board) => [
+    for (final t in topics)
+      if ((t.boards ?? boards).contains(board)) t,
+  ];
   final int number;
   final L10n title;
   final List<Topic> topics;
 
   factory Chapter.fromJson(Map<String, dynamic> j) => Chapter(
-        id: j['id'] as String,
-        subject: j['subject'] as String,
-        year: j['year'] as String,
-        number: j['number'] as int,
-        title: L10n.of(j['title']),
-        topics: [for (final t in (j['topics'] as List?) ?? const []) Topic(t['id'] as String, L10n.of(t['title']), t['ncert'] as String?, (t['boards'] as List?)?.cast<String>())],
-        boards: (j['boards'] as List?)?.cast<String>() ?? const ['kar_pu', 'cbse'],
-      );
+    id: j['id'] as String,
+    subject: j['subject'] as String,
+    year: j['year'] as String,
+    number: j['number'] as int,
+    title: L10n.of(j['title']),
+    topics: [for (final t in (j['topics'] as List?) ?? const []) Topic(t['id'] as String, L10n.of(t['title']), t['ncert'] as String?, (t['boards'] as List?)?.cast<String>())],
+    boards: (j['boards'] as List?)?.cast<String>() ?? const ['kar_pu', 'cbse'],
+  );
 }
 
 /// An installed pack: one chapter, its lessons and questions, and where its media lives.
@@ -197,9 +238,21 @@ class InstalledPack {
   final String mediaDir;
 
   List<Question> questionsFor(Iterable<String> ids) => [for (final i in ids) ?questions[i]];
-  List<Question> topicQuestions(String topicId) => [for (final q in questions.values) if (q.topicId == topicId) q];
+  List<Question> topicQuestions(String topicId) => [
+    for (final q in questions.values)
+      if (q.topicId == topicId) q,
+  ];
 
   /// The lesson as taught on a board following [board]: blocks for other curricula removed.
-  Lesson lessonFor(Lesson l, String board) =>
-      Lesson(id: l.id, chapterId: l.chapterId, topicId: l.topicId, title: l.title, minutes: l.minutes, blocks: [for (final b in l.blocks) if (b.forBoard(board)) b]);
+  Lesson lessonFor(Lesson l, String board) => Lesson(
+    id: l.id,
+    chapterId: l.chapterId,
+    topicId: l.topicId,
+    title: l.title,
+    minutes: l.minutes,
+    blocks: [
+      for (final b in l.blocks)
+        if (b.forBoard(board)) b,
+    ],
+  );
 }

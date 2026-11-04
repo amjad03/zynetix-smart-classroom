@@ -11,13 +11,25 @@ class MathText extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = style ?? Theme.of(context).textTheme.bodyLarge!;
     final parts = text.split(r'$');
-    return Text.rich(TextSpan(style: s, children: [
-      for (var i = 0; i < parts.length; i++)
-        if (i.isOdd)
-          WidgetSpan(alignment: PlaceholderAlignment.middle, child: Math.tex(parts[i], textStyle: s, onErrorFallback: (_) => Text(parts[i], style: s)))
-        else
-          TextSpan(text: parts[i]),
-    ]));
+    return Text.rich(
+      TextSpan(
+        style: s,
+        children: [
+          for (var i = 0; i < parts.length; i++)
+            if (i.isOdd)
+              WidgetSpan(
+                alignment: PlaceholderAlignment.middle,
+                child: Math.tex(
+                  parts[i],
+                  textStyle: s,
+                  onErrorFallback: (_) => Text(parts[i], style: s),
+                ),
+              )
+            else
+              TextSpan(text: parts[i]),
+        ],
+      ),
+    );
   }
 }
 
@@ -27,8 +39,15 @@ class Formula extends StatelessWidget {
   final String tex;
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 32),
-        decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerHighest, borderRadius: BorderRadius.circular(24)),
-        child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: Math.tex(tex, textStyle: const TextStyle(fontSize: 44), onErrorFallback: (_) => Text(tex, style: const TextStyle(fontSize: 36)))),
-      );
+    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 32),
+    decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerHighest, borderRadius: BorderRadius.circular(24)),
+    child: SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Math.tex(
+        tex,
+        textStyle: const TextStyle(fontSize: 44),
+        onErrorFallback: (_) => Text(tex, style: const TextStyle(fontSize: 36)),
+      ),
+    ),
+  );
 }

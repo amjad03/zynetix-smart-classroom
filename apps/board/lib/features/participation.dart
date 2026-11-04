@@ -12,7 +12,10 @@ import '../engine/session_log.dart';
 /// Picks a random roll number in 1..[rollCount], never one in [exclude]. Returns null when every
 /// roll is excluded. Pure, so it is tested directly.
 int? pickRoll(Random rnd, int rollCount, Set<int> exclude) {
-  final left = [for (var r = 1; r <= rollCount; r++) if (!exclude.contains(r)) r];
+  final left = [
+    for (var r = 1; r <= rollCount; r++)
+      if (!exclude.contains(r)) r,
+  ];
   return left.isEmpty ? null : left[rnd.nextInt(left.length)];
 }
 
@@ -20,8 +23,7 @@ int? pickRoll(Random rnd, int rollCount, Set<int> exclude) {
 bool multiCorrect(Question q, Set<int> picked) => setEquals(picked, q.correctSet);
 
 /// numeric: right when the value is within ± tolerance (exact when there is none).
-bool numericCorrect(Question q, double? value) =>
-    value != null && q.numericAnswer != null && (value - q.numericAnswer!).abs() <= (q.tolerance ?? 0) + 1e-9;
+bool numericCorrect(Question q, double? value) => value != null && q.numericAnswer != null && (value - q.numericAnswer!).abs() <= (q.tolerance ?? 0) + 1e-9;
 
 /// The keypad's text as a number ("−" is the minus key); null while it is not a number yet.
 double? parseTyped(String typed) => double.tryParse(typed.replaceAll('−', '-'));
@@ -88,8 +90,10 @@ class QuizRunner extends StatefulWidget {
 class QuizRunnerState extends State<QuizRunner> {
   int q = 0;
   int? chosen;
+
   /// multi_correct: the options tapped so far, in tap order.
   final picked = <int>{};
+
   /// numeric: what the monitor typed on the keypad.
   String typed = '';
   bool revealed = false, lastCorrect = false;
@@ -169,7 +173,11 @@ class QuizRunnerState extends State<QuizRunner> {
     if (revealed) return;
     final q = question;
     if (q.isMulti) chosen = picked.isEmpty ? null : picked.first;
-    final correct = q.isNumeric ? numericCorrect(q, parseTyped(typed)) : q.isMulti ? multiCorrect(q, picked) : chosen == q.answer;
+    final correct = q.isNumeric
+        ? numericCorrect(q, parseTyped(typed))
+        : q.isMulti
+        ? multiCorrect(q, picked)
+        : chosen == q.answer;
     lastCorrect = correct;
     widget.recorder.answer(
       questionId: question.id,
@@ -210,62 +218,111 @@ class QuizRunnerState extends State<QuizRunner> {
       return Center(child: Text(tr('done', l), style: Theme.of(context).textTheme.displayLarge));
     }
     final text = Theme.of(context).textTheme;
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Row(children: [
-        Text('${q + 1} / ${widget.questions.length}', style: text.headlineMedium),
-        const SizedBox(width: Z.gap),
-        if (widget.showExams) ...[
-          for (final e in question.exams) Padding(padding: const EdgeInsets.only(right: 8), child: Chip(label: Text(e, style: const TextStyle(fontSize: 24)))),
-          Chip(label: Text(question.pyqYear != null && question.pyqVerified ? '${question.pyqExam} ${question.pyqYear}' : tr('pyqPattern', l), style: const TextStyle(fontSize: 24))),
-        ],
-        const Spacer(),
-        if (widget.auto && !revealed) _Countdown(left),
-      ]),
-      const SizedBox(height: 12),
-      _ModeBar(state: this),
-      const SizedBox(height: 12),
-      if (question.passage != null)
-        Container(
-          key: const ValueKey('passage'),
-          constraints: const BoxConstraints(maxHeight: 240),
-          margin: const EdgeInsets.only(bottom: 16),
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerHighest, borderRadius: BorderRadius.circular(Z.radius), border: Border(left: BorderSide(color: Z.accent, width: 8))),
-          child: SingleChildScrollView(child: Text(question.passage!.t(l), style: text.bodyLarge?.copyWith(fontSize: 28))),
-        ),
-      Text(question.stem.t(l), style: question.format == 'mcq' ? text.headlineMedium : text.headlineMedium?.copyWith(fontSize: 34)),
-      const SizedBox(height: Z.gap),
-      if (question.isNumeric)
-        Expanded(child: _NumericPad(state: this))
-      else
-      Expanded(
-        // Two rows that share the height left, so all four options stay visible with an explanation.
-        child: Column(children: [
-          for (final row in const [[0, 1], [2, 3]]) ...[
-            Expanded(child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-              Expanded(child: _OptionTile(index: row[0], state: this)),
-              const SizedBox(width: 16),
-              Expanded(child: _OptionTile(index: row[1], state: this)),
-            ])),
-            if (row[0] == 0) const SizedBox(height: 16),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: Z.gap - 8),
+                    child: Text('${q + 1} / ${widget.questions.length}', style: text.headlineMedium),
+                  ),
+                  if (widget.showExams) ...[
+                    for (final e in question.exams) Chip(label: Text(e, style: const TextStyle(fontSize: 24))),
+                    Chip(label: Text(question.pyqYear != null && question.pyqVerified ? '${question.pyqExam} ${question.pyqYear}' : tr('pyqPattern', l), style: const TextStyle(fontSize: 24))),
+                  ],
+                ],
+              ),
+            ),
+            if (widget.auto && !revealed) _Countdown(left),
           ],
-        ]),
-      ),
-      if (revealed) ...[
-        if (question.explanation != null) Text(question.explanation!.t(l), style: text.bodyLarge),
+        ),
         const SizedBox(height: 12),
-        Align(alignment: Alignment.centerRight, child: BigButton(icon: Icons.arrow_forward, label: tr('nextQuestion', l), onPressed: nextQuestion)),
-      ] else if (question.isMulti)
-        Padding(
-          padding: const EdgeInsets.only(top: 16),
-          child: Row(children: [
-            Expanded(child: Text(tr('pickAll', l), style: text.bodyMedium)),
-            BigButton(key: const ValueKey('check'), icon: Icons.fact_check_outlined, label: tr('check', l), color: Z.correct, onPressed: canCheck ? check : null),
-          ]),
-        )
-      else if (!question.isNumeric)
-        Text(tr('monitorTaps', l), style: text.bodyMedium, textAlign: TextAlign.center),
-    ]);
+        _ModeBar(state: this),
+        const SizedBox(height: 12),
+        if (question.passage != null)
+          Container(
+            key: const ValueKey('passage'),
+            constraints: const BoxConstraints(maxHeight: 240),
+            margin: const EdgeInsets.only(bottom: 16),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+              borderRadius: BorderRadius.circular(Z.radius),
+              border: Border(left: BorderSide(color: Z.accent, width: 8)),
+            ),
+            child: SingleChildScrollView(child: Text(question.passage!.t(l), style: text.bodyLarge?.copyWith(fontSize: 28))),
+          ),
+        Text(question.stem.t(l), style: question.format == 'mcq' ? text.headlineMedium : text.headlineMedium?.copyWith(fontSize: 34)),
+        const SizedBox(height: Z.gap),
+        if (question.isNumeric)
+          Expanded(child: _NumericPad(state: this))
+        else
+          Expanded(
+            // Two rows that share the height left, so all four options stay visible with an explanation.
+            child: context.portrait
+                ? Column(
+                    children: [
+                      for (var i = 0; i < 4; i++) ...[
+                        Expanded(
+                          child: _OptionTile(index: i, state: this),
+                        ),
+                        if (i < 3) const SizedBox(height: 12),
+                      ],
+                    ],
+                  )
+                : Column(
+                    children: [
+                      for (final row in const [
+                        [0, 1],
+                        [2, 3],
+                      ]) ...[
+                        Expanded(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Expanded(
+                                child: _OptionTile(index: row[0], state: this),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: _OptionTile(index: row[1], state: this),
+                              ),
+                            ],
+                          ),
+                        ),
+                        if (row[0] == 0) const SizedBox(height: 16),
+                      ],
+                    ],
+                  ),
+          ),
+        if (revealed) ...[
+          if (question.explanation != null) Text(question.explanation!.t(l), style: text.bodyLarge),
+          const SizedBox(height: 12),
+          Align(
+            alignment: Alignment.centerRight,
+            child: BigButton(icon: Icons.arrow_forward, label: tr('nextQuestion', l), onPressed: nextQuestion),
+          ),
+        ] else if (question.isMulti)
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Row(
+              children: [
+                Expanded(child: Text(tr('pickAll', l), style: text.bodyMedium)),
+                BigButton(key: const ValueKey('check'), icon: Icons.fact_check_outlined, label: tr('check', l), color: Z.correct, onPressed: canCheck ? check : null),
+              ],
+            ),
+          )
+        else if (!question.isNumeric)
+          Text(tr('monitorTaps', l), style: text.bodyMedium, textAlign: TextAlign.center),
+      ],
+    );
   }
 }
 
@@ -282,29 +339,48 @@ class _OptionTile extends StatelessWidget {
     final bg = !state.revealed
         ? (isChosen ? Z.accent.withValues(alpha: 0.35) : scheme.surfaceContainerHighest)
         : isAnswer
-            ? Z.correct
-            : isChosen
-                ? Z.wrong
-                : scheme.surfaceContainerHighest.withValues(alpha: 0.5);
+        ? Z.correct
+        : isChosen
+        ? Z.wrong
+        : scheme.surfaceContainerHighest.withValues(alpha: 0.5);
     final fg = state.revealed && (isAnswer || isChosen) ? Colors.white : scheme.onSurface;
     // Roll call: wait until a roll number has been picked.
     final enabled = !state.revealed && (state.widget.mode != QuizMode.rollCall || state.roll != null);
     return Material(
       color: bg,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Z.radius), side: !state.revealed && isChosen ? const BorderSide(color: Z.accent, width: 5) : BorderSide.none),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(Z.radius),
+        side: !state.revealed && isChosen ? const BorderSide(color: Z.accent, width: 5) : BorderSide.none,
+      ),
       child: InkWell(
         key: ValueKey('option-$index'),
         borderRadius: BorderRadius.circular(Z.radius),
         onTap: enabled ? () => state.choose(index) : null,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Row(children: [
-            CircleAvatar(radius: 34, backgroundColor: fg.withValues(alpha: 0.15), child: Text('ABCD'[index], style: TextStyle(fontSize: 34, fontWeight: FontWeight.w700, color: fg))),
-            const SizedBox(width: 20),
-            Expanded(child: Text(q.options[index].t(state.widget.lang), style: TextStyle(fontSize: q.format == 'assertion_reason' ? 26 : 32, color: fg), maxLines: 3, overflow: TextOverflow.ellipsis)),
-            if (state.revealed && isAnswer) const Icon(Icons.check_circle, color: Colors.white, size: 48),
-            if (!state.revealed && q.isMulti) Icon(isChosen ? Icons.check_box : Icons.check_box_outline_blank, size: 52, color: isChosen ? Z.accent : fg.withValues(alpha: 0.6)),
-          ]),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 34,
+                backgroundColor: fg.withValues(alpha: 0.15),
+                child: Text(
+                  'ABCD'[index],
+                  style: TextStyle(fontSize: 34, fontWeight: FontWeight.w700, color: fg),
+                ),
+              ),
+              const SizedBox(width: 20),
+              Expanded(
+                child: Text(
+                  q.options[index].t(state.widget.lang),
+                  style: TextStyle(fontSize: q.format == 'assertion_reason' ? 26 : 32, color: fg),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              if (state.revealed && isAnswer) const Icon(Icons.check_circle, color: Colors.white, size: 48),
+              if (!state.revealed && q.isMulti) Icon(isChosen ? Icons.check_box : Icons.check_box_outline_blank, size: 52, color: isChosen ? Z.accent : fg.withValues(alpha: 0.6)),
+            ],
+          ),
         ),
       ),
     );
@@ -323,35 +399,50 @@ class _ModeBar extends StatelessWidget {
       case QuizMode.monitor:
         return const SizedBox.shrink();
       case QuizMode.rollCall:
-        return Row(children: [
-          if (state.roll != null)
-            Container(
-              key: const ValueKey('roll'),
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-              decoration: BoxDecoration(color: Z.accent, borderRadius: BorderRadius.circular(Z.radius)),
-              child: Text('${tr('rollNo', l)} ${state.roll}', style: const TextStyle(fontSize: 52, fontWeight: FontWeight.w800, color: Colors.black)),
-            ),
-          const SizedBox(width: Z.gap),
-          if (!state.revealed) BigButton(icon: Icons.casino_outlined, label: tr('pickRoll', l), filled: state.roll == null, onPressed: state._pickRoll),
-          const SizedBox(width: 16),
-          if (state.roll != null && !state.revealed) BigButton(icon: Icons.person_off_outlined, label: tr('absent', l), filled: false, onPressed: state._markAbsent),
-        ]);
-      case QuizMode.team:
-        return Row(children: [
-          for (var t = 0; t < w.room.teams; t++)
-            Container(
-              margin: const EdgeInsets.only(right: 16),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-              decoration: BoxDecoration(
-                color: Z.teamColors[t].withValues(alpha: t == state.team ? 1 : 0.35),
-                borderRadius: BorderRadius.circular(Z.radius),
-                border: t == state.team ? Border.all(color: Z.accent, width: 6) : null,
+        return Wrap(
+          spacing: 16,
+          runSpacing: 12,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            if (state.roll != null)
+              Container(
+                key: const ValueKey('roll'),
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+                decoration: BoxDecoration(color: Z.accent, borderRadius: BorderRadius.circular(Z.radius)),
+                child: Text(
+                  '${tr('rollNo', l)} ${state.roll}',
+                  style: const TextStyle(fontSize: 52, fontWeight: FontWeight.w800, color: Colors.black),
+                ),
               ),
-              child: Text('${tr('team', l)} ${t + 1}: ${w.room.scores[t]}', style: const TextStyle(fontSize: 36, fontWeight: FontWeight.w700, color: Colors.white)),
-            ),
-          const SizedBox(width: 8),
-          Text('${tr('teamTurn', l)}: ${tr('team', l)} ${state.team + 1} (${tr('rollNo', l)} ${state.team + 1}, ${state.team + 1 + w.room.teams}, …)', style: Theme.of(context).textTheme.bodyMedium),
-        ]);
+            const SizedBox(width: Z.gap),
+            if (!state.revealed) BigButton(icon: Icons.casino_outlined, label: tr('pickRoll', l), filled: state.roll == null, onPressed: state._pickRoll),
+            const SizedBox(width: 16),
+            if (state.roll != null && !state.revealed) BigButton(icon: Icons.person_off_outlined, label: tr('absent', l), filled: false, onPressed: state._markAbsent),
+          ],
+        );
+      case QuizMode.team:
+        return Wrap(
+          runSpacing: 12,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            for (var t = 0; t < w.room.teams; t++)
+              Container(
+                margin: const EdgeInsets.only(right: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                decoration: BoxDecoration(
+                  color: Z.teamColors[t].withValues(alpha: t == state.team ? 1 : 0.35),
+                  borderRadius: BorderRadius.circular(Z.radius),
+                  border: t == state.team ? Border.all(color: Z.accent, width: 6) : null,
+                ),
+                child: Text(
+                  '${tr('team', l)} ${t + 1}: ${w.room.scores[t]}',
+                  style: const TextStyle(fontSize: 36, fontWeight: FontWeight.w700, color: Colors.white),
+                ),
+              ),
+            const SizedBox(width: 8),
+            Text('${tr('teamTurn', l)}: ${tr('team', l)} ${state.team + 1} (${tr('rollNo', l)} ${state.team + 1}, ${state.team + 1 + w.room.teams}, …)', style: Theme.of(context).textTheme.bodyMedium),
+          ],
+        );
     }
   }
 }
@@ -360,11 +451,16 @@ class _Countdown extends StatelessWidget {
   const _Countdown(this.left);
   final int left;
   @override
-  Widget build(BuildContext context) => Row(children: [
-        const Icon(Icons.timer_outlined, size: 44),
-        const SizedBox(width: 8),
-        Text('${max(left, 0)}s', style: TextStyle(fontSize: 44, fontWeight: FontWeight.w700, color: left <= 10 ? Z.wrong : null)),
-      ]);
+  Widget build(BuildContext context) => Row(
+    children: [
+      const Icon(Icons.timer_outlined, size: 44),
+      const SizedBox(width: 8),
+      Text(
+        '${max(left, 0)}s',
+        style: TextStyle(fontSize: 44, fontWeight: FontWeight.w700, color: left <= 10 ? Z.wrong : null),
+      ),
+    ],
+  );
 }
 
 /// numeric: the class answer in big type and an on-screen keypad (digits, ., −, ⌫) with Check.

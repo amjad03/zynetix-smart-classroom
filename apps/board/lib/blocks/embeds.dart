@@ -24,18 +24,21 @@ class KinetixEmbeds implements Embeds {
 
   @override
   Widget simulation(Block b, InstalledPack pack, Lang lang) => switch (b.s('source')) {
-        'phet' => PackPageView(file: File('${pack.mediaDir}/phet/${b.s('simId')}.html')),
-        'animation' => switch (animationById(b.s('simId')!)) {
-            final a? => AnimationPlayer(animation: a, lang: lang == Lang.kn ? AnimLang.kn : AnimLang.en),
-            null => _missing(b.s('simId')!),
-          },
-        'kinetix_cs' => csSim(b.s('simId')!),
-        _ => lab(b.s('simId')!, b.s('preset'), lang),
-      };
+    'phet' => PackPageView(file: File('${pack.mediaDir}/phet/${b.s('simId')}.html')),
+    'animation' => switch (animationById(b.s('simId')!)) {
+      final a? => AnimationPlayer(animation: a, lang: lang == Lang.kn ? AnimLang.kn : AnimLang.en),
+      null => _missing(b.s('simId')!),
+    },
+    'kinetix_cs' => csSim(b.s('simId')!),
+    _ => lab(b.s('simId')!, b.s('preset'), lang),
+  };
 
   /// Computer Science players from Kinetix: `algo.<kind>`, `sim.<kind>`, `code.<language>`.
   static Widget csSim(String id) {
-    final (kind, name) = switch (id.split('.')) { [final k, final n] => (k, n), _ => ('', '') };
+    final (kind, name) = switch (id.split('.')) {
+      [final k, final n] => (k, n),
+      _ => ('', ''),
+    };
     void noInsert(Object _) {}
     switch (kind) {
       case 'algo':
@@ -55,7 +58,13 @@ class KinetixEmbeds implements Embeds {
   Widget lab(String labId, String? preset, Lang lang) => LabCatalogue.byId(labId) == null
       ? _missing(labId)
       // LabView takes its language from the ambient locale.
-      : Builder(builder: (ctx) => Localizations.override(context: ctx, locale: Locale(lang.name), child: LabView(id: labId, preset: preset)));
+      : Builder(
+          builder: (ctx) => Localizations.override(
+            context: ctx,
+            locale: Locale(lang.name),
+            child: LabView(id: labId, preset: preset),
+          ),
+        );
 
   static Widget _missing(String id) => Center(child: Text('“$id” is not available on this board yet.', style: const TextStyle(fontSize: 28)));
 }
@@ -103,11 +112,13 @@ class _PackPageViewState extends State<PackPageView> {
     super.initState();
     PackMediaServer.urlFor(widget.file).then((u) {
       if (!mounted) return;
-      setState(() => _c = WebViewController()
-        ..setJavaScriptMode(JavaScriptMode.unrestricted)
-        // Only the loopback page; nothing from the internet.
-        ..setNavigationDelegate(NavigationDelegate(onNavigationRequest: (r) => r.url.startsWith('http://127.0.0.1') ? NavigationDecision.navigate : NavigationDecision.prevent))
-        ..loadRequest(u));
+      setState(
+        () => _c = WebViewController()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          // Only the loopback page; nothing from the internet.
+          ..setNavigationDelegate(NavigationDelegate(onNavigationRequest: (r) => r.url.startsWith('http://127.0.0.1') ? NavigationDecision.navigate : NavigationDecision.prevent))
+          ..loadRequest(u),
+      );
     });
   }
 

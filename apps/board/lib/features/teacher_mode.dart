@@ -30,36 +30,38 @@ class _TeacherModeScreenState extends State<TeacherModeScreen> {
         appBar: AppBar(
           toolbarHeight: Z.tap + 16,
           leading: IconButton(iconSize: 56, icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
-          title: Text(tr('teacherMode', l), style: Theme.of(context).textTheme.headlineLarge),
+          title: Text(tr('teacherMode', l), style: context.narrow ? Theme.of(context).textTheme.headlineMedium : Theme.of(context).textTheme.headlineLarge),
           actions: [
             SegmentedButton<String>(
-              style: SegmentedButton.styleFrom(minimumSize: const Size(180, Z.tap - 16), textStyle: zText(28)),
-              segments: [for (final y in const ['puc1', 'puc2']) ButtonSegment(value: y, label: Text(yearLabel(y, s.config.board, l)))],
+              style: SegmentedButton.styleFrom(minimumSize: Size(context.narrow ? 110 : 180, Z.tap - 16), textStyle: zText(context.narrow ? 24 : 28)),
+              segments: [
+                for (final y in const ['puc1', 'puc2']) ButtonSegment(value: y, label: Text(yearLabel(y, s.config.board, l))),
+              ],
               selected: {year},
               showSelectedIcon: false,
               onSelectionChanged: (v) => setState(() => _year = v.first),
             ),
-            const SizedBox(width: 24),
+            SizedBox(width: context.narrow ? 12 : 24),
             const SmartboardButton(),
-            const SizedBox(width: 24),
+            SizedBox(width: context.narrow ? 12 : 24),
           ],
           bottom: TabBar(
-            isScrollable: subjects.length > 5,
-            tabAlignment: subjects.length > 5 ? TabAlignment.start : null,
+            isScrollable: subjects.length > 5 || context.narrow,
+            tabAlignment: subjects.length > 5 || context.narrow ? TabAlignment.start : null,
             labelStyle: zText(34, FontWeight.w700),
             unselectedLabelStyle: zText(32, FontWeight.w500),
             tabs: [for (final sub in subjects) Tab(height: Z.tap, text: subjectName(sub, l))],
           ),
         ),
-        body: TabBarView(children: [
-          for (final sub in subjects)
-            ListView(
-              padding: const EdgeInsets.all(32),
-              children: [
-                for (final ch in s.chapters(sub, year)) _ChapterTile(chapter: ch, lang: l, taught: taught),
-              ],
-            ),
-        ]),
+        body: TabBarView(
+          children: [
+            for (final sub in subjects)
+              ListView(
+                padding: EdgeInsets.all(context.narrow ? 16 : 32),
+                children: [for (final ch in s.chapters(sub, year)) _ChapterTile(chapter: ch, lang: l, taught: taught)],
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -77,27 +79,40 @@ class _ChapterTile extends StatelessWidget {
     final pack = s.store.byChapter(chapter.id);
     final head = Text('${chapter.number}. ${chapter.title.t(lang)}', style: text.headlineMedium?.copyWith(color: pack == null ? Theme.of(context).disabledColor : null));
     if (pack == null) {
-      return Padding(padding: const EdgeInsets.symmetric(vertical: 14), child: Row(children: [Expanded(child: head), Text(tr('comingSoon', lang), style: text.bodyMedium)]));
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        child: Row(
+          children: [
+            Expanded(child: head),
+            Text(tr('comingSoon', lang), style: text.bodyMedium),
+          ],
+        ),
+      );
     }
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 14),
       child: Padding(
         padding: const EdgeInsets.all(24),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          head,
-          const SizedBox(height: 12),
-          for (final t in pack.chapter.topicsFor(s.config.board))
-            if (pack.lessons[t.id] case final lesson?)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Row(children: [
-                  Icon(taught.contains(t.id) ? Icons.check_circle : Icons.radio_button_unchecked, size: 40, color: taught.contains(t.id) ? Z.correct : null),
-                  const SizedBox(width: 16),
-                  Expanded(child: Text(t.title.t(lang), style: text.bodyLarge)),
-                  BigButton(key: ValueKey('start:${t.id}'), icon: Icons.play_arrow, label: tr('start', lang), onPressed: () => openLesson(context, pack, lesson)),
-                ]),
-              ),
-        ]),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            head,
+            const SizedBox(height: 12),
+            for (final t in pack.chapter.topicsFor(s.config.board))
+              if (pack.lessons[t.id] case final lesson?)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Row(
+                    children: [
+                      Icon(taught.contains(t.id) ? Icons.check_circle : Icons.radio_button_unchecked, size: 40, color: taught.contains(t.id) ? Z.correct : null),
+                      const SizedBox(width: 16),
+                      Expanded(child: Text(t.title.t(lang), style: text.bodyLarge)),
+                      BigButton(collapse: true, key: ValueKey('start:${t.id}'), icon: Icons.play_arrow, label: tr('start', lang), onPressed: () => openLesson(context, pack, lesson)),
+                    ],
+                  ),
+                ),
+          ],
+        ),
       ),
     );
   }
