@@ -39,7 +39,7 @@ void main() {
       final out = Archive();
       for (final f in zip.files) {
         var data = f.readBytes()!;
-        if (f.name == 'manifest.json') data = Uint8List.fromList(utf8.encode(utf8.decode(data).replaceFirst('"1.0.0"', '"9.0.0"')));
+        if (f.name == 'manifest.json') data = Uint8List.fromList(utf8.encode(utf8.decode(data).replaceFirst(RegExp(r'"version":\s*"[^"]+"'), '"version": "9.0.0"')));
         out.addFile(ArchiveFile.bytes(f.name, data));
       }
       await expectLater(store.install(Uint8List.fromList(ZipEncoder().encodeBytes(out))), throwsA(isA<PackError>()));

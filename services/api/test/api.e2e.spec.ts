@@ -165,9 +165,9 @@ describe('Zynetix API', () => {
     await http.put(`/v1/cms/packs/${pack}/lessons/${l.topicId}`).auth(editor, { type: 'bearer' }).send(l).expect(200);
 
     const v = (await http.post(`/v1/cms/packs/${pack}/versions`).auth(editor, { type: 'bearer' }).send({ notes: 'Revised topic 1' }).expect(201)).body;
-    expect(v).toMatchObject({ version: "1.1.0", lessons: 5 });
+    expect(v).toMatchObject({ version: "1.2.0", lessons: 5 }); // seed packs are 1.1.0
     expect(v.questions).toBeGreaterThanOrEqual(19);
     const r = await http.post('/v1/board/sync').auth(device, { type: 'bearer' }).send({ installed: { [pack]: '1.0.0' } }).expect(201);
-    expect(r.body.packs.find((x: any) => x.id === pack)).toMatchObject({ version: '1.1.0' });
+    expect(r.body.packs.find((x: any) => x.id === pack)).toMatchObject({ version: '1.2.0' });
   });
 });
