@@ -637,3 +637,11 @@ No text is reproduced. Check these plot details against the texts:
 - **IT Act:** the Cyber Appellate Tribunal is named as in NCERT (merged into TDSAT in 2017).
 - **Mobile generations and MAN range:** approximate, from the pack text.
 - **Refraction animation:** used in the optical-fibre lesson; check that it fits.
+
+## English activities (130 lessons)
+
+- **Map positions:** the Silk Road map and the Ile Amsterdam hotspot are schematic.
+- **Event order:** check Going Places t3 and Memories of Childhood t2.
+- **Distractors:** wrong-answer cards are invented.
+- **Language:** cards are English only.
+- **Real-board check:** the Interview t3 boxes and the Melon City label pills.
