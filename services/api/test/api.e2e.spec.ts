@@ -170,4 +170,92 @@ describe('Zynetix API', () => {
     const r = await http.post('/v1/board/sync').auth(device, { type: 'bearer' }).send({ installed: { [pack]: '1.0.0' } }).expect(201);
     expect(r.body.packs.find((x: any) => x.id === pack)).toMatchObject({ version: '1.2.0' });
   });
+  // ---- Outcomes: answers stored per roll number, dashboards, readiness, league ----
+  const motion = 'puc1-physics-02-motion-in-a-straight-line';
+  const ans = (q: string, roll: number | undefined, correct: boolean, extra: Record<string, unknown> = {}) =>
+    ({ questionId: q, mode: roll ? 'roll_call' : 'monitor', ...(roll ? { roll } : {}), chosen: correct ? 0 : 1, correct, at: new Date().toISOString(), ...extra });
+
+  it('sync stores each answer once, with its topic; old logs without topic/source get them from the question bank', async () => {
+    const old = log({ answers: [ans('mot-q04', 3, true)] }); // an older board: no topicId/chapterId/source
+    const fresh = log({ mode: 'teacher', answers: [ans('mot-q11', undefined, true, { topicId: `${motion}.t5`, chapterId: motion, source: 'challenge' })] });
+    const named = log({ answers: [ans('mot-q11', 4, true, { source: 'Asha Rao' })] }); // free text is refused
+    const r = await http.post('/v1/board/sync').auth(device, { type: 'bearer' }).send({ outbox: [old, fresh, named] }).expect(201);
+    expect(r.body.accepted).toEqual([old.id, fresh.id]);
+    expect(r.body.rejected).toHaveLength(1);
+    await http.post('/v1/board/sync').auth(device, { type: 'bearer' }).send({ outbox: [old, fresh] }).expect(201);
+    const rows = await db.q('SELECT log_id, topic_id, chapter_id, subject, roll, source, correct, section_id FROM answer WHERE log_id = ANY($1) ORDER BY roll NULLS LAST', [[old.id, fresh.id]]);
+    expect(rows).toEqual([
+      { log_id: old.id, topic_id: `${motion}.t2`, chapter_id: motion, subject: 'physics', roll: 3, source: 'roll_call', correct: true, section_id: 'demo-1puc-a' },
+      { log_id: fresh.id, topic_id: `${motion}.t5`, chapter_id: motion, subject: 'physics', roll: null, source: 'challenge', correct: true, section_id: 'demo-1puc-a' },
+    ]);
+  });
+
+  it('outcomes: dashboard, section heatmap and a roll number report (roll numbers only)', async () => {
+    // Rolls 1-5 get t1 and t2 right three times, rolls 6-10 wrong three times.
+    const answers = [];
+    for (let roll = 1; roll <= 10; roll++)
+      for (const q of ['mot-q01', 'mot-q02', 'mot-q03', 'mot-q04', 'mot-q05', 'mot-q06']) answers.push(ans(q, roll, roll <= 5, { topicId: `${motion}.${['mot-q01', 'mot-q02', 'mot-q03'].includes(q) ? 't1' : 't2'}`, chapterId: motion, source: 'roll_call' }));
+    await http.post('/v1/board/sync').auth(device, { type: 'bearer' }).send({ outbox: [log({ mode: 'teacher', answers })] }).expect(201);
+
+    const o = (await http.get('/v1/admin/outcomes?weeks=4').auth(admin, { type: 'bearer' }).expect(200)).body;
+    expect(o.weeks).toHaveLength(4);
+    const row = o.rows.find((r: any) => r.sectionId === 'demo-1puc-a' && r.subject === 'physics');
+    expect(row).toMatchObject({ topicsTaught: 1, topicsAssessed: 2, topicsMastered: 0, stuckShare: 0.5, rollsAssessed: 11 }); // rolls 1-10 and 17
+    expect(row.trend[3]).toBeCloseTo(0.5, 1); // half the class mastered, half stuck
+    expect(o.stuckTopics.find((t: any) => t.topicId === `${motion}.t1`)).toMatchObject({ stuck: 5, assessed: 10, share: 0.5, section: '1st PUC · A · PCMB' });
+    expect(JSON.stringify({ ...o, college: null })).not.toMatch(/name"/i); // nothing per student but roll numbers
+
+    const d = (await http.get('/v1/admin/outcomes/sections/demo-1puc-a?subject=physics').auth(admin, { type: 'bearer' }).expect(200)).body;
+    expect(d.rolls).toHaveLength(62);
+    const t1 = d.topics.find((t: any) => t.id === `${motion}.t1`);
+    expect(t1).toMatchObject({ taught: true, stuck: [6, 7, 8, 9, 10], mastered: 5, assessed: 10 });
+    expect(d.rolls[0].cells[`${motion}.t1`]).toEqual([0.86, 3]);
+    expect(d.rolls[6].cells[`${motion}.t1`]).toEqual([0.14, 3]);
+
+    const r7 = (await http.get('/v1/admin/outcomes/sections/demo-1puc-a/rolls/7').auth(admin, { type: 'bearer' }).expect(200)).body;
+    expect(r7).toMatchObject({ roll: 7, answers: 6, correct: 0, overall: 0.14 });
+    expect(r7.stuck.map((t: any) => t.id).sort()).toEqual([`${motion}.t1`, `${motion}.t2`]);
+    expect(r7.readiness.every((x: any) => x.band === 'not_enough_data')).toBe(true);
+    await http.get('/v1/admin/outcomes/sections/demo-1puc-a/rolls/63').auth(admin, { type: 'bearer' }).expect(400);
+    await http.get('/v1/admin/outcomes/sections/elsewhere/rolls/1').auth(admin, { type: 'bearer' }).expect(404);
+  });
+
+  it('exam readiness per section: honest bands (a few topics answered is not enough data)', async () => {
+    const r = (await http.get('/v1/admin/outcomes/readiness').auth(admin, { type: 'bearer' }).expect(200)).body;
+    const sec = r.sections.find((s: any) => s.sectionId === 'demo-1puc-a');
+    expect(sec.exams.map((e: any) => e.exam)).toEqual(expect.arrayContaining(['PUC', 'KCET', 'NEET', 'JEE']));
+    expect(sec.exams.map((e: any) => e.exam)).not.toContain('CBSE'); // a Karnataka PU section does not sit the CBSE board exam
+    const jee = sec.exams.find((e: any) => e.exam === 'JEE');
+    expect(jee).toMatchObject({ band: 'not_enough_data', label: 'Not enough data', topicsSeen: 2 });
+    expect(jee.answered).toBeGreaterThanOrEqual(60);
+    expect(r.sections.find((s: any) => s.sectionId === 'demo-12-cbse-sci').exams.every((e: any) => e.band === 'not_enough_data' && e.exam !== 'PUC')).toBe(true);
+  });
+
+  it('league: section points per week, and this week in the board sync config as a JSON string', async () => {
+    const l = (await http.get('/v1/admin/outcomes/league?weeks=2').auth(admin, { type: 'bearer' }).expect(200)).body;
+    const w = l.sections.find((s: any) => s.sectionId === 'demo-1puc-a').weeks[1];
+    expect(w.stars).toBe(1); // the one correct challenge answer
+    expect(w.correct).toBeGreaterThanOrEqual(33);
+    expect(w.points).toBe(Math.round(((w.correct + 2 * w.stars) * 40) / 62) + 10 * w.streakDays);
+    const cfg = (await http.post('/v1/board/sync').auth(device, { type: 'bearer' }).send({}).expect(201)).body.config;
+    expect(typeof cfg.league).toBe('string');
+    const league = JSON.parse(cfg.league);
+    expect(league).toHaveLength(4);
+    expect(Object.keys(league[0]).sort()).toEqual(['label', 'points', 'sectionId']);
+    expect(league[0]).toEqual({ sectionId: 'demo-1puc-a', label: '1st PUC · A · PCMB', points: w.points });
+  });
+
+  it('monthly college report, and Outcomes are admin-only and college-scoped', async () => {
+    const month = new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 7);
+    const r = (await http.get(`/v1/admin/outcomes/report?month=${month}`).auth(admin, { type: 'bearer' }).expect(200)).body;
+    expect(r).toMatchObject({ month, college: { id: 'demo-pu', demo: false } });
+    expect(r.totals.answers).toBeGreaterThanOrEqual(63);
+    expect(r.sections).toHaveLength(4);
+    const physics = r.sections.find((s: any) => s.id === 'demo-1puc-a').subjects.find((x: any) => x.subject === 'physics');
+    expect(physics).toMatchObject({ taught: 1, assessed: 2 });
+    expect(r.league[0].sectionId).toBe('demo-1puc-a');
+    await http.get('/v1/admin/outcomes').auth(editor, { type: 'bearer' }).expect(403);
+    await http.get('/v1/admin/outcomes?college=demo-pu').auth(editor, { type: 'bearer' }).expect(403); // editors are content staff, not admins
+    await http.get('/v1/admin/outcomes/readiness').expect(401);
+  });
 });

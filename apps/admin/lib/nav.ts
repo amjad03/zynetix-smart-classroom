@@ -1,5 +1,9 @@
 export const NAV: [string, string][] = [
   ['/', 'Usage'],
+  ['/outcomes', 'Outcomes'],
+  ['/readiness', 'Exam readiness'],
+  ['/league', 'Section league'],
+  ['/report', 'Monthly report'],
   ['/self-learning', 'Self-learning scheduler'],
   ['/timetable', 'Timetable'],
   ['/syllabus', 'Syllabus progress'],

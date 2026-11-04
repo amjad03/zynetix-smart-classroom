@@ -1,1 +1,1 @@
-export default { transpilePackages: ['@zynetix/web-ui'], output: 'standalone' };
+export default { transpilePackages: ['@zynetix/web-ui'], output: 'standalone', devIndicators: false };

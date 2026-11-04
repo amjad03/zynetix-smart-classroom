@@ -4,6 +4,7 @@ import { SessionLog } from '@zynetix/lesson-schema';
 import { z } from 'zod';
 import { CurrentDevice, Device, DeviceGuard } from './auth';
 import { DB, Db } from './db/db';
+import { leagueConfig } from './outcomes.controller';
 import { KEYS, Keys, STORAGE, Storage, Zod, sha256, signLicence, token } from './infra';
 
 const Activate = z.object({ code: z.string().min(6).max(12), name: z.string().min(1).max(60), pin: z.string().regex(/^\d{4,6}$/) }).strict();
@@ -54,14 +55,8 @@ export class BoardController {
         rejected.push({ id: (raw as any)?.id, issues: r.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`) });
         continue;
       }
-      const l = r.data;
-      await this.db.q(
-        `INSERT INTO session_log(id, device_id, section_id, mode, chapter_id, topic_id, lesson_id, pack_version, started_at, ended_at, completed, blocks_shown, answers, present)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) ON CONFLICT (id) DO NOTHING`,
-        // The section is the device's, whatever the board claims.
-        [l.id, d.id, d.sectionId, l.mode, l.chapterId, l.topicId, l.lessonId, l.packVersion, l.startedAt, l.endedAt, l.completed, JSON.stringify(l.blocksShown), JSON.stringify(l.answers), l.present ?? null],
-      );
-      accepted.push(l.id);
+      await this.store(d, r.data);
+      accepted.push(r.data.id);
     }
     const config = await this.config(d);
     const licence = config.licence as { validUntil: string };
@@ -72,6 +67,37 @@ export class BoardController {
        WHERE section_id = $1 AND date BETWEEN current_date AND current_date + 7 ORDER BY date, start_time`, [d.sectionId]);
     const timetable = await this.db.q('SELECT day, period, start_time AS start, end_time AS end, subject FROM timetable_slot WHERE section_id = $1 ORDER BY day, period', [d.sectionId]);
     return { accepted, rejected, packs, schedule, timetable, config, licenceLapsed: lapsed };
+  }
+
+  /**
+   * Stores one log and, the first time only, its answers as rows for Outcomes. Older boards do not
+   * send each answer's topic/chapter/source: the topic comes from the question bank (else the
+   * session's), the source from the quiz mode.
+   */
+  private async store(d: Device, l: SessionLog) {
+    const qs = await this.db.q<{ id: string; topic_id: string | null; chapter_id: string; subject: string }>(
+      'SELECT q.id, q.topic_id, q.chapter_id, c.subject FROM question q JOIN chapter c ON c.id = q.chapter_id WHERE q.id = ANY($1)', [l.answers.map((a) => a.questionId)]);
+    const byId = new Map(qs.map((q) => [q.id, q]));
+    const chapterIds = [...new Set([l.chapterId, ...l.answers.map((a) => a.chapterId).filter((x): x is string => !!x)])];
+    const subjects = new Map((await this.db.q<{ id: string; subject: string }>('SELECT id, subject FROM chapter WHERE id = ANY($1)', [chapterIds])).map((c) => [c.id, c.subject]));
+    await this.db.tx(async (c) => {
+      const ins = await c.query(
+        `INSERT INTO session_log(id, device_id, section_id, mode, chapter_id, topic_id, lesson_id, pack_version, started_at, ended_at, completed, blocks_shown, answers, present)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) ON CONFLICT (id) DO NOTHING RETURNING id`,
+        // The section is the device's, whatever the board claims.
+        [l.id, d.id, d.sectionId, l.mode, l.chapterId, l.topicId, l.lessonId, l.packVersion, l.startedAt, l.endedAt, l.completed, JSON.stringify(l.blocksShown), JSON.stringify(l.answers), l.present ?? null],
+      );
+      if (!ins.rowCount) return; // already synced: never count its answers twice
+      for (const [i, a] of l.answers.entries()) {
+        const q = byId.get(a.questionId);
+        const topicId = a.topicId ?? q?.topic_id ?? l.topicId, chapterId = a.chapterId ?? q?.chapter_id ?? l.chapterId;
+        const at = Number.isNaN(Date.parse(a.at)) ? l.startedAt : a.at;
+        await c.query(
+          `INSERT INTO answer(log_id, idx, section_id, question_id, topic_id, chapter_id, subject, roll, team, mode, source, correct, at)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) ON CONFLICT DO NOTHING`,
+          [l.id, i, d.sectionId, a.questionId, topicId, chapterId, subjects.get(chapterId) ?? q?.subject ?? null, a.roll ?? null, a.team ?? null, a.mode, a.source ?? a.mode, a.correct, at]);
+      }
+    });
   }
 
   /** Local-storage downloads (dev). In production the board gets pre-signed S3 URLs instead. */
@@ -107,6 +133,8 @@ export class BoardController {
     return {
       sectionId: r.id, sectionLabel: r.label, year: r.year, board: r.board, subjects: r.subjects, rollCount: r.roll_count, periodMinutes: r.period_minutes, collegeName: r.college,
       pinHash: r.pin_hash, pinSalt: r.pin_salt, licence: body, licenceToken: signLicence(this.keys.licence, body),
+      /** This week's inter-section league: a JSON string [{"sectionId","label","points"}], highest first. */
+      league: await leagueConfig(this.db, d.collegeId),
     };
   }
 }

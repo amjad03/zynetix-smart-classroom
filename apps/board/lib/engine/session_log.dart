@@ -59,27 +59,22 @@ class SessionRecorder {
   /// session's); [source] overrides the quiz mode for answers captured another way (hands,
   /// phone, paper).
   void answer({required String questionId, required QuizMode mode, int? roll, int? team, required int? chosen, required bool correct, String? topicId, String? chapterId, String? source}) {
-    mastery?.record(Response(
-      roll: roll,
-      questionId: questionId,
-      topicId: topicId ?? _log['topicId'] as String,
-      chapterId: chapterId ?? _log['chapterId'] as String,
-      correct: correct,
-      source: source ?? switch (mode) { QuizMode.monitor => 'monitor', QuizMode.rollCall => 'roll_call', QuizMode.team => 'team' },
-      at: _now(),
-    ));
+    final modeName = switch (mode) { QuizMode.monitor => 'monitor', QuizMode.rollCall => 'roll_call', QuizMode.team => 'team' };
+    final topic = topicId ?? _log['topicId'] as String, chapter = chapterId ?? _log['chapterId'] as String, src = source ?? modeName;
+    mastery?.record(Response(roll: roll, questionId: questionId, topicId: topic, chapterId: chapter, correct: correct, source: src, at: _now()));
     (_log['answers'] as List).add({
       'questionId': questionId,
-      'mode': switch (mode) {
-        QuizMode.monitor => 'monitor',
-        QuizMode.rollCall => 'roll_call',
-        QuizMode.team => 'team',
-      },
+      'mode': modeName,
       'roll': ?roll,
       'team': ?team,
       'chosen': chosen,
       'correct': correct,
       'at': _now().toUtc().toIso8601String(),
+      // The question's own topic and chapter, and how it was captured, so the college's
+      // Outcomes reports match what the board's mastery store learned.
+      'topicId': topic,
+      'chapterId': chapter,
+      'source': src,
     });
   }
 
