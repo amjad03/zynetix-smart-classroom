@@ -1,0 +1,730 @@
+{
+ "id": "puc2-business-studies-17-business-regulators-and-intermediaries.t3.lesson",
+ "chapterId": "puc2-business-studies-17-business-regulators-and-intermediaries",
+ "topicId": "puc2-business-studies-17-business-regulators-and-intermediaries.t3",
+ "title": {
+  "en": "IRDAI, PFRDA, FSSAI and BIS"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Regulators for insurance, pensions, food and standards"
+   },
+   "hook": {
+    "en": "Your family's health policy, your parent's pension account, the packet of biscuits in your bag and the helmet you wear on a scooter are each checked by a different regulator."
+   },
+   "objectives": [
+    {
+     "en": "Explain the objectives and functions of IRDAI"
+    },
+    {
+     "en": "Explain the role of PFRDA in pensions"
+    },
+    {
+     "en": "Explain the role of FSSAI and BIS in quality and safety"
+    }
+   ],
+   "narration": {
+    "en": "Your family's health policy, your parent's pension account, the packet of biscuits in your bag and the helmet you wear on a scooter are each checked by a different regulator."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "IRDAI and PFRDA"
+   },
+   "body": {
+    "en": "The Insurance Regulatory and Development Authority of India (IRDAI), set up under the IRDA Act, 1999, protects the interests of policyholders and regulates and develops the insurance industry. It registers insurance companies, insurance agents and insurance brokers, sets rules on solvency (enough money to pay claims), investments, premiums and claim settlement, and handles grievances. The Pension Fund Regulatory and Development Authority (PFRDA) regulates and develops the pension sector, including the National Pension System; it registers and supervises pension funds and intermediaries such as points of presence and aggregators that bring subscribers into the system."
+   },
+   "points": [
+    {
+     "en": "IRDAI: insurers, agents, brokers; protects policyholders"
+    },
+    {
+     "en": "Solvency, premiums and claim settlement rules"
+    },
+    {
+     "en": "PFRDA: pension funds, NPS, aggregators"
+    },
+    {
+     "en": "Both: protect, promote and regulate"
+    }
+   ],
+   "narration": {
+    "en": "The Insurance Regulatory and Development Authority of India (IRDAI), set up under the IRDA Act, 1999, protects the interests of policyholders and regulates and develops the insurance industry. It registers insurance companies, insurance agents and insurance brokers, sets rules on solvency (enough money to pay claims), investments, premiums and claim settlement, and handles grievances. The Pension Fund Regulatory and Development Authority (PFRDA) regulates and develops the pension sector, including the National Pension System; it registers and supervises pension funds and intermediaries such as points of presence and aggregators that bring subscribers into the system."
+   }
+  },
+  {
+   "id": "scene-insurance-pool",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "How insurance pools risk"
+   },
+   "caption": {
+    "en": "Each dot is a policyholder. A few will suffer a loss this year (red), but nobody knows who. If everyone pays a small premium into a pool, the pool pays the few who suffer. The insurer adds a loading for costs. Press Next year to draw a new year."
+   },
+   "sliders": [
+    {
+     "name": "p",
+     "label": {
+      "en": "Chance of loss for each person"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 2,
+     "unit": "%"
+    },
+    {
+     "name": "L",
+     "label": {
+      "en": "Size of a loss (₹ thousand)"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 25,
+     "value": 200
+    },
+    {
+     "name": "ld",
+     "label": {
+      "en": "Loading for costs and profit"
+     },
+     "min": 0,
+     "max": 40,
+     "step": 5,
+     "value": 20,
+     "unit": "%"
+    }
+   ],
+   "counters": [
+    {
+     "name": "yr",
+     "value": 0,
+     "min": 0,
+     "max": 100
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Next year"
+     },
+     "icon": "next",
+     "set": {
+      "yr": "yr + 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "prem",
+     "expr": "p/100*L*1000*(1 + ld/100)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 200,
+     "r": 1.1,
+     "x": "5 + 4.5*mod(i, 20)",
+     "y": "8 + 4.2*floor(i/20)",
+     "color": {
+      "by": "step(rand(i + 200*yr), p/100)",
+      "scale": [
+       "green",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 55,
+     "size": 24,
+     "text": {
+      "en": "Premium per person ₹{prem:0} a year; claim ₹{L*1000:0} if hit"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 3,
+     "size": 18,
+     "text": {
+      "en": "Year {yr:0}: about {2*p:0} of 200 people expected to claim"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Premium per person"
+     },
+     "expr": "prem",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Expected claims out of 200"
+     },
+     "expr": "2*p",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Pool collected from 200 people"
+     },
+     "expr": "200*prem",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Press Next year a few times. Do the red dots fall on the same people?"
+    },
+    {
+     "en": "Double the chance of loss. What happens to the premium?"
+    },
+    {
+     "en": "Why does IRDAI check that an insurer keeps enough money to pay claims?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Each dot is a policyholder. A few will suffer a loss this year (red), but nobody knows who. If everyone pays a small premium into a pool, the pool pays the few who suffer. The insurer adds a loading for costs. Press Next year to draw a new year."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Which regulator?"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Match each sector with its regulator."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Sector regulators"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        9
+       ],
+       "to": [
+        98,
+        51
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        15
+       ],
+       "to": [
+        98,
+        15
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        21
+       ],
+       "to": [
+        98,
+        21
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        27
+       ],
+       "to": [
+        98,
+        27
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        33
+       ],
+       "to": [
+        98,
+        33
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        39
+       ],
+       "to": [
+        98,
+        39
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        45
+       ],
+       "to": [
+        98,
+        45
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        26,
+        9
+       ],
+       "to": [
+        26,
+        51
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10.3
+       ],
+       "text": {
+        "en": "Regulator"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        10.3
+       ],
+       "text": {
+        "en": "Sector and intermediaries"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        16.3
+       ],
+       "text": {
+        "en": "RBI"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        16.3
+       ],
+       "text": {
+        "en": "Banks, foreign banks, NBFCs"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        22.3
+       ],
+       "text": {
+        "en": "SEBI"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        22.3
+       ],
+       "text": {
+        "en": "Exchanges, brokers, funds, rating"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.3
+       ],
+       "text": {
+        "en": "IRDAI"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        28.3
+       ],
+       "text": {
+        "en": "Insurers, agents, brokers"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        34.3
+       ],
+       "text": {
+        "en": "PFRDA"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        34.3
+       ],
+       "text": {
+        "en": "Pension funds, NPS aggregators"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        40.3
+       ],
+       "text": {
+        "en": "FSSAI"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        40.3
+       ],
+       "text": {
+        "en": "Food processors and packers"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        46.3
+       ],
+       "text": {
+        "en": "BIS"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        46.3
+       ],
+       "text": {
+        "en": "ISI mark, hallmarking"
+       },
+       "size": 2.6,
+       "color": "white"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "FSSAI and BIS"
+   },
+   "body": {
+    "en": "The Food Safety and Standards Authority of India (FSSAI), under the Food Safety and Standards Act, 2006, sets science-based standards for food and regulates its manufacture, processing, packing, storage, sale and import. Food processors and packers must hold an FSSAI licence or registration and print its number on the packet. The Bureau of Indian Standards (BIS) is the national standards body. It sets standards and certifies products: the ISI mark is given to industrial and consumer goods such as electrical appliances, cement and steel that meet Indian standards, and some products must carry it by law. BIS also runs hallmarking of gold jewellery."
+   },
+   "points": [
+    {
+     "en": "FSSAI: food standards, licences for processors and packers"
+    },
+    {
+     "en": "BIS: Indian standards and product certification"
+    },
+    {
+     "en": "ISI mark: electrical goods, steel, cement and more"
+    },
+    {
+     "en": "Hallmarking of gold by BIS"
+    }
+   ],
+   "narration": {
+    "en": "The Food Safety and Standards Authority of India (FSSAI), under the Food Safety and Standards Act, 2006, sets science-based standards for food and regulates its manufacture, processing, packing, storage, sale and import. Food processors and packers must hold an FSSAI licence or registration and print its number on the packet. The Bureau of Indian Standards (BIS) is the national standards body. It sets standards and certifies products: the ISI mark is given to industrial and consumer goods such as electrical appliances, cement and steel that meet Indian standards, and some products must carry it by law. BIS also runs hallmarking of gold jewellery."
+   }
+  },
+  {
+   "id": "activity-sort-regulators",
+   "type": "activity",
+   "kind": "sort",
+   "prompt": {
+    "en": "Sort each business into the regulator that registers or certifies it."
+   },
+   "buckets": [
+    {
+     "id": "irdai",
+     "label": {
+      "en": "IRDAI"
+     }
+    },
+    {
+     "id": "pfrda",
+     "label": {
+      "en": "PFRDA"
+     }
+    },
+    {
+     "id": "fssai",
+     "label": {
+      "en": "FSSAI"
+     }
+    },
+    {
+     "id": "bis",
+     "label": {
+      "en": "BIS"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "A health insurance company"
+     },
+     "answer": "irdai"
+    },
+    {
+     "text": {
+      "en": "An insurance broker"
+     },
+     "answer": "irdai"
+    },
+    {
+     "text": {
+      "en": "A fund managing National Pension System money"
+     },
+     "answer": "pfrda"
+    },
+    {
+     "text": {
+      "en": "An aggregator that enrols workers into a pension scheme"
+     },
+     "answer": "pfrda"
+    },
+    {
+     "text": {
+      "en": "A biscuit factory"
+     },
+     "answer": "fssai"
+    },
+    {
+     "text": {
+      "en": "A packaged drinking water bottler"
+     },
+     "answer": "fssai"
+    },
+    {
+     "text": {
+      "en": "A maker of electric irons seeking the ISI mark"
+     },
+     "answer": "bis"
+    },
+    {
+     "text": {
+      "en": "A steel plant certifying its bars to Indian standards"
+     },
+     "answer": "bis"
+    }
+   ],
+   "explanation": {
+    "en": "Insurance goes to IRDAI, pensions to PFRDA, food to FSSAI and product standards to BIS."
+   },
+   "narration": {
+    "en": "Sort each business into the regulator that registers or certifies it."
+   },
+   "questionId": "act.isc-sort-regulators"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "200 shopkeepers each face a 2% chance of a ₹2,00,000 fire loss this year. An insurer adds 20% for costs and profit. What premium should each pay, and what does the pool collect?"
+   },
+   "steps": [
+    {
+     "en": "Expected loss per person = 2% × 2,00,000 = ₹4,000."
+    },
+    {
+     "en": "With 20% loading: premium = 4,000 × 1.2 = ₹4,800."
+    },
+    {
+     "en": "Pool = 200 × 4,800 = ₹9,60,000."
+    },
+    {
+     "en": "Expected claims = 2% of 200 = 4 people × ₹2,00,000 = ₹8,00,000, leaving ₹1,60,000 for costs and profit."
+    }
+   ],
+   "answer": {
+    "en": "Premium ₹4,800 each; the pool of ₹9.6 lakh covers about 4 claims of ₹2 lakh."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. 200 shopkeepers each face a 2% chance of a ₹2,00,000 fire loss this year. An insurer adds 20% for costs and profit. What premium should each pay, and what does the pool collect?"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "Money, Market, Insurance, Pension, Food, Standards"
+   },
+   "body": {
+    "en": "RBI for money and banks, SEBI for the share market, IRDAI for insurance, PFRDA for pensions, FSSAI for food, BIS for product standards."
+   },
+   "narration": {
+    "en": "Money, Market, Insurance, Pension, Food, Standards. RBI for money and banks, SEBI for the share market, IRDAI for insurance, PFRDA for pensions, FSSAI for food, BIS for product standards."
+   },
+   "mnemonic": {
+    "en": "R-S-I-P-F-B"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-2s17-q09",
+    "isc-2s17-q10",
+    "isc-2s17-q11"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-2s17-q12"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "IRDAI regulates insurers, agents and brokers and protects policyholders."
+    },
+    {
+     "en": "PFRDA regulates pension funds and the National Pension System."
+    },
+    {
+     "en": "FSSAI sets food standards and licenses processors and packers."
+    },
+    {
+     "en": "BIS sets Indian standards and grants the ISI mark."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Find the FSSAI licence number and any ISI or BIS mark on two products at home."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-2s17-q12"
+   ],
+   "narration": {
+    "en": "Recap. IRDAI regulates insurers, agents and brokers and protects policyholders. PFRDA regulates pension funds and the National Pension System. FSSAI sets food standards and licenses processors and packers. BIS sets Indian standards and grants the ISI mark."
+   }
+  }
+ ]
+}

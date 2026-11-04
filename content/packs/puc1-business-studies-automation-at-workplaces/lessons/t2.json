@@ -1,0 +1,510 @@
+{
+ "id": "puc1-business-studies-14-automation-at-workplaces.t2.lesson",
+ "chapterId": "puc1-business-studies-14-automation-at-workplaces",
+ "topicId": "puc1-business-studies-14-automation-at-workplaces.t2",
+ "title": {
+  "en": "Types and uses of automation"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Fixed, programmable, flexible"
+   },
+   "hook": {
+    "en": "A soap factory makes one shape of soap for years; a garment unit changes designs every season; a bank answers thousands of the same questions each day. Each needs a different kind of automation."
+   },
+   "objectives": [
+    {
+     "en": "Distinguish fixed, programmable and flexible automation"
+    },
+    {
+     "en": "Describe office and service automation"
+    },
+    {
+     "en": "Judge when automation is worthwhile"
+    }
+   ],
+   "narration": {
+    "en": "A soap factory makes one shape of soap for years; a garment unit changes designs every season; a bank answers thousands of the same questions each day. Each needs a different kind of automation."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Types of automation"
+   },
+   "body": {
+    "en": "Fixed (hard) automation uses equipment built for one fixed sequence of operations. It gives very high output at low unit cost, but is costly to set up and hard to change; it suits large volumes of a standard product. Programmable automation lets the sequence be changed by a new program; it suits batches of different products, with set-up time between batches. Flexible (soft) automation can switch between products quickly with little or no set-up time, as in computer-controlled machines and robots; it suits a variety of products in moderate volumes."
+   },
+   "points": [
+    {
+     "en": "Fixed: one product, very high volume"
+    },
+    {
+     "en": "Programmable: batches, reprogram between them"
+    },
+    {
+     "en": "Flexible: quick changeover, variety of products"
+    }
+   ],
+   "narration": {
+    "en": "Fixed (hard) automation uses equipment built for one fixed sequence of operations. It gives very high output at low unit cost, but is costly to set up and hard to change; it suits large volumes of a standard product. Programmable automation lets the sequence be changed by a new program; it suits batches of different products, with set-up time between batches. Flexible (soft) automation can switch between products quickly with little or no set-up time, as in computer-controlled machines and robots; it suits a variety of products in moderate volumes."
+   }
+  },
+  {
+   "id": "scene-automation-breakeven",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "When does automation pay?"
+   },
+   "caption": {
+    "en": "Manual work has a low fixed cost but a high cost per unit; automation has a high fixed cost (machines, software) but a low cost per unit. The lines cross at the break-even volume: above it, automation is cheaper."
+   },
+   "sliders": [
+    {
+     "name": "Fa",
+     "label": {
+      "en": "Fixed cost of automation (₹ lakh a year)"
+     },
+     "min": 5,
+     "max": 40,
+     "step": 1,
+     "value": 20
+    },
+    {
+     "name": "va",
+     "label": {
+      "en": "Cost per unit, automated (₹)"
+     },
+     "min": 2,
+     "max": 20,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "vm",
+     "label": {
+      "en": "Cost per unit, manual (₹)"
+     },
+     "min": 10,
+     "max": 40,
+     "step": 1,
+     "value": 25
+    },
+    {
+     "name": "Q",
+     "label": {
+      "en": "Units a year (thousand)"
+     },
+     "min": 10,
+     "max": 300,
+     "step": 10,
+     "value": 80
+    }
+   ],
+   "vars": [
+    {
+     "name": "Fm",
+     "expr": "2"
+    },
+    {
+     "name": "cm",
+     "expr": "Fm + vm*Q/100"
+    },
+    {
+     "name": "ca",
+     "expr": "Fa + va*Q/100"
+    },
+    {
+     "name": "qbe",
+     "expr": "if(vm > va, 100*(Fa - Fm)/(vm - va), 9999)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     320
+    ],
+    "y": [
+     0,
+     130
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "units a year (thousand)",
+    "yLabel": "total cost (₹ lakh)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "Fm + vm*x/100",
+     "from": 0,
+     "to": 310,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "Fa + va*x/100",
+     "from": 0,
+     "to": 310,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "Q",
+     "y1": 0,
+     "x2": "Q",
+     "y2": 125,
+     "dashed": true,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "qbe < 310",
+     "x": "qbe",
+     "y": "Fa + va*qbe/100",
+     "r": 3,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 290,
+     "y": "min(Fm + vm*2.9 + 6, 125)",
+     "size": 20,
+     "color": "blue",
+     "text": {
+      "en": "manual"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 290,
+     "y": "min(Fa + va*2.9 - 6, 120)",
+     "size": 20,
+     "color": "green",
+     "text": {
+      "en": "automated"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 160,
+     "y": 122,
+     "size": 22,
+     "visibleIf": "ca < cm",
+     "color": "green",
+     "text": {
+      "en": "At {Q:0} thousand units automation saves ₹{cm - ca:1} lakh"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 160,
+     "y": 122,
+     "size": 22,
+     "visibleIf": "ca >= cm",
+     "color": "blue",
+     "text": {
+      "en": "At {Q:0} thousand units manual is cheaper by ₹{ca - cm:1} lakh"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Break-even volume"
+     },
+     "expr": "qbe",
+     "digits": 0,
+     "unit": "thousand units"
+    },
+    {
+     "label": {
+      "en": "Cost, manual"
+     },
+     "expr": "cm",
+     "digits": 1,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Cost, automated"
+     },
+     "expr": "ca",
+     "digits": 1,
+     "unit": "₹ lakh"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With the default values, find the break-even volume. Is it 90 thousand units?"
+    },
+    {
+     "en": "Make the automation cheaper to install. Does the break-even move left or right?"
+    },
+    {
+     "en": "Why does automation suit large-volume, standard products best?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Manual work has a low fixed cost but a high cost per unit; automation has a high fixed cost (machines, software) but a low cost per unit. The lines cross at the break-even volume: above it, automation is cheaper."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Break-even volume for automation"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Manual: fixed cost ₹2 lakh, ₹25 a unit. Automated: fixed cost ₹20 lakh, ₹5 a unit."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Is automation worth it?"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        9
+       ],
+       "tex": "Q_{BE} = \\frac{20{,}00{,}000 - 2{,}00{,}000}{25 - 5} = 90{,}000 \\text{ units}",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        16
+       ],
+       "text": {
+        "en": "Below 90,000 units a year: manual is cheaper"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        21.5
+       ],
+       "text": {
+        "en": "Above 90,000 units a year: automation is cheaper"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Automation in offices and services"
+   },
+   "body": {
+    "en": "Offices use automation to handle routine information work: automatic billing and reminders, payroll software, document scanning, e-mail filters, automated reports and software robots that copy data between systems. Services use ATMs, self check-in kiosks, online banking, chatbots and warehouse robots. Automation is worthwhile when volumes are high, tasks are repetitive and rule-based, accuracy matters, and the saving in running costs covers the cost of installing it."
+   },
+   "points": [
+    {
+     "en": "Office: billing, payroll, reports, data entry by software"
+    },
+    {
+     "en": "Services: ATMs, kiosks, chatbots, online banking"
+    },
+    {
+     "en": "Pays off with high volume and routine, rule-based tasks"
+    }
+   ],
+   "narration": {
+    "en": "Offices use automation to handle routine information work: automatic billing and reminders, payroll software, document scanning, e-mail filters, automated reports and software robots that copy data between systems. Services use ATMs, self check-in kiosks, online banking, chatbots and warehouse robots. Automation is worthwhile when volumes are high, tasks are repetitive and rule-based, accuracy matters, and the saving in running costs covers the cost of installing it."
+   },
+   "formula": "Q_{BE} = \\frac{F_{auto} - F_{manual}}{v_{manual} - v_{auto}}"
+  },
+  {
+   "id": "activity-match-automation-types",
+   "type": "activity",
+   "kind": "match",
+   "prompt": {
+    "en": "Match each situation with the type of automation that fits it best."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "A bottling plant fills one size of cola bottle all year"
+     },
+     "right": {
+      "en": "Fixed automation"
+     }
+    },
+    {
+     "left": {
+      "en": "A press makes 5,000 brackets of one design, then is reprogrammed for another"
+     },
+     "right": {
+      "en": "Programmable automation"
+     }
+    },
+    {
+     "left": {
+      "en": "A robot cell switches between three car models with no stoppage"
+     },
+     "right": {
+      "en": "Flexible automation"
+     }
+    },
+    {
+     "left": {
+      "en": "Software sends salary slips to all staff every month"
+     },
+     "right": {
+      "en": "Office automation"
+     }
+    },
+    {
+     "left": {
+      "en": "A chatbot answers routine questions on a bank's website"
+     },
+     "right": {
+      "en": "Service automation"
+     }
+    }
+   ],
+   "explanation": {
+    "en": "The more variety and the less volume, the more flexibility the automation needs; office and service automation handle routine information and customer tasks."
+   },
+   "narration": {
+    "en": "Match each situation with the type of automation that fits it best."
+   },
+   "questionId": "act.isc-match-automation-types"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A firm makes 60,000 units a year by hand at ₹30 a unit with a fixed cost of ₹3 lakh. A machine would cost ₹15 lakh a year (fixed) and ₹10 a unit. Should it automate now? What if sales double?"
+   },
+   "steps": [
+    {
+     "en": "Break-even volume = (15,00,000 − 3,00,000)/(30 − 10) = 60,000 units."
+    },
+    {
+     "en": "At 60,000 units, both cost the same: 3 + 18 = ₹21 lakh and 15 + 6 = ₹21 lakh."
+    },
+    {
+     "en": "At 1,20,000 units: manual = 3 + 36 = ₹39 lakh; automated = 15 + 12 = ₹27 lakh."
+    },
+    {
+     "en": "Automation saves ₹12 lakh a year if sales double."
+    }
+   ],
+   "answer": {
+    "en": "At present volume it makes no difference; with doubled sales automation saves ₹12 lakh a year."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. A firm makes 60,000 units a year by hand at ₹30 a unit with a fixed cost of ₹3 lakh. A machine would cost ₹15 lakh a year (fixed) and ₹10 a unit. Should it automate now? What if sales double?"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "Volume up, flexibility down"
+   },
+   "body": {
+    "en": "Fixed automation: huge volume, no variety. Flexible automation: variety, smaller volume. Programmable sits in between."
+   },
+   "narration": {
+    "en": "Volume up, flexibility down. Fixed automation: huge volume, no variety. Flexible automation: variety, smaller volume. Programmable sits in between."
+   },
+   "mnemonic": {
+    "en": "Fixed - Programmable - Flexible: more variety each step"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-1s14-q05",
+    "isc-1s14-q06",
+    "isc-1s14-q07"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-1s14-q08"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Fixed automation suits very high volumes of one product."
+    },
+    {
+     "en": "Programmable automation suits batches; flexible suits variety with quick changeover."
+    },
+    {
+     "en": "Office and service automation handle routine information and customer tasks."
+    },
+    {
+     "en": "Automation pays above the break-even volume."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Which type of automation would suit a tailoring business that makes custom clothes? Why?"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-1s14-q08"
+   ],
+   "narration": {
+    "en": "Recap. Fixed automation suits very high volumes of one product. Programmable automation suits batches; flexible suits variety with quick changeover. Office and service automation handle routine information and customer tasks. Automation pays above the break-even volume."
+   }
+  }
+ ]
+}

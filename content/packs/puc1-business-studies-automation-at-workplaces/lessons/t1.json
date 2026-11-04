@@ -1,0 +1,745 @@
+{
+ "id": "puc1-business-studies-14-automation-at-workplaces.t1.lesson",
+ "chapterId": "puc1-business-studies-14-automation-at-workplaces",
+ "topicId": "puc1-business-studies-14-automation-at-workplaces.t1",
+ "title": {
+  "en": "Meaning of automation"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Machines that run themselves"
+   },
+   "hook": {
+    "en": "In a modern bottling plant, bottles are filled, capped, labelled and checked without anyone touching them. A few people watch screens. How is this different from a worker running a machine?"
+   },
+   "objectives": [
+    {
+     "en": "Define automation"
+    },
+    {
+     "en": "Distinguish automation from mechanisation and computerisation"
+    },
+    {
+     "en": "Identify the elements of an automated system"
+    }
+   ],
+   "narration": {
+    "en": "In a modern bottling plant, bottles are filled, capped, labelled and checked without anyone touching them. A few people watch screens. How is this different from a worker running a machine?"
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Meaning of automation"
+   },
+   "body": {
+    "en": "Automation is the use of machines, controls and information technology to carry out a process with little or no human intervention. An automated system senses what is happening (sensors), decides what to do according to a program (controller or computer) and acts (actuators, motors, robots), correcting itself through feedback. People design, program, maintain and monitor the system rather than doing each step."
+   },
+   "points": [
+    {
+     "en": "Little or no human intervention in each step"
+    },
+    {
+     "en": "Elements: sensors, a controller, actuators and feedback"
+    },
+    {
+     "en": "Humans design, program, maintain and monitor"
+    }
+   ],
+   "narration": {
+    "en": "Automation is the use of machines, controls and information technology to carry out a process with little or no human intervention. An automated system senses what is happening (sensors), decides what to do according to a program (controller or computer) and acts (actuators, motors, robots), correcting itself through feedback. People design, program, maintain and monitor the system rather than doing each step."
+   }
+  },
+  {
+   "id": "scene-packing-line",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A packing line: manual, mechanised, automated"
+   },
+   "caption": {
+    "en": "Boxes move along a line. With manual work a person does each step; with mechanisation a machine does the work but a person controls it; with automation sensors and a controller run the line by themselves and people only monitor. Press Play and compare output and errors."
+   },
+   "choices": [
+    {
+     "name": "md",
+     "label": {
+      "en": "Mode"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Manual"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Mechanised"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Automated"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "sliders": [
+    {
+     "name": "wk",
+     "label": {
+      "en": "Workers on the line"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4
+    ],
+    "speed": 1,
+    "unit": "min"
+   },
+   "vars": [
+    {
+     "name": "rate",
+     "expr": "if(md==1, 2*wk, if(md==2, 6*wk, 60))"
+    },
+    {
+     "name": "err",
+     "expr": "if(md==1, 4, if(md==2, 2, 0.3))"
+    },
+    {
+     "name": "staff",
+     "expr": "if(md==3, 1, wk)"
+    },
+    {
+     "name": "sp",
+     "expr": "rate/60*8"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     40
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 14,
+     "w": 96,
+     "h": 3,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "r": 1.6,
+     "x": "mod(10*i + sp*t, 100)",
+     "y": 19,
+     "color": "orange"
+    },
+    {
+     "shape": "particles",
+     "count": 6,
+     "r": 1.5,
+     "x": "15 + 14*i",
+     "y": 27,
+     "visibleIf": "md < 3 && i < wk",
+     "color": "blue"
+    },
+    {
+     "shape": "particles",
+     "count": 6,
+     "r": 1.2,
+     "x": "15 + 14*i",
+     "y": 22.5,
+     "visibleIf": "md == 2 && i < wk",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 24,
+     "w": 80,
+     "h": 3,
+     "visibleIf": "md == 3",
+     "color": "green",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 30,
+     "size": 20,
+     "visibleIf": "md == 3",
+     "color": "green",
+     "text": {
+      "en": "sensors + controller"
+     }
+    },
+    {
+     "shape": "circle",
+     "x": 90,
+     "y": 33,
+     "r": 1.5,
+     "visibleIf": "md == 3",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 90,
+     "y": 37,
+     "size": 16,
+     "visibleIf": "md == 3",
+     "text": {
+      "en": "monitor"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 6,
+     "size": 24,
+     "text": {
+      "en": "{rate:0} boxes/min, {err:1}% errors, {staff:0} staff"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Output per minute"
+     },
+     "expr": "rate",
+     "digits": 0,
+     "unit": "boxes"
+    },
+    {
+     "label": {
+      "en": "Output per worker per minute"
+     },
+     "expr": "rate/staff",
+     "digits": 1,
+     "unit": "boxes"
+    },
+    {
+     "label": {
+      "en": "Error rate (illustrative)"
+     },
+     "expr": "err",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Compare output per worker in the three modes."
+    },
+    {
+     "en": "In mechanised mode, what still needs a person at each machine?"
+    },
+    {
+     "en": "In automated mode, what is the one person's job?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Boxes move along a line. With manual work a person does each step; with mechanisation a machine does the work but a person controls it; with automation sensors and a controller run the line by themselves and people only monitor. Press Play and compare output and errors."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Three steps up"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Compare three ways to pack biscuits."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Manual to automated"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        9
+       ],
+       "to": [
+        98,
+        33
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        15
+       ],
+       "to": [
+        98,
+        15
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        21
+       ],
+       "to": [
+        98,
+        21
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        27
+       ],
+       "to": [
+        98,
+        27
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        28,
+        9
+       ],
+       "to": [
+        28,
+        33
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        66,
+        9
+       ],
+       "to": [
+        66,
+        33
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10.3
+       ],
+       "text": {
+        "en": "Mode"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        29,
+        10.3
+       ],
+       "text": {
+        "en": "Who does the work"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        10.3
+       ],
+       "text": {
+        "en": "Who controls it"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        16.3
+       ],
+       "text": {
+        "en": "Manual"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        29,
+        16.3
+       ],
+       "text": {
+        "en": "Worker"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        16.3
+       ],
+       "text": {
+        "en": "Worker"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        22.3
+       ],
+       "text": {
+        "en": "Mechanised"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        29,
+        22.3
+       ],
+       "text": {
+        "en": "Machine"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        22.3
+       ],
+       "text": {
+        "en": "Worker at the machine"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.3
+       ],
+       "text": {
+        "en": "Automated"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        29,
+        28.3
+       ],
+       "text": {
+        "en": "Machine"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        28.3
+       ],
+       "text": {
+        "en": "Program, sensors, feedback"
+       },
+       "size": 2.6,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "An automated system is a loop: sense, decide, act, and check again."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        35
+       ],
+       "tex": "\\text{Sensor} \\rightarrow \\text{Controller} \\rightarrow \\text{Actuator} \\rightarrow \\text{Feedback}",
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Related concepts"
+   },
+   "body": {
+    "en": "Mechanisation replaces human muscle with machines, but a person still operates and controls each machine. Computerisation means using computers to store and process information and to support tasks such as accounting or billing; it may or may not run the process itself. Automation goes further: it replaces both human effort and human control of routine steps. Robotics and artificial intelligence are tools of advanced automation: robots perform physical tasks, and AI handles tasks that need judgement, such as reading documents or answering queries."
+   },
+   "points": [
+    {
+     "en": "Mechanisation: machines do the work, people control them"
+    },
+    {
+     "en": "Computerisation: computers process information"
+    },
+    {
+     "en": "Automation: the process controls itself"
+    },
+    {
+     "en": "Robotics and AI: advanced forms of automation"
+    }
+   ],
+   "narration": {
+    "en": "Mechanisation replaces human muscle with machines, but a person still operates and controls each machine. Computerisation means using computers to store and process information and to support tasks such as accounting or billing; it may or may not run the process itself. Automation goes further: it replaces both human effort and human control of routine steps. Robotics and artificial intelligence are tools of advanced automation: robots perform physical tasks, and AI handles tasks that need judgement, such as reading documents or answering queries."
+   }
+  },
+  {
+   "id": "activity-sort-automation",
+   "type": "activity",
+   "kind": "sort",
+   "prompt": {
+    "en": "Sort each example: mechanisation, computerisation or automation?"
+   },
+   "buckets": [
+    {
+     "id": "mech",
+     "label": {
+      "en": "Mechanisation"
+     }
+    },
+    {
+     "id": "comp",
+     "label": {
+      "en": "Computerisation"
+     }
+    },
+    {
+     "id": "auto",
+     "label": {
+      "en": "Automation"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "A worker drives a tractor to plough a field"
+     },
+     "answer": "mech"
+    },
+    {
+     "text": {
+      "en": "A tailor uses an electric sewing machine"
+     },
+     "answer": "mech"
+    },
+    {
+     "text": {
+      "en": "A shop keeps its accounts in accounting software"
+     },
+     "answer": "comp"
+    },
+    {
+     "text": {
+      "en": "A clerk types student records into a database"
+     },
+     "answer": "comp"
+    },
+    {
+     "text": {
+      "en": "A drip system waters crops when soil sensors read dry"
+     },
+     "answer": "auto"
+    },
+    {
+     "text": {
+      "en": "Robots weld car bodies on an assembly line"
+     },
+     "answer": "auto"
+    },
+    {
+     "text": {
+      "en": "A bank's system sends a payment reminder on the due date by itself"
+     },
+     "answer": "auto"
+    }
+   ],
+   "explanation": {
+    "en": "If a person still runs the machine, it is mechanisation; if computers only hold and process data, it is computerisation; if the process senses and acts by itself, it is automation."
+   },
+   "narration": {
+    "en": "Sort each example: mechanisation, computerisation or automation?"
+   },
+   "questionId": "act.isc-sort-automation"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A dairy fills milk pouches. Method A: workers fill pouches by hand. Method B: a filling machine fills a pouch each time a worker presses a pedal. Method C: a level sensor stops the filler at 500 ml, a sealer seals, a camera rejects leaking pouches. Classify the methods."
+   },
+   "steps": [
+    {
+     "en": "A: people do and control the work: manual."
+    },
+    {
+     "en": "B: a machine does the work, but a person controls each cycle: mechanisation."
+    },
+    {
+     "en": "C: sensors, a controller and feedback run the cycle without a person: automation."
+    }
+   ],
+   "answer": {
+    "en": "A is manual, B is mechanised and C is automated."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. A dairy fills milk pouches. Method A: workers fill pouches by hand. Method B: a filling machine fills a pouch each time a worker presses a pedal. Method C: a level sensor stops the filler at 500 ml, a sealer seals, a camera rejects leaking pouches. Classify the methods."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "Who presses the button?"
+   },
+   "body": {
+    "en": "If a person must start or stop every cycle, it is mechanisation. If the system decides by itself from sensor readings, it is automation."
+   },
+   "narration": {
+    "en": "Who presses the button?. If a person must start or stop every cycle, it is mechanisation. If the system decides by itself from sensor readings, it is automation."
+   },
+   "mnemonic": {
+    "en": "Muscle replaced: mechanised. Mind of routine replaced: automated."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-1s14-q01",
+    "isc-1s14-q02",
+    "isc-1s14-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-1s14-q04"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Automation runs a process with little or no human intervention."
+    },
+    {
+     "en": "It uses sensors, controllers, actuators and feedback."
+    },
+    {
+     "en": "Mechanisation replaces muscle; automation replaces routine control too."
+    },
+    {
+     "en": "Computerisation processes information; robotics and AI extend automation."
+    }
+   ],
+   "homework": [
+    {
+     "en": "List three examples of automation you have seen at a bank, a railway station or a shop."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-1s14-q04"
+   ],
+   "narration": {
+    "en": "Recap. Automation runs a process with little or no human intervention. It uses sensors, controllers, actuators and feedback. Mechanisation replaces muscle; automation replaces routine control too. Computerisation processes information; robotics and AI extend automation."
+   }
+  }
+ ]
+}

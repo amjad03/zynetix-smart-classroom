@@ -1,0 +1,467 @@
+{
+ "id": "puc2-business-studies-13-human-resource-management.t1.lesson",
+ "chapterId": "puc2-business-studies-13-human-resource-management",
+ "topicId": "puc2-business-studies-13-human-resource-management.t1",
+ "title": {
+  "en": "HRM, job analysis and manpower planning"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "The right people in the right jobs"
+   },
+   "hook": {
+    "en": "A hospital is opening a new wing next year. How many nurses will it need, with what skills, and how many of today's staff will still be there? Human resource management starts with these questions."
+   },
+   "objectives": [
+    {
+     "en": "Explain the meaning and functions of HRM"
+    },
+    {
+     "en": "Explain job analysis, job description and job specification"
+    },
+    {
+     "en": "Estimate manpower requirements"
+    }
+   ],
+   "narration": {
+    "en": "A hospital is opening a new wing next year. How many nurses will it need, with what skills, and how many of today's staff will still be there? Human resource management starts with these questions."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "HRM and job analysis"
+   },
+   "body": {
+    "en": "Human resource management is the part of management concerned with acquiring, developing, using and keeping a competent and satisfied workforce. Its functions include manpower planning, recruitment and selection, placement and induction, training and development, performance appraisal, compensation, internal mobility (promotion and transfer), separation, welfare and industrial relations. It starts with job analysis: a systematic study of a job to find its duties and the qualities needed to do it. Job analysis produces a job description (what the job involves: title, duties, responsibilities, conditions) and a job specification (who can do it: qualifications, experience, skills and personal qualities)."
+   },
+   "points": [
+    {
+     "en": "HRM: acquire, develop, use and retain people"
+    },
+    {
+     "en": "Job analysis: study of a job's contents and requirements"
+    },
+    {
+     "en": "Job description: about the job"
+    },
+    {
+     "en": "Job specification: about the person"
+    }
+   ],
+   "narration": {
+    "en": "Human resource management is the part of management concerned with acquiring, developing, using and keeping a competent and satisfied workforce. Its functions include manpower planning, recruitment and selection, placement and induction, training and development, performance appraisal, compensation, internal mobility (promotion and transfer), separation, welfare and industrial relations. It starts with job analysis: a systematic study of a job to find its duties and the qualities needed to do it. Job analysis produces a job description (what the job involves: title, duties, responsibilities, conditions) and a job specification (who can do it: qualifications, experience, skills and personal qualities)."
+   }
+  },
+  {
+   "id": "int-manpower-plan",
+   "type": "interactive",
+   "kind": "bar_chart",
+   "title": {
+    "en": "Manpower planning: how many people to hire?"
+   },
+   "caption": {
+    "en": "Workload next year divided by the hours one employee can actually work gives the staff needed. Compare it with the staff who will still be there after expected exits."
+   },
+   "sliders": [
+    {
+     "name": "W",
+     "label": {
+      "en": "Workload next year (thousand hours)"
+     },
+     "min": 50,
+     "max": 300,
+     "step": 10,
+     "value": 180
+    },
+    {
+     "name": "ab",
+     "label": {
+      "en": "Absenteeism"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    },
+    {
+     "name": "N",
+     "label": {
+      "en": "Present staff"
+     },
+     "min": 50,
+     "max": 150,
+     "step": 5,
+     "value": 90
+    },
+    {
+     "name": "at",
+     "label": {
+      "en": "Expected exits (attrition)"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 12,
+     "unit": "%"
+    }
+   ],
+   "vars": [
+    {
+     "name": "hrs",
+     "expr": "2000*(1 - ab/100)"
+    },
+    {
+     "name": "need",
+     "expr": "ceil(1000*W/hrs)"
+    },
+    {
+     "name": "stay",
+     "expr": "floor(N*(1 - at/100))"
+    },
+    {
+     "name": "gap",
+     "expr": "need - stay"
+    }
+   ],
+   "data": {
+    "Staff needed": "need",
+    "Present staff": "N",
+    "Staff who stay": "stay",
+    "To recruit": "max(gap, 0)",
+    "Surplus": "max(-gap, 0)"
+   },
+   "readouts": [
+    {
+     "label": {
+      "en": "Effective hours per employee (of 2,000)"
+     },
+     "expr": "hrs",
+     "digits": 0,
+     "unit": "h"
+    },
+    {
+     "label": {
+      "en": "Staff needed"
+     },
+     "expr": "need",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "To recruit (+) or surplus (−)"
+     },
+     "expr": "gap",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With the default numbers, how many people must be recruited?"
+    },
+    {
+     "en": "Cut absenteeism to 5%. How many fewer people are needed?"
+    },
+    {
+     "en": "Set a surplus. Which ways of separation or transfer could deal with it?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Workload next year divided by the hours one employee can actually work gives the staff needed. Compare it with the staff who will still be there after expected exits."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: A manpower plan"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Workload next year: 1,80,000 hours. Each employee works 2,000 hours, less 10% absence."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "How many people?"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        9
+       ],
+       "tex": "\\text{Effective hours} = 2000 \\times 0.9 = 1800",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        16
+       ],
+       "tex": "\\text{Needed} = 1{,}80{,}000 / 1800 = 100",
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "There are 90 staff today and 12 percent are expected to leave."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        23
+       ],
+       "tex": "\\text{Stay} = 90 \\times 0.88 = 79.2 \\approx 79",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        30
+       ],
+       "tex": "\\text{Recruit} = 100 - 79 = 21",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        37
+       ],
+       "text": {
+        "en": "Plan: recruit 21 people before the year starts."
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Manpower planning"
+   },
+   "body": {
+    "en": "Manpower (human resource) planning estimates the number and kind of people the organisation will need in future and plans how to get them. Its steps are: forecasting the demand for people from workload and plans; estimating the supply from present staff after allowing for retirements, resignations and promotions; finding the gap; and planning action: recruitment if there is a shortage, or transfers, redeployment or separation if there is a surplus. It avoids both shortages and surpluses of staff, and supports recruitment, training and succession."
+   },
+   "points": [
+    {
+     "en": "Forecast demand from the workload"
+    },
+    {
+     "en": "Estimate supply after attrition"
+    },
+    {
+     "en": "Gap = demand − supply"
+    },
+    {
+     "en": "Action: recruit, train, transfer or separate"
+    }
+   ],
+   "narration": {
+    "en": "Manpower (human resource) planning estimates the number and kind of people the organisation will need in future and plans how to get them. Its steps are: forecasting the demand for people from workload and plans; estimating the supply from present staff after allowing for retirements, resignations and promotions; finding the gap; and planning action: recruitment if there is a shortage, or transfers, redeployment or separation if there is a surplus. It avoids both shortages and surpluses of staff, and supports recruitment, training and succession."
+   },
+   "formula": "\\text{Staff needed} = \\frac{\\text{Workload (hours)}}{\\text{Effective hours per employee}}"
+  },
+  {
+   "id": "activity-sort-job-desc-spec",
+   "type": "activity",
+   "kind": "sort",
+   "prompt": {
+    "en": "For the job of an accounts assistant, sort each item: job description or job specification?"
+   },
+   "buckets": [
+    {
+     "id": "desc",
+     "label": {
+      "en": "Job description"
+     }
+    },
+    {
+     "id": "spec",
+     "label": {
+      "en": "Job specification"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "Prepares daily vouchers and ledger postings"
+     },
+     "answer": "desc"
+    },
+    {
+     "text": {
+      "en": "Reports to the accounts manager"
+     },
+     "answer": "desc"
+    },
+    {
+     "text": {
+      "en": "Works in the head office, 9 a.m. to 5 p.m."
+     },
+     "answer": "desc"
+    },
+    {
+     "text": {
+      "en": "B.Com. with at least 50% marks"
+     },
+     "answer": "spec"
+    },
+    {
+     "text": {
+      "en": "Two years of experience with accounting software"
+     },
+     "answer": "spec"
+    },
+    {
+     "text": {
+      "en": "Careful, honest and good with numbers"
+     },
+     "answer": "spec"
+    }
+   ],
+   "explanation": {
+    "en": "A job description describes the job (duties, reporting, conditions); a job specification describes the person needed (qualifications, experience, qualities)."
+   },
+   "narration": {
+    "en": "For the job of an accounts assistant, sort each item: job description or job specification?"
+   },
+   "questionId": "act.isc-sort-job-desc-spec"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A call centre expects 2,40,000 hours of calls next year. Each agent can work 1,920 hours, but absence is 15%. It has 140 agents and expects 20% to leave. How many should it recruit?"
+   },
+   "steps": [
+    {
+     "en": "Effective hours per agent = 1,920 × 0.85 = 1,632."
+    },
+    {
+     "en": "Agents needed = 2,40,000 / 1,632 ≈ 147.1, so 148 agents."
+    },
+    {
+     "en": "Agents who stay = 140 × 0.80 = 112."
+    },
+    {
+     "en": "To recruit = 148 − 112 = 36."
+    }
+   ],
+   "answer": {
+    "en": "Recruit 36 agents."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. A call centre expects 2,40,000 hours of calls next year. Each agent can work 1,920 hours, but absence is 15%. It has 140 agents and expects 20% to leave. How many should it recruit?"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "Description = job, Specification = person"
+   },
+   "body": {
+    "en": "If the sentence starts with \"The job...\", it belongs in the description; if it starts with \"The person must...\", it belongs in the specification."
+   },
+   "narration": {
+    "en": "Description = job, Specification = person. If the sentence starts with \"The job...\", it belongs in the description; if it starts with \"The person must...\", it belongs in the specification."
+   },
+   "mnemonic": {
+    "en": "D for duties, S for skills"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-2s13-q01",
+    "isc-2s13-q02",
+    "isc-2s13-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-2s13-q04"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "HRM acquires, develops, uses and retains people."
+    },
+    {
+     "en": "Job analysis gives the job description (duties) and job specification (person)."
+    },
+    {
+     "en": "Manpower planning forecasts demand and supply of staff and closes the gap."
+    },
+    {
+     "en": "Shortage: recruit and train; surplus: transfer, redeploy or separate."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Write a job description and a job specification for your school librarian."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-2s13-q04"
+   ],
+   "narration": {
+    "en": "Recap. HRM acquires, develops, uses and retains people. Job analysis gives the job description (duties) and job specification (person). Manpower planning forecasts demand and supply of staff and closes the gap. Shortage: recruit and train; surplus: transfer, redeploy or separate."
+   }
+  }
+ ]
+}

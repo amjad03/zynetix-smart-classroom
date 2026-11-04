@@ -1,0 +1,801 @@
+{
+ "id": "puc2-business-studies-13-human-resource-management.t3.lesson",
+ "chapterId": "puc2-business-studies-13-human-resource-management",
+ "topicId": "puc2-business-studies-13-human-resource-management.t3",
+ "title": {
+  "en": "Appraisal and compensation"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "How well, and how much?"
+   },
+   "hook": {
+    "en": "Two sales executives have the same salary. One meets every target and helps new staff; the other does the minimum. A fair firm must notice the difference, and pay for it."
+   },
+   "objectives": [
+    {
+     "en": "Explain the meaning and purposes of performance appraisal"
+    },
+    {
+     "en": "Describe traditional and modern methods of appraisal"
+    },
+    {
+     "en": "Distinguish time rate and piece rate, and wages and fringe benefits"
+    }
+   ],
+   "narration": {
+    "en": "Two sales executives have the same salary. One meets every target and helps new staff; the other does the minimum. A fair firm must notice the difference, and pay for it."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Performance appraisal"
+   },
+   "body": {
+    "en": "Performance appraisal is the systematic evaluation of an employee's performance and potential against set standards. It is used for promotion, transfer, pay increases, training needs and feedback. Traditional methods include ranking (arranging employees from best to worst), paired comparison, grading against defined categories, rating scales, checklists and critical incidents. Modern methods include management by objectives (MBO), in which manager and employee agree on goals and later review results; 360-degree appraisal, which collects feedback from superiors, peers, subordinates and customers; and behaviourally anchored rating scales."
+   },
+   "points": [
+    {
+     "en": "Purposes: promotion, pay, training, feedback"
+    },
+    {
+     "en": "Traditional: ranking, paired comparison, grading, rating scales, checklists, critical incidents"
+    },
+    {
+     "en": "Modern: MBO, 360-degree feedback, BARS"
+    },
+    {
+     "en": "Appraisal should be objective, regular and discussed"
+    }
+   ],
+   "narration": {
+    "en": "Performance appraisal is the systematic evaluation of an employee's performance and potential against set standards. It is used for promotion, transfer, pay increases, training needs and feedback. Traditional methods include ranking (arranging employees from best to worst), paired comparison, grading against defined categories, rating scales, checklists and critical incidents. Modern methods include management by objectives (MBO), in which manager and employee agree on goals and later review results; 360-degree appraisal, which collects feedback from superiors, peers, subordinates and customers; and behaviourally anchored rating scales."
+   }
+  },
+  {
+   "id": "scene-time-piece-rate",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Time rate or piece rate?"
+   },
+   "caption": {
+    "en": "Under a time rate a worker earns the same daily wage whatever the output. Under a piece rate the wage rises with output. A differential piece rate pays a higher rate to those who reach the standard. Move the output and compare."
+   },
+   "sliders": [
+    {
+     "name": "u",
+     "label": {
+      "en": "Units made in a day"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 1,
+     "value": 35
+    },
+    {
+     "name": "tw",
+     "label": {
+      "en": "Time wage (₹ per day)"
+     },
+     "min": 400,
+     "max": 900,
+     "step": 50,
+     "value": 600
+    },
+    {
+     "name": "pr",
+     "label": {
+      "en": "Piece rate (₹ per unit)"
+     },
+     "min": 10,
+     "max": 25,
+     "step": 1,
+     "value": 15
+    }
+   ],
+   "toggles": [
+    {
+     "name": "dif",
+     "label": {
+      "en": "Differential rate: +40% for reaching 40 units"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "pw",
+     "expr": "u*pr*if(dif && u >= 40, 1.4, 1)"
+    },
+    {
+     "name": "be",
+     "expr": "tw/pr"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     62
+    ],
+    "y": [
+     0,
+     1800
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "units a day",
+    "yLabel": "daily wage (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "tw",
+     "x2": 60,
+     "y2": "tw",
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "x*pr*if(dif && x >= 40, 1.4, 1)",
+     "from": 0,
+     "to": 60,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "u",
+     "y1": 0,
+     "x2": "u",
+     "y2": 1750,
+     "dashed": true,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "u",
+     "y": "tw",
+     "r": 0.7,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "x": "u",
+     "y": "pw",
+     "r": 0.7,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 56,
+     "y": "tw + 70",
+     "size": 20,
+     "color": "blue",
+     "text": {
+      "en": "time rate"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 31,
+     "y": 1700,
+     "size": 22,
+     "text": {
+      "en": "Time ₹{tw:0}   Piece ₹{pw:0}"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Earnings, time rate"
+     },
+     "expr": "tw",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Earnings, piece rate"
+     },
+     "expr": "pw",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Output at which both pay the same"
+     },
+     "expr": "be",
+     "digits": 1,
+     "unit": "units"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At what output does the piece rate start paying more than the time rate?"
+    },
+    {
+     "en": "Turn on the differential rate. What target does it set the worker?"
+    },
+    {
+     "en": "Which system suits a quality-sensitive job like surgery or teaching? Why?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Under a time rate a worker earns the same daily wage whatever the output. Under a piece rate the wage rises with output. A differential piece rate pays a higher rate to those who reach the standard. Move the output and compare."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Paired comparison"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Compare four employees, two at a time. Count how often each one is judged better."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Paired comparison"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        9
+       ],
+       "to": [
+        98,
+        33
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        15
+       ],
+       "to": [
+        98,
+        15
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        21
+       ],
+       "to": [
+        98,
+        21
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        27
+       ],
+       "to": [
+        98,
+        27
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        30,
+        9
+       ],
+       "to": [
+        30,
+        33
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        56,
+        9
+       ],
+       "to": [
+        56,
+        33
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        80,
+        9
+       ],
+       "to": [
+        80,
+        33
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10.3
+       ],
+       "text": {
+        "en": "Pair"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        10.3
+       ],
+       "text": {
+        "en": "Better"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        57,
+        10.3
+       ],
+       "text": {
+        "en": "Pair"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        81,
+        10.3
+       ],
+       "text": {
+        "en": "Better"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        16.3
+       ],
+       "text": {
+        "en": "A vs B"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        16.3
+       ],
+       "text": {
+        "en": "A"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        57,
+        16.3
+       ],
+       "text": {
+        "en": "B vs C"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        81,
+        16.3
+       ],
+       "text": {
+        "en": "C"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        22.3
+       ],
+       "text": {
+        "en": "A vs C"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        22.3
+       ],
+       "text": {
+        "en": "A"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        57,
+        22.3
+       ],
+       "text": {
+        "en": "B vs D"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        81,
+        22.3
+       ],
+       "text": {
+        "en": "B"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.3
+       ],
+       "text": {
+        "en": "A vs D"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        28.3
+       ],
+       "text": {
+        "en": "A"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        57,
+        28.3
+       ],
+       "text": {
+        "en": "C vs D"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        81,
+        28.3
+       ],
+       "text": {
+        "en": "C"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        35
+       ],
+       "text": {
+        "en": "Wins: A 3, C 2, B 1, D 0"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        40.5
+       ],
+       "text": {
+        "en": "Ranking: A, C, B, D"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "For pay: at 35 units and ₹15 a unit the piece wage is ₹525, below a ₹600 time wage."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        9
+       ],
+       "tex": "35 \\times 15 = 525 < 600",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        16
+       ],
+       "tex": "\\text{Break-even output} = 600/15 = 40 \\text{ units}",
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ],
+     "clear": true
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Compensation"
+   },
+   "body": {
+    "en": "Compensation is everything an employee receives for work: basic pay, allowances, incentives and fringe benefits. Under a time-rate system pay depends on time worked; it is simple and secure, suits work where quality matters, but gives no reward for extra output. Under a piece-rate system pay depends on output; it rewards efficiency but may hurt quality. A differential piece rate pays a higher rate to workers who reach a standard. Incentives may be financial (bonus, commission, profit sharing) or non-financial (recognition, job security). Fringe benefits include provident fund, medical care, housing and leave."
+   },
+   "points": [
+    {
+     "en": "Time rate: pay = time × rate"
+    },
+    {
+     "en": "Piece rate: pay = units × rate"
+    },
+    {
+     "en": "Differential piece rate rewards reaching the standard"
+    },
+    {
+     "en": "Fringe benefits: PF, medical, housing, leave"
+    }
+   ],
+   "narration": {
+    "en": "Compensation is everything an employee receives for work: basic pay, allowances, incentives and fringe benefits. Under a time-rate system pay depends on time worked; it is simple and secure, suits work where quality matters, but gives no reward for extra output. Under a piece-rate system pay depends on output; it rewards efficiency but may hurt quality. A differential piece rate pays a higher rate to workers who reach a standard. Incentives may be financial (bonus, commission, profit sharing) or non-financial (recognition, job security). Fringe benefits include provident fund, medical care, housing and leave."
+   },
+   "formula": "\\text{Piece wage} = \\text{Units} \\times \\text{Rate per unit}"
+  },
+  {
+   "id": "activity-sort-appraisal-methods",
+   "type": "activity",
+   "kind": "sort",
+   "prompt": {
+    "en": "Sort each appraisal method: traditional or modern?"
+   },
+   "buckets": [
+    {
+     "id": "trad",
+     "label": {
+      "en": "Traditional method"
+     }
+    },
+    {
+     "id": "mod",
+     "label": {
+      "en": "Modern method"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "Ranking from best to worst"
+     },
+     "answer": "trad"
+    },
+    {
+     "text": {
+      "en": "Paired comparison"
+     },
+     "answer": "trad"
+    },
+    {
+     "text": {
+      "en": "Checklist of yes/no statements"
+     },
+     "answer": "trad"
+    },
+    {
+     "text": {
+      "en": "Critical incidents recorded by the supervisor"
+     },
+     "answer": "trad"
+    },
+    {
+     "text": {
+      "en": "Management by objectives"
+     },
+     "answer": "mod"
+    },
+    {
+     "text": {
+      "en": "360-degree feedback"
+     },
+     "answer": "mod"
+    },
+    {
+     "text": {
+      "en": "Behaviourally anchored rating scales"
+     },
+     "answer": "mod"
+    }
+   ],
+   "explanation": {
+    "en": "Traditional methods judge traits or compare people; modern methods use agreed goals, many sources of feedback and defined behaviours."
+   },
+   "narration": {
+    "en": "Sort each appraisal method: traditional or modern?"
+   },
+   "questionId": "act.isc-sort-appraisal-methods"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A worker can earn ₹600 a day on time rate, or ₹15 a unit on piece rate. With a differential scheme the rate rises by 40% for all units if output reaches 40 a day. Compare earnings at 38 and 42 units."
+   },
+   "steps": [
+    {
+     "en": "At 38 units: piece wage = 38 × 15 = ₹570, below the time wage of ₹600."
+    },
+    {
+     "en": "At 42 units with the differential: rate = 15 × 1.4 = ₹21; wage = 42 × 21 = ₹882."
+    },
+    {
+     "en": "Ordinary piece rate at 42 units would give 42 × 15 = ₹630."
+    },
+    {
+     "en": "The differential gives a strong reason to reach the standard of 40."
+    }
+   ],
+   "answer": {
+    "en": "₹570 at 38 units; ₹882 at 42 units under the differential rate (₹630 without it)."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. A worker can earn ₹600 a day on time rate, or ₹15 a unit on piece rate. With a differential scheme the rate rises by 40% for all units if output reaches 40 a day. Compare earnings at 38 and 42 units."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "Time for quality, piece for quantity"
+   },
+   "body": {
+    "en": "Time rates suit jobs where care and quality matter and output is hard to count; piece rates suit standard, countable output."
+   },
+   "narration": {
+    "en": "Time for quality, piece for quantity. Time rates suit jobs where care and quality matter and output is hard to count; piece rates suit standard, countable output."
+   },
+   "mnemonic": {
+    "en": "Count it? Piece it."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-2s13-q09",
+    "isc-2s13-q10",
+    "isc-2s13-q11"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-2s13-q12"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Performance appraisal evaluates performance against standards for pay, promotion and training."
+    },
+    {
+     "en": "Traditional methods: ranking, paired comparison, grading, checklists, critical incidents."
+    },
+    {
+     "en": "Modern methods: MBO, 360-degree feedback, BARS."
+    },
+    {
+     "en": "Compensation: time or piece rates, incentives and fringe benefits."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Suggest a pay system for (a) a nurse, (b) a garment stitcher. Give reasons."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-2s13-q12"
+   ],
+   "narration": {
+    "en": "Recap. Performance appraisal evaluates performance against standards for pay, promotion and training. Traditional methods: ranking, paired comparison, grading, checklists, critical incidents. Modern methods: MBO, 360-degree feedback, BARS. Compensation: time or piece rates, incentives and fringe benefits."
+   }
+  }
+ ]
+}

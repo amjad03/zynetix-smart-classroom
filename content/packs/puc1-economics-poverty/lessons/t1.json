@@ -1,0 +1,470 @@
+{
+ "id": "puc1-economics-18-poverty.t1.lesson",
+ "chapterId": "puc1-economics-18-poverty",
+ "topicId": "puc1-economics-18-poverty.t1",
+ "title": {
+  "en": "Poverty and the poverty line"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Who is poor, and how do we count?"
+   },
+   "hook": {
+    "en": "A day labourer who finds work only some days, a widow with no land, a family in a city slum: all are poor in different ways. To plan for them, a country must first draw a line and count."
+   },
+   "objectives": [
+    {
+     "en": "Distinguish absolute and relative poverty"
+    },
+    {
+     "en": "Explain how the poverty line is drawn in India"
+    },
+    {
+     "en": "Interpret the head count ratio and multidimensional poverty"
+    }
+   ],
+   "narration": {
+    "en": "A day labourer who finds work only some days, a widow with no land, a family in a city slum: all are poor in different ways. To plan for them, a country must first draw a line and count."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Absolute and relative poverty"
+   },
+   "body": {
+    "en": "Absolute poverty is the inability to afford a minimum standard of food, clothing, shelter, health and education. Relative poverty compares a person's income with others in the same society: the bottom groups are poor relative to the top, even if they meet basic needs. Poverty also has non-income sides: illiteracy, ill health, lack of clean water, sanitation and housing, and social exclusion."
+   },
+   "points": [
+    {
+     "en": "Absolute: below a fixed minimum standard"
+    },
+    {
+     "en": "Relative: low compared with others"
+    },
+    {
+     "en": "Chronic poor: always poor; transient poor: move in and out"
+    },
+    {
+     "en": "Poverty is many-sided, not only income"
+    }
+   ],
+   "narration": {
+    "en": "Absolute poverty is the inability to afford a minimum standard of food, clothing, shelter, health and education. Relative poverty compares a person's income with others in the same society: the bottom groups are poor relative to the top, even if they meet basic needs. Poverty also has non-income sides: illiteracy, ill health, lack of clean water, sanitation and housing, and social exclusion."
+   }
+  },
+  {
+   "id": "scene-poverty-line",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Where you draw the poverty line matters"
+   },
+   "caption": {
+    "en": "Each dot is a household in a model village, placed by monthly spending per person. Move the poverty line: households to its left count as poor. The head count ratio changes a lot with a small change in the line. (Model data, not survey data.)"
+   },
+   "sliders": [
+    {
+     "name": "pl",
+     "label": {
+      "en": "Poverty line (₹ per person per month)"
+     },
+     "min": 600,
+     "max": 2400,
+     "step": 100,
+     "value": 1000
+    },
+    {
+     "name": "med",
+     "label": {
+      "en": "Median spending"
+     },
+     "min": 1000,
+     "max": 3000,
+     "step": 100,
+     "value": 1600
+    }
+   ],
+   "vars": [
+    {
+     "name": "zz",
+     "expr": "ln(pl/med)/0.5"
+    },
+    {
+     "name": "hcr",
+     "expr": "100/(1 + exp(-1.702*zz))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     6000
+    ],
+    "y": [
+     0,
+     30
+    ],
+    "axes": true,
+    "xLabel": "spending per person (₹/month)"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 2,
+     "w": "pl",
+     "h": 24,
+     "color": "red",
+     "opacity": 0.12
+    },
+    {
+     "shape": "particles",
+     "count": 200,
+     "r": 40,
+     "x": "clamp(med*exp(0.5*sqrt(-2*ln(rand(i) + 0.0005))*cos(2*pi*rand(i + 500))), 50, 5950)",
+     "y": "3 + 22*rand(i + 900)",
+     "color": {
+      "by": "step(pl, med*exp(0.5*sqrt(-2*ln(rand(i) + 0.0005))*cos(2*pi*rand(i + 500))))",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": "pl",
+     "y1": 0,
+     "x2": "pl",
+     "y2": 27,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "label",
+     "x": "clamp(pl, 900, 5000)",
+     "y": 28.5,
+     "size": 22,
+     "color": "yellow",
+     "text": {
+      "en": "Poverty line ₹{pl:0}"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Head count ratio (model)"
+     },
+     "expr": "hcr",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Poor households out of 200 (model)"
+     },
+     "expr": "2*hcr",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise the line from ₹1,000 to ₹1,200. How much does the head count ratio rise?"
+    },
+    {
+     "en": "Keep the line fixed and raise median spending (growth). What happens to poverty?"
+    },
+    {
+     "en": "Why do different committees get different poverty figures for the same year?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Each dot is a household in a model village, placed by monthly spending per person. Move the poverty line: households to its left count as poor. The head count ratio changes a lot with a small change in the line. (Model data, not survey data.)"
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Head count ratio"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A village has 1,200 people. 300 of them spend less than the poverty line."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Counting the poor"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        9
+       ],
+       "tex": "\\text{HCR} = \\frac{300}{1200}\\times 100 = 25\\%",
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The head count ratio counts the poor but not how far below the line they are. That is why other measures exist."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        16
+       ],
+       "text": {
+        "en": "HCR: how many are poor"
+       },
+       "size": 3,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        21.5
+       ],
+       "text": {
+        "en": "Poverty gap: how far below the line"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        27.0
+       ],
+       "text": {
+        "en": "Multidimensional: health, education, living"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "The poverty line and its measurement"
+   },
+   "body": {
+    "en": "The poverty line is the minimum spending per person per month needed for basic needs. Early estimates in India were based on a calorie norm (2,400 kcal a day in rural areas and 2,100 in urban areas). Later expert groups (the Tendulkar committee, 2009, and the Rangarajan committee, 2014) used a basket of food and non-food items. The head count ratio is the percentage of people below the line. NITI Aayog also publishes a multidimensional poverty index covering health, education and living standards."
+   },
+   "points": [
+    {
+     "en": "Head count ratio = persons below the line ÷ total population × 100"
+    },
+    {
+     "en": "Calorie norm: 2,400 rural, 2,100 urban (older method)"
+    },
+    {
+     "en": "Expert groups widened the basket beyond food"
+    },
+    {
+     "en": "Multidimensional index: health, education, standard of living"
+    }
+   ],
+   "narration": {
+    "en": "The poverty line is the minimum spending per person per month needed for basic needs. Early estimates in India were based on a calorie norm (2,400 kcal a day in rural areas and 2,100 in urban areas). Later expert groups (the Tendulkar committee, 2009, and the Rangarajan committee, 2014) used a basket of food and non-food items. The head count ratio is the percentage of people below the line. NITI Aayog also publishes a multidimensional poverty index covering health, education and living standards."
+   },
+   "formula": "\\text{HCR} = \\frac{\\text{Number of poor}}{\\text{Total population}} \\times 100"
+  },
+  {
+   "id": "activity-sort-poverty-kinds",
+   "type": "activity",
+   "kind": "sort",
+   "prompt": {
+    "en": "Sort each case: absolute poverty or relative poverty?"
+   },
+   "buckets": [
+    {
+     "id": "abs",
+     "label": {
+      "en": "Absolute poverty"
+     }
+    },
+    {
+     "id": "rel",
+     "label": {
+      "en": "Relative poverty"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "A family cannot afford two meals a day"
+     },
+     "answer": "abs"
+    },
+    {
+     "text": {
+      "en": "A labourer has no shelter in winter"
+     },
+     "answer": "abs"
+    },
+    {
+     "text": {
+      "en": "A child cannot get basic medicines"
+     },
+     "answer": "abs"
+    },
+    {
+     "text": {
+      "en": "A clerk earns far less than most people in his city"
+     },
+     "answer": "rel"
+    },
+    {
+     "text": {
+      "en": "The bottom 10% get a small share of national income"
+     },
+     "answer": "rel"
+    },
+    {
+     "text": {
+      "en": "A family has basics but cannot afford what its neighbours consider normal"
+     },
+     "answer": "rel"
+    }
+   ],
+   "explanation": {
+    "en": "Absolute poverty is falling below a fixed minimum; relative poverty is being low compared with others in the same society."
+   },
+   "narration": {
+    "en": "Sort each case: absolute poverty or relative poverty?"
+   },
+   "questionId": "act.isc-sort-poverty-kinds"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A state has a population of 8 crore. 1.2 crore people spend less than the poverty line. Find the head count ratio. If the line is raised and 0.4 crore more fall below it, what is the new ratio?"
+   },
+   "steps": [
+    {
+     "en": "HCR = 1.2/8 × 100 = 15%."
+    },
+    {
+     "en": "With the higher line, poor = 1.2 + 0.4 = 1.6 crore."
+    },
+    {
+     "en": "New HCR = 1.6/8 × 100 = 20%."
+    }
+   ],
+   "answer": {
+    "en": "15% at first, and 20% with the higher line: the count depends on where the line is drawn."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. A state has a population of 8 crore. 1.2 crore people spend less than the poverty line. Find the head count ratio. If the line is raised and 0.4 crore more fall below it, what is the new ratio?"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "HCR answers \"how many\", not \"how poor\""
+   },
+   "body": {
+    "en": "If a scheme lifts people who were just below the line, HCR falls a lot even though the poorest are untouched. Always ask how deep the poverty is too."
+   },
+   "narration": {
+    "en": "HCR answers \"how many\", not \"how poor\". If a scheme lifts people who were just below the line, HCR falls a lot even though the poorest are untouched. Always ask how deep the poverty is too."
+   },
+   "mnemonic": {
+    "en": "Count and depth"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-1e18-q01",
+    "isc-1e18-q02",
+    "isc-1e18-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-1e18-q04"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Absolute poverty is below a fixed minimum; relative poverty is low compared with others."
+    },
+    {
+     "en": "The poverty line is the minimum monthly spending per person for basic needs."
+    },
+    {
+     "en": "HCR = poor ÷ population × 100."
+    },
+    {
+     "en": "Multidimensional measures add health, education and living standards."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Why might two committees give different poverty figures for the same year?"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-1e18-q04"
+   ],
+   "narration": {
+    "en": "Recap. Absolute poverty is below a fixed minimum; relative poverty is low compared with others. The poverty line is the minimum monthly spending per person for basic needs. HCR = poor ÷ population × 100. Multidimensional measures add health, education and living standards."
+   }
+  }
+ ]
+}

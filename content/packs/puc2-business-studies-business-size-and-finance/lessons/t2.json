@@ -1,0 +1,811 @@
+{
+ "id": "puc2-business-studies-15-business-size-and-finance.t2.lesson",
+ "chapterId": "puc2-business-studies-15-business-size-and-finance",
+ "topicId": "puc2-business-studies-15-business-size-and-finance.t2",
+ "title": {
+  "en": "Traditional sources of finance"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Where does the money come from?"
+   },
+   "hook": {
+    "en": "A company needs ₹100 crore for a new plant and ₹5 crore for raw materials next month. It would not use the same source for both. Why?"
+   },
+   "objectives": [
+    {
+     "en": "Explain owned and borrowed sources of finance"
+    },
+    {
+     "en": "Compare equity shares, preference shares and debentures"
+    },
+    {
+     "en": "Describe short-term sources: trade credit, bill discounting and factoring"
+    }
+   ],
+   "narration": {
+    "en": "A company needs ₹100 crore for a new plant and ₹5 crore for raw materials next month. It would not use the same source for both. Why?"
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Owned funds and long-term borrowing"
+   },
+   "body": {
+    "en": "Equity shares represent ownership: holders get dividends only from profits, have voting rights and bear the highest risk, but the company has no fixed burden. Preference shares get a fixed rate of dividend and repayment of capital before equity holders, usually without voting rights. Retained profits (ploughing back) are profits kept in the business: a cheap, internal source with no dilution of control. Debentures and bonds are borrowed capital carrying a fixed rate of interest, payable even in a loss, and usually secured on assets. Public deposits are taken directly from the public for 6 months to 3 years. Term loans come from banks and financial institutions."
+   },
+   "points": [
+    {
+     "en": "Equity: ownership, voting, residual return"
+    },
+    {
+     "en": "Preference: fixed dividend, priority"
+    },
+    {
+     "en": "Retained profits: internal, no cost of issue"
+    },
+    {
+     "en": "Debentures and bonds: fixed interest, creditors"
+    },
+    {
+     "en": "Public deposits and term loans"
+    }
+   ],
+   "narration": {
+    "en": "Equity shares represent ownership: holders get dividends only from profits, have voting rights and bear the highest risk, but the company has no fixed burden. Preference shares get a fixed rate of dividend and repayment of capital before equity holders, usually without voting rights. Retained profits (ploughing back) are profits kept in the business: a cheap, internal source with no dilution of control. Debentures and bonds are borrowed capital carrying a fixed rate of interest, payable even in a loss, and usually secured on assets. Public deposits are taken directly from the public for 6 months to 3 years. Term loans come from banks and financial institutions."
+   }
+  },
+  {
+   "id": "scene-trading-on-equity",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Equity, debentures and earnings per share"
+   },
+   "caption": {
+    "en": "A company needs ₹100 crore. It raises part by equity shares of ₹10 and the rest by debentures at a fixed interest. When the return on investment is above the interest rate, more debt raises earnings per share; when it is below, debt hurts. Tax is ignored for simplicity."
+   },
+   "sliders": [
+    {
+     "name": "dp",
+     "label": {
+      "en": "Share of debentures"
+     },
+     "min": 0,
+     "max": 80,
+     "step": 10,
+     "value": 40,
+     "unit": "%"
+    },
+    {
+     "name": "roi",
+     "label": {
+      "en": "Return on investment"
+     },
+     "min": 4,
+     "max": 24,
+     "step": 1,
+     "value": 15,
+     "unit": "%"
+    },
+    {
+     "name": "ir",
+     "label": {
+      "en": "Interest on debentures"
+     },
+     "min": 6,
+     "max": 14,
+     "step": 1,
+     "value": 10,
+     "unit": "%"
+    }
+   ],
+   "vars": [
+    {
+     "name": "D",
+     "expr": "dp"
+    },
+    {
+     "name": "E",
+     "expr": "100 - dp"
+    },
+    {
+     "name": "ebit",
+     "expr": "roi"
+    },
+    {
+     "name": "pat",
+     "expr": "ebit - ir*D/100"
+    },
+    {
+     "name": "eps",
+     "expr": "10*pat/E"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     85
+    ],
+    "y": [
+     -6,
+     6
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "share of debt (%)",
+    "yLabel": "EPS (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "10*(roi - ir*x/100)/(100 - x)",
+     "from": 0,
+     "to": 80,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "roi/10",
+     "x2": 80,
+     "y2": "roi/10",
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "x": "dp",
+     "y": "clamp(eps, -6, 6)",
+     "r": 1.2,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 42,
+     "y": 5,
+     "size": 22,
+     "color": {
+      "by": "step(ir, roi)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "text": {
+      "en": "EPS ₹{eps:2} with {dp:0}% debt"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 70,
+     "y": "clamp(roi/10 + 0.5, -5, 5.5)",
+     "size": 18,
+     "text": {
+      "en": "EPS with no debt"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Earnings per share"
+     },
+     "expr": "eps",
+     "digits": 2,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Interest paid (₹ crore)"
+     },
+     "expr": "ir*D/100",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Number of shares (crore)"
+     },
+     "expr": "E/10",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With ROI 15% and interest 10%, does more debt raise EPS?"
+    },
+    {
+     "en": "Drop ROI to 8%. What happens to EPS as debt rises?"
+    },
+    {
+     "en": "Why is this called trading on equity?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "A company needs ₹100 crore. It raises part by equity shares of ₹10 and the rest by debentures at a fixed interest. When the return on investment is above the interest rate, more debt raises earnings per share; when it is below, debt hurts. Tax is ignored for simplicity."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Trading on equity"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A company needs ₹100 crore and earns 15 percent before interest. Compare all equity with 40 percent debt at 10 percent."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Effect of debt on EPS"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        9
+       ],
+       "to": [
+        96,
+        45
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        15
+       ],
+       "to": [
+        96,
+        15
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        21
+       ],
+       "to": [
+        96,
+        21
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        27
+       ],
+       "to": [
+        96,
+        27
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        33
+       ],
+       "to": [
+        96,
+        33
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        39
+       ],
+       "to": [
+        96,
+        39
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        40,
+        9
+       ],
+       "to": [
+        40,
+        45
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        70,
+        9
+       ],
+       "to": [
+        70,
+        45
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        41,
+        10.3
+       ],
+       "text": {
+        "en": "All equity"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        71,
+        10.3
+       ],
+       "text": {
+        "en": "40% debt"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        16.3
+       ],
+       "text": {
+        "en": "EBIT (₹ cr)"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        41,
+        16.3
+       ],
+       "text": {
+        "en": "15"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        71,
+        16.3
+       ],
+       "text": {
+        "en": "15"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        22.3
+       ],
+       "text": {
+        "en": "Interest (₹ cr)"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        41,
+        22.3
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        71,
+        22.3
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.3
+       ],
+       "text": {
+        "en": "Profit (₹ cr)"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        41,
+        28.3
+       ],
+       "text": {
+        "en": "15"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        71,
+        28.3
+       ],
+       "text": {
+        "en": "11"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        34.3
+       ],
+       "text": {
+        "en": "Shares (crore)"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        41,
+        34.3
+       ],
+       "text": {
+        "en": "10"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        71,
+        34.3
+       ],
+       "text": {
+        "en": "6"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        40.3
+       ],
+       "text": {
+        "en": "EPS (₹)"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        41,
+        40.3
+       ],
+       "text": {
+        "en": "1.50"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        71,
+        40.3
+       ],
+       "text": {
+        "en": "1.83"
+       },
+       "size": 2.6,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Because 15 percent is more than the 10 percent interest, debt raises EPS."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        47
+       ],
+       "text": {
+        "en": "ROI > interest: debt helps shareholders"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        52.5
+       ],
+       "text": {
+        "en": "ROI < interest: debt hurts them"
+       },
+       "size": 3,
+       "color": "red"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Short-term sources and choosing a source"
+   },
+   "body": {
+    "en": "Working capital is met by short-term sources. Trade credit is credit given by suppliers on purchases. Discounting of bills of exchange gets cash from a bank before a bill's due date. Factoring is selling book debts to a factor, who collects them and pays most of the value at once. Bank overdrafts and cash credit are also used. A firm chooses a source by cost, risk, the period of need, control, flexibility and the state of the market. Using fixed-cost debt when the return on investment exceeds the interest rate raises the return to shareholders: this is trading on equity."
+   },
+   "points": [
+    {
+     "en": "Trade credit, bill discounting, factoring, overdraft"
+    },
+    {
+     "en": "Match long-term needs with long-term sources"
+    },
+    {
+     "en": "Trading on equity: ROI > interest rate raises EPS"
+    }
+   ],
+   "narration": {
+    "en": "Working capital is met by short-term sources. Trade credit is credit given by suppliers on purchases. Discounting of bills of exchange gets cash from a bank before a bill's due date. Factoring is selling book debts to a factor, who collects them and pays most of the value at once. Bank overdrafts and cash credit are also used. A firm chooses a source by cost, risk, the period of need, control, flexibility and the state of the market. Using fixed-cost debt when the return on investment exceeds the interest rate raises the return to shareholders: this is trading on equity."
+   },
+   "formula": "EPS = \\frac{\\text{Profit after interest (and tax)}}{\\text{Number of equity shares}}"
+  },
+  {
+   "id": "activity-sort-finance-sources",
+   "type": "activity",
+   "kind": "sort",
+   "prompt": {
+    "en": "Sort each source of finance: owned funds, long-term borrowing, or short-term borrowing?"
+   },
+   "buckets": [
+    {
+     "id": "own",
+     "label": {
+      "en": "Owned funds"
+     }
+    },
+    {
+     "id": "lt",
+     "label": {
+      "en": "Long-term borrowed"
+     }
+    },
+    {
+     "id": "st",
+     "label": {
+      "en": "Short-term"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "Equity shares"
+     },
+     "answer": "own"
+    },
+    {
+     "text": {
+      "en": "Preference shares"
+     },
+     "answer": "own"
+    },
+    {
+     "text": {
+      "en": "Retained profits"
+     },
+     "answer": "own"
+    },
+    {
+     "text": {
+      "en": "Debentures"
+     },
+     "answer": "lt"
+    },
+    {
+     "text": {
+      "en": "Term loan from a financial institution"
+     },
+     "answer": "lt"
+    },
+    {
+     "text": {
+      "en": "Trade credit from suppliers"
+     },
+     "answer": "st"
+    },
+    {
+     "text": {
+      "en": "Factoring of book debts"
+     },
+     "answer": "st"
+    },
+    {
+     "text": {
+      "en": "Discounting a bill of exchange"
+     },
+     "answer": "st"
+    }
+   ],
+   "explanation": {
+    "en": "Shares and retained profits belong to the owners; debentures and term loans are long-term debt; trade credit, factoring and bill discounting meet short-term needs."
+   },
+   "narration": {
+    "en": "Sort each source of finance: owned funds, long-term borrowing, or short-term borrowing?"
+   },
+   "questionId": "act.isc-sort-finance-sources"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A company needs ₹50 crore and expects a return of 8% on it. It can borrow at 12%. Should it raise 60% by debentures? Compare EPS with all-equity finance (shares of ₹10, tax ignored)."
+   },
+   "steps": [
+    {
+     "en": "EBIT = 8% of 50 = ₹4 crore."
+    },
+    {
+     "en": "All equity: 5 crore shares; EPS = 4/5 = ₹0.80."
+    },
+    {
+     "en": "With 60% debt: interest = 12% of 30 = ₹3.6 crore; profit = ₹0.4 crore; shares = 2 crore; EPS = ₹0.20."
+    },
+    {
+     "en": "ROI (8%) is below the interest rate (12%), so debt lowers EPS."
+    }
+   ],
+   "answer": {
+    "en": "No: EPS falls from ₹0.80 to ₹0.20, because the return is below the cost of debt."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. A company needs ₹50 crore and expects a return of 8% on it. It can borrow at 12%. Should it raise 60% by debentures? Compare EPS with all-equity finance (shares of ₹10, tax ignored)."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "Long need, long source"
+   },
+   "body": {
+    "en": "Buy fixed assets with long-term money (shares, debentures, retained profits); pay for stock and wages with short-term money (trade credit, factoring, overdraft)."
+   },
+   "narration": {
+    "en": "Long need, long source. Buy fixed assets with long-term money (shares, debentures, retained profits); pay for stock and wages with short-term money (trade credit, factoring, overdraft)."
+   },
+   "mnemonic": {
+    "en": "Match the term"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-2s15-q05",
+    "isc-2s15-q06",
+    "isc-2s15-q07"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-2s15-q08"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Owned funds: equity shares, preference shares, retained profits."
+    },
+    {
+     "en": "Borrowed funds: debentures, bonds, public deposits and loans carry fixed interest."
+    },
+    {
+     "en": "Short-term: trade credit, bill discounting, factoring, overdraft."
+    },
+    {
+     "en": "Debt raises EPS only when the return on investment exceeds the interest rate."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Give three differences between equity shares and debentures."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-2s15-q08"
+   ],
+   "narration": {
+    "en": "Recap. Owned funds: equity shares, preference shares, retained profits. Borrowed funds: debentures, bonds, public deposits and loans carry fixed interest. Short-term: trade credit, bill discounting, factoring, overdraft. Debt raises EPS only when the return on investment exceeds the interest rate."
+   }
+  }
+ ]
+}

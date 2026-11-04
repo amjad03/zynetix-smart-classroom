@@ -1,0 +1,514 @@
+{
+ "id": "puc1-economics-17-measures-of-dispersion.t1.lesson",
+ "chapterId": "puc1-economics-17-measures-of-dispersion",
+ "topicId": "puc1-economics-17-measures-of-dispersion.t1",
+ "title": {
+  "en": "Dispersion and range"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Averages hide the spread"
+   },
+   "hook": {
+    "en": "Two batsmen both average 50 runs. One scores between 40 and 60 every match; the other swings between 25 and 75. The average cannot tell them apart. A measure of dispersion can."
+   },
+   "objectives": [
+    {
+     "en": "Explain the meaning and need for measures of dispersion"
+    },
+    {
+     "en": "Distinguish absolute and relative measures"
+    },
+    {
+     "en": "Calculate the range and the coefficient of range"
+    }
+   ],
+   "narration": {
+    "en": "Two batsmen both average 50 runs. One scores between 40 and 60 every match; the other swings between 25 and 75. The average cannot tell them apart. A measure of dispersion can."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "What dispersion measures"
+   },
+   "body": {
+    "en": "Dispersion is the extent to which the values of a series differ from one another or from their average. An average describes the centre of the data; a measure of dispersion describes the scatter. It tells us how far the average represents the data, lets us compare the consistency of two series, and is the basis of further methods such as correlation. Absolute measures are in the units of the data (rupees, runs); relative measures, or coefficients, are pure numbers that allow series in different units or with different averages to be compared."
+   },
+   "points": [
+    {
+     "en": "Absolute: range, quartile deviation, mean deviation, standard deviation"
+    },
+    {
+     "en": "Relative: coefficients of these, and the coefficient of variation"
+    },
+    {
+     "en": "Good measure: easy, uses all values, not unduly affected by extremes"
+    }
+   ],
+   "narration": {
+    "en": "Dispersion is the extent to which the values of a series differ from one another or from their average. An average describes the centre of the data; a measure of dispersion describes the scatter. It tells us how far the average represents the data, lets us compare the consistency of two series, and is the basis of further methods such as correlation. Absolute measures are in the units of the data (rupees, runs); relative measures, or coefficients, are pure numbers that allow series in different units or with different averages to be compared."
+   }
+  },
+  {
+   "id": "scene-range",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Same average, different spread"
+   },
+   "caption": {
+    "en": "Two batsmen's scores in 7 matches. Batsman A is fixed. Change Batsman B's average and spread: the averages can match while the ranges differ."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "B's average score"
+     },
+     "min": 40,
+     "max": 80,
+     "step": 2,
+     "value": 50
+    },
+    {
+     "name": "s",
+     "label": {
+      "en": "B's spread"
+     },
+     "min": 0.2,
+     "max": 1.5,
+     "step": 0.1,
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "hb",
+     "expr": "m + 25*s"
+    },
+    {
+     "name": "lb",
+     "expr": "m - 25*s"
+    },
+    {
+     "name": "cra",
+     "expr": "20/100"
+    },
+    {
+     "name": "crb",
+     "expr": "(hb - lb)/(hb + lb)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     125
+    ],
+    "y": [
+     0,
+     40
+    ],
+    "axes": true,
+    "xLabel": "runs"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 40,
+     "y1": 28,
+     "x2": 60,
+     "y2": 28,
+     "color": "blue",
+     "width": 6,
+     "opacity": 0.5
+    },
+    {
+     "shape": "particles",
+     "count": 7,
+     "r": 1.4,
+     "color": "blue",
+     "x": "if(i==0, 40, if(i==1, 45, if(i==2, 48, if(i==3, 50, if(i==4, 52, if(i==5, 55, 60))))))",
+     "y": 28
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 28,
+     "size": 24,
+     "color": "blue",
+     "text": {
+      "en": "A"
+     }
+    },
+    {
+     "shape": "line",
+     "x1": "lb",
+     "y1": 14,
+     "x2": "hb",
+     "y2": 14,
+     "color": "orange",
+     "width": 6,
+     "opacity": 0.5
+    },
+    {
+     "shape": "particles",
+     "count": 7,
+     "r": 1.4,
+     "color": "orange",
+     "x": "m + s*if(i==0, -25, if(i==1, -15, if(i==2, -5, if(i==3, 0, if(i==4, 5, if(i==5, 15, 25))))))",
+     "y": 14
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 14,
+     "size": 24,
+     "color": "orange",
+     "text": {
+      "en": "B"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 95,
+     "y": 35,
+     "size": 22,
+     "color": "blue",
+     "text": {
+      "en": "Range A = 20"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 95,
+     "y": 6,
+     "size": 22,
+     "color": "orange",
+     "text": {
+      "en": "Range B = {hb - lb:0}"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Range of B (H − L)"
+     },
+     "expr": "hb - lb",
+     "digits": 0,
+     "unit": "runs"
+    },
+    {
+     "label": {
+      "en": "Coefficient of range, A"
+     },
+     "expr": "cra",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Coefficient of range, B"
+     },
+     "expr": "crb",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set B's average to 50 and spread to 1. Both average 50: who is more consistent?"
+    },
+    {
+     "en": "Find a spread at which B's range equals A's."
+    },
+    {
+     "en": "Raise B's average with the same spread. Why does the coefficient of range fall?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Two batsmen's scores in 7 matches. Batsman A is fixed. Change Batsman B's average and spread: the averages can match while the ranges differ."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Range of two series"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Scores of A: 40, 45, 48, 50, 52, 55, 60. Scores of B: 25, 35, 45, 50, 55, 65, 75."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Range and its coefficient"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        9
+       ],
+       "text": {
+        "en": "A: H = 60, L = 40; B: H = 75, L = 25"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        14.5
+       ],
+       "tex": "R_A = 60 - 40 = 20,\\quad R_B = 75 - 25 = 50",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        21.5
+       ],
+       "tex": "\\text{Coeff}_A = \\frac{20}{100} = 0.20,\\quad \\text{Coeff}_B = \\frac{50}{100} = 0.50",
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Both average 50, but A's smaller range shows more consistent scores."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        28.5
+       ],
+       "text": {
+        "en": "Same mean; A is more consistent."
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Range and coefficient of range"
+   },
+   "body": {
+    "en": "The range is the difference between the largest (H) and the smallest (L) value. In a grouped series, take the upper limit of the highest class and the lower limit of the lowest class. The coefficient of range is (H − L)/(H + L). The range is simple and quick, so it is used in quality control and to report daily price movements, but it depends only on the two extreme values and ignores everything in between."
+   },
+   "points": [
+    {
+     "en": "Range = H − L"
+    },
+    {
+     "en": "Coefficient of range = (H − L)/(H + L)"
+    },
+    {
+     "en": "Merit: simple; demerit: based on extremes only"
+    }
+   ],
+   "narration": {
+    "en": "The range is the difference between the largest (H) and the smallest (L) value. In a grouped series, take the upper limit of the highest class and the lower limit of the lowest class. The coefficient of range is (H − L)/(H + L). The range is simple and quick, so it is used in quality control and to report daily price movements, but it depends only on the two extreme values and ignores everything in between."
+   },
+   "formula": "\\text{Coefficient of range} = \\frac{H - L}{H + L}"
+  },
+  {
+   "id": "activity-sort-dispersion-measures",
+   "type": "activity",
+   "kind": "sort",
+   "prompt": {
+    "en": "Sort each measure: absolute or relative?"
+   },
+   "buckets": [
+    {
+     "id": "abs",
+     "label": {
+      "en": "Absolute measure"
+     }
+    },
+    {
+     "id": "rel",
+     "label": {
+      "en": "Relative measure"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "Range"
+     },
+     "answer": "abs"
+    },
+    {
+     "text": {
+      "en": "Quartile deviation"
+     },
+     "answer": "abs"
+    },
+    {
+     "text": {
+      "en": "Standard deviation"
+     },
+     "answer": "abs"
+    },
+    {
+     "text": {
+      "en": "Coefficient of range"
+     },
+     "answer": "rel"
+    },
+    {
+     "text": {
+      "en": "Coefficient of quartile deviation"
+     },
+     "answer": "rel"
+    },
+    {
+     "text": {
+      "en": "Coefficient of variation"
+     },
+     "answer": "rel"
+    }
+   ],
+   "explanation": {
+    "en": "Absolute measures carry the unit of the data; relative measures divide by an average or a sum, so they are pure numbers."
+   },
+   "narration": {
+    "en": "Sort each measure: absolute or relative?"
+   },
+   "questionId": "act.isc-sort-dispersion-measures"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Daily wages (₹) of workers are grouped in classes 200–300, 300–400, 400–500 and 500–600. Find the range and the coefficient of range."
+   },
+   "steps": [
+    {
+     "en": "H = upper limit of the highest class = 600."
+    },
+    {
+     "en": "L = lower limit of the lowest class = 200."
+    },
+    {
+     "en": "Range = 600 − 200 = ₹400."
+    },
+    {
+     "en": "Coefficient of range = 400/800 = 0.5."
+    }
+   ],
+   "answer": {
+    "en": "Range ₹400; coefficient of range 0.5."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. Daily wages (₹) of workers are grouped in classes 200–300, 300–400, 400–500 and 500–600. Find the range and the coefficient of range."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "Coefficient = difference over sum"
+   },
+   "body": {
+    "en": "Range and quartile deviation have coefficients of the same shape: difference of the two values divided by their sum."
+   },
+   "narration": {
+    "en": "Coefficient = difference over sum. Range and quartile deviation have coefficients of the same shape: difference of the two values divided by their sum."
+   },
+   "mnemonic": {
+    "en": "(H − L)/(H + L) and (Q3 − Q1)/(Q3 + Q1)"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-1e17-q01",
+    "isc-1e17-q02",
+    "isc-1e17-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-1e17-q04"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Dispersion measures the scatter of values about their average."
+    },
+    {
+     "en": "Absolute measures carry units; relative measures are pure numbers."
+    },
+    {
+     "en": "Range = H − L; coefficient of range = (H − L)/(H + L)."
+    },
+    {
+     "en": "The range is simple but depends only on the extremes."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Find the range and coefficient of range of: 12, 18, 7, 25, 16, 9, 21."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-1e17-q04"
+   ],
+   "narration": {
+    "en": "Recap. Dispersion measures the scatter of values about their average. Absolute measures carry units; relative measures are pure numbers. Range = H − L; coefficient of range = (H − L)/(H + L). The range is simple but depends only on the extremes."
+   }
+  }
+ ]
+}

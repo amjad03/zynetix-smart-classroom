@@ -1,0 +1,510 @@
+{
+ "id": "puc1-economics-17-measures-of-dispersion.t2.lesson",
+ "chapterId": "puc1-economics-17-measures-of-dispersion",
+ "topicId": "puc1-economics-17-measures-of-dispersion.t2",
+ "title": {
+  "en": "Quartile deviation and mean deviation"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Spread of the middle, and the average gap"
+   },
+   "hook": {
+    "en": "One very rich family moves into a village. The range of incomes explodes, but the incomes of most villagers have not changed. Which measure of spread stays calm?"
+   },
+   "objectives": [
+    {
+     "en": "Calculate the quartile deviation and its coefficient"
+    },
+    {
+     "en": "Calculate the mean deviation about the mean or median"
+    },
+    {
+     "en": "Compare the merits of QD and MD"
+    }
+   ],
+   "narration": {
+    "en": "One very rich family moves into a village. The range of incomes explodes, but the incomes of most villagers have not changed. Which measure of spread stays calm?"
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Quartile deviation"
+   },
+   "body": {
+    "en": "The interquartile range Q3 − Q1 covers the middle half of the values. Half of it is the quartile deviation, or semi-interquartile range. For an individual or discrete series, Q1 is the size of the (N + 1)/4th item and Q3 of the 3(N + 1)/4th item; for a continuous series use N/4 and 3N/4 with the interpolation formula. Because it ignores the lowest and highest quarters, QD is not affected by extreme values and can be found for open-ended classes."
+   },
+   "points": [
+    {
+     "en": "QD = (Q3 − Q1)/2"
+    },
+    {
+     "en": "Coefficient of QD = (Q3 − Q1)/(Q3 + Q1)"
+    },
+    {
+     "en": "Unaffected by extremes; ignores half the data"
+    }
+   ],
+   "narration": {
+    "en": "The interquartile range Q3 − Q1 covers the middle half of the values. Half of it is the quartile deviation, or semi-interquartile range. For an individual or discrete series, Q1 is the size of the (N + 1)/4th item and Q3 of the 3(N + 1)/4th item; for a continuous series use N/4 and 3N/4 with the interpolation formula. Because it ignores the lowest and highest quarters, QD is not affected by extreme values and can be found for open-ended classes."
+   },
+   "formula": "QD = \\frac{Q_3 - Q_1}{2}"
+  },
+  {
+   "id": "scene-qd-md",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Quartile deviation and mean deviation"
+   },
+   "caption": {
+    "en": "Seven daily wages, in order. The quartiles are the 2nd and 6th items. Add an extreme value to the top wage: the range jumps, the mean deviation moves a little and the quartile deviation does not move at all."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Middle wage"
+     },
+     "min": 300,
+     "max": 600,
+     "step": 20,
+     "value": 400,
+     "unit": "₹"
+    },
+    {
+     "name": "s",
+     "label": {
+      "en": "Gap between wages"
+     },
+     "min": 10,
+     "max": 50,
+     "step": 5,
+     "value": 20,
+     "unit": "₹"
+    },
+    {
+     "name": "o",
+     "label": {
+      "en": "Extra on the top wage"
+     },
+     "min": 0,
+     "max": 300,
+     "step": 20,
+     "value": 0,
+     "unit": "₹"
+    }
+   ],
+   "vars": [
+    {
+     "name": "q1",
+     "expr": "m - 2*s"
+    },
+    {
+     "name": "q3",
+     "expr": "m + 2*s"
+    },
+    {
+     "name": "top",
+     "expr": "m + 3*s + o"
+    },
+    {
+     "name": "mean",
+     "expr": "m + o/7"
+    },
+    {
+     "name": "md",
+     "expr": "(abs(m - 3*s - mean) + abs(m - 2*s - mean) + abs(m - s - mean) + abs(m - mean) + abs(m + s - mean) + abs(m + 2*s - mean) + abs(top - mean))/7"
+    },
+    {
+     "name": "qd",
+     "expr": "(q3 - q1)/2"
+    }
+   ],
+   "view": {
+    "x": [
+     100,
+     1100
+    ],
+    "y": [
+     0,
+     40
+    ],
+    "axes": true,
+    "xLabel": "wage (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "q1",
+     "y": 16,
+     "w": "q3 - q1",
+     "h": 8,
+     "color": "green",
+     "opacity": 0.3
+    },
+    {
+     "shape": "particles",
+     "count": 7,
+     "r": 9,
+     "color": "yellow",
+     "x": "m + s*if(i==0, -3, if(i==1, -2, if(i==2, -1, if(i==3, 0, if(i==4, 1, if(i==5, 2, 3)))))) + if(i==6, o, 0)",
+     "y": 20
+    },
+    {
+     "shape": "line",
+     "x1": "mean",
+     "y1": 8,
+     "x2": "mean",
+     "y2": 32,
+     "color": "orange",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "m - 3*s",
+     "y1": 6,
+     "x2": "top",
+     "y2": 6,
+     "color": "red",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": "mean",
+     "y": 35,
+     "size": 20,
+     "color": "orange",
+     "text": {
+      "en": "mean {mean:0}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": "(q1 + q3)/2",
+     "y": 27,
+     "size": 20,
+     "color": "green",
+     "text": {
+      "en": "Q1 to Q3"
+     }
+    },
+    {
+     "shape": "text",
+     "x": "(m - 3*s + top)/2",
+     "y": 2,
+     "size": 20,
+     "color": "red",
+     "text": {
+      "en": "range {top - m + 3*s:0}"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Quartile deviation (Q3 − Q1)/2"
+     },
+     "expr": "qd",
+     "digits": 1,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Mean deviation about the mean"
+     },
+     "expr": "md",
+     "digits": 1,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Coefficient of QD"
+     },
+     "expr": "(q3 - q1)/(q3 + q1)",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With gap ₹20 and no extra, check QD = ₹40 and MD about the mean = ₹34.3."
+    },
+    {
+     "en": "Add ₹300 to the top wage. Which measure ignores it completely?"
+    },
+    {
+     "en": "Double the gap between wages. What happens to QD and MD?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Seven daily wages, in order. The quartiles are the 2nd and 6th items. Add an extreme value to the top wage: the range jumps, the mean deviation moves a little and the quartile deviation does not move at all."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: QD and MD of seven wages"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Wages: 340, 360, 380, 400, 420, 440, 460. N is 7."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Quartile deviation"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        9
+       ],
+       "tex": "Q_1 = \\left(\\tfrac{7+1}{4}\\right)^{th} = 2^{nd} = 360",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        16
+       ],
+       "tex": "Q_3 = \\left(\\tfrac{3(7+1)}{4}\\right)^{th} = 6^{th} = 440",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        23
+       ],
+       "tex": "QD = \\frac{440 - 360}{2} = 40,\\quad \\text{Coeff} = \\frac{80}{800} = 0.1",
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "For mean deviation, the mean is 400. The absolute deviations are 60, 40, 20, 0, 20, 40 and 60, which add to 240."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Mean deviation"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        9
+       ],
+       "tex": "MD = \\frac{240}{7} = 34.29",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        16
+       ],
+       "tex": "\\text{Coeff of MD} = \\frac{34.29}{400} = 0.086",
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Mean deviation"
+   },
+   "body": {
+    "en": "The mean deviation is the arithmetic mean of the absolute deviations of the values from an average, usually the mean or the median. Signs are ignored, because the plain deviations from the mean add to zero. It is least when taken about the median. MD uses every value, so it is more representative than range or QD, but ignoring signs makes it unsuitable for further algebra. Its coefficient is MD divided by the average used."
+   },
+   "points": [
+    {
+     "en": "MD = Σ|x − A|/N, where A is the mean or median"
+    },
+    {
+     "en": "For a frequency series: Σf|x − A|/Σf"
+    },
+    {
+     "en": "Coefficient of MD = MD / A"
+    }
+   ],
+   "narration": {
+    "en": "The mean deviation is the arithmetic mean of the absolute deviations of the values from an average, usually the mean or the median. Signs are ignored, because the plain deviations from the mean add to zero. It is least when taken about the median. MD uses every value, so it is more representative than range or QD, but ignoring signs makes it unsuitable for further algebra. Its coefficient is MD divided by the average used."
+   },
+   "formula": "MD = \\frac{\\sum |x - \\bar{x}|}{N}"
+  },
+  {
+   "id": "activity-order-qd",
+   "type": "activity",
+   "kind": "order",
+   "prompt": {
+    "en": "Arrange the steps to find the quartile deviation of an individual series."
+   },
+   "steps": [
+    {
+     "en": "Arrange the values in ascending order"
+    },
+    {
+     "en": "Find the (N + 1)/4th item: this is Q1"
+    },
+    {
+     "en": "Find the 3(N + 1)/4th item: this is Q3"
+    },
+    {
+     "en": "Subtract: Q3 − Q1 is the interquartile range"
+    },
+    {
+     "en": "Halve it to get the quartile deviation"
+    }
+   ],
+   "explanation": {
+    "en": "Quartiles are positional values, so the data must be ordered first."
+   },
+   "narration": {
+    "en": "Arrange the steps to find the quartile deviation of an individual series."
+   },
+   "questionId": "act.isc-order-qd"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Find the mean deviation about the median of: 5, 8, 12, 15, 20."
+   },
+   "steps": [
+    {
+     "en": "The values are already in order; the median is the 3rd item, 12."
+    },
+    {
+     "en": "Absolute deviations from 12: 7, 4, 0, 3, 8."
+    },
+    {
+     "en": "Their sum is 22."
+    },
+    {
+     "en": "MD = 22/5 = 4.4; coefficient = 4.4/12 = 0.37."
+    }
+   ],
+   "answer": {
+    "en": "MD about the median = 4.4; coefficient of MD = 0.37."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. Find the mean deviation about the median of: 5, 8, 12, 15, 20."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "Why drop the signs?"
+   },
+   "body": {
+    "en": "Deviations from the mean always add up to zero, so their plain average tells nothing. MD drops the signs; standard deviation squares them instead."
+   },
+   "narration": {
+    "en": "Why drop the signs?. Deviations from the mean always add up to zero, so their plain average tells nothing. MD drops the signs; standard deviation squares them instead."
+   },
+   "mnemonic": {
+    "en": "Drop signs (MD) or square them (SD)"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-1e17-q05",
+    "isc-1e17-q06",
+    "isc-1e17-q07"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-1e17-q08"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "QD = (Q3 − Q1)/2: the spread of the middle half; unaffected by extremes."
+    },
+    {
+     "en": "MD = average absolute deviation from the mean or median."
+    },
+    {
+     "en": "MD is least about the median."
+    },
+    {
+     "en": "Coefficients: (Q3 − Q1)/(Q3 + Q1) and MD/average."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Find QD and its coefficient for: 22, 26, 14, 30, 18, 11, 35, 41, 12, 32, 20."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-1e17-q08"
+   ],
+   "narration": {
+    "en": "Recap. QD = (Q3 − Q1)/2: the spread of the middle half; unaffected by extremes. MD = average absolute deviation from the mean or median. MD is least about the median. Coefficients: (Q3 − Q1)/(Q3 + Q1) and MD/average."
+   }
+  }
+ ]
+}

@@ -1,0 +1,686 @@
+{
+ "id": "puc1-accountancy-10-bills-of-exchange.t1.lesson",
+ "chapterId": "puc1-accountancy-10-bills-of-exchange",
+ "topicId": "puc1-accountancy-10-bills-of-exchange.t1",
+ "title": {
+  "en": "Bills, notes and due dates"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "A written promise you can trade"
+   },
+   "hook": {
+    "en": "A cloth merchant sells goods worth ₹50,000 on three months credit. How can she be sure of payment, and still get cash next week if she needs it? A bill of exchange does both."
+   },
+   "objectives": [
+    {
+     "en": "Define a bill of exchange and a promissory note"
+    },
+    {
+     "en": "Name the parties to a bill"
+    },
+    {
+     "en": "Work out the due date with days of grace"
+    }
+   ],
+   "narration": {
+    "en": "A cloth merchant sells goods worth ₹50,000 on three months credit. How can she be sure of payment, and still get cash next week if she needs it? A bill of exchange does both."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "What a bill of exchange is"
+   },
+   "body": {
+    "en": "Under the Negotiable Instruments Act, 1881, a bill of exchange is an instrument in writing containing an unconditional order, signed by the maker, directing a certain person to pay a certain sum of money only to, or to the order of, a certain person or to the bearer. The seller (creditor) draws the bill and the buyer (debtor) accepts it by signing across it. Once accepted, the bill is a legal and transferable proof of the debt."
+   },
+   "points": [
+    {
+     "en": "Drawer: the person who writes the bill (the creditor)"
+    },
+    {
+     "en": "Drawee: the person ordered to pay; after signing, the acceptor"
+    },
+    {
+     "en": "Payee: the person who receives the money (often the drawer)"
+    },
+    {
+     "en": "The order is unconditional and the amount is certain"
+    },
+    {
+     "en": "It must be stamped and signed"
+    }
+   ],
+   "narration": {
+    "en": "Under the Negotiable Instruments Act, 1881, a bill of exchange is an instrument in writing containing an unconditional order, signed by the maker, directing a certain person to pay a certain sum of money only to, or to the order of, a certain person or to the bearer. The seller (creditor) draws the bill and the buyer (debtor) accepts it by signing across it. Once accepted, the bill is a legal and transferable proof of the debt."
+   }
+  },
+  {
+   "id": "scene-due-date",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Find the due date of a bill"
+   },
+   "caption": {
+    "en": "A bill drawn in 2026 for a number of months \"after date\". Add the months to the date of drawing, then add 3 days of grace. If the due date is a public holiday, the bill is due on the preceding business day."
+   },
+   "sliders": [
+    {
+     "name": "md",
+     "label": {
+      "en": "Month of drawing (1 = Jan)"
+     },
+     "min": 1,
+     "max": 12,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "dd",
+     "label": {
+      "en": "Day of drawing"
+     },
+     "min": 1,
+     "max": 31,
+     "step": 1,
+     "value": 31
+    },
+    {
+     "name": "k",
+     "label": {
+      "en": "Term of the bill"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 1,
+     "value": 1,
+     "unit": "months"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "hol",
+     "label": {
+      "en": "Due date is a public holiday"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "d0",
+     "expr": "min(dd, if(md==2, 28, if(md==4 || md==6 || md==9 || md==11, 30, 31)))"
+    },
+    {
+     "name": "mm",
+     "expr": "mod(md + k - 1, 12) + 1"
+    },
+    {
+     "name": "yy",
+     "expr": "2026 + floor((md + k - 1)/12)"
+    },
+    {
+     "name": "dimm",
+     "expr": "if(mm==2, 28, if(mm==4 || mm==6 || mm==9 || mm==11, 30, 31))"
+    },
+    {
+     "name": "d1",
+     "expr": "min(d0, dimm)"
+    },
+    {
+     "name": "roll",
+     "expr": "d1 + 3 > dimm"
+    },
+    {
+     "name": "d2",
+     "expr": "if(roll, d1 + 3 - dimm, d1 + 3)"
+    },
+    {
+     "name": "m2",
+     "expr": "if(roll, mod(mm, 12) + 1, mm)"
+    },
+    {
+     "name": "y2",
+     "expr": "if(roll && mm == 12, yy + 1, yy)"
+    },
+    {
+     "name": "back",
+     "expr": "hol && roll && d2 == 1"
+    },
+    {
+     "name": "dfin",
+     "expr": "if(back, dimm, if(hol, d2 - 1, d2))"
+    },
+    {
+     "name": "mfin",
+     "expr": "if(back, mm, m2)"
+    },
+    {
+     "name": "yfin",
+     "expr": "if(back, yy, y2)"
+    },
+    {
+     "name": "n0",
+     "expr": "if(md==1, 0, if(md==2, 31, if(md==3, 59, if(md==4, 90, if(md==5, 120, if(md==6, 151, if(md==7, 181, if(md==8, 212, if(md==9, 243, if(md==10, 273, if(md==11, 304, 334))))))))))) + d0"
+    },
+    {
+     "name": "n1",
+     "expr": "if(mm==1, 0, if(mm==2, 31, if(mm==3, 59, if(mm==4, 90, if(mm==5, 120, if(mm==6, 151, if(mm==7, 181, if(mm==8, 212, if(mm==9, 243, if(mm==10, 273, if(mm==11, 304, 334))))))))))) + d1 + 365*(yy - 2026)"
+    },
+    {
+     "name": "nf",
+     "expr": "if(mfin==1, 0, if(mfin==2, 31, if(mfin==3, 59, if(mfin==4, 90, if(mfin==5, 120, if(mfin==6, 151, if(mfin==7, 181, if(mfin==8, 212, if(mfin==9, 243, if(mfin==10, 273, if(mfin==11, 304, 334))))))))))) + dfin + 365*(yfin - 2026)"
+    },
+    {
+     "name": "days",
+     "expr": "nf - n0"
+    },
+    {
+     "name": "x1",
+     "expr": "6 + 88*(n1 - n0)/190"
+    },
+    {
+     "name": "xf",
+     "expr": "6 + 88*days/190"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     40
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 20,
+     "x2": 94,
+     "y2": 20,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 6,
+     "y": 18.5,
+     "w": "x1 - 6",
+     "h": 3,
+     "color": "blue",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": "x1",
+     "y": 18.5,
+     "w": "max(xf - x1, 0.3)",
+     "h": 3,
+     "color": "orange",
+     "opacity": 0.9
+    },
+    {
+     "shape": "circle",
+     "x": 6,
+     "y": 20,
+     "r": 1.2,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": "xf",
+     "y": 20,
+     "r": 1.2,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 14,
+     "y": 30,
+     "size": 24,
+     "color": "green",
+     "text": {
+      "en": "Drawn: {d0:0}/{md:0}/2026"
+     }
+    },
+    {
+     "shape": "label",
+     "x": "clamp(x1, 20, 70)",
+     "y": 10,
+     "size": 22,
+     "color": "blue",
+     "text": {
+      "en": "Term ends: {d1:0}/{mm:0}/{yy:0}"
+     }
+    },
+    {
+     "shape": "label",
+     "x": "clamp(xf, 22, 80)",
+     "y": 33,
+     "size": 26,
+     "color": "red",
+     "text": {
+      "en": "Due date: {dfin:0}/{mfin:0}/{yfin:0}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 3,
+     "size": 20,
+     "color": "white",
+     "text": {
+      "en": "Blue: term of the bill. Orange: days of grace (3), less 1 day for a holiday."
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Days from drawing to due date"
+     },
+     "expr": "days",
+     "digits": 0,
+     "unit": "days"
+    },
+    {
+     "label": {
+      "en": "Due day"
+     },
+     "expr": "dfin",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Due month"
+     },
+     "expr": "mfin",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Draw a 1-month bill on 31 January. Why is the term over on 28 February?"
+    },
+    {
+     "en": "Draw a 3-month bill on 15 March. Check that it is due on 18 June."
+    },
+    {
+     "en": "Turn on the holiday. Which way does the due date move?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "A bill drawn in 2026 for a number of months \"after date\". Add the months to the date of drawing, then add 3 days of grace. If the due date is a public holiday, the bill is due on the preceding business day."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Parties and the due date"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Three parties: Asha sells goods to Bimal and draws a bill on him; she will be paid herself."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Parties to a bill"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        9
+       ],
+       "text": {
+        "en": "Asha (seller) draws the bill: DRAWER"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        14.5
+       ],
+       "text": {
+        "en": "Bimal (buyer) accepts it: DRAWEE / ACCEPTOR"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        20.0
+       ],
+       "text": {
+        "en": "The person to be paid: PAYEE (here Asha)"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        25.5
+       ],
+       "text": {
+        "en": "For Asha: Bills Receivable. For Bimal: Bills Payable."
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Now a due date. A bill dated 15 March 2026, payable three months after date."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        31.0
+       ],
+       "text": {
+        "en": "15 March + 3 months = 15 June"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        36.5
+       ],
+       "text": {
+        "en": "15 June + 3 days of grace = 18 June 2026"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        42.0
+       ],
+       "tex": "\\text{Due date} = 18 \\text{ June } 2026",
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Months are counted as calendar months. A one-month bill drawn on 31 January ends on 28 February, so it is due on 3 March."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        9
+       ],
+       "text": {
+        "en": "31 Jan + 1 month = 28 Feb (no 31 Feb)"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        14.5
+       ],
+       "text": {
+        "en": "28 Feb + 3 days = 3 March 2026"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        20.0
+       ],
+       "text": {
+        "en": "Holiday on due date? Pay on the previous working day."
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ],
+     "clear": true
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Promissory notes and the due date"
+   },
+   "body": {
+    "en": "A promissory note is written by the debtor himself: an unconditional promise to pay a certain sum to a certain person. It has two parties, the maker and the payee, and needs no acceptance. For a bill payable some time after date, the term is added to the date of drawing and three days of grace are then added to get the date of maturity. If that date is a public holiday, the bill is due on the preceding business day; if it is an emergency holiday declared suddenly, it is due on the next business day."
+   },
+   "points": [
+    {
+     "en": "Bill: an order, three parties, needs acceptance"
+    },
+    {
+     "en": "Note: a promise, two parties, no acceptance"
+    },
+    {
+     "en": "Due date = date + term + 3 days of grace"
+    },
+    {
+     "en": "For the drawer it is a bill receivable; for the drawee a bill payable"
+    }
+   ],
+   "narration": {
+    "en": "A promissory note is written by the debtor himself: an unconditional promise to pay a certain sum to a certain person. It has two parties, the maker and the payee, and needs no acceptance. For a bill payable some time after date, the term is added to the date of drawing and three days of grace are then added to get the date of maturity. If that date is a public holiday, the bill is due on the preceding business day; if it is an emergency holiday declared suddenly, it is due on the next business day."
+   },
+   "formula": "\\text{Due date} = \\text{Date of drawing} + \\text{Term} + 3 \\text{ days of grace}"
+  },
+  {
+   "id": "activity-match-bill-parties",
+   "type": "activity",
+   "kind": "match",
+   "prompt": {
+    "en": "Match each term with its meaning."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "Drawer"
+     },
+     "right": {
+      "en": "The creditor who writes and signs the order"
+     }
+    },
+    {
+     "left": {
+      "en": "Drawee"
+     },
+     "right": {
+      "en": "The debtor on whom the bill is drawn"
+     }
+    },
+    {
+     "left": {
+      "en": "Payee"
+     },
+     "right": {
+      "en": "The person to whom the money is to be paid"
+     }
+    },
+    {
+     "left": {
+      "en": "Maker of a note"
+     },
+     "right": {
+      "en": "The debtor who writes a promise to pay"
+     }
+    },
+    {
+     "left": {
+      "en": "Days of grace"
+     },
+     "right": {
+      "en": "Three extra days added to the term"
+     }
+    },
+    {
+     "left": {
+      "en": "Endorsement"
+     },
+     "right": {
+      "en": "Signing a bill over to another person"
+     }
+    }
+   ],
+   "explanation": {
+    "en": "A bill is an order by the creditor (drawer) to the debtor (drawee) to pay the payee. A promissory note is a promise made by the debtor himself, the maker."
+   },
+   "narration": {
+    "en": "Match each term with its meaning."
+   },
+   "questionId": "act.isc-match-bill-parties"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Ravi draws a bill on Meena on 10 April 2026 for ₹30,000 payable 60 days after date. Meena accepts it. Find the due date. Who records it as a bill receivable?"
+   },
+   "steps": [
+    {
+     "en": "When the term is in days, count days and leave out the day of drawing."
+    },
+    {
+     "en": "April: 30 − 10 = 20 days; May: 31 days (51); June: 9 more days make 60, which ends the term on 9 June."
+    },
+    {
+     "en": "Add 3 days of grace: 12 June 2026."
+    },
+    {
+     "en": "Ravi, the drawer, records a bill receivable; Meena records a bill payable."
+    }
+   ],
+   "answer": {
+    "en": "Due on 12 June 2026; Ravi treats it as a bill receivable and Meena as a bill payable."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. Ravi draws a bill on Meena on 10 April 2026 for ₹30,000 payable 60 days after date. Meena accepts it. Find the due date. Who records it as a bill receivable?"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "Months by calendar, days by counting"
+   },
+   "body": {
+    "en": "A term in months: jump to the same date in the later month (or its last day). A term in days: count the days, excluding the date of drawing. Then always add 3 days of grace."
+   },
+   "narration": {
+    "en": "Months by calendar, days by counting. A term in months: jump to the same date in the later month (or its last day). A term in days: count the days, excluding the date of drawing. Then always add 3 days of grace."
+   },
+   "mnemonic": {
+    "en": "Date, jump, plus three"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-1a10-q01",
+    "isc-1a10-q02",
+    "isc-1a10-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-1a10-q04"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A bill of exchange is an unconditional written order; a promissory note is an unconditional written promise."
+    },
+    {
+     "en": "A bill has three parties: drawer, drawee and payee; a note has two: maker and payee."
+    },
+    {
+     "en": "Due date = date of drawing + term + 3 days of grace."
+    },
+    {
+     "en": "A public holiday moves the due date to the preceding business day."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Find the due dates of bills dated 31 August 2026 at 1 month, and 20 January 2026 at 90 days."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-1a10-q04"
+   ],
+   "narration": {
+    "en": "Recap. A bill of exchange is an unconditional written order; a promissory note is an unconditional written promise. A bill has three parties: drawer, drawee and payee; a note has two: maker and payee. Due date = date of drawing + term + 3 days of grace. A public holiday moves the due date to the preceding business day."
+   }
+  }
+ ]
+}

@@ -1,0 +1,756 @@
+{
+ "id": "puc2-business-studies-15-business-size-and-finance.t3.lesson",
+ "chapterId": "puc2-business-studies-15-business-size-and-finance",
+ "topicId": "puc2-business-studies-15-business-size-and-finance.t3",
+ "title": {
+  "en": "Modern sources of finance"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "New ways to raise money"
+   },
+   "hook": {
+    "en": "A start-up with a clever idea but no profits cannot easily issue debentures or get a bank loan. Yet many such start-ups raise crores. Who gives them money, and on what terms?"
+   },
+   "objectives": [
+    {
+     "en": "Explain global depository receipts"
+    },
+    {
+     "en": "Distinguish angel investors and venture capitalists"
+    },
+    {
+     "en": "Explain crowdfunding and peer-to-peer lending"
+    }
+   ],
+   "narration": {
+    "en": "A start-up with a clever idea but no profits cannot easily issue debentures or get a bank loan. Yet many such start-ups raise crores. Who gives them money, and on what terms?"
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "GDRs, angels and venture capital"
+   },
+   "body": {
+    "en": "A global depository receipt (GDR) is a negotiable instrument issued abroad by a depository bank and backed by shares of an Indian company held in custody in India; it lets the company raise foreign currency from investors in other countries, and the GDR is traded on a foreign stock exchange. Angel investors are wealthy individuals who invest their own money in very early-stage start-ups, usually in exchange for equity, and often also give advice and contacts. Venture capitalists are professional funds that invest pooled money in young, high-risk, high-growth companies, take an equity stake and a role on the board, and exit after some years, often through a public issue or a sale."
+   },
+   "points": [
+    {
+     "en": "GDR: foreign funds through receipts backed by shares"
+    },
+    {
+     "en": "Angel investors: individuals, early stage, small amounts"
+    },
+    {
+     "en": "Venture capital: professional funds, larger amounts, active role, planned exit"
+    }
+   ],
+   "narration": {
+    "en": "A global depository receipt (GDR) is a negotiable instrument issued abroad by a depository bank and backed by shares of an Indian company held in custody in India; it lets the company raise foreign currency from investors in other countries, and the GDR is traded on a foreign stock exchange. Angel investors are wealthy individuals who invest their own money in very early-stage start-ups, usually in exchange for equity, and often also give advice and contacts. Venture capitalists are professional funds that invest pooled money in young, high-risk, high-growth companies, take an equity stake and a role on the board, and exit after some years, often through a public issue or a sale."
+   }
+  },
+  {
+   "id": "scene-crowdfunding",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A crowdfunding campaign"
+   },
+   "caption": {
+    "en": "A start-up asks the public for small amounts online over 30 days. Backers arrive fastest at the start and near the deadline. If the goal is not reached, many platforms return the money. Press Play."
+   },
+   "sliders": [
+    {
+     "name": "G",
+     "label": {
+      "en": "Funding goal (₹ lakh)"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 5,
+     "value": 20
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "Backers per day at the start"
+     },
+     "min": 20,
+     "max": 300,
+     "step": 10,
+     "value": 120
+    },
+    {
+     "name": "pl",
+     "label": {
+      "en": "Average pledge (₹)"
+     },
+     "min": 200,
+     "max": 3000,
+     "step": 100,
+     "value": 800
+    }
+   ],
+   "toggles": [
+    {
+     "name": "promo",
+     "label": {
+      "en": "Social media push near the deadline"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 30,
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2,
+    "unit": "day"
+   },
+   "state": [
+    {
+     "name": "raised",
+     "init": 0,
+     "rate": "b*pl/100000*(exp(-t/5) + 0.25 + if(promo, 1.5*exp(-(30 - t)/3), 0))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     32
+    ],
+    "y": [
+     0,
+     80
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "day",
+    "yLabel": "₹ lakh"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "G",
+     "x2": 30,
+     "y2": "G",
+     "dashed": true,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": "G + 3",
+     "size": 18,
+     "color": "yellow",
+     "text": {
+      "en": "goal"
+     }
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "min(raised, 79)",
+     "length": 700,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "min(raised, 79)",
+     "r": 0.5,
+     "color": {
+      "by": "step(G, raised)",
+      "scale": [
+       "orange",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "label",
+     "x": 16,
+     "y": 74,
+     "size": 22,
+     "text": {
+      "en": "Raised ₹{raised:1} lakh of ₹{G:0} lakh"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Raised so far"
+     },
+     "expr": "raised",
+     "digits": 1,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Share of goal"
+     },
+     "expr": "100*raised/G",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With the defaults, is the ₹20 lakh goal reached by day 30?"
+    },
+    {
+     "en": "Turn off the deadline push. Does the campaign still succeed?"
+    },
+    {
+     "en": "Why is crowdfunding suited to consumer products with a story?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "A start-up asks the public for small amounts online over 30 days. Backers arrive fastest at the start and near the deadline. If the goal is not reached, many platforms return the money. Press Play."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Modern sources at a glance"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Five modern sources, who provides the money and what they get."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Modern sources of finance"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        9
+       ],
+       "to": [
+        98,
+        45
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        15
+       ],
+       "to": [
+        98,
+        15
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        21
+       ],
+       "to": [
+        98,
+        21
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        27
+       ],
+       "to": [
+        98,
+        27
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        33
+       ],
+       "to": [
+        98,
+        33
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        39
+       ],
+       "to": [
+        98,
+        39
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        30,
+        9
+       ],
+       "to": [
+        30,
+        45
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        64,
+        9
+       ],
+       "to": [
+        64,
+        45
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10.3
+       ],
+       "text": {
+        "en": "Source"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        10.3
+       ],
+       "text": {
+        "en": "Provider"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        65,
+        10.3
+       ],
+       "text": {
+        "en": "Gets"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        16.3
+       ],
+       "text": {
+        "en": "GDR"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        16.3
+       ],
+       "text": {
+        "en": "Foreign investors"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        65,
+        16.3
+       ],
+       "text": {
+        "en": "Receipts backed by shares"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        22.3
+       ],
+       "text": {
+        "en": "Angel"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        22.3
+       ],
+       "text": {
+        "en": "Rich individual"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        65,
+        22.3
+       ],
+       "text": {
+        "en": "Equity, early stage"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.3
+       ],
+       "text": {
+        "en": "Venture capital"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        28.3
+       ],
+       "text": {
+        "en": "Professional fund"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        65,
+        28.3
+       ],
+       "text": {
+        "en": "Equity, board seat"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        34.3
+       ],
+       "text": {
+        "en": "Crowdfunding"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        34.3
+       ],
+       "text": {
+        "en": "Many people online"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        65,
+        34.3
+       ],
+       "text": {
+        "en": "Reward or equity"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        40.3
+       ],
+       "text": {
+        "en": "P2P lending"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        40.3
+       ],
+       "text": {
+        "en": "Individual lenders"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        65,
+        40.3
+       ],
+       "text": {
+        "en": "Interest"
+       },
+       "size": 2.6,
+       "color": "white"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Crowdfunding and peer-to-peer lending"
+   },
+   "body": {
+    "en": "Crowdfunding raises small amounts from a large number of people through an online platform. It may be donation-based, reward-based (backers get the product or a gift) or equity-based where the law allows. It also tests whether people want the product. Peer-to-peer (P2P) lending uses an online platform to match borrowers directly with individual lenders, without a bank in between; in India P2P platforms are registered as NBFCs and regulated by the RBI. These sources are flexible and fast, but they carry high risk for investors and may be costly for borrowers."
+   },
+   "points": [
+    {
+     "en": "Crowdfunding: many small contributors online"
+    },
+    {
+     "en": "Types: donation, reward, equity"
+    },
+    {
+     "en": "P2P lending: individuals lend to borrowers via a platform"
+    },
+    {
+     "en": "P2P platforms in India: NBFC-P2P regulated by the RBI"
+    }
+   ],
+   "narration": {
+    "en": "Crowdfunding raises small amounts from a large number of people through an online platform. It may be donation-based, reward-based (backers get the product or a gift) or equity-based where the law allows. It also tests whether people want the product. Peer-to-peer (P2P) lending uses an online platform to match borrowers directly with individual lenders, without a bank in between; in India P2P platforms are registered as NBFCs and regulated by the RBI. These sources are flexible and fast, but they carry high risk for investors and may be costly for borrowers."
+   }
+  },
+  {
+   "id": "activity-match-modern-finance",
+   "type": "activity",
+   "kind": "match",
+   "prompt": {
+    "en": "Match each situation with the source of finance."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "An Indian company issues receipts on the Luxembourg exchange backed by its shares"
+     },
+     "right": {
+      "en": "Global depository receipt"
+     }
+    },
+    {
+     "left": {
+      "en": "A retired businessman puts ₹25 lakh into a two-person start-up for 10% of its shares"
+     },
+     "right": {
+      "en": "Angel investor"
+     }
+    },
+    {
+     "left": {
+      "en": "A fund invests ₹40 crore in a fast-growing app and joins its board"
+     },
+     "right": {
+      "en": "Venture capital"
+     }
+    },
+    {
+     "left": {
+      "en": "3,000 people pre-order a smart bottle on a website before it is made"
+     },
+     "right": {
+      "en": "Reward-based crowdfunding"
+     }
+    },
+    {
+     "left": {
+      "en": "A shopkeeper borrows from 40 individuals through an online platform"
+     },
+     "right": {
+      "en": "Peer-to-peer lending"
+     }
+    }
+   ],
+   "explanation": {
+    "en": "The provider (foreign investors, an individual, a fund, the crowd, individual lenders) and what they receive identify the source."
+   },
+   "narration": {
+    "en": "Match each situation with the source of finance."
+   },
+   "questionId": "act.isc-match-modern-finance"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A start-up runs a 30-day reward-based campaign for ₹20 lakh. The average pledge is ₹800. It gets 120 backers a day in week 1, 40 a day for the next 14 days and 90 a day in the last 9 days. Is the goal reached? If not, how many more backers are needed?"
+   },
+   "steps": [
+    {
+     "en": "Backers = 7 × 120 + 14 × 40 + 9 × 90 = 840 + 560 + 810 = 2,210."
+    },
+    {
+     "en": "Amount pledged = 2,210 × ₹800 = ₹17,68,000."
+    },
+    {
+     "en": "Shortfall = ₹20,00,000 − ₹17,68,000 = ₹2,32,000."
+    },
+    {
+     "en": "Extra backers needed = 2,32,000 / 800 = 290."
+    }
+   ],
+   "answer": {
+    "en": "Not reached: about 290 more backers (₹2.32 lakh) are needed, so the start-up must promote harder near the deadline."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. A start-up runs a 30-day reward-based campaign for ₹20 lakh. The average pledge is ₹800. It gets 120 backers a day in week 1, 40 a day for the next 14 days and 90 a day in the last 9 days. Is the goal reached? If not, how many more backers are needed?"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "Angel early, VC later"
+   },
+   "body": {
+    "en": "Angels invest their own money at the idea stage; venture capitalists invest pooled funds once the business shows it can grow."
+   },
+   "narration": {
+    "en": "Angel early, VC later. Angels invest their own money at the idea stage; venture capitalists invest pooled funds once the business shows it can grow."
+   },
+   "mnemonic": {
+    "en": "Angel at birth, VC at growth"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-2s15-q09",
+    "isc-2s15-q10",
+    "isc-2s15-q11"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-2s15-q12"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "GDRs raise foreign capital through receipts backed by shares."
+    },
+    {
+     "en": "Angel investors are individuals who fund early start-ups for equity."
+    },
+    {
+     "en": "Venture capital funds back high-growth firms and take an active role."
+    },
+    {
+     "en": "Crowdfunding and P2P lending raise money from many individuals online."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Which modern source would suit (a) a board game inventor, (b) a profitable firm wanting dollars? Why?"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-2s15-q12"
+   ],
+   "narration": {
+    "en": "Recap. GDRs raise foreign capital through receipts backed by shares. Angel investors are individuals who fund early start-ups for equity. Venture capital funds back high-growth firms and take an active role. Crowdfunding and P2P lending raise money from many individuals online."
+   }
+  }
+ ]
+}

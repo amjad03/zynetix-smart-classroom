@@ -1,0 +1,956 @@
+{
+ "id": "puc2-business-studies-15-business-size-and-finance.t1.lesson",
+ "chapterId": "puc2-business-studies-15-business-size-and-finance",
+ "topicId": "puc2-business-studies-15-business-size-and-finance.t1",
+ "title": {
+  "en": "Forms of business entities"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Choosing the right form"
+   },
+   "hook": {
+    "en": "A baker starts alone, takes in two partners to open a second shop, later forms a private company to raise money from relatives, and one day lists it on the stock exchange. Each step changes who owns it and who bears the risk."
+   },
+   "objectives": [
+    {
+     "en": "State the meaning and features of the four business entities"
+    },
+    {
+     "en": "Distinguish them on members, liability, legal status and transfer of interest"
+    },
+    {
+     "en": "Choose a suitable form for a given business"
+    }
+   ],
+   "narration": {
+    "en": "A baker starts alone, takes in two partners to open a second shop, later forms a private company to raise money from relatives, and one day lists it on the stock exchange. Each step changes who owns it and who bears the risk."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Sole proprietorship and partnership"
+   },
+   "body": {
+    "en": "A sole proprietorship is owned, managed and controlled by one person, who takes all the profit and bears unlimited liability. It is easy to form and close, and decisions are quick, but capital and skills are limited and the business has no separate legal existence. A partnership is a relationship between persons who agree to share the profits of a business carried on by all or any of them acting for all (Indian Partnership Act, 1932). It has 2 to 50 partners (under the Companies Rules), more capital and skills, but partners have unlimited and joint liability, and interest cannot be transferred without the consent of all."
+   },
+   "points": [
+    {
+     "en": "Sole proprietor: one owner, unlimited liability, no separate entity"
+    },
+    {
+     "en": "Partnership: 2 to 50 partners, agreement, mutual agency"
+    },
+    {
+     "en": "Both: unlimited liability, limited life"
+    }
+   ],
+   "narration": {
+    "en": "A sole proprietorship is owned, managed and controlled by one person, who takes all the profit and bears unlimited liability. It is easy to form and close, and decisions are quick, but capital and skills are limited and the business has no separate legal existence. A partnership is a relationship between persons who agree to share the profits of a business carried on by all or any of them acting for all (Indian Partnership Act, 1932). It has 2 to 50 partners (under the Companies Rules), more capital and skills, but partners have unlimited and joint liability, and interest cannot be transferred without the consent of all."
+   }
+  },
+  {
+   "id": "scene-liability",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Who pays when the business fails?"
+   },
+   "caption": {
+    "en": "The business owes more than it owns. Choose the form of organisation: with unlimited liability the owners' personal property can be taken to pay the debts; with limited liability the loss stops at the capital invested."
+   },
+   "choices": [
+    {
+     "name": "ent",
+     "label": {
+      "en": "Form"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Sole proprietorship"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Partnership"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Private company"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Public company"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "sliders": [
+    {
+     "name": "cap",
+     "label": {
+      "en": "Capital invested by the owner(s) (₹ lakh)"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 5,
+     "value": 20
+    },
+    {
+     "name": "dbt",
+     "label": {
+      "en": "Debts left unpaid by the business (₹ lakh)"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 5,
+     "value": 30
+    }
+   ],
+   "vars": [
+    {
+     "name": "unl",
+     "expr": "ent <= 2"
+    },
+    {
+     "name": "pers",
+     "expr": "if(unl, dbt, 0)"
+    },
+    {
+     "name": "loss",
+     "expr": "cap + pers"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     120
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 15,
+     "y": 10,
+     "w": 18,
+     "h": "cap",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 5,
+     "size": 18,
+     "text": {
+      "en": "Capital lost {cap:0}"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 41,
+     "y": 10,
+     "w": 18,
+     "h": "max(pers, 0.5)",
+     "color": "red",
+     "opacity": "if(unl, 0.9, 0.15)"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 5,
+     "size": 18,
+     "text": {
+      "en": "Personal assets taken {pers:0}"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 67,
+     "y": 10,
+     "w": 18,
+     "h": "max(dbt - pers, 0.5)",
+     "color": "orange",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 76,
+     "y": 5,
+     "size": 18,
+     "text": {
+      "en": "Creditors lose {dbt - pers:0}"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 110,
+     "size": 24,
+     "visibleIf": "unl",
+     "color": "red",
+     "text": {
+      "en": "Unlimited liability: owners lose ₹{loss:0} lakh"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 110,
+     "size": 24,
+     "visibleIf": "!unl",
+     "color": "green",
+     "text": {
+      "en": "Limited liability: shareholders lose only ₹{cap:0} lakh"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 98,
+     "size": 18,
+     "visibleIf": "ent==1",
+     "text": {
+      "en": "One owner; no separate legal entity"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 98,
+     "size": 18,
+     "visibleIf": "ent==2",
+     "text": {
+      "en": "2 to 50 partners; jointly and severally liable"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 98,
+     "size": 18,
+     "visibleIf": "ent==3",
+     "text": {
+      "en": "2 to 200 members; separate legal entity; shares not freely transferable"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 98,
+     "size": 18,
+     "visibleIf": "ent==4",
+     "text": {
+      "en": "At least 7 members; separate entity; shares freely transferable"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Total loss to the owner(s)"
+     },
+     "expr": "loss",
+     "digits": 0,
+     "unit": "₹ lakh"
+    },
+    {
+     "label": {
+      "en": "Personal property at risk"
+     },
+     "expr": "pers",
+     "digits": 0,
+     "unit": "₹ lakh"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Compare a partnership and a private company with the same debts."
+    },
+    {
+     "en": "Why might a supplier prefer to give credit to a sole trader with large personal property?"
+    },
+    {
+     "en": "Set debts to zero. Is there any difference between the forms now?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "The business owes more than it owns. Choose the form of organisation: with unlimited liability the owners' personal property can be taken to pay the debts; with limited liability the loss stops at the capital invested."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Four entities compared"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Compare the four forms on four points."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Business entities"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        9
+       ],
+       "to": [
+        99,
+        39
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        15
+       ],
+       "to": [
+        99,
+        15
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        21
+       ],
+       "to": [
+        99,
+        21
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        27
+       ],
+       "to": [
+        99,
+        27
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        33
+       ],
+       "to": [
+        99,
+        33
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        26,
+        9
+       ],
+       "to": [
+        26,
+        39
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        46,
+        9
+       ],
+       "to": [
+        46,
+        39
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        66,
+        9
+       ],
+       "to": [
+        66,
+        39
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        82,
+        9
+       ],
+       "to": [
+        82,
+        39
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10.3
+       ],
+       "text": {
+        "en": "Basis"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        10.3
+       ],
+       "text": {
+        "en": "Sole prop."
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        47,
+        10.3
+       ],
+       "text": {
+        "en": "Partnership"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        10.3
+       ],
+       "text": {
+        "en": "Pvt co."
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        83,
+        10.3
+       ],
+       "text": {
+        "en": "Public co."
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        16.3
+       ],
+       "text": {
+        "en": "Members"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        16.3
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        47,
+        16.3
+       ],
+       "text": {
+        "en": "2 to 50"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        16.3
+       ],
+       "text": {
+        "en": "2 to 200"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        83,
+        16.3
+       ],
+       "text": {
+        "en": "7 or more"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        22.3
+       ],
+       "text": {
+        "en": "Liability"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        22.3
+       ],
+       "text": {
+        "en": "Unlimited"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        47,
+        22.3
+       ],
+       "text": {
+        "en": "Unlimited"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        22.3
+       ],
+       "text": {
+        "en": "Limited"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        83,
+        22.3
+       ],
+       "text": {
+        "en": "Limited"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.3
+       ],
+       "text": {
+        "en": "Legal entity"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        28.3
+       ],
+       "text": {
+        "en": "No"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        47,
+        28.3
+       ],
+       "text": {
+        "en": "No"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        28.3
+       ],
+       "text": {
+        "en": "Yes"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        83,
+        28.3
+       ],
+       "text": {
+        "en": "Yes"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        34.3
+       ],
+       "text": {
+        "en": "Transfer"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        34.3
+       ],
+       "text": {
+        "en": "Owner's"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        47,
+        34.3
+       ],
+       "text": {
+        "en": "All consent"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        67,
+        34.3
+       ],
+       "text": {
+        "en": "Restricted"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        83,
+        34.3
+       ],
+       "text": {
+        "en": "Free"
+       },
+       "size": 2.6,
+       "color": "white"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Private and public companies"
+   },
+   "body": {
+    "en": "A company is an artificial person created by law (Companies Act, 2013), with a separate legal entity, perpetual succession, a common seal and limited liability of members. A private company has at least 2 and at most 200 members (excluding employees), restricts the transfer of its shares and cannot invite the public to buy its securities. A public company has at least 7 members with no maximum, its shares are freely transferable, and it can raise money from the public, which is why it is more strictly regulated. A one person company is a special private company with a single member."
+   },
+   "points": [
+    {
+     "en": "Company: separate legal entity, limited liability, perpetual succession"
+    },
+    {
+     "en": "Private: 2 to 200 members, shares not freely transferable, no public issue"
+    },
+    {
+     "en": "Public: at least 7 members, free transfer, can invite the public"
+    }
+   ],
+   "narration": {
+    "en": "A company is an artificial person created by law (Companies Act, 2013), with a separate legal entity, perpetual succession, a common seal and limited liability of members. A private company has at least 2 and at most 200 members (excluding employees), restricts the transfer of its shares and cannot invite the public to buy its securities. A public company has at least 7 members with no maximum, its shares are freely transferable, and it can raise money from the public, which is why it is more strictly regulated. A one person company is a special private company with a single member."
+   }
+  },
+  {
+   "id": "activity-sort-entities",
+   "type": "activity",
+   "kind": "sort",
+   "prompt": {
+    "en": "Sort each feature into the form of business it describes."
+   },
+   "buckets": [
+    {
+     "id": "sp",
+     "label": {
+      "en": "Sole proprietorship"
+     }
+    },
+    {
+     "id": "pf",
+     "label": {
+      "en": "Partnership"
+     }
+    },
+    {
+     "id": "pv",
+     "label": {
+      "en": "Private company"
+     }
+    },
+    {
+     "id": "pb",
+     "label": {
+      "en": "Public company"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "One person takes all profits and all risk"
+     },
+     "answer": "sp"
+    },
+    {
+     "text": {
+      "en": "Business and owner are the same in law"
+     },
+     "answer": "sp"
+    },
+    {
+     "text": {
+      "en": "Governed by an agreement called a deed"
+     },
+     "answer": "pf"
+    },
+    {
+     "text": {
+      "en": "Every member is an agent of the others"
+     },
+     "answer": "pf"
+    },
+    {
+     "text": {
+      "en": "At most 200 members; cannot invite the public"
+     },
+     "answer": "pv"
+    },
+    {
+     "text": {
+      "en": "Restricts the transfer of its shares"
+     },
+     "answer": "pv"
+    },
+    {
+     "text": {
+      "en": "At least 7 members; may list on a stock exchange"
+     },
+     "answer": "pb"
+    },
+    {
+     "text": {
+      "en": "Shares are freely transferable"
+     },
+     "answer": "pb"
+    }
+   ],
+   "explanation": {
+    "en": "Ownership, liability, legal status and transfer of shares separate the four forms."
+   },
+   "narration": {
+    "en": "Sort each feature into the form of business it describes."
+   },
+   "questionId": "act.isc-sort-entities"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Three friends want to start a software firm. They have ₹30 lakh, expect to need ₹2 crore within three years, and do not want to lose their homes if it fails. Which form suits them, and why?"
+   },
+   "steps": [
+    {
+     "en": "A partnership would give unlimited liability: their homes would be at risk."
+    },
+    {
+     "en": "A public company needs at least 7 members and heavy compliance: too much for now."
+    },
+    {
+     "en": "A private company gives limited liability, a separate legal entity and lets them bring in up to 200 investors privately."
+    },
+    {
+     "en": "Later, if they need large public funds, they can convert into a public company."
+    }
+   ],
+   "answer": {
+    "en": "A private limited company: limited liability now, with room to raise more capital later."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. Three friends want to start a software firm. They have ₹30 lakh, expect to need ₹2 crore within three years, and do not want to lose their homes if it fails. Which form suits them, and why?"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "1, 2–50, 2–200, 7+"
+   },
+   "body": {
+    "en": "Members: sole proprietor 1, partnership 2 to 50, private company 2 to 200, public company at least 7."
+   },
+   "narration": {
+    "en": "1, 2–50, 2–200, 7+. Members: sole proprietor 1, partnership 2 to 50, private company 2 to 200, public company at least 7."
+   },
+   "mnemonic": {
+    "en": "One, fifty, two hundred, seven-plus"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-2s15-q01",
+    "isc-2s15-q02",
+    "isc-2s15-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-2s15-q04"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Sole proprietorship and partnership: unlimited liability, no separate legal entity."
+    },
+    {
+     "en": "Companies: separate legal entity, limited liability, perpetual succession."
+    },
+    {
+     "en": "Private company: 2 to 200 members, restricted transfer, no public issue."
+    },
+    {
+     "en": "Public company: at least 7 members, free transfer, can raise funds from the public."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Give two reasons why a growing partnership may convert into a private company."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-2s15-q04"
+   ],
+   "narration": {
+    "en": "Recap. Sole proprietorship and partnership: unlimited liability, no separate legal entity. Companies: separate legal entity, limited liability, perpetual succession. Private company: 2 to 200 members, restricted transfer, no public issue. Public company: at least 7 members, free transfer, can raise funds from the public."
+   }
+  }
+ ]
+}

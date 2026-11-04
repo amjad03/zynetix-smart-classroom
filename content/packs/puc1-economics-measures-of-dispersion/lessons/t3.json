@@ -1,0 +1,876 @@
+{
+ "id": "puc1-economics-17-measures-of-dispersion.t3.lesson",
+ "chapterId": "puc1-economics-17-measures-of-dispersion",
+ "topicId": "puc1-economics-17-measures-of-dispersion.t3",
+ "title": {
+  "en": "Standard deviation and CV"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "The most used measure of spread"
+   },
+   "hook": {
+    "en": "A bank compares two branches: one has steady deposits around ₹40 lakh, the other larger but more erratic deposits around ₹60 lakh. Which is more stable? The standard deviation and the coefficient of variation decide."
+   },
+   "objectives": [
+    {
+     "en": "Calculate the standard deviation by the direct and assumed mean methods"
+    },
+    {
+     "en": "Calculate the coefficient of variation"
+    },
+    {
+     "en": "Use CV to compare consistency"
+    }
+   ],
+   "narration": {
+    "en": "A bank compares two branches: one has steady deposits around ₹40 lakh, the other larger but more erratic deposits around ₹60 lakh. Which is more stable? The standard deviation and the coefficient of variation decide."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Standard deviation"
+   },
+   "body": {
+    "en": "The standard deviation (σ) is the square root of the mean of the squared deviations from the arithmetic mean. Squaring removes the signs without ignoring them, so σ can be used in further algebra. It uses every value and is the most widely used measure of dispersion. Its square is the variance. For a frequency series, weight each squared deviation by its frequency. With an assumed mean A and d = x − A, σ = √(Σd²/N − (Σd/N)²), which avoids decimals."
+   },
+   "points": [
+    {
+     "en": "σ = √(Σ(x − x̄)²/N)"
+    },
+    {
+     "en": "Shortcut: σ = √(Σd²/N − (Σd/N)²)"
+    },
+    {
+     "en": "Adding a constant to every value does not change σ"
+    },
+    {
+     "en": "Multiplying every value by k multiplies σ by k"
+    }
+   ],
+   "narration": {
+    "en": "The standard deviation (σ) is the square root of the mean of the squared deviations from the arithmetic mean. Squaring removes the signs without ignoring them, so σ can be used in further algebra. It uses every value and is the most widely used measure of dispersion. Its square is the variance. For a frequency series, weight each squared deviation by its frequency. With an assumed mean A and d = x − A, σ = √(Σd²/N − (Σd/N)²), which avoids decimals."
+   },
+   "formula": "\\sigma = \\sqrt{\\frac{\\sum (x - \\bar{x})^2}{N}}"
+  },
+  {
+   "id": "scene-sd-cv",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Standard deviation and coefficient of variation"
+   },
+   "caption": {
+    "en": "Seven monthly sales figures for two shops, spread evenly around their means. The band shows mean ± one standard deviation. The shop with the lower coefficient of variation is the more consistent."
+   },
+   "sliders": [
+    {
+     "name": "ma",
+     "label": {
+      "en": "Shop A mean (₹ thousand)"
+     },
+     "min": 20,
+     "max": 80,
+     "step": 5,
+     "value": 40
+    },
+    {
+     "name": "sa",
+     "label": {
+      "en": "Shop A gap"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 0.5,
+     "value": 3
+    },
+    {
+     "name": "mb",
+     "label": {
+      "en": "Shop B mean (₹ thousand)"
+     },
+     "min": 20,
+     "max": 80,
+     "step": 5,
+     "value": 60
+    },
+    {
+     "name": "sb",
+     "label": {
+      "en": "Shop B gap"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 0.5,
+     "value": 4
+    }
+   ],
+   "vars": [
+    {
+     "name": "sda",
+     "expr": "2*sa"
+    },
+    {
+     "name": "sdb",
+     "expr": "2*sb"
+    },
+    {
+     "name": "cva",
+     "expr": "100*sda/ma"
+    },
+    {
+     "name": "cvb",
+     "expr": "100*sdb/mb"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     40
+    ],
+    "axes": true,
+    "xLabel": "sales (₹ thousand)"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "ma - sda",
+     "y": 25,
+     "w": "2*sda",
+     "h": 6,
+     "color": "blue",
+     "opacity": 0.3
+    },
+    {
+     "shape": "particles",
+     "count": 7,
+     "r": 1.1,
+     "color": "blue",
+     "x": "ma + sa*if(i==0, -3, if(i==1, -2, if(i==2, -1, if(i==3, 0, if(i==4, 1, if(i==5, 2, 3))))))",
+     "y": 28
+    },
+    {
+     "shape": "line",
+     "x1": "ma",
+     "y1": 23,
+     "x2": "ma",
+     "y2": 33,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": "mb - sdb",
+     "y": 9,
+     "w": "2*sdb",
+     "h": 6,
+     "color": "orange",
+     "opacity": 0.3
+    },
+    {
+     "shape": "particles",
+     "count": 7,
+     "r": 1.1,
+     "color": "orange",
+     "x": "mb + sb*if(i==0, -3, if(i==1, -2, if(i==2, -1, if(i==3, 0, if(i==4, 1, if(i==5, 2, 3))))))",
+     "y": 12
+    },
+    {
+     "shape": "line",
+     "x1": "mb",
+     "y1": 7,
+     "x2": "mb",
+     "y2": 17,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "label",
+     "x": "clamp(ma, 15, 85)",
+     "y": 37,
+     "size": 20,
+     "color": "blue",
+     "text": {
+      "en": "A: σ = {sda:1}, CV = {cva:1}%"
+     }
+    },
+    {
+     "shape": "label",
+     "x": "clamp(mb, 15, 85)",
+     "y": 3,
+     "size": 20,
+     "color": "orange",
+     "text": {
+      "en": "B: σ = {sdb:1}, CV = {cvb:1}%"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "σ of shop A"
+     },
+     "expr": "sda",
+     "digits": 2,
+     "unit": "₹ thousand"
+    },
+    {
+     "label": {
+      "en": "σ of shop B"
+     },
+     "expr": "sdb",
+     "digits": 2,
+     "unit": "₹ thousand"
+    },
+    {
+     "label": {
+      "en": "CV of A minus CV of B"
+     },
+     "expr": "cva - cvb",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Shop B has the larger σ. Is it less consistent? Compare the CVs."
+    },
+    {
+     "en": "Set both CVs equal. What do you notice about σ ÷ mean?"
+    },
+    {
+     "en": "Move every value of A up by 20 (raise the mean only). Does σ change?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Seven monthly sales figures for two shops, spread evenly around their means. The band shows mean ± one standard deviation. The shop with the lower coefficient of variation is the more consistent."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Standard deviation step by step"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Find the standard deviation of 4, 8, 6, 10 and 12."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Standard deviation"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        9
+       ],
+       "to": [
+        92,
+        51
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        15
+       ],
+       "to": [
+        92,
+        15
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        21
+       ],
+       "to": [
+        92,
+        21
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        27
+       ],
+       "to": [
+        92,
+        27
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        33
+       ],
+       "to": [
+        92,
+        33
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        39
+       ],
+       "to": [
+        92,
+        39
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        45
+       ],
+       "to": [
+        92,
+        45
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        30,
+        9
+       ],
+       "to": [
+        30,
+        51
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        60,
+        9
+       ],
+       "to": [
+        60,
+        51
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10.3
+       ],
+       "text": {
+        "en": "x"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        10.3
+       ],
+       "text": {
+        "en": "x − mean"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        61,
+        10.3
+       ],
+       "text": {
+        "en": "(x − mean)²"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        16.3
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        16.3
+       ],
+       "text": {
+        "en": "−4"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        61,
+        16.3
+       ],
+       "text": {
+        "en": "16"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        22.3
+       ],
+       "text": {
+        "en": "8"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        22.3
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        61,
+        22.3
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.3
+       ],
+       "text": {
+        "en": "6"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        28.3
+       ],
+       "text": {
+        "en": "−2"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        61,
+        28.3
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        34.3
+       ],
+       "text": {
+        "en": "10"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        34.3
+       ],
+       "text": {
+        "en": "2"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        61,
+        34.3
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        40.3
+       ],
+       "text": {
+        "en": "12"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        40.3
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        61,
+        40.3
+       ],
+       "text": {
+        "en": "16"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        46.3
+       ],
+       "text": {
+        "en": "Σx = 40"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        46.3
+       ],
+       "text": {
+        "en": "mean = 8"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        61,
+        46.3
+       ],
+       "text": {
+        "en": "Σ = 40"
+       },
+       "size": 2.6,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Divide by N, take the root, then express it as a percentage of the mean."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        9
+       ],
+       "tex": "\\sigma = \\sqrt{40/5} = \\sqrt{8} = 2.83",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        16
+       ],
+       "tex": "CV = \\frac{2.83}{8}\\times 100 = 35.4\\%",
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ],
+     "clear": true
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Coefficient of variation"
+   },
+   "body": {
+    "en": "Karl Pearson's coefficient of variation expresses σ as a percentage of the mean: CV = σ/x̄ × 100. Because it is a pure number, it compares the variability of series with different means or units. The series with the smaller CV is more consistent, stable, uniform or homogeneous; the one with the larger CV is more variable."
+   },
+   "points": [
+    {
+     "en": "CV = σ/x̄ × 100"
+    },
+    {
+     "en": "Smaller CV: more consistent"
+    },
+    {
+     "en": "Used to compare players, shares, crops and incomes"
+    }
+   ],
+   "narration": {
+    "en": "Karl Pearson's coefficient of variation expresses σ as a percentage of the mean: CV = σ/x̄ × 100. Because it is a pure number, it compares the variability of series with different means or units. The series with the smaller CV is more consistent, stable, uniform or homogeneous; the one with the larger CV is more variable."
+   },
+   "formula": "CV = \\frac{\\sigma}{\\bar{x}} \\times 100"
+  },
+  {
+   "id": "activity-fill-cv",
+   "type": "activity",
+   "kind": "fill",
+   "prompt": {
+    "en": "Complete the comparison of two batsmen."
+   },
+   "passage": {
+    "en": "Batsman P has mean 50 and σ 10; batsman Q has mean 40 and σ 6. The CV of P is __1__ % and of Q is __2__ %. So __3__ is the more consistent batsman, while __4__ has the higher average."
+   },
+   "blanks": [
+    {
+     "options": [
+      {
+       "en": "20"
+      },
+      {
+       "en": "10"
+      },
+      {
+       "en": "50"
+      }
+     ],
+     "answer": 0
+    },
+    {
+     "options": [
+      {
+       "en": "6"
+      },
+      {
+       "en": "15"
+      },
+      {
+       "en": "24"
+      }
+     ],
+     "answer": 1
+    },
+    {
+     "options": [
+      {
+       "en": "P"
+      },
+      {
+       "en": "Q"
+      }
+     ],
+     "answer": 1
+    },
+    {
+     "options": [
+      {
+       "en": "P"
+      },
+      {
+       "en": "Q"
+      }
+     ],
+     "answer": 0
+    }
+   ],
+   "explanation": {
+    "en": "CV of P = 10/50 × 100 = 20%; CV of Q = 6/40 × 100 = 15%. Lower CV means more consistent, so Q is more consistent even though P scores more on average."
+   },
+   "narration": {
+    "en": "Complete the comparison of two batsmen."
+   },
+   "questionId": "act.isc-fill-cv"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "The prices of a share over 5 days were ₹102, 98, 105, 95 and 100. Find σ by the assumed mean method with A = 100, and the CV."
+   },
+   "steps": [
+    {
+     "en": "d = x − 100: 2, −2, 5, −5, 0; Σd = 0."
+    },
+    {
+     "en": "d²: 4, 4, 25, 25, 0; Σd² = 58."
+    },
+    {
+     "en": "σ = √(58/5 − 0²) = √11.6 = 3.41."
+    },
+    {
+     "en": "Mean = 100 + 0/5 = 100; CV = 3.41/100 × 100 = 3.41%."
+    }
+   ],
+   "answer": {
+    "en": "σ = ₹3.41 and CV = 3.41%."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. The prices of a share over 5 days were ₹102, 98, 105, 95 and 100. Find σ by the assumed mean method with A = 100, and the CV."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "SD ignores a shift, not a stretch"
+   },
+   "body": {
+    "en": "Add or subtract the same number from every value: σ stays the same. Multiply every value by k: σ is multiplied by |k|. That is why the assumed mean method works."
+   },
+   "narration": {
+    "en": "SD ignores a shift, not a stretch. Add or subtract the same number from every value: σ stays the same. Multiply every value by k: σ is multiplied by |k|. That is why the assumed mean method works."
+   },
+   "mnemonic": {
+    "en": "Shift: same. Stretch: scaled."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-1e17-q09",
+    "isc-1e17-q10",
+    "isc-1e17-q11"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-1e17-q12"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "σ is the root mean square deviation from the mean; σ² is the variance."
+    },
+    {
+     "en": "It uses all values and is the basis of further statistics."
+    },
+    {
+     "en": "CV = σ/mean × 100 compares series with different means."
+    },
+    {
+     "en": "The smaller CV shows the more consistent series."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Find σ and CV of: 10, 12, 14, 16, 18."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-1e17-q12"
+   ],
+   "narration": {
+    "en": "Recap. σ is the root mean square deviation from the mean; σ² is the variance. It uses all values and is the basis of further statistics. CV = σ/mean × 100 compares series with different means. The smaller CV shows the more consistent series."
+   }
+  }
+ ]
+}

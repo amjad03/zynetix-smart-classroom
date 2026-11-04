@@ -1,0 +1,925 @@
+{
+ "id": "puc1-economics-16-basic-concepts-and-economic-systems.t3.lesson",
+ "chapterId": "puc1-economics-16-basic-concepts-and-economic-systems",
+ "topicId": "puc1-economics-16-basic-concepts-and-economic-systems.t3",
+ "title": {
+  "en": "Central problems and the PPC"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "What, how and for whom"
+   },
+   "hook": {
+    "en": "India must decide how much food and how many factories to build, whether to use tractors or many workers, and who gets the output. Every economy faces these same three questions."
+   },
+   "objectives": [
+    {
+     "en": "State the central problems of an economy"
+    },
+    {
+     "en": "Draw and explain a production possibility curve"
+    },
+    {
+     "en": "Show opportunity cost and growth with the PPC"
+    }
+   ],
+   "narration": {
+    "en": "India must decide how much food and how many factories to build, whether to use tractors or many workers, and who gets the output. Every economy faces these same three questions."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "The central problems"
+   },
+   "body": {
+    "en": "Because resources are scarce, every economy must decide: what to produce and in what quantities; how to produce, that is, with labour-intensive or capital-intensive techniques; and for whom to produce, that is, how output is distributed. Two more problems are the full and efficient use of resources and the growth of resources over time."
+   },
+   "points": [
+    {
+     "en": "What to produce: allocation of resources"
+    },
+    {
+     "en": "How to produce: choice of technique"
+    },
+    {
+     "en": "For whom to produce: distribution of income"
+    },
+    {
+     "en": "Full employment and growth of resources"
+    }
+   ],
+   "narration": {
+    "en": "Because resources are scarce, every economy must decide: what to produce and in what quantities; how to produce, that is, with labour-intensive or capital-intensive techniques; and for whom to produce, that is, how output is distributed. Two more problems are the full and efficient use of resources and the growth of resources over time."
+   }
+  },
+  {
+   "id": "scene-ppc",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The production possibility curve"
+   },
+   "caption": {
+    "en": "An economy with given resources can make wheat and cloth. Drag the point: on the curve resources are fully used, inside it some lie idle, outside it is out of reach. Better technology shifts the curve out."
+   },
+   "sliders": [
+    {
+     "name": "g",
+     "label": {
+      "en": "Growth in resources or technology"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 5,
+     "value": 0,
+     "unit": "%"
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "output mix",
+     "x": 30,
+     "y": 30,
+     "box": {
+      "x": [
+       0,
+       75
+      ],
+      "y": [
+       0,
+       75
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "R",
+     "expr": "50*(1 + g/100)"
+    },
+    {
+     "name": "ymax",
+     "expr": "R*sqrt(max(1 - (P_x/R)^2, 0))"
+    },
+    {
+     "name": "pos",
+     "expr": "sqrt(P_x^2 + P_y^2)/R"
+    },
+    {
+     "name": "oc",
+     "expr": "if(P_x < R*0.999, P_x/sqrt(R^2 - P_x^2), 99)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     75
+    ],
+    "y": [
+     0,
+     75
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "cloth (lakh m)",
+    "yLabel": "wheat (lakh t)",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "50*sqrt(max(1 - (x/50)^2, 0))",
+     "from": 0,
+     "to": 50,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "path",
+     "fn": "R*sqrt(max(1 - (x/R)^2, 0))",
+     "from": 0,
+     "to": "R",
+     "color": "green",
+     "width": 5
+    },
+    {
+     "shape": "circle",
+     "x": "P_x",
+     "y": "P_y",
+     "r": 1.4,
+     "color": {
+      "by": "clamp((pos - 0.9)*5, 0, 1)",
+      "scale": [
+       "blue",
+       "green",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "label",
+     "x": 52,
+     "y": 70,
+     "size": 24,
+     "visibleIf": "pos < 0.97",
+     "color": "blue",
+     "text": {
+      "en": "Inside: idle resources"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 52,
+     "y": 70,
+     "size": 24,
+     "visibleIf": "pos >= 0.97 && pos <= 1.03",
+     "color": "green",
+     "text": {
+      "en": "On the curve: efficient"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 52,
+     "y": 70,
+     "size": 24,
+     "visibleIf": "pos > 1.03",
+     "color": "red",
+     "text": {
+      "en": "Outside: not attainable now"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Most wheat possible with this much cloth"
+     },
+     "expr": "ymax",
+     "digits": 1,
+     "unit": "lakh t"
+    },
+    {
+     "label": {
+      "en": "Wheat given up per extra unit of cloth (MOC)"
+     },
+     "expr": "oc",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Slide the point along the curve to the right. Does the wheat given up per unit of cloth rise?"
+    },
+    {
+     "en": "Put the point inside the curve. What does that say about unemployment?"
+    },
+    {
+     "en": "Raise growth to 20%. Is a point that was outside now attainable?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "An economy with given resources can make wheat and cloth. Drag the point: on the curve resources are fully used, inside it some lie idle, outside it is out of reach. Better technology shifts the curve out."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: A PPC schedule"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Here is a production possibility schedule for cloth and wheat."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Production possibilities"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        9
+       ],
+       "to": [
+        96,
+        51
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        15
+       ],
+       "to": [
+        96,
+        15
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        21
+       ],
+       "to": [
+        96,
+        21
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        27
+       ],
+       "to": [
+        96,
+        27
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        33
+       ],
+       "to": [
+        96,
+        33
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        39
+       ],
+       "to": [
+        96,
+        39
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        45
+       ],
+       "to": [
+        96,
+        45
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        30,
+        9
+       ],
+       "to": [
+        30,
+        51
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        56,
+        9
+       ],
+       "to": [
+        56,
+        51
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        76,
+        9
+       ],
+       "to": [
+        76,
+        51
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10.3
+       ],
+       "text": {
+        "en": "Point"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        10.3
+       ],
+       "text": {
+        "en": "Cloth"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        57,
+        10.3
+       ],
+       "text": {
+        "en": "Wheat"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        77,
+        10.3
+       ],
+       "text": {
+        "en": "MOC"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        16.3
+       ],
+       "text": {
+        "en": "A"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        16.3
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        57,
+        16.3
+       ],
+       "text": {
+        "en": "15"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        77,
+        16.3
+       ],
+       "text": {
+        "en": "-"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        22.3
+       ],
+       "text": {
+        "en": "B"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        22.3
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        57,
+        22.3
+       ],
+       "text": {
+        "en": "14"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        77,
+        22.3
+       ],
+       "text": {
+        "en": "1"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.3
+       ],
+       "text": {
+        "en": "C"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        28.3
+       ],
+       "text": {
+        "en": "2"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        57,
+        28.3
+       ],
+       "text": {
+        "en": "12"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        77,
+        28.3
+       ],
+       "text": {
+        "en": "2"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        34.3
+       ],
+       "text": {
+        "en": "D"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        34.3
+       ],
+       "text": {
+        "en": "3"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        57,
+        34.3
+       ],
+       "text": {
+        "en": "9"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        77,
+        34.3
+       ],
+       "text": {
+        "en": "3"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        40.3
+       ],
+       "text": {
+        "en": "E"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        40.3
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        57,
+        40.3
+       ],
+       "text": {
+        "en": "5"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        77,
+        40.3
+       ],
+       "text": {
+        "en": "4"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        46.3
+       ],
+       "text": {
+        "en": "F"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        46.3
+       ],
+       "text": {
+        "en": "5"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        57,
+        46.3
+       ],
+       "text": {
+        "en": "0"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        77,
+        46.3
+       ],
+       "text": {
+        "en": "5"
+       },
+       "size": 2.6,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Each extra unit of cloth costs more wheat: 1, 2, 3, 4, then 5. Rising MOC makes the PPC concave."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        9
+       ],
+       "tex": "MOC \\uparrow \\Rightarrow \\text{PPC concave to the origin}",
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ],
+     "clear": true
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "The production possibility curve"
+   },
+   "body": {
+    "en": "A production possibility curve (PPC) shows the combinations of two goods an economy can produce with given resources and technology, when the resources are fully and efficiently used. It slopes down because more of one good means less of the other. It is concave to the origin because resources are not equally suited to both goods, so the marginal opportunity cost (MOC) of a good rises as more of it is made. A point inside shows idle resources; a point outside is unattainable; growth shifts the curve outward."
+   },
+   "points": [
+    {
+     "en": "Slopes downward: scarcity forces a trade-off"
+    },
+    {
+     "en": "Concave: rising marginal opportunity cost"
+    },
+    {
+     "en": "Inside: unemployment or inefficiency"
+    },
+    {
+     "en": "Outward shift: more resources or better technology"
+    }
+   ],
+   "narration": {
+    "en": "A production possibility curve (PPC) shows the combinations of two goods an economy can produce with given resources and technology, when the resources are fully and efficiently used. It slopes down because more of one good means less of the other. It is concave to the origin because resources are not equally suited to both goods, so the marginal opportunity cost (MOC) of a good rises as more of it is made. A point inside shows idle resources; a point outside is unattainable; growth shifts the curve outward."
+   },
+   "formula": "MOC = \\frac{\\Delta\\, \\text{wheat given up}}{\\Delta\\, \\text{cloth gained}}"
+  },
+  {
+   "id": "activity-match-ppc-points",
+   "type": "activity",
+   "kind": "match",
+   "prompt": {
+    "en": "Match each situation with what happens on the PPC diagram."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "Many factories lie closed in a recession"
+     },
+     "right": {
+      "en": "A point inside the curve"
+     }
+    },
+    {
+     "left": {
+      "en": "All resources are fully and efficiently used"
+     },
+     "right": {
+      "en": "A point on the curve"
+     }
+    },
+    {
+     "left": {
+      "en": "A new irrigation technique for wheat only"
+     },
+     "right": {
+      "en": "The curve rotates outward on the wheat axis"
+     }
+    },
+    {
+     "left": {
+      "en": "An earthquake destroys factories and farms"
+     },
+     "right": {
+      "en": "The curve shifts inward"
+     }
+    },
+    {
+     "left": {
+      "en": "A target beyond present resources"
+     },
+     "right": {
+      "en": "A point outside the curve"
+     }
+    }
+   ],
+   "explanation": {
+    "en": "Under-use puts the economy inside the PPC; growth in resources shifts it out; destruction shifts it in; a better technique for one good rotates it on that axis."
+   },
+   "narration": {
+    "en": "Match each situation with what happens on the PPC diagram."
+   },
+   "questionId": "act.isc-match-ppc-points"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Using the schedule on the board, find the opportunity cost of moving from point C (2 cloth, 12 wheat) to point E (4 cloth, 5 wheat). Explain why the PPC is concave."
+   },
+   "steps": [
+    {
+     "en": "Cloth rises by 2 units; wheat falls from 12 to 5, that is by 7 units."
+    },
+    {
+     "en": "Average opportunity cost = 7/2 = 3.5 units of wheat per unit of cloth."
+    },
+    {
+     "en": "Unit by unit the MOC is 3 then 4: it rises because resources suited to wheat are shifted to cloth."
+    }
+   ],
+   "answer": {
+    "en": "7 units of wheat for 2 units of cloth; the MOC rises, so the PPC is concave."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. Using the schedule on the board, find the opportunity cost of moving from point C (2 cloth, 12 wheat) to point E (4 cloth, 5 wheat). Explain why the PPC is concave."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "In, on, out"
+   },
+   "body": {
+    "en": "Inside the PPC: waste. On it: efficiency. Outside it: a dream until the curve shifts."
+   },
+   "narration": {
+    "en": "In, on, out. Inside the PPC: waste. On it: efficiency. Outside it: a dream until the curve shifts."
+   },
+   "mnemonic": {
+    "en": "Waste, best, wish"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-1e16-q09",
+    "isc-1e16-q10",
+    "isc-1e16-q11"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-1e16-q12"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Central problems: what, how and for whom to produce, plus full use and growth of resources."
+    },
+    {
+     "en": "A PPC shows the maximum combinations of two goods with given resources and technology."
+    },
+    {
+     "en": "It slopes down and is concave because MOC rises."
+    },
+    {
+     "en": "Growth shifts it out; under-use puts the economy inside it."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Draw a PPC and show the effect of a flood that destroys crops but not factories."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-1e16-q12"
+   ],
+   "narration": {
+    "en": "Recap. Central problems: what, how and for whom to produce, plus full use and growth of resources. A PPC shows the maximum combinations of two goods with given resources and technology. It slopes down and is concave because MOC rises. Growth shifts it out; under-use puts the economy inside it."
+   }
+  }
+ ]
+}
