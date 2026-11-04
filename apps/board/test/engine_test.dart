@@ -23,7 +23,7 @@ void main() {
       expect(store.packs.length, 270); // every chapter of every subject, both years
       final motion = store.byChapter('puc1-physics-02-motion-in-a-straight-line')!;
       expect(motion.lessons.length, 5);
-      expect(motion.questions.length, 19);
+      expect(motion.questions.length, greaterThanOrEqualTo(19)); // board questions plus the exam layers
       expect(File('${motion.mediaDir}/phet/projectile-motion.html').existsSync(), isTrue);
     });
 

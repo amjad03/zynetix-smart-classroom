@@ -41,7 +41,7 @@ describe('Zynetix API', () => {
     http = request(app.getHttpServer());
     admin = (await http.post('/v1/auth/login').send({ email: 'admin@demo-pu.in', password: 'zynetix123' })).body.token;
     editor = (await http.post('/v1/auth/login').send({ email: 'editor@zynetix.in', password: 'zynetix123' })).body.token;
-  });
+  }, 180_000); // seeds all 270 packs
   afterAll(async () => {
     await app.close();
     await db.pool.end();
