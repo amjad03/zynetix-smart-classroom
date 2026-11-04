@@ -8,7 +8,7 @@ const q = {
 
 describe('schema', () => {
   it('accepts every block type', () => {
-    expect(BLOCK_TYPES).toHaveLength(12);
+    expect(BLOCK_TYPES).toHaveLength(13);
     const ok = Block.safeParse({ id: 'b', type: 'simulation', source: 'phet', simId: 'molarity', caption: { en: 'c' } });
     expect(ok.success).toBe(true);
   });

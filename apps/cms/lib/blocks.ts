@@ -70,6 +70,31 @@ export const BLOCK_FIELDS: Record<BlockType, Field[]> = {
     { key: 'points', label: 'Number-line points (JSON; values or slider names)', kind: 'json', example: '[-2,"a",3.5]' },
     { key: 'tryThis', label: 'Try this', kind: 'l10nList' },
   ],
+  challenge: [
+    { key: 'kind', label: 'Kind', kind: 'select', options: ['function_plot', 'vectors', 'bar_chart', 'pie_chart', 'unit_circle', 'number_line', 'readouts'] },
+    { key: 'sliders', label: 'Sliders (JSON, up to 4)', kind: 'json', example: '[{"name":"a","label":{"en":"a"},"min":-3,"max":3,"step":0.1,"value":1}]' },
+    { key: 'fns', label: 'Functions y = f(x, sliders) (JSON, function_plot)', kind: 'json', example: '[{"fn":"a*x^2","label":"y = ax²","color":"yellow"}]' },
+    { key: 'x', label: 'x range', kind: 'range' },
+    { key: 'y', label: 'y range', kind: 'range' },
+    { key: 'xLabel', label: 'x-axis label', kind: 'text' },
+    { key: 'yLabel', label: 'y-axis label', kind: 'text' },
+    { key: 'readouts', label: 'Read-outs (JSON)', kind: 'json', example: '[{"label":{"en":"Area"},"expr":"a*b","unit":"m²","digits":2}]' },
+    { key: 'vectors', label: 'Vectors [[x, y]…] (JSON; entries may be slider names)', kind: 'json', example: '[[3,"b"],[-1,2]]' },
+    { key: 'data', label: 'Chart data {label: value or slider name} (JSON)', kind: 'json', example: '{"Rent":"r","Food":40}' },
+    { key: 'points', label: 'Number-line points (JSON; values or slider names)', kind: 'json', example: '[-2,"a",3.5]' },
+    { key: 'prompt', label: 'Mission (what the class must do)', kind: 'l10nLong' },
+    { key: 'goal', label: 'Goal expression (sliders)', kind: 'text' },
+    { key: 'goalLabel', label: 'Goal label', kind: 'l10n' },
+    { key: 'goalUnit', label: 'Goal unit', kind: 'text' },
+    { key: 'target', label: 'Target value', kind: 'number' },
+    { key: 'tolerance', label: 'Tolerance (±)', kind: 'number' },
+    { key: 'solution', label: 'Solution slider values (JSON; must hit the target)', kind: 'json', example: '{"a":5}' },
+    { key: 'attempts', label: 'Tries (default 3)', kind: 'number' },
+    { key: 'timeLimit', label: 'Seconds per try (optional)', kind: 'number' },
+    { key: 'mode', label: 'Who plays', kind: 'select', options: ['team', 'roll_call', 'monitor'] },
+    { key: 'hint', label: 'Hint after a miss', kind: 'l10n' },
+    { key: 'explanation', label: 'Explanation (shown at the end)', kind: 'l10nLong' },
+  ],
 };
 
 export const fieldsFor = (t: BlockType) => [...BLOCK_FIELDS[t], ...common];
@@ -93,6 +118,7 @@ export function newBlock(type: BlockType, existing: string[]): Record<string, un
     recap: { points: [L()] },
     whiteboard: { steps: [{ draw: [{ kind: 'text', at: [10, 10], text: L('Title') }] }] },
     interactive: { kind: 'function_plot', caption: L(), sliders: [{ name: 'a', label: L('a'), min: -3, max: 3, step: 0.1, value: 1 }], fns: [{ fn: 'a*x^2', color: 'yellow' }], x: [-5, 5], y: [-5, 5] },
+    challenge: { kind: 'function_plot', prompt: L(), sliders: [{ name: 'a', label: L('a'), min: 0, max: 10, step: 1, value: 1 }], fns: [{ fn: 'a*x', color: 'yellow' }], x: [0, 10], y: [0, 100], goal: 'a*a', goalLabel: L('a²'), target: 25, tolerance: 0.5, solution: { a: 5 }, explanation: L() },
   };
   return { id, type, ...t[type] };
 }

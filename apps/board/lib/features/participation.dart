@@ -298,7 +298,11 @@ class QuizRunnerState extends State<QuizRunner> {
             ),
             child: SingleChildScrollView(child: Text(question.passage!.t(l), style: text.bodyLarge?.copyWith(fontSize: 28))),
           ),
-        Text(question.stem.t(l), style: question.format == 'mcq' ? text.headlineMedium : text.headlineMedium?.copyWith(fontSize: 34)),
+        // A long stem scrolls in its own box so the options always keep their room.
+        ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height * 0.22),
+          child: SingleChildScrollView(child: Text(question.stem.t(l), style: question.format == 'mcq' ? text.headlineMedium : text.headlineMedium?.copyWith(fontSize: 34))),
+        ),
         const SizedBox(height: Z.gap),
         if (question.isNumeric)
           Expanded(child: _NumericPad(state: this))
@@ -549,86 +553,94 @@ class _NumericPad extends StatelessWidget {
         ),
       ),
     );
-    return Row(
+    // Answer beside the keypad; on an upright screen, above it. The answer side scrolls if short.
+    final portrait = context.portrait;
+    return Flex(
+      direction: portrait ? Axis.vertical : Axis.horizontal,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(tr('yourAnswer', l), style: Theme.of(context).textTheme.bodyLarge),
-              const SizedBox(height: 8),
-              Container(
-                key: const ValueKey('typed'),
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                decoration: BoxDecoration(
-                  color: !state.revealed ? scheme.surfaceContainerHighest : (state.lastCorrect ? Z.correct : Z.wrong),
-                  borderRadius: BorderRadius.circular(Z.radius),
-                  border: Border.all(color: Z.accent, width: state.revealed ? 0 : 4),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        shown,
-                        style: const TextStyle(fontSize: 80, fontWeight: FontWeight.w800),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    if (state.revealed) Icon(state.lastCorrect ? Icons.check_circle : Icons.cancel, size: 72, color: Colors.white),
-                  ],
-                ),
-              ),
-              if (state.revealed) ...[
-                const SizedBox(height: 20),
-                Text(
-                  '${tr('correctAnswer', l)}: $answer',
-                  key: const ValueKey('numericAnswer'),
-                  style: const TextStyle(fontSize: 48, fontWeight: FontWeight.w800, color: Z.correct),
-                ),
-              ] else ...[
-                const SizedBox(height: 20),
-                Text(tr('typeAnswer', l), style: Theme.of(context).textTheme.bodyMedium),
-              ],
-            ],
-          ),
-        ),
-        const SizedBox(width: Z.gap),
-        SizedBox(
-          width: 560,
-          child: Column(
-            children: [
-              for (final r in rows)
-                Expanded(
-                  child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [for (final k in r) key(k)]),
-                ),
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    key('0'),
-                    Expanded(
-                      flex: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: FilledButton.icon(
-                          key: const ValueKey('check'),
-                          style: FilledButton.styleFrom(
-                            backgroundColor: Z.correct,
-                            foregroundColor: Colors.white,
-                            textStyle: zText(36, FontWeight.w700),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                          ),
-                          onPressed: !state.revealed && state.canCheck ? state.check : null,
-                          icon: const Icon(Icons.fact_check_outlined, size: 44),
-                          label: Text(tr('check', l)),
+        Flexible(
+          fit: portrait ? FlexFit.loose : FlexFit.tight,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(tr('yourAnswer', l), style: Theme.of(context).textTheme.bodyLarge),
+                const SizedBox(height: 8),
+                Container(
+                  key: const ValueKey('typed'),
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  decoration: BoxDecoration(
+                    color: !state.revealed ? scheme.surfaceContainerHighest : (state.lastCorrect ? Z.correct : Z.wrong),
+                    borderRadius: BorderRadius.circular(Z.radius),
+                    border: Border.all(color: Z.accent, width: state.revealed ? 0 : 4),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          shown,
+                          style: const TextStyle(fontSize: 80, fontWeight: FontWeight.w800),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
+                      if (state.revealed) Icon(state.lastCorrect ? Icons.check_circle : Icons.cancel, size: 72, color: Colors.white),
+                    ],
+                  ),
+                ),
+                if (state.revealed) ...[
+                  const SizedBox(height: 20),
+                  Text(
+                    '${tr('correctAnswer', l)}: $answer',
+                    key: const ValueKey('numericAnswer'),
+                    style: const TextStyle(fontSize: 48, fontWeight: FontWeight.w800, color: Z.correct),
+                  ),
+                ] else ...[
+                  const SizedBox(height: 20),
+                  Text(tr('typeAnswer', l), style: Theme.of(context).textTheme.bodyMedium),
+                ],
+              ],
+            ),
+          ),
+        ),
+        portrait ? const SizedBox(height: Z.gap) : const SizedBox(width: Z.gap),
+        portrait ? Expanded(child: _keys(key)) : SizedBox(width: 560, child: _keys(key)),
+      ],
+    );
+  }
+
+  Widget _keys(Widget Function(String k, {Color? color, Widget? child, VoidCallback? onTap}) key) {
+    final l = state.widget.lang;
+    return Column(
+      children: [
+        for (final r in rows)
+          Expanded(
+            child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [for (final k in r) key(k)]),
+          ),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              key('0'),
+              Expanded(
+                flex: 3,
+                child: Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: FilledButton.icon(
+                    key: const ValueKey('check'),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Z.correct,
+                      foregroundColor: Colors.white,
+                      textStyle: zText(36, FontWeight.w700),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                     ),
-                  ],
+                    onPressed: !state.revealed && state.canCheck ? state.check : null,
+                    icon: const Icon(Icons.fact_check_outlined, size: 44),
+                    label: Text(tr('check', l)),
+                  ),
                 ),
               ),
             ],

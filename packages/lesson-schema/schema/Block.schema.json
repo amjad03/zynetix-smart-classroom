@@ -1761,6 +1761,155 @@
                 "readouts"
               ]
             },
+            "fns": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "fn": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "color": {
+                    "type": "string",
+                    "enum": [
+                      "white",
+                      "yellow",
+                      "red",
+                      "green",
+                      "blue",
+                      "orange"
+                    ],
+                    "default": "white"
+                  }
+                },
+                "required": [
+                  "fn"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 4
+            },
+            "x": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ]
+            },
+            "y": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ]
+            },
+            "xLabel": {
+              "type": "string"
+            },
+            "yLabel": {
+              "type": "string"
+            },
+            "vectors": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": [
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  }
+                ]
+              },
+              "maxItems": 4
+            },
+            "data": {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "number",
+                  "string"
+                ]
+              }
+            },
+            "points": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "number",
+                  "string"
+                ]
+              },
+              "maxItems": 8
+            },
+            "readouts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "object",
+                    "properties": {
+                      "en": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "kn": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "en"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "expr": {
+                    "type": "string"
+                  },
+                  "unit": {
+                    "type": "string"
+                  },
+                  "digits": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 6,
+                    "default": 2
+                  }
+                },
+                "required": [
+                  "label",
+                  "expr"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 4,
+              "default": []
+            },
             "caption": {
               "type": "object",
               "properties": {
@@ -1831,6 +1980,109 @@
               },
               "maxItems": 4,
               "default": []
+            },
+            "tryThis": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "en": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "kn": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "en"
+                ],
+                "additionalProperties": false
+              },
+              "default": []
+            }
+          },
+          "required": [
+            "id",
+            "type",
+            "kind",
+            "caption"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9._-]*$"
+            },
+            "title": {
+              "type": "object",
+              "properties": {
+                "en": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "kn": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "en"
+              ],
+              "additionalProperties": false
+            },
+            "narration": {
+              "type": "object",
+              "properties": {
+                "en": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "kn": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "en"
+              ],
+              "additionalProperties": false
+            },
+            "seconds": {
+              "type": "integer",
+              "minimum": 5,
+              "maximum": 1800
+            },
+            "optional": {
+              "type": "boolean"
+            },
+            "boards": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "kar_pu",
+                  "cbse"
+                ]
+              },
+              "minItems": 1
+            },
+            "type": {
+              "type": "string",
+              "const": "challenge"
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "function_plot",
+                "vectors",
+                "bar_chart",
+                "pie_chart",
+                "unit_circle",
+                "number_line",
+                "readouts"
+              ]
             },
             "fns": {
               "type": "array",
@@ -1981,32 +2233,178 @@
               "maxItems": 4,
               "default": []
             },
-            "tryThis": {
+            "prompt": {
+              "type": "object",
+              "properties": {
+                "en": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "kn": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "en"
+              ],
+              "additionalProperties": false
+            },
+            "sliders": {
               "type": "array",
               "items": {
                 "type": "object",
                 "properties": {
-                  "en": {
+                  "name": {
                     "type": "string",
-                    "minLength": 1
+                    "pattern": "^[a-zA-Z]\\w*$"
                   },
-                  "kn": {
+                  "label": {
+                    "type": "object",
+                    "properties": {
+                      "en": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "kn": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "en"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "step": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "value": {
+                    "type": "number"
+                  },
+                  "unit": {
                     "type": "string"
                   }
                 },
                 "required": [
-                  "en"
+                  "name",
+                  "label",
+                  "min",
+                  "max",
+                  "step",
+                  "value"
                 ],
                 "additionalProperties": false
               },
-              "default": []
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "goal": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goalLabel": {
+              "type": "object",
+              "properties": {
+                "en": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "kn": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "en"
+              ],
+              "additionalProperties": false
+            },
+            "goalUnit": {
+              "type": "string"
+            },
+            "target": {
+              "type": "number"
+            },
+            "tolerance": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "solution": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "number"
+              }
+            },
+            "attempts": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10,
+              "default": 3
+            },
+            "timeLimit": {
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 600
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "monitor",
+                "roll_call",
+                "team"
+              ],
+              "default": "team"
+            },
+            "hint": {
+              "type": "object",
+              "properties": {
+                "en": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "kn": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "en"
+              ],
+              "additionalProperties": false
+            },
+            "explanation": {
+              "type": "object",
+              "properties": {
+                "en": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "kn": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "en"
+              ],
+              "additionalProperties": false
             }
           },
           "required": [
             "id",
             "type",
             "kind",
-            "caption"
+            "prompt",
+            "sliders",
+            "goal",
+            "goalLabel",
+            "target",
+            "tolerance",
+            "solution",
+            "explanation"
           ],
           "additionalProperties": false
         }

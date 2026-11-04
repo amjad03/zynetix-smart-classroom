@@ -7,6 +7,7 @@ import '../core/theme.dart';
 import '../engine/lesson_controller.dart';
 import '../engine/model.dart';
 import '../features/participation.dart';
+import 'challenge_view.dart';
 import 'embeds.dart';
 import 'interactive_view.dart';
 import 'math_text.dart';
@@ -127,6 +128,7 @@ class BlockView extends StatelessWidget {
       ),
       BlockType.whiteboard => WhiteboardView(key: ValueKey('wb:${b.id}'), c: c, block: b, auto: auto),
       BlockType.interactive => InteractiveView(key: ValueKey('ia:${b.id}'), block: b, lang: l),
+      BlockType.challenge => ChallengeView(key: ValueKey('ch:${b.id}'), block: b, lang: l, room: room, recorder: c.recorder, auto: auto, onFinished: onFinished),
       BlockType.recap => SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

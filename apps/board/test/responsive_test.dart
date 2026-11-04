@@ -9,8 +9,12 @@ import 'package:zynetix_board/features/player.dart';
 import 'package:zynetix_board/features/self_learning.dart';
 import 'package:zynetix_board/features/smartboard.dart';
 import 'package:zynetix_board/features/teacher_mode.dart';
+import 'package:zynetix_board/engine/model.dart';
+import 'package:zynetix_board/engine/session_log.dart';
+import 'package:zynetix_board/features/participation.dart';
 import 'package:zynetix_board/main.dart';
 
+import 'fixtures.dart';
 import 'helpers.dart';
 
 const devices = <String, (Size, String)>{
@@ -68,6 +72,12 @@ void main() {
           await t.tap(find.byKey(const ValueKey('next')));
           await t.pump(const Duration(milliseconds: 400));
         }
+      }
+      // The quiz with a numeric keypad, and with the longest question stem in the packs.
+      final longest = ([for (final p in s.store.packs) ...p.questions.values]..sort((a, b) => b.stem.en.length.compareTo(a.stem.en.length))).first;
+      final rec = SessionRecorder.raw(outbox: s.outbox, sectionId: 's', mode: 'teacher', chapterId: 'c', topicId: 't', lessonId: 'l', packVersion: '1');
+      for (final (name, q) in [('numeric', numericQuestion()), ('longest stem ${longest.id}', longest)]) {
+        await show('quiz $name', Scaffold(body: Padding(padding: const EdgeInsets.all(20), child: QuizRunner(questions: [q], mode: QuizMode.rollCall, lang: Lang.en, recorder: rec, room: ClassRoom(rollCount: 60), showExams: true))));
       }
       final sl = s.lessonFor(topics.first)!;
       await show('self-learning', SelfLearningScreen(pack: sl.pack, lesson: sl.lesson, periodSeconds: 2400, autoTick: false));

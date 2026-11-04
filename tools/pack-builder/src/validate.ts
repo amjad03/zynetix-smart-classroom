@@ -8,6 +8,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { readSource, validate } from './build';
 import { compile } from './expr';
+import type { Block } from '@zynetix/lesson-schema';
 
 const repo = resolve(__dirname, '../../..');
 const content = join(repo, 'content');
@@ -18,6 +19,62 @@ const models = tableIds('3d_model'), labs = tableIds('virtual_lab'), sims = tabl
 const csSims = tableIds('simulation, source `kinetix_cs`');
 const anims = new Set([...section('simulation, source `animation`').matchAll(/`([a-z0-9-]+)`/g)].map((m) => m[1]));
 const REQUIRED = ['intro', 'concept', 'example', 'class_quiz', 'recap'];
+
+const RESERVED = new Set(['x', 'e', 'pi', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'sqrt', 'exp', 'ln', 'log', 'abs', 'floor']);
+type Playfield = Extract<Block, { type: 'interactive' | 'challenge' }>;
+type Challenge = Extract<Block, { type: 'challenge' }>;
+
+/** The slider playfield of an interactive or a challenge: names, ranges, expressions, required fields. */
+export function checkPlayfield(b: Playfield, where: string): string[] {
+  const problems: string[] = [];
+  const names = ['x', ...b.sliders.map((sl) => sl.name)];
+  const vars = Object.fromEntries(b.sliders.map((sl) => [sl.name, sl.value]));
+  for (const sl of b.sliders) if (RESERVED.has(sl.name)) problems.push(`${where}: slider name "${sl.name}" clashes with a built-in name`);
+  for (const sl of b.sliders) if (!(sl.min <= sl.value && sl.value <= sl.max)) problems.push(`${where}: slider ${sl.name} value outside min..max`);
+  if (new Set(b.sliders.map((sl) => sl.name)).size !== b.sliders.length) problems.push(`${where}: two sliders share a name`);
+  const exprs = [...(b.fns ?? []).map((f) => f.fn), ...b.readouts.map((r) => r.expr),
+    ...[...(b.vectors ?? []).flat(), ...Object.values(b.data ?? {}), ...(b.points ?? [])].filter((v): v is string => typeof v === 'string')];
+  for (const ex of exprs) {
+    try {
+      const f = compile(ex, names);
+      const xs = b.x ? [b.x[0], (b.x[0] + b.x[1]) / 2, b.x[1]] : [1];
+      if (xs.every((x) => !Number.isFinite(f({ ...vars, x })))) problems.push(`${where}: "${ex}" is not a number at the default slider values`);
+    } catch (e) { problems.push(`${where}: ${(e as Error).message}`); }
+  }
+  const need: Record<string, boolean> = { function_plot: !!b.fns?.length && !!b.x && !!b.y, vectors: !!b.vectors?.length, bar_chart: !!b.data, pie_chart: !!b.data, unit_circle: b.sliders.some((sl) => sl.name === 'theta'), number_line: !!b.points?.length && !!b.x, readouts: b.readouts.length > 0 };
+  if (!need[b.kind]) problems.push(`${where}: ${b.kind} is missing its fields (see lesson-schema InteractiveBlock)`);
+  return problems;
+}
+
+/**
+ * A challenge must be winnable and not won before anyone moves: the goal compiles over the
+ * slider names, the solution sets every slider to a value the slider can reach (inside min..max,
+ * on its step) and puts the goal within tolerance of the target, and the starting values do not.
+ */
+export function checkChallenge(b: Challenge, where: string): string[] {
+  const problems: string[] = [];
+  const names = b.sliders.map((sl) => sl.name);
+  let goal;
+  try { goal = compile(b.goal, names); } catch (e) { return [`${where}: goal ${(e as Error).message}`]; }
+  const sol = b.solution;
+  for (const k of Object.keys(sol)) if (!names.includes(k)) problems.push(`${where}: solution sets unknown slider ${k}`);
+  for (const sl of b.sliders) {
+    const v = sol[sl.name];
+    if (v === undefined) { problems.push(`${where}: solution has no value for slider ${sl.name}`); continue; }
+    if (v < sl.min - 1e-9 || v > sl.max + 1e-9) problems.push(`${where}: solution ${sl.name} = ${v} is outside ${sl.min}..${sl.max}`);
+    const k = (v - sl.min) / sl.step;
+    if (Math.abs(k - Math.round(k)) > 1e-6) problems.push(`${where}: solution ${sl.name} = ${v} is not on the slider's step ${sl.step}`);
+  }
+  if (problems.length) return problems;
+  const hit = goal(sol);
+  if (!Number.isFinite(hit)) problems.push(`${where}: goal is not a number at the solution`);
+  else if (Math.abs(hit - b.target) > b.tolerance + 1e-9) problems.push(`${where}: solution gives ${+hit.toFixed(6)}, not ${b.target} ± ${b.tolerance}: not solvable as written`);
+  const start = goal(Object.fromEntries(b.sliders.map((sl) => [sl.name, sl.value])));
+  if (Number.isFinite(start) && Math.abs(start - b.target) <= b.tolerance) problems.push(`${where}: the starting slider values already hit the target`);
+  const norm = (s: string) => s.replace(/\s+/g, '');
+  if (b.readouts.some((r) => norm(r.expr) === norm(b.goal))) problems.push(`${where}: a readout shows the goal itself (it is revealed after each try)`);
+  return problems;
+}
 
 export function check(dir: string): string[] {
   const problems: string[] = [];
@@ -50,24 +107,8 @@ export function check(dir: string): string[] {
           }
         }
       }
-      if (b.type === 'interactive') {
-        const names = ['x', ...b.sliders.map((sl) => sl.name)];
-        const vars = Object.fromEntries(b.sliders.map((sl) => [sl.name, sl.value]));
-        const reserved = new Set(['x', 'e', 'pi', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'sqrt', 'exp', 'ln', 'log', 'abs', 'floor']);
-        for (const sl of b.sliders) if (reserved.has(sl.name)) problems.push(`${l.id}/${b.id}: slider name "${sl.name}" clashes with a built-in name`);
-        for (const sl of b.sliders) if (!(sl.min <= sl.value && sl.value <= sl.max)) problems.push(`${l.id}/${b.id}: slider ${sl.name} value outside min..max`);
-        const exprs = [...(b.fns ?? []).map((f) => f.fn), ...b.readouts.map((r) => r.expr),
-          ...[...(b.vectors ?? []).flat(), ...Object.values(b.data ?? {}), ...(b.points ?? [])].filter((v): v is string => typeof v === 'string')];
-        for (const ex of exprs) {
-          try {
-            const f = compile(ex, names);
-            const xs = b.x ? [b.x[0], (b.x[0] + b.x[1]) / 2, b.x[1]] : [1];
-            if (xs.every((x) => !Number.isFinite(f({ ...vars, x })))) problems.push(`${l.id}/${b.id}: "${ex}" is not a number at the default slider values`);
-          } catch (e) { problems.push(`${l.id}/${b.id}: ${(e as Error).message}`); }
-        }
-        const need: Record<string, boolean> = { function_plot: !!b.fns?.length && !!b.x && !!b.y, vectors: !!b.vectors?.length, bar_chart: !!b.data, pie_chart: !!b.data, unit_circle: b.sliders.some((sl) => sl.name === 'theta'), number_line: !!b.points?.length && !!b.x, readouts: b.readouts.length > 0 };
-        if (!need[b.kind]) problems.push(`${l.id}/${b.id}: ${b.kind} is missing its fields (see lesson-schema InteractiveBlock)`);
-      }
+      if (b.type === 'interactive' || b.type === 'challenge') problems.push(...checkPlayfield(b, `${l.id}/${b.id}`));
+      if (b.type === 'challenge') problems.push(...checkChallenge(b, `${l.id}/${b.id}`));
       if (b.type === '3d_model' && !models.has(b.modelId)) problems.push(`${l.id}/${b.id}: unknown 3D model ${b.modelId}`);
       if (b.type === 'virtual_lab' && !labs.has(b.labId)) problems.push(`${l.id}/${b.id}: unknown lab ${b.labId}`);
       if (b.type === 'simulation') {

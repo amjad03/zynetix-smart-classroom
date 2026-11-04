@@ -180,6 +180,20 @@ export const WhiteboardBlock = z.object({ ...base, type: z.literal('whiteboard')
 
 /** A slider the class (or monitor) moves; `name` is used in expressions. */
 export const Slider = z.object({ name: z.string().regex(/^[a-zA-Z]\w*$/), label: L10n, min: z.number(), max: z.number(), step: z.number().positive(), value: z.number(), unit: z.string().optional() }).strict();
+/** The fields of a slider playfield, shared by `interactive` and `challenge` (see InteractiveBlock). */
+const InteractiveKind = z.enum(['function_plot', 'vectors', 'bar_chart', 'pie_chart', 'unit_circle', 'number_line', 'readouts']);
+const playfield = {
+  kind: InteractiveKind,
+  fns: z.array(z.object({ fn: z.string().min(1), label: z.string().optional(), color: ink }).strict()).max(4).optional(),
+  x: z.tuple([z.number(), z.number()]).optional(),
+  y: z.tuple([z.number(), z.number()]).optional(),
+  xLabel: z.string().optional(),
+  yLabel: z.string().optional(),
+  vectors: z.array(z.tuple([z.union([z.number(), z.string()]), z.union([z.number(), z.string()])])).max(4).optional(),
+  data: z.record(z.union([z.number(), z.string()])).optional(),
+  points: z.array(z.union([z.number(), z.string()])).max(8).optional(),
+  readouts: z.array(z.object({ label: L10n, expr: z.string(), unit: z.string().optional(), digits: z.number().int().min(0).max(6).default(2) }).strict()).max(4).default([]),
+};
 /**
  * Generic, data-driven interactives (no code per topic):
  * - function_plot: `fns` y = f(x, sliders…) on `x`/`y` ranges (graphs, demand/supply, waves, decay…)
@@ -193,19 +207,44 @@ export const InteractiveBlock = z
   .object({
     ...base,
     type: z.literal('interactive'),
-    kind: z.enum(['function_plot', 'vectors', 'bar_chart', 'pie_chart', 'unit_circle', 'number_line', 'readouts']),
+    ...playfield,
     caption: L10n,
     sliders: z.array(Slider).max(4).default([]),
-    fns: z.array(z.object({ fn: z.string().min(1), label: z.string().optional(), color: ink }).strict()).max(4).optional(),
-    x: z.tuple([z.number(), z.number()]).optional(),
-    y: z.tuple([z.number(), z.number()]).optional(),
-    xLabel: z.string().optional(),
-    yLabel: z.string().optional(),
-    vectors: z.array(z.tuple([z.union([z.number(), z.string()]), z.union([z.number(), z.string()])])).max(4).optional(),
-    data: z.record(z.union([z.number(), z.string()])).optional(),
-    points: z.array(z.union([z.number(), z.string()])).max(8).optional(),
-    readouts: z.array(z.object({ label: L10n, expr: z.string(), unit: z.string().optional(), digits: z.number().int().min(0).max(6).default(2) }).strict()).max(4).default([]),
     tryThis: z.array(L10n).default([]),
+  })
+  .strict();
+
+/**
+ * A playable problem on a slider playfield (same fields as `interactive`): the class sets the
+ * sliders so that `goal` (an expression over the slider names) lands within `tolerance` of
+ * `target`, e.g. "land the projectile on x = 40 m", "set the price where Qd = Qs".
+ * - `solution`: slider values that hit the target (the pack builder checks it really does).
+ * - `attempts`: tries before the answer is revealed; stars are 3, 2, 1 for a hit on the 1st, 2nd,
+ *   3rd-or-later try. `timeLimit`: seconds per try (none when absent).
+ * - `mode`: who plays: the whole class (monitor), teams taking turns, or a picked roll number.
+ * - The goal's value is shown only after each try ("too high / too low"), never while dragging,
+ *   so the class has to reason first; `readouts` must not give it away.
+ */
+export const ChallengeBlock = z
+  .object({
+    ...base,
+    type: z.literal('challenge'),
+    ...playfield,
+    /** The mission, read aloud: what to hit and how. */
+    prompt: L10n,
+    sliders: z.array(Slider).min(1).max(4),
+    goal: z.string().min(1),
+    goalLabel: L10n,
+    goalUnit: z.string().optional(),
+    target: z.number(),
+    tolerance: z.number().positive(),
+    solution: z.record(z.number()),
+    attempts: z.number().int().min(1).max(10).default(3),
+    timeLimit: z.number().int().min(10).max(600).optional(),
+    mode: QuizMode.default('team'),
+    hint: L10n.optional(),
+    /** Shown on success or after the last try: why the solution works. */
+    explanation: L10n,
   })
   .strict();
 
@@ -222,10 +261,11 @@ export const Block = z.discriminatedUnion('type', [
   RecapBlock,
   WhiteboardBlock,
   InteractiveBlock,
+  ChallengeBlock,
 ]);
 export type Block = z.infer<typeof Block>;
 export type BlockType = Block['type'];
-export const BLOCK_TYPES = ['intro', 'concept', '3d_model', 'simulation', 'virtual_lab', 'example', 'class_quiz', 'pyq', 'trick', 'recap', 'whiteboard', 'interactive'] as const satisfies readonly BlockType[];
+export const BLOCK_TYPES = ['intro', 'concept', '3d_model', 'simulation', 'virtual_lab', 'example', 'class_quiz', 'pyq', 'trick', 'recap', 'whiteboard', 'interactive', 'challenge'] as const satisfies readonly BlockType[];
 
 // ---------------------------------------------------------------- syllabus & lessons
 
@@ -295,6 +335,11 @@ export const AnswerLog = z
     chosen: z.number().int().min(0).max(3).nullable(),
     correct: z.boolean(),
     at: z.string(),
+    /** The question's topic and chapter (older boards leave them out; the API looks them up). */
+    topicId: id.optional(),
+    chapterId: id.optional(),
+    /** How the answer was captured: roll_call, team, monitor, hands, phone, paper, exam, challenge… A short code, never free text. */
+    source: z.string().regex(/^[a-z][a-z_]{1,23}$/).optional(),
   })
   .strict();
 

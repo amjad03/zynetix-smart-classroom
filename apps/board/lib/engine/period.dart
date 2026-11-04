@@ -46,8 +46,17 @@ abstract final class PeriodPlanner {
       BlockType.model3d || BlockType.simulation || BlockType.virtualLab => max(read, b.seconds ?? 90),
       BlockType.whiteboard => readingSeconds(b.narration) + whiteboardSeconds(b),
       BlockType.interactive => max(read, b.seconds ?? 60),
+      BlockType.challenge => max(read, b.seconds ?? challengeSeconds(b)),
       _ => max(read, b.seconds ?? 0),
     };
+  }
+
+  /// A challenge: the mission read aloud, each try (its time limit, or 45 s to think and set the
+  /// sliders) and 20 s for the explanation at the end.
+  static int challengeSeconds(Block b) {
+    final tries = (b.raw['attempts'] as num?)?.toInt() ?? 3;
+    final perTry = (b.raw['timeLimit'] as num?)?.toInt() ?? 45;
+    return readingSeconds(b.maybe('prompt')) + tries * perTry + 20;
   }
 
   /// A whiteboard block's steps: each step's line read aloud (at least 3 s of drawing) + 3 s to look.
