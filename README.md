@@ -1,15 +1,17 @@
-# Zynetix Board APKs: production 1.4.0
+# Zynetix Board APKs: production 1.5.0
 
-Built from `main` at 2bfa5b5. **Release-signed** with the Zynetix production key.
+Built from `main` at 79a4b77. **Release-signed** with the Zynetix production key.
 
 Signing certificate SHA-256: `8c4c01f3fb0ab2bb6cd6eb10ff61f6ad695507ebbc00c7ed55445897bb49306a` (CN=Zynetix Smart Classroom, O=Zynetix, Bengaluru).
 
 | File | For |
 |---|---|
-| `zynetix-board-1.4.0-arm64-v8a.apk` | Most smartboards and tablets from the last few years (pick this if unsure) |
-| `zynetix-board-1.4.0-armeabi-v7a.apk` | Older 32-bit ARM boards |
+| `zynetix-board-1.5.0-arm64-v8a.apk` | Most smartboards and tablets from the last few years (pick this if unsure) |
+| `zynetix-board-1.5.0-armeabi-v7a.apk` | Older 32-bit ARM boards |
 
-Each APK includes all 270 chapters (11 subjects, 1st and 2nd PUC, Karnataka PU and CBSE) as signed content packs, each with whiteboard explanations, interactives, 3D models, simulations and virtual labs, plus KCET, COMEDK, NEET, JEE Main, JEE Advanced and CUET practice. A board teaches with no internet from the first start. Installing over 1.0.0 or 1.1.0 keeps settings and updates every chapter.
+Each APK includes all 337 chapter packs (12 subjects, 1st and 2nd PUC / Class XI and XII, Karnataka PU, CBSE and ISC) as signed content packs, each with whiteboard explanations, interactives, 3D models, simulations and virtual labs, plus KCET, COMEDK, NEET, JEE Main, JEE Advanced and CUET practice. A board teaches with no internet from the first start. Installing over 1.0.0 or 1.1.0 keeps settings and updates every chapter.
+
+1.5.0: new rounded design with Inter and Poppins on every screen; ISC (CISCE) Science and Commerce added (Physics, Chemistry, Maths, Biology, Computer Science in Java, English, Accountancy, Commerce, Economics, Business Studies), English only; 128 Zynetix Board 3D models and 166 virtual labs placed in the topics they fit, with Kannada and a "Try this" step.
 
 1.4.0: a simulation or activity with full controls in every one of the 1,332 lessons (animated scenes with play, pause, speed and scrub; toggles, choices, buttons and draggable handles; sort, order, match, label, hotspot and fill activities).
 
