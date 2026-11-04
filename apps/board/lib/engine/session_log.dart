@@ -3,13 +3,14 @@ import 'dart:io';
 
 import 'package:uuid/uuid.dart';
 
+import 'mastery.dart';
 import 'model.dart';
 
 /// A teaching session (one topic, one section), logged with roll numbers only, never names.
 /// Mirrors SessionLog in packages/lesson-schema.
 class SessionRecorder {
-  SessionRecorder({required Outbox outbox, required String sectionId, required String mode, required InstalledPack pack, required Lesson lesson, DateTime Function()? now})
-    : this.raw(outbox: outbox, sectionId: sectionId, mode: mode, chapterId: lesson.chapterId, topicId: lesson.topicId, lessonId: lesson.id, packVersion: pack.version, now: now);
+  SessionRecorder({required Outbox outbox, required String sectionId, required String mode, required InstalledPack pack, required Lesson lesson, DateTime Function()? now, MasteryStore? mastery})
+    : this.raw(outbox: outbox, sectionId: sectionId, mode: mode, chapterId: lesson.chapterId, topicId: lesson.topicId, lessonId: lesson.id, packVersion: pack.version, now: now, mastery: mastery);
 
   /// A session that is not one lesson (Exam Practice): the caller names the chapter and topic.
   SessionRecorder.raw({
@@ -21,6 +22,7 @@ class SessionRecorder {
     required String lessonId,
     required String packVersion,
     DateTime Function()? now,
+    this.mastery,
   }) : _now = now ?? DateTime.now,
        _log = {
          'id': const Uuid().v4(),
@@ -39,6 +41,9 @@ class SessionRecorder {
 
   final Outbox outbox;
   final String sectionId, mode;
+
+  /// Where each answer also goes, so the board learns who knows what (null in old callers).
+  final MasteryStore? mastery;
   final DateTime Function() _now;
   final Map<String, dynamic> _log;
   bool _closed = false;
@@ -50,7 +55,19 @@ class SessionRecorder {
     if (!l.contains(blockId)) l.add(blockId);
   }
 
-  void answer({required String questionId, required QuizMode mode, int? roll, int? team, required int? chosen, required bool correct}) {
+  /// Records one answer. [topicId] and [chapterId] are the question's (they default to the
+  /// session's); [source] overrides the quiz mode for answers captured another way (hands,
+  /// phone, paper).
+  void answer({required String questionId, required QuizMode mode, int? roll, int? team, required int? chosen, required bool correct, String? topicId, String? chapterId, String? source}) {
+    mastery?.record(Response(
+      roll: roll,
+      questionId: questionId,
+      topicId: topicId ?? _log['topicId'] as String,
+      chapterId: chapterId ?? _log['chapterId'] as String,
+      correct: correct,
+      source: source ?? switch (mode) { QuizMode.monitor => 'monitor', QuizMode.rollCall => 'roll_call', QuizMode.team => 'team' },
+      at: _now(),
+    ));
     (_log['answers'] as List).add({
       'questionId': questionId,
       'mode': switch (mode) {

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 
 import '../blocks/embeds.dart';
 import '../engine/licence.dart';
+import '../engine/mastery.dart';
 import '../engine/model.dart';
 import '../engine/narrator.dart';
 import '../engine/pack_store.dart';
@@ -22,7 +23,12 @@ class Services {
     required this.embeds,
     this.licenceKey = const [],
     DateTime Function()? clock,
-  }) : clock = clock ?? DateTime.now;
+    MasteryStore? mastery,
+  }) : clock = clock ?? DateTime.now,
+       mastery = mastery ?? MasteryStore(now: clock);
+
+  /// What this section knows, per topic and per roll number (lib/engine/mastery.dart).
+  final MasteryStore mastery;
 
   final BoardConfig config;
   final PackStore store;

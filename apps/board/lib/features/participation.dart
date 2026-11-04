@@ -186,6 +186,8 @@ class QuizRunnerState extends State<QuizRunner> {
       team: widget.mode == QuizMode.team ? team : null,
       chosen: q.isNumeric ? null : chosen,
       correct: correct,
+      topicId: q.topicId,
+      chapterId: q.chapterId,
     );
     if (widget.mode == QuizMode.team && correct) widget.room.scores[team]++;
     setState(() {

@@ -11,6 +11,7 @@ import 'core/kiosk.dart';
 import 'core/services.dart';
 import 'core/theme.dart';
 import 'core/ui_scale.dart';
+import 'engine/mastery.dart';
 import 'engine/narrator.dart';
 import 'engine/pack_store.dart';
 import 'engine/session_log.dart';
@@ -33,6 +34,7 @@ Future<void> main() async {
     syllabus: await Services.loadSyllabus(rootBundle),
     embeds: KinetixEmbeds(),
     licenceKey: parseTrustedKey(await rootBundle.loadString('assets/keys/licence-key.json')).value,
+    mastery: MasteryStore(file: File('${dir.path}/mastery.jsonl')),
   );
   if (config.kioskOn) unawaited(Kiosk.enter());
   runApp(ZynetixBoardApp(services: services));

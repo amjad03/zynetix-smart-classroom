@@ -145,6 +145,7 @@ class ExamPracticeScreenState extends State<ExamPracticeScreen> {
       lessonId: 'exam-practice.${exam!.toLowerCase()}',
       packVersion: first.pack.version,
       now: s.clock,
+      mastery: s.mastery,
     );
     room = ClassRoom(rollCount: s.config.rollCount);
     _clock?.cancel();

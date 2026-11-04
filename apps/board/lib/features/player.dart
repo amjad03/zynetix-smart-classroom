@@ -30,7 +30,7 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
     lesson: widget.pack.lessonFor(widget.lesson, s.config.board),
     narrator: s.narrator,
     lang: s.config.lang,
-    recorder: SessionRecorder(outbox: s.outbox, sectionId: s.config.sectionId, mode: 'teacher', pack: widget.pack, lesson: widget.lesson, now: s.clock),
+    recorder: SessionRecorder(outbox: s.outbox, sectionId: s.config.sectionId, mode: 'teacher', pack: widget.pack, lesson: widget.lesson, now: s.clock, mastery: s.mastery),
   );
   late final ClassRoom room = ClassRoom(rollCount: s.config.rollCount);
   final ink = InkController(

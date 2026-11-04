@@ -90,7 +90,7 @@ class SelfLearningScreenState extends State<SelfLearningScreen> {
     blocks: plan.blocks,
     narrator: s.narrator,
     lang: s.config.lang,
-    recorder: SessionRecorder(outbox: s.outbox, sectionId: s.config.sectionId, mode: 'self_learning', pack: widget.pack, lesson: widget.lesson, now: s.clock),
+    recorder: SessionRecorder(outbox: s.outbox, sectionId: s.config.sectionId, mode: 'self_learning', pack: widget.pack, lesson: widget.lesson, now: s.clock, mastery: s.mastery),
   );
   late final ClassRoom room = ClassRoom(rollCount: s.config.rollCount);
   late final PeriodRunner runner = PeriodRunner(c: c, plan: plan, periodSeconds: widget.periodSeconds, autoTick: widget.autoTick);
