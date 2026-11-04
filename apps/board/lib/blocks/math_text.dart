@@ -11,7 +11,8 @@ class MathText extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = style ?? Theme.of(context).textTheme.bodyLarge!;
     final parts = text.split(r'$');
-    return Text.rich(
+    // A formula wider than the line scrolls sideways inside its own box instead of overflowing.
+    return LayoutBuilder(builder: (context, box) => Text.rich(
       TextSpan(
         style: s,
         children: [
@@ -19,17 +20,23 @@ class MathText extends StatelessWidget {
             if (i.isOdd)
               WidgetSpan(
                 alignment: PlaceholderAlignment.middle,
-                child: Math.tex(
-                  parts[i],
-                  textStyle: s,
-                  onErrorFallback: (_) => Text(parts[i], style: s),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: box.maxWidth.isFinite ? box.maxWidth : double.infinity),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Math.tex(
+                      parts[i],
+                      textStyle: s,
+                      onErrorFallback: (_) => Text(parts[i], style: s),
+                    ),
+                  ),
                 ),
               )
             else
               TextSpan(text: parts[i]),
         ],
       ),
-    );
+    ));
   }
 }
 
