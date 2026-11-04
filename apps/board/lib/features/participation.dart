@@ -8,6 +8,8 @@ import '../core/strings.dart';
 import '../core/theme.dart';
 import '../engine/model.dart';
 import '../engine/session_log.dart';
+import 'live/hands_up.dart';
+import 'live/strings.dart';
 
 /// Picks a random roll number in 1..[rollCount], never one in [exclude]. Returns null when every
 /// roll is excluded. Pure, so it is tested directly.
@@ -33,6 +35,20 @@ String formatNumber(double v) => v == v.roundToDouble() && v.abs() < 1e15 ? v.ro
 
 /// Team of a roll number when the class is split into [teams] teams: 1, 1+n, 1+2n… in team 0.
 int teamOf(int roll, int teams) => (roll - 1) % teams;
+
+/// Records a hands-up count for [q], source 'hands': one answer per present roll number, or one
+/// anonymous answer per raised hand when hands were counted per option.
+void recordHands(SessionRecorder rec, Question q, HandsResult res, QuizMode mode) {
+  if (res.perRoll != null) {
+    for (final e in res.perRoll!.entries) {
+      rec.answer(questionId: q.id, mode: mode, roll: e.key, chosen: null, correct: e.value, topicId: q.topicId, chapterId: q.chapterId, source: 'hands');
+    }
+  } else {
+    for (final (option, ok) in handsPerOption(res.perOption!, q.correctSet)) {
+      rec.answer(questionId: q.id, mode: mode, chosen: option, correct: ok, topicId: q.topicId, chapterId: q.chapterId, source: 'hands');
+    }
+  }
+}
 
 /// Who has answered in this session: absent rolls, rolls already picked, team scores.
 /// Shared by every quiz in one lesson so the roll picker does not keep calling the same students.
@@ -70,6 +86,7 @@ class QuizRunner extends StatefulWidget {
     this.auto = false,
     this.secondsPerQuestion = 45,
     this.showExams = false,
+    this.handsUp = true,
     this.onDone,
   });
 
@@ -81,6 +98,10 @@ class QuizRunner extends StatefulWidget {
   final bool auto;
   final int secondsPerQuestion;
   final bool showExams;
+
+  /// After a reveal, the teacher can count hands (who got it wrong, by roll number, or hands per
+  /// option) so every student's answer is recorded. Never in [auto] (no teacher in the room).
+  final bool handsUp;
   final VoidCallback? onDone;
 
   @override
@@ -99,6 +120,9 @@ class QuizRunnerState extends State<QuizRunner> {
   bool revealed = false, lastCorrect = false;
   int? roll;
   int left = 0;
+
+  /// What the hands-up count saved for this question (null until then).
+  HandsResult? hands;
   Timer? _tick;
 
   Question get question => widget.questions[q];
@@ -122,6 +146,7 @@ class QuizRunnerState extends State<QuizRunner> {
     picked.clear();
     typed = '';
     revealed = false;
+    hands = null;
     roll = widget.mode == QuizMode.rollCall && widget.auto ? widget.room.nextRoll() : null;
     left = widget.secondsPerQuestion;
     _tick?.cancel();
@@ -194,6 +219,18 @@ class QuizRunnerState extends State<QuizRunner> {
       revealed = true;
       if (widget.auto && left > 0) left = 0;
     });
+  }
+
+  /// Opens the hands-up count and records what it found, source 'hands'. In roll call, the
+  /// student who answered aloud is already recorded and is left out.
+  Future<void> openHands() async {
+    if (!revealed || hands != null) return;
+    final q = question;
+    final rollCallRoll = widget.mode == QuizMode.rollCall ? roll : null;
+    final res = await showHandsUp(context, question: q, rollCount: widget.room.rollCount, absent: widget.room.absent, lang: widget.lang, skip: {?rollCallRoll});
+    if (res == null || !mounted) return;
+    recordHands(widget.recorder, q, res, widget.mode);
+    setState(() => hands = res);
   }
 
   void nextQuestion() {
@@ -307,9 +344,22 @@ class QuizRunnerState extends State<QuizRunner> {
         if (revealed) ...[
           if (question.explanation != null) Text(question.explanation!.t(l), style: text.bodyLarge),
           const SizedBox(height: 12),
-          Align(
-            alignment: Alignment.centerRight,
-            child: BigButton(icon: Icons.arrow_forward, label: tr('nextQuestion', l), onPressed: nextQuestion),
+          Wrap(
+            alignment: WrapAlignment.end,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 16,
+            runSpacing: 12,
+            children: [
+              if (widget.handsUp && !widget.auto)
+                hands == null
+                    ? BigButton(key: const ValueKey('hands'), icon: Icons.back_hand_outlined, label: ltr('hands', l), filled: false, onPressed: openHands)
+                    : Text(
+                        hands!.perRoll != null ? '${ltr('handsSaved', l)}: ${hands!.right} / ${hands!.total} ${ltr('rightCount', l)}' : '${ltr('handsSaved', l)}: ${hands!.total}',
+                        key: const ValueKey('handsDone'),
+                        style: text.bodyLarge?.copyWith(color: Z.correct),
+                      ),
+              BigButton(icon: Icons.arrow_forward, label: tr('nextQuestion', l), onPressed: nextQuestion),
+            ],
           ),
         ] else if (question.isMulti)
           Padding(

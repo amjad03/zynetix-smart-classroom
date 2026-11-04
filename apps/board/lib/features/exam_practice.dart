@@ -495,7 +495,12 @@ class _Results extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = lang, text = Theme.of(context).textTheme;
-    final byId = {for (final a in answers) a['questionId'] as String: a['correct'] == true};
+    // The class's answer is the first one per question; later per-roll answers (hands up) only
+    // feed the mastery map.
+    final byId = <String, bool>{};
+    for (final a in answers) {
+      byId.putIfAbsent(a['questionId'] as String, () => a['correct'] == true);
+    }
     final score = items.where((i) => byId[i.q.id] == true).length;
     final subjects = <String, (int, int)>{};
     for (final i in items) {
