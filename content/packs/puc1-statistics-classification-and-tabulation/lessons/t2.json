@@ -556,6 +556,328 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Toss four coins and tally",
+    "kn": "ನಾಲ್ಕು ನಾಣ್ಯ ಚಿಮ್ಮಿ ಗುರುತು ಹಾಕಿ"
+   },
+   "narration": {
+    "en": "Four coins are tossed again and again. X, the number of heads, is a discrete variable: it can only be 0, 1, 2, 3 or 4. Each toss adds a tally to one bar, and the frequencies always add up to N."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Four coins are tossed again and again. X, the number of heads, is a discrete variable: it can only be 0, 1, 2, 3 or 4. Each toss adds a tally to one bar, and the frequencies always add up to N.",
+    "kn": "ನಾಲ್ಕು ನಾಣ್ಯಗಳನ್ನು ಮತ್ತೆ ಮತ್ತೆ ಚಿಮ್ಮಲಾಗುತ್ತದೆ. ತಲೆಗಳ ಸಂಖ್ಯೆ X ಒಂದು ವಿಚ್ಛಿನ್ನ ಚರ: ಅದು 0, 1, 2, 3 ಅಥವಾ 4 ಮಾತ್ರ ಆಗಬಹುದು. ಪ್ರತಿ ಚಿಮ್ಮುವಿಕೆ ಒಂದು ಕಂಬಕ್ಕೆ ಗುರುತು ಸೇರಿಸುತ್ತದೆ; ಆವೃತ್ತಿಗಳ ಮೊತ್ತ ಯಾವಾಗಲೂ N."
+   },
+   "tryThis": [
+    {
+     "en": "Play and watch which value of X becomes the most frequent."
+    },
+    {
+     "en": "Turn on the expected outline. After 200 tosses, how close are the bars to N × 1, 4, 6, 4, 1 out of 16?"
+    },
+    {
+     "en": "Press New data: the frequencies change, but which value stays the mode?"
+    }
+   ],
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "ex",
+     "label": {
+      "en": "Expected frequencies",
+      "kn": "ನಿರೀಕ್ಷಿತ ಆವೃತ್ತಿಗಳು"
+     },
+     "value": false
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 200
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New data",
+      "kn": "ಹೊಸ ದತ್ತಾಂಶ"
+     },
+     "icon": "launch",
+     "set": {
+      "seed": "seed + 1"
+     },
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 50,
+    "dt": 0.25,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2,
+    "unit": "s"
+   },
+   "integrator": "euler",
+   "vars": [
+    {
+     "name": "k",
+     "expr": "round(t/0.25)"
+    },
+    {
+     "name": "h",
+     "expr": "(rand(40*k + 997*seed + 1) < 0.5) + (rand(40*k + 997*seed + 2) < 0.5) + (rand(40*k + 997*seed + 3) < 0.5) + (rand(40*k + 997*seed + 4) < 0.5)"
+    },
+    {
+     "name": "N",
+     "expr": "f0 + f1 + f2 + f3 + f4"
+    },
+    {
+     "name": "mx",
+     "expr": "max(f0, f1, f2, f3, f4)"
+    }
+   ],
+   "state": [
+    {
+     "name": "f0",
+     "init": 0,
+     "rate": "(h == 0)/0.25"
+    },
+    {
+     "name": "f1",
+     "init": 0,
+     "rate": "(h == 1)/0.25"
+    },
+    {
+     "name": "f2",
+     "init": 0,
+     "rate": "(h == 2)/0.25"
+    },
+    {
+     "name": "f3",
+     "init": 0,
+     "rate": "(h == 3)/0.25"
+    },
+    {
+     "name": "f4",
+     "init": 0,
+     "rate": "(h == 4)/0.25"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.8,
+     4.8
+    ],
+    "y": [
+     -12,
+     100
+    ],
+    "axes": true,
+    "xLabel": "X = number of heads",
+    "yLabel": "frequency f"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "0 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "f0",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": "0 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "N*1/16",
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "ex",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": "f0 + 4",
+     "text": {
+      "en": "{f0}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "rect",
+     "x": "1 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "f1",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": "1 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "N*4/16",
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "ex",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": "f1 + 4",
+     "text": {
+      "en": "{f1}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "rect",
+     "x": "2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "f2",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": "2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "N*6/16",
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "ex",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": "f2 + 4",
+     "text": {
+      "en": "{f2}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "rect",
+     "x": "3 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "f3",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": "3 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "N*4/16",
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "ex",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": "f3 + 4",
+     "text": {
+      "en": "{f3}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "rect",
+     "x": "4 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "f4",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": "4 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "N*1/16",
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "ex",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": "f4 + 4",
+     "text": {
+      "en": "{f4}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 92,
+     "text": {
+      "en": "Σf = N = {N}"
+     },
+     "size": 30
+    },
+    {
+     "shape": "text",
+     "x": "h",
+     "y": -8,
+     "text": {
+      "en": "last toss: {h} heads"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "N > 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Number of tosses N = Σf",
+      "kn": "ಒಟ್ಟು ಚಿಮ್ಮುವಿಕೆ N"
+     },
+     "expr": "N",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Mode (most frequent X)",
+      "kn": "ಬಹುಲಕ"
+     },
+     "expr": "if(N == 0, 0, if(f2 == mx, 2, if(f1 == mx, 1, if(f3 == mx, 3, if(f0 == mx, 0, 4)))))",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Mean number of heads Σfx/N",
+      "kn": "ಸರಾಸರಿ"
+     },
+     "expr": "if(N > 0, (f1 + 2*f2 + 3*f3 + 4*f4)/N, 0)",
+     "digits": 2
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

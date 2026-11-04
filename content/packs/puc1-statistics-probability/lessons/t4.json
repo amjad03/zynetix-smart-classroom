@@ -291,6 +291,235 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Conditional probability as area",
+    "kn": "ಷರತ್ತುಬದ್ಧ ಸಂಭವನೀಯತೆ ವಿಸ್ತೀರ್ಣವಾಗಿ"
+   },
+   "narration": {
+    "en": "The square is the sample space. The left column is A (width P(A)); inside each column the coloured part is B. So P(A ∩ B) = P(A) × P(B|A), the multiplication theorem. If B fills the same fraction of both columns, knowing A tells nothing about B: the events are independent."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The square is the sample space. The left column is A (width P(A)); inside each column the coloured part is B. So P(A ∩ B) = P(A) × P(B|A), the multiplication theorem. If B fills the same fraction of both columns, knowing A tells nothing about B: the events are independent.",
+    "kn": "ಚೌಕ ಮಾದರಿ ಆಕಾಶ. ಎಡ ಕಾಲಂ A (ಅಗಲ P(A)); ಪ್ರತಿ ಕಾಲಂನೊಳಗಿನ ಬಣ್ಣದ ಭಾಗ B. ಹಾಗಾಗಿ P(A ∩ B) = P(A) × P(B|A), ಗುಣಾಕಾರ ಪ್ರಮೇಯ. ಎರಡೂ ಕಾಲಂಗಳಲ್ಲಿ B ಸಮ ಭಾಗ ತುಂಬಿದರೆ ಘಟನೆಗಳು ಸ್ವತಂತ್ರ."
+   },
+   "tryThis": [
+    {
+     "en": "Set P(B|A) = P(B|A′). Check that P(A ∩ B) = P(A) × P(B)."
+    },
+    {
+     "en": "Make P(B|A) much bigger than P(B|A′). Is P(A|B) bigger or smaller than P(A)?"
+    },
+    {
+     "en": "Can P(A|B) and P(B|A) be different? Find a setting where they differ a lot."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "pA",
+     "label": {
+      "en": "P(A)"
+     },
+     "min": 0.1,
+     "max": 0.9,
+     "step": 0.05,
+     "value": 0.4
+    },
+    {
+     "name": "pBA",
+     "label": {
+      "en": "P(B | A)"
+     },
+     "min": 0.05,
+     "max": 0.95,
+     "step": 0.05,
+     "value": 0.7
+    },
+    {
+     "name": "pBn",
+     "label": {
+      "en": "P(B | A′)"
+     },
+     "min": 0.05,
+     "max": 0.95,
+     "step": 0.05,
+     "value": 0.3
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ind",
+     "label": {
+      "en": "Independent (P(B|A′) = P(B|A))",
+      "kn": "ಸ್ವತಂತ್ರ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "q2",
+     "expr": "if(ind, pBA, pBn)"
+    },
+    {
+     "name": "pAB",
+     "expr": "pA*pBA"
+    },
+    {
+     "name": "pB",
+     "expr": "pA*pBA + (1 - pA)*q2"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     10.5
+    ],
+    "y": [
+     -1.4,
+     11.2
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": "10*pA",
+     "h": "10*pBA",
+     "color": "green",
+     "opacity": 0.75
+    },
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": "10*pBA",
+     "w": "10*pA",
+     "h": "10*(1 - pBA)",
+     "color": "blue",
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": "10*pA",
+     "y": 0,
+     "w": "10*(1 - pA)",
+     "h": "10*q2",
+     "color": "orange",
+     "opacity": 0.75
+    },
+    {
+     "shape": "rect",
+     "x": "10*pA",
+     "y": "10*q2",
+     "w": "10*(1 - pA)",
+     "h": "10*(1 - q2)",
+     "color": "white",
+     "opacity": 0.12
+    },
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 10,
+     "h": 10,
+     "color": "white",
+     "fill": false
+    },
+    {
+     "shape": "line",
+     "x1": "10*pA",
+     "y1": 0,
+     "x2": "10*pA",
+     "y2": 10,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "5*pA",
+     "y": 10.6,
+     "text": {
+      "en": "A"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": "5 + 5*pA",
+     "y": 10.6,
+     "text": {
+      "en": "A′"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": "5*pA",
+     "y": "5*pBA",
+     "text": {
+      "en": "A∩B"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": "5 + 5*pA",
+     "y": "5*q2",
+     "text": {
+      "en": "A′∩B"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -0.8,
+     "text": {
+      "en": "independent: B is equally likely in both columns"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "abs(pBA - q2) < 0.001"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "P(A ∩ B) = P(A)·P(B|A)"
+     },
+     "expr": "pAB",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "P(B)"
+     },
+     "expr": "pB",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "P(A | B) = P(A ∩ B)/P(B)"
+     },
+     "expr": "pAB/pB",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "P(A)·P(B)"
+     },
+     "expr": "pA*pB",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

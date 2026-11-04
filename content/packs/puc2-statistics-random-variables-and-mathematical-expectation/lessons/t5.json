@@ -351,6 +351,325 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Shape: skewness and kurtosis",
+    "kn": "ಆಕಾರ: ಓರೆತನ ಮತ್ತು ಚೂಪುತನ"
+   },
+   "narration": {
+    "en": "X takes 0 to 6; drag the four outer bars (the middle three are fixed). Weight on one side makes μ₃ non-zero: its sign gives the direction of the skew and β₁ = μ₃²/μ₂³ its size. Weight on both tails raises β₂ = μ₄/μ₂²; weight near the shoulders lowers it."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "X takes 0 to 6; drag the four outer bars (the middle three are fixed). Weight on one side makes μ₃ non-zero: its sign gives the direction of the skew and β₁ = μ₃²/μ₂³ its size. Weight on both tails raises β₂ = μ₄/μ₂²; weight near the shoulders lowers it.",
+    "kn": "X, 0 ರಿಂದ 6; ಹೊರಗಿನ ನಾಲ್ಕು ಕಂಬಗಳನ್ನು ಎಳೆಯಿರಿ (ಮಧ್ಯದ ಮೂರು ಸ್ಥಿರ). ಒಂದು ಬದಿಯ ತೂಕ μ₃ ಅನ್ನು ಶೂನ್ಯೇತರ ಮಾಡುತ್ತದೆ: ಅದರ ಚಿಹ್ನೆ ಓರೆಯ ದಿಕ್ಕು, β₁ = μ₃²/μ₂³ ಅದರ ಗಾತ್ರ. ಎರಡೂ ಬಾಲಗಳ ತೂಕ β₂ = μ₄/μ₂² ಹೆಚ್ಚಿಸುತ್ತದೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Make the bars symmetric. What are μ₃ and β₁?"
+    },
+    {
+     "en": "Lower the bar at 0 to zero and raise the bar at 6 a little. Which sign does μ₃ take?"
+    },
+    {
+     "en": "Find a symmetric shape with β₂ above 3, and one below 3."
+    }
+   ],
+   "sliders": [],
+   "handles": [
+    {
+     "name": "G0",
+     "x": 0,
+     "y": 1,
+     "axis": "y",
+     "box": {
+      "x": [
+       0,
+       0
+      ],
+      "y": [
+       0,
+       10
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    },
+    {
+     "name": "G1",
+     "x": 1,
+     "y": 3,
+     "axis": "y",
+     "box": {
+      "x": [
+       1,
+       1
+      ],
+      "y": [
+       0,
+       10
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    },
+    {
+     "name": "G5",
+     "x": 5,
+     "y": 3,
+     "axis": "y",
+     "box": {
+      "x": [
+       5,
+       5
+      ],
+      "y": [
+       0,
+       10
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    },
+    {
+     "name": "G6",
+     "x": 6,
+     "y": 1,
+     "axis": "y",
+     "box": {
+      "x": [
+       6,
+       6
+      ],
+      "y": [
+       0,
+       10
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "Wt",
+     "expr": "(G0_y + G1_y + 5 + 6 + 5 + G5_y + G6_y)"
+    },
+    {
+     "name": "mu",
+     "expr": "(G0_y*(0 - 0)^1 + G1_y*(1 - 0)^1 + 5*(2 - 0)^1 + 6*(3 - 0)^1 + 5*(4 - 0)^1 + G5_y*(5 - 0)^1 + G6_y*(6 - 0)^1)/Wt"
+    },
+    {
+     "name": "m2",
+     "expr": "(G0_y*(0 - mu)^2 + G1_y*(1 - mu)^2 + 5*(2 - mu)^2 + 6*(3 - mu)^2 + 5*(4 - mu)^2 + G5_y*(5 - mu)^2 + G6_y*(6 - mu)^2)/Wt"
+    },
+    {
+     "name": "m3",
+     "expr": "(G0_y*(0 - mu)^3 + G1_y*(1 - mu)^3 + 5*(2 - mu)^3 + 6*(3 - mu)^3 + 5*(4 - mu)^3 + G5_y*(5 - mu)^3 + G6_y*(6 - mu)^3)/Wt"
+    },
+    {
+     "name": "m4",
+     "expr": "(G0_y*(0 - mu)^4 + G1_y*(1 - mu)^4 + 5*(2 - mu)^4 + 6*(3 - mu)^4 + 5*(4 - mu)^4 + G5_y*(5 - mu)^4 + G6_y*(6 - mu)^4)/Wt"
+    },
+    {
+     "name": "b2",
+     "expr": "m4/m2^2"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.7,
+     6.7
+    ],
+    "y": [
+     -0.4,
+     9.8
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -0.3,
+     "y": 0,
+     "w": 0.6,
+     "h": "10*G0_y/Wt",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": 0.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "10*G1_y/Wt",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": 1.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "10*5/Wt",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": 2.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "10*6/Wt",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": 3.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "10*5/Wt",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": 4.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "10*G5_y/Wt",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": 5.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "10*G6_y/Wt",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "line",
+     "x1": "mu",
+     "y1": -0.3,
+     "x2": "mu",
+     "y2": 7.5,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "mu",
+     "y": 7.8,
+     "text": {
+      "en": "mean {mu:2}"
+     },
+     "size": 18,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 9.2,
+     "text": {
+      "en": "symmetric"
+     },
+     "size": 22,
+     "visibleIf": "abs(m3) < 0.0005"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 9.2,
+     "text": {
+      "en": "positively skewed (μ₃ > 0)"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "m3 >= 0.0005"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 9.2,
+     "text": {
+      "en": "negatively skewed (μ₃ < 0)"
+     },
+     "size": 22,
+     "color": "blue",
+     "visibleIf": "m3 <= -0.0005"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 8.5,
+     "text": {
+      "en": "leptokurtic β₂ > 3"
+     },
+     "size": 20,
+     "color": "orange",
+     "visibleIf": "b2 > 3.0005"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 8.5,
+     "text": {
+      "en": "platykurtic β₂ < 3"
+     },
+     "size": 20,
+     "color": "blue",
+     "visibleIf": "b2 < 2.9995"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 8.5,
+     "text": {
+      "en": "mesokurtic β₂ = 3"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "abs(b2 - 3) <= 0.0005"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "μ₂ (variance)"
+     },
+     "expr": "m2",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "μ₃"
+     },
+     "expr": "m3",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "β₁ = μ₃²/μ₂³"
+     },
+     "expr": "m3^2/m2^3",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "β₂ = μ₄/μ₂²"
+     },
+     "expr": "b2",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

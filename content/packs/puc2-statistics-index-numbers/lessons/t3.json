@@ -909,6 +909,280 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Laspeyres, Paasche and Fisher",
+    "kn": "ಲ್ಯಾಸ್ಪೇರ್, ಪಾಷೆ, ಫಿಶರ್"
+   },
+   "narration": {
+    "en": "Two goods. Raise the price of A and let families buy less of it (the cut). Laspeyres weights prices by base quantities, so it ignores the cut and tends to overstate the price rise; Paasche uses current quantities and tends to understate it. Fisher’s ideal index lies between them."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Two goods. Raise the price of A and let families buy less of it (the cut). Laspeyres weights prices by base quantities, so it ignores the cut and tends to overstate the price rise; Paasche uses current quantities and tends to understate it. Fisher’s ideal index lies between them.",
+    "kn": "ಎರಡು ಸರಕುಗಳು. A ಯ ಬೆಲೆ ಏರಿಸಿ, ಕುಟುಂಬಗಳು ಅದನ್ನು ಕಡಿಮೆ ಕೊಳ್ಳಲಿ. ಲ್ಯಾಸ್ಪೇರ್ ಆಧಾರ ಪರಿಮಾಣಗಳನ್ನು ತೂಕವಾಗಿ ಬಳಸುವುದರಿಂದ ಏರಿಕೆಯನ್ನು ಹೆಚ್ಚಾಗಿ ತೋರಿಸುತ್ತದೆ; ಪಾಷೆ ಈಗಿನ ಪರಿಮಾಣ ಬಳಸಿ ಕಡಿಮೆ ತೋರಿಸುತ್ತದೆ. ಫಿಶರ್ ಆದರ್ಶ ಸೂಚ್ಯಂಕ ನಡುವೆ ಇರುತ್ತದೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Set the cut to 0. Are all five indices equal? Why?"
+    },
+    {
+     "en": "Raise the price of A by 50% with a cut of 1. Which index is highest?"
+    },
+    {
+     "en": "Is Fisher’s index always between Laspeyres and Paasche? Is Dorbish–Bowley?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Rise in the price of A",
+      "kn": "A ಯ ಬೆಲೆ ಏರಿಕೆ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "%"
+    },
+    {
+     "name": "el",
+     "label": {
+      "en": "How much buyers cut A",
+      "kn": "ಖರೀದಿ ಕಡಿತ"
+     },
+     "min": 0,
+     "max": 2,
+     "step": 0.25,
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "p1A",
+     "expr": "10*(1 + r/100)"
+    },
+    {
+     "name": "q1A",
+     "expr": "50*(1 + r/100)^(-el)"
+    },
+    {
+     "name": "Lp",
+     "expr": "100*(p1A*50 + 20*25)/(10*50 + 20*25)"
+    },
+    {
+     "name": "Pp",
+     "expr": "100*(p1A*q1A + 20*25)/(10*q1A + 20*25)"
+    },
+    {
+     "name": "Fi",
+     "expr": "sqrt(Lp*Pp)"
+    },
+    {
+     "name": "DB",
+     "expr": "(Lp + Pp)/2"
+    },
+    {
+     "name": "ME",
+     "expr": "100*(p1A*(50 + q1A) + 20*50)/(10*(50 + q1A) + 20*50)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.8,
+     4.8
+    ],
+    "y": [
+     -14,
+     215
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -0.6,
+     "y1": 100,
+     "x2": 4.6,
+     "y2": 100,
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "rect",
+     "x": -0.35,
+     "y": 0,
+     "w": 0.7,
+     "h": "Lp",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": "Lp + 6",
+     "text": {
+      "en": "{Lp:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -8,
+     "text": {
+      "en": "Laspeyres"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 0.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "Pp",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": "Pp + 6",
+     "text": {
+      "en": "{Pp:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": -8,
+     "text": {
+      "en": "Paasche"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 1.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "Fi",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": "Fi + 6",
+     "text": {
+      "en": "{Fi:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": -8,
+     "text": {
+      "en": "Fisher"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 2.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "DB",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": "DB + 6",
+     "text": {
+      "en": "{DB:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": -8,
+     "text": {
+      "en": "Dorbish–Bowley"
+     },
+     "size": 15
+    },
+    {
+     "shape": "rect",
+     "x": 3.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "ME",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": "ME + 6",
+     "text": {
+      "en": "{ME:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": -8,
+     "text": {
+      "en": "Marshall–Edgeworth"
+     },
+     "size": 15
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 205,
+     "text": {
+      "en": "A: ₹10 → ₹{p1A}; bought {50} → {q1A:1} · B: ₹20 → ₹20; bought 25 → 25"
+     },
+     "size": 17
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Laspeyres' P₀₁"
+     },
+     "expr": "Lp",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Paasche's P₀₁"
+     },
+     "expr": "Pp",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Fisher's √(L × P)"
+     },
+     "expr": "Fi",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Marshall–Edgeworth"
+     },
+     "expr": "ME",
+     "digits": 2
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

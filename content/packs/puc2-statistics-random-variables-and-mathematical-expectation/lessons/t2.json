@@ -325,6 +325,283 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Probability is area under the density",
+    "kn": "ಸಂಭವನೀಯತೆ ಸಾಂದ್ರತೆಯ ಕೆಳಗಿನ ವಿಸ್ತೀರ್ಣ"
+   },
+   "narration": {
+    "en": "Choose a density and drag the two handles a and b. P(a < X < b) is the shaded area under f(x); the whole area is 1. Pull the handles together: the area of a single point is 0, so P(X = a) = 0 for a continuous variable."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Choose a density and drag the two handles a and b. P(a < X < b) is the shaded area under f(x); the whole area is 1. Pull the handles together: the area of a single point is 0, so P(X = a) = 0 for a continuous variable.",
+    "kn": "ಒಂದು ಸಾಂದ್ರತೆ ಆರಿಸಿ, a ಮತ್ತು b ಹಿಡಿಗಳನ್ನು ಎಳೆಯಿರಿ. P(a < X < b) ಎಂಬುದು f(x) ಕೆಳಗಿನ ಛಾಯೆಯ ವಿಸ್ತೀರ್ಣ; ಒಟ್ಟು ವಿಸ್ತೀರ್ಣ 1. ಹಿಡಿಗಳನ್ನು ಹತ್ತಿರ ತನ್ನಿ: ಒಂದು ಬಿಂದುವಿನ ವಿಸ್ತೀರ್ಣ 0, ಹಾಗಾಗಿ ನಿರಂತರ ಚರಕ್ಕೆ P(X = a) = 0."
+   },
+   "tryThis": [
+    {
+     "en": "For the uniform density, what is P(1 < X < 3)?"
+    },
+    {
+     "en": "For the triangle f(x) = x/8, is P(0 < X < 2) equal to P(2 < X < 4)? Why not?"
+    },
+    {
+     "en": "For the exponential density, what is P(X > 1)?"
+    }
+   ],
+   "sliders": [],
+   "choices": [
+    {
+     "name": "ex",
+     "label": {
+      "en": "Density f(x)",
+      "kn": "ಸಾಂದ್ರತೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Uniform on 0–4",
+        "kn": "ಏಕರೂಪ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Triangle x/8 on 0–4",
+        "kn": "ತ್ರಿಕೋನ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Exponential e^(−x)",
+        "kn": "ಘಾತೀಯ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "handles": [
+    {
+     "name": "Ha",
+     "label": "a",
+     "x": 1,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       0,
+       6
+      ],
+      "y": [
+       0,
+       0
+      ]
+     },
+     "snap": 0.1,
+     "color": "orange"
+    },
+    {
+     "name": "Hb",
+     "label": "b",
+     "x": 3,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       0,
+       6
+      ],
+      "y": [
+       0,
+       0
+      ]
+     },
+     "snap": 0.1,
+     "color": "orange"
+    }
+   ],
+   "vars": [
+    {
+     "name": "lo",
+     "expr": "min(Ha_x, Hb_x)"
+    },
+    {
+     "name": "hi",
+     "expr": "max(Ha_x, Hb_x)"
+    },
+    {
+     "name": "Fa",
+     "expr": "if(ex == 1, clamp(lo/4, 0, 1), if(ex == 2, clamp(lo^2/16, 0, 1), 1 - exp(-lo)))"
+    },
+    {
+     "name": "Fb",
+     "expr": "if(ex == 1, clamp(hi/4, 0, 1), if(ex == 2, clamp(hi^2/16, 0, 1), 1 - exp(-hi)))"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.2,
+     6.2
+    ],
+    "y": [
+     -0.05,
+     1.05
+    ],
+    "axes": true,
+    "xLabel": "x",
+    "yLabel": "f(x)"
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       "lo",
+       0
+      ],
+      [
+       "lo + (hi - lo)*0",
+       "if(ex == 1, if(lo + (hi - lo)*0 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0 <= 4, (lo + (hi - lo)*0)/8, 0), exp(-(lo + (hi - lo)*0))))"
+      ],
+      [
+       "lo + (hi - lo)*0.05",
+       "if(ex == 1, if(lo + (hi - lo)*0.05 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.05 <= 4, (lo + (hi - lo)*0.05)/8, 0), exp(-(lo + (hi - lo)*0.05))))"
+      ],
+      [
+       "lo + (hi - lo)*0.1",
+       "if(ex == 1, if(lo + (hi - lo)*0.1 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.1 <= 4, (lo + (hi - lo)*0.1)/8, 0), exp(-(lo + (hi - lo)*0.1))))"
+      ],
+      [
+       "lo + (hi - lo)*0.15",
+       "if(ex == 1, if(lo + (hi - lo)*0.15 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.15 <= 4, (lo + (hi - lo)*0.15)/8, 0), exp(-(lo + (hi - lo)*0.15))))"
+      ],
+      [
+       "lo + (hi - lo)*0.2",
+       "if(ex == 1, if(lo + (hi - lo)*0.2 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.2 <= 4, (lo + (hi - lo)*0.2)/8, 0), exp(-(lo + (hi - lo)*0.2))))"
+      ],
+      [
+       "lo + (hi - lo)*0.25",
+       "if(ex == 1, if(lo + (hi - lo)*0.25 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.25 <= 4, (lo + (hi - lo)*0.25)/8, 0), exp(-(lo + (hi - lo)*0.25))))"
+      ],
+      [
+       "lo + (hi - lo)*0.3",
+       "if(ex == 1, if(lo + (hi - lo)*0.3 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.3 <= 4, (lo + (hi - lo)*0.3)/8, 0), exp(-(lo + (hi - lo)*0.3))))"
+      ],
+      [
+       "lo + (hi - lo)*0.35",
+       "if(ex == 1, if(lo + (hi - lo)*0.35 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.35 <= 4, (lo + (hi - lo)*0.35)/8, 0), exp(-(lo + (hi - lo)*0.35))))"
+      ],
+      [
+       "lo + (hi - lo)*0.4",
+       "if(ex == 1, if(lo + (hi - lo)*0.4 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.4 <= 4, (lo + (hi - lo)*0.4)/8, 0), exp(-(lo + (hi - lo)*0.4))))"
+      ],
+      [
+       "lo + (hi - lo)*0.45",
+       "if(ex == 1, if(lo + (hi - lo)*0.45 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.45 <= 4, (lo + (hi - lo)*0.45)/8, 0), exp(-(lo + (hi - lo)*0.45))))"
+      ],
+      [
+       "lo + (hi - lo)*0.5",
+       "if(ex == 1, if(lo + (hi - lo)*0.5 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.5 <= 4, (lo + (hi - lo)*0.5)/8, 0), exp(-(lo + (hi - lo)*0.5))))"
+      ],
+      [
+       "lo + (hi - lo)*0.55",
+       "if(ex == 1, if(lo + (hi - lo)*0.55 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.55 <= 4, (lo + (hi - lo)*0.55)/8, 0), exp(-(lo + (hi - lo)*0.55))))"
+      ],
+      [
+       "lo + (hi - lo)*0.6",
+       "if(ex == 1, if(lo + (hi - lo)*0.6 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.6 <= 4, (lo + (hi - lo)*0.6)/8, 0), exp(-(lo + (hi - lo)*0.6))))"
+      ],
+      [
+       "lo + (hi - lo)*0.65",
+       "if(ex == 1, if(lo + (hi - lo)*0.65 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.65 <= 4, (lo + (hi - lo)*0.65)/8, 0), exp(-(lo + (hi - lo)*0.65))))"
+      ],
+      [
+       "lo + (hi - lo)*0.7",
+       "if(ex == 1, if(lo + (hi - lo)*0.7 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.7 <= 4, (lo + (hi - lo)*0.7)/8, 0), exp(-(lo + (hi - lo)*0.7))))"
+      ],
+      [
+       "lo + (hi - lo)*0.75",
+       "if(ex == 1, if(lo + (hi - lo)*0.75 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.75 <= 4, (lo + (hi - lo)*0.75)/8, 0), exp(-(lo + (hi - lo)*0.75))))"
+      ],
+      [
+       "lo + (hi - lo)*0.8",
+       "if(ex == 1, if(lo + (hi - lo)*0.8 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.8 <= 4, (lo + (hi - lo)*0.8)/8, 0), exp(-(lo + (hi - lo)*0.8))))"
+      ],
+      [
+       "lo + (hi - lo)*0.85",
+       "if(ex == 1, if(lo + (hi - lo)*0.85 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.85 <= 4, (lo + (hi - lo)*0.85)/8, 0), exp(-(lo + (hi - lo)*0.85))))"
+      ],
+      [
+       "lo + (hi - lo)*0.9",
+       "if(ex == 1, if(lo + (hi - lo)*0.9 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.9 <= 4, (lo + (hi - lo)*0.9)/8, 0), exp(-(lo + (hi - lo)*0.9))))"
+      ],
+      [
+       "lo + (hi - lo)*0.95",
+       "if(ex == 1, if(lo + (hi - lo)*0.95 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*0.95 <= 4, (lo + (hi - lo)*0.95)/8, 0), exp(-(lo + (hi - lo)*0.95))))"
+      ],
+      [
+       "lo + (hi - lo)*1",
+       "if(ex == 1, if(lo + (hi - lo)*1 <= 4, 0.25, 0), if(ex == 2, if(lo + (hi - lo)*1 <= 4, (lo + (hi - lo)*1)/8, 0), exp(-(lo + (hi - lo)*1))))"
+      ],
+      [
+       "hi",
+       0
+      ]
+     ],
+     "color": "blue",
+     "opacity": 0.45
+    },
+    {
+     "shape": "path",
+     "fn": "if(ex == 1, if(x <= 4, 0.25, 0), if(ex == 2, if(x <= 4, (x)/8, 0), exp(-(x))))",
+     "from": 0,
+     "to": 6,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": "(lo + hi)/2",
+     "y": 0.62,
+     "text": {
+      "en": "area = {Fb - Fa:4}"
+     },
+     "size": 22,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "P(a < X < b)",
+      "kn": "P(a < X < b)"
+     },
+     "expr": "Fb - Fa",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "F(a)"
+     },
+     "expr": "Fa",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "F(b)"
+     },
+     "expr": "Fb",
+     "digits": 4
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "kind": "function_plot",

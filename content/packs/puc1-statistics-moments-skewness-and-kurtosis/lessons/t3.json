@@ -370,6 +370,209 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Mean, median and mode pull apart",
+    "kn": "ಸರಾಸರಿ, ಮಧ್ಯಾಂಕ, ಬಹುಲಕ ಬೇರಾಗುತ್ತವೆ"
+   },
+   "narration": {
+    "en": "Increase the skewness: the long tail drags the mean furthest, the median follows part of the way, and the mode stays at the peak. With a right tail, mean > median > mode; flip it and the order reverses. Karl Pearson's coefficient (mean − mode)/σ takes the sign of the tail."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Increase the skewness: the long tail drags the mean furthest, the median follows part of the way, and the mode stays at the peak. With a right tail, mean > median > mode; flip it and the order reverses. Karl Pearson's coefficient (mean − mode)/σ takes the sign of the tail.",
+    "kn": "ಓರೆತನ ಹೆಚ್ಚಿಸಿ: ಉದ್ದ ಬಾಲ ಸರಾಸರಿಯನ್ನು ಹೆಚ್ಚು ಎಳೆಯುತ್ತದೆ, ಮಧ್ಯಾಂಕ ಸ್ವಲ್ಪ ಹಿಂಬಾಲಿಸುತ್ತದೆ, ಬಹುಲಕ ಶಿಖರದಲ್ಲೇ ಇರುತ್ತದೆ. ಬಲ ಬಾಲದೊಂದಿಗೆ ಸರಾಸರಿ > ಮಧ್ಯಾಂಕ > ಬಹುಲಕ; ತಿರುಗಿಸಿದರೆ ಕ್ರಮ ಹಿಮ್ಮುಖ. ಕಾರ್ಲ್ ಪಿಯರ್ಸನ್ ಗುಣಾಂಕ (ಸರಾಸರಿ − ಬಹುಲಕ)/σ ಬಾಲದ ಚಿಹ್ನೆ ಹೊಂದಿದೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Set the skewness to its lowest. Are the three averages almost equal?"
+    },
+    {
+     "en": "Flip to the left tail. Which average is now the smallest?"
+    },
+    {
+     "en": "Check the empirical relation: is mean − mode close to 3(mean − median)?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "s",
+     "label": {
+      "en": "Skewness (shape)",
+      "kn": "ಓರೆತನ"
+     },
+     "min": 0.05,
+     "max": 0.6,
+     "step": 0.05,
+     "value": 0.4
+    }
+   ],
+   "toggles": [
+    {
+     "name": "neg",
+     "label": {
+      "en": "Long tail on the left",
+      "kn": "ಎಡಕ್ಕೆ ಉದ್ದ ಬಾಲ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "mu",
+     "expr": "ln(12)"
+    },
+    {
+     "name": "fm",
+     "expr": "exp(mu - s^2)*exp(s^2/2)"
+    },
+    {
+     "name": "mn0",
+     "expr": "exp(mu + s^2/2)"
+    },
+    {
+     "name": "md0",
+     "expr": "exp(mu)"
+    },
+    {
+     "name": "mo0",
+     "expr": "exp(mu - s^2)"
+    },
+    {
+     "name": "sd",
+     "expr": "sqrt((exp(s^2) - 1)*exp(2*mu + s^2))"
+    },
+    {
+     "name": "mn",
+     "expr": "if(neg, 40 - mn0, mn0)"
+    },
+    {
+     "name": "md",
+     "expr": "if(neg, 40 - md0, md0)"
+    },
+    {
+     "name": "mo",
+     "expr": "if(neg, 40 - mo0, mo0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     40
+    ],
+    "y": [
+     -0.5,
+     14.5
+    ],
+    "axes": true,
+    "xLabel": "x",
+    "yLabel": "frequency (relative)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "if(if(neg, 40 - x, x) > 0.05, 10*fm/(if(neg, 40 - x, x))*exp(-(ln(if(neg, 40 - x, x)) - mu)^2/(2*s^2)), 0)",
+     "from": 0.1,
+     "to": 39.9,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "mo",
+     "y1": 0,
+     "x2": "mo",
+     "y2": 10.6,
+     "color": "red",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "mo",
+     "y": 11.2,
+     "text": {
+      "en": "mode"
+     },
+     "size": 20,
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": "md",
+     "y1": 0,
+     "x2": "md",
+     "y2": 11.8,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "md",
+     "y": 12.4,
+     "text": {
+      "en": "median"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": "mn",
+     "y1": 0,
+     "x2": "mn",
+     "y2": 13.0,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "mn",
+     "y": 13.6,
+     "text": {
+      "en": "mean"
+     },
+     "size": 20,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mean",
+      "kn": "ಸರಾಸರಿ"
+     },
+     "expr": "mn",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Median",
+      "kn": "ಮಧ್ಯಾಂಕ"
+     },
+     "expr": "md",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Mode",
+      "kn": "ಬಹುಲಕ"
+     },
+     "expr": "mo",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Karl Pearson's Sk = (mean − mode)/σ"
+     },
+     "expr": "(mn - mo)/sd",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

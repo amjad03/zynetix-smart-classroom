@@ -807,6 +807,416 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Drag the points, watch Pearson's r",
+    "kn": "ಬಿಂದುಗಳನ್ನು ಎಳೆಯಿರಿ, r ನೋಡಿ"
+   },
+   "narration": {
+    "en": "Six pairs (x, y): drag the four yellow rings. The dashed lines cross at the means. Points in the green quadrants (dx·dy > 0) push r towards +1, points in the red quadrants push it towards −1. r = Σdx·dy / √(Σdx²·Σdy²)."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Six pairs (x, y): drag the four yellow rings. The dashed lines cross at the means. Points in the green quadrants (dx·dy > 0) push r towards +1, points in the red quadrants push it towards −1. r = Σdx·dy / √(Σdx²·Σdy²).",
+    "kn": "ಆರು (x, y) ಜೋಡಿಗಳು: ನಾಲ್ಕು ಹಳದಿ ಉಂಗುರಗಳನ್ನು ಎಳೆಯಿರಿ. ಚುಕ್ಕೆ ರೇಖೆಗಳು ಸರಾಸರಿಗಳಲ್ಲಿ ಸಂಧಿಸುತ್ತವೆ. ಹಸಿರು ಚತುರ್ಥಕಗಳ ಬಿಂದುಗಳು r ಅನ್ನು +1 ಕಡೆಗೆ, ಕೆಂಪು ಚತುರ್ಥಕಗಳ ಬಿಂದುಗಳು −1 ಕಡೆಗೆ ತಳ್ಳುತ್ತವೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Line all six points up on a rising straight line. What is r?"
+    },
+    {
+     "en": "Drag one point far into a red quadrant. How much does a single point change r?"
+    },
+    {
+     "en": "Turn on the rectangles: r is positive when the green area outweighs the red area."
+    }
+   ],
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "box",
+     "label": {
+      "en": "Deviation rectangles dx·dy",
+      "kn": "ವಿಚಲನ ಆಯತಗಳು"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "P1",
+     "x": 3,
+     "y": 4.5,
+     "box": {
+      "x": [
+       0.5,
+       9.5
+      ],
+      "y": [
+       0.5,
+       9.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    },
+    {
+     "name": "P2",
+     "x": 4.5,
+     "y": 4,
+     "box": {
+      "x": [
+       0.5,
+       9.5
+      ],
+      "y": [
+       0.5,
+       9.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    },
+    {
+     "name": "P3",
+     "x": 6,
+     "y": 6.5,
+     "box": {
+      "x": [
+       0.5,
+       9.5
+      ],
+      "y": [
+       0.5,
+       9.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    },
+    {
+     "name": "P4",
+     "x": 7,
+     "y": 5.5,
+     "box": {
+      "x": [
+       0.5,
+       9.5
+      ],
+      "y": [
+       0.5,
+       9.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "mx",
+     "expr": "(2 + 8 + P1_x + P2_x + P3_x + P4_x)/6"
+    },
+    {
+     "name": "my",
+     "expr": "(3 + 7 + P1_y + P2_y + P3_y + P4_y)/6"
+    },
+    {
+     "name": "sxy",
+     "expr": "(2 - mx)*(3 - my) + (8 - mx)*(7 - my) + (P1_x - mx)*(P1_y - my) + (P2_x - mx)*(P2_y - my) + (P3_x - mx)*(P3_y - my) + (P4_x - mx)*(P4_y - my)"
+    },
+    {
+     "name": "sxx",
+     "expr": "(2 - mx)^2 + (8 - mx)^2 + (P1_x - mx)^2 + (P2_x - mx)^2 + (P3_x - mx)^2 + (P4_x - mx)^2"
+    },
+    {
+     "name": "syy",
+     "expr": "(3 - my)^2 + (7 - my)^2 + (P1_y - my)^2 + (P2_y - my)^2 + (P3_y - my)^2 + (P4_y - my)^2"
+    },
+    {
+     "name": "r",
+     "expr": "sxy/sqrt(sxx*syy)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     -1.4,
+     10.8
+    ],
+    "axes": true,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": "mx",
+     "y1": 0,
+     "x2": "mx",
+     "y2": 10,
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "my",
+     "x2": 10,
+     "y2": "my",
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": "mx",
+     "y": 10.4,
+     "text": {
+      "en": "x̄ = {mx:2}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 10.3,
+     "y": "my",
+     "text": {
+      "en": "ȳ = {my:2}"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": "min(2, mx)",
+     "y": "min(3, my)",
+     "w": "abs(2 - mx)",
+     "h": "abs(3 - my)",
+     "color": {
+      "by": "step(0, (2 - mx)*(3 - my))",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "visibleIf": "box",
+     "opacity": 0.18
+    },
+    {
+     "shape": "rect",
+     "x": "min(8, mx)",
+     "y": "min(7, my)",
+     "w": "abs(8 - mx)",
+     "h": "abs(7 - my)",
+     "color": {
+      "by": "step(0, (8 - mx)*(7 - my))",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "visibleIf": "box",
+     "opacity": 0.18
+    },
+    {
+     "shape": "rect",
+     "x": "min(P1_x, mx)",
+     "y": "min(P1_y, my)",
+     "w": "abs(P1_x - mx)",
+     "h": "abs(P1_y - my)",
+     "color": {
+      "by": "step(0, (P1_x - mx)*(P1_y - my))",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "visibleIf": "box",
+     "opacity": 0.18
+    },
+    {
+     "shape": "rect",
+     "x": "min(P2_x, mx)",
+     "y": "min(P2_y, my)",
+     "w": "abs(P2_x - mx)",
+     "h": "abs(P2_y - my)",
+     "color": {
+      "by": "step(0, (P2_x - mx)*(P2_y - my))",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "visibleIf": "box",
+     "opacity": 0.18
+    },
+    {
+     "shape": "rect",
+     "x": "min(P3_x, mx)",
+     "y": "min(P3_y, my)",
+     "w": "abs(P3_x - mx)",
+     "h": "abs(P3_y - my)",
+     "color": {
+      "by": "step(0, (P3_x - mx)*(P3_y - my))",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "visibleIf": "box",
+     "opacity": 0.18
+    },
+    {
+     "shape": "rect",
+     "x": "min(P4_x, mx)",
+     "y": "min(P4_y, my)",
+     "w": "abs(P4_x - mx)",
+     "h": "abs(P4_y - my)",
+     "color": {
+      "by": "step(0, (P4_x - mx)*(P4_y - my))",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "visibleIf": "box",
+     "opacity": 0.18
+    },
+    {
+     "shape": "circle",
+     "x": "2",
+     "y": "3",
+     "r": 0.22,
+     "color": {
+      "by": "step(0, (2 - mx)*(3 - my))",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "circle",
+     "x": "8",
+     "y": "7",
+     "r": 0.22,
+     "color": {
+      "by": "step(0, (8 - mx)*(7 - my))",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "circle",
+     "x": "P1_x",
+     "y": "P1_y",
+     "r": 0.3,
+     "color": {
+      "by": "step(0, (P1_x - mx)*(P1_y - my))",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "P2_x",
+     "y": "P2_y",
+     "r": 0.3,
+     "color": {
+      "by": "step(0, (P2_x - mx)*(P2_y - my))",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "P3_x",
+     "y": "P3_y",
+     "r": 0.3,
+     "color": {
+      "by": "step(0, (P3_x - mx)*(P3_y - my))",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "P4_x",
+     "y": "P4_y",
+     "r": 0.3,
+     "color": {
+      "by": "step(0, (P4_x - mx)*(P4_y - my))",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -0.9,
+     "text": {
+      "en": "green: dx·dy > 0 pulls r up · red: dx·dy < 0 pulls r down"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Karl Pearson's r",
+      "kn": "ಕಾರ್ಲ್ ಪಿಯರ್ಸನ್ r"
+     },
+     "expr": "r",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Cov(x, y)"
+     },
+     "expr": "sxy/6",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "σx"
+     },
+     "expr": "sqrt(sxx/6)",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "σy"
+     },
+     "expr": "sqrt(syy/6)",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

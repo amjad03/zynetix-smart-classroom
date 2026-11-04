@@ -232,6 +232,234 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Adding probabilities",
+    "kn": "ಸಂಭವನೀಯತೆಗಳ ಕೂಡುವಿಕೆ"
+   },
+   "narration": {
+    "en": "The box is the sample space with total probability 1; widths are probabilities. A and B overlap in A ∩ B. Adding P(A) and P(B) counts the overlap twice, so P(A ∪ B) = P(A) + P(B) − P(A ∩ B). The dots are 200 random outcomes coloured by the events they fall in."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The box is the sample space with total probability 1; widths are probabilities. A and B overlap in A ∩ B. Adding P(A) and P(B) counts the overlap twice, so P(A ∪ B) = P(A) + P(B) − P(A ∩ B). The dots are 200 random outcomes coloured by the events they fall in.",
+    "kn": "ಪೆಟ್ಟಿಗೆ ಒಟ್ಟು ಸಂಭವನೀಯತೆ 1 ರ ಮಾದರಿ ಆಕಾಶ; ಅಗಲಗಳು ಸಂಭವನೀಯತೆಗಳು. A ಮತ್ತು B, A ∩ B ಯಲ್ಲಿ ಅತಿಕ್ರಮಿಸುತ್ತವೆ. P(A) ಮತ್ತು P(B) ಕೂಡಿಸಿದರೆ ಅತಿಕ್ರಮ ಎರಡು ಬಾರಿ ಎಣಿಕೆಯಾಗುತ್ತದೆ; ಹಾಗಾಗಿ P(A ∪ B) = P(A) + P(B) − P(A ∩ B)."
+   },
+   "tryThis": [
+    {
+     "en": "Make the events mutually exclusive. What is P(A ∪ B) now?"
+    },
+    {
+     "en": "Set P(A) = 0.7 and P(B) = 0.6. What is the smallest possible overlap?"
+    },
+    {
+     "en": "Make B lie completely inside A. What is P(A ∪ B)?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "pA",
+     "label": {
+      "en": "P(A)"
+     },
+     "min": 0.05,
+     "max": 0.95,
+     "step": 0.05,
+     "value": 0.5
+    },
+    {
+     "name": "pB",
+     "label": {
+      "en": "P(B)"
+     },
+     "min": 0.05,
+     "max": 0.95,
+     "step": 0.05,
+     "value": 0.4
+    },
+    {
+     "name": "pab",
+     "label": {
+      "en": "P(A ∩ B)"
+     },
+     "min": 0,
+     "max": 0.95,
+     "step": 0.05,
+     "value": 0.15
+    }
+   ],
+   "toggles": [
+    {
+     "name": "me",
+     "label": {
+      "en": "Mutually exclusive",
+      "kn": "ಪರಸ್ಪರ ಹೊರತಾದ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "lo",
+     "expr": "max(0, pA + pB - 1)"
+    },
+    {
+     "name": "q",
+     "expr": "clamp(if(me, 0, pab), lo, min(pA, pB))"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     10.5
+    ],
+    "y": [
+     -1.6,
+     8.6
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 10,
+     "h": 6,
+     "color": "white",
+     "fill": false
+    },
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": "10*pA",
+     "h": 6,
+     "color": "blue",
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": "10*(pA - q)",
+     "y": 0,
+     "w": "10*pB",
+     "h": 6,
+     "color": "orange",
+     "opacity": 0.3
+    },
+    {
+     "shape": "particles",
+     "count": 200,
+     "x": "10*rand(i)",
+     "y": "0.15 + 5.7*rand(i + 500)",
+     "r": 0.07,
+     "color": {
+      "by": "((10*rand(i) < 10*pA) + 2*(10*rand(i) >= 10*(pA - q) && 10*rand(i) < 10*(pA - q + pB)))/3",
+      "scale": [
+       "white",
+       "blue",
+       "orange",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": "5*pA",
+     "y": 6.5,
+     "text": {
+      "en": "A"
+     },
+     "size": 26,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": "10*(pA - q) + 5*pB",
+     "y": 7.2,
+     "text": {
+      "en": "B"
+     },
+     "size": 26,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": "10*(pA - q/2)",
+     "y": 6.5,
+     "text": {
+      "en": "A∩B"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "q > 0.04"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -0.5,
+     "x2": "10*(pA - q + pB)",
+     "y2": -0.5,
+     "color": "yellow",
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "x": "5*(pA - q + pB)",
+     "y": -1.1,
+     "text": {
+      "en": "A ∪ B"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 8,
+     "text": {
+      "en": "cannot be mutually exclusive: P(A) + P(B) > 1"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "me && pA + pB > 1"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "P(A ∩ B) used"
+     },
+     "expr": "q",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "P(A ∪ B) = P(A) + P(B) − P(A ∩ B)",
+      "kn": "P(A ∪ B)"
+     },
+     "expr": "pA + pB - q",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "P(A only)"
+     },
+     "expr": "pA - q",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "P(neither) = 1 − P(A ∪ B)"
+     },
+     "expr": "1 - pA - pB + q",
+     "digits": 2
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

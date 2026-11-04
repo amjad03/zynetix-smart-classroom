@@ -370,6 +370,251 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Parameter and statistic",
+    "kn": "ನಿಯತಾಂಕ ಮತ್ತು ಅಂಕಿಅಂಶ"
+   },
+   "narration": {
+    "en": "A population of 64 heights has a fixed mean μ = 159.84 cm: a parameter. Press Draw: units are picked at random one by one (red ring) and the running sample mean x̄ is plotted. x̄ is a statistic: draw again and it comes out different, while μ never changes."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A population of 64 heights has a fixed mean μ = 159.84 cm: a parameter. Press Draw: units are picked at random one by one (red ring) and the running sample mean x̄ is plotted. x̄ is a statistic: draw again and it comes out different, while μ never changes.",
+    "kn": "64 ಎತ್ತರಗಳ ಸಮಷ್ಟಿಗೆ ಸ್ಥಿರ ಸರಾಸರಿ μ = 159.84 ಸೆಂ.ಮೀ.: ನಿಯತಾಂಕ. ಎಳೆಯಿರಿ ಒತ್ತಿ: ಘಟಕಗಳು ಒಂದೊಂದಾಗಿ ಯಾದೃಚ್ಛಿಕವಾಗಿ ಆಯ್ಕೆಯಾಗುತ್ತವೆ (ಕೆಂಪು ಉಂಗುರ), ಮಾದರಿ ಸರಾಸರಿ x̄ ಗುರುತಿಸಲಾಗುತ್ತದೆ. x̄ ಅಂಕಿಅಂಶ: ಮತ್ತೆ ಎಳೆದರೆ ಬೇರೆಯಾಗುತ್ತದೆ, μ ಎಂದಿಗೂ ಬದಲಾಗದು."
+   },
+   "tryThis": [
+    {
+     "en": "Draw five samples of size 5. How far from μ does x̄ land?"
+    },
+    {
+     "en": "Now use samples of 20. Do the values of x̄ land closer to μ?"
+    },
+    {
+     "en": "Which of these is a parameter: μ, x̄, σ, s? Why?"
+    }
+   ],
+   "sliders": [],
+   "choices": [
+    {
+     "name": "nn",
+     "label": {
+      "en": "Sample size n",
+      "kn": "ಮಾದರಿ ಗಾತ್ರ n"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "5"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "10"
+       },
+       "value": 10
+      },
+      {
+       "label": {
+        "en": "20"
+       },
+       "value": 20
+      }
+     ],
+     "value": 10
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Draw a sample",
+      "kn": "ಮಾದರಿ ಎಳೆಯಿರಿ"
+     },
+     "icon": "launch",
+     "set": {
+      "seed": "seed + 1"
+     },
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 10,
+    "dt": 0.5,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4
+    ],
+    "speed": 2,
+    "stopWhen": "k >= nn"
+   },
+   "integrator": "euler",
+   "vars": [
+    {
+     "name": "k",
+     "expr": "round(t/0.5)"
+    },
+    {
+     "name": "uu",
+     "expr": "floor(64*rand(5*(k - 1) + 7919*seed + 1))"
+    },
+    {
+     "name": "xb",
+     "expr": "if(k > 0, S/k, 0)"
+    }
+   ],
+   "state": [
+    {
+     "name": "S",
+     "init": 0,
+     "rate": "(150 + mod(37*floor(64*rand(5*k + 7919*seed + 1)), 21))/0.5"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     21
+    ],
+    "y": [
+     -0.5,
+     9.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 64,
+     "x": "mod(i, 8) + 0.5",
+     "y": "7.5 - floor(i/8)",
+     "r": 0.32,
+     "color": {
+      "by": "(mod(37*i, 21))/20",
+      "scale": [
+       "blue",
+       "green",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "circle",
+     "x": "mod(uu, 8) + 0.5",
+     "y": "7.5 - floor(uu/8)",
+     "r": 0.48,
+     "color": "red",
+     "fill": false,
+     "visibleIf": "k > 0",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 8.6,
+     "text": {
+      "en": "population: N = 64 heights (150–170 cm)"
+     },
+     "size": 18
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": "0.4*(159.84375 - 150)",
+     "x2": 20,
+     "y2": "0.4*(159.84375 - 150)",
+     "color": "green",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": "if(k > 0, 0.4*(xb - 150), 0) + 0.6",
+     "text": {
+      "en": "x̄ = {xb:2}"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "k > 0"
+    },
+    {
+     "shape": "trail",
+     "x": "10 + 10*t/(0.5*nn)",
+     "y": "if(k > 0, 0.4*(xb - 150), 0.4*(159.84375 - 150))",
+     "length": 600,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 8.6,
+     "text": {
+      "en": "running sample mean x̄ (sample size {nn})"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 19.5,
+     "y": "0.4*(159.84 - 150) - 0.5",
+     "text": {
+      "en": "μ"
+     },
+     "size": 22,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Parameter μ (population mean)",
+      "kn": "ನಿಯತಾಂಕ μ"
+     },
+     "expr": "159.84375",
+     "digits": 2,
+     "unit": "cm"
+    },
+    {
+     "label": {
+      "en": "Statistic x̄ (sample mean)",
+      "kn": "ಅಂಕಿಅಂಶ x̄"
+     },
+     "expr": "xb",
+     "digits": 2,
+     "unit": "cm"
+    },
+    {
+     "label": {
+      "en": "Units drawn"
+     },
+     "expr": "k",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Height of the last unit"
+     },
+     "expr": "if(k > 0, (150 + mod(37*uu, 21)), 0)",
+     "digits": 0,
+     "unit": "cm"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

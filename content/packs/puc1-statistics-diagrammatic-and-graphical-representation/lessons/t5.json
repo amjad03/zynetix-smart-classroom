@@ -275,6 +275,335 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Find the median from ogives",
+    "kn": "ತೊಡೆ ವಕ್ರಗಳಿಂದ ಮಧ್ಯಾಂಕ"
+   },
+   "narration": {
+    "en": "Set the frequencies of the classes 0–10, 10–20, 20–30 and 30–40. The less-than ogive rises through the upper boundaries; the more-than ogive falls through the lower boundaries. They cross at height N/2, right above the median."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Set the frequencies of the classes 0–10, 10–20, 20–30 and 30–40. The less-than ogive rises through the upper boundaries; the more-than ogive falls through the lower boundaries. They cross at height N/2, right above the median.",
+    "kn": "0–10, 10–20, 20–30, 30–40 ವರ್ಗಗಳ ಆವೃತ್ತಿಗಳನ್ನು ನಿಗದಿಪಡಿಸಿ. ಕಡಿಮೆ-ಇರುವ ತೊಡೆ ವಕ್ರ ಮೇಲಿನ ಗಡಿಗಳ ಮೂಲಕ ಏರುತ್ತದೆ; ಹೆಚ್ಚು-ಇರುವ ತೊಡೆ ವಕ್ರ ಕೆಳಗಿನ ಗಡಿಗಳ ಮೂಲಕ ಇಳಿಯುತ್ತದೆ. ಅವು N/2 ಎತ್ತರದಲ್ಲಿ, ಮಧ್ಯಾಂಕದ ನೇರ ಮೇಲೆ ಸಂಧಿಸುತ್ತವೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Make the distribution symmetric (for example 5, 15, 15, 5). Where is the median?"
+    },
+    {
+     "en": "Pile most of the frequency into the first class. Which way does the median move?"
+    },
+    {
+     "en": "Check the reading with the formula L + (N/2 − cf)/f × h."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "f1",
+     "label": {
+      "en": "f of 0–10"
+     },
+     "min": 1,
+     "max": 30,
+     "step": 1,
+     "value": 6
+    },
+    {
+     "name": "f2",
+     "label": {
+      "en": "f of 10–20"
+     },
+     "min": 1,
+     "max": 30,
+     "step": 1,
+     "value": 14
+    },
+    {
+     "name": "f3",
+     "label": {
+      "en": "f of 20–30"
+     },
+     "min": 1,
+     "max": 30,
+     "step": 1,
+     "value": 12
+    },
+    {
+     "name": "f4",
+     "label": {
+      "en": "f of 30–40"
+     },
+     "min": 1,
+     "max": 30,
+     "step": 1,
+     "value": 8
+    }
+   ],
+   "toggles": [
+    {
+     "name": "mo",
+     "label": {
+      "en": "More-than ogive",
+      "kn": "ಹೆಚ್ಚು-ಇರುವ ತೊಡೆ ವಕ್ರ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "c1",
+     "expr": "f1"
+    },
+    {
+     "name": "c2",
+     "expr": "f1 + f2"
+    },
+    {
+     "name": "c3",
+     "expr": "f1 + f2 + f3"
+    },
+    {
+     "name": "N",
+     "expr": "c3 + f4"
+    },
+    {
+     "name": "med",
+     "expr": "if(c1 >= N/2, 0 + (N/2)/f1*10, if(c2 >= N/2, 10 + (N/2 - c1)/f2*10, if(c3 >= N/2, 20 + (N/2 - c2)/f3*10, 30 + (N/2 - c3)/f4*10)))"
+    }
+   ],
+   "view": {
+    "x": [
+     -3,
+     43
+    ],
+    "y": [
+     -8,
+     125
+    ],
+    "axes": true,
+    "xLabel": "marks",
+    "yLabel": "cumulative frequency"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "points": [
+      [
+       "0",
+       "0"
+      ],
+      [
+       "10",
+       "c1"
+      ],
+      [
+       "20",
+       "c2"
+      ],
+      [
+       "30",
+       "c3"
+      ],
+      [
+       "40",
+       "N"
+      ]
+     ],
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "points": [
+      [
+       "0",
+       "N"
+      ],
+      [
+       "10",
+       "N - c1"
+      ],
+      [
+       "20",
+       "N - c2"
+      ],
+      [
+       "30",
+       "N - c3"
+      ],
+      [
+       "40",
+       "0"
+      ]
+     ],
+     "color": "blue",
+     "visibleIf": "mo",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "0",
+     "y": "0",
+     "r": 0.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "10",
+     "y": "c1",
+     "r": 0.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "20",
+     "y": "c2",
+     "r": 0.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "30",
+     "y": "c3",
+     "r": 0.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "40",
+     "y": "N",
+     "r": 0.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "0",
+     "y": "N",
+     "r": 0.6,
+     "color": "blue",
+     "visibleIf": "mo"
+    },
+    {
+     "shape": "circle",
+     "x": "10",
+     "y": "N - c1",
+     "r": 0.6,
+     "color": "blue",
+     "visibleIf": "mo"
+    },
+    {
+     "shape": "circle",
+     "x": "20",
+     "y": "N - c2",
+     "r": 0.6,
+     "color": "blue",
+     "visibleIf": "mo"
+    },
+    {
+     "shape": "circle",
+     "x": "30",
+     "y": "N - c3",
+     "r": 0.6,
+     "color": "blue",
+     "visibleIf": "mo"
+    },
+    {
+     "shape": "circle",
+     "x": "40",
+     "y": "0",
+     "r": 0.6,
+     "color": "blue",
+     "visibleIf": "mo"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "N/2",
+     "x2": "med",
+     "y2": "N/2",
+     "color": "orange",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": "med",
+     "y1": "N/2",
+     "x2": "med",
+     "y2": 0,
+     "color": "orange",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "med",
+     "y": "N/2",
+     "r": 0.8,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": "med",
+     "y": -4,
+     "text": {
+      "en": "median {med:2}"
+     },
+     "size": 24,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": "N + 3",
+     "text": {
+      "en": "less than"
+     },
+     "size": 20,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 35,
+     "y": "N + 3",
+     "text": {
+      "en": "more than"
+     },
+     "size": 20,
+     "color": "blue",
+     "visibleIf": "mo"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "N"
+     },
+     "expr": "N",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "N/2"
+     },
+     "expr": "N/2",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Median",
+      "kn": "ಮಧ್ಯಾಂಕ"
+     },
+     "expr": "med",
+     "digits": 2
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

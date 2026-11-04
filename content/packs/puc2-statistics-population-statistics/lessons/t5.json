@@ -355,6 +355,321 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Generations of mothers: GRR and NRR",
+    "kn": "ತಾಯಂದಿರ ತಲೆಮಾರುಗಳು: GRR ಮತ್ತು NRR"
+   },
+   "narration": {
+    "en": "Start with 1000 women. GRR counts the daughters they would bear (TFR × share of girls). NRR also allows for daughters who die before they reach the child-bearing ages (× survival ratio). Press Next generation: each generation of mothers is NRR times the last."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Start with 1000 women. GRR counts the daughters they would bear (TFR × share of girls). NRR also allows for daughters who die before they reach the child-bearing ages (× survival ratio). Press Next generation: each generation of mothers is NRR times the last.",
+    "kn": "1000 ಮಹಿಳೆಯರಿಂದ ಆರಂಭಿಸಿ. GRR ಅವರು ಹೆರುವ ಹೆಣ್ಣುಮಕ್ಕಳನ್ನು ಎಣಿಸುತ್ತದೆ (TFR × ಹೆಣ್ಣು ಪಾಲು). NRR ಹೆರುವ ವಯಸ್ಸು ತಲುಪುವ ಮೊದಲು ಸಾಯುವ ಹೆಣ್ಣುಮಕ್ಕಳನ್ನೂ ಪರಿಗಣಿಸುತ್ತದೆ (× ಬದುಕುಳಿಯುವ ಅನುಪಾತ). ಮುಂದಿನ ತಲೆಮಾರು ಒತ್ತಿ: ಪ್ರತಿ ತಲೆಮಾರು ಹಿಂದಿನದರ NRR ಪಟ್ಟು."
+   },
+   "tryThis": [
+    {
+     "en": "Find a TFR that makes NRR = 1 when the survival ratio is 0.9."
+    },
+    {
+     "en": "Lower the survival ratio. Why is NRR always at most GRR?"
+    },
+    {
+     "en": "With NRR = 1.2, how many mothers are there after four generations?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "tf",
+     "label": {
+      "en": "TFR (children per woman)",
+      "kn": "TFR"
+     },
+     "min": 1,
+     "max": 4,
+     "step": 0.1,
+     "value": 2.5
+    },
+    {
+     "name": "gs",
+     "label": {
+      "en": "Share of girls among births",
+      "kn": "ಹೆಣ್ಣು ಪಾಲು"
+     },
+     "min": 0.45,
+     "max": 0.52,
+     "step": 0.01,
+     "value": 0.49
+    },
+    {
+     "name": "sv",
+     "label": {
+      "en": "Survival ratio of girls to motherhood",
+      "kn": "ಬದುಕುಳಿಯುವ ಅನುಪಾತ"
+     },
+     "min": 0.6,
+     "max": 1,
+     "step": 0.02,
+     "value": 0.9
+    }
+   ],
+   "counters": [
+    {
+     "name": "gen",
+     "value": 0,
+     "min": 0,
+     "max": 4
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Next generation",
+      "kn": "ಮುಂದಿನ ತಲೆಮಾರು"
+     },
+     "icon": "next",
+     "set": {
+      "gen": "gen + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "gen": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "GRR",
+     "expr": "tf*gs"
+    },
+    {
+     "name": "NRR",
+     "expr": "tf*gs*sv"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.2,
+     5.2
+    ],
+    "y": [
+     -280,
+     3900
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.2,
+     "y": 0,
+     "w": 0.6,
+     "h": "min(1000*NRR^0, 3400)",
+     "color": "blue",
+     "visibleIf": "0 <= gen"
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": "min(1000*NRR^0, 3400) + 110",
+     "text": {
+      "en": "{1000*NRR^0:0}"
+     },
+     "size": 18,
+     "visibleIf": "0 <= gen"
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": -170,
+     "text": {
+      "en": "gen 0"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 1.2,
+     "y": 0,
+     "w": 0.6,
+     "h": "min(1000*NRR^1, 3400)",
+     "color": "orange",
+     "visibleIf": "1 <= gen"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": "min(1000*NRR^1, 3400) + 110",
+     "text": {
+      "en": "{1000*NRR^1:0}"
+     },
+     "size": 18,
+     "visibleIf": "1 <= gen"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": -170,
+     "text": {
+      "en": "gen 1"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 2.2,
+     "y": 0,
+     "w": 0.6,
+     "h": "min(1000*NRR^2, 3400)",
+     "color": "orange",
+     "visibleIf": "2 <= gen"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": "min(1000*NRR^2, 3400) + 110",
+     "text": {
+      "en": "{1000*NRR^2:0}"
+     },
+     "size": 18,
+     "visibleIf": "2 <= gen"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": -170,
+     "text": {
+      "en": "gen 2"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 3.2,
+     "y": 0,
+     "w": 0.6,
+     "h": "min(1000*NRR^3, 3400)",
+     "color": "orange",
+     "visibleIf": "3 <= gen"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": "min(1000*NRR^3, 3400) + 110",
+     "text": {
+      "en": "{1000*NRR^3:0}"
+     },
+     "size": 18,
+     "visibleIf": "3 <= gen"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": -170,
+     "text": {
+      "en": "gen 3"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 4.2,
+     "y": 0,
+     "w": 0.6,
+     "h": "min(1000*NRR^4, 3400)",
+     "color": "orange",
+     "visibleIf": "4 <= gen"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": "min(1000*NRR^4, 3400) + 110",
+     "text": {
+      "en": "{1000*NRR^4:0}"
+     },
+     "size": 18,
+     "visibleIf": "4 <= gen"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": -170,
+     "text": {
+      "en": "gen 4"
+     },
+     "size": 18
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 1000,
+     "x2": 5,
+     "y2": 1000,
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 3700,
+     "text": {
+      "en": "NRR > 1: each generation of mothers is larger"
+     },
+     "size": 20,
+     "color": "orange",
+     "visibleIf": "NRR > 1.0005"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 3700,
+     "text": {
+      "en": "NRR = 1: the population just replaces itself"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "abs(NRR - 1) <= 0.0005"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 3700,
+     "text": {
+      "en": "NRR < 1: each generation of mothers is smaller"
+     },
+     "size": 20,
+     "color": "blue",
+     "visibleIf": "NRR < 0.9995"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "GRR = TFR × share of girls"
+     },
+     "expr": "GRR",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "NRR = GRR × survival ratio",
+      "kn": "NRR"
+     },
+     "expr": "NRR",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

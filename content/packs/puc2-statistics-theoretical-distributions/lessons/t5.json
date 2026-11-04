@@ -234,6 +234,337 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Areas under the normal curve",
+    "kn": "ಸಾಮಾನ್ಯ ವಕ್ರದ ಕೆಳಗಿನ ವಿಸ್ತೀರ್ಣಗಳು"
+   },
+   "narration": {
+    "en": "Marks are normal with mean μ and s.d. σ. Drag the two orange handles. Each is turned into a standard normal variate z = (x − μ)/σ, and the shaded area P(a < X < b) comes from the normal table: add the areas when a and b are on opposite sides of μ, subtract when on the same side."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Marks are normal with mean μ and s.d. σ. Drag the two orange handles. Each is turned into a standard normal variate z = (x − μ)/σ, and the shaded area P(a < X < b) comes from the normal table: add the areas when a and b are on opposite sides of μ, subtract when on the same side.",
+    "kn": "ಅಂಕಗಳು ಸರಾಸರಿ μ, ಪ್ರ.ವಿ. σ ಸಾಮಾನ್ಯ. ಎರಡು ಕಿತ್ತಳೆ ಹಿಡಿಗಳನ್ನು ಎಳೆಯಿರಿ. ಪ್ರತಿಯೊಂದನ್ನು z = (x − μ)/σ ಗೆ ಬದಲಾಯಿಸಲಾಗುತ್ತದೆ; ಛಾಯೆ ವಿಸ್ತೀರ್ಣ P(a < X < b) ಸಾಮಾನ್ಯ ಕೋಷ್ಟಕದಿಂದ: a, b μ ಯ ಎರಡು ಬದಿಗಳಲ್ಲಿದ್ದರೆ ಕೂಡಿಸಿ, ಒಂದೇ ಬದಿಯಲ್ಲಿದ್ದರೆ ಕಳೆಯಿರಿ."
+   },
+   "tryThis": [
+    {
+     "en": "μ = 60, σ = 8: what share of students score between 52 and 68?"
+    },
+    {
+     "en": "What share score above 76? Check with 0.5 − A(2)."
+    },
+    {
+     "en": "Put both handles above μ. How do you find the area from the table?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "mu",
+     "label": {
+      "en": "Mean μ",
+      "kn": "ಸರಾಸರಿ μ"
+     },
+     "min": 40,
+     "max": 80,
+     "step": 1,
+     "value": 60
+    },
+    {
+     "name": "sg",
+     "label": {
+      "en": "Standard deviation σ",
+      "kn": "ಪ್ರ.ವಿ. σ"
+     },
+     "min": 4,
+     "max": 16,
+     "step": 1,
+     "value": 8
+    }
+   ],
+   "handles": [
+    {
+     "name": "Ha",
+     "label": "a",
+     "x": 52,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       20,
+       100
+      ],
+      "y": [
+       0,
+       0
+      ]
+     },
+     "snap": 1,
+     "color": "orange"
+    },
+    {
+     "name": "Hb",
+     "label": "b",
+     "x": 68,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       20,
+       100
+      ],
+      "y": [
+       0,
+       0
+      ]
+     },
+     "snap": 1,
+     "color": "orange"
+    }
+   ],
+   "vars": [
+    {
+     "name": "lo",
+     "expr": "min(Ha_x, Hb_x)"
+    },
+    {
+     "name": "hi",
+     "expr": "max(Ha_x, Hb_x)"
+    },
+    {
+     "name": "paz",
+     "expr": "(lo - mu)/sg"
+    },
+    {
+     "name": "pak",
+     "expr": "1/(1 + 0.2316419*abs(paz))"
+    },
+    {
+     "name": "paq",
+     "expr": "exp(-paz^2/2)/sqrt(2*pi)*pak*(0.31938153 + pak*(-0.356563782 + pak*(1.781477937 + pak*(-1.821255978 + pak*1.330274429))))"
+    },
+    {
+     "name": "pa",
+     "expr": "if(paz >= 0, 1 - paq, paq)"
+    },
+    {
+     "name": "pbz",
+     "expr": "(hi - mu)/sg"
+    },
+    {
+     "name": "pbk",
+     "expr": "1/(1 + 0.2316419*abs(pbz))"
+    },
+    {
+     "name": "pbq",
+     "expr": "exp(-pbz^2/2)/sqrt(2*pi)*pbk*(0.31938153 + pbk*(-0.356563782 + pbk*(1.781477937 + pbk*(-1.821255978 + pbk*1.330274429))))"
+    },
+    {
+     "name": "pb",
+     "expr": "if(pbz >= 0, 1 - pbq, pbq)"
+    },
+    {
+     "name": "za",
+     "expr": "paz"
+    },
+    {
+     "name": "zb",
+     "expr": "pbz"
+    }
+   ],
+   "view": {
+    "x": [
+     20,
+     100
+    ],
+    "y": [
+     -9,
+     105
+    ],
+    "axes": false
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       "lo",
+       0
+      ],
+      [
+       "lo + (hi - lo)*0",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.05",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.05) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.1",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.1) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.15",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.15) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.2",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.2) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.25",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.25) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.3",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.3) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.35",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.35) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.4",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.4) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.45",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.45) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.5",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.5) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.55",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.55) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.6",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.6) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.65",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.65) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.7",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.7) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.75",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.75) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.8",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.8) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.85",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.85) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.9",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.9) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*0.95",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*0.95) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "lo + (hi - lo)*1",
+       "1000/(sg*sqrt(2*pi))*exp(-((lo + (hi - lo)*1) - mu)^2/(2*sg^2))"
+      ],
+      [
+       "hi",
+       0
+      ]
+     ],
+     "color": "blue",
+     "opacity": 0.45
+    },
+    {
+     "shape": "path",
+     "fn": "1000/(sg*sqrt(2*pi))*exp(-((x) - mu)^2/(2*sg^2))",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "mu",
+     "y1": 0,
+     "x2": "mu",
+     "y2": "1000/(sg*sqrt(2*pi))",
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": "(lo + hi)/2",
+     "y": "clamp(0.4*1000/(sg*sqrt(2*pi)), 4, 60)",
+     "text": {
+      "en": "{100*(pb - pa):2}%"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": "lo",
+     "y": -6,
+     "text": {
+      "en": "z = {za:2}"
+     },
+     "size": 18,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": "hi",
+     "y": -6,
+     "text": {
+      "en": "z = {zb:2}"
+     },
+     "size": 18,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "z for a"
+     },
+     "expr": "za",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "z for b"
+     },
+     "expr": "zb",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "P(a < X < b)",
+      "kn": "P(a < X < b)"
+     },
+     "expr": "pb - pa",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "P(X > b)"
+     },
+     "expr": "1 - pb",
+     "digits": 4
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

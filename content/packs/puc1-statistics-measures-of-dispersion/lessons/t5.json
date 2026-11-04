@@ -358,6 +358,302 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Who is more consistent?",
+    "kn": "ಯಾರು ಹೆಚ್ಚು ಸ್ಥಿರ?"
+   },
+   "narration": {
+    "en": "Twenty innings each for two batsmen. Set each one's mean score and standard deviation and press New innings. The coefficient of variation σ/x̄ × 100 compares their consistency even when their averages differ: the smaller C.V. is more consistent."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Twenty innings each for two batsmen. Set each one's mean score and standard deviation and press New innings. The coefficient of variation σ/x̄ × 100 compares their consistency even when their averages differ: the smaller C.V. is more consistent.",
+    "kn": "ಇಬ್ಬರು ಬ್ಯಾಟ್ಸ್‌ಮನ್‌ಗಳ ತಲಾ ಇಪ್ಪತ್ತು ಇನ್ನಿಂಗ್ಸ್. ಪ್ರತಿಯೊಬ್ಬರ ಸರಾಸರಿ ಮತ್ತು ಪ್ರಮಾಣ ವಿಚಲನೆ ನಿಗದಿಪಡಿಸಿ. ಸರಾಸರಿಗಳು ಬೇರೆಯಾದರೂ ವ್ಯತ್ಯಾಸ ಗುಣಾಂಕ σ/x̄ × 100 ಸ್ಥಿರತೆಯನ್ನು ಹೋಲಿಸುತ್ತದೆ: ಚಿಕ್ಕ C.V. ಹೆಚ್ಚು ಸ್ಥಿರ."
+   },
+   "tryThis": [
+    {
+     "en": "Give A mean 60, σ 15 and B mean 30, σ 9. Who has the bigger σ? Who is more consistent?"
+    },
+    {
+     "en": "Find settings where B has the larger σ but is still more consistent."
+    },
+    {
+     "en": "Press New innings: do the dots change? Does the C.V. change?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "mA",
+     "label": {
+      "en": "Mean of A",
+      "kn": "A ಸರಾಸರಿ"
+     },
+     "min": 20,
+     "max": 80,
+     "step": 5,
+     "value": 60
+    },
+    {
+     "name": "sA",
+     "label": {
+      "en": "σ of A",
+      "kn": "A ಯ σ"
+     },
+     "min": 2,
+     "max": 25,
+     "step": 1,
+     "value": 15
+    },
+    {
+     "name": "mB",
+     "label": {
+      "en": "Mean of B",
+      "kn": "B ಸರಾಸರಿ"
+     },
+     "min": 20,
+     "max": 80,
+     "step": 5,
+     "value": 30
+    },
+    {
+     "name": "sB",
+     "label": {
+      "en": "σ of B",
+      "kn": "B ಯ σ"
+     },
+     "min": 2,
+     "max": 25,
+     "step": 1,
+     "value": 9
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New innings",
+      "kn": "ಹೊಸ ಇನ್ನಿಂಗ್ಸ್"
+     },
+     "icon": "next",
+     "set": {
+      "seed": "seed + 1"
+     }
+    }
+   ],
+   "view": {
+    "x": [
+     -8,
+     152
+    ],
+    "y": [
+     -1,
+     5.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 3,
+     "x2": 150,
+     "y2": 3,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 1,
+     "x2": 150,
+     "y2": 1,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": -2,
+     "y": 3,
+     "text": {
+      "en": "A"
+     },
+     "size": 24,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": -2,
+     "y": 1,
+     "text": {
+      "en": "B"
+     },
+     "size": 24,
+     "align": "right"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "clamp(mA + sA*sqrt(-2*ln(0.001 + 0.998*rand(i + 97*seed + 5000)))*cos(2*pi*rand(i + 97*seed + 5040)), 0, 150)",
+     "y": "3 + 0.5*(rand(i + 7) - 0.5)",
+     "r": 0.9,
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "clamp(mB + sB*sqrt(-2*ln(0.001 + 0.998*rand(i + 97*seed + 9000)))*cos(2*pi*rand(i + 97*seed + 9040)), 0, 150)",
+     "y": "1 + 0.5*(rand(i + 77) - 0.5)",
+     "r": 0.9,
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "line",
+     "x1": "mA",
+     "y1": 3.7,
+     "x2": "mA",
+     "y2": 2.3,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "mB",
+     "y1": 1.7,
+     "x2": "mB",
+     "y2": 0.3,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 75,
+     "y": 4.6,
+     "text": {
+      "en": "A is more consistent (smaller C.V.)"
+     },
+     "size": 22,
+     "color": "blue",
+     "visibleIf": "sA/mA < sB/mB"
+    },
+    {
+     "shape": "text",
+     "x": 75,
+     "y": 4.6,
+     "text": {
+      "en": "B is more consistent (smaller C.V.)"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "sA/mA > sB/mB"
+    },
+    {
+     "shape": "text",
+     "x": 75,
+     "y": 4.6,
+     "text": {
+      "en": "equally consistent"
+     },
+     "size": 22,
+     "visibleIf": "sA/mA == sB/mB"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -0.3,
+     "text": {
+      "en": "0"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 25,
+     "y": -0.3,
+     "text": {
+      "en": "25"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": -0.3,
+     "text": {
+      "en": "50"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 75,
+     "y": -0.3,
+     "text": {
+      "en": "75"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 100,
+     "y": -0.3,
+     "text": {
+      "en": "100"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 125,
+     "y": -0.3,
+     "text": {
+      "en": "125"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 150,
+     "y": -0.3,
+     "text": {
+      "en": "150"
+     },
+     "size": 16
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "C.V. of A",
+      "kn": "A ಯ C.V."
+     },
+     "expr": "100*sA/mA",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "C.V. of B",
+      "kn": "B ಯ C.V."
+     },
+     "expr": "100*sB/mB",
+     "digits": 1,
+     "unit": "%"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

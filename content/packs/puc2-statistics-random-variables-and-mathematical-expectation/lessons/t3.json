@@ -458,6 +458,215 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Expectation is the long-run average",
+    "kn": "ನಿರೀಕ್ಷೆ ದೀರ್ಘಾವಧಿ ಸರಾಸರಿ"
+   },
+   "narration": {
+    "en": "A stall game: pay a fee to roll a die, win a prize on a six. Your gain X is (prize − fee) with probability 1/6 and −fee with probability 5/6, so E(X) = prize/6 − fee. Play 1000 rounds: the average gain (yellow) settles at E(X). The game is fair when E(X) = 0."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A stall game: pay a fee to roll a die, win a prize on a six. Your gain X is (prize − fee) with probability 1/6 and −fee with probability 5/6, so E(X) = prize/6 − fee. Play 1000 rounds: the average gain (yellow) settles at E(X). The game is fair when E(X) = 0.",
+    "kn": "ಒಂದು ಆಟ: ದಾಳ ಎಸೆಯಲು ಶುಲ್ಕ ಕೊಡಿ, ಆರು ಬಂದರೆ ಬಹುಮಾನ. ಲಾಭ X = (ಬಹುಮಾನ − ಶುಲ್ಕ) ಸಂಭವನೀಯತೆ 1/6, −ಶುಲ್ಕ ಸಂಭವನೀಯತೆ 5/6; E(X) = ಬಹುಮಾನ/6 − ಶುಲ್ಕ. 1000 ಸುತ್ತು ಆಡಿ: ಸರಾಸರಿ ಲಾಭ E(X) ನಲ್ಲಿ ನೆಲೆಸುತ್ತದೆ. E(X) = 0 ಆದರೆ ನ್ಯಾಯಯುತ ಆಟ."
+   },
+   "tryThis": [
+    {
+     "en": "With a fee of ₹5, what prize makes the game fair?"
+    },
+    {
+     "en": "Set prize ₹24 and fee ₹5. Who gains in the long run, you or the stall?"
+    },
+    {
+     "en": "Play a few runs. Is the average after 20 rounds a good guide? After 1000?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "W",
+     "label": {
+      "en": "Prize on a six",
+      "kn": "ಆರಕ್ಕೆ ಬಹುಮಾನ"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 1,
+     "value": 24,
+     "unit": "₹"
+    },
+    {
+     "name": "Lf",
+     "label": {
+      "en": "Fee per roll",
+      "kn": "ಶುಲ್ಕ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 5,
+     "unit": "₹"
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Play 1000 rounds",
+      "kn": "1000 ಸುತ್ತು ಆಡಿ"
+     },
+     "icon": "launch",
+     "set": {
+      "seed": "seed + 1"
+     },
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 50,
+    "dt": 0.05,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 4
+   },
+   "integrator": "euler",
+   "vars": [
+    {
+     "name": "k",
+     "expr": "round(t/0.05)"
+    },
+    {
+     "name": "six",
+     "expr": "floor(6*rand(k + 7919*seed + 3)) == 5"
+    },
+    {
+     "name": "gain",
+     "expr": "if(six, W - Lf, -Lf)"
+    },
+    {
+     "name": "avg",
+     "expr": "if(k > 0, tot/k, 0)"
+    },
+    {
+     "name": "EG",
+     "expr": "W/6 - Lf"
+    }
+   ],
+   "state": [
+    {
+     "name": "tot",
+     "init": 0,
+     "rate": "gain/0.05"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     1000
+    ],
+    "y": [
+     -11,
+     12
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "round",
+    "yLabel": "average gain (₹)"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "EG",
+     "x2": 1000,
+     "y2": "EG",
+     "color": "green",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 1000,
+     "y2": 0,
+     "color": "white",
+     "opacity": 0.4
+    },
+    {
+     "shape": "trail",
+     "x": "20*t",
+     "y": "avg",
+     "length": 1100,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 870,
+     "y": "EG + 0.8",
+     "text": {
+      "en": "E(gain) = {EG:2}"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 500,
+     "y": 10.8,
+     "text": {
+      "en": "fair game: E(gain) = 0"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "abs(EG) < 0.005"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "E(X) = prize/6 − fee",
+      "kn": "E(X)"
+     },
+     "expr": "EG",
+     "digits": 2,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Average gain so far"
+     },
+     "expr": "avg",
+     "digits": 2,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Rounds played"
+     },
+     "expr": "k",
+     "digits": 0
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

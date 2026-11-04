@@ -374,6 +374,377 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Are the data consistent?",
+    "kn": "ದತ್ತಾಂಶ ಸಂಗತವೇ?"
+   },
+   "narration": {
+    "en": "Set N, (A), (B) and (AB). The four ultimate class frequencies are worked out in the table; a red cell is negative, which is impossible, so the data are inconsistent. The green band on the line shows every value of (AB) that would be consistent."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Set N, (A), (B) and (AB). The four ultimate class frequencies are worked out in the table; a red cell is negative, which is impossible, so the data are inconsistent. The green band on the line shows every value of (AB) that would be consistent.",
+    "kn": "N, (A), (B), (AB) ನಿಗದಿಪಡಿಸಿ. ನಾಲ್ಕು ಅಂತಿಮ ವರ್ಗ ಆವೃತ್ತಿಗಳು ಕೋಷ್ಟಕದಲ್ಲಿವೆ; ಕೆಂಪು ಕೋಶ ಋಣ, ಅದು ಅಸಾಧ್ಯ, ಹಾಗಾಗಿ ದತ್ತಾಂಶ ಅಸಂಗತ. ರೇಖೆಯ ಹಸಿರು ಪಟ್ಟಿ ಸಂಗತವಾಗುವ (AB) ಯ ಎಲ್ಲ ಬೆಲೆಗಳನ್ನು ತೋರಿಸುತ್ತದೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Set N = 100, (A) = 60, (B) = 70 and (AB) = 20. Which cell goes negative?"
+    },
+    {
+     "en": "What is the smallest consistent (AB) when (A) = 60, (B) = 70?"
+    },
+    {
+     "en": "Make (AB) bigger than (A). Which condition fails?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "N",
+     "label": {
+      "en": "N"
+     },
+     "min": 50,
+     "max": 100,
+     "step": 5,
+     "value": 100
+    },
+    {
+     "name": "A",
+     "label": {
+      "en": "(A)"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 60
+    },
+    {
+     "name": "Bv",
+     "label": {
+      "en": "(B)"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 50
+    },
+    {
+     "name": "AB",
+     "label": {
+      "en": "(AB)"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 30
+    }
+   ],
+   "vars": [
+    {
+     "name": "n11",
+     "expr": "AB"
+    },
+    {
+     "name": "n12",
+     "expr": "A - AB"
+    },
+    {
+     "name": "n21",
+     "expr": "Bv - AB"
+    },
+    {
+     "name": "n22",
+     "expr": "N - A - Bv + AB"
+    },
+    {
+     "name": "lo",
+     "expr": "max(0, A + Bv - N)"
+    },
+    {
+     "name": "hi",
+     "expr": "min(A, Bv)"
+    },
+    {
+     "name": "ok",
+     "expr": "n11 >= 0 && n12 >= 0 && n21 >= 0 && n22 >= 0"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     10.5
+    ],
+    "y": [
+     -2.2,
+     8
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.7,
+     "y": 4.2,
+     "w": 3.6,
+     "h": 2.6,
+     "color": {
+      "by": "step(0, n11)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "opacity": 0.35
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 5.9,
+     "text": {
+      "en": "(AB)"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 5.1,
+     "text": {
+      "en": "{n11}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "rect",
+     "x": 4.7,
+     "y": 4.2,
+     "w": 3.6,
+     "h": 2.6,
+     "color": {
+      "by": "step(0, n12)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "opacity": 0.35
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 5.9,
+     "text": {
+      "en": "(Aβ)"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 5.1,
+     "text": {
+      "en": "{n12}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "rect",
+     "x": 0.7,
+     "y": 1.2,
+     "w": 3.6,
+     "h": 2.6,
+     "color": {
+      "by": "step(0, n21)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "opacity": 0.35
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 2.9,
+     "text": {
+      "en": "(αB)"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 2.1,
+     "text": {
+      "en": "{n21}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "rect",
+     "x": 4.7,
+     "y": 1.2,
+     "w": 3.6,
+     "h": 2.6,
+     "color": {
+      "by": "step(0, n22)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "opacity": 0.35
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 2.9,
+     "text": {
+      "en": "(αβ)"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 2.1,
+     "text": {
+      "en": "{n22}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 7.4,
+     "text": {
+      "en": "B"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 7.4,
+     "text": {
+      "en": "β"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 0.2,
+     "y": 5.5,
+     "text": {
+      "en": "A"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 0.2,
+     "y": 2.5,
+     "text": {
+      "en": "α"
+     },
+     "size": 24
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -0.6,
+     "x2": 10,
+     "y2": -0.6,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": "lo/10",
+     "y": -0.9,
+     "w": "(hi - lo)/10",
+     "h": 0.6,
+     "color": "green",
+     "visibleIf": "hi >= lo"
+    },
+    {
+     "shape": "circle",
+     "x": "AB/10",
+     "y": -0.6,
+     "r": 0.22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -1.6,
+     "text": {
+      "en": "(AB) must lie in the green band: {lo} to {hi}"
+     },
+     "size": 20,
+     "visibleIf": "hi >= lo"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -1.6,
+     "text": {
+      "en": "no value of (AB) can make these data consistent"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "hi < lo"
+    },
+    {
+     "shape": "text",
+     "x": 9.3,
+     "y": 7.4,
+     "text": {
+      "en": "consistent"
+     },
+     "size": 24,
+     "color": "green",
+     "visibleIf": "ok"
+    },
+    {
+     "shape": "text",
+     "x": 9.3,
+     "y": 7.4,
+     "text": {
+      "en": "inconsistent"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "!ok"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Smallest consistent (AB)"
+     },
+     "expr": "lo",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Largest consistent (AB)"
+     },
+     "expr": "hi",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "(αβ) = N − (A) − (B) + (AB)"
+     },
+     "expr": "n22",
+     "digits": 0
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

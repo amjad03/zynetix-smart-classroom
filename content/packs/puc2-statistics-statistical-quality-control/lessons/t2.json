@@ -432,6 +432,324 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "X̄ and R charts together",
+    "kn": "X̄ ಮತ್ತು R ಚಿತ್ರಗಳು ಒಟ್ಟಿಗೆ"
+   },
+   "narration": {
+    "en": "Samples of n = 5 from a process with mean 50 and σ = 2, so R̄ = 2.326σ = 4.65. Top: the X̄ chart, limits 50 ± A₂R̄ (A₂ = 0.577). Bottom: the R chart, UCL = D₄R̄ (D₄ = 2.114), LCL = 0. From sample 15, shift the mean or let the machine wear (spread doubles): which chart raises the alarm?"
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Samples of n = 5 from a process with mean 50 and σ = 2, so R̄ = 2.326σ = 4.65. Top: the X̄ chart, limits 50 ± A₂R̄ (A₂ = 0.577). Bottom: the R chart, UCL = D₄R̄ (D₄ = 2.114), LCL = 0. From sample 15, shift the mean or let the machine wear (spread doubles): which chart raises the alarm?",
+    "kn": "ಸರಾಸರಿ 50, σ = 2 ಇರುವ ಪ್ರಕ್ರಿಯೆಯಿಂದ n = 5 ಮಾದರಿಗಳು, R̄ = 4.65. ಮೇಲೆ X̄ ಚಿತ್ರ, ಮಿತಿಗಳು 50 ± A₂R̄. ಕೆಳಗೆ R ಚಿತ್ರ, UCL = D₄R̄, LCL = 0. ಮಾದರಿ 15 ರಿಂದ ಸರಾಸರಿ ಸರಿಸಿ ಅಥವಾ ಯಂತ್ರ ಸವೆಯಲಿ (ಹರಡಿಕೆ ದ್ವಿಗುಣ): ಯಾವ ಚಿತ್ರ ಎಚ್ಚರಿಸುತ್ತದೆ?"
+   },
+   "tryThis": [
+    {
+     "en": "Shift the mean only. Does the R chart notice?"
+    },
+    {
+     "en": "Let the machine wear. Which chart shows it first?"
+    },
+    {
+     "en": "Why should the R chart be checked before trusting the X̄ chart?"
+    }
+   ],
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "ma",
+     "label": {
+      "en": "Mean shifts by 2.5 (from sample 15)",
+      "kn": "ಸರಾಸರಿ ಸರಿತ"
+     },
+     "value": false
+    },
+    {
+     "name": "wr",
+     "label": {
+      "en": "Machine wear: σ doubles (from sample 15)",
+      "kn": "ಯಂತ್ರ ಸವೆತ"
+     },
+     "value": false
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New run",
+      "kn": "ಹೊಸ ಓಟ"
+     },
+     "icon": "launch",
+     "set": {
+      "seed": "seed + 1"
+     },
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 29,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2
+   },
+   "vars": [
+    {
+     "name": "mu0",
+     "expr": "50"
+    },
+    {
+     "name": "kk",
+     "expr": "floor(t)"
+    },
+    {
+     "name": "fr",
+     "expr": "t - kk"
+    },
+    {
+     "name": "a0",
+     "expr": "mu0 + if(ma && kk >= 15, 2.5, 0) + 2*if(wr && kk >= 15, 2, 1)*(sqrt(-2*ln(0.001 + 0.998*rand(10*kk + 7919*seed + 0)))*cos(2*pi*rand(10*kk + 7919*seed + 1)))"
+    },
+    {
+     "name": "a1",
+     "expr": "mu0 + if(ma && kk >= 15, 2.5, 0) + 2*if(wr && kk >= 15, 2, 1)*(sqrt(-2*ln(0.001 + 0.998*rand(10*kk + 7919*seed + 0)))*sin(2*pi*rand(10*kk + 7919*seed + 1)))"
+    },
+    {
+     "name": "a2",
+     "expr": "mu0 + if(ma && kk >= 15, 2.5, 0) + 2*if(wr && kk >= 15, 2, 1)*(sqrt(-2*ln(0.001 + 0.998*rand(10*kk + 7919*seed + 2)))*cos(2*pi*rand(10*kk + 7919*seed + 3)))"
+    },
+    {
+     "name": "a3",
+     "expr": "mu0 + if(ma && kk >= 15, 2.5, 0) + 2*if(wr && kk >= 15, 2, 1)*(sqrt(-2*ln(0.001 + 0.998*rand(10*kk + 7919*seed + 2)))*sin(2*pi*rand(10*kk + 7919*seed + 3)))"
+    },
+    {
+     "name": "a4",
+     "expr": "mu0 + if(ma && kk >= 15, 2.5, 0) + 2*if(wr && kk >= 15, 2, 1)*(sqrt(-2*ln(0.001 + 0.998*rand(10*kk + 7919*seed + 4)))*cos(2*pi*rand(10*kk + 7919*seed + 5)))"
+    },
+    {
+     "name": "am",
+     "expr": "(a0 + a1 + a2 + a3 + a4)/5"
+    },
+    {
+     "name": "ar",
+     "expr": "max(a0, a1, a2, a3, a4) - min(a0, a1, a2, a3, a4)"
+    },
+    {
+     "name": "b0",
+     "expr": "mu0 + if(ma && (kk + 1) >= 15, 2.5, 0) + 2*if(wr && (kk + 1) >= 15, 2, 1)*(sqrt(-2*ln(0.001 + 0.998*rand(10*(kk + 1) + 7919*seed + 0)))*cos(2*pi*rand(10*(kk + 1) + 7919*seed + 1)))"
+    },
+    {
+     "name": "b1",
+     "expr": "mu0 + if(ma && (kk + 1) >= 15, 2.5, 0) + 2*if(wr && (kk + 1) >= 15, 2, 1)*(sqrt(-2*ln(0.001 + 0.998*rand(10*(kk + 1) + 7919*seed + 0)))*sin(2*pi*rand(10*(kk + 1) + 7919*seed + 1)))"
+    },
+    {
+     "name": "b2",
+     "expr": "mu0 + if(ma && (kk + 1) >= 15, 2.5, 0) + 2*if(wr && (kk + 1) >= 15, 2, 1)*(sqrt(-2*ln(0.001 + 0.998*rand(10*(kk + 1) + 7919*seed + 2)))*cos(2*pi*rand(10*(kk + 1) + 7919*seed + 3)))"
+    },
+    {
+     "name": "b3",
+     "expr": "mu0 + if(ma && (kk + 1) >= 15, 2.5, 0) + 2*if(wr && (kk + 1) >= 15, 2, 1)*(sqrt(-2*ln(0.001 + 0.998*rand(10*(kk + 1) + 7919*seed + 2)))*sin(2*pi*rand(10*(kk + 1) + 7919*seed + 3)))"
+    },
+    {
+     "name": "b4",
+     "expr": "mu0 + if(ma && (kk + 1) >= 15, 2.5, 0) + 2*if(wr && (kk + 1) >= 15, 2, 1)*(sqrt(-2*ln(0.001 + 0.998*rand(10*(kk + 1) + 7919*seed + 4)))*cos(2*pi*rand(10*(kk + 1) + 7919*seed + 5)))"
+    },
+    {
+     "name": "bm",
+     "expr": "(b0 + b1 + b2 + b3 + b4)/5"
+    },
+    {
+     "name": "br",
+     "expr": "max(b0, b1, b2, b3, b4) - min(b0, b1, b2, b3, b4)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     34
+    ],
+    "y": [
+     -0.4,
+     12.6
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "6 + (52.684 - 44)/2",
+     "x2": 30,
+     "y2": "6 + (52.684 - 44)/2",
+     "color": "red",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "6 + (47.316 - 44)/2",
+     "x2": 30,
+     "y2": "6 + (47.316 - 44)/2",
+     "color": "red",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 9,
+     "x2": 30,
+     "y2": 9,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "9.834328/4",
+     "x2": 30,
+     "y2": "9.834328/4",
+     "color": "red",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "4.652/4",
+     "x2": 30,
+     "y2": "4.652/4",
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 30,
+     "y2": 0,
+     "color": "red",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 30.3,
+     "y": 10.342,
+     "text": {
+      "en": "UCL 52.68"
+     },
+     "size": 16,
+     "align": "left",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 30.3,
+     "y": 7.658,
+     "text": {
+      "en": "LCL 47.32"
+     },
+     "size": 16,
+     "align": "left",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 30.3,
+     "y": 9,
+     "text": {
+      "en": "X̄ chart"
+     },
+     "size": 18,
+     "align": "left",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 30.3,
+     "y": 2.458,
+     "text": {
+      "en": "UCL 9.83"
+     },
+     "size": 16,
+     "align": "left",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 30.3,
+     "y": 1.163,
+     "text": {
+      "en": "R chart"
+     },
+     "size": 18,
+     "align": "left",
+     "color": "green"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "clamp(6 + (am + (bm - am)*fr - 44)/2, 5.5, 12.5)",
+     "length": 2000,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "clamp((ar + (br - ar)*fr)/4, 0, 5)",
+     "length": 2000,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 15,
+     "y1": 0,
+     "x2": 15,
+     "y2": 12.5,
+     "color": "orange",
+     "dashed": true,
+     "visibleIf": "ma || wr"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Current x̄"
+     },
+     "expr": "am",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Current range R"
+     },
+     "expr": "ar",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Sample number"
+     },
+     "expr": "kk",
+     "digits": 0
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

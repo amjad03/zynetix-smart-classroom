@@ -373,6 +373,211 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Newton's formula term by term",
+    "kn": "ನ್ಯೂಟನ್ ಸೂತ್ರ ಪದ ಪದವಾಗಿ"
+   },
+   "narration": {
+    "en": "Population of a town (thousands) at four censuses, 1991 to 2021 (h = 10). Add the terms of y₀ + uΔy₀ + u(u − 1)/2! Δ²y₀ + … one at a time: one term is a flat line, two terms a straight line, four terms pass through every point. Drag the blue year to read the estimate."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Population of a town (thousands) at four censuses, 1991 to 2021 (h = 10). Add the terms of y₀ + uΔy₀ + u(u − 1)/2! Δ²y₀ + … one at a time: one term is a flat line, two terms a straight line, four terms pass through every point. Drag the blue year to read the estimate.",
+    "kn": "ಒಂದು ಪಟ್ಟಣದ ಜನಸಂಖ್ಯೆ (ಸಾವಿರ) 1991 ರಿಂದ 2021 ರ ನಾಲ್ಕು ಜನಗಣತಿಗಳಲ್ಲಿ (h = 10). ಸೂತ್ರದ ಪದಗಳನ್ನು ಒಂದೊಂದಾಗಿ ಸೇರಿಸಿ: ಒಂದು ಪದ ಸಮತಲ ರೇಖೆ, ಎರಡು ಪದ ಸರಳ ರೇಖೆ, ನಾಲ್ಕು ಪದಗಳು ಎಲ್ಲ ಬಿಂದುಗಳ ಮೂಲಕ. ನೀಲಿ ವರ್ಷ ಎಳೆದು ಅಂದಾಜು ಓದಿ."
+   },
+   "tryThis": [
+    {
+     "en": "Estimate the population in 1996 with 2, 3 and 4 terms. How much does each term add?"
+    },
+    {
+     "en": "For x = 1996, what is u?"
+    },
+    {
+     "en": "Why does the fourth term change the estimate so little near the start of the table?"
+    }
+   ],
+   "sliders": [],
+   "counters": [
+    {
+     "name": "kt",
+     "value": 2,
+     "min": 1,
+     "max": 4
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Add a term",
+      "kn": "ಪದ ಸೇರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "kt": "kt + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Remove a term",
+      "kn": "ಪದ ತೆಗೆಯಿರಿ"
+     },
+     "icon": "remove",
+     "set": {
+      "kt": "kt - 1"
+     }
+    }
+   ],
+   "handles": [
+    {
+     "name": "X",
+     "label": "year",
+     "x": 1996,
+     "y": 32,
+     "axis": "x",
+     "box": {
+      "x": [
+       1991,
+       2021
+      ],
+      "y": [
+       32,
+       32
+      ]
+     },
+     "snap": 1,
+     "color": "blue"
+    }
+   ],
+   "vars": [
+    {
+     "name": "uu",
+     "expr": "(X_x - 1991)/10"
+    },
+    {
+     "name": "est",
+     "expr": "(46)*(0 < kt) + (uu*20)*(1 < kt) + (uu*(uu - 1)/2*(-5))*(2 < kt) + (uu*(uu - 1)*(uu - 2)/6*2)*(3 < kt)"
+    }
+   ],
+   "view": {
+    "x": [
+     1988,
+     2024
+    ],
+    "y": [
+     30,
+     112
+    ],
+    "axes": true,
+    "xLabel": "year",
+    "yLabel": "population (thousand)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "(46)*(0 < 4) + (((x - 1991)/10)*20)*(1 < 4) + (((x - 1991)/10)*(((x - 1991)/10) - 1)/2*(-5))*(2 < 4) + (((x - 1991)/10)*(((x - 1991)/10) - 1)*(((x - 1991)/10) - 2)/6*2)*(3 < 4)",
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "fn": "(46)*(0 < kt) + (((x - 1991)/10)*20)*(1 < kt) + (((x - 1991)/10)*(((x - 1991)/10) - 1)/2*(-5))*(2 < kt) + (((x - 1991)/10)*(((x - 1991)/10) - 1)*(((x - 1991)/10) - 2)/6*2)*(3 < kt)",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 1991,
+     "y": 46,
+     "r": 0.9,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": 2001,
+     "y": 66,
+     "r": 0.9,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": 2011,
+     "y": 81,
+     "r": 0.9,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": 2021,
+     "y": 93,
+     "r": 0.9,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": "X_x",
+     "y1": 30,
+     "x2": "X_x",
+     "y2": "est",
+     "color": "blue",
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "x": "X_x",
+     "y": "est",
+     "r": 0.9,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2000,
+     "y": 108,
+     "text": {
+      "en": "terms used: {kt}"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 2000,
+     "y": 102,
+     "text": {
+      "en": "y₀ = 46, Δy₀ = 20, Δ²y₀ = −5, Δ³y₀ = 2"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "u = (x − x₀)/h"
+     },
+     "expr": "uu",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Estimate with these terms",
+      "kn": "ಅಂದಾಜು"
+     },
+     "expr": "est",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Estimate with all four terms"
+     },
+     "expr": "(46)*(0 < 4) + (uu*20)*(1 < 4) + (uu*(uu - 1)/2*(-5))*(2 < 4) + (uu*(uu - 1)*(uu - 2)/6*2)*(3 < 4)",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "kind": "function_plot",

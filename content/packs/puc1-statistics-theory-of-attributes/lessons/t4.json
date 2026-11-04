@@ -210,6 +210,237 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Independent or associated?",
+    "kn": "ಸ್ವತಂತ್ರವೇ ಸಂಯೋಜಿತವೇ?"
+   },
+   "narration": {
+    "en": "N = 200. The left column is the A group, the right column the α group; the coloured height in each is the share of B in it. If B is equally common among the A’s and the α’s, (AB) = (A)(B)/N and the attributes are independent. A taller green bar means positive association."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "N = 200. The left column is the A group, the right column the α group; the coloured height in each is the share of B in it. If B is equally common among the A’s and the α’s, (AB) = (A)(B)/N and the attributes are independent. A taller green bar means positive association.",
+    "kn": "N = 200. ಎಡ ಕಾಲಂ A ಗುಂಪು, ಬಲ ಕಾಲಂ α ಗುಂಪು; ಪ್ರತಿಯೊಂದರ ಬಣ್ಣದ ಎತ್ತರ ಅದರಲ್ಲಿ B ಯ ಪಾಲು. A ಮತ್ತು α ಗಳಲ್ಲಿ B ಸಮವಾಗಿದ್ದರೆ (AB) = (A)(B)/N, ಗುಣಗಳು ಸ್ವತಂತ್ರ. ಹಸಿರು ಎತ್ತರವಾದರೆ ಧನ ಸಂಯೋಜನೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Find the (AB) that makes the two coloured heights equal. Is it (A)(B)/N?"
+    },
+    {
+     "en": "Make every A also a B. Is this complete association?"
+    },
+    {
+     "en": "Make (AB) = 0. What do we call this?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "(A)"
+     },
+     "min": 40,
+     "max": 160,
+     "step": 10,
+     "value": 80
+    },
+    {
+     "name": "Bv",
+     "label": {
+      "en": "(B)"
+     },
+     "min": 40,
+     "max": 160,
+     "step": 10,
+     "value": 100
+    },
+    {
+     "name": "AB",
+     "label": {
+      "en": "(AB)"
+     },
+     "min": 0,
+     "max": 160,
+     "step": 5,
+     "value": 55
+    }
+   ],
+   "vars": [
+    {
+     "name": "q",
+     "expr": "clamp(AB, max(0, A + Bv - 200), min(A, Bv))"
+    },
+    {
+     "name": "E",
+     "expr": "A*Bv/200"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     13
+    ],
+    "y": [
+     -1.6,
+     11.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": "10*A/200",
+     "h": "10*q/A",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": "10*q/A",
+     "w": "10*A/200",
+     "h": "10 - 10*q/A",
+     "color": "white",
+     "opacity": 0.12
+    },
+    {
+     "shape": "rect",
+     "x": "10*A/200",
+     "y": 0,
+     "w": "10 - 10*A/200",
+     "h": "10*(Bv - q)/(200 - A)",
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 10,
+     "h": 10,
+     "color": "white",
+     "fill": false
+    },
+    {
+     "shape": "line",
+     "x1": "10*A/200",
+     "y1": 0,
+     "x2": "10*A/200",
+     "y2": 10,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "10*Bv/200",
+     "x2": 10,
+     "y2": "10*Bv/200",
+     "color": "yellow",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "5*A/200",
+     "y": 10.6,
+     "text": {
+      "en": "A"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": "5 + 5*A/200",
+     "y": 10.6,
+     "text": {
+      "en": "α"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 10.4,
+     "y": "10*Bv/200",
+     "text": {
+      "en": "B share overall"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -0.9,
+     "text": {
+      "en": "independent"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "abs(q - E) < 0.5"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -0.9,
+     "text": {
+      "en": "positively associated"
+     },
+     "size": 24,
+     "color": "green",
+     "visibleIf": "q - E >= 0.5"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -0.9,
+     "text": {
+      "en": "negatively associated (disassociated)"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "E - q >= 0.5"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "(AB) used (kept consistent)"
+     },
+     "expr": "q",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Expected (AB) = (A)(B)/N"
+     },
+     "expr": "E",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "B among the A’s"
+     },
+     "expr": "100*q/A",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "B among the α’s"
+     },
+     "expr": "100*(Bv - q)/(200 - A)",
+     "digits": 1,
+     "unit": "%"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

@@ -709,3 +709,11 @@ No text is reproduced. Check these plot details against the texts:
 - **Schematic or illustrative (labelled):** the nuclear potential, the photocurrent model, and the flux and damping magnitudes.
 - **Rutherford window:** the edge angle differs slightly from the formula (a readout shows the formula value).
 - **Kannada:** needs a native-speaker review.
+
+## Statistics simulations (101 lessons)
+
+- **Index number tests:** check the time-reversal classifications (simple aggregative, Kelly, simple GM).
+- **Table constants:** A2, D4 and F values.
+- **Normal-curve readouts:** Q.D. 0.6745 sigma and M.D. 0.7979 sigma, where the lesson says about 2/3 and 4/5.
+- **Life table:** a Gompertz model, not real Indian data.
+- **Kannada:** needs a native-speaker review.

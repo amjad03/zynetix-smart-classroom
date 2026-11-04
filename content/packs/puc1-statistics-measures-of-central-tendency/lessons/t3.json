@@ -396,6 +396,349 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Mean or median?",
+    "kn": "ಸರಾಸರಿಯೇ ಮಧ್ಯಾಂಕವೇ?"
+   },
+   "narration": {
+    "en": "Five values: drag four of them; the orange one can jump to an extreme value. The median is the middle value of the ordered data (ringed); the mean uses every value. Watch how one extreme value drags the mean but hardly moves the median."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Five values: drag four of them; the orange one can jump to an extreme value. The median is the middle value of the ordered data (ringed); the mean uses every value. Watch how one extreme value drags the mean but hardly moves the median.",
+    "kn": "ಐದು ಬೆಲೆಗಳು: ನಾಲ್ಕನ್ನು ಎಳೆಯಿರಿ; ಕಿತ್ತಳೆ ಬೆಲೆ ತೀವ್ರ ಬೆಲೆಗೆ ಜಿಗಿಯಬಹುದು. ಮಧ್ಯಾಂಕ ಕ್ರಮಗೊಳಿಸಿದ ದತ್ತಾಂಶದ ಮಧ್ಯದ ಬೆಲೆ (ಉಂಗುರ); ಸರಾಸರಿ ಎಲ್ಲ ಬೆಲೆಗಳನ್ನು ಬಳಸುತ್ತದೆ. ಒಂದು ತೀವ್ರ ಬೆಲೆ ಸರಾಸರಿಯನ್ನು ಎಳೆಯುತ್ತದೆ, ಮಧ್ಯಾಂಕವನ್ನು ಅಷ್ಟೇನೂ ಅಲ್ಲ."
+   },
+   "tryThis": [
+    {
+     "en": "Turn on the extreme value. How far does the mean move? And the median?"
+    },
+    {
+     "en": "Drag the points so that the mean and the median are equal."
+    },
+    {
+     "en": "Which average would you report for the incomes of a village with one very rich family?"
+    }
+   ],
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "ext",
+     "label": {
+      "en": "Make the orange value extreme (48.5)",
+      "kn": "ಕಿತ್ತಳೆ ಬೆಲೆ ತೀವ್ರ"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "H1",
+     "x": 8,
+     "y": 0.5,
+     "axis": "x",
+     "box": {
+      "x": [
+       1,
+       30
+      ],
+      "y": [
+       0.5,
+       0.5
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    },
+    {
+     "name": "H2",
+     "x": 11,
+     "y": 0.5,
+     "axis": "x",
+     "box": {
+      "x": [
+       1,
+       30
+      ],
+      "y": [
+       0.5,
+       0.5
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    },
+    {
+     "name": "H3",
+     "x": 14,
+     "y": 0.5,
+     "axis": "x",
+     "box": {
+      "x": [
+       1,
+       30
+      ],
+      "y": [
+       0.5,
+       0.5
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    },
+    {
+     "name": "H4",
+     "x": 22,
+     "y": 0.5,
+     "axis": "x",
+     "box": {
+      "x": [
+       1,
+       30
+      ],
+      "y": [
+       0.5,
+       0.5
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "v5",
+     "expr": "if(ext, 48.5, 17.5)"
+    },
+    {
+     "name": "r0",
+     "expr": "(H2_x < H1_x) + (H3_x < H1_x) + (H4_x < H1_x) + (v5 < H1_x)"
+    },
+    {
+     "name": "r1",
+     "expr": "(H1_x < H2_x) + (H3_x < H2_x) + (H4_x < H2_x) + (v5 < H2_x) + (H1_x == H2_x)"
+    },
+    {
+     "name": "r2",
+     "expr": "(H1_x < H3_x) + (H2_x < H3_x) + (H4_x < H3_x) + (v5 < H3_x) + (H1_x == H3_x) + (H2_x == H3_x)"
+    },
+    {
+     "name": "r3",
+     "expr": "(H1_x < H4_x) + (H2_x < H4_x) + (H3_x < H4_x) + (v5 < H4_x) + (H1_x == H4_x) + (H2_x == H4_x) + (H3_x == H4_x)"
+    },
+    {
+     "name": "r4",
+     "expr": "(H1_x < v5) + (H2_x < v5) + (H3_x < v5) + (H4_x < v5) + (H1_x == v5) + (H2_x == v5) + (H3_x == v5) + (H4_x == v5)"
+    },
+    {
+     "name": "med",
+     "expr": "H1_x*(r0 == 2) + H2_x*(r1 == 2) + H3_x*(r2 == 2) + H4_x*(r3 == 2) + v5*(r4 == 2)"
+    },
+    {
+     "name": "mean",
+     "expr": "(H1_x + H2_x + H3_x + H4_x + v5)/5"
+    }
+   ],
+   "view": {
+    "x": [
+     -1,
+     53
+    ],
+    "y": [
+     -1.6,
+     5
+    ],
+    "axes": false
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 52,
+     "y2": 0,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -0.9,
+     "text": {
+      "en": "0"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": -0.9,
+     "text": {
+      "en": "10"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": -0.9,
+     "text": {
+      "en": "20"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": -0.9,
+     "text": {
+      "en": "30"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 40,
+     "y": -0.9,
+     "text": {
+      "en": "40"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": -0.9,
+     "text": {
+      "en": "50"
+     },
+     "size": 16
+    },
+    {
+     "shape": "circle",
+     "x": "v5",
+     "y": 0.5,
+     "r": 0.45,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": "H1_x",
+     "y": 0.5,
+     "r": 0.75,
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "r0 == 2",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "H2_x",
+     "y": 0.5,
+     "r": 0.75,
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "r1 == 2",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "H3_x",
+     "y": 0.5,
+     "r": 0.75,
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "r2 == 2",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "H4_x",
+     "y": 0.5,
+     "r": 0.75,
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "r3 == 2",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "v5",
+     "y": 0.5,
+     "r": 0.75,
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "r4 == 2",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "mean",
+     "y1": -0.2,
+     "x2": "mean",
+     "y2": 3.4,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": "mean",
+     "y": 3.9,
+     "text": {
+      "en": "mean {mean:1}"
+     },
+     "size": 22,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": "med",
+     "y1": -0.2,
+     "x2": "med",
+     "y2": 2.2,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": "med",
+     "y": 2.7,
+     "text": {
+      "en": "median {med:1}"
+     },
+     "size": 22,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mean",
+      "kn": "ಸರಾಸರಿ"
+     },
+     "expr": "mean",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Median",
+      "kn": "ಮಧ್ಯಾಂಕ"
+     },
+     "expr": "med",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Mean − median"
+     },
+     "expr": "mean - med",
+     "digits": 2
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

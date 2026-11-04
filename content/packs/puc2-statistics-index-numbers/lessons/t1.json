@@ -276,6 +276,404 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Change the base year",
+    "kn": "ಆಧಾರ ವರ್ಷ ಬದಲಿಸಿ"
+   },
+   "narration": {
+    "en": "The price of a kilogram of rice from 2019 to 2024. Each bar is the price relative p₁/p₀ × 100 on the chosen base year, whose own index is always 100. Change the base and watch every index rescale, while the prices stay the same."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The price of a kilogram of rice from 2019 to 2024. Each bar is the price relative p₁/p₀ × 100 on the chosen base year, whose own index is always 100. Change the base and watch every index rescale, while the prices stay the same.",
+    "kn": "2019 ರಿಂದ 2024 ರವರೆಗೆ ಒಂದು ಕಿಲೋ ಅಕ್ಕಿಯ ಬೆಲೆ. ಪ್ರತಿ ಕಂಬ ಆರಿಸಿದ ಆಧಾರ ವರ್ಷದ ಮೇಲೆ ಬೆಲೆ ಸಾಪೇಕ್ಷ p₁/p₀ × 100; ಆಧಾರ ವರ್ಷದ ಸೂಚ್ಯಂಕ ಯಾವಾಗಲೂ 100. ಆಧಾರ ಬದಲಿಸಿ: ಬೆಲೆಗಳು ಅದೇ, ಸೂಚ್ಯಂಕಗಳು ಮಾತ್ರ ಬದಲಾಗುತ್ತವೆ."
+   },
+   "tryThis": [
+    {
+     "en": "With base 2019, what is the index for 2024? What does it say in words?"
+    },
+    {
+     "en": "Make 2024 the base. Why are all the other bars below 100?"
+    },
+    {
+     "en": "Raise the 2024 price. Which indices change with base 2019, and which with base 2024?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "p24",
+     "label": {
+      "en": "Price in 2024",
+      "kn": "2024 ರ ಬೆಲೆ"
+     },
+     "min": 40,
+     "max": 60,
+     "step": 1,
+     "value": 44,
+     "unit": "₹/kg"
+    }
+   ],
+   "choices": [
+    {
+     "name": "by",
+     "label": {
+      "en": "Base year",
+      "kn": "ಆಧಾರ ವರ್ಷ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "2019"
+       },
+       "value": 2019
+      },
+      {
+       "label": {
+        "en": "2020"
+       },
+       "value": 2020
+      },
+      {
+       "label": {
+        "en": "2021"
+       },
+       "value": 2021
+      },
+      {
+       "label": {
+        "en": "2022"
+       },
+       "value": 2022
+      },
+      {
+       "label": {
+        "en": "2023"
+       },
+       "value": 2023
+      },
+      {
+       "label": {
+        "en": "2024"
+       },
+       "value": 2024
+      }
+     ],
+     "value": 2019
+    }
+   ],
+   "vars": [
+    {
+     "name": "pb",
+     "expr": "if(by == 2019, 30, if(by == 2020, 32, if(by == 2021, 35, if(by == 2022, 38, if(by == 2023, 40, p24)))))"
+    }
+   ],
+   "view": {
+    "x": [
+     -1.4,
+     5.6
+    ],
+    "y": [
+     -25,
+     215
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -0.6,
+     "y1": 100,
+     "x2": 5.6,
+     "y2": 100,
+     "color": "yellow",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": -0.7,
+     "y": 100,
+     "text": {
+      "en": "100"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "rect",
+     "x": -0.35,
+     "y": 0,
+     "w": 0.7,
+     "h": "100*30/pb",
+     "color": {
+      "by": "by == 2019",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": "100*30/pb + 8",
+     "text": {
+      "en": "{100*30/pb:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -10,
+     "text": {
+      "en": "2019"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -20,
+     "text": {
+      "en": "₹{30}"
+     },
+     "size": 16
+    },
+    {
+     "shape": "rect",
+     "x": 0.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "100*32/pb",
+     "color": {
+      "by": "by == 2020",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": "100*32/pb + 8",
+     "text": {
+      "en": "{100*32/pb:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": -10,
+     "text": {
+      "en": "2020"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": -20,
+     "text": {
+      "en": "₹{32}"
+     },
+     "size": 16
+    },
+    {
+     "shape": "rect",
+     "x": 1.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "100*35/pb",
+     "color": {
+      "by": "by == 2021",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": "100*35/pb + 8",
+     "text": {
+      "en": "{100*35/pb:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": -10,
+     "text": {
+      "en": "2021"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": -20,
+     "text": {
+      "en": "₹{35}"
+     },
+     "size": 16
+    },
+    {
+     "shape": "rect",
+     "x": 2.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "100*38/pb",
+     "color": {
+      "by": "by == 2022",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": "100*38/pb + 8",
+     "text": {
+      "en": "{100*38/pb:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": -10,
+     "text": {
+      "en": "2022"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": -20,
+     "text": {
+      "en": "₹{38}"
+     },
+     "size": 16
+    },
+    {
+     "shape": "rect",
+     "x": 3.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "100*40/pb",
+     "color": {
+      "by": "by == 2023",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": "100*40/pb + 8",
+     "text": {
+      "en": "{100*40/pb:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": -10,
+     "text": {
+      "en": "2023"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": -20,
+     "text": {
+      "en": "₹{40}"
+     },
+     "size": 16
+    },
+    {
+     "shape": "rect",
+     "x": 4.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "100*p24/pb",
+     "color": {
+      "by": "by == 2024",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": "100*p24/pb + 8",
+     "text": {
+      "en": "{100*p24/pb:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -10,
+     "text": {
+      "en": "2024"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -20,
+     "text": {
+      "en": "₹{p24}"
+     },
+     "size": 16
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Index for 2024",
+      "kn": "2024 ರ ಸೂಚ್ಯಂಕ"
+     },
+     "expr": "100*p24/pb",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Change from the base year"
+     },
+     "expr": "100*p24/pb - 100",
+     "digits": 1,
+     "unit": "%"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

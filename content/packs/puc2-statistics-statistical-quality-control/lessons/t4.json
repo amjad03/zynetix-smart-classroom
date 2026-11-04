@@ -364,6 +364,237 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Acceptance sampling and the OC curve",
+    "kn": "ಸ್ವೀಕಾರ ಮಾದರಿ ಮತ್ತು OC ವಕ್ರ"
+   },
+   "narration": {
+    "en": "A single sampling plan: inspect n items from each lot and accept the lot if at most c are defective. The yellow OC curve gives the probability of acceptance Pa for each lot quality p. Press Play to inspect hundreds of lots of quality p: the share accepted (orange) settles on the curve."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A single sampling plan: inspect n items from each lot and accept the lot if at most c are defective. The yellow OC curve gives the probability of acceptance Pa for each lot quality p. Press Play to inspect hundreds of lots of quality p: the share accepted (orange) settles on the curve.",
+    "kn": "ಏಕ ಮಾದರಿ ಯೋಜನೆ: ಪ್ರತಿ ಲಾಟ್‌ನಿಂದ n ವಸ್ತುಗಳನ್ನು ಪರೀಕ್ಷಿಸಿ, ಗರಿಷ್ಠ c ದೋಷಯುಕ್ತವಿದ್ದರೆ ಲಾಟ್ ಸ್ವೀಕರಿಸಿ. ಹಳದಿ OC ವಕ್ರ ಪ್ರತಿ ಗುಣಮಟ್ಟ p ಗೆ ಸ್ವೀಕಾರ ಸಂಭವನೀಯತೆ Pa ಕೊಡುತ್ತದೆ. ಚಾಲನೆ ಒತ್ತಿ ನೂರಾರು ಲಾಟ್‌ಗಳನ್ನು ಪರೀಕ್ಷಿಸಿ: ಸ್ವೀಕೃತ ಪಾಲು (ಕಿತ್ತಳೆ) ವಕ್ರದ ಮೇಲೆ ನೆಲೆಸುತ್ತದೆ."
+   },
+   "tryThis": [
+    {
+     "en": "With n = 50 and c = 1, what is Pa for lots that are 2% defective? 10% defective?"
+    },
+    {
+     "en": "Raise c. Who gains, the producer or the consumer?"
+    },
+    {
+     "en": "Compare n = 20 with n = 50 at the same c. Which plan tells good lots from bad ones more sharply?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "pd",
+     "label": {
+      "en": "Lot fraction defective p",
+      "kn": "ಲಾಟ್ ದೋಷ ಭಿನ್ನರಾಶಿ p"
+     },
+     "min": 0,
+     "max": 0.3,
+     "step": 0.01,
+     "value": 0.05
+    },
+    {
+     "name": "cc",
+     "label": {
+      "en": "Acceptance number c",
+      "kn": "ಸ್ವೀಕಾರ ಸಂಖ್ಯೆ c"
+     },
+     "min": 0,
+     "max": 4,
+     "step": 1,
+     "value": 1
+    }
+   ],
+   "choices": [
+    {
+     "name": "nn",
+     "label": {
+      "en": "Sample size n",
+      "kn": "ಮಾದರಿ ಗಾತ್ರ n"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "20"
+       },
+       "value": 20
+      },
+      {
+       "label": {
+        "en": "50"
+       },
+       "value": 50
+      }
+     ],
+     "value": 50
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Inspect lots",
+      "kn": "ಲಾಟ್‌ಗಳನ್ನು ಪರೀಕ್ಷಿಸಿ"
+     },
+     "icon": "launch",
+     "set": {
+      "seed": "seed + 1"
+     },
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 40,
+    "dt": 0.1,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2
+   },
+   "integrator": "euler",
+   "vars": [
+    {
+     "name": "k",
+     "expr": "round(t/0.1)"
+    },
+    {
+     "name": "dd",
+     "expr": "((0 < nn)*(rand(53*k + 7919*seed + 0) < pd) + (1 < nn)*(rand(53*k + 7919*seed + 1) < pd) + (2 < nn)*(rand(53*k + 7919*seed + 2) < pd) + (3 < nn)*(rand(53*k + 7919*seed + 3) < pd) + (4 < nn)*(rand(53*k + 7919*seed + 4) < pd) + (5 < nn)*(rand(53*k + 7919*seed + 5) < pd) + (6 < nn)*(rand(53*k + 7919*seed + 6) < pd) + (7 < nn)*(rand(53*k + 7919*seed + 7) < pd) + (8 < nn)*(rand(53*k + 7919*seed + 8) < pd) + (9 < nn)*(rand(53*k + 7919*seed + 9) < pd) + (10 < nn)*(rand(53*k + 7919*seed + 10) < pd) + (11 < nn)*(rand(53*k + 7919*seed + 11) < pd) + (12 < nn)*(rand(53*k + 7919*seed + 12) < pd) + (13 < nn)*(rand(53*k + 7919*seed + 13) < pd) + (14 < nn)*(rand(53*k + 7919*seed + 14) < pd) + (15 < nn)*(rand(53*k + 7919*seed + 15) < pd) + (16 < nn)*(rand(53*k + 7919*seed + 16) < pd) + (17 < nn)*(rand(53*k + 7919*seed + 17) < pd) + (18 < nn)*(rand(53*k + 7919*seed + 18) < pd) + (19 < nn)*(rand(53*k + 7919*seed + 19) < pd) + (20 < nn)*(rand(53*k + 7919*seed + 20) < pd) + (21 < nn)*(rand(53*k + 7919*seed + 21) < pd) + (22 < nn)*(rand(53*k + 7919*seed + 22) < pd) + (23 < nn)*(rand(53*k + 7919*seed + 23) < pd) + (24 < nn)*(rand(53*k + 7919*seed + 24) < pd) + (25 < nn)*(rand(53*k + 7919*seed + 25) < pd) + (26 < nn)*(rand(53*k + 7919*seed + 26) < pd) + (27 < nn)*(rand(53*k + 7919*seed + 27) < pd) + (28 < nn)*(rand(53*k + 7919*seed + 28) < pd) + (29 < nn)*(rand(53*k + 7919*seed + 29) < pd) + (30 < nn)*(rand(53*k + 7919*seed + 30) < pd) + (31 < nn)*(rand(53*k + 7919*seed + 31) < pd) + (32 < nn)*(rand(53*k + 7919*seed + 32) < pd) + (33 < nn)*(rand(53*k + 7919*seed + 33) < pd) + (34 < nn)*(rand(53*k + 7919*seed + 34) < pd) + (35 < nn)*(rand(53*k + 7919*seed + 35) < pd) + (36 < nn)*(rand(53*k + 7919*seed + 36) < pd) + (37 < nn)*(rand(53*k + 7919*seed + 37) < pd) + (38 < nn)*(rand(53*k + 7919*seed + 38) < pd) + (39 < nn)*(rand(53*k + 7919*seed + 39) < pd) + (40 < nn)*(rand(53*k + 7919*seed + 40) < pd) + (41 < nn)*(rand(53*k + 7919*seed + 41) < pd) + (42 < nn)*(rand(53*k + 7919*seed + 42) < pd) + (43 < nn)*(rand(53*k + 7919*seed + 43) < pd) + (44 < nn)*(rand(53*k + 7919*seed + 44) < pd) + (45 < nn)*(rand(53*k + 7919*seed + 45) < pd) + (46 < nn)*(rand(53*k + 7919*seed + 46) < pd) + (47 < nn)*(rand(53*k + 7919*seed + 47) < pd) + (48 < nn)*(rand(53*k + 7919*seed + 48) < pd) + (49 < nn)*(rand(53*k + 7919*seed + 49) < pd))"
+    },
+    {
+     "name": "Pa",
+     "expr": "(0 <= cc)*if(nn == 20, 1, 1)*(pd)^0*(1 - (pd))^(nn - 0) + (1 <= cc)*if(nn == 20, 20, 50)*(pd)^1*(1 - (pd))^(nn - 1) + (2 <= cc)*if(nn == 20, 190, 1225)*(pd)^2*(1 - (pd))^(nn - 2) + (3 <= cc)*if(nn == 20, 1140, 19600)*(pd)^3*(1 - (pd))^(nn - 3) + (4 <= cc)*if(nn == 20, 4845, 230300)*(pd)^4*(1 - (pd))^(nn - 4)"
+    }
+   ],
+   "state": [
+    {
+     "name": "ac",
+     "init": 0,
+     "rate": "(dd <= cc)/0.1"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     0.3
+    ],
+    "y": [
+     0,
+     1.02
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "lot fraction defective p",
+    "yLabel": "probability of acceptance Pa"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "(0 <= cc)*if(nn == 20, 1, 1)*(x)^0*(1 - (x))^(nn - 0) + (1 <= cc)*if(nn == 20, 20, 50)*(x)^1*(1 - (x))^(nn - 1) + (2 <= cc)*if(nn == 20, 190, 1225)*(x)^2*(1 - (x))^(nn - 2) + (3 <= cc)*if(nn == 20, 1140, 19600)*(x)^3*(1 - (x))^(nn - 3) + (4 <= cc)*if(nn == 20, 4845, 230300)*(x)^4*(1 - (x))^(nn - 4)",
+     "from": 0,
+     "to": 0.3,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "pd",
+     "y1": 0,
+     "x2": "pd",
+     "y2": "Pa",
+     "color": "blue",
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "x": "pd",
+     "y": "Pa",
+     "r": 0.006,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "x": "pd",
+     "y": "if(k > 0, ac/k, 0)",
+     "r": 0.006,
+     "color": "orange",
+     "visibleIf": "k > 0"
+    },
+    {
+     "shape": "text",
+     "x": 0.2,
+     "y": 0.95,
+     "text": {
+      "en": "OC curve (n = {nn}, c = {cc})"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 0.2,
+     "y": 0.86,
+     "text": {
+      "en": "orange: lots accepted so far {ac} of {k}"
+     },
+     "size": 20,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Pa (binomial)"
+     },
+     "expr": "Pa",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "Share of lots accepted"
+     },
+     "expr": "if(k > 0, ac/k, 0)",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "AOQ ≈ p × Pa"
+     },
+     "expr": "pd*Pa",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "ATI for lots of N = 1000"
+     },
+     "expr": "nn + (1 - Pa)*(1000 - nn)",
+     "digits": 0
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

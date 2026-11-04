@@ -170,6 +170,292 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Average speed: which mean?",
+    "kn": "ಸರಾಸರಿ ವೇಗ: ಯಾವ ಮಧ್ಯ?"
+   },
+   "narration": {
+    "en": "A car goes 60 km at one speed and comes back 60 km at another. Three ghost cars drive the whole 120 km at a constant speed equal to the AM, GM and HM of the two speeds. Only the HM car arrives together with yours: for equal distances the right average speed is the harmonic mean."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A car goes 60 km at one speed and comes back 60 km at another. Three ghost cars drive the whole 120 km at a constant speed equal to the AM, GM and HM of the two speeds. Only the HM car arrives together with yours: for equal distances the right average speed is the harmonic mean.",
+    "kn": "ಒಂದು ಕಾರು 60 ಕಿ.ಮೀ. ಒಂದು ವೇಗದಲ್ಲಿ ಹೋಗಿ ಇನ್ನೊಂದು ವೇಗದಲ್ಲಿ 60 ಕಿ.ಮೀ. ಹಿಂದಿರುಗುತ್ತದೆ. ಮೂರು ನೆರಳು ಕಾರುಗಳು ಎರಡು ವೇಗಗಳ AM, GM, HM ಸ್ಥಿರ ವೇಗದಲ್ಲಿ 120 ಕಿ.ಮೀ. ಓಡುತ್ತವೆ. HM ಕಾರು ಮಾತ್ರ ನಿಮ್ಮ ಕಾರಿನೊಂದಿಗೆ ತಲುಪುತ್ತದೆ: ಸಮ ದೂರಗಳಿಗೆ ಸರಿಯಾದ ಸರಾಸರಿ ವೇಗ ಹರಾತ್ಮಕ ಮಧ್ಯ."
+   },
+   "tryThis": [
+    {
+     "en": "Go at 30 km/h and return at 60 km/h. Is the average speed 45 km/h?"
+    },
+    {
+     "en": "Make the two speeds equal. What happens to the three ghosts?"
+    },
+    {
+     "en": "Check that AM ≥ GM ≥ HM for every pair of speeds."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "v1",
+     "label": {
+      "en": "Speed going",
+      "kn": "ಹೋಗುವ ವೇಗ"
+     },
+     "min": 20,
+     "max": 80,
+     "step": 5,
+     "value": 30,
+     "unit": "km/h"
+    },
+    {
+     "name": "v2",
+     "label": {
+      "en": "Speed returning",
+      "kn": "ಹಿಂದಿರುಗುವ ವೇಗ"
+     },
+     "min": 20,
+     "max": 80,
+     "step": 5,
+     "value": 60,
+     "unit": "km/h"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Start the race",
+      "kn": "ಓಟ ಆರಂಭಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 6.2,
+    "unit": "h",
+    "stopWhen": "t >= T",
+    "speeds": [
+     0.25,
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "T",
+     "expr": "60/v1 + 60/v2"
+    },
+    {
+     "name": "AM",
+     "expr": "(v1 + v2)/2"
+    },
+    {
+     "name": "GM",
+     "expr": "sqrt(v1*v2)"
+    },
+    {
+     "name": "HM",
+     "expr": "2*v1*v2/(v1 + v2)"
+    },
+    {
+     "name": "sr",
+     "expr": "if(t < 60/v1, v1*t, min(60 + v2*(t - 60/v1), 120))"
+    }
+   ],
+   "view": {
+    "x": [
+     -14,
+     124
+    ],
+    "y": [
+     -2,
+     10.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 8,
+     "x2": 120,
+     "y2": 8,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "circle",
+     "x": "sr",
+     "y": 8,
+     "r": 2.2,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": -2,
+     "y": 8,
+     "text": {
+      "en": "your trip"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 6,
+     "x2": 120,
+     "y2": 6,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "circle",
+     "x": "min(AM*t, 120)",
+     "y": 6,
+     "r": 2.2,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": -2,
+     "y": 6,
+     "text": {
+      "en": "at AM"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 4,
+     "x2": 120,
+     "y2": 4,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "circle",
+     "x": "min(GM*t, 120)",
+     "y": 4,
+     "r": 2.2,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": -2,
+     "y": 4,
+     "text": {
+      "en": "at GM"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 2,
+     "x2": 120,
+     "y2": 2,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "circle",
+     "x": "min(HM*t, 120)",
+     "y": 2,
+     "r": 2.2,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": -2,
+     "y": 2,
+     "text": {
+      "en": "at HM"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 60,
+     "y1": 0,
+     "x2": 60,
+     "y2": 9,
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 60,
+     "y": 9.8,
+     "text": {
+      "en": "turn back at 60 km"
+     },
+     "size": 18
+    },
+    {
+     "shape": "line",
+     "x1": 120,
+     "y1": 0,
+     "x2": 120,
+     "y2": 9,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 60,
+     "y": -1.4,
+     "text": {
+      "en": "distance covered (km)"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "AM"
+     },
+     "expr": "AM",
+     "digits": 1,
+     "unit": "km/h"
+    },
+    {
+     "label": {
+      "en": "GM"
+     },
+     "expr": "GM",
+     "digits": 1,
+     "unit": "km/h"
+    },
+    {
+     "label": {
+      "en": "HM"
+     },
+     "expr": "HM",
+     "digits": 1,
+     "unit": "km/h"
+    },
+    {
+     "label": {
+      "en": "True average = 120 ÷ total time",
+      "kn": "ನಿಜವಾದ ಸರಾಸರಿ"
+     },
+     "expr": "120/T",
+     "digits": 1,
+     "unit": "km/h"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

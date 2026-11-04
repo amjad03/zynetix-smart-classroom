@@ -404,6 +404,314 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Quartiles and the middle half",
+    "kn": "ಚತುರ್ಥಕಗಳು ಮತ್ತು ಮಧ್ಯದ ಅರ್ಧ"
+   },
+   "narration": {
+    "en": "A frequency curve of marks. Q₁ and Q₃ fence off the middle 50% of the values (shaded). Change the spread and the shape: the quartile deviation (Q₃ − Q₁)/2 grows with the spread, and in a skewed curve the quartiles are no longer equally far from the median."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A frequency curve of marks. Q₁ and Q₃ fence off the middle 50% of the values (shaded). Change the spread and the shape: the quartile deviation (Q₃ − Q₁)/2 grows with the spread, and in a skewed curve the quartiles are no longer equally far from the median.",
+    "kn": "ಅಂಕಗಳ ಒಂದು ಆವೃತ್ತಿ ವಕ್ರ. Q₁ ಮತ್ತು Q₃ ಮಧ್ಯದ 50% ಬೆಲೆಗಳನ್ನು ಸುತ್ತುವರಿಯುತ್ತವೆ (ಛಾಯೆ). ಹರಡಿಕೆ ಮತ್ತು ಆಕಾರ ಬದಲಿಸಿ: ಚತುರ್ಥಕ ವಿಚಲನೆ (Q₃ − Q₁)/2 ಹರಡಿಕೆಯೊಂದಿಗೆ ಹೆಚ್ಚುತ್ತದೆ; ಓರೆ ವಕ್ರದಲ್ಲಿ ಚತುರ್ಥಕಗಳು ಮಧ್ಯಾಂಕದಿಂದ ಸಮ ದೂರದಲ್ಲಿರುವುದಿಲ್ಲ."
+   },
+   "tryThis": [
+    {
+     "en": "Double the spread. What happens to the quartile deviation?"
+    },
+    {
+     "en": "Switch to the skewed curve. Which quartile is further from the median?"
+    },
+    {
+     "en": "Why does the quartile deviation ignore what happens in the tails?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "s",
+     "label": {
+      "en": "Spread",
+      "kn": "ಹರಡಿಕೆ"
+     },
+     "min": 4,
+     "max": 16,
+     "step": 1,
+     "value": 10
+    }
+   ],
+   "choices": [
+    {
+     "name": "sk",
+     "label": {
+      "en": "Shape",
+      "kn": "ಆಕಾರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Symmetric",
+        "kn": "ಸಮಮಿತ"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "Skewed to the right",
+        "kn": "ಬಲಕ್ಕೆ ಓರೆ"
+       },
+       "value": 1
+      }
+     ],
+     "value": 0
+    }
+   ],
+   "vars": [
+    {
+     "name": "sg",
+     "expr": "s"
+    },
+    {
+     "name": "kk",
+     "expr": "s/40"
+    },
+    {
+     "name": "Q1",
+     "expr": "if(sk, 45*exp(-0.6745*kk), 50 - 0.6745*sg)"
+    },
+    {
+     "name": "Q3",
+     "expr": "if(sk, 45*exp(0.6745*kk), 50 + 0.6745*sg)"
+    },
+    {
+     "name": "Md",
+     "expr": "if(sk, 45, 50)"
+    },
+    {
+     "name": "dQ",
+     "expr": "Q3 - Q1"
+    },
+    {
+     "name": "cL",
+     "expr": "1000/(kk*sqrt(2*pi))"
+    },
+    {
+     "name": "cN",
+     "expr": "1000/(sg*sqrt(2*pi))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     120
+    ],
+    "y": [
+     -12,
+     105
+    ],
+    "axes": false
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       "Q1",
+       0
+      ],
+      [
+       "(Q1 + dQ*0)",
+       "if(sk, cL/(Q1 + dQ*0)*exp(-(ln((Q1 + dQ*0)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*0.0625)",
+       "if(sk, cL/(Q1 + dQ*0.0625)*exp(-(ln((Q1 + dQ*0.0625)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0.0625) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*0.125)",
+       "if(sk, cL/(Q1 + dQ*0.125)*exp(-(ln((Q1 + dQ*0.125)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0.125) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*0.1875)",
+       "if(sk, cL/(Q1 + dQ*0.1875)*exp(-(ln((Q1 + dQ*0.1875)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0.1875) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*0.25)",
+       "if(sk, cL/(Q1 + dQ*0.25)*exp(-(ln((Q1 + dQ*0.25)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0.25) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*0.3125)",
+       "if(sk, cL/(Q1 + dQ*0.3125)*exp(-(ln((Q1 + dQ*0.3125)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0.3125) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*0.375)",
+       "if(sk, cL/(Q1 + dQ*0.375)*exp(-(ln((Q1 + dQ*0.375)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0.375) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*0.4375)",
+       "if(sk, cL/(Q1 + dQ*0.4375)*exp(-(ln((Q1 + dQ*0.4375)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0.4375) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*0.5)",
+       "if(sk, cL/(Q1 + dQ*0.5)*exp(-(ln((Q1 + dQ*0.5)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0.5) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*0.5625)",
+       "if(sk, cL/(Q1 + dQ*0.5625)*exp(-(ln((Q1 + dQ*0.5625)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0.5625) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*0.625)",
+       "if(sk, cL/(Q1 + dQ*0.625)*exp(-(ln((Q1 + dQ*0.625)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0.625) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*0.6875)",
+       "if(sk, cL/(Q1 + dQ*0.6875)*exp(-(ln((Q1 + dQ*0.6875)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0.6875) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*0.75)",
+       "if(sk, cL/(Q1 + dQ*0.75)*exp(-(ln((Q1 + dQ*0.75)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0.75) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*0.8125)",
+       "if(sk, cL/(Q1 + dQ*0.8125)*exp(-(ln((Q1 + dQ*0.8125)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0.8125) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*0.875)",
+       "if(sk, cL/(Q1 + dQ*0.875)*exp(-(ln((Q1 + dQ*0.875)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0.875) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*0.9375)",
+       "if(sk, cL/(Q1 + dQ*0.9375)*exp(-(ln((Q1 + dQ*0.9375)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*0.9375) - 50)/sg)^2/2))"
+      ],
+      [
+       "(Q1 + dQ*1)",
+       "if(sk, cL/(Q1 + dQ*1)*exp(-(ln((Q1 + dQ*1)/45)/kk)^2/2), cN*exp(-(((Q1 + dQ*1) - 50)/sg)^2/2))"
+      ],
+      [
+       "Q3",
+       0
+      ]
+     ],
+     "color": "blue",
+     "opacity": 0.4
+    },
+    {
+     "shape": "path",
+     "fn": "if(sk, if(x > 0.5, 1000/(x*kk*sqrt(2*pi))*exp(-(ln(x/45)/kk)^2/2), 0), 1000/(sg*sqrt(2*pi))*exp(-((x - 50)/sg)^2/2))",
+     "from": 1,
+     "to": 119,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "Q1",
+     "y1": 0,
+     "x2": "Q1",
+     "y2": -6,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": "Q3",
+     "y1": 0,
+     "x2": "Q3",
+     "y2": -6,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": "Md",
+     "y1": 0,
+     "x2": "Md",
+     "y2": -6,
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": "Q1",
+     "y1": -4,
+     "x2": "Q3",
+     "y2": -4,
+     "color": "blue",
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "x": "Q1",
+     "y": -9,
+     "text": {
+      "en": "Q₁ {Q1:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": "Q3",
+     "y": -9,
+     "text": {
+      "en": "Q₃ {Q3:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": "Md",
+     "y": 6,
+     "text": {
+      "en": "Md"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": "(Q1 + Q3)/2",
+     "y": "if(sk, 30, 35)",
+     "text": {
+      "en": "middle 50%"
+     },
+     "size": 22,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Q₁"
+     },
+     "expr": "Q1",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Q₃"
+     },
+     "expr": "Q3",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Quartile deviation (Q₃ − Q₁)/2",
+      "kn": "ಚತುರ್ಥಕ ವಿಚಲನೆ"
+     },
+     "expr": "(Q3 - Q1)/2",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Coefficient of Q.D."
+     },
+     "expr": "(Q3 - Q1)/(Q3 + Q1)",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

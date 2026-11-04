@@ -209,6 +209,300 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Student's t has heavier tails",
+    "kn": "ಸ್ಟೂಡೆಂಟ್ t ಯ ಬಾಲಗಳು ದಪ್ಪ"
+   },
+   "narration": {
+    "en": "Each value is t = Z / √(χ²/n). Collect hundreds: the histogram follows the t curve (yellow), symmetric about 0 like the normal curve (dashed) but flatter with heavier tails. So more than 5% of t values fall beyond ±1.96, and small samples need larger critical values. As n grows, t approaches the normal."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Each value is t = Z / √(χ²/n). Collect hundreds: the histogram follows the t curve (yellow), symmetric about 0 like the normal curve (dashed) but flatter with heavier tails. So more than 5% of t values fall beyond ±1.96, and small samples need larger critical values. As n grows, t approaches the normal.",
+    "kn": "ಪ್ರತಿ ಬೆಲೆ t = Z / √(χ²/n). ನೂರಾರು ಸಂಗ್ರಹಿಸಿ: ಆಯತ ಚಿತ್ರ t ವಕ್ರವನ್ನು (ಹಳದಿ) ಅನುಸರಿಸುತ್ತದೆ, ಸಾಮಾನ್ಯ ವಕ್ರದಂತೆ (ಚುಕ್ಕೆ) 0 ಸುತ್ತ ಸಮಮಿತ ಆದರೆ ಚಪ್ಪಟೆ, ದಪ್ಪ ಬಾಲಗಳು. ಹಾಗಾಗಿ ±1.96 ಆಚೆ 5% ಕ್ಕಿಂತ ಹೆಚ್ಚು ಬೀಳುತ್ತವೆ."
+   },
+   "tryThis": [
+    {
+     "en": "With 2 d.f., what share of t values fall beyond ±1.96? Compare with the theory."
+    },
+    {
+     "en": "Increase the d.f. to 10. How close is it to the normal now?"
+    },
+    {
+     "en": "Why must the table value of t be larger than 1.96 for small samples?"
+    }
+   ],
+   "sliders": [],
+   "choices": [
+    {
+     "name": "nd",
+     "label": {
+      "en": "Degrees of freedom n",
+      "kn": "ಸ್ವಾತಂತ್ರ್ಯ ಮಟ್ಟ n"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "2"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "3"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "5"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "10"
+       },
+       "value": 10
+      }
+     ],
+     "value": 3
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New run",
+      "kn": "ಹೊಸ ಓಟ"
+     },
+     "icon": "launch",
+     "set": {
+      "seed": "seed + 1"
+     },
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 50,
+    "dt": 0.1,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2
+   },
+   "integrator": "euler",
+   "vars": [
+    {
+     "name": "k",
+     "expr": "round(t/0.1)"
+    },
+    {
+     "name": "lgA",
+     "expr": "(((((nd + 1)/2) + 6) - 0.5)*ln((((nd + 1)/2) + 6)) - (((nd + 1)/2) + 6) + 0.918938533 + 1/(12*(((nd + 1)/2) + 6)) - 1/(360*(((nd + 1)/2) + 6)^3) + 1/(1260*(((nd + 1)/2) + 6)^5) - ln(((nd + 1)/2)*(((nd + 1)/2) + 1)*(((nd + 1)/2) + 2)*(((nd + 1)/2) + 3)*(((nd + 1)/2) + 4)*(((nd + 1)/2) + 5)))"
+    },
+    {
+     "name": "lgB",
+     "expr": "((((nd/2) + 6) - 0.5)*ln(((nd/2) + 6)) - ((nd/2) + 6) + 0.918938533 + 1/(12*((nd/2) + 6)) - 1/(360*((nd/2) + 6)^3) + 1/(1260*((nd/2) + 6)^5) - ln((nd/2)*((nd/2) + 1)*((nd/2) + 2)*((nd/2) + 3)*((nd/2) + 4)*((nd/2) + 5)))"
+    },
+    {
+     "name": "tv",
+     "expr": "(sqrt(-2*ln(0.001 + 0.998*rand(211*k + 7919*seed + 100)))*cos(2*pi*rand(211*k + 7919*seed + 101)))/sqrt(((0 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(211*k + 7919*seed + 0)))*cos(2*pi*rand(211*k + 7919*seed + 1)))^2 + (1 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(211*k + 7919*seed + 2)))*cos(2*pi*rand(211*k + 7919*seed + 3)))^2 + (2 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(211*k + 7919*seed + 4)))*cos(2*pi*rand(211*k + 7919*seed + 5)))^2 + (3 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(211*k + 7919*seed + 6)))*cos(2*pi*rand(211*k + 7919*seed + 7)))^2 + (4 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(211*k + 7919*seed + 8)))*cos(2*pi*rand(211*k + 7919*seed + 9)))^2 + (5 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(211*k + 7919*seed + 10)))*cos(2*pi*rand(211*k + 7919*seed + 11)))^2 + (6 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(211*k + 7919*seed + 12)))*cos(2*pi*rand(211*k + 7919*seed + 13)))^2 + (7 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(211*k + 7919*seed + 14)))*cos(2*pi*rand(211*k + 7919*seed + 15)))^2 + (8 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(211*k + 7919*seed + 16)))*cos(2*pi*rand(211*k + 7919*seed + 17)))^2 + (9 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(211*k + 7919*seed + 18)))*cos(2*pi*rand(211*k + 7919*seed + 19)))^2)/nd)"
+    },
+    {
+     "name": "bn",
+     "expr": "floor((tv + 4)/(4/3))"
+    }
+   ],
+   "state": [
+    {
+     "name": "c0",
+     "init": 0,
+     "rate": "(bn == 0)/0.1"
+    },
+    {
+     "name": "c1",
+     "init": 0,
+     "rate": "(bn == 1)/0.1"
+    },
+    {
+     "name": "c2",
+     "init": 0,
+     "rate": "(bn == 2)/0.1"
+    },
+    {
+     "name": "c3",
+     "init": 0,
+     "rate": "(bn == 3)/0.1"
+    },
+    {
+     "name": "c4",
+     "init": 0,
+     "rate": "(bn == 4)/0.1"
+    },
+    {
+     "name": "c5",
+     "init": 0,
+     "rate": "(bn == 5)/0.1"
+    },
+    {
+     "name": "ct",
+     "init": 0,
+     "rate": "(abs(tv) > 1.96)/0.1"
+    }
+   ],
+   "view": {
+    "x": [
+     -4,
+     4
+    ],
+    "y": [
+     0,
+     0.5
+    ],
+    "axes": true,
+    "xLabel": "t",
+    "yLabel": "density"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "-4 + 0*4/3",
+     "y": 0,
+     "w": 1.3333333333333333,
+     "h": "if(k > 0, c0/(k*4/3), 0)",
+     "color": "blue",
+     "opacity": 0.75
+    },
+    {
+     "shape": "rect",
+     "x": "-4 + 1*4/3",
+     "y": 0,
+     "w": 1.3333333333333333,
+     "h": "if(k > 0, c1/(k*4/3), 0)",
+     "color": "blue",
+     "opacity": 0.75
+    },
+    {
+     "shape": "rect",
+     "x": "-4 + 2*4/3",
+     "y": 0,
+     "w": 1.3333333333333333,
+     "h": "if(k > 0, c2/(k*4/3), 0)",
+     "color": "blue",
+     "opacity": 0.75
+    },
+    {
+     "shape": "rect",
+     "x": "-4 + 3*4/3",
+     "y": 0,
+     "w": 1.3333333333333333,
+     "h": "if(k > 0, c3/(k*4/3), 0)",
+     "color": "blue",
+     "opacity": 0.75
+    },
+    {
+     "shape": "rect",
+     "x": "-4 + 4*4/3",
+     "y": 0,
+     "w": 1.3333333333333333,
+     "h": "if(k > 0, c4/(k*4/3), 0)",
+     "color": "blue",
+     "opacity": 0.75
+    },
+    {
+     "shape": "rect",
+     "x": "-4 + 5*4/3",
+     "y": 0,
+     "w": 1.3333333333333333,
+     "h": "if(k > 0, c5/(k*4/3), 0)",
+     "color": "blue",
+     "opacity": 0.75
+    },
+    {
+     "shape": "path",
+     "fn": "exp(-x^2/2)/sqrt(2*pi)",
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "fn": "exp(lgA - lgB)/sqrt(nd*pi)*(1 + x^2/nd)^(-(nd + 1)/2)",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": -1.96,
+     "y1": 0,
+     "x2": -1.96,
+     "y2": 0.45,
+     "color": "red",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": 1.96,
+     "y1": 0,
+     "x2": 1.96,
+     "y2": 0.45,
+     "color": "red",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 0.47,
+     "text": {
+      "en": "beyond ±1.96: {100*ct/max(k, 1):1}% (normal: 5%)"
+     },
+     "size": 20,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Share beyond ±1.96 (observed)"
+     },
+     "expr": "100*ct/max(k, 1)",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Share beyond ±1.96 (theory)"
+     },
+     "expr": "if(nd == 2, 18.91, if(nd == 3, 14.49, if(nd == 5, 10.73, 7.84)))",
+     "digits": 2,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Values collected"
+     },
+     "expr": "k",
+     "digits": 0
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

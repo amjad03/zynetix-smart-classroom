@@ -246,6 +246,168 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Peaked or flat?",
+    "kn": "ಚೂಪು ಅಥವಾ ಚಪ್ಪಟೆ?"
+   },
+   "narration": {
+    "en": "Every curve here has mean 0 and variance 1; only the shape parameter p changes. With p = 2 it is the normal curve (β₂ = 3, mesokurtic). Smaller p gives a sharper peak and heavier tails (leptokurtic, β₂ > 3); larger p gives a flat top (platykurtic, β₂ < 3)."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Every curve here has mean 0 and variance 1; only the shape parameter p changes. With p = 2 it is the normal curve (β₂ = 3, mesokurtic). Smaller p gives a sharper peak and heavier tails (leptokurtic, β₂ > 3); larger p gives a flat top (platykurtic, β₂ < 3).",
+    "kn": "ಇಲ್ಲಿ ಪ್ರತಿ ವಕ್ರಕ್ಕೂ ಸರಾಸರಿ 0, ಚದುರಿಕೆ 1; ಆಕಾರ ನಿಯತಾಂಕ p ಮಾತ್ರ ಬದಲಾಗುತ್ತದೆ. p = 2 ಆದಾಗ ಸಾಮಾನ್ಯ ವಕ್ರ (β₂ = 3). ಚಿಕ್ಕ p ಚೂಪಾದ ಶಿಖರ ಮತ್ತು ದಪ್ಪ ಬಾಲಗಳನ್ನು ಕೊಡುತ್ತದೆ (β₂ > 3); ದೊಡ್ಡ p ಚಪ್ಪಟೆ ತುದಿ ಕೊಡುತ್ತದೆ (β₂ < 3)."
+   },
+   "tryThis": [
+    {
+     "en": "Set p = 1. How high is the peak compared with the normal curve? What is β₂?"
+    },
+    {
+     "en": "Set p = 8. Where has the area gone from the tails?"
+    },
+    {
+     "en": "Find the p that makes γ₂ = 0."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "p",
+     "label": {
+      "en": "Shape p",
+      "kn": "ಆಕಾರ p"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 0.25,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "nrm",
+     "label": {
+      "en": "Normal curve for comparison",
+      "kn": "ಹೋಲಿಕೆಗೆ ಸಾಮಾನ್ಯ ವಕ್ರ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "g1",
+     "expr": "((((1/p) + 6) - 0.5)*ln(((1/p) + 6)) - ((1/p) + 6) + 0.918938533 + 1/(12*((1/p) + 6)) - 1/(360*((1/p) + 6)^3) + 1/(1260*((1/p) + 6)^5) - ln((1/p)*((1/p) + 1)*((1/p) + 2)*((1/p) + 3)*((1/p) + 4)*((1/p) + 5)))"
+    },
+    {
+     "name": "g3",
+     "expr": "((((3/p) + 6) - 0.5)*ln(((3/p) + 6)) - ((3/p) + 6) + 0.918938533 + 1/(12*((3/p) + 6)) - 1/(360*((3/p) + 6)^3) + 1/(1260*((3/p) + 6)^5) - ln((3/p)*((3/p) + 1)*((3/p) + 2)*((3/p) + 3)*((3/p) + 4)*((3/p) + 5)))"
+    },
+    {
+     "name": "g5",
+     "expr": "((((5/p) + 6) - 0.5)*ln(((5/p) + 6)) - ((5/p) + 6) + 0.918938533 + 1/(12*((5/p) + 6)) - 1/(360*((5/p) + 6)^3) + 1/(1260*((5/p) + 6)^5) - ln((5/p)*((5/p) + 1)*((5/p) + 2)*((5/p) + 3)*((5/p) + 4)*((5/p) + 5)))"
+    },
+    {
+     "name": "aa",
+     "expr": "exp((g1 - g3)/2)"
+    },
+    {
+     "name": "cc",
+     "expr": "p/(2*aa)*exp(-g1)"
+    },
+    {
+     "name": "b2",
+     "expr": "exp(g5 + g1 - 2*g3)"
+    }
+   ],
+   "view": {
+    "x": [
+     -4,
+     4
+    ],
+    "y": [
+     0,
+     0.8
+    ],
+    "axes": true,
+    "xLabel": "x",
+    "yLabel": "f(x)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "exp(-x^2/2)/sqrt(2*pi)",
+     "color": "white",
+     "dashed": true,
+     "visibleIf": "nrm"
+    },
+    {
+     "shape": "path",
+     "fn": "cc*exp(-(abs(x)/aa)^p)",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 2.6,
+     "y": 0.72,
+     "text": {
+      "en": "leptokurtic"
+     },
+     "size": 26,
+     "color": "orange",
+     "visibleIf": "b2 > 3.005"
+    },
+    {
+     "shape": "text",
+     "x": 2.6,
+     "y": 0.72,
+     "text": {
+      "en": "mesokurtic (normal)"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "abs(b2 - 3) <= 0.005"
+    },
+    {
+     "shape": "text",
+     "x": 2.6,
+     "y": 0.72,
+     "text": {
+      "en": "platykurtic"
+     },
+     "size": 26,
+     "color": "blue",
+     "visibleIf": "b2 < 2.995"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "β₂ = μ₄/μ₂²"
+     },
+     "expr": "b2",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "γ₂ = β₂ − 3"
+     },
+     "expr": "b2 - 3",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Height of the peak"
+     },
+     "expr": "cc",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

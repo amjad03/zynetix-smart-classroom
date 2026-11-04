@@ -394,6 +394,261 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A control chart in action",
+    "kn": "ಕಾರ್ಯದಲ್ಲಿ ನಿಯಂತ್ರಣ ಚಿತ್ರ"
+   },
+   "narration": {
+    "en": "Sample means from a process with mean 50 and standard error 1 are plotted one after another, with CL = 50 and limits 50 ± 3. With only chance causes nearly every point stays inside. Switch on an assignable cause from sample 20 (the mean shifts, or the spread doubles) and points start to break out."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Sample means from a process with mean 50 and standard error 1 are plotted one after another, with CL = 50 and limits 50 ± 3. With only chance causes nearly every point stays inside. Switch on an assignable cause from sample 20 (the mean shifts, or the spread doubles) and points start to break out.",
+    "kn": "ಸರಾಸರಿ 50, ಪ್ರಮಾಣ ದೋಷ 1 ಇರುವ ಪ್ರಕ್ರಿಯೆಯ ಮಾದರಿ ಸರಾಸರಿಗಳನ್ನು ಒಂದರ ನಂತರ ಒಂದು ಗುರುತಿಸಲಾಗುತ್ತದೆ; CL = 50, ಮಿತಿಗಳು 50 ± 3. ಆಕಸ್ಮಿಕ ಕಾರಣಗಳು ಮಾತ್ರ ಇದ್ದರೆ ಬಹುತೇಕ ಬಿಂದುಗಳು ಒಳಗೇ. ಮಾದರಿ 20 ರಿಂದ ನಿರ್ದಿಷ್ಟ ಕಾರಣ ಸೇರಿಸಿ: ಬಿಂದುಗಳು ಹೊರಬೀಳುತ್ತವೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Run the chart with no assignable cause a few times. How often does a point fall outside?"
+    },
+    {
+     "en": "Shift the mean. How soon after sample 20 is the change caught?"
+    },
+    {
+     "en": "Why are the limits put at 3 standard errors and not at 1?"
+    }
+   ],
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "sh",
+     "label": {
+      "en": "Mean shifts up by 2.5",
+      "kn": "ಸರಾಸರಿ 2.5 ಏರಿಕೆ"
+     },
+     "value": false
+    },
+    {
+     "name": "wd",
+     "label": {
+      "en": "Spread doubles",
+      "kn": "ಹರಡಿಕೆ ದ್ವಿಗುಣ"
+     },
+     "value": false
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New run",
+      "kn": "ಹೊಸ ಓಟ"
+     },
+     "icon": "launch",
+     "set": {
+      "seed": "seed + 1"
+     },
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 40,
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2
+   },
+   "integrator": "euler",
+   "vars": [
+    {
+     "name": "kk",
+     "expr": "floor(t)"
+    },
+    {
+     "name": "fr",
+     "expr": "t - kk"
+    },
+    {
+     "name": "xa",
+     "expr": "(50 + if(sh && kk >= 20, 2.5, 0) + if(wd && kk >= 20, 2, 1)*sqrt(-2*ln(0.001 + 0.998*rand(2*kk + 7919*seed + 11)))*cos(2*pi*rand(2*kk + 7919*seed + 12)))"
+    },
+    {
+     "name": "xn",
+     "expr": "(50 + if(sh && (kk + 1) >= 20, 2.5, 0) + if(wd && (kk + 1) >= 20, 2, 1)*sqrt(-2*ln(0.001 + 0.998*rand(2*(kk + 1) + 7919*seed + 11)))*cos(2*pi*rand(2*(kk + 1) + 7919*seed + 12)))"
+    },
+    {
+     "name": "yv",
+     "expr": "xa + (xn - xa)*fr"
+    },
+    {
+     "name": "nst",
+     "expr": "round(t/0.05)"
+    }
+   ],
+   "state": [
+    {
+     "name": "cnt",
+     "init": 0,
+     "rate": "(mod(nst, 20) == 0)*(abs(xa - 50) > 3)/0.05"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     44
+    ],
+    "y": [
+     43.5,
+     57
+    ],
+    "axes": true,
+    "xLabel": "sample number",
+    "yLabel": "sample mean x̄"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 53,
+     "x2": 40,
+     "y2": 53,
+     "color": "red",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 47,
+     "x2": 40,
+     "y2": 47,
+     "color": "red",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 50,
+     "x2": 40,
+     "y2": 50,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 40.3,
+     "y": 53,
+     "text": {
+      "en": "UCL 53"
+     },
+     "size": 18,
+     "align": "left",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 40.3,
+     "y": 47,
+     "text": {
+      "en": "LCL 47"
+     },
+     "size": 18,
+     "align": "left",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 40.3,
+     "y": 50,
+     "text": {
+      "en": "CL 50"
+     },
+     "size": 18,
+     "align": "left",
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": 20,
+     "y1": 44,
+     "x2": 20,
+     "y2": 56,
+     "color": "orange",
+     "dashed": true,
+     "visibleIf": "sh || wd"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 56.4,
+     "text": {
+      "en": "assignable cause from sample 20"
+     },
+     "size": 18,
+     "color": "orange",
+     "visibleIf": "sh || wd"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "clamp(yv, 44, 56)",
+     "length": 2000,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "clamp(yv, 44, 56)",
+     "r": 0.35,
+     "color": {
+      "by": "abs(yv - 50) > 3",
+      "scale": [
+       "yellow",
+       "red"
+      ]
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Points outside the limits",
+      "kn": "ಮಿತಿ ಮೀರಿದ ಬಿಂದುಗಳು"
+     },
+     "expr": "cnt",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Current sample mean"
+     },
+     "expr": "xa",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Sample number"
+     },
+     "expr": "kk",
+     "digits": 0
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -264,6 +264,324 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Bayes' theorem: which machine?",
+    "kn": "ಬೇಯ್ಸ್ ಪ್ರಮೇಯ: ಯಾವ ಯಂತ್ರ?"
+   },
+   "narration": {
+    "en": "Three machines make a share of the output each (column widths, the prior probabilities). M₂ and M₃ make 4% and 2% defectives; set the rate of M₁. A defective item is picked: the posterior probability of each machine is its red area as a share of all the red area."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Three machines make a share of the output each (column widths, the prior probabilities). M₂ and M₃ make 4% and 2% defectives; set the rate of M₁. A defective item is picked: the posterior probability of each machine is its red area as a share of all the red area.",
+    "kn": "ಮೂರು ಯಂತ್ರಗಳು ಉತ್ಪಾದನೆಯ ಪಾಲು ಮಾಡುತ್ತವೆ (ಕಾಲಂ ಅಗಲಗಳು, ಪೂರ್ವ ಸಂಭವನೀಯತೆಗಳು). M₂, M₃ ಕ್ರಮವಾಗಿ 4%, 2% ದೋಷಯುಕ್ತ; M₁ ರ ದರ ನಿಗದಿಪಡಿಸಿ. ಒಂದು ದೋಷಯುಕ್ತ ವಸ್ತು ಆರಿಸಲಾಗಿದೆ: ಪ್ರತಿ ಯಂತ್ರದ ಉತ್ತರ ಸಂಭವನೀಯತೆ ಅದರ ಕೆಂಪು ವಿಸ್ತೀರ್ಣ ÷ ಒಟ್ಟು ಕೆಂಪು ವಿಸ್ತೀರ್ಣ."
+   },
+   "tryThis": [
+    {
+     "en": "Set shares 25% and 35% and M₁ at 5%. Which machine most likely made the defective item?"
+    },
+    {
+     "en": "Can a machine with a small share still be the most likely culprit?"
+    },
+    {
+     "en": "Check that the three posterior probabilities always add up to 1."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "s1",
+     "label": {
+      "en": "Share of M₁",
+      "kn": "M₁ ಪಾಲು"
+     },
+     "min": 0.1,
+     "max": 0.6,
+     "step": 0.05,
+     "value": 0.25
+    },
+    {
+     "name": "s2",
+     "label": {
+      "en": "Share of M₂",
+      "kn": "M₂ ಪಾಲು"
+     },
+     "min": 0.1,
+     "max": 0.4,
+     "step": 0.05,
+     "value": 0.35
+    },
+    {
+     "name": "d1",
+     "label": {
+      "en": "Defective rate of M₁",
+      "kn": "M₁ ದೋಷ ದರ"
+     },
+     "min": 0.01,
+     "max": 0.1,
+     "step": 0.01,
+     "value": 0.05
+    }
+   ],
+   "vars": [
+    {
+     "name": "s3",
+     "expr": "max(0, 1 - s1 - s2)"
+    },
+    {
+     "name": "pD",
+     "expr": "s1*d1 + s2*0.04 + s3*0.02"
+    },
+    {
+     "name": "po1",
+     "expr": "s1*d1/pD"
+    },
+    {
+     "name": "po2",
+     "expr": "s2*0.04/pD"
+    },
+    {
+     "name": "po3",
+     "expr": "s3*0.02/pD"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.3,
+     17.6
+    ],
+    "y": [
+     -1.2,
+     11.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "0",
+     "y": 0,
+     "w": "10*s1",
+     "h": 10,
+     "color": "blue",
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": "0",
+     "y": "10 - 50*d1",
+     "w": "10*s1",
+     "h": "50*d1",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": "0 + 10*s1/2",
+     "y": 4,
+     "text": {
+      "en": "M1"
+     },
+     "size": 24,
+     "visibleIf": "10*s1 > 0.8"
+    },
+    {
+     "shape": "rect",
+     "x": 12.5,
+     "y": 0,
+     "w": 1.1,
+     "h": "10*po1",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 13.05,
+     "y": "10*po1 + 0.5",
+     "text": {
+      "en": "{po1:3}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 13.05,
+     "y": -0.6,
+     "text": {
+      "en": "M1"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": "10*s1",
+     "y": 0,
+     "w": "10*s2",
+     "h": 10,
+     "color": "green",
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": "10*s1",
+     "y": "10 - 50*0.04",
+     "w": "10*s2",
+     "h": "50*0.04",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": "10*s1 + 10*s2/2",
+     "y": 4,
+     "text": {
+      "en": "M2"
+     },
+     "size": 24,
+     "visibleIf": "10*s2 > 0.8"
+    },
+    {
+     "shape": "rect",
+     "x": 14.1,
+     "y": 0,
+     "w": 1.1,
+     "h": "10*po2",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 14.65,
+     "y": "10*po2 + 0.5",
+     "text": {
+      "en": "{po2:3}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 14.65,
+     "y": -0.6,
+     "text": {
+      "en": "M2"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": "10*(s1 + s2)",
+     "y": 0,
+     "w": "10*s3",
+     "h": 10,
+     "color": "orange",
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": "10*(s1 + s2)",
+     "y": "10 - 50*0.02",
+     "w": "10*s3",
+     "h": "50*0.02",
+     "color": "red",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": "10*(s1 + s2) + 10*s3/2",
+     "y": 4,
+     "text": {
+      "en": "M3"
+     },
+     "size": 24,
+     "visibleIf": "10*s3 > 0.8"
+    },
+    {
+     "shape": "rect",
+     "x": 15.7,
+     "y": 0,
+     "w": 1.1,
+     "h": "10*po3",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 16.25,
+     "y": "10*po3 + 0.5",
+     "text": {
+      "en": "{po3:3}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 16.25,
+     "y": -0.6,
+     "text": {
+      "en": "M3"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 10,
+     "h": 10,
+     "color": "white",
+     "fill": false
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 10.6,
+     "text": {
+      "en": "red: defective items (heights × 5)"
+     },
+     "size": 18,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 14.6,
+     "y": 10.6,
+     "text": {
+      "en": "P(Mᵢ | defective)"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Share of M₃"
+     },
+     "expr": "s3",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "P(defective) = Σ P(Mᵢ)P(D|Mᵢ)"
+     },
+     "expr": "pD",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "P(M₁ | D)"
+     },
+     "expr": "po1",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "P(M₂ | D)"
+     },
+     "expr": "po2",
+     "digits": 4
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

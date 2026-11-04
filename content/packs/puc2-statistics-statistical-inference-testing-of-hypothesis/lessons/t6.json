@@ -366,6 +366,380 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Is the die fair? A χ² test",
+    "kn": "ದಾಳ ನ್ಯಾಯಯುತವೇ? χ² ಪರೀಕ್ಷೆ"
+   },
+   "narration": {
+    "en": "Roll a die again and again. The bars are the observed frequencies O; the dashed line is the expected frequency E = N/6 under H₀: the die is fair. χ² = Σ(O − E)²/E with 6 − 1 = 5 d.f. is compared with 11.07. Load the die (a six comes up 25% of the time) and watch χ² grow with N."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Roll a die again and again. The bars are the observed frequencies O; the dashed line is the expected frequency E = N/6 under H₀: the die is fair. χ² = Σ(O − E)²/E with 6 − 1 = 5 d.f. is compared with 11.07. Load the die (a six comes up 25% of the time) and watch χ² grow with N.",
+    "kn": "ದಾಳವನ್ನು ಮತ್ತೆ ಮತ್ತೆ ಎಸೆಯಿರಿ. ಕಂಬಗಳು ವೀಕ್ಷಿತ ಆವೃತ್ತಿಗಳು O; ಚುಕ್ಕೆ ರೇಖೆ H₀: ದಾಳ ನ್ಯಾಯಯುತ ಅಡಿಯಲ್ಲಿ ನಿರೀಕ್ಷಿತ ಆವೃತ್ತಿ E = N/6. χ² = Σ(O − E)²/E, 5 ಸ್ವಾತಂತ್ರ್ಯ ಮಟ್ಟ, 11.07 ರೊಂದಿಗೆ ಹೋಲಿಕೆ. ದಾಳವನ್ನು ಪಕ್ಷಪಾತಿ ಮಾಡಿ (ಆರು 25%) χ² N ಜೊತೆ ಬೆಳೆಯುವುದನ್ನು ನೋಡಿ."
+   },
+   "tryThis": [
+    {
+     "en": "With a fair die, does χ² stay below 11.07? Run it a few times."
+    },
+    {
+     "en": "Load the die. After about how many rolls is the bias detected?"
+    },
+    {
+     "en": "Why are the degrees of freedom 5 and not 6?"
+    }
+   ],
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "ld",
+     "label": {
+      "en": "Loaded die (six 25%)",
+      "kn": "ಪಕ್ಷಪಾತಿ ದಾಳ"
+     },
+     "value": false
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 2,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Roll again",
+      "kn": "ಮತ್ತೆ ಎಸೆಯಿರಿ"
+     },
+     "icon": "launch",
+     "set": {
+      "seed": "seed + 1"
+     },
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 30,
+    "dt": 0.05,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2
+   },
+   "integrator": "euler",
+   "vars": [
+    {
+     "name": "uu",
+     "expr": "rand(round(t/0.05) + 7919*seed + 5)"
+    },
+    {
+     "name": "fc",
+     "expr": "if(ld, if(uu < 0.75, floor(uu/0.15) + 1, 6), floor(6*uu) + 1)"
+    },
+    {
+     "name": "N",
+     "expr": "O1 + O2 + O3 + O4 + O5 + O6"
+    },
+    {
+     "name": "X2",
+     "expr": "if(N > 0, ((O1 - N/6)^2 + (O2 - N/6)^2 + (O3 - N/6)^2 + (O4 - N/6)^2 + (O5 - N/6)^2 + (O6 - N/6)^2)/(N/6), 0)"
+    }
+   ],
+   "state": [
+    {
+     "name": "O1",
+     "init": 0,
+     "rate": "(fc == 1)/0.05"
+    },
+    {
+     "name": "O2",
+     "init": 0,
+     "rate": "(fc == 2)/0.05"
+    },
+    {
+     "name": "O3",
+     "init": 0,
+     "rate": "(fc == 3)/0.05"
+    },
+    {
+     "name": "O4",
+     "init": 0,
+     "rate": "(fc == 4)/0.05"
+    },
+    {
+     "name": "O5",
+     "init": 0,
+     "rate": "(fc == 5)/0.05"
+    },
+    {
+     "name": "O6",
+     "init": 0,
+     "rate": "(fc == 6)/0.05"
+    }
+   ],
+   "view": {
+    "x": [
+     0.3,
+     7.6
+    ],
+    "y": [
+     -14,
+     200
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "O1",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": "O1 + 6",
+     "text": {
+      "en": "{O1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": -8,
+     "text": {
+      "en": "1"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 1.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "O2",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": "O2 + 6",
+     "text": {
+      "en": "{O2}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": -8,
+     "text": {
+      "en": "2"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 2.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "O3",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": "O3 + 6",
+     "text": {
+      "en": "{O3}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": -8,
+     "text": {
+      "en": "3"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 3.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "O4",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": "O4 + 6",
+     "text": {
+      "en": "{O4}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": -8,
+     "text": {
+      "en": "4"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 4.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "O5",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": "O5 + 6",
+     "text": {
+      "en": "{O5}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -8,
+     "text": {
+      "en": "5"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 5.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "O6",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": "O6 + 6",
+     "text": {
+      "en": "{O6}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": -8,
+     "text": {
+      "en": "6"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 0.4,
+     "y1": "N/6",
+     "x2": 6.6,
+     "y2": "N/6",
+     "color": "yellow",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 6.7,
+     "y": "N/6",
+     "text": {
+      "en": "E = {N/6:1}"
+     },
+     "size": 18,
+     "align": "left",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 190,
+     "text": {
+      "en": "χ² = {X2:2} with 5 d.f.; 5% table value 11.07"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 175,
+     "text": {
+      "en": "reject H₀: the die is not fair"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "X2 > 11.07"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 175,
+     "text": {
+      "en": "accept H₀: the die is fair"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "X2 <= 11.07"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Rolls N"
+     },
+     "expr": "N",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "χ² = Σ(O − E)²/E"
+     },
+     "expr": "X2",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Table value χ²₀.₀₅(5)"
+     },
+     "expr": "11.07",
+     "digits": 2
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

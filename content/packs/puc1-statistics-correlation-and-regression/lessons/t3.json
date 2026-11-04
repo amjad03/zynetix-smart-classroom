@@ -675,6 +675,557 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Two judges, one ranking",
+    "kn": "ಇಬ್ಬರು ತೀರ್ಪುಗಾರರು, ಒಂದು ಶ್ರೇಣಿ"
+   },
+   "narration": {
+    "en": "Five contestants P to T are ranked by two judges. Judge A's ranks are fixed; swap judge B's ranks with the buttons. Each line joins a contestant's two ranks: crossing lines mean disagreement. ρ = 1 − 6ΣD²/[n(n² − 1)] with n = 5."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Five contestants P to T are ranked by two judges. Judge A's ranks are fixed; swap judge B's ranks with the buttons. Each line joins a contestant's two ranks: crossing lines mean disagreement. ρ = 1 − 6ΣD²/[n(n² − 1)] with n = 5.",
+    "kn": "P ರಿಂದ T ವರೆಗಿನ ಐದು ಸ್ಪರ್ಧಿಗಳಿಗೆ ಇಬ್ಬರು ತೀರ್ಪುಗಾರರು ಶ್ರೇಣಿ ನೀಡುತ್ತಾರೆ. A ಯ ಶ್ರೇಣಿಗಳು ಸ್ಥಿರ; ಗುಂಡಿಗಳಿಂದ B ಯ ಶ್ರೇಣಿಗಳನ್ನು ಅದಲುಬದಲು ಮಾಡಿ. ಪ್ರತಿ ರೇಖೆ ಸ್ಪರ್ಧಿಯ ಎರಡು ಶ್ರೇಣಿಗಳನ್ನು ಜೋಡಿಸುತ್ತದೆ; ಅಡ್ಡ ಹಾಯುವ ರೇಖೆಗಳು ಭಿನ್ನಾಭಿಪ್ರಾಯ."
+   },
+   "tryThis": [
+    {
+     "en": "Make the two judges agree completely. What are ΣD² and ρ?"
+    },
+    {
+     "en": "Make judge B's order the exact reverse of A's (T first). What is ρ now?"
+    },
+    {
+     "en": "Find an order with ρ close to 0. How many lines cross?"
+    }
+   ],
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "showd",
+     "label": {
+      "en": "Show the differences D",
+      "kn": "ವ್ಯತ್ಯಾಸ D ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "counters": [
+    {
+     "name": "b1",
+     "value": 2,
+     "min": 1,
+     "max": 5
+    },
+    {
+     "name": "b2",
+     "value": 1,
+     "min": 1,
+     "max": 5
+    },
+    {
+     "name": "b3",
+     "value": 5,
+     "min": 1,
+     "max": 5
+    },
+    {
+     "name": "b4",
+     "value": 3,
+     "min": 1,
+     "max": 5
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Swap B's ranks of P and Q",
+      "kn": "P, Q ಅದಲುಬದಲು"
+     },
+     "icon": "flip",
+     "set": {
+      "b1": "b2",
+      "b2": "b1"
+     }
+    },
+    {
+     "label": {
+      "en": "Swap B's ranks of Q and R",
+      "kn": "Q, R ಅದಲುಬದಲು"
+     },
+     "icon": "flip",
+     "set": {
+      "b2": "b3",
+      "b3": "b2"
+     }
+    },
+    {
+     "label": {
+      "en": "Swap B's ranks of R and S",
+      "kn": "R, S ಅದಲುಬದಲು"
+     },
+     "icon": "flip",
+     "set": {
+      "b3": "b4",
+      "b4": "b3"
+     }
+    },
+    {
+     "label": {
+      "en": "Swap B's ranks of S and T",
+      "kn": "S, T ಅದಲುಬದಲು"
+     },
+     "icon": "flip",
+     "set": {
+      "b4": "15 - b1 - b2 - b3 - b4"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "sd2",
+     "expr": "(1 - b1)^2 + (2 - b2)^2 + (3 - b3)^2 + (4 - b4)^2 + (5 - (15 - b1 - b2 - b3 - b4))^2"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     7
+    ],
+    "y": [
+     -0.8,
+     5.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 0.2,
+     "y": 4,
+     "text": {
+      "en": "Judge A"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0.2,
+     "y": 1,
+     "text": {
+      "en": "Judge B"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 3.7,
+     "x2": "b1 + 1",
+     "y2": 1.3,
+     "color": {
+      "by": "min(abs(1 - b1), 3)/3",
+      "scale": [
+       "green",
+       "yellow",
+       "red"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 2,
+     "y": 4,
+     "r": 0.3,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 4,
+     "text": {
+      "en": "P"
+     },
+     "size": 24
+    },
+    {
+     "shape": "circle",
+     "x": "b1 + 1",
+     "y": 1,
+     "r": 0.3,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": "b1 + 1",
+     "y": 1,
+     "text": {
+      "en": "P"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 4.75,
+     "text": {
+      "en": "rank 1"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 0.25,
+     "text": {
+      "en": "rank 1"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": "b1 + 1",
+     "y": -0.4,
+     "text": {
+      "en": "D = {1 - b1}"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "showd"
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 3.7,
+     "x2": "b2 + 1",
+     "y2": 1.3,
+     "color": {
+      "by": "min(abs(2 - b2), 3)/3",
+      "scale": [
+       "green",
+       "yellow",
+       "red"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 3,
+     "y": 4,
+     "r": 0.3,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 4,
+     "text": {
+      "en": "Q"
+     },
+     "size": 24
+    },
+    {
+     "shape": "circle",
+     "x": "b2 + 1",
+     "y": 1,
+     "r": 0.3,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": "b2 + 1",
+     "y": 1,
+     "text": {
+      "en": "Q"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 4.75,
+     "text": {
+      "en": "rank 2"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 0.25,
+     "text": {
+      "en": "rank 2"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": "b2 + 1",
+     "y": -0.4,
+     "text": {
+      "en": "D = {2 - b2}"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "showd"
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": 3.7,
+     "x2": "b3 + 1",
+     "y2": 1.3,
+     "color": {
+      "by": "min(abs(3 - b3), 3)/3",
+      "scale": [
+       "green",
+       "yellow",
+       "red"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 4,
+     "y": 4,
+     "r": 0.3,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 4,
+     "text": {
+      "en": "R"
+     },
+     "size": 24
+    },
+    {
+     "shape": "circle",
+     "x": "b3 + 1",
+     "y": 1,
+     "r": 0.3,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": "b3 + 1",
+     "y": 1,
+     "text": {
+      "en": "R"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 4.75,
+     "text": {
+      "en": "rank 3"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 0.25,
+     "text": {
+      "en": "rank 3"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": "b3 + 1",
+     "y": -0.4,
+     "text": {
+      "en": "D = {3 - b3}"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "showd"
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 3.7,
+     "x2": "b4 + 1",
+     "y2": 1.3,
+     "color": {
+      "by": "min(abs(4 - b4), 3)/3",
+      "scale": [
+       "green",
+       "yellow",
+       "red"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 5,
+     "y": 4,
+     "r": 0.3,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 4,
+     "text": {
+      "en": "S"
+     },
+     "size": 24
+    },
+    {
+     "shape": "circle",
+     "x": "b4 + 1",
+     "y": 1,
+     "r": 0.3,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": "b4 + 1",
+     "y": 1,
+     "text": {
+      "en": "S"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 4.75,
+     "text": {
+      "en": "rank 4"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 0.25,
+     "text": {
+      "en": "rank 4"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": "b4 + 1",
+     "y": -0.4,
+     "text": {
+      "en": "D = {4 - b4}"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "showd"
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 3.7,
+     "x2": "(15 - b1 - b2 - b3 - b4) + 1",
+     "y2": 1.3,
+     "color": {
+      "by": "min(abs(5 - (15 - b1 - b2 - b3 - b4)), 3)/3",
+      "scale": [
+       "green",
+       "yellow",
+       "red"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 6,
+     "y": 4,
+     "r": 0.3,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 4,
+     "text": {
+      "en": "T"
+     },
+     "size": 24
+    },
+    {
+     "shape": "circle",
+     "x": "(15 - b1 - b2 - b3 - b4) + 1",
+     "y": 1,
+     "r": 0.3,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": "(15 - b1 - b2 - b3 - b4) + 1",
+     "y": 1,
+     "text": {
+      "en": "T"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 4.75,
+     "text": {
+      "en": "rank 5"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 0.25,
+     "text": {
+      "en": "rank 5"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": "(15 - b1 - b2 - b3 - b4) + 1",
+     "y": -0.4,
+     "text": {
+      "en": "D = {5 - (15 - b1 - b2 - b3 - b4)}"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "showd"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "ΣD²"
+     },
+     "expr": "sd2",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Rank correlation ρ = 1 − 6ΣD²/120",
+      "kn": "ಶ್ರೇಣಿ ಸಹಸಂಬಂಧ ρ"
+     },
+     "expr": "1 - 6*sd2/120",
+     "digits": 2
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

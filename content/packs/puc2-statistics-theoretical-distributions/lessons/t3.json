@@ -432,6 +432,341 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Without replacement: hypergeometric",
+    "kn": "ಬದಲಿಸದೆ: ಅಧಿಜ್ಯಾಮಿತೀಯ"
+   },
+   "narration": {
+    "en": "A lot of N items has M defectives; 5 are drawn without replacement. The bars are the hypergeometric probabilities of x defectives; the outlines are the binomial B(5, M/N) for drawing with replacement. For a small lot they differ; as N grows they become the same."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A lot of N items has M defectives; 5 are drawn without replacement. The bars are the hypergeometric probabilities of x defectives; the outlines are the binomial B(5, M/N) for drawing with replacement. For a small lot they differ; as N grows they become the same.",
+    "kn": "N ವಸ್ತುಗಳ ಲಾಟ್‌ನಲ್ಲಿ M ದೋಷಯುಕ್ತ; ಬದಲಿಸದೆ 5 ಎಳೆಯಲಾಗುತ್ತದೆ. ಕಂಬಗಳು x ದೋಷಯುಕ್ತಗಳ ಅಧಿಜ್ಯಾಮಿತೀಯ ಸಂಭವನೀಯತೆಗಳು; ರೂಪರೇಖೆಗಳು ಬದಲಿಸಿ ಎಳೆಯುವ ದ್ವಿಪದ B(5, M/N). ಚಿಕ್ಕ ಲಾಟ್‌ಗೆ ಬೇರೆ; N ಬೆಳೆದಂತೆ ಒಂದೇ."
+   },
+   "tryThis": [
+    {
+     "en": "With N = 10 and 30% defective, can you draw 4 defectives? What does the binomial say?"
+    },
+    {
+     "en": "Raise N to 200. How close are the two now?"
+    },
+    {
+     "en": "Both have mean nM/N. Which has the smaller variance, and why?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "Nn",
+     "label": {
+      "en": "Lot size N",
+      "kn": "ಲಾಟ್ ಗಾತ್ರ N"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 10,
+     "value": 10
+    },
+    {
+     "name": "pf",
+     "label": {
+      "en": "Share defective M/N",
+      "kn": "ದೋಷಯುಕ್ತ ಪಾಲು M/N"
+     },
+     "min": 0.1,
+     "max": 0.5,
+     "step": 0.1,
+     "value": 0.3
+    }
+   ],
+   "vars": [
+    {
+     "name": "M",
+     "expr": "round(pf*Nn)"
+    },
+    {
+     "name": "h0",
+     "expr": "(1)*(((Nn - M) - 0)/1*((Nn - M) - 1)/2*((Nn - M) - 2)/3*((Nn - M) - 3)/4*((Nn - M) - 4)/5)/((Nn - 0)/1*(Nn - 1)/2*(Nn - 2)/3*(Nn - 3)/4*(Nn - 4)/5)"
+    },
+    {
+     "name": "h1",
+     "expr": "((M - 0)/1)*(((Nn - M) - 0)/1*((Nn - M) - 1)/2*((Nn - M) - 2)/3*((Nn - M) - 3)/4)/((Nn - 0)/1*(Nn - 1)/2*(Nn - 2)/3*(Nn - 3)/4*(Nn - 4)/5)"
+    },
+    {
+     "name": "h2",
+     "expr": "((M - 0)/1*(M - 1)/2)*(((Nn - M) - 0)/1*((Nn - M) - 1)/2*((Nn - M) - 2)/3)/((Nn - 0)/1*(Nn - 1)/2*(Nn - 2)/3*(Nn - 3)/4*(Nn - 4)/5)"
+    },
+    {
+     "name": "h3",
+     "expr": "((M - 0)/1*(M - 1)/2*(M - 2)/3)*(((Nn - M) - 0)/1*((Nn - M) - 1)/2)/((Nn - 0)/1*(Nn - 1)/2*(Nn - 2)/3*(Nn - 3)/4*(Nn - 4)/5)"
+    },
+    {
+     "name": "h4",
+     "expr": "((M - 0)/1*(M - 1)/2*(M - 2)/3*(M - 3)/4)*(((Nn - M) - 0)/1)/((Nn - 0)/1*(Nn - 1)/2*(Nn - 2)/3*(Nn - 3)/4*(Nn - 4)/5)"
+    },
+    {
+     "name": "h5",
+     "expr": "((M - 0)/1*(M - 1)/2*(M - 2)/3*(M - 3)/4*(M - 4)/5)*(1)/((Nn - 0)/1*(Nn - 1)/2*(Nn - 2)/3*(Nn - 3)/4*(Nn - 4)/5)"
+    },
+    {
+     "name": "g0",
+     "expr": "1*pf^0*(1 - pf)^5"
+    },
+    {
+     "name": "g1",
+     "expr": "5*pf^1*(1 - pf)^4"
+    },
+    {
+     "name": "g2",
+     "expr": "10*pf^2*(1 - pf)^3"
+    },
+    {
+     "name": "g3",
+     "expr": "10*pf^3*(1 - pf)^2"
+    },
+    {
+     "name": "g4",
+     "expr": "5*pf^4*(1 - pf)^1"
+    },
+    {
+     "name": "g5",
+     "expr": "1*pf^5*(1 - pf)^0"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.6,
+     5.6
+    ],
+    "y": [
+     -0.07,
+     0.8
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -0.35,
+     "y": 0,
+     "w": 0.7,
+     "h": "h0",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": -0.35,
+     "y": 0,
+     "w": 0.7,
+     "h": "g0",
+     "color": "yellow",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -0.03,
+     "text": {
+      "en": "0"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 0.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "h1",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 0.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "g1",
+     "color": "yellow",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": -0.03,
+     "text": {
+      "en": "1"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 1.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "h2",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 1.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "g2",
+     "color": "yellow",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": -0.03,
+     "text": {
+      "en": "2"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 2.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "h3",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 2.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "g3",
+     "color": "yellow",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": -0.03,
+     "text": {
+      "en": "3"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 3.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "h4",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 3.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "g4",
+     "color": "yellow",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": -0.03,
+     "text": {
+      "en": "4"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 4.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "h5",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 4.65,
+     "y": 0,
+     "w": 0.7,
+     "h": "g5",
+     "color": "yellow",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -0.03,
+     "text": {
+      "en": "5"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 0.75,
+     "text": {
+      "en": "bars: hypergeometric (without replacement) · outlines: binomial"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 0.69,
+     "text": {
+      "en": "N = {Nn}, M = {M} defective, sample n = 5"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mean nM/N"
+     },
+     "expr": "5*M/Nn",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Variance (hypergeometric)"
+     },
+     "expr": "5*pf*(1 - pf)*(Nn - 5)/(Nn - 1)",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "Variance (binomial) npq"
+     },
+     "expr": "5*pf*(1 - pf)",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "P(X = 4): hypergeometric"
+     },
+     "expr": "h4",
+     "digits": 4
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

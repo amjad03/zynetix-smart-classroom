@@ -210,6 +210,224 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Relative frequency settles down",
+    "kn": "ಸಾಪೇಕ್ಷ ಆವೃತ್ತಿ ಸ್ಥಿರವಾಗುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "Repeat a random experiment again and again. The curve is the relative frequency m/n of the event after n trials. It jumps about at first, then settles near the classical probability (dashed line): the statistical definition of probability."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Repeat a random experiment again and again. The curve is the relative frequency m/n of the event after n trials. It jumps about at first, then settles near the classical probability (dashed line): the statistical definition of probability.",
+    "kn": "ಒಂದು ಯಾದೃಚ್ಛಿಕ ಪ್ರಯೋಗವನ್ನು ಮತ್ತೆ ಮತ್ತೆ ಮಾಡಿ. ವಕ್ರ n ಪ್ರಯತ್ನಗಳ ನಂತರ ಘಟನೆಯ ಸಾಪೇಕ್ಷ ಆವೃತ್ತಿ m/n. ಮೊದಲು ಏರಿಳಿಯುತ್ತದೆ, ನಂತರ ಶಾಸ್ತ್ರೀಯ ಸಂಭವನೀಯತೆಯ (ಚುಕ್ಕೆ ರೇಖೆ) ಹತ್ತಿರ ನೆಲೆಸುತ್ತದೆ: ಸಂಭವನೀಯತೆಯ ಸಾಂಖ್ಯಿಕ ವ್ಯಾಖ್ಯೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Run the coin a few times. After 20 tosses, is m/n always close to 0.5? After 1000?"
+    },
+    {
+     "en": "Switch to \"six on a die\". Which line does the curve approach?"
+    },
+    {
+     "en": "Why can classical probability not be used for a biased coin, while this method can?"
+    }
+   ],
+   "sliders": [],
+   "choices": [
+    {
+     "name": "ex",
+     "label": {
+      "en": "Experiment",
+      "kn": "ಪ್ರಯೋಗ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Coin: head",
+        "kn": "ನಾಣ್ಯ: ತಲೆ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Die: six",
+        "kn": "ದಾಳ: ಆರು"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Card: a heart",
+        "kn": "ಎಲೆ: ಹೃದಯ"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Two dice: sum 7",
+        "kn": "ಎರಡು ದಾಳ: ಮೊತ್ತ 7"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New run",
+      "kn": "ಹೊಸ ಓಟ"
+     },
+     "icon": "launch",
+     "set": {
+      "seed": "seed + 1"
+     },
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 50,
+    "dt": 0.05,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2,
+    "unit": "s"
+   },
+   "integrator": "euler",
+   "vars": [
+    {
+     "name": "k",
+     "expr": "round(t/0.05)"
+    },
+    {
+     "name": "hit",
+     "expr": "if(ex == 1, rand(3*k + 7919*seed + 11) < 0.5, if(ex == 2, floor(6*rand(3*k + 7919*seed + 11)) == 5, if(ex == 3, floor(52*rand(3*k + 7919*seed + 11)) < 13, floor(6*rand(3*k + 7919*seed + 11)) + floor(6*rand(3*k + 7919*seed + 12)) == 5)))"
+    },
+    {
+     "name": "n",
+     "expr": "k"
+    },
+    {
+     "name": "pc",
+     "expr": "if(ex == 1, 0.5, if(ex == 3, 0.25, 1/6))"
+    },
+    {
+     "name": "rf",
+     "expr": "if(n > 0, m/n, 0)"
+    }
+   ],
+   "state": [
+    {
+     "name": "m",
+     "init": 0,
+     "rate": "hit/0.05"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     1000
+    ],
+    "y": [
+     0,
+     1
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "number of trials n",
+    "yLabel": "relative frequency m/n"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "pc",
+     "x2": 1000,
+     "y2": "pc",
+     "color": "green",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "trail",
+     "x": "20*t",
+     "y": "rf",
+     "length": 1100,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "20*t",
+     "y": "rf",
+     "r": 6,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 850,
+     "y": "pc + 0.06",
+     "text": {
+      "en": "P = {pc:3}"
+     },
+     "size": 22,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Trials n",
+      "kn": "ಪ್ರಯತ್ನಗಳು n"
+     },
+     "expr": "n",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Successes m"
+     },
+     "expr": "m",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Relative frequency m/n",
+      "kn": "ಸಾಪೇಕ್ಷ ಆವೃತ್ತಿ"
+     },
+     "expr": "rf",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Classical probability"
+     },
+     "expr": "pc",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "lab-probability",
    "type": "virtual_lab",
    "labId": "probability",

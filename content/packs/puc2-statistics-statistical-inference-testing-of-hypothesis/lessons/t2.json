@@ -248,6 +248,436 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A Z test, sample after sample",
+    "kn": "ಮಾದರಿ ನಂತರ ಮಾದರಿ Z ಪರೀಕ್ಷೆ"
+   },
+   "narration": {
+    "en": "H₀: μ = 50 is tested again and again with fresh samples of size n from a population whose true mean you set. Left: the Z of each sample against the critical region (red). Right: the share of samples that reject H₀. If H₀ is true this share settles at α; if it is false, at the power 1 − β."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "H₀: μ = 50 is tested again and again with fresh samples of size n from a population whose true mean you set. Left: the Z of each sample against the critical region (red). Right: the share of samples that reject H₀. If H₀ is true this share settles at α; if it is false, at the power 1 − β.",
+    "kn": "H₀: μ = 50 ಅನ್ನು ನೀವು ನಿಗದಿಪಡಿಸಿದ ನಿಜ ಸರಾಸರಿಯ ಸಮಷ್ಟಿಯಿಂದ n ಗಾತ್ರದ ಹೊಸ ಮಾದರಿಗಳಿಂದ ಮತ್ತೆ ಮತ್ತೆ ಪರೀಕ್ಷಿಸಲಾಗುತ್ತದೆ. ಎಡ: ಪ್ರತಿ ಮಾದರಿಯ Z ಮತ್ತು ನಿರಾಕರಣ ಪ್ರದೇಶ. ಬಲ: H₀ ನಿರಾಕರಿಸುವ ಮಾದರಿಗಳ ಪಾಲು. H₀ ಸತ್ಯವಾದರೆ ಪಾಲು α; ಅಸತ್ಯವಾದರೆ ಶಕ್ತಿ 1 − β."
+   },
+   "tryThis": [
+    {
+     "en": "Set the true mean to 50. What share of samples wrongly reject H₀? Compare with α."
+    },
+    {
+     "en": "Set the true mean to 52 with n = 25, then n = 100. How does the power change?"
+    },
+    {
+     "en": "Switch α to 1%. What happens to Type I errors and to the power?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "mu",
+     "label": {
+      "en": "True mean μ",
+      "kn": "ನಿಜ ಸರಾಸರಿ μ"
+     },
+     "min": 46,
+     "max": 54,
+     "step": 0.5,
+     "value": 52
+    },
+    {
+     "name": "nn",
+     "label": {
+      "en": "Sample size n",
+      "kn": "ಮಾದರಿ ಗಾತ್ರ n"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 25
+    },
+    {
+     "name": "sg",
+     "label": {
+      "en": "σ"
+     },
+     "min": 5,
+     "max": 20,
+     "step": 1,
+     "value": 10
+    }
+   ],
+   "choices": [
+    {
+     "name": "zc",
+     "label": {
+      "en": "Level of significance α",
+      "kn": "ಮಹತ್ವ ಮಟ್ಟ α"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "5% (1.96)"
+       },
+       "value": 1.96
+      },
+      {
+       "label": {
+        "en": "1% (2.58)"
+       },
+       "value": 2.58
+      }
+     ],
+     "value": 1.96
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New run",
+      "kn": "ಹೊಸ ಓಟ"
+     },
+     "icon": "launch",
+     "set": {
+      "seed": "seed + 1"
+     },
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 50,
+    "dt": 0.1,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2
+   },
+   "integrator": "euler",
+   "vars": [
+    {
+     "name": "k",
+     "expr": "round(t/0.1)"
+    },
+    {
+     "name": "dl",
+     "expr": "(mu - 50)*sqrt(nn)/sg"
+    },
+    {
+     "name": "Zv",
+     "expr": "dl + sqrt(-2*ln(0.001 + 0.998*rand(2*k + 7919*seed + 1)))*cos(2*pi*rand(2*k + 7919*seed + 2))"
+    },
+    {
+     "name": "paz",
+     "expr": "zc - dl"
+    },
+    {
+     "name": "pak",
+     "expr": "1/(1 + 0.2316419*abs(paz))"
+    },
+    {
+     "name": "paq",
+     "expr": "exp(-paz^2/2)/sqrt(2*pi)*pak*(0.31938153 + pak*(-0.356563782 + pak*(1.781477937 + pak*(-1.821255978 + pak*1.330274429))))"
+    },
+    {
+     "name": "pa",
+     "expr": "if(paz >= 0, 1 - paq, paq)"
+    },
+    {
+     "name": "pbz",
+     "expr": "-zc - dl"
+    },
+    {
+     "name": "pbk",
+     "expr": "1/(1 + 0.2316419*abs(pbz))"
+    },
+    {
+     "name": "pbq",
+     "expr": "exp(-pbz^2/2)/sqrt(2*pi)*pbk*(0.31938153 + pbk*(-0.356563782 + pbk*(1.781477937 + pbk*(-1.821255978 + pbk*1.330274429))))"
+    },
+    {
+     "name": "pb",
+     "expr": "if(pbz >= 0, 1 - pbq, pbq)"
+    },
+    {
+     "name": "pw",
+     "expr": "1 - pa + pb"
+    }
+   ],
+   "state": [
+    {
+     "name": "rj",
+     "init": 0,
+     "rate": "(abs(Zv) > zc)/0.1"
+    }
+   ],
+   "view": {
+    "x": [
+     -4.3,
+     14.3
+    ],
+    "y": [
+     -0.3,
+     5.4
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       -4,
+       0
+      ],
+      [
+       "-4 + 0*(4 - zc)/4",
+       "4.2*exp(-(-4 + 0*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "-4 + 0.333333*(4 - zc)/4",
+       "4.2*exp(-(-4 + 0.0833333*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "-4 + 0.666667*(4 - zc)/4",
+       "4.2*exp(-(-4 + 0.166667*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "-4 + 1*(4 - zc)/4",
+       "4.2*exp(-(-4 + 0.25*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "-4 + 1.33333*(4 - zc)/4",
+       "4.2*exp(-(-4 + 0.333333*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "-4 + 1.66667*(4 - zc)/4",
+       "4.2*exp(-(-4 + 0.416667*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "-4 + 2*(4 - zc)/4",
+       "4.2*exp(-(-4 + 0.5*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "-4 + 2.33333*(4 - zc)/4",
+       "4.2*exp(-(-4 + 0.583333*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "-4 + 2.66667*(4 - zc)/4",
+       "4.2*exp(-(-4 + 0.666667*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "-4 + 3*(4 - zc)/4",
+       "4.2*exp(-(-4 + 0.75*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "-4 + 3.33333*(4 - zc)/4",
+       "4.2*exp(-(-4 + 0.833333*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "-4 + 3.66667*(4 - zc)/4",
+       "4.2*exp(-(-4 + 0.916667*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "-4 + 4*(4 - zc)/4",
+       "4.2*exp(-(-4 + 1*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "-zc",
+       0
+      ]
+     ],
+     "color": "red",
+     "opacity": 0.4
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       "zc",
+       0
+      ],
+      [
+       "zc + 0*(4 - zc)",
+       "4.2*exp(-(zc + 0*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "zc + 0.0833333*(4 - zc)",
+       "4.2*exp(-(zc + 0.0833333*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "zc + 0.166667*(4 - zc)",
+       "4.2*exp(-(zc + 0.166667*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "zc + 0.25*(4 - zc)",
+       "4.2*exp(-(zc + 0.25*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "zc + 0.333333*(4 - zc)",
+       "4.2*exp(-(zc + 0.333333*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "zc + 0.416667*(4 - zc)",
+       "4.2*exp(-(zc + 0.416667*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "zc + 0.5*(4 - zc)",
+       "4.2*exp(-(zc + 0.5*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "zc + 0.583333*(4 - zc)",
+       "4.2*exp(-(zc + 0.583333*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "zc + 0.666667*(4 - zc)",
+       "4.2*exp(-(zc + 0.666667*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "zc + 0.75*(4 - zc)",
+       "4.2*exp(-(zc + 0.75*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "zc + 0.833333*(4 - zc)",
+       "4.2*exp(-(zc + 0.833333*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "zc + 0.916667*(4 - zc)",
+       "4.2*exp(-(zc + 0.916667*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       "zc + 1*(4 - zc)",
+       "4.2*exp(-(zc + 1*(4 - zc))^2/2)/sqrt(2*pi)/0.4"
+      ],
+      [
+       4,
+       0
+      ]
+     ],
+     "color": "red",
+     "opacity": 0.4
+    },
+    {
+     "shape": "path",
+     "fn": "4.2*exp(-(x)^2/2)/sqrt(2*pi)/0.4",
+     "from": -4,
+     "to": 4,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "clamp(Zv, -4, 4)",
+     "y1": 0,
+     "x2": "clamp(Zv, -4, 4)",
+     "y2": 4.6,
+     "color": {
+      "by": "abs(Zv) > zc",
+      "scale": [
+       "green",
+       "red"
+      ]
+     },
+     "visibleIf": "k > 0",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 5,
+     "text": {
+      "en": "Z of the last sample"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 0,
+     "w": 9,
+     "h": 4.6,
+     "color": "white",
+     "fill": false,
+     "opacity": 0.4
+    },
+    {
+     "shape": "trail",
+     "x": "5 + 9*t/50",
+     "y": "if(k > 0, 4.6*rj/k, 0)",
+     "length": 600,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": "4.6*pw",
+     "x2": 14,
+     "y2": "4.6*pw",
+     "color": "green",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 9.5,
+     "y": 5,
+     "text": {
+      "en": "share of samples rejecting H₀"
+     },
+     "size": 18,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 13.9,
+     "y": "4.6*pw + 0.25",
+     "text": {
+      "en": "theory {pw:3}"
+     },
+     "size": 16,
+     "align": "right",
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Share rejecting H₀"
+     },
+     "expr": "if(k > 0, rj/k, 0)",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Theory: α if μ = 50, power otherwise",
+      "kn": "ಶಕ್ತಿ"
+     },
+     "expr": "pw",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Samples tested"
+     },
+     "expr": "k",
+     "digits": 0
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

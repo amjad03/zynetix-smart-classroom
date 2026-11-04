@@ -458,6 +458,220 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The unit test",
+    "kn": "ಘಟಕ ಪರೀಕ್ಷೆ"
+   },
+   "narration": {
+    "en": "Three items: rice, milk and cloth. Set the current price of rice. The simple aggregative index adds the prices, so quoting rice per quintal instead of per kg changes the index. Indices built from price relatives (AM or GM) do not change: they pass the unit test."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Three items: rice, milk and cloth. Set the current price of rice. The simple aggregative index adds the prices, so quoting rice per quintal instead of per kg changes the index. Indices built from price relatives (AM or GM) do not change: they pass the unit test.",
+    "kn": "ಮೂರು ವಸ್ತುಗಳು: ಅಕ್ಕಿ, ಹಾಲು, ಬಟ್ಟೆ. ಅಕ್ಕಿಯ ಪ್ರಸ್ತುತ ಬೆಲೆ ನಿಗದಿಪಡಿಸಿ. ಸರಳ ಸಮಗ್ರ ಸೂಚ್ಯಂಕ ಬೆಲೆಗಳನ್ನು ಕೂಡಿಸುವುದರಿಂದ ಅಕ್ಕಿಯನ್ನು ಕೆ.ಜಿ. ಬದಲು ಕ್ವಿಂಟಾಲ್‌ಗೆ ಉಲ್ಲೇಖಿಸಿದರೆ ಸೂಚ್ಯಂಕ ಬದಲಾಗುತ್ತದೆ. ಬೆಲೆ ಸಾಪೇಕ್ಷಗಳ ಸರಾಸರಿ ಸೂಚ್ಯಂಕಗಳು ಬದಲಾಗುವುದಿಲ್ಲ: ಘಟಕ ಪರೀಕ್ಷೆಯಲ್ಲಿ ಉತ್ತೀರ್ಣ."
+   },
+   "tryThis": [
+    {
+     "en": "Switch rice to per quintal. Which bar jumps? Which stay still?"
+    },
+    {
+     "en": "Why does an expensive item dominate the simple aggregative index?"
+    },
+    {
+     "en": "Set the rice price so that all three indices are close together."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "pr1",
+     "label": {
+      "en": "Current price of rice",
+      "kn": "ಅಕ್ಕಿಯ ಈಗಿನ ಬೆಲೆ"
+     },
+     "min": 24,
+     "max": 60,
+     "step": 1,
+     "value": 36,
+     "unit": "₹/kg"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "qt",
+     "label": {
+      "en": "Quote rice per quintal (100 kg)",
+      "kn": "ಅಕ್ಕಿ ಕ್ವಿಂಟಾಲ್‌ಗೆ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "u",
+     "expr": "if(qt, 100, 1)"
+    },
+    {
+     "name": "SA",
+     "expr": "100*(pr1*u + 50 + 110)/(30*u + 40 + 100)"
+    },
+    {
+     "name": "AMr",
+     "expr": "100*(pr1/30 + 1.25 + 1.1)/3"
+    },
+    {
+     "name": "GMr",
+     "expr": "100*(pr1/30*1.25*1.1)^(1/3)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.2,
+     7
+    ],
+    "y": [
+     -16,
+     170
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 0,
+     "w": 1.5,
+     "h": "SA",
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 2.5,
+     "y": 0,
+     "w": 1.5,
+     "h": "AMr",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 4.5,
+     "y": 0,
+     "w": 1.5,
+     "h": "GMr",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 1.25,
+     "y": "SA + 6",
+     "text": {
+      "en": "{SA:2}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": "AMr + 6",
+     "text": {
+      "en": "{AMr:2}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": "GMr + 6",
+     "text": {
+      "en": "{GMr:2}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 1.25,
+     "y": -9,
+     "text": {
+      "en": "simple aggregative"
+     },
+     "size": 17
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": -9,
+     "text": {
+      "en": "AM of relatives"
+     },
+     "size": 17
+    },
+    {
+     "shape": "text",
+     "x": 5.25,
+     "y": -9,
+     "text": {
+      "en": "GM of relatives"
+     },
+     "size": 17
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 100,
+     "x2": 6.5,
+     "y2": 100,
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": 158,
+     "text": {
+      "en": "rice now quoted per quintal: ₹{30*u} → ₹{pr1*u}"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "qt"
+    },
+    {
+     "shape": "text",
+     "x": 3.25,
+     "y": 158,
+     "text": {
+      "en": "rice per kg: ₹30 → ₹{pr1}; milk ₹40 → ₹50; cloth ₹100 → ₹110"
+     },
+     "size": 18,
+     "visibleIf": "!qt"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Simple aggregative Σp₁/Σp₀ × 100"
+     },
+     "expr": "SA",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Average of relatives (AM)"
+     },
+     "expr": "AMr",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Average of relatives (GM)"
+     },
+     "expr": "GMr",
+     "digits": 2
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

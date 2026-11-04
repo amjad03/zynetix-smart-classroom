@@ -409,6 +409,529 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A binomial board",
+    "kn": "ದ್ವಿಪದ ಹಲಗೆ"
+   },
+   "narration": {
+    "en": "Each ball meets n pegs and goes right (a success) with probability p, left otherwise: n independent Bernoulli trials. The bin it lands in is X, the number of successes. Play to drop hundreds of balls: the bars approach the binomial probabilities (outlines), with mean np and variance npq."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Each ball meets n pegs and goes right (a success) with probability p, left otherwise: n independent Bernoulli trials. The bin it lands in is X, the number of successes. Play to drop hundreds of balls: the bars approach the binomial probabilities (outlines), with mean np and variance npq.",
+    "kn": "ಪ್ರತಿ ಚೆಂಡು n ಮೊಳೆಗಳನ್ನು ತಾಗಿ p ಸಂಭವನೀಯತೆಯಿಂದ ಬಲಕ್ಕೆ (ಯಶಸ್ಸು), ಇಲ್ಲವಾದರೆ ಎಡಕ್ಕೆ ಹೋಗುತ್ತದೆ: n ಸ್ವತಂತ್ರ ಬರ್ನೌಲಿ ಪ್ರಯತ್ನಗಳು. ಬೀಳುವ ತೊಟ್ಟಿ X, ಯಶಸ್ಸುಗಳ ಸಂಖ್ಯೆ. ನೂರಾರು ಚೆಂಡುಗಳನ್ನು ಬೀಳಿಸಿ: ಕಂಬಗಳು ದ್ವಿಪದ ಸಂಭವನೀಯತೆಗಳನ್ನು ಸಮೀಪಿಸುತ್ತವೆ; ಸರಾಸರಿ np, ಚದುರಿಕೆ npq."
+   },
+   "tryThis": [
+    {
+     "en": "Set p = 0.5. Is the distribution symmetric? Now try p = 0.2."
+    },
+    {
+     "en": "Compare the observed mean and variance with np and npq."
+    },
+    {
+     "en": "Why is the variance always smaller than the mean for a binomial variate?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "nr",
+     "label": {
+      "en": "Number of trials n",
+      "kn": "ಪ್ರಯತ್ನಗಳ ಸಂಖ್ಯೆ n"
+     },
+     "min": 1,
+     "max": 7,
+     "step": 1,
+     "value": 6
+    },
+    {
+     "name": "p",
+     "label": {
+      "en": "Probability of success p",
+      "kn": "ಯಶಸ್ಸಿನ ಸಂಭವನೀಯತೆ p"
+     },
+     "min": 0.1,
+     "max": 0.9,
+     "step": 0.05,
+     "value": 0.5
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Drop the balls",
+      "kn": "ಚೆಂಡುಗಳನ್ನು ಬೀಳಿಸಿ"
+     },
+     "icon": "launch",
+     "set": {
+      "seed": "seed + 1"
+     },
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 40,
+    "dt": 0.1,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2
+   },
+   "integrator": "euler",
+   "vars": [
+    {
+     "name": "k",
+     "expr": "round(t/0.1)"
+    },
+    {
+     "name": "s0",
+     "expr": "(0 < nr)*(rand(11*k + 7919*seed + 0) < p)"
+    },
+    {
+     "name": "s1",
+     "expr": "(1 < nr)*(rand(11*k + 7919*seed + 1) < p)"
+    },
+    {
+     "name": "s2",
+     "expr": "(2 < nr)*(rand(11*k + 7919*seed + 2) < p)"
+    },
+    {
+     "name": "s3",
+     "expr": "(3 < nr)*(rand(11*k + 7919*seed + 3) < p)"
+    },
+    {
+     "name": "s4",
+     "expr": "(4 < nr)*(rand(11*k + 7919*seed + 4) < p)"
+    },
+    {
+     "name": "s5",
+     "expr": "(5 < nr)*(rand(11*k + 7919*seed + 5) < p)"
+    },
+    {
+     "name": "s6",
+     "expr": "(6 < nr)*(rand(11*k + 7919*seed + 6) < p)"
+    },
+    {
+     "name": "X",
+     "expr": "s0 + s1 + s2 + s3 + s4 + s5 + s6"
+    },
+    {
+     "name": "N",
+     "expr": "c0 + c1 + c2 + c3 + c4 + c5 + c6 + c7"
+    },
+    {
+     "name": "om",
+     "expr": "if(N > 0, (1*c1 + 2*c2 + 3*c3 + 4*c4 + 5*c5 + 6*c6 + 7*c7)/N, 0)"
+    },
+    {
+     "name": "ov",
+     "expr": "if(N > 0, (1*c1 + 4*c2 + 9*c3 + 16*c4 + 25*c5 + 36*c6 + 49*c7)/N - om^2, 0)"
+    }
+   ],
+   "state": [
+    {
+     "name": "c0",
+     "init": 0,
+     "rate": "(X == 0)/0.1"
+    },
+    {
+     "name": "c1",
+     "init": 0,
+     "rate": "(X == 1)/0.1"
+    },
+    {
+     "name": "c2",
+     "init": 0,
+     "rate": "(X == 2)/0.1"
+    },
+    {
+     "name": "c3",
+     "init": 0,
+     "rate": "(X == 3)/0.1"
+    },
+    {
+     "name": "c4",
+     "init": 0,
+     "rate": "(X == 4)/0.1"
+    },
+    {
+     "name": "c5",
+     "init": 0,
+     "rate": "(X == 5)/0.1"
+    },
+    {
+     "name": "c6",
+     "init": 0,
+     "rate": "(X == 6)/0.1"
+    },
+    {
+     "name": "c7",
+     "init": 0,
+     "rate": "(X == 7)/0.1"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.6,
+     7.6
+    ],
+    "y": [
+     -1,
+     15.6
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 28,
+     "x": "3.5 + (i - floor((sqrt(8*i + 1) - 1)/2)*(floor((sqrt(8*i + 1) - 1)/2) + 1)/2) - floor((sqrt(8*i + 1) - 1)/2)/2",
+     "y": "15 - floor((sqrt(8*i + 1) - 1)/2)",
+     "r": 0.12,
+     "color": "white",
+     "visibleIf": "floor((sqrt(8*i + 1) - 1)/2) < nr"
+    },
+    {
+     "shape": "path",
+     "points": [
+      [
+       "3.5 + (0) - min(0, nr)/2",
+       "15 - min(0, nr)"
+      ],
+      [
+       "3.5 + (s0) - min(1, nr)/2",
+       "15 - min(1, nr)"
+      ],
+      [
+       "3.5 + (s0 + s1) - min(2, nr)/2",
+       "15 - min(2, nr)"
+      ],
+      [
+       "3.5 + (s0 + s1 + s2) - min(3, nr)/2",
+       "15 - min(3, nr)"
+      ],
+      [
+       "3.5 + (s0 + s1 + s2 + s3) - min(4, nr)/2",
+       "15 - min(4, nr)"
+      ],
+      [
+       "3.5 + (s0 + s1 + s2 + s3 + s4) - min(5, nr)/2",
+       "15 - min(5, nr)"
+      ],
+      [
+       "3.5 + (s0 + s1 + s2 + s3 + s4 + s5) - min(6, nr)/2",
+       "15 - min(6, nr)"
+      ],
+      [
+       "3.5 + (s0 + s1 + s2 + s3 + s4 + s5 + s6) - min(7, nr)/2",
+       "15 - min(7, nr)"
+      ],
+      [
+       "3.5 + (s0 + s1 + s2 + s3 + s4 + s5 + s6) - nr/2",
+       7.6
+      ]
+     ],
+     "color": "orange",
+     "visibleIf": "N > 0",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 0 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "if(N > 0, 7*c0/N, 0)",
+     "color": "blue",
+     "visibleIf": "0 <= nr",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 0 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "7*(1)*p^0*(1 - p)^(nr - 0)",
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "0 <= nr",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "3.5 + 0 - nr/2",
+     "y": -0.6,
+     "text": {
+      "en": "0"
+     },
+     "size": 18,
+     "visibleIf": "0 <= nr"
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 1 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "if(N > 0, 7*c1/N, 0)",
+     "color": "blue",
+     "visibleIf": "1 <= nr",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 1 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "7*((nr - 0)/1)*p^1*(1 - p)^(nr - 1)",
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "1 <= nr",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "3.5 + 1 - nr/2",
+     "y": -0.6,
+     "text": {
+      "en": "1"
+     },
+     "size": 18,
+     "visibleIf": "1 <= nr"
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 2 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "if(N > 0, 7*c2/N, 0)",
+     "color": "blue",
+     "visibleIf": "2 <= nr",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 2 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "7*((nr - 0)/1*(nr - 1)/2)*p^2*(1 - p)^(nr - 2)",
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "2 <= nr",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "3.5 + 2 - nr/2",
+     "y": -0.6,
+     "text": {
+      "en": "2"
+     },
+     "size": 18,
+     "visibleIf": "2 <= nr"
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 3 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "if(N > 0, 7*c3/N, 0)",
+     "color": "blue",
+     "visibleIf": "3 <= nr",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 3 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "7*((nr - 0)/1*(nr - 1)/2*(nr - 2)/3)*p^3*(1 - p)^(nr - 3)",
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "3 <= nr",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "3.5 + 3 - nr/2",
+     "y": -0.6,
+     "text": {
+      "en": "3"
+     },
+     "size": 18,
+     "visibleIf": "3 <= nr"
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 4 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "if(N > 0, 7*c4/N, 0)",
+     "color": "blue",
+     "visibleIf": "4 <= nr",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 4 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "7*((nr - 0)/1*(nr - 1)/2*(nr - 2)/3*(nr - 3)/4)*p^4*(1 - p)^(nr - 4)",
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "4 <= nr",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "3.5 + 4 - nr/2",
+     "y": -0.6,
+     "text": {
+      "en": "4"
+     },
+     "size": 18,
+     "visibleIf": "4 <= nr"
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 5 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "if(N > 0, 7*c5/N, 0)",
+     "color": "blue",
+     "visibleIf": "5 <= nr",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 5 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "7*((nr - 0)/1*(nr - 1)/2*(nr - 2)/3*(nr - 3)/4*(nr - 4)/5)*p^5*(1 - p)^(nr - 5)",
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "5 <= nr",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "3.5 + 5 - nr/2",
+     "y": -0.6,
+     "text": {
+      "en": "5"
+     },
+     "size": 18,
+     "visibleIf": "5 <= nr"
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 6 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "if(N > 0, 7*c6/N, 0)",
+     "color": "blue",
+     "visibleIf": "6 <= nr",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 6 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "7*((nr - 0)/1*(nr - 1)/2*(nr - 2)/3*(nr - 3)/4*(nr - 4)/5*(nr - 5)/6)*p^6*(1 - p)^(nr - 6)",
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "6 <= nr",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "3.5 + 6 - nr/2",
+     "y": -0.6,
+     "text": {
+      "en": "6"
+     },
+     "size": 18,
+     "visibleIf": "6 <= nr"
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 7 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "if(N > 0, 7*c7/N, 0)",
+     "color": "blue",
+     "visibleIf": "7 <= nr",
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": "3.5 + 7 - nr/2 - 0.35",
+     "y": 0,
+     "w": 0.7,
+     "h": "7*((nr - 0)/1*(nr - 1)/2*(nr - 2)/3*(nr - 3)/4*(nr - 4)/5*(nr - 5)/6*(nr - 6)/7)*p^7*(1 - p)^(nr - 7)",
+     "color": "yellow",
+     "fill": false,
+     "visibleIf": "7 <= nr",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "3.5 + 7 - nr/2",
+     "y": -0.6,
+     "text": {
+      "en": "7"
+     },
+     "size": 18,
+     "visibleIf": "7 <= nr"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mean np"
+     },
+     "expr": "nr*p",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Variance npq"
+     },
+     "expr": "nr*p*(1 - p)",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Observed mean"
+     },
+     "expr": "om",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Observed variance"
+     },
+     "expr": "ov",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

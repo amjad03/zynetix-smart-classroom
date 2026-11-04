@@ -242,6 +242,236 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Interpolate or extrapolate?",
+    "kn": "ಅಂತರ್ವೇಶನವೇ ಬಹಿರ್ವೇಶನವೇ?"
+   },
+   "narration": {
+    "en": "A state's population (lakhs) is known at four census years (orange). The yellow curve is the polynomial through them; the dashed curve is the true but unknown growth. Drag the blue year: inside 1981–2011 the estimate is interpolation and very close; outside it is extrapolation and drifts away. Add a sudden jump and the smoothness assumption fails."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A state's population (lakhs) is known at four census years (orange). The yellow curve is the polynomial through them; the dashed curve is the true but unknown growth. Drag the blue year: inside 1981–2011 the estimate is interpolation and very close; outside it is extrapolation and drifts away. Add a sudden jump and the smoothness assumption fails.",
+    "kn": "ಒಂದು ರಾಜ್ಯದ ಜನಸಂಖ್ಯೆ (ಲಕ್ಷ) ನಾಲ್ಕು ಜನಗಣತಿ ವರ್ಷಗಳಲ್ಲಿ ತಿಳಿದಿದೆ. ಹಳದಿ ವಕ್ರ ಅವುಗಳ ಮೂಲಕ ಬಹುಪದ; ಚುಕ್ಕೆ ವಕ್ರ ನಿಜವಾದ ಆದರೆ ಅಜ್ಞಾತ ಬೆಳವಣಿಗೆ. ನೀಲಿ ವರ್ಷವನ್ನು ಎಳೆಯಿರಿ: 1981–2011 ಒಳಗೆ ಅಂತರ್ವೇಶನ, ತುಂಬಾ ಹತ್ತಿರ; ಹೊರಗೆ ಬಹಿರ್ವೇಶನ, ದೂರ ಸರಿಯುತ್ತದೆ. ಹಠಾತ್ ಜಿಗಿತ ಸೇರಿಸಿದರೆ ನಯತೆಯ ಊಹೆ ವಿಫಲ."
+   },
+   "tryThis": [
+    {
+     "en": "Estimate the population in 1996. How large is the error?"
+    },
+    {
+     "en": "Now try 2031. Why does the error grow outside the known range?"
+    },
+    {
+     "en": "Turn on the sudden jump. Which assumption of interpolation is broken?"
+    }
+   ],
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "jump",
+     "label": {
+      "en": "A sudden jump after 1995",
+      "kn": "1995 ರ ನಂತರ ಹಠಾತ್ ಜಿಗಿತ"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "Y",
+     "label": "year",
+     "x": 1996,
+     "y": 3,
+     "axis": "x",
+     "box": {
+      "x": [
+       1971,
+       2041
+      ],
+      "y": [
+       3,
+       3
+      ]
+     },
+     "snap": 1,
+     "color": "blue"
+    }
+   ],
+   "vars": [
+    {
+     "name": "y0",
+     "expr": "(37*exp(0.016*(1981 - 1981)) + if(jump && 1981 > 1995, 8, 0))"
+    },
+    {
+     "name": "y1",
+     "expr": "(37*exp(0.016*(1991 - 1981)) + if(jump && 1991 > 1995, 8, 0))"
+    },
+    {
+     "name": "y2",
+     "expr": "(37*exp(0.016*(2001 - 1981)) + if(jump && 2001 > 1995, 8, 0))"
+    },
+    {
+     "name": "y3",
+     "expr": "(37*exp(0.016*(2011 - 1981)) + if(jump && 2011 > 1995, 8, 0))"
+    },
+    {
+     "name": "est",
+     "expr": "y0*(-(((Y_x - 1981)/10) - 1)*(((Y_x - 1981)/10) - 2)*(((Y_x - 1981)/10) - 3)/6) + y1*(((Y_x - 1981)/10)*(((Y_x - 1981)/10) - 2)*(((Y_x - 1981)/10) - 3)/2) + y2*(-((Y_x - 1981)/10)*(((Y_x - 1981)/10) - 1)*(((Y_x - 1981)/10) - 3)/2) + y3*(((Y_x - 1981)/10)*(((Y_x - 1981)/10) - 1)*(((Y_x - 1981)/10) - 2)/6)"
+    },
+    {
+     "name": "tru",
+     "expr": "(37*exp(0.016*(Y_x - 1981)) + if(jump && Y_x > 1995, 8, 0))"
+    }
+   ],
+   "view": {
+    "x": [
+     1969,
+     2043
+    ],
+    "y": [
+     0,
+     110
+    ],
+    "axes": true,
+    "xLabel": "year",
+    "yLabel": "population (lakh)"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1981,
+     "y": 0,
+     "w": 30,
+     "h": 100,
+     "color": "green",
+     "opacity": 0.08
+    },
+    {
+     "shape": "path",
+     "fn": "(37*exp(0.016*(x - 1981)) + if(jump && x > 1995, 8, 0))",
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "fn": "y0*(-(((x - 1981)/10) - 1)*(((x - 1981)/10) - 2)*(((x - 1981)/10) - 3)/6) + y1*(((x - 1981)/10)*(((x - 1981)/10) - 2)*(((x - 1981)/10) - 3)/2) + y2*(-((x - 1981)/10)*(((x - 1981)/10) - 1)*(((x - 1981)/10) - 3)/2) + y3*(((x - 1981)/10)*(((x - 1981)/10) - 1)*(((x - 1981)/10) - 2)/6)",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 1981,
+     "y": "y0",
+     "r": 0.9,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": 1991,
+     "y": "y1",
+     "r": 0.9,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": 2001,
+     "y": "y2",
+     "r": 0.9,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": 2011,
+     "y": "y3",
+     "r": 0.9,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": "Y_x",
+     "y1": 0,
+     "x2": "Y_x",
+     "y2": "est",
+     "color": "blue",
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "x": "Y_x",
+     "y": "est",
+     "r": 0.9,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 1996,
+     "y": 95,
+     "text": {
+      "en": "interpolation zone"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": "Y_x",
+     "y": "est + 6",
+     "text": {
+      "en": "interpolation"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "Y_x >= 1981 && Y_x <= 2011"
+    },
+    {
+     "shape": "text",
+     "x": "Y_x",
+     "y": "est + 6",
+     "text": {
+      "en": "extrapolation"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "Y_x < 1981 || Y_x > 2011"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Year"
+     },
+     "expr": "Y_x",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Estimate from the polynomial",
+      "kn": "ಅಂದಾಜು"
+     },
+     "expr": "est",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "True value"
+     },
+     "expr": "tru",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Error"
+     },
+     "expr": "est - tru",
+     "digits": 2
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

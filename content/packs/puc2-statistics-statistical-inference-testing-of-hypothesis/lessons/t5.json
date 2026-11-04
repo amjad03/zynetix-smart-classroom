@@ -248,6 +248,294 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "F test for two variances",
+    "kn": "ಎರಡು ಚದುರಿಕೆಗಳಿಗೆ F ಪರೀಕ್ಷೆ"
+   },
+   "narration": {
+    "en": "Two samples of the same size n from normal populations. Set their unbiased variances s₁² and s₂². F is the larger over the smaller, with (n − 1, n − 1) d.f. If it lands beyond the 5% table value (red region), H₀: σ₁² = σ₂² is rejected."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Two samples of the same size n from normal populations. Set their unbiased variances s₁² and s₂². F is the larger over the smaller, with (n − 1, n − 1) d.f. If it lands beyond the 5% table value (red region), H₀: σ₁² = σ₂² is rejected.",
+    "kn": "ಸಾಮಾನ್ಯ ಸಮಷ್ಟಿಗಳಿಂದ ಒಂದೇ ಗಾತ್ರ n ನ ಎರಡು ಮಾದರಿಗಳು. ಅವುಗಳ ಪಕ್ಷಪಾತರಹಿತ ಚದುರಿಕೆಗಳನ್ನು ನಿಗದಿಪಡಿಸಿ. F = ದೊಡ್ಡದು ÷ ಚಿಕ್ಕದು, (n − 1, n − 1) ಸ್ವಾತಂತ್ರ್ಯ ಮಟ್ಟ. 5% ಕೋಷ್ಟಕ ಬೆಲೆ ಆಚೆ ಬಿದ್ದರೆ H₀ ನಿರಾಕರಿಸಲಾಗುತ್ತದೆ."
+   },
+   "tryThis": [
+    {
+     "en": "With n = 9, how big must the ratio of variances be to be significant?"
+    },
+    {
+     "en": "Keep s₁² = 2 s₂² and increase n. When does the difference become significant?"
+    },
+    {
+     "en": "Why do we always put the larger variance in the numerator?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "v1",
+     "label": {
+      "en": "s₁²"
+     },
+     "min": 1,
+     "max": 40,
+     "step": 1,
+     "value": 20
+    },
+    {
+     "name": "v2",
+     "label": {
+      "en": "s₂²"
+     },
+     "min": 1,
+     "max": 40,
+     "step": 1,
+     "value": 8
+    }
+   ],
+   "choices": [
+    {
+     "name": "nn",
+     "label": {
+      "en": "Size of each sample n",
+      "kn": "ಮಾದರಿ ಗಾತ್ರ n"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "6"
+       },
+       "value": 6
+      },
+      {
+       "label": {
+        "en": "9"
+       },
+       "value": 9
+      },
+      {
+       "label": {
+        "en": "11"
+       },
+       "value": 11
+      },
+      {
+       "label": {
+        "en": "16"
+       },
+       "value": 16
+      },
+      {
+       "label": {
+        "en": "21"
+       },
+       "value": 21
+      }
+     ],
+     "value": 9
+    }
+   ],
+   "vars": [
+    {
+     "name": "df",
+     "expr": "nn - 1"
+    },
+    {
+     "name": "lc",
+     "expr": "(((df + 6) - 0.5)*ln((df + 6)) - (df + 6) + 0.918938533 + 1/(12*(df + 6)) - 1/(360*(df + 6)^3) + 1/(1260*(df + 6)^5) - ln(df*(df + 1)*(df + 2)*(df + 3)*(df + 4)*(df + 5))) - 2*((((df/2) + 6) - 0.5)*ln(((df/2) + 6)) - ((df/2) + 6) + 0.918938533 + 1/(12*((df/2) + 6)) - 1/(360*((df/2) + 6)^3) + 1/(1260*((df/2) + 6)^5) - ln((df/2)*((df/2) + 1)*((df/2) + 2)*((df/2) + 3)*((df/2) + 4)*((df/2) + 5)))"
+    },
+    {
+     "name": "Fv",
+     "expr": "max(v1, v2)/min(v1, v2)"
+    },
+    {
+     "name": "fc",
+     "expr": "if(nn == 6, 5.0503, if(nn == 9, 3.4381, if(nn == 11, 2.9782, if(nn == 16, 2.4034, 2.1242))))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     6
+    ],
+    "y": [
+     -0.12,
+     1.2
+    ],
+    "axes": true,
+    "xLabel": "F",
+    "yLabel": "density"
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       "fc",
+       0
+      ],
+      [
+       "fc + 0*(6 - fc)",
+       "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln((fc + 0*(6 - fc))) - df*ln(1 + (fc + 0*(6 - fc))))"
+      ],
+      [
+       "fc + 0.0714286*(6 - fc)",
+       "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln((fc + 0.0714286*(6 - fc))) - df*ln(1 + (fc + 0.0714286*(6 - fc))))"
+      ],
+      [
+       "fc + 0.142857*(6 - fc)",
+       "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln((fc + 0.142857*(6 - fc))) - df*ln(1 + (fc + 0.142857*(6 - fc))))"
+      ],
+      [
+       "fc + 0.214286*(6 - fc)",
+       "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln((fc + 0.214286*(6 - fc))) - df*ln(1 + (fc + 0.214286*(6 - fc))))"
+      ],
+      [
+       "fc + 0.285714*(6 - fc)",
+       "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln((fc + 0.285714*(6 - fc))) - df*ln(1 + (fc + 0.285714*(6 - fc))))"
+      ],
+      [
+       "fc + 0.357143*(6 - fc)",
+       "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln((fc + 0.357143*(6 - fc))) - df*ln(1 + (fc + 0.357143*(6 - fc))))"
+      ],
+      [
+       "fc + 0.428571*(6 - fc)",
+       "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln((fc + 0.428571*(6 - fc))) - df*ln(1 + (fc + 0.428571*(6 - fc))))"
+      ],
+      [
+       "fc + 0.5*(6 - fc)",
+       "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln((fc + 0.5*(6 - fc))) - df*ln(1 + (fc + 0.5*(6 - fc))))"
+      ],
+      [
+       "fc + 0.571429*(6 - fc)",
+       "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln((fc + 0.571429*(6 - fc))) - df*ln(1 + (fc + 0.571429*(6 - fc))))"
+      ],
+      [
+       "fc + 0.642857*(6 - fc)",
+       "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln((fc + 0.642857*(6 - fc))) - df*ln(1 + (fc + 0.642857*(6 - fc))))"
+      ],
+      [
+       "fc + 0.714286*(6 - fc)",
+       "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln((fc + 0.714286*(6 - fc))) - df*ln(1 + (fc + 0.714286*(6 - fc))))"
+      ],
+      [
+       "fc + 0.785714*(6 - fc)",
+       "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln((fc + 0.785714*(6 - fc))) - df*ln(1 + (fc + 0.785714*(6 - fc))))"
+      ],
+      [
+       "fc + 0.857143*(6 - fc)",
+       "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln((fc + 0.857143*(6 - fc))) - df*ln(1 + (fc + 0.857143*(6 - fc))))"
+      ],
+      [
+       "fc + 0.928571*(6 - fc)",
+       "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln((fc + 0.928571*(6 - fc))) - df*ln(1 + (fc + 0.928571*(6 - fc))))"
+      ],
+      [
+       "fc + 1*(6 - fc)",
+       "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln((fc + 1*(6 - fc))) - df*ln(1 + (fc + 1*(6 - fc))))"
+      ],
+      [
+       6,
+       0
+      ]
+     ],
+     "color": "red",
+     "opacity": 0.45
+    },
+    {
+     "shape": "path",
+     "fn": "exp(lc + (df/2)*ln(1) + (df/2 - 1)*ln(x) - df*ln(1 + x))",
+     "from": 0.01,
+     "to": 6,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "min(Fv, 6)",
+     "y1": 0,
+     "x2": "min(Fv, 6)",
+     "y2": 0.95,
+     "color": {
+      "by": "Fv > fc",
+      "scale": [
+       "green",
+       "red"
+      ]
+     },
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "x": "min(Fv, 6)",
+     "y": 1.0,
+     "text": {
+      "en": "F = {Fv:2}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": "fc",
+     "y": -0.06,
+     "text": {
+      "en": "F₀.₀₅ = {fc:2}"
+     },
+     "size": 18,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 1.12,
+     "text": {
+      "en": "reject H₀: the variances differ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "Fv > fc"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 1.12,
+     "text": {
+      "en": "accept H₀: σ₁² = σ₂²"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "Fv <= fc"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "F = larger s² ÷ smaller s²"
+     },
+     "expr": "Fv",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Table value F₀.₀₅(n − 1, n − 1)"
+     },
+     "expr": "fc",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "d.f."
+     },
+     "expr": "df",
+     "digits": 0
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

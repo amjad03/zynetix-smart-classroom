@@ -565,6 +565,293 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Spread of a random variable",
+    "kn": "ಯಾದೃಚ್ಛಿಕ ಚರದ ಹರಡಿಕೆ"
+   },
+   "narration": {
+    "en": "X takes the values 0 to 4. Drag the bar tops to set the weights (they are turned into probabilities). E(X) is the balance point; V(X) = E(X²) − [E(X)]² measures the spread. Pile probability at the ends to make V(X) large, in the middle to make it small."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "X takes the values 0 to 4. Drag the bar tops to set the weights (they are turned into probabilities). E(X) is the balance point; V(X) = E(X²) − [E(X)]² measures the spread. Pile probability at the ends to make V(X) large, in the middle to make it small.",
+    "kn": "X, 0 ರಿಂದ 4 ಬೆಲೆಗಳನ್ನು ಪಡೆಯುತ್ತದೆ. ತೂಕಗಳನ್ನು ನಿಗದಿಪಡಿಸಲು ಕಂಬಗಳ ತುದಿಗಳನ್ನು ಎಳೆಯಿರಿ (ಅವು ಸಂಭವನೀಯತೆಗಳಾಗುತ್ತವೆ). E(X) ಸಮತೋಲನ ಬಿಂದು; V(X) = E(X²) − [E(X)]² ಹರಡಿಕೆಯನ್ನು ಅಳೆಯುತ್ತದೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Make V(X) as large as you can. Where did you put the probability?"
+    },
+    {
+     "en": "Make V(X) as small as possible. What is the smallest value?"
+    },
+    {
+     "en": "Check: E(X²) is always at least [E(X)]². Why?"
+    }
+   ],
+   "sliders": [],
+   "handles": [
+    {
+     "name": "F0",
+     "x": 0,
+     "y": 1,
+     "axis": "y",
+     "box": {
+      "x": [
+       0,
+       0
+      ],
+      "y": [
+       0,
+       10
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    },
+    {
+     "name": "F1",
+     "x": 1,
+     "y": 3,
+     "axis": "y",
+     "box": {
+      "x": [
+       1,
+       1
+      ],
+      "y": [
+       0,
+       10
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    },
+    {
+     "name": "F3",
+     "x": 3,
+     "y": 3,
+     "axis": "y",
+     "box": {
+      "x": [
+       3,
+       3
+      ],
+      "y": [
+       0,
+       10
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    },
+    {
+     "name": "F4",
+     "x": 4,
+     "y": 1,
+     "axis": "y",
+     "box": {
+      "x": [
+       4,
+       4
+      ],
+      "y": [
+       0,
+       10
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "Wt",
+     "expr": "(F0_y + F1_y + 4 + F3_y + F4_y)"
+    },
+    {
+     "name": "mu",
+     "expr": "(F0_y*(0 - 0)^1 + F1_y*(1 - 0)^1 + 4*(2 - 0)^1 + F3_y*(3 - 0)^1 + F4_y*(4 - 0)^1)/Wt"
+    },
+    {
+     "name": "e2",
+     "expr": "(F0_y*(0 - 0)^2 + F1_y*(1 - 0)^2 + 4*(2 - 0)^2 + F3_y*(3 - 0)^2 + F4_y*(4 - 0)^2)/Wt"
+    },
+    {
+     "name": "vv",
+     "expr": "e2 - mu^2"
+    },
+    {
+     "name": "sd",
+     "expr": "sqrt(max(vv, 0))"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.7,
+     4.7
+    ],
+    "y": [
+     -0.4,
+     8.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -0.3,
+     "y": 0,
+     "w": 0.6,
+     "h": "10*F0_y/Wt",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": "10*F0_y/Wt + 0.35",
+     "text": {
+      "en": "{F0_y/Wt:2}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 0.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "10*F1_y/Wt",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": "10*F1_y/Wt + 0.35",
+     "text": {
+      "en": "{F1_y/Wt:2}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 1.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "10*4/Wt",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": "10*4/Wt + 0.35",
+     "text": {
+      "en": "{4/Wt:2}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 2.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "10*F3_y/Wt",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": "10*F3_y/Wt + 0.35",
+     "text": {
+      "en": "{F3_y/Wt:2}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 3.7,
+     "y": 0,
+     "w": 0.6,
+     "h": "10*F4_y/Wt",
+     "color": "blue",
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": "10*F4_y/Wt + 0.35",
+     "text": {
+      "en": "{F4_y/Wt:2}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "line",
+     "x1": "mu",
+     "y1": -0.3,
+     "x2": "mu",
+     "y2": 7.5,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "mu - sd",
+     "y1": 7,
+     "x2": "mu + sd",
+     "y2": 7,
+     "color": "orange",
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "x": "mu",
+     "y": 7.6,
+     "text": {
+      "en": "μ ± σ"
+     },
+     "size": 20,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "E(X)"
+     },
+     "expr": "mu",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "E(X²)"
+     },
+     "expr": "e2",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "V(X) = E(X²) − [E(X)]²",
+      "kn": "V(X)"
+     },
+     "expr": "vv",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "σ"
+     },
+     "expr": "sd",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "kind": "readouts",

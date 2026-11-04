@@ -226,6 +226,306 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Chi-square from squared normals",
+    "kn": "ವರ್ಗ ಸಾಮಾನ್ಯಗಳಿಂದ ಕೈ-ವರ್ಗ"
+   },
+   "narration": {
+    "en": "Each value is χ² = Z₁² + … + Zₙ², the sum of n squared standard normal variates. Collect hundreds of them: the histogram follows the χ² curve with n degrees of freedom. It is never negative, skewed to the right, with mean n and variance 2n, and becomes more symmetric as n grows."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Each value is χ² = Z₁² + … + Zₙ², the sum of n squared standard normal variates. Collect hundreds of them: the histogram follows the χ² curve with n degrees of freedom. It is never negative, skewed to the right, with mean n and variance 2n, and becomes more symmetric as n grows.",
+    "kn": "ಪ್ರತಿ ಬೆಲೆ χ² = Z₁² + … + Zₙ², n ಪ್ರಮಾಣಿತ ಸಾಮಾನ್ಯ ಚರಗಳ ವರ್ಗಗಳ ಮೊತ್ತ. ನೂರಾರು ಸಂಗ್ರಹಿಸಿ: ಆಯತ ಚಿತ್ರ n ಸ್ವಾತಂತ್ರ್ಯ ಮಟ್ಟದ χ² ವಕ್ರವನ್ನು ಅನುಸರಿಸುತ್ತದೆ. ಅದು ಎಂದಿಗೂ ಋಣವಲ್ಲ, ಬಲಕ್ಕೆ ಓರೆ, ಸರಾಸರಿ n, ಚದುರಿಕೆ 2n."
+   },
+   "tryThis": [
+    {
+     "en": "With 1 d.f., where do most values fall? Why?"
+    },
+    {
+     "en": "Compare the observed mean and variance with n and 2n."
+    },
+    {
+     "en": "Increase the d.f. to 10. Is the curve still as skewed?"
+    }
+   ],
+   "sliders": [],
+   "choices": [
+    {
+     "name": "nd",
+     "label": {
+      "en": "Degrees of freedom n",
+      "kn": "ಸ್ವಾತಂತ್ರ್ಯ ಮಟ್ಟ n"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "1"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "2"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "3"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "4"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "6"
+       },
+       "value": 6
+      },
+      {
+       "label": {
+        "en": "10"
+       },
+       "value": 10
+      }
+     ],
+     "value": 3
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New run",
+      "kn": "ಹೊಸ ಓಟ"
+     },
+     "icon": "launch",
+     "set": {
+      "seed": "seed + 1"
+     },
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 40,
+    "dt": 0.1,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2
+   },
+   "integrator": "euler",
+   "vars": [
+    {
+     "name": "k",
+     "expr": "round(t/0.1)"
+    },
+    {
+     "name": "lg",
+     "expr": "((((nd/2) + 6) - 0.5)*ln(((nd/2) + 6)) - ((nd/2) + 6) + 0.918938533 + 1/(12*((nd/2) + 6)) - 1/(360*((nd/2) + 6)^3) + 1/(1260*((nd/2) + 6)^5) - ln((nd/2)*((nd/2) + 1)*((nd/2) + 2)*((nd/2) + 3)*((nd/2) + 4)*((nd/2) + 5)))"
+    },
+    {
+     "name": "w",
+     "expr": "(nd + 4*sqrt(2*nd))/6"
+    },
+    {
+     "name": "cs",
+     "expr": "(0 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(23*k + 7919*seed + 0)))*cos(2*pi*rand(23*k + 7919*seed + 1)))^2 + (1 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(23*k + 7919*seed + 2)))*cos(2*pi*rand(23*k + 7919*seed + 3)))^2 + (2 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(23*k + 7919*seed + 4)))*cos(2*pi*rand(23*k + 7919*seed + 5)))^2 + (3 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(23*k + 7919*seed + 6)))*cos(2*pi*rand(23*k + 7919*seed + 7)))^2 + (4 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(23*k + 7919*seed + 8)))*cos(2*pi*rand(23*k + 7919*seed + 9)))^2 + (5 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(23*k + 7919*seed + 10)))*cos(2*pi*rand(23*k + 7919*seed + 11)))^2 + (6 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(23*k + 7919*seed + 12)))*cos(2*pi*rand(23*k + 7919*seed + 13)))^2 + (7 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(23*k + 7919*seed + 14)))*cos(2*pi*rand(23*k + 7919*seed + 15)))^2 + (8 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(23*k + 7919*seed + 16)))*cos(2*pi*rand(23*k + 7919*seed + 17)))^2 + (9 < nd)*(sqrt(-2*ln(0.001 + 0.998*rand(23*k + 7919*seed + 18)))*cos(2*pi*rand(23*k + 7919*seed + 19)))^2"
+    },
+    {
+     "name": "bn",
+     "expr": "floor(cs/w)"
+    },
+    {
+     "name": "om",
+     "expr": "if(k > 0, s1/k, 0)"
+    }
+   ],
+   "state": [
+    {
+     "name": "c0",
+     "init": 0,
+     "rate": "(bn == 0)/0.1"
+    },
+    {
+     "name": "c1",
+     "init": 0,
+     "rate": "(bn == 1)/0.1"
+    },
+    {
+     "name": "c2",
+     "init": 0,
+     "rate": "(bn == 2)/0.1"
+    },
+    {
+     "name": "c3",
+     "init": 0,
+     "rate": "(bn == 3)/0.1"
+    },
+    {
+     "name": "c4",
+     "init": 0,
+     "rate": "(bn == 4)/0.1"
+    },
+    {
+     "name": "c5",
+     "init": 0,
+     "rate": "(bn == 5)/0.1"
+    },
+    {
+     "name": "s1",
+     "init": 0,
+     "rate": "cs/0.1"
+    },
+    {
+     "name": "s2",
+     "init": 0,
+     "rate": "cs^2/0.1"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     27
+    ],
+    "y": [
+     0,
+     0.7
+    ],
+    "axes": true,
+    "xLabel": "χ²",
+    "yLabel": "density"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "0*w",
+     "y": 0,
+     "w": "w",
+     "h": "if(k > 0, c0/(k*w), 0)",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "1*w",
+     "y": 0,
+     "w": "w",
+     "h": "if(k > 0, c1/(k*w), 0)",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "2*w",
+     "y": 0,
+     "w": "w",
+     "h": "if(k > 0, c2/(k*w), 0)",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "3*w",
+     "y": 0,
+     "w": "w",
+     "h": "if(k > 0, c3/(k*w), 0)",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "4*w",
+     "y": 0,
+     "w": "w",
+     "h": "if(k > 0, c4/(k*w), 0)",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "5*w",
+     "y": 0,
+     "w": "w",
+     "h": "if(k > 0, c5/(k*w), 0)",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "path",
+     "fn": "exp((nd/2 - 1)*ln(x) - x/2 - (nd/2)*ln(2) - lg)",
+     "from": 0.02,
+     "to": 40,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "nd",
+     "y1": 0,
+     "x2": "nd",
+     "y2": 0.6,
+     "color": "green",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": "nd",
+     "y": 0.63,
+     "text": {
+      "en": "mean n"
+     },
+     "size": 18,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mean of the values (theory n)"
+     },
+     "expr": "om",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Variance of the values (theory 2n)"
+     },
+     "expr": "if(k > 1, s2/k - om^2, 0)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Values collected"
+     },
+     "expr": "k",
+     "digits": 0
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

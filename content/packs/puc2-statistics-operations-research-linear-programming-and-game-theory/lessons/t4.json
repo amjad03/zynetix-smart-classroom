@@ -384,6 +384,222 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Play the mixed strategy",
+    "kn": "ಮಿಶ್ರ ತಂತ್ರ ಆಡಿ"
+   },
+   "narration": {
+    "en": "A 2 × 2 game with no saddle point. A plays A₁ with probability p, B plays B₁ with probability q; press Play and they play 1000 rounds. The yellow curve is A's average gain. With p = 0.2, A's expected gain is the value 3.4 whatever B does; with q = 0.6, B holds A to 3.4 whatever A does."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A 2 × 2 game with no saddle point. A plays A₁ with probability p, B plays B₁ with probability q; press Play and they play 1000 rounds. The yellow curve is A's average gain. With p = 0.2, A's expected gain is the value 3.4 whatever B does; with q = 0.6, B holds A to 3.4 whatever A does.",
+    "kn": "ಸ್ಯಾಡಲ್ ಬಿಂದು ಇಲ್ಲದ 2 × 2 ಆಟ. A, p ಸಂಭವನೀಯತೆಯಿಂದ A₁; B, q ಸಂಭವನೀಯತೆಯಿಂದ B₁ ಆಡುತ್ತಾರೆ; 1000 ಸುತ್ತು ಆಡಿ. ಹಳದಿ ವಕ್ರ A ಯ ಸರಾಸರಿ ಲಾಭ. p = 0.2 ಆದರೆ B ಏನೇ ಮಾಡಿದರೂ A ಯ ನಿರೀಕ್ಷಿತ ಲಾಭ 3.4."
+   },
+   "tryThis": [
+    {
+     "en": "Set p = 0.2 and try q = 0, 0.5 and 1. Does the average still settle at 3.4?"
+    },
+    {
+     "en": "Set p = 1 (always A₁). How can B punish A?"
+    },
+    {
+     "en": "Check the formulas: p₁ = (a₂₂ − a₂₁)/D and q₁ = (a₂₂ − a₁₂)/D with D = 5."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "p",
+     "label": {
+      "en": "A plays A₁ with probability p",
+      "kn": "A₁ ಸಂಭವನೀಯತೆ p"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.2
+    },
+    {
+     "name": "q",
+     "label": {
+      "en": "B plays B₁ with probability q",
+      "kn": "B₁ ಸಂಭವನೀಯತೆ q"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.5
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Play 1000 rounds",
+      "kn": "1000 ಸುತ್ತು ಆಡಿ"
+     },
+     "icon": "launch",
+     "set": {
+      "seed": "seed + 1"
+     },
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 50,
+    "dt": 0.05,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 4
+   },
+   "integrator": "euler",
+   "vars": [
+    {
+     "name": "k",
+     "expr": "round(t/0.05)"
+    },
+    {
+     "name": "aA",
+     "expr": "rand(2*k + 7919*seed + 1) < p"
+    },
+    {
+     "name": "bB",
+     "expr": "rand(2*k + 7919*seed + 2) < q"
+    },
+    {
+     "name": "pay",
+     "expr": "if(aA, if(bB, 5, 1), if(bB, 3, 4))"
+    },
+    {
+     "name": "avg",
+     "expr": "if(k > 0, tot/k, 0)"
+    },
+    {
+     "name": "Ep",
+     "expr": "5*p*q + p*(1 - q) + 3*(1 - p)*q + 4*(1 - p)*(1 - q)"
+    }
+   ],
+   "state": [
+    {
+     "name": "tot",
+     "init": 0,
+     "rate": "pay/0.05"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     1000
+    ],
+    "y": [
+     0.5,
+     6
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "round",
+    "yLabel": "A's average gain"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 3.4,
+     "x2": 1000,
+     "y2": 3.4,
+     "color": "green",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "Ep",
+     "x2": 1000,
+     "y2": "Ep",
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "trail",
+     "x": "20*t",
+     "y": "avg",
+     "length": 1100,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 860,
+     "y": 3.55,
+     "text": {
+      "en": "v = 3.4"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 860,
+     "y": "Ep - 0.18",
+     "text": {
+      "en": "expected {Ep:2}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 500,
+     "y": 5.6,
+     "text": {
+      "en": "payoffs to A:  (A1,B1) 5 · (A1,B2) 1 · (A2,B1) 3 · (A2,B2) 4"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Expected gain E(p, q)",
+      "kn": "ನಿರೀಕ್ಷಿತ ಲಾಭ"
+     },
+     "expr": "Ep",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Average gain so far"
+     },
+     "expr": "avg",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "A's guaranteed gain min(3 + 2p, 4 − 3p)"
+     },
+     "expr": "min(3 + 2*p, 4 - 3*p)",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

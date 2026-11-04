@@ -279,6 +279,171 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "How a chart can mislead",
+    "kn": "ಚಿತ್ರ ಹೇಗೆ ದಾರಿ ತಪ್ಪಿಸಬಹುದು"
+   },
+   "narration": {
+    "en": "Sales of a firm: 100 last year. Set this year's sales. Then start the axis at 95 instead of 0: the same figures now look like a huge jump. This is a common cause of distrust: the numbers are right, the presentation is not."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Sales of a firm: 100 last year. Set this year's sales. Then start the axis at 95 instead of 0: the same figures now look like a huge jump. This is a common cause of distrust: the numbers are right, the presentation is not.",
+    "kn": "ಒಂದು ಸಂಸ್ಥೆಯ ಮಾರಾಟ: ಕಳೆದ ವರ್ಷ 100. ಈ ವರ್ಷದ ಮಾರಾಟ ನಿಗದಿಪಡಿಸಿ. ನಂತರ ಅಕ್ಷವನ್ನು 0 ಬದಲು 95 ರಿಂದ ಆರಂಭಿಸಿ: ಅದೇ ಅಂಕಿಗಳು ಈಗ ದೊಡ್ಡ ಜಿಗಿತದಂತೆ ಕಾಣುತ್ತವೆ. ಅಪನಂಬಿಕೆಗೆ ಇದು ಸಾಮಾನ್ಯ ಕಾರಣ: ಅಂಕಿಗಳು ಸರಿ, ನಿರೂಪಣೆ ತಪ್ಪು."
+   },
+   "tryThis": [
+    {
+     "en": "Set this year to 104. What is the real growth? How big does it look with the cut axis?"
+    },
+    {
+     "en": "Who might want to cut the axis, and why?"
+    },
+    {
+     "en": "Which rule of diagrams does the cut axis break?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "v",
+     "label": {
+      "en": "This year's sales",
+      "kn": "ಈ ವರ್ಷದ ಮಾರಾಟ"
+     },
+     "min": 96,
+     "max": 120,
+     "step": 1,
+     "value": 104
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cut",
+     "label": {
+      "en": "Start the axis at 95",
+      "kn": "ಅಕ್ಷ 95 ರಿಂದ"
+     },
+     "value": false
+    }
+   ],
+   "view": {
+    "x": [
+     -1.5,
+     9
+    ],
+    "y": [
+     -10,
+     135
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.5,
+     "y": 0,
+     "w": 2,
+     "h": "if(cut, 100 - 95, 100)",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 5.5,
+     "y": 0,
+     "w": 2,
+     "h": "if(cut, v - 95, v)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": "if(cut, 5, 100) + 3",
+     "text": {
+      "en": "100"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": "if(cut, v - 95, v) + 3",
+     "text": {
+      "en": "{v}"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": -6,
+     "text": {
+      "en": "Last year"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": -6,
+     "text": {
+      "en": "This year"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": -0.1,
+     "y": 0,
+     "text": {
+      "en": "{if(cut, 95, 0)}"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 0.8,
+     "y1": 0,
+     "x2": 8.5,
+     "y2": 0,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 128,
+     "text": {
+      "en": "Axis starts at 95: the bars exaggerate the growth"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "cut"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Real change",
+      "kn": "ನಿಜವಾದ ಬದಲಾವಣೆ"
+     },
+     "expr": "v - 100",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Change in bar height",
+      "kn": "ಕಂಬದ ಎತ್ತರದ ಬದಲಾವಣೆ"
+     },
+     "expr": "100*(if(cut, (v - 95)/5, v/100) - 1)",
+     "digits": 0,
+     "unit": "%"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

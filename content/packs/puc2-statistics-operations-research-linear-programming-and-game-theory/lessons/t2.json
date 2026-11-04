@@ -342,6 +342,368 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Feasible region and the best corner",
+    "kn": "ಸಾಧ್ಯ ಪ್ರದೇಶ ಮತ್ತು ಉತ್ತಮ ಮೂಲೆ"
+   },
+   "narration": {
+    "en": "Maximise Z = c₁x + c₂y subject to two ≤ constraints and x, y ≥ 0. Drag the intercepts of the yellow and blue constraint lines; the green region is feasible. Z is worked out at every corner, and the dashed iso-profit line touches the region at the optimum corner."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Maximise Z = c₁x + c₂y subject to two ≤ constraints and x, y ≥ 0. Drag the intercepts of the yellow and blue constraint lines; the green region is feasible. Z is worked out at every corner, and the dashed iso-profit line touches the region at the optimum corner.",
+    "kn": "Z = c₁x + c₂y ಅನ್ನು ಎರಡು ≤ ನಿರ್ಬಂಧಗಳು ಮತ್ತು x, y ≥ 0 ಒಳಗೆ ಗರಿಷ್ಠಗೊಳಿಸಿ. ಹಳದಿ ಮತ್ತು ನೀಲಿ ನಿರ್ಬಂಧ ರೇಖೆಗಳ ಛೇದಕಗಳನ್ನು ಎಳೆಯಿರಿ; ಹಸಿರು ಪ್ರದೇಶ ಸಾಧ್ಯ. ಪ್ರತಿ ಮೂಲೆಯಲ್ಲಿ Z ಲೆಕ್ಕಹಾಕಲಾಗಿದೆ; ಚುಕ್ಕೆ ಸಮ-ಲಾಭ ರೇಖೆ ಗರಿಷ್ಠ ಮೂಲೆಯಲ್ಲಿ ಪ್ರದೇಶವನ್ನು ಸ್ಪರ್ಶಿಸುತ್ತದೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Change c₁ and c₂ until the best corner jumps to another vertex."
+    },
+    {
+     "en": "Drag the lines so that one lies entirely inside the other. Which constraint is redundant?"
+    },
+    {
+     "en": "Make the profit line parallel to an edge. What do you notice about the corner values?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "c1",
+     "label": {
+      "en": "Profit per unit of x",
+      "kn": "x ಗೆ ಲಾಭ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 3
+    },
+    {
+     "name": "c2",
+     "label": {
+      "en": "Profit per unit of y",
+      "kn": "y ಗೆ ಲಾಭ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 2
+    }
+   ],
+   "handles": [
+    {
+     "name": "X1",
+     "x": 5,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       2,
+       11
+      ],
+      "y": [
+       0,
+       0
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    },
+    {
+     "name": "Y1",
+     "x": 0,
+     "y": 10,
+     "axis": "y",
+     "box": {
+      "x": [
+       0,
+       0
+      ],
+      "y": [
+       2,
+       11
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    },
+    {
+     "name": "X2",
+     "x": 8,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       2,
+       11
+      ],
+      "y": [
+       0,
+       0
+      ]
+     },
+     "snap": 0.5,
+     "color": "blue"
+    },
+    {
+     "name": "Y2",
+     "x": 0,
+     "y": 8,
+     "axis": "y",
+     "box": {
+      "x": [
+       0,
+       0
+      ],
+      "y": [
+       2,
+       11
+      ]
+     },
+     "snap": 0.5,
+     "color": "blue"
+    }
+   ],
+   "vars": [
+    {
+     "name": "a1",
+     "expr": "X1_x"
+    },
+    {
+     "name": "b1",
+     "expr": "Y1_y"
+    },
+    {
+     "name": "a2",
+     "expr": "X2_x"
+    },
+    {
+     "name": "b2",
+     "expr": "Y2_y"
+    },
+    {
+     "name": "cr",
+     "expr": "(a1 - a2)*(b1 - b2) < 0"
+    },
+    {
+     "name": "Dt",
+     "expr": "1/(a1*b2) - 1/(a2*b1)"
+    },
+    {
+     "name": "px",
+     "expr": "if(cr, (1/b2 - 1/b1)/Dt, min(a1, a2))"
+    },
+    {
+     "name": "py",
+     "expr": "if(cr, (1/a1 - 1/a2)/Dt, 0)"
+    },
+    {
+     "name": "xa",
+     "expr": "min(a1, a2)"
+    },
+    {
+     "name": "yb",
+     "expr": "min(b1, b2)"
+    },
+    {
+     "name": "zX",
+     "expr": "c1*xa"
+    },
+    {
+     "name": "zY",
+     "expr": "c2*yb"
+    },
+    {
+     "name": "zP",
+     "expr": "c1*px + c2*py"
+    },
+    {
+     "name": "zm",
+     "expr": "max(zX, zY, zP)"
+    },
+    {
+     "name": "ox",
+     "expr": "if(zm == zP, px, if(zm == zX, xa, 0))"
+    },
+    {
+     "name": "oy",
+     "expr": "if(zm == zP, py, if(zm == zX, 0, yb))"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     12
+    ],
+    "y": [
+     -0.5,
+     12
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x",
+    "yLabel": "y",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "xa",
+       0
+      ],
+      [
+       "px",
+       "py"
+      ],
+      [
+       0,
+       "yb"
+      ]
+     ],
+     "color": "green",
+     "opacity": 0.3
+    },
+    {
+     "shape": "line",
+     "x1": "a1",
+     "y1": 0,
+     "x2": 0,
+     "y2": "b1",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "a2",
+     "y1": 0,
+     "x2": 0,
+     "y2": "b2",
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "zm/c1",
+     "y1": 0,
+     "x2": 0,
+     "y2": "zm/c2",
+     "color": "orange",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "xa",
+     "y": 0,
+     "r": 0.18,
+     "color": "white"
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": "yb",
+     "r": 0.18,
+     "color": "white"
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 0.18,
+     "color": "white",
+     "visibleIf": "cr"
+    },
+    {
+     "shape": "circle",
+     "x": "ox",
+     "y": "oy",
+     "r": 0.3,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": "ox + 0.3",
+     "y": "oy + 0.5",
+     "text": {
+      "en": "optimum Z = {zm:1}"
+     },
+     "size": 22,
+     "align": "left",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": "xa",
+     "y": 0.5,
+     "text": {
+      "en": "{zX:1}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 0.6,
+     "y": "yb",
+     "text": {
+      "en": "{zY:1}"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": "px + 0.3",
+     "y": "py",
+     "text": {
+      "en": "{zP:1}"
+     },
+     "size": 18,
+     "align": "left",
+     "visibleIf": "cr"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Z at the x-axis corner"
+     },
+     "expr": "zX",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Z where the lines cross"
+     },
+     "expr": "if(cr, zP, 0)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Z at the y-axis corner"
+     },
+     "expr": "zY",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Maximum Z",
+      "kn": "ಗರಿಷ್ಠ Z"
+     },
+     "expr": "zm",
+     "digits": 2
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

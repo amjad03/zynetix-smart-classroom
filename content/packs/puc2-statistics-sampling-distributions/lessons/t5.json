@@ -199,6 +199,150 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The F distribution and its degrees of freedom",
+    "kn": "F ವಿತರಣೆ ಮತ್ತು ಸ್ವಾತಂತ್ರ್ಯ ಮಟ್ಟಗಳು"
+   },
+   "narration": {
+    "en": "F = (χ²₁/n₁)/(χ²₂/n₂) is never negative and is skewed to the right. Change the two degrees of freedom: the order matters, since F(n₁, n₂) and F(n₂, n₁) are different curves (turn on the dashed one). Its mean is n₂/(n₂ − 2), a little above 1."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "F = (χ²₁/n₁)/(χ²₂/n₂) is never negative and is skewed to the right. Change the two degrees of freedom: the order matters, since F(n₁, n₂) and F(n₂, n₁) are different curves (turn on the dashed one). Its mean is n₂/(n₂ − 2), a little above 1.",
+    "kn": "F = (χ²₁/n₁)/(χ²₂/n₂) ಎಂದಿಗೂ ಋಣವಲ್ಲ, ಬಲಕ್ಕೆ ಓರೆ. ಎರಡು ಸ್ವಾತಂತ್ರ್ಯ ಮಟ್ಟಗಳನ್ನು ಬದಲಿಸಿ: ಕ್ರಮ ಮುಖ್ಯ, F(n₁, n₂) ಮತ್ತು F(n₂, n₁) ಬೇರೆ ವಕ್ರಗಳು. ಅದರ ಸರಾಸರಿ n₂/(n₂ − 2), 1 ಕ್ಕಿಂತ ಸ್ವಲ್ಪ ಹೆಚ್ಚು."
+   },
+   "tryThis": [
+    {
+     "en": "Make both d.f. large (30, 30). Where does the curve pile up?"
+    },
+    {
+     "en": "Swap the d.f. with the dashed curve on. Are the two curves the same?"
+    },
+    {
+     "en": "Set n₁ = 1. The curve is the distribution of t² with n₂ d.f."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "n1",
+     "label": {
+      "en": "Numerator d.f. n₁",
+      "kn": "ಅಂಶ n₁"
+     },
+     "min": 1,
+     "max": 30,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "n2",
+     "label": {
+      "en": "Denominator d.f. n₂",
+      "kn": "ಛೇದ n₂"
+     },
+     "min": 3,
+     "max": 30,
+     "step": 1,
+     "value": 10
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sw",
+     "label": {
+      "en": "Also show F(n₂, n₁)",
+      "kn": "F(n₂, n₁) ತೋರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "lc",
+     "expr": "(((((n1 + n2)/2) + 6) - 0.5)*ln((((n1 + n2)/2) + 6)) - (((n1 + n2)/2) + 6) + 0.918938533 + 1/(12*(((n1 + n2)/2) + 6)) - 1/(360*(((n1 + n2)/2) + 6)^3) + 1/(1260*(((n1 + n2)/2) + 6)^5) - ln(((n1 + n2)/2)*(((n1 + n2)/2) + 1)*(((n1 + n2)/2) + 2)*(((n1 + n2)/2) + 3)*(((n1 + n2)/2) + 4)*(((n1 + n2)/2) + 5))) - ((((n1/2) + 6) - 0.5)*ln(((n1/2) + 6)) - ((n1/2) + 6) + 0.918938533 + 1/(12*((n1/2) + 6)) - 1/(360*((n1/2) + 6)^3) + 1/(1260*((n1/2) + 6)^5) - ln((n1/2)*((n1/2) + 1)*((n1/2) + 2)*((n1/2) + 3)*((n1/2) + 4)*((n1/2) + 5))) - ((((n2/2) + 6) - 0.5)*ln(((n2/2) + 6)) - ((n2/2) + 6) + 0.918938533 + 1/(12*((n2/2) + 6)) - 1/(360*((n2/2) + 6)^3) + 1/(1260*((n2/2) + 6)^5) - ln((n2/2)*((n2/2) + 1)*((n2/2) + 2)*((n2/2) + 3)*((n2/2) + 4)*((n2/2) + 5)))"
+    },
+    {
+     "name": "mF",
+     "expr": "n2/(n2 - 2)"
+    },
+    {
+     "name": "mo",
+     "expr": "if(n1 > 2, (n1 - 2)/n1*n2/(n2 + 2), 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     5
+    ],
+    "y": [
+     0,
+     1.6
+    ],
+    "axes": true,
+    "xLabel": "F",
+    "yLabel": "density"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "exp(lc + (n1/2)*ln(n1/n2) + (n1/2 - 1)*ln(x) - ((n1 + n2)/2)*ln(1 + n1*x/n2))",
+     "from": 0.005,
+     "to": 5,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "exp(lc + (n2/2)*ln(n2/n1) + (n2/2 - 1)*ln(x) - ((n2 + n1)/2)*ln(1 + n2*x/n1))",
+     "from": 0.005,
+     "to": 5,
+     "color": "blue",
+     "dashed": true,
+     "visibleIf": "sw"
+    },
+    {
+     "shape": "line",
+     "x1": "mF",
+     "y1": 0,
+     "x2": "mF",
+     "y2": 1.45,
+     "color": "green",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": "mF",
+     "y": 1.52,
+     "text": {
+      "en": "mean"
+     },
+     "size": 18,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mean n₂/(n₂ − 2)"
+     },
+     "expr": "mF",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Mode (n₁ − 2)/n₁ · n₂/(n₂ + 2)"
+     },
+     "expr": "mo",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

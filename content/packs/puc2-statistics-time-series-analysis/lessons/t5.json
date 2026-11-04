@@ -827,6 +827,284 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Straight, parabolic or exponential trend?",
+    "kn": "ಸರಳ, ಪರವಲಯ ಅಥವಾ ಘಾತೀಯ ಪ್ರವೃತ್ತಿ?"
+   },
+   "narration": {
+    "en": "Sales 10, 13, 17, 23, 30 for 2020 to 2024 (X = −2 … 2). The three least-squares trends are y = 18.6 + 5X, y = 17.17 + 5X + 0.714X², and y = 17.24 × 1.319ˣ (a growth of about 32% a year). Choose one and move the forecast year: the fits agree on the past but part ways in the future."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Sales 10, 13, 17, 23, 30 for 2020 to 2024 (X = −2 … 2). The three least-squares trends are y = 18.6 + 5X, y = 17.17 + 5X + 0.714X², and y = 17.24 × 1.319ˣ (a growth of about 32% a year). Choose one and move the forecast year: the fits agree on the past but part ways in the future.",
+    "kn": "2020 ರಿಂದ 2024 ರ ಮಾರಾಟ 10, 13, 17, 23, 30 (X = −2 … 2). ಮೂರು ಕನಿಷ್ಠ ವರ್ಗ ಪ್ರವೃತ್ತಿಗಳು: ಸರಳ ರೇಖೆ, ಪರವಲಯ ಮತ್ತು ಘಾತೀಯ (ವರ್ಷಕ್ಕೆ ಸುಮಾರು 32% ಬೆಳವಣಿಗೆ). ಒಂದನ್ನು ಆರಿಸಿ ಮುನ್ಸೂಚನೆ ವರ್ಷ ಸರಿಸಿ: ಹಿಂದಿನ ವರ್ಷಗಳಿಗೆ ಹೊಂದುತ್ತವೆ, ಭವಿಷ್ಯದಲ್ಲಿ ದೂರವಾಗುತ್ತವೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Which fit has the smallest Σ(y − yₜ)²?"
+    },
+    {
+     "en": "Forecast 2028 with each fit. How far apart are they?"
+    },
+    {
+     "en": "The data grow by roughly the same percentage each year. Which trend suits that?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "Xf",
+     "label": {
+      "en": "Year to read (X, 0 = 2022)",
+      "kn": "ಓದುವ ವರ್ಷ X"
+     },
+     "min": -2,
+     "max": 6,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "choices": [
+    {
+     "name": "fit",
+     "label": {
+      "en": "Trend",
+      "kn": "ಪ್ರವೃತ್ತಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Linear",
+        "kn": "ರೇಖೀಯ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Parabola",
+        "kn": "ಪರವಲಯ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Exponential",
+        "kn": "ಘಾತೀಯ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "vars": [
+    {
+     "name": "yf",
+     "expr": "if(fit == 1, 18.6 + 5*Xf, if(fit == 2, 17.1714 + 5*Xf + 0.7143*Xf^2, 17.2444*1.31887^Xf))"
+    }
+   ],
+   "view": {
+    "x": [
+     -2.5,
+     6.5
+    ],
+    "y": [
+     0,
+     100
+    ],
+    "axes": false
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "18.6 + 5*x",
+     "from": -2.3,
+     "to": 6.3,
+     "color": {
+      "by": "fit == 1",
+      "scale": [
+       "white",
+       "blue"
+      ]
+     },
+     "width": "if(fit == 1, 4, 1)"
+    },
+    {
+     "shape": "path",
+     "fn": "17.1714 + 5*x + 0.7143*x^2",
+     "from": -2.3,
+     "to": 6.3,
+     "color": {
+      "by": "fit == 2",
+      "scale": [
+       "white",
+       "green"
+      ]
+     },
+     "width": "if(fit == 2, 4, 1)"
+    },
+    {
+     "shape": "path",
+     "fn": "17.2444*1.31887^x",
+     "from": -2.3,
+     "to": 6.3,
+     "color": {
+      "by": "fit == 3",
+      "scale": [
+       "white",
+       "orange"
+      ]
+     },
+     "width": "if(fit == 3, 4, 1)"
+    },
+    {
+     "shape": "line",
+     "x1": "Xf",
+     "y1": 0,
+     "x2": "Xf",
+     "y2": "yf",
+     "color": "yellow",
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "x": "Xf",
+     "y": "yf",
+     "r": 0.12,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": "Xf",
+     "y": "yf + 5",
+     "text": {
+      "en": "{2022 + Xf}: {yf:1}"
+     },
+     "size": 20,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 2.5,
+     "y1": 0,
+     "x2": 2.5,
+     "y2": 100,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 4.4,
+     "y": 96,
+     "text": {
+      "en": "forecasts"
+     },
+     "size": 18
+    },
+    {
+     "shape": "circle",
+     "x": -2,
+     "y": 10,
+     "r": 0.1,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": -2,
+     "y": 2,
+     "text": {
+      "en": "2020"
+     },
+     "size": 15
+    },
+    {
+     "shape": "circle",
+     "x": -1,
+     "y": 13,
+     "r": 0.1,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": -1,
+     "y": 2,
+     "text": {
+      "en": "2021"
+     },
+     "size": 15
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 17,
+     "r": 0.1,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 2,
+     "text": {
+      "en": "2022"
+     },
+     "size": 15
+    },
+    {
+     "shape": "circle",
+     "x": 1,
+     "y": 23,
+     "r": 0.1,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 2,
+     "text": {
+      "en": "2023"
+     },
+     "size": 15
+    },
+    {
+     "shape": "circle",
+     "x": 2,
+     "y": 30,
+     "r": 0.1,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 2,
+     "text": {
+      "en": "2024"
+     },
+     "size": 15
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Trend value at the chosen year",
+      "kn": "ಪ್ರವೃತ್ತಿ ಬೆಲೆ"
+     },
+     "expr": "yf",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Σ(y − yₜ)² of this fit"
+     },
+     "expr": "if(fit == 1, 7.2, if(fit == 2, 0.057, 0.139))",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

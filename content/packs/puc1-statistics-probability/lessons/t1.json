@@ -255,6 +255,283 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Events in the sample space of two dice",
+    "kn": "ಎರಡು ದಾಳಗಳ ಮಾದರಿ ಆಕಾಶದಲ್ಲಿ ಘಟನೆಗಳು"
+   },
+   "narration": {
+    "en": "The 36 sample points of throwing two dice (first die across, second die up). Event A is \"the sum is s\"; choose event B. Points are coloured by the events they belong to. When no point is green, A and B cannot happen together: they are mutually exclusive."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The 36 sample points of throwing two dice (first die across, second die up). Event A is \"the sum is s\"; choose event B. Points are coloured by the events they belong to. When no point is green, A and B cannot happen together: they are mutually exclusive.",
+    "kn": "ಎರಡು ದಾಳ ಎಸೆಯುವಿಕೆಯ 36 ಮಾದರಿ ಬಿಂದುಗಳು (ಮೊದಲ ದಾಳ ಅಡ್ಡ, ಎರಡನೆಯದು ಮೇಲೆ). ಘಟನೆ A \"ಮೊತ್ತ s\"; ಘಟನೆ B ಆರಿಸಿ. ಬಿಂದುಗಳು ಘಟನೆಗಳ ಪ್ರಕಾರ ಬಣ್ಣ ಪಡೆಯುತ್ತವೆ. ಹಸಿರು ಬಿಂದು ಇಲ್ಲದಿದ್ದರೆ A ಮತ್ತು B ಪರಸ್ಪರ ಹೊರತಾದವು."
+   },
+   "tryThis": [
+    {
+     "en": "Which sum s has the most sample points? What is its probability?"
+    },
+    {
+     "en": "With B = doubles, which sums make A and B mutually exclusive?"
+    },
+    {
+     "en": "Check P(A ∪ B) = P(A) + P(B) − P(A ∩ B) by counting the coloured points."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "s",
+     "label": {
+      "en": "A: the sum is s",
+      "kn": "A: ಮೊತ್ತ s"
+     },
+     "min": 2,
+     "max": 12,
+     "step": 1,
+     "value": 7
+    }
+   ],
+   "choices": [
+    {
+     "name": "ev",
+     "label": {
+      "en": "Event B",
+      "kn": "ಘಟನೆ B"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Doubles",
+        "kn": "ಜೋಡಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "First die shows 6",
+        "kn": "ಮೊದಲ ದಾಳ 6"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Second die shows 1 or 2",
+        "kn": "ಎರಡನೇ ದಾಳ 1 ಅಥವಾ 2"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "nA",
+     "expr": "6 - abs(s - 7)"
+    },
+    {
+     "name": "nB",
+     "expr": "if(ev == 3, 12, 6)"
+    },
+    {
+     "name": "nAB",
+     "expr": "if(ev == 1, mod(s, 2) == 0, if(ev == 2, s >= 7, (s >= 2 && s <= 7) + (s >= 3 && s <= 8)))"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.2,
+     7.2
+    ],
+    "y": [
+     -0.3,
+     7.6
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 36,
+     "x": "(floor(i/6) + 1)",
+     "y": "(mod(i, 6) + 1)",
+     "r": 0.32,
+     "color": {
+      "by": "(((floor(i/6) + 1) + (mod(i, 6) + 1) == s) + 2*if(ev == 1, (floor(i/6) + 1) == (mod(i, 6) + 1), if(ev == 2, (floor(i/6) + 1) == 6, (mod(i, 6) + 1) <= 2)))/3",
+      "scale": [
+       "white",
+       "yellow",
+       "blue",
+       "green"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 7.2,
+     "text": {
+      "en": "yellow: A only · blue: B only · green: A and B"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 6.6,
+     "text": {
+      "en": "A and B are mutually exclusive"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "nAB == 0"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 0.2,
+     "text": {
+      "en": "1"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 0.2,
+     "text": {
+      "en": "2"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 0.2,
+     "text": {
+      "en": "3"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 0.2,
+     "text": {
+      "en": "4"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 0.2,
+     "text": {
+      "en": "5"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 0.2,
+     "text": {
+      "en": "6"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 0.25,
+     "y": 1,
+     "text": {
+      "en": "1"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 0.25,
+     "y": 2,
+     "text": {
+      "en": "2"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 0.25,
+     "y": 3,
+     "text": {
+      "en": "3"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 0.25,
+     "y": 4,
+     "text": {
+      "en": "4"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 0.25,
+     "y": 5,
+     "text": {
+      "en": "5"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 0.25,
+     "y": 6,
+     "text": {
+      "en": "6"
+     },
+     "size": 18
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "n(A)"
+     },
+     "expr": "nA",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "n(B)"
+     },
+     "expr": "nB",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "n(A ∩ B)"
+     },
+     "expr": "nAB",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "P(A ∪ B)"
+     },
+     "expr": "(nA + nB - nAB)/36",
+     "digits": 4
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

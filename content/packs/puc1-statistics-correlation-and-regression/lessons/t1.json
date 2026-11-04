@@ -495,6 +495,219 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Scatter diagrams of every kind",
+    "kn": "ಎಲ್ಲ ಬಗೆಯ ಚದುರಿಕೆ ಚಿತ್ರಗಳು"
+   },
+   "narration": {
+    "en": "Forty pairs (x, y) drawn at random with the correlation you set. Near +1 the points hug a rising line, near −1 a falling line, near 0 they form a round cloud. The curved option shows a strong relation that is not linear."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Forty pairs (x, y) drawn at random with the correlation you set. Near +1 the points hug a rising line, near −1 a falling line, near 0 they form a round cloud. The curved option shows a strong relation that is not linear.",
+    "kn": "ನೀವು ನಿಗದಿಪಡಿಸಿದ ಸಹಸಂಬಂಧದೊಂದಿಗೆ ಯಾದೃಚ್ಛಿಕವಾಗಿ ಎಳೆದ ನಲವತ್ತು (x, y) ಜೋಡಿಗಳು. +1 ಹತ್ತಿರ ಬಿಂದುಗಳು ಏರುವ ರೇಖೆಗೆ, −1 ಹತ್ತಿರ ಇಳಿಯುವ ರೇಖೆಗೆ ಅಂಟಿಕೊಳ್ಳುತ್ತವೆ; 0 ಹತ್ತಿರ ದುಂಡನೆಯ ಮೋಡ. ವಕ್ರ ಆಯ್ಕೆ ರೇಖೀಯವಲ್ಲದ ಬಲವಾದ ಸಂಬಂಧ ತೋರಿಸುತ್ತದೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Slide the correlation from −1 to +1 and describe the cloud at each end."
+    },
+    {
+     "en": "Set it to 0.3 and press New sample a few times. Could you tell the sign from one small sample?"
+    },
+    {
+     "en": "Turn on the curved relation. Why is a strong relation still not a linear correlation?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "rho",
+     "label": {
+      "en": "Correlation in the population",
+      "kn": "ಸಮಷ್ಟಿಯ ಸಹಸಂಬಂಧ"
+     },
+     "min": -1,
+     "max": 1,
+     "step": 0.1,
+     "value": 0.7
+    }
+   ],
+   "toggles": [
+    {
+     "name": "curve",
+     "label": {
+      "en": "Curved (non-linear) relation",
+      "kn": "ವಕ್ರ ಸಂಬಂಧ"
+     },
+     "value": false
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New sample",
+      "kn": "ಹೊಸ ಮಾದರಿ"
+     },
+     "icon": "next",
+     "set": {
+      "seed": "seed + 1"
+     }
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     11.2
+    ],
+    "axes": true,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "clamp(5 + 1.5*sqrt(-2*ln((0.001 + 0.998*rand(i + 400*seed))))*cos(2*pi*rand(i + 400*seed + 211)), 0.2, 9.8)",
+     "y": "clamp(if(curve, 1.2 + 0.9*(sqrt(-2*ln((0.001 + 0.998*rand(i + 400*seed))))*cos(2*pi*rand(i + 400*seed + 211)))^2 + 0.35*sqrt(-2*ln((0.001 + 0.998*rand(i + 400*seed))))*sin(2*pi*rand(i + 400*seed + 211)), 5 + 1.5*(rho*sqrt(-2*ln((0.001 + 0.998*rand(i + 400*seed))))*cos(2*pi*rand(i + 400*seed + 211)) + sqrt(1 - rho^2)*sqrt(-2*ln((0.001 + 0.998*rand(i + 400*seed))))*sin(2*pi*rand(i + 400*seed + 211)))), 0.2, 9.8)",
+     "r": 0.13,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 0,
+     "x2": 5,
+     "y2": 10,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.4
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 5,
+     "x2": 10,
+     "y2": 5,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.4
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 10.6,
+     "text": {
+      "en": "Perfect positive correlation"
+     },
+     "size": 26,
+     "color": "orange",
+     "visibleIf": "!curve && rho == 1"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 10.6,
+     "text": {
+      "en": "High positive correlation"
+     },
+     "size": 26,
+     "color": "orange",
+     "visibleIf": "!curve && rho >= 0.7 && rho < 1"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 10.6,
+     "text": {
+      "en": "Moderate positive correlation"
+     },
+     "size": 26,
+     "color": "orange",
+     "visibleIf": "!curve && rho >= 0.3 && rho < 0.7"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 10.6,
+     "text": {
+      "en": "Low or no linear correlation"
+     },
+     "size": 26,
+     "color": "orange",
+     "visibleIf": "!curve && abs(rho) < 0.3"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 10.6,
+     "text": {
+      "en": "Moderate negative correlation"
+     },
+     "size": 26,
+     "color": "orange",
+     "visibleIf": "!curve && rho <= -0.3 && rho > -0.7"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 10.6,
+     "text": {
+      "en": "High negative correlation"
+     },
+     "size": 26,
+     "color": "orange",
+     "visibleIf": "!curve && rho <= -0.7 && rho > -1"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 10.6,
+     "text": {
+      "en": "Perfect negative correlation"
+     },
+     "size": 26,
+     "color": "orange",
+     "visibleIf": "!curve && rho == -1"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 10.6,
+     "text": {
+      "en": "Curved relation: strong, but r is near 0"
+     },
+     "size": 26,
+     "color": "orange",
+     "visibleIf": "curve"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Population correlation",
+      "kn": "ಸಹಸಂಬಂಧ"
+     },
+     "expr": "if(curve, 0, rho)",
+     "digits": 1
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

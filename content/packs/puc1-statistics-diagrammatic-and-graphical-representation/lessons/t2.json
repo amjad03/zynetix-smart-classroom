@@ -544,6 +544,340 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Subdivided or percentage bars?",
+    "kn": "ಉಪವಿಭಜಿತ ಅಥವಾ ಶೇಕಡಾ ಕಂಬಗಳು?"
+   },
+   "narration": {
+    "en": "Two families' monthly spending split into food, education and others. Change family A's amounts. Subdivided bars show the totals and parts; percentage bars make every bar 100 so that the shares can be compared even when totals differ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Two families' monthly spending split into food, education and others. Change family A's amounts. Subdivided bars show the totals and parts; percentage bars make every bar 100 so that the shares can be compared even when totals differ.",
+    "kn": "ಎರಡು ಕುಟುಂಬಗಳ ಮಾಸಿಕ ಖರ್ಚು ಆಹಾರ, ಶಿಕ್ಷಣ ಮತ್ತು ಇತರೆ ಎಂದು ವಿಭಜಿಸಲಾಗಿದೆ. ಕುಟುಂಬ A ಯ ಮೊತ್ತಗಳನ್ನು ಬದಲಿಸಿ. ಉಪವಿಭಜಿತ ಕಂಬಗಳು ಒಟ್ಟು ಮತ್ತು ಭಾಗಗಳನ್ನು ತೋರಿಸುತ್ತವೆ; ಶೇಕಡಾ ಕಂಬಗಳು ಪ್ರತಿ ಕಂಬವನ್ನು 100 ಮಾಡುತ್ತವೆ, ಹಾಗಾಗಿ ಒಟ್ಟು ಬೇರೆಯಾದರೂ ಪಾಲುಗಳನ್ನು ಹೋಲಿಸಬಹುದು."
+   },
+   "tryThis": [
+    {
+     "en": "Which family spends more rupees on food? Which spends a bigger share of its budget on food?"
+    },
+    {
+     "en": "Double every amount of family A. Which diagram changes and which does not?"
+    },
+    {
+     "en": "Make family A spend the same shares as family B (30%, 20%, 50%)."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "af",
+     "label": {
+      "en": "A: food (₹ thousand)",
+      "kn": "A: ಆಹಾರ"
+     },
+     "min": 2,
+     "max": 20,
+     "step": 1,
+     "value": 12
+    },
+    {
+     "name": "ae",
+     "label": {
+      "en": "A: education",
+      "kn": "A: ಶಿಕ್ಷಣ"
+     },
+     "min": 1,
+     "max": 15,
+     "step": 1,
+     "value": 4
+    },
+    {
+     "name": "ao",
+     "label": {
+      "en": "A: others",
+      "kn": "A: ಇತರೆ"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 6
+    }
+   ],
+   "toggles": [
+    {
+     "name": "pct",
+     "label": {
+      "en": "Percentage bars",
+      "kn": "ಶೇಕಡಾ ಕಂಬಗಳು"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "TA",
+     "expr": "af + ae + ao"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     10.5
+    ],
+    "y": [
+     -7,
+     70
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": "if(pct, 60*(0)/TA, 0)",
+     "w": 2,
+     "h": "if(pct, 60*af/TA, af)",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": "if(pct, 0, 0)",
+     "w": 2,
+     "h": "if(pct, 18, 18)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": "if(pct, 60*(0)/TA, 0) + if(pct, 60*af/TA, af)/2",
+     "text": {
+      "en": "{if(pct, 100*af/TA, af):0}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": "if(pct, 0, 0) + if(pct, 18, 18)/2",
+     "text": {
+      "en": "{if(pct, 30, 18):0}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 8.2,
+     "y": 50,
+     "w": 0.5,
+     "h": 4,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 8.9,
+     "y": 52,
+     "text": {
+      "en": "Food"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": "if(pct, 60*(af)/TA, af)",
+     "w": 2,
+     "h": "if(pct, 60*ae/TA, ae)",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": "if(pct, 18, 18)",
+     "w": 2,
+     "h": "if(pct, 12, 12)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": "if(pct, 60*(af)/TA, af) + if(pct, 60*ae/TA, ae)/2",
+     "text": {
+      "en": "{if(pct, 100*ae/TA, ae):0}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": "if(pct, 18, 18) + if(pct, 12, 12)/2",
+     "text": {
+      "en": "{if(pct, 20, 12):0}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 8.2,
+     "y": 43,
+     "w": 0.5,
+     "h": 4,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 8.9,
+     "y": 45,
+     "text": {
+      "en": "Education"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": "if(pct, 60*(af + ae)/TA, af + ae)",
+     "w": 2,
+     "h": "if(pct, 60*ao/TA, ao)",
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": "if(pct, 30, 30)",
+     "w": 2,
+     "h": "if(pct, 30, 30)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": "if(pct, 60*(af + ae)/TA, af + ae) + if(pct, 60*ao/TA, ao)/2",
+     "text": {
+      "en": "{if(pct, 100*ao/TA, ao):0}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": "if(pct, 30, 30) + if(pct, 30, 30)/2",
+     "text": {
+      "en": "{if(pct, 50, 30):0}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 8.2,
+     "y": 36,
+     "w": 0.5,
+     "h": 4,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 8.9,
+     "y": 38,
+     "text": {
+      "en": "Others"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": -4,
+     "text": {
+      "en": "Family A"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": -4,
+     "text": {
+      "en": "Family B"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 66,
+     "text": {
+      "en": "Spending in ₹ thousand (subdivided bars)"
+     },
+     "size": 22,
+     "visibleIf": "!pct"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 66,
+     "text": {
+      "en": "Each bar = 100% (percentage bars)"
+     },
+     "size": 22,
+     "visibleIf": "pct"
+    },
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": 60,
+     "x2": 7.5,
+     "y2": 60,
+     "color": "yellow",
+     "dashed": true,
+     "visibleIf": "pct"
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 60,
+     "text": {
+      "en": "100%"
+     },
+     "size": 18,
+     "align": "right",
+     "visibleIf": "pct"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "A's total (₹ thousand)"
+     },
+     "expr": "TA",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "A's share on food",
+      "kn": "A ಆಹಾರದ ಪಾಲು"
+     },
+     "expr": "100*af/TA",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "B's share on food",
+      "kn": "B ಆಹಾರದ ಪಾಲು"
+     },
+     "expr": "30",
+     "digits": 1,
+     "unit": "%"
+    }
+   ]
+  },
+  {
    "kind": "bar_chart",
    "caption": {
     "en": "A family's monthly spending on four items. The bars show each item as a percentage of the total: the parts of a percentage bar."

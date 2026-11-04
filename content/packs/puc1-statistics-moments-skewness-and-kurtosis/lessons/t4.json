@@ -266,6 +266,237 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Bowley's coefficient from the quartiles",
+    "kn": "ಚತುರ್ಥಕಗಳಿಂದ ಬೌಲೆ ಗುಣಾಂಕ"
+   },
+   "narration": {
+    "en": "The box under the curve runs from Q₁ to Q₃ with the median inside. In a symmetric curve the two gaps are equal. Bowley's coefficient (Q₃ + Q₁ − 2Md)/(Q₃ − Q₁) compares the gap above the median with the gap below; it uses only the middle half of the data."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The box under the curve runs from Q₁ to Q₃ with the median inside. In a symmetric curve the two gaps are equal. Bowley's coefficient (Q₃ + Q₁ − 2Md)/(Q₃ − Q₁) compares the gap above the median with the gap below; it uses only the middle half of the data.",
+    "kn": "ವಕ್ರದ ಕೆಳಗಿನ ಪೆಟ್ಟಿಗೆ Q₁ ರಿಂದ Q₃ ವರೆಗೆ, ಒಳಗೆ ಮಧ್ಯಾಂಕ. ಸಮಮಿತ ವಕ್ರದಲ್ಲಿ ಎರಡು ಅಂತರಗಳು ಸಮ. ಬೌಲೆ ಗುಣಾಂಕ (Q₃ + Q₁ − 2Md)/(Q₃ − Q₁) ಮಧ್ಯಾಂಕದ ಮೇಲಿನ ಮತ್ತು ಕೆಳಗಿನ ಅಂತರಗಳನ್ನು ಹೋಲಿಸುತ್ತದೆ; ದತ್ತಾಂಶದ ಮಧ್ಯದ ಅರ್ಧವನ್ನು ಮಾತ್ರ ಬಳಸುತ್ತದೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Set the skewness low. Are the two gaps nearly equal?"
+    },
+    {
+     "en": "Flip the tail. What happens to the sign of the coefficient?"
+    },
+    {
+     "en": "Even at the highest skewness, is the coefficient far from ±1? Why can it never go beyond ±1?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "s",
+     "label": {
+      "en": "Skewness (shape)",
+      "kn": "ಓರೆತನ"
+     },
+     "min": 0.05,
+     "max": 0.6,
+     "step": 0.05,
+     "value": 0.4
+    }
+   ],
+   "toggles": [
+    {
+     "name": "neg",
+     "label": {
+      "en": "Long tail on the left",
+      "kn": "ಎಡಕ್ಕೆ ಉದ್ದ ಬಾಲ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "mu",
+     "expr": "ln(12)"
+    },
+    {
+     "name": "fm",
+     "expr": "exp(mu - s^2)*exp(s^2/2)"
+    },
+    {
+     "name": "a1",
+     "expr": "exp(mu - 0.6745*s)"
+    },
+    {
+     "name": "a3",
+     "expr": "exp(mu + 0.6745*s)"
+    },
+    {
+     "name": "Q1",
+     "expr": "if(neg, 40 - a3, a1)"
+    },
+    {
+     "name": "Q3",
+     "expr": "if(neg, 40 - a1, a3)"
+    },
+    {
+     "name": "md",
+     "expr": "if(neg, 28, 12)"
+    },
+    {
+     "name": "hq1",
+     "expr": "if(if(neg, 40 - Q1, Q1) > 0.05, 10*fm/(if(neg, 40 - Q1, Q1))*exp(-(ln(if(neg, 40 - Q1, Q1)) - mu)^2/(2*s^2)), 0)"
+    },
+    {
+     "name": "hq3",
+     "expr": "if(if(neg, 40 - Q3, Q3) > 0.05, 10*fm/(if(neg, 40 - Q3, Q3))*exp(-(ln(if(neg, 40 - Q3, Q3)) - mu)^2/(2*s^2)), 0)"
+    },
+    {
+     "name": "hmd",
+     "expr": "if(if(neg, 40 - md, md) > 0.05, 10*fm/(if(neg, 40 - md, md))*exp(-(ln(if(neg, 40 - md, md)) - mu)^2/(2*s^2)), 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     40
+    ],
+    "y": [
+     -5.2,
+     11.5
+    ],
+    "axes": false
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "if(if(neg, 40 - x, x) > 0.05, 10*fm/(if(neg, 40 - x, x))*exp(-(ln(if(neg, 40 - x, x)) - mu)^2/(2*s^2)), 0)",
+     "from": 0.1,
+     "to": 39.9,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": "Q1",
+     "y": -3.2,
+     "w": "Q3 - Q1",
+     "h": 1.8,
+     "color": "blue",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "md",
+     "y1": -3.2,
+     "x2": "md",
+     "y2": -1.4,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "Q1",
+     "y1": -0.2,
+     "x2": "Q1",
+     "y2": "hq1",
+     "color": "blue",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": "Q3",
+     "y1": -0.2,
+     "x2": "Q3",
+     "y2": "hq3",
+     "color": "blue",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": "md",
+     "y1": -0.2,
+     "x2": "md",
+     "y2": "hmd",
+     "color": "green",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": "(Q1 + md)/2",
+     "y": -4.4,
+     "text": {
+      "en": "{md - Q1:2}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": "(md + Q3)/2",
+     "y": -4.4,
+     "text": {
+      "en": "{Q3 - md:2}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": "Q1",
+     "y": 1,
+     "text": {
+      "en": "Q₁"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": "Q3",
+     "y": 1,
+     "text": {
+      "en": "Q₃"
+     },
+     "size": 20,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Q₁"
+     },
+     "expr": "Q1",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Median",
+      "kn": "ಮಧ್ಯಾಂಕ"
+     },
+     "expr": "md",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Q₃"
+     },
+     "expr": "Q3",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Bowley's Sk = (Q₃ + Q₁ − 2Md)/(Q₃ − Q₁)",
+      "kn": "ಬೌಲೆ ಓರೆತನ"
+     },
+     "expr": "(Q3 + Q1 - 2*md)/(Q3 - Q1)",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

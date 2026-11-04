@@ -862,6 +862,372 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Beat the least-squares line",
+    "kn": "ಕನಿಷ್ಠ ವರ್ಗ ರೇಖೆಯನ್ನು ಸೋಲಿಸಿ"
+   },
+   "narration": {
+    "en": "Sales for seven years, coded X = −3 … 3. Drag the two ends of the orange trend line; the vertical bars are the errors y − yₜ. Try to make Σ(y − yₜ)² as small as you can, then show the least-squares line a = Σy/n, b = ΣXy/ΣX²: nothing beats it."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Sales for seven years, coded X = −3 … 3. Drag the two ends of the orange trend line; the vertical bars are the errors y − yₜ. Try to make Σ(y − yₜ)² as small as you can, then show the least-squares line a = Σy/n, b = ΣXy/ΣX²: nothing beats it.",
+    "kn": "ಏಳು ವರ್ಷಗಳ ಮಾರಾಟ, X = −3 … 3. ಕಿತ್ತಳೆ ಪ್ರವೃತ್ತಿ ರೇಖೆಯ ಎರಡು ತುದಿಗಳನ್ನು ಎಳೆಯಿರಿ; ಲಂಬ ಪಟ್ಟಿಗಳು ದೋಷಗಳು y − yₜ. Σ(y − yₜ)² ಅನ್ನು ಸಾಧ್ಯವಾದಷ್ಟು ಚಿಕ್ಕದು ಮಾಡಿ, ನಂತರ ಕನಿಷ್ಠ ವರ್ಗ ರೇಖೆ ತೋರಿಸಿ: ಯಾವುದೂ ಅದನ್ನು ಸೋಲಿಸಲಾರದು."
+   },
+   "tryThis": [
+    {
+     "en": "Get Σ(y − yₜ)² below 10."
+    },
+    {
+     "en": "Show the least-squares line. Is Σ(y − yₜ) zero for it?"
+    },
+    {
+     "en": "Forecast sales for 2025 (X = 4) from the least-squares line."
+    }
+   ],
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "ls",
+     "label": {
+      "en": "Show the least-squares line",
+      "kn": "ಕನಿಷ್ಠ ವರ್ಗ ರೇಖೆ ತೋರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "L",
+     "x": -3.3,
+     "y": 14,
+     "axis": "y",
+     "box": {
+      "x": [
+       -3.3,
+       -3.3
+      ],
+      "y": [
+       5,
+       40
+      ]
+     },
+     "snap": 0.1,
+     "color": "orange"
+    },
+    {
+     "name": "R",
+     "x": 3.3,
+     "y": 28,
+     "axis": "y",
+     "box": {
+      "x": [
+       3.3,
+       3.3
+      ],
+      "y": [
+       5,
+       40
+      ]
+     },
+     "snap": 0.1,
+     "color": "orange"
+    }
+   ],
+   "vars": [
+    {
+     "name": "bb",
+     "expr": "(R_y - L_y)/6.6"
+    },
+    {
+     "name": "aa",
+     "expr": "(L_y + R_y)/2"
+    }
+   ],
+   "view": {
+    "x": [
+     -3.7,
+     3.7
+    ],
+    "y": [
+     5,
+     40
+    ],
+    "axes": false
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "aa + bb*x",
+     "from": -3.6,
+     "to": 3.6,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "21.2857 + 3.1071*x",
+     "from": -3.6,
+     "to": 3.6,
+     "color": "green",
+     "dashed": true,
+     "visibleIf": "ls"
+    },
+    {
+     "shape": "line",
+     "x1": -3,
+     "y1": 12,
+     "x2": -3,
+     "y2": "aa + bb*-3",
+     "color": {
+      "by": "step(aa + bb*-3, 12)",
+      "scale": [
+       "red",
+       "blue"
+      ]
+     },
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": -3,
+     "y": 12,
+     "r": 0.09,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": -3,
+     "y": 6,
+     "text": {
+      "en": "2018"
+     },
+     "size": 16
+    },
+    {
+     "shape": "line",
+     "x1": -2,
+     "y1": 15,
+     "x2": -2,
+     "y2": "aa + bb*-2",
+     "color": {
+      "by": "step(aa + bb*-2, 15)",
+      "scale": [
+       "red",
+       "blue"
+      ]
+     },
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": -2,
+     "y": 15,
+     "r": 0.09,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": -2,
+     "y": 6,
+     "text": {
+      "en": "2019"
+     },
+     "size": 16
+    },
+    {
+     "shape": "line",
+     "x1": -1,
+     "y1": 19,
+     "x2": -1,
+     "y2": "aa + bb*-1",
+     "color": {
+      "by": "step(aa + bb*-1, 19)",
+      "scale": [
+       "red",
+       "blue"
+      ]
+     },
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": -1,
+     "y": 19,
+     "r": 0.09,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": -1,
+     "y": 6,
+     "text": {
+      "en": "2020"
+     },
+     "size": 16
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 20,
+     "x2": 0,
+     "y2": "aa + bb*0",
+     "color": {
+      "by": "step(aa + bb*0, 20)",
+      "scale": [
+       "red",
+       "blue"
+      ]
+     },
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 20,
+     "r": 0.09,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 6,
+     "text": {
+      "en": "2021"
+     },
+     "size": 16
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 24,
+     "x2": 1,
+     "y2": "aa + bb*1",
+     "color": {
+      "by": "step(aa + bb*1, 24)",
+      "scale": [
+       "red",
+       "blue"
+      ]
+     },
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 1,
+     "y": 24,
+     "r": 0.09,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 6,
+     "text": {
+      "en": "2022"
+     },
+     "size": 16
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 29,
+     "x2": 2,
+     "y2": "aa + bb*2",
+     "color": {
+      "by": "step(aa + bb*2, 29)",
+      "scale": [
+       "red",
+       "blue"
+      ]
+     },
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 2,
+     "y": 29,
+     "r": 0.09,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 6,
+     "text": {
+      "en": "2023"
+     },
+     "size": 16
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 30,
+     "x2": 3,
+     "y2": "aa + bb*3",
+     "color": {
+      "by": "step(aa + bb*3, 30)",
+      "scale": [
+       "red",
+       "blue"
+      ]
+     },
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 3,
+     "y": 30,
+     "r": 0.09,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 6,
+     "text": {
+      "en": "2024"
+     },
+     "size": 16
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Your a and b: a"
+     },
+     "expr": "aa",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "b"
+     },
+     "expr": "bb",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Σ(y − yₜ)²",
+      "kn": "ದೋಷ ವರ್ಗಗಳ ಮೊತ್ತ"
+     },
+     "expr": "(12 - (aa + bb*-3))^2 + (15 - (aa + bb*-2))^2 + (19 - (aa + bb*-1))^2 + (20 - (aa + bb*0))^2 + (24 - (aa + bb*1))^2 + (29 - (aa + bb*2))^2 + (30 - (aa + bb*3))^2",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Least possible (a = 21.29, b = 3.107)"
+     },
+     "expr": "5.107",
+     "digits": 2
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "kind": "function_plot",

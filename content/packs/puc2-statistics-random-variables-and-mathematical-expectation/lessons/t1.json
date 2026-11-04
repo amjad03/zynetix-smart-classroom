@@ -730,6 +730,454 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Probability mass and distribution function",
+    "kn": "ಸಂಭವನೀಯತೆ ದ್ರವ್ಯರಾಶಿ ಮತ್ತು ವಿತರಣಾ ಫಲನ"
+   },
+   "narration": {
+    "en": "Choose a random variable. The bars are its p.m.f. p(x); the green steps below are its distribution function F(x) = P(X ≤ x). Drag the orange line: F(x) is the sum of the yellow bars to its left, rising in steps from 0 to 1."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Choose a random variable. The bars are its p.m.f. p(x); the green steps below are its distribution function F(x) = P(X ≤ x). Drag the orange line: F(x) is the sum of the yellow bars to its left, rising in steps from 0 to 1.",
+    "kn": "ಒಂದು ಯಾದೃಚ್ಛಿಕ ಚರ ಆರಿಸಿ. ಕಂಬಗಳು ಅದರ p.m.f. p(x); ಕೆಳಗಿನ ಹಸಿರು ಮೆಟ್ಟಿಲುಗಳು ವಿತರಣಾ ಫಲನ F(x) = P(X ≤ x). ಕಿತ್ತಳೆ ರೇಖೆ ಎಳೆಯಿರಿ: F(x) ಅದರ ಎಡಕ್ಕಿರುವ ಹಳದಿ ಕಂಬಗಳ ಮೊತ್ತ, 0 ರಿಂದ 1 ರವರೆಗೆ ಮೆಟ್ಟಿಲಾಗಿ ಏರುತ್ತದೆ."
+   },
+   "tryThis": [
+    {
+     "en": "For heads in three tosses, what is F(1.5)? Is it the same as F(1)?"
+    },
+    {
+     "en": "For the larger of two dice, which value is most likely?"
+    },
+    {
+     "en": "Where does F(x) jump, and by how much?"
+    }
+   ],
+   "sliders": [],
+   "choices": [
+    {
+     "name": "ex",
+     "label": {
+      "en": "X is",
+      "kn": "X"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Heads in 3 tosses",
+        "kn": "3 ಚಿಮ್ಮುವಿಕೆಯಲ್ಲಿ ತಲೆಗಳು"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Score on a die",
+        "kn": "ದಾಳದ ಅಂಕ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Larger of two dice",
+        "kn": "ಎರಡು ದಾಳಗಳಲ್ಲಿ ದೊಡ್ಡದು"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "handles": [
+    {
+     "name": "X",
+     "label": "x",
+     "x": 1.5,
+     "y": 9,
+     "axis": "x",
+     "box": {
+      "x": [
+       -0.5,
+       6.9
+      ],
+      "y": [
+       9,
+       9
+      ]
+     },
+     "snap": 0.1,
+     "color": "orange"
+    }
+   ],
+   "vars": [
+    {
+     "name": "p0",
+     "expr": "if(ex == 1, 1/8, if(ex == 2, 0, 0))"
+    },
+    {
+     "name": "p1",
+     "expr": "if(ex == 1, 3/8, if(ex == 2, 1/6, 1/36))"
+    },
+    {
+     "name": "p2",
+     "expr": "if(ex == 1, 3/8, if(ex == 2, 1/6, 3/36))"
+    },
+    {
+     "name": "p3",
+     "expr": "if(ex == 1, 1/8, if(ex == 2, 1/6, 5/36))"
+    },
+    {
+     "name": "p4",
+     "expr": "if(ex == 1, 0, if(ex == 2, 1/6, 7/36))"
+    },
+    {
+     "name": "p5",
+     "expr": "if(ex == 1, 0, if(ex == 2, 1/6, 9/36))"
+    },
+    {
+     "name": "p6",
+     "expr": "if(ex == 1, 0, if(ex == 2, 1/6, 11/36))"
+    },
+    {
+     "name": "Fh",
+     "expr": "p0*(0 <= X_x) + p1*(1 <= X_x) + p2*(2 <= X_x) + p3*(3 <= X_x) + p4*(4 <= X_x) + p5*(5 <= X_x) + p6*(6 <= X_x)"
+    }
+   ],
+   "view": {
+    "x": [
+     -1.3,
+     7.4
+    ],
+    "y": [
+     -0.4,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -0.3,
+     "y": 5.2,
+     "w": 0.6,
+     "h": "12*p0",
+     "color": {
+      "by": "0 <= X_x",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "4*(p0)",
+     "x2": 1,
+     "y2": "4*(p0)",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 4.6,
+     "text": {
+      "en": "0"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 0.7,
+     "y": 5.2,
+     "w": 0.6,
+     "h": "12*p1",
+     "color": {
+      "by": "1 <= X_x",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": "4*(p0 + p1)",
+     "x2": 2,
+     "y2": "4*(p0 + p1)",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 4.6,
+     "text": {
+      "en": "1"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 1.7,
+     "y": 5.2,
+     "w": 0.6,
+     "h": "12*p2",
+     "color": {
+      "by": "2 <= X_x",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": "4*(p0 + p1 + p2)",
+     "x2": 3,
+     "y2": "4*(p0 + p1 + p2)",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 4.6,
+     "text": {
+      "en": "2"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 2.7,
+     "y": 5.2,
+     "w": 0.6,
+     "h": "12*p3",
+     "color": {
+      "by": "3 <= X_x",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": "4*(p0 + p1 + p2 + p3)",
+     "x2": 4,
+     "y2": "4*(p0 + p1 + p2 + p3)",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 4.6,
+     "text": {
+      "en": "3"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 3.7,
+     "y": 5.2,
+     "w": 0.6,
+     "h": "12*p4",
+     "color": {
+      "by": "4 <= X_x",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "4*(p0 + p1 + p2 + p3 + p4)",
+     "x2": 5,
+     "y2": "4*(p0 + p1 + p2 + p3 + p4)",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 4.6,
+     "text": {
+      "en": "4"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 4.7,
+     "y": 5.2,
+     "w": 0.6,
+     "h": "12*p5",
+     "color": {
+      "by": "5 <= X_x",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": "4*(p0 + p1 + p2 + p3 + p4 + p5)",
+     "x2": 6,
+     "y2": "4*(p0 + p1 + p2 + p3 + p4 + p5)",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 4.6,
+     "text": {
+      "en": "5"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 5.7,
+     "y": 5.2,
+     "w": 0.6,
+     "h": "12*p6",
+     "color": {
+      "by": "6 <= X_x",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": "4*(p0 + p1 + p2 + p3 + p4 + p5 + p6)",
+     "x2": 7,
+     "y2": "4*(p0 + p1 + p2 + p3 + p4 + p5 + p6)",
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 4.6,
+     "text": {
+      "en": "6"
+     },
+     "size": 18
+    },
+    {
+     "shape": "line",
+     "x1": -1,
+     "y1": 0,
+     "x2": 0,
+     "y2": 0,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "X_x",
+     "y1": 0,
+     "x2": "X_x",
+     "y2": 9.5,
+     "color": "orange",
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "x": "X_x",
+     "y": "4*Fh",
+     "r": 0.12,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": 9.4,
+     "text": {
+      "en": "p(x)"
+     },
+     "size": 22,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 6.2,
+     "y": 3.4,
+     "text": {
+      "en": "F(x)"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": -1,
+     "y1": 4,
+     "x2": 7.4,
+     "y2": 4,
+     "color": "white",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": -1.1,
+     "y": 4,
+     "text": {
+      "en": "1"
+     },
+     "size": 16,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "x"
+     },
+     "expr": "X_x",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "F(x) = P(X ≤ x)"
+     },
+     "expr": "Fh",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "E(X) = Σx p(x)"
+     },
+     "expr": "1*p1 + 2*p2 + 3*p3 + 4*p4 + 5*p5 + 6*p6",
+     "digits": 4
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

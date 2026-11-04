@@ -500,6 +500,492 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Hunt for the saddle point",
+    "kn": "ಸ್ಯಾಡಲ್ ಬಿಂದು ಹುಡುಕಿ"
+   },
+   "narration": {
+    "en": "A 3 × 3 payoff matrix (gains of A). Each row minimum is listed on the right, each column maximum below. A picks the largest row minimum (maximin, yellow); B picks the smallest column maximum (minimax, blue). When they are equal, the green cell is a saddle point. Change three of the payoffs."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A 3 × 3 payoff matrix (gains of A). Each row minimum is listed on the right, each column maximum below. A picks the largest row minimum (maximin, yellow); B picks the smallest column maximum (minimax, blue). When they are equal, the green cell is a saddle point. Change three of the payoffs.",
+    "kn": "3 × 3 ಪ್ರತಿಫಲ ಮಾತೃಕೆ (A ಯ ಲಾಭ). ಬಲಕ್ಕೆ ಪ್ರತಿ ಸಾಲಿನ ಕನಿಷ್ಠ, ಕೆಳಗೆ ಪ್ರತಿ ಕಾಲಂನ ಗರಿಷ್ಠ. A ದೊಡ್ಡ ಸಾಲು ಕನಿಷ್ಠ (ಮ್ಯಾಕ್ಸಿಮಿನ್) ಆರಿಸುತ್ತಾನೆ; B ಚಿಕ್ಕ ಕಾಲಂ ಗರಿಷ್ಠ (ಮಿನಿಮ್ಯಾಕ್ಸ್) ಆರಿಸುತ್ತಾನೆ. ಸಮವಾದರೆ ಹಸಿರು ಕೋಶ ಸ್ಯಾಡಲ್ ಬಿಂದು."
+   },
+   "tryThis": [
+    {
+     "en": "At the start, where is the saddle point and what is the value of the game?"
+    },
+    {
+     "en": "Lower the centre payoff to 1. Is there still a saddle point?"
+    },
+    {
+     "en": "Find settings that make the game fair (value 0)."
+    }
+   ],
+   "sliders": [
+    {
+     "name": "a22",
+     "label": {
+      "en": "Payoff (A2, B2)"
+     },
+     "min": -6,
+     "max": 8,
+     "step": 1,
+     "value": 4
+    },
+    {
+     "name": "a21",
+     "label": {
+      "en": "Payoff (A2, B1)"
+     },
+     "min": -6,
+     "max": 8,
+     "step": 1,
+     "value": 6
+    },
+    {
+     "name": "a13",
+     "label": {
+      "en": "Payoff (A1, B3)"
+     },
+     "min": -6,
+     "max": 8,
+     "step": 1,
+     "value": -2
+    }
+   ],
+   "vars": [
+    {
+     "name": "r0",
+     "expr": "min(-1, 2, a13)"
+    },
+    {
+     "name": "r1",
+     "expr": "min(a21, a22, 6)"
+    },
+    {
+     "name": "r2",
+     "expr": "min(-5, 0, 3)"
+    },
+    {
+     "name": "k0",
+     "expr": "max(-1, a21, -5)"
+    },
+    {
+     "name": "k1",
+     "expr": "max(2, a22, 0)"
+    },
+    {
+     "name": "k2",
+     "expr": "max(a13, 6, 3)"
+    },
+    {
+     "name": "mxm",
+     "expr": "max(r0, r1, r2)"
+    },
+    {
+     "name": "mnx",
+     "expr": "min(k0, k1, k2)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.4,
+     9.4
+    ],
+    "y": [
+     -0.5,
+     8
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.2,
+     "y": 5.4,
+     "w": 1.6,
+     "h": 1.2,
+     "color": "green",
+     "visibleIf": "-1 == r0 && -1 == k0",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 6.0,
+     "text": {
+      "en": "{-1}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "rect",
+     "x": 3.2,
+     "y": 5.4,
+     "w": 1.6,
+     "h": 1.2,
+     "color": "green",
+     "visibleIf": "2 == r0 && 2 == k1",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 6.0,
+     "text": {
+      "en": "{2}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "rect",
+     "x": 5.2,
+     "y": 5.4,
+     "w": 1.6,
+     "h": 1.2,
+     "color": "green",
+     "visibleIf": "a13 == r0 && a13 == k2",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 6.0,
+     "text": {
+      "en": "{a13}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": 6.0,
+     "text": {
+      "en": "{r0}"
+     },
+     "size": 24,
+     "color": {
+      "by": "r0 == mxm",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 6.0,
+     "text": {
+      "en": "A1"
+     },
+     "size": 24
+    },
+    {
+     "shape": "rect",
+     "x": 1.2,
+     "y": 3.9,
+     "w": 1.6,
+     "h": 1.2,
+     "color": "green",
+     "visibleIf": "a21 == r1 && a21 == k0",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 4.5,
+     "text": {
+      "en": "{a21}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "rect",
+     "x": 3.2,
+     "y": 3.9,
+     "w": 1.6,
+     "h": 1.2,
+     "color": "green",
+     "visibleIf": "a22 == r1 && a22 == k1",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 4.5,
+     "text": {
+      "en": "{a22}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "rect",
+     "x": 5.2,
+     "y": 3.9,
+     "w": 1.6,
+     "h": 1.2,
+     "color": "green",
+     "visibleIf": "6 == r1 && 6 == k2",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 4.5,
+     "text": {
+      "en": "{6}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": 4.5,
+     "text": {
+      "en": "{r1}"
+     },
+     "size": 24,
+     "color": {
+      "by": "r1 == mxm",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 4.5,
+     "text": {
+      "en": "A2"
+     },
+     "size": 24
+    },
+    {
+     "shape": "rect",
+     "x": 1.2,
+     "y": 2.4,
+     "w": 1.6,
+     "h": 1.2,
+     "color": "green",
+     "visibleIf": "-5 == r2 && -5 == k0",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 3.0,
+     "text": {
+      "en": "{-5}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "rect",
+     "x": 3.2,
+     "y": 2.4,
+     "w": 1.6,
+     "h": 1.2,
+     "color": "green",
+     "visibleIf": "0 == r2 && 0 == k1",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 3.0,
+     "text": {
+      "en": "{0}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "rect",
+     "x": 5.2,
+     "y": 2.4,
+     "w": 1.6,
+     "h": 1.2,
+     "color": "green",
+     "visibleIf": "3 == r2 && 3 == k2",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 3.0,
+     "text": {
+      "en": "{3}"
+     },
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": 3.0,
+     "text": {
+      "en": "{r2}"
+     },
+     "size": 24,
+     "color": {
+      "by": "r2 == mxm",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 3.0,
+     "text": {
+      "en": "A3"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 1.0,
+     "text": {
+      "en": "{k0}"
+     },
+     "size": 24,
+     "color": {
+      "by": "k0 == mnx",
+      "scale": [
+       "white",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 7.3,
+     "text": {
+      "en": "B1"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 1.0,
+     "text": {
+      "en": "{k1}"
+     },
+     "size": 24,
+     "color": {
+      "by": "k1 == mnx",
+      "scale": [
+       "white",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 7.3,
+     "text": {
+      "en": "B2"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.0,
+     "text": {
+      "en": "{k2}"
+     },
+     "size": 24,
+     "color": {
+      "by": "k2 == mnx",
+      "scale": [
+       "white",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 7.3,
+     "text": {
+      "en": "B3"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 8.4,
+     "y": 7.3,
+     "text": {
+      "en": "row min"
+     },
+     "size": 18,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 1.0,
+     "text": {
+      "en": "col max"
+     },
+     "size": 18,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 0.1,
+     "text": {
+      "en": "saddle point: value of the game = {mxm}"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "mxm == mnx"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 0.1,
+     "text": {
+      "en": "no saddle point: maximin {mxm} < minimax {mnx}"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "mxm < mnx"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Maximin (A)"
+     },
+     "expr": "mxm",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Minimax (B)"
+     },
+     "expr": "mnx",
+     "digits": 0
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

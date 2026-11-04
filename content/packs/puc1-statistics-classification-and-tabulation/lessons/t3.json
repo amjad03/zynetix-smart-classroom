@@ -270,6 +270,485 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Which class does it go in?",
+    "kn": "ಯಾವ ವರ್ಗಕ್ಕೆ ಸೇರುತ್ತದೆ?"
+   },
+   "narration": {
+    "en": "Drag the red value along the line. With exclusive classes the upper limit belongs to the next class; with inclusive classes both limits are included and the class boundaries are half a unit outside the limits."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the red value along the line. With exclusive classes the upper limit belongs to the next class; with inclusive classes both limits are included and the class boundaries are half a unit outside the limits.",
+    "kn": "ಕೆಂಪು ಬೆಲೆಯನ್ನು ರೇಖೆಯ ಮೇಲೆ ಎಳೆಯಿರಿ. ಹೊರತುಪಡಿಸುವ ವರ್ಗಗಳಲ್ಲಿ ಮೇಲಿನ ಮಿತಿ ಮುಂದಿನ ವರ್ಗಕ್ಕೆ ಸೇರುತ್ತದೆ; ಒಳಗೊಳ್ಳುವ ವರ್ಗಗಳಲ್ಲಿ ಎರಡೂ ಮಿತಿಗಳು ಸೇರಿವೆ ಮತ್ತು ವರ್ಗ ಗಡಿಗಳು ಮಿತಿಗಳಿಂದ ಅರ್ಧ ಘಟಕ ಹೊರಗಿವೆ."
+   },
+   "tryThis": [
+    {
+     "en": "With exclusive classes of width 10, put the value at exactly 30. Which class takes it?"
+    },
+    {
+     "en": "Switch to inclusive classes. What are the boundaries of the class 20–29?"
+    },
+    {
+     "en": "Change the width to 20. How does the mid-value of the class change?"
+    }
+   ],
+   "sliders": [],
+   "choices": [
+    {
+     "name": "w",
+     "label": {
+      "en": "Class width",
+      "kn": "ವರ್ಗಾಂತರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "5"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "10"
+       },
+       "value": 10
+      },
+      {
+       "label": {
+        "en": "20"
+       },
+       "value": 20
+      }
+     ],
+     "value": 10
+    },
+    {
+     "name": "inc",
+     "label": {
+      "en": "Method",
+      "kn": "ವಿಧಾನ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Exclusive (10–20)",
+        "kn": "ಹೊರತುಪಡಿಸುವ"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "Inclusive (10–19)",
+        "kn": "ಒಳಗೊಳ್ಳುವ"
+       },
+       "value": 1
+      }
+     ],
+     "value": 0
+    }
+   ],
+   "handles": [
+    {
+     "name": "V",
+     "label": "value",
+     "x": 30,
+     "y": 2,
+     "axis": "x",
+     "box": {
+      "x": [
+       0,
+       59
+      ],
+      "y": [
+       2,
+       2
+      ]
+     },
+     "snap": 1,
+     "color": "red"
+    }
+   ],
+   "vars": [
+    {
+     "name": "kk",
+     "expr": "floor(V_x/w)"
+    },
+    {
+     "name": "lo",
+     "expr": "kk*w"
+    },
+    {
+     "name": "hi",
+     "expr": "lo + w - inc"
+    },
+    {
+     "name": "mid",
+     "expr": "(lo + hi)/2"
+    }
+   ],
+   "view": {
+    "x": [
+     -1,
+     61
+    ],
+    "y": [
+     -1.5,
+     10
+    ],
+    "axes": false
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "0*w - 0.5*inc",
+     "y": 0,
+     "w": "w",
+     "h": 4,
+     "color": "blue",
+     "visibleIf": "0 < 60/w",
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": "1*w - 0.5*inc",
+     "y": 0,
+     "w": "w",
+     "h": 4,
+     "color": "green",
+     "visibleIf": "1 < 60/w",
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": "2*w - 0.5*inc",
+     "y": 0,
+     "w": "w",
+     "h": 4,
+     "color": "blue",
+     "visibleIf": "2 < 60/w",
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": "3*w - 0.5*inc",
+     "y": 0,
+     "w": "w",
+     "h": 4,
+     "color": "green",
+     "visibleIf": "3 < 60/w",
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": "4*w - 0.5*inc",
+     "y": 0,
+     "w": "w",
+     "h": 4,
+     "color": "blue",
+     "visibleIf": "4 < 60/w",
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": "5*w - 0.5*inc",
+     "y": 0,
+     "w": "w",
+     "h": 4,
+     "color": "green",
+     "visibleIf": "5 < 60/w",
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": "6*w - 0.5*inc",
+     "y": 0,
+     "w": "w",
+     "h": 4,
+     "color": "blue",
+     "visibleIf": "6 < 60/w",
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": "7*w - 0.5*inc",
+     "y": 0,
+     "w": "w",
+     "h": 4,
+     "color": "green",
+     "visibleIf": "7 < 60/w",
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": "8*w - 0.5*inc",
+     "y": 0,
+     "w": "w",
+     "h": 4,
+     "color": "blue",
+     "visibleIf": "8 < 60/w",
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": "9*w - 0.5*inc",
+     "y": 0,
+     "w": "w",
+     "h": 4,
+     "color": "green",
+     "visibleIf": "9 < 60/w",
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": "10*w - 0.5*inc",
+     "y": 0,
+     "w": "w",
+     "h": 4,
+     "color": "blue",
+     "visibleIf": "10 < 60/w",
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": "11*w - 0.5*inc",
+     "y": 0,
+     "w": "w",
+     "h": 4,
+     "color": "green",
+     "visibleIf": "11 < 60/w",
+     "opacity": 0.25
+    },
+    {
+     "shape": "text",
+     "x": "0*w + w/2 - 0.5*inc",
+     "y": 5,
+     "text": {
+      "en": "{0*w}–{1*w - inc}"
+     },
+     "size": 20,
+     "visibleIf": "0 < 60/w"
+    },
+    {
+     "shape": "text",
+     "x": "1*w + w/2 - 0.5*inc",
+     "y": 5,
+     "text": {
+      "en": "{1*w}–{2*w - inc}"
+     },
+     "size": 20,
+     "visibleIf": "1 < 60/w"
+    },
+    {
+     "shape": "text",
+     "x": "2*w + w/2 - 0.5*inc",
+     "y": 5,
+     "text": {
+      "en": "{2*w}–{3*w - inc}"
+     },
+     "size": 20,
+     "visibleIf": "2 < 60/w"
+    },
+    {
+     "shape": "text",
+     "x": "3*w + w/2 - 0.5*inc",
+     "y": 5,
+     "text": {
+      "en": "{3*w}–{4*w - inc}"
+     },
+     "size": 20,
+     "visibleIf": "3 < 60/w"
+    },
+    {
+     "shape": "text",
+     "x": "4*w + w/2 - 0.5*inc",
+     "y": 5,
+     "text": {
+      "en": "{4*w}–{5*w - inc}"
+     },
+     "size": 20,
+     "visibleIf": "4 < 60/w"
+    },
+    {
+     "shape": "text",
+     "x": "5*w + w/2 - 0.5*inc",
+     "y": 5,
+     "text": {
+      "en": "{5*w}–{6*w - inc}"
+     },
+     "size": 20,
+     "visibleIf": "5 < 60/w"
+    },
+    {
+     "shape": "text",
+     "x": "6*w + w/2 - 0.5*inc",
+     "y": 5,
+     "text": {
+      "en": "{6*w}–{7*w - inc}"
+     },
+     "size": 20,
+     "visibleIf": "6 < 60/w"
+    },
+    {
+     "shape": "text",
+     "x": "7*w + w/2 - 0.5*inc",
+     "y": 5,
+     "text": {
+      "en": "{7*w}–{8*w - inc}"
+     },
+     "size": 20,
+     "visibleIf": "7 < 60/w"
+    },
+    {
+     "shape": "text",
+     "x": "8*w + w/2 - 0.5*inc",
+     "y": 5,
+     "text": {
+      "en": "{8*w}–{9*w - inc}"
+     },
+     "size": 20,
+     "visibleIf": "8 < 60/w"
+    },
+    {
+     "shape": "text",
+     "x": "9*w + w/2 - 0.5*inc",
+     "y": 5,
+     "text": {
+      "en": "{9*w}–{10*w - inc}"
+     },
+     "size": 20,
+     "visibleIf": "9 < 60/w"
+    },
+    {
+     "shape": "text",
+     "x": "10*w + w/2 - 0.5*inc",
+     "y": 5,
+     "text": {
+      "en": "{10*w}–{11*w - inc}"
+     },
+     "size": 20,
+     "visibleIf": "10 < 60/w"
+    },
+    {
+     "shape": "text",
+     "x": "11*w + w/2 - 0.5*inc",
+     "y": 5,
+     "text": {
+      "en": "{11*w}–{12*w - inc}"
+     },
+     "size": 20,
+     "visibleIf": "11 < 60/w"
+    },
+    {
+     "shape": "rect",
+     "x": "lo - 0.5*inc",
+     "y": 0,
+     "w": "w",
+     "h": 4,
+     "color": "yellow",
+     "opacity": 0.55
+    },
+    {
+     "shape": "line",
+     "x1": "V_x",
+     "y1": -0.5,
+     "x2": "V_x",
+     "y2": 4.5,
+     "color": "red",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "lo - 0.5",
+     "y1": -0.3,
+     "x2": "lo - 0.5",
+     "y2": 4.3,
+     "color": "orange",
+     "dashed": true,
+     "visibleIf": "inc"
+    },
+    {
+     "shape": "line",
+     "x1": "lo + w - 0.5",
+     "y1": -0.3,
+     "x2": "lo + w - 0.5",
+     "y2": 4.3,
+     "color": "orange",
+     "dashed": true,
+     "visibleIf": "inc"
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 8.6,
+     "text": {
+      "en": "value {V_x} goes into the class {lo}–{hi}"
+     },
+     "size": 30
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 7.3,
+     "text": {
+      "en": "class boundaries {lo - 0.5}–{hi + 0.5}"
+     },
+     "size": 24,
+     "color": "orange",
+     "visibleIf": "inc"
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 7.3,
+     "text": {
+      "en": "the upper limit is not included: {hi} would go to the next class"
+     },
+     "size": 24,
+     "color": "orange",
+     "visibleIf": "!inc"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Lower limit",
+      "kn": "ಕೆಳ ಮಿತಿ"
+     },
+     "expr": "lo",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Upper limit",
+      "kn": "ಮೇಲಿನ ಮಿತಿ"
+     },
+     "expr": "hi",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Mid-value",
+      "kn": "ಮಧ್ಯಬಿಂದು"
+     },
+     "expr": "mid",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Class width h",
+      "kn": "ವರ್ಗಾಂತರ h"
+     },
+     "expr": "w",
+     "digits": 0
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

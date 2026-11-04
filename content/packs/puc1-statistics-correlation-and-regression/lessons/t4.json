@@ -309,6 +309,377 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Two regression lines",
+    "kn": "ಎರಡು ಪ್ರತಿಗಮನ ರೇಖೆಗಳು"
+   },
+   "narration": {
+    "en": "Drag the four rings. The yellow line (Y on X) makes the vertical errors least; the blue line (X on Y) makes the horizontal errors least. Both always pass through (x̄, ȳ), and they close up into one line as r approaches ±1."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the four rings. The yellow line (Y on X) makes the vertical errors least; the blue line (X on Y) makes the horizontal errors least. Both always pass through (x̄, ȳ), and they close up into one line as r approaches ±1.",
+    "kn": "ನಾಲ್ಕು ಉಂಗುರಗಳನ್ನು ಎಳೆಯಿರಿ. ಹಳದಿ ರೇಖೆ (X ಮೇಲೆ Y) ಲಂಬ ದೋಷಗಳನ್ನು ಕನಿಷ್ಠಗೊಳಿಸುತ್ತದೆ; ನೀಲಿ ರೇಖೆ (Y ಮೇಲೆ X) ಅಡ್ಡ ದೋಷಗಳನ್ನು ಕನಿಷ್ಠಗೊಳಿಸುತ್ತದೆ. ಎರಡೂ (x̄, ȳ) ಮೂಲಕ ಹಾದುಹೋಗುತ್ತವೆ; r → ±1 ಆದಂತೆ ಒಂದಾಗುತ್ತವೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Put all the points nearly on one straight line. What happens to the angle between the two lines?"
+    },
+    {
+     "en": "Scatter the points into a round cloud. Which way do the lines turn as r falls towards 0?"
+    },
+    {
+     "en": "Check that b_yx × b_xy equals r² every time."
+    }
+   ],
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "res",
+     "label": {
+      "en": "Vertical errors (Y on X)",
+      "kn": "ಲಂಬ ದೋಷಗಳು"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "P1",
+     "x": 3,
+     "y": 4.5,
+     "box": {
+      "x": [
+       0.5,
+       9.5
+      ],
+      "y": [
+       0.5,
+       9.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    },
+    {
+     "name": "P2",
+     "x": 4.5,
+     "y": 4,
+     "box": {
+      "x": [
+       0.5,
+       9.5
+      ],
+      "y": [
+       0.5,
+       9.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    },
+    {
+     "name": "P3",
+     "x": 6,
+     "y": 6.5,
+     "box": {
+      "x": [
+       0.5,
+       9.5
+      ],
+      "y": [
+       0.5,
+       9.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    },
+    {
+     "name": "P4",
+     "x": 7,
+     "y": 5.5,
+     "box": {
+      "x": [
+       0.5,
+       9.5
+      ],
+      "y": [
+       0.5,
+       9.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "mx",
+     "expr": "(2 + 8 + P1_x + P2_x + P3_x + P4_x)/6"
+    },
+    {
+     "name": "my",
+     "expr": "(3 + 7 + P1_y + P2_y + P3_y + P4_y)/6"
+    },
+    {
+     "name": "sxy",
+     "expr": "(2 - mx)*(3 - my) + (8 - mx)*(7 - my) + (P1_x - mx)*(P1_y - my) + (P2_x - mx)*(P2_y - my) + (P3_x - mx)*(P3_y - my) + (P4_x - mx)*(P4_y - my)"
+    },
+    {
+     "name": "sxx",
+     "expr": "(2 - mx)^2 + (8 - mx)^2 + (P1_x - mx)^2 + (P2_x - mx)^2 + (P3_x - mx)^2 + (P4_x - mx)^2"
+    },
+    {
+     "name": "syy",
+     "expr": "(3 - my)^2 + (7 - my)^2 + (P1_y - my)^2 + (P2_y - my)^2 + (P3_y - my)^2 + (P4_y - my)^2"
+    },
+    {
+     "name": "r",
+     "expr": "sxy/sqrt(sxx*syy)"
+    },
+    {
+     "name": "byx",
+     "expr": "sxy/sxx"
+    },
+    {
+     "name": "bxy",
+     "expr": "sxy/syy"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     10.8
+    ],
+    "axes": true,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": "mx",
+     "y1": 0,
+     "x2": "mx",
+     "y2": 10,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.4
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "my",
+     "x2": 10,
+     "y2": "my",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.4
+    },
+    {
+     "shape": "path",
+     "fn": "my + byx*(x - mx)",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "mx + bxy*(0 - my)",
+     "y1": 0,
+     "x2": "mx + bxy*(10 - my)",
+     "y2": 10,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "mx",
+     "y": "my",
+     "r": 0.18,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": "mx + 0.3",
+     "y": "my - 0.5",
+     "text": {
+      "en": "(x̄, ȳ)"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": "2",
+     "y1": "3",
+     "x2": "2",
+     "y2": "my + byx*(2 - mx)",
+     "color": "yellow",
+     "dashed": true,
+     "visibleIf": "res"
+    },
+    {
+     "shape": "line",
+     "x1": "8",
+     "y1": "7",
+     "x2": "8",
+     "y2": "my + byx*(8 - mx)",
+     "color": "yellow",
+     "dashed": true,
+     "visibleIf": "res"
+    },
+    {
+     "shape": "line",
+     "x1": "P1_x",
+     "y1": "P1_y",
+     "x2": "P1_x",
+     "y2": "my + byx*(P1_x - mx)",
+     "color": "yellow",
+     "dashed": true,
+     "visibleIf": "res"
+    },
+    {
+     "shape": "line",
+     "x1": "P2_x",
+     "y1": "P2_y",
+     "x2": "P2_x",
+     "y2": "my + byx*(P2_x - mx)",
+     "color": "yellow",
+     "dashed": true,
+     "visibleIf": "res"
+    },
+    {
+     "shape": "line",
+     "x1": "P3_x",
+     "y1": "P3_y",
+     "x2": "P3_x",
+     "y2": "my + byx*(P3_x - mx)",
+     "color": "yellow",
+     "dashed": true,
+     "visibleIf": "res"
+    },
+    {
+     "shape": "line",
+     "x1": "P4_x",
+     "y1": "P4_y",
+     "x2": "P4_x",
+     "y2": "my + byx*(P4_x - mx)",
+     "color": "yellow",
+     "dashed": true,
+     "visibleIf": "res"
+    },
+    {
+     "shape": "circle",
+     "x": "2",
+     "y": "3",
+     "r": 0.2,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": "8",
+     "y": "7",
+     "r": 0.2,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": "P1_x",
+     "y": "P1_y",
+     "r": 0.3,
+     "color": "orange",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "P2_x",
+     "y": "P2_y",
+     "r": 0.3,
+     "color": "orange",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "P3_x",
+     "y": "P3_y",
+     "r": 0.3,
+     "color": "orange",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "P4_x",
+     "y": "P4_y",
+     "r": 0.3,
+     "color": "orange",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 10.4,
+     "text": {
+      "en": "Y on X"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 10.4,
+     "text": {
+      "en": "X on Y"
+     },
+     "size": 24,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "b_yx (slope of Y on X)"
+     },
+     "expr": "byx",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "b_xy"
+     },
+     "expr": "bxy",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "r"
+     },
+     "expr": "r",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "b_yx × b_xy = r²"
+     },
+     "expr": "byx*bxy",
+     "digits": 3
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

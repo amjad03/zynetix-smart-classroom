@@ -346,6 +346,369 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Trend by semi-averages",
+    "kn": "ಅರ್ಧ ಸರಾಸರಿಗಳಿಂದ ಪ್ರವೃತ್ತಿ"
+   },
+   "narration": {
+    "en": "Sales over eight years; drag four of the values. The series is split into two halves; the average of each half is plotted against the middle of its half (green dots) and the trend line is drawn through them. With an odd number of years, the middle year is left out."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Sales over eight years; drag four of the values. The series is split into two halves; the average of each half is plotted against the middle of its half (green dots) and the trend line is drawn through them. With an odd number of years, the middle year is left out.",
+    "kn": "ಎಂಟು ವರ್ಷಗಳ ಮಾರಾಟ; ನಾಲ್ಕು ಬೆಲೆಗಳನ್ನು ಎಳೆಯಿರಿ. ಶ್ರೇಣಿಯನ್ನು ಎರಡು ಅರ್ಧಗಳಾಗಿ ವಿಭಜಿಸಿ, ಪ್ರತಿ ಅರ್ಧದ ಸರಾಸರಿಯನ್ನು ಅದರ ಮಧ್ಯ ವರ್ಷದ ಎದುರು ಗುರುತಿಸಿ ಅವುಗಳ ಮೂಲಕ ಪ್ರವೃತ್ತಿ ರೇಖೆ ಎಳೆಯಲಾಗುತ್ತದೆ. ಬೆಸ ಸಂಖ್ಯೆಯ ವರ್ಷಗಳಿದ್ದರೆ ಮಧ್ಯ ವರ್ಷ ಬಿಡಲಾಗುತ್ತದೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Make 2018 an extreme value. How much does the trend line tilt?"
+    },
+    {
+     "en": "Drop 2024. Which year is left out, and where are the two averages plotted now?"
+    },
+    {
+     "en": "Use the line to forecast 2025."
+    }
+   ],
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "odd",
+     "label": {
+      "en": "Use only 2017–2023 (7 years)",
+      "kn": "7 ವರ್ಷ ಮಾತ್ರ"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "H1",
+     "x": 1,
+     "y": 44,
+     "axis": "y",
+     "box": {
+      "x": [
+       1,
+       1
+      ],
+      "y": [
+       34,
+       75
+      ]
+     },
+     "snap": 1,
+     "color": "orange"
+    },
+    {
+     "name": "H2",
+     "x": 2,
+     "y": 47,
+     "axis": "y",
+     "box": {
+      "x": [
+       2,
+       2
+      ],
+      "y": [
+       34,
+       75
+      ]
+     },
+     "snap": 1,
+     "color": "orange"
+    },
+    {
+     "name": "H5",
+     "x": 5,
+     "y": 58,
+     "axis": "y",
+     "box": {
+      "x": [
+       5,
+       5
+      ],
+      "y": [
+       34,
+       75
+      ]
+     },
+     "snap": 1,
+     "color": "orange"
+    },
+    {
+     "name": "H6",
+     "x": 6,
+     "y": 62,
+     "axis": "y",
+     "box": {
+      "x": [
+       6,
+       6
+      ],
+      "y": [
+       34,
+       75
+      ]
+     },
+     "snap": 1,
+     "color": "orange"
+    }
+   ],
+   "vars": [
+    {
+     "name": "A1",
+     "expr": "if(odd, (40 + H1_y + H2_y)/3, (40 + H1_y + H2_y + 52)/4)"
+    },
+    {
+     "name": "A2",
+     "expr": "if(odd, (50 + H5_y + H6_y)/3, (50 + H5_y + H6_y + 66)/4)"
+    },
+    {
+     "name": "c1",
+     "expr": "if(odd, 1, 1.5)"
+    },
+    {
+     "name": "c2",
+     "expr": "if(odd, 5, 5.5)"
+    },
+    {
+     "name": "bs",
+     "expr": "(A2 - A1)/(c2 - c1)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.6,
+     8.6
+    ],
+    "y": [
+     30,
+     80
+    ],
+    "axes": false
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "A1 + bs*(x - c1)",
+     "from": -0.5,
+     "to": 8.5,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "c1",
+     "y": "A1",
+     "r": 0.15,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": "c2",
+     "y": "A2",
+     "r": 0.15,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": 3.5,
+     "y1": 30,
+     "x2": 3.5,
+     "y2": 78,
+     "color": "white",
+     "dashed": true,
+     "visibleIf": "!odd",
+     "opacity": 0.4
+    },
+    {
+     "shape": "rect",
+     "x": 2.6,
+     "y": 30,
+     "w": 0.8,
+     "h": 48,
+     "color": "red",
+     "visibleIf": "odd",
+     "opacity": 0.12
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": "40",
+     "r": 0.13,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 32,
+     "text": {
+      "en": "2017"
+     },
+     "size": 16
+    },
+    {
+     "shape": "circle",
+     "x": 1,
+     "y": "H1_y",
+     "r": 0.13,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 32,
+     "text": {
+      "en": "2018"
+     },
+     "size": 16
+    },
+    {
+     "shape": "circle",
+     "x": 2,
+     "y": "H2_y",
+     "r": 0.13,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 32,
+     "text": {
+      "en": "2019"
+     },
+     "size": 16
+    },
+    {
+     "shape": "circle",
+     "x": 3,
+     "y": "52",
+     "r": 0.13,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 32,
+     "text": {
+      "en": "2020"
+     },
+     "size": 16
+    },
+    {
+     "shape": "circle",
+     "x": 4,
+     "y": "50",
+     "r": 0.13,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 32,
+     "text": {
+      "en": "2021"
+     },
+     "size": 16
+    },
+    {
+     "shape": "circle",
+     "x": 5,
+     "y": "H5_y",
+     "r": 0.13,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 32,
+     "text": {
+      "en": "2022"
+     },
+     "size": 16
+    },
+    {
+     "shape": "circle",
+     "x": 6,
+     "y": "H6_y",
+     "r": 0.13,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 32,
+     "text": {
+      "en": "2023"
+     },
+     "size": 16
+    },
+    {
+     "shape": "circle",
+     "x": 7,
+     "y": "66",
+     "r": 0.13,
+     "color": "yellow",
+     "visibleIf": "!odd"
+    },
+    {
+     "shape": "text",
+     "x": 7,
+     "y": 32,
+     "text": {
+      "en": "2024"
+     },
+     "size": 16,
+     "visibleIf": "!odd"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 76,
+     "text": {
+      "en": "middle year 2020 is left out"
+     },
+     "size": 18,
+     "color": "red",
+     "visibleIf": "odd"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "First semi-average"
+     },
+     "expr": "A1",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Second semi-average"
+     },
+     "expr": "A2",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Trend change per year"
+     },
+     "expr": "bs",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Trend value for 2025"
+     },
+     "expr": "A1 + bs*(8 - c1)",
+     "digits": 1
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "kind": "function_plot",

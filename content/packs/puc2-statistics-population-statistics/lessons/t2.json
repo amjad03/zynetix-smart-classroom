@@ -480,6 +480,357 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Same health, different crude death rates",
+    "kn": "ಒಂದೇ ಆರೋಗ್ಯ, ಬೇರೆ ಕಚ್ಚಾ ಮರಣ ದರ"
+   },
+   "narration": {
+    "en": "Two towns have exactly the same specific death rates in every age group. Town B has more old people. Its crude death rate, the weighted mean of the SDRs with the population shares as weights, comes out higher: the CDR mixes up health with age structure."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Two towns have exactly the same specific death rates in every age group. Town B has more old people. Its crude death rate, the weighted mean of the SDRs with the population shares as weights, comes out higher: the CDR mixes up health with age structure.",
+    "kn": "ಎರಡು ಪಟ್ಟಣಗಳಲ್ಲಿ ಪ್ರತಿ ವಯೋಗುಂಪಿನ ನಿರ್ದಿಷ್ಟ ಮರಣ ದರಗಳು ಒಂದೇ. ಪಟ್ಟಣ B ಯಲ್ಲಿ ಹೆಚ್ಚು ವೃದ್ಧರು. ಜನಸಂಖ್ಯೆ ಪಾಲುಗಳನ್ನು ತೂಕವಾಗಿಟ್ಟ SDR ಗಳ ತೂಕಿತ ಸರಾಸರಿಯಾದ ಅದರ ಕಚ್ಚಾ ಮರಣ ದರ ಹೆಚ್ಚು ಬರುತ್ತದೆ: CDR ಆರೋಗ್ಯವನ್ನು ವಯೋರಚನೆಯೊಂದಿಗೆ ಬೆರೆಸುತ್ತದೆ."
+   },
+   "tryThis": [
+    {
+     "en": "Make town B as young as town A (10% aged 50+). Are the CDRs equal?"
+    },
+    {
+     "en": "Raise the share of old people in B to 40%. Is B really less healthy?"
+    },
+    {
+     "en": "Raise the death rate of the old. Which town’s CDR rises faster? Why?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "ob",
+     "label": {
+      "en": "Share aged 50+ in town B",
+      "kn": "B ಯಲ್ಲಿ 50+ ಪಾಲು"
+     },
+     "min": 0.1,
+     "max": 0.5,
+     "step": 0.05,
+     "value": 0.35
+    },
+    {
+     "name": "so",
+     "label": {
+      "en": "Death rate of the 50+ group",
+      "kn": "50+ ಮರಣ ದರ"
+     },
+     "min": 15,
+     "max": 60,
+     "step": 5,
+     "value": 30,
+     "unit": "per 1000"
+    }
+   ],
+   "vars": [
+    {
+     "name": "cA",
+     "expr": "0.3*6 + 0.6*3 + 0.1*so"
+    },
+    {
+     "name": "cB",
+     "expr": "((1 - ob)/3)*6 + (2*(1 - ob)/3)*3 + ob*so"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     17
+    ],
+    "y": [
+     -1.4,
+     16
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.4,
+     "y": 0,
+     "w": 0.9,
+     "h": "0.3*20",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 4.4,
+     "y": 0,
+     "w": 0.9,
+     "h": "((1 - ob)/3)*20",
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 0.85,
+     "y": -0.7,
+     "text": {
+      "en": "0–14"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 4.85,
+     "y": -0.7,
+     "text": {
+      "en": "0–14"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 0.85,
+     "y": "0.3*20 + 0.6",
+     "text": {
+      "en": "{30}%"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 4.85,
+     "y": "((1 - ob)/3)*20 + 0.6",
+     "text": {
+      "en": "{100*(1 - ob)/3:0}%"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 10.4,
+     "y": 13.0,
+     "text": {
+      "en": "SDR 0–14: {6} per 1000"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 1.5,
+     "y": 0,
+     "w": 0.9,
+     "h": "0.6*20",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 5.5,
+     "y": 0,
+     "w": 0.9,
+     "h": "(2*(1 - ob)/3)*20",
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 1.9500000000000002,
+     "y": -0.7,
+     "text": {
+      "en": "15–49"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 5.949999999999999,
+     "y": -0.7,
+     "text": {
+      "en": "15–49"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 1.9500000000000002,
+     "y": "0.6*20 + 0.6",
+     "text": {
+      "en": "{60}%"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 5.949999999999999,
+     "y": "(2*(1 - ob)/3)*20 + 0.6",
+     "text": {
+      "en": "{100*2*(1 - ob)/3:0}%"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 10.4,
+     "y": 11.8,
+     "text": {
+      "en": "SDR 15–49: {3} per 1000"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 2.6,
+     "y": 0,
+     "w": 0.9,
+     "h": "0.1*20",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 6.6000000000000005,
+     "y": 0,
+     "w": 0.9,
+     "h": "(ob)*20",
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 3.0500000000000003,
+     "y": -0.7,
+     "text": {
+      "en": "50+"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 7.05,
+     "y": -0.7,
+     "text": {
+      "en": "50+"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 3.0500000000000003,
+     "y": "0.1*20 + 0.6",
+     "text": {
+      "en": "{10}%"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 7.05,
+     "y": "(ob)*20 + 0.6",
+     "text": {
+      "en": "{100*ob:0}%"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 10.4,
+     "y": 10.6,
+     "text": {
+      "en": "SDR 50+: {so} per 1000"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 14.5,
+     "text": {
+      "en": "Town A (young)"
+     },
+     "size": 20,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 14.5,
+     "text": {
+      "en": "Town B"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 10.5,
+     "y": 0,
+     "w": 1.2,
+     "h": "cA",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 12.3,
+     "y": 0,
+     "w": 1.2,
+     "h": "cB",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 11.1,
+     "y": "cA + 0.7",
+     "text": {
+      "en": "{cA:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 12.9,
+     "y": "cB + 0.7",
+     "text": {
+      "en": "{cB:1}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": -0.7,
+     "text": {
+      "en": "CDR"
+     },
+     "size": 18
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "CDR of town A",
+      "kn": "A ಯ CDR"
+     },
+     "expr": "cA",
+     "digits": 2,
+     "unit": "per 1000"
+    },
+    {
+     "label": {
+      "en": "CDR of town B",
+      "kn": "B ಯ CDR"
+     },
+     "expr": "cB",
+     "digits": 2,
+     "unit": "per 1000"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

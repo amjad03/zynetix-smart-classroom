@@ -174,6 +174,227 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Estimate with a regression line",
+    "kn": "ಪ್ರತಿಗಮನ ರೇಖೆಯಿಂದ ಅಂದಾಜು"
+   },
+   "narration": {
+    "en": "Means x̄ = 40, ȳ = 40. Set r and the two standard deviations; drag the orange handle to an x value to estimate y from the line of Y on X. The coefficients b_yx = rσy/σx and b_xy = rσx/σy always share the sign of r, and their product is r²."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Means x̄ = 40, ȳ = 40. Set r and the two standard deviations; drag the orange handle to an x value to estimate y from the line of Y on X. The coefficients b_yx = rσy/σx and b_xy = rσx/σy always share the sign of r, and their product is r².",
+    "kn": "ಸರಾಸರಿಗಳು x̄ = 40, ȳ = 40. r ಮತ್ತು ಎರಡು ಪ್ರಮಾಣ ವಿಚಲನೆಗಳನ್ನು ನಿಗದಿಪಡಿಸಿ; X ಮೇಲೆ Y ರೇಖೆಯಿಂದ y ಅಂದಾಜಿಸಲು ಕಿತ್ತಳೆ ಹಿಡಿಯನ್ನು x ಬೆಲೆಗೆ ಎಳೆಯಿರಿ. b_yx ಮತ್ತು b_xy ಯಾವಾಗಲೂ r ನ ಚಿಹ್ನೆಯನ್ನೇ ಹೊಂದಿವೆ; ಗುಣಲಬ್ಧ r²."
+   },
+   "tryThis": [
+    {
+     "en": "Set r = 0. Which way does each line point?"
+    },
+    {
+     "en": "Set r = 1 or −1. What happens to the two lines?"
+    },
+    {
+     "en": "Make σy larger than σx with r = 0.9. Can b_yx be more than 1? Can b_xy then also be more than 1?"
+    }
+   ],
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Correlation r",
+      "kn": "ಸಹಸಂಬಂಧ r"
+     },
+     "min": -1,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.6
+    },
+    {
+     "name": "sx",
+     "label": {
+      "en": "σx"
+     },
+     "min": 4,
+     "max": 16,
+     "step": 1,
+     "value": 8
+    },
+    {
+     "name": "sy",
+     "label": {
+      "en": "σy"
+     },
+     "min": 4,
+     "max": 16,
+     "step": 1,
+     "value": 10
+    }
+   ],
+   "handles": [
+    {
+     "name": "X",
+     "label": "x",
+     "x": 55,
+     "y": 2,
+     "axis": "x",
+     "box": {
+      "x": [
+       5,
+       75
+      ],
+      "y": [
+       2,
+       2
+      ]
+     },
+     "snap": 1,
+     "color": "orange"
+    }
+   ],
+   "vars": [
+    {
+     "name": "xbar",
+     "expr": "40"
+    },
+    {
+     "name": "ybar",
+     "expr": "40"
+    },
+    {
+     "name": "yhat",
+     "expr": "ybar + r*sy/sx*(X_x - xbar)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     80
+    ],
+    "y": [
+     0,
+     80
+    ],
+    "axes": true,
+    "xLabel": "x",
+    "yLabel": "y",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "ybar + r*sy/sx*(x - xbar)",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "xbar + r*sx/sy*(0 - ybar)",
+     "y1": 0,
+     "x2": "xbar + r*sx/sy*(80 - ybar)",
+     "y2": 80,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "xbar",
+     "y": "ybar",
+     "r": 0.8,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": "X_x",
+     "y1": 0,
+     "x2": "X_x",
+     "y2": "yhat",
+     "color": "orange",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "yhat",
+     "x2": "X_x",
+     "y2": "yhat",
+     "color": "orange",
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "x": "X_x",
+     "y": "yhat",
+     "r": 0.9,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": "X_x",
+     "y": "yhat + 4",
+     "text": {
+      "en": "ŷ = {yhat:1}"
+     },
+     "size": 24,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 76,
+     "text": {
+      "en": "Y on X"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 70,
+     "text": {
+      "en": "X on Y"
+     },
+     "size": 24,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "b_yx = rσy/σx"
+     },
+     "expr": "r*sy/sx",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "b_xy = rσx/σy"
+     },
+     "expr": "r*sx/sy",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "b_yx × b_xy"
+     },
+     "expr": "r^2",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Estimate ŷ at the chosen x",
+      "kn": "ಅಂದಾಜು ŷ"
+     },
+     "expr": "yhat",
+     "digits": 2
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {
