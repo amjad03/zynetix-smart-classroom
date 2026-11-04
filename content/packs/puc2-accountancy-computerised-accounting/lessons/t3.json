@@ -1,0 +1,1266 @@
+{
+ "id": "puc2-accountancy-11-computerised-accounting.t3.lesson",
+ "chapterId": "puc2-accountancy-11-computerised-accounting",
+ "topicId": "puc2-accountancy-11-computerised-accounting.t3",
+ "title": {
+  "en": "DBMS for accounting"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Accounting data in tables"
+   },
+   "hook": {
+    "en": "An accounting package stores thousands of vouchers, accounts and parties. Ask it \"which customers owe more than ₹10,000?\" and the answer comes in a second. Behind it is a database."
+   },
+   "objectives": [
+    {
+     "en": "Explain a database and a DBMS"
+    },
+    {
+     "en": "Explain tables, records, fields and keys"
+    },
+    {
+     "en": "Use queries, forms and reports for accounting information"
+    }
+   ],
+   "narration": {
+    "en": "An accounting package stores thousands of vouchers, accounts and parties. Ask it \"which customers owe more than ₹10,000?\" and the answer comes in a second. Behind it is a database."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Database, tables and keys"
+   },
+   "body": {
+    "en": "A database is an organised collection of related data; a database management system (DBMS) is software that creates, stores, updates and retrieves that data while keeping it consistent and secure. Data is kept in tables. Each row is a record (one voucher or one account) and each column is a field (date, voucher number, account code, amount). A primary key is a field whose value is unique for every record, such as a voucher number or account code. A foreign key links one table to another, for example the account code in a Vouchers table refers to the Accounts table."
+   },
+   "points": [
+    {
+     "en": "Table = rows (records) × columns (fields)"
+    },
+    {
+     "en": "Primary key: unique for each record"
+    },
+    {
+     "en": "Foreign key: links related tables"
+    },
+    {
+     "en": "Each field has a data type: text, number, date"
+    }
+   ],
+   "narration": {
+    "en": "A database is an organised collection of related data; a database management system (DBMS) is software that creates, stores, updates and retrieves that data while keeping it consistent and secure. Data is kept in tables. Each row is a record (one voucher or one account) and each column is a field (date, voucher number, account code, amount). A primary key is a field whose value is unique for every record, such as a voucher number or account code. A foreign key links one table to another, for example the account code in a Vouchers table refers to the Accounts table."
+   }
+  },
+  {
+   "id": "scene-dbms-query",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Querying a sales table"
+   },
+   "caption": {
+    "en": "Each row is a record in a Sales table with the fields Bill no., Party and Amount. A query picks the records that meet a condition. Move the amount limit and choose a party: the matching records light up, as in SELECT * FROM Sales WHERE Amount > limit."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Amount greater than (₹)"
+     },
+     "min": 0,
+     "max": 40000,
+     "step": 1000,
+     "value": 10000
+    }
+   ],
+   "choices": [
+    {
+     "name": "pt",
+     "label": {
+      "en": "Party"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Any"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "Asha"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Bimal"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Chand"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Dev"
+       },
+       "value": 4
+      }
+     ],
+     "value": 0
+    }
+   ],
+   "vars": [
+    {
+     "name": "cnt",
+     "expr": "((12000 > k) && (pt == 0 || pt == 1)) + ((4500 > k) && (pt == 0 || pt == 2)) + ((30500 > k) && (pt == 0 || pt == 3)) + ((8000 > k) && (pt == 0 || pt == 1)) + ((15500 > k) && (pt == 0 || pt == 4)) + ((2500 > k) && (pt == 0 || pt == 2)) + ((22000 > k) && (pt == 0 || pt == 3)) + ((6000 > k) && (pt == 0 || pt == 4)) + ((41000 > k) && (pt == 0 || pt == 1)) + ((9500 > k) && (pt == 0 || pt == 2)) + ((18000 > k) && (pt == 0 || pt == 4)) + ((3500 > k) && (pt == 0 || pt == 3))"
+    },
+    {
+     "name": "tot",
+     "expr": "12000*((12000 > k) && (pt == 0 || pt == 1)) + 4500*((4500 > k) && (pt == 0 || pt == 2)) + 30500*((30500 > k) && (pt == 0 || pt == 3)) + 8000*((8000 > k) && (pt == 0 || pt == 1)) + 15500*((15500 > k) && (pt == 0 || pt == 4)) + 2500*((2500 > k) && (pt == 0 || pt == 2)) + 22000*((22000 > k) && (pt == 0 || pt == 3)) + 6000*((6000 > k) && (pt == 0 || pt == 4)) + 41000*((41000 > k) && (pt == 0 || pt == 1)) + 9500*((9500 > k) && (pt == 0 || pt == 2)) + 18000*((18000 > k) && (pt == 0 || pt == 4)) + 3500*((3500 > k) && (pt == 0 || pt == 3))"
+    },
+    {
+     "name": "gt",
+     "expr": "(12000 > k) + (4500 > k) + (30500 > k) + (8000 > k) + (15500 > k) + (2500 > k) + (22000 > k) + (6000 > k) + (41000 > k) + (9500 > k) + (18000 > k) + (3500 > k)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     64
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 60,
+     "size": 18,
+     "color": "yellow",
+     "text": {
+      "en": "Bill no."
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 60,
+     "size": 18,
+     "color": "yellow",
+     "text": {
+      "en": "Party"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 60,
+     "size": 18,
+     "color": "yellow",
+     "text": {
+      "en": "Amount (₹)"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 53.0,
+     "w": 90,
+     "h": 3.8,
+     "color": "green",
+     "opacity": "if((12000 > k) && (pt == 0 || pt == 1), 0.6, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 54.9,
+     "size": 16,
+     "text": {
+      "en": "101"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 54.9,
+     "size": 16,
+     "text": {
+      "en": "Asha"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 54.9,
+     "size": 16,
+     "text": {
+      "en": "12,000"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 48.6,
+     "w": 90,
+     "h": 3.8,
+     "color": "green",
+     "opacity": "if((4500 > k) && (pt == 0 || pt == 2), 0.6, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 50.5,
+     "size": 16,
+     "text": {
+      "en": "102"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 50.5,
+     "size": 16,
+     "text": {
+      "en": "Bimal"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 50.5,
+     "size": 16,
+     "text": {
+      "en": "4,500"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 44.2,
+     "w": 90,
+     "h": 3.8,
+     "color": "green",
+     "opacity": "if((30500 > k) && (pt == 0 || pt == 3), 0.6, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 46.099999999999994,
+     "size": 16,
+     "text": {
+      "en": "103"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 46.099999999999994,
+     "size": 16,
+     "text": {
+      "en": "Chand"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 46.099999999999994,
+     "size": 16,
+     "text": {
+      "en": "30,500"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 39.8,
+     "w": 90,
+     "h": 3.8,
+     "color": "green",
+     "opacity": "if((8000 > k) && (pt == 0 || pt == 1), 0.6, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 41.699999999999996,
+     "size": 16,
+     "text": {
+      "en": "104"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 41.699999999999996,
+     "size": 16,
+     "text": {
+      "en": "Asha"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 41.699999999999996,
+     "size": 16,
+     "text": {
+      "en": "8,000"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 35.4,
+     "w": 90,
+     "h": 3.8,
+     "color": "green",
+     "opacity": "if((15500 > k) && (pt == 0 || pt == 4), 0.6, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 37.3,
+     "size": 16,
+     "text": {
+      "en": "105"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 37.3,
+     "size": 16,
+     "text": {
+      "en": "Dev"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 37.3,
+     "size": 16,
+     "text": {
+      "en": "15,500"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 31.0,
+     "w": 90,
+     "h": 3.8,
+     "color": "green",
+     "opacity": "if((2500 > k) && (pt == 0 || pt == 2), 0.6, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 32.9,
+     "size": 16,
+     "text": {
+      "en": "106"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 32.9,
+     "size": 16,
+     "text": {
+      "en": "Bimal"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 32.9,
+     "size": 16,
+     "text": {
+      "en": "2,500"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 26.599999999999998,
+     "w": 90,
+     "h": 3.8,
+     "color": "green",
+     "opacity": "if((22000 > k) && (pt == 0 || pt == 3), 0.6, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 28.499999999999996,
+     "size": 16,
+     "text": {
+      "en": "107"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 28.499999999999996,
+     "size": 16,
+     "text": {
+      "en": "Chand"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 28.499999999999996,
+     "size": 16,
+     "text": {
+      "en": "22,000"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 22.199999999999996,
+     "w": 90,
+     "h": 3.8,
+     "color": "green",
+     "opacity": "if((6000 > k) && (pt == 0 || pt == 4), 0.6, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 24.099999999999994,
+     "size": 16,
+     "text": {
+      "en": "108"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 24.099999999999994,
+     "size": 16,
+     "text": {
+      "en": "Dev"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 24.099999999999994,
+     "size": 16,
+     "text": {
+      "en": "6,000"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 17.799999999999997,
+     "w": 90,
+     "h": 3.8,
+     "color": "green",
+     "opacity": "if((41000 > k) && (pt == 0 || pt == 1), 0.6, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 19.699999999999996,
+     "size": 16,
+     "text": {
+      "en": "109"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 19.699999999999996,
+     "size": 16,
+     "text": {
+      "en": "Asha"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 19.699999999999996,
+     "size": 16,
+     "text": {
+      "en": "41,000"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 13.399999999999999,
+     "w": 90,
+     "h": 3.8,
+     "color": "green",
+     "opacity": "if((9500 > k) && (pt == 0 || pt == 2), 0.6, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 15.299999999999997,
+     "size": 16,
+     "text": {
+      "en": "110"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 15.299999999999997,
+     "size": 16,
+     "text": {
+      "en": "Bimal"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 15.299999999999997,
+     "size": 16,
+     "text": {
+      "en": "9,500"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 9.0,
+     "w": 90,
+     "h": 3.8,
+     "color": "green",
+     "opacity": "if((18000 > k) && (pt == 0 || pt == 4), 0.6, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 10.899999999999999,
+     "size": 16,
+     "text": {
+      "en": "111"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 10.899999999999999,
+     "size": 16,
+     "text": {
+      "en": "Dev"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 10.899999999999999,
+     "size": 16,
+     "text": {
+      "en": "18,000"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 4.599999999999994,
+     "w": 90,
+     "h": 3.8,
+     "color": "green",
+     "opacity": "if((3500 > k) && (pt == 0 || pt == 3), 0.6, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 6.499999999999993,
+     "size": 16,
+     "text": {
+      "en": "112"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 6.499999999999993,
+     "size": 16,
+     "text": {
+      "en": "Chand"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 6.499999999999993,
+     "size": 16,
+     "text": {
+      "en": "3,500"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Records returned"
+     },
+     "expr": "cnt",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Total of the selected amounts"
+     },
+     "expr": "tot",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Records above the limit (any party)"
+     },
+     "expr": "gt",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set the limit to ₹10,000 with any party. How many bills are returned?"
+    },
+    {
+     "en": "Choose Asha only. What is the total of her bills above the limit?"
+    },
+    {
+     "en": "Which field would you make the primary key, and why not Party?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Each row is a record in a Sales table with the fields Bill no., Party and Amount. A query picks the records that meet a condition. Move the amount limit and choose a party: the matching records light up, as in SELECT * FROM Sales WHERE Amount > limit."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: Two linked tables"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "An Accounts table and a Vouchers table, linked by the account code."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Accounts and vouchers"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        9
+       ],
+       "to": [
+        70,
+        33
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        15
+       ],
+       "to": [
+        70,
+        15
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        21
+       ],
+       "to": [
+        70,
+        21
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        27
+       ],
+       "to": [
+        70,
+        27
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        30,
+        9
+       ],
+       "to": [
+        30,
+        33
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        10.3
+       ],
+       "text": {
+        "en": "Code (PK)"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        10.3
+       ],
+       "text": {
+        "en": "Account name"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        16.3
+       ],
+       "text": {
+        "en": "101"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        16.3
+       ],
+       "text": {
+        "en": "Cash"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        22.3
+       ],
+       "text": {
+        "en": "201"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        22.3
+       ],
+       "text": {
+        "en": "Sales"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        28.3
+       ],
+       "text": {
+        "en": "301"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        31,
+        28.3
+       ],
+       "text": {
+        "en": "Asha (debtor)"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        4,
+        35
+       ],
+       "to": [
+        96,
+        53
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        41
+       ],
+       "to": [
+        96,
+        41
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        4,
+        47
+       ],
+       "to": [
+        96,
+        47
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        26,
+        35
+       ],
+       "to": [
+        26,
+        53
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        48,
+        35
+       ],
+       "to": [
+        48,
+        53
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        70,
+        35
+       ],
+       "to": [
+        70,
+        53
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        36.3
+       ],
+       "text": {
+        "en": "V. no (PK)"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        36.3
+       ],
+       "text": {
+        "en": "Date"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        49,
+        36.3
+       ],
+       "text": {
+        "en": "Dr code (FK)"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        71,
+        36.3
+       ],
+       "text": {
+        "en": "Amount"
+       },
+       "size": 2.6,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        42.3
+       ],
+       "text": {
+        "en": "V1"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        42.3
+       ],
+       "text": {
+        "en": "02-04"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        49,
+        42.3
+       ],
+       "text": {
+        "en": "301"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        71,
+        42.3
+       ],
+       "text": {
+        "en": "12,000"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        48.3
+       ],
+       "text": {
+        "en": "V2"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        27,
+        48.3
+       ],
+       "text": {
+        "en": "05-04"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        49,
+        48.3
+       ],
+       "text": {
+        "en": "101"
+       },
+       "size": 2.6,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        71,
+        48.3
+       ],
+       "text": {
+        "en": "4,500"
+       },
+       "size": 2.6,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A query on the linked tables can list every voucher of a debtor with the account name."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        4,
+        9
+       ],
+       "text": {
+        "en": "SELECT * FROM Vouchers WHERE DrCode = 301"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ],
+     "clear": true
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Queries, forms and reports"
+   },
+   "body": {
+    "en": "A query asks the database for records that meet conditions, for example all sales above ₹10,000 to one party, written in SQL as SELECT * FROM Sales WHERE Amount > 10000. Forms are screens for entering data correctly, such as a voucher entry form with checks. Reports present the results in a printed or summary form, such as a ledger, a trial balance or a debtors list. A DBMS reduces duplication of data, keeps data consistent, allows many users at once and controls who can see or change what."
+   },
+   "points": [
+    {
+     "en": "Query: retrieve records by conditions"
+    },
+    {
+     "en": "Form: controlled data entry"
+    },
+    {
+     "en": "Report: formatted output (ledger, trial balance)"
+    },
+    {
+     "en": "Benefits: less duplication, consistency, security, sharing"
+    }
+   ],
+   "narration": {
+    "en": "A query asks the database for records that meet conditions, for example all sales above ₹10,000 to one party, written in SQL as SELECT * FROM Sales WHERE Amount > 10000. Forms are screens for entering data correctly, such as a voucher entry form with checks. Reports present the results in a printed or summary form, such as a ledger, a trial balance or a debtors list. A DBMS reduces duplication of data, keeps data consistent, allows many users at once and controls who can see or change what."
+   }
+  },
+  {
+   "id": "activity-match-dbms-terms",
+   "type": "activity",
+   "kind": "match",
+   "prompt": {
+    "en": "Match each database term with its meaning in an accounting database."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "Table"
+     },
+     "right": {
+      "en": "All vouchers of the year stored in rows and columns"
+     }
+    },
+    {
+     "left": {
+      "en": "Record"
+     },
+     "right": {
+      "en": "One voucher with all its details"
+     }
+    },
+    {
+     "left": {
+      "en": "Field"
+     },
+     "right": {
+      "en": "The Amount column"
+     }
+    },
+    {
+     "left": {
+      "en": "Primary key"
+     },
+     "right": {
+      "en": "Voucher number, unique for every voucher"
+     }
+    },
+    {
+     "left": {
+      "en": "Query"
+     },
+     "right": {
+      "en": "Find all sales above ₹10,000 in April"
+     }
+    },
+    {
+     "left": {
+      "en": "Report"
+     },
+     "right": {
+      "en": "A printed trial balance from the data"
+     }
+    }
+   ],
+   "explanation": {
+    "en": "Tables hold records made of fields; keys identify and link records; queries retrieve them; reports present them."
+   },
+   "narration": {
+    "en": "Match each database term with its meaning in an accounting database."
+   },
+   "questionId": "act.isc-match-dbms-terms"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A Sales table has bills of ₹12,000, 4,500, 30,500, 8,000, 15,500, 2,500, 22,000, 6,000, 41,000, 9,500, 18,000 and 3,500. How many records does the query \"Amount > 10,000\" return, and what is their total?"
+   },
+   "steps": [
+    {
+     "en": "Bills above ₹10,000: 12,000, 30,500, 15,500, 22,000, 41,000 and 18,000."
+    },
+    {
+     "en": "That is 6 records."
+    },
+    {
+     "en": "Total = 12,000 + 30,500 + 15,500 + 22,000 + 41,000 + 18,000 = ₹1,39,000."
+    }
+   ],
+   "answer": {
+    "en": "6 records totalling ₹1,39,000."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. A Sales table has bills of ₹12,000, 4,500, 30,500, 8,000, 15,500, 2,500, 22,000, 6,000, 41,000, 9,500, 18,000 and 3,500. How many records does the query \"Amount > 10,000\" return, and what is their total?"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "Row, column, key"
+   },
+   "body": {
+    "en": "A row is a record, a column is a field, and the key is the field that never repeats."
+   },
+   "narration": {
+    "en": "Row, column, key. A row is a record, a column is a field, and the key is the field that never repeats."
+   },
+   "mnemonic": {
+    "en": "R-F-K: Record across, Field down, Key unique"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-2a11-q09",
+    "isc-2a11-q10",
+    "isc-2a11-q11"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-2a11-q12"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A DBMS creates, stores, updates and retrieves related data."
+    },
+    {
+     "en": "Tables hold records (rows) and fields (columns)."
+    },
+    {
+     "en": "A primary key identifies each record; a foreign key links tables."
+    },
+    {
+     "en": "Queries retrieve, forms enter, reports present data."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Design a Debtors table: list its fields, data types and primary key."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-2a11-q12"
+   ],
+   "narration": {
+    "en": "Recap. A DBMS creates, stores, updates and retrieves related data. Tables hold records (rows) and fields (columns). A primary key identifies each record; a foreign key links tables. Queries retrieve, forms enter, reports present data."
+   }
+  }
+ ]
+}

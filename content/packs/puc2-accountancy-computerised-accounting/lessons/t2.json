@@ -1,0 +1,763 @@
+{
+ "id": "puc2-accountancy-11-computerised-accounting.t2.lesson",
+ "chapterId": "puc2-accountancy-11-computerised-accounting",
+ "topicId": "puc2-accountancy-11-computerised-accounting.t2",
+ "title": {
+  "en": "Spreadsheets in accounting"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Cells that calculate"
+   },
+   "hook": {
+    "en": "An accountant builds a depreciation schedule once. Next year the cost of the machine changes, and every figure in the schedule updates by itself. That is the power of a spreadsheet."
+   },
+   "objectives": [
+    {
+     "en": "Explain cells, formulas and cell references"
+    },
+    {
+     "en": "Use common functions (SUM, AVERAGE, IF, ROUND, MIN, MAX)"
+    },
+    {
+     "en": "Prepare accounting schedules such as depreciation and payroll in a spreadsheet"
+    }
+   ],
+   "narration": {
+    "en": "An accountant builds a depreciation schedule once. Next year the cost of the machine changes, and every figure in the schedule updates by itself. That is the power of a spreadsheet."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Cells, formulas and references"
+   },
+   "body": {
+    "en": "A spreadsheet is a grid of rows (numbered) and columns (lettered); each cell has an address such as B5. A cell may hold text, a number or a formula, which starts with an equals sign, for example =B5*$B$2. A relative reference (B5) changes when the formula is copied to another row; an absolute reference ($B$2) stays fixed, which is used for a rate or a constant. A mixed reference fixes only the row or the column. Copying one formula down a column builds a whole schedule."
+   },
+   "points": [
+    {
+     "en": "Cell address: column letter + row number"
+    },
+    {
+     "en": "Formula begins with ="
+    },
+    {
+     "en": "Relative B5 changes on copying; absolute $B$2 does not"
+    },
+    {
+     "en": "Copy a formula down to fill a schedule"
+    }
+   ],
+   "narration": {
+    "en": "A spreadsheet is a grid of rows (numbered) and columns (lettered); each cell has an address such as B5. A cell may hold text, a number or a formula, which starts with an equals sign, for example =B5*$B$2. A relative reference (B5) changes when the formula is copied to another row; an absolute reference ($B$2) stays fixed, which is used for a rate or a constant. A mixed reference fixes only the row or the column. Copying one formula down a column builds a whole schedule."
+   }
+  },
+  {
+   "id": "scene-spreadsheet-depreciation",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A depreciation schedule in a spreadsheet"
+   },
+   "caption": {
+    "en": "Each cell below is worked out by a formula, as in a spreadsheet: change the cost or the rate and every row updates at once. Switch between the straight line and written down value methods."
+   },
+   "sliders": [
+    {
+     "name": "C",
+     "label": {
+      "en": "Cost of the machine (B1, ₹)"
+     },
+     "min": 50000,
+     "max": 500000,
+     "step": 10000,
+     "value": 200000
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Rate of depreciation (B2)"
+     },
+     "min": 5,
+     "max": 40,
+     "step": 1,
+     "value": 20,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Method"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Straight line (SLM)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Written down value (WDV)"
+       },
+       "value": 2
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "vars": [
+    {
+     "name": "o1",
+     "expr": "C"
+    },
+    {
+     "name": "d1",
+     "expr": "if(m==1, min(C*r/100, o1), o1*r/100)"
+    },
+    {
+     "name": "o2",
+     "expr": "o1 - d1"
+    },
+    {
+     "name": "d2",
+     "expr": "if(m==1, min(C*r/100, o2), o2*r/100)"
+    },
+    {
+     "name": "o3",
+     "expr": "o2 - d2"
+    },
+    {
+     "name": "d3",
+     "expr": "if(m==1, min(C*r/100, o3), o3*r/100)"
+    },
+    {
+     "name": "o4",
+     "expr": "o3 - d3"
+    },
+    {
+     "name": "d4",
+     "expr": "if(m==1, min(C*r/100, o4), o4*r/100)"
+    },
+    {
+     "name": "c4",
+     "expr": "o4 - d4"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 4,
+     "y": 4,
+     "w": 92,
+     "h": 45,
+     "fill": false,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 4,
+     "y": 40,
+     "w": 92,
+     "h": 9,
+     "color": "blue",
+     "opacity": 0.4
+    },
+    {
+     "shape": "line",
+     "x1": 20,
+     "y1": 4,
+     "x2": 20,
+     "y2": 49,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 45,
+     "y1": 4,
+     "x2": 45,
+     "y2": 49,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 70,
+     "y1": 4,
+     "x2": 70,
+     "y2": 49,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 44.5,
+     "size": 18,
+     "text": {
+      "en": "Year"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 44.5,
+     "size": 18,
+     "text": {
+      "en": "Opening"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 57.5,
+     "y": 44.5,
+     "size": 18,
+     "text": {
+      "en": "Depreciation"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 83,
+     "y": 44.5,
+     "size": 18,
+     "text": {
+      "en": "Closing"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 35,
+     "size": 18,
+     "text": {
+      "en": "1"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 35,
+     "size": 18,
+     "text": {
+      "en": "{o1:0}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 57.5,
+     "y": 35,
+     "size": 18,
+     "color": "orange",
+     "text": {
+      "en": "{d1:0}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 83,
+     "y": 35,
+     "size": 18,
+     "text": {
+      "en": "{o2:0}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 26,
+     "size": 18,
+     "text": {
+      "en": "2"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 26,
+     "size": 18,
+     "text": {
+      "en": "{o2:0}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 57.5,
+     "y": 26,
+     "size": 18,
+     "color": "orange",
+     "text": {
+      "en": "{d2:0}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 83,
+     "y": 26,
+     "size": 18,
+     "text": {
+      "en": "{o3:0}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 17,
+     "size": 18,
+     "text": {
+      "en": "3"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 17,
+     "size": 18,
+     "text": {
+      "en": "{o3:0}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 57.5,
+     "y": 17,
+     "size": 18,
+     "color": "orange",
+     "text": {
+      "en": "{d3:0}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 83,
+     "y": 17,
+     "size": 18,
+     "text": {
+      "en": "{o4:0}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 8,
+     "size": 18,
+     "text": {
+      "en": "4"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 32.5,
+     "y": 8,
+     "size": 18,
+     "text": {
+      "en": "{o4:0}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 57.5,
+     "y": 8,
+     "size": 18,
+     "color": "orange",
+     "text": {
+      "en": "{d4:0}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 83,
+     "y": 8,
+     "size": 18,
+     "text": {
+      "en": "{c4:0}"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 55,
+     "size": 20,
+     "visibleIf": "m==1",
+     "text": {
+      "en": "Depreciation cell: =MIN($B$1*$B$2, B5)  (same every year)"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 55,
+     "size": 20,
+     "visibleIf": "m==2",
+     "text": {
+      "en": "Depreciation cell: =B5*$B$2  (opening × rate)"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Total depreciation in 4 years"
+     },
+     "expr": "d1 + d2 + d3 + d4",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Book value after 4 years"
+     },
+     "expr": "c4",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Cost ₹2,00,000 at 20% WDV: check that year 2 depreciation is ₹32,000."
+    },
+    {
+     "en": "Switch to SLM. Why is the depreciation cell the same every year?"
+    },
+    {
+     "en": "Why does the WDV formula use an absolute reference ($B$2) for the rate?"
+    }
+   ],
+   "seconds": 110,
+   "narration": {
+    "en": "Each cell below is worked out by a formula, as in a spreadsheet: change the cost or the rate and every row updates at once. Switch between the straight line and written down value methods."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "On the board: A payroll row"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A payroll sheet. Basic pay is in B5; DA is 40 percent, HRA is 10 percent, PF is 12 percent of basic."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        2,
+        1
+       ],
+       "text": {
+        "en": "Payroll formulas"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        9
+       ],
+       "text": {
+        "en": "C5 (DA):   =B5*40%"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        14.5
+       ],
+       "text": {
+        "en": "D5 (HRA):  =B5*10%"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        20.0
+       ],
+       "text": {
+        "en": "E5 (Gross): =SUM(B5:D5)"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        25.5
+       ],
+       "text": {
+        "en": "F5 (PF):   =ROUND(B5*12%, 0)"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        4,
+        31.0
+       ],
+       "text": {
+        "en": "G5 (Net):  =E5-F5"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "For a basic pay of 30,000 rupees the row works out like this."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        4,
+        36.5
+       ],
+       "tex": "30{,}000 + 12{,}000 + 3{,}000 = 45{,}000",
+       "size": 3.5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        4,
+        43.5
+       ],
+       "tex": "\\text{Net} = 45{,}000 - 3{,}600 = 41{,}400",
+       "size": 3.5,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Functions and accounting uses"
+   },
+   "body": {
+    "en": "Functions are ready-made formulas: SUM adds a range, AVERAGE finds the mean, MIN and MAX find the smallest and largest values, ROUND rounds to given places, and IF chooses between two results by a condition, for example =IF(C5>40000, C5*10%, 0) for a bonus. Spreadsheets are used for depreciation schedules, payroll (basic pay, allowances, deductions and net pay), loan repayment tables, ratio analysis, and preparing a trial balance or comparative statements from ledger balances. Charts show the results graphically."
+   },
+   "points": [
+    {
+     "en": "SUM, AVERAGE, MIN, MAX, ROUND, IF"
+    },
+    {
+     "en": "Depreciation schedules: SLM and WDV"
+    },
+    {
+     "en": "Payroll: gross pay − deductions = net pay"
+    },
+    {
+     "en": "Ratio analysis and charts"
+    }
+   ],
+   "narration": {
+    "en": "Functions are ready-made formulas: SUM adds a range, AVERAGE finds the mean, MIN and MAX find the smallest and largest values, ROUND rounds to given places, and IF chooses between two results by a condition, for example =IF(C5>40000, C5*10%, 0) for a bonus. Spreadsheets are used for depreciation schedules, payroll (basic pay, allowances, deductions and net pay), loan repayment tables, ratio analysis, and preparing a trial balance or comparative statements from ledger balances. Charts show the results graphically."
+   },
+   "formula": "\\text{WDV depreciation} = \\text{Opening value} \\times \\text{Rate}"
+  },
+  {
+   "id": "activity-match-spreadsheet-functions",
+   "type": "activity",
+   "kind": "match",
+   "prompt": {
+    "en": "Match each spreadsheet formula with what it does."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "=SUM(B2:B10)"
+     },
+     "right": {
+      "en": "Adds the values in B2 to B10"
+     }
+    },
+    {
+     "left": {
+      "en": "=AVERAGE(C2:C13)"
+     },
+     "right": {
+      "en": "Finds the mean of twelve monthly figures"
+     }
+    },
+    {
+     "left": {
+      "en": "=IF(D5>40000, D5*10%, 0)"
+     },
+     "right": {
+      "en": "Gives a 10% bonus only above ₹40,000"
+     }
+    },
+    {
+     "left": {
+      "en": "=ROUND(E5, 0)"
+     },
+     "right": {
+      "en": "Rounds E5 to the nearest rupee"
+     }
+    },
+    {
+     "left": {
+      "en": "=MAX(F2:F20)"
+     },
+     "right": {
+      "en": "Finds the largest value in the range"
+     }
+    },
+    {
+     "left": {
+      "en": "=B5*$B$2"
+     },
+     "right": {
+      "en": "Multiplies by a fixed rate that does not move when copied"
+     }
+    }
+   ],
+   "explanation": {
+    "en": "Functions save writing long formulas; the $ sign keeps a reference fixed when a formula is copied."
+   },
+   "narration": {
+    "en": "Match each spreadsheet formula with what it does."
+   },
+   "questionId": "act.isc-match-spreadsheet-functions"
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A machine costs ₹2,00,000 (cell B1) and is depreciated at 20% (cell B2) by the written down value method. Write the depreciation formula for year 1 (opening value in B5) and find depreciation for years 1 to 3."
+   },
+   "steps": [
+    {
+     "en": "Formula in C5: =B5*$B$2; closing value D5: =B5-C5; next opening B6: =D5."
+    },
+    {
+     "en": "Year 1: 2,00,000 × 20% = ₹40,000; closing ₹1,60,000."
+    },
+    {
+     "en": "Year 2: 1,60,000 × 20% = ₹32,000; closing ₹1,28,000."
+    },
+    {
+     "en": "Year 3: 1,28,000 × 20% = ₹25,600; closing ₹1,02,400."
+    }
+   ],
+   "answer": {
+    "en": "Depreciation ₹40,000, ₹32,000 and ₹25,600; the formula =B5*$B$2 is copied down."
+   },
+   "narration": {
+    "en": "Let us work this out step by step. A machine costs ₹2,00,000 (cell B1) and is depreciated at 20% (cell B2) by the written down value method. Write the depreciation formula for year 1 (opening value in B5) and find depreciation for years 1 to 3."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "optional": true,
+   "seconds": 60,
+   "heading": {
+    "en": "Dollar means do not move"
+   },
+   "body": {
+    "en": "Put $ before the column and row of any cell that holds a rate or constant, so the reference stays fixed when you copy the formula down."
+   },
+   "narration": {
+    "en": "Dollar means do not move. Put $ before the column and row of any cell that holds a rate or constant, so the reference stays fixed when you copy the formula down."
+   },
+   "mnemonic": {
+    "en": "$ = stay"
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "isc-2a11-q05",
+    "isc-2a11-q06",
+    "isc-2a11-q07"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 60,
+   "narration": {
+    "en": "Class quiz. Think, then answer together."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC exam pattern"
+   },
+   "questionIds": [
+    "isc-2a11-q08"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "Now questions in the pattern of the ISC examination."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A spreadsheet is a grid of cells; formulas start with =."
+    },
+    {
+     "en": "Relative references change on copying; absolute references ($B$2) do not."
+    },
+    {
+     "en": "Functions: SUM, AVERAGE, MIN, MAX, ROUND, IF."
+    },
+    {
+     "en": "Uses: depreciation, payroll, loan schedules, ratios and charts."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Design a spreadsheet for the payroll of five employees with DA 40%, HRA 10% and PF 12% of basic pay."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "isc-2a11-q08"
+   ],
+   "narration": {
+    "en": "Recap. A spreadsheet is a grid of cells; formulas start with =. Relative references change on copying; absolute references ($B$2) do not. Functions: SUM, AVERAGE, MIN, MAX, ROUND, IF. Uses: depreciation, payroll, loan schedules, ratios and charts."
+   }
+  }
+ ]
+}
