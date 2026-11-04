@@ -27,7 +27,13 @@ Future<PackStore> seededStore() async {
   final root = Directory.systemTemp;
   for (final d in root.listSync().whereType<Directory>()) {
     final m = RegExp(r'zx-board-test-(\d+)$').firstMatch(d.path);
-    if (m != null && int.parse(m[1]!) != pid && !Directory('/proc/${m[1]}').existsSync()) d.deleteSync(recursive: true);
+    if (m != null && int.parse(m[1]!) != pid && !Directory('/proc/${m[1]}').existsSync()) {
+      try {
+        d.deleteSync(recursive: true);
+      } on FileSystemException {
+        // Another test process tidied it first.
+      }
+    }
   }
   final dir = Directory('${root.path}/zx-board-test-$pid');
   if (dir.existsSync()) dir.deleteSync(recursive: true);

@@ -165,10 +165,14 @@ describe('Zynetix API', () => {
     await http.put(`/v1/cms/packs/${pack}/lessons/${l.topicId}`).auth(editor, { type: 'bearer' }).send(l).expect(200);
 
     const v = (await http.post(`/v1/cms/packs/${pack}/versions`).auth(editor, { type: 'bearer' }).send({ notes: 'Revised topic 1' }).expect(201)).body;
-    expect(v).toMatchObject({ version: "1.2.0", lessons: 5 }); // seed packs are 1.1.0
+    // Publishing bumps the minor version of whatever the seed pack was.
+    const seed = JSON.parse(require('fs').readFileSync(require('path').join(__dirname, '../../../content/packs', pack, 'pack.json'), 'utf8')).version as string;
+    const [maj, min] = seed.split('.').map(Number);
+    const next = `${maj}.${min + 1}.0`;
+    expect(v).toMatchObject({ version: next, lessons: 5 });
     expect(v.questions).toBeGreaterThanOrEqual(19);
     const r = await http.post('/v1/board/sync').auth(device, { type: 'bearer' }).send({ installed: { [pack]: '1.0.0' } }).expect(201);
-    expect(r.body.packs.find((x: any) => x.id === pack)).toMatchObject({ version: '1.2.0' });
+    expect(r.body.packs.find((x: any) => x.id === pack)).toMatchObject({ version: next });
   });
   // ---- Outcomes: answers stored per roll number, dashboards, readiness, league ----
   const motion = 'puc1-physics-02-motion-in-a-straight-line';

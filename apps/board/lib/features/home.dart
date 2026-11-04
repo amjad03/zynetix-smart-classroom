@@ -8,6 +8,15 @@ import '../core/theme.dart';
 import '../engine/licence.dart';
 import '../engine/model.dart';
 import 'exam_practice.dart';
+import 'game/game_hub.dart';
+import 'game/strings.dart';
+import 'insight/mastery_map.dart';
+import 'insight/strings.dart';
+import 'insight/today_plan.dart';
+import 'insight/worksheet.dart';
+import 'live/live_quiz_screen.dart';
+import 'live/paper_marks.dart';
+import 'live/strings.dart';
 import 'player.dart';
 import 'self_learning.dart';
 import 'settings.dart';
@@ -45,6 +54,8 @@ class HomeScreen extends StatelessWidget {
                             StatusBar(lang: l),
                             _LicenceBanner(services: s),
                             const Spacer(),
+                            const TodayPlanCard(),
+                            const SizedBox(height: 16),
                             if (next != null)
                               _ContinueCard(
                                 title: '${subjectName(next.pack.chapter.subject, l)} · ${next.pack.chapter.title.t(l)}',
@@ -95,6 +106,8 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                             const Spacer(),
+                            const SizedBox(height: 16),
+                            _ToolStrip(lang: l),
                             const SizedBox(height: 16),
                             Text('${s.config.collegeName} · ${tr('offlineOk', l)}', style: text.bodyMedium, textAlign: TextAlign.center),
                           ],
@@ -288,4 +301,30 @@ class _LicenceBanner extends StatelessWidget {
       );
     },
   );
+}
+
+/// Under the three modes: the class's mastery map, the Game Zone, the phone quiz, paper marks
+/// and the homework sheet. Wraps onto more lines on a narrow screen.
+class _ToolStrip extends StatelessWidget {
+  const _ToolStrip({required this.lang});
+  final Lang lang;
+
+  @override
+  Widget build(BuildContext context) {
+    void go(Widget screen) => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => screen));
+    final l = lang;
+    final tools = [
+      (const ValueKey('tool-mastery'), Icons.grid_on_outlined, it('masteryMap', l), () => go(const MasteryMapScreen())),
+      (const ValueKey('tool-game'), Icons.sports_esports_outlined, gt('gameHub', l), () => go(const GameHubScreen())),
+      (const ValueKey('tool-phones'), Icons.phonelink_ring_outlined, ltr('phones', l), () => go(const LiveQuizScreen())),
+      (const ValueKey('tool-paper'), Icons.fact_check_outlined, ltr('paperMarks', l), () => go(const PaperMarksScreen())),
+      (const ValueKey('tool-worksheet'), Icons.print_outlined, it('worksheet', l), () => go(const WorksheetScreen())),
+    ];
+    return Wrap(
+      spacing: 20,
+      runSpacing: 16,
+      alignment: WrapAlignment.center,
+      children: [for (final (k, i, label, onTap) in tools) BigButton(key: k, icon: i, label: label, filled: false, onPressed: onTap)],
+    );
+  }
 }
