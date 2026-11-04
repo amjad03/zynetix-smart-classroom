@@ -213,10 +213,16 @@ class _Controls extends StatelessWidget {
               filled: false,
               onPressed: c.speaking ? null : c.readAloud,
             ),
-          const Spacer(),
-          c.isLast
-              ? BigButton(key: const ValueKey('finish'), icon: Icons.done_all, label: tr('finish', l), color: Z.correct, onPressed: onFinish)
-              : BigButton(key: const ValueKey('next'), icon: Icons.arrow_forward, label: tr('next', l), onPressed: c.next),
+          gap,
+          // Takes the space left, so its label shortens rather than overflowing on a phone.
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: c.isLast
+                  ? BigButton(key: const ValueKey('finish'), icon: Icons.done_all, label: tr('finish', l), color: Z.correct, onPressed: onFinish)
+                  : BigButton(key: const ValueKey('next'), icon: Icons.arrow_forward, label: tr('next', l), onPressed: c.next),
+            ),
+          ),
         ],
       ),
     );
