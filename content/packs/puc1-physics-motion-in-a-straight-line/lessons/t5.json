@@ -311,6 +311,248 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Throw a ball up: its x–t and v–t graphs",
+    "kn": "ಚೆಂಡನ್ನು ಮೇಲೆಸೆಯಿರಿ: x–t ಮತ್ತು v–t ನಕ್ಷೆಗಳು"
+   },
+   "narration": {
+    "en": "Ignoring air resistance, the only acceleration is g = 9.8 m/s² downwards, all the way up, at the top and on the way down. So the height–time graph is a parabola and the velocity–time graph is a straight line of slope −g. At the top the velocity is zero but the acceleration is still g.",
+    "kn": "ಗಾಳಿ ರೋಧ ಬಿಟ್ಟರೆ ಏಕೈಕ ವೇಗೋತ್ಕರ್ಷ ಕೆಳಮುಖ g = 9.8 m/s²: ಮೇಲೆ ಹೋಗುವಾಗ, ತುದಿಯಲ್ಲಿ ಮತ್ತು ಕೆಳಗೆ ಬರುವಾಗ. ಹಾಗಾಗಿ ಎತ್ತರ–ಸಮಯ ನಕ್ಷೆ ಪರವಲಯ, ವೇಗ–ಸಮಯ ನಕ್ಷೆ −g ಇಳಿಜಾರಿನ ನೇರ ರೇಖೆ. ತುದಿಯಲ್ಲಿ ವೇಗ ಶೂನ್ಯ, ಆದರೆ ವೇಗೋತ್ಕರ್ಷ ಇನ್ನೂ g."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Ignoring air resistance, the only acceleration is g = 9.8 m/s² downwards, all the way up, at the top and on the way down. So the height–time graph is a parabola and the velocity–time graph is a straight line of slope −g. At the top the velocity is zero but the acceleration is still g.",
+    "kn": "ಗಾಳಿ ರೋಧ ಬಿಟ್ಟರೆ ಏಕೈಕ ವೇಗೋತ್ಕರ್ಷ ಕೆಳಮುಖ g = 9.8 m/s²: ಮೇಲೆ ಹೋಗುವಾಗ, ತುದಿಯಲ್ಲಿ ಮತ್ತು ಕೆಳಗೆ ಬರುವಾಗ. ಹಾಗಾಗಿ ಎತ್ತರ–ಸಮಯ ನಕ್ಷೆ ಪರವಲಯ, ವೇಗ–ಸಮಯ ನಕ್ಷೆ −g ಇಳಿಜಾರಿನ ನೇರ ರೇಖೆ. ತುದಿಯಲ್ಲಿ ವೇಗ ಶೂನ್ಯ, ಆದರೆ ವೇಗೋತ್ಕರ್ಷ ಇನ್ನೂ g."
+   },
+   "sliders": [
+    {
+     "name": "h0",
+     "label": {
+      "en": "Starting height",
+      "kn": "ಆರಂಭ ಎತ್ತರ"
+     },
+     "min": 0,
+     "max": 50,
+     "step": 1,
+     "value": 20,
+     "unit": "m"
+    },
+    {
+     "name": "u",
+     "label": {
+      "en": "Throw velocity (+ up)",
+      "kn": "ಎಸೆಯುವ ವೇಗ (+ ಮೇಲೆ)"
+     },
+     "min": -20,
+     "max": 30,
+     "step": 1,
+     "value": 10,
+     "unit": "m/s"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Throw",
+      "kn": "ಎಸೆಯಿರಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 8,
+    "stopWhen": "t > 0 && yy <= 0"
+   },
+   "vars": [
+    {
+     "name": "yy",
+     "expr": "max(h0 + u*t - 4.9*t^2, 0)"
+    },
+    {
+     "name": "vv",
+     "expr": "u - 9.8*t"
+    }
+   ],
+   "view": {
+    "x": [
+     -10,
+     105
+    ],
+    "y": [
+     -6,
+     100
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -8,
+     "y1": 0,
+     "x2": 4,
+     "y2": 0,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "trail",
+     "x": 0,
+     "y": "yy",
+     "length": 60,
+     "color": "orange",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": "yy",
+     "r": 1.4,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "abs(vv) > 0.5",
+     "x": 3,
+     "y": "yy",
+     "dx": 0,
+     "dy": "vv*0.4",
+     "color": "green",
+     "label": "v"
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 0,
+     "x2": 50,
+     "y2": 0,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 0,
+     "x2": 10,
+     "y2": 98,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "trail",
+     "x": "10 + 5*t",
+     "y": "yy",
+     "length": 1000,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": -4,
+     "text": {
+      "en": "height–time (0 to 8 s)",
+      "kn": "ಎತ್ತರ–ಸಮಯ (0 ರಿಂದ 8 s)"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 60,
+     "y1": 50,
+     "x2": 100,
+     "y2": 50,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 60,
+     "y1": 3,
+     "x2": 60,
+     "y2": 98,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "trail",
+     "x": "60 + 5*t",
+     "y": "50 + vv",
+     "length": 1000,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": -4,
+     "text": {
+      "en": "velocity–time (v = 0 on the line)",
+      "kn": "ವೇಗ–ಸಮಯ (ರೇಖೆಯ ಮೇಲೆ v = 0)"
+     },
+     "size": 22,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Time of flight",
+      "kn": "ಹಾರಾಟದ ಸಮಯ"
+     },
+     "expr": "(u + sqrt(u^2 + 19.6*h0))/9.8",
+     "digits": 2,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Highest point",
+      "kn": "ಅತಿ ಎತ್ತರದ ಬಿಂದು"
+     },
+     "expr": "h0 + max(u, 0)^2/19.6",
+     "digits": 1,
+     "unit": "m"
+    },
+    {
+     "label": {
+      "en": "Landing speed",
+      "kn": "ಬೀಳುವ ವೇಗ"
+     },
+     "expr": "sqrt(u^2 + 19.6*h0)",
+     "digits": 1,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Velocity now",
+      "kn": "ಈಗಿನ ವೇಗ"
+     },
+     "expr": "vv",
+     "digits": 1,
+     "unit": "m/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Throw up at 20 m/s from the ground. How long until it lands, and how high does it go?",
+     "kn": "ನೆಲದಿಂದ 20 m/s ನಲ್ಲಿ ಮೇಲೆಸೆಯಿರಿ. ಎಷ್ಟು ಸಮಯದಲ್ಲಿ ಬೀಳುತ್ತದೆ, ಎಷ್ಟು ಎತ್ತರ ಏರುತ್ತದೆ?"
+    },
+    {
+     "en": "Drop a ball (speed 0) from 45 m. Check the time with h = ½gt².",
+     "kn": "45 m ನಿಂದ ಚೆಂಡು ಬೀಳಿಸಿ (ವೇಗ 0). h = ½gt² ನಿಂದ ಸಮಯ ಪರಿಶೀಲಿಸಿ."
+    },
+    {
+     "en": "Does the v–t line change its slope at the top?",
+     "kn": "ತುದಿಯಲ್ಲಿ v–t ರೇಖೆಯ ಇಳಿಜಾರು ಬದಲಾಗುತ್ತದೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "sim-projectile-motion",
    "type": "simulation",
    "source": "phet",

@@ -581,6 +581,297 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Three ways to stress a block",
+    "kn": "ಬ್ಲಾಕ್ ಅನ್ನು ಒತ್ತಡಕ್ಕೆ ಒಳಪಡಿಸುವ ಮೂರು ವಿಧ"
+   },
+   "narration": {
+    "en": "Stress is the restoring force per unit area, F/A; strain is the fractional change in shape or size. Pull and you get tensile (longitudinal) strain, push sideways on the top face and you get shear strain, squeeze from all sides and you get volume strain. The block is aluminium; the change is drawn 100 times larger.",
+    "kn": "ಪ್ರತಿಬಲ (ಸ್ಟ್ರೆಸ್) ಪ್ರತಿ ಏಕಮಾನ ವಿಸ್ತೀರ್ಣದ ಪುನಃಸ್ಥಾಪಕ ಬಲ, F/A; ವಿಕೃತಿ (ಸ್ಟ್ರೇನ್) ಆಕಾರ ಅಥವಾ ಗಾತ್ರದ ಭಾಗಶಃ ಬದಲಾವಣೆ. ಎಳೆದರೆ ಉದ್ದದ ವಿಕೃತಿ, ಮೇಲ್ಮುಖವನ್ನು ಪಕ್ಕಕ್ಕೆ ತಳ್ಳಿದರೆ ಕತ್ತರಿ ವಿಕೃತಿ, ಎಲ್ಲ ಕಡೆಯಿಂದ ಒತ್ತಿದರೆ ಗಾತ್ರ ವಿಕೃತಿ. ಬ್ಲಾಕ್ ಅಲ್ಯೂಮಿನಿಯಂ; ಬದಲಾವಣೆಯನ್ನು 100 ಪಟ್ಟು ದೊಡ್ಡದಾಗಿ ಚಿತ್ರಿಸಲಾಗಿದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Stress is the restoring force per unit area, F/A; strain is the fractional change in shape or size. Pull and you get tensile (longitudinal) strain, push sideways on the top face and you get shear strain, squeeze from all sides and you get volume strain. The block is aluminium; the change is drawn 100 times larger.",
+    "kn": "ಪ್ರತಿಬಲ (ಸ್ಟ್ರೆಸ್) ಪ್ರತಿ ಏಕಮಾನ ವಿಸ್ತೀರ್ಣದ ಪುನಃಸ್ಥಾಪಕ ಬಲ, F/A; ವಿಕೃತಿ (ಸ್ಟ್ರೇನ್) ಆಕಾರ ಅಥವಾ ಗಾತ್ರದ ಭಾಗಶಃ ಬದಲಾವಣೆ. ಎಳೆದರೆ ಉದ್ದದ ವಿಕೃತಿ, ಮೇಲ್ಮುಖವನ್ನು ಪಕ್ಕಕ್ಕೆ ತಳ್ಳಿದರೆ ಕತ್ತರಿ ವಿಕೃತಿ, ಎಲ್ಲ ಕಡೆಯಿಂದ ಒತ್ತಿದರೆ ಗಾತ್ರ ವಿಕೃತಿ. ಬ್ಲಾಕ್ ಅಲ್ಯೂಮಿನಿಯಂ; ಬದಲಾವಣೆಯನ್ನು 100 ಪಟ್ಟು ದೊಡ್ಡದಾಗಿ ಚಿತ್ರಿಸಲಾಗಿದೆ."
+   },
+   "sliders": [
+    {
+     "name": "F",
+     "label": {
+      "en": "Force",
+      "kn": "ಬಲ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 2,
+     "value": 50,
+     "unit": "kN"
+    },
+    {
+     "name": "A",
+     "label": {
+      "en": "Area",
+      "kn": "ವಿಸ್ತೀರ್ಣ"
+     },
+     "min": 10,
+     "max": 40,
+     "step": 1,
+     "value": 20,
+     "unit": "cm²"
+    }
+   ],
+   "choices": [
+    {
+     "name": "mode",
+     "label": {
+      "en": "Kind of stress",
+      "kn": "ಪ್ರತಿಬಲದ ವಿಧ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Tensile",
+        "kn": "ಎಳೆತ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Shearing",
+        "kn": "ಕತ್ತರಿ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Hydraulic",
+        "kn": "ದ್ರವ ಒತ್ತಡ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "st",
+     "expr": "10*F/A"
+    },
+    {
+     "name": "md",
+     "expr": "if(mode == 1, 70, if(mode == 2, 25, 72))"
+    },
+    {
+     "name": "ee",
+     "expr": "10*F/A/if(mode == 1, 70, if(mode == 2, 25, 72))*0.1"
+    }
+   ],
+   "view": {
+    "x": [
+     -5,
+     7
+    ],
+    "y": [
+     -4.2,
+     4.8
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -2,
+     "y": -2,
+     "w": 4,
+     "h": 4,
+     "fill": false,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "mode == 1",
+     "x": -2,
+     "y": "-2 - 2*ee",
+     "w": 4,
+     "h": "4*(1 + ee)",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "mode == 1",
+     "x": 0,
+     "y": "2 + 2*ee",
+     "dx": 0,
+     "dy": "0.4 + F/60",
+     "color": "yellow",
+     "label": "F"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "mode == 1",
+     "x": 0,
+     "y": "-2 - 2*ee",
+     "dx": 0,
+     "dy": "-0.4 - F/60",
+     "color": "yellow",
+     "label": "F"
+    },
+    {
+     "shape": "polygon",
+     "visibleIf": "mode == 2",
+     "points": [
+      [
+       -2,
+       -2
+      ],
+      [
+       2,
+       -2
+      ],
+      [
+       "2 + 4*ee",
+       2
+      ],
+      [
+       "-2 + 4*ee",
+       2
+      ]
+     ],
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "line",
+     "visibleIf": "mode == 2",
+     "x1": -2.6,
+     "y1": -2.05,
+     "x2": 2.6,
+     "y2": -2.05,
+     "color": "white",
+     "width": 8
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "mode == 2",
+     "x": "-1 + 4*ee",
+     "y": 2.4,
+     "dx": "0.6 + F/40",
+     "dy": 0,
+     "color": "yellow",
+     "label": "F"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "mode == 3",
+     "x": "-2*(1 - ee/3)",
+     "y": "-2*(1 - ee/3)",
+     "w": "4*(1 - ee/3)",
+     "h": "4*(1 - ee/3)",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "mode == 3",
+     "x": 0,
+     "y": 3.6,
+     "dx": 0,
+     "dy": -1.3,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "mode == 3",
+     "x": 0,
+     "y": -3.6,
+     "dx": 0,
+     "dy": 1.3,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "mode == 3",
+     "x": -3.6,
+     "y": 0,
+     "dx": 1.3,
+     "dy": 0,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "mode == 3",
+     "x": 3.6,
+     "y": 0,
+     "dx": -1.3,
+     "dy": 0,
+     "color": "yellow",
+     "label": "p"
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": 4.3,
+     "text": {
+      "en": "drawn ×100",
+      "kn": "×100 ಚಿತ್ರ"
+     },
+     "size": 22,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Stress F/A",
+      "kn": "ಪ್ರತಿಬಲ F/A"
+     },
+     "expr": "st",
+     "digits": 1,
+     "unit": "MPa"
+    },
+    {
+     "label": {
+      "en": "Strain",
+      "kn": "ವಿಕೃತಿ"
+     },
+     "expr": "st/md",
+     "digits": 3,
+     "unit": "× 10⁻³"
+    },
+    {
+     "label": {
+      "en": "Modulus of aluminium used",
+      "kn": "ಬಳಸಿದ ಅಲ್ಯೂಮಿನಿಯಂ ಮಾಪಾಂಕ"
+     },
+     "expr": "md",
+     "digits": 0,
+     "unit": "GPa"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Keep the force fixed and double the area. What happens to the stress?",
+     "kn": "ಬಲ ಸ್ಥಿರವಿಟ್ಟು ವಿಸ್ತೀರ್ಣ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ಪ್ರತಿಬಲಕ್ಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Apply the same stress as tension and as shear. Which strain is larger, and why?",
+     "kn": "ಅದೇ ಪ್ರತಿಬಲವನ್ನು ಎಳೆತ ಮತ್ತು ಕತ್ತರಿಯಾಗಿ ಹಾಕಿ. ಯಾವ ವಿಕೃತಿ ದೊಡ್ಡದು, ಏಕೆ?"
+    },
+    {
+     "en": "Strain has no unit. Why?",
+     "kn": "ವಿಕೃತಿಗೆ ಏಕಮಾನ ಇಲ್ಲ. ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

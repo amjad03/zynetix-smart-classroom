@@ -385,6 +385,227 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "SHM is a shadow of circular motion",
+    "kn": "SHM ವೃತ್ತೀಯ ಚಲನೆಯ ನೆರಳು"
+   },
+   "narration": {
+    "en": "A point P goes round a circle of radius A at constant angular speed ω. Its projection on a diameter moves to and fro in simple harmonic motion, y = A sin(ωt + φ): the radius is the amplitude, ω the angular frequency and the starting angle φ the phase constant.",
+    "kn": "P ಬಿಂದು A ತ್ರಿಜ್ಯದ ವೃತ್ತದಲ್ಲಿ ಸ್ಥಿರ ಕೋನೀಯ ವೇಗ ω ದಲ್ಲಿ ಸುತ್ತುತ್ತದೆ. ಅದರ ವ್ಯಾಸದ ಮೇಲಿನ ಪ್ರಕ್ಷೇಪ ಸರಳ ಹಾರ್ಮೋನಿಕ್ ಚಲನೆ y = A sin(ωt + φ): ತ್ರಿಜ್ಯ ಕಂಪನ ವಿಸ್ತಾರ, ω ಕೋನೀಯ ಆವೃತ್ತಿ, ಆರಂಭ ಕೋನ φ ಹಂತ ಸ್ಥಿರಾಂಕ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A point P goes round a circle of radius A at constant angular speed ω. Its projection on a diameter moves to and fro in simple harmonic motion, y = A sin(ωt + φ): the radius is the amplitude, ω the angular frequency and the starting angle φ the phase constant.",
+    "kn": "P ಬಿಂದು A ತ್ರಿಜ್ಯದ ವೃತ್ತದಲ್ಲಿ ಸ್ಥಿರ ಕೋನೀಯ ವೇಗ ω ದಲ್ಲಿ ಸುತ್ತುತ್ತದೆ. ಅದರ ವ್ಯಾಸದ ಮೇಲಿನ ಪ್ರಕ್ಷೇಪ ಸರಳ ಹಾರ್ಮೋನಿಕ್ ಚಲನೆ y = A sin(ωt + φ): ತ್ರಿಜ್ಯ ಕಂಪನ ವಿಸ್ತಾರ, ω ಕೋನೀಯ ಆವೃತ್ತಿ, ಆರಂಭ ಕೋನ φ ಹಂತ ಸ್ಥಿರಾಂಕ."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Amplitude A",
+      "kn": "ಕಂಪನ ವಿಸ್ತಾರ A"
+     },
+     "min": 1,
+     "max": 4,
+     "step": 0.25,
+     "value": 3
+    },
+    {
+     "name": "T",
+     "label": {
+      "en": "Period T",
+      "kn": "ಆವರ್ತ ಕಾಲ T"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 0.25,
+     "value": 4,
+     "unit": "s"
+    },
+    {
+     "name": "phi",
+     "label": {
+      "en": "Phase constant φ",
+      "kn": "ಹಂತ ಸ್ಥಿರಾಂಕ φ"
+     },
+     "min": 0,
+     "max": 360,
+     "step": 15,
+     "value": 0,
+     "unit": "°"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "circ",
+     "label": {
+      "en": "Reference circle",
+      "kn": "ಆಧಾರ ವೃತ್ತ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 12
+   },
+   "vars": [
+    {
+     "name": "th",
+     "expr": "2*pi*t/T + rad(phi)"
+    }
+   ],
+   "view": {
+    "x": [
+     -9.5,
+     16
+    ],
+    "y": [
+     -4.6,
+     4.6
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "visibleIf": "circ",
+     "x": -5,
+     "y": 0,
+     "r": "A",
+     "fill": false,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "circ",
+     "x1": -5,
+     "y1": 0,
+     "x2": "-5 + A*cos(th)",
+     "y2": "A*sin(th)",
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": -5,
+     "y1": -4.2,
+     "x2": -5,
+     "y2": 4.2,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "circ",
+     "x": "-5 + A*cos(th)",
+     "y": "A*sin(th)",
+     "r": 0.22,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": "-5 + A*cos(th)",
+     "y1": "A*sin(th)",
+     "x2": "0.5 + 1.25*t",
+     "y2": "A*sin(th)",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.4
+    },
+    {
+     "shape": "circle",
+     "x": -5,
+     "y": "A*sin(th)",
+     "r": 0.28,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": 0,
+     "x2": 15.7,
+     "y2": 0,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "trail",
+     "x": "0.5 + 1.25*t",
+     "y": "A*sin(th)",
+     "length": 1500,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 15.7,
+     "y": -4.3,
+     "align": "right",
+     "text": {
+      "en": "time (0 to 12 s) →",
+      "kn": "ಸಮಯ (0 ರಿಂದ 12 s) →"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Angular frequency ω = 2π/T",
+      "kn": "ಕೋನೀಯ ಆವೃತ್ತಿ ω = 2π/T"
+     },
+     "expr": "2*pi/T",
+     "digits": 3,
+     "unit": "rad/s"
+    },
+    {
+     "label": {
+      "en": "Displacement y",
+      "kn": "ಸ್ಥಾನಪಲ್ಲಟ y"
+     },
+     "expr": "A*sin(th)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Phase ωt + φ",
+      "kn": "ಹಂತ ωt + φ"
+     },
+     "expr": "mod(deg(th), 360)",
+     "digits": 0,
+     "unit": "°"
+    },
+    {
+     "label": {
+      "en": "Velocity Aω cos(ωt + φ)",
+      "kn": "ವೇಗ Aω cos(ωt + φ)"
+     },
+     "expr": "A*2*pi/T*cos(th)",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Change φ from 0° to 90°. How does the graph shift?",
+     "kn": "φ ಅನ್ನು 0° ಯಿಂದ 90° ಗೆ ಬದಲಿಸಿ. ನಕ್ಷೆ ಹೇಗೆ ಸರಿಯುತ್ತದೆ?"
+    },
+    {
+     "en": "Where on the circle is the shadow moving fastest?",
+     "kn": "ವೃತ್ತದ ಯಾವ ಸ್ಥಾನದಲ್ಲಿ ನೆರಳು ಅತಿ ವೇಗವಾಗಿ ಚಲಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Halve the period. What happens to ω?",
+     "kn": "ಆವರ್ತ ಕಾಲ ಅರ್ಧ ಮಾಡಿ. ω ಗೆ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

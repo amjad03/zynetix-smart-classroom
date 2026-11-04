@@ -581,6 +581,303 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Capillary rise",
+    "kn": "ಲೋಮನಾಳ ಏರಿಕೆ"
+   },
+   "narration": {
+    "en": "Surface tension pulls the liquid up a thin tube until the column's weight balances it: h = 2S cos θ/(ρ g r). Water wets glass (θ ≈ 0) and rises; mercury does not wet glass (θ ≈ 140°) and is pushed down. A tube twice as wide gives half the rise.",
+    "kn": "ಮೇಲ್ಮೈ ಸೆಳೆತ ದ್ರವವನ್ನು ತೆಳು ನಳಿಕೆಯಲ್ಲಿ ಮೇಲೆಳೆಯುತ್ತದೆ, ಕಂಬದ ತೂಕ ಅದಕ್ಕೆ ಸಮವಾಗುವವರೆಗೆ: h = 2S cos θ/(ρ g r). ನೀರು ಗಾಜನ್ನು ತೇವಗೊಳಿಸುತ್ತದೆ (θ ≈ 0), ಏರುತ್ತದೆ; ಪಾದರಸ ತೇವಗೊಳಿಸದು (θ ≈ 140°), ಕೆಳಗೆ ತಳ್ಳಲ್ಪಡುತ್ತದೆ. ಎರಡು ಪಟ್ಟು ಅಗಲದ ನಳಿಕೆಯಲ್ಲಿ ಏರಿಕೆ ಅರ್ಧ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Surface tension pulls the liquid up a thin tube until the column's weight balances it: h = 2S cos θ/(ρ g r). Water wets glass (θ ≈ 0) and rises; mercury does not wet glass (θ ≈ 140°) and is pushed down. A tube twice as wide gives half the rise.",
+    "kn": "ಮೇಲ್ಮೈ ಸೆಳೆತ ದ್ರವವನ್ನು ತೆಳು ನಳಿಕೆಯಲ್ಲಿ ಮೇಲೆಳೆಯುತ್ತದೆ, ಕಂಬದ ತೂಕ ಅದಕ್ಕೆ ಸಮವಾಗುವವರೆಗೆ: h = 2S cos θ/(ρ g r). ನೀರು ಗಾಜನ್ನು ತೇವಗೊಳಿಸುತ್ತದೆ (θ ≈ 0), ಏರುತ್ತದೆ; ಪಾದರಸ ತೇವಗೊಳಿಸದು (θ ≈ 140°), ಕೆಳಗೆ ತಳ್ಳಲ್ಪಡುತ್ತದೆ. ಎರಡು ಪಟ್ಟು ಅಗಲದ ನಳಿಕೆಯಲ್ಲಿ ಏರಿಕೆ ಅರ್ಧ."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Tube radius",
+      "kn": "ನಳಿಕೆಯ ತ್ರಿಜ್ಯ"
+     },
+     "min": 0.1,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.25,
+     "unit": "mm"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "two",
+     "label": {
+      "en": "Tube twice as wide",
+      "kn": "ಎರಡು ಪಟ್ಟು ಅಗಲದ ನಳಿಕೆ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "liq",
+     "label": {
+      "en": "Liquid",
+      "kn": "ದ್ರವ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Water",
+        "kn": "ನೀರು"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Alcohol",
+        "kn": "ಆಲ್ಕೋಹಾಲ್"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Mercury",
+        "kn": "ಪಾದರಸ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Dip the tube",
+      "kn": "ನಳಿಕೆ ಮುಳುಗಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 4
+   },
+   "vars": [
+    {
+     "name": "S",
+     "expr": "if(liq == 1, 0.0727, if(liq == 2, 0.0227, 0.4355))"
+    },
+    {
+     "name": "th",
+     "expr": "if(liq == 3, 140, 0)"
+    },
+    {
+     "name": "rho",
+     "expr": "if(liq == 1, 1000, if(liq == 2, 789, 13600))"
+    },
+    {
+     "name": "H",
+     "expr": "2*S*cos(rad(th))/(rho*9.8*r/1000)*100"
+    },
+    {
+     "name": "hh",
+     "expr": "H*(1 - exp(-t/0.5))"
+    },
+    {
+     "name": "wv",
+     "expr": "0.15 + 0.35*r"
+    }
+   ],
+   "view": {
+    "x": [
+     -6,
+     6
+    ],
+    "y": [
+     -9,
+     17.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -5.5,
+     "y": -8,
+     "w": 11,
+     "h": 8,
+     "color": {
+      "by": "liq == 3",
+      "scale": [
+       "blue",
+       "white"
+      ]
+     },
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": -5.5,
+     "y1": -8,
+     "x2": 5.5,
+     "y2": -8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": "-2 - wv",
+     "y": -6,
+     "w": "2*wv",
+     "h": "6 + hh",
+     "color": {
+      "by": "liq == 3",
+      "scale": [
+       "blue",
+       "white"
+      ]
+     },
+     "opacity": 0.9
+    },
+    {
+     "shape": "line",
+     "x1": "-2 - wv",
+     "y1": -6,
+     "x2": "-2 - wv",
+     "y2": 16,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": "-2 + wv",
+     "y1": -6,
+     "x2": "-2 + wv",
+     "y2": 16,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "two",
+     "x": "2.5 - 2*wv",
+     "y": -6,
+     "w": "4*wv",
+     "h": "6 + hh/2",
+     "color": {
+      "by": "liq == 3",
+      "scale": [
+       "blue",
+       "white"
+      ]
+     },
+     "opacity": 0.9
+    },
+    {
+     "shape": "line",
+     "visibleIf": "two",
+     "x1": "2.5 - 2*wv",
+     "y1": -6,
+     "x2": "2.5 - 2*wv",
+     "y2": 16,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "two",
+     "x1": "2.5 + 2*wv",
+     "y1": -6,
+     "x2": "2.5 + 2*wv",
+     "y2": 16,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": -5.5,
+     "y1": 0,
+     "x2": 5.5,
+     "y2": 0,
+     "color": "yellow",
+     "dashed": true,
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": -2,
+     "y": 16.8,
+     "text": {
+      "en": "h = {hh:1} cm",
+      "kn": "h = {hh:1} cm"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "two",
+     "x": 2.5,
+     "y": 16.8,
+     "text": {
+      "en": "2r: {hh/2:1} cm",
+      "kn": "2r: {hh/2:1} cm"
+     },
+     "size": 24,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Height of rise (− means fall)",
+      "kn": "ಏರಿಕೆ ಎತ್ತರ (− ಎಂದರೆ ಇಳಿಕೆ)"
+     },
+     "expr": "H",
+     "digits": 2,
+     "unit": "cm"
+    },
+    {
+     "label": {
+      "en": "Surface tension S",
+      "kn": "ಮೇಲ್ಮೈ ಸೆಳೆತ S"
+     },
+     "expr": "S",
+     "digits": 4,
+     "unit": "N/m"
+    },
+    {
+     "label": {
+      "en": "Contact angle θ",
+      "kn": "ಸಂಪರ್ಕ ಕೋನ θ"
+     },
+     "expr": "th",
+     "digits": 0,
+     "unit": "°"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Halve the radius of the tube. What happens to the rise?",
+     "kn": "ನಳಿಕೆಯ ತ್ರಿಜ್ಯ ಅರ್ಧ ಮಾಡಿ. ಏರಿಕೆಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Switch to mercury. Why does the level fall inside the tube?",
+     "kn": "ಪಾದರಸಕ್ಕೆ ಬದಲಿಸಿ. ನಳಿಕೆಯೊಳಗೆ ಮಟ್ಟ ಏಕೆ ಇಳಿಯುತ್ತದೆ?"
+    },
+    {
+     "en": "How does water reach the top of a tall plant? Is capillarity alone enough?",
+     "kn": "ಎತ್ತರದ ಸಸ್ಯದ ತುದಿಗೆ ನೀರು ಹೇಗೆ ತಲುಪುತ್ತದೆ? ಲೋಮನಾಳತೆ ಮಾತ್ರ ಸಾಕೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -296,6 +296,180 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "From average to instantaneous velocity",
+    "kn": "ಸರಾಸರಿಯಿಂದ ತಕ್ಷಣದ ವೇಗಕ್ಕೆ"
+   },
+   "narration": {
+    "en": "The orange chord joins the positions at t and t + Δt; its slope is the average velocity over Δt. Shrink Δt and the chord turns into the tangent: its slope is the instantaneous velocity v = dx/dt. Here x = 0.2t³ − 2t² + 6t + 2 (m).",
+    "kn": "ಕಿತ್ತಳೆ ಜ್ಯಾ t ಮತ್ತು t + Δt ಸ್ಥಾನಗಳನ್ನು ಜೋಡಿಸುತ್ತದೆ; ಅದರ ಇಳಿಜಾರು Δt ಯಲ್ಲಿನ ಸರಾಸರಿ ವೇಗ. Δt ಕುಗ್ಗಿಸಿದರೆ ಜ್ಯಾ ಸ್ಪರ್ಶಕವಾಗುತ್ತದೆ: ಅದರ ಇಳಿಜಾರು ತಕ್ಷಣದ ವೇಗ v = dx/dt. ಇಲ್ಲಿ x = 0.2t³ − 2t² + 6t + 2 (m)."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The orange chord joins the positions at t and t + Δt; its slope is the average velocity over Δt. Shrink Δt and the chord turns into the tangent: its slope is the instantaneous velocity v = dx/dt. Here x = 0.2t³ − 2t² + 6t + 2 (m).",
+    "kn": "ಕಿತ್ತಳೆ ಜ್ಯಾ t ಮತ್ತು t + Δt ಸ್ಥಾನಗಳನ್ನು ಜೋಡಿಸುತ್ತದೆ; ಅದರ ಇಳಿಜಾರು Δt ಯಲ್ಲಿನ ಸರಾಸರಿ ವೇಗ. Δt ಕುಗ್ಗಿಸಿದರೆ ಜ್ಯಾ ಸ್ಪರ್ಶಕವಾಗುತ್ತದೆ: ಅದರ ಇಳಿಜಾರು ತಕ್ಷಣದ ವೇಗ v = dx/dt. ಇಲ್ಲಿ x = 0.2t³ − 2t² + 6t + 2 (m)."
+   },
+   "sliders": [
+    {
+     "name": "t0",
+     "label": {
+      "en": "Time t",
+      "kn": "ಸಮಯ t"
+     },
+     "min": 0,
+     "max": 6,
+     "step": 0.25,
+     "value": 2,
+     "unit": "s"
+    },
+    {
+     "name": "dt",
+     "label": {
+      "en": "Interval Δt",
+      "kn": "ಅಂತರ Δt"
+     },
+     "min": 0.05,
+     "max": 2,
+     "step": 0.05,
+     "value": 1.5,
+     "unit": "s"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "tg",
+     "label": {
+      "en": "Tangent line",
+      "kn": "ಸ್ಪರ್ಶಕ ರೇಖೆ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "x0",
+     "expr": "0.2*t0^3 - 2*t0^2 + 6*t0 + 2"
+    },
+    {
+     "name": "x1",
+     "expr": "0.2*(t0 + dt)^3 - 2*(t0 + dt)^2 + 6*(t0 + dt) + 2"
+    },
+    {
+     "name": "m",
+     "expr": "((0.2*(t0 + dt)^3 - 2*(t0 + dt)^2 + 6*(t0 + dt) + 2) - (0.2*t0^3 - 2*t0^2 + 6*t0 + 2))/dt"
+    },
+    {
+     "name": "v0",
+     "expr": "0.6*t0^2 - 4*t0 + 6"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     8.5
+    ],
+    "y": [
+     -2,
+     26
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "t (s)",
+    "yLabel": "x (m)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "0.2*x^3 - 2*x^2 + 6*x + 2",
+     "from": 0,
+     "to": 8,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "t0 - 1",
+     "y1": "x0 - m",
+     "x2": "t0 + dt + 1",
+     "y2": "x1 + m",
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "tg",
+     "x1": "t0 - 1.5",
+     "y1": "x0 - 1.5*v0",
+     "x2": "t0 + 1.5",
+     "y2": "x0 + 1.5*v0",
+     "color": "green",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "t0",
+     "y": "x0",
+     "r": 0.1,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "t0 + dt",
+     "y": "x1",
+     "r": 0.1,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Average velocity Δx/Δt",
+      "kn": "ಸರಾಸರಿ ವೇಗ Δx/Δt"
+     },
+     "expr": "m",
+     "digits": 3,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Instantaneous velocity dx/dt",
+      "kn": "ತಕ್ಷಣದ ವೇಗ dx/dt"
+     },
+     "expr": "v0",
+     "digits": 3,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Difference",
+      "kn": "ವ್ಯತ್ಯಾಸ"
+     },
+     "expr": "m - v0",
+     "digits": 3,
+     "unit": "m/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At t = 2 s, shrink Δt from 2 s to 0.05 s. Watch the average velocity approach dx/dt.",
+     "kn": "t = 2 s ನಲ್ಲಿ Δt ಅನ್ನು 2 s ನಿಂದ 0.05 s ಗೆ ಕುಗ್ಗಿಸಿ. ಸರಾಸರಿ ವೇಗ dx/dt ಗೆ ಹತ್ತಿರವಾಗುವುದನ್ನು ನೋಡಿ."
+    },
+    {
+     "en": "Find the two times where the instantaneous velocity is zero. What is the car doing there?",
+     "kn": "ತಕ್ಷಣದ ವೇಗ ಶೂನ್ಯವಾಗುವ ಎರಡು ಸಮಯ ಹುಡುಕಿ. ಅಲ್ಲಿ ಕಾರು ಏನು ಮಾಡುತ್ತಿದೆ?"
+    },
+    {
+     "en": "Can the average velocity be zero while the instantaneous velocity is not?",
+     "kn": "ತಕ್ಷಣದ ವೇಗ ಶೂನ್ಯವಲ್ಲದಿದ್ದರೂ ಸರಾಸರಿ ವೇಗ ಶೂನ್ಯವಾಗಬಹುದೇ?"
+    }
+   ]
+  },
+  {
    "id": "sim-lab.graph-plotter",
    "type": "simulation",
    "source": "kinetix_sim",

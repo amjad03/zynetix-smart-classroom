@@ -400,6 +400,281 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Heating ice to steam",
+    "kn": "ಮಂಜುಗಡ್ಡೆಯನ್ನು ಹಬೆಯವರೆಗೆ ಕಾಯಿಸುವುದು"
+   },
+   "narration": {
+    "en": "A heater supplies heat at a steady rate. The temperature rises while ice warms, stays at 0 °C while it melts (latent heat of fusion, 3.33 × 10⁵ J/kg), rises again while the water warms, and stays at 100 °C while it boils (latent heat of vaporisation, 22.6 × 10⁵ J/kg). The flat parts are changes of state.",
+    "kn": "ಹೀಟರ್ ಸ್ಥಿರ ದರದಲ್ಲಿ ಉಷ್ಣ ಕೊಡುತ್ತದೆ. ಮಂಜು ಬಿಸಿಯಾಗುವಾಗ ತಾಪ ಏರುತ್ತದೆ, ಕರಗುವಾಗ 0 °C ನಲ್ಲಿ ನಿಲ್ಲುತ್ತದೆ (ದ್ರವೀಕರಣ ಗುಪ್ತೋಷ್ಣ 3.33 × 10⁵ J/kg), ನೀರು ಬಿಸಿಯಾಗುವಾಗ ಮತ್ತೆ ಏರುತ್ತದೆ, ಕುದಿಯುವಾಗ 100 °C ನಲ್ಲಿ ನಿಲ್ಲುತ್ತದೆ (ಆವೀಕರಣ ಗುಪ್ತೋಷ್ಣ 22.6 × 10⁵ J/kg). ಸಮತಟ್ಟು ಭಾಗಗಳು ಸ್ಥಿತಿ ಬದಲಾವಣೆಗಳು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A heater supplies heat at a steady rate. The temperature rises while ice warms, stays at 0 °C while it melts (latent heat of fusion, 3.33 × 10⁵ J/kg), rises again while the water warms, and stays at 100 °C while it boils (latent heat of vaporisation, 22.6 × 10⁵ J/kg). The flat parts are changes of state.",
+    "kn": "ಹೀಟರ್ ಸ್ಥಿರ ದರದಲ್ಲಿ ಉಷ್ಣ ಕೊಡುತ್ತದೆ. ಮಂಜು ಬಿಸಿಯಾಗುವಾಗ ತಾಪ ಏರುತ್ತದೆ, ಕರಗುವಾಗ 0 °C ನಲ್ಲಿ ನಿಲ್ಲುತ್ತದೆ (ದ್ರವೀಕರಣ ಗುಪ್ತೋಷ್ಣ 3.33 × 10⁵ J/kg), ನೀರು ಬಿಸಿಯಾಗುವಾಗ ಮತ್ತೆ ಏರುತ್ತದೆ, ಕುದಿಯುವಾಗ 100 °C ನಲ್ಲಿ ನಿಲ್ಲುತ್ತದೆ (ಆವೀಕರಣ ಗುಪ್ತೋಷ್ಣ 22.6 × 10⁵ J/kg). ಸಮತಟ್ಟು ಭಾಗಗಳು ಸ್ಥಿತಿ ಬದಲಾವಣೆಗಳು."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Mass of ice",
+      "kn": "ಮಂಜಿನ ದ್ರವ್ಯರಾಶಿ"
+     },
+     "min": 0.1,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.5,
+     "unit": "kg"
+    },
+    {
+     "name": "Pw",
+     "label": {
+      "en": "Heater power",
+      "kn": "ಹೀಟರ್ ಸಾಮರ್ಥ್ಯ"
+     },
+     "min": 0.5,
+     "max": 3,
+     "step": 0.1,
+     "value": 1,
+     "unit": "kW"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Switch on the heater",
+      "kn": "ಹೀಟರ್ ಆನ್ ಮಾಡಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 100,
+    "unit": "min",
+    "speeds": [
+     1,
+     2,
+     4,
+     8,
+     16
+    ],
+    "speed": 4,
+    "stopWhen": "Q >= Q4"
+   },
+   "vars": [
+    {
+     "name": "Q",
+     "expr": "Pw*60*t"
+    },
+    {
+     "name": "Q1",
+     "expr": "42*m"
+    },
+    {
+     "name": "Q2",
+     "expr": "375*m"
+    },
+    {
+     "name": "Q3",
+     "expr": "793.6*m"
+    },
+    {
+     "name": "Q4",
+     "expr": "3053.6*m"
+    },
+    {
+     "name": "T",
+     "expr": "if(Pw*60*t < 42*m, -20 + Pw*60*t/(2.1*m), if(Pw*60*t < 375*m, 0, if(Pw*60*t < 793.6*m, (Pw*60*t - 375*m)/(4.186*m), 100)))"
+    },
+    {
+     "name": "ice",
+     "expr": "m*(1 - clamp((Pw*60*t - 42*m)/(333*m), 0, 1))"
+    },
+    {
+     "name": "stm",
+     "expr": "m*clamp((Pw*60*t - 793.6*m)/(2260*m), 0, 1)"
+    },
+    {
+     "name": "wat",
+     "expr": "m - m*(1 - clamp((Pw*60*t - 42*m)/(333*m), 0, 1)) - m*clamp((Pw*60*t - 793.6*m)/(2260*m), 0, 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     -34,
+     105
+    ],
+    "y": [
+     -32,
+     125
+    ],
+    "axes": true,
+    "xLabel": "time (min)",
+    "yLabel": "T (°C)"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -30,
+     "y": -28,
+     "w": 22,
+     "h": 60,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": -29.5,
+     "y": -27.5,
+     "w": 21,
+     "h": "50*wat",
+     "color": "blue",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": -29.5,
+     "y": "-27.5 + 50*wat",
+     "w": 21,
+     "h": "50*ice",
+     "color": "white",
+     "opacity": 0.9
+    },
+    {
+     "shape": "particles",
+     "visibleIf": "Q > Q3 && Q < Q4 && i < 30",
+     "count": 30,
+     "r": 0.6,
+     "color": "white",
+     "opacity": 0.6,
+     "x": "-28 + 18*rand(i)",
+     "y": "-27 + 50*wat + mod(rand(i + 100)*40 + 25*t, 40)"
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "T",
+     "length": 2000,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "T",
+     "r": 1.2,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "Q < Q1",
+     "x": 50,
+     "y": 118,
+     "text": {
+      "en": "Ice warming",
+      "kn": "ಮಂಜು ಬಿಸಿಯಾಗುತ್ತಿದೆ"
+     },
+     "size": 26,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "Q >= Q1 && Q < Q2",
+     "x": 50,
+     "y": 118,
+     "text": {
+      "en": "Melting at 0 °C",
+      "kn": "0 °C ನಲ್ಲಿ ಕರಗುತ್ತಿದೆ"
+     },
+     "size": 26,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "Q >= Q2 && Q < Q3",
+     "x": 50,
+     "y": 118,
+     "text": {
+      "en": "Water warming",
+      "kn": "ನೀರು ಬಿಸಿಯಾಗುತ್ತಿದೆ"
+     },
+     "size": 26,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "Q >= Q3",
+     "x": 50,
+     "y": 118,
+     "text": {
+      "en": "Boiling at 100 °C",
+      "kn": "100 °C ನಲ್ಲಿ ಕುದಿಯುತ್ತಿದೆ"
+     },
+     "size": 26,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Heat supplied",
+      "kn": "ಕೊಟ್ಟ ಉಷ್ಣ"
+     },
+     "expr": "Q",
+     "digits": 0,
+     "unit": "kJ"
+    },
+    {
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪ"
+     },
+     "expr": "T",
+     "digits": 1,
+     "unit": "°C"
+    },
+    {
+     "label": {
+      "en": "Ice left",
+      "kn": "ಉಳಿದ ಮಂಜು"
+     },
+     "expr": "ice",
+     "digits": 3,
+     "unit": "kg"
+    },
+    {
+     "label": {
+      "en": "Boiled away",
+      "kn": "ಆವಿಯಾದದ್ದು"
+     },
+     "expr": "stm",
+     "digits": 3,
+     "unit": "kg"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Which flat part is longer, melting or boiling? Why?",
+     "kn": "ಯಾವ ಸಮತಟ್ಟು ಭಾಗ ಉದ್ದ, ಕರಗುವಿಕೆಯೇ ಕುದಿಯುವಿಕೆಯೇ? ಏಕೆ?"
+    },
+    {
+     "en": "Double the heater power. What happens to the graph?",
+     "kn": "ಹೀಟರ್ ಸಾಮರ್ಥ್ಯ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ನಕ್ಷೆಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "While the ice melts, where does the heat go if the temperature does not rise?",
+     "kn": "ಮಂಜು ಕರಗುವಾಗ ತಾಪ ಏರದಿದ್ದರೆ ಉಷ್ಣ ಎಲ್ಲಿ ಹೋಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -559,6 +559,304 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Hydraulic lift",
+    "kn": "ಹೈಡ್ರಾಲಿಕ್ ಎತ್ತುಗ"
+   },
+   "narration": {
+    "en": "Drag the small piston down. The pressure F₁/A₁ is passed undiminished to every part of the liquid (Pascal's law), so the big piston feels F₂ = F₁ A₂/A₁. The big piston rises only A₁/A₂ as far, so the work in equals the work out.",
+    "kn": "ಸಣ್ಣ ಪಿಸ್ಟನ್ ಅನ್ನು ಕೆಳಗೆ ಎಳೆಯಿರಿ. ಒತ್ತಡ F₁/A₁ ದ್ರವದ ಪ್ರತಿ ಭಾಗಕ್ಕೂ ಕಡಿಮೆಯಾಗದೆ ಹರಡುತ್ತದೆ (ಪಾಸ್ಕಲ್ ನಿಯಮ), ಹಾಗಾಗಿ ದೊಡ್ಡ ಪಿಸ್ಟನ್ ಮೇಲೆ F₂ = F₁ A₂/A₁. ದೊಡ್ಡ ಪಿಸ್ಟನ್ A₁/A₂ ಪಟ್ಟು ಮಾತ್ರ ಏರುತ್ತದೆ, ಹಾಗಾಗಿ ಒಳಗಿನ ಕೆಲಸ = ಹೊರಗಿನ ಕೆಲಸ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the small piston down. The pressure F₁/A₁ is passed undiminished to every part of the liquid (Pascal's law), so the big piston feels F₂ = F₁ A₂/A₁. The big piston rises only A₁/A₂ as far, so the work in equals the work out.",
+    "kn": "ಸಣ್ಣ ಪಿಸ್ಟನ್ ಅನ್ನು ಕೆಳಗೆ ಎಳೆಯಿರಿ. ಒತ್ತಡ F₁/A₁ ದ್ರವದ ಪ್ರತಿ ಭಾಗಕ್ಕೂ ಕಡಿಮೆಯಾಗದೆ ಹರಡುತ್ತದೆ (ಪಾಸ್ಕಲ್ ನಿಯಮ), ಹಾಗಾಗಿ ದೊಡ್ಡ ಪಿಸ್ಟನ್ ಮೇಲೆ F₂ = F₁ A₂/A₁. ದೊಡ್ಡ ಪಿಸ್ಟನ್ A₁/A₂ ಪಟ್ಟು ಮಾತ್ರ ಏರುತ್ತದೆ, ಹಾಗಾಗಿ ಒಳಗಿನ ಕೆಲಸ = ಹೊರಗಿನ ಕೆಲಸ."
+   },
+   "sliders": [
+    {
+     "name": "F1",
+     "label": {
+      "en": "Push on small piston",
+      "kn": "ಸಣ್ಣ ಪಿಸ್ಟನ್ ಮೇಲಿನ ತಳ್ಳುವಿಕೆ"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 10,
+     "value": 100,
+     "unit": "N"
+    },
+    {
+     "name": "A1",
+     "label": {
+      "en": "Small piston area",
+      "kn": "ಸಣ್ಣ ಪಿಸ್ಟನ್ ವಿಸ್ತೀರ್ಣ"
+     },
+     "min": 5,
+     "max": 25,
+     "step": 1,
+     "value": 10,
+     "unit": "cm²"
+    },
+    {
+     "name": "A2",
+     "label": {
+      "en": "Big piston area",
+      "kn": "ದೊಡ್ಡ ಪಿಸ್ಟನ್ ವಿಸ್ತೀರ್ಣ"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 25,
+     "value": 500,
+     "unit": "cm²"
+    }
+   ],
+   "handles": [
+    {
+     "name": "S",
+     "label": "push",
+     "x": -4,
+     "y": 4,
+     "axis": "y",
+     "box": {
+      "x": [
+       -4,
+       -4
+      ],
+      "y": [
+       1,
+       4
+      ]
+     },
+     "snap": 0.05,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "w1",
+     "expr": "0.1*sqrt(A1)"
+    },
+    {
+     "name": "w2",
+     "expr": "0.1*sqrt(A2)"
+    },
+    {
+     "name": "d1",
+     "expr": "10*(4 - S_y)"
+    },
+    {
+     "name": "d2",
+     "expr": "10*(4 - S_y)*A1/A2"
+    },
+    {
+     "name": "d2u",
+     "expr": "(4 - S_y)*A1/A2"
+    },
+    {
+     "name": "F2",
+     "expr": "F1*A2/A1"
+    }
+   ],
+   "view": {
+    "x": [
+     -6,
+     7
+    ],
+    "y": [
+     -1.6,
+     6.2
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -4,
+     "y": -1,
+     "w": 7,
+     "h": 0.9,
+     "color": "blue",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": "-4 - w1",
+     "y": -1,
+     "w": "2*w1",
+     "h": "S_y + 1",
+     "color": "blue",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": "3 - w2",
+     "y": -1,
+     "w": "2*w2",
+     "h": "2 + d2u",
+     "color": "blue",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": "-4 - w1",
+     "y1": -1,
+     "x2": "-4 - w1",
+     "y2": 4.4,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "-4 + w1",
+     "y1": 0,
+     "x2": "-4 + w1",
+     "y2": 4.4,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "3 - w2",
+     "y1": 0,
+     "x2": "3 - w2",
+     "y2": 2.6,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "3 + w2",
+     "y1": -1,
+     "x2": "3 + w2",
+     "y2": 2.6,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "-4 - w1",
+     "y1": -1,
+     "x2": "3 + w2",
+     "y2": -1,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": "-4 - w1",
+     "y": "S_y",
+     "w": "2*w1",
+     "h": 0.2,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": "3 - w2",
+     "y": "1 + d2u",
+     "w": "2*w2",
+     "h": 0.2,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": "3 - 1.3",
+     "y": "1.2 + d2u",
+     "w": 2.6,
+     "h": 0.9,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": 2.3,
+     "y": "1.2 + d2u",
+     "r": 0.3,
+     "color": "white"
+    },
+    {
+     "shape": "circle",
+     "x": 3.7,
+     "y": "1.2 + d2u",
+     "r": 0.3,
+     "color": "white"
+    },
+    {
+     "shape": "arrow",
+     "x": -4,
+     "y": "S_y + 0.2 + F1/250",
+     "dx": 0,
+     "dy": "-F1/250",
+     "color": "yellow",
+     "label": "F₁"
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 5.7,
+     "text": {
+      "en": "Work in {F1*d1/100:1} J = work out {F2*d2/100:1} J",
+      "kn": "ಒಳಗಿನ ಕೆಲಸ {F1*d1/100:1} J = ಹೊರಗಿನ ಕೆಲಸ {F2*d2/100:1} J"
+     },
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Pressure in the liquid",
+      "kn": "ದ್ರವದಲ್ಲಿನ ಒತ್ತಡ"
+     },
+     "expr": "10*F1/A1",
+     "digits": 1,
+     "unit": "kPa"
+    },
+    {
+     "label": {
+      "en": "Force on big piston F₂",
+      "kn": "ದೊಡ್ಡ ಪಿಸ್ಟನ್ ಮೇಲಿನ ಬಲ F₂"
+     },
+     "expr": "F2",
+     "digits": 0,
+     "unit": "N"
+    },
+    {
+     "label": {
+      "en": "Mass it can lift",
+      "kn": "ಎತ್ತಬಲ್ಲ ದ್ರವ್ಯರಾಶಿ"
+     },
+     "expr": "F2/9.8",
+     "digits": 0,
+     "unit": "kg"
+    },
+    {
+     "label": {
+      "en": "Big piston rises",
+      "kn": "ದೊಡ್ಡ ಪಿಸ್ಟನ್ ಏರಿಕೆ"
+     },
+     "expr": "d2",
+     "digits": 2,
+     "unit": "cm"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find a setting where a 100 N push lifts a 1000 kg car.",
+     "kn": "100 N ತಳ್ಳುವಿಕೆ 1000 kg ಕಾರನ್ನು ಎತ್ತುವ ಸೆಟ್ಟಿಂಗ್ ಹುಡುಕಿ."
+    },
+    {
+     "en": "Push the small piston down 30 cm. How far does the car rise?",
+     "kn": "ಸಣ್ಣ ಪಿಸ್ಟನ್ ಅನ್ನು 30 cm ಕೆಳಗೆ ತಳ್ಳಿ. ಕಾರು ಎಷ್ಟು ಏರುತ್ತದೆ?"
+    },
+    {
+     "en": "Is the force multiplied for free? Compare the work in and out.",
+     "kn": "ಬಲ ಉಚಿತವಾಗಿ ಹೆಚ್ಚುತ್ತದೆಯೇ? ಒಳಗಿನ ಮತ್ತು ಹೊರಗಿನ ಕೆಲಸ ಹೋಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

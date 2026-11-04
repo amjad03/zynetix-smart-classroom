@@ -430,6 +430,277 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Which motions repeat?",
+    "kn": "ಯಾವ ಚಲನೆಗಳು ಪುನರಾವರ್ತಿಸುತ್ತವೆ?"
+   },
+   "narration": {
+    "en": "A motion that repeats itself after a fixed time, the period T, is periodic. If it also goes to and fro about a mean position it is oscillatory. Circular motion is periodic but not oscillatory; a swing is both; a bouncing ball repeats but is not simple harmonic; a dying swing never repeats exactly. Watch the graph on the right.",
+    "kn": "ನಿಗದಿತ ಸಮಯ T ನಂತರ ಪುನರಾವರ್ತಿಸುವ ಚಲನೆ ಆವರ್ತಕ. ಅದು ಸರಾಸರಿ ಸ್ಥಾನದ ಸುತ್ತ ಹಿಂದೆ-ಮುಂದೆ ಹೋದರೆ ಆಂದೋಲನ. ವೃತ್ತೀಯ ಚಲನೆ ಆವರ್ತಕ ಆದರೆ ಆಂದೋಲನವಲ್ಲ; ಉಯ್ಯಾಲೆ ಎರಡೂ; ಪುಟಿಯುವ ಚೆಂಡು ಪುನರಾವರ್ತಿಸುತ್ತದೆ ಆದರೆ ಸರಳ ಹಾರ್ಮೋನಿಕ್ ಅಲ್ಲ; ಕುಂದುವ ಉಯ್ಯಾಲೆ ಎಂದೂ ಸರಿಯಾಗಿ ಪುನರಾವರ್ತಿಸದು. ಬಲಗಡೆಯ ನಕ್ಷೆ ನೋಡಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A motion that repeats itself after a fixed time, the period T, is periodic. If it also goes to and fro about a mean position it is oscillatory. Circular motion is periodic but not oscillatory; a swing is both; a bouncing ball repeats but is not simple harmonic; a dying swing never repeats exactly. Watch the graph on the right.",
+    "kn": "ನಿಗದಿತ ಸಮಯ T ನಂತರ ಪುನರಾವರ್ತಿಸುವ ಚಲನೆ ಆವರ್ತಕ. ಅದು ಸರಾಸರಿ ಸ್ಥಾನದ ಸುತ್ತ ಹಿಂದೆ-ಮುಂದೆ ಹೋದರೆ ಆಂದೋಲನ. ವೃತ್ತೀಯ ಚಲನೆ ಆವರ್ತಕ ಆದರೆ ಆಂದೋಲನವಲ್ಲ; ಉಯ್ಯಾಲೆ ಎರಡೂ; ಪುಟಿಯುವ ಚೆಂಡು ಪುನರಾವರ್ತಿಸುತ್ತದೆ ಆದರೆ ಸರಳ ಹಾರ್ಮೋನಿಕ್ ಅಲ್ಲ; ಕುಂದುವ ಉಯ್ಯಾಲೆ ಎಂದೂ ಸರಿಯಾಗಿ ಪುನರಾವರ್ತಿಸದು. ಬಲಗಡೆಯ ನಕ್ಷೆ ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "T",
+     "label": {
+      "en": "Period",
+      "kn": "ಆವರ್ತ ಕಾಲ"
+     },
+     "min": 0.5,
+     "max": 4,
+     "step": 0.1,
+     "value": 2,
+     "unit": "s"
+    }
+   ],
+   "choices": [
+    {
+     "name": "mo",
+     "label": {
+      "en": "Motion",
+      "kn": "ಚಲನೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Going round",
+        "kn": "ಸುತ್ತುವುದು"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Swing",
+        "kn": "ಉಯ್ಯಾಲೆ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Bouncing ball",
+        "kn": "ಪುಟಿಯುವ ಚೆಂಡು"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Dying swing",
+        "kn": "ಕುಂದುವ ಉಯ್ಯಾಲೆ"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 12,
+    "autoplay": true,
+    "loop": true
+   },
+   "vars": [
+    {
+     "name": "w",
+     "expr": "2*pi/T"
+    },
+    {
+     "name": "s",
+     "expr": "mod(t/T, 1)"
+    },
+    {
+     "name": "yg",
+     "expr": "if(mo == 3, -2 + 16*mod(t/T, 1)*(1 - mod(t/T, 1)), if(mo == 4, 2*exp(-0.25*t), 2)*sin(2*pi*t/T))"
+    },
+    {
+     "name": "ox",
+     "expr": "if(mo == 1, -3 + 2*cos(2*pi*t/T), if(mo == 3, -3, -3 + 2*if(mo == 4, exp(-0.25*t), 1)*sin(2*pi*t/T)))"
+    },
+    {
+     "name": "oy",
+     "expr": "if(mo == 1, 2*sin(2*pi*t/T), if(mo == 3, -2 + 16*mod(t/T, 1)*(1 - mod(t/T, 1)), 0))"
+    }
+   ],
+   "view": {
+    "x": [
+     -5.5,
+     17
+    ],
+    "y": [
+     -3,
+     3.4
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "visibleIf": "mo == 1",
+     "x": -3,
+     "y": 0,
+     "r": 2,
+     "fill": false,
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "mo == 2 || mo == 4",
+     "x1": -5,
+     "y1": 0,
+     "x2": -1,
+     "y2": 0,
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "mo == 3",
+     "x1": -4.2,
+     "y1": -2.15,
+     "x2": -1.8,
+     "y2": -2.15,
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "circle",
+     "x": "ox",
+     "y": "oy",
+     "r": 0.3,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": 0,
+     "x2": 16.5,
+     "y2": 0,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": -2.6,
+     "x2": 4,
+     "y2": 2.6,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "trail",
+     "x": "4 + t",
+     "y": "yg",
+     "length": 1200,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 16.5,
+     "y": -2.7,
+     "align": "right",
+     "text": {
+      "en": "time (0 to 12 s) →",
+      "kn": "ಸಮಯ (0 ರಿಂದ 12 s) →"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "visibleIf": "mo == 1",
+     "x": 6,
+     "y": 3.0,
+     "text": {
+      "en": "Periodic, not oscillatory",
+      "kn": "ಆವರ್ತಕ, ಆಂದೋಲನವಲ್ಲ"
+     },
+     "size": 26,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "mo == 2",
+     "x": 6,
+     "y": 3.0,
+     "text": {
+      "en": "Periodic and oscillatory (simple harmonic)",
+      "kn": "ಆವರ್ತಕ ಮತ್ತು ಆಂದೋಲನ (ಸರಳ ಹಾರ್ಮೋನಿಕ್)"
+     },
+     "size": 26,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "mo == 3",
+     "x": 6,
+     "y": 3.0,
+     "text": {
+      "en": "Periodic, but not simple harmonic",
+      "kn": "ಆವರ್ತಕ, ಆದರೆ ಸರಳ ಹಾರ್ಮೋನಿಕ್ ಅಲ್ಲ"
+     },
+     "size": 26,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "mo == 4",
+     "x": 6,
+     "y": 3.0,
+     "text": {
+      "en": "Not periodic: it never repeats exactly",
+      "kn": "ಆವರ್ತಕವಲ್ಲ: ಸರಿಯಾಗಿ ಪುನರಾವರ್ತಿಸದು"
+     },
+     "size": 26,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Frequency 1/T",
+      "kn": "ಆವೃತ್ತಿ 1/T"
+     },
+     "expr": "1/T",
+     "digits": 2,
+     "unit": "Hz"
+    },
+    {
+     "label": {
+      "en": "Angular frequency 2π/T",
+      "kn": "ಕೋನೀಯ ಆವೃತ್ತಿ 2π/T"
+     },
+     "expr": "2*pi/T",
+     "digits": 2,
+     "unit": "rad/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set T = 2 s. How many complete cycles appear on the 12 s graph?",
+     "kn": "T = 2 s ಮಾಡಿ. 12 s ನಕ್ಷೆಯಲ್ಲಿ ಎಷ್ಟು ಪೂರ್ಣ ಚಕ್ರಗಳಿವೆ?"
+    },
+    {
+     "en": "Compare the graphs of the swing and the bouncing ball. Both repeat; how do their shapes differ?",
+     "kn": "ಉಯ್ಯಾಲೆ ಮತ್ತು ಪುಟಿಯುವ ಚೆಂಡಿನ ನಕ್ಷೆ ಹೋಲಿಸಿ. ಎರಡೂ ಪುನರಾವರ್ತಿಸುತ್ತವೆ; ಆಕಾರಗಳು ಹೇಗೆ ಭಿನ್ನ?"
+    },
+    {
+     "en": "Why is the dying swing not periodic, even though it has a regular rhythm?",
+     "kn": "ಕುಂದುವ ಉಯ್ಯಾಲೆಗೆ ಲಯ ಇದ್ದರೂ ಅದು ಏಕೆ ಆವರ್ತಕವಲ್ಲ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

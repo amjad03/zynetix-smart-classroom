@@ -367,6 +367,223 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "How far between collisions?",
+    "kn": "ಘರ್ಷಣೆಗಳ ನಡುವೆ ಎಷ್ಟು ದೂರ?"
+   },
+   "narration": {
+    "en": "The green molecule runs straight for one mean free path λ = kT/(√2 π d² P), then a collision sends it off in a new direction. Lower pressure or smaller molecules give longer free paths. Here 1 grid unit is 100 nm; the molecules are drawn far larger than their real size (about 0.3 nm).",
+    "kn": "ಹಸಿರು ಅಣು ಒಂದು ಸರಾಸರಿ ಮುಕ್ತ ಪಥ λ = kT/(√2 π d² P) ನೇರವಾಗಿ ಓಡುತ್ತದೆ, ನಂತರ ಘರ್ಷಣೆ ಅದನ್ನು ಹೊಸ ದಿಕ್ಕಿಗೆ ಕಳುಹಿಸುತ್ತದೆ. ಕಡಿಮೆ ಒತ್ತಡ ಅಥವಾ ಸಣ್ಣ ಅಣುಗಳು ಉದ್ದ ಮುಕ್ತ ಪಥ ಕೊಡುತ್ತವೆ. ಇಲ್ಲಿ 1 ಘಟಕ = 100 nm; ಅಣುಗಳನ್ನು ನಿಜ ಗಾತ್ರಕ್ಕಿಂತ ತುಂಬಾ ದೊಡ್ಡದಾಗಿ ಚಿತ್ರಿಸಲಾಗಿದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The green molecule runs straight for one mean free path λ = kT/(√2 π d² P), then a collision sends it off in a new direction. Lower pressure or smaller molecules give longer free paths. Here 1 grid unit is 100 nm; the molecules are drawn far larger than their real size (about 0.3 nm).",
+    "kn": "ಹಸಿರು ಅಣು ಒಂದು ಸರಾಸರಿ ಮುಕ್ತ ಪಥ λ = kT/(√2 π d² P) ನೇರವಾಗಿ ಓಡುತ್ತದೆ, ನಂತರ ಘರ್ಷಣೆ ಅದನ್ನು ಹೊಸ ದಿಕ್ಕಿಗೆ ಕಳುಹಿಸುತ್ತದೆ. ಕಡಿಮೆ ಒತ್ತಡ ಅಥವಾ ಸಣ್ಣ ಅಣುಗಳು ಉದ್ದ ಮುಕ್ತ ಪಥ ಕೊಡುತ್ತವೆ. ಇಲ್ಲಿ 1 ಘಟಕ = 100 nm; ಅಣುಗಳನ್ನು ನಿಜ ಗಾತ್ರಕ್ಕಿಂತ ತುಂಬಾ ದೊಡ್ಡದಾಗಿ ಚಿತ್ರಿಸಲಾಗಿದೆ."
+   },
+   "sliders": [
+    {
+     "name": "Pa",
+     "label": {
+      "en": "Pressure",
+      "kn": "ಒತ್ತಡ"
+     },
+     "min": 0.25,
+     "max": 2,
+     "step": 0.05,
+     "value": 1,
+     "unit": "atm"
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "Molecular diameter",
+      "kn": "ಅಣುವಿನ ವ್ಯಾಸ"
+     },
+     "min": 0.2,
+     "max": 0.5,
+     "step": 0.01,
+     "value": 0.3,
+     "unit": "nm"
+    },
+    {
+     "name": "T",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪಮಾನ"
+     },
+     "min": 200,
+     "max": 600,
+     "step": 20,
+     "value": 300,
+     "unit": "K"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Restart the walk",
+      "kn": "ನಡಿಗೆ ಮರುಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 40,
+    "loop": true,
+    "autoplay": true,
+    "dt": 0.005
+   },
+   "vars": [
+    {
+     "name": "lam",
+     "expr": "0.030677*T/(d^2*Pa)"
+    },
+    {
+     "name": "Ls",
+     "expr": "lam/100"
+    },
+    {
+     "name": "ph",
+     "expr": "2*pi*rand(floor(3*t/Ls))"
+    },
+    {
+     "name": "nv",
+     "expr": "min(300, 60*Pa*300/T)"
+    }
+   ],
+   "state": [
+    {
+     "name": "X",
+     "init": 10,
+     "rate": "3*cos(ph)"
+    },
+    {
+     "name": "Y",
+     "init": 5.5,
+     "rate": "3*sin(ph)"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     11
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 20,
+     "h": 11,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 300,
+     "visibleIf": "i < nv",
+     "r": "0.35*d",
+     "color": "blue",
+     "opacity": 0.7,
+     "x": "0.2 + 19.6*rand(i) + 0.08*sin(6*t + 6.28*rand(i + 300))",
+     "y": "0.2 + 10.6*rand(i + 150) + 0.08*cos(6*t + 6.28*rand(i + 600))"
+    },
+    {
+     "shape": "trail",
+     "x": "bounce(X, 0.2, 19.8)",
+     "y": "bounce(Y, 0.2, 10.8)",
+     "length": 600,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "bounce(X, 0.2, 19.8)",
+     "y": "bounce(Y, 0.2, 10.8)",
+     "r": 0.22,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": 10.4,
+     "x2": "0.5 + Ls",
+     "y2": 10.4,
+     "color": "yellow",
+     "width": 6
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 9.8,
+     "align": "left",
+     "text": {
+      "en": "λ = {lam:0} nm",
+      "kn": "λ = {lam:0} nm"
+     },
+     "size": 24,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mean free path λ",
+      "kn": "ಸರಾಸರಿ ಮುಕ್ತ ಪಥ λ"
+     },
+     "expr": "lam",
+     "digits": 0,
+     "unit": "nm"
+    },
+    {
+     "label": {
+      "en": "Molecules per m³",
+      "kn": "ಪ್ರತಿ m³ ಅಣುಗಳು"
+     },
+     "expr": "733.7*Pa/T",
+     "digits": 2,
+     "unit": "× 10²⁵"
+    },
+    {
+     "label": {
+      "en": "Collisions per second (N₂)",
+      "kn": "ಪ್ರತಿ ಸೆಕೆಂಡ್ ಘರ್ಷಣೆಗಳು (N₂)"
+     },
+     "expr": "sqrt(756.1*T)/lam",
+     "digits": 2,
+     "unit": "× 10⁹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Halve the pressure. What happens to λ?",
+     "kn": "ಒತ್ತಡ ಅರ್ಧ ಮಾಡಿ. λ ಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Double the molecular diameter. Is λ halved or quartered?",
+     "kn": "ಅಣುವಿನ ವ್ಯಾಸ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. λ ಅರ್ಧವೇ, ನಾಲ್ಕನೇ ಒಂದೇ?"
+    },
+    {
+     "en": "At 1 atm, about how many molecular diameters long is a free path?",
+     "kn": "1 atm ನಲ್ಲಿ ಒಂದು ಮುಕ್ತ ಪಥ ಸುಮಾರು ಎಷ್ಟು ಅಣು ವ್ಯಾಸಗಳಷ್ಟು ಉದ್ದ?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

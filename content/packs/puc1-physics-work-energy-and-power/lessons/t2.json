@@ -318,6 +318,291 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Work changes kinetic energy",
+    "kn": "ಕೆಲಸ ಚಲನ ಶಕ್ತಿಯನ್ನು ಬದಲಿಸುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "A steady force F acts on the block over a distance s (negative F brakes it). The work done, Fs, equals the change in kinetic energy: K_f − K_i = W (work–energy theorem). The bars show K at the start, the work done so far, and K now.",
+    "kn": "ಸ್ಥಿರ ಬಲ F ಬ್ಲಾಕ್‌ನ ಮೇಲೆ s ದೂರ ವರ್ತಿಸುತ್ತದೆ (ಋಣ F ಬ್ರೇಕ್ ಹಾಕುತ್ತದೆ). ಮಾಡಿದ ಕೆಲಸ Fs ಚಲನ ಶಕ್ತಿಯ ಬದಲಾವಣೆಗೆ ಸಮ: K_f − K_i = W (ಕೆಲಸ–ಶಕ್ತಿ ಪ್ರಮೇಯ). ಪಟ್ಟಿಗಳು ಆರಂಭದ K, ಇಲ್ಲಿಯವರೆಗಿನ ಕೆಲಸ ಮತ್ತು ಈಗಿನ K ತೋರಿಸುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A steady force F acts on the block over a distance s (negative F brakes it). The work done, Fs, equals the change in kinetic energy: K_f − K_i = W (work–energy theorem). The bars show K at the start, the work done so far, and K now.",
+    "kn": "ಸ್ಥಿರ ಬಲ F ಬ್ಲಾಕ್‌ನ ಮೇಲೆ s ದೂರ ವರ್ತಿಸುತ್ತದೆ (ಋಣ F ಬ್ರೇಕ್ ಹಾಕುತ್ತದೆ). ಮಾಡಿದ ಕೆಲಸ Fs ಚಲನ ಶಕ್ತಿಯ ಬದಲಾವಣೆಗೆ ಸಮ: K_f − K_i = W (ಕೆಲಸ–ಶಕ್ತಿ ಪ್ರಮೇಯ). ಪಟ್ಟಿಗಳು ಆರಂಭದ K, ಇಲ್ಲಿಯವರೆಗಿನ ಕೆಲಸ ಮತ್ತು ಈಗಿನ K ತೋರಿಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Mass",
+      "kn": "ದ್ರವ್ಯರಾಶಿ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 2,
+     "unit": "kg"
+    },
+    {
+     "name": "u",
+     "label": {
+      "en": "Starting speed",
+      "kn": "ಆರಂಭದ ವೇಗ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 0.5,
+     "value": 3,
+     "unit": "m/s"
+    },
+    {
+     "name": "F",
+     "label": {
+      "en": "Force (− brakes)",
+      "kn": "ಬಲ (− ಬ್ರೇಕ್)"
+     },
+     "min": -20,
+     "max": 20,
+     "step": 1,
+     "value": 6,
+     "unit": "N"
+    },
+    {
+     "name": "s",
+     "label": {
+      "en": "Distance the force acts",
+      "kn": "ಬಲ ವರ್ತಿಸುವ ದೂರ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 5,
+     "unit": "m"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Go",
+      "kn": "ಹೊರಡಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 10,
+    "dt": 0.005,
+    "stopWhen": "!go"
+   },
+   "vars": [
+    {
+     "name": "go",
+     "expr": "xx < s && (vv > 0 || F > 0)"
+    },
+    {
+     "name": "W",
+     "expr": "F*xx"
+    },
+    {
+     "name": "K",
+     "expr": "0.5*m*vv^2"
+    },
+    {
+     "name": "K0",
+     "expr": "0.5*m*u^2"
+    }
+   ],
+   "state": [
+    {
+     "name": "xx",
+     "init": 0,
+     "rate": "vv*go"
+    },
+    {
+     "name": "vv",
+     "init": "u",
+     "rate": "F/m*go"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     -1,
+     12
+    ],
+    "y": [
+     -3.9,
+     3.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -1,
+     "y1": 0,
+     "x2": 12,
+     "y2": 0,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "s + 0.9",
+     "y1": -0.3,
+     "x2": "s + 0.9",
+     "y2": 1.6,
+     "color": "red",
+     "dashed": true
+    },
+    {
+     "shape": "rect",
+     "x": "xx",
+     "y": 0,
+     "w": 0.9,
+     "h": 0.9,
+     "color": "blue"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "go && F != 0",
+     "x": "xx + 0.45",
+     "y": 1.4,
+     "dx": "F/8",
+     "dy": 0,
+     "color": "yellow",
+     "label": "F"
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": -1.45,
+     "w": "K0/100",
+     "h": 0.5,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 2.8,
+     "y": -1.2,
+     "align": "right",
+     "text": {
+      "en": "K at start",
+      "kn": "ಆರಂಭದ K"
+     },
+     "size": 22,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": "3 + min(W, 0)/100",
+     "y": -2.45,
+     "w": "abs(W)/100 + 0.001",
+     "h": 0.5,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 2.8,
+     "y": "-2.2",
+     "align": "right",
+     "text": {
+      "en": "work done",
+      "kn": "ಮಾಡಿದ ಕೆಲಸ"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": -3.45,
+     "w": "K/100",
+     "h": 0.5,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2.8,
+     "y": -3.2,
+     "align": "right",
+     "text": {
+      "en": "K now",
+      "kn": "ಈಗಿನ K"
+     },
+     "size": 22,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": -3.6,
+     "x2": 3,
+     "y2": -0.8,
+     "color": "white",
+     "opacity": 0.6
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Work done so far",
+      "kn": "ಇಲ್ಲಿಯವರೆಗಿನ ಕೆಲಸ"
+     },
+     "expr": "W",
+     "digits": 1,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "Change in K",
+      "kn": "K ಬದಲಾವಣೆ"
+     },
+     "expr": "K - K0",
+     "digits": 1,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "Speed now",
+      "kn": "ಈಗಿನ ವೇಗ"
+     },
+     "expr": "vv",
+     "digits": 2,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Predicted final speed",
+      "kn": "ಊಹಿತ ಅಂತಿಮ ವೇಗ"
+     },
+     "expr": "sqrt(max(u^2 + 2*F*s/m, 0))",
+     "digits": 2,
+     "unit": "m/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Check that K now = K at start + work done, at every moment.",
+     "kn": "ಪ್ರತಿ ಕ್ಷಣ ಈಗಿನ K = ಆರಂಭದ K + ಮಾಡಿದ ಕೆಲಸ ಎಂದು ಪರಿಶೀಲಿಸಿ."
+    },
+    {
+     "en": "Make F negative. How far does the block go before it stops?",
+     "kn": "F ಋಣ ಮಾಡಿ. ಬ್ಲಾಕ್ ನಿಲ್ಲುವ ಮುಂಚೆ ಎಷ್ಟು ದೂರ ಹೋಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Double the starting speed while braking. Is the stopping distance doubled or quadrupled?",
+     "kn": "ಬ್ರೇಕ್ ಹಾಕುವಾಗ ಆರಂಭದ ವೇಗ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ನಿಲ್ಲುವ ದೂರ ಎರಡು ಪಟ್ಟೇ ನಾಲ್ಕು ಪಟ್ಟೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

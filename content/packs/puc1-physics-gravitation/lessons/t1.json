@@ -602,6 +602,388 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Planet on an elliptical orbit",
+    "kn": "ದೀರ್ಘವೃತ್ತ ಕಕ್ಷೆಯಲ್ಲಿ ಗ್ರಹ"
+   },
+   "narration": {
+    "en": "The planet is moved by the Sun's gravity alone, worked out step by step. It speeds up near the Sun and slows down far away, yet the area swept per year by the Sun–planet line stays the same (Kepler's second law). The period follows T² ∝ a³ (third law): with a in AU, T = a^1.5 years.",
+    "kn": "ಗ್ರಹವನ್ನು ಸೂರ್ಯನ ಗುರುತ್ವ ಮಾತ್ರ ಚಲಿಸುತ್ತದೆ. ಸೂರ್ಯನ ಹತ್ತಿರ ವೇಗ ಹೆಚ್ಚು, ದೂರದಲ್ಲಿ ಕಡಿಮೆ; ಆದರೂ ಸೂರ್ಯ–ಗ್ರಹ ರೇಖೆ ಪ್ರತಿ ವರ್ಷ ಗುಡಿಸುವ ವಿಸ್ತೀರ್ಣ ಒಂದೇ (ಕೆಪ್ಲರನ ಎರಡನೇ ನಿಯಮ). ಆವರ್ತ ಕಾಲ T² ∝ a³ (ಮೂರನೇ ನಿಯಮ): a ಅನ್ನು AU ನಲ್ಲಿ ಕೊಟ್ಟರೆ T = a^1.5 ವರ್ಷ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The planet is moved by the Sun's gravity alone, worked out step by step. It speeds up near the Sun and slows down far away, yet the area swept per year by the Sun–planet line stays the same (Kepler's second law). The period follows T² ∝ a³ (third law): with a in AU, T = a^1.5 years.",
+    "kn": "ಗ್ರಹವನ್ನು ಸೂರ್ಯನ ಗುರುತ್ವ ಮಾತ್ರ ಚಲಿಸುತ್ತದೆ. ಸೂರ್ಯನ ಹತ್ತಿರ ವೇಗ ಹೆಚ್ಚು, ದೂರದಲ್ಲಿ ಕಡಿಮೆ; ಆದರೂ ಸೂರ್ಯ–ಗ್ರಹ ರೇಖೆ ಪ್ರತಿ ವರ್ಷ ಗುಡಿಸುವ ವಿಸ್ತೀರ್ಣ ಒಂದೇ (ಕೆಪ್ಲರನ ಎರಡನೇ ನಿಯಮ). ಆವರ್ತ ಕಾಲ T² ∝ a³ (ಮೂರನೇ ನಿಯಮ): a ಅನ್ನು AU ನಲ್ಲಿ ಕೊಟ್ಟರೆ T = a^1.5 ವರ್ಷ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Semi-major axis",
+      "kn": "ಅರೆ-ದೀರ್ಘ ಅಕ್ಷ"
+     },
+     "min": 0.6,
+     "max": 2.0,
+     "step": 0.05,
+     "value": 1.0,
+     "unit": "AU"
+    },
+    {
+     "name": "ecc",
+     "label": {
+      "en": "Eccentricity",
+      "kn": "ಉತ್ಕೇಂದ್ರತೆ"
+     },
+     "min": 0,
+     "max": 0.75,
+     "step": 0.05,
+     "value": 0.5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sline",
+     "label": {
+      "en": "Sun–planet line",
+      "kn": "ಸೂರ್ಯ–ಗ್ರಹ ರೇಖೆ"
+     },
+     "value": true
+    },
+    {
+     "name": "vel",
+     "label": {
+      "en": "Velocity arrow",
+      "kn": "ವೇಗ ಬಾಣ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 6,
+    "dt": 0.0005,
+    "unit": "yr",
+    "speeds": [
+     0.25,
+     0.5,
+     1,
+     2
+    ],
+    "speed": 0.5
+   },
+   "vars": [
+    {
+     "name": "r",
+     "expr": "hypot(px, py)"
+    },
+    {
+     "name": "r3",
+     "expr": "hypot(px, py)^3"
+    },
+    {
+     "name": "vk",
+     "expr": "4.74*hypot(vx, vy)"
+    }
+   ],
+   "state": [
+    {
+     "name": "px",
+     "init": "a*(1 - ecc)",
+     "rate": "vx"
+    },
+    {
+     "name": "py",
+     "init": 0,
+     "rate": "vy"
+    },
+    {
+     "name": "vx",
+     "init": 0,
+     "rate": "-39.478*px/r3"
+    },
+    {
+     "name": "vy",
+     "init": "sqrt(39.478*(1 + ecc)/(a*(1 - ecc)))",
+     "rate": "-39.478*py/r3"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     -3.6,
+     2.4
+    ],
+    "y": [
+     -2.2,
+     2.2
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "points": [
+      [
+       "a*(cos(0.0000) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(0.0000)"
+      ],
+      [
+       "a*(cos(0.1963) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(0.1963)"
+      ],
+      [
+       "a*(cos(0.3927) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(0.3927)"
+      ],
+      [
+       "a*(cos(0.5890) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(0.5890)"
+      ],
+      [
+       "a*(cos(0.7854) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(0.7854)"
+      ],
+      [
+       "a*(cos(0.9817) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(0.9817)"
+      ],
+      [
+       "a*(cos(1.1781) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(1.1781)"
+      ],
+      [
+       "a*(cos(1.3744) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(1.3744)"
+      ],
+      [
+       "a*(cos(1.5708) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(1.5708)"
+      ],
+      [
+       "a*(cos(1.7671) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(1.7671)"
+      ],
+      [
+       "a*(cos(1.9635) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(1.9635)"
+      ],
+      [
+       "a*(cos(2.1598) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(2.1598)"
+      ],
+      [
+       "a*(cos(2.3562) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(2.3562)"
+      ],
+      [
+       "a*(cos(2.5525) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(2.5525)"
+      ],
+      [
+       "a*(cos(2.7489) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(2.7489)"
+      ],
+      [
+       "a*(cos(2.9452) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(2.9452)"
+      ],
+      [
+       "a*(cos(3.1416) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(3.1416)"
+      ],
+      [
+       "a*(cos(3.3379) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(3.3379)"
+      ],
+      [
+       "a*(cos(3.5343) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(3.5343)"
+      ],
+      [
+       "a*(cos(3.7306) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(3.7306)"
+      ],
+      [
+       "a*(cos(3.9270) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(3.9270)"
+      ],
+      [
+       "a*(cos(4.1233) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(4.1233)"
+      ],
+      [
+       "a*(cos(4.3197) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(4.3197)"
+      ],
+      [
+       "a*(cos(4.5160) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(4.5160)"
+      ],
+      [
+       "a*(cos(4.7124) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(4.7124)"
+      ],
+      [
+       "a*(cos(4.9087) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(4.9087)"
+      ],
+      [
+       "a*(cos(5.1051) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(5.1051)"
+      ],
+      [
+       "a*(cos(5.3014) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(5.3014)"
+      ],
+      [
+       "a*(cos(5.4978) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(5.4978)"
+      ],
+      [
+       "a*(cos(5.6941) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(5.6941)"
+      ],
+      [
+       "a*(cos(5.8905) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(5.8905)"
+      ],
+      [
+       "a*(cos(6.0868) - ecc)",
+       "a*sqrt(1 - ecc^2)*sin(6.0868)"
+      ]
+     ],
+     "closed": true,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.35,
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 0.13,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -0.32,
+     "text": {
+      "en": "Sun",
+      "kn": "ಸೂರ್ಯ"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "visibleIf": "sline",
+     "x1": 0,
+     "y1": 0,
+     "x2": "px",
+     "y2": "py",
+     "color": "yellow",
+     "opacity": 0.6,
+     "width": 2
+    },
+    {
+     "shape": "trail",
+     "x": "px",
+     "y": "py",
+     "length": 400,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 0.07,
+     "color": "blue"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "vel",
+     "x": "px",
+     "y": "py",
+     "dx": "0.05*vx",
+     "dy": "0.05*vy",
+     "color": "green",
+     "label": "v"
+    },
+    {
+     "shape": "text",
+     "x": -3.5,
+     "y": 1.95,
+     "align": "left",
+     "size": 24,
+     "text": {
+      "en": "Speed {vk:1} km/s",
+      "kn": "ವೇಗ {vk:1} km/s"
+     },
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": -3.5,
+     "y": 1.6,
+     "align": "left",
+     "size": 24,
+     "text": {
+      "en": "Distance {r:2} AU",
+      "kn": "ದೂರ {r:2} AU"
+     },
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Period T = a^1.5",
+      "kn": "ಆವರ್ತ ಕಾಲ T = a^1.5"
+     },
+     "expr": "a^1.5",
+     "digits": 2,
+     "unit": "years"
+    },
+    {
+     "label": {
+      "en": "Area swept per year",
+      "kn": "ಪ್ರತಿ ವರ್ಷ ಗುಡಿಸಿದ ವಿಸ್ತೀರ್ಣ"
+     },
+     "expr": "0.5*abs(px*vy - py*vx)",
+     "digits": 3,
+     "unit": "AU²"
+    },
+    {
+     "label": {
+      "en": "Fastest / slowest speed",
+      "kn": "ಗರಿಷ್ಠ / ಕನಿಷ್ಠ ವೇಗ"
+     },
+     "expr": "(1 + ecc)/(1 - ecc)",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set the eccentricity to 0.6 and watch the speed readout at the nearest and farthest points.",
+     "kn": "ಉತ್ಕೇಂದ್ರತೆಯನ್ನು 0.6 ಮಾಡಿ, ಅತಿ ಹತ್ತಿರ ಮತ್ತು ಅತಿ ದೂರದ ಬಿಂದುಗಳಲ್ಲಿ ವೇಗ ನೋಡಿ."
+    },
+    {
+     "en": "Watch the 'area swept per year' readout while the planet moves. Does it change?",
+     "kn": "ಗ್ರಹ ಚಲಿಸುವಾಗ 'ಪ್ರತಿ ವರ್ಷ ಗುಡಿಸಿದ ವಿಸ್ತೀರ್ಣ' ನೋಡಿ. ಅದು ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Make a = 1.6 AU. Is the period 1.6^1.5 ≈ 2.0 years?",
+     "kn": "a = 1.6 AU ಮಾಡಿ. ಆವರ್ತ ಕಾಲ 1.6^1.5 ≈ 2.0 ವರ್ಷವೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

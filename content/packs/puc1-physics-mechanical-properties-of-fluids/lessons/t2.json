@@ -374,6 +374,226 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Flow through a narrowing pipe",
+    "kn": "ಕಿರಿದಾಗುವ ಕೊಳವೆಯ ಮೂಲಕ ಹರಿವು"
+   },
+   "narration": {
+    "en": "An incompressible liquid cannot pile up, so the same volume passes every cross-section each second: A₁v₁ = A₂v₂. Where the pipe is narrow the liquid moves faster. The dots are bits of liquid moving with the flow.",
+    "kn": "ಸಂಕುಚಿಸಲಾಗದ ದ್ರವ ಎಲ್ಲೂ ಶೇಖರವಾಗದು, ಹಾಗಾಗಿ ಪ್ರತಿ ಸೆಕೆಂಡ್ ಪ್ರತಿ ಅಡ್ಡಕೊಯ್ತದ ಮೂಲಕ ಅದೇ ಗಾತ್ರ ಹಾದುಹೋಗುತ್ತದೆ: A₁v₁ = A₂v₂. ಕೊಳವೆ ಕಿರಿದಾದಲ್ಲಿ ದ್ರವ ವೇಗವಾಗಿ ಚಲಿಸುತ್ತದೆ. ಚುಕ್ಕೆಗಳು ಹರಿವಿನೊಂದಿಗೆ ಚಲಿಸುವ ದ್ರವದ ತುಣುಕುಗಳು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "An incompressible liquid cannot pile up, so the same volume passes every cross-section each second: A₁v₁ = A₂v₂. Where the pipe is narrow the liquid moves faster. The dots are bits of liquid moving with the flow.",
+    "kn": "ಸಂಕುಚಿಸಲಾಗದ ದ್ರವ ಎಲ್ಲೂ ಶೇಖರವಾಗದು, ಹಾಗಾಗಿ ಪ್ರತಿ ಸೆಕೆಂಡ್ ಪ್ರತಿ ಅಡ್ಡಕೊಯ್ತದ ಮೂಲಕ ಅದೇ ಗಾತ್ರ ಹಾದುಹೋಗುತ್ತದೆ: A₁v₁ = A₂v₂. ಕೊಳವೆ ಕಿರಿದಾದಲ್ಲಿ ದ್ರವ ವೇಗವಾಗಿ ಚಲಿಸುತ್ತದೆ. ಚುಕ್ಕೆಗಳು ಹರಿವಿನೊಂದಿಗೆ ಚಲಿಸುವ ದ್ರವದ ತುಣುಕುಗಳು."
+   },
+   "sliders": [
+    {
+     "name": "A1",
+     "label": {
+      "en": "Wide part area A₁",
+      "kn": "ಅಗಲ ಭಾಗ ವಿಸ್ತೀರ್ಣ A₁"
+     },
+     "min": 10,
+     "max": 40,
+     "step": 1,
+     "value": 30,
+     "unit": "cm²"
+    },
+    {
+     "name": "A2",
+     "label": {
+      "en": "Narrow part area A₂",
+      "kn": "ಕಿರಿದು ಭಾಗ ವಿಸ್ತೀರ್ಣ A₂"
+     },
+     "min": 5,
+     "max": 40,
+     "step": 1,
+     "value": 10,
+     "unit": "cm²"
+    },
+    {
+     "name": "v1",
+     "label": {
+      "en": "Speed in wide part v₁",
+      "kn": "ಅಗಲ ಭಾಗದ ವೇಗ v₁"
+     },
+     "min": 0.2,
+     "max": 2,
+     "step": 0.1,
+     "value": 0.5,
+     "unit": "m/s"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Restart flow",
+      "kn": "ಹರಿವು ಮರುಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true,
+    "dt": 0.02
+   },
+   "vars": [
+    {
+     "name": "v2",
+     "expr": "v1*A1/A2"
+    },
+    {
+     "name": "q2",
+     "expr": "7*A1 + 0.5*(A1 + A2)"
+    },
+    {
+     "name": "Qt",
+     "expr": "7*A1 + 0.5*(A1 + A2) + 8*A2"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     16.5
+    ],
+    "y": [
+     -2.6,
+     2.6
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "points": [
+      [
+       0,
+       "A1/20 + 0.05"
+      ],
+      [
+       7,
+       "A1/20 + 0.05"
+      ],
+      [
+       8,
+       "A2/20 + 0.05"
+      ],
+      [
+       16,
+       "A2/20 + 0.05"
+      ]
+     ],
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "points": [
+      [
+       0,
+       "-A1/20 - 0.05"
+      ],
+      [
+       7,
+       "-A1/20 - 0.05"
+      ],
+      [
+       8,
+       "-A2/20 - 0.05"
+      ],
+      [
+       16,
+       "-A2/20 - 0.05"
+      ]
+     ],
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "particles",
+     "count": 160,
+     "r": 0.07,
+     "color": "blue",
+     "x": "if((mod(rand(i)*Qt + A1*4*v1*t, Qt)) < 7*A1, (mod(rand(i)*Qt + A1*4*v1*t, Qt))/A1, if((mod(rand(i)*Qt + A1*4*v1*t, Qt)) < q2, 7 + if(abs(A2 - A1) < 0.001, ((mod(rand(i)*Qt + A1*4*v1*t, Qt)) - 7*A1)/A1, (sqrt(A1^2 + 2*(A2 - A1)*((mod(rand(i)*Qt + A1*4*v1*t, Qt)) - 7*A1)) - A1)/(A2 - A1)), 8 + ((mod(rand(i)*Qt + A1*4*v1*t, Qt)) - q2)/A2))",
+     "y": "(rand(i + 500) - 0.5)*0.09*if((if((mod(rand(i)*Qt + A1*4*v1*t, Qt)) < 7*A1, (mod(rand(i)*Qt + A1*4*v1*t, Qt))/A1, if((mod(rand(i)*Qt + A1*4*v1*t, Qt)) < q2, 7 + if(abs(A2 - A1) < 0.001, ((mod(rand(i)*Qt + A1*4*v1*t, Qt)) - 7*A1)/A1, (sqrt(A1^2 + 2*(A2 - A1)*((mod(rand(i)*Qt + A1*4*v1*t, Qt)) - 7*A1)) - A1)/(A2 - A1)), 8 + ((mod(rand(i)*Qt + A1*4*v1*t, Qt)) - q2)/A2))) < 7, A1, if((if((mod(rand(i)*Qt + A1*4*v1*t, Qt)) < 7*A1, (mod(rand(i)*Qt + A1*4*v1*t, Qt))/A1, if((mod(rand(i)*Qt + A1*4*v1*t, Qt)) < q2, 7 + if(abs(A2 - A1) < 0.001, ((mod(rand(i)*Qt + A1*4*v1*t, Qt)) - 7*A1)/A1, (sqrt(A1^2 + 2*(A2 - A1)*((mod(rand(i)*Qt + A1*4*v1*t, Qt)) - 7*A1)) - A1)/(A2 - A1)), 8 + ((mod(rand(i)*Qt + A1*4*v1*t, Qt)) - q2)/A2))) < 8, A1 + (A2 - A1)*((if((mod(rand(i)*Qt + A1*4*v1*t, Qt)) < 7*A1, (mod(rand(i)*Qt + A1*4*v1*t, Qt))/A1, if((mod(rand(i)*Qt + A1*4*v1*t, Qt)) < q2, 7 + if(abs(A2 - A1) < 0.001, ((mod(rand(i)*Qt + A1*4*v1*t, Qt)) - 7*A1)/A1, (sqrt(A1^2 + 2*(A2 - A1)*((mod(rand(i)*Qt + A1*4*v1*t, Qt)) - 7*A1)) - A1)/(A2 - A1)), 8 + ((mod(rand(i)*Qt + A1*4*v1*t, Qt)) - q2)/A2))) - 7), A2))"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": -2.3,
+     "text": {
+      "en": "v₁ = {v1:2} m/s",
+      "kn": "v₁ = {v1:2} m/s"
+     },
+     "size": 26,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": -2.3,
+     "text": {
+      "en": "v₂ = {v2:2} m/s",
+      "kn": "v₂ = {v2:2} m/s"
+     },
+     "size": 26,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Speed in narrow part v₂",
+      "kn": "ಕಿರಿದು ಭಾಗದ ವೇಗ v₂"
+     },
+     "expr": "v2",
+     "digits": 2,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Volume flow A₁v₁",
+      "kn": "ಗಾತ್ರ ಹರಿವು A₁v₁"
+     },
+     "expr": "0.1*A1*v1",
+     "digits": 3,
+     "unit": "L/s"
+    },
+    {
+     "label": {
+      "en": "Volume flow A₂v₂",
+      "kn": "ಗಾತ್ರ ಹರಿವು A₂v₂"
+     },
+     "expr": "0.1*A2*v2",
+     "digits": 3,
+     "unit": "L/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make the narrow part one third of the wide part. How much faster is the flow there?",
+     "kn": "ಕಿರಿದಾದ ಭಾಗವನ್ನು ಅಗಲ ಭಾಗದ ಮೂರನೇ ಒಂದು ಮಾಡಿ. ಅಲ್ಲಿ ಹರಿವು ಎಷ್ಟು ಪಟ್ಟು ವೇಗ?"
+    },
+    {
+     "en": "Why do we press the end of a garden hose to make the water go farther?",
+     "kn": "ನೀರು ದೂರ ಹೋಗಲು ತೋಟದ ಕೊಳವೆಯ ತುದಿಯನ್ನು ಏಕೆ ಒತ್ತುತ್ತೇವೆ?"
+    },
+    {
+     "en": "Make both parts equal. What happens to the speeds?",
+     "kn": "ಎರಡೂ ಭಾಗ ಸಮ ಮಾಡಿ. ವೇಗಗಳಿಗೆ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

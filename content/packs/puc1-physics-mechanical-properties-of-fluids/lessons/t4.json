@@ -470,6 +470,319 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A ball sinking in glycerine",
+    "kn": "ಗ್ಲಿಸರಿನ್‌ನಲ್ಲಿ ಮುಳುಗುವ ಚೆಂಡು"
+   },
+   "narration": {
+    "en": "The viscous drag 6πηrv grows with speed until it balances weight minus buoyancy. From then on the ball falls at the terminal velocity v_t = 2r²(ρ − σ)g/(9η). Doubling the radius makes v_t four times larger.",
+    "kn": "ಸ್ನಿಗ್ಧ ಎಳೆತ 6πηrv ವೇಗದೊಂದಿಗೆ ಬೆಳೆದು ತೂಕ ಮೈನಸ್ ತೇಲುಬಲಕ್ಕೆ ಸಮವಾಗುತ್ತದೆ. ಅಲ್ಲಿಂದ ಚೆಂಡು ಅಂತಿಮ ವೇಗ v_t = 2r²(ρ − σ)g/(9η) ನಲ್ಲಿ ಬೀಳುತ್ತದೆ. ತ್ರಿಜ್ಯ ಎರಡು ಪಟ್ಟಾದರೆ v_t ನಾಲ್ಕು ಪಟ್ಟು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The viscous drag 6πηrv grows with speed until it balances weight minus buoyancy. From then on the ball falls at the terminal velocity v_t = 2r²(ρ − σ)g/(9η). Doubling the radius makes v_t four times larger.",
+    "kn": "ಸ್ನಿಗ್ಧ ಎಳೆತ 6πηrv ವೇಗದೊಂದಿಗೆ ಬೆಳೆದು ತೂಕ ಮೈನಸ್ ತೇಲುಬಲಕ್ಕೆ ಸಮವಾಗುತ್ತದೆ. ಅಲ್ಲಿಂದ ಚೆಂಡು ಅಂತಿಮ ವೇಗ v_t = 2r²(ρ − σ)g/(9η) ನಲ್ಲಿ ಬೀಳುತ್ತದೆ. ತ್ರಿಜ್ಯ ಎರಡು ಪಟ್ಟಾದರೆ v_t ನಾಲ್ಕು ಪಟ್ಟು."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Ball radius",
+      "kn": "ಚೆಂಡಿನ ತ್ರಿಜ್ಯ"
+     },
+     "min": 0.5,
+     "max": 3,
+     "step": 0.1,
+     "value": 1.5,
+     "unit": "mm"
+    },
+    {
+     "name": "eta",
+     "label": {
+      "en": "Viscosity η (glycerine ≈ 0.83)",
+      "kn": "ಸ್ನಿಗ್ಧತೆ η (ಗ್ಲಿಸರಿನ್ ≈ 0.83)"
+     },
+     "min": 0.3,
+     "max": 1.5,
+     "step": 0.05,
+     "value": 0.85,
+     "unit": "Pa s"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "forces",
+     "label": {
+      "en": "Forces",
+      "kn": "ಬಲಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "rs",
+     "label": {
+      "en": "Ball",
+      "kn": "ಚೆಂಡು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Steel",
+        "kn": "ಉಕ್ಕು"
+       },
+       "value": 7800
+      },
+      {
+       "label": {
+        "en": "Aluminium",
+        "kn": "ಅಲ್ಯೂಮಿನಿಯಂ"
+       },
+       "value": 2700
+      },
+      {
+       "label": {
+        "en": "Glass",
+        "kn": "ಗಾಜು"
+       },
+       "value": 2500
+      }
+     ],
+     "value": 7800
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Drop",
+      "kn": "ಬೀಳಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "speeds": [
+     0.25,
+     1,
+     4,
+     16
+    ],
+    "speed": 1,
+    "stopWhen": "yy >= 0.4"
+   },
+   "vars": [
+    {
+     "name": "vt",
+     "expr": "2*(r/1000)^2*(rs - 1260)*9.8/(9*eta)"
+    },
+    {
+     "name": "tau",
+     "expr": "2*rs*(r/1000)^2/(9*eta)"
+    },
+    {
+     "name": "yy",
+     "expr": "vt*(t - tau*(1 - exp(-t/tau)))"
+    },
+    {
+     "name": "vv",
+     "expr": "vt*(1 - exp(-t/tau))"
+    },
+    {
+     "name": "tg",
+     "expr": "min(0.4/vt + tau, 60)"
+    }
+   ],
+   "view": {
+    "x": [
+     -4,
+     36
+    ],
+    "y": [
+     -8,
+     44
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 6,
+     "h": 40,
+     "color": "yellow",
+     "opacity": 0.18
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 0,
+     "y2": 42,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 0,
+     "x2": 6,
+     "y2": 42,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 6,
+     "y2": 0,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 3,
+     "y": "40 - 100*yy",
+     "r": "0.25 + 0.15*r",
+     "color": {
+      "by": "(rs - 2500)/5300",
+      "scale": [
+       "blue",
+       "white"
+      ]
+     }
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "forces",
+     "x": 3.8,
+     "y": "40 - 100*yy",
+     "dx": 0,
+     "dy": -7,
+     "color": "white",
+     "label": "W − B"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "forces",
+     "x": 2.2,
+     "y": "40 - 100*yy",
+     "dx": 0,
+     "dy": "7*vv/vt",
+     "color": "orange",
+     "label": "6πηrv"
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 2,
+     "x2": 35,
+     "y2": 2,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 2,
+     "x2": 10,
+     "y2": 36,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 32,
+     "x2": 35,
+     "y2": 32,
+     "color": "green",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "trail",
+     "x": "10 + 25*min(t/tg, 1)",
+     "y": "2 + 30*vv/vt",
+     "length": 1500,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 22.5,
+     "y": 34,
+     "text": {
+      "en": "terminal velocity {100*vt:2} cm/s",
+      "kn": "ಅಂತಿಮ ವೇಗ {100*vt:2} cm/s"
+     },
+     "size": 24,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 22.5,
+     "y": -1,
+     "text": {
+      "en": "time (0 to {tg:2} s) →",
+      "kn": "ಸಮಯ (0 ರಿಂದ {tg:2} s) →"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Terminal velocity",
+      "kn": "ಅಂತಿಮ ವೇಗ"
+     },
+     "expr": "100*vt",
+     "digits": 3,
+     "unit": "cm/s"
+    },
+    {
+     "label": {
+      "en": "Time to fall 40 cm",
+      "kn": "40 cm ಬೀಳುವ ಸಮಯ"
+     },
+     "expr": "0.4/vt + tau",
+     "digits": 1,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Time constant 2ρr²/9η",
+      "kn": "ಸಮಯ ಸ್ಥಿರಾಂಕ 2ρr²/9η"
+     },
+     "expr": "1000*tau",
+     "digits": 2,
+     "unit": "ms"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double the radius. Check that the terminal velocity becomes four times larger.",
+     "kn": "ತ್ರಿಜ್ಯ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ಅಂತಿಮ ವೇಗ ನಾಲ್ಕು ಪಟ್ಟು ಆಗುವುದನ್ನು ಪರಿಶೀಲಿಸಿ."
+    },
+    {
+     "en": "Compare a steel ball and a glass ball of the same size.",
+     "kn": "ಒಂದೇ ಗಾತ್ರದ ಉಕ್ಕಿನ ಮತ್ತು ಗಾಜಿನ ಚೆಂಡು ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Watch the two arrows. When are they equal?",
+     "kn": "ಎರಡು ಬಾಣಗಳನ್ನು ನೋಡಿ. ಅವು ಯಾವಾಗ ಸಮ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

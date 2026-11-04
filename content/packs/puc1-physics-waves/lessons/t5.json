@@ -286,6 +286,183 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Beats",
+    "kn": "ಬೀಟ್‌ಗಳು (ಸ್ಪಂದನಗಳು)"
+   },
+   "narration": {
+    "en": "Two waves of slightly different frequency drift in and out of step, so their sum swells and fades. The loudness rises and falls |f₁ − f₂| times a second: the beat frequency. The frequencies here are slowed down to be seen; tuning forks of 256 Hz and 260 Hz give 4 beats per second in exactly the same way.",
+    "kn": "ಸ್ವಲ್ಪ ಬೇರೆ ಆವೃತ್ತಿಯ ಎರಡು ತರಂಗಗಳು ಹಂತದೊಳಗೆ-ಹೊರಗೆ ಸರಿಯುತ್ತವೆ, ಹಾಗಾಗಿ ಅವುಗಳ ಮೊತ್ತ ಏರಿ ಇಳಿಯುತ್ತದೆ. ಧ್ವನಿಯ ತೀವ್ರತೆ ಸೆಕೆಂಡಿಗೆ |f₁ − f₂| ಬಾರಿ ಏರಿಳಿಯುತ್ತದೆ: ಬೀಟ್ ಆವೃತ್ತಿ. ಇಲ್ಲಿನ ಆವೃತ್ತಿಗಳನ್ನು ನೋಡಲು ನಿಧಾನಗೊಳಿಸಲಾಗಿದೆ; 256 Hz ಮತ್ತು 260 Hz ಶ್ರುತಿ ಕವೆಗಳು ಇದೇ ರೀತಿ ಸೆಕೆಂಡಿಗೆ 4 ಬೀಟ್ ಕೊಡುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Two waves of slightly different frequency drift in and out of step, so their sum swells and fades. The loudness rises and falls |f₁ − f₂| times a second: the beat frequency. The frequencies here are slowed down to be seen; tuning forks of 256 Hz and 260 Hz give 4 beats per second in exactly the same way.",
+    "kn": "ಸ್ವಲ್ಪ ಬೇರೆ ಆವೃತ್ತಿಯ ಎರಡು ತರಂಗಗಳು ಹಂತದೊಳಗೆ-ಹೊರಗೆ ಸರಿಯುತ್ತವೆ, ಹಾಗಾಗಿ ಅವುಗಳ ಮೊತ್ತ ಏರಿ ಇಳಿಯುತ್ತದೆ. ಧ್ವನಿಯ ತೀವ್ರತೆ ಸೆಕೆಂಡಿಗೆ |f₁ − f₂| ಬಾರಿ ಏರಿಳಿಯುತ್ತದೆ: ಬೀಟ್ ಆವೃತ್ತಿ. ಇಲ್ಲಿನ ಆವೃತ್ತಿಗಳನ್ನು ನೋಡಲು ನಿಧಾನಗೊಳಿಸಲಾಗಿದೆ; 256 Hz ಮತ್ತು 260 Hz ಶ್ರುತಿ ಕವೆಗಳು ಇದೇ ರೀತಿ ಸೆಕೆಂಡಿಗೆ 4 ಬೀಟ್ ಕೊಡುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "f1",
+     "label": {
+      "en": "Frequency f₁",
+      "kn": "ಆವೃತ್ತಿ f₁"
+     },
+     "min": 10,
+     "max": 20,
+     "step": 0.5,
+     "value": 12,
+     "unit": "Hz"
+    },
+    {
+     "name": "f2",
+     "label": {
+      "en": "Frequency f₂",
+      "kn": "ಆವೃತ್ತಿ f₂"
+     },
+     "min": 10,
+     "max": 20,
+     "step": 0.5,
+     "value": 13,
+     "unit": "Hz"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sep",
+     "label": {
+      "en": "Show the two waves",
+      "kn": "ಎರಡು ತರಂಗ ತೋರಿಸಿ"
+     },
+     "value": true
+    },
+    {
+     "name": "env",
+     "label": {
+      "en": "Envelope",
+      "kn": "ಆವರಣ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 20,
+    "loop": true,
+    "autoplay": true,
+    "speeds": [
+     0.05,
+     0.1,
+     0.25,
+     0.5
+    ],
+    "speed": 0.1
+   },
+   "view": {
+    "x": [
+     0,
+     2
+    ],
+    "y": [
+     -2.6,
+     4.8
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "wave",
+     "visibleIf": "sep",
+     "fn": "3.8 + 0.4*sin(2*pi*f1*(x + t))",
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "wave",
+     "visibleIf": "sep",
+     "fn": "2.8 + 0.4*sin(2*pi*f2*(x + t))",
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "path",
+     "visibleIf": "env",
+     "fn": "2*abs(cos(pi*(f1 - f2)*(x + t)))",
+     "color": "red",
+     "dashed": true,
+     "opacity": 0.7
+    },
+    {
+     "shape": "path",
+     "visibleIf": "env",
+     "fn": "-2*abs(cos(pi*(f1 - f2)*(x + t)))",
+     "color": "red",
+     "dashed": true,
+     "opacity": 0.7
+    },
+    {
+     "shape": "wave",
+     "fn": "sin(2*pi*f1*(x + t)) + sin(2*pi*f2*(x + t))",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 1.98,
+     "y": -2.45,
+     "align": "right",
+     "text": {
+      "en": "time window of 2 s →",
+      "kn": "2 s ಸಮಯದ ಕಿಟಕಿ →"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Beat frequency |f₁ − f₂|",
+      "kn": "ಬೀಟ್ ಆವೃತ್ತಿ |f₁ − f₂|"
+     },
+     "expr": "abs(f1 - f2)",
+     "digits": 1,
+     "unit": "Hz"
+    },
+    {
+     "label": {
+      "en": "Time between beats",
+      "kn": "ಬೀಟ್‌ಗಳ ನಡುವಿನ ಸಮಯ"
+     },
+     "expr": "if(f1 != f2, 1/abs(f1 - f2), 0)",
+     "digits": 2,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Frequency heard (f₁ + f₂)/2",
+      "kn": "ಕೇಳುವ ಆವೃತ್ತಿ (f₁ + f₂)/2"
+     },
+     "expr": "(f1 + f2)/2",
+     "digits": 2,
+     "unit": "Hz"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set 12 Hz and 13 Hz. How many loud swells appear in the 2 s window?",
+     "kn": "12 Hz ಮತ್ತು 13 Hz ಮಾಡಿ. 2 s ಕಿಟಕಿಯಲ್ಲಿ ಎಷ್ಟು ಜೋರು ಏರಿಕೆಗಳಿವೆ?"
+    },
+    {
+     "en": "Bring the two frequencies closer. Do the beats get faster or slower?",
+     "kn": "ಎರಡು ಆವೃತ್ತಿಗಳನ್ನು ಹತ್ತಿರ ತನ್ನಿ. ಬೀಟ್‌ಗಳು ವೇಗವಾಗುತ್ತವೆಯೇ, ನಿಧಾನವೇ?"
+    },
+    {
+     "en": "How does a musician use beats to tune a veena or a guitar string?",
+     "kn": "ವೀಣೆ ಅಥವಾ ಗಿಟಾರ್ ತಂತಿ ಶ್ರುತಿಗೊಳಿಸಲು ಸಂಗೀತಗಾರ ಬೀಟ್‌ಗಳನ್ನು ಹೇಗೆ ಬಳಸುತ್ತಾನೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

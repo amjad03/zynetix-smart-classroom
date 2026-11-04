@@ -415,6 +415,222 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Galileo's two ramps",
+    "kn": "ಗೆಲಿಲಿಯೋನ ಎರಡು ಇಳಿಜಾರುಗಳು"
+   },
+   "narration": {
+    "en": "Without friction the ball climbs the second ramp to the height it started from, however gentle the slope. Make the second ramp flat and it never reaches that height, so it never stops: a body keeps moving unless a force (here friction) changes its motion.",
+    "kn": "ಘರ್ಷಣೆ ಇಲ್ಲದಿದ್ದರೆ, ಎರಡನೇ ಇಳಿಜಾರು ಎಷ್ಟೇ ಸೌಮ್ಯವಾಗಿರಲಿ, ಚೆಂಡು ಆರಂಭದ ಎತ್ತರಕ್ಕೆ ಏರುತ್ತದೆ. ಎರಡನೇ ಇಳಿಜಾರನ್ನು ಸಮತಟ್ಟು ಮಾಡಿದರೆ ಆ ಎತ್ತರ ತಲುಪುವುದೇ ಇಲ್ಲ, ಹಾಗಾಗಿ ನಿಲ್ಲುವುದೇ ಇಲ್ಲ: ಬಲ (ಇಲ್ಲಿ ಘರ್ಷಣೆ) ಬದಲಿಸದಿದ್ದರೆ ಕಾಯ ಚಲಿಸುತ್ತಲೇ ಇರುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Without friction the ball climbs the second ramp to the height it started from, however gentle the slope. Make the second ramp flat and it never reaches that height, so it never stops: a body keeps moving unless a force (here friction) changes its motion.",
+    "kn": "ಘರ್ಷಣೆ ಇಲ್ಲದಿದ್ದರೆ, ಎರಡನೇ ಇಳಿಜಾರು ಎಷ್ಟೇ ಸೌಮ್ಯವಾಗಿರಲಿ, ಚೆಂಡು ಆರಂಭದ ಎತ್ತರಕ್ಕೆ ಏರುತ್ತದೆ. ಎರಡನೇ ಇಳಿಜಾರನ್ನು ಸಮತಟ್ಟು ಮಾಡಿದರೆ ಆ ಎತ್ತರ ತಲುಪುವುದೇ ಇಲ್ಲ, ಹಾಗಾಗಿ ನಿಲ್ಲುವುದೇ ಇಲ್ಲ: ಬಲ (ಇಲ್ಲಿ ಘರ್ಷಣೆ) ಬದಲಿಸದಿದ್ದರೆ ಕಾಯ ಚಲಿಸುತ್ತಲೇ ಇರುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "h0",
+     "label": {
+      "en": "Starting height",
+      "kn": "ಆರಂಭದ ಎತ್ತರ"
+     },
+     "min": 0.5,
+     "max": 2,
+     "step": 0.1,
+     "value": 1.5,
+     "unit": "m"
+    },
+    {
+     "name": "th2",
+     "label": {
+      "en": "Second ramp angle",
+      "kn": "ಎರಡನೇ ಇಳಿಜಾರಿನ ಕೋನ"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 2,
+     "value": 30,
+     "unit": "°"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fric",
+     "label": {
+      "en": "Friction (μ = 0.1)",
+      "kn": "ಘರ್ಷಣೆ (μ = 0.1)"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Release",
+      "kn": "ಬಿಡಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 20,
+    "dt": 0.002,
+    "stopWhen": "px > 13"
+   },
+   "vars": [
+    {
+     "name": "mu",
+     "expr": "if(fric, 0.1, 0)"
+    },
+    {
+     "name": "c2",
+     "expr": "cos(rad(th2))"
+    },
+    {
+     "name": "s2",
+     "expr": "sin(rad(th2))"
+    },
+    {
+     "name": "fr",
+     "expr": "clamp(v/0.02, -1, 1)"
+    },
+    {
+     "name": "L2",
+     "expr": "if(th2 > 0, min(13/cos(rad(th2)), 2.6/max(sin(rad(th2)), 0.01)), 13)"
+    },
+    {
+     "name": "px",
+     "expr": "if(s < 0, s*0.866, s*cos(rad(th2)))"
+    },
+    {
+     "name": "py",
+     "expr": "if(s < 0, -s*0.5, s*sin(rad(th2)))"
+    }
+   ],
+   "state": [
+    {
+     "name": "s",
+     "init": "-2*h0",
+     "rate": "v"
+    },
+    {
+     "name": "v",
+     "init": 0,
+     "rate": "if(s < 0, 4.9 - mu*8.487*fr, -9.8*s2 - mu*9.8*c2*fr)"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     -4,
+     13.5
+    ],
+    "y": [
+     -0.6,
+     3.2
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -4,
+     "y1": "h0",
+     "x2": 13.5,
+     "y2": "h0",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.4
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": -3.64,
+     "y2": 2.1,
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "L2*c2",
+     "y2": "L2*s2",
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "trail",
+     "x": "px",
+     "y": "py + 0.13",
+     "length": 300,
+     "color": "orange",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py + 0.13",
+     "r": 0.13,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "th2 == 0 && !fric",
+     "x": 7,
+     "y": 2.6,
+     "text": {
+      "en": "Flat and frictionless: it never stops",
+      "kn": "ಸಮತಟ್ಟು, ಘರ್ಷಣೆ ಇಲ್ಲ: ನಿಲ್ಲುವುದೇ ಇಲ್ಲ"
+     },
+     "size": 26,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Height now",
+      "kn": "ಈಗಿನ ಎತ್ತರ"
+     },
+     "expr": "py",
+     "digits": 2,
+     "unit": "m"
+    },
+    {
+     "label": {
+      "en": "Speed now",
+      "kn": "ಈಗಿನ ವೇಗ"
+     },
+     "expr": "abs(v)",
+     "digits": 2,
+     "unit": "m/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With friction off, set the second ramp to 30°, then 10°. Does the ball reach the dashed line each time?",
+     "kn": "ಘರ್ಷಣೆ ಆಫ್ ಮಾಡಿ, ಎರಡನೇ ಇಳಿಜಾರನ್ನು 30°, ನಂತರ 10° ಮಾಡಿ. ಪ್ರತಿ ಬಾರಿ ಚೆಂಡು ಚುಕ್ಕೆ ರೇಖೆ ತಲುಪುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Make the second ramp flat (0°). What does the ball do?",
+     "kn": "ಎರಡನೇ ಇಳಿಜಾರನ್ನು ಸಮತಟ್ಟು (0°) ಮಾಡಿ. ಚೆಂಡು ಏನು ಮಾಡುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn friction on. Which force stops the ball in everyday life?",
+     "kn": "ಘರ್ಷಣೆ ಆನ್ ಮಾಡಿ. ದೈನಂದಿನ ಜೀವನದಲ್ಲಿ ಚೆಂಡನ್ನು ಯಾವ ಬಲ ನಿಲ್ಲಿಸುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

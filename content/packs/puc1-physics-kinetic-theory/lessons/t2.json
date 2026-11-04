@@ -238,6 +238,204 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Pressure from molecular speed",
+    "kn": "ಅಣು ವೇಗದಿಂದ ಒತ್ತಡ"
+   },
+   "narration": {
+    "en": "Kinetic theory gives P = (1/3) ρ v², where ρ is the density of the gas and v the rms speed of its molecules. For air at room temperature, ρ ≈ 1.2 kg/m³ and v ≈ 500 m/s give about 100 kPa: atmospheric pressure.",
+    "kn": "ಚಲನ ಸಿದ್ಧಾಂತ P = (1/3) ρ v² ಕೊಡುತ್ತದೆ; ρ ಅನಿಲದ ಸಾಂದ್ರತೆ, v ಅಣುಗಳ rms ವೇಗ. ಕೊಠಡಿ ತಾಪದ ಗಾಳಿಗೆ ρ ≈ 1.2 kg/m³, v ≈ 500 m/s ಆದರೆ ಸುಮಾರು 100 kPa: ವಾತಾವರಣದ ಒತ್ತಡ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Kinetic theory gives P = (1/3) ρ v², where ρ is the density of the gas and v the rms speed of its molecules. For air at room temperature, ρ ≈ 1.2 kg/m³ and v ≈ 500 m/s give about 100 kPa: atmospheric pressure.",
+    "kn": "ಚಲನ ಸಿದ್ಧಾಂತ P = (1/3) ρ v² ಕೊಡುತ್ತದೆ; ρ ಅನಿಲದ ಸಾಂದ್ರತೆ, v ಅಣುಗಳ rms ವೇಗ. ಕೊಠಡಿ ತಾಪದ ಗಾಳಿಗೆ ρ ≈ 1.2 kg/m³, v ≈ 500 m/s ಆದರೆ ಸುಮಾರು 100 kPa: ವಾತಾವರಣದ ಒತ್ತಡ."
+   },
+   "sliders": [
+    {
+     "name": "rho",
+     "label": {
+      "en": "Density",
+      "kn": "ಸಾಂದ್ರತೆ"
+     },
+     "min": 0.2,
+     "max": 2.4,
+     "step": 0.1,
+     "value": 1.2,
+     "unit": "kg/m³"
+    },
+    {
+     "name": "vr",
+     "label": {
+      "en": "rms speed",
+      "kn": "rms ವೇಗ"
+     },
+     "min": 200,
+     "max": 1000,
+     "step": 25,
+     "value": 500,
+     "unit": "m/s"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "track",
+     "label": {
+      "en": "Follow one molecule",
+      "kn": "ಒಂದು ಅಣು ಹಿಂಬಾಲಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true,
+    "dt": 0.02
+   },
+   "vars": [
+    {
+     "name": "s",
+     "expr": "vr/250"
+    },
+    {
+     "name": "Pk",
+     "expr": "rho*vr^2/3000"
+    },
+    {
+     "name": "x0",
+     "expr": "bounce(0.15 + 9.7*rand(0) + s*t*cos(2*pi*rand(300))*(0.4 + rand(900)), 0.15, 9.85)"
+    },
+    {
+     "name": "y0",
+     "expr": "bounce(0.15 + 9.7*rand(150) + s*t*sin(2*pi*rand(300))*(0.4 + rand(900)), 0.15, 9.85)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     13
+    ],
+    "y": [
+     -0.6,
+     10.6
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 10,
+     "h": 10,
+     "fill": false,
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "particles",
+     "count": 60,
+     "r": 0.17,
+     "color": {
+      "by": "(vr - 200)/800",
+      "scale": [
+       "blue",
+       "yellow",
+       "red"
+      ]
+     },
+     "x": "bounce(0.15 + (10 - 0.3)*rand(i) + s*t*cos(2*pi*rand(i + 300))*(0.4 + rand(i + 900)), 0.15, 10 - 0.15)",
+     "y": "bounce(0.15 + (10 - 0.3)*rand(i + 150) + s*t*sin(2*pi*rand(i + 300))*(0.4 + rand(i + 900)), 0.15, 10 - 0.15)",
+     "visibleIf": "i < 25*rho"
+    },
+    {
+     "shape": "trail",
+     "visibleIf": "track",
+     "x": "x0",
+     "y": "y0",
+     "length": 200,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "track",
+     "x": "x0",
+     "y": "y0",
+     "r": 0.3,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 11.2,
+     "y": 0,
+     "w": 0.8,
+     "h": 10,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 11.3,
+     "y": 0.05,
+     "w": 0.6,
+     "h": "min(9.9*Pk/800, 9.9)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 11.6,
+     "y": 10.35,
+     "size": 24,
+     "text": {
+      "en": "{Pk:0} kPa",
+      "kn": "{Pk:0} kPa"
+     },
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Pressure (1/3) ρ v²",
+      "kn": "ಒತ್ತಡ (1/3) ρ v²"
+     },
+     "expr": "Pk",
+     "digits": 1,
+     "unit": "kPa"
+    },
+    {
+     "label": {
+      "en": "Temperature, if the gas is nitrogen",
+      "kn": "ಅನಿಲ ನೈಟ್ರೋಜನ್ ಆದರೆ ತಾಪಮಾನ"
+     },
+     "expr": "vr^2*0.028/(3*8.314)",
+     "digits": 0,
+     "unit": "K"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double the rms speed. By what factor does the pressure rise?",
+     "kn": "rms ವೇಗ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ಒತ್ತಡ ಎಷ್ಟು ಪಟ್ಟು ಏರುತ್ತದೆ?"
+    },
+    {
+     "en": "Double the density instead. Compare.",
+     "kn": "ಬದಲಾಗಿ ಸಾಂದ್ರತೆ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Find a setting that gives 100 kPa with half the density of air.",
+     "kn": "ಗಾಳಿಯ ಅರ್ಧ ಸಾಂದ್ರತೆಯಲ್ಲಿ 100 kPa ಕೊಡುವ ಸೆಟ್ಟಿಂಗ್ ಹುಡುಕಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

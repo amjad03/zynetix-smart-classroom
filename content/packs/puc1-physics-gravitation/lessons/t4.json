@@ -210,6 +210,296 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Launch fast enough to escape",
+    "kn": "ತಪ್ಪಿಸಿಕೊಳ್ಳುವಷ್ಟು ವೇಗದಲ್ಲಿ ಉಡಾಯಿಸಿ"
+   },
+   "narration": {
+    "en": "A body is fired straight up and slowed by gravity that weakens as 1/r². Below the escape speed it rises to a height and falls back; at or above v_e = √(2gR) it never returns. The escape speed does not depend on the mass of the body.",
+    "kn": "ಒಂದು ಕಾಯವನ್ನು ನೇರವಾಗಿ ಮೇಲೆ ಹಾರಿಸಲಾಗಿದೆ; 1/r² ಆಗಿ ದುರ್ಬಲವಾಗುವ ಗುರುತ್ವ ಅದನ್ನು ನಿಧಾನಗೊಳಿಸುತ್ತದೆ. ಪಲಾಯನ ವೇಗಕ್ಕಿಂತ ಕಡಿಮೆ ಇದ್ದರೆ ಒಂದು ಎತ್ತರಕ್ಕೆ ಏರಿ ಹಿಂದೆ ಬೀಳುತ್ತದೆ; v_e = √(2gR) ಅಥವಾ ಹೆಚ್ಚು ಇದ್ದರೆ ಹಿಂತಿರುಗುವುದಿಲ್ಲ. ಪಲಾಯನ ವೇಗ ಕಾಯದ ದ್ರವ್ಯರಾಶಿಯನ್ನು ಅವಲಂಬಿಸುವುದಿಲ್ಲ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A body is fired straight up and slowed by gravity that weakens as 1/r². Below the escape speed it rises to a height and falls back; at or above v_e = √(2gR) it never returns. The escape speed does not depend on the mass of the body.",
+    "kn": "ಒಂದು ಕಾಯವನ್ನು ನೇರವಾಗಿ ಮೇಲೆ ಹಾರಿಸಲಾಗಿದೆ; 1/r² ಆಗಿ ದುರ್ಬಲವಾಗುವ ಗುರುತ್ವ ಅದನ್ನು ನಿಧಾನಗೊಳಿಸುತ್ತದೆ. ಪಲಾಯನ ವೇಗಕ್ಕಿಂತ ಕಡಿಮೆ ಇದ್ದರೆ ಒಂದು ಎತ್ತರಕ್ಕೆ ಏರಿ ಹಿಂದೆ ಬೀಳುತ್ತದೆ; v_e = √(2gR) ಅಥವಾ ಹೆಚ್ಚು ಇದ್ದರೆ ಹಿಂತಿರುಗುವುದಿಲ್ಲ. ಪಲಾಯನ ವೇಗ ಕಾಯದ ದ್ರವ್ಯರಾಶಿಯನ್ನು ಅವಲಂಬಿಸುವುದಿಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "v",
+     "label": {
+      "en": "Launch speed",
+      "kn": "ಉಡಾವಣಾ ವೇಗ"
+     },
+     "min": 1,
+     "max": 15,
+     "step": 0.5,
+     "value": 8,
+     "unit": "km/s"
+    }
+   ],
+   "choices": [
+    {
+     "name": "p",
+     "label": {
+      "en": "Planet",
+      "kn": "ಗ್ರಹ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Earth",
+        "kn": "ಭೂಮಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Moon",
+        "kn": "ಚಂದ್ರ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Mars",
+        "kn": "ಮಂಗಳ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Launch",
+      "kn": "ಉಡಾಯಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 240,
+    "dt": 0.05,
+    "unit": "min",
+    "speeds": [
+     1,
+     2,
+     4,
+     8,
+     16
+    ],
+    "speed": 4,
+    "stopWhen": "(r < 1 && u < 0) || r > 12"
+   },
+   "vars": [
+    {
+     "name": "g0",
+     "expr": "if(p == 1, 9.8, if(p == 2, 1.62, 3.71))"
+    },
+    {
+     "name": "R",
+     "expr": "if(p == 1, 6400, if(p == 2, 1740, 3390))"
+    },
+    {
+     "name": "ve",
+     "expr": "sqrt(2*g0*R/1000)"
+    },
+    {
+     "name": "rmax",
+     "expr": "if(v < ve, 1/(1 - v^2/ve^2), 12)"
+    }
+   ],
+   "state": [
+    {
+     "name": "r",
+     "init": 1,
+     "rate": "u*60/R"
+    },
+    {
+     "name": "u",
+     "init": "v",
+     "rate": "-g0*0.06/r^2"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     -2.2,
+     12.6
+    ],
+    "y": [
+     -1.3,
+     12.6
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 1,
+     "color": {
+      "by": "(p - 1)/2",
+      "scale": [
+       "blue",
+       "white",
+       "orange"
+      ]
+     },
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "visibleIf": "v < ve",
+     "x1": -0.6,
+     "y1": "rmax",
+     "x2": 0.6,
+     "y2": "rmax",
+     "color": "red",
+     "dashed": true
+    },
+    {
+     "shape": "trail",
+     "x": 0,
+     "y": "r",
+     "length": 50,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": "r",
+     "r": 0.16,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 1,
+     "x2": 12,
+     "y2": 1,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 1,
+     "x2": 2,
+     "y2": 12,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "trail",
+     "x": "2 + t/24",
+     "y": "r",
+     "length": 2000,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 7,
+     "y": 0.45,
+     "text": {
+      "en": "time (0 to 4 h) →",
+      "kn": "ಸಮಯ (0 ರಿಂದ 4 h) →"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 2.3,
+     "y": 11.6,
+     "align": "left",
+     "text": {
+      "en": "distance from centre (planet radii)",
+      "kn": "ಕೇಂದ್ರದಿಂದ ದೂರ (ಗ್ರಹ ತ್ರಿಜ್ಯಗಳು)"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "v >= ve",
+     "x": 7,
+     "y": 9.5,
+     "text": {
+      "en": "Escapes: it never comes back",
+      "kn": "ತಪ್ಪಿಸಿಕೊಳ್ಳುತ್ತದೆ: ಹಿಂತಿರುಗುವುದಿಲ್ಲ"
+     },
+     "size": 28,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "v < ve",
+     "x": 7,
+     "y": 9.5,
+     "text": {
+      "en": "Rises {(rmax - 1)*R:0} km, then falls back",
+      "kn": "{(rmax - 1)*R:0} km ಏರಿ ಹಿಂದೆ ಬೀಳುತ್ತದೆ"
+     },
+     "size": 28,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Escape speed √(2gR)",
+      "kn": "ಪಲಾಯನ ವೇಗ √(2gR)"
+     },
+     "expr": "ve",
+     "digits": 2,
+     "unit": "km/s"
+    },
+    {
+     "label": {
+      "en": "Speed now",
+      "kn": "ಈಗಿನ ವೇಗ"
+     },
+     "expr": "u",
+     "digits": 2,
+     "unit": "km/s"
+    },
+    {
+     "label": {
+      "en": "Height now",
+      "kn": "ಈಗಿನ ಎತ್ತರ"
+     },
+     "expr": "(r - 1)*R",
+     "digits": 0,
+     "unit": "km"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "On Earth, launch at 8, 10 and 11 km/s. How does the maximum height grow?",
+     "kn": "ಭೂಮಿಯಲ್ಲಿ 8, 10 ಮತ್ತು 11 km/s ನಲ್ಲಿ ಉಡಾಯಿಸಿ. ಗರಿಷ್ಠ ಎತ್ತರ ಹೇಗೆ ಬೆಳೆಯುತ್ತದೆ?"
+    },
+    {
+     "en": "Find the slowest launch that escapes the Moon.",
+     "kn": "ಚಂದ್ರನಿಂದ ತಪ್ಪಿಸಿಕೊಳ್ಳುವ ಅತಿ ಕಡಿಮೆ ವೇಗವನ್ನು ಹುಡುಕಿ."
+    },
+    {
+     "en": "Why can the Moon not hold an atmosphere? Compare its escape speed with the speed of gas molecules (about 0.5 km/s).",
+     "kn": "ಚಂದ್ರನಿಗೆ ವಾತಾವರಣ ಏಕೆ ಇಲ್ಲ? ಅದರ ಪಲಾಯನ ವೇಗವನ್ನು ಅನಿಲ ಅಣುಗಳ ವೇಗದೊಂದಿಗೆ (ಸುಮಾರು 0.5 km/s) ಹೋಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

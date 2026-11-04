@@ -640,6 +640,290 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Displacement or distance?",
+    "kn": "ಸ್ಥಾನಪಲ್ಲಟವೋ ದೂರವೋ?"
+   },
+   "narration": {
+    "en": "The car drives out to x = +30 m, turns round at t = 6 s and comes back past the start. Pick two times. Displacement is the change in position; distance is the length of road actually covered. Average velocity = displacement ÷ time, the slope of the chord on the x–t graph; average speed = distance ÷ time.",
+    "kn": "ಕಾರು x = +30 m ವರೆಗೆ ಹೋಗಿ, t = 6 s ನಲ್ಲಿ ತಿರುಗಿ ಆರಂಭ ಬಿಂದು ದಾಟಿ ಹಿಂದೆ ಬರುತ್ತದೆ. ಎರಡು ಸಮಯಗಳನ್ನು ಆರಿಸಿ. ಸ್ಥಾನಪಲ್ಲಟ = ಸ್ಥಾನದ ಬದಲಾವಣೆ; ದೂರ = ನಿಜವಾಗಿ ಕ್ರಮಿಸಿದ ರಸ್ತೆಯ ಉದ್ದ. ಸರಾಸರಿ ವೇಗ (velocity) = ಸ್ಥಾನಪಲ್ಲಟ ÷ ಸಮಯ, x–t ನಕ್ಷೆಯ ಜ್ಯಾದ ಇಳಿಜಾರು; ಸರಾಸರಿ ವೇಗ (speed) = ದೂರ ÷ ಸಮಯ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The car drives out to x = +30 m, turns round at t = 6 s and comes back past the start. Pick two times. Displacement is the change in position; distance is the length of road actually covered. Average velocity = displacement ÷ time, the slope of the chord on the x–t graph; average speed = distance ÷ time.",
+    "kn": "ಕಾರು x = +30 m ವರೆಗೆ ಹೋಗಿ, t = 6 s ನಲ್ಲಿ ತಿರುಗಿ ಆರಂಭ ಬಿಂದು ದಾಟಿ ಹಿಂದೆ ಬರುತ್ತದೆ. ಎರಡು ಸಮಯಗಳನ್ನು ಆರಿಸಿ. ಸ್ಥಾನಪಲ್ಲಟ = ಸ್ಥಾನದ ಬದಲಾವಣೆ; ದೂರ = ನಿಜವಾಗಿ ಕ್ರಮಿಸಿದ ರಸ್ತೆಯ ಉದ್ದ. ಸರಾಸರಿ ವೇಗ (velocity) = ಸ್ಥಾನಪಲ್ಲಟ ÷ ಸಮಯ, x–t ನಕ್ಷೆಯ ಜ್ಯಾದ ಇಳಿಜಾರು; ಸರಾಸರಿ ವೇಗ (speed) = ದೂರ ÷ ಸಮಯ."
+   },
+   "sliders": [
+    {
+     "name": "ta",
+     "label": {
+      "en": "First time",
+      "kn": "ಮೊದಲ ಸಮಯ"
+     },
+     "min": 0,
+     "max": 18,
+     "step": 0.5,
+     "value": 2,
+     "unit": "s"
+    },
+    {
+     "name": "tb",
+     "label": {
+      "en": "Second time",
+      "kn": "ಎರಡನೇ ಸಮಯ"
+     },
+     "min": 0,
+     "max": 18,
+     "step": 0.5,
+     "value": 14,
+     "unit": "s"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Drive",
+      "kn": "ಓಡಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 18
+   },
+   "vars": [
+    {
+     "name": "t1",
+     "expr": "min(ta, tb)"
+    },
+    {
+     "name": "t2",
+     "expr": "max(ta, tb)"
+    },
+    {
+     "name": "xa",
+     "expr": "30*sin(pi*min(ta, tb)/12)"
+    },
+    {
+     "name": "xb",
+     "expr": "30*sin(pi*max(ta, tb)/12)"
+    },
+    {
+     "name": "dist",
+     "expr": "if(min(ta, tb) < 6 && max(ta, tb) > 6, (30 - 30*sin(pi*min(ta, tb)/12)) + (30 - 30*sin(pi*max(ta, tb)/12)), abs(30*sin(pi*max(ta, tb)/12) - 30*sin(pi*min(ta, tb)/12)))"
+    }
+   ],
+   "view": {
+    "x": [
+     -33,
+     33
+    ],
+    "y": [
+     -13.5,
+     9.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -32,
+     "y1": 5.8,
+     "x2": 32,
+     "y2": 5.8,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 5.2,
+     "x2": 0,
+     "y2": 6.4,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 4.4,
+     "text": {
+      "en": "0"
+     },
+     "size": 22
+    },
+    {
+     "shape": "line",
+     "x1": "xa",
+     "y1": 5.8,
+     "x2": "xa",
+     "y2": 8.6,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": "xa",
+     "y": 9.1,
+     "text": {
+      "en": "t₁",
+      "kn": "t₁"
+     },
+     "size": 24,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": "xb",
+     "y1": 5.8,
+     "x2": "xb",
+     "y2": 8.6,
+     "color": "red",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": "xb",
+     "y": 9.1,
+     "text": {
+      "en": "t₂",
+      "kn": "t₂"
+     },
+     "size": 24,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": "30*sin(pi*t/12) - 1.5",
+     "y": 5.9,
+     "w": 3,
+     "h": 1.4,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": -30,
+     "y1": -6,
+     "x2": 30,
+     "y2": -6,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": -30,
+     "y1": -12.5,
+     "x2": -30,
+     "y2": 0.5,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "path",
+     "fn": "-6 + 6*sin(pi*(x + 30)/40)",
+     "from": -30,
+     "to": 30,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "-30 + 10*t1/3",
+     "y1": "-6 + xa/5",
+     "x2": "-30 + 10*t2/3",
+     "y2": "-6 + xb/5",
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "-30 + 10*t/3",
+     "y": "-6 + 6*sin(pi*t/12)",
+     "r": 0.6,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": -12.8,
+     "align": "right",
+     "text": {
+      "en": "time (0 to 18 s) →",
+      "kn": "ಸಮಯ (0 ರಿಂದ 18 s) →"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": -29,
+     "y": 1.2,
+     "align": "left",
+     "text": {
+      "en": "x–t graph: the orange chord's slope is the average velocity",
+      "kn": "x–t ನಕ್ಷೆ: ಕಿತ್ತಳೆ ಜ್ಯಾದ ಇಳಿಜಾರು ಸರಾಸರಿ ವೇಗ"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Displacement",
+      "kn": "ಸ್ಥಾನಪಲ್ಲಟ"
+     },
+     "expr": "xb - xa",
+     "digits": 1,
+     "unit": "m"
+    },
+    {
+     "label": {
+      "en": "Distance",
+      "kn": "ದೂರ"
+     },
+     "expr": "dist",
+     "digits": 1,
+     "unit": "m"
+    },
+    {
+     "label": {
+      "en": "Average velocity",
+      "kn": "ಸರಾಸರಿ ವೇಗ (velocity)"
+     },
+     "expr": "if(t2 > t1, (xb - xa)/(t2 - t1), 0)",
+     "digits": 2,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Average speed",
+      "kn": "ಸರಾಸರಿ ವೇಗ (speed)"
+     },
+     "expr": "if(t2 > t1, dist/(t2 - t1), 0)",
+     "digits": 2,
+     "unit": "m/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Choose 0 s and 12 s. Why is the displacement zero but the distance 60 m?",
+     "kn": "0 s ಮತ್ತು 12 s ಆರಿಸಿ. ಸ್ಥಾನಪಲ್ಲಟ ಶೂನ್ಯ, ಆದರೆ ದೂರ 60 m ಏಕೆ?"
+    },
+    {
+     "en": "Choose two times before 6 s. When are average speed and the size of average velocity equal?",
+     "kn": "6 s ಗಿಂತ ಮೊದಲಿನ ಎರಡು ಸಮಯ ಆರಿಸಿ. ಸರಾಸರಿ speed ಮತ್ತು ಸರಾಸರಿ velocity ಯ ಗಾತ್ರ ಯಾವಾಗ ಸಮ?"
+    },
+    {
+     "en": "Find an interval with a negative average velocity.",
+     "kn": "ಋಣ ಸರಾಸರಿ ವೇಗದ ಅಂತರ ಹುಡುಕಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

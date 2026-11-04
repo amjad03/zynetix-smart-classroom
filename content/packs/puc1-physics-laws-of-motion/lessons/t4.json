@@ -516,6 +516,320 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Pull a block against friction",
+    "kn": "ಘರ್ಷಣೆಯ ವಿರುದ್ಧ ಬ್ಲಾಕ್ ಅನ್ನು ಎಳೆಯಿರಿ"
+   },
+   "narration": {
+    "en": "Static friction matches your pull exactly, up to its limit μs N. Pull harder than that and the block slides; then kinetic friction μk N, a little smaller, opposes it and the block accelerates at (F − μk N)/m. The graph shows friction against the applied force.",
+    "kn": "ಸ್ಥಿರ ಘರ್ಷಣೆ ನಿಮ್ಮ ಎಳೆತಕ್ಕೆ ಸರಿಯಾಗಿ ಸಮ, ಅದರ ಮಿತಿ μs N ವರೆಗೆ. ಅದಕ್ಕಿಂತ ಹೆಚ್ಚು ಎಳೆದರೆ ಬ್ಲಾಕ್ ಜಾರುತ್ತದೆ; ಆಗ ಸ್ವಲ್ಪ ಕಡಿಮೆಯಾದ ಚಲನ ಘರ್ಷಣೆ μk N ವಿರೋಧಿಸುತ್ತದೆ, ವೇಗೋತ್ಕರ್ಷ (F − μk N)/m. ನಕ್ಷೆ ಅನ್ವಯಿತ ಬಲದ ವಿರುದ್ಧ ಘರ್ಷಣೆ ತೋರಿಸುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Static friction matches your pull exactly, up to its limit μs N. Pull harder than that and the block slides; then kinetic friction μk N, a little smaller, opposes it and the block accelerates at (F − μk N)/m. The graph shows friction against the applied force.",
+    "kn": "ಸ್ಥಿರ ಘರ್ಷಣೆ ನಿಮ್ಮ ಎಳೆತಕ್ಕೆ ಸರಿಯಾಗಿ ಸಮ, ಅದರ ಮಿತಿ μs N ವರೆಗೆ. ಅದಕ್ಕಿಂತ ಹೆಚ್ಚು ಎಳೆದರೆ ಬ್ಲಾಕ್ ಜಾರುತ್ತದೆ; ಆಗ ಸ್ವಲ್ಪ ಕಡಿಮೆಯಾದ ಚಲನ ಘರ್ಷಣೆ μk N ವಿರೋಧಿಸುತ್ತದೆ, ವೇಗೋತ್ಕರ್ಷ (F − μk N)/m. ನಕ್ಷೆ ಅನ್ವಯಿತ ಬಲದ ವಿರುದ್ಧ ಘರ್ಷಣೆ ತೋರಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "F",
+     "label": {
+      "en": "Pull",
+      "kn": "ಎಳೆತ"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 1,
+     "value": 15,
+     "unit": "N"
+    },
+    {
+     "name": "m",
+     "label": {
+      "en": "Mass",
+      "kn": "ದ್ರವ್ಯರಾಶಿ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 4,
+     "unit": "kg"
+    },
+    {
+     "name": "mus",
+     "label": {
+      "en": "μs (static)",
+      "kn": "μs (ಸ್ಥಿರ)"
+     },
+     "min": 0.1,
+     "max": 0.8,
+     "step": 0.05,
+     "value": 0.5
+    },
+    {
+     "name": "muk",
+     "label": {
+      "en": "μk (kinetic)",
+      "kn": "μk (ಚಲನ)"
+     },
+     "min": 0.05,
+     "max": 0.7,
+     "step": 0.05,
+     "value": 0.4
+    }
+   ],
+   "toggles": [
+    {
+     "name": "forces",
+     "label": {
+      "en": "Force arrows",
+      "kn": "ಬಲ ಬಾಣಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Pull",
+      "kn": "ಎಳೆಯಿರಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 4,
+    "stopWhen": "xb > 7"
+   },
+   "vars": [
+    {
+     "name": "N",
+     "expr": "m*9.8"
+    },
+    {
+     "name": "fs",
+     "expr": "mus*m*9.8"
+    },
+    {
+     "name": "fk",
+     "expr": "min(muk, mus)*m*9.8"
+    },
+    {
+     "name": "mov",
+     "expr": "F > mus*m*9.8"
+    },
+    {
+     "name": "fr",
+     "expr": "if(F > mus*m*9.8, min(muk, mus)*m*9.8, F)"
+    },
+    {
+     "name": "a",
+     "expr": "if(F > mus*m*9.8, (F - min(muk, mus)*m*9.8)/m, 0)"
+    },
+    {
+     "name": "xb",
+     "expr": "0.5*a*t^2"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     13
+    ],
+    "y": [
+     -6.8,
+     4.4
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -0.5,
+     "y1": 0,
+     "x2": 13,
+     "y2": 0,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": "1 + xb",
+     "y": 0,
+     "w": 1.6,
+     "h": 1.2,
+     "color": "blue"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "forces",
+     "x": "2.6 + xb",
+     "y": 0.6,
+     "dx": "F/15",
+     "dy": 0,
+     "color": "yellow",
+     "label": "F"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "forces && fr > 0",
+     "x": "1.8 + xb",
+     "y": 0.05,
+     "dx": "-fr/15",
+     "dy": 0,
+     "color": "red",
+     "label": "f"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "forces",
+     "x": "1.8 + xb",
+     "y": 0.6,
+     "dx": 0,
+     "dy": "-N/32",
+     "color": "white",
+     "label": "mg"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "forces",
+     "x": "1.8 + xb",
+     "y": 1.2,
+     "dx": 0,
+     "dy": "N/32",
+     "color": "green",
+     "label": "N"
+    },
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": -6,
+     "x2": 12.6,
+     "y2": -6,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": -6,
+     "x2": 0.5,
+     "y2": -1.2,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "path",
+     "fn": "-6 + 0.05625*if(x - 0.5 < 0.2*fs, (x - 0.5)/0.2, fk)",
+     "from": 0.5,
+     "to": 12.5,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "0.5 + 0.2*F",
+     "y": "-6 + 0.05625*fr",
+     "r": 0.15,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 12.5,
+     "y": -6.5,
+     "align": "right",
+     "text": {
+      "en": "applied force (0 to 60 N) →",
+      "kn": "ಅನ್ವಯಿತ ಬಲ (0 ರಿಂದ 60 N) →"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 0.7,
+     "y": -1.0,
+     "align": "left",
+     "text": {
+      "en": "friction",
+      "kn": "ಘರ್ಷಣೆ"
+     },
+     "size": 22,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "mov",
+     "x": 8,
+     "y": 2.6,
+     "text": {
+      "en": "Sliding: kinetic friction",
+      "kn": "ಜಾರುತ್ತಿದೆ: ಚಲನ ಘರ್ಷಣೆ"
+     },
+     "size": 28,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "!mov",
+     "x": 8,
+     "y": 2.6,
+     "text": {
+      "en": "At rest: static friction = pull",
+      "kn": "ನಿಶ್ಚಲ: ಸ್ಥಿರ ಘರ್ಷಣೆ = ಎಳೆತ"
+     },
+     "size": 28,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Friction now",
+      "kn": "ಈಗಿನ ಘರ್ಷಣೆ"
+     },
+     "expr": "fr",
+     "digits": 1,
+     "unit": "N"
+    },
+    {
+     "label": {
+      "en": "Limiting friction μs N",
+      "kn": "ಮಿತಿ ಘರ್ಷಣೆ μs N"
+     },
+     "expr": "fs",
+     "digits": 1,
+     "unit": "N"
+    },
+    {
+     "label": {
+      "en": "Acceleration",
+      "kn": "ವೇಗೋತ್ಕರ್ಷ"
+     },
+     "expr": "a",
+     "digits": 2,
+     "unit": "m/s²"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise the pull slowly from 0. At what force does the block start to slide?",
+     "kn": "ಎಳೆತವನ್ನು 0 ಯಿಂದ ನಿಧಾನವಾಗಿ ಹೆಚ್ಚಿಸಿ. ಯಾವ ಬಲದಲ್ಲಿ ಬ್ಲಾಕ್ ಜಾರಲು ಆರಂಭಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Double the mass. What happens to the limiting friction?",
+     "kn": "ದ್ರವ್ಯರಾಶಿ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ಮಿತಿ ಘರ್ಷಣೆಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Why is it harder to start pushing a heavy box than to keep it moving?",
+     "kn": "ಭಾರ ಪೆಟ್ಟಿಗೆಯನ್ನು ಚಲಿಸುತ್ತಲೇ ಇಡುವುದಕ್ಕಿಂತ ತಳ್ಳಲು ಆರಂಭಿಸುವುದು ಏಕೆ ಕಷ್ಟ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

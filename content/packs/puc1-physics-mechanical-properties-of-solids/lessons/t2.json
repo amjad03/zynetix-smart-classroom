@@ -492,6 +492,252 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Walk along the stress–strain curve",
+    "kn": "ಪ್ರತಿಬಲ–ವಿಕೃತಿ ವಕ್ರದ ಮೇಲೆ ನಡೆಯಿರಿ"
+   },
+   "narration": {
+    "en": "Up to A stress is proportional to strain (Hooke's law). Up to B, the yield point, the wire still returns to its length when unloaded. Beyond B it flows plastically and keeps a permanent set; D is the ultimate tensile strength and at E it breaks. The shape is typical of a ductile metal; the numbers are not to scale.",
+    "kn": "A ವರೆಗೆ ಪ್ರತಿಬಲ ವಿಕೃತಿಗೆ ಅನುಪಾತ (ಹುಕ್ ನಿಯಮ). B (ಇಳುವರಿ ಬಿಂದು) ವರೆಗೆ ಭಾರ ತೆಗೆದಾಗ ತಂತಿ ಮೂಲ ಉದ್ದಕ್ಕೆ ಮರಳುತ್ತದೆ. B ನಂತರ ಪ್ಲಾಸ್ಟಿಕ್ ಆಗಿ ಹರಿದು ಶಾಶ್ವತ ಬದಲಾವಣೆ ಉಳಿಯುತ್ತದೆ; D ಗರಿಷ್ಠ ಎಳೆತ ಸಾಮರ್ಥ್ಯ, E ನಲ್ಲಿ ಮುರಿಯುತ್ತದೆ. ಆಕಾರ ತನ್ಯ ಲೋಹಕ್ಕೆ ವಿಶಿಷ್ಟ; ಸಂಖ್ಯೆಗಳು ಪ್ರಮಾಣಕ್ಕೆ ಅನುಗುಣವಾಗಿಲ್ಲ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Up to A stress is proportional to strain (Hooke's law). Up to B, the yield point, the wire still returns to its length when unloaded. Beyond B it flows plastically and keeps a permanent set; D is the ultimate tensile strength and at E it breaks. The shape is typical of a ductile metal; the numbers are not to scale.",
+    "kn": "A ವರೆಗೆ ಪ್ರತಿಬಲ ವಿಕೃತಿಗೆ ಅನುಪಾತ (ಹುಕ್ ನಿಯಮ). B (ಇಳುವರಿ ಬಿಂದು) ವರೆಗೆ ಭಾರ ತೆಗೆದಾಗ ತಂತಿ ಮೂಲ ಉದ್ದಕ್ಕೆ ಮರಳುತ್ತದೆ. B ನಂತರ ಪ್ಲಾಸ್ಟಿಕ್ ಆಗಿ ಹರಿದು ಶಾಶ್ವತ ಬದಲಾವಣೆ ಉಳಿಯುತ್ತದೆ; D ಗರಿಷ್ಠ ಎಳೆತ ಸಾಮರ್ಥ್ಯ, E ನಲ್ಲಿ ಮುರಿಯುತ್ತದೆ. ಆಕಾರ ತನ್ಯ ಲೋಹಕ್ಕೆ ವಿಶಿಷ್ಟ; ಸಂಖ್ಯೆಗಳು ಪ್ರಮಾಣಕ್ಕೆ ಅನುಗುಣವಾಗಿಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "eps",
+     "label": {
+      "en": "Strain (not to scale)",
+      "kn": "ವಿಕೃತಿ (ಪ್ರಮಾಣಕ್ಕೆ ಅಲ್ಲ)"
+     },
+     "min": 0,
+     "max": 18,
+     "step": 0.5,
+     "value": 3
+    }
+   ],
+   "toggles": [
+    {
+     "name": "unload",
+     "label": {
+      "en": "Show unloading",
+      "kn": "ಭಾರ ತೆಗೆಯುವಿಕೆ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "sg",
+     "expr": "if(eps <= 4, 1.5*eps, if(eps <= 5, 6 + 0.6*(eps - 4), if(eps <= 14, 6.6 + 2.4*sin(pi/2*(eps - 5)/9), 9 - 1.5*((eps - 14)/4)^2)))"
+    },
+    {
+     "name": "ep",
+     "expr": "if(eps <= 5, 0, eps - (if(eps <= 4, 1.5*eps, if(eps <= 5, 6 + 0.6*(eps - 4), if(eps <= 14, 6.6 + 2.4*sin(pi/2*(eps - 5)/9), 9 - 1.5*((eps - 14)/4)^2))))/1.5)"
+    }
+   ],
+   "view": {
+    "x": [
+     -1,
+     20
+    ],
+    "y": [
+     -1.2,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 19.5,
+     "y2": 0,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 0,
+     "y2": 10.5,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "path",
+     "fn": "if(x <= 4, 1.5*x, if(x <= 5, 6 + 0.6*(x - 4), if(x <= 14, 6.6 + 2.4*sin(pi/2*(x - 5)/9), 9 - 1.5*((x - 14)/4)^2)))",
+     "from": 0,
+     "to": 18,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "visibleIf": "unload && eps > 5",
+     "x1": "eps",
+     "y1": "sg",
+     "x2": "ep",
+     "y2": 0,
+     "color": "orange",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "eps",
+     "y": "sg",
+     "r": 0.25,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 3.6,
+     "y": 6.6,
+     "text": {
+      "en": "A"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 4.9,
+     "y": 7.3,
+     "text": {
+      "en": "B"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 9.6,
+     "text": {
+      "en": "D"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 18.4,
+     "y": 7.9,
+     "text": {
+      "en": "E"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 19.5,
+     "y": -0.7,
+     "align": "right",
+     "text": {
+      "en": "strain →",
+      "kn": "ವಿಕೃತಿ →"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 0.3,
+     "y": 10.6,
+     "align": "left",
+     "text": {
+      "en": "stress",
+      "kn": "ಪ್ರತಿಬಲ"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "visibleIf": "eps <= 4",
+     "x": 10,
+     "y": 3,
+     "text": {
+      "en": "Hooke's law region: stress ∝ strain",
+      "kn": "ಹುಕ್ ನಿಯಮ ವಲಯ: ಪ್ರತಿಬಲ ∝ ವಿಕೃತಿ"
+     },
+     "size": 26,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "eps > 4 && eps <= 5",
+     "x": 10,
+     "y": 3,
+     "text": {
+      "en": "Elastic, but no longer proportional",
+      "kn": "ಸ್ಥಿತಿಸ್ಥಾಪಕ, ಆದರೆ ಅನುಪಾತವಲ್ಲ"
+     },
+     "size": 26,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "eps > 5 && eps <= 14",
+     "x": 10,
+     "y": 3,
+     "text": {
+      "en": "Plastic: a permanent set remains",
+      "kn": "ಪ್ಲಾಸ್ಟಿಕ್: ಶಾಶ್ವತ ಬದಲಾವಣೆ ಉಳಿಯುತ್ತದೆ"
+     },
+     "size": 26,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "eps > 14",
+     "x": 10,
+     "y": 3,
+     "text": {
+      "en": "Necking: the wire thins and breaks at E",
+      "kn": "ಕತ್ತು ಕಿರಿದಾಗುವಿಕೆ: E ನಲ್ಲಿ ಮುರಿಯುತ್ತದೆ"
+     },
+     "size": 26,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Stress (relative)",
+      "kn": "ಪ್ರತಿಬಲ (ಸಾಪೇಕ್ಷ)"
+     },
+     "expr": "sg",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Permanent set after unloading",
+      "kn": "ಭಾರ ತೆಗೆದ ನಂತರ ಶಾಶ್ವತ ವಿಕೃತಿ"
+     },
+     "expr": "ep",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Stretch to just before B and unload. Is there a permanent set?",
+     "kn": "B ಗೆ ಸ್ವಲ್ಪ ಮುಂಚೆ ಎಳೆದು ಭಾರ ತೆಗೆಯಿರಿ. ಶಾಶ್ವತ ಬದಲಾವಣೆ ಇದೆಯೇ?"
+    },
+    {
+     "en": "Stretch to 12 and unload. Why is the unloading line parallel to OA?",
+     "kn": "12 ರವರೆಗೆ ಎಳೆದು ಭಾರ ತೆಗೆಯಿರಿ. ಭಾರ ತೆಗೆಯುವ ರೇಖೆ OA ಗೆ ಏಕೆ ಸಮಾಂತರ?"
+    },
+    {
+     "en": "Between D and E the stress falls although the wire stretches. What is happening to the wire?",
+     "kn": "D ಮತ್ತು E ನಡುವೆ ತಂತಿ ಹಿಗ್ಗಿದರೂ ಪ್ರತಿಬಲ ಕಡಿಮೆ. ತಂತಿಗೆ ಏನಾಗುತ್ತಿದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

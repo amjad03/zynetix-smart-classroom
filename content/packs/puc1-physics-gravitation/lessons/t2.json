@@ -340,6 +340,238 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Gravity between two bodies",
+    "kn": "ಎರಡು ಕಾಯಗಳ ನಡುವಿನ ಗುರುತ್ವ"
+   },
+   "narration": {
+    "en": "Drag the second body. The pull F = G m1 m2 / r² acts on both bodies, equal in size and opposite in direction. Double the distance and the force becomes a quarter. With Earth and Moon values (6 and 7.5 on the sliders, 3.84 × 10⁸ m apart) the force is about 2 × 10²⁰ N.",
+    "kn": "ಎರಡನೇ ಕಾಯವನ್ನು ಎಳೆಯಿರಿ. F = G m1 m2 / r² ಬಲ ಎರಡೂ ಕಾಯಗಳ ಮೇಲೆ ಸಮ ಪ್ರಮಾಣದಲ್ಲಿ, ವಿರುದ್ಧ ದಿಕ್ಕಿನಲ್ಲಿ ವರ್ತಿಸುತ್ತದೆ. ದೂರ ಎರಡು ಪಟ್ಟಾದರೆ ಬಲ ನಾಲ್ಕನೇ ಒಂದು ಭಾಗ. ಭೂಮಿ–ಚಂದ್ರರ ಮೌಲ್ಯಗಳಲ್ಲಿ ಬಲ ಸುಮಾರು 2 × 10²⁰ N."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the second body. The pull F = G m1 m2 / r² acts on both bodies, equal in size and opposite in direction. Double the distance and the force becomes a quarter. With Earth and Moon values (6 and 7.5 on the sliders, 3.84 × 10⁸ m apart) the force is about 2 × 10²⁰ N.",
+    "kn": "ಎರಡನೇ ಕಾಯವನ್ನು ಎಳೆಯಿರಿ. F = G m1 m2 / r² ಬಲ ಎರಡೂ ಕಾಯಗಳ ಮೇಲೆ ಸಮ ಪ್ರಮಾಣದಲ್ಲಿ, ವಿರುದ್ಧ ದಿಕ್ಕಿನಲ್ಲಿ ವರ್ತಿಸುತ್ತದೆ. ದೂರ ಎರಡು ಪಟ್ಟಾದರೆ ಬಲ ನಾಲ್ಕನೇ ಒಂದು ಭಾಗ. ಭೂಮಿ–ಚಂದ್ರರ ಮೌಲ್ಯಗಳಲ್ಲಿ ಬಲ ಸುಮಾರು 2 × 10²⁰ N."
+   },
+   "sliders": [
+    {
+     "name": "m1",
+     "label": {
+      "en": "Mass 1 (×10²⁴ kg)",
+      "kn": "ದ್ರವ್ಯರಾಶಿ 1 (×10²⁴ kg)"
+     },
+     "min": 0.5,
+     "max": 10,
+     "step": 0.25,
+     "value": 6
+    },
+    {
+     "name": "m2",
+     "label": {
+      "en": "Mass 2 (×10²² kg)",
+      "kn": "ದ್ರವ್ಯರಾಶಿ 2 (×10²² kg)"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 0.5,
+     "value": 7.5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "graph",
+     "label": {
+      "en": "Force–distance graph",
+      "kn": "ಬಲ–ದೂರ ನಕ್ಷೆ"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "M",
+     "label": "body 2",
+     "x": 3.84,
+     "y": 1.4,
+     "axis": "x",
+     "box": {
+      "x": [
+       1,
+       10
+      ],
+      "y": [
+       1.4,
+       1.4
+      ]
+     },
+     "snap": 0.02,
+     "color": "white"
+    }
+   ],
+   "vars": [
+    {
+     "name": "F",
+     "expr": "0.6674*m1*m2/M_x^2"
+    },
+    {
+     "name": "Lr",
+     "expr": "min(0.7*sqrt(F), 0.42*M_x)"
+    }
+   ],
+   "view": {
+    "x": [
+     -1,
+     11
+    ],
+    "y": [
+     -3.2,
+     3
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 1.4,
+     "x2": "M_x",
+     "y2": 1.4,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.4
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 1.4,
+     "r": "0.25 + 0.06*m1",
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "x": "M_x",
+     "y": 1.4,
+     "r": "0.12 + 0.02*m2",
+     "color": "white"
+    },
+    {
+     "shape": "arrow",
+     "x": 0,
+     "y": 1.4,
+     "dx": "Lr",
+     "dy": 0,
+     "color": "yellow",
+     "label": "F",
+     "width": 5
+    },
+    {
+     "shape": "arrow",
+     "x": "M_x",
+     "y": 1.4,
+     "dx": "-Lr",
+     "dy": 0,
+     "color": "yellow",
+     "label": "F",
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "x": "M_x/2",
+     "y": 2.6,
+     "text": {
+      "en": "r = {M_x:2} × 10⁸ m",
+      "kn": "r = {M_x:2} × 10⁸ m"
+     },
+     "size": 26
+    },
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": -2.9,
+     "x2": 10.5,
+     "y2": -2.9,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "visibleIf": "graph",
+     "x1": 1,
+     "y1": -2.9,
+     "x2": 1,
+     "y2": 0.1,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "path",
+     "visibleIf": "graph",
+     "fn": "-2.9 + 3/x^2",
+     "from": 1,
+     "to": 10.5,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "graph",
+     "x": "M_x",
+     "y": "-2.9 + 3/M_x^2",
+     "r": 0.12,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "graph",
+     "x": 6,
+     "y": -1.4,
+     "text": {
+      "en": "F ∝ 1/r²",
+      "kn": "F ∝ 1/r²"
+     },
+     "size": 28,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Force on each body",
+      "kn": "ಪ್ರತಿ ಕಾಯದ ಮೇಲಿನ ಬಲ"
+     },
+     "expr": "F",
+     "digits": 3,
+     "unit": "× 10²⁰ N"
+    },
+    {
+     "label": {
+      "en": "Pull per kg on body 2",
+      "kn": "ಕಾಯ 2 ರ ಮೇಲೆ ಪ್ರತಿ ಕೆಜಿ ಎಳೆತ"
+     },
+     "expr": "6.674*m1/M_x^2",
+     "digits": 3,
+     "unit": "mm/s²"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Drag body 2 from 2 to 4 (×10⁸ m). By what factor does the force fall?",
+     "kn": "ಕಾಯ 2 ಅನ್ನು 2 ರಿಂದ 4 ಕ್ಕೆ ಎಳೆಯಿರಿ. ಬಲ ಎಷ್ಟು ಪಟ್ಟು ಕಡಿಮೆಯಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Make m1 much bigger than m2. Are the two arrows still equal?",
+     "kn": "m1 ಅನ್ನು m2 ಗಿಂತ ತುಂಬಾ ದೊಡ್ಡದು ಮಾಡಿ. ಎರಡು ಬಾಣಗಳು ಇನ್ನೂ ಸಮವೇ?"
+    },
+    {
+     "en": "Compare the pull per kilogram on body 2 with the Moon's centripetal acceleration, 2.7 mm/s².",
+     "kn": "ಕಾಯ 2 ರ ಮೇಲಿನ ಪ್ರತಿ ಕೆಜಿ ಎಳೆತವನ್ನು ಚಂದ್ರನ ಕೇಂದ್ರಾಭಿಮುಖ ವೇಗೋತ್ಕರ್ಷ 2.7 mm/s² ಜೊತೆ ಹೋಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

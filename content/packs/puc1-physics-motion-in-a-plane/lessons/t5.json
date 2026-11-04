@@ -359,6 +359,223 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Whirl a stone, then cut the string",
+    "kn": "ಕಲ್ಲನ್ನು ಸುತ್ತಿಸಿ, ನಂತರ ದಾರ ಕತ್ತರಿಸಿ"
+   },
+   "narration": {
+    "en": "In uniform circular motion the speed v = ωr stays the same but the direction keeps changing, so there is an acceleration v²/r = ω²r towards the centre, given by the tension. Cut the string and the centripetal force vanishes: the stone flies off along the tangent, not outwards.",
+    "kn": "ಏಕರೂಪ ವೃತ್ತೀಯ ಚಲನೆಯಲ್ಲಿ ವೇಗ v = ωr ಒಂದೇ, ಆದರೆ ದಿಕ್ಕು ಬದಲಾಗುತ್ತಲೇ ಇರುತ್ತದೆ; ಹಾಗಾಗಿ ಕೇಂದ್ರದ ಕಡೆಗೆ v²/r = ω²r ವೇಗೋತ್ಕರ್ಷ, ಅದನ್ನು ದಾರದ ಸೆಳೆತ ಕೊಡುತ್ತದೆ. ದಾರ ಕತ್ತರಿಸಿದರೆ ಕೇಂದ್ರಾಭಿಮುಖ ಬಲ ಇಲ್ಲ: ಕಲ್ಲು ಸ್ಪರ್ಶಕದ ದಿಕ್ಕಿನಲ್ಲಿ ಹಾರುತ್ತದೆ, ಹೊರಗಲ್ಲ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "In uniform circular motion the speed v = ωr stays the same but the direction keeps changing, so there is an acceleration v²/r = ω²r towards the centre, given by the tension. Cut the string and the centripetal force vanishes: the stone flies off along the tangent, not outwards.",
+    "kn": "ಏಕರೂಪ ವೃತ್ತೀಯ ಚಲನೆಯಲ್ಲಿ ವೇಗ v = ωr ಒಂದೇ, ಆದರೆ ದಿಕ್ಕು ಬದಲಾಗುತ್ತಲೇ ಇರುತ್ತದೆ; ಹಾಗಾಗಿ ಕೇಂದ್ರದ ಕಡೆಗೆ v²/r = ω²r ವೇಗೋತ್ಕರ್ಷ, ಅದನ್ನು ದಾರದ ಸೆಳೆತ ಕೊಡುತ್ತದೆ. ದಾರ ಕತ್ತರಿಸಿದರೆ ಕೇಂದ್ರಾಭಿಮುಖ ಬಲ ಇಲ್ಲ: ಕಲ್ಲು ಸ್ಪರ್ಶಕದ ದಿಕ್ಕಿನಲ್ಲಿ ಹಾರುತ್ತದೆ, ಹೊರಗಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Radius",
+      "kn": "ತ್ರಿಜ್ಯ"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 0.25,
+     "value": 3,
+     "unit": "m"
+    },
+    {
+     "name": "w",
+     "label": {
+      "en": "Angular speed ω",
+      "kn": "ಕೋನೀಯ ವೇಗ ω"
+     },
+     "min": 0.5,
+     "max": 3,
+     "step": 0.1,
+     "value": 1.5,
+     "unit": "rad/s"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cut",
+     "label": {
+      "en": "String cut",
+      "kn": "ದಾರ ಕತ್ತರಿಸಿ"
+     },
+     "value": false
+    },
+    {
+     "name": "showa",
+     "label": {
+      "en": "Acceleration arrow",
+      "kn": "ವೇಗೋತ್ಕರ್ಷ ಬಾಣ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 30,
+    "dt": 0.002,
+    "stopWhen": "hypot(px, py) > 9"
+   },
+   "state": [
+    {
+     "name": "px",
+     "init": "r",
+     "rate": "vx"
+    },
+    {
+     "name": "py",
+     "init": 0,
+     "rate": "vy"
+    },
+    {
+     "name": "vx",
+     "init": 0,
+     "rate": "if(cut, 0, -w^2*px)"
+    },
+    {
+     "name": "vy",
+     "init": "w*r",
+     "rate": "if(cut, 0, -w^2*py)"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     -8,
+     8
+    ],
+    "y": [
+     -8,
+     8
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": "r",
+     "fill": false,
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 0.15,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "visibleIf": "!cut",
+     "x1": 0,
+     "y1": 0,
+     "x2": "px",
+     "y2": "py",
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "trail",
+     "x": "px",
+     "y": "py",
+     "length": 300,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 0.3,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": "px",
+     "y": "py",
+     "dx": "0.25*vx",
+     "dy": "0.25*vy",
+     "color": "green",
+     "label": "v"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "showa && !cut",
+     "x": "px",
+     "y": "py",
+     "dx": "-0.1*w^2*px",
+     "dy": "-0.1*w^2*py",
+     "color": "red",
+     "label": "a"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Speed v = ωr",
+      "kn": "ವೇಗ v = ωr"
+     },
+     "expr": "w*r",
+     "digits": 2,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Centripetal acceleration ω²r",
+      "kn": "ಕೇಂದ್ರಾಭಿಮುಖ ವೇಗೋತ್ಕರ್ಷ ω²r"
+     },
+     "expr": "w^2*r",
+     "digits": 2,
+     "unit": "m/s²"
+    },
+    {
+     "label": {
+      "en": "Period 2π/ω",
+      "kn": "ಆವರ್ತ ಕಾಲ 2π/ω"
+     },
+     "expr": "2*pi/w",
+     "digits": 2,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Speed now",
+      "kn": "ಈಗಿನ ವೇಗ"
+     },
+     "expr": "hypot(vx, vy)",
+     "digits": 2,
+     "unit": "m/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double ω at the same radius. How does the acceleration change?",
+     "kn": "ಅದೇ ತ್ರಿಜ್ಯದಲ್ಲಿ ω ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ವೇಗೋತ್ಕರ್ಷ ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on 'String cut' while the stone is at the top. Which way does it go?",
+     "kn": "ಕಲ್ಲು ಮೇಲ್ಭಾಗದಲ್ಲಿರುವಾಗ 'ದಾರ ಕತ್ತರಿಸಿ' ಆನ್ ಮಾಡಿ. ಅದು ಯಾವ ಕಡೆ ಹೋಗುತ್ತದೆ?"
+    },
+    {
+     "en": "After the cut, does the speed change?",
+     "kn": "ಕತ್ತರಿಸಿದ ನಂತರ ವೇಗ ಬದಲಾಗುತ್ತದೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

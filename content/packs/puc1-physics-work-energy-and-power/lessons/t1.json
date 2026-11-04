@@ -391,6 +391,246 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Work done by a pull at an angle",
+    "kn": "ಕೋನದಲ್ಲಿ ಎಳೆತ ಮಾಡುವ ಕೆಲಸ"
+   },
+   "narration": {
+    "en": "The box moves a distance d to the right. Only the part of the force along the displacement, F cos θ, does work: W = F·d = F d cos θ. Pull at 90° and no work is done; pull backwards (θ > 90°) and the work is negative.",
+    "kn": "ಪೆಟ್ಟಿಗೆ ಬಲಕ್ಕೆ d ದೂರ ಚಲಿಸುತ್ತದೆ. ಸ್ಥಾನಪಲ್ಲಟದ ದಿಕ್ಕಿನ ಬಲದ ಭಾಗ F cos θ ಮಾತ್ರ ಕೆಲಸ ಮಾಡುತ್ತದೆ: W = F·d = F d cos θ. 90° ನಲ್ಲಿ ಎಳೆದರೆ ಕೆಲಸ ಶೂನ್ಯ; ಹಿಂದಕ್ಕೆ (θ > 90°) ಎಳೆದರೆ ಕೆಲಸ ಋಣ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The box moves a distance d to the right. Only the part of the force along the displacement, F cos θ, does work: W = F·d = F d cos θ. Pull at 90° and no work is done; pull backwards (θ > 90°) and the work is negative.",
+    "kn": "ಪೆಟ್ಟಿಗೆ ಬಲಕ್ಕೆ d ದೂರ ಚಲಿಸುತ್ತದೆ. ಸ್ಥಾನಪಲ್ಲಟದ ದಿಕ್ಕಿನ ಬಲದ ಭಾಗ F cos θ ಮಾತ್ರ ಕೆಲಸ ಮಾಡುತ್ತದೆ: W = F·d = F d cos θ. 90° ನಲ್ಲಿ ಎಳೆದರೆ ಕೆಲಸ ಶೂನ್ಯ; ಹಿಂದಕ್ಕೆ (θ > 90°) ಎಳೆದರೆ ಕೆಲಸ ಋಣ."
+   },
+   "sliders": [
+    {
+     "name": "F",
+     "label": {
+      "en": "Force",
+      "kn": "ಬಲ"
+     },
+     "min": 1,
+     "max": 50,
+     "step": 1,
+     "value": 20,
+     "unit": "N"
+    },
+    {
+     "name": "th",
+     "label": {
+      "en": "Angle with displacement",
+      "kn": "ಸ್ಥಾನಪಲ್ಲಟದೊಂದಿಗೆ ಕೋನ"
+     },
+     "min": 0,
+     "max": 180,
+     "step": 5,
+     "value": 30,
+     "unit": "°"
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "Displacement",
+      "kn": "ಸ್ಥಾನಪಲ್ಲಟ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 6,
+     "unit": "m"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "comps",
+     "label": {
+      "en": "Component along the motion",
+      "kn": "ಚಲನೆಯ ದಿಕ್ಕಿನ ಘಟಕ"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Move the box",
+      "kn": "ಪೆಟ್ಟಿಗೆ ಸರಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 3
+   },
+   "vars": [
+    {
+     "name": "sx",
+     "expr": "d*min(t/3, 1)"
+    },
+    {
+     "name": "W",
+     "expr": "F*d*cos(rad(th))"
+    }
+   ],
+   "view": {
+    "x": [
+     -5,
+     16.5
+    ],
+    "y": [
+     -2.2,
+     6.5
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -5,
+     "y1": 0,
+     "x2": 16.5,
+     "y2": 0,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": "sx",
+     "y": 0,
+     "w": 1.2,
+     "h": 1,
+     "color": "blue"
+    },
+    {
+     "shape": "arrow",
+     "x": "sx + 0.6",
+     "y": 0.5,
+     "dx": "F/10*cos(rad(th))",
+     "dy": "F/10*sin(rad(th))",
+     "color": "yellow",
+     "label": "F",
+     "width": 5
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "comps && abs(cos(rad(th))) > 0.01",
+     "x": "sx + 0.6",
+     "y": 0.5,
+     "dx": "F/10*cos(rad(th))",
+     "dy": 0,
+     "color": "green",
+     "label": "F cos θ"
+    },
+    {
+     "shape": "line",
+     "visibleIf": "comps",
+     "x1": "sx + 0.6 + F/10*cos(rad(th))",
+     "y1": 0.5,
+     "x2": "sx + 0.6 + F/10*cos(rad(th))",
+     "y2": "0.5 + F/10*sin(rad(th))",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.5
+    },
+    {
+     "shape": "arrow",
+     "x": 0,
+     "y": -1,
+     "dx": "d",
+     "dy": 0,
+     "color": "orange",
+     "label": "d"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "W > 0.001",
+     "x": 8,
+     "y": 6,
+     "text": {
+      "en": "W > 0: the force helps the motion",
+      "kn": "W > 0: ಬಲ ಚಲನೆಗೆ ಸಹಾಯ"
+     },
+     "size": 26,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "abs(W) <= 0.001",
+     "x": 8,
+     "y": 6,
+     "text": {
+      "en": "W = 0: force ⟂ displacement",
+      "kn": "W = 0: ಬಲ ⟂ ಸ್ಥಾನಪಲ್ಲಟ"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "W < -0.001",
+     "x": 8,
+     "y": 6,
+     "text": {
+      "en": "W < 0: the force opposes the motion",
+      "kn": "W < 0: ಬಲ ಚಲನೆಯನ್ನು ವಿರೋಧಿಸುತ್ತದೆ"
+     },
+     "size": 26,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Work W = F d cos θ",
+      "kn": "ಕೆಲಸ W = F d cos θ"
+     },
+     "expr": "W",
+     "digits": 1,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "Component along d",
+      "kn": "d ದಿಕ್ಕಿನ ಘಟಕ"
+     },
+     "expr": "F*cos(rad(th))",
+     "digits": 2,
+     "unit": "N"
+    },
+    {
+     "label": {
+      "en": "Work done so far",
+      "kn": "ಇಲ್ಲಿಯವರೆಗಿನ ಕೆಲಸ"
+     },
+     "expr": "F*sx*cos(rad(th))",
+     "digits": 1,
+     "unit": "J"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Keep F and d fixed. At what angle is the work half of its value at 0°?",
+     "kn": "F ಮತ್ತು d ಸ್ಥಿರವಿಡಿ. ಯಾವ ಕೋನದಲ್ಲಿ ಕೆಲಸ 0° ಯ ಅರ್ಧ?"
+    },
+    {
+     "en": "Set θ = 90°. Why is no work done although a force acts?",
+     "kn": "θ = 90° ಮಾಡಿ. ಬಲ ವರ್ತಿಸಿದರೂ ಕೆಲಸ ಏಕೆ ಶೂನ್ಯ?"
+    },
+    {
+     "en": "Give an everyday example of negative work.",
+     "kn": "ಋಣ ಕೆಲಸದ ಒಂದು ದೈನಂದಿನ ಉದಾಹರಣೆ ಕೊಡಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

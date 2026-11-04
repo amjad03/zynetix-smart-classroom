@@ -373,6 +373,255 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Two carts push apart",
+    "kn": "ಎರಡು ಗಾಡಿಗಳು ಪರಸ್ಪರ ತಳ್ಳುತ್ತವೆ"
+   },
+   "narration": {
+    "en": "A compressed spring pushes the carts apart. The spring pushes each cart with an equal and opposite force for the same time, so they get equal and opposite momenta: the total stays zero. The lighter cart moves faster and carries more of the kinetic energy.",
+    "kn": "ಸಂಕುಚಿತ ಸ್ಪ್ರಿಂಗ್ ಗಾಡಿಗಳನ್ನು ದೂರ ತಳ್ಳುತ್ತದೆ. ಸ್ಪ್ರಿಂಗ್ ಪ್ರತಿ ಗಾಡಿಯನ್ನು ಅದೇ ಸಮಯ ಸಮ ಮತ್ತು ವಿರುದ್ಧ ಬಲದಿಂದ ತಳ್ಳುತ್ತದೆ, ಹಾಗಾಗಿ ಸಮ ಮತ್ತು ವಿರುದ್ಧ ಸಂವೇಗ: ಒಟ್ಟು ಶೂನ್ಯವೇ ಉಳಿಯುತ್ತದೆ. ಹಗುರ ಗಾಡಿ ವೇಗವಾಗಿ ಚಲಿಸಿ ಹೆಚ್ಚು ಚಲನ ಶಕ್ತಿ ಒಯ್ಯುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A compressed spring pushes the carts apart. The spring pushes each cart with an equal and opposite force for the same time, so they get equal and opposite momenta: the total stays zero. The lighter cart moves faster and carries more of the kinetic energy.",
+    "kn": "ಸಂಕುಚಿತ ಸ್ಪ್ರಿಂಗ್ ಗಾಡಿಗಳನ್ನು ದೂರ ತಳ್ಳುತ್ತದೆ. ಸ್ಪ್ರಿಂಗ್ ಪ್ರತಿ ಗಾಡಿಯನ್ನು ಅದೇ ಸಮಯ ಸಮ ಮತ್ತು ವಿರುದ್ಧ ಬಲದಿಂದ ತಳ್ಳುತ್ತದೆ, ಹಾಗಾಗಿ ಸಮ ಮತ್ತು ವಿರುದ್ಧ ಸಂವೇಗ: ಒಟ್ಟು ಶೂನ್ಯವೇ ಉಳಿಯುತ್ತದೆ. ಹಗುರ ಗಾಡಿ ವೇಗವಾಗಿ ಚಲಿಸಿ ಹೆಚ್ಚು ಚಲನ ಶಕ್ತಿ ಒಯ್ಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "m1",
+     "label": {
+      "en": "Left cart mass",
+      "kn": "ಎಡ ಗಾಡಿ ದ್ರವ್ಯರಾಶಿ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 4,
+     "unit": "kg"
+    },
+    {
+     "name": "m2",
+     "label": {
+      "en": "Right cart mass",
+      "kn": "ಬಲ ಗಾಡಿ ದ್ರವ್ಯರಾಶಿ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 2,
+     "unit": "kg"
+    },
+    {
+     "name": "E",
+     "label": {
+      "en": "Spring energy",
+      "kn": "ಸ್ಪ್ರಿಂಗ್ ಶಕ್ತಿ"
+     },
+     "min": 5,
+     "max": 100,
+     "step": 5,
+     "value": 30,
+     "unit": "J"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "forces",
+     "label": {
+      "en": "Force arrows",
+      "kn": "ಬಲ ಬಾಣಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Release",
+      "kn": "ಬಿಡಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 4,
+    "stopWhen": "abs(x1) > 11 || abs(x2) > 11"
+   },
+   "vars": [
+    {
+     "name": "v1",
+     "expr": "-sqrt(2*E*m2/(m1*(m1 + m2)))"
+    },
+    {
+     "name": "v2",
+     "expr": "sqrt(2*E*m1/(m2*(m1 + m2)))"
+    },
+    {
+     "name": "w1",
+     "expr": "0.4 + 0.1*m1"
+    },
+    {
+     "name": "w2",
+     "expr": "0.4 + 0.1*m2"
+    },
+    {
+     "name": "x1",
+     "expr": "-0.15 - (0.4 + 0.1*m1)/2 + v1*t"
+    },
+    {
+     "name": "x2",
+     "expr": "0.15 + (0.4 + 0.1*m2)/2 + v2*t"
+    }
+   ],
+   "view": {
+    "x": [
+     -12,
+     12
+    ],
+    "y": [
+     -1.2,
+     3.2
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -12,
+     "y1": 0,
+     "x2": 12,
+     "y2": 0,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "spring",
+     "visibleIf": "t < 0.05",
+     "x1": -0.15,
+     "y1": 0.45,
+     "x2": 0.15,
+     "y2": 0.45,
+     "coils": 6,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": "x1 - w1/2",
+     "y": 0.05,
+     "w": "w1",
+     "h": "0.3 + 0.08*m1",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": "x2 - w2/2",
+     "y": 0.05,
+     "w": "w2",
+     "h": "0.3 + 0.08*m2",
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "forces && t < 0.5",
+     "x": "x1",
+     "y": 1.6,
+     "dx": -1.5,
+     "dy": 0,
+     "color": "yellow",
+     "label": "F"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "forces && t < 0.5",
+     "x": "x2",
+     "y": 1.6,
+     "dx": 1.5,
+     "dy": 0,
+     "color": "yellow",
+     "label": "F"
+    },
+    {
+     "shape": "text",
+     "x": "x1",
+     "y": 2.5,
+     "text": {
+      "en": "{v1:2} m/s",
+      "kn": "{v1:2} m/s"
+     },
+     "size": 24,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": "x2",
+     "y": 2.5,
+     "text": {
+      "en": "{v2:2} m/s",
+      "kn": "{v2:2} m/s"
+     },
+     "size": 24,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Momentum of left cart",
+      "kn": "ಎಡ ಗಾಡಿಯ ಸಂವೇಗ"
+     },
+     "expr": "m1*v1",
+     "digits": 2,
+     "unit": "kg m/s"
+    },
+    {
+     "label": {
+      "en": "Momentum of right cart",
+      "kn": "ಬಲ ಗಾಡಿಯ ಸಂವೇಗ"
+     },
+     "expr": "m2*v2",
+     "digits": 2,
+     "unit": "kg m/s"
+    },
+    {
+     "label": {
+      "en": "Total momentum",
+      "kn": "ಒಟ್ಟು ಸಂವೇಗ"
+     },
+     "expr": "m1*v1 + m2*v2",
+     "digits": 2,
+     "unit": "kg m/s"
+    },
+    {
+     "label": {
+      "en": "KE right ÷ KE left",
+      "kn": "ಬಲ ಚ.ಶ ÷ ಎಡ ಚ.ಶ"
+     },
+     "expr": "m1/m2",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make one cart five times heavier, like a gun and its bullet. Which moves faster?",
+     "kn": "ಒಂದು ಗಾಡಿಯನ್ನು ಐದು ಪಟ್ಟು ಭಾರ ಮಾಡಿ, ಬಂದೂಕು ಮತ್ತು ಗುಂಡಿನಂತೆ. ಯಾವುದು ವೇಗವಾಗಿ ಚಲಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Check that the total momentum is zero for every setting.",
+     "kn": "ಪ್ರತಿ ಸೆಟ್ಟಿಂಗ್‌ಗೆ ಒಟ್ಟು ಸಂವೇಗ ಶೂನ್ಯ ಎಂದು ಪರಿಶೀಲಿಸಿ."
+    },
+    {
+     "en": "With equal masses, how is the spring's energy shared?",
+     "kn": "ಸಮ ದ್ರವ್ಯರಾಶಿಗಳಲ್ಲಿ ಸ್ಪ್ರಿಂಗ್ ಶಕ್ತಿ ಹೇಗೆ ಹಂಚಿಕೆಯಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -451,6 +451,375 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Taking a banked curve",
+    "kn": "ಓರೆಯಾದ ತಿರುವಿನಲ್ಲಿ ಸಾಗುವುದು"
+   },
+   "narration": {
+    "en": "On a curve the car needs a centripetal force mv²/r. A banked road provides part of it from the normal force; friction supplies the rest. At the optimum speed √(rg tan θ) no friction is needed. Above v_max = √(rg(μ + tan θ)/(1 − μ tan θ)) the car skids outwards; far too slow and it slides down the bank.",
+    "kn": "ತಿರುವಿನಲ್ಲಿ ಕಾರಿಗೆ mv²/r ಕೇಂದ್ರಾಭಿಮುಖ ಬಲ ಬೇಕು. ಓರೆಯಾದ ರಸ್ತೆಯಲ್ಲಿ ಅದರ ಒಂದು ಭಾಗವನ್ನು ಲಂಬ ಬಲ ಕೊಡುತ್ತದೆ; ಉಳಿದದ್ದನ್ನು ಘರ್ಷಣೆ. ಆದರ್ಶ ವೇಗ √(rg tan θ) ನಲ್ಲಿ ಘರ್ಷಣೆ ಬೇಡ. v_max ಗಿಂತ ಹೆಚ್ಚಾದರೆ ಕಾರು ಹೊರಗೆ ಜಾರುತ್ತದೆ; ತುಂಬಾ ನಿಧಾನವಾದರೆ ಇಳಿಜಾರಿನಲ್ಲಿ ಕೆಳಗೆ ಜಾರುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "On a curve the car needs a centripetal force mv²/r. A banked road provides part of it from the normal force; friction supplies the rest. At the optimum speed √(rg tan θ) no friction is needed. Above v_max = √(rg(μ + tan θ)/(1 − μ tan θ)) the car skids outwards; far too slow and it slides down the bank.",
+    "kn": "ತಿರುವಿನಲ್ಲಿ ಕಾರಿಗೆ mv²/r ಕೇಂದ್ರಾಭಿಮುಖ ಬಲ ಬೇಕು. ಓರೆಯಾದ ರಸ್ತೆಯಲ್ಲಿ ಅದರ ಒಂದು ಭಾಗವನ್ನು ಲಂಬ ಬಲ ಕೊಡುತ್ತದೆ; ಉಳಿದದ್ದನ್ನು ಘರ್ಷಣೆ. ಆದರ್ಶ ವೇಗ √(rg tan θ) ನಲ್ಲಿ ಘರ್ಷಣೆ ಬೇಡ. v_max ಗಿಂತ ಹೆಚ್ಚಾದರೆ ಕಾರು ಹೊರಗೆ ಜಾರುತ್ತದೆ; ತುಂಬಾ ನಿಧಾನವಾದರೆ ಇಳಿಜಾರಿನಲ್ಲಿ ಕೆಳಗೆ ಜಾರುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "v",
+     "label": {
+      "en": "Speed",
+      "kn": "ವೇಗ"
+     },
+     "min": 20,
+     "max": 150,
+     "step": 5,
+     "value": 60,
+     "unit": "km/h"
+    },
+    {
+     "name": "r",
+     "label": {
+      "en": "Radius of curve",
+      "kn": "ತಿರುವಿನ ತ್ರಿಜ್ಯ"
+     },
+     "min": 20,
+     "max": 200,
+     "step": 10,
+     "value": 100,
+     "unit": "m"
+    },
+    {
+     "name": "th",
+     "label": {
+      "en": "Banking angle",
+      "kn": "ಓರೆ ಕೋನ"
+     },
+     "min": 0,
+     "max": 40,
+     "step": 1,
+     "value": 15,
+     "unit": "°"
+    },
+    {
+     "name": "mu",
+     "label": {
+      "en": "Friction μ",
+      "kn": "ಘರ್ಷಣೆ μ"
+     },
+     "min": 0,
+     "max": 0.8,
+     "step": 0.05,
+     "value": 0.2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "forces",
+     "label": {
+      "en": "Forces on the car",
+      "kn": "ಕಾರಿನ ಮೇಲಿನ ಬಲಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Drive",
+      "kn": "ಓಡಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2,
+    "stopWhen": "hypot(cx, cy) > 5"
+   },
+   "vars": [
+    {
+     "name": "vm",
+     "expr": "v/3.6"
+    },
+    {
+     "name": "ta",
+     "expr": "tan(rad(th))"
+    },
+    {
+     "name": "vmax",
+     "expr": "sqrt(r*9.8*(mu + tan(rad(th)))/(1 - mu*tan(rad(th))))"
+    },
+    {
+     "name": "vmin",
+     "expr": "sqrt(max(r*9.8*(tan(rad(th)) - mu)/(1 + mu*tan(rad(th))), 0))"
+    },
+    {
+     "name": "v0",
+     "expr": "sqrt(r*9.8*tan(rad(th)))"
+    },
+    {
+     "name": "ok",
+     "expr": "vm <= vmax && vm >= vmin"
+    },
+    {
+     "name": "w",
+     "expr": "vm/r"
+    },
+    {
+     "name": "ph",
+     "expr": "if(vm > vmax, vm/r*min(t, 2), vm/r*t)"
+    },
+    {
+     "name": "ex",
+     "expr": "if(vm > vmax, 3*vm/r*max(t - 2, 0)*4, 0)"
+    },
+    {
+     "name": "rd",
+     "expr": "3 - if(vm < vmin, min(0.4*max(t - 2, 0), 1.5), 0)"
+    },
+    {
+     "name": "cx",
+     "expr": "rd*cos(ph) - sin(ph)*ex"
+    },
+    {
+     "name": "cy",
+     "expr": "rd*sin(ph) + cos(ph)*ex"
+    }
+   ],
+   "view": {
+    "x": [
+     -4,
+     12
+    ],
+    "y": [
+     -4.4,
+     4.4
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 3.35,
+     "fill": false,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 2.65,
+     "fill": false,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 3
+    },
+    {
+     "shape": "trail",
+     "x": "cx",
+     "y": "cy",
+     "length": 200,
+     "color": {
+      "by": "ok",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "cx",
+     "y": "cy",
+     "r": 0.22,
+     "color": {
+      "by": "ok",
+      "scale": [
+       "red",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": "8 - 2.6*cos(rad(th))",
+     "y1": "-1.5 - 2.6*sin(rad(th))",
+     "x2": "8 + 2.6*cos(rad(th))",
+     "y2": "-1.5 + 2.6*sin(rad(th))",
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       "8 - 0.8*cos(rad(th))",
+       "-1.5 - 0.8*sin(rad(th))"
+      ],
+      [
+       "8 + 0.8*cos(rad(th))",
+       "-1.5 + 0.8*sin(rad(th))"
+      ],
+      [
+       "8 + 0.8*cos(rad(th)) - 0.7*sin(rad(th))",
+       "-1.5 + 0.8*sin(rad(th)) + 0.7*cos(rad(th))"
+      ],
+      [
+       "8 - 0.8*cos(rad(th)) - 0.7*sin(rad(th))",
+       "-1.5 - 0.8*sin(rad(th)) + 0.7*cos(rad(th))"
+      ]
+     ],
+     "color": "blue"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "forces",
+     "x": 8,
+     "y": -1.15,
+     "dx": "-2*sin(rad(th))",
+     "dy": "2*cos(rad(th))",
+     "color": "green",
+     "label": "N"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "forces",
+     "x": 8,
+     "y": -1.15,
+     "dx": 0,
+     "dy": -1.6,
+     "color": "white",
+     "label": "mg"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "forces && abs(vm - v0) > 0.5",
+     "x": 8,
+     "y": -1.5,
+     "dx": "-1.2*sign(vm - v0)*cos(rad(th))",
+     "dy": "-1.2*sign(vm - v0)*sin(rad(th))",
+     "color": "red",
+     "label": "f"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": -3.9,
+     "text": {
+      "en": "centre of curve ←   cross-section   → outside",
+      "kn": "ತಿರುವಿನ ಕೇಂದ್ರ ←   ಅಡ್ಡಕೊಯ್ತ   → ಹೊರಗೆ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "visibleIf": "ok",
+     "x": 8,
+     "y": 3.3,
+     "text": {
+      "en": "Safe",
+      "kn": "ಸುರಕ್ಷಿತ"
+     },
+     "size": 32,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "vm > vmax",
+     "x": 8,
+     "y": 3.3,
+     "text": {
+      "en": "Too fast: skids outwards",
+      "kn": "ತುಂಬಾ ವೇಗ: ಹೊರಗೆ ಜಾರುತ್ತದೆ"
+     },
+     "size": 28,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "vm < vmin",
+     "x": 8,
+     "y": 3.3,
+     "text": {
+      "en": "Too slow: slides down the bank",
+      "kn": "ತುಂಬಾ ನಿಧಾನ: ಕೆಳಗೆ ಜಾರುತ್ತದೆ"
+     },
+     "size": 28,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Maximum safe speed",
+      "kn": "ಗರಿಷ್ಠ ಸುರಕ್ಷಿತ ವೇಗ"
+     },
+     "expr": "vmax*3.6",
+     "digits": 1,
+     "unit": "km/h"
+    },
+    {
+     "label": {
+      "en": "Optimum speed (no friction needed)",
+      "kn": "ಆದರ್ಶ ವೇಗ (ಘರ್ಷಣೆ ಬೇಡ)"
+     },
+     "expr": "v0*3.6",
+     "digits": 1,
+     "unit": "km/h"
+    },
+    {
+     "label": {
+      "en": "Minimum speed",
+      "kn": "ಕನಿಷ್ಠ ವೇಗ"
+     },
+     "expr": "vmin*3.6",
+     "digits": 1,
+     "unit": "km/h"
+    },
+    {
+     "label": {
+      "en": "Centripetal acceleration v²/r",
+      "kn": "ಕೇಂದ್ರಾಭಿಮುಖ ವೇಗೋತ್ಕರ್ಷ v²/r"
+     },
+     "expr": "vm^2/r",
+     "digits": 2,
+     "unit": "m/s²"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With no banking (0°), find the top speed for μ = 0.2 and r = 100 m.",
+     "kn": "ಓರೆ ಇಲ್ಲದೆ (0°), μ = 0.2, r = 100 m ಗೆ ಗರಿಷ್ಠ ವೇಗ ಹುಡುಕಿ."
+    },
+    {
+     "en": "Set friction to 0. Is there still a speed at which the car can take the curve?",
+     "kn": "ಘರ್ಷಣೆ 0 ಮಾಡಿ. ಕಾರು ತಿರುವು ತೆಗೆದುಕೊಳ್ಳಬಹುದಾದ ವೇಗ ಇನ್ನೂ ಇದೆಯೇ?"
+    },
+    {
+     "en": "Drive faster than v_max and watch the path.",
+     "kn": "v_max ಗಿಂತ ವೇಗವಾಗಿ ಓಡಿಸಿ, ಪಥ ನೋಡಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

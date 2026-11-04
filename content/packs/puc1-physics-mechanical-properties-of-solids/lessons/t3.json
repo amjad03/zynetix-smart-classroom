@@ -391,6 +391,295 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Load a wire, measure Y",
+    "kn": "ತಂತಿಗೆ ಭಾರ ಹಾಕಿ, Y ಅಳೆಯಿರಿ"
+   },
+   "narration": {
+    "en": "Add masses one at a time and watch the extension. The points fall on a straight line (Hooke's law), and stress ÷ strain is the same at every load: that constant is Young's modulus Y = FL/(AΔL). A thicker or shorter wire stretches less, but Y belongs to the material.",
+    "kn": "ಒಂದೊಂದಾಗಿ ತೂಕ ಸೇರಿಸಿ ಹಿಗ್ಗುವಿಕೆ ನೋಡಿ. ಬಿಂದುಗಳು ನೇರ ರೇಖೆಯ ಮೇಲೆ ಬೀಳುತ್ತವೆ (ಹುಕ್ ನಿಯಮ), ಪ್ರತಿ ಭಾರದಲ್ಲೂ ಪ್ರತಿಬಲ ÷ ವಿಕೃತಿ ಒಂದೇ: ಅದೇ ಯಂಗ್ ಮಾಪಾಂಕ Y = FL/(AΔL). ದಪ್ಪ ಅಥವಾ ಚಿಕ್ಕ ತಂತಿ ಕಡಿಮೆ ಹಿಗ್ಗುತ್ತದೆ, ಆದರೆ Y ವಸ್ತುವಿನ ಗುಣ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Add masses one at a time and watch the extension. The points fall on a straight line (Hooke's law), and stress ÷ strain is the same at every load: that constant is Young's modulus Y = FL/(AΔL). A thicker or shorter wire stretches less, but Y belongs to the material.",
+    "kn": "ಒಂದೊಂದಾಗಿ ತೂಕ ಸೇರಿಸಿ ಹಿಗ್ಗುವಿಕೆ ನೋಡಿ. ಬಿಂದುಗಳು ನೇರ ರೇಖೆಯ ಮೇಲೆ ಬೀಳುತ್ತವೆ (ಹುಕ್ ನಿಯಮ), ಪ್ರತಿ ಭಾರದಲ್ಲೂ ಪ್ರತಿಬಲ ÷ ವಿಕೃತಿ ಒಂದೇ: ಅದೇ ಯಂಗ್ ಮಾಪಾಂಕ Y = FL/(AΔL). ದಪ್ಪ ಅಥವಾ ಚಿಕ್ಕ ತಂತಿ ಕಡಿಮೆ ಹಿಗ್ಗುತ್ತದೆ, ಆದರೆ Y ವಸ್ತುವಿನ ಗುಣ."
+   },
+   "sliders": [
+    {
+     "name": "L",
+     "label": {
+      "en": "Wire length",
+      "kn": "ತಂತಿ ಉದ್ದ"
+     },
+     "min": 1,
+     "max": 2,
+     "step": 0.05,
+     "value": 2,
+     "unit": "m"
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "Wire diameter",
+      "kn": "ತಂತಿ ವ್ಯಾಸ"
+     },
+     "min": 1,
+     "max": 2,
+     "step": 0.05,
+     "value": 1,
+     "unit": "mm"
+    }
+   ],
+   "choices": [
+    {
+     "name": "Y",
+     "label": {
+      "en": "Material",
+      "kn": "ವಸ್ತು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Steel",
+        "kn": "ಉಕ್ಕು"
+       },
+       "value": 200
+      },
+      {
+       "label": {
+        "en": "Copper",
+        "kn": "ತಾಮ್ರ"
+       },
+       "value": 120
+      },
+      {
+       "label": {
+        "en": "Aluminium",
+        "kn": "ಅಲ್ಯೂಮಿನಿಯಂ"
+       },
+       "value": 70
+      }
+     ],
+     "value": 200
+    }
+   ],
+   "counters": [
+    {
+     "name": "M",
+     "value": 4,
+     "min": 0,
+     "max": 8
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Add 1 kg",
+      "kn": "1 kg ಸೇರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "M": "M + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Remove 1 kg",
+      "kn": "1 kg ತೆಗೆಯಿರಿ"
+     },
+     "icon": "remove",
+     "set": {
+      "M": "M - 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "Ar",
+     "expr": "pi*(d/2000)^2"
+    },
+    {
+     "name": "ex1",
+     "expr": "9.8*L/(pi*(d/2000)^2*Y*1e9)*1000"
+    },
+    {
+     "name": "ex",
+     "expr": "M*9.8*L/(pi*(d/2000)^2*Y*1e9)*1000"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     -0.6,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": 9.6,
+     "x2": 3.5,
+     "y2": 9.6,
+     "color": "white",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 9.6,
+     "x2": 2,
+     "y2": "4.6 - 0.6*ex",
+     "color": {
+      "by": "(Y - 70)/130",
+      "scale": [
+       "white",
+       "orange",
+       "blue"
+      ]
+     },
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 1.4,
+     "y": "4.6 - 0.6*ex - 0.3*M - 0.3",
+     "w": 1.2,
+     "h": "0.3*M + 0.3",
+     "color": "yellow",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": "4.2 - 0.6*ex - 0.3*M - 0.3",
+     "text": {
+      "en": "{M} kg",
+      "kn": "{M} kg"
+     },
+     "size": 24
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 0.6,
+     "x2": 15,
+     "y2": 0.6,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 0.6,
+     "x2": 5,
+     "y2": 9.4,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 0.6,
+     "x2": "5 + 3.4*ex1*8",
+     "y2": 8.6,
+     "color": "green",
+     "opacity": 0.4,
+     "dashed": true
+    },
+    {
+     "shape": "particles",
+     "count": 9,
+     "visibleIf": "i <= M",
+     "x": "5 + 3.4*ex1*i",
+     "y": "0.6 + i",
+     "r": 0.13,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 0,
+     "align": "right",
+     "text": {
+      "en": "extension (0 to 3 mm) →",
+      "kn": "ಹಿಗ್ಗುವಿಕೆ (0 ರಿಂದ 3 mm) →"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 5.2,
+     "y": 9.7,
+     "align": "left",
+     "text": {
+      "en": "load (kg)",
+      "kn": "ಭಾರ (kg)"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Stress",
+      "kn": "ಪ್ರತಿಬಲ"
+     },
+     "expr": "M*9.8/Ar/1e6",
+     "digits": 1,
+     "unit": "MPa"
+    },
+    {
+     "label": {
+      "en": "Extension",
+      "kn": "ಹಿಗ್ಗುವಿಕೆ"
+     },
+     "expr": "ex",
+     "digits": 3,
+     "unit": "mm"
+    },
+    {
+     "label": {
+      "en": "Strain",
+      "kn": "ವಿಕೃತಿ"
+     },
+     "expr": "ex/L*10",
+     "digits": 2,
+     "unit": "× 10⁻⁴"
+    },
+    {
+     "label": {
+      "en": "Stress ÷ strain",
+      "kn": "ಪ್ರತಿಬಲ ÷ ವಿಕೃತಿ"
+     },
+     "expr": "if(M > 0, M*9.8/Ar/(ex/(1000*L))/1e9, Y)",
+     "digits": 0,
+     "unit": "GPa"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Add 1 kg at a time. Does each kilogram add the same extension?",
+     "kn": "ಒಂದೊಂದು ಕೆಜಿ ಸೇರಿಸಿ. ಪ್ರತಿ ಕೆಜಿ ಅದೇ ಹಿಗ್ಗುವಿಕೆ ಸೇರಿಸುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Double the diameter. By what factor does the extension fall? Does Y change?",
+     "kn": "ವ್ಯಾಸ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ಹಿಗ್ಗುವಿಕೆ ಎಷ್ಟು ಪಟ್ಟು ಕಡಿಮೆ? Y ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Compare steel and aluminium wires of the same size and load.",
+     "kn": "ಒಂದೇ ಗಾತ್ರ ಮತ್ತು ಭಾರದ ಉಕ್ಕು ಮತ್ತು ಅಲ್ಯೂಮಿನಿಯಂ ತಂತಿ ಹೋಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

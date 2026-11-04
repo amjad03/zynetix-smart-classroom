@@ -586,6 +586,374 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Sharing energy among degrees of freedom",
+    "kn": "ಸ್ವಾತಂತ್ರ್ಯ ಮಟ್ಟಗಳಲ್ಲಿ ಶಕ್ತಿ ಹಂಚಿಕೆ"
+   },
+   "narration": {
+    "en": "Each degree of freedom gets ½kT of energy on average (½kT for each way of moving; a vibration has two shares, one kinetic and one potential). More shares means more energy per kelvin, so Cv = (f/2)R and γ = 1 + 2/f.",
+    "kn": "ಪ್ರತಿ ಸ್ವಾತಂತ್ರ್ಯ ಮಟ್ಟಕ್ಕೆ ಸರಾಸರಿ ½kT ಶಕ್ತಿ (ಕಂಪನಕ್ಕೆ ಎರಡು ಪಾಲು: ಚಲನ ಮತ್ತು ಸ್ಥಿತಿ). ಹೆಚ್ಚು ಪಾಲುಗಳಾದರೆ ಪ್ರತಿ ಕೆಲ್ವಿನ್‌ಗೆ ಹೆಚ್ಚು ಶಕ್ತಿ: Cv = (f/2)R, γ = 1 + 2/f."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Each degree of freedom gets ½kT of energy on average (½kT for each way of moving; a vibration has two shares, one kinetic and one potential). More shares means more energy per kelvin, so Cv = (f/2)R and γ = 1 + 2/f.",
+    "kn": "ಪ್ರತಿ ಸ್ವಾತಂತ್ರ್ಯ ಮಟ್ಟಕ್ಕೆ ಸರಾಸರಿ ½kT ಶಕ್ತಿ (ಕಂಪನಕ್ಕೆ ಎರಡು ಪಾಲು: ಚಲನ ಮತ್ತು ಸ್ಥಿತಿ). ಹೆಚ್ಚು ಪಾಲುಗಳಾದರೆ ಪ್ರತಿ ಕೆಲ್ವಿನ್‌ಗೆ ಹೆಚ್ಚು ಶಕ್ತಿ: Cv = (f/2)R, γ = 1 + 2/f."
+   },
+   "sliders": [
+    {
+     "name": "T",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪಮಾನ"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 50,
+     "value": 300,
+     "unit": "K"
+    }
+   ],
+   "choices": [
+    {
+     "name": "f",
+     "label": {
+      "en": "Gas",
+      "kn": "ಅನಿಲ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Monatomic (He)",
+        "kn": "ಏಕಪರಮಾಣು (He)"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Diatomic (O₂)",
+        "kn": "ದ್ವಿಪರಮಾಣು (O₂)"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "Diatomic, vibrating",
+        "kn": "ದ್ವಿಪರಮಾಣು, ಕಂಪಿಸುವ"
+       },
+       "value": 7
+      },
+      {
+       "label": {
+        "en": "Non-linear (CH₄)",
+        "kn": "ರೇಖಾತ್ಮಕವಲ್ಲದ (CH₄)"
+       },
+       "value": 6
+      }
+     ],
+     "value": 5
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true,
+    "dt": 0.02
+   },
+   "vars": [
+    {
+     "name": "s",
+     "expr": "sqrt(T/300)"
+    },
+    {
+     "name": "cx",
+     "expr": "bounce(2 + 1.1*s*t, 0.9, 6.1)"
+    },
+    {
+     "name": "cy",
+     "expr": "bounce(2.5 + 0.8*s*t, 0.9, 5.1)"
+    },
+    {
+     "name": "ph",
+     "expr": "1.6*s*t"
+    },
+    {
+     "name": "dd",
+     "expr": "0.55 + if(f == 7, 0.12*sin(14*s*t), 0)"
+    },
+    {
+     "name": "bh",
+     "expr": "5*T/1000"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.3,
+     16
+    ],
+    "y": [
+     -1.4,
+     6.6
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 7,
+     "h": 6,
+     "fill": false,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "f == 3",
+     "x": "cx",
+     "y": "cy",
+     "r": 0.35,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "visibleIf": "f == 5 || f == 7",
+     "x1": "cx - dd*cos(ph)",
+     "y1": "cy - dd*sin(ph)",
+     "x2": "cx + dd*cos(ph)",
+     "y2": "cy + dd*sin(ph)",
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "f == 5 || f == 7",
+     "x": "cx - dd*cos(ph)",
+     "y": "cy - dd*sin(ph)",
+     "r": 0.3,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "f == 5 || f == 7",
+     "x": "cx + dd*cos(ph)",
+     "y": "cy + dd*sin(ph)",
+     "r": 0.3,
+     "color": "red"
+    },
+    {
+     "shape": "polygon",
+     "visibleIf": "f == 6",
+     "points": [
+      [
+       "cx + 0.6*cos(ph)",
+       "cy + 0.6*sin(ph)"
+      ],
+      [
+       "cx + 0.6*cos(ph + 2.094)",
+       "cy + 0.6*sin(ph + 2.094)"
+      ],
+      [
+       "cx + 0.6*cos(ph + 4.189)",
+       "cy + 0.6*sin(ph + 4.189)"
+      ]
+     ],
+     "fill": false,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "f == 6",
+     "x": "cx + 0.6*cos(ph)",
+     "y": "cy + 0.6*sin(ph)",
+     "r": 0.28,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "f == 6",
+     "x": "cx + 0.6*cos(ph + 2.094)",
+     "y": "cy + 0.6*sin(ph + 2.094)",
+     "r": 0.28,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "f == 6",
+     "x": "cx + 0.6*cos(ph + 4.189)",
+     "y": "cy + 0.6*sin(ph + 4.189)",
+     "r": 0.28,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 8.2,
+     "y": 0,
+     "w": 0.8,
+     "h": "bh",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 9.2,
+     "y": 0,
+     "w": 0.8,
+     "h": "bh",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 10.2,
+     "y": 0,
+     "w": 0.8,
+     "h": "bh",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "f >= 5",
+     "x": 11.4,
+     "y": 0,
+     "w": 0.8,
+     "h": "bh",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "f >= 5",
+     "x": 12.4,
+     "y": 0,
+     "w": 0.8,
+     "h": "bh",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "f >= 6",
+     "x": 13.4,
+     "y": 0,
+     "w": 0.8,
+     "h": "bh",
+     "color": {
+      "by": "f == 7",
+      "scale": [
+       "green",
+       "orange"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "f == 7",
+     "x": 14.4,
+     "y": 0,
+     "w": 0.8,
+     "h": "bh",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 9.6,
+     "y": -0.5,
+     "text": {
+      "en": "move",
+      "kn": "ಸ್ಥಾನಾಂತರ"
+     },
+     "size": 22,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 12.3,
+     "y": -0.5,
+     "text": {
+      "en": "turn",
+      "kn": "ಭ್ರಮಣ"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "f == 7",
+     "x": 14.3,
+     "y": -1.0,
+     "text": {
+      "en": "vibrate",
+      "kn": "ಕಂಪನ"
+     },
+     "size": 22,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 11.7,
+     "y": 6.1,
+     "text": {
+      "en": "½kT per share: {f} shares",
+      "kn": "ಪ್ರತಿ ಪಾಲಿಗೆ ½kT: {f} ಪಾಲುಗಳು"
+     },
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cv = (f/2)R",
+      "kn": "Cv = (f/2)R"
+     },
+     "expr": "f/2*8.314",
+     "digits": 2,
+     "unit": "J/mol K"
+    },
+    {
+     "label": {
+      "en": "Cp = Cv + R",
+      "kn": "Cp = Cv + R"
+     },
+     "expr": "(f/2 + 1)*8.314",
+     "digits": 2,
+     "unit": "J/mol K"
+    },
+    {
+     "label": {
+      "en": "γ = Cp/Cv",
+      "kn": "γ = Cp/Cv"
+     },
+     "expr": "1 + 2/f",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Energy of one mole",
+      "kn": "ಒಂದು ಮೋಲ್ ಶಕ್ತಿ"
+     },
+     "expr": "f/2*8.314*T/1000",
+     "digits": 2,
+     "unit": "kJ"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Switch from a monatomic to a rigid diatomic gas. How many new shares appear, and of which kind?",
+     "kn": "ಏಕಪರಮಾಣು ಅನಿಲದಿಂದ ದೃಢ ದ್ವಿಪರಮಾಣು ಅನಿಲಕ್ಕೆ ಬದಲಿಸಿ. ಎಷ್ಟು ಹೊಸ ಪಾಲುಗಳು, ಯಾವ ರೀತಿಯವು?"
+    },
+    {
+     "en": "Compare γ for helium-like and oxygen-like gases with the values 1.67 and 1.40.",
+     "kn": "ಹೀಲಿಯಂ ಮತ್ತು ಆಮ್ಲಜನಕದಂತಹ ಅನಿಲಗಳ γ ಅನ್ನು 1.67 ಮತ್ತು 1.40 ಜೊತೆ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Double T. Does the size of each share change, or their number?",
+     "kn": "T ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ಪ್ರತಿ ಪಾಲಿನ ಗಾತ್ರ ಬದಲಾಗುತ್ತದೆಯೇ, ಅಥವಾ ಸಂಖ್ಯೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

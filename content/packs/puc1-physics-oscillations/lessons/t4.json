@@ -334,6 +334,287 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Energy sloshing in a spring",
+    "kn": "ಸ್ಪ್ರಿಂಗ್‌ನಲ್ಲಿ ಶಕ್ತಿಯ ಏರಿಳಿತ"
+   },
+   "narration": {
+    "en": "Potential energy ½kx² (blue) is largest at the ends; kinetic energy ½mv² (green) is largest in the middle. Without friction their total stays ½kA². The parabola is the potential energy curve; the gap up to the total line is the kinetic energy. Turn on damping and the total slowly falls.",
+    "kn": "ಸ್ಥಿತಿ ಶಕ್ತಿ ½kx² (ನೀಲಿ) ತುದಿಗಳಲ್ಲಿ ಗರಿಷ್ಠ; ಚಲನ ಶಕ್ತಿ ½mv² (ಹಸಿರು) ಮಧ್ಯದಲ್ಲಿ ಗರಿಷ್ಠ. ಘರ್ಷಣೆ ಇಲ್ಲದಿದ್ದರೆ ಒಟ್ಟು ½kA² ಸ್ಥಿರ. ಪರವಲಯ ಸ್ಥಿತಿ ಶಕ್ತಿ ವಕ್ರ; ಒಟ್ಟು ರೇಖೆಯವರೆಗಿನ ಅಂತರ ಚಲನ ಶಕ್ತಿ. ಮಂದನ ಆನ್ ಮಾಡಿದರೆ ಒಟ್ಟು ನಿಧಾನವಾಗಿ ಇಳಿಯುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Potential energy ½kx² (blue) is largest at the ends; kinetic energy ½mv² (green) is largest in the middle. Without friction their total stays ½kA². The parabola is the potential energy curve; the gap up to the total line is the kinetic energy. Turn on damping and the total slowly falls.",
+    "kn": "ಸ್ಥಿತಿ ಶಕ್ತಿ ½kx² (ನೀಲಿ) ತುದಿಗಳಲ್ಲಿ ಗರಿಷ್ಠ; ಚಲನ ಶಕ್ತಿ ½mv² (ಹಸಿರು) ಮಧ್ಯದಲ್ಲಿ ಗರಿಷ್ಠ. ಘರ್ಷಣೆ ಇಲ್ಲದಿದ್ದರೆ ಒಟ್ಟು ½kA² ಸ್ಥಿರ. ಪರವಲಯ ಸ್ಥಿತಿ ಶಕ್ತಿ ವಕ್ರ; ಒಟ್ಟು ರೇಖೆಯವರೆಗಿನ ಅಂತರ ಚಲನ ಶಕ್ತಿ. ಮಂದನ ಆನ್ ಮಾಡಿದರೆ ಒಟ್ಟು ನಿಧಾನವಾಗಿ ಇಳಿಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Spring constant k",
+      "kn": "ಸ್ಪ್ರಿಂಗ್ ಸ್ಥಿರಾಂಕ k"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 40,
+     "unit": "N/m"
+    },
+    {
+     "name": "m",
+     "label": {
+      "en": "Mass m",
+      "kn": "ದ್ರವ್ಯರಾಶಿ m"
+     },
+     "min": 0.5,
+     "max": 5,
+     "step": 0.25,
+     "value": 1,
+     "unit": "kg"
+    },
+    {
+     "name": "A",
+     "label": {
+      "en": "Amplitude A",
+      "kn": "ಕಂಪನ ವಿಸ್ತಾರ A"
+     },
+     "min": 0.05,
+     "max": 0.3,
+     "step": 0.01,
+     "value": 0.2,
+     "unit": "m"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "damp",
+     "label": {
+      "en": "Damping",
+      "kn": "ಮಂದನ"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Release",
+      "kn": "ಬಿಡಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 20,
+    "dt": 0.002
+   },
+   "vars": [
+    {
+     "name": "KE",
+     "expr": "0.5*m*u^2"
+    },
+    {
+     "name": "PE",
+     "expr": "0.5*k*xx^2"
+    },
+    {
+     "name": "E0",
+     "expr": "0.5*k*A^2"
+    }
+   ],
+   "state": [
+    {
+     "name": "xx",
+     "init": "A",
+     "rate": "u"
+    },
+    {
+     "name": "u",
+     "init": 0,
+     "rate": "-k/m*xx - if(damp, 0.3, 0)*u"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     -4.5,
+     7.2
+    ],
+    "y": [
+     -3.6,
+     4.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -4.1,
+     "y1": 2.2,
+     "x2": -4.1,
+     "y2": 3.6,
+     "color": "white",
+     "width": 6
+    },
+    {
+     "shape": "spring",
+     "x1": -4.1,
+     "y1": 2.9,
+     "x2": "10*xx - 0.4",
+     "y2": 2.9,
+     "coils": 12,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": "10*xx - 0.4",
+     "y": 2.45,
+     "w": 0.8,
+     "h": 0.9,
+     "color": "blue"
+    },
+    {
+     "shape": "path",
+     "fn": "-3 + 3*(x/(10*A))^2",
+     "from": "-10*A",
+     "to": "10*A",
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "-10*A",
+     "y1": "-3 + 3*(KE + PE)/E0",
+     "x2": "10*A",
+     "y2": "-3 + 3*(KE + PE)/E0",
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": "10*xx",
+     "y1": "-3 + 3*PE/E0",
+     "x2": "10*xx",
+     "y2": "-3 + 3*(KE + PE)/E0",
+     "color": "green",
+     "width": 6
+    },
+    {
+     "shape": "circle",
+     "x": "10*xx",
+     "y": "-3 + 3*PE/E0",
+     "r": 0.12,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 4.4,
+     "y": -3,
+     "w": 0.8,
+     "h": "3*KE/E0",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 5.5,
+     "y": -3,
+     "w": 0.8,
+     "h": "3*PE/E0",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 4.3,
+     "y": -3,
+     "w": 2.1,
+     "h": 3.05,
+     "fill": false,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 4.8,
+     "y": -3.35,
+     "text": {
+      "en": "KE",
+      "kn": "ಚ.ಶ"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 5.9,
+     "y": -3.35,
+     "text": {
+      "en": "PE",
+      "kn": "ಸ್ಥಿ.ಶ"
+     },
+     "size": 22,
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Kinetic energy",
+      "kn": "ಚಲನ ಶಕ್ತಿ"
+     },
+     "expr": "KE",
+     "digits": 3,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "Potential energy",
+      "kn": "ಸ್ಥಿತಿ ಶಕ್ತಿ"
+     },
+     "expr": "PE",
+     "digits": 3,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "Total energy",
+      "kn": "ಒಟ್ಟು ಶಕ್ತಿ"
+     },
+     "expr": "KE + PE",
+     "digits": 3,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "½kA²",
+      "kn": "½kA²"
+     },
+     "expr": "E0",
+     "digits": 3,
+     "unit": "J"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Where is the kinetic energy equal to the potential energy?",
+     "kn": "ಚಲನ ಶಕ್ತಿ ಸ್ಥಿತಿ ಶಕ್ತಿಗೆ ಎಲ್ಲಿ ಸಮ?"
+    },
+    {
+     "en": "Double the amplitude. By what factor does the total energy grow?",
+     "kn": "ಕಂಪನ ವಿಸ್ತಾರ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ಒಟ್ಟು ಶಕ್ತಿ ಎಷ್ಟು ಪಟ್ಟು ಬೆಳೆಯುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on damping. Where does the lost energy go?",
+     "kn": "ಮಂದನ ಆನ್ ಮಾಡಿ. ಕಳೆದ ಶಕ್ತಿ ಎಲ್ಲಿ ಹೋಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

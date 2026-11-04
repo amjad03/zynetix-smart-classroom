@@ -378,6 +378,256 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Heat flowing through a wall",
+    "kn": "ಗೋಡೆಯ ಮೂಲಕ ಉಷ್ಣ ಹರಿವು"
+   },
+   "narration": {
+    "en": "Heat flows from the hot side to the ice at the rate H = KA(T_hot − T_cold)/L. It grows with the area and the temperature difference and falls with the thickness. Metals conduct thousands of times better than wood. Faster dots mean more heat per second (on a log scale).",
+    "kn": "ಉಷ್ಣ ಬಿಸಿ ಬದಿಯಿಂದ ಮಂಜಿನ ಕಡೆಗೆ H = KA(T_hot − T_cold)/L ದರದಲ್ಲಿ ಹರಿಯುತ್ತದೆ. ಅದು ವಿಸ್ತೀರ್ಣ ಮತ್ತು ತಾಪ ವ್ಯತ್ಯಾಸದೊಂದಿಗೆ ಹೆಚ್ಚುತ್ತದೆ, ದಪ್ಪದೊಂದಿಗೆ ಕಡಿಮೆಯಾಗುತ್ತದೆ. ಲೋಹಗಳು ಮರಕ್ಕಿಂತ ಸಾವಿರಾರು ಪಟ್ಟು ಉತ್ತಮ ವಾಹಕಗಳು. ವೇಗದ ಚುಕ್ಕೆಗಳು ಎಂದರೆ ಪ್ರತಿ ಸೆಕೆಂಡ್ ಹೆಚ್ಚು ಉಷ್ಣ (ಲಾಗ್ ಅಳತೆ)."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Heat flows from the hot side to the ice at the rate H = KA(T_hot − T_cold)/L. It grows with the area and the temperature difference and falls with the thickness. Metals conduct thousands of times better than wood. Faster dots mean more heat per second (on a log scale).",
+    "kn": "ಉಷ್ಣ ಬಿಸಿ ಬದಿಯಿಂದ ಮಂಜಿನ ಕಡೆಗೆ H = KA(T_hot − T_cold)/L ದರದಲ್ಲಿ ಹರಿಯುತ್ತದೆ. ಅದು ವಿಸ್ತೀರ್ಣ ಮತ್ತು ತಾಪ ವ್ಯತ್ಯಾಸದೊಂದಿಗೆ ಹೆಚ್ಚುತ್ತದೆ, ದಪ್ಪದೊಂದಿಗೆ ಕಡಿಮೆಯಾಗುತ್ತದೆ. ಲೋಹಗಳು ಮರಕ್ಕಿಂತ ಸಾವಿರಾರು ಪಟ್ಟು ಉತ್ತಮ ವಾಹಕಗಳು. ವೇಗದ ಚುಕ್ಕೆಗಳು ಎಂದರೆ ಪ್ರತಿ ಸೆಕೆಂಡ್ ಹೆಚ್ಚು ಉಷ್ಣ (ಲಾಗ್ ಅಳತೆ)."
+   },
+   "sliders": [
+    {
+     "name": "Th",
+     "label": {
+      "en": "Hot side temperature",
+      "kn": "ಬಿಸಿ ಬದಿಯ ತಾಪ"
+     },
+     "min": 50,
+     "max": 200,
+     "step": 5,
+     "value": 100,
+     "unit": "°C"
+    },
+    {
+     "name": "L",
+     "label": {
+      "en": "Thickness",
+      "kn": "ದಪ್ಪ"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 5,
+     "unit": "cm"
+    },
+    {
+     "name": "A",
+     "label": {
+      "en": "Area",
+      "kn": "ವಿಸ್ತೀರ್ಣ"
+     },
+     "min": 0.1,
+     "max": 2,
+     "step": 0.1,
+     "value": 1,
+     "unit": "m²"
+    }
+   ],
+   "choices": [
+    {
+     "name": "K",
+     "label": {
+      "en": "Material (K in W/m K)",
+      "kn": "ವಸ್ತು (K, W/m K)"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Copper 385",
+        "kn": "ತಾಮ್ರ 385"
+       },
+       "value": 385
+      },
+      {
+       "label": {
+        "en": "Steel 50.2",
+        "kn": "ಉಕ್ಕು 50.2"
+       },
+       "value": 50.2
+      },
+      {
+       "label": {
+        "en": "Glass 0.8",
+        "kn": "ಗಾಜು 0.8"
+       },
+       "value": 0.8
+      },
+      {
+       "label": {
+        "en": "Wood 0.12",
+        "kn": "ಮರ 0.12"
+       },
+       "value": 0.12
+      }
+     ],
+     "value": 50.2
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "H",
+     "expr": "K*A*Th/(L/100)"
+    },
+    {
+     "name": "sp",
+     "expr": "clamp(0.5*log(K*A*Th/(L/100)), 0.15, 3.5)"
+    }
+   ],
+   "view": {
+    "x": [
+     -3.5,
+     14
+    ],
+    "y": [
+     -1.5,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -3,
+     "y": 0,
+     "w": 2.5,
+     "h": 8,
+     "color": "red",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": -1.75,
+     "y": 8.6,
+     "text": {
+      "en": "{Th} °C",
+      "kn": "{Th} °C"
+     },
+     "size": 24,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": "0.4*L",
+     "y": 0,
+     "w": 2.5,
+     "h": 8,
+     "color": "white",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": "0.4*L + 1.25",
+     "y": 8.6,
+     "text": {
+      "en": "ice 0 °C",
+      "kn": "ಮಂಜು 0 °C"
+     },
+     "size": 24
+    },
+    {
+     "shape": "rect",
+     "x": -0.5,
+     "y": "4 - 2*sqrt(A)",
+     "w": "0.4*L + 0.5",
+     "h": "4*sqrt(A)",
+     "color": {
+      "by": "K/400",
+      "scale": [
+       "orange",
+       "yellow",
+       "white"
+      ]
+     },
+     "opacity": 0.35
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "r": 0.12,
+     "color": "yellow",
+     "x": "-0.5 + (0.4*L + 0.5)*mod(rand(i) + sp*t/(0.4*L + 0.5), 1)",
+     "y": "4 - 2*sqrt(A) + 4*sqrt(A)*rand(i + 200)"
+    },
+    {
+     "shape": "line",
+     "x1": -0.5,
+     "y1": "4 + 2*sqrt(A) + 0.4 + 2*Th/200",
+     "x2": "0.4*L",
+     "y2": "4 + 2*sqrt(A) + 0.4",
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "0.2*L",
+     "y": -0.9,
+     "text": {
+      "en": "H = {H:1} W",
+      "kn": "H = {H:1} W"
+     },
+     "size": 26,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Rate of heat flow H",
+      "kn": "ಉಷ್ಣ ಹರಿವಿನ ದರ H"
+     },
+     "expr": "H/1000",
+     "digits": 3,
+     "unit": "kW"
+    },
+    {
+     "label": {
+      "en": "Temperature gradient",
+      "kn": "ತಾಪ ಇಳಿಜಾರು"
+     },
+     "expr": "Th/(L/100)",
+     "digits": 0,
+     "unit": "°C/m"
+    },
+    {
+     "label": {
+      "en": "Ice melted per minute",
+      "kn": "ಪ್ರತಿ ನಿಮಿಷ ಕರಗಿದ ಮಂಜು"
+     },
+     "expr": "H*60/333000",
+     "digits": 3,
+     "unit": "kg"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double the thickness. What happens to H?",
+     "kn": "ದಪ್ಪ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. H ಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Compare copper and wood of the same size. How many times more heat does copper pass?",
+     "kn": "ಒಂದೇ ಗಾತ್ರದ ತಾಮ್ರ ಮತ್ತು ಮರ ಹೋಲಿಸಿ. ತಾಮ್ರ ಎಷ್ಟು ಪಟ್ಟು ಹೆಚ್ಚು ಉಷ್ಣ ಹಾಯಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Why are cooking pots made of metal but their handles of wood or plastic?",
+     "kn": "ಅಡುಗೆ ಪಾತ್ರೆಗಳು ಲೋಹದವು, ಆದರೆ ಹಿಡಿಗಳು ಮರ ಅಥವಾ ಪ್ಲಾಸ್ಟಿಕ್ ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

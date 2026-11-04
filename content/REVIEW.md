@@ -724,3 +724,9 @@ No text is reproduced. Check these plot details against the texts:
 - **Assumptions to check:** bus cable count; download-time units (2^20).
 - **Exception names:** import mathh is shown as ImportError (Python 3 raises its subclass ModuleNotFoundError).
 - **Kannada:** needs a native-speaker review.
+
+## Physics 1st PUC simulations (66 lessons)
+
+- **Data to check:** mercury surface tension 0.4355 N/m (from recollection of NCERT; the real value is about 0.47) and contact angle 140 deg; copper Y 120 GPa; specific heat of ice 2100 J/kg K; the conductivity and expansion values.
+- **Illustrative (labelled):** the mean free path walk, the stress-strain shape, slowed beats.
+- **Kannada:** needs a native-speaker review.

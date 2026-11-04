@@ -326,6 +326,376 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Where does the heat go?",
+    "kn": "ಉಷ್ಣ ಎಲ್ಲಿ ಹೋಗುತ್ತದೆ?"
+   },
+   "narration": {
+    "en": "Heat Q given to a gas is shared: ΔQ = ΔU + ΔW. With the piston pinned (constant volume) no work is done and all of it raises the internal energy. With the piston free (constant pressure) part of it pushes the piston out, so the temperature rises less: that is why Cp = Cv + R.",
+    "kn": "ಅನಿಲಕ್ಕೆ ಕೊಟ್ಟ ಉಷ್ಣ ಹಂಚಿಕೆಯಾಗುತ್ತದೆ: ΔQ = ΔU + ΔW. ಪಿಸ್ಟನ್ ಬಂಧಿಸಿದರೆ (ಸ್ಥಿರ ಗಾತ್ರ) ಕೆಲಸ ಇಲ್ಲ, ಎಲ್ಲವೂ ಆಂತರಿಕ ಶಕ್ತಿ ಏರಿಸುತ್ತದೆ. ಪಿಸ್ಟನ್ ಮುಕ್ತವಾದರೆ (ಸ್ಥಿರ ಒತ್ತಡ) ಒಂದು ಭಾಗ ಪಿಸ್ಟನ್ ತಳ್ಳುತ್ತದೆ, ತಾಪ ಕಡಿಮೆ ಏರುತ್ತದೆ: ಹಾಗಾಗಿ Cp = Cv + R."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Heat Q given to a gas is shared: ΔQ = ΔU + ΔW. With the piston pinned (constant volume) no work is done and all of it raises the internal energy. With the piston free (constant pressure) part of it pushes the piston out, so the temperature rises less: that is why Cp = Cv + R.",
+    "kn": "ಅನಿಲಕ್ಕೆ ಕೊಟ್ಟ ಉಷ್ಣ ಹಂಚಿಕೆಯಾಗುತ್ತದೆ: ΔQ = ΔU + ΔW. ಪಿಸ್ಟನ್ ಬಂಧಿಸಿದರೆ (ಸ್ಥಿರ ಗಾತ್ರ) ಕೆಲಸ ಇಲ್ಲ, ಎಲ್ಲವೂ ಆಂತರಿಕ ಶಕ್ತಿ ಏರಿಸುತ್ತದೆ. ಪಿಸ್ಟನ್ ಮುಕ್ತವಾದರೆ (ಸ್ಥಿರ ಒತ್ತಡ) ಒಂದು ಭಾಗ ಪಿಸ್ಟನ್ ತಳ್ಳುತ್ತದೆ, ತಾಪ ಕಡಿಮೆ ಏರುತ್ತದೆ: ಹಾಗಾಗಿ Cp = Cv + R."
+   },
+   "sliders": [
+    {
+     "name": "Q",
+     "label": {
+      "en": "Heat given",
+      "kn": "ಕೊಟ್ಟ ಉಷ್ಣ"
+     },
+     "min": 100,
+     "max": 1500,
+     "step": 50,
+     "value": 1000,
+     "unit": "J"
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "Amount of gas",
+      "kn": "ಅನಿಲದ ಪ್ರಮಾಣ"
+     },
+     "min": 0.2,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.5,
+     "unit": "mol"
+    }
+   ],
+   "choices": [
+    {
+     "name": "proc",
+     "label": {
+      "en": "Piston",
+      "kn": "ಪಿಸ್ಟನ್"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Pinned: constant volume",
+        "kn": "ಬಂಧಿತ: ಸ್ಥಿರ ಗಾತ್ರ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Free: constant pressure",
+        "kn": "ಮುಕ್ತ: ಸ್ಥಿರ ಒತ್ತಡ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 2
+    },
+    {
+     "name": "f",
+     "label": {
+      "en": "Gas",
+      "kn": "ಅನಿಲ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Monatomic (Cv = 3R/2)",
+        "kn": "ಏಕಪರಮಾಣು (Cv = 3R/2)"
+       },
+       "value": 1.5
+      },
+      {
+       "label": {
+        "en": "Diatomic (Cv = 5R/2)",
+        "kn": "ದ್ವಿಪರಮಾಣು (Cv = 5R/2)"
+       },
+       "value": 2.5
+      }
+     ],
+     "value": 2.5
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Heat it",
+      "kn": "ಕಾಯಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 6
+   },
+   "vars": [
+    {
+     "name": "q",
+     "expr": "Q*min(t/5, 1)"
+    },
+    {
+     "name": "dT",
+     "expr": "Q*min(t/5, 1)/(n*(f + if(proc == 2, 1, 0))*8.314)"
+    },
+    {
+     "name": "TK",
+     "expr": "300 + Q*min(t/5, 1)/(n*(f + if(proc == 2, 1, 0))*8.314)"
+    },
+    {
+     "name": "dU",
+     "expr": "n*f*8.314*Q*min(t/5, 1)/(n*(f + if(proc == 2, 1, 0))*8.314)"
+    },
+    {
+     "name": "W",
+     "expr": "if(proc == 2, n*8.314*Q*min(t/5, 1)/(n*(f + 1)*8.314), 0)"
+    },
+    {
+     "name": "h",
+     "expr": "4*if(proc == 2, (300 + Q*min(t/5, 1)/(n*(f + 1)*8.314))/300, 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     -5,
+     12.5
+    ],
+    "y": [
+     -2.2,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -3,
+     "y": 0,
+     "w": 6,
+     "h": "h",
+     "color": {
+      "by": "(TK - 300)/600",
+      "scale": [
+       "blue",
+       "yellow",
+       "red"
+      ]
+     },
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": -3.1,
+     "y1": 0,
+     "x2": -3.1,
+     "y2": 9.5,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 3.1,
+     "y1": 0,
+     "x2": 3.1,
+     "y2": 9.5,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": -3.1,
+     "y1": 0,
+     "x2": 3.1,
+     "y2": 0,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": -3,
+     "y": "h",
+     "w": 6,
+     "h": 0.4,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "proc == 1",
+     "x": -3.4,
+     "y": 4.4,
+     "w": 0.8,
+     "h": 0.3,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "proc == 1",
+     "x": 2.6,
+     "y": 4.4,
+     "w": 0.8,
+     "h": 0.3,
+     "color": "red"
+    },
+    {
+     "shape": "polygon",
+     "visibleIf": "t > 0 && t < 5",
+     "points": [
+      [
+       -1.5,
+       -0.3
+      ],
+      [
+       -1,
+       -1.8
+      ],
+      [
+       -0.5,
+       -0.3
+      ]
+     ],
+     "color": "orange"
+    },
+    {
+     "shape": "polygon",
+     "visibleIf": "t > 0 && t < 5",
+     "points": [
+      [
+       0.5,
+       -0.3
+      ],
+      [
+       1,
+       -1.8
+      ],
+      [
+       1.5,
+       -0.3
+      ]
+     ],
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 6,
+     "y": 0,
+     "w": 1.4,
+     "h": "8*q/1500",
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 8,
+     "y": 0,
+     "w": 1.4,
+     "h": "8*dU/1500",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 0,
+     "w": 1.4,
+     "h": "8*W/1500",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 6.7,
+     "y": -0.7,
+     "text": {
+      "en": "ΔQ"
+     },
+     "size": 24,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 8.7,
+     "y": -0.7,
+     "text": {
+      "en": "ΔU"
+     },
+     "size": 24,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 10.7,
+     "y": -0.7,
+     "text": {
+      "en": "ΔW"
+     },
+     "size": 24,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 10.4,
+     "text": {
+      "en": "{TK:0} K",
+      "kn": "{TK:0} K"
+     },
+     "size": 26
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Temperature rise",
+      "kn": "ತಾಪ ಏರಿಕೆ"
+     },
+     "expr": "dT",
+     "digits": 1,
+     "unit": "K"
+    },
+    {
+     "label": {
+      "en": "Change in internal energy ΔU",
+      "kn": "ಆಂತರಿಕ ಶಕ್ತಿ ಬದಲಾವಣೆ ΔU"
+     },
+     "expr": "dU",
+     "digits": 0,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "Work done by the gas ΔW",
+      "kn": "ಅನಿಲ ಮಾಡಿದ ಕೆಲಸ ΔW"
+     },
+     "expr": "W",
+     "digits": 0,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "Pressure",
+      "kn": "ಒತ್ತಡ"
+     },
+     "expr": "100*if(proc == 1, TK/300, 1)",
+     "digits": 1,
+     "unit": "kPa"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Give the same heat at constant volume and at constant pressure. Compare the temperature rise.",
+     "kn": "ಅದೇ ಉಷ್ಣವನ್ನು ಸ್ಥಿರ ಗಾತ್ರ ಮತ್ತು ಸ್ಥಿರ ಒತ್ತಡದಲ್ಲಿ ಕೊಡಿ. ತಾಪ ಏರಿಕೆ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "At constant pressure, what fraction of the heat becomes work for a monatomic gas? (Try 2/5.)",
+     "kn": "ಸ್ಥಿರ ಒತ್ತಡದಲ್ಲಿ ಏಕಪರಮಾಣು ಅನಿಲಕ್ಕೆ ಉಷ್ಣದ ಎಷ್ಟು ಭಾಗ ಕೆಲಸವಾಗುತ್ತದೆ? (2/5 ಪ್ರಯತ್ನಿಸಿ.)"
+    },
+    {
+     "en": "Why does a diatomic gas warm up less than a monatomic gas for the same heat?",
+     "kn": "ಅದೇ ಉಷ್ಣಕ್ಕೆ ದ್ವಿಪರಮಾಣು ಅನಿಲ ಏಕಪರಮಾಣುವಿಗಿಂತ ಕಡಿಮೆ ಬಿಸಿಯಾಗುವುದು ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

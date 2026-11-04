@@ -367,6 +367,310 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Hot metal in cold water",
+    "kn": "ತಣ್ಣೀರಿನಲ್ಲಿ ಬಿಸಿ ಲೋಹ"
+   },
+   "narration": {
+    "en": "Heat flows from the metal to the water until both reach the same temperature. With no heat lost, heat lost by the metal = heat gained by the water: m₁c₁(T₁ − T) = m₂c_w(T − T₂). Water starts at 25 °C.",
+    "kn": "ಲೋಹದಿಂದ ನೀರಿಗೆ ಉಷ್ಣ ಹರಿದು ಎರಡೂ ಒಂದೇ ತಾಪ ತಲುಪುತ್ತವೆ. ಉಷ್ಣ ನಷ್ಟವಿಲ್ಲದಿದ್ದರೆ ಲೋಹ ಕಳೆದ ಉಷ್ಣ = ನೀರು ಪಡೆದ ಉಷ್ಣ: m₁c₁(T₁ − T) = m₂c_w(T − T₂). ನೀರು 25 °C ನಲ್ಲಿ ಆರಂಭ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Heat flows from the metal to the water until both reach the same temperature. With no heat lost, heat lost by the metal = heat gained by the water: m₁c₁(T₁ − T) = m₂c_w(T − T₂). Water starts at 25 °C.",
+    "kn": "ಲೋಹದಿಂದ ನೀರಿಗೆ ಉಷ್ಣ ಹರಿದು ಎರಡೂ ಒಂದೇ ತಾಪ ತಲುಪುತ್ತವೆ. ಉಷ್ಣ ನಷ್ಟವಿಲ್ಲದಿದ್ದರೆ ಲೋಹ ಕಳೆದ ಉಷ್ಣ = ನೀರು ಪಡೆದ ಉಷ್ಣ: m₁c₁(T₁ − T) = m₂c_w(T − T₂). ನೀರು 25 °C ನಲ್ಲಿ ಆರಂಭ."
+   },
+   "sliders": [
+    {
+     "name": "m1",
+     "label": {
+      "en": "Metal mass",
+      "kn": "ಲೋಹದ ದ್ರವ್ಯರಾಶಿ"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 10,
+     "value": 200,
+     "unit": "g"
+    },
+    {
+     "name": "T1i",
+     "label": {
+      "en": "Metal temperature",
+      "kn": "ಲೋಹದ ತಾಪ"
+     },
+     "min": 50,
+     "max": 200,
+     "step": 5,
+     "value": 100,
+     "unit": "°C"
+    },
+    {
+     "name": "m2",
+     "label": {
+      "en": "Water mass",
+      "kn": "ನೀರಿನ ದ್ರವ್ಯರಾಶಿ"
+     },
+     "min": 100,
+     "max": 500,
+     "step": 10,
+     "value": 300,
+     "unit": "g"
+    }
+   ],
+   "choices": [
+    {
+     "name": "c",
+     "label": {
+      "en": "Metal",
+      "kn": "ಲೋಹ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Aluminium",
+        "kn": "ಅಲ್ಯೂಮಿನಿಯಂ"
+       },
+       "value": 900
+      },
+      {
+       "label": {
+        "en": "Copper",
+        "kn": "ತಾಮ್ರ"
+       },
+       "value": 386.4
+      },
+      {
+       "label": {
+        "en": "Lead",
+        "kn": "ಸೀಸ"
+       },
+       "value": 127.7
+      }
+     ],
+     "value": 900
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Drop it in",
+      "kn": "ಹಾಕಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 120,
+    "dt": 0.02,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2
+   },
+   "vars": [
+    {
+     "name": "C1",
+     "expr": "m1*c/1000"
+    },
+    {
+     "name": "C2",
+     "expr": "m2*4.186"
+    },
+    {
+     "name": "Tf",
+     "expr": "(m1*c/1000*T1i + m2*4.186*25)/(m1*c/1000 + m2*4.186)"
+    }
+   ],
+   "state": [
+    {
+     "name": "T1",
+     "init": "T1i",
+     "rate": "-15*(T1 - T2)/C1"
+    },
+    {
+     "name": "T2",
+     "init": 25,
+     "rate": "15*(T1 - T2)/C2"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     -45,
+     125
+    ],
+    "y": [
+     -20,
+     215
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "icon",
+     "icon": "beaker",
+     "x": -22,
+     "y": 45,
+     "size": 36,
+     "on": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": -28,
+     "y": 20,
+     "w": 12,
+     "h": 12,
+     "color": {
+      "by": "(T1 - 25)/175",
+      "scale": [
+       "blue",
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": -22,
+     "y": -8,
+     "text": {
+      "en": "water {T2:1} °C",
+      "kn": "ನೀರು {T2:1} °C"
+     },
+     "size": 22,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": -22,
+     "y": 100,
+     "text": {
+      "en": "metal {T1:1} °C",
+      "kn": "ಲೋಹ {T1:1} °C"
+     },
+     "size": 22,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 122,
+     "y2": 0,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 0,
+     "y2": 205,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "Tf",
+     "x2": 120,
+     "y2": "Tf",
+     "color": "green",
+     "dashed": true
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "T1",
+     "length": 1500,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "T2",
+     "length": 1500,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 120,
+     "y": -12,
+     "align": "right",
+     "text": {
+      "en": "time (0 to 120 s) →",
+      "kn": "ಸಮಯ (0 ರಿಂದ 120 s) →"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 208,
+     "align": "left",
+     "text": {
+      "en": "temperature (°C)",
+      "kn": "ತಾಪ (°C)"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Final temperature (predicted)",
+      "kn": "ಅಂತಿಮ ತಾಪ (ಊಹಿತ)"
+     },
+     "expr": "Tf",
+     "digits": 2,
+     "unit": "°C"
+    },
+    {
+     "label": {
+      "en": "Heat lost by metal",
+      "kn": "ಲೋಹ ಕಳೆದ ಉಷ್ಣ"
+     },
+     "expr": "C1*(T1i - T1)",
+     "digits": 0,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "Heat gained by water",
+      "kn": "ನೀರು ಪಡೆದ ಉಷ್ಣ"
+     },
+     "expr": "C2*(T2 - 25)",
+     "digits": 0,
+     "unit": "J"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Drop 200 g of copper and then 200 g of aluminium at 100 °C. Which warms the water more, and why?",
+     "kn": "100 °C ನಲ್ಲಿ 200 g ತಾಮ್ರ, ನಂತರ 200 g ಅಲ್ಯೂಮಿನಿಯಂ ಹಾಕಿ. ಯಾವುದು ನೀರನ್ನು ಹೆಚ್ಚು ಬಿಸಿ ಮಾಡುತ್ತದೆ, ಏಕೆ?"
+    },
+    {
+     "en": "Find the mass of lead that warms 100 g of water by 5 °C from 200 °C.",
+     "kn": "200 °C ನಿಂದ 100 g ನೀರನ್ನು 5 °C ಬಿಸಿ ಮಾಡುವ ಸೀಸದ ದ್ರವ್ಯರಾಶಿ ಹುಡುಕಿ."
+    },
+    {
+     "en": "Check that the heat lost equals the heat gained.",
+     "kn": "ಕಳೆದ ಉಷ್ಣ = ಪಡೆದ ಉಷ್ಣ ಎಂದು ಪರಿಶೀಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

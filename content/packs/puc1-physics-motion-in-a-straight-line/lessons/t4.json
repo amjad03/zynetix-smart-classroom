@@ -339,6 +339,312 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Stopping distance of a car",
+    "kn": "ಕಾರಿನ ನಿಲುಗಡೆ ದೂರ"
+   },
+   "narration": {
+    "en": "The driver sees the obstacle and reacts after the reaction time, still at full speed. Then the brakes give a steady deceleration a, and v² = u² − 2as gives the braking distance u²/(2a). Double the speed and the braking distance becomes four times larger.",
+    "kn": "ಚಾಲಕ ಅಡಚಣೆ ನೋಡಿ ಪ್ರತಿಕ್ರಿಯಾ ಸಮಯದ ನಂತರ ಪ್ರತಿಕ್ರಿಯಿಸುತ್ತಾನೆ, ಆ ಸಮಯದಲ್ಲಿ ಪೂರ್ಣ ವೇಗ. ನಂತರ ಬ್ರೇಕ್ ಸ್ಥಿರ ಮಂದನ a ಕೊಡುತ್ತದೆ; v² = u² − 2as ನಿಂದ ಬ್ರೇಕ್ ದೂರ u²/(2a). ವೇಗ ಎರಡು ಪಟ್ಟಾದರೆ ಬ್ರೇಕ್ ದೂರ ನಾಲ್ಕು ಪಟ್ಟು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The driver sees the obstacle and reacts after the reaction time, still at full speed. Then the brakes give a steady deceleration a, and v² = u² − 2as gives the braking distance u²/(2a). Double the speed and the braking distance becomes four times larger.",
+    "kn": "ಚಾಲಕ ಅಡಚಣೆ ನೋಡಿ ಪ್ರತಿಕ್ರಿಯಾ ಸಮಯದ ನಂತರ ಪ್ರತಿಕ್ರಿಯಿಸುತ್ತಾನೆ, ಆ ಸಮಯದಲ್ಲಿ ಪೂರ್ಣ ವೇಗ. ನಂತರ ಬ್ರೇಕ್ ಸ್ಥಿರ ಮಂದನ a ಕೊಡುತ್ತದೆ; v² = u² − 2as ನಿಂದ ಬ್ರೇಕ್ ದೂರ u²/(2a). ವೇಗ ಎರಡು ಪಟ್ಟಾದರೆ ಬ್ರೇಕ್ ದೂರ ನಾಲ್ಕು ಪಟ್ಟು."
+   },
+   "sliders": [
+    {
+     "name": "u",
+     "label": {
+      "en": "Speed",
+      "kn": "ವೇಗ"
+     },
+     "min": 20,
+     "max": 100,
+     "step": 5,
+     "value": 60,
+     "unit": "km/h"
+    },
+    {
+     "name": "tr",
+     "label": {
+      "en": "Reaction time",
+      "kn": "ಪ್ರತಿಕ್ರಿಯಾ ಸಮಯ"
+     },
+     "min": 0.2,
+     "max": 2,
+     "step": 0.1,
+     "value": 1,
+     "unit": "s"
+    },
+    {
+     "name": "a",
+     "label": {
+      "en": "Braking deceleration",
+      "kn": "ಬ್ರೇಕ್ ಮಂದನ"
+     },
+     "min": 4,
+     "max": 9,
+     "step": 0.5,
+     "value": 6,
+     "unit": "m/s²"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "wet",
+     "label": {
+      "en": "Wet road (60% grip)",
+      "kn": "ಒದ್ದೆ ರಸ್ತೆ (60% ಹಿಡಿತ)"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Obstacle! Brake",
+      "kn": "ಅಡಚಣೆ! ಬ್ರೇಕ್"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "O",
+     "label": "obstacle",
+     "x": 50,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       15,
+       220
+      ],
+      "y": [
+       0,
+       0
+      ]
+     },
+     "snap": 1,
+     "color": "red"
+    }
+   ],
+   "time": {
+    "max": 20,
+    "stopWhen": "t >= tr + um/ae || xx >= O_x"
+   },
+   "vars": [
+    {
+     "name": "um",
+     "expr": "u/3.6"
+    },
+    {
+     "name": "ae",
+     "expr": "a*if(wet, 0.6, 1)"
+    },
+    {
+     "name": "dr",
+     "expr": "u/3.6*tr"
+    },
+    {
+     "name": "sd",
+     "expr": "u/3.6*tr + (u/3.6)^2/(2*a*if(wet, 0.6, 1))"
+    },
+    {
+     "name": "xx",
+     "expr": "if(t < tr, um*t, um*tr + um*(min(t, tr + um/ae) - tr) - 0.5*ae*(min(t, tr + um/ae) - tr)^2)"
+    },
+    {
+     "name": "vv",
+     "expr": "if(t < tr, um, max(um - ae*(t - tr), 0))"
+    }
+   ],
+   "view": {
+    "x": [
+     -8,
+     225
+    ],
+    "y": [
+     -38,
+     24
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -8,
+     "y1": 0,
+     "x2": 225,
+     "y2": 0,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "dr",
+     "y1": -3,
+     "x2": "dr",
+     "y2": 10,
+     "color": "yellow",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": "dr",
+     "y": 12,
+     "text": {
+      "en": "brakes on",
+      "kn": "ಬ್ರೇಕ್"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": "sd",
+     "y1": -3,
+     "x2": "sd",
+     "y2": 10,
+     "color": {
+      "by": "sd > O_x",
+      "scale": [
+       "green",
+       "red"
+      ]
+     },
+     "dashed": true
+    },
+    {
+     "shape": "rect",
+     "x": "O_x",
+     "y": 0,
+     "w": 1.5,
+     "h": 6,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": "min(xx, O_x) - 4.5",
+     "y": 0.3,
+     "w": 4.5,
+     "h": 3,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -34,
+     "x2": 225,
+     "y2": -34,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "trail",
+     "x": "min(xx, O_x)",
+     "y": "-34 + vv",
+     "length": 1500,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": -6,
+     "align": "left",
+     "text": {
+      "en": "speed against distance ↓",
+      "kn": "ದೂರದ ವಿರುದ್ಧ ವೇಗ ↓"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "sd > O_x",
+     "x": 110,
+     "y": 19,
+     "text": {
+      "en": "Crash! It needs {sd:1} m to stop",
+      "kn": "ಅಪಘಾತ! ನಿಲ್ಲಲು {sd:1} m ಬೇಕು"
+     },
+     "size": 28,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "sd <= O_x",
+     "x": 110,
+     "y": 19,
+     "text": {
+      "en": "Stops {O_x - sd:1} m before the obstacle",
+      "kn": "ಅಡಚಣೆಗೆ {O_x - sd:1} m ಮುಂಚೆ ನಿಲ್ಲುತ್ತದೆ"
+     },
+     "size": 28,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Reaction distance u t",
+      "kn": "ಪ್ರತಿಕ್ರಿಯಾ ದೂರ u t"
+     },
+     "expr": "dr",
+     "digits": 1,
+     "unit": "m"
+    },
+    {
+     "label": {
+      "en": "Braking distance u²/2a",
+      "kn": "ಬ್ರೇಕ್ ದೂರ u²/2a"
+     },
+     "expr": "um^2/(2*ae)",
+     "digits": 1,
+     "unit": "m"
+    },
+    {
+     "label": {
+      "en": "Stopping distance",
+      "kn": "ನಿಲುಗಡೆ ದೂರ"
+     },
+     "expr": "sd",
+     "digits": 1,
+     "unit": "m"
+    },
+    {
+     "label": {
+      "en": "Time to stop",
+      "kn": "ನಿಲ್ಲುವ ಸಮಯ"
+     },
+     "expr": "tr + um/ae",
+     "digits": 2,
+     "unit": "s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Drive at 40 and then 80 km/h. Compare the braking distances.",
+     "kn": "40 ನಂತರ 80 km/h ನಲ್ಲಿ ಓಡಿಸಿ. ಬ್ರೇಕ್ ದೂರಗಳನ್ನು ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "A distracted driver reacts in 2 s instead of 0.7 s. How much farther does the car go?",
+     "kn": "ಗಮನವಿಲ್ಲದ ಚಾಲಕ 0.7 s ಬದಲು 2 s ನಲ್ಲಿ ಪ್ರತಿಕ್ರಿಯಿಸುತ್ತಾನೆ. ಕಾರು ಎಷ್ಟು ಹೆಚ್ಚು ದೂರ ಹೋಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Drag the obstacle to 40 m and turn on the wet road. What is the highest safe speed?",
+     "kn": "ಅಡಚಣೆಯನ್ನು 40 m ಗೆ ಎಳೆದು ಒದ್ದೆ ರಸ್ತೆ ಆನ್ ಮಾಡಿ. ಗರಿಷ್ಠ ಸುರಕ್ಷಿತ ವೇಗ ಎಷ್ಟು?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "kind": "function_plot",

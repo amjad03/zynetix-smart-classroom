@@ -313,6 +313,240 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "y(x, t) = A sin(kx − ωt + φ)",
+    "kn": "y(x, t) = A sin(kx − ωt + φ)"
+   },
+   "narration": {
+    "en": "A progressive wave is y = A sin(kx − ωt + φ), with angular wave number k = 2π/λ and angular frequency ω = 2π/T. The pattern moves at v = ω/k = λ/T; with kx + ωt it moves the other way. Drag the marker to watch one point of the string oscillate.",
+    "kn": "ಪ್ರಗಾಮಿ ತರಂಗ y = A sin(kx − ωt + φ); ಕೋನೀಯ ತರಂಗ ಸಂಖ್ಯೆ k = 2π/λ, ಕೋನೀಯ ಆವೃತ್ತಿ ω = 2π/T. ಮಾದರಿ v = ω/k = λ/T ವೇಗದಲ್ಲಿ ಸಾಗುತ್ತದೆ; kx + ωt ಆದರೆ ಇನ್ನೊಂದು ದಿಕ್ಕಿಗೆ. ದಾರದ ಒಂದು ಬಿಂದು ಆಂದೋಲಿಸುವುದನ್ನು ನೋಡಲು ಗುರುತನ್ನು ಎಳೆಯಿರಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A progressive wave is y = A sin(kx − ωt + φ), with angular wave number k = 2π/λ and angular frequency ω = 2π/T. The pattern moves at v = ω/k = λ/T; with kx + ωt it moves the other way. Drag the marker to watch one point of the string oscillate.",
+    "kn": "ಪ್ರಗಾಮಿ ತರಂಗ y = A sin(kx − ωt + φ); ಕೋನೀಯ ತರಂಗ ಸಂಖ್ಯೆ k = 2π/λ, ಕೋನೀಯ ಆವೃತ್ತಿ ω = 2π/T. ಮಾದರಿ v = ω/k = λ/T ವೇಗದಲ್ಲಿ ಸಾಗುತ್ತದೆ; kx + ωt ಆದರೆ ಇನ್ನೊಂದು ದಿಕ್ಕಿಗೆ. ದಾರದ ಒಂದು ಬಿಂದು ಆಂದೋಲಿಸುವುದನ್ನು ನೋಡಲು ಗುರುತನ್ನು ಎಳೆಯಿರಿ."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Amplitude A",
+      "kn": "ಕಂಪನ ವಿಸ್ತಾರ A"
+     },
+     "min": 0.5,
+     "max": 2,
+     "step": 0.1,
+     "value": 1.5,
+     "unit": "cm"
+    },
+    {
+     "name": "lam",
+     "label": {
+      "en": "Wavelength λ",
+      "kn": "ತರಂಗದೂರ λ"
+     },
+     "min": 2,
+     "max": 10,
+     "step": 0.5,
+     "value": 6,
+     "unit": "m"
+    },
+    {
+     "name": "T",
+     "label": {
+      "en": "Period T",
+      "kn": "ಆವರ್ತ ಕಾಲ T"
+     },
+     "min": 0.5,
+     "max": 4,
+     "step": 0.1,
+     "value": 2,
+     "unit": "s"
+    },
+    {
+     "name": "phi",
+     "label": {
+      "en": "Phase constant φ",
+      "kn": "ಹಂತ ಸ್ಥಿರಾಂಕ φ"
+     },
+     "min": 0,
+     "max": 360,
+     "step": 15,
+     "value": 0,
+     "unit": "°"
+    }
+   ],
+   "choices": [
+    {
+     "name": "dir",
+     "label": {
+      "en": "Travels towards",
+      "kn": "ಸಾಗುವ ದಿಕ್ಕು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "+x (kx − ωt)",
+        "kn": "+x (kx − ωt)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "−x (kx + ωt)",
+        "kn": "−x (kx + ωt)"
+       },
+       "value": -1
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "point",
+     "x": 3,
+     "y": -2.6,
+     "axis": "x",
+     "box": {
+      "x": [
+       0,
+       14
+      ],
+      "y": [
+       -2.6,
+       -2.6
+      ]
+     },
+     "snap": 0.25,
+     "color": "yellow"
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "yp",
+     "expr": "A*sin(2*pi/lam*P_x - dir*2*pi/T*t + rad(phi))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     14.5
+    ],
+    "y": [
+     -3.3,
+     3.1
+    ],
+    "axes": true,
+    "xLabel": "x (m)",
+    "yLabel": "y (cm)"
+   },
+   "shapes": [
+    {
+     "shape": "wave",
+     "fn": "A*sin(2*pi/lam*x - dir*2*pi/T*t + rad(phi))",
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "P_x",
+     "y1": -2.6,
+     "x2": "P_x",
+     "y2": "yp",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.5
+    },
+    {
+     "shape": "circle",
+     "x": "P_x",
+     "y": "yp",
+     "r": 0.15,
+     "color": "yellow"
+    },
+    {
+     "shape": "trail",
+     "x": "P_x",
+     "y": "yp",
+     "length": 40,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "arrow",
+     "x": "7.25 - dir*1.5",
+     "y": 2.6,
+     "dx": "3*dir",
+     "dy": 0,
+     "color": "green",
+     "label": "v"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "k = 2π/λ",
+      "kn": "k = 2π/λ"
+     },
+     "expr": "2*pi/lam",
+     "digits": 3,
+     "unit": "rad/m"
+    },
+    {
+     "label": {
+      "en": "ω = 2π/T",
+      "kn": "ω = 2π/T"
+     },
+     "expr": "2*pi/T",
+     "digits": 3,
+     "unit": "rad/s"
+    },
+    {
+     "label": {
+      "en": "Wave speed λ/T",
+      "kn": "ತರಂಗ ವೇಗ λ/T"
+     },
+     "expr": "lam/T",
+     "digits": 2,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Phase at the marker",
+      "kn": "ಗುರುತಿನಲ್ಲಿ ಹಂತ"
+     },
+     "expr": "mod(deg(2*pi/lam*P_x - dir*2*pi/T*t + rad(phi)), 360)",
+     "digits": 0,
+     "unit": "°"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find two points one wavelength apart. Do they always move together?",
+     "kn": "ಒಂದು ತರಂಗದೂರ ಅಂತರದ ಎರಡು ಬಿಂದುಗಳನ್ನು ಹುಡುಕಿ. ಅವು ಯಾವಾಗಲೂ ಒಟ್ಟಿಗೆ ಚಲಿಸುತ್ತವೆಯೇ?"
+    },
+    {
+     "en": "Change φ by 180°. What happens to the picture at t = 0?",
+     "kn": "φ ಅನ್ನು 180° ಬದಲಿಸಿ. t = 0 ನಲ್ಲಿ ಚಿತ್ರಕ್ಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Halve T at the same λ. How does v change?",
+     "kn": "ಅದೇ λ ನಲ್ಲಿ T ಅರ್ಧ ಮಾಡಿ. v ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

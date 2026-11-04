@@ -381,6 +381,256 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Components do the adding",
+    "kn": "ಘಟಕಗಳು ಕೂಡಿಸುತ್ತವೆ"
+   },
+   "narration": {
+    "en": "Each vector splits into components A cos θ along x and A sin θ along y. Add the x parts and the y parts separately: Rx = Ax + Bx, Ry = Ay + By. Then |R| = √(Rx² + Ry²) and tan α = Ry/Rx.",
+    "kn": "ಪ್ರತಿ ಸದಿಶ x ದಿಕ್ಕಿನಲ್ಲಿ A cos θ ಮತ್ತು y ದಿಕ್ಕಿನಲ್ಲಿ A sin θ ಘಟಕಗಳಾಗಿ ಒಡೆಯುತ್ತದೆ. x ಭಾಗಗಳನ್ನು ಮತ್ತು y ಭಾಗಗಳನ್ನು ಪ್ರತ್ಯೇಕವಾಗಿ ಕೂಡಿಸಿ: Rx = Ax + Bx, Ry = Ay + By. ನಂತರ |R| = √(Rx² + Ry²), tan α = Ry/Rx."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Each vector splits into components A cos θ along x and A sin θ along y. Add the x parts and the y parts separately: Rx = Ax + Bx, Ry = Ay + By. Then |R| = √(Rx² + Ry²) and tan α = Ry/Rx.",
+    "kn": "ಪ್ರತಿ ಸದಿಶ x ದಿಕ್ಕಿನಲ್ಲಿ A cos θ ಮತ್ತು y ದಿಕ್ಕಿನಲ್ಲಿ A sin θ ಘಟಕಗಳಾಗಿ ಒಡೆಯುತ್ತದೆ. x ಭಾಗಗಳನ್ನು ಮತ್ತು y ಭಾಗಗಳನ್ನು ಪ್ರತ್ಯೇಕವಾಗಿ ಕೂಡಿಸಿ: Rx = Ax + Bx, Ry = Ay + By. ನಂತರ |R| = √(Rx² + Ry²), tan α = Ry/Rx."
+   },
+   "sliders": [
+    {
+     "name": "Am",
+     "label": {
+      "en": "|A|",
+      "kn": "|A|"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 0.5,
+     "value": 6
+    },
+    {
+     "name": "ta",
+     "label": {
+      "en": "Angle of A",
+      "kn": "A ಯ ಕೋನ"
+     },
+     "min": 0,
+     "max": 360,
+     "step": 10,
+     "value": 30,
+     "unit": "°"
+    },
+    {
+     "name": "Bm",
+     "label": {
+      "en": "|B|",
+      "kn": "|B|"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 0.5,
+     "value": 4
+    },
+    {
+     "name": "tb",
+     "label": {
+      "en": "Angle of B",
+      "kn": "B ಯ ಕೋನ"
+     },
+     "min": 0,
+     "max": 360,
+     "step": 10,
+     "value": 120,
+     "unit": "°"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "comps",
+     "label": {
+      "en": "Components",
+      "kn": "ಘಟಕಗಳು"
+     },
+     "value": true
+    },
+    {
+     "name": "res",
+     "label": {
+      "en": "Resultant",
+      "kn": "ಫಲಿತ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "Ax",
+     "expr": "Am*cos(rad(ta))"
+    },
+    {
+     "name": "Ay",
+     "expr": "Am*sin(rad(ta))"
+    },
+    {
+     "name": "Bx",
+     "expr": "Bm*cos(rad(tb))"
+    },
+    {
+     "name": "By",
+     "expr": "Bm*sin(rad(tb))"
+    },
+    {
+     "name": "Rx",
+     "expr": "Am*cos(rad(ta)) + Bm*cos(rad(tb))"
+    },
+    {
+     "name": "Ry",
+     "expr": "Am*sin(rad(ta)) + Bm*sin(rad(tb))"
+    }
+   ],
+   "view": {
+    "x": [
+     -17,
+     17
+    ],
+    "y": [
+     -17,
+     17
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "arrow",
+     "visibleIf": "comps",
+     "x": 0,
+     "y": 0,
+     "dx": "Rx",
+     "dy": 0,
+     "color": "green",
+     "opacity": 0.6,
+     "label": "Rx"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "comps",
+     "x": "Rx",
+     "y": 0,
+     "dx": 0,
+     "dy": "Ry",
+     "color": "green",
+     "opacity": 0.6,
+     "label": "Ry"
+    },
+    {
+     "shape": "line",
+     "visibleIf": "comps",
+     "x1": "Ax",
+     "y1": 0,
+     "x2": "Ax",
+     "y2": "Ay",
+     "color": "blue",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "visibleIf": "comps",
+     "x1": "Bx",
+     "y1": 0,
+     "x2": "Bx",
+     "y2": "By",
+     "color": "orange",
+     "dashed": true,
+     "opacity": 0.6
+    },
+    {
+     "shape": "arrow",
+     "x": 0,
+     "y": 0,
+     "dx": "Ax",
+     "dy": "Ay",
+     "color": "blue",
+     "label": "A",
+     "width": 5
+    },
+    {
+     "shape": "arrow",
+     "x": 0,
+     "y": 0,
+     "dx": "Bx",
+     "dy": "By",
+     "color": "orange",
+     "label": "B",
+     "width": 5
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "res",
+     "x": 0,
+     "y": 0,
+     "dx": "Rx",
+     "dy": "Ry",
+     "color": "green",
+     "label": "R",
+     "width": 6
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Rx = Ax + Bx",
+      "kn": "Rx = Ax + Bx"
+     },
+     "expr": "Rx",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Ry = Ay + By",
+      "kn": "Ry = Ay + By"
+     },
+     "expr": "Ry",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "|R|",
+      "kn": "|R|"
+     },
+     "expr": "hypot(Rx, Ry)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Direction of R",
+      "kn": "R ನ ದಿಕ್ಕು"
+     },
+     "expr": "mod(deg(atan2(Ry, Rx)), 360)",
+     "digits": 0,
+     "unit": "°"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set A = 5 at 0° and B = 5 at 90°. Is |R| = 7.07 at 45°?",
+     "kn": "A = 5, 0° ಮತ್ತು B = 5, 90° ಮಾಡಿ. |R| = 7.07, 45° ಆಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Find angles where Rx is zero but Ry is not.",
+     "kn": "Rx ಶೂನ್ಯ ಆದರೆ Ry ಶೂನ್ಯವಲ್ಲದ ಕೋನಗಳನ್ನು ಹುಡುಕಿ."
+    },
+    {
+     "en": "At what angle between them do two equal vectors give a resultant equal to each?",
+     "kn": "ಎರಡು ಸಮ ಸದಿಶಗಳ ನಡುವೆ ಯಾವ ಕೋನದಲ್ಲಿ ಫಲಿತ ಪ್ರತಿಯೊಂದಕ್ಕೂ ಸಮ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

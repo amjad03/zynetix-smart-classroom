@@ -432,6 +432,270 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Balance the see-saw",
+    "kn": "ಜಾರುಬಂಡಿ (ಸೀ-ಸಾ) ಸಮತೋಲನ ಮಾಡಿ"
+   },
+   "narration": {
+    "en": "Each weight turns the plank with a torque τ = mg × (distance from the pivot). The plank balances when the anticlockwise and clockwise torques are equal, m₁d₁ = m₂d₂ (principle of moments). Drag the markers on the ruler to move the children.",
+    "kn": "ಪ್ರತಿ ತೂಕ ಹಲಗೆಯನ್ನು τ = mg × (ಆಧಾರದಿಂದ ದೂರ) ಟಾರ್ಕ್‌ನಿಂದ ತಿರುಗಿಸುತ್ತದೆ. ಅಪ್ರದಕ್ಷಿಣ ಮತ್ತು ಪ್ರದಕ್ಷಿಣ ಟಾರ್ಕ್‌ಗಳು ಸಮವಾದಾಗ ಹಲಗೆ ಸಮತೋಲನ, m₁d₁ = m₂d₂ (ಭ್ರಾಮಕಗಳ ತತ್ವ). ಮಕ್ಕಳನ್ನು ಸರಿಸಲು ಅಳತೆಪಟ್ಟಿಯ ಗುರುತುಗಳನ್ನು ಎಳೆಯಿರಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Each weight turns the plank with a torque τ = mg × (distance from the pivot). The plank balances when the anticlockwise and clockwise torques are equal, m₁d₁ = m₂d₂ (principle of moments). Drag the markers on the ruler to move the children.",
+    "kn": "ಪ್ರತಿ ತೂಕ ಹಲಗೆಯನ್ನು τ = mg × (ಆಧಾರದಿಂದ ದೂರ) ಟಾರ್ಕ್‌ನಿಂದ ತಿರುಗಿಸುತ್ತದೆ. ಅಪ್ರದಕ್ಷಿಣ ಮತ್ತು ಪ್ರದಕ್ಷಿಣ ಟಾರ್ಕ್‌ಗಳು ಸಮವಾದಾಗ ಹಲಗೆ ಸಮತೋಲನ, m₁d₁ = m₂d₂ (ಭ್ರಾಮಕಗಳ ತತ್ವ). ಮಕ್ಕಳನ್ನು ಸರಿಸಲು ಅಳತೆಪಟ್ಟಿಯ ಗುರುತುಗಳನ್ನು ಎಳೆಯಿರಿ."
+   },
+   "sliders": [
+    {
+     "name": "m1",
+     "label": {
+      "en": "Blue child",
+      "kn": "ನೀಲಿ ಮಗು"
+     },
+     "min": 5,
+     "max": 80,
+     "step": 5,
+     "value": 30,
+     "unit": "kg"
+    },
+    {
+     "name": "m2",
+     "label": {
+      "en": "Orange child",
+      "kn": "ಕಿತ್ತಳೆ ಮಗು"
+     },
+     "min": 5,
+     "max": 80,
+     "step": 5,
+     "value": 40,
+     "unit": "kg"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "wts",
+     "label": {
+      "en": "Weight arrows",
+      "kn": "ತೂಕ ಬಾಣಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "A",
+     "label": "blue",
+     "x": -3,
+     "y": -2.6,
+     "axis": "x",
+     "box": {
+      "x": [
+       -4,
+       4
+      ],
+      "y": [
+       -2.6,
+       -2.6
+      ]
+     },
+     "snap": 0.25,
+     "color": "blue"
+    },
+    {
+     "name": "B",
+     "label": "orange",
+     "x": 2,
+     "y": -2.6,
+     "axis": "x",
+     "box": {
+      "x": [
+       -4,
+       4
+      ],
+      "y": [
+       -2.6,
+       -2.6
+      ]
+     },
+     "snap": 0.25,
+     "color": "orange"
+    }
+   ],
+   "vars": [
+    {
+     "name": "net",
+     "expr": "-9.8*(m1*A_x + m2*B_x)"
+    },
+    {
+     "name": "tl",
+     "expr": "clamp(-9.8*(m1*A_x + m2*B_x)/40, -10, 10)"
+    }
+   ],
+   "view": {
+    "x": [
+     -5.5,
+     5.5
+    ],
+    "y": [
+     -3.4,
+     2.6
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       -0.45,
+       -1
+      ],
+      [
+       0.45,
+       -1
+      ]
+     ],
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": "-4*cos(rad(tl))",
+     "y1": "-4*sin(rad(tl))",
+     "x2": "4*cos(rad(tl))",
+     "y2": "4*sin(rad(tl))",
+     "color": "orange",
+     "width": 8
+    },
+    {
+     "shape": "circle",
+     "x": "A_x*cos(rad(tl)) - (0.25 + 0.004*m1)*sin(rad(tl))",
+     "y": "A_x*sin(rad(tl)) + (0.25 + 0.004*m1)*cos(rad(tl))",
+     "r": "0.2 + 0.004*m1",
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "x": "B_x*cos(rad(tl)) - (0.25 + 0.004*m2)*sin(rad(tl))",
+     "y": "B_x*sin(rad(tl)) + (0.25 + 0.004*m2)*cos(rad(tl))",
+     "r": "0.2 + 0.004*m2",
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "wts",
+     "x": "A_x*cos(rad(tl))",
+     "y": "A_x*sin(rad(tl))",
+     "dx": 0,
+     "dy": "-m1/40",
+     "color": "white",
+     "label": "m₁g"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "wts",
+     "x": "B_x*cos(rad(tl))",
+     "y": "B_x*sin(rad(tl))",
+     "dx": 0,
+     "dy": "-m2/40",
+     "color": "white",
+     "label": "m₂g"
+    },
+    {
+     "shape": "line",
+     "x1": -4,
+     "y1": -2.6,
+     "x2": 4,
+     "y2": -2.6,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": -2.8,
+     "x2": 0,
+     "y2": -2.4,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "visibleIf": "abs(net) < 1",
+     "x": 0,
+     "y": 2.2,
+     "text": {
+      "en": "Balanced!",
+      "kn": "ಸಮತೋಲನ!"
+     },
+     "size": 32,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "abs(net) >= 1",
+     "x": 0,
+     "y": 2.2,
+     "text": {
+      "en": "Net torque {net:0} N m",
+      "kn": "ನಿವ್ವಳ ಟಾರ್ಕ್ {net:0} N m"
+     },
+     "size": 28,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Torque of blue child (anticlockwise +)",
+      "kn": "ನೀಲಿ ಮಗುವಿನ ಟಾರ್ಕ್ (ಅಪ್ರದಕ್ಷಿಣೆ +)"
+     },
+     "expr": "-m1*9.8*A_x",
+     "digits": 0,
+     "unit": "N m"
+    },
+    {
+     "label": {
+      "en": "Torque of orange child",
+      "kn": "ಕಿತ್ತಳೆ ಮಗುವಿನ ಟಾರ್ಕ್"
+     },
+     "expr": "-m2*9.8*B_x",
+     "digits": 0,
+     "unit": "N m"
+    },
+    {
+     "label": {
+      "en": "Net torque",
+      "kn": "ನಿವ್ವಳ ಟಾರ್ಕ್"
+     },
+     "expr": "net",
+     "digits": 0,
+     "unit": "N m"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "A 40 kg child sits 1.5 m from the pivot. Where must a 30 kg child sit to balance?",
+     "kn": "40 kg ಮಗು ಆಧಾರದಿಂದ 1.5 m ದೂರ ಕುಳಿತಿದೆ. 30 kg ಮಗು ಸಮತೋಲನಕ್ಕೆ ಎಲ್ಲಿ ಕುಳಿತುಕೊಳ್ಳಬೇಕು?"
+    },
+    {
+     "en": "Put both children on the same side. Can the plank balance?",
+     "kn": "ಇಬ್ಬರೂ ಮಕ್ಕಳನ್ನು ಒಂದೇ ಕಡೆ ಇಡಿ. ಹಲಗೆ ಸಮತೋಲನವಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Double one mass. How must its distance change to keep the balance?",
+     "kn": "ಒಂದು ದ್ರವ್ಯರಾಶಿ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ಸಮತೋಲನ ಉಳಿಸಲು ಅದರ ದೂರ ಹೇಗೆ ಬದಲಾಗಬೇಕು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

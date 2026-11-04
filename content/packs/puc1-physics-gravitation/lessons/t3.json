@@ -319,6 +319,274 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "How g changes above and below the surface",
+    "kn": "ಮೇಲ್ಮೈ ಮೇಲೆ ಮತ್ತು ಕೆಳಗೆ g ಬದಲಾವಣೆ"
+   },
+   "narration": {
+    "en": "Move the probe from the centre outwards. Inside a uniform planet g grows in proportion to the distance from the centre, g = g₀ r/R. Outside it falls as the inverse square, g = g₀ R²/r². It is largest at the surface and zero at the centre.",
+    "kn": "ಶೋಧಕವನ್ನು ಕೇಂದ್ರದಿಂದ ಹೊರಗೆ ಸರಿಸಿ. ಏಕರೂಪ ಗ್ರಹದ ಒಳಗೆ g ಕೇಂದ್ರದಿಂದ ದೂರಕ್ಕೆ ಅನುಪಾತದಲ್ಲಿ ಹೆಚ್ಚುತ್ತದೆ, g = g₀ r/R. ಹೊರಗೆ ವಿಲೋಮ ವರ್ಗದಂತೆ ಕಡಿಮೆ, g = g₀ R²/r². ಮೇಲ್ಮೈಯಲ್ಲಿ ಗರಿಷ್ಠ, ಕೇಂದ್ರದಲ್ಲಿ ಶೂನ್ಯ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Move the probe from the centre outwards. Inside a uniform planet g grows in proportion to the distance from the centre, g = g₀ r/R. Outside it falls as the inverse square, g = g₀ R²/r². It is largest at the surface and zero at the centre.",
+    "kn": "ಶೋಧಕವನ್ನು ಕೇಂದ್ರದಿಂದ ಹೊರಗೆ ಸರಿಸಿ. ಏಕರೂಪ ಗ್ರಹದ ಒಳಗೆ g ಕೇಂದ್ರದಿಂದ ದೂರಕ್ಕೆ ಅನುಪಾತದಲ್ಲಿ ಹೆಚ್ಚುತ್ತದೆ, g = g₀ r/R. ಹೊರಗೆ ವಿಲೋಮ ವರ್ಗದಂತೆ ಕಡಿಮೆ, g = g₀ R²/r². ಮೇಲ್ಮೈಯಲ್ಲಿ ಗರಿಷ್ಠ, ಕೇಂದ್ರದಲ್ಲಿ ಶೂನ್ಯ."
+   },
+   "sliders": [
+    {
+     "name": "rr",
+     "label": {
+      "en": "Distance from centre (r/R)",
+      "kn": "ಕೇಂದ್ರದಿಂದ ದೂರ (r/R)"
+     },
+     "min": 0,
+     "max": 4,
+     "step": 0.1,
+     "value": 1.5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "approx",
+     "label": {
+      "en": "Small-height line",
+      "kn": "ಸಣ್ಣ-ಎತ್ತರ ರೇಖೆ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "p",
+     "label": {
+      "en": "Planet",
+      "kn": "ಗ್ರಹ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Earth",
+        "kn": "ಭೂಮಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Moon",
+        "kn": "ಚಂದ್ರ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Mars",
+        "kn": "ಮಂಗಳ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "g0",
+     "expr": "if(p == 1, 9.8, if(p == 2, 1.62, 3.71))"
+    },
+    {
+     "name": "R",
+     "expr": "if(p == 1, 6400, if(p == 2, 1740, 3390))"
+    },
+    {
+     "name": "gr",
+     "expr": "if(rr < 1, rr, 1/rr^2)"
+    }
+   ],
+   "view": {
+    "x": [
+     -1.2,
+     4.4
+    ],
+    "y": [
+     -1.15,
+     2.7
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 1,
+     "color": {
+      "by": "(p - 1)/2",
+      "scale": [
+       "blue",
+       "white",
+       "orange"
+      ]
+     },
+     "opacity": 0.6
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 0.05,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 4.2,
+     "y2": 0,
+     "color": "white",
+     "opacity": 0.3,
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "x": "rr",
+     "y": 0,
+     "r": 0.08,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "rr > 0.05",
+     "x": "rr",
+     "y": 0,
+     "dx": "-0.9*gr",
+     "dy": 0,
+     "color": "yellow",
+     "label": "g"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 1.2,
+     "x2": 4.2,
+     "y2": 1.2,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 1.2,
+     "x2": 0,
+     "y2": 2.6,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 1.2,
+     "x2": 1,
+     "y2": 2.6,
+     "color": "white",
+     "opacity": 0.3,
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "fn": "1.2 + 1.3*if(x < 1, x, 1/x^2)",
+     "from": 0,
+     "to": 4.2,
+     "color": "green",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "visibleIf": "approx",
+     "fn": "1.2 + 1.3*(1 - 2*(x - 1))",
+     "from": 1,
+     "to": 1.45,
+     "color": "red",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "rr",
+     "y": "1.2 + 1.3*gr",
+     "r": 0.07,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 2.68,
+     "text": {
+      "en": "surface",
+      "kn": "ಮೇಲ್ಮೈ"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 3.2,
+     "y": 2.3,
+     "text": {
+      "en": "g / g₀",
+      "kn": "g / g₀"
+     },
+     "size": 26,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "g here",
+      "kn": "ಇಲ್ಲಿ g"
+     },
+     "expr": "g0*gr",
+     "digits": 2,
+     "unit": "m/s²"
+    },
+    {
+     "label": {
+      "en": "Height (+) or depth (−)",
+      "kn": "ಎತ್ತರ (+) ಅಥವಾ ಆಳ (−)"
+     },
+     "expr": "(rr - 1)*R",
+     "digits": 0,
+     "unit": "km"
+    },
+    {
+     "label": {
+      "en": "Weight of a 60 kg person",
+      "kn": "60 kg ವ್ಯಕ್ತಿಯ ತೂಕ"
+     },
+     "expr": "60*g0*gr",
+     "digits": 0,
+     "unit": "N"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At what distance from the centre is g one quarter of its surface value?",
+     "kn": "ಕೇಂದ್ರದಿಂದ ಎಷ್ಟು ದೂರದಲ್ಲಿ g ಮೇಲ್ಮೈ ಮೌಲ್ಯದ ನಾಲ್ಕನೇ ಒಂದು ಭಾಗ?"
+    },
+    {
+     "en": "Find two places, one inside and one outside, where g is half its surface value.",
+     "kn": "g ಮೇಲ್ಮೈ ಮೌಲ್ಯದ ಅರ್ಧ ಇರುವ ಎರಡು ಸ್ಥಳಗಳನ್ನು ಹುಡುಕಿ: ಒಂದು ಒಳಗೆ, ಒಂದು ಹೊರಗೆ."
+    },
+    {
+     "en": "Turn on the small-height line. Up to what height does g₀(1 − 2h/R) stay close to the curve?",
+     "kn": "ಸಣ್ಣ-ಎತ್ತರ ರೇಖೆ ಆನ್ ಮಾಡಿ. ಯಾವ ಎತ್ತರದವರೆಗೆ g₀(1 − 2h/R) ವಕ್ರಕ್ಕೆ ಹತ್ತಿರ ಇರುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

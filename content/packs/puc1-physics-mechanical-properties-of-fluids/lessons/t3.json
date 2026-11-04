@@ -536,6 +536,257 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Water jet from a tank",
+    "kn": "ತೊಟ್ಟಿಯಿಂದ ನೀರಿನ ಚಿಮ್ಮು"
+   },
+   "narration": {
+    "en": "Bernoulli's equation between the water surface and the hole gives the speed of efflux v = √(2gh), the speed of a body falling through h (Torricelli's law). As the tank empties h falls, so the jet slows and lands closer. The jet lands at a distance 2√(h y), where y is the height of the hole above the ground.",
+    "kn": "ನೀರಿನ ಮೇಲ್ಮೈ ಮತ್ತು ರಂಧ್ರದ ನಡುವೆ ಬರ್ನೌಲಿ ಸಮೀಕರಣ ಹೊರಹರಿವಿನ ವೇಗ v = √(2gh) ಕೊಡುತ್ತದೆ (ಟೊರಿಸೆಲ್ಲಿ ನಿಯಮ). ತೊಟ್ಟಿ ಖಾಲಿಯಾದಂತೆ h ಕಡಿಮೆಯಾಗಿ ಚಿಮ್ಮು ನಿಧಾನವಾಗಿ ಹತ್ತಿರ ಬೀಳುತ್ತದೆ. ಚಿಮ್ಮು 2√(h y) ದೂರದಲ್ಲಿ ಬೀಳುತ್ತದೆ; y ರಂಧ್ರದ ನೆಲದಿಂದ ಎತ್ತರ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Bernoulli's equation between the water surface and the hole gives the speed of efflux v = √(2gh), the speed of a body falling through h (Torricelli's law). As the tank empties h falls, so the jet slows and lands closer. The jet lands at a distance 2√(h y), where y is the height of the hole above the ground.",
+    "kn": "ನೀರಿನ ಮೇಲ್ಮೈ ಮತ್ತು ರಂಧ್ರದ ನಡುವೆ ಬರ್ನೌಲಿ ಸಮೀಕರಣ ಹೊರಹರಿವಿನ ವೇಗ v = √(2gh) ಕೊಡುತ್ತದೆ (ಟೊರಿಸೆಲ್ಲಿ ನಿಯಮ). ತೊಟ್ಟಿ ಖಾಲಿಯಾದಂತೆ h ಕಡಿಮೆಯಾಗಿ ಚಿಮ್ಮು ನಿಧಾನವಾಗಿ ಹತ್ತಿರ ಬೀಳುತ್ತದೆ. ಚಿಮ್ಮು 2√(h y) ದೂರದಲ್ಲಿ ಬೀಳುತ್ತದೆ; y ರಂಧ್ರದ ನೆಲದಿಂದ ಎತ್ತರ."
+   },
+   "sliders": [
+    {
+     "name": "H0",
+     "label": {
+      "en": "Water above the hole",
+      "kn": "ರಂಧ್ರದ ಮೇಲಿನ ನೀರು"
+     },
+     "min": 0.2,
+     "max": 2,
+     "step": 0.1,
+     "value": 1,
+     "unit": "m"
+    },
+    {
+     "name": "yh",
+     "label": {
+      "en": "Height of the hole",
+      "kn": "ರಂಧ್ರದ ಎತ್ತರ"
+     },
+     "min": 0.2,
+     "max": 2,
+     "step": 0.1,
+     "value": 1,
+     "unit": "m"
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "Hole diameter (tank 30 cm wide)",
+      "kn": "ರಂಧ್ರದ ವ್ಯಾಸ (ತೊಟ್ಟಿ 30 cm)"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 0.25,
+     "value": 3,
+     "unit": "cm"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Open the hole",
+      "kn": "ರಂಧ್ರ ತೆರೆಯಿರಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 240,
+    "dt": 0.02,
+    "speeds": [
+     1,
+     2,
+     4,
+     8,
+     16
+    ],
+    "speed": 2,
+    "stopWhen": "h < 0.002"
+   },
+   "vars": [
+    {
+     "name": "ar",
+     "expr": "(d/30)^2"
+    },
+    {
+     "name": "v",
+     "expr": "sqrt(2*9.8*max(h, 0))"
+    },
+    {
+     "name": "rg",
+     "expr": "2*sqrt(max(h, 0)*yh)"
+    }
+   ],
+   "state": [
+    {
+     "name": "h",
+     "init": "H0",
+     "rate": "-(d/30)^2*sqrt(2*9.8*max(h, 0))"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     -1,
+     4.5
+    ],
+    "y": [
+     -0.2,
+     4.3
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -1,
+     "y1": 0,
+     "x2": 4.5,
+     "y2": 0,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": -0.6,
+     "y": 0,
+     "w": 0.6,
+     "h": "yh + h",
+     "color": "blue",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": -0.62,
+     "y1": 0,
+     "x2": -0.62,
+     "y2": 4.2,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0.02,
+     "y1": "yh + 0.05",
+     "x2": 0.02,
+     "y2": 4.2,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0.02,
+     "y1": 0,
+     "x2": 0.02,
+     "y2": "yh - 0.05",
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "visibleIf": "h > 0.002",
+     "fn": "yh - 9.8*x^2/(2*max(v, 0.05)^2)",
+     "from": 0,
+     "to": "rg",
+     "color": "blue",
+     "width": 5
+    },
+    {
+     "shape": "particles",
+     "visibleIf": "h > 0.002",
+     "count": 24,
+     "r": 0.04,
+     "color": "white",
+     "x": "rg*mod(rand(i) + 0.7*t, 1)",
+     "y": "yh - 9.8*(rg*mod(rand(i) + 0.7*t, 1))^2/(2*max(v, 0.05)^2)"
+    },
+    {
+     "shape": "line",
+     "x1": -0.9,
+     "y1": "yh + h",
+     "x2": -0.7,
+     "y2": "yh + h",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 3.9,
+     "text": {
+      "en": "v = √(2gh) = {v:2} m/s",
+      "kn": "v = √(2gh) = {v:2} m/s"
+     },
+     "size": 26,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Speed of efflux",
+      "kn": "ಹೊರಹರಿವಿನ ವೇಗ"
+     },
+     "expr": "v",
+     "digits": 2,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Water lands at",
+      "kn": "ನೀರು ಬೀಳುವ ದೂರ"
+     },
+     "expr": "rg",
+     "digits": 2,
+     "unit": "m"
+    },
+    {
+     "label": {
+      "en": "Water above hole now",
+      "kn": "ಈಗ ರಂಧ್ರದ ಮೇಲಿನ ನೀರು"
+     },
+     "expr": "max(h, 0)",
+     "digits": 2,
+     "unit": "m"
+    },
+    {
+     "label": {
+      "en": "Time left to empty",
+      "kn": "ಖಾಲಿಯಾಗಲು ಉಳಿದ ಸಮಯ"
+     },
+     "expr": "sqrt(2*max(h, 0)/9.8)/ar",
+     "digits": 0,
+     "unit": "s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make the water four times deeper above the hole. How much faster is the jet?",
+     "kn": "ರಂಧ್ರದ ಮೇಲಿನ ನೀರನ್ನು ನಾಲ್ಕು ಪಟ್ಟು ಆಳ ಮಾಡಿ. ಚಿಮ್ಮು ಎಷ್ಟು ಪಟ್ಟು ವೇಗ?"
+    },
+    {
+     "en": "Find the hole height that throws the water farthest for a fixed total height of water.",
+     "kn": "ನೀರಿನ ಒಟ್ಟು ಎತ್ತರ ಸ್ಥಿರವಿದ್ದಾಗ ನೀರನ್ನು ಅತಿ ದೂರ ಎಸೆಯುವ ರಂಧ್ರದ ಎತ್ತರ ಹುಡುಕಿ."
+    },
+    {
+     "en": "Use a smaller hole. Does the jet speed change, or only the time to empty?",
+     "kn": "ಸಣ್ಣ ರಂಧ್ರ ಬಳಸಿ. ಚಿಮ್ಮಿನ ವೇಗ ಬದಲಾಗುತ್ತದೆಯೇ, ಅಥವಾ ಖಾಲಿಯಾಗುವ ಸಮಯ ಮಾತ್ರವೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

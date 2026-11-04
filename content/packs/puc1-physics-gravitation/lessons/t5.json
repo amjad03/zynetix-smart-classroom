@@ -356,6 +356,286 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Put a satellite in orbit",
+    "kn": "ಉಪಗ್ರಹವನ್ನು ಕಕ್ಷೆಗೆ ಸೇರಿಸಿ"
+   },
+   "narration": {
+    "en": "At the orbital speed v₀ = √(GM/r) the satellite circles. A little slower and the orbit becomes an ellipse that dips closer (or hits the Earth); faster and it swings out. At √2 times v₀ it escapes. The total energy of a bound orbit is negative; for a circle it is −GMm/2r.",
+    "kn": "ಕಕ್ಷೀಯ ವೇಗ v₀ = √(GM/r) ನಲ್ಲಿ ಉಪಗ್ರಹ ವೃತ್ತದಲ್ಲಿ ಸುತ್ತುತ್ತದೆ. ಸ್ವಲ್ಪ ನಿಧಾನವಾದರೆ ಕಕ್ಷೆ ಹತ್ತಿರ ಬರುವ ದೀರ್ಘವೃತ್ತ (ಅಥವಾ ಭೂಮಿಗೆ ಬಡಿಯುತ್ತದೆ); ವೇಗವಾದರೆ ದೂರ ಹೋಗುತ್ತದೆ. √2 ಪಟ್ಟು v₀ ನಲ್ಲಿ ತಪ್ಪಿಸಿಕೊಳ್ಳುತ್ತದೆ. ಬಂಧಿತ ಕಕ್ಷೆಯ ಒಟ್ಟು ಶಕ್ತಿ ಋಣಾತ್ಮಕ; ವೃತ್ತಕ್ಕೆ −GMm/2r."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "At the orbital speed v₀ = √(GM/r) the satellite circles. A little slower and the orbit becomes an ellipse that dips closer (or hits the Earth); faster and it swings out. At √2 times v₀ it escapes. The total energy of a bound orbit is negative; for a circle it is −GMm/2r.",
+    "kn": "ಕಕ್ಷೀಯ ವೇಗ v₀ = √(GM/r) ನಲ್ಲಿ ಉಪಗ್ರಹ ವೃತ್ತದಲ್ಲಿ ಸುತ್ತುತ್ತದೆ. ಸ್ವಲ್ಪ ನಿಧಾನವಾದರೆ ಕಕ್ಷೆ ಹತ್ತಿರ ಬರುವ ದೀರ್ಘವೃತ್ತ (ಅಥವಾ ಭೂಮಿಗೆ ಬಡಿಯುತ್ತದೆ); ವೇಗವಾದರೆ ದೂರ ಹೋಗುತ್ತದೆ. √2 ಪಟ್ಟು v₀ ನಲ್ಲಿ ತಪ್ಪಿಸಿಕೊಳ್ಳುತ್ತದೆ. ಬಂಧಿತ ಕಕ್ಷೆಯ ಒಟ್ಟು ಶಕ್ತಿ ಋಣಾತ್ಮಕ; ವೃತ್ತಕ್ಕೆ −GMm/2r."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Launch speed ÷ orbital speed",
+      "kn": "ಉಡಾವಣಾ ವೇಗ ÷ ಕಕ್ಷೀಯ ವೇಗ"
+     },
+     "min": 0.8,
+     "max": 1.5,
+     "step": 0.02,
+     "value": 1.0
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ring",
+     "label": {
+      "en": "Circular orbit",
+      "kn": "ವೃತ್ತ ಕಕ್ಷೆ"
+     },
+     "value": true
+    },
+    {
+     "name": "vel",
+     "label": {
+      "en": "Velocity arrow",
+      "kn": "ವೇಗ ಬಾಣ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "h",
+     "label": {
+      "en": "Height",
+      "kn": "ಎತ್ತರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "400 km (space station)",
+        "kn": "400 km (ಬಾಹ್ಯಾಕಾಶ ನಿಲ್ದಾಣ)"
+       },
+       "value": 400
+      },
+      {
+       "label": {
+        "en": "20200 km (GPS)",
+        "kn": "20200 km (GPS)"
+       },
+       "value": 20200
+      },
+      {
+       "label": {
+        "en": "35800 km (geostationary)",
+        "kn": "35800 km (ಭೂಸ್ಥಿರ)"
+       },
+       "value": 35800
+      }
+     ],
+     "value": 400
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Launch",
+      "kn": "ಉಡಾಯಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 6,
+    "dt": 0.002,
+    "unit": "orbits",
+    "speeds": [
+     0.25,
+     0.5,
+     1,
+     2
+    ],
+    "speed": 0.5,
+    "stopWhen": "hit || hypot(px, py) > 6"
+   },
+   "vars": [
+    {
+     "name": "r0",
+     "expr": "6371 + h"
+    },
+    {
+     "name": "Re",
+     "expr": "6371/(6371 + h)"
+    },
+    {
+     "name": "vc",
+     "expr": "sqrt(398600/(6371 + h))"
+    },
+    {
+     "name": "hit",
+     "expr": "hypot(px, py) < 6371/(6371 + h)"
+    }
+   ],
+   "state": [
+    {
+     "name": "px",
+     "init": 1,
+     "rate": "vx"
+    },
+    {
+     "name": "py",
+     "init": 0,
+     "rate": "vy"
+    },
+    {
+     "name": "vx",
+     "init": 0,
+     "rate": "-39.478*px/hypot(px, py)^3"
+    },
+    {
+     "name": "vy",
+     "init": "2*pi*k",
+     "rate": "-39.478*py/hypot(px, py)^3"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     -3.2,
+     1.8
+    ],
+    "y": [
+     -1.9,
+     1.9
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": "Re",
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "ring",
+     "x": 0,
+     "y": 0,
+     "r": 1,
+     "fill": false,
+     "color": "white",
+     "opacity": 0.35,
+     "width": 2
+    },
+    {
+     "shape": "trail",
+     "x": "px",
+     "y": "py",
+     "length": 1500,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 0.05,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "vel",
+     "x": "px",
+     "y": "py",
+     "dx": "0.06*vx",
+     "dy": "0.06*vy",
+     "color": "green",
+     "label": "v"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "k >= 1.414",
+     "x": -1.4,
+     "y": 1.65,
+     "text": {
+      "en": "Escape: total energy ≥ 0",
+      "kn": "ಪಲಾಯನ: ಒಟ್ಟು ಶಕ್ತಿ ≥ 0"
+     },
+     "size": 26,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "hit",
+     "x": -1.4,
+     "y": 1.65,
+     "text": {
+      "en": "Too slow: it hits the Earth",
+      "kn": "ತುಂಬಾ ನಿಧಾನ: ಭೂಮಿಗೆ ಬಡಿಯುತ್ತದೆ"
+     },
+     "size": 26,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Orbital speed v₀",
+      "kn": "ಕಕ್ಷೀಯ ವೇಗ v₀"
+     },
+     "expr": "vc",
+     "digits": 2,
+     "unit": "km/s"
+    },
+    {
+     "label": {
+      "en": "Period of the circular orbit",
+      "kn": "ವೃತ್ತ ಕಕ್ಷೆಯ ಆವರ್ತ ಕಾಲ"
+     },
+     "expr": "2*pi*r0/vc/3600",
+     "digits": 2,
+     "unit": "h"
+    },
+    {
+     "label": {
+      "en": "Speed now",
+      "kn": "ಈಗಿನ ವೇಗ"
+     },
+     "expr": "vc*hypot(vx, vy)/(2*pi)",
+     "digits": 2,
+     "unit": "km/s"
+    },
+    {
+     "label": {
+      "en": "Total energy per kg",
+      "kn": "ಪ್ರತಿ ಕೆಜಿ ಒಟ್ಟು ಶಕ್ತಿ"
+     },
+     "expr": "vc^2*(0.5*(vx^2 + vy^2)/(4*pi^2) - 1/hypot(px, py))",
+     "digits": 1,
+     "unit": "MJ/kg"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Pick the space station orbit and launch at 0.95 v₀. What happens?",
+     "kn": "ಬಾಹ್ಯಾಕಾಶ ನಿಲ್ದಾಣದ ಕಕ್ಷೆ ಆರಿಸಿ 0.95 v₀ ನಲ್ಲಿ ಉಡಾಯಿಸಿ. ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Compare the period of the geostationary orbit with one day.",
+     "kn": "ಭೂಸ್ಥಿರ ಕಕ್ಷೆಯ ಆವರ್ತ ಕಾಲವನ್ನು ಒಂದು ದಿನದೊಂದಿಗೆ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Raise the speed until the total energy is zero. Where is that?",
+     "kn": "ಒಟ್ಟು ಶಕ್ತಿ ಶೂನ್ಯವಾಗುವವರೆಗೆ ವೇಗ ಹೆಚ್ಚಿಸಿ. ಅದು ಯಾವ ವೇಗ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

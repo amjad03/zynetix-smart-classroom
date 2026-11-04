@@ -467,6 +467,259 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Squeeze, heat and fill a gas",
+    "kn": "ಅನಿಲವನ್ನು ಒತ್ತಿ, ಕಾಯಿಸಿ, ತುಂಬಿಸಿ"
+   },
+   "narration": {
+    "en": "The pressure of a gas comes from its molecules hitting the walls. Halve the volume and twice as many hits land each second (Boyle's law). Heat it and each hit is harder and more frequent (Charles's and Gay-Lussac's laws). Add gas and there are more molecules. All of it is PV = nRT.",
+    "kn": "ಅನಿಲದ ಒತ್ತಡ ಅಣುಗಳು ಗೋಡೆಗೆ ಬಡಿಯುವುದರಿಂದ ಬರುತ್ತದೆ. ಗಾತ್ರ ಅರ್ಧ ಮಾಡಿದರೆ ಪ್ರತಿ ಸೆಕೆಂಡಿಗೆ ಎರಡು ಪಟ್ಟು ಬಡಿತ (ಬಾಯ್ಲ್ ನಿಯಮ). ಕಾಯಿಸಿದರೆ ಪ್ರತಿ ಬಡಿತ ಬಲವಾಗಿ, ಹೆಚ್ಚು ಬಾರಿ (ಚಾರ್ಲ್ಸ್ ಮತ್ತು ಗೇ-ಲುಸಾಕ್ ನಿಯಮ). ಅನಿಲ ಸೇರಿಸಿದರೆ ಅಣುಗಳು ಹೆಚ್ಚು. ಎಲ್ಲವೂ PV = nRT."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The pressure of a gas comes from its molecules hitting the walls. Halve the volume and twice as many hits land each second (Boyle's law). Heat it and each hit is harder and more frequent (Charles's and Gay-Lussac's laws). Add gas and there are more molecules. All of it is PV = nRT.",
+    "kn": "ಅನಿಲದ ಒತ್ತಡ ಅಣುಗಳು ಗೋಡೆಗೆ ಬಡಿಯುವುದರಿಂದ ಬರುತ್ತದೆ. ಗಾತ್ರ ಅರ್ಧ ಮಾಡಿದರೆ ಪ್ರತಿ ಸೆಕೆಂಡಿಗೆ ಎರಡು ಪಟ್ಟು ಬಡಿತ (ಬಾಯ್ಲ್ ನಿಯಮ). ಕಾಯಿಸಿದರೆ ಪ್ರತಿ ಬಡಿತ ಬಲವಾಗಿ, ಹೆಚ್ಚು ಬಾರಿ (ಚಾರ್ಲ್ಸ್ ಮತ್ತು ಗೇ-ಲುಸಾಕ್ ನಿಯಮ). ಅನಿಲ ಸೇರಿಸಿದರೆ ಅಣುಗಳು ಹೆಚ್ಚು. ಎಲ್ಲವೂ PV = nRT."
+   },
+   "sliders": [
+    {
+     "name": "Vl",
+     "label": {
+      "en": "Volume",
+      "kn": "ಗಾತ್ರ"
+     },
+     "min": 1,
+     "max": 4,
+     "step": 0.1,
+     "value": 2,
+     "unit": "L"
+    },
+    {
+     "name": "T",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪಮಾನ"
+     },
+     "min": 100,
+     "max": 600,
+     "step": 20,
+     "value": 300,
+     "unit": "K"
+    }
+   ],
+   "counters": [
+    {
+     "name": "N",
+     "value": 4,
+     "min": 1,
+     "max": 8
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Add gas",
+      "kn": "ಅನಿಲ ಸೇರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "N": "N + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Let gas out",
+      "kn": "ಅನಿಲ ಹೊರಬಿಡಿ"
+     },
+     "icon": "remove",
+     "set": {
+      "N": "N - 1"
+     }
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true,
+    "dt": 0.02
+   },
+   "vars": [
+    {
+     "name": "n",
+     "expr": "0.02*N"
+    },
+    {
+     "name": "w",
+     "expr": "2.5*Vl"
+    },
+    {
+     "name": "s",
+     "expr": "1.2*sqrt(T/300)"
+    },
+    {
+     "name": "Pk",
+     "expr": "0.02*N*8.314*T/Vl"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     13
+    ],
+    "y": [
+     -0.6,
+     6.4
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 10.3,
+     "y2": 0,
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 5,
+     "x2": 10.3,
+     "y2": 5,
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 0,
+     "y2": 5,
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "rect",
+     "x": "w",
+     "y": 0.05,
+     "w": 0.25,
+     "h": 4.9,
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": "w + 0.25",
+     "y": 2.3,
+     "w": "10.3 - w",
+     "h": 0.4,
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "particles",
+     "count": 120,
+     "r": 0.13,
+     "color": {
+      "by": "(T - 100)/500",
+      "scale": [
+       "blue",
+       "yellow",
+       "red"
+      ]
+     },
+     "x": "bounce(0.15 + (w - 0.3)*rand(i) + s*t*cos(2*pi*rand(i + 300))*(0.4 + rand(i + 900)), 0.15, w - 0.15)",
+     "y": "bounce(0.15 + (5 - 0.3)*rand(i + 150) + s*t*sin(2*pi*rand(i + 300))*(0.4 + rand(i + 900)), 0.15, 5 - 0.15)",
+     "visibleIf": "i < 15*N"
+    },
+    {
+     "shape": "rect",
+     "x": 11.4,
+     "y": 0,
+     "w": 0.9,
+     "h": 5,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 11.5,
+     "y": 0.05,
+     "w": 0.7,
+     "h": "min(4.9*Pk/800, 4.9)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 11.85,
+     "y": 5.6,
+     "text": {
+      "en": "P",
+      "kn": "P"
+     },
+     "size": 26,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Pressure",
+      "kn": "ಒತ್ತಡ"
+     },
+     "expr": "Pk",
+     "digits": 1,
+     "unit": "kPa"
+    },
+    {
+     "label": {
+      "en": "Amount of gas",
+      "kn": "ಅನಿಲದ ಪ್ರಮಾಣ"
+     },
+     "expr": "n",
+     "digits": 2,
+     "unit": "mol"
+    },
+    {
+     "label": {
+      "en": "PV",
+      "kn": "PV"
+     },
+     "expr": "Pk*Vl",
+     "digits": 1,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "PV / T",
+      "kn": "PV / T"
+     },
+     "expr": "Pk*Vl/T",
+     "digits": 3,
+     "unit": "J/K"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Keep T fixed and halve the volume. What happens to the pressure?",
+     "kn": "T ಸ್ಥಿರವಾಗಿಟ್ಟು ಗಾತ್ರ ಅರ್ಧ ಮಾಡಿ. ಒತ್ತಡ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Double the absolute temperature at fixed volume. Check PV/T stays the same.",
+     "kn": "ಸ್ಥಿರ ಗಾತ್ರದಲ್ಲಿ ನಿರಪೇಕ್ಷ ತಾಪಮಾನ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. PV/T ಒಂದೇ ಇರುವುದನ್ನು ಪರಿಶೀಲಿಸಿ."
+    },
+    {
+     "en": "Add gas twice. How does the pressure change?",
+     "kn": "ಎರಡು ಬಾರಿ ಅನಿಲ ಸೇರಿಸಿ. ಒತ್ತಡ ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

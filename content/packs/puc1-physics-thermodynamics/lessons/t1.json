@@ -554,6 +554,274 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Three bodies and the zeroth law",
+    "kn": "ಮೂರು ಕಾಯಗಳು ಮತ್ತು ಶೂನ್ಯ ನಿಯಮ"
+   },
+   "narration": {
+    "en": "A and B are separated by an insulating (adiabatic) wall, but each touches C through a conducting (diathermic) wall. Heat flows until A and C, and B and C, are in thermal equilibrium. Then A and B are at the same temperature too: opening the wall between them makes no heat flow. That is the zeroth law, and temperature is what they share.",
+    "kn": "A ಮತ್ತು B ನಡುವೆ ಉಷ್ಣನಿರೋಧಕ (ಅಡಿಯಾಬ್ಯಾಟಿಕ್) ಗೋಡೆ, ಆದರೆ ಪ್ರತಿಯೊಂದೂ ವಾಹಕ (ಡಯಾಥರ್ಮಿಕ್) ಗೋಡೆಯ ಮೂಲಕ C ಯನ್ನು ಮುಟ್ಟುತ್ತದೆ. A–C ಮತ್ತು B–C ಉಷ್ಣ ಸಮತೋಲನಕ್ಕೆ ಬರುವವರೆಗೆ ಉಷ್ಣ ಹರಿಯುತ್ತದೆ. ಆಗ A ಮತ್ತು B ಕೂಡ ಒಂದೇ ತಾಪದಲ್ಲಿರುತ್ತವೆ: ಅವುಗಳ ನಡುವಿನ ಗೋಡೆ ತೆರೆದರೂ ಉಷ್ಣ ಹರಿಯದು. ಇದೇ ಶೂನ್ಯ ನಿಯಮ; ಅವು ಹಂಚಿಕೊಳ್ಳುವುದೇ ತಾಪ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A and B are separated by an insulating (adiabatic) wall, but each touches C through a conducting (diathermic) wall. Heat flows until A and C, and B and C, are in thermal equilibrium. Then A and B are at the same temperature too: opening the wall between them makes no heat flow. That is the zeroth law, and temperature is what they share.",
+    "kn": "A ಮತ್ತು B ನಡುವೆ ಉಷ್ಣನಿರೋಧಕ (ಅಡಿಯಾಬ್ಯಾಟಿಕ್) ಗೋಡೆ, ಆದರೆ ಪ್ರತಿಯೊಂದೂ ವಾಹಕ (ಡಯಾಥರ್ಮಿಕ್) ಗೋಡೆಯ ಮೂಲಕ C ಯನ್ನು ಮುಟ್ಟುತ್ತದೆ. A–C ಮತ್ತು B–C ಉಷ್ಣ ಸಮತೋಲನಕ್ಕೆ ಬರುವವರೆಗೆ ಉಷ್ಣ ಹರಿಯುತ್ತದೆ. ಆಗ A ಮತ್ತು B ಕೂಡ ಒಂದೇ ತಾಪದಲ್ಲಿರುತ್ತವೆ: ಅವುಗಳ ನಡುವಿನ ಗೋಡೆ ತೆರೆದರೂ ಉಷ್ಣ ಹರಿಯದು. ಇದೇ ಶೂನ್ಯ ನಿಯಮ; ಅವು ಹಂಚಿಕೊಳ್ಳುವುದೇ ತಾಪ."
+   },
+   "sliders": [
+    {
+     "name": "TA0",
+     "label": {
+      "en": "A starts at",
+      "kn": "A ಆರಂಭ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 80,
+     "unit": "°C"
+    },
+    {
+     "name": "TB0",
+     "label": {
+      "en": "B starts at",
+      "kn": "B ಆರಂಭ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 20,
+     "unit": "°C"
+    },
+    {
+     "name": "TC0",
+     "label": {
+      "en": "C starts at",
+      "kn": "C ಆರಂಭ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "°C"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cc",
+     "label": {
+      "en": "C touches A and B",
+      "kn": "C, A ಮತ್ತು B ಯನ್ನು ಮುಟ್ಟುತ್ತದೆ"
+     },
+     "value": true
+    },
+    {
+     "name": "ab",
+     "label": {
+      "en": "A touches B",
+      "kn": "A, B ಯನ್ನು ಮುಟ್ಟುತ್ತದೆ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 40,
+    "dt": 0.02
+   },
+   "state": [
+    {
+     "name": "TA",
+     "init": "TA0",
+     "rate": "0.15*cc*(TC - TA) + 0.15*ab*(TB - TA)"
+    },
+    {
+     "name": "TB",
+     "init": "TB0",
+     "rate": "0.15*cc*(TC - TB) + 0.15*ab*(TA - TB)"
+    },
+    {
+     "name": "TC",
+     "init": "TC0",
+     "rate": "0.15*cc*(TA - TC) + 0.15*cc*(TB - TC)"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     -7,
+     7
+    ],
+    "y": [
+     -5,
+     6.4
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -6,
+     "y": 0.4,
+     "w": 5,
+     "h": 4.4,
+     "color": {
+      "by": "TA/100",
+      "scale": [
+       "blue",
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0.4,
+     "w": 5,
+     "h": 4.4,
+     "color": {
+      "by": "TB/100",
+      "scale": [
+       "blue",
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": -6,
+     "y": -4.4,
+     "w": 12,
+     "h": 4.4,
+     "color": {
+      "by": "TC/100",
+      "scale": [
+       "blue",
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": -1,
+     "y": 0.4,
+     "w": 2,
+     "h": 4.4,
+     "color": {
+      "by": "ab",
+      "scale": [
+       "orange",
+       "white"
+      ]
+     },
+     "opacity": "if(ab, 0.25, 0.9)"
+    },
+    {
+     "shape": "rect",
+     "x": -6,
+     "y": 0,
+     "w": 12,
+     "h": 0.4,
+     "color": {
+      "by": "cc",
+      "scale": [
+       "orange",
+       "white"
+      ]
+     },
+     "opacity": "if(cc, 0.25, 0.9)"
+    },
+    {
+     "shape": "text",
+     "x": -3.5,
+     "y": 2.6,
+     "text": {
+      "en": "A {TA:1} °C",
+      "kn": "A {TA:1} °C"
+     },
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 2.6,
+     "text": {
+      "en": "B {TB:1} °C",
+      "kn": "B {TB:1} °C"
+     },
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -2.2,
+     "text": {
+      "en": "C {TC:1} °C",
+      "kn": "C {TC:1} °C"
+     },
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 5.6,
+     "text": {
+      "en": "orange wall = insulating, pale wall = conducting",
+      "kn": "ಕಿತ್ತಳೆ ಗೋಡೆ = ನಿರೋಧಕ, ತಿಳಿ ಗೋಡೆ = ವಾಹಕ"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "A",
+      "kn": "A"
+     },
+     "expr": "TA",
+     "digits": 1,
+     "unit": "°C"
+    },
+    {
+     "label": {
+      "en": "B",
+      "kn": "B"
+     },
+     "expr": "TB",
+     "digits": 1,
+     "unit": "°C"
+    },
+    {
+     "label": {
+      "en": "C",
+      "kn": "C"
+     },
+     "expr": "TC",
+     "digits": 1,
+     "unit": "°C"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Run it with C in contact. Then switch on the A–B contact. Does anything change?",
+     "kn": "C ಸಂಪರ್ಕದೊಂದಿಗೆ ಚಲಾಯಿಸಿ. ನಂತರ A–B ಸಂಪರ್ಕ ಆನ್ ಮಾಡಿ. ಏನಾದರೂ ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Insulate C from both. What happens to the three temperatures?",
+     "kn": "C ಯನ್ನು ಎರಡರಿಂದಲೂ ನಿರೋಧಿಸಿ. ಮೂರು ತಾಪಗಳಿಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Which body here plays the part of a thermometer?",
+     "kn": "ಇಲ್ಲಿ ಯಾವ ಕಾಯ ಉಷ್ಣಮಾಪಕದ ಪಾತ್ರ ವಹಿಸುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

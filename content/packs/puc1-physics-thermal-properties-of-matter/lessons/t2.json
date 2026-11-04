@@ -375,6 +375,284 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Why rails have gaps",
+    "kn": "ಹಳಿಗಳ ನಡುವೆ ಅಂತರ ಏಕೆ"
+   },
+   "narration": {
+    "en": "A rail of length L expands by ΔL = αLΔT when it warms. The gap at each joint closes by that amount. If the gap is too small the rails push on each other and buckle on a hot day. The joint is drawn magnified; the gap is in millimetres.",
+    "kn": "L ಉದ್ದದ ಹಳಿ ಬಿಸಿಯಾದಾಗ ΔL = αLΔT ಹಿಗ್ಗುತ್ತದೆ. ಪ್ರತಿ ಜೋಡಣೆಯ ಅಂತರ ಅಷ್ಟು ಕಡಿಮೆಯಾಗುತ್ತದೆ. ಅಂತರ ತುಂಬಾ ಚಿಕ್ಕದಾದರೆ ಬಿಸಿಲಿನ ದಿನ ಹಳಿಗಳು ಒಂದನ್ನೊಂದು ತಳ್ಳಿ ಬಾಗುತ್ತವೆ. ಜೋಡಣೆಯನ್ನು ದೊಡ್ಡದಾಗಿ ಚಿತ್ರಿಸಲಾಗಿದೆ; ಅಂತರ ಮಿಲಿಮೀಟರ್‌ನಲ್ಲಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A rail of length L expands by ΔL = αLΔT when it warms. The gap at each joint closes by that amount. If the gap is too small the rails push on each other and buckle on a hot day. The joint is drawn magnified; the gap is in millimetres.",
+    "kn": "L ಉದ್ದದ ಹಳಿ ಬಿಸಿಯಾದಾಗ ΔL = αLΔT ಹಿಗ್ಗುತ್ತದೆ. ಪ್ರತಿ ಜೋಡಣೆಯ ಅಂತರ ಅಷ್ಟು ಕಡಿಮೆಯಾಗುತ್ತದೆ. ಅಂತರ ತುಂಬಾ ಚಿಕ್ಕದಾದರೆ ಬಿಸಿಲಿನ ದಿನ ಹಳಿಗಳು ಒಂದನ್ನೊಂದು ತಳ್ಳಿ ಬಾಗುತ್ತವೆ. ಜೋಡಣೆಯನ್ನು ದೊಡ್ಡದಾಗಿ ಚಿತ್ರಿಸಲಾಗಿದೆ; ಅಂತರ ಮಿಲಿಮೀಟರ್‌ನಲ್ಲಿ."
+   },
+   "sliders": [
+    {
+     "name": "dT",
+     "label": {
+      "en": "Temperature rise",
+      "kn": "ತಾಪ ಏರಿಕೆ"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 2,
+     "value": 20,
+     "unit": "°C"
+    },
+    {
+     "name": "L",
+     "label": {
+      "en": "Rail length",
+      "kn": "ಹಳಿ ಉದ್ದ"
+     },
+     "min": 5,
+     "max": 25,
+     "step": 1,
+     "value": 12,
+     "unit": "m"
+    },
+    {
+     "name": "g0",
+     "label": {
+      "en": "Gap when laid",
+      "kn": "ಹಾಕಿದಾಗ ಅಂತರ"
+     },
+     "min": 2,
+     "max": 12,
+     "step": 0.5,
+     "value": 6,
+     "unit": "mm"
+    }
+   ],
+   "choices": [
+    {
+     "name": "al",
+     "label": {
+      "en": "Metal (α × 10⁻⁶ /K)",
+      "kn": "ಲೋಹ (α × 10⁻⁶ /K)"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Iron/steel 12",
+        "kn": "ಕಬ್ಬಿಣ/ಉಕ್ಕು 12"
+       },
+       "value": 12
+      },
+      {
+       "label": {
+        "en": "Copper 17",
+        "kn": "ತಾಮ್ರ 17"
+       },
+       "value": 17
+      },
+      {
+       "label": {
+        "en": "Aluminium 25",
+        "kn": "ಅಲ್ಯೂಮಿನಿಯಂ 25"
+       },
+       "value": 25
+      }
+     ],
+     "value": 12
+    }
+   ],
+   "vars": [
+    {
+     "name": "dL",
+     "expr": "al*L*dT/1000"
+    },
+    {
+     "name": "gp",
+     "expr": "g0 - al*L*dT/1000"
+    }
+   ],
+   "view": {
+    "x": [
+     -20,
+     20
+    ],
+    "y": [
+     -9,
+     13
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -20,
+     "y": -2,
+     "w": "20 - max(gp, 0)/2",
+     "h": 4,
+     "color": {
+      "by": "gp < 0",
+      "scale": [
+       "white",
+       "red"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": "max(gp, 0)/2",
+     "y": -2,
+     "w": "20 - max(gp, 0)/2",
+     "h": 4,
+     "color": {
+      "by": "gp < 0",
+      "scale": [
+       "white",
+       "red"
+      ]
+     },
+     "opacity": 0.85
+    },
+    {
+     "shape": "rect",
+     "x": -20,
+     "y": -3.2,
+     "w": 40,
+     "h": 1.2,
+     "color": "orange",
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": "-g0/2",
+     "y1": 3,
+     "x2": "-g0/2",
+     "y2": 5,
+     "color": "green",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": "g0/2",
+     "y1": 3,
+     "x2": "g0/2",
+     "y2": 5,
+     "color": "green",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 6,
+     "text": {
+      "en": "gap when laid: {g0:1} mm",
+      "kn": "ಹಾಕಿದಾಗ ಅಂತರ: {g0:1} mm"
+     },
+     "size": 24,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "gp >= 0",
+     "x": 0,
+     "y": -6,
+     "text": {
+      "en": "gap now {gp:2} mm",
+      "kn": "ಈಗಿನ ಅಂತರ {gp:2} mm"
+     },
+     "size": 28,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "gp < 0",
+     "x": 0,
+     "y": -6,
+     "text": {
+      "en": "No gap left: the rails buckle!",
+      "kn": "ಅಂತರ ಉಳಿದಿಲ್ಲ: ಹಳಿಗಳು ಬಾಗುತ್ತವೆ!"
+     },
+     "size": 28,
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": -18,
+     "y": 7.5,
+     "w": 36,
+     "h": 1.2,
+     "fill": false,
+     "color": "white",
+     "opacity": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "x": -18,
+     "y": 7.6,
+     "w": "36*dT/60",
+     "h": 1.0,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 10.3,
+     "text": {
+      "en": "warmer by {dT} °C",
+      "kn": "{dT} °C ಹೆಚ್ಚು ಬಿಸಿ"
+     },
+     "size": 24,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Expansion of each rail ΔL",
+      "kn": "ಪ್ರತಿ ಹಳಿಯ ಹಿಗ್ಗುವಿಕೆ ΔL"
+     },
+     "expr": "dL",
+     "digits": 2,
+     "unit": "mm"
+    },
+    {
+     "label": {
+      "en": "Gap left",
+      "kn": "ಉಳಿದ ಅಂತರ"
+     },
+     "expr": "gp",
+     "digits": 2,
+     "unit": "mm"
+    },
+    {
+     "label": {
+      "en": "Rise that closes the gap",
+      "kn": "ಅಂತರ ಮುಚ್ಚುವ ಏರಿಕೆ"
+     },
+     "expr": "g0*1000/(al*L)",
+     "digits": 1,
+     "unit": "°C"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "For 12 m steel rails, what temperature rise closes a 6 mm gap?",
+     "kn": "12 m ಉಕ್ಕಿನ ಹಳಿಗಳಿಗೆ ಯಾವ ತಾಪ ಏರಿಕೆ 6 mm ಅಂತರ ಮುಚ್ಚುತ್ತದೆ?"
+    },
+    {
+     "en": "Switch to aluminium. Does the gap close sooner or later?",
+     "kn": "ಅಲ್ಯೂಮಿನಿಯಂಗೆ ಬದಲಿಸಿ. ಅಂತರ ಬೇಗ ಮುಚ್ಚುತ್ತದೆಯೇ, ತಡವಾಗಿಯೇ?"
+    },
+    {
+     "en": "Double the rail length. How big must the gap be now?",
+     "kn": "ಹಳಿ ಉದ್ದ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ಈಗ ಅಂತರ ಎಷ್ಟು ಇರಬೇಕು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

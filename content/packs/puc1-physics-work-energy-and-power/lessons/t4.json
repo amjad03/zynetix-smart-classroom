@@ -280,6 +280,240 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "How powerful a lift motor?",
+    "kn": "ಎತ್ತುಗ ಮೋಟಾರ್ ಎಷ್ಟು ಶಕ್ತಿಯುತ?"
+   },
+   "narration": {
+    "en": "Power is the rate of doing work, P = W/t = Fv. Lifting mass m through height h needs work mgh; a motor of power P does it in t = mgh/P and lifts at speed v = P/(mg). A real motor wastes some power, so it takes longer. 1 horsepower = 746 W.",
+    "kn": "ಸಾಮರ್ಥ್ಯ = ಕೆಲಸ ಮಾಡುವ ದರ, P = W/t = Fv. m ದ್ರವ್ಯರಾಶಿಯನ್ನು h ಎತ್ತರಕ್ಕೆ ಎತ್ತಲು mgh ಕೆಲಸ ಬೇಕು; P ಸಾಮರ್ಥ್ಯದ ಮೋಟಾರ್ t = mgh/P ಸಮಯದಲ್ಲಿ, v = P/(mg) ವೇಗದಲ್ಲಿ ಎತ್ತುತ್ತದೆ. ನಿಜ ಮೋಟಾರ್ ಸ್ವಲ್ಪ ಸಾಮರ್ಥ್ಯ ವ್ಯರ್ಥ ಮಾಡುತ್ತದೆ, ಹಾಗಾಗಿ ಹೆಚ್ಚು ಸಮಯ. 1 ಅಶ್ವಶಕ್ತಿ = 746 W."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Power is the rate of doing work, P = W/t = Fv. Lifting mass m through height h needs work mgh; a motor of power P does it in t = mgh/P and lifts at speed v = P/(mg). A real motor wastes some power, so it takes longer. 1 horsepower = 746 W.",
+    "kn": "ಸಾಮರ್ಥ್ಯ = ಕೆಲಸ ಮಾಡುವ ದರ, P = W/t = Fv. m ದ್ರವ್ಯರಾಶಿಯನ್ನು h ಎತ್ತರಕ್ಕೆ ಎತ್ತಲು mgh ಕೆಲಸ ಬೇಕು; P ಸಾಮರ್ಥ್ಯದ ಮೋಟಾರ್ t = mgh/P ಸಮಯದಲ್ಲಿ, v = P/(mg) ವೇಗದಲ್ಲಿ ಎತ್ತುತ್ತದೆ. ನಿಜ ಮೋಟಾರ್ ಸ್ವಲ್ಪ ಸಾಮರ್ಥ್ಯ ವ್ಯರ್ಥ ಮಾಡುತ್ತದೆ, ಹಾಗಾಗಿ ಹೆಚ್ಚು ಸಮಯ. 1 ಅಶ್ವಶಕ್ತಿ = 746 W."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Load",
+      "kn": "ಭಾರ"
+     },
+     "min": 50,
+     "max": 1000,
+     "step": 25,
+     "value": 500,
+     "unit": "kg"
+    },
+    {
+     "name": "h",
+     "label": {
+      "en": "Height",
+      "kn": "ಎತ್ತರ"
+     },
+     "min": 2,
+     "max": 30,
+     "step": 1,
+     "value": 10,
+     "unit": "m"
+    },
+    {
+     "name": "Pk",
+     "label": {
+      "en": "Motor power",
+      "kn": "ಮೋಟಾರ್ ಸಾಮರ್ಥ್ಯ"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 0.5,
+     "value": 5,
+     "unit": "kW"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "eff",
+     "label": {
+      "en": "Real motor (70% efficient)",
+      "kn": "ನಿಜ ಮೋಟಾರ್ (70% ದಕ್ಷ)"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Lift",
+      "kn": "ಎತ್ತಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 1,
+    "stopWhen": "yy >= h"
+   },
+   "vars": [
+    {
+     "name": "eta",
+     "expr": "if(eff, 0.7, 1)"
+    },
+    {
+     "name": "v",
+     "expr": "if(eff, 0.7, 1)*Pk*1000/(m*9.8)"
+    },
+    {
+     "name": "yy",
+     "expr": "min(if(eff, 0.7, 1)*Pk*1000/(m*9.8)*t, h)"
+    }
+   ],
+   "view": {
+    "x": [
+     -10,
+     20
+    ],
+    "y": [
+     -1,
+     33
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -0.2,
+     "y": 0,
+     "w": 4.4,
+     "h": 32,
+     "fill": false,
+     "color": "white",
+     "opacity": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": -0.2,
+     "y1": "h + 2.6",
+     "x2": 4.2,
+     "y2": "h + 2.6",
+     "color": "green",
+     "dashed": true
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 32,
+     "w": 2,
+     "h": 0.9,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 32,
+     "x2": 2,
+     "y2": "yy + 2.5",
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "x": 0.2,
+     "y": "yy",
+     "w": 3.6,
+     "h": 2.5,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": "yy + 1.2",
+     "text": {
+      "en": "{m} kg",
+      "kn": "{m} kg"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 26,
+     "text": {
+      "en": "{100*yy/h:0}% of the way up",
+      "kn": "{100*yy/h:0}% ಮೇಲೆ"
+     },
+     "size": 26,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Work needed mgh",
+      "kn": "ಬೇಕಾದ ಕೆಲಸ mgh"
+     },
+     "expr": "m*9.8*h/1000",
+     "digits": 1,
+     "unit": "kJ"
+    },
+    {
+     "label": {
+      "en": "Time to lift",
+      "kn": "ಎತ್ತುವ ಸಮಯ"
+     },
+     "expr": "m*9.8*h/(eta*Pk*1000)",
+     "digits": 1,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Lifting speed",
+      "kn": "ಎತ್ತುವ ವೇಗ"
+     },
+     "expr": "v",
+     "digits": 2,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Motor power in horsepower",
+      "kn": "ಮೋಟಾರ್ ಸಾಮರ್ಥ್ಯ ಅಶ್ವಶಕ್ತಿಯಲ್ಲಿ"
+     },
+     "expr": "Pk/0.746",
+     "digits": 1,
+     "unit": "hp"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double the power. What happens to the lifting time?",
+     "kn": "ಸಾಮರ್ಥ್ಯ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ಎತ್ತುವ ಸಮಯಕ್ಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "What power lifts 10 people (650 kg) up 10 floors (30 m) in 30 s?",
+     "kn": "10 ಜನರನ್ನು (650 kg) 10 ಮಹಡಿ (30 m) 30 s ನಲ್ಲಿ ಎತ್ತಲು ಎಷ್ಟು ಸಾಮರ್ಥ್ಯ ಬೇಕು?"
+    },
+    {
+     "en": "Turn on the real motor. Where does the other 30% of the energy go?",
+     "kn": "ನಿಜ ಮೋಟಾರ್ ಆನ್ ಮಾಡಿ. ಉಳಿದ 30% ಶಕ್ತಿ ಎಲ್ಲಿ ಹೋಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "kind": "function_plot",

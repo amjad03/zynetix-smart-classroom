@@ -477,6 +477,256 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Skating in a bowl",
+    "kn": "ಬಟ್ಟಲಿನಲ್ಲಿ ಜಾರುವಿಕೆ"
+   },
+   "narration": {
+    "en": "Released from height h, the ball rolls down the smooth bowl and up the other side. Potential energy mgh turns into kinetic energy ½mv² and back, and the total stays mgh, so it reaches the same height. With friction on, the total slowly falls and the swings die down.",
+    "kn": "h ಎತ್ತರದಿಂದ ಬಿಟ್ಟ ಚೆಂಡು ನಯವಾದ ಬಟ್ಟಲಿನಲ್ಲಿ ಕೆಳಗೆ ಉರುಳಿ ಇನ್ನೊಂದು ಬದಿಗೆ ಏರುತ್ತದೆ. ಸ್ಥಿತಿ ಶಕ್ತಿ mgh ಚಲನ ಶಕ್ತಿ ½mv² ಆಗಿ ಮತ್ತೆ ಹಿಂದಿರುಗುತ್ತದೆ, ಒಟ್ಟು mgh ಸ್ಥಿರ, ಹಾಗಾಗಿ ಅದೇ ಎತ್ತರ ತಲುಪುತ್ತದೆ. ಘರ್ಷಣೆ ಆನ್ ಮಾಡಿದರೆ ಒಟ್ಟು ನಿಧಾನವಾಗಿ ಇಳಿದು ತೂಗಾಟ ಕುಂದುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Released from height h, the ball rolls down the smooth bowl and up the other side. Potential energy mgh turns into kinetic energy ½mv² and back, and the total stays mgh, so it reaches the same height. With friction on, the total slowly falls and the swings die down.",
+    "kn": "h ಎತ್ತರದಿಂದ ಬಿಟ್ಟ ಚೆಂಡು ನಯವಾದ ಬಟ್ಟಲಿನಲ್ಲಿ ಕೆಳಗೆ ಉರುಳಿ ಇನ್ನೊಂದು ಬದಿಗೆ ಏರುತ್ತದೆ. ಸ್ಥಿತಿ ಶಕ್ತಿ mgh ಚಲನ ಶಕ್ತಿ ½mv² ಆಗಿ ಮತ್ತೆ ಹಿಂದಿರುಗುತ್ತದೆ, ಒಟ್ಟು mgh ಸ್ಥಿರ, ಹಾಗಾಗಿ ಅದೇ ಎತ್ತರ ತಲುಪುತ್ತದೆ. ಘರ್ಷಣೆ ಆನ್ ಮಾಡಿದರೆ ಒಟ್ಟು ನಿಧಾನವಾಗಿ ಇಳಿದು ತೂಗಾಟ ಕುಂದುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "h0",
+     "label": {
+      "en": "Release height",
+      "kn": "ಬಿಡುವ ಎತ್ತರ"
+     },
+     "min": 0.5,
+     "max": 4,
+     "step": 0.1,
+     "value": 3,
+     "unit": "m"
+    },
+    {
+     "name": "m",
+     "label": {
+      "en": "Mass",
+      "kn": "ದ್ರವ್ಯರಾಶಿ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 2,
+     "unit": "kg"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fric",
+     "label": {
+      "en": "Friction",
+      "kn": "ಘರ್ಷಣೆ"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Release",
+      "kn": "ಬಿಡಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 20,
+    "dt": 0.002
+   },
+   "vars": [
+    {
+     "name": "sp",
+     "expr": "abs(U)*sqrt(1 + 0.25*X^2)"
+    },
+    {
+     "name": "KE",
+     "expr": "0.5*m*U^2*(1 + 0.25*X^2)"
+    },
+    {
+     "name": "PE",
+     "expr": "m*9.8*0.25*X^2"
+    },
+    {
+     "name": "E0",
+     "expr": "m*9.8*h0"
+    }
+   ],
+   "state": [
+    {
+     "name": "X",
+     "init": "-2*sqrt(h0)",
+     "rate": "U"
+    },
+    {
+     "name": "U",
+     "init": 0,
+     "rate": "-(4.9*X + 0.25*X*U^2)/(1 + 0.25*X^2) - if(fric, 0.3, 0)*U"
+    }
+   ],
+   "integrator": "rk2",
+   "view": {
+    "x": [
+     -4.6,
+     7.9
+    ],
+    "y": [
+     -0.7,
+     4.7
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "0.25*x^2",
+     "from": -4.2,
+     "to": 4.2,
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "line",
+     "x1": -4.3,
+     "y1": "h0",
+     "x2": 4.3,
+     "y2": "h0",
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.35
+    },
+    {
+     "shape": "circle",
+     "x": "X",
+     "y": "0.25*X^2 + 0.18",
+     "r": 0.18,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 5.2,
+     "y": 0,
+     "w": 0.8,
+     "h": "4*KE/E0",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 6.3,
+     "y": 0,
+     "w": 0.8,
+     "h": "4*PE/E0",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 5.1,
+     "y": 0,
+     "w": 2.1,
+     "h": 4.05,
+     "fill": false,
+     "color": "white",
+     "opacity": 0.4,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 5.6,
+     "y": -0.4,
+     "text": {
+      "en": "KE",
+      "kn": "ಚ.ಶ"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 6.7,
+     "y": -0.4,
+     "text": {
+      "en": "PE",
+      "kn": "ಸ್ಥಿ.ಶ"
+     },
+     "size": 22,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 6.15,
+     "y": 4.45,
+     "text": {
+      "en": "{100*(KE + PE)/E0:0}% left",
+      "kn": "{100*(KE + PE)/E0:0}% ಉಳಿದಿದೆ"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Speed",
+      "kn": "ವೇಗ"
+     },
+     "expr": "sp",
+     "digits": 2,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Kinetic energy",
+      "kn": "ಚಲನ ಶಕ್ತಿ"
+     },
+     "expr": "KE",
+     "digits": 1,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "Potential energy",
+      "kn": "ಸ್ಥಿತಿ ಶಕ್ತಿ"
+     },
+     "expr": "PE",
+     "digits": 1,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "Total",
+      "kn": "ಒಟ್ಟು"
+     },
+     "expr": "KE + PE",
+     "digits": 1,
+     "unit": "J"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Release from 3 m. Check that the speed at the bottom is √(2gh).",
+     "kn": "3 m ನಿಂದ ಬಿಡಿ. ತಳದಲ್ಲಿ ವೇಗ √(2gh) ಎಂದು ಪರಿಶೀಲಿಸಿ."
+    },
+    {
+     "en": "Double the mass. Does the speed at the bottom change? Does the energy?",
+     "kn": "ದ್ರವ್ಯರಾಶಿ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ತಳದ ವೇಗ ಬದಲಾಗುತ್ತದೆಯೇ? ಶಕ್ತಿ?"
+    },
+    {
+     "en": "Where is the kinetic energy equal to the potential energy?",
+     "kn": "ಚಲನ ಶಕ್ತಿ ಸ್ಥಿತಿ ಶಕ್ತಿಗೆ ಎಲ್ಲಿ ಸಮ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

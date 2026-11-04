@@ -338,6 +338,250 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Push a cart: force, time and momentum",
+    "kn": "ಗಾಡಿಯನ್ನು ತಳ್ಳಿ: ಬಲ, ಸಮಯ ಮತ್ತು ಸಂವೇಗ"
+   },
+   "narration": {
+    "en": "A steady force F pushes the cart for a time τ on a smooth track. While it pushes, the momentum grows at the rate F (that is F = dp/dt), so the final momentum equals the impulse F τ, the area of the orange block. After the push the cart coasts at constant speed. The track repeats every 13 m.",
+    "kn": "ಸ್ಥಿರ ಬಲ F ನಯವಾದ ಹಳಿಯ ಮೇಲೆ τ ಸಮಯ ಗಾಡಿಯನ್ನು ತಳ್ಳುತ್ತದೆ. ತಳ್ಳುವಾಗ ಸಂವೇಗ F ದರದಲ್ಲಿ ಬೆಳೆಯುತ್ತದೆ (F = dp/dt), ಹಾಗಾಗಿ ಅಂತಿಮ ಸಂವೇಗ = ಆವೇಗ F τ, ಕಿತ್ತಳೆ ಆಯತದ ವಿಸ್ತೀರ್ಣ. ತಳ್ಳಿದ ನಂತರ ಗಾಡಿ ಸ್ಥಿರ ವೇಗದಲ್ಲಿ ಸಾಗುತ್ತದೆ. ಹಳಿ ಪ್ರತಿ 13 m ಗೆ ಪುನರಾವರ್ತಿಸುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A steady force F pushes the cart for a time τ on a smooth track. While it pushes, the momentum grows at the rate F (that is F = dp/dt), so the final momentum equals the impulse F τ, the area of the orange block. After the push the cart coasts at constant speed. The track repeats every 13 m.",
+    "kn": "ಸ್ಥಿರ ಬಲ F ನಯವಾದ ಹಳಿಯ ಮೇಲೆ τ ಸಮಯ ಗಾಡಿಯನ್ನು ತಳ್ಳುತ್ತದೆ. ತಳ್ಳುವಾಗ ಸಂವೇಗ F ದರದಲ್ಲಿ ಬೆಳೆಯುತ್ತದೆ (F = dp/dt), ಹಾಗಾಗಿ ಅಂತಿಮ ಸಂವೇಗ = ಆವೇಗ F τ, ಕಿತ್ತಳೆ ಆಯತದ ವಿಸ್ತೀರ್ಣ. ತಳ್ಳಿದ ನಂತರ ಗಾಡಿ ಸ್ಥಿರ ವೇಗದಲ್ಲಿ ಸಾಗುತ್ತದೆ. ಹಳಿ ಪ್ರತಿ 13 m ಗೆ ಪುನರಾವರ್ತಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "F",
+     "label": {
+      "en": "Force",
+      "kn": "ಬಲ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 4,
+     "unit": "N"
+    },
+    {
+     "name": "m",
+     "label": {
+      "en": "Mass",
+      "kn": "ದ್ರವ್ಯರಾಶಿ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 2,
+     "unit": "kg"
+    },
+    {
+     "name": "tau",
+     "label": {
+      "en": "Push time τ",
+      "kn": "ತಳ್ಳುವ ಸಮಯ τ"
+     },
+     "min": 0.5,
+     "max": 4,
+     "step": 0.25,
+     "value": 2,
+     "unit": "s"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Push",
+      "kn": "ತಳ್ಳಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 8
+   },
+   "vars": [
+    {
+     "name": "a",
+     "expr": "F/m"
+    },
+    {
+     "name": "v",
+     "expr": "F/m*min(t, tau)"
+    },
+    {
+     "name": "xx",
+     "expr": "0.5*F/m*min(t, tau)^2 + F/m*tau*max(t - tau, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     14
+    ],
+    "y": [
+     -0.4,
+     8.6
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 6.9,
+     "x2": 14,
+     "y2": 6.9,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": "mod(xx, 13)",
+     "y": 7,
+     "w": 1,
+     "h": 0.7,
+     "color": "blue"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "t < tau",
+     "x": "mod(xx, 13) + 0.5",
+     "y": 8.0,
+     "dx": "0.3*F",
+     "dy": 0,
+     "color": "orange",
+     "label": "F"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": 8.2,
+     "align": "right",
+     "text": {
+      "en": "distance {xx:1} m",
+      "kn": "ದೂರ {xx:1} m"
+     },
+     "size": 24
+    },
+    {
+     "shape": "line",
+     "x1": 0.6,
+     "y1": 0.4,
+     "x2": 13.6,
+     "y2": 0.4,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 0.6,
+     "y1": 0.4,
+     "x2": 0.6,
+     "y2": 5.6,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 0.6,
+     "y": 0.4,
+     "w": "1.6*tau",
+     "h": "F/2",
+     "color": "orange",
+     "opacity": 0.35
+    },
+    {
+     "shape": "trail",
+     "x": "0.6 + 1.6*t",
+     "y": "0.4 + m*v/8",
+     "length": 900,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 13.5,
+     "y": 0,
+     "align": "right",
+     "text": {
+      "en": "time (0 to 8 s) →",
+      "kn": "ಸಮಯ (0 ರಿಂದ 8 s) →"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 0.8,
+     "y": 6.0,
+     "align": "left",
+     "text": {
+      "en": "green: momentum (1 unit = 8 N s)   orange: force (1 unit = 2 N)",
+      "kn": "ಹಸಿರು: ಸಂವೇಗ (1 ಘಟಕ = 8 N s)   ಕಿತ್ತಳೆ: ಬಲ (1 ಘಟಕ = 2 N)"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Acceleration F/m",
+      "kn": "ವೇಗೋತ್ಕರ್ಷ F/m"
+     },
+     "expr": "F/m",
+     "digits": 2,
+     "unit": "m/s²"
+    },
+    {
+     "label": {
+      "en": "Impulse F τ",
+      "kn": "ಆವೇಗ F τ"
+     },
+     "expr": "F*tau",
+     "digits": 2,
+     "unit": "N s"
+    },
+    {
+     "label": {
+      "en": "Momentum now",
+      "kn": "ಈಗಿನ ಸಂವೇಗ"
+     },
+     "expr": "m*v",
+     "digits": 2,
+     "unit": "kg m/s"
+    },
+    {
+     "label": {
+      "en": "Speed now",
+      "kn": "ಈಗಿನ ವೇಗ"
+     },
+     "expr": "v",
+     "digits": 2,
+     "unit": "m/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Push with 4 N for 2 s, then with 2 N for 4 s. Compare the final momentum.",
+     "kn": "4 N ನಿಂದ 2 s, ನಂತರ 2 N ನಿಂದ 4 s ತಳ್ಳಿ. ಅಂತಿಮ ಸಂವೇಗ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Double the mass with the same push. What changes: momentum or speed?",
+     "kn": "ಅದೇ ತಳ್ಳುವಿಕೆಯಲ್ಲಿ ದ್ರವ್ಯರಾಶಿ ಎರಡು ಪಟ್ಟು ಮಾಡಿ. ಏನು ಬದಲಾಗುತ್ತದೆ: ಸಂವೇಗವೇ, ವೇಗವೇ?"
+    },
+    {
+     "en": "Why does a cricketer draw the hands back while catching?",
+     "kn": "ಕ್ಯಾಚ್ ಹಿಡಿಯುವಾಗ ಕ್ರಿಕೆಟಿಗ ಕೈಗಳನ್ನು ಏಕೆ ಹಿಂದೆ ಎಳೆಯುತ್ತಾನೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
