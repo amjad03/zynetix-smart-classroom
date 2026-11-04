@@ -717,3 +717,10 @@ No text is reproduced. Check these plot details against the texts:
 - **Normal-curve readouts:** Q.D. 0.6745 sigma and M.D. 0.7979 sigma, where the lesson says about 2/3 and 4/5.
 - **Life table:** a Gompertz model, not real Indian data.
 - **Kannada:** needs a native-speaker review.
+
+## Computer Science simulations and activities (117 lessons)
+
+- **Toy models (labelled):** the blockchain hash and the spam scores.
+- **Assumptions to check:** bus cable count; download-time units (2^20).
+- **Exception names:** import mathh is shown as ImportError (Python 3 raises its subclass ModuleNotFoundError).
+- **Kannada:** needs a native-speaker review.

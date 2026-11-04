@@ -629,6 +629,352 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A smart street light",
+    "kn": "ಸ್ಮಾರ್ಟ್ ಬೀದಿ ದೀಪ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "An IoT street light: sensors report light level and movement, the controller decides, and the readings are sent over the Internet to a city dashboard.",
+    "kn": "IoT ಬೀದಿ ದೀಪ: ಸಂವೇದಕಗಳು ಬೆಳಕು ಮತ್ತು ಚಲನೆಯನ್ನು ತಿಳಿಸುತ್ತವೆ, ನಿಯಂತ್ರಕ ನಿರ್ಧರಿಸುತ್ತದೆ, ಮಾಹಿತಿ ಇಂಟರ್ನೆಟ್ ಮೂಲಕ ನಗರ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಹೋಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "amb",
+     "label": {
+      "en": "Light level",
+      "kn": "ಬೆಳಕಿನ ಮಟ್ಟ"
+     },
+     "min": 0,
+     "max": 1000,
+     "step": 20,
+     "value": 600,
+     "unit": "lux"
+    },
+    {
+     "name": "th",
+     "label": {
+      "en": "Switch-on threshold",
+      "kn": "ಆನ್ ಮಿತಿ"
+     },
+     "min": 20,
+     "max": 400,
+     "step": 20,
+     "value": 100,
+     "unit": "lux"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "mov",
+     "label": {
+      "en": "Motion detected",
+      "kn": "ಚಲನೆ ಪತ್ತೆ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 30,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "bright",
+     "expr": "if(amb < th, if(mov, 1, 0.3), 0)"
+    },
+    {
+     "name": "power",
+     "expr": "100*bright"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 20,
+     "h": 10,
+     "color": {
+      "by": "clamp(amb/1000, 0, 1)",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.18
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": 0.5,
+     "x2": 4,
+     "y2": 7.5,
+     "color": "white",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": 7.5,
+     "x2": 6,
+     "y2": 7.5,
+     "color": "white",
+     "width": 8
+    },
+    {
+     "shape": "icon",
+     "icon": "bulb",
+     "x": 6,
+     "y": 6.9,
+     "size": 1.2,
+     "on": "bright"
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       5.2,
+       6.4
+      ],
+      [
+       6.8,
+       6.4
+      ],
+      [
+       8.5,
+       0.5
+      ],
+      [
+       3.5,
+       0.5
+      ]
+     ],
+     "color": "yellow",
+     "opacity": "0.35*bright"
+    },
+    {
+     "shape": "circle",
+     "x": 4,
+     "y": 3,
+     "r": 0.35,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 2.2,
+     "text": {
+      "en": "light sensor",
+      "kn": "ಬೆಳಕಿನ ಸಂವೇದಕ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "circle",
+     "x": 2,
+     "y": 4.2,
+     "r": 0.35,
+     "color": {
+      "by": "mov",
+      "scale": [
+       "white",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 3.4,
+     "text": {
+      "en": "motion sensor",
+      "kn": "ಚಲನ ಸಂವೇದಕ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.5,
+     "y": 4.5,
+     "w": 3,
+     "h": 2,
+     "color": "green",
+     "opacity": 0.4
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 5.5,
+     "text": {
+      "en": "controller",
+      "kn": "ನಿಯಂತ್ರಕ"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16,
+     "y": 7,
+     "w": 3.5,
+     "h": 2,
+     "color": "blue",
+     "opacity": 0.4
+    },
+    {
+     "shape": "text",
+     "x": 17.75,
+     "y": 8,
+     "text": {
+      "en": "cloud",
+      "kn": "ಕ್ಲೌಡ್"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 4.4,
+     "y1": 3,
+     "x2": 10.5,
+     "y2": 5,
+     "dashed": true,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 13.5,
+     "y1": 6,
+     "x2": 16,
+     "y2": 8,
+     "dashed": true,
+     "color": "white"
+    },
+    {
+     "shape": "circle",
+     "x": "4.4 + 6.1*mod(t, 1)",
+     "y": "3 + 2*mod(t, 1)",
+     "r": 0.18,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": "13.5 + 2.5*mod(t + 0.5, 1)",
+     "y": "6 + 2*mod(t + 0.5, 1)",
+     "r": 0.18,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 3.5,
+     "text": {
+      "en": "light {amb} lux, threshold {th} lux",
+      "kn": "ಬೆಳಕು {amb} lux, ಮಿತಿ {th} lux"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 2.6,
+     "text": {
+      "en": "dark → lamp ON",
+      "kn": "ಕತ್ತಲು → ದೀಪ ಆನ್"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "amb < th"
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 2.6,
+     "text": {
+      "en": "bright → lamp OFF",
+      "kn": "ಬೆಳಕು → ದೀಪ ಆಫ್"
+     },
+     "size": 28,
+     "color": "white",
+     "visibleIf": "amb >= th"
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 1.6,
+     "text": {
+      "en": "someone near → full power",
+      "kn": "ಯಾರೋ ಹತ್ತಿರ → ಪೂರ್ಣ ಬೆಳಕು"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "amb < th && mov"
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 1.6,
+     "text": {
+      "en": "nobody near → dimmed to 30%",
+      "kn": "ಯಾರೂ ಇಲ್ಲ → 30% ಮಂದ"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "amb < th && !mov"
+    },
+    {
+     "shape": "text",
+     "x": 17.75,
+     "y": 6.3,
+     "text": {
+      "en": "dashboard: {power} W"
+     },
+     "size": 22,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Lamp power (100 W lamp)",
+      "kn": "ದೀಪದ ಶಕ್ತಿ"
+     },
+     "expr": "power",
+     "digits": 0,
+     "unit": "W"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Lower the light level slowly. At what value does the lamp switch on?",
+     "kn": "ಬೆಳಕನ್ನು ನಿಧಾನವಾಗಿ ಇಳಿಸಿ. ಯಾವ ಮೌಲ್ಯದಲ್ಲಿ ದೀಪ ಆನ್ ಆಗುತ್ತದೆ?"
+    },
+    {
+     "en": "At night, switch motion on and off. How much power is saved when nobody is near?",
+     "kn": "ರಾತ್ರಿ ಚಲನವನ್ನು ಆನ್/ಆಫ್ ಮಾಡಿ. ಯಾರೂ ಇಲ್ಲದಾಗ ಎಷ್ಟು ಶಕ್ತಿ ಉಳಿಯುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

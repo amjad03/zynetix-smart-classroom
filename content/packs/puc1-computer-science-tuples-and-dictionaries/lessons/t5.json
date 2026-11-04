@@ -492,6 +492,564 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Count letters with a dictionary",
+    "kn": "ನಿಘಂಟಿನಿಂದ ಅಕ್ಷರ ಎಣಿಕೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Step through the word. A letter seen for the first time becomes a new key with value 1; a letter seen again has its value increased.",
+    "kn": "ಪದದ ಮೂಲಕ ಹೆಜ್ಜೆ ಹಾಕಿ. ಮೊದಲ ಬಾರಿ ಕಂಡ ಅಕ್ಷರ ಮೌಲ್ಯ 1 ಇರುವ ಹೊಸ ಕೀಲಿ; ಮತ್ತೆ ಕಂಡರೆ ಮೌಲ್ಯ ಹೆಚ್ಚುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Letters read",
+      "kn": "ಓದಿದ ಅಕ್ಷರಗಳು"
+     },
+     "min": 0,
+     "max": 9,
+     "step": 1,
+     "value": 0
+    }
+   ],
+   "choices": [
+    {
+     "name": "w",
+     "label": {
+      "en": "Word",
+      "kn": "ಪದ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "BANANA",
+        "kn": "BANANA"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "COMMITTEE",
+        "kn": "COMMITTEE"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(kk + 1, L)"
+     }
+    },
+    {
+     "label": {
+      "en": "Back",
+      "kn": "ಹಿಂದೆ"
+     },
+     "icon": "remove",
+     "set": {
+      "k": "max(kk - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "L",
+     "expr": "if(w == 1, 6, 9)"
+    },
+    {
+     "name": "kk",
+     "expr": "min(k, L)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "freq = {}"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.6,
+     "text": {
+      "en": "for ch in word:"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.9,
+     "text": {
+      "en": "freq[ch] = freq.get(ch, 0) + 1"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 6.4,
+     "text": {
+      "en": "B"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "w == 1"
+    },
+    {
+     "shape": "text",
+     "x": 3.4,
+     "y": 6.4,
+     "text": {
+      "en": "A"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "w == 1"
+    },
+    {
+     "shape": "text",
+     "x": 5.3,
+     "y": 6.4,
+     "text": {
+      "en": "N"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "w == 1"
+    },
+    {
+     "shape": "text",
+     "x": 7.199999999999999,
+     "y": 6.4,
+     "text": {
+      "en": "A"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "w == 1"
+    },
+    {
+     "shape": "text",
+     "x": 9.1,
+     "y": 6.4,
+     "text": {
+      "en": "N"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "w == 1"
+    },
+    {
+     "shape": "text",
+     "x": 11.0,
+     "y": 6.4,
+     "text": {
+      "en": "A"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "w == 1"
+    },
+    {
+     "shape": "text",
+     "x": 0.8,
+     "y": 4.6,
+     "text": {
+      "en": "'B': {(kk > 0)}"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "yellow",
+     "visibleIf": "w == 1 && kk > 0"
+    },
+    {
+     "shape": "rect",
+     "x": 3.2,
+     "y": 4.35,
+     "w": "1.5*((kk > 0))",
+     "h": 0.5,
+     "color": "green",
+     "visibleIf": "w == 1 && kk > 0",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 0.8,
+     "y": 3.8499999999999996,
+     "text": {
+      "en": "'A': {(kk > 1) + (kk > 3) + (kk > 5)}"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "yellow",
+     "visibleIf": "w == 1 && kk > 1"
+    },
+    {
+     "shape": "rect",
+     "x": 3.2,
+     "y": 3.5999999999999996,
+     "w": "1.5*((kk > 1) + (kk > 3) + (kk > 5))",
+     "h": 0.5,
+     "color": "green",
+     "visibleIf": "w == 1 && kk > 1",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 0.8,
+     "y": 3.0999999999999996,
+     "text": {
+      "en": "'N': {(kk > 2) + (kk > 4)}"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "yellow",
+     "visibleIf": "w == 1 && kk > 2"
+    },
+    {
+     "shape": "rect",
+     "x": 3.2,
+     "y": 2.8499999999999996,
+     "w": "1.5*((kk > 2) + (kk > 4))",
+     "h": 0.5,
+     "color": "green",
+     "visibleIf": "w == 1 && kk > 2",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 6.4,
+     "text": {
+      "en": "C"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "w == 2"
+    },
+    {
+     "shape": "text",
+     "x": 3.4,
+     "y": 6.4,
+     "text": {
+      "en": "O"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "w == 2"
+    },
+    {
+     "shape": "text",
+     "x": 5.3,
+     "y": 6.4,
+     "text": {
+      "en": "M"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "w == 2"
+    },
+    {
+     "shape": "text",
+     "x": 7.199999999999999,
+     "y": 6.4,
+     "text": {
+      "en": "M"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "w == 2"
+    },
+    {
+     "shape": "text",
+     "x": 9.1,
+     "y": 6.4,
+     "text": {
+      "en": "I"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "w == 2"
+    },
+    {
+     "shape": "text",
+     "x": 11.0,
+     "y": 6.4,
+     "text": {
+      "en": "T"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "w == 2"
+    },
+    {
+     "shape": "text",
+     "x": 12.899999999999999,
+     "y": 6.4,
+     "text": {
+      "en": "T"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "w == 2"
+    },
+    {
+     "shape": "text",
+     "x": 14.799999999999999,
+     "y": 6.4,
+     "text": {
+      "en": "E"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "w == 2"
+    },
+    {
+     "shape": "text",
+     "x": 16.7,
+     "y": 6.4,
+     "text": {
+      "en": "E"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "w == 2"
+    },
+    {
+     "shape": "text",
+     "x": 0.8,
+     "y": 4.6,
+     "text": {
+      "en": "'C': {(kk > 0)}"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "yellow",
+     "visibleIf": "w == 2 && kk > 0"
+    },
+    {
+     "shape": "rect",
+     "x": 3.2,
+     "y": 4.35,
+     "w": "1.5*((kk > 0))",
+     "h": 0.5,
+     "color": "green",
+     "visibleIf": "w == 2 && kk > 0",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 0.8,
+     "y": 3.8499999999999996,
+     "text": {
+      "en": "'O': {(kk > 1)}"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "yellow",
+     "visibleIf": "w == 2 && kk > 1"
+    },
+    {
+     "shape": "rect",
+     "x": 3.2,
+     "y": 3.5999999999999996,
+     "w": "1.5*((kk > 1))",
+     "h": 0.5,
+     "color": "green",
+     "visibleIf": "w == 2 && kk > 1",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 0.8,
+     "y": 3.0999999999999996,
+     "text": {
+      "en": "'M': {(kk > 2) + (kk > 3)}"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "yellow",
+     "visibleIf": "w == 2 && kk > 2"
+    },
+    {
+     "shape": "rect",
+     "x": 3.2,
+     "y": 2.8499999999999996,
+     "w": "1.5*((kk > 2) + (kk > 3))",
+     "h": 0.5,
+     "color": "green",
+     "visibleIf": "w == 2 && kk > 2",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 0.8,
+     "y": 2.3499999999999996,
+     "text": {
+      "en": "'I': {(kk > 4)}"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "yellow",
+     "visibleIf": "w == 2 && kk > 4"
+    },
+    {
+     "shape": "rect",
+     "x": 3.2,
+     "y": 2.0999999999999996,
+     "w": "1.5*((kk > 4))",
+     "h": 0.5,
+     "color": "green",
+     "visibleIf": "w == 2 && kk > 4",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 0.8,
+     "y": 1.5999999999999996,
+     "text": {
+      "en": "'T': {(kk > 5) + (kk > 6)}"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "yellow",
+     "visibleIf": "w == 2 && kk > 5"
+    },
+    {
+     "shape": "rect",
+     "x": 3.2,
+     "y": 1.3499999999999996,
+     "w": "1.5*((kk > 5) + (kk > 6))",
+     "h": 0.5,
+     "color": "green",
+     "visibleIf": "w == 2 && kk > 5",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 0.8,
+     "y": 0.8499999999999996,
+     "text": {
+      "en": "'E': {(kk > 7) + (kk > 8)}"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "yellow",
+     "visibleIf": "w == 2 && kk > 7"
+    },
+    {
+     "shape": "rect",
+     "x": 3.2,
+     "y": 0.5999999999999996,
+     "w": "1.5*((kk > 7) + (kk > 8))",
+     "h": 0.5,
+     "color": "green",
+     "visibleIf": "w == 2 && kk > 7",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": "1.5 + 1.9*(kk - 1) - 0.7",
+     "y": 5.8,
+     "w": 1.4,
+     "h": 1.2,
+     "fill": false,
+     "color": "yellow",
+     "visibleIf": "kk > 0",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 3.0,
+     "text": {
+      "en": "new key → added with 1",
+      "kn": "ಹೊಸ ಕೀಲಿ → 1 ಇಂದ ಸೇರುತ್ತದೆ"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 2.2,
+     "text": {
+      "en": "old key → its value goes up",
+      "kn": "ಹಳೆಯ ಕೀಲಿ → ಮೌಲ್ಯ ಹೆಚ್ಚುತ್ತದೆ"
+     },
+     "size": 22,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Distinct keys so far",
+      "kn": "ಇಲ್ಲಿಯವರೆಗಿನ ಕೀಲಿಗಳು"
+     },
+     "expr": "if(w == 1, (kk > 0) + (kk > 1) + (kk > 2), (kk > 0) + (kk > 1) + (kk > 2) + (kk > 4) + (kk > 5) + (kk > 7))",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "For BANANA, which key ends with the largest value?",
+     "kn": "BANANA ಗೆ ಯಾವ ಕೀಲಿಗೆ ಅತಿ ಹೆಚ್ಚು ಮೌಲ್ಯ?"
+    },
+    {
+     "en": "In COMMITTEE, at which step is the key 'E' first added?",
+     "kn": "COMMITTEE ನಲ್ಲಿ 'E' ಕೀಲಿ ಯಾವ ಹೆಜ್ಜೆಯಲ್ಲಿ ಸೇರುತ್ತದೆ?"
+    },
+    {
+     "en": "Why are the keys listed in the order the letters first appear?",
+     "kn": "ಕೀಲಿಗಳು ಅಕ್ಷರಗಳು ಮೊದಲು ಬಂದ ಕ್ರಮದಲ್ಲಿ ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "sim-code.python",
    "type": "simulation",
    "source": "kinetix_cs",

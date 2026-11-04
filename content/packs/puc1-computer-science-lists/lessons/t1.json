@@ -542,6 +542,435 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Change a list in place",
+    "kn": "ಪಟ್ಟಿಯನ್ನು ಸ್ಥಳದಲ್ಲೇ ಬದಲಿಸಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Pick an index (positive or negative) and a new value, then press Assign. A list element can be replaced; switch to a string to see why the same does not work there.",
+    "kn": "ಸೂಚಿ (ಧನ ಅಥವಾ ಋಣ) ಮತ್ತು ಹೊಸ ಮೌಲ್ಯ ಆರಿಸಿ, ನಿಯೋಜಿಸು ಒತ್ತಿ. ಪಟ್ಟಿಯ ಅಂಶ ಬದಲಿಸಬಹುದು; ಸ್ಟ್ರಿಂಗ್‌ಗೆ ಬದಲಿಸಿ ಏಕೆ ಆಗದು ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "idx",
+     "label": {
+      "en": "Index i",
+      "kn": "ಸೂಚಿ i"
+     },
+     "min": -4,
+     "max": 3,
+     "step": 1,
+     "value": 2
+    },
+    {
+     "name": "v",
+     "label": {
+      "en": "New value",
+      "kn": "ಹೊಸ ಮೌಲ್ಯ"
+     },
+     "min": 0,
+     "max": 99,
+     "step": 1,
+     "value": 99
+    }
+   ],
+   "toggles": [
+    {
+     "name": "isstr",
+     "label": {
+      "en": "Use a string instead",
+      "kn": "ಬದಲಿಗೆ ಸ್ಟ್ರಿಂಗ್"
+     },
+     "value": false
+    }
+   ],
+   "counters": [
+    {
+     "name": "c0",
+     "value": 10,
+     "min": 0,
+     "max": 99
+    },
+    {
+     "name": "c1",
+     "value": 20,
+     "min": 0,
+     "max": 99
+    },
+    {
+     "name": "c2",
+     "value": 30,
+     "min": 0,
+     "max": 99
+    },
+    {
+     "name": "c3",
+     "value": 40,
+     "min": 0,
+     "max": 99
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Assign L[i] = value",
+      "kn": "ನಿಯೋಜಿಸು"
+     },
+     "icon": "check",
+     "set": {
+      "c0": "if(pos == 0 && !isstr, v, c0)",
+      "c1": "if(pos == 1 && !isstr, v, c1)",
+      "c2": "if(pos == 2 && !isstr, v, c2)",
+      "c3": "if(pos == 3 && !isstr, v, c3)"
+     }
+    },
+    {
+     "label": {
+      "en": "Reset list",
+      "kn": "ಪಟ್ಟಿ ಮರುಹೊಂದಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "c0": "10",
+      "c1": "20",
+      "c2": "30",
+      "c3": "40"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "pos",
+     "expr": "if(idx < 0, idx + 4, idx)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "L = [{c0}, {c1}, {c2}, {c3}]"
+     },
+     "size": 34,
+     "color": "yellow",
+     "visibleIf": "!isstr"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "s = \"PYTH\""
+     },
+     "size": 34,
+     "color": "yellow",
+     "visibleIf": "isstr"
+    },
+    {
+     "shape": "rect",
+     "x": 3.0,
+     "y": 4.2,
+     "w": 3,
+     "h": 2,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 5.2,
+     "text": {
+      "en": "{c0}"
+     },
+     "size": 40,
+     "color": "white",
+     "visibleIf": "!isstr"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 5.2,
+     "text": {
+      "en": "P"
+     },
+     "size": 40,
+     "color": "white",
+     "visibleIf": "isstr"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 6.8,
+     "text": {
+      "en": "0"
+     },
+     "size": 26,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 3.6,
+     "text": {
+      "en": "-4"
+     },
+     "size": 26,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 6.6,
+     "y": 4.2,
+     "w": 3,
+     "h": 2,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 8.1,
+     "y": 5.2,
+     "text": {
+      "en": "{c1}"
+     },
+     "size": 40,
+     "color": "white",
+     "visibleIf": "!isstr"
+    },
+    {
+     "shape": "text",
+     "x": 8.1,
+     "y": 5.2,
+     "text": {
+      "en": "Y"
+     },
+     "size": 40,
+     "color": "white",
+     "visibleIf": "isstr"
+    },
+    {
+     "shape": "text",
+     "x": 8.1,
+     "y": 6.8,
+     "text": {
+      "en": "1"
+     },
+     "size": 26,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 8.1,
+     "y": 3.6,
+     "text": {
+      "en": "-3"
+     },
+     "size": 26,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 10.2,
+     "y": 4.2,
+     "w": 3,
+     "h": 2,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 11.7,
+     "y": 5.2,
+     "text": {
+      "en": "{c2}"
+     },
+     "size": 40,
+     "color": "white",
+     "visibleIf": "!isstr"
+    },
+    {
+     "shape": "text",
+     "x": 11.7,
+     "y": 5.2,
+     "text": {
+      "en": "T"
+     },
+     "size": 40,
+     "color": "white",
+     "visibleIf": "isstr"
+    },
+    {
+     "shape": "text",
+     "x": 11.7,
+     "y": 6.8,
+     "text": {
+      "en": "2"
+     },
+     "size": 26,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 11.7,
+     "y": 3.6,
+     "text": {
+      "en": "-2"
+     },
+     "size": 26,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 13.8,
+     "y": 4.2,
+     "w": 3,
+     "h": 2,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 15.3,
+     "y": 5.2,
+     "text": {
+      "en": "{c3}"
+     },
+     "size": 40,
+     "color": "white",
+     "visibleIf": "!isstr"
+    },
+    {
+     "shape": "text",
+     "x": 15.3,
+     "y": 5.2,
+     "text": {
+      "en": "H"
+     },
+     "size": 40,
+     "color": "white",
+     "visibleIf": "isstr"
+    },
+    {
+     "shape": "text",
+     "x": 15.3,
+     "y": 6.8,
+     "text": {
+      "en": "3"
+     },
+     "size": 26,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 15.3,
+     "y": 3.6,
+     "text": {
+      "en": "-1"
+     },
+     "size": 26,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": "3 + 3.6*pos - 0.15",
+     "y": 4.05,
+     "w": 3.3,
+     "h": 2.3,
+     "fill": false,
+     "color": "yellow",
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "x": 1.6,
+     "y": 6.8,
+     "text": {
+      "en": "index",
+      "kn": "ಸೂಚಿ"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 1.6,
+     "y": 3.6,
+     "text": {
+      "en": "negative",
+      "kn": "ಋಣ"
+     },
+     "size": 22,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.3,
+     "text": {
+      "en": "L[{idx}] = {v}  is allowed: lists are mutable",
+      "kn": "L[{idx}] = {v} ಸಾಧ್ಯ: ಪಟ್ಟಿ ಬದಲಾಯಿಸಬಹುದು"
+     },
+     "size": 28,
+     "color": "green",
+     "visibleIf": "!isstr"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.3,
+     "text": {
+      "en": "s[{idx}] = ... gives TypeError: strings are immutable",
+      "kn": "s[{idx}] = ... TypeError: ಸ್ಟ್ರಿಂಗ್ ಬದಲಾಗದು"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "isstr"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.1,
+     "text": {
+      "en": "the same list object is changed in place",
+      "kn": "ಅದೇ ಪಟ್ಟಿ ವಸ್ತು ಸ್ಥಳದಲ್ಲೇ ಬದಲಾಗುತ್ತದೆ"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "!isstr"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set L[-1] = 99. Which box changed?",
+     "kn": "L[-1] = 99 ಮಾಡಿ. ಯಾವ ಪೆಟ್ಟಿಗೆ ಬದಲಾಯಿತು?"
+    },
+    {
+     "en": "Are L[1] and L[-3] the same element?",
+     "kn": "L[1] ಮತ್ತು L[-3] ಒಂದೇ ಅಂಶವೇ?"
+    },
+    {
+     "en": "Switch to the string and try again. What error does Python give?",
+     "kn": "ಸ್ಟ್ರಿಂಗ್‌ಗೆ ಬದಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ. Python ಯಾವ ದೋಷ ಕೊಡುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

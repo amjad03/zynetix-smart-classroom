@@ -431,6 +431,460 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "From any base to decimal",
+    "kn": "ಯಾವುದೇ ಆಧಾರದಿಂದ ದಶಮಾನಕ್ಕೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Set four digits and a base. Each Step multiplies one digit, from the right, by its place value and adds it to the total.",
+    "kn": "ನಾಲ್ಕು ಅಂಕಿ ಮತ್ತು ಆಧಾರ ಹೊಂದಿಸಿ. ಪ್ರತಿ ಹೆಜ್ಜೆ ಬಲದಿಂದ ಒಂದು ಅಂಕಿಯನ್ನು ಅದರ ಸ್ಥಾನ ಬೆಲೆಯಿಂದ ಗುಣಿಸಿ ಮೊತ್ತಕ್ಕೆ ಸೇರಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "g3",
+     "label": {
+      "en": "Digit 4 (left)",
+      "kn": "ಅಂಕಿ 4 (ಎಡ)"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "g2",
+     "label": {
+      "en": "Digit 3",
+      "kn": "ಅಂಕಿ 3"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 0
+    },
+    {
+     "name": "g1",
+     "label": {
+      "en": "Digit 2",
+      "kn": "ಅಂಕಿ 2"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "g0",
+     "label": {
+      "en": "Digit 1 (right)",
+      "kn": "ಅಂಕಿ 1 (ಬಲ)"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 1
+    }
+   ],
+   "choices": [
+    {
+     "name": "b",
+     "label": {
+      "en": "Base",
+      "kn": "ಆಧಾರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "2",
+        "kn": "2"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "8",
+        "kn": "8"
+       },
+       "value": 8
+      },
+      {
+       "label": {
+        "en": "16",
+        "kn": "16"
+       },
+       "value": 16
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "counters": [
+    {
+     "name": "k",
+     "value": 0,
+     "min": 0,
+     "max": 4
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(k + 1, 4)"
+     }
+    },
+    {
+     "label": {
+      "en": "Back",
+      "kn": "ಹಿಂದೆ"
+     },
+     "icon": "remove",
+     "set": {
+      "k": "max(k - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "e0",
+     "expr": "min(g0, b - 1)"
+    },
+    {
+     "name": "e1",
+     "expr": "min(g1, b - 1)"
+    },
+    {
+     "name": "e2",
+     "expr": "min(g2, b - 1)"
+    },
+    {
+     "name": "e3",
+     "expr": "min(g3, b - 1)"
+    },
+    {
+     "name": "m0",
+     "expr": "e0*pow(b, 0)"
+    },
+    {
+     "name": "m1",
+     "expr": "e1*pow(b, 1)"
+    },
+    {
+     "name": "m2",
+     "expr": "e2*pow(b, 2)"
+    },
+    {
+     "name": "m3",
+     "expr": "e3*pow(b, 3)"
+    },
+    {
+     "name": "run",
+     "expr": "(k > 0)*m0 + (k > 1)*m1 + (k > 2)*m2 + (k > 3)*m3"
+    },
+    {
+     "name": "bad",
+     "expr": "g0 >= b || g1 >= b || g2 >= b || g3 >= b"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "Number in base {b}",
+      "kn": "ಆಧಾರ {b} ರಲ್ಲಿ ಸಂಖ್ಯೆ"
+     },
+     "size": 28,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 14.399999999999999,
+     "y": 6.5,
+     "w": 2.6,
+     "h": 2.0,
+     "color": {
+      "by": "k > 0",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     },
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 15.7,
+     "y": 7.5,
+     "text": {
+      "en": "{e0}"
+     },
+     "size": 48,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.7,
+     "y": 6.0,
+     "text": {
+      "en": "{b}^0 = {pow(b, 0)}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 4.6,
+     "text": {
+      "en": "{e0} × {pow(b, 0)} = {m0}"
+     },
+     "size": 28,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "k > 0"
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": 6.5,
+     "w": 2.6,
+     "h": 2.0,
+     "color": {
+      "by": "k > 1",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     },
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 11.9,
+     "y": 7.5,
+     "text": {
+      "en": "{e1}"
+     },
+     "size": 48,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.9,
+     "y": 6.0,
+     "text": {
+      "en": "{b}^1 = {pow(b, 1)}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 3.7499999999999996,
+     "text": {
+      "en": "{e1} × {pow(b, 1)} = {m1}"
+     },
+     "size": 28,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "k > 1"
+    },
+    {
+     "shape": "rect",
+     "x": 6.8,
+     "y": 6.5,
+     "w": 2.6,
+     "h": 2.0,
+     "color": {
+      "by": "k > 2",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     },
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 8.1,
+     "y": 7.5,
+     "text": {
+      "en": "{e2}"
+     },
+     "size": 48,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.1,
+     "y": 6.0,
+     "text": {
+      "en": "{b}^2 = {pow(b, 2)}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 2.8999999999999995,
+     "text": {
+      "en": "{e2} × {pow(b, 2)} = {m2}"
+     },
+     "size": 28,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "k > 2"
+    },
+    {
+     "shape": "rect",
+     "x": 3.0,
+     "y": 6.5,
+     "w": 2.6,
+     "h": 2.0,
+     "color": {
+      "by": "k > 3",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     },
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 4.3,
+     "y": 7.5,
+     "text": {
+      "en": "{e3}"
+     },
+     "size": 48,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 4.3,
+     "y": 6.0,
+     "text": {
+      "en": "{b}^3 = {pow(b, 3)}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 2.05,
+     "text": {
+      "en": "{e3} × {pow(b, 3)} = {m3}"
+     },
+     "size": 28,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "k > 3"
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 3.2,
+     "text": {
+      "en": "running total = {run}",
+      "kn": "ಮೊತ್ತ = {run}"
+     },
+     "size": 34,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 2.0,
+     "text": {
+      "en": "Done: this is the decimal value",
+      "kn": "ಮುಗಿಯಿತು: ಇದೇ ದಶಮಾನ ಮೌಲ್ಯ"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "k >= 4"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.7,
+     "text": {
+      "en": "A digit cannot be {b} or more in base {b}: it is shown as {b - 1}",
+      "kn": "ಆಧಾರ {b} ರಲ್ಲಿ ಅಂಕಿ {b} ಅಥವಾ ಹೆಚ್ಚು ಇರಲಾರದು"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "bad"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.7,
+     "text": {
+      "en": "Hex digits 10–15 are A–F",
+      "kn": "ಹೆಕ್ಸಾ ಅಂಕಿ 10–15 = A–F"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "b == 16 && !bad"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Decimal value",
+      "kn": "ದಶಮಾನ ಮೌಲ್ಯ"
+     },
+     "expr": "m0 + m1 + m2 + m3",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set 1 0 1 1 in base 2 and step through. Do you get 11?",
+     "kn": "ಆಧಾರ 2 ರಲ್ಲಿ 1 0 1 1 ಹೊಂದಿಸಿ. 11 ಬರುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Keep the digits 1 0 1 1 and switch to base 8, then 16. How does the value change?",
+     "kn": "ಅದೇ ಅಂಕಿಗಳೊಂದಿಗೆ ಆಧಾರ 8, 16 ಮಾಡಿ. ಮೌಲ್ಯ ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "kind": "readouts",

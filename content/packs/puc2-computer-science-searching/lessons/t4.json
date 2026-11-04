@@ -553,6 +553,538 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Search by hashing",
+    "kn": "ಹ್ಯಾಶಿಂಗ್‌ನಿಂದ ಹುಡುಕಾಟ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The hash function key % 10 gives the slot directly, so a search needs only one comparison. Try keys that are in the table, keys that are not, and keys that collide.",
+    "kn": "ಹ್ಯಾಶ್ ಫಂಕ್ಷನ್ key % 10 ನೇರವಾಗಿ ಸ್ಥಾನ ಕೊಡುತ್ತದೆ; ಒಂದೇ ಹೋಲಿಕೆ ಸಾಕು. ಇರುವ, ಇಲ್ಲದ, ಘರ್ಷಿಸುವ ಕೀಲಿಗಳನ್ನು ಪ್ರಯತ್ನಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "key",
+     "label": {
+      "en": "Key",
+      "kn": "ಕೀಲಿ"
+     },
+     "min": 0,
+     "max": 99,
+     "step": 1,
+     "value": 77
+    }
+   ],
+   "toggles": [
+    {
+     "name": "col",
+     "label": {
+      "en": "Show collisions",
+      "kn": "ಘರ್ಷಣೆ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "h",
+     "expr": "mod(key, 10)"
+    },
+    {
+     "name": "occ",
+     "expr": "if(h < 1, 80, if(h < 2, 51, if(h < 3, 2, if(h < 4, 93, if(h < 5, 34, if(h < 6, -1, if(h < 7, 16, if(h < 8, 77, -1))))))))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "h(key) = key % 10 = {key} % 10 = {h}"
+     },
+     "size": 30,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 0.35,
+     "y": 3.6,
+     "w": 1.7,
+     "h": 1.6,
+     "color": {
+      "by": "h == 0",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 1.2,
+     "y": 4.4,
+     "text": {
+      "en": "80"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.2,
+     "y": 2.9,
+     "text": {
+      "en": "0"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": 2.2499999999999996,
+     "y": 3.6,
+     "w": 1.7,
+     "h": 1.6,
+     "color": {
+      "by": "h == 1",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 3.0999999999999996,
+     "y": 4.4,
+     "text": {
+      "en": "51"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.0999999999999996,
+     "y": 2.9,
+     "text": {
+      "en": "1"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": 4.15,
+     "y": 3.6,
+     "w": 1.7,
+     "h": 1.6,
+     "color": {
+      "by": "h == 2",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 5.0,
+     "y": 4.4,
+     "text": {
+      "en": "2"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.0,
+     "y": 2.9,
+     "text": {
+      "en": "2"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": 6.05,
+     "y": 3.6,
+     "w": 1.7,
+     "h": 1.6,
+     "color": {
+      "by": "h == 3",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 6.8999999999999995,
+     "y": 4.4,
+     "text": {
+      "en": "93"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.8999999999999995,
+     "y": 2.9,
+     "text": {
+      "en": "3"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": 7.949999999999999,
+     "y": 3.6,
+     "w": 1.7,
+     "h": 1.6,
+     "color": {
+      "by": "h == 4",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 8.799999999999999,
+     "y": 4.4,
+     "text": {
+      "en": "34"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.799999999999999,
+     "y": 2.9,
+     "text": {
+      "en": "4"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": 9.85,
+     "y": 3.6,
+     "w": 1.7,
+     "h": 1.6,
+     "color": {
+      "by": "h == 5",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 10.7,
+     "y": 4.4,
+     "text": {
+      "en": "None"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 10.7,
+     "y": 2.9,
+     "text": {
+      "en": "5"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": 11.749999999999998,
+     "y": 3.6,
+     "w": 1.7,
+     "h": 1.6,
+     "color": {
+      "by": "h == 6",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 12.599999999999998,
+     "y": 4.4,
+     "text": {
+      "en": "16"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.599999999999998,
+     "y": 2.9,
+     "text": {
+      "en": "6"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": 13.649999999999999,
+     "y": 3.6,
+     "w": 1.7,
+     "h": 1.6,
+     "color": {
+      "by": "h == 7",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 14.499999999999998,
+     "y": 4.4,
+     "text": {
+      "en": "77"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.499999999999998,
+     "y": 2.9,
+     "text": {
+      "en": "7"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": 15.549999999999999,
+     "y": 3.6,
+     "w": 1.7,
+     "h": 1.6,
+     "color": {
+      "by": "h == 8",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 16.4,
+     "y": 4.4,
+     "text": {
+      "en": "None"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 16.4,
+     "y": 2.9,
+     "text": {
+      "en": "8"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": 17.449999999999996,
+     "y": 3.6,
+     "w": 1.7,
+     "h": 1.6,
+     "color": {
+      "by": "h == 9",
+      "scale": [
+       "blue",
+       "yellow"
+      ]
+     },
+     "opacity": 0.55
+    },
+    {
+     "shape": "text",
+     "x": 18.299999999999997,
+     "y": 4.4,
+     "text": {
+      "en": "None"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 18.299999999999997,
+     "y": 2.9,
+     "text": {
+      "en": "9"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "arrow",
+     "x": "1.2 + 1.9*h",
+     "y": 7.6,
+     "dx": 0,
+     "dy": -2.2,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": "1.2 + 1.9*h",
+     "y": 8.1,
+     "text": {
+      "en": "key {key}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.7,
+     "text": {
+      "en": "Found with one comparison",
+      "kn": "ಒಂದೇ ಹೋಲಿಕೆಯಲ್ಲಿ ಸಿಕ್ಕಿತು"
+     },
+     "size": 28,
+     "color": "green",
+     "visibleIf": "occ == key"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.7,
+     "text": {
+      "en": "Slot {h} is empty: {key} is not in the table",
+      "kn": "ಸ್ಥಾನ {h} ಖಾಲಿ: {key} ಇಲ್ಲ"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "occ == -1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.7,
+     "text": {
+      "en": "Slot {h} holds {occ}, not {key}: not found",
+      "kn": "ಸ್ಥಾನ {h} ರಲ್ಲಿ {occ}: ಸಿಗಲಿಲ್ಲ"
+     },
+     "size": 28,
+     "color": "orange",
+     "visibleIf": "occ != -1 && occ != key"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.7,
+     "text": {
+      "en": "Inserting {key} here would be a collision with {occ}",
+      "kn": "{key} ಸೇರಿಸಿದರೆ {occ} ಜೊತೆ ಘರ್ಷಣೆ"
+     },
+     "size": 24,
+     "color": "orange",
+     "visibleIf": "occ != -1 && occ != key && col"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 6.6,
+     "text": {
+      "en": "table built from [34, 16, 2, 93, 80, 77, 51]",
+      "kn": "ಪಟ್ಟಿ [34, 16, 2, 93, 80, 77, 51] ಇಂದ"
+     },
+     "size": 22,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Hash value",
+      "kn": "ಹ್ಯಾಶ್ ಮೌಲ್ಯ"
+     },
+     "expr": "h",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Search for 77, then for 44. Why is 44 not found at slot 4?",
+     "kn": "77 ನಂತರ 44 ಹುಡುಕಿ. 44 ಸ್ಥಾನ 4 ರಲ್ಲಿ ಏಕೆ ಇಲ್ಲ?"
+    },
+    {
+     "en": "Find a key that lands in an empty slot.",
+     "kn": "ಖಾಲಿ ಸ್ಥಾನಕ್ಕೆ ಬೀಳುವ ಕೀಲಿ ಹುಡುಕಿ."
+    },
+    {
+     "en": "Is this hash function perfect for the list? Why?",
+     "kn": "ಈ ಹ್ಯಾಶ್ ಫಂಕ್ಷನ್ ಈ ಪಟ್ಟಿಗೆ ಪರಿಪೂರ್ಣವೇ? ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -764,6 +764,643 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "UPDATE and DELETE with WHERE",
+    "kn": "WHERE ಜೊತೆ UPDATE ಮತ್ತು DELETE"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Set the WHERE condition and pick UPDATE or DELETE. Only matching rows change; remove the WHERE clause to see why it matters.",
+    "kn": "WHERE ಷರತ್ತು ಹೊಂದಿಸಿ UPDATE ಅಥವಾ DELETE ಆರಿಸಿ. ಹೊಂದುವ ಸಾಲುಗಳು ಮಾತ್ರ ಬದಲಾಗುತ್ತವೆ; WHERE ತೆಗೆದು ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "lim",
+     "label": {
+      "en": "WHERE Salary <",
+      "kn": "WHERE Salary <"
+     },
+     "min": 10000,
+     "max": 70000,
+     "step": 2000,
+     "value": 35000
+    }
+   ],
+   "toggles": [
+    {
+     "name": "nw",
+     "label": {
+      "en": "Forget the WHERE clause",
+      "kn": "WHERE ಮರೆತುಬಿಡಿ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "op",
+     "label": {
+      "en": "Statement",
+      "kn": "ಹೇಳಿಕೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "UPDATE",
+        "kn": "UPDATE"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "DELETE",
+        "kn": "DELETE"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "hit0",
+     "expr": "nw || 25000 < lim"
+    },
+    {
+     "name": "hit1",
+     "expr": "nw || 48000 < lim"
+    },
+    {
+     "name": "hit2",
+     "expr": "nw || 32000 < lim"
+    },
+    {
+     "name": "hit3",
+     "expr": "nw || 60000 < lim"
+    },
+    {
+     "name": "hit4",
+     "expr": "nw || 18000 < lim"
+    },
+    {
+     "name": "hit5",
+     "expr": "nw || 41000 < lim"
+    },
+    {
+     "name": "cnt",
+     "expr": "hit0 + hit1 + hit2 + hit3 + hit4 + hit5"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "UPDATE EMPLOYEE SET Salary = Salary * 1.1"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "op == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "DELETE FROM EMPLOYEE"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "op == 2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.7,
+     "text": {
+      "en": "WHERE Salary < {lim};"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "!nw"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.7,
+     "text": {
+      "en": "(no WHERE clause: every row!)",
+      "kn": "(WHERE ಇಲ್ಲ: ಎಲ್ಲ ಸಾಲು!)"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "nw"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 7.6,
+     "text": {
+      "en": "EmpNo"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 7.6,
+     "text": {
+      "en": "Name"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.5,
+     "y": 7.6,
+     "text": {
+      "en": "Salary"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 7.6,
+     "text": {
+      "en": "after",
+      "kn": "ನಂತರ"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 0.8,
+     "y": 6.3,
+     "w": 18.4,
+     "h": 0.8,
+     "color": {
+      "by": "hit0*op/2",
+      "scale": [
+       "white",
+       "yellow",
+       "red"
+      ]
+     },
+     "opacity": "if(hit0, 0.35, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 6.7,
+     "text": {
+      "en": "101"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 6.7,
+     "text": {
+      "en": "Asha"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.5,
+     "y": 6.7,
+     "text": {
+      "en": "25000"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 6.7,
+     "text": {
+      "en": "{if(hit0, 25000*1.1, 25000):0}"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "op == 1"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 6.7,
+     "text": {
+      "en": "deleted",
+      "kn": "ಅಳಿಸಲಾಗಿದೆ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "op == 2 && hit0"
+    },
+    {
+     "shape": "rect",
+     "x": 0.8,
+     "y": 5.35,
+     "w": 18.4,
+     "h": 0.8,
+     "color": {
+      "by": "hit1*op/2",
+      "scale": [
+       "white",
+       "yellow",
+       "red"
+      ]
+     },
+     "opacity": "if(hit1, 0.35, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 5.75,
+     "text": {
+      "en": "102"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 5.75,
+     "text": {
+      "en": "Ravi"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.5,
+     "y": 5.75,
+     "text": {
+      "en": "48000"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 5.75,
+     "text": {
+      "en": "{if(hit1, 48000*1.1, 48000):0}"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "op == 1"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 5.75,
+     "text": {
+      "en": "deleted",
+      "kn": "ಅಳಿಸಲಾಗಿದೆ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "op == 2 && hit1"
+    },
+    {
+     "shape": "rect",
+     "x": 0.8,
+     "y": 4.4,
+     "w": 18.4,
+     "h": 0.8,
+     "color": {
+      "by": "hit2*op/2",
+      "scale": [
+       "white",
+       "yellow",
+       "red"
+      ]
+     },
+     "opacity": "if(hit2, 0.35, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 4.800000000000001,
+     "text": {
+      "en": "103"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 4.800000000000001,
+     "text": {
+      "en": "Neha"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.5,
+     "y": 4.800000000000001,
+     "text": {
+      "en": "32000"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 4.800000000000001,
+     "text": {
+      "en": "{if(hit2, 32000*1.1, 32000):0}"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "op == 1"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 4.800000000000001,
+     "text": {
+      "en": "deleted",
+      "kn": "ಅಳಿಸಲಾಗಿದೆ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "op == 2 && hit2"
+    },
+    {
+     "shape": "rect",
+     "x": 0.8,
+     "y": 3.4500000000000006,
+     "w": 18.4,
+     "h": 0.8,
+     "color": {
+      "by": "hit3*op/2",
+      "scale": [
+       "white",
+       "yellow",
+       "red"
+      ]
+     },
+     "opacity": "if(hit3, 0.35, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 3.8500000000000005,
+     "text": {
+      "en": "104"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 3.8500000000000005,
+     "text": {
+      "en": "Imran"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.5,
+     "y": 3.8500000000000005,
+     "text": {
+      "en": "60000"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 3.8500000000000005,
+     "text": {
+      "en": "{if(hit3, 60000*1.1, 60000):0}"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "op == 1"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 3.8500000000000005,
+     "text": {
+      "en": "deleted",
+      "kn": "ಅಳಿಸಲಾಗಿದೆ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "op == 2 && hit3"
+    },
+    {
+     "shape": "rect",
+     "x": 0.8,
+     "y": 2.5000000000000004,
+     "w": 18.4,
+     "h": 0.8,
+     "color": {
+      "by": "hit4*op/2",
+      "scale": [
+       "white",
+       "yellow",
+       "red"
+      ]
+     },
+     "opacity": "if(hit4, 0.35, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 2.9000000000000004,
+     "text": {
+      "en": "105"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 2.9000000000000004,
+     "text": {
+      "en": "Divya"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.5,
+     "y": 2.9000000000000004,
+     "text": {
+      "en": "18000"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 2.9000000000000004,
+     "text": {
+      "en": "{if(hit4, 18000*1.1, 18000):0}"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "op == 1"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 2.9000000000000004,
+     "text": {
+      "en": "deleted",
+      "kn": "ಅಳಿಸಲಾಗಿದೆ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "op == 2 && hit4"
+    },
+    {
+     "shape": "rect",
+     "x": 0.8,
+     "y": 1.5500000000000003,
+     "w": 18.4,
+     "h": 0.8,
+     "color": {
+      "by": "hit5*op/2",
+      "scale": [
+       "white",
+       "yellow",
+       "red"
+      ]
+     },
+     "opacity": "if(hit5, 0.35, 0.08)"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 1.9500000000000002,
+     "text": {
+      "en": "106"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 1.9500000000000002,
+     "text": {
+      "en": "Kiran"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.5,
+     "y": 1.9500000000000002,
+     "text": {
+      "en": "41000"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 1.9500000000000002,
+     "text": {
+      "en": "{if(hit5, 41000*1.1, 41000):0}"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "op == 1"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 1.9500000000000002,
+     "text": {
+      "en": "deleted",
+      "kn": "ಅಳಿಸಲಾಗಿದೆ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "op == 2 && hit5"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.6,
+     "text": {
+      "en": "{cnt} rows affected",
+      "kn": "{cnt} ಸಾಲುಗಳು ಪ್ರಭಾವಿತ"
+     },
+     "size": 26,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Rows affected",
+      "kn": "ಪ್ರಭಾವಿತ ಸಾಲುಗಳು"
+     },
+     "expr": "cnt",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Give a 10% raise to everyone earning less than 35000. Whose salary changes?",
+     "kn": "35000 ಕ್ಕಿಂತ ಕಡಿಮೆ ಗಳಿಸುವವರಿಗೆ 10% ಏರಿಕೆ. ಯಾರ ಸಂಬಳ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Switch to DELETE and turn off WHERE. How many rows are left?",
+     "kn": "DELETE ಮಾಡಿ WHERE ತೆಗೆಯಿರಿ. ಎಷ್ಟು ಸಾಲು ಉಳಿಯುತ್ತವೆ?"
+    }
+   ]
+  },
+  {
    "id": "sim-code.sql",
    "type": "simulation",
    "source": "kinetix_cs",

@@ -899,6 +899,616 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Count in any base",
+    "kn": "ಯಾವುದೇ ಆಧಾರದಲ್ಲಿ ಎಣಿಸಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Press Add and watch the digits roll over like an odometer. A digit resets to 0 when it reaches the base, and the next place goes up by one.",
+    "kn": "ಸೇರಿಸಿ ಒತ್ತಿ, ಅಂಕಿಗಳು ಓಡೋಮೀಟರ್‌ನಂತೆ ತಿರುಗುವುದನ್ನು ನೋಡಿ. ಅಂಕಿ ಆಧಾರ ತಲುಪಿದಾಗ 0 ಆಗಿ ಮುಂದಿನ ಸ್ಥಾನ ಒಂದು ಹೆಚ್ಚುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Amount to add",
+      "kn": "ಸೇರಿಸುವ ಮೊತ್ತ"
+     },
+     "min": 1,
+     "max": 64,
+     "step": 1,
+     "value": 1
+    }
+   ],
+   "choices": [
+    {
+     "name": "b",
+     "label": {
+      "en": "Base",
+      "kn": "ಆಧಾರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "2",
+        "kn": "2"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "8",
+        "kn": "8"
+       },
+       "value": 8
+      },
+      {
+       "label": {
+        "en": "10",
+        "kn": "10"
+       },
+       "value": 10
+      },
+      {
+       "label": {
+        "en": "16",
+        "kn": "16"
+       },
+       "value": 16
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "counters": [
+    {
+     "name": "n",
+     "value": 0,
+     "min": 0,
+     "max": 70000
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Add 1",
+      "kn": "1 ಸೇರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "n": "n + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Add amount",
+      "kn": "ಮೊತ್ತ ಸೇರಿಸಿ"
+     },
+     "icon": "next",
+     "set": {
+      "n": "n + a"
+     }
+    },
+    {
+     "label": {
+      "en": "Subtract 1",
+      "kn": "1 ಕಳೆಯಿರಿ"
+     },
+     "icon": "remove",
+     "set": {
+      "n": "max(n - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Reset",
+      "kn": "ಮರುಹೊಂದಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "n": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "pv0",
+     "expr": "pow(b, 0)"
+    },
+    {
+     "name": "d0",
+     "expr": "mod(floor(n/pv0), b)"
+    },
+    {
+     "name": "pv1",
+     "expr": "pow(b, 1)"
+    },
+    {
+     "name": "d1",
+     "expr": "mod(floor(n/pv1), b)"
+    },
+    {
+     "name": "pv2",
+     "expr": "pow(b, 2)"
+    },
+    {
+     "name": "d2",
+     "expr": "mod(floor(n/pv2), b)"
+    },
+    {
+     "name": "pv3",
+     "expr": "pow(b, 3)"
+    },
+    {
+     "name": "d3",
+     "expr": "mod(floor(n/pv3), b)"
+    },
+    {
+     "name": "shown",
+     "expr": "mod(n, pow(b, 4))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.2,
+     "text": {
+      "en": "A 4-digit counter in base {b}",
+      "kn": "ಆಧಾರ {b} ರಲ್ಲಿ 4-ಅಂಕಿಯ ಎಣಿಕೆ"
+     },
+     "size": 30,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 14.5,
+     "y": 3.6,
+     "w": 3,
+     "h": 3.6,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 16.0,
+     "y": 5.0,
+     "text": {
+      "en": "{d0}"
+     },
+     "size": 60,
+     "color": "white",
+     "visibleIf": "d0 < 10"
+    },
+    {
+     "shape": "text",
+     "x": 16.0,
+     "y": 5.0,
+     "text": {
+      "en": "A"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d0 == 10"
+    },
+    {
+     "shape": "text",
+     "x": 16.0,
+     "y": 5.0,
+     "text": {
+      "en": "B"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d0 == 11"
+    },
+    {
+     "shape": "text",
+     "x": 16.0,
+     "y": 5.0,
+     "text": {
+      "en": "C"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d0 == 12"
+    },
+    {
+     "shape": "text",
+     "x": 16.0,
+     "y": 5.0,
+     "text": {
+      "en": "D"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d0 == 13"
+    },
+    {
+     "shape": "text",
+     "x": 16.0,
+     "y": 5.0,
+     "text": {
+      "en": "E"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d0 == 14"
+    },
+    {
+     "shape": "text",
+     "x": 16.0,
+     "y": 5.0,
+     "text": {
+      "en": "F"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d0 == 15"
+    },
+    {
+     "shape": "text",
+     "x": 16.0,
+     "y": 2.9,
+     "text": {
+      "en": "× {pv0}"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.5,
+     "y": 3.6,
+     "w": 3,
+     "h": 3.6,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 12.0,
+     "y": 5.0,
+     "text": {
+      "en": "{d1}"
+     },
+     "size": 60,
+     "color": "white",
+     "visibleIf": "d1 < 10"
+    },
+    {
+     "shape": "text",
+     "x": 12.0,
+     "y": 5.0,
+     "text": {
+      "en": "A"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d1 == 10"
+    },
+    {
+     "shape": "text",
+     "x": 12.0,
+     "y": 5.0,
+     "text": {
+      "en": "B"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d1 == 11"
+    },
+    {
+     "shape": "text",
+     "x": 12.0,
+     "y": 5.0,
+     "text": {
+      "en": "C"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d1 == 12"
+    },
+    {
+     "shape": "text",
+     "x": 12.0,
+     "y": 5.0,
+     "text": {
+      "en": "D"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d1 == 13"
+    },
+    {
+     "shape": "text",
+     "x": 12.0,
+     "y": 5.0,
+     "text": {
+      "en": "E"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d1 == 14"
+    },
+    {
+     "shape": "text",
+     "x": 12.0,
+     "y": 5.0,
+     "text": {
+      "en": "F"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d1 == 15"
+    },
+    {
+     "shape": "text",
+     "x": 12.0,
+     "y": 2.9,
+     "text": {
+      "en": "× {pv1}"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 6.5,
+     "y": 3.6,
+     "w": 3,
+     "h": 3.6,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 8.0,
+     "y": 5.0,
+     "text": {
+      "en": "{d2}"
+     },
+     "size": 60,
+     "color": "white",
+     "visibleIf": "d2 < 10"
+    },
+    {
+     "shape": "text",
+     "x": 8.0,
+     "y": 5.0,
+     "text": {
+      "en": "A"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d2 == 10"
+    },
+    {
+     "shape": "text",
+     "x": 8.0,
+     "y": 5.0,
+     "text": {
+      "en": "B"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d2 == 11"
+    },
+    {
+     "shape": "text",
+     "x": 8.0,
+     "y": 5.0,
+     "text": {
+      "en": "C"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d2 == 12"
+    },
+    {
+     "shape": "text",
+     "x": 8.0,
+     "y": 5.0,
+     "text": {
+      "en": "D"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d2 == 13"
+    },
+    {
+     "shape": "text",
+     "x": 8.0,
+     "y": 5.0,
+     "text": {
+      "en": "E"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d2 == 14"
+    },
+    {
+     "shape": "text",
+     "x": 8.0,
+     "y": 5.0,
+     "text": {
+      "en": "F"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d2 == 15"
+    },
+    {
+     "shape": "text",
+     "x": 8.0,
+     "y": 2.9,
+     "text": {
+      "en": "× {pv2}"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 2.5,
+     "y": 3.6,
+     "w": 3,
+     "h": 3.6,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 4.0,
+     "y": 5.0,
+     "text": {
+      "en": "{d3}"
+     },
+     "size": 60,
+     "color": "white",
+     "visibleIf": "d3 < 10"
+    },
+    {
+     "shape": "text",
+     "x": 4.0,
+     "y": 5.0,
+     "text": {
+      "en": "A"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d3 == 10"
+    },
+    {
+     "shape": "text",
+     "x": 4.0,
+     "y": 5.0,
+     "text": {
+      "en": "B"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d3 == 11"
+    },
+    {
+     "shape": "text",
+     "x": 4.0,
+     "y": 5.0,
+     "text": {
+      "en": "C"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d3 == 12"
+    },
+    {
+     "shape": "text",
+     "x": 4.0,
+     "y": 5.0,
+     "text": {
+      "en": "D"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d3 == 13"
+    },
+    {
+     "shape": "text",
+     "x": 4.0,
+     "y": 5.0,
+     "text": {
+      "en": "E"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d3 == 14"
+    },
+    {
+     "shape": "text",
+     "x": 4.0,
+     "y": 5.0,
+     "text": {
+      "en": "F"
+     },
+     "size": 60,
+     "color": "yellow",
+     "visibleIf": "d3 == 15"
+    },
+    {
+     "shape": "text",
+     "x": 4.0,
+     "y": 2.9,
+     "text": {
+      "en": "× {pv3}"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.6,
+     "text": {
+      "en": "value = {shown} in decimal (count so far: {n})",
+      "kn": "ಮೌಲ್ಯ = {shown} ದಶಮಾನದಲ್ಲಿ (ಎಣಿಕೆ: {n})"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.6,
+     "text": {
+      "en": "All 4 digits were full: the counter rolled over",
+      "kn": "ಎಲ್ಲ 4 ಅಂಕಿಗಳು ತುಂಬಿ ಎಣಿಕೆ ಮತ್ತೆ ಆರಂಭವಾಯಿತು"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "n >= pow(b, 4)"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Decimal value",
+      "kn": "ದಶಮಾನ ಮೌಲ್ಯ"
+     },
+     "expr": "shown",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "In base 2, add 1 seven times, then once more. What happens?",
+     "kn": "ಆಧಾರ 2 ರಲ್ಲಿ 1 ಅನ್ನು ಏಳು ಸಲ ಸೇರಿಸಿ, ಮತ್ತೊಮ್ಮೆ ಸೇರಿಸಿ. ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Switch the base without resetting. The value stays the same; why do the digits change?",
+     "kn": "ಆಧಾರ ಬದಲಿಸಿ. ಮೌಲ್ಯ ಒಂದೇ; ಅಂಕಿಗಳು ಏಕೆ ಬದಲಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "What is the largest value 4 hexadecimal digits can show?",
+     "kn": "4 ಹೆಕ್ಸಾ ಅಂಕಿಗಳು ತೋರಿಸುವ ಅತಿದೊಡ್ಡ ಮೌಲ್ಯ ಯಾವುದು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

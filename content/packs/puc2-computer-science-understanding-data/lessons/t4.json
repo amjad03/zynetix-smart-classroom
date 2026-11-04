@@ -575,6 +575,533 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Mean, median and mode",
+    "kn": "ಸರಾಸರಿ, ಮಧ್ಯಾಂಕ, ಬಹುಲಕ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Drag the four dots and move the fifth value with the slider. Make the fifth value very large: the mean runs after it, but the median hardly moves.",
+    "kn": "ನಾಲ್ಕು ಚುಕ್ಕೆಗಳನ್ನು ಎಳೆಯಿರಿ, ಐದನೆಯದನ್ನು ಸ್ಲೈಡರ್‌ನಿಂದ ಸರಿಸಿ. ಐದನೆಯದನ್ನು ತುಂಬಾ ದೊಡ್ಡದು ಮಾಡಿ: ಸರಾಸರಿ ಅದರ ಹಿಂದೆ ಓಡುತ್ತದೆ, ಮಧ್ಯಾಂಕ ಹೆಚ್ಚು ಸರಿಯುವುದಿಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "v5",
+     "label": {
+      "en": "Fifth value",
+      "kn": "ಐದನೇ ಮೌಲ್ಯ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 50
+    }
+   ],
+   "toggles": [
+    {
+     "name": "mk",
+     "label": {
+      "en": "Show mean and median",
+      "kn": "ಸರಾಸರಿ, ಮಧ್ಯಾಂಕ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "A",
+     "label": "A",
+     "x": 20,
+     "y": 4,
+     "axis": "x",
+     "box": {
+      "x": [
+       0,
+       100
+      ],
+      "y": [
+       4,
+       4
+      ]
+     },
+     "snap": 5,
+     "color": "blue"
+    },
+    {
+     "name": "B",
+     "label": "B",
+     "x": 35,
+     "y": 4,
+     "axis": "x",
+     "box": {
+      "x": [
+       0,
+       100
+      ],
+      "y": [
+       4,
+       4
+      ]
+     },
+     "snap": 5,
+     "color": "blue"
+    },
+    {
+     "name": "C",
+     "label": "C",
+     "x": 35,
+     "y": 4,
+     "axis": "x",
+     "box": {
+      "x": [
+       0,
+       100
+      ],
+      "y": [
+       4,
+       4
+      ]
+     },
+     "snap": 5,
+     "color": "blue"
+    },
+    {
+     "name": "D",
+     "label": "D",
+     "x": 60,
+     "y": 4,
+     "axis": "x",
+     "box": {
+      "x": [
+       0,
+       100
+      ],
+      "y": [
+       4,
+       4
+      ]
+     },
+     "snap": 5,
+     "color": "blue"
+    }
+   ],
+   "vars": [
+    {
+     "name": "lt0",
+     "expr": "(A_x < A_x) + (B_x < A_x) + (C_x < A_x) + (D_x < A_x) + (v5 < A_x)"
+    },
+    {
+     "name": "le0",
+     "expr": "(A_x <= A_x) + (B_x <= A_x) + (C_x <= A_x) + (D_x <= A_x) + (v5 <= A_x)"
+    },
+    {
+     "name": "lt1",
+     "expr": "(A_x < B_x) + (B_x < B_x) + (C_x < B_x) + (D_x < B_x) + (v5 < B_x)"
+    },
+    {
+     "name": "le1",
+     "expr": "(A_x <= B_x) + (B_x <= B_x) + (C_x <= B_x) + (D_x <= B_x) + (v5 <= B_x)"
+    },
+    {
+     "name": "lt2",
+     "expr": "(A_x < C_x) + (B_x < C_x) + (C_x < C_x) + (D_x < C_x) + (v5 < C_x)"
+    },
+    {
+     "name": "le2",
+     "expr": "(A_x <= C_x) + (B_x <= C_x) + (C_x <= C_x) + (D_x <= C_x) + (v5 <= C_x)"
+    },
+    {
+     "name": "lt3",
+     "expr": "(A_x < D_x) + (B_x < D_x) + (C_x < D_x) + (D_x < D_x) + (v5 < D_x)"
+    },
+    {
+     "name": "le3",
+     "expr": "(A_x <= D_x) + (B_x <= D_x) + (C_x <= D_x) + (D_x <= D_x) + (v5 <= D_x)"
+    },
+    {
+     "name": "lt4",
+     "expr": "(A_x < v5) + (B_x < v5) + (C_x < v5) + (D_x < v5) + (v5 < v5)"
+    },
+    {
+     "name": "le4",
+     "expr": "(A_x <= v5) + (B_x <= v5) + (C_x <= v5) + (D_x <= v5) + (v5 <= v5)"
+    },
+    {
+     "name": "mean",
+     "expr": "(A_x + B_x + C_x + D_x + v5)/5"
+    },
+    {
+     "name": "med",
+     "expr": "if(lt0 < 3 && 3 <= le0, A_x, if(lt1 < 3 && 3 <= le1, B_x, if(lt2 < 3 && 3 <= le2, C_x, if(lt3 < 3 && 3 <= le3, D_x, v5))))"
+    },
+    {
+     "name": "mf",
+     "expr": "max(le0 - lt0, le1 - lt1, le2 - lt2, le3 - lt3, le4 - lt4)"
+    },
+    {
+     "name": "nm",
+     "expr": "((le0 - lt0 == mf) + (le1 - lt1 == mf) + (le2 - lt2 == mf) + (le3 - lt3 == mf) + (le4 - lt4 == mf))/mf"
+    },
+    {
+     "name": "mo",
+     "expr": "if(le0 - lt0 == mf, A_x, if(le1 - lt1 == mf, B_x, if(le2 - lt2 == mf, C_x, if(le3 - lt3 == mf, D_x, v5))))"
+    }
+   ],
+   "view": {
+    "x": [
+     -5,
+     105
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 4,
+     "x2": 100,
+     "y2": 4,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 3.7,
+     "x2": 0,
+     "y2": 4.3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 3.0,
+     "text": {
+      "en": "0"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 3.7,
+     "x2": 10,
+     "y2": 4.3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 3.0,
+     "text": {
+      "en": "10"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 20,
+     "y1": 3.7,
+     "x2": 20,
+     "y2": 4.3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 3.0,
+     "text": {
+      "en": "20"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 30,
+     "y1": 3.7,
+     "x2": 30,
+     "y2": 4.3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 3.0,
+     "text": {
+      "en": "30"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 40,
+     "y1": 3.7,
+     "x2": 40,
+     "y2": 4.3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 40,
+     "y": 3.0,
+     "text": {
+      "en": "40"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 50,
+     "y1": 3.7,
+     "x2": 50,
+     "y2": 4.3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 3.0,
+     "text": {
+      "en": "50"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 60,
+     "y1": 3.7,
+     "x2": 60,
+     "y2": 4.3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 60,
+     "y": 3.0,
+     "text": {
+      "en": "60"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 70,
+     "y1": 3.7,
+     "x2": 70,
+     "y2": 4.3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 70,
+     "y": 3.0,
+     "text": {
+      "en": "70"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 80,
+     "y1": 3.7,
+     "x2": 80,
+     "y2": 4.3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 3.0,
+     "text": {
+      "en": "80"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 90,
+     "y1": 3.7,
+     "x2": 90,
+     "y2": 4.3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 90,
+     "y": 3.0,
+     "text": {
+      "en": "90"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 100,
+     "y1": 3.7,
+     "x2": 100,
+     "y2": 4.3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 100,
+     "y": 3.0,
+     "text": {
+      "en": "100"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "circle",
+     "x": "v5",
+     "y": 4,
+     "r": 1.6,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": "v5",
+     "y": 6.2,
+     "text": {
+      "en": "5th"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "x": "mean",
+     "y": 9.0,
+     "dx": 0,
+     "dy": -3.6,
+     "color": "yellow",
+     "visibleIf": "mk"
+    },
+    {
+     "shape": "label",
+     "x": "mean",
+     "y": 9.4,
+     "text": {
+      "en": "mean {mean:1}",
+      "kn": "ಸರಾಸರಿ {mean:1}"
+     },
+     "visibleIf": "mk"
+    },
+    {
+     "shape": "arrow",
+     "x": "med",
+     "y": 0.6,
+     "dx": 0,
+     "dy": 2.6,
+     "color": "green",
+     "visibleIf": "mk"
+    },
+    {
+     "shape": "label",
+     "x": "med",
+     "y": 0.6,
+     "text": {
+      "en": "median {med}",
+      "kn": "ಮಧ್ಯಾಂಕ {med}"
+     },
+     "visibleIf": "mk"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 8.2,
+     "text": {
+      "en": "mode = {mo} (appears {mf} times)",
+      "kn": "ಬಹುಲಕ = {mo} ({mf} ಬಾರಿ)"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "mf > 1 && nm == 1"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 8.2,
+     "text": {
+      "en": "no single mode",
+      "kn": "ಒಂದೇ ಬಹುಲಕ ಇಲ್ಲ"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "!(mf > 1 && nm == 1)"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mean",
+      "kn": "ಸರಾಸರಿ"
+     },
+     "expr": "mean",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Median",
+      "kn": "ಮಧ್ಯಾಂಕ"
+     },
+     "expr": "med",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Range",
+      "kn": "ವ್ಯಾಪ್ತಿ"
+     },
+     "expr": "max(A_x, B_x, C_x, D_x, v5) - min(A_x, B_x, C_x, D_x, v5)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Move the fifth value from 50 to 100. How far do the mean and the median move?",
+     "kn": "ಐದನೆಯದನ್ನು 50 ರಿಂದ 100 ಕ್ಕೆ ಸರಿಸಿ. ಸರಾಸರಿ, ಮಧ್ಯಾಂಕ ಎಷ್ಟು ಸರಿಯುತ್ತವೆ?"
+    },
+    {
+     "en": "Drag two dots onto the same value. What is the mode now?",
+     "kn": "ಎರಡು ಚುಕ್ಕೆಗಳನ್ನು ಒಂದೇ ಮೌಲ್ಯಕ್ಕೆ ಎಳೆಯಿರಿ. ಈಗ ಬಹುಲಕ ಏನು?"
+    },
+    {
+     "en": "Can you make the mean, median and mode all equal?",
+     "kn": "ಸರಾಸರಿ, ಮಧ್ಯಾಂಕ, ಬಹುಲಕ ಮೂರೂ ಸಮಾನವಾಗಿಸಬಹುದೇ?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "kind": "bar_chart",

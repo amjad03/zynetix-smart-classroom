@@ -602,6 +602,605 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Binary search halves the list",
+    "kn": "ದ್ವಿಮಾನ ಹುಡುಕಾಟ ಅರ್ಧಗೊಳಿಸುತ್ತದೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The list is sorted. Each Step compares the key with the middle element and throws away the half that cannot contain it.",
+    "kn": "ಪಟ್ಟಿ ವಿಂಗಡಿತ. ಪ್ರತಿ ಹೆಜ್ಜೆ ಕೀಲಿಯನ್ನು ಮಧ್ಯದ ಅಂಶದೊಂದಿಗೆ ಹೋಲಿಸಿ, ಕೀಲಿ ಇರಲಾರದ ಅರ್ಧವನ್ನು ಬಿಡುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "key",
+     "label": {
+      "en": "Key",
+      "kn": "ಕೀಲಿ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 1,
+     "value": 45
+    }
+   ],
+   "counters": [
+    {
+     "name": "k",
+     "value": 0,
+     "min": 0,
+     "max": 4
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(kk + 1, it)"
+     }
+    },
+    {
+     "label": {
+      "en": "Back",
+      "kn": "ಹಿಂದೆ"
+     },
+     "icon": "remove",
+     "set": {
+      "k": "max(kk - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "f0",
+     "expr": "0"
+    },
+    {
+     "name": "l0",
+     "expr": "14"
+    },
+    {
+     "name": "m1",
+     "expr": "floor((f0 + l0)/2)"
+    },
+    {
+     "name": "f1",
+     "expr": "if(f0 > l0, f0, if((if(m1 < 1, 2, if(m1 < 2, 5, if(m1 < 3, 8, if(m1 < 4, 12, if(m1 < 5, 16, if(m1 < 6, 23, if(m1 < 7, 38, if(m1 < 8, 45, if(m1 < 9, 56, if(m1 < 10, 67, if(m1 < 11, 72, if(m1 < 12, 81, if(m1 < 13, 88, if(m1 < 14, 91, 99))))))))))))))) == key, 100 + m1, if((if(m1 < 1, 2, if(m1 < 2, 5, if(m1 < 3, 8, if(m1 < 4, 12, if(m1 < 5, 16, if(m1 < 6, 23, if(m1 < 7, 38, if(m1 < 8, 45, if(m1 < 9, 56, if(m1 < 10, 67, if(m1 < 11, 72, if(m1 < 12, 81, if(m1 < 13, 88, if(m1 < 14, 91, 99))))))))))))))) < key, m1 + 1, f0)))"
+    },
+    {
+     "name": "l1",
+     "expr": "if(f0 > l0, l0, if((if(m1 < 1, 2, if(m1 < 2, 5, if(m1 < 3, 8, if(m1 < 4, 12, if(m1 < 5, 16, if(m1 < 6, 23, if(m1 < 7, 38, if(m1 < 8, 45, if(m1 < 9, 56, if(m1 < 10, 67, if(m1 < 11, 72, if(m1 < 12, 81, if(m1 < 13, 88, if(m1 < 14, 91, 99))))))))))))))) > key, m1 - 1, l0))"
+    },
+    {
+     "name": "m2",
+     "expr": "floor((f1 + l1)/2)"
+    },
+    {
+     "name": "f2",
+     "expr": "if(f1 > l1, f1, if((if(m2 < 1, 2, if(m2 < 2, 5, if(m2 < 3, 8, if(m2 < 4, 12, if(m2 < 5, 16, if(m2 < 6, 23, if(m2 < 7, 38, if(m2 < 8, 45, if(m2 < 9, 56, if(m2 < 10, 67, if(m2 < 11, 72, if(m2 < 12, 81, if(m2 < 13, 88, if(m2 < 14, 91, 99))))))))))))))) == key, 100 + m2, if((if(m2 < 1, 2, if(m2 < 2, 5, if(m2 < 3, 8, if(m2 < 4, 12, if(m2 < 5, 16, if(m2 < 6, 23, if(m2 < 7, 38, if(m2 < 8, 45, if(m2 < 9, 56, if(m2 < 10, 67, if(m2 < 11, 72, if(m2 < 12, 81, if(m2 < 13, 88, if(m2 < 14, 91, 99))))))))))))))) < key, m2 + 1, f1)))"
+    },
+    {
+     "name": "l2",
+     "expr": "if(f1 > l1, l1, if((if(m2 < 1, 2, if(m2 < 2, 5, if(m2 < 3, 8, if(m2 < 4, 12, if(m2 < 5, 16, if(m2 < 6, 23, if(m2 < 7, 38, if(m2 < 8, 45, if(m2 < 9, 56, if(m2 < 10, 67, if(m2 < 11, 72, if(m2 < 12, 81, if(m2 < 13, 88, if(m2 < 14, 91, 99))))))))))))))) > key, m2 - 1, l1))"
+    },
+    {
+     "name": "m3",
+     "expr": "floor((f2 + l2)/2)"
+    },
+    {
+     "name": "f3",
+     "expr": "if(f2 > l2, f2, if((if(m3 < 1, 2, if(m3 < 2, 5, if(m3 < 3, 8, if(m3 < 4, 12, if(m3 < 5, 16, if(m3 < 6, 23, if(m3 < 7, 38, if(m3 < 8, 45, if(m3 < 9, 56, if(m3 < 10, 67, if(m3 < 11, 72, if(m3 < 12, 81, if(m3 < 13, 88, if(m3 < 14, 91, 99))))))))))))))) == key, 100 + m3, if((if(m3 < 1, 2, if(m3 < 2, 5, if(m3 < 3, 8, if(m3 < 4, 12, if(m3 < 5, 16, if(m3 < 6, 23, if(m3 < 7, 38, if(m3 < 8, 45, if(m3 < 9, 56, if(m3 < 10, 67, if(m3 < 11, 72, if(m3 < 12, 81, if(m3 < 13, 88, if(m3 < 14, 91, 99))))))))))))))) < key, m3 + 1, f2)))"
+    },
+    {
+     "name": "l3",
+     "expr": "if(f2 > l2, l2, if((if(m3 < 1, 2, if(m3 < 2, 5, if(m3 < 3, 8, if(m3 < 4, 12, if(m3 < 5, 16, if(m3 < 6, 23, if(m3 < 7, 38, if(m3 < 8, 45, if(m3 < 9, 56, if(m3 < 10, 67, if(m3 < 11, 72, if(m3 < 12, 81, if(m3 < 13, 88, if(m3 < 14, 91, 99))))))))))))))) > key, m3 - 1, l2))"
+    },
+    {
+     "name": "m4",
+     "expr": "floor((f3 + l3)/2)"
+    },
+    {
+     "name": "f4",
+     "expr": "if(f3 > l3, f3, if((if(m4 < 1, 2, if(m4 < 2, 5, if(m4 < 3, 8, if(m4 < 4, 12, if(m4 < 5, 16, if(m4 < 6, 23, if(m4 < 7, 38, if(m4 < 8, 45, if(m4 < 9, 56, if(m4 < 10, 67, if(m4 < 11, 72, if(m4 < 12, 81, if(m4 < 13, 88, if(m4 < 14, 91, 99))))))))))))))) == key, 100 + m4, if((if(m4 < 1, 2, if(m4 < 2, 5, if(m4 < 3, 8, if(m4 < 4, 12, if(m4 < 5, 16, if(m4 < 6, 23, if(m4 < 7, 38, if(m4 < 8, 45, if(m4 < 9, 56, if(m4 < 10, 67, if(m4 < 11, 72, if(m4 < 12, 81, if(m4 < 13, 88, if(m4 < 14, 91, 99))))))))))))))) < key, m4 + 1, f3)))"
+    },
+    {
+     "name": "l4",
+     "expr": "if(f3 > l3, l3, if((if(m4 < 1, 2, if(m4 < 2, 5, if(m4 < 3, 8, if(m4 < 4, 12, if(m4 < 5, 16, if(m4 < 6, 23, if(m4 < 7, 38, if(m4 < 8, 45, if(m4 < 9, 56, if(m4 < 10, 67, if(m4 < 11, 72, if(m4 < 12, 81, if(m4 < 13, 88, if(m4 < 14, 91, 99))))))))))))))) > key, m4 - 1, l3))"
+    },
+    {
+     "name": "it",
+     "expr": "(f0 <= l0) + (f1 <= l1) + (f2 <= l2) + (f3 <= l3)"
+    },
+    {
+     "name": "kk",
+     "expr": "min(k, it)"
+    },
+    {
+     "name": "cf",
+     "expr": "if(kk < 1, f0, if(kk < 2, f1, if(kk < 3, f2, if(kk < 4, f3, f4))))"
+    },
+    {
+     "name": "cl",
+     "expr": "if(kk < 1, l0, if(kk < 2, l1, if(kk < 3, l2, if(kk < 4, l3, l4))))"
+    },
+    {
+     "name": "cm",
+     "expr": "if(kk < 1, 0, if(kk < 2, m1, if(kk < 3, m2, if(kk < 4, m3, m4))))"
+    },
+    {
+     "name": "fd",
+     "expr": "cf >= 100"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "key = {key}"
+     },
+     "size": 30,
+     "color": "yellow"
+    },
+    {
+     "shape": "particles",
+     "count": 15,
+     "x": "1.3 + 1.25*i",
+     "y": 5.8,
+     "r": 0.58,
+     "color": {
+      "by": "if(fd && i == cf - 100, 1, if(i == cm && kk > 0, 0.66, if(!fd && i >= cf && i <= cl, 0.33, 0)))",
+      "scale": [
+       "white",
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": "if(fd || (i >= cf && i <= cl) || (i == cm && kk > 0), 0.85, 0.2)"
+    },
+    {
+     "shape": "text",
+     "x": 1.3,
+     "y": 5.8,
+     "text": {
+      "en": "2"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.3,
+     "y": 4.8,
+     "text": {
+      "en": "0"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 2.55,
+     "y": 5.8,
+     "text": {
+      "en": "5"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.55,
+     "y": 4.8,
+     "text": {
+      "en": "1"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 3.8,
+     "y": 5.8,
+     "text": {
+      "en": "8"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.8,
+     "y": 4.8,
+     "text": {
+      "en": "2"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 5.05,
+     "y": 5.8,
+     "text": {
+      "en": "12"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.05,
+     "y": 4.8,
+     "text": {
+      "en": "3"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 6.3,
+     "y": 5.8,
+     "text": {
+      "en": "16"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.3,
+     "y": 4.8,
+     "text": {
+      "en": "4"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 7.55,
+     "y": 5.8,
+     "text": {
+      "en": "23"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.55,
+     "y": 4.8,
+     "text": {
+      "en": "5"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 8.8,
+     "y": 5.8,
+     "text": {
+      "en": "38"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.8,
+     "y": 4.8,
+     "text": {
+      "en": "6"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 10.05,
+     "y": 5.8,
+     "text": {
+      "en": "45"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.05,
+     "y": 4.8,
+     "text": {
+      "en": "7"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 11.3,
+     "y": 5.8,
+     "text": {
+      "en": "56"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.3,
+     "y": 4.8,
+     "text": {
+      "en": "8"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 12.55,
+     "y": 5.8,
+     "text": {
+      "en": "67"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.55,
+     "y": 4.8,
+     "text": {
+      "en": "9"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": 5.8,
+     "text": {
+      "en": "72"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": 4.8,
+     "text": {
+      "en": "10"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 15.05,
+     "y": 5.8,
+     "text": {
+      "en": "81"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.05,
+     "y": 4.8,
+     "text": {
+      "en": "11"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 16.3,
+     "y": 5.8,
+     "text": {
+      "en": "88"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 16.3,
+     "y": 4.8,
+     "text": {
+      "en": "12"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 17.55,
+     "y": 5.8,
+     "text": {
+      "en": "91"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.55,
+     "y": 4.8,
+     "text": {
+      "en": "13"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 18.8,
+     "y": 5.8,
+     "text": {
+      "en": "99"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 18.8,
+     "y": 4.8,
+     "text": {
+      "en": "14"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": "1.3 + 1.25*clamp(cf, 0, 14)",
+     "y": 7.2,
+     "text": {
+      "en": "first",
+      "kn": "ಮೊದಲು"
+     },
+     "size": 20,
+     "color": "blue",
+     "visibleIf": "!fd && cf <= cl"
+    },
+    {
+     "shape": "text",
+     "x": "1.3 + 1.25*clamp(cl, 0, 14)",
+     "y": 7.2,
+     "text": {
+      "en": "last",
+      "kn": "ಕೊನೆ"
+     },
+     "size": 20,
+     "color": "blue",
+     "visibleIf": "!fd && cf <= cl"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 3.4,
+     "text": {
+      "en": "step {kk}: compare the key with the middle element, index {cm}",
+      "kn": "ಹೆಜ್ಜೆ {kk}: ಮಧ್ಯದ ಅಂಶ, ಸೂಚಿ {cm}"
+     },
+     "size": 26,
+     "color": "yellow",
+     "visibleIf": "kk > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.2,
+     "text": {
+      "en": "Found at index {cf - 100} after {kk} comparisons",
+      "kn": "ಸೂಚಿ {cf - 100} ರಲ್ಲಿ ಸಿಕ್ಕಿತು"
+     },
+     "size": 28,
+     "color": "green",
+     "visibleIf": "fd"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.2,
+     "text": {
+      "en": "first > last: the key is not in the list",
+      "kn": "ಮೊದಲು > ಕೊನೆ: ಕೀಲಿ ಇಲ್ಲ"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "!fd && kk >= it && cf > cl"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.0,
+     "text": {
+      "en": "yellow = middle element compared, blue = part still searched",
+      "kn": "ಹಳದಿ = ಮಧ್ಯ, ನೀಲಿ = ಉಳಿದ ಭಾಗ"
+     },
+     "size": 20,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Comparisons",
+      "kn": "ಹೋಲಿಕೆಗಳು"
+     },
+     "expr": "kk",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Search for 45. How many comparisons did it take?",
+     "kn": "45 ಹುಡುಕಿ. ಎಷ್ಟು ಹೋಲಿಕೆಗಳು?"
+    },
+    {
+     "en": "Search for 2 and for 99. Is either more than 4 comparisons?",
+     "kn": "2 ಮತ್ತು 99 ಹುಡುಕಿ. ಯಾವುದಾದರೂ 4 ಕ್ಕಿಂತ ಹೆಚ್ಚೇ?"
+    },
+    {
+     "en": "Search for 50, which is missing. When does the search stop?",
+     "kn": "ಇಲ್ಲದ 50 ಹುಡುಕಿ. ಹುಡುಕಾಟ ಯಾವಾಗ ನಿಲ್ಲುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

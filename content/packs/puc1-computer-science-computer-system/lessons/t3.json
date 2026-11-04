@@ -617,6 +617,323 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Data on the system bus",
+    "kn": "ಸಿಸ್ಟಮ್ ಬಸ್‌ನಲ್ಲಿ ದತ್ತಾಂಶ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Press Send. The address goes one way on the address bus, the control bus says read or write, and the data moves on the two-way data bus.",
+    "kn": "ಕಳುಹಿಸಿ ಒತ್ತಿ. ವಿಳಾಸ ಬಸ್‌ನಲ್ಲಿ ವಿಳಾಸ ಒಂದೇ ದಿಕ್ಕಿನಲ್ಲಿ ಹೋಗುತ್ತದೆ, ನಿಯಂತ್ರಣ ಬಸ್ ಓದು/ಬರೆ ಹೇಳುತ್ತದೆ, ದತ್ತಾಂಶ ಎರಡೂ ದಿಕ್ಕಿನ ಬಸ್‌ನಲ್ಲಿ ಚಲಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "nb",
+     "label": {
+      "en": "Address bus lines",
+      "kn": "ವಿಳಾಸ ಬಸ್ ತಂತಿಗಳು"
+     },
+     "min": 4,
+     "max": 32,
+     "step": 1,
+     "value": 16,
+     "unit": "bits"
+    },
+    {
+     "name": "addr",
+     "label": {
+      "en": "Address",
+      "kn": "ವಿಳಾಸ"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "choices": [
+    {
+     "name": "op",
+     "label": {
+      "en": "Operation",
+      "kn": "ಕಾರ್ಯ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Read",
+        "kn": "ಓದು"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "Write",
+        "kn": "ಬರೆ"
+       },
+       "value": 1
+      }
+     ],
+     "value": 0
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Send",
+      "kn": "ಕಳುಹಿಸಿ"
+     },
+     "icon": "launch",
+     "set": {},
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 2.2,
+    "speeds": [
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.5
+   },
+   "vars": [
+    {
+     "name": "locs",
+     "expr": "pow(2, nb)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 2,
+     "w": 4,
+     "h": 6,
+     "color": "blue",
+     "opacity": 0.35
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 7.2,
+     "text": {
+      "en": "CPU"
+     },
+     "size": 36,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 15.5,
+     "y": 2,
+     "w": 4,
+     "h": 6,
+     "color": "green",
+     "opacity": 0.35
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 7.2,
+     "text": {
+      "en": "Memory",
+      "kn": "ಸ್ಮರಣೆ"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 4.5,
+     "y1": 6,
+     "x2": 15.5,
+     "y2": 6,
+     "color": "orange",
+     "width": 6
+    },
+    {
+     "shape": "line",
+     "x1": 4.5,
+     "y1": 4.5,
+     "x2": 15.5,
+     "y2": 4.5,
+     "color": "yellow",
+     "width": 6
+    },
+    {
+     "shape": "line",
+     "x1": 4.5,
+     "y1": 3,
+     "x2": 15.5,
+     "y2": 3,
+     "color": "red",
+     "width": 6
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 6.5,
+     "text": {
+      "en": "Address bus (CPU → memory only)",
+      "kn": "ವಿಳಾಸ ಬಸ್ (ಒಂದು ದಿಕ್ಕು)"
+     },
+     "size": 24,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.0,
+     "text": {
+      "en": "Data bus (both ways)",
+      "kn": "ದತ್ತಾಂಶ ಬಸ್ (ಎರಡೂ ದಿಕ್ಕು)"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.4,
+     "text": {
+      "en": "Control bus (read / write signal)",
+      "kn": "ನಿಯಂತ್ರಣ ಬಸ್"
+     },
+     "size": 24,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "x": "4.5 + 11*clamp(t, 0, 1)",
+     "y": 6,
+     "r": 0.35,
+     "color": "orange",
+     "visibleIf": "t <= 1"
+    },
+    {
+     "shape": "label",
+     "x": "4.5 + 11*clamp(t, 0, 1)",
+     "y": 3,
+     "text": {
+      "en": "READ"
+     },
+     "size": 22,
+     "visibleIf": "op == 0 && t <= 1"
+    },
+    {
+     "shape": "label",
+     "x": "4.5 + 11*clamp(t, 0, 1)",
+     "y": 3,
+     "text": {
+      "en": "WRITE"
+     },
+     "size": 22,
+     "visibleIf": "op == 1 && t <= 1"
+    },
+    {
+     "shape": "rect",
+     "x": "if(op == 0, 15.5 - 11*clamp(t - 1, 0, 1), 4.5 + 11*clamp(t - 1, 0, 1)) - 0.4",
+     "y": 4.2,
+     "w": 0.8,
+     "h": 0.6,
+     "color": "yellow",
+     "visibleIf": "t > 1"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 5.2,
+     "text": {
+      "en": "address {addr}",
+      "kn": "ವಿಳಾಸ {addr}"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 5.2,
+     "text": {
+      "en": "location {addr}",
+      "kn": "ಸ್ಥಳ {addr}"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.2,
+     "text": {
+      "en": "Read: data comes back to the CPU",
+      "kn": "ಓದು: ದತ್ತಾಂಶ CPU ಗೆ ಹಿಂತಿರುಗುತ್ತದೆ"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "op == 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.2,
+     "text": {
+      "en": "Write: data goes from the CPU to memory",
+      "kn": "ಬರೆ: ದತ್ತಾಂಶ CPU ಇಂದ ಸ್ಮರಣೆಗೆ"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "op == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.8,
+     "text": {
+      "en": "{nb}-bit address bus → 2^{nb} = {locs} locations"
+     },
+     "size": 28,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Addressable locations",
+      "kn": "ವಿಳಾಸಿಸಬಹುದಾದ ಸ್ಥಳಗಳು"
+     },
+     "expr": "locs",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Switch between Read and Write. Which bus changes direction?",
+     "kn": "ಓದು ಮತ್ತು ಬರೆ ನಡುವೆ ಬದಲಿಸಿ. ಯಾವ ಬಸ್ ದಿಕ್ಕು ಬದಲಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Add one line to the address bus. What happens to the number of locations?",
+     "kn": "ವಿಳಾಸ ಬಸ್‌ಗೆ ಒಂದು ತಂತಿ ಸೇರಿಸಿ. ಸ್ಥಳಗಳ ಸಂಖ್ಯೆ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

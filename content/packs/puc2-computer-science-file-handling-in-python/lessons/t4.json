@@ -594,6 +594,463 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Move the file offset",
+    "kn": "ಕಡತ ಆಫ್‌ಸೆಟ್ ಸರಿಸಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Every read moves the offset forward; tell() reports where it is and seek() moves it. Try read(n), readline() and seek(position).",
+    "kn": "ಪ್ರತಿ ಓದು ಆಫ್‌ಸೆಟ್ ಮುಂದೆ ಸರಿಸುತ್ತದೆ; tell() ಸ್ಥಾನ ಹೇಳುತ್ತದೆ, seek() ಸರಿಸುತ್ತದೆ. read(n), readline(), seek() ಪ್ರಯತ್ನಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "n for read(n)",
+      "kn": "read(n) ಗೆ n"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 2
+    },
+    {
+     "name": "s",
+     "label": {
+      "en": "position for seek()",
+      "kn": "seek() ಸ್ಥಾನ"
+     },
+     "min": 0,
+     "max": 21,
+     "step": 1,
+     "value": 9
+    }
+   ],
+   "counters": [
+    {
+     "name": "p",
+     "value": 0,
+     "min": 0,
+     "max": 21
+    },
+    {
+     "name": "q",
+     "value": 0,
+     "min": 0,
+     "max": 21
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "f.read(n)",
+      "kn": "f.read(n)"
+     },
+     "icon": "next",
+     "set": {
+      "q": "p",
+      "p": "min(p + n, 21)"
+     }
+    },
+    {
+     "label": {
+      "en": "f.readline()",
+      "kn": "f.readline()"
+     },
+     "icon": "next",
+     "set": {
+      "q": "p",
+      "p": "if(p < 9, 9, if(p < 16, 16, 21))"
+     }
+    },
+    {
+     "label": {
+      "en": "f.seek(position)",
+      "kn": "f.seek(ಸ್ಥಾನ)"
+     },
+     "icon": "reset",
+     "set": {
+      "q": "s",
+      "p": "s"
+     }
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 21,
+     "x": "0.95 + 0.9*i",
+     "y": 5.5,
+     "r": 0.4,
+     "opacity": 0.75,
+     "color": {
+      "by": "if(i >= q && i < p, 1, 0)",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 0.95,
+     "y": 5.5,
+     "text": {
+      "en": "H"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.85,
+     "y": 5.5,
+     "text": {
+      "en": "i"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.75,
+     "y": 5.5,
+     "text": {
+      "en": " "
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.6500000000000004,
+     "y": 5.5,
+     "text": {
+      "en": "t"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 4.55,
+     "y": 5.5,
+     "text": {
+      "en": "h"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.45,
+     "y": 5.5,
+     "text": {
+      "en": "e"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.3500000000000005,
+     "y": 5.5,
+     "text": {
+      "en": "r"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.25,
+     "y": 5.5,
+     "text": {
+      "en": "e"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.15,
+     "y": 5.5,
+     "text": {
+      "en": "↵"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.049999999999999,
+     "y": 5.5,
+     "text": {
+      "en": "P"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.95,
+     "y": 5.5,
+     "text": {
+      "en": "y"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.85,
+     "y": 5.5,
+     "text": {
+      "en": "t"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.75,
+     "y": 5.5,
+     "text": {
+      "en": "h"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.65,
+     "y": 5.5,
+     "text": {
+      "en": "o"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.549999999999999,
+     "y": 5.5,
+     "text": {
+      "en": "n"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.45,
+     "y": 5.5,
+     "text": {
+      "en": "↵"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.35,
+     "y": 5.5,
+     "text": {
+      "en": "f"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 16.25,
+     "y": 5.5,
+     "text": {
+      "en": "i"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.15,
+     "y": 5.5,
+     "text": {
+      "en": "l"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 18.05,
+     "y": 5.5,
+     "text": {
+      "en": "e"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 18.95,
+     "y": 5.5,
+     "text": {
+      "en": "s"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 0.95,
+     "y": 4.5,
+     "text": {
+      "en": "0"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 5.45,
+     "y": 4.5,
+     "text": {
+      "en": "5"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 9.95,
+     "y": 4.5,
+     "text": {
+      "en": "10"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 14.45,
+     "y": 4.5,
+     "text": {
+      "en": "15"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 18.95,
+     "y": 4.5,
+     "text": {
+      "en": "20"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "arrow",
+     "x": "0.5 + 0.9*p",
+     "y": 7.4,
+     "dx": 0,
+     "dy": -1.3,
+     "color": "yellow",
+     "label": "offset"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.9,
+     "text": {
+      "en": "f.tell() = {p}"
+     },
+     "size": 34,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.8,
+     "text": {
+      "en": "last read: {p - q} characters (green)",
+      "kn": "ಕೊನೆಯ ಓದು: {p - q} ಅಕ್ಷರ (ಹಸಿರು)"
+     },
+     "size": 26,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.8,
+     "text": {
+      "en": "end of file: read() now returns \"\"",
+      "kn": "ಕಡತದ ಅಂತ್ಯ: read() \"\" ಕೊಡುತ್ತದೆ"
+     },
+     "size": 24,
+     "color": "orange",
+     "visibleIf": "p >= 21"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.8,
+     "text": {
+      "en": "↵ is the newline character \\n (one byte here)",
+      "kn": "↵ = \\n ಹೊಸಸಾಲು ಅಕ್ಷರ"
+     },
+     "size": 20,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "tell()",
+      "kn": "tell()"
+     },
+     "expr": "p",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Press read(n) with n = 2 twice. What does tell() show?",
+     "kn": "n = 2 ಇಟ್ಟು read(n) ಎರಡು ಬಾರಿ ಒತ್ತಿ. tell() ಏನು?"
+    },
+    {
+     "en": "Call readline() three times. Where does each one stop?",
+     "kn": "readline() ಮೂರು ಬಾರಿ. ಪ್ರತಿಯೊಂದೂ ಎಲ್ಲಿ ನಿಲ್ಲುತ್ತದೆ?"
+    },
+    {
+     "en": "Use seek(9) and then read(6). Which word do you get?",
+     "kn": "seek(9) ನಂತರ read(6). ಯಾವ ಪದ ಸಿಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

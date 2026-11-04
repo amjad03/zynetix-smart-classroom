@@ -612,6 +612,275 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Which prime test is faster?",
+    "kn": "ಯಾವ ಅವಿಭಾಜ್ಯ ಪರೀಕ್ಷೆ ವೇಗ?"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Three correct algorithms check whether n is prime. The bars count the divisions each one does. All three agree on the answer; they differ in the work.",
+    "kn": "n ಅವಿಭಾಜ್ಯವೇ ಎಂದು ಮೂರು ಸರಿಯಾದ ಅಲ್ಗಾರಿದಮ್‌ಗಳು ಪರೀಕ್ಷಿಸುತ್ತವೆ. ಪಟ್ಟಿಗಳು ಪ್ರತಿಯೊಂದರ ಭಾಗಾಕಾರಗಳನ್ನು ಎಣಿಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "n",
+      "kn": "n"
+     },
+     "min": 2,
+     "max": 400,
+     "step": 1,
+     "value": 97
+    }
+   ],
+   "toggles": [
+    {
+     "name": "early",
+     "label": {
+      "en": "Stop at first divisor",
+      "kn": "ಮೊದಲ ಭಾಜಕದಲ್ಲಿ ನಿಲ್ಲಿಸು"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "n + 1",
+      "kn": "n + 1"
+     },
+     "icon": "add",
+     "set": {
+      "n": "min(n + 1, 400)"
+     }
+    },
+    {
+     "label": {
+      "en": "n − 1",
+      "kn": "n − 1"
+     },
+     "icon": "remove",
+     "set": {
+      "n": "max(n - 1, 2)"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "sp",
+     "expr": "if(mod(n, 2) == 0, 2, if(mod(n, 3) == 0, 3, if(mod(n, 5) == 0, 5, if(mod(n, 7) == 0, 7, if(mod(n, 11) == 0, 11, if(mod(n, 13) == 0, 13, if(mod(n, 17) == 0, 17, if(mod(n, 19) == 0, 19, n))))))))"
+    },
+    {
+     "name": "comp",
+     "expr": "sp < n"
+    },
+    {
+     "name": "f1",
+     "expr": "n - 2"
+    },
+    {
+     "name": "f2",
+     "expr": "max(floor(n/2) - 1, 0)"
+    },
+    {
+     "name": "f3",
+     "expr": "max(floor(sqrt(n)) - 1, 0)"
+    },
+    {
+     "name": "c1",
+     "expr": "if(early && comp, sp - 1, f1)"
+    },
+    {
+     "name": "c2",
+     "expr": "if(early && comp, sp - 1, f2)"
+    },
+    {
+     "name": "c3",
+     "expr": "if(early && comp, sp - 1, f3)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "{n} is prime",
+      "kn": "{n} ಅವಿಭಾಜ್ಯ"
+     },
+     "size": 32,
+     "color": "green",
+     "visibleIf": "!comp"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "{n} is not prime: {sp} divides it",
+      "kn": "{n} ಅವಿಭಾಜ್ಯವಲ್ಲ: {sp} ಭಾಗಿಸುತ್ತದೆ"
+     },
+     "size": 32,
+     "color": "orange",
+     "visibleIf": "comp"
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 7.8,
+     "text": {
+      "en": "Method 1: divide by 2 to n − 1",
+      "kn": "ವಿಧಾನ 1: 2 ರಿಂದ n − 1"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 6.3,
+     "w": "max(15*c1/398, 0.05)",
+     "h": 0.9,
+     "color": "red",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": "1.2 + 15*c1/398",
+     "y": 6.75,
+     "text": {
+      "en": "{c1} divisions",
+      "kn": "{c1} ಭಾಗಾಕಾರ"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 5.5,
+     "text": {
+      "en": "Method 2: divide by 2 to n/2",
+      "kn": "ವಿಧಾನ 2: 2 ರಿಂದ n/2"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 4.0,
+     "w": "max(15*c2/398, 0.05)",
+     "h": 0.9,
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": "1.2 + 15*c2/398",
+     "y": 4.45,
+     "text": {
+      "en": "{c2} divisions",
+      "kn": "{c2} ಭಾಗಾಕಾರ"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 3.2000000000000006,
+     "text": {
+      "en": "Method 3: divide by 2 to √n",
+      "kn": "ವಿಧಾನ 3: 2 ರಿಂದ √n"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 1.7000000000000006,
+     "w": "max(15*c3/398, 0.05)",
+     "h": 0.9,
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": "1.2 + 15*c3/398",
+     "y": 2.1500000000000004,
+     "text": {
+      "en": "{c3} divisions",
+      "kn": "{c3} ಭಾಗಾಕಾರ"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Method 1",
+      "kn": "ವಿಧಾನ 1"
+     },
+     "expr": "c1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Method 2",
+      "kn": "ವಿಧಾನ 2"
+     },
+     "expr": "c2",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Method 3",
+      "kn": "ವಿಧಾನ 3"
+     },
+     "expr": "c3",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Try n = 397, a prime. How many divisions does each method need?",
+     "kn": "n = 397 (ಅವಿಭಾಜ್ಯ). ಪ್ರತಿ ವಿಧಾನಕ್ಕೆ ಎಷ್ಟು ಭಾಗಾಕಾರ?"
+    },
+    {
+     "en": "Turn on Stop at first divisor and try n = 391 = 17 × 23.",
+     "kn": "ಮೊದಲ ಭಾಜಕದಲ್ಲಿ ನಿಲ್ಲಿಸು ಆನ್ ಮಾಡಿ n = 391 ಪ್ರಯತ್ನಿಸಿ."
+    },
+    {
+     "en": "Why is it enough to test divisors up to √n?",
+     "kn": "√n ವರೆಗೆ ಮಾತ್ರ ಪರೀಕ್ಷಿಸಿದರೆ ಏಕೆ ಸಾಕು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -431,6 +431,367 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "break or continue?",
+    "kn": "break ಅಥವಾ continue?"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Pick break or continue and the value that triggers it, then Step through the loop. Green numbers are printed; orange is where the statement acted.",
+    "kn": "break ಅಥವಾ continue ಮತ್ತು ಅದನ್ನು ಪ್ರಚೋದಿಸುವ ಮೌಲ್ಯ ಆರಿಸಿ, ಲೂಪ್ ಮೂಲಕ ಹೆಜ್ಜೆ ಹಾಕಿ. ಹಸಿರು ಸಂಖ್ಯೆಗಳು ಮುದ್ರಿತ."
+   },
+   "sliders": [
+    {
+     "name": "sv",
+     "label": {
+      "en": "Trigger value",
+      "kn": "ಪ್ರಚೋದಕ ಮೌಲ್ಯ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 6
+    }
+   ],
+   "choices": [
+    {
+     "name": "md",
+     "label": {
+      "en": "Statement",
+      "kn": "ಹೇಳಿಕೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "break",
+        "kn": "break"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "continue",
+        "kn": "continue"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "neither",
+        "kn": "ಯಾವುದೂ ಇಲ್ಲ"
+       },
+       "value": 0
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "counters": [
+    {
+     "name": "k",
+     "value": 0,
+     "min": 0,
+     "max": 10
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(kk + 1, kmax)"
+     }
+    },
+    {
+     "label": {
+      "en": "Run all",
+      "kn": "ಎಲ್ಲ ಚಲಾಯಿಸಿ"
+     },
+     "icon": "play",
+     "set": {
+      "k": "kmax"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "kmax",
+     "expr": "if(md == 1, sv, 10)"
+    },
+    {
+     "name": "kk",
+     "expr": "min(k, kmax)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "for i in range(1, 11):"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.5,
+     "text": {
+      "en": "if i == {sv}: break"
+     },
+     "size": 26,
+     "color": "orange",
+     "visibleIf": "md == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.5,
+     "text": {
+      "en": "if i == {sv}: continue"
+     },
+     "size": 26,
+     "color": "orange",
+     "visibleIf": "md == 2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.5,
+     "text": {
+      "en": "(no break or continue)",
+      "kn": "(break/continue ಇಲ್ಲ)"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "md == 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.7,
+     "text": {
+      "en": "print(i)"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "x": "1.3 + i*1.9",
+     "y": 5.4,
+     "r": 0.8,
+     "color": {
+      "by": "if(i + 1 > kk, 0, if(i + 1 == sv && md != 0, 0.5, 1))",
+      "scale": [
+       "blue",
+       "orange",
+       "green"
+      ]
+     },
+     "opacity": "if(md == 1 && i + 1 > sv, 0.15, 0.75)"
+    },
+    {
+     "shape": "text",
+     "x": 1.3,
+     "y": 5.4,
+     "text": {
+      "en": "1"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.2,
+     "y": 5.4,
+     "text": {
+      "en": "2"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.1,
+     "y": 5.4,
+     "text": {
+      "en": "3"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.999999999999999,
+     "y": 5.4,
+     "text": {
+      "en": "4"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.9,
+     "y": 5.4,
+     "text": {
+      "en": "5"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.8,
+     "y": 5.4,
+     "text": {
+      "en": "6"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.7,
+     "y": 5.4,
+     "text": {
+      "en": "7"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.6,
+     "y": 5.4,
+     "text": {
+      "en": "8"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 16.5,
+     "y": 5.4,
+     "text": {
+      "en": "9"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 18.4,
+     "y": 5.4,
+     "text": {
+      "en": "10"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 3.9,
+     "text": {
+      "en": "green = printed, orange = where the statement acted, blue = not reached yet",
+      "kn": "ಹಸಿರು = ಮುದ್ರಿತ, ಕಿತ್ತಳೆ = ಹೇಳಿಕೆ ಕೆಲಸ ಮಾಡಿದ ಕಡೆ, ನೀಲಿ = ಇನ್ನೂ ತಲುಪಿಲ್ಲ"
+     },
+     "size": 20,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.6,
+     "text": {
+      "en": "break: the loop ends at once; i = {sv} is not printed",
+      "kn": "break: ಲೂಪ್ ತಕ್ಷಣ ಮುಗಿಯುತ್ತದೆ"
+     },
+     "size": 26,
+     "color": "orange",
+     "visibleIf": "md == 1 && kk >= sv"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.6,
+     "text": {
+      "en": "continue: {sv} is skipped, the loop goes on",
+      "kn": "continue: {sv} ಬಿಡಲ್ಪಡುತ್ತದೆ, ಲೂಪ್ ಮುಂದುವರಿಯುತ್ತದೆ"
+     },
+     "size": 26,
+     "color": "orange",
+     "visibleIf": "md == 2 && kk >= sv"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.3,
+     "text": {
+      "en": "numbers printed: {kk - (md != 0 && kk >= sv)}",
+      "kn": "ಮುದ್ರಿತ ಸಂಖ್ಯೆಗಳು: {kk - (md != 0 && kk >= sv)}"
+     },
+     "size": 28,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.4,
+     "text": {
+      "en": "next statement after the loop runs",
+      "kn": "ಲೂಪ್ ನಂತರದ ಹೇಳಿಕೆ ಚಲಿಸುತ್ತದೆ"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "kk >= kmax"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With break at 6, which numbers are printed?",
+     "kn": "6 ರಲ್ಲಿ break ಇದ್ದರೆ ಯಾವ ಸಂಖ್ಯೆಗಳು ಮುದ್ರಿತ?"
+    },
+    {
+     "en": "Switch to continue at 6. What changes?",
+     "kn": "6 ರಲ್ಲಿ continue ಮಾಡಿ. ಏನು ಬದಲಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

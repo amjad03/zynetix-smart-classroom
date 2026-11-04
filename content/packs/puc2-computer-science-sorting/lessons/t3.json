@@ -975,6 +975,497 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Insertion sort, step by step",
+    "kn": "ಸೇರಿಸುವ ವಿಂಗಡಣೆ, ಹೆಜ್ಜೆ ಹೆಜ್ಜೆಯಾಗಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The green part on the left is sorted. Each pass takes the next element out as temp, shifts the bigger sorted elements right, and drops temp into the gap.",
+    "kn": "ಎಡದ ಹಸಿರು ಭಾಗ ವಿಂಗಡಿತ. ಪ್ರತಿ ಸುತ್ತು ಮುಂದಿನ ಅಂಶವನ್ನು temp ಆಗಿ ತೆಗೆದು, ದೊಡ್ಡವನ್ನು ಬಲಕ್ಕೆ ಸರಿಸಿ, temp ಅನ್ನು ಖಾಲಿ ಜಾಗಕ್ಕೆ ಇಡುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Step number",
+      "kn": "ಹೆಜ್ಜೆ ಸಂಖ್ಯೆ"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 0
+    }
+   ],
+   "choices": [
+    {
+     "name": "w",
+     "label": {
+      "en": "List",
+      "kn": "ಪಟ್ಟಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "6 3 8 1 9 4",
+        "kn": "6 3 8 1 9 4"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "already sorted",
+        "kn": "ಈಗಾಗಲೇ ವಿಂಗಡಿತ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(kk + 1, if(w == 1, 20, 15))"
+     }
+    },
+    {
+     "label": {
+      "en": "Back",
+      "kn": "ಹಿಂದೆ"
+     },
+     "icon": "remove",
+     "set": {
+      "k": "max(kk - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "kk",
+     "expr": "min(k, if(w == 1, 20, 15))"
+    },
+    {
+     "name": "S",
+     "expr": "if(w == 1, if(kk < 2, 638194, if(kk < 3, 668194, if(kk < 8, 368194, if(kk < 9, 368894, if(kk < 10, 366894, if(kk < 11, 336894, if(kk < 16, 136894, if(kk < 17, 136899, if(kk < 18, 136889, if(kk < 20, 136689, 134689)))))))))), 134689)"
+    },
+    {
+     "name": "e0",
+     "expr": "mod(floor(S/100000), 10)"
+    },
+    {
+     "name": "e1",
+     "expr": "mod(floor(S/10000), 10)"
+    },
+    {
+     "name": "e2",
+     "expr": "mod(floor(S/1000), 10)"
+    },
+    {
+     "name": "e3",
+     "expr": "mod(floor(S/100), 10)"
+    },
+    {
+     "name": "e4",
+     "expr": "mod(floor(S/10), 10)"
+    },
+    {
+     "name": "e5",
+     "expr": "mod(floor(S/1), 10)"
+    },
+    {
+     "name": "a",
+     "expr": "if(w == 1, if(kk < 1, -1, if(kk < 2, 1, if(kk < 4, 0, if(kk < 5, 2, if(kk < 6, 1, if(kk < 7, 2, if(kk < 8, 3, if(kk < 9, 2, if(kk < 10, 1, if(kk < 12, 0, if(kk < 13, 4, if(kk < 14, 3, if(kk < 15, 4, if(kk < 16, 5, if(kk < 17, 4, if(kk < 18, 3, if(kk < 19, 2, if(kk < 20, 1, 2)))))))))))))))))), if(kk < 1, -1, if(kk < 2, 1, if(kk < 3, 0, if(kk < 4, 1, if(kk < 5, 2, if(kk < 6, 1, if(kk < 7, 2, if(kk < 8, 3, if(kk < 9, 2, if(kk < 10, 3, if(kk < 11, 4, if(kk < 12, 3, if(kk < 13, 4, if(kk < 14, 5, if(kk < 15, 4, 5))))))))))))))))"
+    },
+    {
+     "name": "b",
+     "expr": "if(w == 1, if(kk < 2, -1, if(kk < 3, 1, if(kk < 8, -1, if(kk < 9, 3, if(kk < 10, 2, if(kk < 11, 1, if(kk < 16, -1, if(kk < 17, 5, if(kk < 18, 4, if(kk < 19, 3, -1)))))))))), -1)"
+    },
+    {
+     "name": "ghi",
+     "expr": "if(w == 1, if(kk < 3, 1, if(kk < 6, 2, if(kk < 11, 3, if(kk < 14, 4, if(kk < 20, 5, 6))))), if(kk < 3, 1, if(kk < 6, 2, if(kk < 9, 3, if(kk < 12, 4, if(kk < 15, 5, 6))))))"
+    },
+    {
+     "name": "code",
+     "expr": "if(w == 1, if(kk < 1, 0, if(kk < 2, 1, if(kk < 3, 2, if(kk < 4, 4, if(kk < 5, 1, if(kk < 6, 3, if(kk < 7, 4, if(kk < 8, 1, if(kk < 11, 2, if(kk < 12, 4, if(kk < 13, 1, if(kk < 14, 3, if(kk < 15, 4, if(kk < 16, 1, if(kk < 19, 2, if(kk < 20, 3, 4)))))))))))))))), if(kk < 1, 0, if(kk < 2, 1, if(kk < 3, 3, if(kk < 4, 4, if(kk < 5, 1, if(kk < 6, 3, if(kk < 7, 4, if(kk < 8, 1, if(kk < 9, 3, if(kk < 10, 4, if(kk < 11, 1, if(kk < 12, 3, if(kk < 13, 4, if(kk < 14, 1, if(kk < 15, 3, 4))))))))))))))))"
+    },
+    {
+     "name": "tv",
+     "expr": "if(w == 1, if(kk < 1, 0, if(kk < 4, 3, if(kk < 7, 8, if(kk < 12, 1, if(kk < 15, 9, 4))))), if(kk < 1, 0, if(kk < 4, 3, if(kk < 7, 4, if(kk < 10, 6, if(kk < 13, 8, 9))))))"
+    },
+    {
+     "name": "p",
+     "expr": "if(w == 1, if(kk < 1, 0, if(kk < 4, 1, if(kk < 7, 2, if(kk < 12, 3, if(kk < 15, 4, 5))))), if(kk < 1, 0, if(kk < 4, 1, if(kk < 7, 2, if(kk < 10, 3, if(kk < 13, 4, 5))))))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 3.0,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e0",
+     "color": {
+      "by": "if(0 == a && code != 4, 0.5, if(0 < ghi, 1, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 3.9,
+     "y": "2.5 + 0.55*e0",
+     "text": {
+      "en": "{e0}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.9,
+     "y": 1.4,
+     "text": {
+      "en": "0"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 5.4,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e1",
+     "color": {
+      "by": "if(1 == a && code != 4, 0.5, if(1 < ghi, 1, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 6.300000000000001,
+     "y": "2.5 + 0.55*e1",
+     "text": {
+      "en": "{e1}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.300000000000001,
+     "y": 1.4,
+     "text": {
+      "en": "1"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 7.8,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e2",
+     "color": {
+      "by": "if(2 == a && code != 4, 0.5, if(2 < ghi, 1, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 8.7,
+     "y": "2.5 + 0.55*e2",
+     "text": {
+      "en": "{e2}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.7,
+     "y": 1.4,
+     "text": {
+      "en": "2"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 10.2,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e3",
+     "color": {
+      "by": "if(3 == a && code != 4, 0.5, if(3 < ghi, 1, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 11.1,
+     "y": "2.5 + 0.55*e3",
+     "text": {
+      "en": "{e3}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.1,
+     "y": 1.4,
+     "text": {
+      "en": "3"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 12.6,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e4",
+     "color": {
+      "by": "if(4 == a && code != 4, 0.5, if(4 < ghi, 1, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 13.5,
+     "y": "2.5 + 0.55*e4",
+     "text": {
+      "en": "{e4}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.5,
+     "y": 1.4,
+     "text": {
+      "en": "4"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 15.0,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e5",
+     "color": {
+      "by": "if(5 == a && code != 4, 0.5, if(5 < ghi, 1, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 15.9,
+     "y": "2.5 + 0.55*e5",
+     "text": {
+      "en": "{e5}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.9,
+     "y": 1.4,
+     "text": {
+      "en": "5"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 17.2,
+     "y": 6.4,
+     "w": 2.2,
+     "h": 1.6,
+     "color": "orange",
+     "visibleIf": "code >= 1 && code <= 3",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 18.3,
+     "y": 7.2,
+     "text": {
+      "en": "temp = {tv}"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "code >= 1 && code <= 3"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "Press Step to start insertion sort",
+      "kn": "ಸೇರಿಸುವ ವಿಂಗಡಣೆ ಆರಂಭಿಸಲು ಹೆಜ್ಜೆ ಒತ್ತಿ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "kk == 0"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 9.3,
+     "text": {
+      "en": "pass {p}: take temp = L[{a}]",
+      "kn": "ಸುತ್ತು {p}: temp = L[{a}]"
+     },
+     "size": 26,
+     "color": "yellow",
+     "visibleIf": "code == 1"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 9.3,
+     "text": {
+      "en": "temp < L[{a}]: shift it one place right",
+      "kn": "temp < L[{a}]: ಬಲಕ್ಕೆ ಸರಿಸಿ"
+     },
+     "size": 26,
+     "color": "yellow",
+     "visibleIf": "code == 2"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 9.3,
+     "text": {
+      "en": "temp >= L[{a}]: stop comparing",
+      "kn": "temp >= L[{a}]: ಹೋಲಿಕೆ ನಿಲ್ಲಿಸಿ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "code == 3"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 9.3,
+     "text": {
+      "en": "put temp into the gap at index {a}",
+      "kn": "temp ಅನ್ನು ಸೂಚಿ {a} ನಲ್ಲಿ ಇಡಿ"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "code == 4"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.4,
+     "text": {
+      "en": "Sorted after {kk} steps",
+      "kn": "{kk} ಹೆಜ್ಜೆಗಳ ನಂತರ ವಿಂಗಡಿತ"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "kk == if(w == 1, 20, 15)"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Pass",
+      "kn": "ಸುತ್ತು"
+     },
+     "expr": "p",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "While elements shift, one value appears twice. Why is nothing lost?",
+     "kn": "ಸರಿಸುವಾಗ ಒಂದು ಮೌಲ್ಯ ಎರಡು ಬಾರಿ ಕಾಣುತ್ತದೆ. ಏನೂ ಕಳೆಯುವುದಿಲ್ಲ ಏಕೆ?"
+    },
+    {
+     "en": "Choose the sorted list. How many steps does it take now?",
+     "kn": "ವಿಂಗಡಿತ ಪಟ್ಟಿ ಆರಿಸಿ. ಈಗ ಎಷ್ಟು ಹೆಜ್ಜೆ?"
+    }
+   ]
+  },
+  {
    "id": "sim-algo.insertion",
    "type": "simulation",
    "source": "kinetix_cs",

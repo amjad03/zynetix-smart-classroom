@@ -653,6 +653,253 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Simplex, half-duplex, full-duplex",
+    "kn": "ಸಿಂಪ್ಲೆಕ್ಸ್, ಅರ್ಧ, ಪೂರ್ಣ ಡ್ಯೂಪ್ಲೆಕ್ಸ್"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Yellow packets go from A to B and orange ones from B to A. Switch the mode and watch when each side is allowed to send.",
+    "kn": "ಹಳದಿ ಪ್ಯಾಕೆಟ್ A ಇಂದ B ಗೆ, ಕಿತ್ತಳೆ B ಇಂದ A ಗೆ. ವಿಧಾನ ಬದಲಿಸಿ ಪ್ರತಿ ಕಡೆ ಯಾವಾಗ ಕಳುಹಿಸಬಹುದು ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "spd",
+     "label": {
+      "en": "Packet speed",
+      "kn": "ಪ್ಯಾಕೆಟ್ ವೇಗ"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 2
+    }
+   ],
+   "choices": [
+    {
+     "name": "md",
+     "label": {
+      "en": "Mode",
+      "kn": "ವಿಧಾನ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Simplex",
+        "kn": "ಸಿಂಪ್ಲೆಕ್ಸ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Half-duplex",
+        "kn": "ಅರ್ಧ-ಡ್ಯೂಪ್ಲೆಕ್ಸ್"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Full-duplex",
+        "kn": "ಪೂರ್ಣ-ಡ್ಯೂಪ್ಲೆಕ್ಸ್"
+       },
+       "value": 3
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "time": {
+    "max": 32,
+    "loop": true,
+    "autoplay": true
+   },
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 3.5,
+     "w": 3,
+     "h": 3,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 5,
+     "text": {
+      "en": "A"
+     },
+     "size": 44,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.5,
+     "y": 3.5,
+     "w": 3,
+     "h": 3,
+     "color": "green",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": 5,
+     "text": {
+      "en": "B"
+     },
+     "size": 44,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 3.5,
+     "y1": 5.8,
+     "x2": 16.5,
+     "y2": 5.8,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 3.5,
+     "y1": 4.2,
+     "x2": 16.5,
+     "y2": 4.2,
+     "color": "white",
+     "visibleIf": "md == 3",
+     "width": 2
+    },
+    {
+     "shape": "particles",
+     "count": 6,
+     "x": "3.7 + 12.6*mod(t*spd/6 + i/6, 1)",
+     "y": 5.8,
+     "r": 0.3,
+     "color": "yellow",
+     "visibleIf": "md != 2 || mod(t, 8) < 4"
+    },
+    {
+     "shape": "particles",
+     "count": 6,
+     "x": "16.3 - 12.6*mod(t*spd/6 + i/6, 1)",
+     "y": "if(md == 3, 4.2, 5.8)",
+     "r": 0.3,
+     "color": "orange",
+     "visibleIf": "md == 3 || (md == 2 && mod(t, 8) >= 4)"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.8,
+     "text": {
+      "en": "Simplex: one direction only (keyboard → computer, TV broadcast)",
+      "kn": "ಸಿಂಪ್ಲೆಕ್ಸ್: ಒಂದೇ ದಿಕ್ಕು"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "md == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.8,
+     "text": {
+      "en": "Half-duplex: both ways, one at a time (walkie-talkie)",
+      "kn": "ಅರ್ಧ-ಡ್ಯೂಪ್ಲೆಕ್ಸ್: ಒಮ್ಮೆಗೆ ಒಂದು ದಿಕ್ಕು"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "md == 2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.8,
+     "text": {
+      "en": "Full-duplex: both ways at the same time (phone call)",
+      "kn": "ಪೂರ್ಣ-ಡ್ಯೂಪ್ಲೆಕ್ಸ್: ಎರಡೂ ದಿಕ್ಕು ಒಟ್ಟಿಗೆ"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "md == 3"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.4,
+     "text": {
+      "en": "A is sending; B must wait",
+      "kn": "A ಕಳುಹಿಸುತ್ತಿದೆ; B ಕಾಯಬೇಕು"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "md == 2 && mod(t, 8) < 4"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.4,
+     "text": {
+      "en": "B is sending; A must wait",
+      "kn": "B ಕಳುಹಿಸುತ್ತಿದೆ; A ಕಾಯಬೇಕು"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "md == 2 && mod(t, 8) >= 4"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.4,
+     "text": {
+      "en": "B can only receive",
+      "kn": "B ಕೇವಲ ಸ್ವೀಕರಿಸಬಲ್ಲದು"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "md == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.4,
+     "text": {
+      "en": "A and B talk at once",
+      "kn": "A ಮತ್ತು B ಒಟ್ಟಿಗೆ"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "md == 3"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "In half-duplex, can A and B ever send at the same moment?",
+     "kn": "ಅರ್ಧ-ಡ್ಯೂಪ್ಲೆಕ್ಸ್‌ನಲ್ಲಿ A, B ಒಟ್ಟಿಗೆ ಕಳುಹಿಸಬಹುದೇ?"
+    },
+    {
+     "en": "Which mode does a video call need, and why?",
+     "kn": "ವೀಡಿಯೊ ಕರೆಗೆ ಯಾವ ವಿಧಾನ ಬೇಕು, ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

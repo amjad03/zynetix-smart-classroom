@@ -795,6 +795,647 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Infix to postfix with a stack",
+    "kn": "ಸ್ಟ್ಯಾಕ್‌ನಿಂದ ಇನ್‌ಫಿಕ್ಸ್‌ನಿಂದ ಪೋಸ್ಟ್‌ಫಿಕ್ಸ್"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Step through the conversion one symbol at a time. Operands go straight to the output; operators wait on the stack until an operator of lower precedence, a right bracket or the end arrives.",
+    "kn": "ಒಂದೊಂದೇ ಚಿಹ್ನೆ ಹೆಜ್ಜೆ ಹಾಕಿ. ಆಪರಾಂಡ್ ನೇರ ಔಟ್‌ಪುಟ್‌ಗೆ; ಆಪರೇಟರ್‌ಗಳು ಸ್ಟ್ಯಾಕ್‌ನಲ್ಲಿ ಕಾಯುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Symbols read",
+      "kn": "ಓದಿದ ಚಿಹ್ನೆಗಳು"
+     },
+     "min": 0,
+     "max": 12,
+     "step": 1,
+     "value": 0
+    }
+   ],
+   "choices": [
+    {
+     "name": "ex",
+     "label": {
+      "en": "Expression",
+      "kn": "ಅಭಿವ್ಯಕ್ತಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "A + B * C - D",
+        "kn": "A + B * C - D"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "( A + B ) * C - D / E",
+        "kn": "( A + B ) * C - D / E"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(kk + 1, if(ex == 1, 8, 12))"
+     }
+    },
+    {
+     "label": {
+      "en": "Back",
+      "kn": "ಹಿಂದೆ"
+     },
+     "icon": "remove",
+     "set": {
+      "k": "max(kk - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "kk",
+     "expr": "min(k, if(ex == 1, 8, 12))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "infix: A + B * C - D",
+      "kn": "ಇನ್‌ಫಿಕ್ಸ್: A + B * C - D"
+     },
+     "size": 30,
+     "color": "yellow",
+     "visibleIf": "ex == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read A: operand: straight to the output",
+      "kn": "A ಓದಿ: ಆಪರಾಂಡ್: ನೇರ ಔಟ್‌ಪುಟ್‌ಗೆ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 1 && kk == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [  ]      output: A",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [  ]      ಔಟ್‌ಪುಟ್: A"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 1 && kk == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read +: push +",
+      "kn": "+ ಓದಿ: + push"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 1 && kk == 2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ + ]      output: A",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ + ]      ಔಟ್‌ಪುಟ್: A"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 1 && kk == 2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read B: operand: straight to the output",
+      "kn": "B ಓದಿ: ಆಪರಾಂಡ್: ನೇರ ಔಟ್‌ಪುಟ್‌ಗೆ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 1 && kk == 3"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ + ]      output: A B",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ + ]      ಔಟ್‌ಪುಟ್: A B"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 1 && kk == 3"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read *: push *",
+      "kn": "* ಓದಿ: * push"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 1 && kk == 4"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ + * ]      output: A B",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ + * ]      ಔಟ್‌ಪುಟ್: A B"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 1 && kk == 4"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read C: operand: straight to the output",
+      "kn": "C ಓದಿ: ಆಪರಾಂಡ್: ನೇರ ಔಟ್‌ಪುಟ್‌ಗೆ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 1 && kk == 5"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ + * ]      output: A B C",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ + * ]      ಔಟ್‌ಪುಟ್: A B C"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 1 && kk == 5"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read -: pop * + (higher or equal precedence), push -",
+      "kn": "- ಓದಿ: * + pop, - push"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 1 && kk == 6"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ - ]      output: A B C * +",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ - ]      ಔಟ್‌ಪುಟ್: A B C * +"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 1 && kk == 6"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read D: operand: straight to the output",
+      "kn": "D ಓದಿ: ಆಪರಾಂಡ್: ನೇರ ಔಟ್‌ಪುಟ್‌ಗೆ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 1 && kk == 7"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ - ]      output: A B C * + D",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ - ]      ಔಟ್‌ಪುಟ್: A B C * + D"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 1 && kk == 7"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "end of expression",
+      "kn": "ಅಭಿವ್ಯಕ್ತಿ ಅಂತ್ಯ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 1 && kk == 8"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [  ]      output: A B C * + D -",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [  ]      ಔಟ್‌ಪುಟ್: A B C * + D -"
+     },
+     "size": 28,
+     "color": "green",
+     "visibleIf": "ex == 1 && kk == 8"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "infix: ( A + B ) * C - D / E",
+      "kn": "ಇನ್‌ಫಿಕ್ಸ್: ( A + B ) * C - D / E"
+     },
+     "size": 30,
+     "color": "yellow",
+     "visibleIf": "ex == 2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read (: push (",
+      "kn": "( ಓದಿ: push ("
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 2 && kk == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ ( ]      output: ",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ ( ]      ಔಟ್‌ಪುಟ್: "
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 2 && kk == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read A: operand: straight to the output",
+      "kn": "A ಓದಿ: ಆಪರಾಂಡ್: ನೇರ ಔಟ್‌ಪುಟ್‌ಗೆ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 2 && kk == 2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ ( ]      output: A",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ ( ]      ಔಟ್‌ಪುಟ್: A"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 2 && kk == 2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read +: push +",
+      "kn": "+ ಓದಿ: + push"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 2 && kk == 3"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ ( + ]      output: A",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ ( + ]      ಔಟ್‌ಪುಟ್: A"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 2 && kk == 3"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read B: operand: straight to the output",
+      "kn": "B ಓದಿ: ಆಪರಾಂಡ್: ನೇರ ಔಟ್‌ಪುಟ್‌ಗೆ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 2 && kk == 4"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ ( + ]      output: A B",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ ( + ]      ಔಟ್‌ಪುಟ್: A B"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 2 && kk == 4"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read ): pop operators until (, then drop the (",
+      "kn": ") ಓದಿ: ( ವರೆಗೆ pop, ( ಬಿಡಿ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 2 && kk == 5"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [  ]      output: A B +",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [  ]      ಔಟ್‌ಪುಟ್: A B +"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 2 && kk == 5"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read *: push *",
+      "kn": "* ಓದಿ: * push"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 2 && kk == 6"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ * ]      output: A B +",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ * ]      ಔಟ್‌ಪುಟ್: A B +"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 2 && kk == 6"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read C: operand: straight to the output",
+      "kn": "C ಓದಿ: ಆಪರಾಂಡ್: ನೇರ ಔಟ್‌ಪುಟ್‌ಗೆ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 2 && kk == 7"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ * ]      output: A B + C",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ * ]      ಔಟ್‌ಪುಟ್: A B + C"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 2 && kk == 7"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read -: pop * (higher or equal precedence), push -",
+      "kn": "- ಓದಿ: * pop, - push"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 2 && kk == 8"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ - ]      output: A B + C *",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ - ]      ಔಟ್‌ಪುಟ್: A B + C *"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 2 && kk == 8"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read D: operand: straight to the output",
+      "kn": "D ಓದಿ: ಆಪರಾಂಡ್: ನೇರ ಔಟ್‌ಪುಟ್‌ಗೆ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 2 && kk == 9"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ - ]      output: A B + C * D",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ - ]      ಔಟ್‌ಪುಟ್: A B + C * D"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 2 && kk == 9"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read /: push /",
+      "kn": "/ ಓದಿ: / push"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 2 && kk == 10"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ - / ]      output: A B + C * D",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ - / ]      ಔಟ್‌ಪುಟ್: A B + C * D"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 2 && kk == 10"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "read E: operand: straight to the output",
+      "kn": "E ಓದಿ: ಆಪರಾಂಡ್: ನೇರ ಔಟ್‌ಪುಟ್‌ಗೆ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 2 && kk == 11"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [ - / ]      output: A B + C * D E",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [ - / ]      ಔಟ್‌ಪುಟ್: A B + C * D E"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "ex == 2 && kk == 11"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "end of expression",
+      "kn": "ಅಭಿವ್ಯಕ್ತಿ ಅಂತ್ಯ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "ex == 2 && kk == 12"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.4,
+     "text": {
+      "en": "stack: [  ]      output: A B + C * D E / -",
+      "kn": "ಸ್ಟ್ಯಾಕ್: [  ]      ಔಟ್‌ಪುಟ್: A B + C * D E / -"
+     },
+     "size": 28,
+     "color": "green",
+     "visibleIf": "ex == 2 && kk == 12"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "Press Step to read the first symbol",
+      "kn": "ಮೊದಲ ಚಿಹ್ನೆ ಓದಲು ಹೆಜ್ಜೆ ಒತ್ತಿ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "kk == 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.4,
+     "text": {
+      "en": "rule: * and / come before + and −; equal precedence is popped first (left to right)",
+      "kn": "ನಿಯಮ: * / ಮೊದಲು, + − ನಂತರ"
+     },
+     "size": 20,
+     "color": "white"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "In A + B * C - D, why is * popped before + when - arrives?",
+     "kn": "A + B * C - D ನಲ್ಲಿ - ಬಂದಾಗ * ಏಕೆ + ಗಿಂತ ಮೊದಲು pop?"
+    },
+    {
+     "en": "Switch to the bracketed expression. What happens to the ( when ) is read?",
+     "kn": "ಆವರಣದ ಅಭಿವ್ಯಕ್ತಿಗೆ ಬದಲಿಸಿ. ) ಓದಿದಾಗ ( ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

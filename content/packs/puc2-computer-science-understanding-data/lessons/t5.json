@@ -666,6 +666,442 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Range and standard deviation",
+    "kn": "ವ್ಯಾಪ್ತಿ ಮತ್ತು ಪ್ರಮಾಣಿತ ವಿಚಲನ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Drag the four values on the top line. The lower line shows them after adding a constant or doubling; orange lines are the deviations from the mean, and σ is their root-mean-square.",
+    "kn": "ಮೇಲಿನ ರೇಖೆಯ ನಾಲ್ಕು ಮೌಲ್ಯಗಳನ್ನು ಎಳೆಯಿರಿ. ಕೆಳಗಿನ ರೇಖೆ ಸ್ಥಿರಾಂಕ ಸೇರಿಸಿದ ಅಥವಾ ದ್ವಿಗುಣಿಸಿದ ನಂತರದ್ದು; ಕಿತ್ತಳೆ ರೇಖೆಗಳು ಸರಾಸರಿಯಿಂದ ವಿಚಲನಗಳು."
+   },
+   "sliders": [
+    {
+     "name": "c",
+     "label": {
+      "en": "Add to every value",
+      "kn": "ಪ್ರತಿ ಮೌಲ್ಯಕ್ಕೆ ಸೇರಿಸಿ"
+     },
+     "min": -20,
+     "max": 20,
+     "step": 2,
+     "value": 0
+    }
+   ],
+   "toggles": [
+    {
+     "name": "dbl",
+     "label": {
+      "en": "Double every value",
+      "kn": "ಪ್ರತಿ ಮೌಲ್ಯ ದ್ವಿಗುಣ"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "P",
+     "x": 10,
+     "y": 7,
+     "axis": "x",
+     "box": {
+      "x": [
+       0,
+       50
+      ],
+      "y": [
+       7,
+       7
+      ]
+     },
+     "snap": 1,
+     "color": "blue"
+    },
+    {
+     "name": "Q",
+     "label": "Q",
+     "x": 20,
+     "y": 7,
+     "axis": "x",
+     "box": {
+      "x": [
+       0,
+       50
+      ],
+      "y": [
+       7,
+       7
+      ]
+     },
+     "snap": 1,
+     "color": "blue"
+    },
+    {
+     "name": "R",
+     "label": "R",
+     "x": 25,
+     "y": 7,
+     "axis": "x",
+     "box": {
+      "x": [
+       0,
+       50
+      ],
+      "y": [
+       7,
+       7
+      ]
+     },
+     "snap": 1,
+     "color": "blue"
+    },
+    {
+     "name": "S",
+     "label": "S",
+     "x": 40,
+     "y": 7,
+     "axis": "x",
+     "box": {
+      "x": [
+       0,
+       50
+      ],
+      "y": [
+       7,
+       7
+      ]
+     },
+     "snap": 1,
+     "color": "blue"
+    }
+   ],
+   "vars": [
+    {
+     "name": "y0",
+     "expr": "if(dbl, 2*P_x, P_x) + c"
+    },
+    {
+     "name": "y1",
+     "expr": "if(dbl, 2*Q_x, Q_x) + c"
+    },
+    {
+     "name": "y2",
+     "expr": "if(dbl, 2*R_x, R_x) + c"
+    },
+    {
+     "name": "y3",
+     "expr": "if(dbl, 2*S_x, S_x) + c"
+    },
+    {
+     "name": "mu",
+     "expr": "(y0 + y1 + y2 + y3)/4"
+    },
+    {
+     "name": "sd",
+     "expr": "sqrt(((y0 - mu)^2 + (y1 - mu)^2 + (y2 - mu)^2 + (y3 - mu)^2)/4)"
+    },
+    {
+     "name": "rg",
+     "expr": "max(y0, y1, y2, y3) - min(y0, y1, y2, y3)"
+    }
+   ],
+   "view": {
+    "x": [
+     -25,
+     125
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -25,
+     "y1": 7,
+     "x2": 125,
+     "y2": 7,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": -25,
+     "y1": 3,
+     "x2": 125,
+     "y2": 3,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": -23,
+     "y": 8.2,
+     "text": {
+      "en": "your data (drag)",
+      "kn": "ನಿಮ್ಮ ದತ್ತಾಂಶ (ಎಳೆಯಿರಿ)"
+     },
+     "size": 20,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": -23,
+     "y": 4.6,
+     "text": {
+      "en": "after the change",
+      "kn": "ಬದಲಾವಣೆಯ ನಂತರ"
+     },
+     "size": 20,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": -20,
+     "y": 2.0,
+     "text": {
+      "en": "-20"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 2.0,
+     "text": {
+      "en": "0"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 2.0,
+     "text": {
+      "en": "20"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 40,
+     "y": 2.0,
+     "text": {
+      "en": "40"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 60,
+     "y": 2.0,
+     "text": {
+      "en": "60"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 80,
+     "y": 2.0,
+     "text": {
+      "en": "80"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 100,
+     "y": 2.0,
+     "text": {
+      "en": "100"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 120,
+     "y": 2.0,
+     "text": {
+      "en": "120"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": "max(mu - sd, -25)",
+     "y": 2.4,
+     "w": "min(mu + sd, 125) - max(mu - sd, -25)",
+     "h": 1.2,
+     "color": "green",
+     "opacity": 0.25
+    },
+    {
+     "shape": "line",
+     "x1": "mu",
+     "y1": 2.2,
+     "x2": "mu",
+     "y2": 3.8,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "mu",
+     "y1": 3,
+     "x2": "y0",
+     "y2": 3,
+     "color": "orange",
+     "width": 3,
+     "opacity": 0.6
+    },
+    {
+     "shape": "circle",
+     "x": "y0",
+     "y": 3,
+     "r": 1.4,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": "mu",
+     "y1": 3,
+     "x2": "y1",
+     "y2": 3,
+     "color": "orange",
+     "width": 3,
+     "opacity": 0.6
+    },
+    {
+     "shape": "circle",
+     "x": "y1",
+     "y": 3,
+     "r": 1.4,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": "mu",
+     "y1": 3,
+     "x2": "y2",
+     "y2": 3,
+     "color": "orange",
+     "width": 3,
+     "opacity": 0.6
+    },
+    {
+     "shape": "circle",
+     "x": "y2",
+     "y": 3,
+     "r": 1.4,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": "mu",
+     "y1": 3,
+     "x2": "y3",
+     "y2": 3,
+     "color": "orange",
+     "width": 3,
+     "opacity": 0.6
+    },
+    {
+     "shape": "circle",
+     "x": "y3",
+     "y": 3,
+     "r": 1.4,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 9.4,
+     "text": {
+      "en": "range = {rg}    mean = {mu:1}    σ = {sd:2}",
+      "kn": "ವ್ಯಾಪ್ತಿ = {rg}   ಸರಾಸರಿ = {mu:1}   σ = {sd:2}"
+     },
+     "size": 26,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 0.6,
+     "text": {
+      "en": "green band: mean ± σ",
+      "kn": "ಹಸಿರು ಪಟ್ಟಿ: ಸರಾಸರಿ ± σ"
+     },
+     "size": 20,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Range",
+      "kn": "ವ್ಯಾಪ್ತಿ"
+     },
+     "expr": "rg",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Mean",
+      "kn": "ಸರಾಸರಿ"
+     },
+     "expr": "mu",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Standard deviation σ",
+      "kn": "ಪ್ರಮಾಣಿತ ವಿಚಲನ σ"
+     },
+     "expr": "sd",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Bring all four values close together. What happens to σ?",
+     "kn": "ನಾಲ್ಕೂ ಮೌಲ್ಯಗಳನ್ನು ಹತ್ತಿರ ತನ್ನಿ. σ ಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Add 20 to every value with the slider. Do the range and σ change?",
+     "kn": "ಸ್ಲೈಡರ್‌ನಿಂದ ಪ್ರತಿ ಮೌಲ್ಯಕ್ಕೆ 20 ಸೇರಿಸಿ. ವ್ಯಾಪ್ತಿ, σ ಬದಲಾಗುತ್ತವೆಯೇ?"
+    },
+    {
+     "en": "Double every value. What happens to σ?",
+     "kn": "ಪ್ರತಿ ಮೌಲ್ಯ ದ್ವಿಗುಣಿಸಿ. σ ಗೆ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "kind": "number_line",

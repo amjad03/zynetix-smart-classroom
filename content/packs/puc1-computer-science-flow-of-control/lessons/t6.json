@@ -471,6 +471,272 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Nested loops draw a pattern",
+    "kn": "ಗೂಡು ಲೂಪ್‌ಗಳಿಂದ ಮಾದರಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Each Step runs the inner body once. For every value of i the inner loop runs all its values of j, then print() starts a new row.",
+    "kn": "ಪ್ರತಿ ಹೆಜ್ಜೆ ಒಳಗಿನ ದೇಹವನ್ನು ಒಮ್ಮೆ ಚಲಾಯಿಸುತ್ತದೆ. i ಯ ಪ್ರತಿ ಮೌಲ್ಯಕ್ಕೆ ಒಳಗಿನ ಲೂಪ್ ಎಲ್ಲ j ಮೌಲ್ಯಗಳನ್ನು ಓಡಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Rows (outer loop)",
+      "kn": "ಸಾಲುಗಳು (ಹೊರ ಲೂಪ್)"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 1,
+     "value": 3
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "Columns (inner loop)",
+      "kn": "ಕಾಲಂಗಳು (ಒಳ ಲೂಪ್)"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "toggles": [
+    {
+     "name": "tri",
+     "label": {
+      "en": "Triangle: range(i + 1)",
+      "kn": "ತ್ರಿಕೋನ: range(i + 1)"
+     },
+     "value": false
+    }
+   ],
+   "counters": [
+    {
+     "name": "k",
+     "value": 0,
+     "min": 0,
+     "max": 48
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(kk + 1, tot)"
+     }
+    },
+    {
+     "label": {
+      "en": "Back",
+      "kn": "ಹಿಂದೆ"
+     },
+     "icon": "remove",
+     "set": {
+      "k": "max(kk - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Run all",
+      "kn": "ಎಲ್ಲ ಚಲಾಯಿಸಿ"
+     },
+     "icon": "play",
+     "set": {
+      "k": "tot"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "tot",
+     "expr": "if(tri, m*(m + 1)/2, m*n)"
+    },
+    {
+     "name": "kk",
+     "expr": "min(k, tot)"
+    },
+    {
+     "name": "q",
+     "expr": "max(kk - 1, 0)"
+    },
+    {
+     "name": "ci",
+     "expr": "if(tri, floor((sqrt(8*q + 1) - 1)/2), floor(q/n))"
+    },
+    {
+     "name": "cj",
+     "expr": "if(tri, q - ci*(ci + 1)/2, mod(q, n))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 48,
+     "x": "1.1 + mod(i, 8)*1.2",
+     "y": "8.1 - floor(i/8)*1.3",
+     "r": 0.5,
+     "opacity": 0.8,
+     "color": {
+      "by": "if(if(tri, floor(i/8)*(floor(i/8) + 1)/2 + mod(i, 8), floor(i/8)*n + mod(i, 8)) < kk - 1, 0.5, if(if(tri, floor(i/8)*(floor(i/8) + 1)/2 + mod(i, 8), floor(i/8)*n + mod(i, 8)) == kk - 1, 1, 0))",
+      "scale": [
+       "blue",
+       "green",
+       "yellow"
+      ]
+     },
+     "visibleIf": "floor(i/8) < m && if(tri, mod(i, 8) <= floor(i/8), mod(i, 8) < n)"
+    },
+    {
+     "shape": "text",
+     "x": 14.8,
+     "y": 9.0,
+     "text": {
+      "en": "for i in range({m}):"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.8,
+     "y": 8.2,
+     "text": {
+      "en": "for j in range({n}):"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "!tri"
+    },
+    {
+     "shape": "text",
+     "x": 14.8,
+     "y": 8.2,
+     "text": {
+      "en": "for j in range(i + 1):"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "tri"
+    },
+    {
+     "shape": "text",
+     "x": 14.8,
+     "y": 7.4,
+     "text": {
+      "en": "print(\"*\", end=\"\")"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.8,
+     "y": 6.6,
+     "text": {
+      "en": "print()"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.8,
+     "y": 5.0,
+     "text": {
+      "en": "i = {ci},  j = {cj}"
+     },
+     "size": 34,
+     "color": "yellow",
+     "visibleIf": "kk > 0"
+    },
+    {
+     "shape": "text",
+     "x": 14.8,
+     "y": 3.6,
+     "text": {
+      "en": "inner body has run {kk} of {tot} times",
+      "kn": "ಒಳಗಿನ ದೇಹ {tot} ರಲ್ಲಿ {kk} ಬಾರಿ"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 14.8,
+     "y": 2.6,
+     "text": {
+      "en": "{m} × {n} = {m*n}"
+     },
+     "size": 28,
+     "color": "green",
+     "visibleIf": "!tri"
+    },
+    {
+     "shape": "text",
+     "x": 14.8,
+     "y": 2.6,
+     "text": {
+      "en": "1 + 2 + … + {m} = {tot}"
+     },
+     "size": 28,
+     "color": "green",
+     "visibleIf": "tri"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Inner body runs",
+      "kn": "ಒಳ ದೇಹದ ಓಟಗಳು"
+     },
+     "expr": "tot",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With 3 rows and 4 columns, what are i and j on the 6th step?",
+     "kn": "3 ಸಾಲು 4 ಕಾಲಂ: 6ನೇ ಹೆಜ್ಜೆಯಲ್ಲಿ i, j ಏನು?"
+    },
+    {
+     "en": "Switch to the triangle. Why does row i have i + 1 stars?",
+     "kn": "ತ್ರಿಕೋನಕ್ಕೆ ಬದಲಿಸಿ. ಸಾಲು i ಯಲ್ಲಿ i + 1 ನಕ್ಷತ್ರ ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

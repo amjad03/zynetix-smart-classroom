@@ -987,6 +987,442 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Selection sort, step by step",
+    "kn": "ಆಯ್ಕೆ ವಿಂಗಡಣೆ, ಹೆಜ್ಜೆ ಹೆಜ್ಜೆಯಾಗಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Yellow marks the smallest value found so far in the unsorted part, and the lighter bar is the element being compared. At the end of each pass the minimum is swapped into place (green).",
+    "kn": "ಹಳದಿ ಈವರೆಗಿನ ಕನಿಷ್ಠ, ತಿಳಿ ಬಣ್ಣ ಹೋಲಿಸುತ್ತಿರುವ ಅಂಶ. ಪ್ರತಿ ಸುತ್ತಿನ ಕೊನೆಗೆ ಕನಿಷ್ಠ ತನ್ನ ಸ್ಥಾನಕ್ಕೆ ಬರುತ್ತದೆ (ಹಸಿರು)."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Step number",
+      "kn": "ಹೆಜ್ಜೆ ಸಂಖ್ಯೆ"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 0
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(k + 1, 20)"
+     }
+    },
+    {
+     "label": {
+      "en": "Back",
+      "kn": "ಹಿಂದೆ"
+     },
+     "icon": "remove",
+     "set": {
+      "k": "max(k - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "S",
+     "expr": "if(k < 6, 749261, if(k < 11, 149267, if(k < 15, 129467, if(k < 18, 124967, if(k < 20, 124697, 124679)))))"
+    },
+    {
+     "name": "e0",
+     "expr": "mod(floor(S/100000), 10)"
+    },
+    {
+     "name": "e1",
+     "expr": "mod(floor(S/10000), 10)"
+    },
+    {
+     "name": "e2",
+     "expr": "mod(floor(S/1000), 10)"
+    },
+    {
+     "name": "e3",
+     "expr": "mod(floor(S/100), 10)"
+    },
+    {
+     "name": "e4",
+     "expr": "mod(floor(S/10), 10)"
+    },
+    {
+     "name": "e5",
+     "expr": "mod(floor(S/1), 10)"
+    },
+    {
+     "name": "a",
+     "expr": "if(k < 1, -1, if(k < 3, 1, if(k < 5, 3, if(k < 6, 5, if(k < 7, 0, if(k < 8, 1, if(k < 11, 3, if(k < 12, 1, if(k < 15, 3, if(k < 16, 2, if(k < 18, 4, if(k < 19, 3, if(k < 20, 5, 4)))))))))))))"
+    },
+    {
+     "name": "b",
+     "expr": "if(k < 1, -1, if(k < 2, 1, if(k < 3, 2, if(k < 4, 3, if(k < 5, 4, if(k < 7, 5, if(k < 8, 2, if(k < 9, 3, if(k < 10, 4, if(k < 11, 5, if(k < 13, 3, if(k < 14, 4, if(k < 15, 5, if(k < 16, 3, if(k < 17, 4, if(k < 18, 5, if(k < 19, 4, 5)))))))))))))))))"
+    },
+    {
+     "name": "ghi",
+     "expr": "if(k < 6, 0, if(k < 11, 1, if(k < 15, 2, if(k < 18, 3, if(k < 20, 4, 6)))))"
+    },
+    {
+     "name": "code",
+     "expr": "if(k < 1, 0, if(k < 2, 1, if(k < 3, 2, if(k < 4, 1, if(k < 5, 2, if(k < 6, 1, if(k < 7, 3, if(k < 8, 2, if(k < 9, 1, if(k < 11, 2, if(k < 12, 3, if(k < 13, 1, if(k < 15, 2, if(k < 16, 3, if(k < 17, 1, if(k < 18, 2, if(k < 19, 3, if(k < 20, 1, 3))))))))))))))))))"
+    },
+    {
+     "name": "p",
+     "expr": "if(k < 1, 0, if(k < 7, 1, if(k < 12, 2, if(k < 16, 3, if(k < 19, 4, 5)))))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 3.0,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e0",
+     "color": {
+      "by": "if(0 < ghi, 1, if(0 == a, 0.5, if(0 == b, 0.25, 0)))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 3.9,
+     "y": "2.5 + 0.55*e0",
+     "text": {
+      "en": "{e0}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.9,
+     "y": 1.4,
+     "text": {
+      "en": "0"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 5.4,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e1",
+     "color": {
+      "by": "if(1 < ghi, 1, if(1 == a, 0.5, if(1 == b, 0.25, 0)))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 6.300000000000001,
+     "y": "2.5 + 0.55*e1",
+     "text": {
+      "en": "{e1}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.300000000000001,
+     "y": 1.4,
+     "text": {
+      "en": "1"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 7.8,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e2",
+     "color": {
+      "by": "if(2 < ghi, 1, if(2 == a, 0.5, if(2 == b, 0.25, 0)))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 8.7,
+     "y": "2.5 + 0.55*e2",
+     "text": {
+      "en": "{e2}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.7,
+     "y": 1.4,
+     "text": {
+      "en": "2"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 10.2,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e3",
+     "color": {
+      "by": "if(3 < ghi, 1, if(3 == a, 0.5, if(3 == b, 0.25, 0)))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 11.1,
+     "y": "2.5 + 0.55*e3",
+     "text": {
+      "en": "{e3}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.1,
+     "y": 1.4,
+     "text": {
+      "en": "3"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 12.6,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e4",
+     "color": {
+      "by": "if(4 < ghi, 1, if(4 == a, 0.5, if(4 == b, 0.25, 0)))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 13.5,
+     "y": "2.5 + 0.55*e4",
+     "text": {
+      "en": "{e4}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.5,
+     "y": 1.4,
+     "text": {
+      "en": "4"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 15.0,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e5",
+     "color": {
+      "by": "if(5 < ghi, 1, if(5 == a, 0.5, if(5 == b, 0.25, 0)))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 15.9,
+     "y": "2.5 + 0.55*e5",
+     "text": {
+      "en": "{e5}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.9,
+     "y": 1.4,
+     "text": {
+      "en": "5"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "pass {p}: find the smallest of the unsorted part",
+      "kn": "ಸುತ್ತು {p}: ವಿಂಗಡಿಸದ ಭಾಗದ ಚಿಕ್ಕದನ್ನು ಹುಡುಕಿ"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "k > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "Press Step to start selection sort",
+      "kn": "ಆಯ್ಕೆ ವಿಂಗಡಣೆ ಆರಂಭಿಸಲು ಹೆಜ್ಜೆ ಒತ್ತಿ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "k == 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.4,
+     "text": {
+      "en": "L[{b}] is smaller: new minimum at index {a}",
+      "kn": "L[{b}] ಚಿಕ್ಕದು: ಹೊಸ ಕನಿಷ್ಠ ಸೂಚಿ {a}"
+     },
+     "size": 26,
+     "color": "yellow",
+     "visibleIf": "code == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.4,
+     "text": {
+      "en": "L[{b}] is not smaller: minimum stays at index {a}",
+      "kn": "ಕನಿಷ್ಠ ಸೂಚಿ {a} ನಲ್ಲೇ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "code == 2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.4,
+     "text": {
+      "en": "swap L[{a}] and L[{b}]: the minimum joins the sorted part",
+      "kn": "L[{a}], L[{b}] ಅದಲುಬದಲು"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "code == 3"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.5,
+     "text": {
+      "en": "Sorted",
+      "kn": "ವಿಂಗಡಿತ"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "k == 20"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Pass",
+      "kn": "ಸುತ್ತು"
+     },
+     "expr": "p",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "How many swaps does selection sort make for 6 elements?",
+     "kn": "6 ಅಂಶಗಳಿಗೆ ಎಷ್ಟು ಅದಲುಬದಲು?"
+    },
+    {
+     "en": "Compare with bubble sort: which one swaps less?",
+     "kn": "ಬಬಲ್ ಸಾರ್ಟ್‌ಗೆ ಹೋಲಿಸಿ: ಯಾವುದು ಕಡಿಮೆ ಅದಲುಬದಲು ಮಾಡುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "sim-algo.selection",
    "type": "simulation",
    "source": "kinetix_cs",

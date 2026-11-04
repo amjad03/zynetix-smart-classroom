@@ -396,6 +396,499 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Step through range()",
+    "kn": "range() ಮೂಲಕ ಹೆಜ್ಜೆ ಹಾಕಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Set start, stop and step. The boxes are the values range() gives; press Step to run the loop body once for each value.",
+    "kn": "ಆರಂಭ, ನಿಲುಗಡೆ, ಹೆಜ್ಜೆ ಹೊಂದಿಸಿ. ಪೆಟ್ಟಿಗೆಗಳು range() ಕೊಡುವ ಮೌಲ್ಯಗಳು; ಪ್ರತಿ ಮೌಲ್ಯಕ್ಕೆ ಲೂಪ್ ದೇಹ ಚಲಾಯಿಸಲು ಹೆಜ್ಜೆ ಒತ್ತಿ."
+   },
+   "sliders": [
+    {
+     "name": "s0",
+     "label": {
+      "en": "start",
+      "kn": "ಆರಂಭ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "sp",
+     "label": {
+      "en": "stop",
+      "kn": "ನಿಲುಗಡೆ"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 6
+    }
+   ],
+   "choices": [
+    {
+     "name": "st",
+     "label": {
+      "en": "step",
+      "kn": "ಹೆಜ್ಜೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "1",
+        "kn": "1"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "2",
+        "kn": "2"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "3",
+        "kn": "3"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "−1",
+        "kn": "−1"
+       },
+       "value": -1
+      },
+      {
+       "label": {
+        "en": "−2",
+        "kn": "−2"
+       },
+       "value": -2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "counters": [
+    {
+     "name": "k",
+     "value": 0,
+     "min": 0,
+     "max": 20
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(kk + 1, cnt)"
+     }
+    },
+    {
+     "label": {
+      "en": "Back",
+      "kn": "ಹಿಂದೆ"
+     },
+     "icon": "remove",
+     "set": {
+      "k": "max(kk - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "cnt",
+     "expr": "max(0, ceil((sp - s0)/st))"
+    },
+    {
+     "name": "kk",
+     "expr": "min(k, cnt)"
+    },
+    {
+     "name": "cur",
+     "expr": "s0 + (kk - 1)*st"
+    },
+    {
+     "name": "tot",
+     "expr": "kk*s0 + st*kk*(kk - 1)/2"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     21
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "for i in range({s0}, {sp}, {st}):    total = total + i"
+     },
+     "size": 28,
+     "color": "yellow"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "1 + i",
+     "y": 6.3,
+     "r": 0.45,
+     "opacity": 0.7,
+     "visibleIf": "i < cnt",
+     "color": {
+      "by": "if(i < kk - 1, 1, if(i == kk - 1, 2, 0))/2",
+      "scale": [
+       "blue",
+       "green",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 0*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "0 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 1*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "1 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 2*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "2 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 3*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "3 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 4*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "4 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 5*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "5 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 7,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 6*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "6 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 7*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "7 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 8*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "8 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 9*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "9 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 10*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "10 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 11*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "11 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 12*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "12 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 13*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "13 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 14*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "14 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 16,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 15*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "15 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 17,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 16*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "16 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 17*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "17 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 19,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 18*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "18 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 6.3,
+     "text": {
+      "en": "{s0 + 19*st}"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "19 < cnt"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 4.4,
+     "text": {
+      "en": "range gives {cnt} values; the stop value {sp} is never included",
+      "kn": "range {cnt} ಮೌಲ್ಯ ಕೊಡುತ್ತದೆ; ನಿಲ್ಲಿಸುವ ಮೌಲ್ಯ {sp} ಸೇರುವುದಿಲ್ಲ"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 3.1,
+     "text": {
+      "en": "iteration {kk}:  i = {cur}",
+      "kn": "ಪುನರಾವರ್ತನೆ {kk}:  i = {cur}"
+     },
+     "size": 32,
+     "color": "yellow",
+     "visibleIf": "kk > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.9,
+     "text": {
+      "en": "total = {tot}",
+      "kn": "ಮೊತ್ತ = {tot}"
+     },
+     "size": 32,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.8,
+     "text": {
+      "en": "Loop over: no values left",
+      "kn": "ಲೂಪ್ ಮುಗಿಯಿತು"
+     },
+     "size": 26,
+     "color": "orange",
+     "visibleIf": "kk >= cnt && k > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.8,
+     "text": {
+      "en": "Empty range: the body never runs",
+      "kn": "ಖಾಲಿ range: ದೇಹ ಚಲಿಸುವುದೇ ಇಲ್ಲ"
+     },
+     "size": 26,
+     "color": "red",
+     "visibleIf": "cnt == 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Values in range",
+      "kn": "range ನ ಮೌಲ್ಯಗಳು"
+     },
+     "expr": "cnt",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "total",
+      "kn": "ಮೊತ್ತ"
+     },
+     "expr": "tot",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make range(0, 10, 2). Is 10 in the list?",
+     "kn": "range(0, 10, 2) ಮಾಡಿ. 10 ಇದೆಯೇ?"
+    },
+    {
+     "en": "Choose step −1 with start 10 and stop 0. What is printed first and last?",
+     "kn": "ಹೆಜ್ಜೆ −1, ಆರಂಭ 10, ನಿಲುಗಡೆ 0. ಮೊದಲು ಮತ್ತು ಕೊನೆಗೆ ಏನು?"
+    },
+    {
+     "en": "Set start equal to stop. How many times does the body run?",
+     "kn": "ಆರಂಭ = ನಿಲುಗಡೆ ಮಾಡಿ. ದೇಹ ಎಷ್ಟು ಬಾರಿ ಚಲಿಸುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

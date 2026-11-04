@@ -502,6 +502,578 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Step down an elif ladder",
+    "kn": "elif ಏಣಿಯಲ್ಲಿ ಇಳಿಯಿರಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Press Step to test the conditions from the top. The first True condition runs its block and every condition below it is skipped.",
+    "kn": "ಮೇಲಿನಿಂದ ಷರತ್ತುಗಳನ್ನು ಪರೀಕ್ಷಿಸಲು ಹೆಜ್ಜೆ ಒತ್ತಿ. ಮೊದಲ ನಿಜ ಷರತ್ತಿನ ಭಾಗ ಚಲಿಸುತ್ತದೆ, ಕೆಳಗಿನವು ಬಿಡಲ್ಪಡುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "mk",
+     "label": {
+      "en": "Marks",
+      "kn": "ಅಂಕಗಳು"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 1,
+     "value": 80
+    }
+   ],
+   "toggles": [
+    {
+     "name": "bad",
+     "label": {
+      "en": "Wrong order (>= 35 first)",
+      "kn": "ತಪ್ಪು ಕ್ರಮ"
+     },
+     "value": false
+    }
+   ],
+   "counters": [
+    {
+     "name": "k",
+     "value": 0,
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(k + 1, 5)"
+     }
+    },
+    {
+     "label": {
+      "en": "Back",
+      "kn": "ಹಿಂದೆ"
+     },
+     "icon": "remove",
+     "set": {
+      "k": "max(k - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "th1",
+     "expr": "if(bad, 35, 90)"
+    },
+    {
+     "name": "th2",
+     "expr": "if(bad, 60, 75)"
+    },
+    {
+     "name": "th3",
+     "expr": "if(bad, 75, 60)"
+    },
+    {
+     "name": "th4",
+     "expr": "if(bad, 90, 35)"
+    },
+    {
+     "name": "f",
+     "expr": "if(mk >= th1, 1, if(mk >= th2, 2, if(mk >= th3, 3, if(mk >= th4, 4, 5))))"
+    },
+    {
+     "name": "kk",
+     "expr": "min(k, f)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.4,
+     "text": {
+      "en": "marks = {mk}",
+      "kn": "ಅಂಕ = {mk}"
+     },
+     "size": 30,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 6.75,
+     "w": 12.5,
+     "h": 1.0,
+     "color": {
+      "by": "if(kk >= 1 && 1 < f, 0, if(kk >= 1 && 1 == f, 1, 0.5))",
+      "scale": [
+       "red",
+       "blue",
+       "green"
+      ]
+     },
+     "opacity": "if(kk >= f && 1 > f, 0.15, 0.55)"
+    },
+    {
+     "shape": "text",
+     "x": 1.4,
+     "y": 7.25,
+     "text": {
+      "en": "if marks >= {th1}:"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.0,
+     "y": 7.25,
+     "text": {
+      "en": "grade = \"A\""
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "!bad"
+    },
+    {
+     "shape": "text",
+     "x": 9.0,
+     "y": 7.25,
+     "text": {
+      "en": "grade = \"D\""
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "bad"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 7.25,
+     "text": {
+      "en": "False → next",
+      "kn": "ತಪ್ಪು → ಮುಂದೆ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "kk >= 1 && 1 < f"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 7.25,
+     "text": {
+      "en": "runs",
+      "kn": "ಚಲಿಸುತ್ತದೆ"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "kk >= 1 && 1 == f"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 7.25,
+     "text": {
+      "en": "skipped",
+      "kn": "ಬಿಡಲಾಗಿದೆ"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "kk >= f && 1 > f"
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 5.3999999999999995,
+     "w": 12.5,
+     "h": 1.0,
+     "color": {
+      "by": "if(kk >= 2 && 2 < f, 0, if(kk >= 2 && 2 == f, 1, 0.5))",
+      "scale": [
+       "red",
+       "blue",
+       "green"
+      ]
+     },
+     "opacity": "if(kk >= f && 2 > f, 0.15, 0.55)"
+    },
+    {
+     "shape": "text",
+     "x": 1.4,
+     "y": 5.8999999999999995,
+     "text": {
+      "en": "elif marks >= {th2}:"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.0,
+     "y": 5.8999999999999995,
+     "text": {
+      "en": "grade = \"B\""
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "!bad"
+    },
+    {
+     "shape": "text",
+     "x": 9.0,
+     "y": 5.8999999999999995,
+     "text": {
+      "en": "grade = \"C\""
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "bad"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 5.8999999999999995,
+     "text": {
+      "en": "False → next",
+      "kn": "ತಪ್ಪು → ಮುಂದೆ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "kk >= 2 && 2 < f"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 5.8999999999999995,
+     "text": {
+      "en": "runs",
+      "kn": "ಚಲಿಸುತ್ತದೆ"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "kk >= 2 && 2 == f"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 5.8999999999999995,
+     "text": {
+      "en": "skipped",
+      "kn": "ಬಿಡಲಾಗಿದೆ"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "kk >= f && 2 > f"
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 4.049999999999999,
+     "w": 12.5,
+     "h": 1.0,
+     "color": {
+      "by": "if(kk >= 3 && 3 < f, 0, if(kk >= 3 && 3 == f, 1, 0.5))",
+      "scale": [
+       "red",
+       "blue",
+       "green"
+      ]
+     },
+     "opacity": "if(kk >= f && 3 > f, 0.15, 0.55)"
+    },
+    {
+     "shape": "text",
+     "x": 1.4,
+     "y": 4.549999999999999,
+     "text": {
+      "en": "elif marks >= {th3}:"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.0,
+     "y": 4.549999999999999,
+     "text": {
+      "en": "grade = \"C\""
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "!bad"
+    },
+    {
+     "shape": "text",
+     "x": 9.0,
+     "y": 4.549999999999999,
+     "text": {
+      "en": "grade = \"B\""
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "bad"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 4.549999999999999,
+     "text": {
+      "en": "False → next",
+      "kn": "ತಪ್ಪು → ಮುಂದೆ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "kk >= 3 && 3 < f"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 4.549999999999999,
+     "text": {
+      "en": "runs",
+      "kn": "ಚಲಿಸುತ್ತದೆ"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "kk >= 3 && 3 == f"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 4.549999999999999,
+     "text": {
+      "en": "skipped",
+      "kn": "ಬಿಡಲಾಗಿದೆ"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "kk >= f && 3 > f"
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 2.6999999999999993,
+     "w": 12.5,
+     "h": 1.0,
+     "color": {
+      "by": "if(kk >= 4 && 4 < f, 0, if(kk >= 4 && 4 == f, 1, 0.5))",
+      "scale": [
+       "red",
+       "blue",
+       "green"
+      ]
+     },
+     "opacity": "if(kk >= f && 4 > f, 0.15, 0.55)"
+    },
+    {
+     "shape": "text",
+     "x": 1.4,
+     "y": 3.1999999999999993,
+     "text": {
+      "en": "elif marks >= {th4}:"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.0,
+     "y": 3.1999999999999993,
+     "text": {
+      "en": "grade = \"D\""
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "!bad"
+    },
+    {
+     "shape": "text",
+     "x": 9.0,
+     "y": 3.1999999999999993,
+     "text": {
+      "en": "grade = \"A\""
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "bad"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 3.1999999999999993,
+     "text": {
+      "en": "False → next",
+      "kn": "ತಪ್ಪು → ಮುಂದೆ"
+     },
+     "size": 24,
+     "color": "red",
+     "visibleIf": "kk >= 4 && 4 < f"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 3.1999999999999993,
+     "text": {
+      "en": "runs",
+      "kn": "ಚಲಿಸುತ್ತದೆ"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "kk >= 4 && 4 == f"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 3.1999999999999993,
+     "text": {
+      "en": "skipped",
+      "kn": "ಬಿಡಲಾಗಿದೆ"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "kk >= f && 4 > f"
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 1.3499999999999996,
+     "w": 12.5,
+     "h": 1.0,
+     "color": {
+      "by": "if(kk >= 5 && 5 < f, 0, if(kk >= 5 && 5 == f, 1, 0.5))",
+      "scale": [
+       "red",
+       "blue",
+       "green"
+      ]
+     },
+     "opacity": "if(kk >= f && 5 > f, 0.15, 0.55)"
+    },
+    {
+     "shape": "text",
+     "x": 1.4,
+     "y": 1.8499999999999996,
+     "text": {
+      "en": "else:"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.0,
+     "y": 1.8499999999999996,
+     "text": {
+      "en": "grade = \"Fail\""
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "!bad"
+    },
+    {
+     "shape": "text",
+     "x": 9.0,
+     "y": 1.8499999999999996,
+     "text": {
+      "en": "grade = \"Fail\""
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "bad"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 1.8499999999999996,
+     "text": {
+      "en": "runs",
+      "kn": "ಚಲಿಸುತ್ತದೆ"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "kk >= 5 && 5 == f"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 1.8499999999999996,
+     "text": {
+      "en": "skipped",
+      "kn": "ಬಿಡಲಾಗಿದೆ"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "kk >= f && 5 > f"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.5,
+     "text": {
+      "en": "Wrong order: almost everyone gets D!",
+      "kn": "ತಪ್ಪು ಕ್ರಮ: ಬಹುತೇಕ ಎಲ್ಲರಿಗೂ D!"
+     },
+     "size": 26,
+     "color": "orange",
+     "visibleIf": "bad && kk >= f && f == 1"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With 80 marks, how many conditions are tested?",
+     "kn": "80 ಅಂಕಕ್ಕೆ ಎಷ್ಟು ಷರತ್ತುಗಳು ಪರೀಕ್ಷಿಸಲ್ಪಡುತ್ತವೆ?"
+    },
+    {
+     "en": "Turn on the wrong order and try 95 marks. Why is the grade wrong?",
+     "kn": "ತಪ್ಪು ಕ್ರಮ ಆನ್ ಮಾಡಿ 95 ಅಂಕ ಕೊಡಿ. ಗ್ರೇಡ್ ಏಕೆ ತಪ್ಪು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

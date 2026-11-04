@@ -621,6 +621,376 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A double-ended queue",
+    "kn": "ಎರಡು-ತುದಿಯ ಕ್ಯೂ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A deque allows insertion and deletion at both ends. Insert values at the front or rear and delete from either end.",
+    "kn": "ಡೆಕ್‌ನಲ್ಲಿ ಎರಡೂ ತುದಿಗಳಲ್ಲಿ ಸೇರಿಸಬಹುದು ಮತ್ತು ತೆಗೆಯಬಹುದು. ಮುಂಭಾಗ ಅಥವಾ ಹಿಂಭಾಗದಲ್ಲಿ ಪ್ರಯತ್ನಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "v",
+     "label": {
+      "en": "Value to insert",
+      "kn": "ಸೇರಿಸುವ ಮೌಲ್ಯ"
+     },
+     "min": 1,
+     "max": 9,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "cap",
+     "label": {
+      "en": "Deque size",
+      "kn": "ಡೆಕ್ ಗಾತ್ರ"
+     },
+     "min": 2,
+     "max": 6,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "counters": [
+    {
+     "name": "Q",
+     "value": 0,
+     "min": 0,
+     "max": 999999
+    },
+    {
+     "name": "n",
+     "value": 0,
+     "min": 0,
+     "max": 6
+    },
+    {
+     "name": "msg",
+     "value": 0,
+     "min": 0,
+     "max": 3
+    },
+    {
+     "name": "out",
+     "value": 0,
+     "min": 0,
+     "max": 9
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "insertFront",
+      "kn": "insertFront"
+     },
+     "icon": "add",
+     "set": {
+      "Q": "if(n < cap, v*pow(10, n) + Q, Q)",
+      "n": "if(n < cap, n + 1, n)",
+      "msg": "if(n < cap, 0, 1)"
+     }
+    },
+    {
+     "label": {
+      "en": "insertRear",
+      "kn": "insertRear"
+     },
+     "icon": "add",
+     "set": {
+      "Q": "if(n < cap, Q*10 + v, Q)",
+      "n": "if(n < cap, n + 1, n)",
+      "msg": "if(n < cap, 0, 1)"
+     }
+    },
+    {
+     "label": {
+      "en": "deletionFront",
+      "kn": "deletionFront"
+     },
+     "icon": "remove",
+     "set": {
+      "out": "if(n > 0, floor(Q/pow(10, n - 1)), out)",
+      "Q": "if(n > 0, mod(Q, pow(10, n - 1)), Q)",
+      "n": "max(n - 1, 0)",
+      "msg": "if(n > 0, 2, 3)"
+     }
+    },
+    {
+     "label": {
+      "en": "deletionRear",
+      "kn": "deletionRear"
+     },
+     "icon": "remove",
+     "set": {
+      "out": "if(n > 0, mod(Q, 10), out)",
+      "Q": "if(n > 0, floor(Q/10), Q)",
+      "n": "max(n - 1, 0)",
+      "msg": "if(n > 0, 2, 3)"
+     }
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "myDeque: FRONT at the left, REAR at the right",
+      "kn": "myDeque: ಎಡ FRONT, ಬಲ REAR"
+     },
+     "size": 26,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 3.4,
+     "y": 4.0,
+     "w": "2.2*cap + 0.2",
+     "h": 2.2,
+     "fill": false,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "arrow",
+     "x": 1.0,
+     "y": 5.6,
+     "dx": 2.0,
+     "dy": 0,
+     "color": "green"
+    },
+    {
+     "shape": "arrow",
+     "x": 3.0,
+     "y": 4.6,
+     "dx": -2.0,
+     "dy": 0,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 1.9,
+     "y": 6.3,
+     "text": {
+      "en": "front",
+      "kn": "ಮುಂಭಾಗ"
+     },
+     "size": 20,
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": "4.6 - 0.8",
+     "y": "5.1 - 0.6",
+     "w": 1.6,
+     "h": 1.2,
+     "color": "blue",
+     "visibleIf": "0 < n",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": "4.6",
+     "y": "5.1",
+     "text": {
+      "en": "{mod(floor(Q/pow(10, n - 1 - 0)), 10)}"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "0 < n"
+    },
+    {
+     "shape": "rect",
+     "x": "6.8 - 0.8",
+     "y": "5.1 - 0.6",
+     "w": 1.6,
+     "h": 1.2,
+     "color": "blue",
+     "visibleIf": "1 < n",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": "6.8",
+     "y": "5.1",
+     "text": {
+      "en": "{mod(floor(Q/pow(10, n - 1 - 1)), 10)}"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "1 < n"
+    },
+    {
+     "shape": "rect",
+     "x": "9.0 - 0.8",
+     "y": "5.1 - 0.6",
+     "w": 1.6,
+     "h": 1.2,
+     "color": "blue",
+     "visibleIf": "2 < n",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": "9.0",
+     "y": "5.1",
+     "text": {
+      "en": "{mod(floor(Q/pow(10, n - 1 - 2)), 10)}"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "2 < n"
+    },
+    {
+     "shape": "rect",
+     "x": "11.2 - 0.8",
+     "y": "5.1 - 0.6",
+     "w": 1.6,
+     "h": 1.2,
+     "color": "blue",
+     "visibleIf": "3 < n",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": "11.2",
+     "y": "5.1",
+     "text": {
+      "en": "{mod(floor(Q/pow(10, n - 1 - 3)), 10)}"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "3 < n"
+    },
+    {
+     "shape": "rect",
+     "x": "13.4 - 0.8",
+     "y": "5.1 - 0.6",
+     "w": 1.6,
+     "h": 1.2,
+     "color": "blue",
+     "visibleIf": "4 < n",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": "13.4",
+     "y": "5.1",
+     "text": {
+      "en": "{mod(floor(Q/pow(10, n - 1 - 4)), 10)}"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "4 < n"
+    },
+    {
+     "shape": "rect",
+     "x": "15.6 - 0.8",
+     "y": "5.1 - 0.6",
+     "w": 1.6,
+     "h": 1.2,
+     "color": "blue",
+     "visibleIf": "5 < n",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": "15.6",
+     "y": "5.1",
+     "text": {
+      "en": "{mod(floor(Q/pow(10, n - 1 - 5)), 10)}"
+     },
+     "size": 34,
+     "color": "white",
+     "visibleIf": "5 < n"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.8,
+     "text": {
+      "en": "removed {out}",
+      "kn": "ತೆಗೆದದ್ದು {out}"
+     },
+     "size": 28,
+     "color": "green",
+     "visibleIf": "msg == 2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.8,
+     "text": {
+      "en": "Overflow: the deque is full",
+      "kn": "ಓವರ್‌ಫ್ಲೋ"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "msg == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.8,
+     "text": {
+      "en": "Underflow: the deque is empty",
+      "kn": "ಅಂಡರ್‌ಫ್ಲೋ"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "msg == 3"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.8,
+     "text": {
+      "en": "same end in and out → stack;  opposite ends → queue",
+      "kn": "ಒಂದೇ ತುದಿ → ಸ್ಟ್ಯಾಕ್; ವಿರುದ್ಧ ತುದಿ → ಕ್ಯೂ"
+     },
+     "size": 22,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Elements",
+      "kn": "ಅಂಶಗಳು"
+     },
+     "expr": "n",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Insert 1, 2, 3 at the rear and delete from the rear. Is it behaving like a stack or a queue?",
+     "kn": "ಹಿಂದೆ 1, 2, 3 ಸೇರಿಸಿ ಹಿಂದಿನಿಂದ ತೆಗೆಯಿರಿ. ಸ್ಟ್ಯಾಕ್‌ನಂತೆಯೇ ಕ್ಯೂನಂತೆಯೇ?"
+    },
+    {
+     "en": "Now delete from the front instead. What changes?",
+     "kn": "ಈಗ ಮುಂಭಾಗದಿಂದ ತೆಗೆಯಿರಿ. ಏನು ಬದಲಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

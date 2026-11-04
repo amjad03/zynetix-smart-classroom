@@ -274,6 +274,310 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "How work grows with n",
+    "kn": "n ಜೊತೆ ಕೆಲಸ ಹೇಗೆ ಬೆಳೆಯುತ್ತದೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Move n and compare the growth of 1, log n, n, n log n and n². The three simple sorts all grow like n²: double n and the work is about four times.",
+    "kn": "n ಸರಿಸಿ 1, log n, n, n log n, n² ಬೆಳವಣಿಗೆ ಹೋಲಿಸಿ. ಮೂರು ಸರಳ ವಿಂಗಡಣೆಗಳು n² ನಂತೆ: n ದ್ವಿಗುಣವಾದರೆ ಕೆಲಸ ಸುಮಾರು ನಾಲ್ಕು ಪಟ್ಟು."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Input size n",
+      "kn": "ಇನ್‌ಪುಟ್ ಗಾತ್ರ n"
+     },
+     "min": 1,
+     "max": 50,
+     "step": 1,
+     "value": 10
+    }
+   ],
+   "toggles": [
+    {
+     "name": "lg",
+     "label": {
+      "en": "log n",
+      "kn": "log n"
+     },
+     "value": true
+    },
+    {
+     "name": "nlg",
+     "label": {
+      "en": "n log n",
+      "kn": "n log n"
+     },
+     "value": true
+    },
+    {
+     "name": "sq",
+     "label": {
+      "en": "n²",
+      "kn": "n²"
+     },
+     "value": true
+    },
+    {
+     "name": "bub",
+     "label": {
+      "en": "Bubble sort n(n−1)/2",
+      "kn": "ಬಬಲ್ n(n−1)/2"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "ym",
+     "label": {
+      "en": "Zoom (top of box)",
+      "kn": "ಜೂಮ್"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "50",
+        "kn": "50"
+       },
+       "value": 50
+      },
+      {
+       "label": {
+        "en": "500",
+        "kn": "500"
+       },
+       "value": 500
+      },
+      {
+       "label": {
+        "en": "2500",
+        "kn": "2500"
+       },
+       "value": 2500
+      }
+     ],
+     "value": 500
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     50
+    ],
+    "y": [
+     0,
+     10
+    ],
+    "axes": true,
+    "xLabel": "n"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "if((1)*10/ym <= 10.3, (1)*10/ym, sqrt(-1))",
+     "from": 1,
+     "to": 50,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "if((x)*10/ym <= 10.3, (x)*10/ym, sqrt(-1))",
+     "from": 1,
+     "to": 50,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "if((ln(x)/ln(2))*10/ym <= 10.3, (ln(x)/ln(2))*10/ym, sqrt(-1))",
+     "from": 1,
+     "to": 50,
+     "color": "blue",
+     "width": 4,
+     "visibleIf": "lg"
+    },
+    {
+     "shape": "path",
+     "fn": "if((x*ln(x)/ln(2))*10/ym <= 10.3, (x*ln(x)/ln(2))*10/ym, sqrt(-1))",
+     "from": 1,
+     "to": 50,
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "nlg"
+    },
+    {
+     "shape": "path",
+     "fn": "if((x*x)*10/ym <= 10.3, (x*x)*10/ym, sqrt(-1))",
+     "from": 1,
+     "to": 50,
+     "color": "red",
+     "width": 4,
+     "visibleIf": "sq"
+    },
+    {
+     "shape": "path",
+     "fn": "if((x*(x - 1)/2)*10/ym <= 10.3, (x*(x - 1)/2)*10/ym, sqrt(-1))",
+     "from": 1,
+     "to": 50,
+     "color": "green",
+     "width": 4,
+     "visibleIf": "bub"
+    },
+    {
+     "shape": "line",
+     "x1": "n",
+     "y1": 0,
+     "x2": "n",
+     "y2": 10,
+     "dashed": true,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 9.5,
+     "text": {
+      "en": "operations (top of the box = {ym})",
+      "kn": "ಕ್ರಿಯೆಗಳು (ಮೇಲ್ತುದಿ = {ym})"
+     },
+     "size": 22,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 49,
+     "y": 9.0,
+     "text": {
+      "en": "n²"
+     },
+     "size": 26,
+     "align": "right",
+     "color": "red",
+     "visibleIf": "sq"
+    },
+    {
+     "shape": "text",
+     "x": 49,
+     "y": 8.2,
+     "text": {
+      "en": "n log n"
+     },
+     "size": 24,
+     "align": "right",
+     "color": "yellow",
+     "visibleIf": "nlg"
+    },
+    {
+     "shape": "text",
+     "x": 49,
+     "y": 7.4,
+     "text": {
+      "en": "n"
+     },
+     "size": 26,
+     "align": "right",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 49,
+     "y": 6.6,
+     "text": {
+      "en": "log n"
+     },
+     "size": 24,
+     "align": "right",
+     "color": "blue",
+     "visibleIf": "lg"
+    },
+    {
+     "shape": "text",
+     "x": 49,
+     "y": 5.8,
+     "text": {
+      "en": "bubble n(n−1)/2"
+     },
+     "size": 22,
+     "align": "right",
+     "color": "green",
+     "visibleIf": "bub"
+    },
+    {
+     "shape": "circle",
+     "x": "n",
+     "y": "clamp(n*n*10/ym, 0, 10)",
+     "r": 0.5,
+     "color": "red",
+     "visibleIf": "sq"
+    },
+    {
+     "shape": "circle",
+     "x": "n",
+     "y": "clamp(n*10/ym, 0, 10)",
+     "r": 0.5,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "n²",
+      "kn": "n²"
+     },
+     "expr": "n*n",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "n log₂ n",
+      "kn": "n log₂ n"
+     },
+     "expr": "n*ln(n)/ln(2)",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "log₂ n",
+      "kn": "log₂ n"
+     },
+     "expr": "ln(n)/ln(2)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Bubble comparisons",
+      "kn": "ಬಬಲ್ ಹೋಲಿಕೆಗಳು"
+     },
+     "expr": "n*(n - 1)/2",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set n = 10 and then n = 20. How does n² change?",
+     "kn": "n = 10 ನಂತರ n = 20. n² ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on the bubble sort count. Why is it about half of n²?",
+     "kn": "ಬಬಲ್ ಎಣಿಕೆ ಆನ್ ಮಾಡಿ. ಅದು n² ನ ಸುಮಾರು ಅರ್ಧ ಏಕೆ?"
+    },
+    {
+     "en": "Zoom out to 2500. Which curves now look flat?",
+     "kn": "2500 ಗೆ ಜೂಮ್ ಔಟ್. ಯಾವ ವಕ್ರಗಳು ಸಮತಟ್ಟಾಗಿ ಕಾಣುತ್ತವೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

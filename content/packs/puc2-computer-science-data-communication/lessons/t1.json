@@ -369,6 +369,285 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "How long does a download take?",
+    "kn": "ಡೌನ್‌ಲೋಡ್‌ಗೆ ಎಷ್ಟು ಸಮಯ?"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Choose a file size and a data transfer rate, then press Send. Time = number of bits ÷ bits per second (here 1 MB = 2^20 bytes and 1 Mbps = 2^20 bps).",
+    "kn": "ಕಡತದ ಗಾತ್ರ ಮತ್ತು ವರ್ಗಾವಣೆ ದರ ಆರಿಸಿ, ಕಳುಹಿಸಿ ಒತ್ತಿ. ಸಮಯ = ಬಿಟ್‌ಗಳು ÷ ಪ್ರತಿ ಸೆಕೆಂಡಿನ ಬಿಟ್‌ಗಳು."
+   },
+   "sliders": [
+    {
+     "name": "sz",
+     "label": {
+      "en": "File size",
+      "kn": "ಕಡತದ ಗಾತ್ರ"
+     },
+     "min": 5,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "MB"
+    },
+    {
+     "name": "rate",
+     "label": {
+      "en": "Data rate",
+      "kn": "ದತ್ತಾಂಶ ದರ"
+     },
+     "min": 2,
+     "max": 100,
+     "step": 2,
+     "value": 10,
+     "unit": "Mbps"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cmp",
+     "label": {
+      "en": "Label the components",
+      "kn": "ಘಟಕಗಳ ಲೇಬಲ್"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Send",
+      "kn": "ಕಳುಹಿಸಿ"
+     },
+     "icon": "launch",
+     "set": {},
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 10,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4
+    ],
+    "speed": 1,
+    "unit": ""
+   },
+   "vars": [
+    {
+     "name": "bits",
+     "expr": "sz*8*1048576"
+    },
+    {
+     "name": "T",
+     "expr": "8*sz/rate"
+    },
+    {
+     "name": "prog",
+     "expr": "clamp(t/10, 0, 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 4,
+     "w": 3,
+     "h": 2.5,
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 16.5,
+     "y": 4,
+     "w": 3,
+     "h": 2.5,
+     "color": "green",
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 3.5,
+     "y1": 5.25,
+     "x2": 16.5,
+     "y2": 5.25,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "3.6 + 12.8*mod(t/2 + i/20, 1)",
+     "y": 5.25,
+     "r": 0.18,
+     "color": "yellow",
+     "visibleIf": "i < 4 + 16*rate/100 && prog < 1"
+    },
+    {
+     "shape": "rect",
+     "x": 3.5,
+     "y": 2.2,
+     "w": 13,
+     "h": 0.6,
+     "fill": false,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "x": 3.5,
+     "y": 2.2,
+     "w": "13*prog",
+     "h": 0.6,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.4,
+     "text": {
+      "en": "{prog*100:0}% sent: {prog*T:1} s of {T:1} s",
+      "kn": "{prog*100:0}% ಕಳುಹಿಸಲಾಗಿದೆ: {T:1} ರಲ್ಲಿ {prog*T:1} ಸೆ"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.8,
+     "text": {
+      "en": "{sz} MB = {sz} × 1024 × 1024 × 8 = {bits} bits"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.8,
+     "text": {
+      "en": "time = bits ÷ rate = {T:1} s",
+      "kn": "ಸಮಯ = ಬಿಟ್ ÷ ದರ = {T:1} ಸೆ"
+     },
+     "size": 28,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 3.4,
+     "text": {
+      "en": "sender",
+      "kn": "ಕಳುಹಿಸುವವ"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": 3.4,
+     "text": {
+      "en": "receiver",
+      "kn": "ಸ್ವೀಕರಿಸುವವ"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.9,
+     "text": {
+      "en": "medium (cable or wireless)",
+      "kn": "ಮಾಧ್ಯಮ"
+     },
+     "size": 20,
+     "color": "white",
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 4.6,
+     "text": {
+      "en": "message: the file, sent as bits",
+      "kn": "ಸಂದೇಶ: ಕಡತ, ಬಿಟ್‌ಗಳಾಗಿ"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "cmp"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 6.7,
+     "text": {
+      "en": "protocol: rules both sides follow",
+      "kn": "ಶಿಷ್ಟಾಚಾರ: ಎರಡೂ ಕಡೆಯ ನಿಯಮಗಳು"
+     },
+     "size": 20,
+     "color": "orange",
+     "visibleIf": "cmp"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Transfer time",
+      "kn": "ವರ್ಗಾವಣೆ ಸಮಯ"
+     },
+     "expr": "T",
+     "digits": 1,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Bits to send",
+      "kn": "ಕಳುಹಿಸುವ ಬಿಟ್‌ಗಳು"
+     },
+     "expr": "bits",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "How long does a 50 MB file take at 10 Mbps?",
+     "kn": "10 Mbps ನಲ್ಲಿ 50 MB ಕಡತಕ್ಕೆ ಎಷ್ಟು ಸಮಯ?"
+    },
+    {
+     "en": "Double the rate. What happens to the time?",
+     "kn": "ದರ ದ್ವಿಗುಣಿಸಿ. ಸಮಯಕ್ಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on the labels: name the five components of data communication.",
+     "kn": "ಲೇಬಲ್ ಆನ್ ಮಾಡಿ: ದತ್ತಾಂಶ ಸಂವಹನದ ಐದು ಘಟಕಗಳನ್ನು ಹೆಸರಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

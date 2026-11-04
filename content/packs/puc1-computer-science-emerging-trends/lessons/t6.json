@@ -565,6 +565,454 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Tamper with a blockchain",
+    "kn": "ಬ್ಲಾಕ್‌ಚೈನ್ ತಿದ್ದಲು ಪ್ರಯತ್ನಿಸಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Change the amount in block 2 and watch the links. The hash here is a simple teaching formula, not a real cryptographic hash.",
+    "kn": "ಬ್ಲಾಕ್ 2 ರ ಮೊತ್ತ ಬದಲಿಸಿ ಕೊಂಡಿಗಳನ್ನು ನೋಡಿ. ಇಲ್ಲಿನ ಹ್ಯಾಶ್ ಕಲಿಕೆಯ ಸರಳ ಸೂತ್ರ, ನಿಜವಾದ ಗೂಢಲಿಪಿ ಹ್ಯಾಶ್ ಅಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "d2",
+     "label": {
+      "en": "Amount in block 2",
+      "kn": "ಬ್ಲಾಕ್ 2 ಮೊತ್ತ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 40,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fix",
+     "label": {
+      "en": "Recompute later hashes",
+      "kn": "ಮುಂದಿನ ಹ್ಯಾಶ್ ಮರುಲೆಕ್ಕ"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Restore ₹40",
+      "kn": "₹40 ಮರುಸ್ಥಾಪಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "d2": "40"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "h1",
+     "expr": "mod(31*0 + 17*25 + 7, 1000)"
+    },
+    {
+     "name": "h2",
+     "expr": "mod(31*h1 + 17*d2 + 14, 1000)"
+    },
+    {
+     "name": "p3",
+     "expr": "if(fix, h2, 86)"
+    },
+    {
+     "name": "h3",
+     "expr": "mod(31*p3 + 17*10 + 21, 1000)"
+    },
+    {
+     "name": "p4",
+     "expr": "if(fix, h3, 857)"
+    },
+    {
+     "name": "h4",
+     "expr": "mod(31*p4 + 17*60 + 28, 1000)"
+    },
+    {
+     "name": "ok3",
+     "expr": "p3 == h2"
+    },
+    {
+     "name": "ok4",
+     "expr": "p4 == h3"
+    },
+    {
+     "name": "net",
+     "expr": "ok3 && ok4 && h4 == 615"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.4,
+     "y": 3.2,
+     "w": 4.5,
+     "h": 4.6,
+     "color": {
+      "by": "1",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 2.65,
+     "y": 7.2,
+     "text": {
+      "en": "Block 1",
+      "kn": "ಬ್ಲಾಕ್ 1"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.65,
+     "y": 6.1,
+     "text": {
+      "en": "data: ₹25",
+      "kn": "ದತ್ತಾಂಶ: ₹25"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.65,
+     "y": 5.1,
+     "text": {
+      "en": "prev hash: 0",
+      "kn": "ಹಿಂದಿನ ಹ್ಯಾಶ್: 0"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.65,
+     "y": 4.0,
+     "text": {
+      "en": "hash: {h1}",
+      "kn": "ಹ್ಯಾಶ್: {h1}"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 4.9,
+     "y": 5.5,
+     "dx": 0.4,
+     "dy": 0,
+     "color": {
+      "by": "1",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 5.3,
+     "y": 3.2,
+     "w": 4.5,
+     "h": 4.6,
+     "color": {
+      "by": "1",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 7.55,
+     "y": 7.2,
+     "text": {
+      "en": "Block 2",
+      "kn": "ಬ್ಲಾಕ್ 2"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.55,
+     "y": 6.1,
+     "text": {
+      "en": "data: ₹{d2}",
+      "kn": "ದತ್ತಾಂಶ: ₹{d2}"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.55,
+     "y": 5.1,
+     "text": {
+      "en": "prev hash: {h1}",
+      "kn": "ಹಿಂದಿನ ಹ್ಯಾಶ್: {h1}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.55,
+     "y": 4.0,
+     "text": {
+      "en": "hash: {h2}",
+      "kn": "ಹ್ಯಾಶ್: {h2}"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 9.8,
+     "y": 5.5,
+     "dx": 0.4,
+     "dy": 0,
+     "color": {
+      "by": "ok3",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 10.2,
+     "y": 3.2,
+     "w": 4.5,
+     "h": 4.6,
+     "color": {
+      "by": "ok3",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 12.45,
+     "y": 7.2,
+     "text": {
+      "en": "Block 3",
+      "kn": "ಬ್ಲಾಕ್ 3"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.45,
+     "y": 6.1,
+     "text": {
+      "en": "data: ₹10",
+      "kn": "ದತ್ತಾಂಶ: ₹10"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.45,
+     "y": 5.1,
+     "text": {
+      "en": "prev hash: {p3}",
+      "kn": "ಹಿಂದಿನ ಹ್ಯಾಶ್: {p3}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.45,
+     "y": 4.0,
+     "text": {
+      "en": "hash: {h3}",
+      "kn": "ಹ್ಯಾಶ್: {h3}"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 14.7,
+     "y": 5.5,
+     "dx": 0.4,
+     "dy": 0,
+     "color": {
+      "by": "ok4",
+      "scale": [
+       "red",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 15.1,
+     "y": 3.2,
+     "w": 4.5,
+     "h": 4.6,
+     "color": {
+      "by": "ok4",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 17.35,
+     "y": 7.2,
+     "text": {
+      "en": "Block 4",
+      "kn": "ಬ್ಲಾಕ್ 4"
+     },
+     "size": 28,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.35,
+     "y": 6.1,
+     "text": {
+      "en": "data: ₹60",
+      "kn": "ದತ್ತಾಂಶ: ₹60"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.35,
+     "y": 5.1,
+     "text": {
+      "en": "prev hash: {p4}",
+      "kn": "ಹಿಂದಿನ ಹ್ಯಾಶ್: {p4}"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.35,
+     "y": 4.0,
+     "text": {
+      "en": "hash: {h4}",
+      "kn": "ಹ್ಯಾಶ್: {h4}"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.0,
+     "text": {
+      "en": "Each block stores the previous block's hash",
+      "kn": "ಪ್ರತಿ ಬ್ಲಾಕ್ ಹಿಂದಿನ ಬ್ಲಾಕ್‌ನ ಹ್ಯಾಶ್ ಇಡುತ್ತದೆ"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.2,
+     "text": {
+      "en": "Chain broken: block 3 no longer matches block 2",
+      "kn": "ಸರಪಳಿ ಮುರಿದಿದೆ"
+     },
+     "size": 26,
+     "color": "red",
+     "visibleIf": "!ok3"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.2,
+     "text": {
+      "en": "Chain links all match",
+      "kn": "ಎಲ್ಲ ಕೊಂಡಿಗಳು ಹೊಂದುತ್ತವೆ"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "ok3 && ok4"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.1,
+     "text": {
+      "en": "Other nodes hold last hash 615: this copy is rejected",
+      "kn": "ಇತರ ನೋಡ್‌ಗಳ ಪ್ರತಿ ಬೇರೆ: ಈ ಪ್ರತಿ ತಿರಸ್ಕೃತ"
+     },
+     "size": 24,
+     "color": "orange",
+     "visibleIf": "!net"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.1,
+     "text": {
+      "en": "Matches every other node's copy",
+      "kn": "ಎಲ್ಲ ನೋಡ್‌ಗಳ ಪ್ರತಿಗೆ ಹೊಂದುತ್ತದೆ"
+     },
+     "size": 24,
+     "color": "green",
+     "visibleIf": "net"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Change block 2 from ₹40 to ₹45. Which link turns red?",
+     "kn": "ಬ್ಲಾಕ್ 2 ಅನ್ನು ₹40 ರಿಂದ ₹45 ಮಾಡಿ. ಯಾವ ಕೊಂಡಿ ಕೆಂಪಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on Recompute later hashes. The chain looks fine; why do other nodes still reject it?",
+     "kn": "ಮುಂದಿನ ಹ್ಯಾಶ್ ಮರುಲೆಕ್ಕ ಆನ್ ಮಾಡಿ. ಸರಪಳಿ ಸರಿ ಕಾಣುತ್ತದೆ; ಇತರ ನೋಡ್‌ಗಳು ಏಕೆ ತಿರಸ್ಕರಿಸುತ್ತವೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

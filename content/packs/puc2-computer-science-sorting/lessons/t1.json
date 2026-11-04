@@ -1183,6 +1183,438 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Bubble sort, step by step",
+    "kn": "ಬಬಲ್ ಸಾರ್ಟ್, ಹೆಜ್ಜೆ ಹೆಜ್ಜೆಯಾಗಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Each Step is one comparison of neighbours (yellow). After every pass the largest remaining value has bubbled to the right end (green).",
+    "kn": "ಪ್ರತಿ ಹೆಜ್ಜೆ ಪಕ್ಕದ ಎರಡರ ಒಂದು ಹೋಲಿಕೆ (ಹಳದಿ). ಪ್ರತಿ ಸುತ್ತಿನ ನಂತರ ಉಳಿದದ್ದರಲ್ಲಿ ದೊಡ್ಡದು ಬಲ ತುದಿ ತಲುಪುತ್ತದೆ (ಹಸಿರು)."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Comparison number",
+      "kn": "ಹೋಲಿಕೆ ಸಂಖ್ಯೆ"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 0
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(k + 1, 15)"
+     }
+    },
+    {
+     "label": {
+      "en": "Back",
+      "kn": "ಹಿಂದೆ"
+     },
+     "icon": "remove",
+     "set": {
+      "k": "max(k - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "S",
+     "expr": "if(k < 1, 514283, if(k < 2, 154283, if(k < 3, 145283, if(k < 5, 142583, if(k < 7, 142538, if(k < 9, 124538, if(k < 12, 124358, 123458)))))))"
+    },
+    {
+     "name": "e0",
+     "expr": "mod(floor(S/100000), 10)"
+    },
+    {
+     "name": "e1",
+     "expr": "mod(floor(S/10000), 10)"
+    },
+    {
+     "name": "e2",
+     "expr": "mod(floor(S/1000), 10)"
+    },
+    {
+     "name": "e3",
+     "expr": "mod(floor(S/100), 10)"
+    },
+    {
+     "name": "e4",
+     "expr": "mod(floor(S/10), 10)"
+    },
+    {
+     "name": "e5",
+     "expr": "mod(floor(S/1), 10)"
+    },
+    {
+     "name": "a",
+     "expr": "if(k < 1, -1, if(k < 2, 0, if(k < 3, 1, if(k < 4, 2, if(k < 5, 3, if(k < 6, 4, if(k < 7, 0, if(k < 8, 1, if(k < 9, 2, if(k < 10, 3, if(k < 11, 0, if(k < 12, 1, if(k < 13, 2, if(k < 14, 0, if(k < 15, 1, 0)))))))))))))))"
+    },
+    {
+     "name": "glo",
+     "expr": "if(k < 5, 6, if(k < 9, 5, if(k < 12, 4, if(k < 14, 3, if(k < 15, 2, 0)))))"
+    },
+    {
+     "name": "code",
+     "expr": "if(k < 1, 0, if(k < 4, 1, if(k < 5, 2, if(k < 6, 1, if(k < 7, 2, if(k < 8, 1, if(k < 9, 2, if(k < 10, 1, if(k < 12, 2, if(k < 13, 1, if(k < 15, 2, 3)))))))))))"
+    },
+    {
+     "name": "p",
+     "expr": "if(k < 1, 0, if(k < 6, 1, if(k < 10, 2, if(k < 13, 3, if(k < 15, 4, 5)))))"
+    },
+    {
+     "name": "va",
+     "expr": "if(a == 0, e0, if(a == 1, e1, if(a == 2, e2, if(a == 3, e3, if(a == 4, e4, e5)))))"
+    },
+    {
+     "name": "vb",
+     "expr": "if(a + 1 == 0, e0, if(a + 1 == 1, e1, if(a + 1 == 2, e2, if(a + 1 == 3, e3, if(a + 1 == 4, e4, e5)))))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 3.0,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e0",
+     "color": {
+      "by": "if(0 >= glo, 1, if(0 == a || 0 == a + 1, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 3.9,
+     "y": "2.5 + 0.55*e0",
+     "text": {
+      "en": "{e0}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 3.9,
+     "y": 1.4,
+     "text": {
+      "en": "0"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 5.4,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e1",
+     "color": {
+      "by": "if(1 >= glo, 1, if(1 == a || 1 == a + 1, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 6.300000000000001,
+     "y": "2.5 + 0.55*e1",
+     "text": {
+      "en": "{e1}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.300000000000001,
+     "y": 1.4,
+     "text": {
+      "en": "1"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 7.8,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e2",
+     "color": {
+      "by": "if(2 >= glo, 1, if(2 == a || 2 == a + 1, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 8.7,
+     "y": "2.5 + 0.55*e2",
+     "text": {
+      "en": "{e2}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.7,
+     "y": 1.4,
+     "text": {
+      "en": "2"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 10.2,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e3",
+     "color": {
+      "by": "if(3 >= glo, 1, if(3 == a || 3 == a + 1, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 11.1,
+     "y": "2.5 + 0.55*e3",
+     "text": {
+      "en": "{e3}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.1,
+     "y": 1.4,
+     "text": {
+      "en": "3"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 12.6,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e4",
+     "color": {
+      "by": "if(4 >= glo, 1, if(4 == a || 4 == a + 1, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 13.5,
+     "y": "2.5 + 0.55*e4",
+     "text": {
+      "en": "{e4}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.5,
+     "y": 1.4,
+     "text": {
+      "en": "4"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 15.0,
+     "y": 2.0,
+     "w": 1.8,
+     "h": "0.55*e5",
+     "color": {
+      "by": "if(5 >= glo, 1, if(5 == a || 5 == a + 1, 0.5, 0))",
+      "scale": [
+       "blue",
+       "yellow",
+       "green"
+      ]
+     },
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 15.9,
+     "y": "2.5 + 0.55*e5",
+     "text": {
+      "en": "{e5}"
+     },
+     "size": 32,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.9,
+     "y": 1.4,
+     "text": {
+      "en": "5"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "pass {p}: compare neighbours, swap if the left one is bigger",
+      "kn": "ಸುತ್ತು {p}: ಪಕ್ಕದವನ್ನು ಹೋಲಿಸಿ, ಎಡದ್ದು ದೊಡ್ಡದಾದರೆ ಅದಲುಬದಲು"
+     },
+     "size": 24,
+     "color": "white",
+     "visibleIf": "k > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "Press Step to start bubble sort",
+      "kn": "ಬಬಲ್ ಸಾರ್ಟ್ ಆರಂಭಿಸಲು ಹೆಜ್ಜೆ ಒತ್ತಿ"
+     },
+     "size": 26,
+     "color": "white",
+     "visibleIf": "k == 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.4,
+     "text": {
+      "en": "L[{a}] > L[{a + 1}]: swapped",
+      "kn": "L[{a}] > L[{a + 1}]: ಅದಲುಬದಲು"
+     },
+     "size": 28,
+     "color": "yellow",
+     "visibleIf": "code == 1 || code == 4"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.4,
+     "text": {
+      "en": "L[{a}] <= L[{a + 1}]: no swap",
+      "kn": "L[{a}] <= L[{a + 1}]: ಬದಲಿಲ್ಲ"
+     },
+     "size": 28,
+     "color": "white",
+     "visibleIf": "code == 2 || code == 3"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.5,
+     "text": {
+      "en": "Sorted after 15 comparisons",
+      "kn": "15 ಹೋಲಿಕೆಗಳ ನಂತರ ವಿಂಗಡಿತ"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "k == 15"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Pass",
+      "kn": "ಸುತ್ತು"
+     },
+     "expr": "p",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "How many comparisons are in pass 1? In pass 2?",
+     "kn": "ಸುತ್ತು 1 ರಲ್ಲಿ ಎಷ್ಟು ಹೋಲಿಕೆ? ಸುತ್ತು 2 ರಲ್ಲಿ?"
+    },
+    {
+     "en": "Count the swaps in the whole sort.",
+     "kn": "ಇಡೀ ವಿಂಗಡಣೆಯಲ್ಲಿ ಅದಲುಬದಲುಗಳನ್ನು ಎಣಿಸಿ."
+    },
+    {
+     "en": "Is the list already sorted before the last pass? Does bubble sort notice?",
+     "kn": "ಕೊನೆಯ ಸುತ್ತಿಗೆ ಮೊದಲೇ ಪಟ್ಟಿ ವಿಂಗಡಿತವೇ? ಬಬಲ್ ಸಾರ್ಟ್ ಗಮನಿಸುತ್ತದೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -479,6 +479,375 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Traverse a list and count",
+    "kn": "ಪಟ್ಟಿಯನ್ನು ಹಾದು ಎಣಿಸಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The for loop visits every element in order. Set the limit, then Step: green elements are counted, red ones are not.",
+    "kn": "for ಲೂಪ್ ಪ್ರತಿ ಅಂಶವನ್ನು ಕ್ರಮವಾಗಿ ಭೇಟಿ ಮಾಡುತ್ತದೆ. ಮಿತಿ ಹೊಂದಿಸಿ ಹೆಜ್ಜೆ ಹಾಕಿ: ಹಸಿರು ಎಣಿಸಲ್ಪಡುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "th",
+     "label": {
+      "en": "Limit",
+      "kn": "ಮಿತಿ"
+     },
+     "min": 0,
+     "max": 90,
+     "step": 5,
+     "value": 30
+    }
+   ],
+   "counters": [
+    {
+     "name": "k",
+     "value": 0,
+     "min": 0,
+     "max": 8
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(k + 1, 8)"
+     }
+    },
+    {
+     "label": {
+      "en": "Back",
+      "kn": "ಹಿಂದೆ"
+     },
+     "icon": "remove",
+     "set": {
+      "k": "max(k - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "cnt",
+     "expr": "(k > 0 && 12 > th) + (k > 1 && 45 > th) + (k > 2 && 7 > th) + (k > 3 && 23 > th) + (k > 4 && 56 > th) + (k > 5 && 89 > th) + (k > 6 && 34 > th) + (k > 7 && 18 > th)"
+    },
+    {
+     "name": "xk",
+     "expr": "if(k - 1 < 1, 12, if(k - 1 < 2, 45, if(k - 1 < 3, 7, if(k - 1 < 4, 23, if(k - 1 < 5, 56, if(k - 1 < 6, 89, if(k - 1 < 7, 34, 18)))))))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.3,
+     "text": {
+      "en": "count = 0"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 8.5,
+     "text": {
+      "en": "for x in L:"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.7,
+     "text": {
+      "en": "if x > {th}: count = count + 1"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "particles",
+     "count": 8,
+     "x": "2.3 + 2.2*i",
+     "y": 5.2,
+     "r": 0.9,
+     "opacity": 0.75,
+     "color": {
+      "by": "if(i >= k, 0.5, if((if(i < 1, 12, if(i < 2, 45, if(i < 3, 7, if(i < 4, 23, if(i < 5, 56, if(i < 6, 89, if(i < 7, 34, 18)))))))) > th, 1, 0))",
+      "scale": [
+       "red",
+       "blue",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "circle",
+     "x": "2.3 + 2.2*(k - 1)",
+     "y": 5.2,
+     "r": 1.05,
+     "fill": false,
+     "color": "yellow",
+     "visibleIf": "k > 0",
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "x": 2.3,
+     "y": 5.2,
+     "text": {
+      "en": "12"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.3,
+     "y": 3.8,
+     "text": {
+      "en": "0"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 5.2,
+     "text": {
+      "en": "45"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 3.8,
+     "text": {
+      "en": "1"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 6.7,
+     "y": 5.2,
+     "text": {
+      "en": "7"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.7,
+     "y": 3.8,
+     "text": {
+      "en": "2"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 8.9,
+     "y": 5.2,
+     "text": {
+      "en": "23"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.9,
+     "y": 3.8,
+     "text": {
+      "en": "3"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 11.100000000000001,
+     "y": 5.2,
+     "text": {
+      "en": "56"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.100000000000001,
+     "y": 3.8,
+     "text": {
+      "en": "4"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 13.3,
+     "y": 5.2,
+     "text": {
+      "en": "89"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.3,
+     "y": 3.8,
+     "text": {
+      "en": "5"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 5.2,
+     "text": {
+      "en": "34"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 3.8,
+     "text": {
+      "en": "6"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 17.700000000000003,
+     "y": 5.2,
+     "text": {
+      "en": "18"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.700000000000003,
+     "y": 3.8,
+     "text": {
+      "en": "7"
+     },
+     "size": 20,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.5,
+     "text": {
+      "en": "x = {xk}:  {xk} > {th} is True → count up",
+      "kn": "x = {xk}: ನಿಜ → ಎಣಿಕೆ ಹೆಚ್ಚು"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "k > 0 && xk > th"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.5,
+     "text": {
+      "en": "x = {xk}:  {xk} > {th} is False",
+      "kn": "x = {xk}: ತಪ್ಪು"
+     },
+     "size": 26,
+     "color": "red",
+     "visibleIf": "k > 0 && xk <= th"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.2,
+     "text": {
+      "en": "count = {cnt}",
+      "kn": "ಎಣಿಕೆ = {cnt}"
+     },
+     "size": 34,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "count",
+      "kn": "ಎಣಿಕೆ"
+     },
+     "expr": "cnt",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "How many elements are greater than 30?",
+     "kn": "30 ಕ್ಕಿಂತ ದೊಡ್ಡ ಅಂಶಗಳು ಎಷ್ಟು?"
+    },
+    {
+     "en": "Change the limit after a few steps. Does the count update for elements already visited?",
+     "kn": "ಕೆಲವು ಹೆಜ್ಜೆಗಳ ನಂತರ ಮಿತಿ ಬದಲಿಸಿ. ಎಣಿಕೆ ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

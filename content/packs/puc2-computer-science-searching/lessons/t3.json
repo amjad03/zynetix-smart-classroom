@@ -218,6 +218,196 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Linear or binary: count the comparisons",
+    "kn": "ರೇಖೀಯ ಅಥವಾ ದ್ವಿಮಾನ: ಹೋಲಿಕೆ ಎಣಿಸಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Grow the list. Linear search may need n comparisons, but binary search on a sorted list needs at most floor(log2 n) + 1.",
+    "kn": "ಪಟ್ಟಿ ಬೆಳೆಸಿ. ರೇಖೀಯಕ್ಕೆ n ಹೋಲಿಕೆ ಬೇಕಾಗಬಹುದು; ವಿಂಗಡಿತ ಪಟ್ಟಿಯಲ್ಲಿ ದ್ವಿಮಾನಕ್ಕೆ ಗರಿಷ್ಠ floor(log2 n) + 1."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "List size n",
+      "kn": "ಪಟ್ಟಿ ಗಾತ್ರ n"
+     },
+     "min": 10,
+     "max": 1000,
+     "step": 10,
+     "value": 100
+    }
+   ],
+   "toggles": [
+    {
+     "name": "avg",
+     "label": {
+      "en": "Linear: average case",
+      "kn": "ರೇಖೀಯ: ಸರಾಸರಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "lin",
+     "expr": "if(avg, (n + 1)/2, n)"
+    },
+    {
+     "name": "bin",
+     "expr": "floor(ln(n)/ln(2)) + 1"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.2,
+     "text": {
+      "en": "n = {n} elements",
+      "kn": "n = {n} ಅಂಶಗಳು"
+     },
+     "size": 32,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 0.6,
+     "y": 7.6,
+     "text": {
+      "en": "Linear search",
+      "kn": "ರೇಖೀಯ ಹುಡುಕಾಟ"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 0.6,
+     "y": 6.0,
+     "w": "18*lin/1000",
+     "h": 1.0,
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": "0.9 + 18*lin/1000",
+     "y": 6.5,
+     "text": {
+      "en": "{lin:1}"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 0.6,
+     "y": 4.6,
+     "text": {
+      "en": "Binary search (worst case)",
+      "kn": "ದ್ವಿಮಾನ ಹುಡುಕಾಟ (ಕೆಟ್ಟ ಸಂದರ್ಭ)"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 0.6,
+     "y": 3.0,
+     "w": "max(18*bin/1000, 0.06)",
+     "h": 1.0,
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": "0.9 + 18*bin/1000",
+     "y": 3.5,
+     "text": {
+      "en": "{bin}"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.6,
+     "text": {
+      "en": "binary search is about {lin/bin:0} times fewer comparisons",
+      "kn": "ದ್ವಿಮಾನ ಸುಮಾರು {lin/bin:0} ಪಟ್ಟು ಕಡಿಮೆ ಹೋಲಿಕೆ"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.6,
+     "text": {
+      "en": "average case for linear search: (n + 1)/2",
+      "kn": "ರೇಖೀಯದ ಸರಾಸರಿ: (n + 1)/2"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "avg"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Linear",
+      "kn": "ರೇಖೀಯ"
+     },
+     "expr": "lin",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Binary",
+      "kn": "ದ್ವಿಮಾನ"
+     },
+     "expr": "bin",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double n from 100 to 200. How do the two counts change?",
+     "kn": "n ಅನ್ನು 100 ರಿಂದ 200 ಮಾಡಿ. ಎರಡು ಎಣಿಕೆ ಹೇಗೆ ಬದಲಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "For n = 1000, how many comparisons does binary search need?",
+     "kn": "n = 1000 ಕ್ಕೆ ದ್ವಿಮಾನಕ್ಕೆ ಎಷ್ಟು ಹೋಲಿಕೆ?"
+    },
+    {
+     "en": "Binary search is faster, so why do we still use linear search?",
+     "kn": "ದ್ವಿಮಾನ ವೇಗ; ಆದರೂ ರೇಖೀಯ ಏಕೆ ಬಳಸುತ್ತೇವೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

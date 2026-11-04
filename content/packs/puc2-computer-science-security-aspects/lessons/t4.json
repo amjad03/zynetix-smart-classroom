@@ -401,6 +401,424 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A firewall at the gateway",
+    "kn": "ಗೇಟ್‌ವೇಯಲ್ಲಿ ಫೈರ್‌ವಾಲ್"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Packets for different ports arrive from the Internet. Turn on firewall rules to block some of them. Notice also what an interceptor sees in HTTP and HTTPS traffic.",
+    "kn": "ಬೇರೆ ಪೋರ್ಟ್‌ಗಳ ಪ್ಯಾಕೆಟ್‌ಗಳು ಇಂಟರ್ನೆಟ್‌ನಿಂದ ಬರುತ್ತವೆ. ಕೆಲವನ್ನು ತಡೆಯಲು ಫೈರ್‌ವಾಲ್ ನಿಯಮ ಆನ್ ಮಾಡಿ. HTTP ಮತ್ತು HTTPS ನಲ್ಲಿ ಕದ್ದಾಲಿಕೆದಾರ ಏನು ನೋಡುತ್ತಾನೆ ಗಮನಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "spd",
+     "label": {
+      "en": "Traffic speed",
+      "kn": "ಸಂಚಾರ ವೇಗ"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "b23",
+     "label": {
+      "en": "Rule: block Telnet (port 23)",
+      "kn": "ನಿಯಮ: Telnet ತಡೆ"
+     },
+     "value": false
+    },
+    {
+     "name": "web",
+     "label": {
+      "en": "Rule: allow only web (80, 443)",
+      "kn": "ನಿಯಮ: ವೆಬ್ ಮಾತ್ರ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "bk0",
+     "expr": "0"
+    },
+    {
+     "name": "bk1",
+     "expr": "0"
+    },
+    {
+     "name": "bk2",
+     "expr": "b23 || web"
+    },
+    {
+     "name": "bk3",
+     "expr": "web"
+    },
+    {
+     "name": "bk4",
+     "expr": "web"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.3,
+     "y": 0.8,
+     "w": 3.2,
+     "h": 8.4,
+     "color": "red",
+     "opacity": 0.15
+    },
+    {
+     "shape": "text",
+     "x": 1.9,
+     "y": 9.5,
+     "text": {
+      "en": "Internet"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 16.3,
+     "y": 0.8,
+     "w": 3.4,
+     "h": 8.4,
+     "color": "green",
+     "opacity": 0.15
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": 9.5,
+     "text": {
+      "en": "school LAN",
+      "kn": "ಶಾಲಾ LAN"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 9.6,
+     "y": 0.8,
+     "w": 0.8,
+     "h": 8.4,
+     "color": "orange",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.5,
+     "text": {
+      "en": "firewall",
+      "kn": "ಫೈರ್‌ವಾಲ್"
+     },
+     "size": 24,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 1.9,
+     "y": 8.0,
+     "text": {
+      "en": "port 80"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.9,
+     "y": 7.45,
+     "text": {
+      "en": "HTTP web page"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(bk0, min(3.6 + 12.5*mod(t*spd/10 + 0*0.17, 1), 9.2), 3.6 + 12.5*mod(t*spd/10 + 0*0.17, 1))",
+     "y": 8.0,
+     "r": 0.3,
+     "color": {
+      "by": "bk0",
+      "scale": [
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 8.0,
+     "text": {
+      "en": "blocked",
+      "kn": "ತಡೆಯಲಾಗಿದೆ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "bk0"
+    },
+    {
+     "shape": "text",
+     "x": 1.9,
+     "y": 6.4,
+     "text": {
+      "en": "port 443"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.9,
+     "y": 5.8500000000000005,
+     "text": {
+      "en": "HTTPS web page"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(bk1, min(3.6 + 12.5*mod(t*spd/10 + 1*0.17, 1), 9.2), 3.6 + 12.5*mod(t*spd/10 + 1*0.17, 1))",
+     "y": 6.4,
+     "r": 0.3,
+     "color": {
+      "by": "bk1",
+      "scale": [
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 6.4,
+     "text": {
+      "en": "blocked",
+      "kn": "ತಡೆಯಲಾಗಿದೆ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "bk1"
+    },
+    {
+     "shape": "text",
+     "x": 1.9,
+     "y": 4.8,
+     "text": {
+      "en": "port 23"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.9,
+     "y": 4.25,
+     "text": {
+      "en": "Telnet login"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(bk2, min(3.6 + 12.5*mod(t*spd/10 + 2*0.17, 1), 9.2), 3.6 + 12.5*mod(t*spd/10 + 2*0.17, 1))",
+     "y": 4.8,
+     "r": 0.3,
+     "color": {
+      "by": "bk2",
+      "scale": [
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 4.8,
+     "text": {
+      "en": "blocked",
+      "kn": "ತಡೆಯಲಾಗಿದೆ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "bk2"
+    },
+    {
+     "shape": "text",
+     "x": 1.9,
+     "y": 3.1999999999999993,
+     "text": {
+      "en": "port 21"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.9,
+     "y": 2.6499999999999995,
+     "text": {
+      "en": "FTP file"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(bk3, min(3.6 + 12.5*mod(t*spd/10 + 3*0.17, 1), 9.2), 3.6 + 12.5*mod(t*spd/10 + 3*0.17, 1))",
+     "y": 3.1999999999999993,
+     "r": 0.3,
+     "color": {
+      "by": "bk3",
+      "scale": [
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 3.1999999999999993,
+     "text": {
+      "en": "blocked",
+      "kn": "ತಡೆಯಲಾಗಿದೆ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "bk3"
+    },
+    {
+     "shape": "text",
+     "x": 1.9,
+     "y": 1.5999999999999996,
+     "text": {
+      "en": "port 25"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.9,
+     "y": 1.0499999999999996,
+     "text": {
+      "en": "SMTP mail"
+     },
+     "size": 16,
+     "color": "white",
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "if(bk4, min(3.6 + 12.5*mod(t*spd/10 + 4*0.17, 1), 9.2), 3.6 + 12.5*mod(t*spd/10 + 4*0.17, 1))",
+     "y": 1.5999999999999996,
+     "r": 0.3,
+     "color": {
+      "by": "bk4",
+      "scale": [
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 1.5999999999999996,
+     "text": {
+      "en": "blocked",
+      "kn": "ತಡೆಯಲಾಗಿದೆ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "bk4"
+    },
+    {
+     "shape": "label",
+     "x": "6.5",
+     "y": 5.8,
+     "text": {
+      "en": "x8#Qz!7@ (encrypted)",
+      "kn": "(ಗೂಢಲಿಪೀಕೃತ)"
+     },
+     "size": 18
+    },
+    {
+     "shape": "label",
+     "x": "6.5",
+     "y": 7.4,
+     "text": {
+      "en": "user=asha pass=1234"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 0.3,
+     "text": {
+      "en": "an eavesdropper can read HTTP but not HTTPS",
+      "kn": "ಕದ್ದಾಲಿಕೆದಾರ HTTP ಓದಬಲ್ಲ, HTTPS ಅಲ್ಲ"
+     },
+     "size": 20,
+     "color": "white"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Block Telnet. Which packets still reach the LAN?",
+     "kn": "Telnet ತಡೆಯಿರಿ. ಯಾವ ಪ್ಯಾಕೆಟ್‌ಗಳು ಇನ್ನೂ LAN ತಲುಪುತ್ತವೆ?"
+    },
+    {
+     "en": "Allow only web traffic. Why might the school still want e-mail to work?",
+     "kn": "ವೆಬ್ ಮಾತ್ರ ಅನುಮತಿಸಿ. ಶಾಲೆಗೆ ಇ-ಮೇಲ್ ಏಕೆ ಬೇಕಾಗಬಹುದು?"
+    },
+    {
+     "en": "Which web page should you use for a login, and why?",
+     "kn": "ಲಾಗಿನ್‌ಗೆ ಯಾವ ವೆಬ್ ಪುಟ ಬಳಸಬೇಕು, ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

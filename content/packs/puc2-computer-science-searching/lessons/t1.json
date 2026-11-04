@@ -483,6 +483,344 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Linear search, one comparison at a time",
+    "kn": "ರೇಖೀಯ ಹುಡುಕಾಟ, ಒಂದೊಂದೇ ಹೋಲಿಕೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Choose a key and press Step. The key is compared with each element from the first; the search stops as soon as it matches or the list ends.",
+    "kn": "ಕೀಲಿ ಆರಿಸಿ ಹೆಜ್ಜೆ ಒತ್ತಿ. ಕೀಲಿಯನ್ನು ಮೊದಲಿನಿಂದ ಪ್ರತಿ ಅಂಶದೊಂದಿಗೆ ಹೋಲಿಸಲಾಗುತ್ತದೆ; ಹೊಂದಿದ ತಕ್ಷಣ ನಿಲ್ಲುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "key",
+     "label": {
+      "en": "Key",
+      "kn": "ಕೀಲಿ"
+     },
+     "min": -5,
+     "max": 20,
+     "step": 1,
+     "value": 17
+    }
+   ],
+   "counters": [
+    {
+     "name": "k",
+     "value": 0,
+     "min": 0,
+     "max": 7
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(kk + 1, kmax)"
+     }
+    },
+    {
+     "label": {
+      "en": "Run all",
+      "kn": "ಎಲ್ಲ ಚಲಾಯಿಸಿ"
+     },
+     "icon": "play",
+     "set": {
+      "k": "kmax"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "f",
+     "expr": "if(key == 8, 0, if(key == -4, 1, if(key == 7, 2, if(key == 17, 3, if(key == 0, 4, if(key == 2, 5, if(key == 19, 6, 7)))))))"
+    },
+    {
+     "name": "kmax",
+     "expr": "min(f + 1, 7)"
+    },
+    {
+     "name": "kk",
+     "expr": "min(k, kmax)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.2,
+     "text": {
+      "en": "numList = [8, -4, 7, 17, 0, 2, 19],  key = {key}"
+     },
+     "size": 28,
+     "color": "yellow"
+    },
+    {
+     "shape": "particles",
+     "count": 7,
+     "x": "2.5 + 2.5*i",
+     "y": 5.6,
+     "r": 1.0,
+     "opacity": 0.75,
+     "color": {
+      "by": "if(i >= kk, 0.5, if(i == f, 1, 0))",
+      "scale": [
+       "red",
+       "blue",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 5.6,
+     "text": {
+      "en": "8"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 4.1,
+     "text": {
+      "en": "index 0",
+      "kn": "ಸೂಚಿ 0"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 5.0,
+     "y": 5.6,
+     "text": {
+      "en": "-4"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.0,
+     "y": 4.1,
+     "text": {
+      "en": "index 1",
+      "kn": "ಸೂಚಿ 1"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 5.6,
+     "text": {
+      "en": "7"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 4.1,
+     "text": {
+      "en": "index 2",
+      "kn": "ಸೂಚಿ 2"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 5.6,
+     "text": {
+      "en": "17"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.0,
+     "y": 4.1,
+     "text": {
+      "en": "index 3",
+      "kn": "ಸೂಚಿ 3"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 12.5,
+     "y": 5.6,
+     "text": {
+      "en": "0"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 12.5,
+     "y": 4.1,
+     "text": {
+      "en": "index 4",
+      "kn": "ಸೂಚಿ 4"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 15.0,
+     "y": 5.6,
+     "text": {
+      "en": "2"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.0,
+     "y": 4.1,
+     "text": {
+      "en": "index 5",
+      "kn": "ಸೂಚಿ 5"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 5.6,
+     "text": {
+      "en": "19"
+     },
+     "size": 34,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 4.1,
+     "text": {
+      "en": "index 6",
+      "kn": "ಸೂಚಿ 6"
+     },
+     "size": 18,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "arrow",
+     "x": "2.5 + 2.5*(kk - 1)",
+     "y": 7.9,
+     "dx": 0,
+     "dy": -1.1,
+     "color": "yellow",
+     "visibleIf": "kk > 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.6,
+     "text": {
+      "en": "comparisons: {kk}",
+      "kn": "ಹೋಲಿಕೆಗಳು: {kk}"
+     },
+     "size": 30,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.4,
+     "text": {
+      "en": "Found at position {f + 1} (index {f})",
+      "kn": "ಸ್ಥಾನ {f + 1} ರಲ್ಲಿ ಸಿಕ್ಕಿತು"
+     },
+     "size": 30,
+     "color": "green",
+     "visibleIf": "f < 7 && kk > f"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.4,
+     "text": {
+      "en": "Not found: all 7 elements compared",
+      "kn": "ಸಿಗಲಿಲ್ಲ: ಎಲ್ಲ 7 ಹೋಲಿಸಲಾಗಿದೆ"
+     },
+     "size": 30,
+     "color": "red",
+     "visibleIf": "f == 7 && kk >= 7"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Comparisons",
+      "kn": "ಹೋಲಿಕೆಗಳು"
+     },
+     "expr": "kk",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Search for 8 and for 19. Which is the best case and which the worst?",
+     "kn": "8 ಮತ್ತು 19 ಹುಡುಕಿ. ಉತ್ತಮ ಮತ್ತು ಕೆಟ್ಟ ಸಂದರ್ಭ ಯಾವುದು?"
+    },
+    {
+     "en": "Search for 5. How many comparisons before Python returns None?",
+     "kn": "5 ಹುಡುಕಿ. None ಮೊದಲು ಎಷ್ಟು ಹೋಲಿಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

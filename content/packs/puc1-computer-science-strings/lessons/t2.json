@@ -530,6 +530,439 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Slice a string",
+    "kn": "ಸ್ಟ್ರಿಂಗ್ ಸ್ಲೈಸ್ ಮಾಡಿ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Set start, stop and step. The green characters are taken: from start up to stop − 1, jumping by step. The new string appears below.",
+    "kn": "ಆರಂಭ, ನಿಲುಗಡೆ, ಹೆಜ್ಜೆ ಹೊಂದಿಸಿ. ಆರಂಭದಿಂದ ನಿಲುಗಡೆ − 1 ವರೆಗೆ ಹೆಜ್ಜೆಯಂತೆ ಹಸಿರು ಅಕ್ಷರಗಳು ತೆಗೆಯಲ್ಪಡುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "s0",
+     "label": {
+      "en": "start",
+      "kn": "ಆರಂಭ"
+     },
+     "min": 0,
+     "max": 8,
+     "step": 1,
+     "value": 3
+    },
+    {
+     "name": "sp",
+     "label": {
+      "en": "stop",
+      "kn": "ನಿಲುಗಡೆ"
+     },
+     "min": 0,
+     "max": 8,
+     "step": 1,
+     "value": 8
+    }
+   ],
+   "choices": [
+    {
+     "name": "st",
+     "label": {
+      "en": "step",
+      "kn": "ಹೆಜ್ಜೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "1",
+        "kn": "1"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "2",
+        "kn": "2"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "3",
+        "kn": "3"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "en",
+     "expr": "min(sp, 8)"
+    },
+    {
+     "name": "cnt",
+     "expr": "max(0, ceil((en - s0)/st))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.2,
+     "text": {
+      "en": "s[{s0}:{sp}:{st}]"
+     },
+     "size": 36,
+     "color": "yellow"
+    },
+    {
+     "shape": "particles",
+     "count": 8,
+     "x": "2.1 + 2.25*i",
+     "y": 6.6,
+     "r": 0.95,
+     "opacity": 0.6,
+     "color": {
+      "by": "i >= s0 && i < en && mod(i - s0, st) == 0",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 2.1,
+     "y": 6.6,
+     "text": {
+      "en": "C"
+     },
+     "size": 40,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 2.1,
+     "y": 8.0,
+     "text": {
+      "en": "0"
+     },
+     "size": 22,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": "2.1 + 2.25*(0 - s0)/st",
+     "y": 2.8,
+     "text": {
+      "en": "C"
+     },
+     "size": 44,
+     "color": "green",
+     "visibleIf": "0 >= s0 && 0 < en && mod(0 - s0, st) == 0"
+    },
+    {
+     "shape": "text",
+     "x": 4.35,
+     "y": 6.6,
+     "text": {
+      "en": "O"
+     },
+     "size": 40,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 4.35,
+     "y": 8.0,
+     "text": {
+      "en": "1"
+     },
+     "size": 22,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": "2.1 + 2.25*(1 - s0)/st",
+     "y": 2.8,
+     "text": {
+      "en": "O"
+     },
+     "size": 44,
+     "color": "green",
+     "visibleIf": "1 >= s0 && 1 < en && mod(1 - s0, st) == 0"
+    },
+    {
+     "shape": "text",
+     "x": 6.6,
+     "y": 6.6,
+     "text": {
+      "en": "M"
+     },
+     "size": 40,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.6,
+     "y": 8.0,
+     "text": {
+      "en": "2"
+     },
+     "size": 22,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": "2.1 + 2.25*(2 - s0)/st",
+     "y": 2.8,
+     "text": {
+      "en": "M"
+     },
+     "size": 44,
+     "color": "green",
+     "visibleIf": "2 >= s0 && 2 < en && mod(2 - s0, st) == 0"
+    },
+    {
+     "shape": "text",
+     "x": 8.85,
+     "y": 6.6,
+     "text": {
+      "en": "P"
+     },
+     "size": 40,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.85,
+     "y": 8.0,
+     "text": {
+      "en": "3"
+     },
+     "size": 22,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": "2.1 + 2.25*(3 - s0)/st",
+     "y": 2.8,
+     "text": {
+      "en": "P"
+     },
+     "size": 44,
+     "color": "green",
+     "visibleIf": "3 >= s0 && 3 < en && mod(3 - s0, st) == 0"
+    },
+    {
+     "shape": "text",
+     "x": 11.1,
+     "y": 6.6,
+     "text": {
+      "en": "U"
+     },
+     "size": 40,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.1,
+     "y": 8.0,
+     "text": {
+      "en": "4"
+     },
+     "size": 22,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": "2.1 + 2.25*(4 - s0)/st",
+     "y": 2.8,
+     "text": {
+      "en": "U"
+     },
+     "size": 44,
+     "color": "green",
+     "visibleIf": "4 >= s0 && 4 < en && mod(4 - s0, st) == 0"
+    },
+    {
+     "shape": "text",
+     "x": 13.35,
+     "y": 6.6,
+     "text": {
+      "en": "T"
+     },
+     "size": 40,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.35,
+     "y": 8.0,
+     "text": {
+      "en": "5"
+     },
+     "size": 22,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": "2.1 + 2.25*(5 - s0)/st",
+     "y": 2.8,
+     "text": {
+      "en": "T"
+     },
+     "size": 44,
+     "color": "green",
+     "visibleIf": "5 >= s0 && 5 < en && mod(5 - s0, st) == 0"
+    },
+    {
+     "shape": "text",
+     "x": 15.6,
+     "y": 6.6,
+     "text": {
+      "en": "E"
+     },
+     "size": 40,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.6,
+     "y": 8.0,
+     "text": {
+      "en": "6"
+     },
+     "size": 22,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": "2.1 + 2.25*(6 - s0)/st",
+     "y": 2.8,
+     "text": {
+      "en": "E"
+     },
+     "size": 44,
+     "color": "green",
+     "visibleIf": "6 >= s0 && 6 < en && mod(6 - s0, st) == 0"
+    },
+    {
+     "shape": "text",
+     "x": 17.85,
+     "y": 6.6,
+     "text": {
+      "en": "R"
+     },
+     "size": 40,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.85,
+     "y": 8.0,
+     "text": {
+      "en": "7"
+     },
+     "size": 22,
+     "color": "white",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": "2.1 + 2.25*(7 - s0)/st",
+     "y": 2.8,
+     "text": {
+      "en": "R"
+     },
+     "size": 44,
+     "color": "green",
+     "visibleIf": "7 >= s0 && 7 < en && mod(7 - s0, st) == 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 4.4,
+     "text": {
+      "en": "result: {cnt} characters (index {s0} up to {sp} − 1, every {st})",
+      "kn": "ಫಲಿತಾಂಶ: {cnt} ಅಕ್ಷರಗಳು"
+     },
+     "size": 24,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.8,
+     "text": {
+      "en": "\"\" (empty string)",
+      "kn": "\"\" (ಖಾಲಿ ಸ್ಟ್ರಿಂಗ್)"
+     },
+     "size": 36,
+     "color": "orange",
+     "visibleIf": "cnt == 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.0,
+     "text": {
+      "en": "A slice never gives IndexError: stops past the end are cut to len(s)",
+      "kn": "ಸ್ಲೈಸ್ IndexError ಕೊಡುವುದಿಲ್ಲ"
+     },
+     "size": 22,
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Length of the slice",
+      "kn": "ಸ್ಲೈಸ್ ಉದ್ದ"
+     },
+     "expr": "cnt",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make s[0:3]. Is the character at index 3 included?",
+     "kn": "s[0:3] ಮಾಡಿ. ಸೂಚಿ 3 ರ ಅಕ್ಷರ ಸೇರಿದೆಯೇ?"
+    },
+    {
+     "en": "Make s[1:8:2]. Which letters do you get?",
+     "kn": "s[1:8:2] ಮಾಡಿ. ಯಾವ ಅಕ್ಷರಗಳು ಸಿಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Set start greater than stop. What does the slice give?",
+     "kn": "ಆರಂಭ > ನಿಲುಗಡೆ ಮಾಡಿ. ಸ್ಲೈಸ್ ಏನು ಕೊಡುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -348,6 +348,351 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Radio, microwave or infrared?",
+    "kn": "ರೇಡಿಯೊ, ಮೈಕ್ರೋವೇವ್ ಅಥವಾ ಅವಗೆಂಪು?"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Slide the frequency (on a power-of-ten scale) or jump to a real device. Higher frequency means a shorter wavelength; the band decides how the wave behaves.",
+    "kn": "ಆವರ್ತನವನ್ನು (ಹತ್ತರ ಘಾತದ ಅಳತೆಯಲ್ಲಿ) ಸರಿಸಿ ಅಥವಾ ನಿಜ ಸಾಧನಕ್ಕೆ ಹಾರಿ. ಹೆಚ್ಚು ಆವರ್ತನ ಎಂದರೆ ಚಿಕ್ಕ ತರಂಗಾಂತರ."
+   },
+   "sliders": [
+    {
+     "name": "lf",
+     "label": {
+      "en": "Frequency, log10 of Hz",
+      "kn": "ಆವರ್ತನ (log10 Hz)"
+     },
+     "min": 3.5,
+     "max": 14.5,
+     "step": 0.02,
+     "value": 8
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "FM radio 100 MHz",
+      "kn": "FM ರೇಡಿಯೊ"
+     },
+     "icon": "next",
+     "set": {
+      "lf": "8"
+     }
+    },
+    {
+     "label": {
+      "en": "Wi-Fi / Bluetooth 2.4 GHz",
+      "kn": "Wi-Fi 2.4 GHz"
+     },
+     "icon": "next",
+     "set": {
+      "lf": "9.38"
+     }
+    },
+    {
+     "label": {
+      "en": "Satellite 12 GHz",
+      "kn": "ಉಪಗ್ರಹ 12 GHz"
+     },
+     "icon": "next",
+     "set": {
+      "lf": "10.08"
+     }
+    },
+    {
+     "label": {
+      "en": "TV remote (infrared)",
+      "kn": "TV ರಿಮೋಟ್"
+     },
+     "icon": "next",
+     "set": {
+      "lf": "14.5"
+     }
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "f",
+     "expr": "pow(10, lf)"
+    },
+    {
+     "name": "lam",
+     "expr": "3e8/f"
+    },
+    {
+     "name": "band",
+     "expr": "if(lf < 9, 1, if(lf < 11.477, 2, 3))"
+    },
+    {
+     "name": "wl",
+     "expr": "0.25 + (14.6 - lf)*0.45"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 1.2,
+     "w": "18*(9 - 3.477)/(14.6 - 3.477)",
+     "h": 0.7,
+     "color": "blue",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": "1 + 18*(9 - 3.477)/(14.6 - 3.477)",
+     "y": 1.2,
+     "w": "18*(11.477 - 9)/(14.6 - 3.477)",
+     "h": 0.7,
+     "color": "green",
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": "1 + 18*(11.477 - 3.477)/(14.6 - 3.477)",
+     "y": 1.2,
+     "w": "18*(14.6 - 11.477)/(14.6 - 3.477)",
+     "h": 0.7,
+     "color": "red",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 0.5,
+     "text": {
+      "en": "radio",
+      "kn": "ರೇಡಿಯೊ"
+     },
+     "size": 22,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 0.5,
+     "text": {
+      "en": "microwave",
+      "kn": "ಮೈಕ್ರೋವೇವ್"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 17,
+     "y": 0.5,
+     "text": {
+      "en": "infrared",
+      "kn": "ಅವಗೆಂಪು"
+     },
+     "size": 22,
+     "color": "red"
+    },
+    {
+     "shape": "arrow",
+     "x": "1 + 18*(lf - 3.477)/(14.6 - 3.477)",
+     "y": 2.9,
+     "dx": 0,
+     "dy": -0.9,
+     "color": "yellow"
+    },
+    {
+     "shape": "wave",
+     "fn": "5 + 1.1*sin(2*pi*(x/wl - t/2))",
+     "from": 1,
+     "to": 19,
+     "color": {
+      "by": "(band - 1)/2",
+      "scale": [
+       "blue",
+       "green",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 8.9,
+     "text": {
+      "en": "frequency {f/1e3:1} kHz",
+      "kn": "ಆವರ್ತನ {f/1e3:1} kHz"
+     },
+     "size": 30,
+     "color": "yellow",
+     "visibleIf": "lf < 6"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 8.9,
+     "text": {
+      "en": "frequency {f/1e6:1} MHz",
+      "kn": "ಆವರ್ತನ {f/1e6:1} MHz"
+     },
+     "size": 30,
+     "color": "yellow",
+     "visibleIf": "lf >= 6 && lf < 9"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 8.9,
+     "text": {
+      "en": "frequency {f/1e9:1} GHz",
+      "kn": "ಆವರ್ತನ {f/1e9:1} GHz"
+     },
+     "size": 30,
+     "color": "yellow",
+     "visibleIf": "lf >= 9 && lf < 12"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 8.9,
+     "text": {
+      "en": "frequency {f/1e12:1} THz",
+      "kn": "ಆವರ್ತನ {f/1e12:1} THz"
+     },
+     "size": 30,
+     "color": "yellow",
+     "visibleIf": "lf >= 12"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 8.9,
+     "text": {
+      "en": "wavelength {lam/1000:1} km",
+      "kn": "ತರಂಗಾಂತರ {lam/1000:1} km"
+     },
+     "size": 30,
+     "color": "white",
+     "visibleIf": "lam >= 1000"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 8.9,
+     "text": {
+      "en": "wavelength {lam:2} m",
+      "kn": "ತರಂಗಾಂತರ {lam:2} m"
+     },
+     "size": 30,
+     "color": "white",
+     "visibleIf": "lam < 1000 && lam >= 1"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 8.9,
+     "text": {
+      "en": "wavelength {lam*100:1} cm",
+      "kn": "ತರಂಗಾಂತರ {lam*100:1} cm"
+     },
+     "size": 30,
+     "color": "white",
+     "visibleIf": "lam < 1 && lam >= 0.01"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 8.9,
+     "text": {
+      "en": "wavelength {lam*1000:2} mm",
+      "kn": "ತರಂಗಾಂತರ {lam*1000:2} mm"
+     },
+     "size": 30,
+     "color": "white",
+     "visibleIf": "lam < 0.01 && lam >= 0.0001"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 8.9,
+     "text": {
+      "en": "wavelength {lam*1e6:2} µm",
+      "kn": "ತರಂಗಾಂತರ {lam*1e6:2} µm"
+     },
+     "size": 30,
+     "color": "white",
+     "visibleIf": "lam < 0.0001"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.8,
+     "text": {
+      "en": "Radio: goes in all directions, travels far, passes through walls",
+      "kn": "ರೇಡಿಯೊ: ಎಲ್ಲ ದಿಕ್ಕು, ದೂರ, ಗೋಡೆ ದಾಟುತ್ತದೆ"
+     },
+     "size": 22,
+     "color": "blue",
+     "visibleIf": "band == 1"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.8,
+     "text": {
+      "en": "Microwave: one direction, needs line of sight, blocked by solid objects",
+      "kn": "ಮೈಕ್ರೋವೇವ್: ಒಂದು ದಿಕ್ಕು, ನೇರ ದೃಷ್ಟಿ ಬೇಕು"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "band == 2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 7.8,
+     "text": {
+      "en": "Infrared: very short range, line of sight, cannot pass walls",
+      "kn": "ಅವಗೆಂಪು: ಅತಿ ಕಡಿಮೆ ದೂರ, ಗೋಡೆ ದಾಟದು"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "band == 3"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Press FM radio and then Wi-Fi. Which one passes through walls more easily?",
+     "kn": "FM ರೇಡಿಯೊ ಮತ್ತು Wi-Fi ಒತ್ತಿ. ಯಾವುದು ಗೋಡೆ ಸುಲಭವಾಗಿ ದಾಟುತ್ತದೆ?"
+    },
+    {
+     "en": "Why must a TV remote point at the TV?",
+     "kn": "TV ರಿಮೋಟ್ ಏಕೆ TV ಕಡೆ ತೋರಿಸಬೇಕು?"
+    },
+    {
+     "en": "Where does 1 GHz fall: radio or microwave?",
+     "kn": "1 GHz ಎಲ್ಲಿ: ರೇಡಿಯೊ ಅಥವಾ ಮೈಕ್ರೋವೇವ್?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

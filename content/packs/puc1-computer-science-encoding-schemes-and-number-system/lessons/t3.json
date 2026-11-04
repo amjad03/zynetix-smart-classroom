@@ -864,6 +864,441 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Decimal to another base",
+    "kn": "ದಶಮಾನದಿಂದ ಇನ್ನೊಂದು ಆಧಾರಕ್ಕೆ"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Choose a number and a base, then press Step to divide again and again. The remainders, read from the bottom up, are the digits.",
+    "kn": "ಸಂಖ್ಯೆ ಮತ್ತು ಆಧಾರ ಆರಿಸಿ, ಮತ್ತೆ ಮತ್ತೆ ಭಾಗಿಸಲು ಹೆಜ್ಜೆ ಒತ್ತಿ. ಕೆಳಗಿನಿಂದ ಮೇಲಕ್ಕೆ ಓದಿದ ಶೇಷಗಳೇ ಅಂಕಿಗಳು."
+   },
+   "sliders": [
+    {
+     "name": "N",
+     "label": {
+      "en": "Decimal number",
+      "kn": "ದಶಮಾನ ಸಂಖ್ಯೆ"
+     },
+     "min": 1,
+     "max": 255,
+     "step": 1,
+     "value": 25
+    }
+   ],
+   "choices": [
+    {
+     "name": "b",
+     "label": {
+      "en": "Base",
+      "kn": "ಆಧಾರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "2",
+        "kn": "2"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "8",
+        "kn": "8"
+       },
+       "value": 8
+      },
+      {
+       "label": {
+        "en": "16",
+        "kn": "16"
+       },
+       "value": 16
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "counters": [
+    {
+     "name": "k",
+     "value": 0,
+     "min": 0,
+     "max": 8
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(k + 1, 8)"
+     }
+    },
+    {
+     "label": {
+      "en": "Back",
+      "kn": "ಹಿಂದೆ"
+     },
+     "icon": "remove",
+     "set": {
+      "k": "max(k - 1, 0)"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "q0",
+     "expr": "floor(N/pow(b, 0))"
+    },
+    {
+     "name": "q1",
+     "expr": "floor(N/pow(b, 1))"
+    },
+    {
+     "name": "q2",
+     "expr": "floor(N/pow(b, 2))"
+    },
+    {
+     "name": "q3",
+     "expr": "floor(N/pow(b, 3))"
+    },
+    {
+     "name": "q4",
+     "expr": "floor(N/pow(b, 4))"
+    },
+    {
+     "name": "q5",
+     "expr": "floor(N/pow(b, 5))"
+    },
+    {
+     "name": "q6",
+     "expr": "floor(N/pow(b, 6))"
+    },
+    {
+     "name": "q7",
+     "expr": "floor(N/pow(b, 7))"
+    },
+    {
+     "name": "q8",
+     "expr": "floor(N/pow(b, 8))"
+    },
+    {
+     "name": "nd",
+     "expr": "(q0 > 0) + (q1 > 0) + (q2 > 0) + (q3 > 0) + (q4 > 0) + (q5 > 0) + (q6 > 0) + (q7 > 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": 9.3,
+     "text": {
+      "en": "Divide by {b}, keep the remainder",
+      "kn": "{b} ಇಂದ ಭಾಗಿಸಿ, ಶೇಷ ಬರೆಯಿರಿ"
+     },
+     "size": 28,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 1.0,
+     "y": 8.3,
+     "text": {
+      "en": "{q0} ÷ {b} = {q1}   remainder {q0 - b*q1}",
+      "kn": "{q0} ÷ {b} = {q1}   ಶೇಷ {q0 - b*q1}"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "k > 0 && q0 > 0"
+    },
+    {
+     "shape": "text",
+     "x": 1.0,
+     "y": 7.450000000000001,
+     "text": {
+      "en": "{q1} ÷ {b} = {q2}   remainder {q1 - b*q2}",
+      "kn": "{q1} ÷ {b} = {q2}   ಶೇಷ {q1 - b*q2}"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "k > 1 && q1 > 0"
+    },
+    {
+     "shape": "text",
+     "x": 1.0,
+     "y": 6.6000000000000005,
+     "text": {
+      "en": "{q2} ÷ {b} = {q3}   remainder {q2 - b*q3}",
+      "kn": "{q2} ÷ {b} = {q3}   ಶೇಷ {q2 - b*q3}"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "k > 2 && q2 > 0"
+    },
+    {
+     "shape": "text",
+     "x": 1.0,
+     "y": 5.750000000000001,
+     "text": {
+      "en": "{q3} ÷ {b} = {q4}   remainder {q3 - b*q4}",
+      "kn": "{q3} ÷ {b} = {q4}   ಶೇಷ {q3 - b*q4}"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "k > 3 && q3 > 0"
+    },
+    {
+     "shape": "text",
+     "x": 1.0,
+     "y": 4.9,
+     "text": {
+      "en": "{q4} ÷ {b} = {q5}   remainder {q4 - b*q5}",
+      "kn": "{q4} ÷ {b} = {q5}   ಶೇಷ {q4 - b*q5}"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "k > 4 && q4 > 0"
+    },
+    {
+     "shape": "text",
+     "x": 1.0,
+     "y": 4.050000000000001,
+     "text": {
+      "en": "{q5} ÷ {b} = {q6}   remainder {q5 - b*q6}",
+      "kn": "{q5} ÷ {b} = {q6}   ಶೇಷ {q5 - b*q6}"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "k > 5 && q5 > 0"
+    },
+    {
+     "shape": "text",
+     "x": 1.0,
+     "y": 3.200000000000001,
+     "text": {
+      "en": "{q6} ÷ {b} = {q7}   remainder {q6 - b*q7}",
+      "kn": "{q6} ÷ {b} = {q7}   ಶೇಷ {q6 - b*q7}"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "k > 6 && q6 > 0"
+    },
+    {
+     "shape": "text",
+     "x": 1.0,
+     "y": 2.3500000000000005,
+     "text": {
+      "en": "{q7} ÷ {b} = {q8}   remainder {q7 - b*q8}",
+      "kn": "{q7} ÷ {b} = {q8}   ಶೇಷ {q7 - b*q8}"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "k > 7 && q7 > 0"
+    },
+    {
+     "shape": "arrow",
+     "x": 11.2,
+     "y": 1.3,
+     "dx": 0,
+     "dy": 6.8,
+     "color": "green",
+     "visibleIf": "k >= nd"
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": 8.6,
+     "text": {
+      "en": "read upwards",
+      "kn": "ಮೇಲಕ್ಕೆ ಓದಿ"
+     },
+     "size": 22,
+     "align": "left",
+     "color": "green",
+     "visibleIf": "k >= nd"
+    },
+    {
+     "shape": "text",
+     "x": 18.8,
+     "y": 3.0,
+     "text": {
+      "en": "{q0 - b*q1}"
+     },
+     "size": 30,
+     "color": "yellow",
+     "visibleIf": "k > 0 && q0 > 0"
+    },
+    {
+     "shape": "text",
+     "x": 17.95,
+     "y": 3.0,
+     "text": {
+      "en": "{q1 - b*q2}"
+     },
+     "size": 30,
+     "color": "yellow",
+     "visibleIf": "k > 1 && q1 > 0"
+    },
+    {
+     "shape": "text",
+     "x": 17.1,
+     "y": 3.0,
+     "text": {
+      "en": "{q2 - b*q3}"
+     },
+     "size": 30,
+     "color": "yellow",
+     "visibleIf": "k > 2 && q2 > 0"
+    },
+    {
+     "shape": "text",
+     "x": 16.25,
+     "y": 3.0,
+     "text": {
+      "en": "{q3 - b*q4}"
+     },
+     "size": 30,
+     "color": "yellow",
+     "visibleIf": "k > 3 && q3 > 0"
+    },
+    {
+     "shape": "text",
+     "x": 15.4,
+     "y": 3.0,
+     "text": {
+      "en": "{q4 - b*q5}"
+     },
+     "size": 30,
+     "color": "yellow",
+     "visibleIf": "k > 4 && q4 > 0"
+    },
+    {
+     "shape": "text",
+     "x": 14.55,
+     "y": 3.0,
+     "text": {
+      "en": "{q5 - b*q6}"
+     },
+     "size": 30,
+     "color": "yellow",
+     "visibleIf": "k > 5 && q5 > 0"
+    },
+    {
+     "shape": "text",
+     "x": 13.700000000000001,
+     "y": 3.0,
+     "text": {
+      "en": "{q6 - b*q7}"
+     },
+     "size": 30,
+     "color": "yellow",
+     "visibleIf": "k > 6 && q6 > 0"
+    },
+    {
+     "shape": "text",
+     "x": 12.850000000000001,
+     "y": 3.0,
+     "text": {
+      "en": "{q7 - b*q8}"
+     },
+     "size": 30,
+     "color": "yellow",
+     "visibleIf": "k > 7 && q7 > 0"
+    },
+    {
+     "shape": "text",
+     "x": 15.4,
+     "y": 4.4,
+     "text": {
+      "en": "answer (base {b}):",
+      "kn": "ಉತ್ತರ (ಆಧಾರ {b}):"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15.4,
+     "y": 1.6,
+     "text": {
+      "en": "Done: the quotient is 0",
+      "kn": "ಮುಗಿಯಿತು: ಭಾಗಲಬ್ಧ 0"
+     },
+     "size": 24,
+     "color": "green",
+     "visibleIf": "k >= nd"
+    },
+    {
+     "shape": "text",
+     "x": 15.4,
+     "y": 0.7,
+     "text": {
+      "en": "In base 16, 10–15 are A–F",
+      "kn": "ಆಧಾರ 16 ರಲ್ಲಿ 10–15 = A–F"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "b == 16"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Digits needed",
+      "kn": "ಬೇಕಾದ ಅಂಕಿಗಳು"
+     },
+     "expr": "nd",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Convert 25 to binary. How many divisions did it take?",
+     "kn": "25 ಅನ್ನು ಬೈನರಿಗೆ ಬದಲಿಸಿ. ಎಷ್ಟು ಭಾಗಾಕಾರಗಳು ಬೇಕಾದವು?"
+    },
+    {
+     "en": "Convert 200 to octal and to hexadecimal. Which needs fewer digits?",
+     "kn": "200 ಅನ್ನು ಆಕ್ಟಲ್ ಮತ್ತು ಹೆಕ್ಸಾಗೆ ಬದಲಿಸಿ. ಯಾವುದಕ್ಕೆ ಕಡಿಮೆ ಅಂಕಿಗಳು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -369,6 +369,234 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A while loop that doubles",
+    "kn": "ದ್ವಿಗುಣಗೊಳಿಸುವ while ಲೂಪ್"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The condition is tested before every pass. Press Step: p doubles each time, and the loop stops the first time p < N is False.",
+    "kn": "ಪ್ರತಿ ಸುತ್ತಿನ ಮೊದಲು ಷರತ್ತು ಪರೀಕ್ಷಿಸಲ್ಪಡುತ್ತದೆ. ಹೆಜ್ಜೆ ಒತ್ತಿ: p ಪ್ರತಿ ಬಾರಿ ದ್ವಿಗುಣ, p < N ತಪ್ಪಾದ ತಕ್ಷಣ ಲೂಪ್ ನಿಲ್ಲುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "N",
+     "label": {
+      "en": "N",
+      "kn": "N"
+     },
+     "min": 10,
+     "max": 500,
+     "step": 10,
+     "value": 100
+    }
+   ],
+   "counters": [
+    {
+     "name": "k",
+     "value": 0,
+     "min": 0,
+     "max": 10
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Step",
+      "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(kk + 1, it)"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "it",
+     "expr": "(1 < N) + (2 < N) + (4 < N) + (8 < N) + (16 < N) + (32 < N) + (64 < N) + (128 < N) + (256 < N) + (512 < N)"
+    },
+    {
+     "name": "kk",
+     "expr": "min(k, it)"
+    },
+    {
+     "name": "p",
+     "expr": "pow(2, kk)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": 9.3,
+     "text": {
+      "en": "p = 1;  count = 0"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": 8.5,
+     "text": {
+      "en": "while p < {N}:"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.3,
+     "y": 7.7,
+     "text": {
+      "en": "p = p * 2;  count = count + 1"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 6.4,
+     "text": {
+      "en": "test {p} < {N}: True → run the body",
+      "kn": "ಪರೀಕ್ಷೆ {p} < {N}: ನಿಜ → ದೇಹ ಚಲಿಸು"
+     },
+     "size": 28,
+     "color": "green",
+     "visibleIf": "p < N"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 6.4,
+     "text": {
+      "en": "test {p} < {N}: False → leave the loop",
+      "kn": "ಪರೀಕ್ಷೆ {p} < {N}: ತಪ್ಪು → ಲೂಪ್ ಬಿಡು"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "p >= N"
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 4.2,
+     "w": "18*N/512",
+     "h": 0.8,
+     "color": "orange",
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 3.7,
+     "text": {
+      "en": "N = {N}"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 2.4,
+     "w": "18*p/512",
+     "h": 0.8,
+     "color": "green",
+     "opacity": 0.8
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 1.9,
+     "text": {
+      "en": "p = {p}"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 0.8,
+     "text": {
+      "en": "count = {kk}",
+      "kn": "ಎಣಿಕೆ = {kk}"
+     },
+     "size": 30,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 16,
+     "y": 0.8,
+     "text": {
+      "en": "loop ended",
+      "kn": "ಲೂಪ್ ಮುಗಿಯಿತು"
+     },
+     "size": 26,
+     "color": "red",
+     "visibleIf": "kk >= it"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Passes needed",
+      "kn": "ಬೇಕಾದ ಸುತ್ತುಗಳು"
+     },
+     "expr": "it",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With N = 100, how many times does the body run?",
+     "kn": "N = 100 ಆದಾಗ ದೇಹ ಎಷ್ಟು ಬಾರಿ ಚಲಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Compare N = 60 and N = 70. Why do they need a different number of passes?",
+     "kn": "N = 60 ಮತ್ತು N = 70 ಹೋಲಿಸಿ. ಸುತ್ತುಗಳ ಸಂಖ್ಯೆ ಏಕೆ ಬೇರೆ?"
+    },
+    {
+     "en": "Double N. How many more passes does the loop need?",
+     "kn": "N ಅನ್ನು ದ್ವಿಗುಣಿಸಿ. ಲೂಪ್‌ಗೆ ಎಷ್ಟು ಹೆಚ್ಚು ಸುತ್ತು ಬೇಕು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

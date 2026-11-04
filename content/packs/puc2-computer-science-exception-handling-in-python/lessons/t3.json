@@ -215,6 +215,320 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "assert and raise",
+    "kn": "assert ಮತ್ತು raise"
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Set the age passed to the function. Green lines ran, the red line raised an exception, and grey lines were skipped.",
+    "kn": "ಫಂಕ್ಷನ್‌ಗೆ ಕೊಡುವ ವಯಸ್ಸು ಹೊಂದಿಸಿ. ಹಸಿರು ಸಾಲುಗಳು ಚಲಿಸಿದವು, ಕೆಂಪು ಸಾಲು ವಿನಾಯಿತಿ ಎಬ್ಬಿಸಿತು, ಬೂದು ಬಿಡಲ್ಪಟ್ಟವು."
+   },
+   "sliders": [
+    {
+     "name": "age",
+     "label": {
+      "en": "Age passed",
+      "kn": "ಕೊಟ್ಟ ವಯಸ್ಸು"
+     },
+     "min": -20,
+     "max": 140,
+     "step": 5,
+     "value": 25
+    }
+   ],
+   "choices": [
+    {
+     "name": "md",
+     "label": {
+      "en": "Check with",
+      "kn": "ಪರಿಶೀಲನೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "assert",
+        "kn": "assert"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "raise",
+        "kn": "raise"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 8.1,
+     "w": 18,
+     "h": 0.95,
+     "color": {
+      "by": "(1)/2",
+      "scale": [
+       "white",
+       "green",
+       "red"
+      ]
+     },
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 1.3,
+     "y": 8.55,
+     "text": {
+      "en": "def check_age(age):"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "md == 1"
+    },
+    {
+     "shape": "text",
+     "x": 1.3,
+     "y": 8.55,
+     "text": {
+      "en": "def check_age(age):"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "md == 2"
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 7.0,
+     "w": 18,
+     "h": 0.95,
+     "color": {
+      "by": "(if(age < 0, 2, 1))/2",
+      "scale": [
+       "white",
+       "green",
+       "red"
+      ]
+     },
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 1.3,
+     "y": 7.450000000000001,
+     "text": {
+      "en": "    assert age >= 0, \"Age cannot be negative\""
+     },
+     "size": 24,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "md == 1"
+    },
+    {
+     "shape": "text",
+     "x": 1.3,
+     "y": 7.450000000000001,
+     "text": {
+      "en": "    if age < 0: raise ValueError(\"Age cannot be negative\")"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "md == 2"
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 5.8999999999999995,
+     "w": 18,
+     "h": 0.95,
+     "color": {
+      "by": "(if(age < 0, 0, if(age > 120, 2, 1)))/2",
+      "scale": [
+       "white",
+       "green",
+       "red"
+      ]
+     },
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 1.3,
+     "y": 6.3500000000000005,
+     "text": {
+      "en": "    assert age <= 120, \"Age too large\""
+     },
+     "size": 24,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "md == 1"
+    },
+    {
+     "shape": "text",
+     "x": 1.3,
+     "y": 6.3500000000000005,
+     "text": {
+      "en": "    if age > 120: raise ValueError(\"Age too large\")"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "md == 2"
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 4.799999999999999,
+     "w": 18,
+     "h": 0.95,
+     "color": {
+      "by": "(if(age >= 0 && age <= 120, 1, 0))/2",
+      "scale": [
+       "white",
+       "green",
+       "red"
+      ]
+     },
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 1.3,
+     "y": 5.25,
+     "text": {
+      "en": "    print(\"Age is\", age)"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "md == 1"
+    },
+    {
+     "shape": "text",
+     "x": 1.3,
+     "y": 5.25,
+     "text": {
+      "en": "    print(\"Age is\", age)"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "white",
+     "visibleIf": "md == 2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 3.4,
+     "text": {
+      "en": "check_age({age})"
+     },
+     "size": 30,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.2,
+     "text": {
+      "en": "Output: Age is {age}",
+      "kn": "ಔಟ್‌ಪುಟ್: Age is {age}"
+     },
+     "size": 28,
+     "color": "green",
+     "visibleIf": "age >= 0 && age <= 120"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.2,
+     "text": {
+      "en": "AssertionError: Age cannot be negative"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "md == 1 && age < 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.2,
+     "text": {
+      "en": "AssertionError: Age too large"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "md == 1 && age > 120"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.2,
+     "text": {
+      "en": "ValueError: Age cannot be negative"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "md == 2 && age < 0"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 2.2,
+     "text": {
+      "en": "ValueError: Age too large"
+     },
+     "size": 28,
+     "color": "red",
+     "visibleIf": "md == 2 && age > 120"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 1.0,
+     "text": {
+      "en": "After the exception, the rest of the block is skipped",
+      "kn": "ವಿನಾಯಿತಿಯ ನಂತರ ಉಳಿದ ಭಾಗ ಬಿಡಲ್ಪಡುತ್ತದೆ"
+     },
+     "size": 22,
+     "color": "white",
+     "visibleIf": "age < 0 || age > 120"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Give a negative age. Which lines are skipped?",
+     "kn": "ಋಣ ವಯಸ್ಸು ಕೊಡಿ. ಯಾವ ಸಾಲುಗಳು ಬಿಡಲ್ಪಡುತ್ತವೆ?"
+    },
+    {
+     "en": "Switch between assert and raise. What changes in the message?",
+     "kn": "assert ಮತ್ತು raise ನಡುವೆ ಬದಲಿಸಿ. ಸಂದೇಶದಲ್ಲಿ ಏನು ಬದಲಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
