@@ -319,6 +319,31 @@ void main() {
     await t.pump(const Duration(seconds: 1));
     await shot(t, '26-paper-marks');
   });
+
+  // Version 3: simulations and activities in every lesson.
+  Future<void> sim(WidgetTester t, String topicId, String blockId, String name, {Duration play = Duration.zero}) async {
+    final s = await shotServices(prefs: {'displaySize': 'classroom'});
+    final hit = s.lessonFor(topicId)!;
+    final b = hit.lesson.blocks.firstWhere((b) => b.id == blockId);
+    await pumpBoard(t, s, home: LessonPlayerScreen(pack: hit.pack, lesson: lessonWith(hit.pack, [b])));
+    await t.pump(const Duration(milliseconds: 500));
+    final playBtn = find.byKey(const ValueKey('timePlay'));
+    if (play > Duration.zero && playBtn.evaluate().isNotEmpty) {
+      await t.tap(playBtn.first);
+      for (var i = 0; i < play.inMilliseconds ~/ 100; i++) {
+        await t.pump(const Duration(milliseconds: 100));
+      }
+    }
+    await shot(t, name);
+  }
+
+  testWidgets('27 pendulum', (t) => sim(t, 'puc1-physics-13-oscillations.t5', 'scene-pendulum', '27-sim-pendulum', play: const Duration(milliseconds: 1600)));
+  testWidgets('28 lens', (t) => sim(t, 'puc2-physics-09-ray-optics-and-optical-instruments.t4', 'scene-lens', '28-sim-lens'));
+  testWidgets('29 cardiac cycle', (t) => sim(t, 'puc1-biology-15-body-fluids-and-circulation.t4', 'sim1', '29-sim-cardiac-cycle', play: const Duration(milliseconds: 1200)));
+  testWidgets('30 label the heart', (t) => sim(t, 'puc1-biology-15-body-fluids-and-circulation.t3', 'act1', '30-activity-label-heart'));
+  testWidgets('31 kinetics', (t) => sim(t, 'puc2-chemistry-03-chemical-kinetics.t5', 'sim1', '31-sim-arrhenius'));
+  testWidgets('32 bubble sort', (t) => sim(t, 'puc2-computer-science-05-sorting.t1', 'sim1', '32-sim-bubble-sort'));
+  testWidgets('33 accounting equation', (t) => sim(t, 'puc1-accountancy-03-recording-of-transactions-i.t2', 'sim1', '33-sim-accounting-equation'));
 }
 
 int _index(WidgetTester t) {

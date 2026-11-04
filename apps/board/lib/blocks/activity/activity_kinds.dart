@@ -34,14 +34,16 @@ class ActivityCard extends StatelessWidget {
         : selected
         ? Z.accent
         : Colors.white38;
+    // A chalk-dark chip with white text on any page background; the state tints it.
+    const base = Color(0xFF263A33);
     return Material(
       color: mark == true
-          ? Z.correct.withValues(alpha: 0.25)
+          ? Color.alphaBlend(Z.correct.withValues(alpha: 0.35), base)
           : mark == false
-          ? Z.wrong.withValues(alpha: 0.25)
+          ? Color.alphaBlend(Z.wrong.withValues(alpha: 0.35), base)
           : selected
-          ? Z.accent.withValues(alpha: 0.2)
-          : const Color(0xFF263A33),
+          ? Color.alphaBlend(Z.accent.withValues(alpha: 0.3), base)
+          : base,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
         side: BorderSide(color: edge, width: selected || mark != null ? 4 : 2),
@@ -56,7 +58,7 @@ class ActivityCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               if (leading != null) ...[leading!, const SizedBox(width: 12)],
-              Flexible(child: Text(text, style: zText(compact ? 26 : 30))),
+              Flexible(child: Text(text, style: zText(compact ? 26 : 30).copyWith(color: Colors.white))),
               if (mark != null) ...[const SizedBox(width: 8), Icon(mark! ? Icons.check_circle : Icons.cancel, size: 36, color: mark! ? Z.correct : Z.wrong)],
             ],
           ),
@@ -404,7 +406,7 @@ class _DiagramBoardState extends State<DiagramBoard> {
                             fit: BoxFit.scaleDown,
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 8),
-                              child: Text(label.chips[chip].text.t(l), style: zText(28, FontWeight.w700)),
+                              child: Text(label.chips[chip].text.t(l), style: zText(28, FontWeight.w700).copyWith(color: Colors.white)),
                             ),
                           );
                   } else {
@@ -413,7 +415,7 @@ class _DiagramBoardState extends State<DiagramBoard> {
                             fit: BoxFit.scaleDown,
                             child: Padding(
                               padding: const EdgeInsets.all(6),
-                              child: Text(t.label.t(l), style: zText(26, FontWeight.w700)),
+                              child: Text(t.label.t(l), style: zText(26, FontWeight.w700).copyWith(color: Colors.white)),
                             ),
                           )
                         : const SizedBox.shrink();

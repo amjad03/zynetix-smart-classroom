@@ -114,7 +114,7 @@ class ActivityViewState extends State<ActivityView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         MathText(b.f('prompt').t(l), style: text.headlineMedium),
-                        Text(st(_hint, l), style: text.bodyMedium?.copyWith(color: Colors.white70)),
+                        Text(st(_hint, l), style: text.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant)),
                       ],
                     ),
                   ),
