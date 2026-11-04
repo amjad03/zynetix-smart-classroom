@@ -51,6 +51,219 @@
    }
   },
   {
+   "id": "scene-scrotum-temp",
+   "type": "interactive",
+   "title": {
+    "en": "Why the testes hang outside",
+    "kn": "ವೃಷಣಗಳು ಏಕೆ ಹೊರಗೆ ತೂಗುತ್ತವೆ"
+   },
+   "narration": {
+    "en": "Sperm are made in the seminiferous tubules, and this needs a temperature about 2 to 2.5 °C below body temperature. The scrotum keeps the testes that much cooler. If the testes stay in the abdomen (undescended), or the body is hot for long, sperm production falls sharply. The curve is a simplified model.",
+    "kn": "ಶುಕ್ರಾಣುಗಳು ಶುಕ್ರಜನಕ ನಳಿಕೆಗಳಲ್ಲಿ ತಯಾರಾಗುತ್ತವೆ, ಇದಕ್ಕೆ ದೇಹದ ತಾಪಮಾನಕ್ಕಿಂತ ಸುಮಾರು 2–2.5 °C ಕಡಿಮೆ ತಾಪಮಾನ ಬೇಕು. ವೃಷಣಚೀಲ ವೃಷಣಗಳನ್ನು ಅಷ್ಟು ತಂಪಾಗಿಡುತ್ತದೆ. ವೃಷಣಗಳು ಉದರದಲ್ಲೇ ಉಳಿದರೆ ಅಥವಾ ದೇಹ ದೀರ್ಘಕಾಲ ಬಿಸಿಯಾಗಿದ್ದರೆ ಶುಕ್ರಾಣು ಉತ್ಪಾದನೆ ತೀವ್ರವಾಗಿ ಕುಸಿಯುತ್ತದೆ. ಸರಳ ಮಾದರಿ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Sperm are made in the seminiferous tubules, and this needs a temperature about 2 to 2.5 °C below body temperature. The scrotum keeps the testes that much cooler. If the testes stay in the abdomen (undescended), or the body is hot for long, sperm production falls sharply. The curve is a simplified model.",
+    "kn": "ಶುಕ್ರಾಣುಗಳು ಶುಕ್ರಜನಕ ನಳಿಕೆಗಳಲ್ಲಿ ತಯಾರಾಗುತ್ತವೆ, ಇದಕ್ಕೆ ದೇಹದ ತಾಪಮಾನಕ್ಕಿಂತ ಸುಮಾರು 2–2.5 °C ಕಡಿಮೆ ತಾಪಮಾನ ಬೇಕು. ವೃಷಣಚೀಲ ವೃಷಣಗಳನ್ನು ಅಷ್ಟು ತಂಪಾಗಿಡುತ್ತದೆ. ವೃಷಣಗಳು ಉದರದಲ್ಲೇ ಉಳಿದರೆ ಅಥವಾ ದೇಹ ದೀರ್ಘಕಾಲ ಬಿಸಿಯಾಗಿದ್ದರೆ ಶುಕ್ರಾಣು ಉತ್ಪಾದನೆ ತೀವ್ರವಾಗಿ ಕುಸಿಯುತ್ತದೆ. ಸರಳ ಮಾದರಿ."
+   },
+   "sliders": [
+    {
+     "name": "Tb",
+     "label": {
+      "en": "Body temperature",
+      "kn": "ದೇಹದ ತಾಪಮಾನ"
+     },
+     "min": 36.5,
+     "max": 40,
+     "step": 0.1,
+     "value": 37,
+     "unit": "°C"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "desc",
+     "label": {
+      "en": "Testes in the scrotum",
+      "kn": "ವೃಷಣಗಳು ವೃಷಣಚೀಲದಲ್ಲಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "Tt",
+     "expr": "if(desc, Tb - 2.3, Tb)"
+    },
+    {
+     "name": "pr",
+     "expr": "clamp(1 - 0.4*(Tt - 34.7), 0, 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 28,
+     "y": 30,
+     "r": 20,
+     "fill": false,
+     "width": 10,
+     "color": {
+      "by": "clamp((Tt - 33)/6, 0, 1)",
+      "scale": [
+       "blue",
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "circle",
+     "x": 28,
+     "y": 30,
+     "r": 13,
+     "fill": false,
+     "width": 3,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "particles",
+     "count": 60,
+     "x": "28 + (13 - 12*mod(0.05*t + rand(i), 1))*cos(2*pi*rand(i + 60))",
+     "y": "30 + (13 - 12*mod(0.05*t + rand(i), 1))*sin(2*pi*rand(i + 60))",
+     "r": 0.45,
+     "color": "white",
+     "visibleIf": "rand(i + 3) < pr"
+    },
+    {
+     "shape": "text",
+     "x": 28,
+     "y": 55,
+     "size": 20,
+     "text": {
+      "en": "A seminiferous tubule (cut across)",
+      "kn": "ಶುಕ್ರಜನಕ ನಳಿಕೆ (ಅಡ್ಡಛೇದ)"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 28,
+     "y": 4,
+     "size": 26,
+     "text": {
+      "en": "Testis at {Tt:1} °C",
+      "kn": "ವೃಷಣ {Tt:1} °C"
+     },
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 60,
+     "y1": 8,
+     "x2": 96,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 60,
+     "y1": 8,
+     "x2": 60,
+     "y2": 54,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 70,
+     "y": 8,
+     "w": 16,
+     "h": "44*pr",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 78,
+     "y": 4.5,
+     "size": 20,
+     "text": {
+      "en": "Sperm production",
+      "kn": "ಶುಕ್ರಾಣು ಉತ್ಪಾದನೆ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 78,
+     "y": "10 + 44*pr",
+     "size": 22,
+     "text": {
+      "en": "{100*pr:0}%"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 78,
+     "y": 57,
+     "size": 18,
+     "text": {
+      "en": "Undescended testes: risk of sterility",
+      "kn": "ಇಳಿಯದ ವೃಷಣ: ಬಂಜೆತನದ ಅಪಾಯ"
+     },
+     "visibleIf": "!desc",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Testis temperature",
+      "kn": "ವೃಷಣದ ತಾಪಮಾನ"
+     },
+     "expr": "Tt",
+     "digits": 1,
+     "unit": "°C"
+    },
+    {
+     "label": {
+      "en": "Sperm production",
+      "kn": "ಶುಕ್ರಾಣು ಉತ್ಪಾದನೆ"
+     },
+     "expr": "100*pr",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn off \"testes in the scrotum\". What happens to sperm production at 37 °C?",
+     "kn": "\"ವೃಷಣಗಳು ವೃಷಣಚೀಲದಲ್ಲಿ\" ಆಫ್ ಮಾಡಿ. 37 °C ನಲ್ಲಿ ಶುಕ್ರಾಣು ಉತ್ಪಾದನೆಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Raise the body temperature to 39.5 °C (a long fever). What do you predict?",
+     "kn": "ದೇಹದ ತಾಪಮಾನ 39.5 °C (ದೀರ್ಘ ಜ್ವರ) ಮಾಡಿ. ಏನು ಊಹಿಸುವಿರಿ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

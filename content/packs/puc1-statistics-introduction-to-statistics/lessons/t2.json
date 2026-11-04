@@ -59,6 +59,267 @@
    }
   },
   {
+   "id": "scene-many-causes",
+   "type": "interactive",
+   "title": {
+    "en": "Statistics are affected by many causes",
+    "kn": "ಅಂಕಿಅಂಶಗಳ ಮೇಲೆ ಅನೇಕ ಕಾರಣಗಳ ಪ್ರಭಾವ"
+   },
+   "narration": {
+    "en": "Secrist's characteristics: statistics are aggregates of facts, affected to a marked extent by a multiplicity of causes, numerically expressed, estimated with reasonable accuracy, collected systematically for a purpose and placed in relation to each other. The yield of paddy depends on rainfall, fertiliser and seed together (illustrative model): no single cause explains it.",
+    "kn": "ಸೆಕ್ರಿಸ್ಟ್ ಲಕ್ಷಣಗಳು: ಅಂಕಿಅಂಶಗಳು ಸಂಗತಿಗಳ ಒಟ್ಟು, ಅನೇಕ ಕಾರಣಗಳಿಂದ ಪ್ರಭಾವಿತ, ಸಂಖ್ಯೆಯಲ್ಲಿ ವ್ಯಕ್ತ, ಸಮಂಜಸ ನಿಖರತೆಯಿಂದ ಅಂದಾಜು, ಉದ್ದೇಶಕ್ಕಾಗಿ ವ್ಯವಸ್ಥಿತವಾಗಿ ಸಂಗ್ರಹಿತ ಮತ್ತು ಪರಸ್ಪರ ಹೋಲಿಸಬಲ್ಲವು. ಭತ್ತದ ಇಳುವರಿ ಮಳೆ, ಗೊಬ್ಬರ ಮತ್ತು ಬೀಜ ಎಲ್ಲವನ್ನೂ ಅವಲಂಬಿಸುತ್ತದೆ (ದೃಷ್ಟಾಂತ ಮಾದರಿ)."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Secrist's characteristics: statistics are aggregates of facts, affected to a marked extent by a multiplicity of causes, numerically expressed, estimated with reasonable accuracy, collected systematically for a purpose and placed in relation to each other. The yield of paddy depends on rainfall, fertiliser and seed together (illustrative model): no single cause explains it.",
+    "kn": "ಸೆಕ್ರಿಸ್ಟ್ ಲಕ್ಷಣಗಳು: ಅಂಕಿಅಂಶಗಳು ಸಂಗತಿಗಳ ಒಟ್ಟು, ಅನೇಕ ಕಾರಣಗಳಿಂದ ಪ್ರಭಾವಿತ, ಸಂಖ್ಯೆಯಲ್ಲಿ ವ್ಯಕ್ತ, ಸಮಂಜಸ ನಿಖರತೆಯಿಂದ ಅಂದಾಜು, ಉದ್ದೇಶಕ್ಕಾಗಿ ವ್ಯವಸ್ಥಿತವಾಗಿ ಸಂಗ್ರಹಿತ ಮತ್ತು ಪರಸ್ಪರ ಹೋಲಿಸಬಲ್ಲವು. ಭತ್ತದ ಇಳುವರಿ ಮಳೆ, ಗೊಬ್ಬರ ಮತ್ತು ಬೀಜ ಎಲ್ಲವನ್ನೂ ಅವಲಂಬಿಸುತ್ತದೆ (ದೃಷ್ಟಾಂತ ಮಾದರಿ)."
+   },
+   "sliders": [
+    {
+     "name": "rf",
+     "label": {
+      "en": "Rainfall",
+      "kn": "ಮಳೆ"
+     },
+     "min": 400,
+     "max": 2000,
+     "step": 100,
+     "value": 1200,
+     "unit": "mm"
+    },
+    {
+     "name": "fe",
+     "label": {
+      "en": "Fertiliser",
+      "kn": "ಗೊಬ್ಬರ"
+     },
+     "min": 0,
+     "max": 150,
+     "step": 10,
+     "value": 60,
+     "unit": "kg/acre"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "pest",
+     "label": {
+      "en": "Pest attack",
+      "kn": "ಕೀಟ ದಾಳಿ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "sd",
+     "label": {
+      "en": "Seed",
+      "kn": "ಬೀಜ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Local seed",
+        "kn": "ಸ್ಥಳೀಯ ಬೀಜ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Improved seed",
+        "kn": "ಸುಧಾರಿತ ಬೀಜ"
+       },
+       "value": 1.3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "fr",
+     "expr": "clamp(1 - ((rf - 1300)/900)^2, 0.1, 1)"
+    },
+    {
+     "name": "ff",
+     "expr": "0.55 + 0.45*(1 - exp(-fe/50))"
+    },
+    {
+     "name": "fp",
+     "expr": "if(pest, 0.7, 1)"
+    },
+    {
+     "name": "yld",
+     "expr": "24*fr*ff*sd*fp"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 60,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 8,
+     "y2": 56,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 57.5,
+     "size": 22,
+     "text": {
+      "en": "Effect (%)",
+      "kn": "ಪರಿಣಾಮ (%)"
+     },
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 12,
+     "y": 8,
+     "w": 9,
+     "h": "44*fr",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 24,
+     "y": 8,
+     "w": 9,
+     "h": "44*ff",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 36,
+     "y": 8,
+     "w": 9,
+     "h": "44*sd/1.3",
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 48,
+     "y": 8,
+     "w": 9,
+     "h": "44*fp",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 16.5,
+     "y": 4.5,
+     "size": 18,
+     "text": {
+      "en": "Rain",
+      "kn": "ಮಳೆ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 28.5,
+     "y": 4.5,
+     "size": 18,
+     "text": {
+      "en": "Fertiliser",
+      "kn": "ಗೊಬ್ಬರ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 40.5,
+     "y": 4.5,
+     "size": 18,
+     "text": {
+      "en": "Seed",
+      "kn": "ಬೀಜ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 52.5,
+     "y": 4.5,
+     "size": 18,
+     "text": {
+      "en": "Pests",
+      "kn": "ಕೀಟ"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 70,
+     "y": 8,
+     "w": 18,
+     "h": "yld*1.2",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 79,
+     "y": "10 + yld*1.2",
+     "size": 20,
+     "text": {
+      "en": "{yld:1} quintal/acre",
+      "kn": "{yld:1} ಕ್ವಿಂಟಾಲ್/ಎಕರೆ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 79,
+     "y": 4.5,
+     "size": 22,
+     "text": {
+      "en": "Yield",
+      "kn": "ಇಳುವರಿ"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Yield",
+      "kn": "ಇಳುವರಿ"
+     },
+     "expr": "yld",
+     "digits": 1,
+     "unit": "q/acre"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Keep the fertiliser high but cut the rain to 500 mm. Can fertiliser make up for it?",
+     "kn": "ಗೊಬ್ಬರ ಹೆಚ್ಚಿಟ್ಟು ಮಳೆಯನ್ನು 500 mm ಗೆ ಇಳಿಸಿ. ಗೊಬ್ಬರ ಅದನ್ನು ತುಂಬಬಲ್ಲದೇ?"
+    },
+    {
+     "en": "Why is \"the yield of one farm in one year\" not statistics, while yields of many farms over years are?",
+     "kn": "\"ಒಂದು ಹೊಲದ ಒಂದು ವರ್ಷದ ಇಳುವರಿ\" ಏಕೆ ಅಂಕಿಅಂಶವಲ್ಲ, ಅನೇಕ ಹೊಲಗಳ ಹಲವು ವರ್ಷಗಳ ಇಳುವರಿ ಏಕೆ ಅಂಕಿಅಂಶ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

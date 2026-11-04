@@ -51,6 +51,345 @@
    }
   },
   {
+   "id": "scene-follicle",
+   "type": "interactive",
+   "title": {
+    "en": "A follicle through one cycle",
+    "kn": "ಒಂದು ಚಕ್ರದಲ್ಲಿ ಕೋಶಕ"
+   },
+   "narration": {
+    "en": "In the ovary a primary follicle grows into a secondary and then a tertiary follicle with a fluid-filled antrum, and finally a mature Graafian follicle. At ovulation (about 14 days before the next period) it releases the secondary oocyte, which the fimbriae sweep into the oviduct. The empty follicle becomes the corpus luteum; without fertilisation it degenerates.",
+    "kn": "ಅಂಡಾಶಯದಲ್ಲಿ ಪ್ರಾಥಮಿಕ ಕೋಶಕ ದ್ವಿತೀಯಕ, ನಂತರ ದ್ರವ ತುಂಬಿದ ಆಂಟ್ರಮ್ ಇರುವ ತೃತೀಯಕ, ಮತ್ತು ಕೊನೆಗೆ ಪಕ್ವ ಗ್ರಾಫಿಯನ್ ಕೋಶಕವಾಗುತ್ತದೆ. ಅಂಡೋತ್ಸರ್ಜನೆಯಲ್ಲಿ (ಮುಂದಿನ ಋತುವಿಗೆ ಸುಮಾರು 14 ದಿನ ಮೊದಲು) ದ್ವಿತೀಯಕ ಅಂಡಕೋಶ ಬಿಡುಗಡೆಯಾಗಿ ಫಿಂಬ್ರಿಯೆ ಅದನ್ನು ಅಂಡನಾಳಕ್ಕೆ ತಳ್ಳುತ್ತವೆ. ಖಾಲಿ ಕೋಶಕ ಕಾರ್ಪಸ್ ಲೂಟಿಯಂ ಆಗುತ್ತದೆ; ನಿಷೇಚನವಿಲ್ಲದಿದ್ದರೆ ಅದು ಕ್ಷೀಣಿಸುತ್ತದೆ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "In the ovary a primary follicle grows into a secondary and then a tertiary follicle with a fluid-filled antrum, and finally a mature Graafian follicle. At ovulation (about 14 days before the next period) it releases the secondary oocyte, which the fimbriae sweep into the oviduct. The empty follicle becomes the corpus luteum; without fertilisation it degenerates.",
+    "kn": "ಅಂಡಾಶಯದಲ್ಲಿ ಪ್ರಾಥಮಿಕ ಕೋಶಕ ದ್ವಿತೀಯಕ, ನಂತರ ದ್ರವ ತುಂಬಿದ ಆಂಟ್ರಮ್ ಇರುವ ತೃತೀಯಕ, ಮತ್ತು ಕೊನೆಗೆ ಪಕ್ವ ಗ್ರಾಫಿಯನ್ ಕೋಶಕವಾಗುತ್ತದೆ. ಅಂಡೋತ್ಸರ್ಜನೆಯಲ್ಲಿ (ಮುಂದಿನ ಋತುವಿಗೆ ಸುಮಾರು 14 ದಿನ ಮೊದಲು) ದ್ವಿತೀಯಕ ಅಂಡಕೋಶ ಬಿಡುಗಡೆಯಾಗಿ ಫಿಂಬ್ರಿಯೆ ಅದನ್ನು ಅಂಡನಾಳಕ್ಕೆ ತಳ್ಳುತ್ತವೆ. ಖಾಲಿ ಕೋಶಕ ಕಾರ್ಪಸ್ ಲೂಟಿಯಂ ಆಗುತ್ತದೆ; ನಿಷೇಚನವಿಲ್ಲದಿದ್ದರೆ ಅದು ಕ್ಷೀಣಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "cl",
+     "label": {
+      "en": "Cycle length",
+      "kn": "ಚಕ್ರದ ಅವಧಿ"
+     },
+     "min": 24,
+     "max": 35,
+     "step": 1,
+     "value": 28,
+     "unit": "days"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fert",
+     "label": {
+      "en": "Fertilisation happens",
+      "kn": "ನಿಷೇಚನವಾಗುತ್ತದೆ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "min": 1,
+    "max": 35,
+    "unit": "d",
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4
+    ],
+    "speed": 1,
+    "stopWhen": "t >= cl"
+   },
+   "vars": [
+    {
+     "name": "ov",
+     "expr": "cl - 14"
+    },
+    {
+     "name": "pre",
+     "expr": "t < ov"
+    },
+    {
+     "name": "rf",
+     "expr": "if(pre, 1.5 + 6*smoothstep(1, ov, t), 0)"
+    },
+    {
+     "name": "ant",
+     "expr": "if(pre, 4.5*smoothstep(0.55*ov, ov, t), 0)"
+    },
+    {
+     "name": "cls",
+     "expr": "!pre"
+    },
+    {
+     "name": "clr",
+     "expr": "if(fert, 6, 6*(1 - smoothstep(ov + 8, cl, t)) + 1)"
+    },
+    {
+     "name": "eg",
+     "expr": "clamp((t - ov)/3, 0, 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 30,
+     "y": 28,
+     "r": 20,
+     "color": "orange",
+     "opacity": 0.25
+    },
+    {
+     "shape": "circle",
+     "x": 30,
+     "y": 28,
+     "r": 20,
+     "fill": false,
+     "width": 4,
+     "color": "orange"
+    },
+    {
+     "shape": "circle",
+     "x": 34,
+     "y": 32,
+     "r": "rf",
+     "color": "yellow",
+     "opacity": 0.6,
+     "visibleIf": "pre"
+    },
+    {
+     "shape": "circle",
+     "x": 35,
+     "y": 33,
+     "r": "ant",
+     "color": "blue",
+     "opacity": 0.5,
+     "visibleIf": "pre && ant > 0.3"
+    },
+    {
+     "shape": "circle",
+     "x": "34 - 0.5*rf",
+     "y": "32 - 0.3*rf",
+     "r": 1,
+     "color": "white",
+     "visibleIf": "pre"
+    },
+    {
+     "shape": "circle",
+     "x": 34,
+     "y": 32,
+     "r": "clr",
+     "color": {
+      "by": "if(fert, 0, smoothstep(ov + 8, cl, t))",
+      "scale": [
+       "yellow",
+       "white"
+      ]
+     },
+     "visibleIf": "cls"
+    },
+    {
+     "shape": "circle",
+     "x": "34 + 30*eg",
+     "y": "32 + 14*eg",
+     "r": 1,
+     "color": "white",
+     "visibleIf": "cls && eg < 1"
+    },
+    {
+     "shape": "path",
+     "points": [
+      [
+       62,
+       50
+      ],
+      [
+       70,
+       47
+      ],
+      [
+       80,
+       46
+      ],
+      [
+       92,
+       48
+      ]
+     ],
+     "color": "red",
+     "width": 10
+    },
+    {
+     "shape": "particles",
+     "count": 6,
+     "x": "60 + 1.2*i",
+     "y": "50 - 3*sin(i)",
+     "r": 0.8,
+     "color": "red"
+    },
+    {
+     "shape": "circle",
+     "x": "64 + min((t - ov - 3)*3, 26)",
+     "y": 47,
+     "r": 1,
+     "color": "white",
+     "visibleIf": "cls && eg >= 1"
+    },
+    {
+     "shape": "label",
+     "x": 30,
+     "y": 55,
+     "size": 22,
+     "text": {
+      "en": "Primary follicle",
+      "kn": "ಪ್ರಾಥಮಿಕ ಕೋಶಕ"
+     },
+     "visibleIf": "pre && t < 0.3*ov"
+    },
+    {
+     "shape": "label",
+     "x": 30,
+     "y": 55,
+     "size": 22,
+     "text": {
+      "en": "Secondary follicle",
+      "kn": "ದ್ವಿತೀಯಕ ಕೋಶಕ"
+     },
+     "visibleIf": "pre && t >= 0.3*ov && t < 0.55*ov"
+    },
+    {
+     "shape": "label",
+     "x": 30,
+     "y": 55,
+     "size": 22,
+     "text": {
+      "en": "Tertiary follicle: antrum forms",
+      "kn": "ತೃತೀಯಕ ಕೋಶಕ: ಆಂಟ್ರಮ್"
+     },
+     "visibleIf": "pre && t >= 0.55*ov && t < ov - 2"
+    },
+    {
+     "shape": "label",
+     "x": 30,
+     "y": 55,
+     "size": 22,
+     "text": {
+      "en": "Graafian follicle: ready to ovulate",
+      "kn": "ಗ್ರಾಫಿಯನ್ ಕೋಶಕ: ಅಂಡೋತ್ಸರ್ಜನೆಗೆ ಸಿದ್ಧ"
+     },
+     "visibleIf": "pre && t >= ov - 2",
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 30,
+     "y": 55,
+     "size": 22,
+     "text": {
+      "en": "Corpus luteum: makes progesterone",
+      "kn": "ಕಾರ್ಪಸ್ ಲೂಟಿಯಂ: ಪ್ರೊಜೆಸ್ಟೆರಾನ್ ಉತ್ಪಾದನೆ"
+     },
+     "visibleIf": "cls && (fert || t < ov + 8)",
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 30,
+     "y": 55,
+     "size": 22,
+     "text": {
+      "en": "No fertilisation: corpus luteum degenerates",
+      "kn": "ನಿಷೇಚನವಿಲ್ಲ: ಕಾರ್ಪಸ್ ಲೂಟಿಯಂ ಕ್ಷೀಣಿಸುತ್ತದೆ"
+     },
+     "visibleIf": "cls && !fert && t >= ov + 8",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 78,
+     "y": 40,
+     "size": 20,
+     "text": {
+      "en": "Fallopian tube (fimbriae)",
+      "kn": "ಅಂಡನಾಳ (ಫಿಂಬ್ರಿಯೆ)"
+     },
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 78,
+     "y": 20,
+     "size": 30,
+     "text": {
+      "en": "Day {t:0}",
+      "kn": "ದಿನ {t:0}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 78,
+     "y": 13,
+     "size": 22,
+     "text": {
+      "en": "Ovulation on day {ov}",
+      "kn": "ಅಂಡೋತ್ಸರ್ಜನೆ ದಿನ {ov}"
+     },
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Day",
+      "kn": "ದಿನ"
+     },
+     "expr": "t",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Ovulation day",
+      "kn": "ಅಂಡೋತ್ಸರ್ಜನೆ ದಿನ"
+     },
+     "expr": "ov",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Days to ovulation",
+      "kn": "ಅಂಡೋತ್ಸರ್ಜನೆಗೆ ದಿನಗಳು"
+     },
+     "expr": "max(ov - t, 0)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make the cycle 32 days. On which day does ovulation happen now?",
+     "kn": "ಚಕ್ರವನ್ನು 32 ದಿನ ಮಾಡಿ. ಈಗ ಅಂಡೋತ್ಸರ್ಜನೆ ಯಾವ ದಿನ?"
+    },
+    {
+     "en": "Turn on fertilisation. Why must the corpus luteum keep working?",
+     "kn": "ನಿಷೇಚನ ಆನ್ ಮಾಡಿ. ಕಾರ್ಪಸ್ ಲೂಟಿಯಂ ಏಕೆ ಕಾರ್ಯ ಮುಂದುವರಿಸಬೇಕು?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

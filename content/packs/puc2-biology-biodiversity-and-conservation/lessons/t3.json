@@ -64,6 +64,202 @@
    }
   },
   {
+   "id": "scene-habitat-loss",
+   "type": "interactive",
+   "title": {
+    "en": "Habitat loss and species loss",
+    "kn": "ಆವಾಸ ನಷ್ಟ ಮತ್ತು ಪ್ರಭೇದ ನಷ್ಟ"
+   },
+   "narration": {
+    "en": "Habitat loss and fragmentation is the most important of the Evil Quartet. From the species–area relationship, the share of species that survives when only a fraction of the habitat is left is (fraction left)ᶻ. Co-extinctions (a parasite or pollinator dying with its host) add to the loss.",
+    "kn": "ಆವಾಸ ನಷ್ಟ ಮತ್ತು ವಿಭಜನೆ \"ದುಷ್ಟ ಚತುಷ್ಟಯ\"ದಲ್ಲಿ ಅತಿ ಮುಖ್ಯ. ಪ್ರಭೇದ–ವಿಸ್ತೀರ್ಣ ಸಂಬಂಧದಿಂದ, ಆವಾಸದ ಒಂದು ಭಾಗ ಮಾತ್ರ ಉಳಿದಾಗ ಉಳಿಯುವ ಪ್ರಭೇದಗಳ ಪಾಲು (ಉಳಿದ ಭಾಗ)ᶻ. ಸಹ-ವಿನಾಶ (ಆತಿಥೇಯದೊಂದಿಗೆ ಪರಾವಲಂಬಿ ಅಥವಾ ಪರಾಗಸ್ಪರ್ಶಕ ಸಾಯುವುದು) ನಷ್ಟವನ್ನು ಹೆಚ್ಚಿಸುತ್ತದೆ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Habitat loss and fragmentation is the most important of the Evil Quartet. From the species–area relationship, the share of species that survives when only a fraction of the habitat is left is (fraction left)ᶻ. Co-extinctions (a parasite or pollinator dying with its host) add to the loss.",
+    "kn": "ಆವಾಸ ನಷ್ಟ ಮತ್ತು ವಿಭಜನೆ \"ದುಷ್ಟ ಚತುಷ್ಟಯ\"ದಲ್ಲಿ ಅತಿ ಮುಖ್ಯ. ಪ್ರಭೇದ–ವಿಸ್ತೀರ್ಣ ಸಂಬಂಧದಿಂದ, ಆವಾಸದ ಒಂದು ಭಾಗ ಮಾತ್ರ ಉಳಿದಾಗ ಉಳಿಯುವ ಪ್ರಭೇದಗಳ ಪಾಲು (ಉಳಿದ ಭಾಗ)ᶻ. ಸಹ-ವಿನಾಶ (ಆತಿಥೇಯದೊಂದಿಗೆ ಪರಾವಲಂಬಿ ಅಥವಾ ಪರಾಗಸ್ಪರ್ಶಕ ಸಾಯುವುದು) ನಷ್ಟವನ್ನು ಹೆಚ್ಚಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "f",
+     "label": {
+      "en": "Habitat destroyed",
+      "kn": "ನಾಶವಾದ ಆವಾಸ"
+     },
+     "min": 0,
+     "max": 95,
+     "step": 5,
+     "value": 50,
+     "unit": "%"
+    },
+    {
+     "name": "z",
+     "label": {
+      "en": "Z of the region",
+      "kn": "ಪ್ರದೇಶದ Z"
+     },
+     "min": 0.15,
+     "max": 0.35,
+     "step": 0.05,
+     "value": 0.25
+    }
+   ],
+   "toggles": [
+    {
+     "name": "co",
+     "label": {
+      "en": "Count co-extinctions",
+      "kn": "ಸಹ-ವಿನಾಶ ಸೇರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "left",
+     "expr": "(1 - f/100)^z"
+    },
+    {
+     "name": "lost",
+     "expr": "min(100*(1 - left)*if(co, 1.3, 1), 100)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 300,
+     "x": "3 + 2.6*mod(i, 20)",
+     "y": "4 + 3.4*floor(i/20)",
+     "r": 1.1,
+     "color": "green"
+    },
+    {
+     "shape": "particles",
+     "count": 300,
+     "x": "3 + 2.6*mod(i, 20)",
+     "y": "4 + 3.4*floor(i/20)",
+     "r": 1.15,
+     "color": "orange",
+     "visibleIf": "rand(i + 5) < f/100"
+    },
+    {
+     "shape": "text",
+     "x": 27,
+     "y": 57,
+     "size": 20,
+     "text": {
+      "en": "Green: forest left · orange: cleared",
+      "kn": "ಹಸಿರು: ಉಳಿದ ಕಾಡು · ಕಿತ್ತಳೆ: ನಾಶ"
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 62,
+     "y1": 8,
+     "x2": 96,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 62,
+     "y1": 8,
+     "x2": 62,
+     "y2": 54,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 66,
+     "y": 8,
+     "w": 11,
+     "h": "0.44*(100 - f)",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 82,
+     "y": 8,
+     "w": 11,
+     "h": "0.44*(100 - lost)",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 71.5,
+     "y": 4.5,
+     "size": 20,
+     "text": {
+      "en": "Habitat",
+      "kn": "ಆವಾಸ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 87.5,
+     "y": 4.5,
+     "size": 20,
+     "text": {
+      "en": "Species",
+      "kn": "ಪ್ರಭೇದ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 87.5,
+     "y": "10 + 0.44*(100 - lost)",
+     "size": 20,
+     "text": {
+      "en": "{100 - lost:0}%"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Species lost",
+      "kn": "ನಷ್ಟವಾದ ಪ್ರಭೇದ"
+     },
+     "expr": "lost",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Habitat left",
+      "kn": "ಉಳಿದ ಆವಾಸ"
+     },
+     "expr": "100 - f",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Destroy half the habitat. Is half the species lost? Why not?",
+     "kn": "ಅರ್ಧ ಆವಾಸ ನಾಶಮಾಡಿ. ಅರ್ಧ ಪ್ರಭೇದ ನಷ್ಟವಾಗುತ್ತದೆಯೇ? ಏಕೆ ಇಲ್ಲ?"
+    },
+    {
+     "en": "Now destroy 90%. Why do the last bits of forest matter so much?",
+     "kn": "ಈಗ 90% ನಾಶಮಾಡಿ. ಕಾಡಿನ ಕೊನೆಯ ತುಣುಕುಗಳು ಏಕೆ ಅಷ್ಟು ಮುಖ್ಯ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

@@ -64,6 +64,287 @@
    }
   },
   {
+   "id": "scene-stratification",
+   "type": "interactive",
+   "title": {
+    "en": "Layers of a forest and the light they get",
+    "kn": "ಕಾಡಿನ ಪದರಗಳು ಮತ್ತು ಅವು ಪಡೆಯುವ ಬೆಳಕು"
+   },
+   "narration": {
+    "en": "Stratification is the vertical arrangement of species in layers: trees at the top, then shrubs, then herbs and grasses at the bottom. Each layer of leaves absorbs part of the sunlight (roughly e^(−k × leaf area) passes through), so the lower layers live in shade and hold shade-tolerant plants. A grassland has only the bottom layer.",
+    "kn": "ಪದರೀಕರಣ ಎಂದರೆ ಪ್ರಭೇದಗಳ ಲಂಬ ಪದರಗಳ ಜೋಡಣೆ: ಮೇಲೆ ಮರಗಳು, ನಂತರ ಪೊದೆಗಳು, ಕೆಳಗೆ ಮೂಲಿಕೆ ಮತ್ತು ಹುಲ್ಲು. ಎಲೆಗಳ ಪ್ರತಿ ಪದರ ಸೂರ್ಯನ ಬೆಳಕಿನ ಒಂದು ಭಾಗ ಹೀರುತ್ತದೆ, ಹಾಗಾಗಿ ಕೆಳಗಿನ ಪದರಗಳು ನೆರಳಿನಲ್ಲಿದ್ದು ನೆರಳು ಸಹಿಷ್ಣು ಸಸ್ಯಗಳನ್ನು ಹೊಂದಿವೆ. ಹುಲ್ಲುಗಾವಲಿನಲ್ಲಿ ಕೆಳಗಿನ ಪದರ ಮಾತ್ರ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Stratification is the vertical arrangement of species in layers: trees at the top, then shrubs, then herbs and grasses at the bottom. Each layer of leaves absorbs part of the sunlight (roughly e^(−k × leaf area) passes through), so the lower layers live in shade and hold shade-tolerant plants. A grassland has only the bottom layer.",
+    "kn": "ಪದರೀಕರಣ ಎಂದರೆ ಪ್ರಭೇದಗಳ ಲಂಬ ಪದರಗಳ ಜೋಡಣೆ: ಮೇಲೆ ಮರಗಳು, ನಂತರ ಪೊದೆಗಳು, ಕೆಳಗೆ ಮೂಲಿಕೆ ಮತ್ತು ಹುಲ್ಲು. ಎಲೆಗಳ ಪ್ರತಿ ಪದರ ಸೂರ್ಯನ ಬೆಳಕಿನ ಒಂದು ಭಾಗ ಹೀರುತ್ತದೆ, ಹಾಗಾಗಿ ಕೆಳಗಿನ ಪದರಗಳು ನೆರಳಿನಲ್ಲಿದ್ದು ನೆರಳು ಸಹಿಷ್ಣು ಸಸ್ಯಗಳನ್ನು ಹೊಂದಿವೆ. ಹುಲ್ಲುಗಾವಲಿನಲ್ಲಿ ಕೆಳಗಿನ ಪದರ ಮಾತ್ರ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Leaf density of each layer",
+      "kn": "ಪ್ರತಿ ಪದರದ ಎಲೆ ಸಾಂದ್ರತೆ"
+     },
+     "min": 0.2,
+     "max": 1.2,
+     "step": 0.1,
+     "value": 0.6
+    },
+    {
+     "name": "I0",
+     "label": {
+      "en": "Sunlight at the top",
+      "kn": "ಮೇಲಿನ ಸೂರ್ಯಬೆಳಕು"
+     },
+     "min": 20,
+     "max": 100,
+     "step": 10,
+     "value": 100,
+     "unit": "%"
+    }
+   ],
+   "choices": [
+    {
+     "name": "ec",
+     "label": {
+      "en": "Ecosystem",
+      "kn": "ಪರಿಸರ ವ್ಯವಸ್ಥೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Tropical forest",
+        "kn": "ಉಷ್ಣವಲಯದ ಕಾಡು"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Grassland",
+        "kn": "ಹುಲ್ಲುಗಾವಲು"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "tr",
+     "expr": "if(ec == 1, 3, 0)"
+    },
+    {
+     "name": "sb",
+     "expr": "if(ec == 1, 1.5, 0)"
+    },
+    {
+     "name": "I1",
+     "expr": "I0*exp(-k*tr)"
+    },
+    {
+     "name": "I2",
+     "expr": "I1*exp(-k*sb)"
+    },
+    {
+     "name": "I3",
+     "expr": "I2*exp(-k*1)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 60,
+     "h": 4,
+     "color": "orange",
+     "opacity": 0.4
+    },
+    {
+     "shape": "particles",
+     "count": 24,
+     "x": "4 + 2.4*i",
+     "y": "44 + 4*rand(i)",
+     "r": 3.2,
+     "color": "green",
+     "opacity": 0.8,
+     "visibleIf": "ec == 1"
+    },
+    {
+     "shape": "particles",
+     "count": 6,
+     "x": "6 + 10*i",
+     "y": 24,
+     "r": 0.8,
+     "color": "orange",
+     "visibleIf": "ec == 1"
+    },
+    {
+     "shape": "particles",
+     "count": 14,
+     "x": "3 + 4.2*i",
+     "y": "22 + 2*rand(i + 30)",
+     "r": 2.2,
+     "color": "green",
+     "opacity": 0.65,
+     "visibleIf": "ec == 1"
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "1.5 + 1.45*i",
+     "y": "6 + 1.6*rand(i + 70)",
+     "r": 1,
+     "color": "green",
+     "opacity": 0.5
+    },
+    {
+     "shape": "arrow",
+     "x": 55,
+     "y": 58,
+     "dx": 0,
+     "dy": -6,
+     "color": "yellow",
+     "width": "2 + 6*I0/100"
+    },
+    {
+     "shape": "text",
+     "x": 70,
+     "y": 46,
+     "size": 20,
+     "text": {
+      "en": "Canopy (trees)",
+      "kn": "ಮೇಲಾವರಣ (ಮರಗಳು)"
+     },
+     "align": "left",
+     "visibleIf": "ec == 1"
+    },
+    {
+     "shape": "text",
+     "x": 70,
+     "y": 23,
+     "size": 20,
+     "text": {
+      "en": "Shrubs",
+      "kn": "ಪೊದೆಗಳು"
+     },
+     "align": "left",
+     "visibleIf": "ec == 1"
+    },
+    {
+     "shape": "text",
+     "x": 70,
+     "y": 8,
+     "size": 20,
+     "text": {
+      "en": "Herbs and grasses",
+      "kn": "ಮೂಲಿಕೆ, ಹುಲ್ಲು"
+     },
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 97,
+     "y": 43,
+     "size": 22,
+     "text": {
+      "en": "{I1:0}%"
+     },
+     "align": "right",
+     "visibleIf": "ec == 1",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 97,
+     "y": 20,
+     "size": 22,
+     "text": {
+      "en": "{I2:0}%"
+     },
+     "align": "right",
+     "visibleIf": "ec == 1",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 97,
+     "y": 5,
+     "size": 22,
+     "text": {
+      "en": "{I2:0}%"
+     },
+     "align": "right",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 97,
+     "y": 1,
+     "size": 18,
+     "text": {
+      "en": "ground {I3:0}%",
+      "kn": "ನೆಲ {I3:0}%"
+     },
+     "align": "right",
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Light below the canopy",
+      "kn": "ಮೇಲಾವರಣದ ಕೆಳಗಿನ ಬೆಳಕು"
+     },
+     "expr": "I1",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Light at the herbs",
+      "kn": "ಮೂಲಿಕೆ ಪದರದ ಬೆಳಕು"
+     },
+     "expr": "I2",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Light on the ground",
+      "kn": "ನೆಲದ ಬೆಳಕು"
+     },
+     "expr": "I3",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "In the forest, what share of sunlight reaches the herbs? Compare with the grassland.",
+     "kn": "ಕಾಡಿನಲ್ಲಿ ಸೂರ್ಯಬೆಳಕಿನ ಎಷ್ಟು ಪಾಲು ಮೂಲಿಕೆಗಳನ್ನು ತಲುಪುತ್ತದೆ? ಹುಲ್ಲುಗಾವಲಿನೊಂದಿಗೆ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Why is productivity per square metre of a tropical forest so high despite the dark floor?",
+     "kn": "ನೆಲ ಕತ್ತಲಾಗಿದ್ದರೂ ಉಷ್ಣವಲಯದ ಕಾಡಿನ ಉತ್ಪಾದಕತೆ ಏಕೆ ಅಷ್ಟು ಹೆಚ್ಚು?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

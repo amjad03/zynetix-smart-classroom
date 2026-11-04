@@ -51,6 +51,241 @@
    }
   },
   {
+   "id": "scene-sigfig",
+   "type": "interactive",
+   "title": {
+    "en": "How many significant figures can you claim?",
+    "kn": "ಎಷ್ಟು ಸಾರ್ಥಕ ಅಂಕಿಗಳನ್ನು ಹೇಳಬಹುದು?"
+   },
+   "narration": {
+    "en": "Drag the end of the rod. The reading you can report is limited by the least count of the instrument: a metre scale reads to 0.1 cm, vernier callipers to 0.01 cm, a screw gauge to 0.001 cm. The number of significant figures is all the certain digits plus the first uncertain one.",
+    "kn": "ಸರಳಿನ ತುದಿಯನ್ನು ಎಳೆಯಿರಿ. ವರದಿ ಮಾಡಬಹುದಾದ ಓದು ಸಾಧನದ ಕನಿಷ್ಠ ಎಣಿಕೆಯಿಂದ ಸೀಮಿತ: ಮೀಟರ್ ಅಳತೆಪಟ್ಟಿ 0.1 cm, ವರ್ನಿಯರ್ ಕ್ಯಾಲಿಪರ್ 0.01 cm, ಸ್ಕ್ರೂ ಗೇಜ್ 0.001 cm. ಸಾರ್ಥಕ ಅಂಕಿಗಳು ಎಲ್ಲ ಖಚಿತ ಅಂಕಿಗಳು ಮತ್ತು ಮೊದಲ ಅನಿಶ್ಚಿತ ಅಂಕಿ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag the end of the rod. The reading you can report is limited by the least count of the instrument: a metre scale reads to 0.1 cm, vernier callipers to 0.01 cm, a screw gauge to 0.001 cm. The number of significant figures is all the certain digits plus the first uncertain one.",
+    "kn": "ಸರಳಿನ ತುದಿಯನ್ನು ಎಳೆಯಿರಿ. ವರದಿ ಮಾಡಬಹುದಾದ ಓದು ಸಾಧನದ ಕನಿಷ್ಠ ಎಣಿಕೆಯಿಂದ ಸೀಮಿತ: ಮೀಟರ್ ಅಳತೆಪಟ್ಟಿ 0.1 cm, ವರ್ನಿಯರ್ ಕ್ಯಾಲಿಪರ್ 0.01 cm, ಸ್ಕ್ರೂ ಗೇಜ್ 0.001 cm. ಸಾರ್ಥಕ ಅಂಕಿಗಳು ಎಲ್ಲ ಖಚಿತ ಅಂಕಿಗಳು ಮತ್ತು ಮೊದಲ ಅನಿಶ್ಚಿತ ಅಂಕಿ."
+   },
+   "sliders": [],
+   "choices": [
+    {
+     "name": "lc",
+     "label": {
+      "en": "Instrument",
+      "kn": "ಸಾಧನ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Metre scale (0.1 cm)",
+        "kn": "ಮೀಟರ್ ಪಟ್ಟಿ (0.1 cm)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Vernier callipers (0.01 cm)",
+        "kn": "ವರ್ನಿಯರ್ (0.01 cm)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Screw gauge (0.001 cm)",
+        "kn": "ಸ್ಕ್ರೂ ಗೇಜ್ (0.001 cm)"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "rod end",
+     "x": 4.237,
+     "y": 1.2,
+     "axis": "x",
+     "box": {
+      "x": [
+       1,
+       9.9
+      ],
+      "y": [
+       1.2,
+       1.2
+      ]
+     },
+     "snap": 0.001,
+     "color": "orange"
+    }
+   ],
+   "vars": [
+    {
+     "name": "L",
+     "expr": "P_x"
+    },
+    {
+     "name": "rd",
+     "expr": "round(L*10^lc)/10^lc"
+    },
+    {
+     "name": "sf",
+     "expr": "floor(log(rd)) + 1 + lc"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     10.5
+    ],
+    "y": [
+     -2.5,
+     4
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 10,
+     "h": 0.8,
+     "color": "yellow",
+     "opacity": 0.35
+    },
+    {
+     "shape": "particles",
+     "count": 101,
+     "x": "0.1*i",
+     "y": "0.8 - if(mod(i, 10) == 0, 0.6, if(mod(i, 5) == 0, 0.4, 0.25))/2",
+     "r": 0.025,
+     "color": "white"
+    },
+    {
+     "shape": "particles",
+     "count": 11,
+     "x": "i",
+     "y": 0.2,
+     "r": 0.06,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -0.6,
+     "size": 18,
+     "text": {
+      "en": "0"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -0.6,
+     "size": 18,
+     "text": {
+      "en": "5"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": -0.6,
+     "size": 18,
+     "text": {
+      "en": "10 cm"
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 1,
+     "w": "P_x",
+     "h": 0.4,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 3.2,
+     "size": 34,
+     "text": {
+      "en": "Reading: {rd:1} cm",
+      "kn": "ಓದು: {rd:1} cm"
+     },
+     "visibleIf": "lc == 1",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 3.2,
+     "size": 34,
+     "text": {
+      "en": "Reading: {rd:2} cm",
+      "kn": "ಓದು: {rd:2} cm"
+     },
+     "visibleIf": "lc == 2",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 3.2,
+     "size": 34,
+     "text": {
+      "en": "Reading: {rd:3} cm",
+      "kn": "ಓದು: {rd:3} cm"
+     },
+     "visibleIf": "lc == 3",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -1.8,
+     "size": 20,
+     "text": {
+      "en": "Zeros at the end after the decimal point count: 4.20 has 3",
+      "kn": "ದಶಮಾಂಶದ ನಂತರ ಕೊನೆಯ ಸೊನ್ನೆಗಳು ಎಣಿಕೆ: 4.20 ಗೆ 3"
+     },
+     "opacity": 0.8
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Significant figures",
+      "kn": "ಸಾರ್ಥಕ ಅಂಕಿಗಳು"
+     },
+     "expr": "sf",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Least count",
+      "kn": "ಕನಿಷ್ಠ ಎಣಿಕೆ"
+     },
+     "expr": "10^(-lc)",
+     "digits": 3,
+     "unit": "cm"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Keep the rod fixed and change the instrument. How many significant figures does each give?",
+     "kn": "ಸರಳನ್ನು ಸ್ಥಿರವಾಗಿಟ್ಟು ಸಾಧನ ಬದಲಿಸಿ. ಪ್ರತಿಯೊಂದು ಎಷ್ಟು ಸಾರ್ಥಕ ಅಂಕಿ ನೀಡುತ್ತದೆ?"
+    },
+    {
+     "en": "Set the rod to exactly 5 cm with the vernier. Why must you write 5.00 cm, not 5 cm?",
+     "kn": "ವರ್ನಿಯರ್‌ನಲ್ಲಿ ಸರಳನ್ನು ನಿಖರ 5 cm ಗೆ ಹೊಂದಿಸಿ. 5 cm ಅಲ್ಲ, 5.00 cm ಏಕೆ ಬರೆಯಬೇಕು?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

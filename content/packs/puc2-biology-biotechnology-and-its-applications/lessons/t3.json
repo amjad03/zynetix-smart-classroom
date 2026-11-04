@@ -58,6 +58,232 @@
    }
   },
   {
+   "id": "scene-insulin",
+   "type": "interactive",
+   "title": {
+    "en": "Insulin and blood glucose after a meal",
+    "kn": "ಊಟದ ನಂತರ ಇನ್ಸುಲಿನ್ ಮತ್ತು ರಕ್ತದ ಗ್ಲೂಕೋಸ್"
+   },
+   "narration": {
+    "en": "After a meal glucose enters the blood; the pancreas releases insulin, which lets cells take glucose up, and the level returns to normal in about two hours. In a person with type 1 diabetes no insulin is made and glucose stays high. Injected insulin, made by E. coli carrying the human A and B chain genes (Eli Lilly, 1983), brings it down. A simplified model.",
+    "kn": "ಊಟದ ನಂತರ ಗ್ಲೂಕೋಸ್ ರಕ್ತ ಸೇರುತ್ತದೆ; ಮೇದೋಜೀರಕ ಗ್ರಂಥಿ ಇನ್ಸುಲಿನ್ ಬಿಡುಗಡೆ ಮಾಡಿ ಕೋಶಗಳು ಗ್ಲೂಕೋಸ್ ಹೀರುವಂತೆ ಮಾಡುತ್ತದೆ; ಸುಮಾರು ಎರಡು ಗಂಟೆಯಲ್ಲಿ ಮಟ್ಟ ಸಾಮಾನ್ಯವಾಗುತ್ತದೆ. ಟೈಪ್ 1 ಮಧುಮೇಹದಲ್ಲಿ ಇನ್ಸುಲಿನ್ ಇಲ್ಲದೆ ಗ್ಲೂಕೋಸ್ ಹೆಚ್ಚಾಗಿಯೇ ಇರುತ್ತದೆ. ಮಾನವ A ಮತ್ತು B ಸರಪಳಿ ಜೀನ್ ಹೊಂದಿದ E. coli ತಯಾರಿಸಿದ ಇನ್ಸುಲಿನ್ (ಎಲಿ ಲಿಲ್ಲಿ, 1983) ಚುಚ್ಚುಮದ್ದು ಅದನ್ನು ಇಳಿಸುತ್ತದೆ. ಸರಳ ಮಾದರಿ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "After a meal glucose enters the blood; the pancreas releases insulin, which lets cells take glucose up, and the level returns to normal in about two hours. In a person with type 1 diabetes no insulin is made and glucose stays high. Injected insulin, made by E. coli carrying the human A and B chain genes (Eli Lilly, 1983), brings it down. A simplified model.",
+    "kn": "ಊಟದ ನಂತರ ಗ್ಲೂಕೋಸ್ ರಕ್ತ ಸೇರುತ್ತದೆ; ಮೇದೋಜೀರಕ ಗ್ರಂಥಿ ಇನ್ಸುಲಿನ್ ಬಿಡುಗಡೆ ಮಾಡಿ ಕೋಶಗಳು ಗ್ಲೂಕೋಸ್ ಹೀರುವಂತೆ ಮಾಡುತ್ತದೆ; ಸುಮಾರು ಎರಡು ಗಂಟೆಯಲ್ಲಿ ಮಟ್ಟ ಸಾಮಾನ್ಯವಾಗುತ್ತದೆ. ಟೈಪ್ 1 ಮಧುಮೇಹದಲ್ಲಿ ಇನ್ಸುಲಿನ್ ಇಲ್ಲದೆ ಗ್ಲೂಕೋಸ್ ಹೆಚ್ಚಾಗಿಯೇ ಇರುತ್ತದೆ. ಮಾನವ A ಮತ್ತು B ಸರಪಳಿ ಜೀನ್ ಹೊಂದಿದ E. coli ತಯಾರಿಸಿದ ಇನ್ಸುಲಿನ್ (ಎಲಿ ಲಿಲ್ಲಿ, 1983) ಚುಚ್ಚುಮದ್ದು ಅದನ್ನು ಇಳಿಸುತ್ತದೆ. ಸರಳ ಮಾದರಿ."
+   },
+   "sliders": [
+    {
+     "name": "D",
+     "label": {
+      "en": "Insulin dose",
+      "kn": "ಇನ್ಸುಲಿನ್ ಪ್ರಮಾಣ"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 1,
+     "value": 6,
+     "unit": "units"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "db",
+     "label": {
+      "en": "Type 1 diabetes",
+      "kn": "ಟೈಪ್ 1 ಮಧುಮೇಹ"
+     },
+     "value": true
+    },
+    {
+     "name": "inj",
+     "label": {
+      "en": "Inject insulin at the meal",
+      "kn": "ಊಟದ ಸಮಯ ಇನ್ಸುಲಿನ್ ಚುಚ್ಚುಮದ್ದು"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 240,
+    "unit": "min",
+    "dt": 0.5,
+    "speeds": [
+     4,
+     8,
+     16
+    ],
+    "speed": 8
+   },
+   "vars": [
+    {
+     "name": "Ra",
+     "expr": "6*(t/30)*exp(1 - t/30)"
+    },
+    {
+     "name": "inn",
+     "expr": "if(inj, D*(t/45)*exp(1 - t/45)*0.25, 0)"
+    },
+    {
+     "name": "Ie",
+     "expr": "Ip + inn"
+    }
+   ],
+   "state": [
+    {
+     "name": "G",
+     "init": 90,
+     "rate": "Ra - 0.01*(G - 80) - 0.012*Ie*(G - 70)"
+    },
+    {
+     "name": "Ip",
+     "init": "if(db, 0, 1)",
+     "rate": "if(db, 0, 0.004*max(G - 90, 0)) - 0.03*(Ip - if(db, 0, 1))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 92,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 8,
+     "y2": 56,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 50.0,
+     "y": 4.6,
+     "size": 22,
+     "text": {
+      "en": "Minutes after the meal",
+      "kn": "ಊಟದ ನಂತರದ ನಿಮಿಷಗಳು"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 57.5,
+     "size": 22,
+     "text": {
+      "en": "Blood glucose (mg/dL)",
+      "kn": "ರಕ್ತದ ಗ್ಲೂಕೋಸ್ (mg/dL)"
+     },
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 8,
+     "y": "8 + 0.12*70",
+     "w": 84,
+     "h": "0.12*70",
+     "color": "green",
+     "opacity": 0.2
+    },
+    {
+     "shape": "text",
+     "x": 90,
+     "y": "8 + 0.12*105",
+     "size": 18,
+     "text": {
+      "en": "normal range",
+      "kn": "ಸಾಮಾನ್ಯ ವ್ಯಾಪ್ತಿ"
+     },
+     "align": "right",
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": "8 + 0.12*180",
+     "x2": 92,
+     "y2": "8 + 0.12*180",
+     "color": "red",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 90,
+     "y": "10 + 0.12*180",
+     "size": 18,
+     "text": {
+      "en": "180: spills into urine",
+      "kn": "180: ಮೂತ್ರಕ್ಕೆ ಸೋರಿಕೆ"
+     },
+     "align": "right",
+     "color": "red"
+    },
+    {
+     "shape": "trail",
+     "x": "8 + t*0.35",
+     "y": "8 + 0.12*min(G, 390)",
+     "length": 600,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "8 + t*0.35",
+     "y": "8 + 0.12*min(G, 390)",
+     "r": 0.9,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Glucose",
+      "kn": "ಗ್ಲೂಕೋಸ್"
+     },
+     "expr": "G",
+     "digits": 0,
+     "unit": "mg/dL"
+    },
+    {
+     "label": {
+      "en": "Insulin acting (relative)",
+      "kn": "ಕಾರ್ಯನಿರತ ಇನ್ಸುಲಿನ್ (ಸಾಪೇಕ್ಷ)"
+     },
+     "expr": "Ie",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn diabetes off and play: how long until glucose is back near 90?",
+     "kn": "ಮಧುಮೇಹ ಆಫ್ ಮಾಡಿ ಚಲಾಯಿಸಿ: ಗ್ಲೂಕೋಸ್ 90 ರ ಹತ್ತಿರ ಮರಳಲು ಎಷ್ಟು ಸಮಯ?"
+    },
+    {
+     "en": "With diabetes on, find the smallest dose that keeps glucose under 180.",
+     "kn": "ಮಧುಮೇಹ ಆನ್ ಇರುವಾಗ ಗ್ಲೂಕೋಸ್ 180 ಕ್ಕಿಂತ ಕಡಿಮೆ ಇರಿಸುವ ಕನಿಷ್ಠ ಪ್ರಮಾಣ ಹುಡುಕಿ."
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

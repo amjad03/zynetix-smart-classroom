@@ -52,6 +52,253 @@
    "formula": "[F] = [M\\,L\\,T^{-2}]"
   },
   {
+   "id": "scene-dimensions",
+   "type": "interactive",
+   "title": {
+    "en": "Find the pendulum formula by dimensions",
+    "kn": "ಆಯಾಮಗಳಿಂದ ಲೋಲಕದ ಸೂತ್ರ"
+   },
+   "narration": {
+    "en": "Suppose the period of a pendulum is T = k mᵃ lᵇ gᶜ. The dimensions of the right side are [Mᵃ Lᵇ⁺ᶜ T⁻²ᶜ], and they must equal [T]. Move the powers until the bars match the target: a = 0, b + c = 0 and −2c = 1, so T = k√(l/g). The method cannot find k (it is 2π).",
+    "kn": "ಲೋಲಕದ ಆವರ್ತಕಾಲ T = k mᵃ lᵇ gᶜ ಎಂದುಕೊಳ್ಳಿ. ಬಲಭಾಗದ ಆಯಾಮಗಳು [Mᵃ Lᵇ⁺ᶜ T⁻²ᶜ], ಅವು [T] ಗೆ ಸಮವಾಗಿರಬೇಕು. ಗುರಿಗೆ ಹೊಂದುವವರೆಗೆ ಘಾತಗಳನ್ನು ಸರಿಸಿ: a = 0, b + c = 0, −2c = 1, ಹಾಗಾಗಿ T = k√(l/g). ಈ ವಿಧಾನ k ಅನ್ನು ಕಂಡುಹಿಡಿಯಲಾರದು (ಅದು 2π)."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Suppose the period of a pendulum is T = k mᵃ lᵇ gᶜ. The dimensions of the right side are [Mᵃ Lᵇ⁺ᶜ T⁻²ᶜ], and they must equal [T]. Move the powers until the bars match the target: a = 0, b + c = 0 and −2c = 1, so T = k√(l/g). The method cannot find k (it is 2π).",
+    "kn": "ಲೋಲಕದ ಆವರ್ತಕಾಲ T = k mᵃ lᵇ gᶜ ಎಂದುಕೊಳ್ಳಿ. ಬಲಭಾಗದ ಆಯಾಮಗಳು [Mᵃ Lᵇ⁺ᶜ T⁻²ᶜ], ಅವು [T] ಗೆ ಸಮವಾಗಿರಬೇಕು. ಗುರಿಗೆ ಹೊಂದುವವರೆಗೆ ಘಾತಗಳನ್ನು ಸರಿಸಿ: a = 0, b + c = 0, −2c = 1, ಹಾಗಾಗಿ T = k√(l/g). ಈ ವಿಧಾನ k ಅನ್ನು ಕಂಡುಹಿಡಿಯಲಾರದು (ಅದು 2π)."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Power of mass, a",
+      "kn": "ರಾಶಿಯ ಘಾತ a"
+     },
+     "min": -2,
+     "max": 2,
+     "step": 0.5,
+     "value": 1
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "Power of length, b",
+      "kn": "ಉದ್ದದ ಘಾತ b"
+     },
+     "min": -2,
+     "max": 2,
+     "step": 0.5,
+     "value": 1
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "Power of g, c",
+      "kn": "g ಯ ಘಾತ c"
+     },
+     "min": -2,
+     "max": 2,
+     "step": 0.5,
+     "value": 0
+    }
+   ],
+   "vars": [
+    {
+     "name": "pM",
+     "expr": "a"
+    },
+    {
+     "name": "pL",
+     "expr": "b + c"
+    },
+    {
+     "name": "pT",
+     "expr": "-2*c"
+    },
+    {
+     "name": "ok",
+     "expr": "pM == 0 && pL == 0 && pT == 1"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 30,
+     "x2": 92,
+     "y2": 30,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 16,
+     "y": "min(30, 30 + 8*pM)",
+     "w": 14,
+     "h": "abs(8*pM) + 0.2",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 43,
+     "y": "min(30, 30 + 8*pL)",
+     "w": 14,
+     "h": "abs(8*pL) + 0.2",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 70,
+     "y": "min(30, 30 + 8*pT)",
+     "w": 14,
+     "h": "abs(8*pT) + 0.2",
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 30,
+     "x2": 32,
+     "y2": 30,
+     "color": "yellow",
+     "width": 6,
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": 41,
+     "y1": 30,
+     "x2": 59,
+     "y2": 30,
+     "color": "yellow",
+     "width": 6,
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": 68,
+     "y1": 38,
+     "x2": 86,
+     "y2": 38,
+     "color": "yellow",
+     "width": 6,
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 23,
+     "y": 2,
+     "size": 26,
+     "text": {
+      "en": "M: {pM:1}"
+     },
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 2,
+     "size": 26,
+     "text": {
+      "en": "L: {pL:1}"
+     },
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 77,
+     "y": 2,
+     "size": 26,
+     "text": {
+      "en": "T: {pT:1}"
+     },
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 56,
+     "size": 24,
+     "text": {
+      "en": "Right side: [M^{pM:1} L^{pL:1} T^{pT:1}]   Target: [M^0 L^0 T^1]",
+      "kn": "ಬಲಭಾಗ: [M^{pM:1} L^{pL:1} T^{pT:1}]   ಗುರಿ: [M^0 L^0 T^1]"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 48,
+     "size": 26,
+     "text": {
+      "en": "Dimensions match: T = k √(l / g)",
+      "kn": "ಆಯಾಮಗಳು ಹೊಂದುತ್ತವೆ: T = k √(l / g)"
+     },
+     "visibleIf": "ok",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 94,
+     "y": 39,
+     "size": 18,
+     "text": {
+      "en": "target",
+      "kn": "ಗುರಿ"
+     },
+     "align": "right",
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Power of M",
+      "kn": "M ನ ಘಾತ"
+     },
+     "expr": "pM",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Power of L",
+      "kn": "L ನ ಘಾತ"
+     },
+     "expr": "pL",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Power of T",
+      "kn": "T ಯ ಘಾತ"
+     },
+     "expr": "pT",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find a, b and c that make all three bars hit the dashed targets.",
+     "kn": "ಮೂರೂ ಪಟ್ಟಿಗಳು ಚುಕ್ಕೆ ಗುರಿ ತಲುಪುವಂತೆ a, b, c ಕಂಡುಹಿಡಿಯಿರಿ."
+    },
+    {
+     "en": "What does a = 0 tell you about a heavier bob?",
+     "kn": "a = 0 ಭಾರವಾದ ಗುಂಡಿನ ಬಗ್ಗೆ ಏನು ಹೇಳುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

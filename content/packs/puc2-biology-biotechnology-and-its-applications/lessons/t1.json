@@ -64,6 +64,349 @@
    }
   },
   {
+   "id": "scene-bt-toxin",
+   "type": "interactive",
+   "title": {
+    "en": "How Bt cotton kills bollworms",
+    "kn": "ಬಿಟಿ ಹತ್ತಿ ಕಾಯಿಕೊರಕವನ್ನು ಹೇಗೆ ಕೊಲ್ಲುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "Bt cotton carries cry genes from Bacillus thuringiensis and makes an inactive protoxin. In the alkaline gut of an insect larva (pH about 10) the protoxin dissolves and is cut into the active toxin, which binds the gut lining and makes pores; the larva stops feeding and dies. In acidic guts, like ours, it stays inactive.",
+    "kn": "ಬಿಟಿ ಹತ್ತಿ ಬ್ಯಾಸಿಲಸ್ ತುರಿಂಜಿಯೆನ್ಸಿಸ್‌ನ cry ಜೀನ್‌ಗಳನ್ನು ಹೊಂದಿದ್ದು ನಿಷ್ಕ್ರಿಯ ಪ್ರೋಟಾಕ್ಸಿನ್ ಉತ್ಪಾದಿಸುತ್ತದೆ. ಕೀಟ ಡಿಂಭದ ಕ್ಷಾರೀಯ ಕರುಳಿನಲ್ಲಿ (pH ಸುಮಾರು 10) ಅದು ಕರಗಿ ಸಕ್ರಿಯ ವಿಷವಾಗುತ್ತದೆ, ಕರುಳಿನ ಪದರಕ್ಕೆ ಅಂಟಿ ರಂಧ್ರ ಮಾಡುತ್ತದೆ; ಡಿಂಭ ತಿನ್ನುವುದು ನಿಲ್ಲಿಸಿ ಸಾಯುತ್ತದೆ. ನಮ್ಮಂತಹ ಆಮ್ಲೀಯ ಕರುಳಿನಲ್ಲಿ ಅದು ನಿಷ್ಕ್ರಿಯ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Bt cotton carries cry genes from Bacillus thuringiensis and makes an inactive protoxin. In the alkaline gut of an insect larva (pH about 10) the protoxin dissolves and is cut into the active toxin, which binds the gut lining and makes pores; the larva stops feeding and dies. In acidic guts, like ours, it stays inactive.",
+    "kn": "ಬಿಟಿ ಹತ್ತಿ ಬ್ಯಾಸಿಲಸ್ ತುರಿಂಜಿಯೆನ್ಸಿಸ್‌ನ cry ಜೀನ್‌ಗಳನ್ನು ಹೊಂದಿದ್ದು ನಿಷ್ಕ್ರಿಯ ಪ್ರೋಟಾಕ್ಸಿನ್ ಉತ್ಪಾದಿಸುತ್ತದೆ. ಕೀಟ ಡಿಂಭದ ಕ್ಷಾರೀಯ ಕರುಳಿನಲ್ಲಿ (pH ಸುಮಾರು 10) ಅದು ಕರಗಿ ಸಕ್ರಿಯ ವಿಷವಾಗುತ್ತದೆ, ಕರುಳಿನ ಪದರಕ್ಕೆ ಅಂಟಿ ರಂಧ್ರ ಮಾಡುತ್ತದೆ; ಡಿಂಭ ತಿನ್ನುವುದು ನಿಲ್ಲಿಸಿ ಸಾಯುತ್ತದೆ. ನಮ್ಮಂತಹ ಆಮ್ಲೀಯ ಕರುಳಿನಲ್ಲಿ ಅದು ನಿಷ್ಕ್ರಿಯ."
+   },
+   "sliders": [
+    {
+     "name": "ph",
+     "label": {
+      "en": "Gut pH of the eater",
+      "kn": "ತಿನ್ನುವ ಪ್ರಾಣಿಯ ಕರುಳಿನ pH"
+     },
+     "min": 2,
+     "max": 11,
+     "step": 0.5,
+     "value": 10
+    }
+   ],
+   "choices": [
+    {
+     "name": "bt",
+     "label": {
+      "en": "Crop",
+      "kn": "ಬೆಳೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Ordinary cotton",
+        "kn": "ಸಾಮಾನ್ಯ ಹತ್ತಿ"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "Bt cotton",
+        "kn": "ಬಿಟಿ ಹತ್ತಿ"
+       },
+       "value": 1
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "unit": "d",
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 4
+   },
+   "vars": [
+    {
+     "name": "act",
+     "expr": "smoothstep(8, 9.5, ph)"
+    },
+    {
+     "name": "kill",
+     "expr": "bt*0.35*act"
+    }
+   ],
+   "state": [
+    {
+     "name": "Lv",
+     "init": 50,
+     "rate": "0.12*Lv*(1 - Lv/400) - kill*Lv"
+    },
+    {
+     "name": "Dm",
+     "init": 0,
+     "rate": "0.004*Lv*(1 - Dm/100)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 58,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 8,
+     "y2": 56,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 33.0,
+     "y": 4.6,
+     "size": 22,
+     "text": {
+      "en": "Days",
+      "kn": "ದಿನಗಳು"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 57.5,
+     "size": 22,
+     "text": {
+      "en": "Larvae per plot",
+      "kn": "ಪ್ರತಿ ತಾಕಿನ ಡಿಂಭಗಳು"
+     },
+     "align": "left"
+    },
+    {
+     "shape": "trail",
+     "x": "8 + t*0.83",
+     "y": "8 + 0.12*Lv",
+     "length": 1200,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       70,
+       46
+      ],
+      [
+       74,
+       50
+      ],
+      [
+       78,
+       46
+      ],
+      [
+       74,
+       42
+      ]
+     ],
+     "color": "white",
+     "visibleIf": "bt && act < 0.5"
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       68,
+       46
+      ],
+      [
+       71,
+       49
+      ],
+      [
+       74,
+       46
+      ],
+      [
+       71,
+       43
+      ]
+     ],
+     "color": "red",
+     "visibleIf": "bt && act >= 0.5"
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       75,
+       46
+      ],
+      [
+       78,
+       49
+      ],
+      [
+       81,
+       46
+      ],
+      [
+       78,
+       43
+      ]
+     ],
+     "color": "red",
+     "visibleIf": "bt && act >= 0.5"
+    },
+    {
+     "shape": "text",
+     "x": 75,
+     "y": 38,
+     "size": 20,
+     "text": {
+      "en": "Inactive protoxin",
+      "kn": "ನಿಷ್ಕ್ರಿಯ ಪ್ರೋಟಾಕ್ಸಿನ್"
+     },
+     "visibleIf": "bt && act < 0.5"
+    },
+    {
+     "shape": "text",
+     "x": 75,
+     "y": 38,
+     "size": 20,
+     "text": {
+      "en": "Active toxin: pores in the gut",
+      "kn": "ಸಕ್ರಿಯ ವಿಷ: ಕರುಳಿನಲ್ಲಿ ರಂಧ್ರ"
+     },
+     "visibleIf": "bt && act >= 0.5",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 75,
+     "y": 38,
+     "size": 20,
+     "text": {
+      "en": "No toxin in this crop",
+      "kn": "ಈ ಬೆಳೆಯಲ್ಲಿ ವಿಷವಿಲ್ಲ"
+     },
+     "visibleIf": "!bt"
+    },
+    {
+     "shape": "rect",
+     "x": 68,
+     "y": 8,
+     "w": 14,
+     "h": "0.24*Dm",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 75,
+     "y": 4.5,
+     "size": 20,
+     "text": {
+      "en": "Boll damage",
+      "kn": "ಕಾಯಿ ಹಾನಿ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 90,
+     "y": 24,
+     "size": 22,
+     "text": {
+      "en": "pH {ph:1}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 90,
+     "y": 18,
+     "size": 18,
+     "text": {
+      "en": "alkaline",
+      "kn": "ಕ್ಷಾರೀಯ"
+     },
+     "visibleIf": "ph > 7.5",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 90,
+     "y": 18,
+     "size": 18,
+     "text": {
+      "en": "acidic",
+      "kn": "ಆಮ್ಲೀಯ"
+     },
+     "visibleIf": "ph < 6.5",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Toxin activated",
+      "kn": "ಸಕ್ರಿಯವಾದ ವಿಷ"
+     },
+     "expr": "100*act*bt",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Larvae",
+      "kn": "ಡಿಂಭಗಳು"
+     },
+     "expr": "Lv",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Boll damage",
+      "kn": "ಕಾಯಿ ಹಾನಿ"
+     },
+     "expr": "Dm",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Grow ordinary cotton, then Bt cotton. Compare the boll damage after 60 days.",
+     "kn": "ಸಾಮಾನ್ಯ ಹತ್ತಿ, ನಂತರ ಬಿಟಿ ಹತ್ತಿ ಬೆಳೆಸಿ. 60 ದಿನಗಳ ನಂತರ ಕಾಯಿ ಹಾನಿ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Set the pH to 2, like a human stomach. Why is the toxin harmless to us?",
+     "kn": "pH ಅನ್ನು 2 (ಮಾನವ ಜಠರದಂತೆ) ಮಾಡಿ. ವಿಷ ನಮಗೆ ಏಕೆ ಹಾನಿಕರವಲ್ಲ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

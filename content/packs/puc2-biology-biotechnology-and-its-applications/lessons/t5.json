@@ -64,6 +64,191 @@
    }
   },
   {
+   "id": "scene-transgenic-cross",
+   "type": "interactive",
+   "title": {
+    "en": "Breeding a transgenic line",
+    "kn": "ಜೀವಾಂತರ ತಳಿಯನ್ನು ಬೆಳೆಸುವುದು"
+   },
+   "narration": {
+    "en": "A transgenic founder animal (such as Rosie, the cow whose milk carried human alpha-lactalbumin) usually has the new gene on one chromosome only. Crossed with a normal animal, about half its young carry the gene; crossing two carriers gives about three quarters carriers, one quarter of them with two copies. Each press shows a new litter.",
+    "kn": "ಜೀವಾಂತರ ಮೂಲ ಪ್ರಾಣಿಯಲ್ಲಿ (ಮಾನವ ಆಲ್ಫಾ-ಲ್ಯಾಕ್ಟಾಲ್ಬುಮಿನ್ ಹಾಲು ನೀಡಿದ ರೋಸಿ ಹಸುವಿನಂತೆ) ಹೊಸ ಜೀನ್ ಸಾಮಾನ್ಯವಾಗಿ ಒಂದೇ ವರ್ಣತಂತುವಿನಲ್ಲಿರುತ್ತದೆ. ಸಾಮಾನ್ಯ ಪ್ರಾಣಿಯೊಂದಿಗೆ ಸಂಕರಿಸಿದರೆ ಸುಮಾರು ಅರ್ಧ ಮರಿಗಳಲ್ಲಿ ಜೀನ್; ಎರಡು ವಾಹಕಗಳ ಸಂಕರದಲ್ಲಿ ಸುಮಾರು ಮುಕ್ಕಾಲು ಭಾಗ, ಅವುಗಳಲ್ಲಿ ಕಾಲು ಭಾಗಕ್ಕೆ ಎರಡು ಪ್ರತಿಗಳು. ಪ್ರತಿ ಒತ್ತುವಿಕೆ ಹೊಸ ಮರಿಗಳನ್ನು ತೋರಿಸುತ್ತದೆ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "A transgenic founder animal (such as Rosie, the cow whose milk carried human alpha-lactalbumin) usually has the new gene on one chromosome only. Crossed with a normal animal, about half its young carry the gene; crossing two carriers gives about three quarters carriers, one quarter of them with two copies. Each press shows a new litter.",
+    "kn": "ಜೀವಾಂತರ ಮೂಲ ಪ್ರಾಣಿಯಲ್ಲಿ (ಮಾನವ ಆಲ್ಫಾ-ಲ್ಯಾಕ್ಟಾಲ್ಬುಮಿನ್ ಹಾಲು ನೀಡಿದ ರೋಸಿ ಹಸುವಿನಂತೆ) ಹೊಸ ಜೀನ್ ಸಾಮಾನ್ಯವಾಗಿ ಒಂದೇ ವರ್ಣತಂತುವಿನಲ್ಲಿರುತ್ತದೆ. ಸಾಮಾನ್ಯ ಪ್ರಾಣಿಯೊಂದಿಗೆ ಸಂಕರಿಸಿದರೆ ಸುಮಾರು ಅರ್ಧ ಮರಿಗಳಲ್ಲಿ ಜೀನ್; ಎರಡು ವಾಹಕಗಳ ಸಂಕರದಲ್ಲಿ ಸುಮಾರು ಮುಕ್ಕಾಲು ಭಾಗ, ಅವುಗಳಲ್ಲಿ ಕಾಲು ಭಾಗಕ್ಕೆ ಎರಡು ಪ್ರತಿಗಳು. ಪ್ರತಿ ಒತ್ತುವಿಕೆ ಹೊಸ ಮರಿಗಳನ್ನು ತೋರಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Young in the litter",
+      "kn": "ಮರಿಗಳ ಸಂಖ್ಯೆ"
+     },
+     "min": 4,
+     "max": 40,
+     "step": 4,
+     "value": 20
+    }
+   ],
+   "choices": [
+    {
+     "name": "cr",
+     "label": {
+      "en": "Cross",
+      "kn": "ಸಂಕರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Carrier × normal",
+        "kn": "ವಾಹಕ × ಸಾಮಾನ್ಯ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Carrier × carrier",
+        "kn": "ವಾಹಕ × ವಾಹಕ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "counters": [
+    {
+     "name": "g",
+     "value": 0,
+     "min": 0,
+     "max": 500
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New litter",
+      "kn": "ಹೊಸ ಮರಿಗಳು"
+     },
+     "icon": "next",
+     "set": {
+      "g": "g + 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "p1",
+     "expr": "if(cr == 1, 0.5, 0.75)"
+    },
+    {
+     "name": "p2",
+     "expr": "if(cr == 1, 0, 0.25)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "12 + 8*mod(i, 10)",
+     "y": "44 - 8*floor(i/10)",
+     "r": 2.6,
+     "color": "white",
+     "opacity": 0.35,
+     "visibleIf": "i < n"
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "12 + 8*mod(i, 10)",
+     "y": "44 - 8*floor(i/10)",
+     "r": 2.6,
+     "color": "green",
+     "visibleIf": "i < n && rand(i + 41*g) < p1"
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "12 + 8*mod(i, 10)",
+     "y": "44 - 8*floor(i/10)",
+     "r": 1.2,
+     "color": "yellow",
+     "visibleIf": "i < n && rand(i + 41*g) < p2"
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 56,
+     "size": 22,
+     "text": {
+      "en": "Green: carries the transgene · yellow dot: two copies",
+      "kn": "ಹಸಿರು: ಜೀವಾಂತರ ಜೀನ್ ವಾಹಕ · ಹಳದಿ ಚುಕ್ಕೆ: ಎರಡು ಪ್ರತಿ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 6,
+     "size": 24,
+     "text": {
+      "en": "Expected: {100*p1:0}% carriers",
+      "kn": "ನಿರೀಕ್ಷಿತ: {100*p1:0}% ವಾಹಕಗಳು"
+     },
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Expected carriers",
+      "kn": "ನಿರೀಕ್ಷಿತ ವಾಹಕಗಳು"
+     },
+     "expr": "n*p1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Expected with two copies",
+      "kn": "ಎರಡು ಪ್ರತಿ ನಿರೀಕ್ಷಿತ"
+     },
+     "expr": "n*p2",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Litter number",
+      "kn": "ಮರಿಗಳ ಕ್ರಮ"
+     },
+     "expr": "g",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Press New litter several times with 8 young. Does every litter show exactly half carriers?",
+     "kn": "8 ಮರಿಗಳೊಂದಿಗೆ ಹಲವು ಬಾರಿ ಹೊಸ ಮರಿಗಳು ಒತ್ತಿ. ಪ್ರತಿ ಬಾರಿ ನಿಖರ ಅರ್ಧ ವಾಹಕಗಳೇ?"
+    },
+    {
+     "en": "Why would a breeder cross two carriers to start a true-breeding transgenic herd?",
+     "kn": "ಶುದ್ಧ ತಳಿಯ ಜೀವಾಂತರ ಹಿಂಡು ಆರಂಭಿಸಲು ತಳಿಗಾರ ಎರಡು ವಾಹಕಗಳನ್ನು ಏಕೆ ಸಂಕರಿಸುತ್ತಾನೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

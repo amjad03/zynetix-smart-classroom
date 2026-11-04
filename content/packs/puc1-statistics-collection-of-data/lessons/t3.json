@@ -65,6 +65,236 @@
    }
   },
   {
+   "id": "scene-questionnaire",
+   "type": "interactive",
+   "title": {
+    "en": "Mailed questionnaire or schedule?",
+    "kn": "ಅಂಚೆ ಪ್ರಶ್ನಾವಳಿ ಅಥವಾ ಅನುಸೂಚಿ?"
+   },
+   "narration": {
+    "en": "A questionnaire is filled in by the informant; a schedule is filled in by an enumerator who asks the questions. Mailed questionnaires are cheap and reach far, but many are not returned, and long ones even less; schedules get answers from almost everyone and work with people who cannot read, but cost more. Figures are illustrative.",
+    "kn": "ಪ್ರಶ್ನಾವಳಿಯನ್ನು ಮಾಹಿತಿದಾರರೇ ತುಂಬುತ್ತಾರೆ; ಅನುಸೂಚಿಯನ್ನು ಪ್ರಶ್ನೆ ಕೇಳುವ ಗಣತಿದಾರರು ತುಂಬುತ್ತಾರೆ. ಅಂಚೆ ಪ್ರಶ್ನಾವಳಿ ಅಗ್ಗ, ದೂರ ತಲುಪುತ್ತದೆ, ಆದರೆ ಅನೇಕವು ಹಿಂತಿರುಗುವುದಿಲ್ಲ, ಉದ್ದವಾದವು ಇನ್ನೂ ಕಡಿಮೆ; ಅನುಸೂಚಿ ಬಹುತೇಕ ಎಲ್ಲರಿಂದ ಉತ್ತರ ಪಡೆಯುತ್ತದೆ, ಓದಲು ಬಾರದವರಿಗೂ ಸೂಕ್ತ, ಆದರೆ ದುಬಾರಿ. ಸಂಖ್ಯೆಗಳು ದೃಷ್ಟಾಂತಕ್ಕೆ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "A questionnaire is filled in by the informant; a schedule is filled in by an enumerator who asks the questions. Mailed questionnaires are cheap and reach far, but many are not returned, and long ones even less; schedules get answers from almost everyone and work with people who cannot read, but cost more. Figures are illustrative.",
+    "kn": "ಪ್ರಶ್ನಾವಳಿಯನ್ನು ಮಾಹಿತಿದಾರರೇ ತುಂಬುತ್ತಾರೆ; ಅನುಸೂಚಿಯನ್ನು ಪ್ರಶ್ನೆ ಕೇಳುವ ಗಣತಿದಾರರು ತುಂಬುತ್ತಾರೆ. ಅಂಚೆ ಪ್ರಶ್ನಾವಳಿ ಅಗ್ಗ, ದೂರ ತಲುಪುತ್ತದೆ, ಆದರೆ ಅನೇಕವು ಹಿಂತಿರುಗುವುದಿಲ್ಲ, ಉದ್ದವಾದವು ಇನ್ನೂ ಕಡಿಮೆ; ಅನುಸೂಚಿ ಬಹುತೇಕ ಎಲ್ಲರಿಂದ ಉತ್ತರ ಪಡೆಯುತ್ತದೆ, ಓದಲು ಬಾರದವರಿಗೂ ಸೂಕ್ತ, ಆದರೆ ದುಬಾರಿ. ಸಂಖ್ಯೆಗಳು ದೃಷ್ಟಾಂತಕ್ಕೆ."
+   },
+   "sliders": [
+    {
+     "name": "q",
+     "label": {
+      "en": "Number of questions",
+      "kn": "ಪ್ರಶ್ನೆಗಳ ಸಂಖ್ಯೆ"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 5,
+     "value": 15
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "People approached",
+      "kn": "ಸಂಪರ್ಕಿಸಿದವರು"
+     },
+     "min": 100,
+     "max": 2000,
+     "step": 100,
+     "value": 400
+    }
+   ],
+   "toggles": [
+    {
+     "name": "lit",
+     "label": {
+      "en": "Many informants cannot read",
+      "kn": "ಅನೇಕ ಮಾಹಿತಿದಾರರಿಗೆ ಓದಲು ಬಾರದು"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "me",
+     "label": {
+      "en": "Method",
+      "kn": "ವಿಧಾನ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Mailed questionnaire",
+        "kn": "ಅಂಚೆ ಪ್ರಶ್ನಾವಳಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Schedule (enumerator)",
+        "kn": "ಅನುಸೂಚಿ (ಗಣತಿದಾರ)"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "rr",
+     "expr": "if(me == 1, max(0.6 - 0.008*q, 0.1)*if(lit, 0.4, 1), 0.95)"
+    },
+    {
+     "name": "cost",
+     "expr": "if(me == 1, 15*n, 90*n)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 400,
+     "x": "4 + 2.3*mod(i, 20)",
+     "y": "10 + 2.3*floor(i/20)",
+     "r": 0.8,
+     "color": "white",
+     "opacity": 0.3
+    },
+    {
+     "shape": "particles",
+     "count": 400,
+     "x": "4 + 2.3*mod(i, 20)",
+     "y": "10 + 2.3*floor(i/20)",
+     "r": 0.8,
+     "color": "green",
+     "visibleIf": "rand(i + 13) < rr"
+    },
+    {
+     "shape": "text",
+     "x": 26,
+     "y": 4,
+     "size": 18,
+     "text": {
+      "en": "Green: replied (each dot = n/400 people)",
+      "kn": "ಹಸಿರು: ಉತ್ತರಿಸಿದವರು (ಪ್ರತಿ ಚುಕ್ಕೆ = n/400 ಜನ)"
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 58,
+     "y1": 8,
+     "x2": 96,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 58,
+     "y1": 8,
+     "x2": 58,
+     "y2": 54,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 62,
+     "y": 8,
+     "w": 12,
+     "h": "44*rr",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 80,
+     "y": 8,
+     "w": 12,
+     "h": "min(cost/180000, 1)*44",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 68,
+     "y": 4.5,
+     "size": 20,
+     "text": {
+      "en": "Response",
+      "kn": "ಪ್ರತಿಕ್ರಿಯೆ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 86,
+     "y": 4.5,
+     "size": 20,
+     "text": {
+      "en": "Cost",
+      "kn": "ವೆಚ್ಚ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 68,
+     "y": "11 + 44*rr",
+     "size": 20,
+     "text": {
+      "en": "{100*rr:0}%"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 86,
+     "y": "11 + min(cost/180000, 1)*44",
+     "size": 18,
+     "text": {
+      "en": "₹ {cost:0}"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Replies",
+      "kn": "ಉತ್ತರಗಳು"
+     },
+     "expr": "round(n*rr)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Cost per reply",
+      "kn": "ಪ್ರತಿ ಉತ್ತರದ ವೆಚ್ಚ"
+     },
+     "expr": "cost/max(n*rr, 1)",
+     "digits": 0,
+     "unit": "₹"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Lengthen the questionnaire from 10 to 40 questions. What happens to the replies?",
+     "kn": "ಪ್ರಶ್ನಾವಳಿಯನ್ನು 10 ರಿಂದ 40 ಪ್ರಶ್ನೆಗಳಿಗೆ ಹೆಚ್ಚಿಸಿ. ಉತ್ತರಗಳಿಗೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on \"cannot read\". Which method now costs less per reply?",
+     "kn": "\"ಓದಲು ಬಾರದು\" ಆನ್ ಮಾಡಿ. ಈಗ ಪ್ರತಿ ಉತ್ತರಕ್ಕೆ ಯಾವ ವಿಧಾನ ಅಗ್ಗ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

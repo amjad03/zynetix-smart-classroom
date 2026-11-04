@@ -51,6 +51,242 @@
    }
   },
   {
+   "id": "scene-population-growth",
+   "type": "interactive",
+   "title": {
+    "en": "Birth rate, death rate and growth",
+    "kn": "ಜನನ ದರ, ಮರಣ ದರ ಮತ್ತು ಬೆಳವಣಿಗೆ"
+   },
+   "narration": {
+    "en": "India's population was about 36 crore in 1947. Better health care cut the death rate, but the birth rate stayed high, so the population grew fast. Set the birth and death rates (per 1,000 people per year) and see the growth rate, the doubling time (about 70 ÷ growth %) and the population after 50 years. India's family planning programmes aim to bring the birth rate down.",
+    "kn": "1947 ರಲ್ಲಿ ಭಾರತದ ಜನಸಂಖ್ಯೆ ಸುಮಾರು 36 ಕೋಟಿ. ಉತ್ತಮ ಆರೋಗ್ಯ ಸೇವೆ ಮರಣ ದರ ಇಳಿಸಿತು, ಆದರೆ ಜನನ ದರ ಹೆಚ್ಚಾಗಿಯೇ ಉಳಿದು ಜನಸಂಖ್ಯೆ ವೇಗವಾಗಿ ಬೆಳೆಯಿತು. ಜನನ ಮತ್ತು ಮರಣ ದರ (ವರ್ಷಕ್ಕೆ 1,000 ಜನರಿಗೆ) ಹೊಂದಿಸಿ ಬೆಳವಣಿಗೆಯ ದರ, ದ್ವಿಗುಣ ಕಾಲ (≈ 70 ÷ ಬೆಳವಣಿಗೆ %) ಮತ್ತು 50 ವರ್ಷದ ನಂತರದ ಜನಸಂಖ್ಯೆ ನೋಡಿ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "India's population was about 36 crore in 1947. Better health care cut the death rate, but the birth rate stayed high, so the population grew fast. Set the birth and death rates (per 1,000 people per year) and see the growth rate, the doubling time (about 70 ÷ growth %) and the population after 50 years. India's family planning programmes aim to bring the birth rate down.",
+    "kn": "1947 ರಲ್ಲಿ ಭಾರತದ ಜನಸಂಖ್ಯೆ ಸುಮಾರು 36 ಕೋಟಿ. ಉತ್ತಮ ಆರೋಗ್ಯ ಸೇವೆ ಮರಣ ದರ ಇಳಿಸಿತು, ಆದರೆ ಜನನ ದರ ಹೆಚ್ಚಾಗಿಯೇ ಉಳಿದು ಜನಸಂಖ್ಯೆ ವೇಗವಾಗಿ ಬೆಳೆಯಿತು. ಜನನ ಮತ್ತು ಮರಣ ದರ (ವರ್ಷಕ್ಕೆ 1,000 ಜನರಿಗೆ) ಹೊಂದಿಸಿ ಬೆಳವಣಿಗೆಯ ದರ, ದ್ವಿಗುಣ ಕಾಲ (≈ 70 ÷ ಬೆಳವಣಿಗೆ %) ಮತ್ತು 50 ವರ್ಷದ ನಂತರದ ಜನಸಂಖ್ಯೆ ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "b",
+     "label": {
+      "en": "Birth rate",
+      "kn": "ಜನನ ದರ"
+     },
+     "min": 10,
+     "max": 45,
+     "step": 1,
+     "value": 40,
+     "unit": "per 1000"
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "Death rate",
+      "kn": "ಮರಣ ದರ"
+     },
+     "min": 5,
+     "max": 30,
+     "step": 1,
+     "value": 25,
+     "unit": "per 1000"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fp",
+     "label": {
+      "en": "Family planning (birth rate −30%)",
+      "kn": "ಕುಟುಂಬ ಯೋಜನೆ (ಜನನ ದರ −30%)"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 50,
+    "unit": "yr",
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2
+   },
+   "vars": [
+    {
+     "name": "be",
+     "expr": "if(fp, 0.7*b, b)"
+    },
+    {
+     "name": "r",
+     "expr": "(be - d)/10"
+    },
+    {
+     "name": "dbl",
+     "expr": "if(r > 0.05, 70/r, 0)"
+    }
+   ],
+   "state": [
+    {
+     "name": "N",
+     "init": 36,
+     "rate": "r/100*N"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 70,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 8,
+     "y2": 56,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 39.0,
+     "y": 4.6,
+     "size": 22,
+     "text": {
+      "en": "Years",
+      "kn": "ವರ್ಷಗಳು"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 57.5,
+     "size": 22,
+     "text": {
+      "en": "Population (crore)",
+      "kn": "ಜನಸಂಖ್ಯೆ (ಕೋಟಿ)"
+     },
+     "align": "left"
+    },
+    {
+     "shape": "trail",
+     "x": "8 + 1.24*t",
+     "y": "8 + 0.16*min(N, 300)",
+     "length": 1100,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "8 + 1.24*t",
+     "y": "8 + 0.16*min(N, 300)",
+     "r": 0.9,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 85,
+     "y": 44,
+     "size": 30,
+     "text": {
+      "en": "{N:0} crore",
+      "kn": "{N:0} ಕೋಟಿ"
+     },
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 85,
+     "y": 34,
+     "size": 22,
+     "text": {
+      "en": "Growth {r:1}% a year",
+      "kn": "ವರ್ಷಕ್ಕೆ {r:1}% ಬೆಳವಣಿಗೆ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 85,
+     "y": 28,
+     "size": 22,
+     "text": {
+      "en": "Doubles in {dbl:0} years",
+      "kn": "{dbl:0} ವರ್ಷದಲ್ಲಿ ದ್ವಿಗುಣ"
+     },
+     "visibleIf": "r > 0.05"
+    },
+    {
+     "shape": "text",
+     "x": 85,
+     "y": 28,
+     "size": 22,
+     "text": {
+      "en": "Not growing",
+      "kn": "ಬೆಳೆಯುತ್ತಿಲ್ಲ"
+     },
+     "visibleIf": "r <= 0.05"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Growth rate",
+      "kn": "ಬೆಳವಣಿಗೆಯ ದರ"
+     },
+     "expr": "r",
+     "digits": 1,
+     "unit": "%/yr"
+    },
+    {
+     "label": {
+      "en": "Doubling time",
+      "kn": "ದ್ವಿಗುಣ ಕಾಲ"
+     },
+     "expr": "dbl",
+     "digits": 0,
+     "unit": "yr"
+    },
+    {
+     "label": {
+      "en": "Population",
+      "kn": "ಜನಸಂಖ್ಯೆ"
+     },
+     "expr": "N",
+     "digits": 0,
+     "unit": "crore"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Lower the death rate from 25 to 10 but keep the birth rate at 40. What happens to the doubling time?",
+     "kn": "ಜನನ ದರ 40 ಇಟ್ಟು ಮರಣ ದರವನ್ನು 25 ರಿಂದ 10 ಕ್ಕೆ ಇಳಿಸಿ. ದ್ವಿಗುಣ ಕಾಲಕ್ಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Turn on family planning. How many crore fewer people are there after 50 years?",
+     "kn": "ಕುಟುಂಬ ಯೋಜನೆ ಆನ್ ಮಾಡಿ. 50 ವರ್ಷದ ನಂತರ ಎಷ್ಟು ಕೋಟಿ ಕಡಿಮೆ ಜನ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

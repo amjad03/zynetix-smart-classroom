@@ -51,6 +51,224 @@
    }
   },
   {
+   "id": "scene-sti-spread",
+   "type": "interactive",
+   "title": {
+    "en": "How an STI spreads, and how to stop it",
+    "kn": "ಲೈಂಗಿಕ ಸೋಂಕು ಹೇಗೆ ಹರಡುತ್ತದೆ, ಹೇಗೆ ತಡೆಯುವುದು"
+   },
+   "narration": {
+    "en": "Each infected person passes the infection on to others through unprotected contact; it ends when the person is cured. If, on average, each case causes more than one new case (R > 1), the infection spreads. Condoms cut transmission, and early detection with complete treatment shortens how long a person is infectious. A simplified model.",
+    "kn": "ಸೋಂಕಿತ ವ್ಯಕ್ತಿ ಅಸುರಕ್ಷಿತ ಸಂಪರ್ಕದಿಂದ ಇತರರಿಗೆ ಸೋಂಕು ಹರಡುತ್ತಾರೆ; ಗುಣವಾದಾಗ ಅದು ನಿಲ್ಲುತ್ತದೆ. ಸರಾಸರಿ ಪ್ರತಿ ಪ್ರಕರಣ ಒಂದಕ್ಕಿಂತ ಹೆಚ್ಚು ಹೊಸ ಪ್ರಕರಣ ಉಂಟುಮಾಡಿದರೆ (R > 1) ಸೋಂಕು ಹರಡುತ್ತದೆ. ಕಾಂಡೋಮ್ ಹರಡುವಿಕೆ ಕಡಿಮೆ ಮಾಡುತ್ತದೆ, ಬೇಗ ಪತ್ತೆ ಮತ್ತು ಪೂರ್ಣ ಚಿಕಿತ್ಸೆ ಸೋಂಕು ಹರಡುವ ಅವಧಿ ಕಡಿಮೆ ಮಾಡುತ್ತದೆ. ಸರಳ ಮಾದರಿ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Each infected person passes the infection on to others through unprotected contact; it ends when the person is cured. If, on average, each case causes more than one new case (R > 1), the infection spreads. Condoms cut transmission, and early detection with complete treatment shortens how long a person is infectious. A simplified model.",
+    "kn": "ಸೋಂಕಿತ ವ್ಯಕ್ತಿ ಅಸುರಕ್ಷಿತ ಸಂಪರ್ಕದಿಂದ ಇತರರಿಗೆ ಸೋಂಕು ಹರಡುತ್ತಾರೆ; ಗುಣವಾದಾಗ ಅದು ನಿಲ್ಲುತ್ತದೆ. ಸರಾಸರಿ ಪ್ರತಿ ಪ್ರಕರಣ ಒಂದಕ್ಕಿಂತ ಹೆಚ್ಚು ಹೊಸ ಪ್ರಕರಣ ಉಂಟುಮಾಡಿದರೆ (R > 1) ಸೋಂಕು ಹರಡುತ್ತದೆ. ಕಾಂಡೋಮ್ ಹರಡುವಿಕೆ ಕಡಿಮೆ ಮಾಡುತ್ತದೆ, ಬೇಗ ಪತ್ತೆ ಮತ್ತು ಪೂರ್ಣ ಚಿಕಿತ್ಸೆ ಸೋಂಕು ಹರಡುವ ಅವಧಿ ಕಡಿಮೆ ಮಾಡುತ್ತದೆ. ಸರಳ ಮಾದರಿ."
+   },
+   "sliders": [
+    {
+     "name": "be",
+     "label": {
+      "en": "Unprotected contacts",
+      "kn": "ಅಸುರಕ್ಷಿತ ಸಂಪರ್ಕಗಳು"
+     },
+     "min": 0.1,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.5,
+     "unit": "per month"
+    },
+    {
+     "name": "cu",
+     "label": {
+      "en": "Condom use",
+      "kn": "ಕಾಂಡೋಮ್ ಬಳಕೆ"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 10,
+     "value": 0,
+     "unit": "%"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "det",
+     "label": {
+      "en": "Early detection and treatment",
+      "kn": "ಬೇಗ ಪತ್ತೆ ಮತ್ತು ಚಿಕಿತ್ಸೆ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 120,
+    "unit": "mo",
+    "dt": 0.1,
+    "speeds": [
+     2,
+     4,
+     8,
+     16
+    ],
+    "speed": 4
+   },
+   "vars": [
+    {
+     "name": "g",
+     "expr": "if(det, 0.4, 0.08)"
+    },
+    {
+     "name": "bb",
+     "expr": "be*(1 - 0.9*cu/100)"
+    },
+    {
+     "name": "R0",
+     "expr": "bb/g"
+    }
+   ],
+   "state": [
+    {
+     "name": "I",
+     "init": 1,
+     "rate": "bb*I*(1 - I/100) - g*I"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 66,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 8,
+     "y2": 56,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 37.0,
+     "y": 4.6,
+     "size": 22,
+     "text": {
+      "en": "Months",
+      "kn": "ತಿಂಗಳುಗಳು"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 57.5,
+     "size": 22,
+     "text": {
+      "en": "Infected (%)",
+      "kn": "ಸೋಂಕಿತರು (%)"
+     },
+     "align": "left"
+    },
+    {
+     "shape": "trail",
+     "x": "8 + 0.48*t",
+     "y": "8 + 0.46*I",
+     "length": 1300,
+     "color": "red",
+     "width": 4
+    },
+    {
+     "shape": "particles",
+     "count": 100,
+     "x": "72 + 2.6*mod(i, 10)",
+     "y": "12 + 4*floor(i/10)",
+     "r": 1,
+     "color": "white",
+     "opacity": 0.4
+    },
+    {
+     "shape": "particles",
+     "count": 100,
+     "x": "72 + 2.6*mod(i, 10)",
+     "y": "12 + 4*floor(i/10)",
+     "r": 1.05,
+     "color": "red",
+     "visibleIf": "i < I"
+    },
+    {
+     "shape": "label",
+     "x": 84,
+     "y": 56,
+     "size": 20,
+     "text": {
+      "en": "R = {R0:2}: spreading",
+      "kn": "R = {R0:2}: ಹರಡುತ್ತಿದೆ"
+     },
+     "visibleIf": "R0 > 1",
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 84,
+     "y": 56,
+     "size": 20,
+     "text": {
+      "en": "R = {R0:2}: dying out",
+      "kn": "R = {R0:2}: ಕ್ಷೀಣಿಸುತ್ತಿದೆ"
+     },
+     "visibleIf": "R0 <= 1",
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Infected",
+      "kn": "ಸೋಂಕಿತರು"
+     },
+     "expr": "I",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "R (new cases per case)",
+      "kn": "R (ಪ್ರತಿ ಪ್ರಕರಣದ ಹೊಸ ಪ್ರಕರಣ)"
+     },
+     "expr": "R0",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the condom use that brings R below 1 without early treatment.",
+     "kn": "ಬೇಗ ಚಿಕಿತ್ಸೆ ಇಲ್ಲದೆ R ಅನ್ನು 1 ಕ್ಕಿಂತ ಕೆಳಗಿಳಿಸುವ ಕಾಂಡೋಮ್ ಬಳಕೆ ಹುಡುಕಿ."
+    },
+    {
+     "en": "Why does early detection help even the people who were never infected?",
+     "kn": "ಬೇಗ ಪತ್ತೆ ಎಂದೂ ಸೋಂಕಿತರಾಗದವರಿಗೂ ಏಕೆ ಸಹಾಯಕ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

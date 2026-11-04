@@ -67,6 +67,314 @@
    }
   },
   {
+   "id": "scene-interactions",
+   "type": "interactive",
+   "title": {
+    "en": "How two species affect each other",
+    "kn": "ಎರಡು ಪ್ರಭೇದಗಳು ಪರಸ್ಪರ ಹೇಗೆ ಪ್ರಭಾವಿಸುತ್ತವೆ"
+   },
+   "narration": {
+    "en": "Each population grows towards its own carrying capacity, but the other species pushes it up (+), down (−) or not at all (0). Mutualism is +/+, commensalism +/0, parasitism +/− (the parasite gains, the host loses), amensalism 0/− and competition −/−. Pick an interaction and its strength.",
+    "kn": "ಪ್ರತಿ ಸಮೂಹ ತನ್ನ ಧಾರಣ ಸಾಮರ್ಥ್ಯದತ್ತ ಬೆಳೆಯುತ್ತದೆ, ಆದರೆ ಇನ್ನೊಂದು ಪ್ರಭೇದ ಅದನ್ನು ಏರಿಸುತ್ತದೆ (+), ಇಳಿಸುತ್ತದೆ (−) ಅಥವಾ ಪ್ರಭಾವಿಸದು (0). ಸಹಜೀವನ +/+, ಸಹಭೋಜನ +/0, ಪರಾವಲಂಬನೆ +/−, ಅಸಹಭೋಜನ 0/−, ಸ್ಪರ್ಧೆ −/−. ಪರಸ್ಪರ ಕ್ರಿಯೆ ಮತ್ತು ಅದರ ಬಲ ಆಯ್ಕೆಮಾಡಿ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Each population grows towards its own carrying capacity, but the other species pushes it up (+), down (−) or not at all (0). Mutualism is +/+, commensalism +/0, parasitism +/− (the parasite gains, the host loses), amensalism 0/− and competition −/−. Pick an interaction and its strength.",
+    "kn": "ಪ್ರತಿ ಸಮೂಹ ತನ್ನ ಧಾರಣ ಸಾಮರ್ಥ್ಯದತ್ತ ಬೆಳೆಯುತ್ತದೆ, ಆದರೆ ಇನ್ನೊಂದು ಪ್ರಭೇದ ಅದನ್ನು ಏರಿಸುತ್ತದೆ (+), ಇಳಿಸುತ್ತದೆ (−) ಅಥವಾ ಪ್ರಭಾವಿಸದು (0). ಸಹಜೀವನ +/+, ಸಹಭೋಜನ +/0, ಪರಾವಲಂಬನೆ +/−, ಅಸಹಭೋಜನ 0/−, ಸ್ಪರ್ಧೆ −/−. ಪರಸ್ಪರ ಕ್ರಿಯೆ ಮತ್ತು ಅದರ ಬಲ ಆಯ್ಕೆಮಾಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Strength of the effect",
+      "kn": "ಪ್ರಭಾವದ ಬಲ"
+     },
+     "min": 0,
+     "max": 0.6,
+     "step": 0.05,
+     "value": 0.4
+    }
+   ],
+   "choices": [
+    {
+     "name": "it",
+     "label": {
+      "en": "Interaction",
+      "kn": "ಪರಸ್ಪರ ಕ್ರಿಯೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Mutualism (+/+)",
+        "kn": "ಸಹಜೀವನ (+/+)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Commensalism (+/0)",
+        "kn": "ಸಹಭೋಜನ (+/0)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Parasitism (+/−)",
+        "kn": "ಪರಾವಲಂಬನೆ (+/−)"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Amensalism (0/−)",
+        "kn": "ಅಸಹಭೋಜನ (0/−)"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "Competition (−/−)",
+        "kn": "ಸ್ಪರ್ಧೆ (−/−)"
+       },
+       "value": 5
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 100,
+    "unit": "wk",
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 4
+   },
+   "vars": [
+    {
+     "name": "sa",
+     "expr": "if(it == 1, 1, if(it == 2, 1, if(it == 3, 1, if(it == 4, 0, -1))))"
+    },
+    {
+     "name": "sb",
+     "expr": "if(it == 1, 1, if(it == 2, 0, if(it == 3, -1, -1)))"
+    }
+   ],
+   "state": [
+    {
+     "name": "Na",
+     "init": 20,
+     "rate": "0.15*Na*(1 - Na/100 + sa*a*Nb/100)"
+    },
+    {
+     "name": "Nb",
+     "init": 20,
+     "rate": "0.12*Nb*(1 - Nb/100 + sb*a*Na/100)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 70,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 8,
+     "y2": 56,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 39.0,
+     "y": 4.6,
+     "size": 22,
+     "text": {
+      "en": "Weeks",
+      "kn": "ವಾರಗಳು"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 57.5,
+     "size": 22,
+     "text": {
+      "en": "Population",
+      "kn": "ಸಮೂಹ"
+     },
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": "8 + 0.19*100",
+     "x2": 70,
+     "y2": "8 + 0.19*100",
+     "color": "white",
+     "dashed": true,
+     "width": 2,
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 69,
+     "y": 29,
+     "size": 16,
+     "text": {
+      "en": "alone: 100",
+      "kn": "ಒಂಟಿಯಾಗಿ: 100"
+     },
+     "align": "right",
+     "opacity": 0.7
+    },
+    {
+     "shape": "trail",
+     "x": "8 + 0.62*t",
+     "y": "8 + 0.19*min(Na, 250)",
+     "length": 2000,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "trail",
+     "x": "8 + 0.62*t",
+     "y": "8 + 0.19*min(Nb, 250)",
+     "length": 2000,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 86,
+     "y": 50,
+     "size": 20,
+     "text": {
+      "en": "Yellow: species A",
+      "kn": "ಹಳದಿ: ಪ್ರಭೇದ A"
+     },
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 86,
+     "y": 45,
+     "size": 20,
+     "text": {
+      "en": "Blue: species B",
+      "kn": "ನೀಲಿ: ಪ್ರಭೇದ B"
+     },
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 86,
+     "y": 34,
+     "size": 18,
+     "text": {
+      "en": "Lichen: alga + fungus",
+      "kn": "ಕಲ್ಲುಹೂ: ಶೈವಲ + ಶಿಲೀಂಧ್ರ"
+     },
+     "visibleIf": "it == 1"
+    },
+    {
+     "shape": "text",
+     "x": 86,
+     "y": 34,
+     "size": 18,
+     "text": {
+      "en": "Orchid on a mango branch",
+      "kn": "ಮಾವಿನ ಕೊಂಬೆಯ ಆರ್ಕಿಡ್"
+     },
+     "visibleIf": "it == 2"
+    },
+    {
+     "shape": "text",
+     "x": 86,
+     "y": 34,
+     "size": 18,
+     "text": {
+      "en": "Cuscuta on a host plant",
+      "kn": "ಆತಿಥೇಯ ಸಸ್ಯದ ಮೇಲೆ ಕಸ್ಕುಟಾ"
+     },
+     "visibleIf": "it == 3"
+    },
+    {
+     "shape": "text",
+     "x": 86,
+     "y": 34,
+     "size": 18,
+     "text": {
+      "en": "Penicillium and bacteria",
+      "kn": "ಪೆನಿಸಿಲಿಯಂ ಮತ್ತು ಬ್ಯಾಕ್ಟೀರಿಯಾ"
+     },
+     "visibleIf": "it == 4"
+    },
+    {
+     "shape": "text",
+     "x": 86,
+     "y": 34,
+     "size": 18,
+     "text": {
+      "en": "Flamingoes and fish sharing food",
+      "kn": "ಆಹಾರ ಹಂಚುವ ಫ್ಲೆಮಿಂಗೊ, ಮೀನು"
+     },
+     "visibleIf": "it == 5"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Species A",
+      "kn": "ಪ್ರಭೇದ A"
+     },
+     "expr": "Na",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Species B",
+      "kn": "ಪ್ರಭೇದ B"
+     },
+     "expr": "Nb",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "In mutualism, how far above 100 do both populations settle? Change the strength.",
+     "kn": "ಸಹಜೀವನದಲ್ಲಿ ಎರಡೂ ಸಮೂಹಗಳು 100 ಕ್ಕಿಂತ ಎಷ್ಟು ಮೇಲೆ ಸ್ಥಿರವಾಗುತ್ತವೆ? ಬಲ ಬದಲಿಸಿ."
+    },
+    {
+     "en": "In parasitism, why is it bad for the parasite to make the host too small?",
+     "kn": "ಪರಾವಲಂಬನೆಯಲ್ಲಿ ಆತಿಥೇಯವನ್ನು ತುಂಬಾ ಕುಗ್ಗಿಸುವುದು ಪರಾವಲಂಬಿಗೆ ಏಕೆ ಕೆಟ್ಟದು?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

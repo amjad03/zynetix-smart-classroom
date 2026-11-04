@@ -64,6 +64,263 @@
    }
   },
   {
+   "id": "scene-species-area",
+   "type": "interactive",
+   "title": {
+    "en": "Species–area relationship",
+    "kn": "ಪ್ರಭೇದ–ವಿಸ್ತೀರ್ಣ ಸಂಬಂಧ"
+   },
+   "narration": {
+    "en": "Alexander von Humboldt found that the number of species S rises with the area A explored, but ever more slowly: S = C·Aᶻ, a straight line on log–log axes, log S = log C + Z log A. For small regions Z is about 0.1 to 0.2; for very large areas such as whole continents it is 0.6 to 1.2.",
+    "kn": "ಅನ್ವೇಷಿಸಿದ ವಿಸ್ತೀರ್ಣ A ಯೊಂದಿಗೆ ಪ್ರಭೇದಗಳ ಸಂಖ್ಯೆ S ಏರುತ್ತದೆ, ಆದರೆ ನಿಧಾನವಾಗುತ್ತಾ: S = C·Aᶻ, ಲಾಗ್–ಲಾಗ್ ಅಕ್ಷಗಳಲ್ಲಿ ನೇರ ರೇಖೆ, log S = log C + Z log A ಎಂದು ಹಂಬೋಲ್ಟ್ ಕಂಡರು. ಸಣ್ಣ ಪ್ರದೇಶಗಳಿಗೆ Z ಸುಮಾರು 0.1–0.2; ಖಂಡಗಳಂತಹ ದೊಡ್ಡ ವಿಸ್ತೀರ್ಣಕ್ಕೆ 0.6–1.2."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Alexander von Humboldt found that the number of species S rises with the area A explored, but ever more slowly: S = C·Aᶻ, a straight line on log–log axes, log S = log C + Z log A. For small regions Z is about 0.1 to 0.2; for very large areas such as whole continents it is 0.6 to 1.2.",
+    "kn": "ಅನ್ವೇಷಿಸಿದ ವಿಸ್ತೀರ್ಣ A ಯೊಂದಿಗೆ ಪ್ರಭೇದಗಳ ಸಂಖ್ಯೆ S ಏರುತ್ತದೆ, ಆದರೆ ನಿಧಾನವಾಗುತ್ತಾ: S = C·Aᶻ, ಲಾಗ್–ಲಾಗ್ ಅಕ್ಷಗಳಲ್ಲಿ ನೇರ ರೇಖೆ, log S = log C + Z log A ಎಂದು ಹಂಬೋಲ್ಟ್ ಕಂಡರು. ಸಣ್ಣ ಪ್ರದೇಶಗಳಿಗೆ Z ಸುಮಾರು 0.1–0.2; ಖಂಡಗಳಂತಹ ದೊಡ್ಡ ವಿಸ್ತೀರ್ಣಕ್ಕೆ 0.6–1.2."
+   },
+   "sliders": [
+    {
+     "name": "lA",
+     "label": {
+      "en": "log₁₀ area (km²)",
+      "kn": "log₁₀ ವಿಸ್ತೀರ್ಣ (km²)"
+     },
+     "min": 0,
+     "max": 4,
+     "step": 0.1,
+     "value": 2
+    },
+    {
+     "name": "z",
+     "label": {
+      "en": "Slope Z",
+      "kn": "ಇಳಿಜಾರು Z"
+     },
+     "min": 0.1,
+     "max": 1.2,
+     "step": 0.05,
+     "value": 0.15
+    },
+    {
+     "name": "Cc",
+     "label": {
+      "en": "Constant C",
+      "kn": "ಸ್ಥಿರಾಂಕ C"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 5,
+     "value": 20
+    }
+   ],
+   "toggles": [
+    {
+     "name": "lg",
+     "label": {
+      "en": "Log–log axes",
+      "kn": "ಲಾಗ್–ಲಾಗ್ ಅಕ್ಷಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Typical region",
+      "kn": "ಸಾಮಾನ್ಯ ಪ್ರದೇಶ"
+     },
+     "icon": "reset",
+     "set": {
+      "z": "0.15"
+     }
+    },
+    {
+     "label": {
+      "en": "Whole continents",
+      "kn": "ಇಡೀ ಖಂಡಗಳು"
+     },
+     "icon": "next",
+     "set": {
+      "z": "1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "Sp",
+     "expr": "Cc*10^(z*lA)"
+    },
+    {
+     "name": "lS",
+     "expr": "log(Sp)"
+    },
+    {
+     "name": "gx",
+     "expr": "10 + 12*lA"
+    },
+    {
+     "name": "gy",
+     "expr": "if(lg, 8 + 7*lS, 8 + 48*min(Sp/(50*10^(1.2*4)), 1))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 8,
+     "x2": 60,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 8,
+     "x2": 10,
+     "y2": 56,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 35,
+     "y": 4.5,
+     "size": 20,
+     "text": {
+      "en": "log area",
+      "kn": "ಲಾಗ್ ವಿಸ್ತೀರ್ಣ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 57.5,
+     "size": 20,
+     "text": {
+      "en": "log species",
+      "kn": "ಲಾಗ್ ಪ್ರಭೇದ"
+     },
+     "align": "left",
+     "visibleIf": "lg"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 57.5,
+     "size": 20,
+     "text": {
+      "en": "species (linear)",
+      "kn": "ಪ್ರಭೇದ (ರೇಖೀಯ)"
+     },
+     "align": "left",
+     "visibleIf": "!lg"
+    },
+    {
+     "shape": "path",
+     "fn": "8 + 7*(log(Cc) + z*(x - 10)/12)",
+     "from": 10,
+     "to": 58,
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "lg"
+    },
+    {
+     "shape": "path",
+     "fn": "8 + 48*Cc*10^(z*(x - 10)/12)/(50*10^(4.8))",
+     "from": 10,
+     "to": 58,
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "!lg"
+    },
+    {
+     "shape": "circle",
+     "x": "gx",
+     "y": "gy",
+     "r": 1.3,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 70,
+     "y": 8,
+     "w": "min(4 + 3*lA*2.5, 26)",
+     "h": "min(4 + 3*lA*2.5, 26)",
+     "color": "green",
+     "opacity": 0.4
+    },
+    {
+     "shape": "text",
+     "x": 82,
+     "y": 40,
+     "size": 26,
+     "text": {
+      "en": "S = {Sp:0} species",
+      "kn": "S = {Sp:0} ಪ್ರಭೇದಗಳು"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 82,
+     "y": 34,
+     "size": 22,
+     "text": {
+      "en": "A = {10^lA:0} km²"
+     }
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Species S",
+      "kn": "ಪ್ರಭೇದ S"
+     },
+     "expr": "Sp",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "log S"
+     },
+     "expr": "lS",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Area",
+      "kn": "ವಿಸ್ತೀರ್ಣ"
+     },
+     "expr": "10^lA",
+     "digits": 0,
+     "unit": "km²"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With Z = 0.15, how many times more area do you need to double the species?",
+     "kn": "Z = 0.15 ಇದ್ದಾಗ ಪ್ರಭೇದಗಳನ್ನು ದ್ವಿಗುಣಗೊಳಿಸಲು ಎಷ್ಟು ಪಟ್ಟು ವಿಸ್ತೀರ್ಣ ಬೇಕು?"
+    },
+    {
+     "en": "Switch to linear axes. Why do ecologists prefer the log–log plot?",
+     "kn": "ರೇಖೀಯ ಅಕ್ಷಗಳಿಗೆ ಬದಲಿಸಿ. ಪರಿಸರಶಾಸ್ತ್ರಜ್ಞರು ಲಾಗ್–ಲಾಗ್ ಗ್ರಾಫ್ ಏಕೆ ಇಷ್ಟಪಡುತ್ತಾರೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

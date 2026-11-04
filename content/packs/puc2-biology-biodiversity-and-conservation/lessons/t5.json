@@ -67,6 +67,228 @@
    }
   },
   {
+   "id": "scene-tiger-reserve",
+   "type": "interactive",
+   "title": {
+    "en": "Saving tigers in situ and ex situ",
+    "kn": "ಹುಲಿಗಳ ಸ್ಥಾನೀಯ ಮತ್ತು ಸ್ಥಾನಾಂತರ ಸಂರಕ್ಷಣೆ"
+   },
+   "narration": {
+    "en": "A tiger population grows logistically up to the number its reserve can support (about one tiger per 10 km² of good forest here), while poaching removes a share every year. Protecting the reserve (in situ conservation, as in Project Tiger) cuts poaching; releasing zoo-bred animals (ex situ) adds a few each year.",
+    "kn": "ಹುಲಿಗಳ ಸಮೂಹ ಮೀಸಲು ಪ್ರದೇಶ ಪೋಷಿಸಬಲ್ಲ ಸಂಖ್ಯೆಯವರೆಗೆ (ಇಲ್ಲಿ ಸುಮಾರು 10 km² ಗೆ ಒಂದು ಹುಲಿ) ಬೆಳೆಯುತ್ತದೆ, ಬೇಟೆ ಪ್ರತಿ ವರ್ಷ ಒಂದು ಪಾಲು ತೆಗೆಯುತ್ತದೆ. ಮೀಸಲು ರಕ್ಷಣೆ (ಸ್ಥಾನೀಯ, ಹುಲಿ ಯೋಜನೆಯಂತೆ) ಬೇಟೆ ಕಡಿಮೆ ಮಾಡುತ್ತದೆ; ಮೃಗಾಲಯದಲ್ಲಿ ಬೆಳೆಸಿದವನ್ನು ಬಿಡುವುದು (ಸ್ಥಾನಾಂತರ) ಪ್ರತಿ ವರ್ಷ ಕೆಲವನ್ನು ಸೇರಿಸುತ್ತದೆ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "A tiger population grows logistically up to the number its reserve can support (about one tiger per 10 km² of good forest here), while poaching removes a share every year. Protecting the reserve (in situ conservation, as in Project Tiger) cuts poaching; releasing zoo-bred animals (ex situ) adds a few each year.",
+    "kn": "ಹುಲಿಗಳ ಸಮೂಹ ಮೀಸಲು ಪ್ರದೇಶ ಪೋಷಿಸಬಲ್ಲ ಸಂಖ್ಯೆಯವರೆಗೆ (ಇಲ್ಲಿ ಸುಮಾರು 10 km² ಗೆ ಒಂದು ಹುಲಿ) ಬೆಳೆಯುತ್ತದೆ, ಬೇಟೆ ಪ್ರತಿ ವರ್ಷ ಒಂದು ಪಾಲು ತೆಗೆಯುತ್ತದೆ. ಮೀಸಲು ರಕ್ಷಣೆ (ಸ್ಥಾನೀಯ, ಹುಲಿ ಯೋಜನೆಯಂತೆ) ಬೇಟೆ ಕಡಿಮೆ ಮಾಡುತ್ತದೆ; ಮೃಗಾಲಯದಲ್ಲಿ ಬೆಳೆಸಿದವನ್ನು ಬಿಡುವುದು (ಸ್ಥಾನಾಂತರ) ಪ್ರತಿ ವರ್ಷ ಕೆಲವನ್ನು ಸೇರಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Reserve area",
+      "kn": "ಮೀಸಲು ವಿಸ್ತೀರ್ಣ"
+     },
+     "min": 200,
+     "max": 1500,
+     "step": 100,
+     "value": 800,
+     "unit": "km²"
+    },
+    {
+     "name": "h",
+     "label": {
+      "en": "Poaching",
+      "kn": "ಬೇಟೆ"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 2,
+     "value": 18,
+     "unit": "%/yr"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "prot",
+     "label": {
+      "en": "Protected (in situ)",
+      "kn": "ರಕ್ಷಿತ (ಸ್ಥಾನೀಯ)"
+     },
+     "value": false
+    },
+    {
+     "name": "rel",
+     "label": {
+      "en": "Release zoo-bred tigers (ex situ)",
+      "kn": "ಮೃಗಾಲಯದ ಹುಲಿ ಬಿಡುಗಡೆ (ಸ್ಥಾನಾಂತರ)"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 50,
+    "unit": "yr",
+    "dt": 0.05,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2
+   },
+   "vars": [
+    {
+     "name": "K",
+     "expr": "A/10"
+    },
+    {
+     "name": "hh",
+     "expr": "if(prot, 0.2, 1)*h/100"
+    }
+   ],
+   "state": [
+    {
+     "name": "N",
+     "init": 30,
+     "rate": "0.2*N*(1 - N/K) - hh*N + if(rel, 1, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 62,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 8,
+     "x2": 8,
+     "y2": 56,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 35.0,
+     "y": 4.6,
+     "size": 22,
+     "text": {
+      "en": "Years",
+      "kn": "ವರ್ಷಗಳು"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 57.5,
+     "size": 22,
+     "text": {
+      "en": "Tigers",
+      "kn": "ಹುಲಿಗಳು"
+     },
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": "8 + 0.3*K",
+     "x2": 62,
+     "y2": "8 + 0.3*K",
+     "color": "green",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 61,
+     "y": "10 + 0.3*K",
+     "size": 18,
+     "text": {
+      "en": "reserve can hold {K:0}",
+      "kn": "ಮೀಸಲು ಹಿಡಿಯಬಲ್ಲದು {K:0}"
+     },
+     "align": "right",
+     "color": "green"
+    },
+    {
+     "shape": "trail",
+     "x": "8 + t*1.08",
+     "y": "8 + 0.3*N",
+     "length": 1100,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "particles",
+     "count": 150,
+     "x": "70 + 26*rand(i)",
+     "y": "10 + 44*rand(i + 300)",
+     "r": 0.7,
+     "color": "orange",
+     "visibleIf": "i < N"
+    },
+    {
+     "shape": "label",
+     "x": 83,
+     "y": 4,
+     "size": 20,
+     "text": {
+      "en": "Heading for local extinction",
+      "kn": "ಸ್ಥಳೀಯ ವಿನಾಶದತ್ತ"
+     },
+     "visibleIf": "N < 5 && t > 5",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Tigers",
+      "kn": "ಹುಲಿಗಳು"
+     },
+     "expr": "N",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Carrying capacity",
+      "kn": "ಧಾರಣ ಸಾಮರ್ಥ್ಯ"
+     },
+     "expr": "K",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With poaching at 18% and no protection, what happens over 50 years? Now protect the reserve.",
+     "kn": "ರಕ್ಷಣೆ ಇಲ್ಲದೆ 18% ಬೇಟೆಯಲ್ಲಿ 50 ವರ್ಷದಲ್ಲಿ ಏನಾಗುತ್ತದೆ? ಈಗ ಮೀಸಲು ರಕ್ಷಿಸಿ."
+    },
+    {
+     "en": "Can releases from zoos alone save the tigers if poaching continues?",
+     "kn": "ಬೇಟೆ ಮುಂದುವರಿದರೆ ಮೃಗಾಲಯದ ಬಿಡುಗಡೆ ಮಾತ್ರ ಹುಲಿಗಳನ್ನು ಉಳಿಸಬಲ್ಲದೇ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

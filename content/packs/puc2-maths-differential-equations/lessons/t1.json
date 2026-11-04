@@ -60,6 +60,239 @@
    "formula": "\\text{Order} = \\text{order of the highest derivative}"
   },
   {
+   "id": "scene-de-family",
+   "type": "interactive",
+   "title": {
+    "en": "Order = number of arbitrary constants",
+    "kn": "ಕ್ರಮ = ಯಾದೃಚ್ಛಿಕ ಸ್ಥಿರಾಂಕಗಳ ಸಂಖ್ಯೆ"
+   },
+   "narration": {
+    "en": "Each family of curves has arbitrary constants A (and B). Differentiate as many times as there are constants and eliminate them: the differential equation you get has that order. Move A and B to see one member of the family; the faint curves are other members, all solutions of the same equation.",
+    "kn": "ಪ್ರತಿ ವಕ್ರ ಕುಟುಂಬಕ್ಕೆ ಯಾದೃಚ್ಛಿಕ ಸ್ಥಿರಾಂಕಗಳು A (ಮತ್ತು B). ಸ್ಥಿರಾಂಕಗಳಷ್ಟು ಬಾರಿ ಅವಕಲಿಸಿ ಅವುಗಳನ್ನು ನಿವಾರಿಸಿ: ಸಿಗುವ ಅವಕಲ ಸಮೀಕರಣದ ಕ್ರಮ ಅಷ್ಟೇ. A ಮತ್ತು B ಸರಿಸಿ ಕುಟುಂಬದ ಒಂದು ಸದಸ್ಯನನ್ನು ನೋಡಿ; ಮಸುಕಾದ ವಕ್ರಗಳು ಅದೇ ಸಮೀಕರಣದ ಇತರ ಪರಿಹಾರಗಳು."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "Each family of curves has arbitrary constants A (and B). Differentiate as many times as there are constants and eliminate them: the differential equation you get has that order. Move A and B to see one member of the family; the faint curves are other members, all solutions of the same equation.",
+    "kn": "ಪ್ರತಿ ವಕ್ರ ಕುಟುಂಬಕ್ಕೆ ಯಾದೃಚ್ಛಿಕ ಸ್ಥಿರಾಂಕಗಳು A (ಮತ್ತು B). ಸ್ಥಿರಾಂಕಗಳಷ್ಟು ಬಾರಿ ಅವಕಲಿಸಿ ಅವುಗಳನ್ನು ನಿವಾರಿಸಿ: ಸಿಗುವ ಅವಕಲ ಸಮೀಕರಣದ ಕ್ರಮ ಅಷ್ಟೇ. A ಮತ್ತು B ಸರಿಸಿ ಕುಟುಂಬದ ಒಂದು ಸದಸ್ಯನನ್ನು ನೋಡಿ; ಮಸುಕಾದ ವಕ್ರಗಳು ಅದೇ ಸಮೀಕರಣದ ಇತರ ಪರಿಹಾರಗಳು."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Constant A",
+      "kn": "ಸ್ಥಿರಾಂಕ A"
+     },
+     "min": -3,
+     "max": 3,
+     "step": 0.25,
+     "value": 1.5
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "Constant B",
+      "kn": "ಸ್ಥಿರಾಂಕ B"
+     },
+     "min": -3,
+     "max": 3,
+     "step": 0.25,
+     "value": 1
+    }
+   ],
+   "choices": [
+    {
+     "name": "f",
+     "label": {
+      "en": "Family of curves",
+      "kn": "ವಕ್ರ ಕುಟುಂಬ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "y = A e^(x/2)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "y = A sin x + B cos x"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "y = Ax + B"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "y = A x²/4"
+       },
+       "value": 4
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "vars": [
+    {
+     "name": "nc",
+     "expr": "if(f == 2 || f == 3, 2, 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     -6,
+     6
+    ],
+    "y": [
+     -8,
+     8
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "if(f == 1, (-2)*exp(x/2), if(f == 2, (-2)*sin(x) + (1)*cos(x), if(f == 3, (-2)*x + (1), (-2)*x^2/4)))",
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "if(f == 1, (-1)*exp(x/2), if(f == 2, (-1)*sin(x) + (-1)*cos(x), if(f == 3, (-1)*x + (-1), (-1)*x^2/4)))",
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "if(f == 1, (1)*exp(x/2), if(f == 2, (1)*sin(x) + (2)*cos(x), if(f == 3, (1)*x + (2), (1)*x^2/4)))",
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "if(f == 1, (2)*exp(x/2), if(f == 2, (2)*sin(x) + (-2)*cos(x), if(f == 3, (2)*x + (-2), (2)*x^2/4)))",
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "if(f == 1, (0.5)*exp(x/2), if(f == 2, (0.5)*sin(x) + (0)*cos(x), if(f == 3, (0.5)*x + (0), (0.5)*x^2/4)))",
+     "color": "white",
+     "opacity": 0.3,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "fn": "if(f == 1, A*exp(x/2), if(f == 2, A*sin(x) + B*cos(x), if(f == 3, A*x + B, A*x^2/4)))",
+     "color": "yellow",
+     "width": 5
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 5,
+     "size": 24,
+     "text": {
+      "en": "Family y = Ae^(x/2)   →   y' = y/2"
+     },
+     "visibleIf": "f == 1",
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 5,
+     "size": 24,
+     "text": {
+      "en": "Family y = Asin(x) + Bcos(x)   →   y'' + y = 0"
+     },
+     "visibleIf": "f == 2",
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 5,
+     "size": 24,
+     "text": {
+      "en": "Family y = Ax + B   →   y'' = 0"
+     },
+     "visibleIf": "f == 3",
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 5,
+     "size": 24,
+     "text": {
+      "en": "Family y = Ax²/4   →   x y' = 2y"
+     },
+     "visibleIf": "f == 4",
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": -5,
+     "size": 20,
+     "text": {
+      "en": "B does not appear: only one constant",
+      "kn": "B ಇಲ್ಲ: ಒಂದೇ ಸ್ಥಿರಾಂಕ"
+     },
+     "visibleIf": "f == 1 || f == 4",
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Arbitrary constants",
+      "kn": "ಯಾದೃಚ್ಛಿಕ ಸ್ಥಿರಾಂಕಗಳು"
+     },
+     "expr": "nc",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Order of the DE",
+      "kn": "ಅವಕಲ ಸಮೀಕರಣದ ಕ್ರಮ"
+     },
+     "expr": "nc",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Degree",
+      "kn": "ಘಾತ"
+     },
+     "expr": "1",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "For y = A sin x + B cos x, differentiate twice. Which equation is left once A and B are gone?",
+     "kn": "y = A sin x + B cos x ಅನ್ನು ಎರಡು ಬಾರಿ ಅವಕಲಿಸಿ. A, B ನಿವಾರಿಸಿದ ನಂತರ ಉಳಿಯುವ ಸಮೀಕರಣ ಯಾವುದು?"
+    },
+    {
+     "en": "Change A for y = A x²/4. Do all the parabolas satisfy x y' = 2y?",
+     "kn": "y = A x²/4 ಗೆ A ಬದಲಿಸಿ. ಎಲ್ಲ ಪರವಲಯಗಳು x y' = 2y ಅನ್ನು ಪೂರೈಸುತ್ತವೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {

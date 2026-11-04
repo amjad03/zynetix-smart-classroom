@@ -59,6 +59,262 @@
    }
   },
   {
+   "id": "scene-primary-secondary",
+   "type": "interactive",
+   "title": {
+    "en": "Primary or secondary data?",
+    "kn": "ಪ್ರಾಥಮಿಕ ಅಥವಾ ದ್ವಿತೀಯಕ ದತ್ತಾಂಶ?"
+   },
+   "narration": {
+    "en": "An enquiry into household spending can collect primary data (your own survey, original and fitted to your purpose, but costly and slow) or use secondary data (already published, cheap and quick, but collected for someone else). The numbers here are illustrative: ₹ 60 and about 25 interviews per enumerator per day for a survey.",
+    "kn": "ಕುಟುಂಬ ವೆಚ್ಚದ ವಿಚಾರಣೆ ಪ್ರಾಥಮಿಕ ದತ್ತಾಂಶ (ಸ್ವಂತ ಸಮೀಕ್ಷೆ: ಮೂಲ, ಉದ್ದೇಶಕ್ಕೆ ಹೊಂದುವುದು, ಆದರೆ ದುಬಾರಿ ಮತ್ತು ನಿಧಾನ) ಅಥವಾ ದ್ವಿತೀಯಕ ದತ್ತಾಂಶ (ಈಗಾಗಲೇ ಪ್ರಕಟಿತ, ಅಗ್ಗ ಮತ್ತು ವೇಗ, ಆದರೆ ಬೇರೆಯವರ ಉದ್ದೇಶಕ್ಕೆ ಸಂಗ್ರಹಿತ) ಬಳಸಬಹುದು. ಇಲ್ಲಿನ ಸಂಖ್ಯೆಗಳು ದೃಷ್ಟಾಂತಕ್ಕೆ ಮಾತ್ರ."
+   },
+   "seconds": 100,
+   "kind": "scene",
+   "caption": {
+    "en": "An enquiry into household spending can collect primary data (your own survey, original and fitted to your purpose, but costly and slow) or use secondary data (already published, cheap and quick, but collected for someone else). The numbers here are illustrative: ₹ 60 and about 25 interviews per enumerator per day for a survey.",
+    "kn": "ಕುಟುಂಬ ವೆಚ್ಚದ ವಿಚಾರಣೆ ಪ್ರಾಥಮಿಕ ದತ್ತಾಂಶ (ಸ್ವಂತ ಸಮೀಕ್ಷೆ: ಮೂಲ, ಉದ್ದೇಶಕ್ಕೆ ಹೊಂದುವುದು, ಆದರೆ ದುಬಾರಿ ಮತ್ತು ನಿಧಾನ) ಅಥವಾ ದ್ವಿತೀಯಕ ದತ್ತಾಂಶ (ಈಗಾಗಲೇ ಪ್ರಕಟಿತ, ಅಗ್ಗ ಮತ್ತು ವೇಗ, ಆದರೆ ಬೇರೆಯವರ ಉದ್ದೇಶಕ್ಕೆ ಸಂಗ್ರಹಿತ) ಬಳಸಬಹುದು. ಇಲ್ಲಿನ ಸಂಖ್ಯೆಗಳು ದೃಷ್ಟಾಂತಕ್ಕೆ ಮಾತ್ರ."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Households to cover",
+      "kn": "ಒಳಗೊಳ್ಳಬೇಕಾದ ಕುಟುಂಬಗಳು"
+     },
+     "min": 100,
+     "max": 2000,
+     "step": 100,
+     "value": 500
+    },
+    {
+     "name": "en",
+     "label": {
+      "en": "Enumerators",
+      "kn": "ಗಣತಿದಾರರು"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fit",
+     "label": {
+      "en": "Published data matches our purpose",
+      "kn": "ಪ್ರಕಟಿತ ದತ್ತಾಂಶ ನಮ್ಮ ಉದ್ದೇಶಕ್ಕೆ ಹೊಂದುತ್ತದೆ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "src",
+     "label": {
+      "en": "Source",
+      "kn": "ಮೂಲ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Primary: own survey",
+        "kn": "ಪ್ರಾಥಮಿಕ: ಸ್ವಂತ ಸಮೀಕ್ಷೆ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Secondary: published report",
+        "kn": "ದ್ವಿತೀಯಕ: ಪ್ರಕಟಿತ ವರದಿ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "cost",
+     "expr": "if(src == 1, 60*n + 2000, 500)"
+    },
+    {
+     "name": "days",
+     "expr": "if(src == 1, ceil(n/(25*en)), 2)"
+    },
+    {
+     "name": "fitp",
+     "expr": "if(src == 1, 95, if(fit, 85, 40))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     100
+    ],
+    "y": [
+     0,
+     60
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 8,
+     "x2": 92,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 8,
+     "x2": 10,
+     "y2": 54,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 16,
+     "y": 8,
+     "w": 16,
+     "h": "min(cost/125000, 1)*44",
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 42,
+     "y": 8,
+     "w": 16,
+     "h": "min(days/80, 1)*44",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 68,
+     "y": 8,
+     "w": 16,
+     "h": "fitp*0.44",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 4.5,
+     "size": 22,
+     "text": {
+      "en": "Cost",
+      "kn": "ವೆಚ್ಚ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": 4.5,
+     "size": 22,
+     "text": {
+      "en": "Time",
+      "kn": "ಸಮಯ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 76,
+     "y": 4.5,
+     "size": 22,
+     "text": {
+      "en": "Fit to purpose",
+      "kn": "ಉದ್ದೇಶಕ್ಕೆ ಹೊಂದಿಕೆ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": "11 + min(cost/125000, 1)*44",
+     "size": 20,
+     "text": {
+      "en": "₹ {cost:0}"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 50,
+     "y": "11 + min(days/80, 1)*44",
+     "size": 20,
+     "text": {
+      "en": "{days} days",
+      "kn": "{days} ದಿನ"
+     }
+    },
+    {
+     "shape": "text",
+     "x": 76,
+     "y": "11 + fitp*0.44",
+     "size": 20,
+     "text": {
+      "en": "{fitp}%"
+     }
+    },
+    {
+     "shape": "label",
+     "x": 50,
+     "y": 58,
+     "size": 20,
+     "text": {
+      "en": "Secondary data: check who collected it, when and why",
+      "kn": "ದ್ವಿತೀಯಕ ದತ್ತಾಂಶ: ಯಾರು, ಯಾವಾಗ, ಏಕೆ ಸಂಗ್ರಹಿಸಿದರು ಪರಿಶೀಲಿಸಿ"
+     },
+     "visibleIf": "src == 2",
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cost",
+      "kn": "ವೆಚ್ಚ"
+     },
+     "expr": "cost",
+     "digits": 0,
+     "unit": "₹"
+    },
+    {
+     "label": {
+      "en": "Time",
+      "kn": "ಸಮಯ"
+     },
+     "expr": "days",
+     "digits": 0,
+     "unit": "days"
+    },
+    {
+     "label": {
+      "en": "Suitability",
+      "kn": "ಸೂಕ್ತತೆ"
+     },
+     "expr": "fitp",
+     "digits": 0,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "For 2,000 households, how many enumerators keep a survey under 20 days?",
+     "kn": "2,000 ಕುಟುಂಬಗಳಿಗೆ ಸಮೀಕ್ಷೆ 20 ದಿನದೊಳಗೆ ಮುಗಿಸಲು ಎಷ್ಟು ಗಣತಿದಾರರು ಬೇಕು?"
+    },
+    {
+     "en": "When is secondary data the sensible choice?",
+     "kn": "ದ್ವಿತೀಯಕ ದತ್ತಾಂಶ ಯಾವಾಗ ಸೂಕ್ತ ಆಯ್ಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "wb1",
    "type": "whiteboard",
    "title": {
