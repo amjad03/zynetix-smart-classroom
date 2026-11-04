@@ -559,6 +559,259 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Conservation of mass and fixed proportions",
+    "kn": "ದ್ರವ್ಯರಾಶಿ ಸಂರಕ್ಷಣೆ ಮತ್ತು ನಿರ್ದಿಷ್ಟ ಅನುಪಾತ"
+   },
+   "narration": {
+    "en": "Hydrogen and oxygen always combine in the mass ratio 1 : 8 to form water (taking H = 1 u, O = 16 u). Spark the mixture: whatever is in excess is left over, and the total mass before and after is the same.",
+    "kn": "ಹೈಡ್ರೋಜನ್ ಮತ್ತು ಆಮ್ಲಜನಕ ಯಾವಾಗಲೂ 1 : 8 ದ್ರವ್ಯರಾಶಿ ಅನುಪಾತದಲ್ಲಿ ಸೇರಿ ನೀರು ಆಗುತ್ತವೆ. ಹೆಚ್ಚುವರಿ ಉಳಿಯುತ್ತದೆ; ಮೊದಲು ಮತ್ತು ನಂತರದ ಒಟ್ಟು ದ್ರವ್ಯರಾಶಿ ಒಂದೇ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Hydrogen and oxygen always combine in the mass ratio 1 : 8 to form water (taking H = 1 u, O = 16 u). Spark the mixture: whatever is in excess is left over, and the total mass before and after is the same.",
+    "kn": "ಹೈಡ್ರೋಜನ್ ಮತ್ತು ಆಮ್ಲಜನಕ ಯಾವಾಗಲೂ 1 : 8 ದ್ರವ್ಯರಾಶಿ ಅನುಪಾತದಲ್ಲಿ ಸೇರಿ ನೀರು ಆಗುತ್ತವೆ. ಹೆಚ್ಚುವರಿ ಉಳಿಯುತ್ತದೆ; ಮೊದಲು ಮತ್ತು ನಂತರದ ಒಟ್ಟು ದ್ರವ್ಯರಾಶಿ ಒಂದೇ."
+   },
+   "sliders": [
+    {
+     "name": "mH",
+     "label": {
+      "en": "Hydrogen",
+      "kn": "ಹೈಡ್ರೋಜನ್"
+     },
+     "min": 0.5,
+     "max": 5,
+     "step": 0.25,
+     "value": 1,
+     "unit": "g"
+    },
+    {
+     "name": "mO",
+     "label": {
+      "en": "Oxygen",
+      "kn": "ಆಮ್ಲಜನಕ"
+     },
+     "min": 2,
+     "max": 40,
+     "step": 1,
+     "value": 10,
+     "unit": "g"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Spark",
+      "kn": "ಕಿಡಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 4
+   },
+   "vars": [
+    {
+     "name": "pr",
+     "expr": "min(t/3, 1)"
+    },
+    {
+     "name": "ext",
+     "expr": "min(mH, mO/8)"
+    },
+    {
+     "name": "hr",
+     "expr": "ext*pr"
+    },
+    {
+     "name": "hl",
+     "expr": "mH - hr"
+    },
+    {
+     "name": "ol",
+     "expr": "mO - 8*hr"
+    },
+    {
+     "name": "w",
+     "expr": "9*hr"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     -1,
+     8.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": 0,
+     "x2": 11.5,
+     "y2": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 0,
+     "w": 2,
+     "h": "0.15*mH",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": "0.15*mH",
+     "w": 2,
+     "h": "0.15*mO",
+     "color": "red"
+    },
+    {
+     "shape": "rect",
+     "x": 8,
+     "y": 0,
+     "w": 2,
+     "h": "0.15*w",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 8,
+     "y": "0.15*w",
+     "w": 2,
+     "h": "0.15*hl",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8,
+     "y": "0.15*(w + hl)",
+     "w": 2,
+     "h": "0.15*ol",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": -0.5,
+     "text": {
+      "en": "before"
+     },
+     "color": "white",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": -0.5,
+     "text": {
+      "en": "now"
+     },
+     "color": "white",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": "0.15*(mH + mO) + 0.4",
+     "text": {
+      "en": "{mH + mO:2} g"
+     },
+     "color": "white",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": "0.15*(mH + mO) + 0.4",
+     "text": {
+      "en": "{w + hl + ol:2} g"
+     },
+     "color": "white",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 8,
+     "text": {
+      "en": "white H₂   red O₂   blue H₂O"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "circle",
+     "x": 6,
+     "y": 3,
+     "r": "0.3 + 0.6*pr*(1 - pr)*4",
+     "visibleIf": "t > 0 && pr < 1",
+     "color": "yellow",
+     "opacity": 0.8
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Water formed",
+      "kn": "ಉಂಟಾದ ನೀರು"
+     },
+     "expr": "w",
+     "digits": 2,
+     "unit": "g"
+    },
+    {
+     "label": {
+      "en": "Hydrogen left"
+     },
+     "expr": "hl",
+     "digits": 2,
+     "unit": "g"
+    },
+    {
+     "label": {
+      "en": "Oxygen left"
+     },
+     "expr": "ol",
+     "digits": 2,
+     "unit": "g"
+    },
+    {
+     "label": {
+      "en": "Total mass now"
+     },
+     "expr": "w + hl + ol",
+     "digits": 2,
+     "unit": "g"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Use 1 g of hydrogen. How much oxygen reacts with it exactly?",
+     "kn": "1 g ಹೈಡ್ರೋಜನ್ ಬಳಸಿ. ಎಷ್ಟು ಆಮ್ಲಜನಕ ಸಂಪೂರ್ಣವಾಗಿ ಕ್ರಿಯಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Use 3 g hydrogen and 16 g oxygen. Which gas is left over, and how much?",
+     "kn": "3 g ಹೈಡ್ರೋಜನ್, 16 g ಆಮ್ಲಜನಕ. ಯಾವುದು ಉಳಿಯುತ್ತದೆ, ಎಷ್ಟು?"
+    },
+    {
+     "en": "Compare the two columns at the end. What law do they show?",
+     "kn": "ಕೊನೆಯಲ್ಲಿ ಎರಡು ಸ್ತಂಭ ಹೋಲಿಸಿ. ಯಾವ ನಿಯಮ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

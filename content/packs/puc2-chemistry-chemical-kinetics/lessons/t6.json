@@ -450,6 +450,226 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Energy profile and a catalyst",
+    "kn": "ಶಕ್ತಿ ರೇಖಾಚಿತ್ರ ಮತ್ತು ಉತ್ಪ್ರೇರಕ"
+   },
+   "narration": {
+    "en": "Reactants must climb the activation-energy hill to the activated complex before they fall to products. A catalyst gives a lower path: Ea drops, so more collisions succeed, but ΔH and the equilibrium constant do not change.",
+    "kn": "ಉತ್ಪನ್ನವಾಗುವ ಮೊದಲು ಕ್ರಿಯಾಕಾರಕಗಳು ಸಕ್ರಿಯಗೊಳಿಸುವ ಶಕ್ತಿಯ ಬೆಟ್ಟ ಏರಬೇಕು. ಉತ್ಪ್ರೇರಕ ಕಡಿಮೆ ಎತ್ತರದ ಮಾರ್ಗ ಕೊಡುತ್ತದೆ: Ea ಇಳಿಯುತ್ತದೆ, ಆದರೆ ΔH ಮತ್ತು ಸಮತೋಲನ ಸ್ಥಿರಾಂಕ ಬದಲಾಗುವುದಿಲ್ಲ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Reactants must climb the activation-energy hill to the activated complex before they fall to products. A catalyst gives a lower path: Ea drops, so more collisions succeed, but ΔH and the equilibrium constant do not change.",
+    "kn": "ಉತ್ಪನ್ನವಾಗುವ ಮೊದಲು ಕ್ರಿಯಾಕಾರಕಗಳು ಸಕ್ರಿಯಗೊಳಿಸುವ ಶಕ್ತಿಯ ಬೆಟ್ಟ ಏರಬೇಕು. ಉತ್ಪ್ರೇರಕ ಕಡಿಮೆ ಎತ್ತರದ ಮಾರ್ಗ ಕೊಡುತ್ತದೆ: Ea ಇಳಿಯುತ್ತದೆ, ಆದರೆ ΔH ಮತ್ತು ಸಮತೋಲನ ಸ್ಥಿರಾಂಕ ಬದಲಾಗುವುದಿಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "Ea",
+     "label": {
+      "en": "Activation energy (no catalyst)"
+     },
+     "min": 40,
+     "max": 150,
+     "step": 5,
+     "value": 100,
+     "unit": "kJ/mol"
+    },
+    {
+     "name": "dH",
+     "label": {
+      "en": "ΔH of reaction"
+     },
+     "min": -100,
+     "max": 100,
+     "step": 5,
+     "value": -50,
+     "unit": "kJ/mol"
+    },
+    {
+     "name": "drop",
+     "label": {
+      "en": "Catalyst lowers Ea by"
+     },
+     "min": 10,
+     "max": 60,
+     "step": 5,
+     "value": 30,
+     "unit": "kJ/mol"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cat",
+     "label": {
+      "en": "Catalyst present",
+      "kn": "ಉತ್ಪ್ರೇರಕ ಇದೆ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 6,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "E1",
+     "expr": "max(Ea, max(dH, 0) + 10)"
+    },
+    {
+     "name": "E2",
+     "expr": "max(E1 - drop, max(dH, 0) + 5)"
+    },
+    {
+     "name": "Eu",
+     "expr": "if(cat, E2, E1)"
+    },
+    {
+     "name": "B1",
+     "expr": "E1 - dH/2"
+    },
+    {
+     "name": "B2",
+     "expr": "E2 - dH/2"
+    },
+    {
+     "name": "Bu",
+     "expr": "Eu - dH/2"
+    },
+    {
+     "name": "px",
+     "expr": "10*t/6"
+    },
+    {
+     "name": "py",
+     "expr": "dH*smoothstep(2.5, 7.5, px) + Bu*exp(-((px - 5)/1.3)^2)"
+    },
+    {
+     "name": "fac",
+     "expr": "exp((E1 - E2)*1000/(8.314*298))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     -130,
+     180
+    ],
+    "axes": true,
+    "xLabel": "reaction progress",
+    "yLabel": "energy (kJ/mol)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "color": "white",
+     "fn": "dH*smoothstep(2.5, 7.5, x) + B1*exp(-((x - 5)/1.3)^2)",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "visibleIf": "cat",
+     "color": "green",
+     "fn": "dH*smoothstep(2.5, 7.5, x) + B2*exp(-((x - 5)/1.3)^2)",
+     "dashed": true,
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "x": 1.2,
+     "y": 0,
+     "dx": 0,
+     "dy": "E1",
+     "color": "yellow",
+     "label": "Ea"
+    },
+    {
+     "shape": "arrow",
+     "x": 2.0,
+     "y": 0,
+     "dx": 0,
+     "dy": "E2",
+     "visibleIf": "cat",
+     "color": "green",
+     "label": "Ea (cat.)"
+    },
+    {
+     "shape": "line",
+     "x1": 7.5,
+     "y1": "dH",
+     "x2": 10,
+     "y2": "dH",
+     "color": "blue",
+     "dashed": true
+    },
+    {
+     "shape": "arrow",
+     "x": 9.3,
+     "y": 0,
+     "dx": 0,
+     "dy": "dH",
+     "color": "blue",
+     "label": "ΔH"
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 0.18,
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Ea used"
+     },
+     "expr": "Eu",
+     "digits": 0,
+     "unit": "kJ/mol"
+    },
+    {
+     "label": {
+      "en": "ΔH"
+     },
+     "expr": "dH",
+     "digits": 0,
+     "unit": "kJ/mol"
+    },
+    {
+     "label": {
+      "en": "Catalyst speeds it up (298 K) by"
+     },
+     "expr": "fac",
+     "digits": 0,
+     "unit": "×"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Switch on the catalyst. Does ΔH change?",
+     "kn": "ಉತ್ಪ್ರೇರಕ ಆನ್ ಮಾಡಿ. ΔH ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Lower Ea by 20 kJ/mol. How many times faster is the reaction at 298 K?",
+     "kn": "Ea ಯನ್ನು 20 kJ/mol ಇಳಿಸಿ. 298 K ನಲ್ಲಿ ಎಷ್ಟು ಪಟ್ಟು ವೇಗ?"
+    },
+    {
+     "en": "Make the reaction endothermic. Is the backward Ea larger or smaller than the forward one?",
+     "kn": "ಕ್ರಿಯೆ ಉಷ್ಣಗ್ರಾಹಕ ಮಾಡಿ. ಹಿಮ್ಮುಖ Ea ದೊಡ್ಡದೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

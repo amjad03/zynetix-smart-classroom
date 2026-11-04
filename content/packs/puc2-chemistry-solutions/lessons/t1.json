@@ -355,6 +355,222 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Ways to state concentration",
+    "kn": "ಸಾರತೆ ವ್ಯಕ್ತಪಡಿಸುವ ವಿಧಾನಗಳು"
+   },
+   "narration": {
+    "en": "Dissolve a solute in water. Molality = moles of solute per kg of solvent, mole fraction = moles of solute ÷ total moles, mass % = mass of solute ÷ mass of solution × 100. In the box, each dot is a molecule: orange solute among blue water.",
+    "kn": "ನೀರಿನಲ್ಲಿ ದ್ರಾವ್ಯ ಕರಗಿಸಿ. ಮೋಲಾಲಿಟಿ = ಪ್ರತಿ kg ದ್ರಾವಕಕ್ಕೆ ದ್ರಾವ್ಯದ ಮೋಲ್; ಮೋಲ್ ಭಾಗ = ದ್ರಾವ್ಯ ಮೋಲ್ ÷ ಒಟ್ಟು ಮೋಲ್; ದ್ರವ್ಯರಾಶಿ % = ದ್ರಾವ್ಯ ÷ ದ್ರಾವಣ × 100."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Dissolve a solute in water. Molality = moles of solute per kg of solvent, mole fraction = moles of solute ÷ total moles, mass % = mass of solute ÷ mass of solution × 100. In the box, each dot is a molecule: orange solute among blue water.",
+    "kn": "ನೀರಿನಲ್ಲಿ ದ್ರಾವ್ಯ ಕರಗಿಸಿ. ಮೋಲಾಲಿಟಿ = ಪ್ರತಿ kg ದ್ರಾವಕಕ್ಕೆ ದ್ರಾವ್ಯದ ಮೋಲ್; ಮೋಲ್ ಭಾಗ = ದ್ರಾವ್ಯ ಮೋಲ್ ÷ ಒಟ್ಟು ಮೋಲ್; ದ್ರವ್ಯರಾಶಿ % = ದ್ರಾವ್ಯ ÷ ದ್ರಾವಣ × 100."
+   },
+   "sliders": [
+    {
+     "name": "ms",
+     "label": {
+      "en": "Mass of solute",
+      "kn": "ದ್ರಾವ್ಯದ ದ್ರವ್ಯರಾಶಿ"
+     },
+     "min": 1,
+     "max": 60,
+     "step": 1,
+     "value": 18,
+     "unit": "g"
+    },
+    {
+     "name": "mw",
+     "label": {
+      "en": "Mass of water",
+      "kn": "ನೀರಿನ ದ್ರವ್ಯರಾಶಿ"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 20,
+     "value": 500,
+     "unit": "g"
+    }
+   ],
+   "choices": [
+    {
+     "name": "sol",
+     "label": {
+      "en": "Solute",
+      "kn": "ದ್ರಾವ್ಯ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Glucose (180.16)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Urea (60.06)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "NaOH (40.00)"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "NaCl (58.44)"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "M",
+     "expr": "((sol == 1)*(180.16) + (sol == 2)*(60.06) + (sol == 3)*(40.0) + (sol == 4)*(58.44))"
+    },
+    {
+     "name": "n",
+     "expr": "ms/M"
+    },
+    {
+     "name": "nw",
+     "expr": "mw/18.015"
+    },
+    {
+     "name": "mol",
+     "expr": "n/(mw/1000)"
+    },
+    {
+     "name": "x2",
+     "expr": "n/(n + nw)"
+    },
+    {
+     "name": "pct",
+     "expr": "100*ms/(ms + mw)"
+    },
+    {
+     "name": "ns",
+     "expr": "max(round(300*x2), if(n > 0, 1, 0))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     -0.6,
+     7.6
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.2,
+     "y": 0.2,
+     "w": 9.6,
+     "h": 6.8,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 300,
+     "x": "bounce(0.4 + 9.2*rand(i) + 0.4*t*cos(2*pi*rand(i + 400)), 0.4, 9.6)",
+     "y": "bounce(0.4 + 6.4*rand(i + 800) + 0.4*t*sin(2*pi*rand(i + 400)), 0.4, 6.8)",
+     "r": 0.09,
+     "visibleIf": "i >= ns",
+     "color": "blue"
+    },
+    {
+     "shape": "particles",
+     "count": 300,
+     "x": "bounce(0.4 + 9.2*rand(i) + 0.4*t*cos(2*pi*rand(i + 400)), 0.4, 9.6)",
+     "y": "bounce(0.4 + 6.4*rand(i + 800) + 0.4*t*sin(2*pi*rand(i + 400)), 0.4, 6.8)",
+     "r": 0.12,
+     "visibleIf": "i < ns",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 7.35,
+     "text": {
+      "en": "300 molecules shown; orange = solute"
+     },
+     "color": "white",
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Molality",
+      "kn": "ಮೋಲಾಲಿಟಿ"
+     },
+     "expr": "mol",
+     "digits": 3,
+     "unit": "mol/kg"
+    },
+    {
+     "label": {
+      "en": "Mole fraction of solute",
+      "kn": "ಮೋಲ್ ಭಾಗ"
+     },
+     "expr": "x2",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "Mass percentage"
+     },
+     "expr": "pct",
+     "digits": 2,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Moles of solute"
+     },
+     "expr": "n",
+     "digits": 3,
+     "unit": "mol"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Dissolve 18 g of glucose in 1000 g of water. What is the molality?",
+     "kn": "1000 g ನೀರಿನಲ್ಲಿ 18 g ಗ್ಲೂಕೋಸ್. ಮೋಲಾಲಿಟಿ ಎಷ್ಟು?"
+    },
+    {
+     "en": "Same mass of urea instead: why is the molality three times larger?",
+     "kn": "ಅದೇ ದ್ರವ್ಯರಾಶಿ ಯೂರಿಯಾ: ಮೋಲಾಲಿಟಿ ಮೂರು ಪಟ್ಟು ಏಕೆ?"
+    },
+    {
+     "en": "Which of these does not change with temperature, and why?",
+     "kn": "ಇವುಗಳಲ್ಲಿ ಯಾವುದು ತಾಪದೊಂದಿಗೆ ಬದಲಾಗುವುದಿಲ್ಲ, ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "3d-molecules",
    "type": "3d_model",
    "modelId": "molecules",

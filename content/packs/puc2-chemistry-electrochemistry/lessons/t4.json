@@ -483,6 +483,297 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Faraday's first law",
+    "kn": "ಫ್ಯಾರಡೆಯ ಮೊದಲ ನಿಯಮ"
+   },
+   "narration": {
+    "en": "Switch on the current. The mass deposited at the cathode is m = (I t / zF) × M: it grows with the current and the time, and for the same charge it depends on the molar mass and the charge on the ion.",
+    "kn": "ವಿದ್ಯುತ್ ಆನ್ ಮಾಡಿ. ಕ್ಯಾಥೋಡ್‌ನಲ್ಲಿ ಸಂಗ್ರಹವಾಗುವ ದ್ರವ್ಯರಾಶಿ m = (I t / zF) × M: ವಿದ್ಯುತ್ ಮತ್ತು ಸಮಯದೊಂದಿಗೆ ಹೆಚ್ಚುತ್ತದೆ; ಅದೇ ಆವೇಶಕ್ಕೆ ಮೋಲಾರ್ ದ್ರವ್ಯರಾಶಿ ಮತ್ತು ಅಯಾನಿನ ಆವೇಶದ ಮೇಲೆ ಅವಲಂಬಿತ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Switch on the current. The mass deposited at the cathode is m = (I t / zF) × M: it grows with the current and the time, and for the same charge it depends on the molar mass and the charge on the ion.",
+    "kn": "ವಿದ್ಯುತ್ ಆನ್ ಮಾಡಿ. ಕ್ಯಾಥೋಡ್‌ನಲ್ಲಿ ಸಂಗ್ರಹವಾಗುವ ದ್ರವ್ಯರಾಶಿ m = (I t / zF) × M: ವಿದ್ಯುತ್ ಮತ್ತು ಸಮಯದೊಂದಿಗೆ ಹೆಚ್ಚುತ್ತದೆ; ಅದೇ ಆವೇಶಕ್ಕೆ ಮೋಲಾರ್ ದ್ರವ್ಯರಾಶಿ ಮತ್ತು ಅಯಾನಿನ ಆವೇಶದ ಮೇಲೆ ಅವಲಂಬಿತ."
+   },
+   "sliders": [
+    {
+     "name": "I",
+     "label": {
+      "en": "Current",
+      "kn": "ವಿದ್ಯುತ್"
+     },
+     "min": 0.5,
+     "max": 5,
+     "step": 0.1,
+     "value": 2,
+     "unit": "A"
+    }
+   ],
+   "choices": [
+    {
+     "name": "ion",
+     "label": {
+      "en": "Metal ion",
+      "kn": "ಲೋಹ ಅಯಾನು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Ag⁺ (z = 1)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Cu²⁺ (z = 2)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Al³⁺ (z = 3, molten)"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Switch on",
+      "kn": "ಆನ್ ಮಾಡಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "unit": "min",
+    "dt": 0.05
+   },
+   "vars": [
+    {
+     "name": "z",
+     "expr": "ion"
+    },
+    {
+     "name": "M",
+     "expr": "((ion == 1)*(107.87) + (ion == 2)*(63.55) + (ion == 3)*(26.98))"
+    },
+    {
+     "name": "Q",
+     "expr": "I*t*60"
+    },
+    {
+     "name": "ne",
+     "expr": "Q/96485"
+    },
+    {
+     "name": "m",
+     "expr": "ne*M/z"
+    }
+   ],
+   "state": [
+    {
+     "name": "ph",
+     "init": 0,
+     "rate": "I"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     0,
+     10
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0.5,
+     "w": 10,
+     "h": 5.5,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0.5,
+     "w": 10,
+     "h": 6.5,
+     "color": "white",
+     "fill": false,
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": 2.5,
+     "y": 1.5,
+     "w": 0.8,
+     "h": 6.5,
+     "color": "orange",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 8.7,
+     "y": 1.5,
+     "w": 0.8,
+     "h": 6.5,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": "8.7 - 0.06*min(m, 20)",
+     "y": 1.5,
+     "w": "0.8 + 0.12*min(m, 20)",
+     "h": 4.5,
+     "visibleIf": "m > 0.001",
+     "color": "white",
+     "opacity": 0.9
+    },
+    {
+     "shape": "icon",
+     "icon": "battery",
+     "x": 6,
+     "y": 9,
+     "size": 1.6
+    },
+    {
+     "shape": "line",
+     "x1": 2.9,
+     "y1": 8,
+     "x2": 2.9,
+     "y2": 9,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 2.9,
+     "y1": 9,
+     "x2": 5.2,
+     "y2": 9,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 6.8,
+     "y1": 9,
+     "x2": 9.1,
+     "y2": 9,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 9.1,
+     "y1": 9,
+     "x2": 9.1,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 8,
+     "x": "6.8 + mod(i/8 + 0.3*ph, 1)*2.3",
+     "y": 9,
+     "r": 0.13,
+     "visibleIf": "t > 0",
+     "color": "yellow"
+    },
+    {
+     "shape": "particles",
+     "count": 16,
+     "x": "3.5 + mod(5*rand(i) + 0.3*ph, 5)",
+     "y": "1 + 4.5*rand(i + 30)",
+     "r": 0.13,
+     "visibleIf": "t > 0",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 2.9,
+     "y": 0,
+     "text": {
+      "en": "anode"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 9.1,
+     "y": 0,
+     "text": {
+      "en": "cathode"
+     },
+     "color": "white",
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Charge passed",
+      "kn": "ಹರಿದ ಆವೇಶ"
+     },
+     "expr": "Q",
+     "digits": 0,
+     "unit": "C"
+    },
+    {
+     "label": {
+      "en": "Electrons"
+     },
+     "expr": "ne",
+     "digits": 4,
+     "unit": "mol"
+    },
+    {
+     "label": {
+      "en": "Mass deposited",
+      "kn": "ಸಂಗ್ರಹವಾದ ದ್ರವ್ಯರಾಶಿ"
+     },
+     "expr": "m",
+     "digits": 3,
+     "unit": "g"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Pass 2 A for 30 min through AgNO₃. How much silver deposits?",
+     "kn": "AgNO₃ ಮೂಲಕ 30 ನಿಮಿಷ 2 A. ಎಷ್ಟು ಬೆಳ್ಳಿ?"
+    },
+    {
+     "en": "Same current and time with Cu²⁺: why is the mass of copper less than a third of the silver?",
+     "kn": "ಅದೇ ವಿದ್ಯುತ್, ಸಮಯದಲ್ಲಿ Cu²⁺: ತಾಮ್ರ ಬೆಳ್ಳಿಯ ಮೂರನೇ ಒಂದಕ್ಕಿಂತ ಕಡಿಮೆ ಏಕೆ?"
+    },
+    {
+     "en": "How many coulombs make one mole of electrons?",
+     "kn": "ಒಂದು ಮೋಲ್ ಇಲೆಕ್ಟ್ರಾನ್‌ಗೆ ಎಷ್ಟು ಕೂಲಂಬ್?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

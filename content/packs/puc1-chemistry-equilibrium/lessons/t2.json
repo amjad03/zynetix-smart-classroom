@@ -215,6 +215,290 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Equilibrium from either side",
+    "kn": "ಎರಡೂ ಕಡೆಯಿಂದ ಸಮತೋಲನ"
+   },
+   "narration": {
+    "en": "A ⇌ B with forward rate constant kf and backward kb. Start with pure A or pure B: the concentrations level off at the same values, where Q = [B]/[A] equals K = kf/kb.",
+    "kn": "A ⇌ B ಮುಂದಿನ ದರ ಸ್ಥಿರಾಂಕ kf, ಹಿಂದಿನ kb. ಶುದ್ಧ A ಅಥವಾ ಶುದ್ಧ B ಯಿಂದ ಪ್ರಾರಂಭಿಸಿ: ಸಾರತೆಗಳು ಒಂದೇ ಮೌಲ್ಯಕ್ಕೆ ಬರುತ್ತವೆ, ಅಲ್ಲಿ Q = K = kf/kb."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A ⇌ B with forward rate constant kf and backward kb. Start with pure A or pure B: the concentrations level off at the same values, where Q = [B]/[A] equals K = kf/kb.",
+    "kn": "A ⇌ B ಮುಂದಿನ ದರ ಸ್ಥಿರಾಂಕ kf, ಹಿಂದಿನ kb. ಶುದ್ಧ A ಅಥವಾ ಶುದ್ಧ B ಯಿಂದ ಪ್ರಾರಂಭಿಸಿ: ಸಾರತೆಗಳು ಒಂದೇ ಮೌಲ್ಯಕ್ಕೆ ಬರುತ್ತವೆ, ಅಲ್ಲಿ Q = K = kf/kb."
+   },
+   "sliders": [
+    {
+     "name": "kf",
+     "label": {
+      "en": "Forward rate constant kf",
+      "kn": "ಮುಂದಿನ ದರ ಸ್ಥಿರಾಂಕ"
+     },
+     "min": 0.1,
+     "max": 2,
+     "step": 0.05,
+     "value": 0.5,
+     "unit": "per s"
+    },
+    {
+     "name": "kb",
+     "label": {
+      "en": "Backward rate constant kb",
+      "kn": "ಹಿಂದಿನ ದರ ಸ್ಥಿರಾಂಕ"
+     },
+     "min": 0.1,
+     "max": 2,
+     "step": 0.05,
+     "value": 0.25,
+     "unit": "per s"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fromB",
+     "label": {
+      "en": "Start with pure B",
+      "kn": "ಶುದ್ಧ B ಯಿಂದ ಪ್ರಾರಂಭ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 20,
+    "autoplay": false
+   },
+   "vars": [
+    {
+     "name": "k",
+     "expr": "kf + kb"
+    },
+    {
+     "name": "Aeq",
+     "expr": "kb/k"
+    },
+    {
+     "name": "A0",
+     "expr": "if(fromB, 0, 1)"
+    },
+    {
+     "name": "A",
+     "expr": "Aeq + (A0 - Aeq)*exp(-k*t)"
+    },
+    {
+     "name": "Bc",
+     "expr": "1 - A"
+    },
+    {
+     "name": "Q",
+     "expr": "min(Bc/max(A, 0.001), 999)"
+    },
+    {
+     "name": "K",
+     "expr": "kf/kb"
+    },
+    {
+     "name": "nB",
+     "expr": "round(100*Bc)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.8,
+     17
+    ],
+    "y": [
+     -1,
+     7.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 10,
+     "y2": 0,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 0,
+     "y2": 6,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -0.6,
+     "text": {
+      "en": "time (0 to 20 s)"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": -0.3,
+     "y": 6.6,
+     "text": {
+      "en": "1 mol/L"
+     },
+     "color": "white",
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "6*Aeq",
+     "x2": 10,
+     "y2": "6*Aeq",
+     "color": "blue",
+     "opacity": 0.6,
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": "6*(1 - Aeq)",
+     "x2": 10,
+     "y2": "6*(1 - Aeq)",
+     "color": "red",
+     "opacity": 0.6,
+     "dashed": true
+    },
+    {
+     "shape": "path",
+     "color": "blue",
+     "fn": "6*(Aeq + (A0 - Aeq)*exp(-k*2*x))",
+     "from": 0,
+     "to": "max(t/2, 0.01)",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "color": "red",
+     "fn": "6*(1 - Aeq - (A0 - Aeq)*exp(-k*2*x))",
+     "from": 0,
+     "to": "max(t/2, 0.01)",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 9.8,
+     "y": "6*A + 0.35",
+     "text": {
+      "en": "[A]"
+     },
+     "color": "blue",
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 9.8,
+     "y": "6*Bc + 0.35",
+     "text": {
+      "en": "[B]"
+     },
+     "color": "red",
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "rect",
+     "x": 10.8,
+     "y": 0,
+     "w": 6,
+     "h": 6,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 100,
+     "x": "bounce(11 + 5.6*rand(i) + 0.8*t*cos(2*pi*rand(i + 300)), 11, 16.6)",
+     "y": "bounce(0.2 + 5.6*rand(i + 150) + 0.8*t*sin(2*pi*rand(i + 300)), 0.2, 5.8)",
+     "r": 0.13,
+     "visibleIf": "i < nB",
+     "color": "red"
+    },
+    {
+     "shape": "particles",
+     "count": 100,
+     "x": "bounce(11 + 5.6*rand(i) + 0.8*t*cos(2*pi*rand(i + 300)), 11, 16.6)",
+     "y": "bounce(0.2 + 5.6*rand(i + 150) + 0.8*t*sin(2*pi*rand(i + 300)), 0.2, 5.8)",
+     "r": 0.13,
+     "visibleIf": "i >= nB",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": 6.6,
+     "text": {
+      "en": "A blue, B red"
+     },
+     "color": "white",
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "[A]"
+     },
+     "expr": "A",
+     "digits": 3,
+     "unit": "mol/L"
+    },
+    {
+     "label": {
+      "en": "[B]"
+     },
+     "expr": "Bc",
+     "digits": 3,
+     "unit": "mol/L"
+    },
+    {
+     "label": {
+      "en": "Q = [B]/[A]"
+     },
+     "expr": "Q",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "K = kf/kb"
+     },
+     "expr": "K",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Run from pure A, then switch on \"Start with pure B\". Do you reach the same equilibrium?",
+     "kn": "ಶುದ್ಧ A ಯಿಂದ, ನಂತರ ಶುದ್ಧ B ಯಿಂದ ಚಲಾಯಿಸಿ. ಒಂದೇ ಸಮತೋಲನವೇ?"
+    },
+    {
+     "en": "Make kf twice kb. What is [B]/[A] at the end?",
+     "kn": "kf ಅನ್ನು kb ಯ ಎರಡರಷ್ಟು ಮಾಡಿ. ಕೊನೆಗೆ [B]/[A] ಎಷ್ಟು?"
+    },
+    {
+     "en": "Make both constants larger but keep the ratio. What changes and what does not?",
+     "kn": "ಅನುಪಾತ ಬದಲಿಸದೆ ಎರಡನ್ನೂ ಹೆಚ್ಚಿಸಿ. ಏನು ಬದಲಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

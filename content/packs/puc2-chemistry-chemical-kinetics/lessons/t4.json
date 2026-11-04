@@ -381,6 +381,264 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Half-life of a first-order reaction",
+    "kn": "ಮೊದಲ ಕ್ರಮ ಕ್ರಿಯೆಯ ಅರ್ಧಾಯು"
+   },
+   "narration": {
+    "en": "Each molecule reacts at a random moment, but on average half of what is left reacts in every half-life t½ = 0.693/k, however much you start with. After n half-lives the fraction left is (½)ⁿ.",
+    "kn": "ಪ್ರತಿ ಅಣು ಯಾದೃಚ್ಛಿಕ ಕ್ಷಣದಲ್ಲಿ ಕ್ರಿಯಿಸುತ್ತದೆ, ಆದರೆ ಪ್ರತಿ ಅರ್ಧಾಯುವಿನಲ್ಲಿ ಉಳಿದದ್ದರ ಅರ್ಧ ಕ್ರಿಯಿಸುತ್ತದೆ: t½ = 0.693/k, ಆರಂಭಿಕ ಪ್ರಮಾಣ ಏನೇ ಇರಲಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Each molecule reacts at a random moment, but on average half of what is left reacts in every half-life t½ = 0.693/k, however much you start with. After n half-lives the fraction left is (½)ⁿ.",
+    "kn": "ಪ್ರತಿ ಅಣು ಯಾದೃಚ್ಛಿಕ ಕ್ಷಣದಲ್ಲಿ ಕ್ರಿಯಿಸುತ್ತದೆ, ಆದರೆ ಪ್ರತಿ ಅರ್ಧಾಯುವಿನಲ್ಲಿ ಉಳಿದದ್ದರ ಅರ್ಧ ಕ್ರಿಯಿಸುತ್ತದೆ: t½ = 0.693/k, ಆರಂಭಿಕ ಪ್ರಮಾಣ ಏನೇ ಇರಲಿ."
+   },
+   "sliders": [
+    {
+     "name": "th",
+     "label": {
+      "en": "Half-life t½",
+      "kn": "ಅರ್ಧಾಯು"
+     },
+     "min": 2,
+     "max": 20,
+     "step": 0.5,
+     "value": 10,
+     "unit": "s"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "mk",
+     "label": {
+      "en": "Mark each half-life",
+      "kn": "ಅರ್ಧಾಯು ಗುರುತು"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "N0",
+     "label": {
+      "en": "Molecules at the start",
+      "kn": "ಆರಂಭಿಕ ಅಣುಗಳು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "100"
+       },
+       "value": 100
+      },
+      {
+       "label": {
+        "en": "200"
+       },
+       "value": 200
+      },
+      {
+       "label": {
+        "en": "400"
+       },
+       "value": 400
+      }
+     ],
+     "value": 200
+    }
+   ],
+   "time": {
+    "max": 80
+   },
+   "vars": [
+    {
+     "name": "k",
+     "expr": "0.693/th"
+    },
+    {
+     "name": "Ne",
+     "expr": "N0*pow(0.5, t/th)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     22
+    ],
+    "y": [
+     -0.8,
+     10.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.2,
+     "y": 0.2,
+     "w": 9.6,
+     "h": 9.6,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 400,
+     "x": "0.5 + 9*mod(i, 20)/19",
+     "y": "0.5 + 9*floor(i/20)/19",
+     "r": 0.17,
+     "visibleIf": "i < N0 && t < -th/0.693*ln(1 - rand(i))",
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 0.5,
+     "x2": 21.5,
+     "y2": 0.5,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 0.5,
+     "x2": 11,
+     "y2": 10,
+     "color": "white"
+    },
+    {
+     "shape": "path",
+     "color": "green",
+     "fn": "0.5 + 9.5*pow(0.5, (x - 11)*8/th)",
+     "from": 11,
+     "to": 21,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "11 + t/8",
+     "y": "0.5 + 9.5*Ne/N0",
+     "r": 0.22,
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": "11 + th/8",
+     "y1": 0.5,
+     "x2": "11 + th/8",
+     "y2": 10,
+     "visibleIf": "mk && th*1 <= 80",
+     "color": "orange",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": "11 + 2*th/8",
+     "y1": 0.5,
+     "x2": "11 + 2*th/8",
+     "y2": 10,
+     "visibleIf": "mk && th*2 <= 80",
+     "color": "orange",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": "11 + 3*th/8",
+     "y1": 0.5,
+     "x2": "11 + 3*th/8",
+     "y2": 10,
+     "visibleIf": "mk && th*3 <= 80",
+     "color": "orange",
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 5.25,
+     "x2": 21.5,
+     "y2": 5.25,
+     "visibleIf": "mk",
+     "color": "white",
+     "opacity": 0.4,
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 2.875,
+     "x2": 21.5,
+     "y2": 2.875,
+     "visibleIf": "mk",
+     "color": "white",
+     "opacity": 0.4,
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 16.2,
+     "y": 10.2,
+     "text": {
+      "en": "fraction left (expected)"
+     },
+     "color": "green",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 16.2,
+     "y": -0.4,
+     "text": {
+      "en": "time (0 to 80 s)"
+     },
+     "color": "white",
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Expected molecules left"
+     },
+     "expr": "Ne",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Half-lives passed"
+     },
+     "expr": "t/th",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Rate constant k"
+     },
+     "expr": "k",
+     "digits": 4,
+     "unit": "per s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Count the molecules left after one and after two half-lives.",
+     "kn": "ಒಂದು ಮತ್ತು ಎರಡು ಅರ್ಧಾಯುವಿನ ನಂತರ ಉಳಿದ ಅಣುಗಳನ್ನು ಎಣಿಸಿ."
+    },
+    {
+     "en": "Start with 400 instead of 100. Does the half-life change?",
+     "kn": "100 ಬದಲು 400 ರಿಂದ ಪ್ರಾರಂಭಿಸಿ. ಅರ್ಧಾಯು ಬದಲಾಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "How long until less than 10% is left? (about 3.3 half-lives)",
+     "kn": "10% ಕ್ಕಿಂತ ಕಡಿಮೆ ಉಳಿಯಲು ಎಷ್ಟು ಸಮಯ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

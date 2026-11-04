@@ -691,3 +691,12 @@ No text is reproduced. Check these plot details against the texts:
 - **NCERT conventions:** octant numbering I-VIII.
 - **Sorts to confirm:** xy >= 1 and 1/x > 2 as not linear.
 - **Kannada:** needs a native-speaker review.
+
+## Chemistry simulations and activities (101 lessons)
+
+- **pKa values:** haloacetic acids, phenol, carboxylic acid and amine values.
+- **Table data:** 3d-series data (NCERT tables 8.2/8.4); Ln3+ radii.
+- **Relative rates:** SN1/SN2 rates.
+- **Henry constants:** the NCERT CH4 value was left out.
+- **Simplified models:** Morse curve, Rutherford deflection, generic Le Chatelier, Kohlrausch at high c, approximate colours.
+- **Kannada:** needs a native-speaker review.

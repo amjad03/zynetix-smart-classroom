@@ -478,6 +478,259 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Chromate and dichromate",
+    "kn": "ಕ್ರೋಮೇಟ್ ಮತ್ತು ಡೈಕ್ರೋಮೇಟ್"
+   },
+   "narration": {
+    "en": "2CrO₄²⁻ (yellow) + 2H⁺ ⇌ Cr₂O₇²⁻ (orange) + H₂O. Adding acid pushes the equilibrium to orange dichromate; adding alkali pulls it back to yellow chromate. Chromium stays +6 throughout: this is not a redox change.",
+    "kn": "2CrO₄²⁻ (ಹಳದಿ) + 2H⁺ ⇌ Cr₂O₇²⁻ (ಕಿತ್ತಳೆ) + H₂O. ಆಮ್ಲ ಸೇರಿಸಿದರೆ ಕಿತ್ತಳೆ ಡೈಕ್ರೋಮೇಟ್ ಕಡೆ, ಕ್ಷಾರ ಸೇರಿಸಿದರೆ ಹಳದಿ ಕ್ರೋಮೇಟ್ ಕಡೆ. ಕ್ರೋಮಿಯಂ +6 ಆಗಿಯೇ ಇರುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "2CrO₄²⁻ (yellow) + 2H⁺ ⇌ Cr₂O₇²⁻ (orange) + H₂O. Adding acid pushes the equilibrium to orange dichromate; adding alkali pulls it back to yellow chromate. Chromium stays +6 throughout: this is not a redox change.",
+    "kn": "2CrO₄²⁻ (ಹಳದಿ) + 2H⁺ ⇌ Cr₂O₇²⁻ (ಕಿತ್ತಳೆ) + H₂O. ಆಮ್ಲ ಸೇರಿಸಿದರೆ ಕಿತ್ತಳೆ ಡೈಕ್ರೋಮೇಟ್ ಕಡೆ, ಕ್ಷಾರ ಸೇರಿಸಿದರೆ ಹಳದಿ ಕ್ರೋಮೇಟ್ ಕಡೆ. ಕ್ರೋಮಿಯಂ +6 ಆಗಿಯೇ ಇರುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "pH",
+     "label": {
+      "en": "pH",
+      "kn": "pH"
+     },
+     "min": 2,
+     "max": 12,
+     "step": 0.25,
+     "value": 9
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ions",
+     "label": {
+      "en": "Show the ions",
+      "kn": "ಅಯಾನುಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Add acid",
+      "kn": "ಆಮ್ಲ ಸೇರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "pH": "pH - 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Add alkali",
+      "kn": "ಕ್ಷಾರ ಸೇರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "pH": "pH + 1"
+     }
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "a",
+     "expr": "2*320000000000000.0*pow(10, -2*pH)"
+    },
+    {
+     "name": "cr",
+     "expr": "0.2/(1 + sqrt(1 + 0.4*a))"
+    },
+    {
+     "name": "dc",
+     "expr": "(0.1 - cr)/2"
+    },
+    {
+     "name": "fd",
+     "expr": "2*dc/0.1"
+    },
+    {
+     "name": "nc",
+     "expr": "round(40*cr/0.1)"
+    },
+    {
+     "name": "nd",
+     "expr": "round(20*fd)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     14
+    ],
+    "y": [
+     -0.6,
+     9
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0.5,
+     "w": 8,
+     "h": 7,
+     "color": {
+      "by": "fd",
+      "scale": [
+       "yellow",
+       "orange"
+      ]
+     },
+     "opacity": 0.7
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0.5,
+     "w": 8,
+     "h": 7.5,
+     "color": "white",
+     "fill": false,
+     "width": 4
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "bounce(1.4 + 7.2*rand(i) + 0.5*t*cos(2*pi*rand(i + 300)), 1.4, 8.6)",
+     "y": "bounce(0.9 + 6.2*rand(i + 150) + 0.5*t*sin(2*pi*rand(i + 300)), 0.9, 7.1)",
+     "r": 0.18,
+     "visibleIf": "ions && i < nc",
+     "color": "white"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "bounce(1.4 + 7.2*rand(i + 600) + 0.4*t*cos(2*pi*rand(i + 900)), 1.4, 8.6) - 0.15",
+     "y": "bounce(0.9 + 6.2*rand(i + 750) + 0.4*t*sin(2*pi*rand(i + 900)), 0.9, 7.1)",
+     "r": 0.18,
+     "visibleIf": "ions && i < nd",
+     "color": "red"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "bounce(1.4 + 7.2*rand(i + 600) + 0.4*t*cos(2*pi*rand(i + 900)), 1.4, 8.6) + 0.22",
+     "y": "bounce(0.9 + 6.2*rand(i + 750) + 0.4*t*sin(2*pi*rand(i + 900)), 0.9, 7.1)",
+     "r": 0.18,
+     "visibleIf": "ions && i < nd",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 8.5,
+     "text": {
+      "en": "white dots CrO₄²⁻, red pairs Cr₂O₇²⁻"
+     },
+     "visibleIf": "ions",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 6,
+     "text": {
+      "en": "pH {pH:2}"
+     },
+     "color": "white",
+     "size": 30
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 4.5,
+     "text": {
+      "en": "yellow (chromate)"
+     },
+     "visibleIf": "fd < 0.3",
+     "color": "yellow",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 4.5,
+     "text": {
+      "en": "orange (dichromate)"
+     },
+     "visibleIf": "fd > 0.7",
+     "color": "orange",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 4.5,
+     "text": {
+      "en": "mixture"
+     },
+     "visibleIf": "fd >= 0.3 && fd <= 0.7",
+     "color": "orange",
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cr present as dichromate"
+     },
+     "expr": "fd*100",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "[CrO₄²⁻]"
+     },
+     "expr": "cr",
+     "digits": 4,
+     "unit": "mol/L"
+    },
+    {
+     "label": {
+      "en": "[Cr₂O₇²⁻]"
+     },
+     "expr": "dc",
+     "digits": 4,
+     "unit": "mol/L"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Add acid step by step from pH 10. Around which pH does the colour change?",
+     "kn": "pH 10 ರಿಂದ ಹಂತವಾಗಿ ಆಮ್ಲ ಸೇರಿಸಿ. ಯಾವ pH ಸುತ್ತ ಬಣ್ಣ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "What is the oxidation state of Cr in CrO₄²⁻ and in Cr₂O₇²⁻?",
+     "kn": "CrO₄²⁻, Cr₂O₇²⁻ ನಲ್ಲಿ Cr ನ ಉತ್ಕರ್ಷಣ ಸ್ಥಿತಿ?"
+    },
+    {
+     "en": "Use Le Chatelier's principle to explain the colour change.",
+     "kn": "ಲೆ ಷಾಟೆಲಿಯರ್ ತತ್ವದಿಂದ ಬಣ್ಣ ಬದಲಾವಣೆ ವಿವರಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

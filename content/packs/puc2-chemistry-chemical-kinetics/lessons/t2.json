@@ -553,6 +553,314 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Rate law: rate = k[A]^m [B]^n",
+    "kn": "ದರ ನಿಯಮ: ದರ = k[A]^m [B]^n"
+   },
+   "narration": {
+    "en": "Choose the orders m and n, then change the concentrations. Doubling a concentration has no effect for order 0, doubles the rate for order 1 and quadruples it for order 2. The overall order m + n sets the units of k.",
+    "kn": "ಕ್ರಮಾಂಕ m, n ಆರಿಸಿ ಸಾರತೆ ಬದಲಿಸಿ. ಸಾರತೆ ದ್ವಿಗುಣಗೊಳಿಸಿದರೆ ಕ್ರಮ 0 ಗೆ ಪರಿಣಾಮವಿಲ್ಲ, ಕ್ರಮ 1 ಗೆ ದರ ದ್ವಿಗುಣ, ಕ್ರಮ 2 ಗೆ ನಾಲ್ಕು ಪಟ್ಟು. ಒಟ್ಟು ಕ್ರಮ k ಯ ಮಾನ ನಿರ್ಧರಿಸುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Choose the orders m and n, then change the concentrations. Doubling a concentration has no effect for order 0, doubles the rate for order 1 and quadruples it for order 2. The overall order m + n sets the units of k.",
+    "kn": "ಕ್ರಮಾಂಕ m, n ಆರಿಸಿ ಸಾರತೆ ಬದಲಿಸಿ. ಸಾರತೆ ದ್ವಿಗುಣಗೊಳಿಸಿದರೆ ಕ್ರಮ 0 ಗೆ ಪರಿಣಾಮವಿಲ್ಲ, ಕ್ರಮ 1 ಗೆ ದರ ದ್ವಿಗುಣ, ಕ್ರಮ 2 ಗೆ ನಾಲ್ಕು ಪಟ್ಟು. ಒಟ್ಟು ಕ್ರಮ k ಯ ಮಾನ ನಿರ್ಧರಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "[A]"
+     },
+     "min": 0.1,
+     "max": 1.0,
+     "step": 0.05,
+     "value": 0.2,
+     "unit": "mol/L"
+    },
+    {
+     "name": "Bc",
+     "label": {
+      "en": "[B]"
+     },
+     "min": 0.1,
+     "max": 1.0,
+     "step": 0.05,
+     "value": 0.2,
+     "unit": "mol/L"
+    }
+   ],
+   "choices": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Order in A, m"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "0"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "1"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "2"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "Order in B, n"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "0"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "1"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "2"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Double [A]",
+      "kn": "[A] ದ್ವಿಗುಣ"
+     },
+     "icon": "add",
+     "set": {
+      "A": "A*2"
+     }
+    },
+    {
+     "label": {
+      "en": "Halve [A]"
+     },
+     "icon": "remove",
+     "set": {
+      "A": "A/2"
+     }
+    },
+    {
+     "label": {
+      "en": "Double [B]"
+     },
+     "icon": "add",
+     "set": {
+      "Bc": "Bc*2"
+     }
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "rate",
+     "expr": "0.5*pow(A, m)*pow(Bc, n)"
+    },
+    {
+     "name": "ord",
+     "expr": "m + n"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     15
+    ],
+    "y": [
+     -0.6,
+     8
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.3,
+     "y": 0.3,
+     "w": 8.4,
+     "h": 6.4,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "bounce(0.5 + 8*rand(i) + 1.2*t*cos(2*pi*rand(i + 300)), 0.5, 8.5)",
+     "y": "bounce(0.5 + 6*rand(i + 150) + 1.2*t*sin(2*pi*rand(i + 300)), 0.5, 6.5)",
+     "r": 0.13,
+     "visibleIf": "i < round(40*A)",
+     "color": "blue"
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "bounce(0.5 + 8*rand(i + 600) + 1.2*t*cos(2*pi*rand(i + 900)), 0.5, 8.5)",
+     "y": "bounce(0.5 + 6*rand(i + 750) + 1.2*t*sin(2*pi*rand(i + 900)), 0.5, 6.5)",
+     "r": 0.13,
+     "visibleIf": "i < round(40*Bc)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 7.2,
+     "text": {
+      "en": "blue A, orange B"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": 10.5,
+     "y": 0.3,
+     "w": 2,
+     "h": "clamp(12*rate, 0, 6.4)",
+     "color": "green"
+    },
+    {
+     "shape": "rect",
+     "x": 10.5,
+     "y": 0.3,
+     "w": 2,
+     "h": 6.4,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": -0.3,
+     "text": {
+      "en": "rate"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 7.6,
+     "text": {
+      "en": "k in mol L⁻¹ s⁻¹"
+     },
+     "visibleIf": "ord == 0",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 7.6,
+     "text": {
+      "en": "k in s⁻¹"
+     },
+     "visibleIf": "ord == 1",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 7.6,
+     "text": {
+      "en": "k in L mol⁻¹ s⁻¹"
+     },
+     "visibleIf": "ord == 2",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 7.6,
+     "text": {
+      "en": "k in L² mol⁻² s⁻¹"
+     },
+     "visibleIf": "ord == 3",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 7.6,
+     "text": {
+      "en": "k in L³ mol⁻³ s⁻¹"
+     },
+     "visibleIf": "ord == 4",
+     "color": "white",
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Rate (k = 0.5)"
+     },
+     "expr": "rate",
+     "digits": 4,
+     "unit": "mol L⁻¹ s⁻¹"
+    },
+    {
+     "label": {
+      "en": "Overall order"
+     },
+     "expr": "ord",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With m = 2, press \"Double [A]\". By what factor does the rate change?",
+     "kn": "m = 2 ಇರುವಾಗ \"[A] ದ್ವಿಗುಣ\" ಒತ್ತಿ. ದರ ಎಷ್ಟು ಪಟ್ಟು?"
+    },
+    {
+     "en": "Find the orders for which the rate does not depend on [B].",
+     "kn": "ದರ [B] ಮೇಲೆ ಅವಲಂಬಿಸದ ಕ್ರಮಾಂಕ ಹುಡುಕಿ."
+    },
+    {
+     "en": "What are the units of k for an overall order of 2?",
+     "kn": "ಒಟ್ಟು ಕ್ರಮ 2 ಕ್ಕೆ k ಯ ಮಾನ ಏನು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

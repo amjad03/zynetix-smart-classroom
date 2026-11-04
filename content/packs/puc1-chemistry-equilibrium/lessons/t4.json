@@ -349,6 +349,553 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "pH of acids, bases and water",
+    "kn": "ಆಮ್ಲ, ಪ್ರತ್ಯಾಮ್ಲ ಮತ್ತು ನೀರಿನ pH"
+   },
+   "narration": {
+    "en": "Choose HCl, NaOH or pure water and set the concentration. pH = −log[H₃O⁺] and pH + pOH = pKw. Very dilute acid never goes above pH 7, because water itself gives H₃O⁺ ions. Kw grows with temperature.",
+    "kn": "HCl, NaOH ಅಥವಾ ಶುದ್ಧ ನೀರು ಆರಿಸಿ ಸಾರತೆ ಹೊಂದಿಸಿ. pH = −log[H₃O⁺], pH + pOH = pKw. ತುಂಬಾ ದುರ್ಬಲ ಆಮ್ಲವೂ pH 7 ಮೀರುವುದಿಲ್ಲ. ತಾಪದೊಂದಿಗೆ Kw ಹೆಚ್ಚುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Choose HCl, NaOH or pure water and set the concentration. pH = −log[H₃O⁺] and pH + pOH = pKw. Very dilute acid never goes above pH 7, because water itself gives H₃O⁺ ions. Kw grows with temperature.",
+    "kn": "HCl, NaOH ಅಥವಾ ಶುದ್ಧ ನೀರು ಆರಿಸಿ ಸಾರತೆ ಹೊಂದಿಸಿ. pH = −log[H₃O⁺], pH + pOH = pKw. ತುಂಬಾ ದುರ್ಬಲ ಆಮ್ಲವೂ pH 7 ಮೀರುವುದಿಲ್ಲ. ತಾಪದೊಂದಿಗೆ Kw ಹೆಚ್ಚುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "pc",
+     "label": {
+      "en": "Concentration: 10 to the power −n, n =",
+      "kn": "ಸಾರತೆ ಘಾತ n"
+     },
+     "min": 1,
+     "max": 8,
+     "step": 0.25,
+     "value": 2
+    }
+   ],
+   "choices": [
+    {
+     "name": "sub",
+     "label": {
+      "en": "Solution",
+      "kn": "ದ್ರಾವಣ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "HCl"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "NaOH"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Pure water"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    },
+    {
+     "name": "pKw",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪಮಾನ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "0 °C"
+       },
+       "value": 14.94
+      },
+      {
+       "label": {
+        "en": "25 °C"
+       },
+       "value": 14.0
+      },
+      {
+       "label": {
+        "en": "50 °C"
+       },
+       "value": 13.26
+      }
+     ],
+     "value": 14.0
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Dilute 10 times",
+      "kn": "10 ಪಟ್ಟು ದುರ್ಬಲ"
+     },
+     "icon": "remove",
+     "set": {
+      "pc": "pc + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "10 times stronger"
+     },
+     "icon": "add",
+     "set": {
+      "pc": "pc - 1"
+     }
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "c",
+     "expr": "pow(10, -pc)"
+    },
+    {
+     "name": "Kw",
+     "expr": "pow(10, -pKw)"
+    },
+    {
+     "name": "h",
+     "expr": "if(sub == 1, c/2 + sqrt(c^2/4 + Kw), if(sub == 2, Kw/(c/2 + sqrt(c^2/4 + Kw)), sqrt(Kw)))"
+    },
+    {
+     "name": "pH",
+     "expr": "-log(h)"
+    },
+    {
+     "name": "pOH",
+     "expr": "pKw - pH"
+    },
+    {
+     "name": "nH",
+     "expr": "round(5*pOH)"
+    },
+    {
+     "name": "nOH",
+     "expr": "round(5*pH)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     15
+    ],
+    "y": [
+     -0.6,
+     9
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "0.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "0/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "1.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "1/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "2.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "2/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "3.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "3/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "4.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "4/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "5.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "5/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "6.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "6/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "7.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "7/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "8.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "8/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "9.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "9/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "10.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "10/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "11.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "11/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "12.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "12/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "13.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "13/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 0,
+     "text": {
+      "en": "0"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 0,
+     "text": {
+      "en": "7"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": 0,
+     "text": {
+      "en": "14"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": "0.5 + pH",
+     "y": 1.9,
+     "dx": 0,
+     "dy": -0.9,
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "x": "0.5 + pH",
+     "y": 2.2,
+     "text": {
+      "en": "pH {pH:2}"
+     },
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": 3,
+     "w": 9,
+     "h": 5.5,
+     "color": {
+      "by": "pH/14",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     },
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": 3,
+     "w": 9,
+     "h": 5.5,
+     "color": "white",
+     "fill": false,
+     "width": 4
+    },
+    {
+     "shape": "particles",
+     "count": 80,
+     "x": "bounce(3.3 + 8.4*rand(i) + 0.8*t*cos(2*pi*rand(i + 300)), 3.3, 11.7)",
+     "y": "bounce(3.3 + 4.9*rand(i + 150) + 0.8*t*sin(2*pi*rand(i + 300)), 3.3, 8.2)",
+     "r": 0.12,
+     "visibleIf": "i < nH",
+     "color": "red"
+    },
+    {
+     "shape": "particles",
+     "count": 80,
+     "x": "bounce(3.3 + 8.4*rand(i + 600) + 0.8*t*cos(2*pi*rand(i + 900)), 3.3, 11.7)",
+     "y": "bounce(3.3 + 4.9*rand(i + 750) + 0.8*t*sin(2*pi*rand(i + 900)), 3.3, 8.2)",
+     "r": 0.12,
+     "visibleIf": "i < nOH",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 8.75,
+     "text": {
+      "en": "red H₃O⁺, blue OH⁻ (log scale)"
+     },
+     "color": "white",
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "pH"
+     },
+     "expr": "pH",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "pOH"
+     },
+     "expr": "pOH",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Kw"
+     },
+     "expr": "Kw*1e14",
+     "digits": 3,
+     "unit": "× 10⁻¹⁴"
+    },
+    {
+     "label": {
+      "en": "Concentration"
+     },
+     "expr": "c",
+     "digits": 6,
+     "unit": "mol/L"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Dilute 0.1 M HCl ten times, step by step. How much does the pH change each time?",
+     "kn": "0.1 M HCl ಅನ್ನು ಹತ್ತು ಪಟ್ಟು ಹಂತ ಹಂತವಾಗಿ ದುರ್ಬಲಗೊಳಿಸಿ. ಪ್ರತಿ ಬಾರಿ pH ಎಷ್ಟು ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "What is the pH of 10⁻⁸ M HCl? Why is it not 8?",
+     "kn": "10⁻⁸ M HCl ನ pH ಎಷ್ಟು? ಅದು 8 ಏಕೆ ಅಲ್ಲ?"
+    },
+    {
+     "en": "Pure water at 50 °C: is it acidic if its pH is below 7?",
+     "kn": "50 °C ನ ಶುದ್ಧ ನೀರು: pH 7 ಕ್ಕಿಂತ ಕಡಿಮೆ ಇದ್ದರೆ ಆಮ್ಲೀಯವೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

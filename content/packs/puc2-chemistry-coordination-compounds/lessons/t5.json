@@ -452,6 +452,524 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Crystal field splitting and colour",
+    "kn": "ಸ್ಫಟಿಕ ಕ್ಷೇತ್ರ ವಿಭಜನೆ ಮತ್ತು ಬಣ್ಣ"
+   },
+   "narration": {
+    "en": "Six ligands split the d orbitals into t2g (−0.4Δo) and eg (+0.6Δo). If Δo is smaller than the pairing energy P, electrons go up to eg before pairing (high spin). A d–d jump absorbs light of wavelength 1/Δo, and we see the complementary colour.",
+    "kn": "ಆರು ಲಿಗಂಡ್‌ಗಳು d ಕಕ್ಷಕಗಳನ್ನು t2g (−0.4Δo), eg (+0.6Δo) ಆಗಿ ವಿಭಜಿಸುತ್ತವೆ. Δo < P ಆದರೆ ಜೋಡಿಯಾಗುವ ಮೊದಲು eg ಗೆ (ಉನ್ನತ ಸ್ಪಿನ್). d–d ಜಿಗಿತ 1/Δo ತರಂಗಾಂತರದ ಬೆಳಕು ಹೀರುತ್ತದೆ; ಪೂರಕ ಬಣ್ಣ ಕಾಣುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Six ligands split the d orbitals into t2g (−0.4Δo) and eg (+0.6Δo). If Δo is smaller than the pairing energy P, electrons go up to eg before pairing (high spin). A d–d jump absorbs light of wavelength 1/Δo, and we see the complementary colour.",
+    "kn": "ಆರು ಲಿಗಂಡ್‌ಗಳು d ಕಕ್ಷಕಗಳನ್ನು t2g (−0.4Δo), eg (+0.6Δo) ಆಗಿ ವಿಭಜಿಸುತ್ತವೆ. Δo < P ಆದರೆ ಜೋಡಿಯಾಗುವ ಮೊದಲು eg ಗೆ (ಉನ್ನತ ಸ್ಪಿನ್). d–d ಜಿಗಿತ 1/Δo ತರಂಗಾಂತರದ ಬೆಳಕು ಹೀರುತ್ತದೆ; ಪೂರಕ ಬಣ್ಣ ಕಾಣುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "D",
+     "label": {
+      "en": "Splitting Δo",
+      "kn": "ವಿಭಜನೆ Δo"
+     },
+     "min": 8000,
+     "max": 40000,
+     "step": 1000,
+     "value": 20000,
+     "unit": "cm⁻¹"
+    },
+    {
+     "name": "Pe",
+     "label": {
+      "en": "Pairing energy P",
+      "kn": "ಜೋಡಣೆ ಶಕ್ತಿ"
+     },
+     "min": 10000,
+     "max": 30000,
+     "step": 1000,
+     "value": 20000,
+     "unit": "cm⁻¹"
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "d electrons",
+      "kn": "d ಇಲೆಕ್ಟ್ರಾನ್"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "shw",
+     "label": {
+      "en": "Show the absorbed light",
+      "kn": "ಹೀರಿದ ಬೆಳಕು"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "low",
+     "expr": "D > Pe"
+    },
+    {
+     "name": "nt",
+     "expr": "if(low, min(n, 6), if(n <= 3, n, if(n <= 5, 3, if(n <= 8, n - 2, 6))))"
+    },
+    {
+     "name": "ne",
+     "expr": "n - nt"
+    },
+    {
+     "name": "unp",
+     "expr": "if(nt <= 3, nt, 6 - nt) + if(ne <= 2, ne, 4 - ne)"
+    },
+    {
+     "name": "cfse",
+     "expr": "-0.4*nt + 0.6*ne"
+    },
+    {
+     "name": "lam",
+     "expr": "1e7/D"
+    },
+    {
+     "name": "abs_",
+     "expr": "shw && n < 10"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     15
+    ],
+    "y": [
+     -18,
+     29
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": 0,
+     "x2": 2.5,
+     "y2": 0,
+     "color": "white",
+     "opacity": 0.6,
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 0.5,
+     "text": {
+      "en": "barycentre"
+     },
+     "color": "white",
+     "size": 18
+    },
+    {
+     "shape": "arrow",
+     "x": 9,
+     "y": "-0.4*D/1000",
+     "dx": 0,
+     "dy": "D/1000",
+     "color": "yellow",
+     "label": "Δo"
+    },
+    {
+     "shape": "line",
+     "x1": 3.2,
+     "y1": "-0.4*D/1000",
+     "x2": 4.4,
+     "y2": "-0.4*D/1000",
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "x": 3.6,
+     "y": "-0.4*D/1000 + 0.2",
+     "dx": 0,
+     "dy": 1.6,
+     "visibleIf": "nt >= 1",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 4.0,
+     "y": "-0.4*D/1000 + 1.8",
+     "dx": 0,
+     "dy": -1.6,
+     "visibleIf": "nt >= 4",
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 4.7,
+     "y1": "-0.4*D/1000",
+     "x2": 5.9,
+     "y2": "-0.4*D/1000",
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "x": 5.1000000000000005,
+     "y": "-0.4*D/1000 + 0.2",
+     "dx": 0,
+     "dy": 1.6,
+     "visibleIf": "nt >= 2",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 5.5,
+     "y": "-0.4*D/1000 + 1.8",
+     "dx": 0,
+     "dy": -1.6,
+     "visibleIf": "nt >= 5",
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 6.2,
+     "y1": "-0.4*D/1000",
+     "x2": 7.4,
+     "y2": "-0.4*D/1000",
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "x": 6.6000000000000005,
+     "y": "-0.4*D/1000 + 0.2",
+     "dx": 0,
+     "dy": 1.6,
+     "visibleIf": "nt >= 3",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 7.0,
+     "y": "-0.4*D/1000 + 1.8",
+     "dx": 0,
+     "dy": -1.6,
+     "visibleIf": "nt >= 6",
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 3.95,
+     "y1": "0.6*D/1000",
+     "x2": 5.15,
+     "y2": "0.6*D/1000",
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "x": 4.3500000000000005,
+     "y": "0.6*D/1000 + 0.2",
+     "dx": 0,
+     "dy": 1.6,
+     "visibleIf": "ne >= 1",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 4.75,
+     "y": "0.6*D/1000 + 1.8",
+     "dx": 0,
+     "dy": -1.6,
+     "visibleIf": "ne >= 3",
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 5.45,
+     "y1": "0.6*D/1000",
+     "x2": 6.65,
+     "y2": "0.6*D/1000",
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "x": 5.8500000000000005,
+     "y": "0.6*D/1000 + 0.2",
+     "dx": 0,
+     "dy": 1.6,
+     "visibleIf": "ne >= 2",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 6.25,
+     "y": "0.6*D/1000 + 1.8",
+     "dx": 0,
+     "dy": -1.6,
+     "visibleIf": "ne >= 4",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 8.3,
+     "y": "-0.4*D/1000",
+     "text": {
+      "en": "t2g"
+     },
+     "color": "white",
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 7.4,
+     "y": "0.6*D/1000",
+     "text": {
+      "en": "eg"
+     },
+     "color": "white",
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 11,
+     "y": -14,
+     "w": 3.5,
+     "h": 7,
+     "visibleIf": "abs_",
+     "color": {
+      "by": "clamp((lam - 400)/350, 0, 1)",
+      "scale": [
+       "yellow",
+       "orange",
+       "red",
+       "blue",
+       "green",
+       "green"
+      ]
+     },
+     "opacity": 0.75
+    },
+    {
+     "shape": "rect",
+     "x": 11,
+     "y": -14,
+     "w": 3.5,
+     "h": 7,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": -5.5,
+     "text": {
+      "en": "absorbs {lam:0} nm"
+     },
+     "visibleIf": "abs_",
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": 27,
+     "text": {
+      "en": "low spin (Δo > P)"
+     },
+     "visibleIf": "low",
+     "color": "green",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": 27,
+     "text": {
+      "en": "high spin (Δo < P)"
+     },
+     "visibleIf": "low == 0",
+     "color": "orange",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": -16,
+     "text": {
+      "en": "ultraviolet absorbed: looks pale (colourless)"
+     },
+     "visibleIf": "abs_ && lam >= 0 && lam < 400",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": -16,
+     "text": {
+      "en": "violet absorbed: looks yellow-green"
+     },
+     "visibleIf": "abs_ && lam >= 400 && lam < 435",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": -16,
+     "text": {
+      "en": "blue absorbed: looks yellow"
+     },
+     "visibleIf": "abs_ && lam >= 435 && lam < 480",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": -16,
+     "text": {
+      "en": "green-blue absorbed: looks orange"
+     },
+     "visibleIf": "abs_ && lam >= 480 && lam < 490",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": -16,
+     "text": {
+      "en": "blue-green absorbed: looks red"
+     },
+     "visibleIf": "abs_ && lam >= 490 && lam < 500",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": -16,
+     "text": {
+      "en": "green absorbed: looks purple"
+     },
+     "visibleIf": "abs_ && lam >= 500 && lam < 560",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": -16,
+     "text": {
+      "en": "yellow-green absorbed: looks violet"
+     },
+     "visibleIf": "abs_ && lam >= 560 && lam < 580",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": -16,
+     "text": {
+      "en": "yellow absorbed: looks blue"
+     },
+     "visibleIf": "abs_ && lam >= 580 && lam < 595",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": -16,
+     "text": {
+      "en": "orange absorbed: looks green-blue"
+     },
+     "visibleIf": "abs_ && lam >= 595 && lam < 605",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": -16,
+     "text": {
+      "en": "red absorbed: looks blue-green"
+     },
+     "visibleIf": "abs_ && lam >= 605 && lam < 750",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": -16,
+     "text": {
+      "en": "infrared absorbed: looks pale"
+     },
+     "visibleIf": "abs_ && lam >= 750 && lam < 2000",
+     "color": "white",
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Unpaired electrons"
+     },
+     "expr": "unp",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "CFSE (without pairing terms)"
+     },
+     "expr": "cfse",
+     "digits": 1,
+     "unit": "× Δo"
+    },
+    {
+     "label": {
+      "en": "Wavelength absorbed",
+      "kn": "ಹೀರಿದ ತರಂಗಾಂತರ"
+     },
+     "expr": "lam",
+     "digits": 0,
+     "unit": "nm"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "For d⁴, find the Δo where the complex switches from high to low spin.",
+     "kn": "d⁴ ಗೆ ಉನ್ನತದಿಂದ ಕಡಿಮೆ ಸ್ಪಿನ್‌ಗೆ ಬದಲಾಗುವ Δo ಹುಡುಕಿ."
+    },
+    {
+     "en": "[Ti(H₂O)₆]³⁺ (d¹) has Δo ≈ 20 300 cm⁻¹. What wavelength does it absorb?",
+     "kn": "[Ti(H₂O)₆]³⁺ (d¹) Δo ≈ 20 300 cm⁻¹. ಯಾವ ತರಂಗಾಂತರ ಹೀರುತ್ತದೆ?"
+    },
+    {
+     "en": "Why are d¹⁰ ions such as Zn²⁺ colourless?",
+     "kn": "Zn²⁺ ನಂಥ d¹⁰ ಅಯಾನುಗಳು ಏಕೆ ಬಣ್ಣರಹಿತ?"
+    }
+   ]
+  },
+  {
    "id": "3d-orbitals",
    "type": "3d_model",
    "modelId": "orbitals",

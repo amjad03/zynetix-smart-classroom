@@ -564,6 +564,483 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Quantum numbers",
+    "kn": "ಕ್ವಾಂಟಮ್ ಸಂಖ್ಯೆಗಳು"
+   },
+   "narration": {
+    "en": "n is the shell, l the subshell (0 = s, 1 = p, 2 = d, 3 = f, at most n − 1) and mₗ runs from −l to +l, one value per orbital. Each orbital holds two electrons of opposite spin (mₛ = +½, −½).",
+    "kn": "n ಕವಚ, l ಉಪಕವಚ (0 = s, 1 = p, 2 = d, 3 = f; ಗರಿಷ್ಠ n − 1), mₗ −l ರಿಂದ +l ವರೆಗೆ, ಪ್ರತಿ ಕಕ್ಷಕಕ್ಕೆ ಒಂದು. ಪ್ರತಿ ಕಕ್ಷಕದಲ್ಲಿ ವಿರುದ್ಧ ಸ್ಪಿನ್‌ನ ಎರಡು ಇಲೆಕ್ಟ್ರಾನ್."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "n is the shell, l the subshell (0 = s, 1 = p, 2 = d, 3 = f, at most n − 1) and mₗ runs from −l to +l, one value per orbital. Each orbital holds two electrons of opposite spin (mₛ = +½, −½).",
+    "kn": "n ಕವಚ, l ಉಪಕವಚ (0 = s, 1 = p, 2 = d, 3 = f; ಗರಿಷ್ಠ n − 1), mₗ −l ರಿಂದ +l ವರೆಗೆ, ಪ್ರತಿ ಕಕ್ಷಕಕ್ಕೆ ಒಂದು. ಪ್ರತಿ ಕಕ್ಷಕದಲ್ಲಿ ವಿರುದ್ಧ ಸ್ಪಿನ್‌ನ ಎರಡು ಇಲೆಕ್ಟ್ರಾನ್."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Principal quantum number n",
+      "kn": "ಪ್ರಧಾನ ಕ್ವಾಂಟಮ್ ಸಂಖ್ಯೆ"
+     },
+     "min": 1,
+     "max": 7,
+     "step": 1,
+     "value": 3
+    },
+    {
+     "name": "l",
+     "label": {
+      "en": "Azimuthal quantum number l",
+      "kn": "ದಿಗಂಶ ಕ್ವಾಂಟಮ್ ಸಂಖ್ಯೆ"
+     },
+     "min": 0,
+     "max": 3,
+     "step": 1,
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fill",
+     "label": {
+      "en": "Fill with electrons",
+      "kn": "ಇಲೆಕ್ಟ್ರಾನ್ ತುಂಬಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "lv",
+     "expr": "min(l, n - 1)"
+    },
+    {
+     "name": "no",
+     "expr": "2*lv + 1"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     1.8,
+     8
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 7.4,
+     "text": {
+      "en": "{n}s subshell"
+     },
+     "visibleIf": "lv == 0",
+     "color": "yellow",
+     "size": 30
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 7.4,
+     "text": {
+      "en": "{n}p subshell"
+     },
+     "visibleIf": "lv == 1",
+     "color": "yellow",
+     "size": 30
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 7.4,
+     "text": {
+      "en": "{n}d subshell"
+     },
+     "visibleIf": "lv == 2",
+     "color": "yellow",
+     "size": 30
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 7.4,
+     "text": {
+      "en": "{n}f subshell"
+     },
+     "visibleIf": "lv == 3",
+     "color": "yellow",
+     "size": 30
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 6.6,
+     "text": {
+      "en": "l can be at most n − 1 (here l = {lv})"
+     },
+     "visibleIf": "l > n - 1",
+     "color": "red",
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": "(5 - 0.6*no + 1.2*0)",
+     "y": 3.5,
+     "w": 1.2,
+     "h": 1.2,
+     "visibleIf": "0 < no",
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "(5 - 0.6*no + 1.2*0) + 0.6",
+     "y": 3.0,
+     "text": {
+      "en": "{0 - lv}"
+     },
+     "visibleIf": "0 < no",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": "(5 - 0.6*no + 1.2*0) + 0.4",
+     "y": 3.8,
+     "dx": 0,
+     "dy": 0.6,
+     "visibleIf": "fill && 0 < no",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": "(5 - 0.6*no + 1.2*0) + 0.8",
+     "y": 4.4,
+     "dx": 0,
+     "dy": -0.6,
+     "visibleIf": "fill && 0 < no",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": "(5 - 0.6*no + 1.2*1)",
+     "y": 3.5,
+     "w": 1.2,
+     "h": 1.2,
+     "visibleIf": "1 < no",
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "(5 - 0.6*no + 1.2*1) + 0.6",
+     "y": 3.0,
+     "text": {
+      "en": "{1 - lv}"
+     },
+     "visibleIf": "1 < no",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": "(5 - 0.6*no + 1.2*1) + 0.4",
+     "y": 3.8,
+     "dx": 0,
+     "dy": 0.6,
+     "visibleIf": "fill && 1 < no",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": "(5 - 0.6*no + 1.2*1) + 0.8",
+     "y": 4.4,
+     "dx": 0,
+     "dy": -0.6,
+     "visibleIf": "fill && 1 < no",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": "(5 - 0.6*no + 1.2*2)",
+     "y": 3.5,
+     "w": 1.2,
+     "h": 1.2,
+     "visibleIf": "2 < no",
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "(5 - 0.6*no + 1.2*2) + 0.6",
+     "y": 3.0,
+     "text": {
+      "en": "{2 - lv}"
+     },
+     "visibleIf": "2 < no",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": "(5 - 0.6*no + 1.2*2) + 0.4",
+     "y": 3.8,
+     "dx": 0,
+     "dy": 0.6,
+     "visibleIf": "fill && 2 < no",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": "(5 - 0.6*no + 1.2*2) + 0.8",
+     "y": 4.4,
+     "dx": 0,
+     "dy": -0.6,
+     "visibleIf": "fill && 2 < no",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": "(5 - 0.6*no + 1.2*3)",
+     "y": 3.5,
+     "w": 1.2,
+     "h": 1.2,
+     "visibleIf": "3 < no",
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "(5 - 0.6*no + 1.2*3) + 0.6",
+     "y": 3.0,
+     "text": {
+      "en": "{3 - lv}"
+     },
+     "visibleIf": "3 < no",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": "(5 - 0.6*no + 1.2*3) + 0.4",
+     "y": 3.8,
+     "dx": 0,
+     "dy": 0.6,
+     "visibleIf": "fill && 3 < no",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": "(5 - 0.6*no + 1.2*3) + 0.8",
+     "y": 4.4,
+     "dx": 0,
+     "dy": -0.6,
+     "visibleIf": "fill && 3 < no",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": "(5 - 0.6*no + 1.2*4)",
+     "y": 3.5,
+     "w": 1.2,
+     "h": 1.2,
+     "visibleIf": "4 < no",
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "(5 - 0.6*no + 1.2*4) + 0.6",
+     "y": 3.0,
+     "text": {
+      "en": "{4 - lv}"
+     },
+     "visibleIf": "4 < no",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": "(5 - 0.6*no + 1.2*4) + 0.4",
+     "y": 3.8,
+     "dx": 0,
+     "dy": 0.6,
+     "visibleIf": "fill && 4 < no",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": "(5 - 0.6*no + 1.2*4) + 0.8",
+     "y": 4.4,
+     "dx": 0,
+     "dy": -0.6,
+     "visibleIf": "fill && 4 < no",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": "(5 - 0.6*no + 1.2*5)",
+     "y": 3.5,
+     "w": 1.2,
+     "h": 1.2,
+     "visibleIf": "5 < no",
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "(5 - 0.6*no + 1.2*5) + 0.6",
+     "y": 3.0,
+     "text": {
+      "en": "{5 - lv}"
+     },
+     "visibleIf": "5 < no",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": "(5 - 0.6*no + 1.2*5) + 0.4",
+     "y": 3.8,
+     "dx": 0,
+     "dy": 0.6,
+     "visibleIf": "fill && 5 < no",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": "(5 - 0.6*no + 1.2*5) + 0.8",
+     "y": 4.4,
+     "dx": 0,
+     "dy": -0.6,
+     "visibleIf": "fill && 5 < no",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": "(5 - 0.6*no + 1.2*6)",
+     "y": 3.5,
+     "w": 1.2,
+     "h": 1.2,
+     "visibleIf": "6 < no",
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "(5 - 0.6*no + 1.2*6) + 0.6",
+     "y": 3.0,
+     "text": {
+      "en": "{6 - lv}"
+     },
+     "visibleIf": "6 < no",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": "(5 - 0.6*no + 1.2*6) + 0.4",
+     "y": 3.8,
+     "dx": 0,
+     "dy": 0.6,
+     "visibleIf": "fill && 6 < no",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": "(5 - 0.6*no + 1.2*6) + 0.8",
+     "y": 4.4,
+     "dx": 0,
+     "dy": -0.6,
+     "visibleIf": "fill && 6 < no",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 2.3,
+     "text": {
+      "en": "mₗ values"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 5.4,
+     "text": {
+      "en": "{no} orbital(s), up to {2*no} electrons"
+     },
+     "color": "white",
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Orbitals in the subshell",
+      "kn": "ಕಕ್ಷಕಗಳು"
+     },
+     "expr": "no",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Radial nodes n − l − 1",
+      "kn": "ತ್ರಿಜ್ಯೀಯ ನೋಡ್"
+     },
+     "expr": "n - lv - 1",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Angular nodes l",
+      "kn": "ಕೋನೀಯ ನೋಡ್"
+     },
+     "expr": "lv",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Orbitals in the whole shell n²"
+     },
+     "expr": "n^2",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set n = 2. Which values of l are allowed?",
+     "kn": "n = 2 ಮಾಡಿ. ಯಾವ l ಮೌಲ್ಯಗಳು ಸಾಧ್ಯ?"
+    },
+    {
+     "en": "How many radial and angular nodes does a 3p orbital have?",
+     "kn": "3p ಕಕ್ಷಕಕ್ಕೆ ಎಷ್ಟು ತ್ರಿಜ್ಯೀಯ ಮತ್ತು ಕೋನೀಯ ನೋಡ್‌ಗಳು?"
+    },
+    {
+     "en": "How many electrons fit in a 4f subshell?",
+     "kn": "4f ಉಪಕವಚದಲ್ಲಿ ಎಷ್ಟು ಇಲೆಕ್ಟ್ರಾನ್?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

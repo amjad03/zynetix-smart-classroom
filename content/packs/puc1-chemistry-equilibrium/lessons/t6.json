@@ -224,6 +224,278 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Ksp and the common ion effect",
+    "kn": "Ksp ಮತ್ತು ಸಾಮಾನ್ಯ ಅಯಾನು ಪರಿಣಾಮ"
+   },
+   "narration": {
+    "en": "For a 1:1 salt MX, Ksp = [M⁺][X⁻]. In pure water the solubility is S = √Ksp. Add a common ion (for AgCl, Cl⁻ from NaCl) and S falls sharply, because the product must still equal Ksp.",
+    "kn": "1:1 ಲವಣ MX ಗೆ Ksp = [M⁺][X⁻]. ಶುದ್ಧ ನೀರಿನಲ್ಲಿ S = √Ksp. ಸಾಮಾನ್ಯ ಅಯಾನು ಸೇರಿಸಿದರೆ S ತೀವ್ರವಾಗಿ ಇಳಿಯುತ್ತದೆ, ಏಕೆಂದರೆ ಗುಣಲಬ್ಧ Ksp ಗೆ ಸಮವಾಗಿರಬೇಕು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "For a 1:1 salt MX, Ksp = [M⁺][X⁻]. In pure water the solubility is S = √Ksp. Add a common ion (for AgCl, Cl⁻ from NaCl) and S falls sharply, because the product must still equal Ksp.",
+    "kn": "1:1 ಲವಣ MX ಗೆ Ksp = [M⁺][X⁻]. ಶುದ್ಧ ನೀರಿನಲ್ಲಿ S = √Ksp. ಸಾಮಾನ್ಯ ಅಯಾನು ಸೇರಿಸಿದರೆ S ತೀವ್ರವಾಗಿ ಇಳಿಯುತ್ತದೆ, ಏಕೆಂದರೆ ಗುಣಲಬ್ಧ Ksp ಗೆ ಸಮವಾಗಿರಬೇಕು."
+   },
+   "sliders": [
+    {
+     "name": "lc",
+     "label": {
+      "en": "Common ion: log of concentration",
+      "kn": "ಸಾಮಾನ್ಯ ಅಯಾನು (log ಸಾರತೆ)"
+     },
+     "min": -8,
+     "max": -1,
+     "step": 0.25,
+     "value": -2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "com",
+     "label": {
+      "en": "Add the common ion",
+      "kn": "ಸಾಮಾನ್ಯ ಅಯಾನು ಸೇರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "salt",
+     "label": {
+      "en": "Salt",
+      "kn": "ಲವಣ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "AgCl"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "AgBr"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "AgI"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "BaSO₄"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "Ksp",
+     "expr": "((salt == 1)*(1.8e-10) + (salt == 2)*(5e-13) + (salt == 3)*(8.3e-17) + (salt == 4)*(1.1e-10))"
+    },
+    {
+     "name": "c",
+     "expr": "if(com, pow(10, lc), 0)"
+    },
+    {
+     "name": "S",
+     "expr": "2*Ksp/(c + sqrt(c^2 + 4*Ksp))"
+    },
+    {
+     "name": "S0",
+     "expr": "sqrt(Ksp)"
+    },
+    {
+     "name": "lS",
+     "expr": "log(S)"
+    },
+    {
+     "name": "lS0",
+     "expr": "log(S0)"
+    },
+    {
+     "name": "nd",
+     "expr": "clamp(round(8*(lS + 17)), 0, 120)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     -1,
+     9.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 0.5,
+     "w": 8,
+     "h": 7,
+     "color": "white",
+     "fill": false,
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": 0.7,
+     "y": 0.5,
+     "w": 7.6,
+     "h": 0.6,
+     "color": "white",
+     "opacity": 0.9
+    },
+    {
+     "shape": "particles",
+     "count": 120,
+     "x": "bounce(0.8 + 7.4*rand(i) + 0.6*t*cos(2*pi*rand(i + 300)), 0.8, 8.2)",
+     "y": "bounce(1.3 + 5.9*rand(i + 150) + 0.6*t*sin(2*pi*rand(i + 300)), 1.3, 7.2)",
+     "r": 0.1,
+     "visibleIf": "i < nd",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 8.2,
+     "text": {
+      "en": "dissolved ions (log scale)"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 0,
+     "x2": 15.5,
+     "y2": 0,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": 0,
+     "w": 1.6,
+     "h": "(lS0 + 17)/2",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 13.2,
+     "y": 0,
+     "w": 1.6,
+     "h": "(lS + 17)/2",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": -0.5,
+     "text": {
+      "en": "pure water"
+     },
+     "color": "blue",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": -0.5,
+     "text": {
+      "en": "with ion"
+     },
+     "color": "orange",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": "(lS0 + 17)/2 + 0.4",
+     "text": {
+      "en": "10^{lS0:1}"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": "(lS + 17)/2 + 0.4",
+     "text": {
+      "en": "10^{lS:1}"
+     },
+     "color": "white",
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "log₁₀ S (mol/L)"
+     },
+     "expr": "lS",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "log₁₀ S in pure water"
+     },
+     "expr": "lS0",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Lowered by a factor"
+     },
+     "expr": "S0/S",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Ksp check [M⁺][X⁻]"
+     },
+     "expr": "(S*(S + c))/Ksp",
+     "digits": 3,
+     "unit": "× Ksp"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "AgCl in pure water: what is its solubility? Now add 0.01 M Cl⁻.",
+     "kn": "ಶುದ್ಧ ನೀರಿನಲ್ಲಿ AgCl ನ ಕರಗುವಿಕೆ ಎಷ್ಟು? ಈಗ 0.01 M Cl⁻ ಸೇರಿಸಿ."
+    },
+    {
+     "en": "Each tenfold increase of the common ion lowers S by how much?",
+     "kn": "ಸಾಮಾನ್ಯ ಅಯಾನು 10 ಪಟ್ಟು ಹೆಚ್ಚಿದರೆ S ಎಷ್ಟು ಕಡಿಮೆ?"
+    },
+    {
+     "en": "Put AgCl, AgBr and AgI in order of solubility.",
+     "kn": "AgCl, AgBr, AgI ಕರಗುವಿಕೆಯ ಕ್ರಮದಲ್ಲಿ ಜೋಡಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

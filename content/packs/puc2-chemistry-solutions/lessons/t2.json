@@ -320,6 +320,229 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Henry's law",
+    "kn": "ಹೆನ್ರಿ ನಿಯಮ"
+   },
+   "narration": {
+    "en": "The mole fraction of a gas dissolved in water is proportional to its partial pressure above the water: x = p/K_H. A gas with a small K_H (CO₂) dissolves far more than one with a large K_H (He, N₂). Opening a soda bottle drops p, and the gas bubbles out.",
+    "kn": "ನೀರಿನಲ್ಲಿ ಕರಗಿದ ಅನಿಲದ ಮೋಲ್ ಭಾಗ ಅದರ ಆಂಶಿಕ ಒತ್ತಡಕ್ಕೆ ಅನುಪಾತೀಯ: x = p/K_H. ಕಡಿಮೆ K_H (CO₂) ಇರುವ ಅನಿಲ ಹೆಚ್ಚು ಕರಗುತ್ತದೆ. ಸೋಡಾ ಬಾಟಲಿ ತೆರೆದರೆ p ಇಳಿದು ಅನಿಲ ಹೊರಬರುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The mole fraction of a gas dissolved in water is proportional to its partial pressure above the water: x = p/K_H. A gas with a small K_H (CO₂) dissolves far more than one with a large K_H (He, N₂). Opening a soda bottle drops p, and the gas bubbles out.",
+    "kn": "ನೀರಿನಲ್ಲಿ ಕರಗಿದ ಅನಿಲದ ಮೋಲ್ ಭಾಗ ಅದರ ಆಂಶಿಕ ಒತ್ತಡಕ್ಕೆ ಅನುಪಾತೀಯ: x = p/K_H. ಕಡಿಮೆ K_H (CO₂) ಇರುವ ಅನಿಲ ಹೆಚ್ಚು ಕರಗುತ್ತದೆ. ಸೋಡಾ ಬಾಟಲಿ ತೆರೆದರೆ p ಇಳಿದು ಅನಿಲ ಹೊರಬರುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "p",
+     "label": {
+      "en": "Partial pressure of the gas",
+      "kn": "ಆಂಶಿಕ ಒತ್ತಡ"
+     },
+     "min": 0.2,
+     "max": 5,
+     "step": 0.2,
+     "value": 1,
+     "unit": "bar"
+    }
+   ],
+   "choices": [
+    {
+     "name": "KH",
+     "label": {
+      "en": "Gas (K_H in kbar)",
+      "kn": "ಅನಿಲ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "He (144.97)"
+       },
+       "value": 144.97
+      },
+      {
+       "label": {
+        "en": "N₂ (76.48)"
+       },
+       "value": 76.48
+      },
+      {
+       "label": {
+        "en": "O₂ (34.86)"
+       },
+       "value": 34.86
+      },
+      {
+       "label": {
+        "en": "CO₂ (1.67)"
+       },
+       "value": 1.67
+      }
+     ],
+     "value": 1.67
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Seal and pressurise",
+      "kn": "ಮುಚ್ಚಿ ಒತ್ತಡ ಹಾಕಿ"
+     },
+     "icon": "add",
+     "set": {
+      "p": 4
+     }
+    },
+    {
+     "label": {
+      "en": "Open the bottle",
+      "kn": "ಬಾಟಲಿ ತೆರೆಯಿರಿ"
+     },
+     "icon": "remove",
+     "set": {
+      "p": 0.2
+     }
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "xg",
+     "expr": "p/(KH*1000)"
+    },
+    {
+     "name": "mm",
+     "expr": "xg*55510"
+    },
+    {
+     "name": "nd",
+     "expr": "min(200, round(30000*xg))"
+    },
+    {
+     "name": "ng",
+     "expr": "round(25*p)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     -0.6,
+     10.4
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0,
+     "w": 8,
+     "h": 5,
+     "color": "blue",
+     "opacity": 0.35
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0,
+     "w": 8,
+     "h": 9.5,
+     "color": "white",
+     "fill": false,
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": 0.8,
+     "y": "9.5 - 0.6*p",
+     "w": 8.4,
+     "h": 0.4,
+     "color": "orange"
+    },
+    {
+     "shape": "particles",
+     "count": 125,
+     "x": "bounce(1.2 + 7.6*rand(i) + 1.5*t*cos(2*pi*rand(i + 300)), 1.2, 8.8)",
+     "y": "bounce(5.2 + 4*rand(i + 150) + 1.5*t*sin(2*pi*rand(i + 300)), 5.2, 9.2 - 0.6*p)",
+     "r": 0.12,
+     "visibleIf": "i < ng",
+     "color": "white"
+    },
+    {
+     "shape": "particles",
+     "count": 200,
+     "x": "bounce(1.2 + 7.6*rand(i + 500) + 0.4*t*cos(2*pi*rand(i + 800)), 1.2, 8.8)",
+     "y": "bounce(0.2 + 4.6*rand(i + 650) + 0.4*t*sin(2*pi*rand(i + 800)), 0.2, 4.8)",
+     "r": 0.1,
+     "visibleIf": "i < nd",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 10,
+     "text": {
+      "en": "gas above (white) and dissolved gas (yellow)"
+     },
+     "color": "white",
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mole fraction dissolved"
+     },
+     "expr": "xg*1e5",
+     "digits": 2,
+     "unit": "× 10⁻⁵"
+    },
+    {
+     "label": {
+      "en": "Solubility (dilute)",
+      "kn": "ಕರಗುವಿಕೆ"
+     },
+     "expr": "mm",
+     "digits": 2,
+     "unit": "mmol/L"
+    },
+    {
+     "label": {
+      "en": "K_H"
+     },
+     "expr": "KH",
+     "digits": 2,
+     "unit": "kbar"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double the pressure of CO₂. What happens to its solubility?",
+     "kn": "CO₂ ಒತ್ತಡ ದ್ವಿಗುಣ ಮಾಡಿ. ಕರಗುವಿಕೆ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "At 1 bar, how much more soluble is O₂ than N₂? Why does this matter for fish?",
+     "kn": "1 bar ನಲ್ಲಿ O₂, N₂ ಗಿಂತ ಎಷ್ಟು ಹೆಚ್ಚು ಕರಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Press \"Open the bottle\". What do you see?",
+     "kn": "\"ಬಾಟಲಿ ತೆರೆಯಿರಿ\" ಒತ್ತಿ. ಏನು ಕಾಣುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

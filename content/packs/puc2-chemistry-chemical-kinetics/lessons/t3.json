@@ -288,6 +288,218 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Zero and first order: straight-line plots",
+    "kn": "ಶೂನ್ಯ ಮತ್ತು ಮೊದಲ ಕ್ರಮ: ನೇರ ರೇಖಾ ನಕ್ಷೆ"
+   },
+   "narration": {
+    "en": "For zero order [R] = [R]₀ − kt, a straight line of [R] against t. For first order [R] = [R]₀ e^(−kt), so ln[R] against t is a straight line of slope −k. Switch the plot to find the straight line.",
+    "kn": "ಶೂನ್ಯ ಕ್ರಮಕ್ಕೆ [R] = [R]₀ − kt, [R]–t ನೇರ ರೇಖೆ. ಮೊದಲ ಕ್ರಮಕ್ಕೆ ln[R]–t ನೇರ ರೇಖೆ, ಇಳಿಜಾರು −k. ನಕ್ಷೆ ಬದಲಿಸಿ ನೇರ ರೇಖೆ ಹುಡುಕಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "For zero order [R] = [R]₀ − kt, a straight line of [R] against t. For first order [R] = [R]₀ e^(−kt), so ln[R] against t is a straight line of slope −k. Switch the plot to find the straight line.",
+    "kn": "ಶೂನ್ಯ ಕ್ರಮಕ್ಕೆ [R] = [R]₀ − kt, [R]–t ನೇರ ರೇಖೆ. ಮೊದಲ ಕ್ರಮಕ್ಕೆ ln[R]–t ನೇರ ರೇಖೆ, ಇಳಿಜಾರು −k. ನಕ್ಷೆ ಬದಲಿಸಿ ನೇರ ರೇಖೆ ಹುಡುಕಿ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Rate constant k"
+     },
+     "min": 0.01,
+     "max": 0.2,
+     "step": 0.005,
+     "value": 0.05
+    },
+    {
+     "name": "R0",
+     "label": {
+      "en": "[R]₀"
+     },
+     "min": 0.5,
+     "max": 2,
+     "step": 0.1,
+     "value": 1.0,
+     "unit": "mol/L"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "lnp",
+     "label": {
+      "en": "Plot ln[R] instead of [R]",
+      "kn": "ln[R] ನಕ್ಷೆ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "ord",
+     "label": {
+      "en": "Order",
+      "kn": "ಕ್ರಮ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Zero"
+       },
+       "value": 0
+      },
+      {
+       "label": {
+        "en": "First"
+       },
+       "value": 1
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60
+   },
+   "vars": [
+    {
+     "name": "Rt",
+     "expr": "if(ord == 0, max(R0 - k*t, 0), R0*exp(-k*t))"
+    },
+    {
+     "name": "ypl",
+     "expr": "if(lnp, max(ln(max(Rt, 0.001)), -4.4), Rt)"
+    },
+    {
+     "name": "th",
+     "expr": "if(ord == 0, R0/(2*k), ln(2)/k)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     60
+    ],
+    "y": [
+     -4.6,
+     2.3
+    ],
+    "axes": true,
+    "xLabel": "t (s)",
+    "yLabel": "[R] or ln[R]"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "color": "white",
+     "fn": "if(lnp, max(ln(max(if(ord == 0, max(R0 - k*x, 0), R0*exp(-k*x)), 0.001)), -4.4), if(ord == 0, max(R0 - k*x, 0), R0*exp(-k*x)))",
+     "from": 0,
+     "to": 60,
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "trail",
+     "x": "t",
+     "y": "ypl",
+     "length": 2000,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "t",
+     "y": "ypl",
+     "r": 0.8,
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": "th",
+     "y1": -4.4,
+     "x2": "th",
+     "y2": 2.2,
+     "visibleIf": "th < 60",
+     "color": "orange",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": "th",
+     "y": -4.0,
+     "text": {
+      "en": "t½"
+     },
+     "visibleIf": "th < 60",
+     "color": "orange",
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": 44,
+     "y": 0.4,
+     "w": 14,
+     "h": 1.8,
+     "color": "white",
+     "fill": false,
+     "width": 2
+    },
+    {
+     "shape": "particles",
+     "count": 50,
+     "x": "44.6 + 12.8*rand(i)",
+     "y": "0.6 + 1.4*rand(i + 70)",
+     "r": 0.3,
+     "visibleIf": "i < round(50*Rt/R0)",
+     "color": "blue"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "[R] now"
+     },
+     "expr": "Rt",
+     "digits": 3,
+     "unit": "mol/L"
+    },
+    {
+     "label": {
+      "en": "Half-life",
+      "kn": "ಅರ್ಧಾಯು"
+     },
+     "expr": "th",
+     "digits": 1,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Slope of the straight-line plot"
+     },
+     "expr": "-k",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "For the first-order reaction, which plot is straight: [R] or ln[R]?",
+     "kn": "ಮೊದಲ ಕ್ರಮಕ್ಕೆ ಯಾವ ನಕ್ಷೆ ನೇರ: [R] ಅಥವಾ ln[R]?"
+    },
+    {
+     "en": "Change [R]₀. Which half-life changes and which does not?",
+     "kn": "[R]₀ ಬದಲಿಸಿ. ಯಾವ ಅರ್ಧಾಯು ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "When does a zero-order reaction stop?",
+     "kn": "ಶೂನ್ಯ ಕ್ರಮದ ಕ್ರಿಯೆ ಯಾವಾಗ ನಿಲ್ಲುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

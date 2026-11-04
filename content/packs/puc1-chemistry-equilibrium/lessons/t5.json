@@ -244,6 +244,607 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "How a buffer resists pH change",
+    "kn": "ಬಫರ್ pH ಬದಲಾವಣೆ ತಡೆಯುವುದು"
+   },
+   "narration": {
+    "en": "An acetic acid–sodium acetate buffer (pKa 4.76) against pure water. Add HCl or NaOH 0.01 mol at a time to 1 L. The buffer's acetate ions take up the added H⁺ and the acid takes up OH⁻, so its pH barely moves until one of them runs out.",
+    "kn": "ಅಸಿಟಿಕ್ ಆಮ್ಲ–ಸೋಡಿಯಂ ಅಸಿಟೇಟ್ ಬಫರ್ ಮತ್ತು ಶುದ್ಧ ನೀರು. 1 L ಗೆ 0.01 mol HCl ಅಥವಾ NaOH ಸೇರಿಸಿ. ಬಫರ್‌ನ ಅಯಾನುಗಳು ಸೇರಿಸಿದ H⁺/OH⁻ ಬಳಸಿಕೊಳ್ಳುವುದರಿಂದ pH ಸ್ವಲ್ಪವೇ ಬದಲಾಗುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "An acetic acid–sodium acetate buffer (pKa 4.76) against pure water. Add HCl or NaOH 0.01 mol at a time to 1 L. The buffer's acetate ions take up the added H⁺ and the acid takes up OH⁻, so its pH barely moves until one of them runs out.",
+    "kn": "ಅಸಿಟಿಕ್ ಆಮ್ಲ–ಸೋಡಿಯಂ ಅಸಿಟೇಟ್ ಬಫರ್ ಮತ್ತು ಶುದ್ಧ ನೀರು. 1 L ಗೆ 0.01 mol HCl ಅಥವಾ NaOH ಸೇರಿಸಿ. ಬಫರ್‌ನ ಅಯಾನುಗಳು ಸೇರಿಸಿದ H⁺/OH⁻ ಬಳಸಿಕೊಳ್ಳುವುದರಿಂದ pH ಸ್ವಲ್ಪವೇ ಬದಲಾಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "ca",
+     "label": {
+      "en": "Acetic acid",
+      "kn": "ಅಸಿಟಿಕ್ ಆಮ್ಲ"
+     },
+     "min": 0.05,
+     "max": 0.5,
+     "step": 0.01,
+     "value": 0.1,
+     "unit": "mol/L"
+    },
+    {
+     "name": "cs",
+     "label": {
+      "en": "Sodium acetate",
+      "kn": "ಸೋಡಿಯಂ ಅಸಿಟೇಟ್"
+     },
+     "min": 0.05,
+     "max": 0.5,
+     "step": 0.01,
+     "value": 0.1,
+     "unit": "mol/L"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "buf",
+     "label": {
+      "en": "Buffer (off = pure water)",
+      "kn": "ಬಫರ್"
+     },
+     "value": true
+    }
+   ],
+   "counters": [
+    {
+     "name": "n",
+     "value": 0,
+     "min": -40,
+     "max": 40
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Add 0.01 mol HCl",
+      "kn": "HCl ಸೇರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "n": "n + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Add 0.01 mol NaOH",
+      "kn": "NaOH ಸೇರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "n": "n - 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again"
+     },
+     "icon": "reset",
+     "set": {
+      "n": 0
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "N",
+     "expr": "if(buf, cs, 0) - 0.01*n"
+    },
+    {
+     "name": "CT",
+     "expr": "if(buf, ca + cs, 0)"
+    },
+    {
+     "name": "p1",
+     "expr": "7 + 3.5*sign((pow(10, -7) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -7)) - 1e-14/pow(10, -7)))"
+    },
+    {
+     "name": "p2",
+     "expr": "p1 + 1.75*sign((pow(10, -p1) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -p1)) - 1e-14/pow(10, -p1)))"
+    },
+    {
+     "name": "p3",
+     "expr": "p2 + 0.875*sign((pow(10, -p2) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -p2)) - 1e-14/pow(10, -p2)))"
+    },
+    {
+     "name": "p4",
+     "expr": "p3 + 0.4375*sign((pow(10, -p3) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -p3)) - 1e-14/pow(10, -p3)))"
+    },
+    {
+     "name": "p5",
+     "expr": "p4 + 0.21875*sign((pow(10, -p4) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -p4)) - 1e-14/pow(10, -p4)))"
+    },
+    {
+     "name": "p6",
+     "expr": "p5 + 0.109375*sign((pow(10, -p5) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -p5)) - 1e-14/pow(10, -p5)))"
+    },
+    {
+     "name": "p7",
+     "expr": "p6 + 0.0546875*sign((pow(10, -p6) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -p6)) - 1e-14/pow(10, -p6)))"
+    },
+    {
+     "name": "p8",
+     "expr": "p7 + 0.02734375*sign((pow(10, -p7) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -p7)) - 1e-14/pow(10, -p7)))"
+    },
+    {
+     "name": "p9",
+     "expr": "p8 + 0.013671875*sign((pow(10, -p8) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -p8)) - 1e-14/pow(10, -p8)))"
+    },
+    {
+     "name": "p10",
+     "expr": "p9 + 0.0068359375*sign((pow(10, -p9) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -p9)) - 1e-14/pow(10, -p9)))"
+    },
+    {
+     "name": "p11",
+     "expr": "p10 + 0.00341796875*sign((pow(10, -p10) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -p10)) - 1e-14/pow(10, -p10)))"
+    },
+    {
+     "name": "p12",
+     "expr": "p11 + 0.001708984375*sign((pow(10, -p11) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -p11)) - 1e-14/pow(10, -p11)))"
+    },
+    {
+     "name": "p13",
+     "expr": "p12 + 0.0008544921875*sign((pow(10, -p12) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -p12)) - 1e-14/pow(10, -p12)))"
+    },
+    {
+     "name": "p14",
+     "expr": "p13 + 0.00042724609375*sign((pow(10, -p13) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -p13)) - 1e-14/pow(10, -p13)))"
+    },
+    {
+     "name": "p15",
+     "expr": "p14 + 0.000213623046875*sign((pow(10, -p14) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -p14)) - 1e-14/pow(10, -p14)))"
+    },
+    {
+     "name": "p16",
+     "expr": "p15 + 0.0001068115234375*sign((pow(10, -p15) + N - 1.74e-05*CT/(1.74e-05 + pow(10, -p15)) - 1e-14/pow(10, -p15)))"
+    },
+    {
+     "name": "pH",
+     "expr": "p16"
+    },
+    {
+     "name": "Hh",
+     "expr": "pow(10, -pH)"
+    },
+    {
+     "name": "HA",
+     "expr": "CT*Hh/(1.74e-5 + Hh)"
+    },
+    {
+     "name": "Am",
+     "expr": "CT - HA"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     15
+    ],
+    "y": [
+     -0.6,
+     9
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "0.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "0/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "1.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "1/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "2.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "2/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "3.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "3/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "4.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "4/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "5.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "5/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "6.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "6/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "7.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "7/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "8.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "8/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "9.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "9/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "10.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "10/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "11.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "11/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "12.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "12/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": "13.5",
+     "y": 0.4,
+     "w": 1,
+     "h": 0.5,
+     "color": {
+      "by": "13/13",
+      "scale": [
+       "red",
+       "orange",
+       "yellow",
+       "green",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 0,
+     "text": {
+      "en": "0"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 0,
+     "text": {
+      "en": "7"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 14.5,
+     "y": 0,
+     "text": {
+      "en": "14"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": "0.5 + pH",
+     "y": 1.9,
+     "dx": 0,
+     "dy": -0.9,
+     "color": "white",
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "x": "0.5 + pH",
+     "y": 2.2,
+     "text": {
+      "en": "pH {pH:2}"
+     },
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": 3,
+     "w": 3,
+     "h": 5.5,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 9,
+     "y": 3,
+     "w": 3,
+     "h": 5.5,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 3.2,
+     "y": 3,
+     "w": 2.6,
+     "h": "min(5.4, 8*HA)",
+     "visibleIf": "buf",
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 9.2,
+     "y": 3,
+     "w": 2.6,
+     "h": "min(5.4, 8*Am)",
+     "visibleIf": "buf",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 8.9,
+     "text": {
+      "en": "CH₃COOH {HA:3} M"
+     },
+     "visibleIf": "buf",
+     "color": "orange",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 10.5,
+     "y": 8.9,
+     "text": {
+      "en": "CH₃COO⁻ {Am:3} M"
+     },
+     "visibleIf": "buf",
+     "color": "green",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 6,
+     "text": {
+      "en": "pure water: nothing to take up H⁺ or OH⁻"
+     },
+     "visibleIf": "buf == 0",
+     "color": "white",
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "pH"
+     },
+     "expr": "pH",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Strong acid added (− = base)"
+     },
+     "expr": "0.01*n",
+     "digits": 2,
+     "unit": "mol"
+    },
+    {
+     "label": {
+      "en": "[CH₃COOH]"
+     },
+     "expr": "HA",
+     "digits": 3,
+     "unit": "mol/L"
+    },
+    {
+     "label": {
+      "en": "[CH₃COO⁻]"
+     },
+     "expr": "Am",
+     "digits": 3,
+     "unit": "mol/L"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Add 0.05 mol HCl to the buffer, then to water. Compare the pH change.",
+     "kn": "ಬಫರ್‌ಗೆ, ನಂತರ ನೀರಿಗೆ 0.05 mol HCl ಸೇರಿಸಿ. pH ಬದಲಾವಣೆ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "With equal acid and salt, why is pH = pKa? (Henderson equation)",
+     "kn": "ಆಮ್ಲ ಮತ್ತು ಲವಣ ಸಮವಾದಾಗ pH = pKa ಏಕೆ?"
+    },
+    {
+     "en": "Make the buffer dilute (0.05 M each). How many presses until it fails?",
+     "kn": "ಬಫರ್ ದುರ್ಬಲಗೊಳಿಸಿ (0.05 M). ಎಷ್ಟು ಒತ್ತುವಿಕೆಯಲ್ಲಿ ವಿಫಲ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -409,6 +409,405 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Mass, moles and particles",
+    "kn": "ದ್ರವ್ಯರಾಶಿ, ಮೋಲ್ ಮತ್ತು ಕಣಗಳು"
+   },
+   "narration": {
+    "en": "Pick a substance and a mass. Moles = mass ÷ molar mass, and one mole holds 6.022 × 10²³ formula units. The bars give the percentage by mass of each element.",
+    "kn": "ವಸ್ತು ಮತ್ತು ದ್ರವ್ಯರಾಶಿ ಆರಿಸಿ. ಮೋಲ್ = ದ್ರವ್ಯರಾಶಿ ÷ ಮೋಲಾರ್ ದ್ರವ್ಯರಾಶಿ; ಒಂದು ಮೋಲ್‌ನಲ್ಲಿ 6.022 × 10²³ ಘಟಕಗಳು. ಪಟ್ಟಿಗಳು ಪ್ರತಿ ಧಾತುವಿನ ದ್ರವ್ಯರಾಶಿ ಶೇಕಡಾ ತೋರಿಸುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Pick a substance and a mass. Moles = mass ÷ molar mass, and one mole holds 6.022 × 10²³ formula units. The bars give the percentage by mass of each element.",
+    "kn": "ವಸ್ತು ಮತ್ತು ದ್ರವ್ಯರಾಶಿ ಆರಿಸಿ. ಮೋಲ್ = ದ್ರವ್ಯರಾಶಿ ÷ ಮೋಲಾರ್ ದ್ರವ್ಯರಾಶಿ; ಒಂದು ಮೋಲ್‌ನಲ್ಲಿ 6.022 × 10²³ ಘಟಕಗಳು. ಪಟ್ಟಿಗಳು ಪ್ರತಿ ಧಾತುವಿನ ದ್ರವ್ಯರಾಶಿ ಶೇಕಡಾ ತೋರಿಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Mass",
+      "kn": "ದ್ರವ್ಯರಾಶಿ"
+     },
+     "min": 2,
+     "max": 100,
+     "step": 2,
+     "value": 18,
+     "unit": "g"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "pct",
+     "label": {
+      "en": "Show % composition",
+      "kn": "% ಸಂಯೋಜನೆ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "sub",
+     "label": {
+      "en": "Substance",
+      "kn": "ವಸ್ತು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "H₂O"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "CO₂"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "NaCl"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "C₆H₁₂O₆"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "Fe"
+       },
+       "value": 5
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "M",
+     "expr": "((sub == 1)*(18.015) + (sub == 2)*(44.009) + (sub == 3)*(58.44) + (sub == 4)*(180.156) + (sub == 5)*(55.845))"
+    },
+    {
+     "name": "n",
+     "expr": "m/M"
+    },
+    {
+     "name": "N",
+     "expr": "n*6.022"
+    },
+    {
+     "name": "at",
+     "expr": "N*((sub == 1)*(3) + (sub == 2)*(3) + (sub == 3)*(2) + (sub == 4)*(24) + (sub == 5)*(1))"
+    },
+    {
+     "name": "nd",
+     "expr": "min(400, round(40*n))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     14.5
+    ],
+    "y": [
+     0,
+     8.5
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.3,
+     "y": 0.3,
+     "w": 7.4,
+     "h": 7.4,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 400,
+     "x": "0.5 + 7*rand(i)",
+     "y": "0.5 + 7*rand(i + 500)",
+     "r": 0.09,
+     "visibleIf": "i < nd",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 8.1,
+     "text": {
+      "en": "each dot = 0.025 mol"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": 9.0,
+     "y": 0.3,
+     "w": 1.1,
+     "h": 0.7833,
+     "visibleIf": "pct && sub == 1",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 9.55,
+     "y": 1.4832999999999998,
+     "text": {
+      "en": "H 11.19%"
+     },
+     "visibleIf": "pct && sub == 1",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": 0.3,
+     "w": 1.1,
+     "h": 6.2167,
+     "visibleIf": "pct && sub == 1",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 11.15,
+     "y": 6.9167000000000005,
+     "text": {
+      "en": "O 88.81%"
+     },
+     "visibleIf": "pct && sub == 1",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 9.0,
+     "y": 0.3,
+     "w": 1.1,
+     "h": 1.9103,
+     "visibleIf": "pct && sub == 2",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 9.55,
+     "y": 2.6103,
+     "text": {
+      "en": "C 27.29%"
+     },
+     "visibleIf": "pct && sub == 2",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": 0.3,
+     "w": 1.1,
+     "h": 5.0897,
+     "visibleIf": "pct && sub == 2",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 11.15,
+     "y": 5.7897,
+     "text": {
+      "en": "O 72.71%"
+     },
+     "visibleIf": "pct && sub == 2",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 9.0,
+     "y": 0.3,
+     "w": 1.1,
+     "h": 2.7538000000000005,
+     "visibleIf": "pct && sub == 3",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 9.55,
+     "y": 3.4538,
+     "text": {
+      "en": "Na 39.34%"
+     },
+     "visibleIf": "pct && sub == 3",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": 0.3,
+     "w": 1.1,
+     "h": 4.2462,
+     "visibleIf": "pct && sub == 3",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 11.15,
+     "y": 4.9462,
+     "text": {
+      "en": "Cl 60.66%"
+     },
+     "visibleIf": "pct && sub == 3",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 9.0,
+     "y": 0.3,
+     "w": 1.1,
+     "h": 2.8000000000000003,
+     "visibleIf": "pct && sub == 4",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 9.55,
+     "y": 3.5,
+     "text": {
+      "en": "C 40.00%"
+     },
+     "visibleIf": "pct && sub == 4",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 10.6,
+     "y": 0.3,
+     "w": 1.1,
+     "h": 0.46970000000000006,
+     "visibleIf": "pct && sub == 4",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 11.15,
+     "y": 1.1697,
+     "text": {
+      "en": "H 6.71%"
+     },
+     "visibleIf": "pct && sub == 4",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 12.2,
+     "y": 0.3,
+     "w": 1.1,
+     "h": 3.7303,
+     "visibleIf": "pct && sub == 4",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 12.75,
+     "y": 4.4303,
+     "text": {
+      "en": "O 53.29%"
+     },
+     "visibleIf": "pct && sub == 4",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 9.0,
+     "y": 0.3,
+     "w": 1.1,
+     "h": 7.000000000000001,
+     "visibleIf": "pct && sub == 5",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 9.55,
+     "y": 7.700000000000001,
+     "text": {
+      "en": "Fe 100.00%"
+     },
+     "visibleIf": "pct && sub == 5",
+     "color": "white",
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Molar mass",
+      "kn": "ಮೋಲಾರ್ ದ್ರವ್ಯರಾಶಿ"
+     },
+     "expr": "M",
+     "digits": 2,
+     "unit": "g/mol"
+    },
+    {
+     "label": {
+      "en": "Amount",
+      "kn": "ಪ್ರಮಾಣ"
+     },
+     "expr": "n",
+     "digits": 3,
+     "unit": "mol"
+    },
+    {
+     "label": {
+      "en": "Formula units"
+     },
+     "expr": "N",
+     "digits": 3,
+     "unit": "× 10²³"
+    },
+    {
+     "label": {
+      "en": "Atoms (or ions)"
+     },
+     "expr": "at",
+     "digits": 2,
+     "unit": "× 10²³"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "How many moles are in 18 g of water? How many molecules?",
+     "kn": "18 g ನೀರಿನಲ್ಲಿ ಎಷ್ಟು ಮೋಲ್? ಎಷ್ಟು ಅಣುಗಳು?"
+    },
+    {
+     "en": "Which has more particles: 44 g of CO₂ or 56 g of iron?",
+     "kn": "44 g CO₂ ಅಥವಾ 56 g ಕಬ್ಬಿಣ: ಯಾವುದರಲ್ಲಿ ಹೆಚ್ಚು ಕಣಗಳು?"
+    },
+    {
+     "en": "What percentage of glucose is carbon?",
+     "kn": "ಗ್ಲೂಕೋಸ್‌ನಲ್ಲಿ ಕಾರ್ಬನ್ ಶೇಕಡಾ ಎಷ್ಟು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -328,6 +328,316 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "How basic are amines?",
+    "kn": "ಅಮೀನ್‌ಗಳು ಎಷ್ಟು ಪ್ರತ್ಯಾಮ್ಲೀಯ?"
+   },
+   "narration": {
+    "en": "A base is half protonated (RNH₃⁺) when pH = pKa of RNH₃⁺ = 14 − pKb. Alkylamines are stronger bases than ammonia (+I effect); aniline is far weaker because its lone pair is spread into the ring.",
+    "kn": "pH = 14 − pKb ಆದಾಗ ಪ್ರತ್ಯಾಮ್ಲ ಅರ್ಧ ಪ್ರೋಟಾನೀಕೃತ. ಆಲ್ಕೈಲ್ ಅಮೀನ್‌ಗಳು ಅಮೋನಿಯಾಕ್ಕಿಂತ ಬಲ (+I); ಅನಿಲೀನ್‌ನ ಏಕಾಂಗಿ ಜೋಡಿ ಉಂಗುರದಲ್ಲಿ ಹರಡಿರುವುದರಿಂದ ತುಂಬಾ ದುರ್ಬಲ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A base is half protonated (RNH₃⁺) when pH = pKa of RNH₃⁺ = 14 − pKb. Alkylamines are stronger bases than ammonia (+I effect); aniline is far weaker because its lone pair is spread into the ring.",
+    "kn": "pH = 14 − pKb ಆದಾಗ ಪ್ರತ್ಯಾಮ್ಲ ಅರ್ಧ ಪ್ರೋಟಾನೀಕೃತ. ಆಲ್ಕೈಲ್ ಅಮೀನ್‌ಗಳು ಅಮೋನಿಯಾಕ್ಕಿಂತ ಬಲ (+I); ಅನಿಲೀನ್‌ನ ಏಕಾಂಗಿ ಜೋಡಿ ಉಂಗುರದಲ್ಲಿ ಹರಡಿರುವುದರಿಂದ ತುಂಬಾ ದುರ್ಬಲ."
+   },
+   "sliders": [
+    {
+     "name": "pH",
+     "label": {
+      "en": "pH of the solution",
+      "kn": "ದ್ರಾವಣದ pH"
+     },
+     "min": 0,
+     "max": 14,
+     "step": 0.25,
+     "value": 7
+    }
+   ],
+   "toggles": [
+    {
+     "name": "crv",
+     "label": {
+      "en": "Show the curve",
+      "kn": "ವಕ್ರ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "cmp",
+     "label": {
+      "en": "Base",
+      "kn": "ಸಂಯುಕ್ತ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "NH₃ (pKb 4.75)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Methanamine (3.38)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "N-Ethylethanamine (3.00)"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "N,N-Dimethylmethanamine (4.22)"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "Benzylamine (4.70)"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "Aniline (9.38)"
+       },
+       "value": 6
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Add acid (pH − 1)"
+     },
+     "icon": "add",
+     "set": {
+      "pH": "pH - 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Add alkali (pH + 1)"
+     },
+     "icon": "add",
+     "set": {
+      "pH": "pH + 1"
+     }
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "pK",
+     "expr": "((cmp == 1)*(9.25) + (cmp == 2)*(10.620000000000001) + (cmp == 3)*(11.0) + (cmp == 4)*(9.780000000000001) + (cmp == 5)*(9.3) + (cmp == 6)*(4.619999999999999))"
+    },
+    {
+     "name": "f",
+     "expr": "1/(1 + pow(10, pH - pK))"
+    },
+    {
+     "name": "nI",
+     "expr": "round(40*f)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     23
+    ],
+    "y": [
+     -0.8,
+     8
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0.5,
+     "w": 7,
+     "h": 6.5,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "bounce(0.3 + 6.4*rand(i) + 0.5*t*cos(2*pi*rand(i + 300)), 0.3, 6.7)",
+     "y": "bounce(0.8 + 5.9*rand(i + 150) + 0.5*t*sin(2*pi*rand(i + 300)), 0.8, 6.7)",
+     "r": 0.2,
+     "visibleIf": "i < nI",
+     "color": "orange"
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "bounce(0.3 + 6.4*rand(i) + 0.5*t*cos(2*pi*rand(i + 300)), 0.3, 6.7)",
+     "y": "bounce(0.8 + 5.9*rand(i + 150) + 0.5*t*sin(2*pi*rand(i + 300)), 0.8, 6.7)",
+     "r": 0.2,
+     "visibleIf": "i >= nI",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 7.5,
+     "text": {
+      "en": "orange protonated (RNH₃⁺), blue free amine"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 8.5,
+     "y1": 1,
+     "x2": 22.5,
+     "y2": 1,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 8.5,
+     "y1": 1,
+     "x2": 8.5,
+     "y2": 6.5,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.5,
+     "y": 0.4,
+     "text": {
+      "en": "0"
+     },
+     "color": "white",
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 0.4,
+     "text": {
+      "en": "pH 7"
+     },
+     "color": "white",
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 22.5,
+     "y": 0.4,
+     "text": {
+      "en": "14"
+     },
+     "color": "white",
+     "size": 18
+    },
+    {
+     "shape": "path",
+     "visibleIf": "crv",
+     "color": "green",
+     "fn": "1 + 5*(1/(1 + pow(10, ((x - 8.5)) - pK)))",
+     "from": 8.5,
+     "to": 22.5,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "8.5 + pK",
+     "y1": 1,
+     "x2": "8.5 + pK",
+     "y2": 6,
+     "visibleIf": "crv && pK <= 14",
+     "color": "orange",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": "8.5 + pK",
+     "y": 6.6,
+     "text": {
+      "en": "pKa {pK:2}"
+     },
+     "visibleIf": "crv && pK <= 14",
+     "color": "orange",
+     "size": 20
+    },
+    {
+     "shape": "circle",
+     "x": "8.5 + pH",
+     "y": "1 + 5*f",
+     "r": 0.22,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 7.4,
+     "text": {
+      "en": "fraction protonated (RNH₃⁺)"
+     },
+     "color": "green",
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Fraction protonated (RNH₃⁺)"
+     },
+     "expr": "f*100",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "pKa"
+     },
+     "expr": "pK",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "pH"
+     },
+     "expr": "pH",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At pH 7, compare methanamine and aniline. Which is mostly protonated?",
+     "kn": "pH 7 ನಲ್ಲಿ ಮೆಥನಮೀನ್ ಮತ್ತು ಅನಿಲೀನ್ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Order NH₃, methanamine, N-ethylethanamine by base strength.",
+     "kn": "NH₃, ಮೆಥನಮೀನ್, N-ಈಥೈಲ್ ಈಥನಮೀನ್ ಬಲದಂತೆ ಜೋಡಿಸಿ."
+    },
+    {
+     "en": "Why is benzylamine much more basic than aniline?",
+     "kn": "ಬೆಂಜೈಲ್ ಅಮೀನ್ ಅನಿಲೀನ್‌ಗಿಂತ ಏಕೆ ಹೆಚ್ಚು ಪ್ರತ್ಯಾಮ್ಲೀಯ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -273,6 +273,315 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Nernst equation for the Daniell cell",
+    "kn": "ಡೇನಿಯಲ್ ಕೋಶಕ್ಕೆ ನೆರ್ನ್ಸ್ಟ್ ಸಮೀಕರಣ"
+   },
+   "narration": {
+    "en": "E = E° − (2.303RT/2F) log([Zn²⁺]/[Cu²⁺]), with E° = 1.10 V. Making [Cu²⁺] larger or [Zn²⁺] smaller raises E. ΔG = −nFE, and at equilibrium E = 0, which gives log K = 2E°/0.059 at 298 K.",
+    "kn": "E = E° − (2.303RT/2F) log([Zn²⁺]/[Cu²⁺]), E° = 1.10 V. [Cu²⁺] ಹೆಚ್ಚಿಸಿದರೆ ಅಥವಾ [Zn²⁺] ಕಡಿಮೆ ಮಾಡಿದರೆ E ಏರುತ್ತದೆ. ΔG = −nFE; ಸಮತೋಲನದಲ್ಲಿ E = 0."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "E = E° − (2.303RT/2F) log([Zn²⁺]/[Cu²⁺]), with E° = 1.10 V. Making [Cu²⁺] larger or [Zn²⁺] smaller raises E. ΔG = −nFE, and at equilibrium E = 0, which gives log K = 2E°/0.059 at 298 K.",
+    "kn": "E = E° − (2.303RT/2F) log([Zn²⁺]/[Cu²⁺]), E° = 1.10 V. [Cu²⁺] ಹೆಚ್ಚಿಸಿದರೆ ಅಥವಾ [Zn²⁺] ಕಡಿಮೆ ಮಾಡಿದರೆ E ಏರುತ್ತದೆ. ΔG = −nFE; ಸಮತೋಲನದಲ್ಲಿ E = 0."
+   },
+   "sliders": [
+    {
+     "name": "lzn",
+     "label": {
+      "en": "log [Zn²⁺]"
+     },
+     "min": -4,
+     "max": 0,
+     "step": 0.1,
+     "value": 0
+    },
+    {
+     "name": "lcu",
+     "label": {
+      "en": "log [Cu²⁺]"
+     },
+     "min": -4,
+     "max": 0,
+     "step": 0.1,
+     "value": 0
+    },
+    {
+     "name": "T",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪಮಾನ"
+     },
+     "min": 273,
+     "max": 373,
+     "step": 5,
+     "value": 298,
+     "unit": "K"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sg",
+     "label": {
+      "en": "Show ΔG",
+      "kn": "ΔG ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "slope",
+     "expr": "2.303*8.314*T/(2*96485)"
+    },
+    {
+     "name": "E",
+     "expr": "1.10 - slope*(lzn - lcu)"
+    },
+    {
+     "name": "dG",
+     "expr": "-2*96485*E/1000"
+    },
+    {
+     "name": "logK",
+     "expr": "2*1.10/(2*slope)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     14
+    ],
+    "y": [
+     0,
+     10
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 0.5,
+     "w": 4.5,
+     "h": 4,
+     "color": "white",
+     "opacity": "0.05 + 0.05*(lzn + 4)"
+    },
+    {
+     "shape": "rect",
+     "x": 9,
+     "y": 0.5,
+     "w": 4.5,
+     "h": 4,
+     "color": "blue",
+     "opacity": "0.1 + 0.15*(lcu + 4)"
+    },
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 0.5,
+     "w": 4.5,
+     "h": 4.5,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 9,
+     "y": 0.5,
+     "w": 4.5,
+     "h": 4.5,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 2.3,
+     "y": 1.2,
+     "w": 0.9,
+     "h": 5,
+     "color": "white",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 10.8,
+     "y": 1.2,
+     "w": 0.9,
+     "h": 5,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 2.75,
+     "y1": 6.2,
+     "x2": 2.75,
+     "y2": 7.2,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 11.25,
+     "y1": 6.2,
+     "x2": 11.25,
+     "y2": 7.2,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 2.75,
+     "y1": 7.2,
+     "x2": 5.2,
+     "y2": 7.2,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 8.8,
+     "y1": 7.2,
+     "x2": 11.25,
+     "y2": 7.2,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "color": "white",
+     "points": [
+      [
+       5.6,
+       7.6
+      ],
+      [
+       6.0,
+       8.5
+      ],
+      [
+       7.0,
+       8.9
+      ],
+      [
+       8.0,
+       8.5
+      ],
+      [
+       8.4,
+       7.6
+      ]
+     ],
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 7,
+     "y1": 7.2,
+     "x2": "7 + 1.6*cos(rad(160 - 140*E/1.3))",
+     "y2": "7.2 + 1.6*sin(rad(160 - 140*E/1.3))",
+     "color": "red",
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "x": 7,
+     "y": 6.6,
+     "text": {
+      "en": "{E:3} V"
+     },
+     "color": "yellow",
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 2.75,
+     "y": 0,
+     "text": {
+      "en": "Zn | Zn²⁺"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 11.25,
+     "y": 0,
+     "text": {
+      "en": "Cu²⁺ | Cu"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 7,
+     "y": 3,
+     "text": {
+      "en": "ΔG = {dG:1} kJ/mol"
+     },
+     "visibleIf": "sg",
+     "color": "green",
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Cell potential E",
+      "kn": "ಕೋಶ ವಿಭವ"
+     },
+     "expr": "E",
+     "digits": 3,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Q = [Zn²⁺]/[Cu²⁺], log"
+     },
+     "expr": "lzn - lcu",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "ΔG = −nFE"
+     },
+     "expr": "dG",
+     "digits": 1,
+     "unit": "kJ/mol"
+    },
+    {
+     "label": {
+      "en": "log K"
+     },
+     "expr": "logK",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make [Zn²⁺] ten times [Cu²⁺]. By how much does E fall?",
+     "kn": "[Zn²⁺] ಅನ್ನು [Cu²⁺] ಗಿಂತ ಹತ್ತು ಪಟ್ಟು ಮಾಡಿ. E ಎಷ್ಟು ಇಳಿಯುತ್ತದೆ?"
+    },
+    {
+     "en": "What is ΔG when both are 1 M?",
+     "kn": "ಎರಡೂ 1 M ಆದಾಗ ΔG ಎಷ್ಟು?"
+    },
+    {
+     "en": "Does temperature matter when the two concentrations are equal?",
+     "kn": "ಎರಡು ಸಾರತೆ ಸಮವಾದಾಗ ತಾಪ ಪರಿಣಾಮ ಬೀರುತ್ತದೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

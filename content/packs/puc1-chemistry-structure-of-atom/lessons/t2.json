@@ -860,6 +860,272 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Photons and the photoelectric effect",
+    "kn": "ಫೋಟಾನ್‌ಗಳು ಮತ್ತು ದ್ಯುತಿವಿದ್ಯುತ್ ಪರಿಣಾಮ"
+   },
+   "narration": {
+    "en": "Light comes in photons of energy E = hν = hc/λ. An electron is knocked out only if one photon has more energy than the work function W₀; the extra becomes kinetic energy. Brighter light gives more electrons, not faster ones.",
+    "kn": "ಬೆಳಕು E = hν = hc/λ ಶಕ್ತಿಯ ಫೋಟಾನ್‌ಗಳಾಗಿ ಬರುತ್ತದೆ. ಒಂದು ಫೋಟಾನ್‌ನ ಶಕ್ತಿ ಕಾರ್ಯ ಫಲನ W₀ ಮೀರಿದರೆ ಮಾತ್ರ ಇಲೆಕ್ಟ್ರಾನ್ ಹೊರಬರುತ್ತದೆ; ಹೆಚ್ಚುವರಿ ಚಲನ ಶಕ್ತಿಯಾಗುತ್ತದೆ. ಪ್ರಕಾಶ ಹೆಚ್ಚಿಸಿದರೆ ಇಲೆಕ್ಟ್ರಾನ್ ಸಂಖ್ಯೆ ಹೆಚ್ಚು, ವೇಗವಲ್ಲ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Light comes in photons of energy E = hν = hc/λ. An electron is knocked out only if one photon has more energy than the work function W₀; the extra becomes kinetic energy. Brighter light gives more electrons, not faster ones.",
+    "kn": "ಬೆಳಕು E = hν = hc/λ ಶಕ್ತಿಯ ಫೋಟಾನ್‌ಗಳಾಗಿ ಬರುತ್ತದೆ. ಒಂದು ಫೋಟಾನ್‌ನ ಶಕ್ತಿ ಕಾರ್ಯ ಫಲನ W₀ ಮೀರಿದರೆ ಮಾತ್ರ ಇಲೆಕ್ಟ್ರಾನ್ ಹೊರಬರುತ್ತದೆ; ಹೆಚ್ಚುವರಿ ಚಲನ ಶಕ್ತಿಯಾಗುತ್ತದೆ. ಪ್ರಕಾಶ ಹೆಚ್ಚಿಸಿದರೆ ಇಲೆಕ್ಟ್ರಾನ್ ಸಂಖ್ಯೆ ಹೆಚ್ಚು, ವೇಗವಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "lam",
+     "label": {
+      "en": "Wavelength",
+      "kn": "ತರಂಗಾಂತರ"
+     },
+     "min": 100,
+     "max": 800,
+     "step": 20,
+     "value": 400,
+     "unit": "nm"
+    },
+    {
+     "name": "I",
+     "label": {
+      "en": "Brightness (photons)",
+      "kn": "ಪ್ರಕಾಶ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "choices": [
+    {
+     "name": "W",
+     "label": {
+      "en": "Metal",
+      "kn": "ಲೋಹ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Na (2.3 eV)"
+       },
+       "value": 2.3
+      },
+      {
+       "label": {
+        "en": "Mg (3.7 eV)"
+       },
+       "value": 3.7
+      },
+      {
+       "label": {
+        "en": "Ag (4.3 eV)"
+       },
+       "value": 4.3
+      },
+      {
+       "label": {
+        "en": "Cu (4.8 eV)"
+       },
+       "value": 4.8
+      }
+     ],
+     "value": 2.3
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "Ep",
+     "expr": "1239.8/lam"
+    },
+    {
+     "name": "KE",
+     "expr": "Ep - W"
+    },
+    {
+     "name": "go",
+     "expr": "KE > 0"
+    },
+    {
+     "name": "ve",
+     "expr": "sqrt(max(KE, 0)*2*1.602e-19/9.109e-31)"
+    },
+    {
+     "name": "lam0",
+     "expr": "1239.8/W"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     17
+    ],
+    "y": [
+     0,
+     10
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "wave",
+     "fn": "8.6 + 0.5*sin(2*pi*(x - 2*t)*100/lam)",
+     "color": {
+      "by": "clamp((lam - 400)/300, 0, 1)",
+      "scale": [
+       "blue",
+       "green",
+       "yellow",
+       "orange",
+       "red"
+      ]
+     },
+     "from": 0.3,
+     "to": 9.5,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 9.6,
+     "text": {
+      "en": "{lam} nm"
+     },
+     "color": "white",
+     "size": 24
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 1,
+     "w": 0.8,
+     "h": 7,
+     "color": "white",
+     "opacity": 0.9
+    },
+    {
+     "shape": "text",
+     "x": 10.4,
+     "y": 0.4,
+     "text": {
+      "en": "metal"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "x": "mod(10*rand(i) + 4*t, 10)",
+     "y": "1.5 + 6*rand(i + 40)",
+     "r": 0.16,
+     "visibleIf": "i < I",
+     "color": {
+      "by": "clamp((lam - 400)/300, 0, 1)",
+      "scale": [
+       "blue",
+       "green",
+       "yellow",
+       "orange",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "x": "10.9 + mod(6*rand(i + 80) + 1.5*ve/1e6*t, 6)",
+     "y": "1.5 + 6*rand(i + 120)",
+     "r": 0.14,
+     "visibleIf": "go && i < I",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": 8.6,
+     "text": {
+      "en": "electrons ejected"
+     },
+     "visibleIf": "go",
+     "color": "yellow",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 13.8,
+     "y": 8.6,
+     "text": {
+      "en": "no electrons: hν < W₀"
+     },
+     "visibleIf": "go == 0",
+     "color": "red",
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Photon energy",
+      "kn": "ಫೋಟಾನ್ ಶಕ್ತಿ"
+     },
+     "expr": "Ep",
+     "digits": 2,
+     "unit": "eV"
+    },
+    {
+     "label": {
+      "en": "Frequency",
+      "kn": "ಆವರ್ತನ"
+     },
+     "expr": "2998/lam",
+     "digits": 2,
+     "unit": "× 10¹⁴ Hz"
+    },
+    {
+     "label": {
+      "en": "Max kinetic energy of electron"
+     },
+     "expr": "max(KE, 0)",
+     "digits": 2,
+     "unit": "eV"
+    },
+    {
+     "label": {
+      "en": "Threshold wavelength",
+      "kn": "ಅಂಚಿನ ತರಂಗಾಂತರ"
+     },
+     "expr": "lam0",
+     "digits": 0,
+     "unit": "nm"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the longest wavelength that still ejects electrons from sodium.",
+     "kn": "ಸೋಡಿಯಂನಿಂದ ಇಲೆಕ್ಟ್ರಾನ್ ಹೊರಡಿಸುವ ಅತಿ ಉದ್ದ ತರಂಗಾಂತರ ಹುಡುಕಿ."
+    },
+    {
+     "en": "Use red light (700 nm) at full brightness on sodium. Does anything happen?",
+     "kn": "ಸೋಡಿಯಂ ಮೇಲೆ ಪೂರ್ಣ ಪ್ರಕಾಶದ ಕೆಂಪು ಬೆಳಕು (700 nm). ಏನಾದರೂ ಆಗುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Why does copper need ultraviolet light?",
+     "kn": "ತಾಮ್ರಕ್ಕೆ ಅತಿನೇರಳೆ ಬೆಳಕು ಏಕೆ ಬೇಕು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

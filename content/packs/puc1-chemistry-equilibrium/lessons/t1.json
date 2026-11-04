@@ -325,6 +325,254 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Evaporation in a closed jar",
+    "kn": "ಮುಚ್ಚಿದ ಜಾಡಿಯಲ್ಲಿ ಆವಿಯಾಗುವಿಕೆ"
+   },
+   "narration": {
+    "en": "Water evaporates at a steady rate. In a closed jar the vapour molecules pile up and condense faster and faster until the two rates are equal: dynamic equilibrium. With the lid off, vapour escapes and equilibrium is never reached.",
+    "kn": "ನೀರು ಸ್ಥಿರ ದರದಲ್ಲಿ ಆವಿಯಾಗುತ್ತದೆ. ಮುಚ್ಚಿದ ಜಾಡಿಯಲ್ಲಿ ಆವಿ ಅಣುಗಳು ಹೆಚ್ಚಿ ಘನೀಕರಣ ದರ ಏರುತ್ತದೆ; ಎರಡೂ ದರ ಸಮವಾದಾಗ ಚಲನಶೀಲ ಸಮತೋಲನ. ಮುಚ್ಚಳ ತೆಗೆದರೆ ಸಮತೋಲನ ಬರುವುದಿಲ್ಲ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Water evaporates at a steady rate. In a closed jar the vapour molecules pile up and condense faster and faster until the two rates are equal: dynamic equilibrium. With the lid off, vapour escapes and equilibrium is never reached.",
+    "kn": "ನೀರು ಸ್ಥಿರ ದರದಲ್ಲಿ ಆವಿಯಾಗುತ್ತದೆ. ಮುಚ್ಚಿದ ಜಾಡಿಯಲ್ಲಿ ಆವಿ ಅಣುಗಳು ಹೆಚ್ಚಿ ಘನೀಕರಣ ದರ ಏರುತ್ತದೆ; ಎರಡೂ ದರ ಸಮವಾದಾಗ ಚಲನಶೀಲ ಸಮತೋಲನ. ಮುಚ್ಚಳ ತೆಗೆದರೆ ಸಮತೋಲನ ಬರುವುದಿಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "T",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪಮಾನ"
+     },
+     "min": 20,
+     "max": 100,
+     "step": 2,
+     "value": 60,
+     "unit": "°C"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "lid",
+     "label": {
+      "en": "Lid closed",
+      "kn": "ಮುಚ್ಚಳ ಮುಚ್ಚಿದೆ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 40,
+    "dt": 0.02,
+    "autoplay": false
+   },
+   "vars": [
+    {
+     "name": "p",
+     "expr": "0.133322*pow(10, 8.07131 - 1730.63/(233.426 + T))"
+    },
+    {
+     "name": "neq",
+     "expr": "3*p"
+    },
+    {
+     "name": "evap",
+     "expr": "0.4*neq"
+    },
+    {
+     "name": "cond",
+     "expr": "0.4*v"
+    }
+   ],
+   "state": [
+    {
+     "name": "v",
+     "init": 0,
+     "rate": "0.4*(neq - v) - if(lid, 0, 0.3*v)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     20.5
+    ],
+    "y": [
+     -0.8,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 10,
+     "h": 3.5,
+     "color": "blue",
+     "opacity": 0.6
+    },
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 10,
+     "h": 10,
+     "color": "white",
+     "fill": false,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 10,
+     "x2": 10,
+     "y2": 10,
+     "visibleIf": "lid",
+     "color": "orange",
+     "width": 10
+    },
+    {
+     "shape": "particles",
+     "count": 320,
+     "x": "bounce(0.3 + 9.4*rand(i) + 2.5*t*cos(2*pi*rand(i + 400)), 0.3, 9.7)",
+     "y": "bounce(3.8 + 5.9*rand(i + 800) + 2.5*t*sin(2*pi*rand(i + 400)), 3.8, 9.7)",
+     "r": 0.12,
+     "visibleIf": "i < v",
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 0,
+     "x2": 20,
+     "y2": 0,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 0,
+     "x2": 11,
+     "y2": 10,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 9,
+     "x2": 20,
+     "y2": 9,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 19.8,
+     "y": 9.5,
+     "text": {
+      "en": "evaporation"
+     },
+     "color": "orange",
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "trail",
+     "x": "11 + t*9/40",
+     "y": "9*v/neq",
+     "length": 2000,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 19.8,
+     "y": 1.0,
+     "text": {
+      "en": "condensation"
+     },
+     "color": "green",
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": -0.5,
+     "text": {
+      "en": "time"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 10.5,
+     "text": {
+      "en": "rates (scaled)"
+     },
+     "color": "white",
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Vapour pressure at equilibrium",
+      "kn": "ಸಮತೋಲನ ಆವಿ ಒತ್ತಡ"
+     },
+     "expr": "p",
+     "digits": 1,
+     "unit": "kPa"
+    },
+    {
+     "label": {
+      "en": "Molecules in the vapour"
+     },
+     "expr": "v",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Evaporation rate",
+      "kn": "ಆವಿಯಾಗುವ ದರ"
+     },
+     "expr": "evap",
+     "digits": 0,
+     "unit": "per s"
+    },
+    {
+     "label": {
+      "en": "Condensation rate",
+      "kn": "ಘನೀಕರಣ ದರ"
+     },
+     "expr": "cond",
+     "digits": 0,
+     "unit": "per s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Watch the two rate lines on the graph. When do they meet?",
+     "kn": "ನಕ್ಷೆಯಲ್ಲಿ ಎರಡು ದರ ರೇಖೆ ನೋಡಿ. ಅವು ಯಾವಾಗ ಸೇರುತ್ತವೆ?"
+    },
+    {
+     "en": "Raise the temperature to 80 °C. What happens to the vapour pressure?",
+     "kn": "ತಾಪ 80 °C ಗೆ ಏರಿಸಿ. ಆವಿ ಒತ್ತಡ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Open the lid. Is there still an equilibrium?",
+     "kn": "ಮುಚ್ಚಳ ತೆರೆಯಿರಿ. ಈಗಲೂ ಸಮತೋಲನ ಇದೆಯೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -407,6 +407,470 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Boiling points of alkanes",
+    "kn": "ಆಲ್ಕೇನ್‌ಗಳ ಕುದಿಬಿಂದು"
+   },
+   "narration": {
+    "en": "Grow the carbon chain one CH₂ at a time. Longer chains have more surface for van der Waals forces, so the boiling point rises steadily; C1 to C4 are gases at room temperature.",
+    "kn": "ಕಾರ್ಬನ್ ಸರಪಳಿಯನ್ನು ಒಂದೊಂದು CH₂ ಸೇರಿಸಿ ಬೆಳೆಸಿ. ಉದ್ದ ಸರಪಳಿಗೆ ವಾನ್ ಡರ್ ವಾಲ್ಸ್ ಬಲ ಹೆಚ್ಚು, ಆದ್ದರಿಂದ ಕುದಿಬಿಂದು ಏರುತ್ತದೆ; C1–C4 ಕೊಠಡಿ ತಾಪದಲ್ಲಿ ಅನಿಲ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Grow the carbon chain one CH₂ at a time. Longer chains have more surface for van der Waals forces, so the boiling point rises steadily; C1 to C4 are gases at room temperature.",
+    "kn": "ಕಾರ್ಬನ್ ಸರಪಳಿಯನ್ನು ಒಂದೊಂದು CH₂ ಸೇರಿಸಿ ಬೆಳೆಸಿ. ಉದ್ದ ಸರಪಳಿಗೆ ವಾನ್ ಡರ್ ವಾಲ್ಸ್ ಬಲ ಹೆಚ್ಚು, ಆದ್ದರಿಂದ ಕುದಿಬಿಂದು ಏರುತ್ತದೆ; C1–C4 ಕೊಠಡಿ ತಾಪದಲ್ಲಿ ಅನಿಲ."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Number of carbon atoms",
+      "kn": "ಕಾರ್ಬನ್ ಪರಮಾಣುಗಳ ಸಂಖ್ಯೆ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "toggles": [
+    {
+     "name": "st",
+     "label": {
+      "en": "Colour by state at 25 °C",
+      "kn": "ಸ್ಥಿತಿಯ ಬಣ್ಣ"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Add CH₂"
+     },
+     "icon": "add",
+     "set": {
+      "n": "n + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Remove CH₂"
+     },
+     "icon": "remove",
+     "set": {
+      "n": "n - 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "b",
+     "expr": "((n == 1)*(-161.5) + (n == 2)*(-88.6) + (n == 3)*(-42.1) + (n == 4)*(-0.5) + (n == 5)*(36.1) + (n == 6)*(68.7) + (n == 7)*(98.4) + (n == 8)*(125.7) + (n == 9)*(150.8) + (n == 10)*(174.1))"
+    },
+    {
+     "name": "M",
+     "expr": "14*n + 2.016"
+    },
+    {
+     "name": "iso",
+     "expr": "((n == 1)*(1) + (n == 2)*(1) + (n == 3)*(1) + (n == 4)*(2) + (n == 5)*(3) + (n == 6)*(5) + (n == 7)*(9) + (n == 8)*(18) + (n == 9)*(35) + (n == 10)*(75))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     -1,
+     9.8
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 3.75,
+     "x2": 11.5,
+     "y2": 3.75,
+     "color": "white",
+     "opacity": 0.6,
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 11.4,
+     "y": 4.05,
+     "text": {
+      "en": "25 °C"
+     },
+     "color": "white",
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 11.5,
+     "y2": 0,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 0.2,
+     "y": 6.9,
+     "text": {
+      "en": "boiling point (°C)"
+     },
+     "color": "white",
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 0.6,
+     "y": 0,
+     "w": 0.8,
+     "h": "(-161.5 + 200)/60",
+     "color": {
+      "by": "st*(-161.5 > 25)",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 1.0,
+     "y": -0.4,
+     "text": {
+      "en": "C1"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 1.7000000000000002,
+     "y": 0,
+     "w": 0.8,
+     "h": "(-88.6 + 200)/60",
+     "color": {
+      "by": "st*(-88.6 > 25)",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 2.1,
+     "y": -0.4,
+     "text": {
+      "en": "C2"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 2.8000000000000003,
+     "y": 0,
+     "w": 0.8,
+     "h": "(-42.1 + 200)/60",
+     "color": {
+      "by": "st*(-42.1 > 25)",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 3.2,
+     "y": -0.4,
+     "text": {
+      "en": "C3"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 3.9000000000000004,
+     "y": 0,
+     "w": 0.8,
+     "h": "(-0.5 + 200)/60",
+     "color": {
+      "by": "st*(-0.5 > 25)",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 4.300000000000001,
+     "y": -0.4,
+     "text": {
+      "en": "C4"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 5.0,
+     "y": 0,
+     "w": 0.8,
+     "h": "(36.1 + 200)/60",
+     "color": {
+      "by": "st*(36.1 > 25)",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 5.4,
+     "y": -0.4,
+     "text": {
+      "en": "C5"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 6.1,
+     "y": 0,
+     "w": 0.8,
+     "h": "(68.7 + 200)/60",
+     "color": {
+      "by": "st*(68.7 > 25)",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": -0.4,
+     "text": {
+      "en": "C6"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 7.2,
+     "y": 0,
+     "w": 0.8,
+     "h": "(98.4 + 200)/60",
+     "color": {
+      "by": "st*(98.4 > 25)",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 7.6000000000000005,
+     "y": -0.4,
+     "text": {
+      "en": "C7"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 8.3,
+     "y": 0,
+     "w": 0.8,
+     "h": "(125.7 + 200)/60",
+     "color": {
+      "by": "st*(125.7 > 25)",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 8.700000000000001,
+     "y": -0.4,
+     "text": {
+      "en": "C8"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 9.4,
+     "y": 0,
+     "w": 0.8,
+     "h": "(150.8 + 200)/60",
+     "color": {
+      "by": "st*(150.8 > 25)",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 9.8,
+     "y": -0.4,
+     "text": {
+      "en": "C9"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 10.5,
+     "y": 0,
+     "w": 0.8,
+     "h": "(174.1 + 200)/60",
+     "color": {
+      "by": "st*(174.1 > 25)",
+      "scale": [
+       "blue",
+       "green"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 10.9,
+     "y": -0.4,
+     "text": {
+      "en": "C10"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": "0.5 + 1.1*(n - 1)",
+     "y": -0.7,
+     "w": 1.0,
+     "h": 7.3,
+     "color": "yellow",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "x": "1.2 + 0.95*i",
+     "y": "8.1 + 0.45*mod(i, 2)",
+     "r": 0.22,
+     "visibleIf": "i < n",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 9.3,
+     "text": {
+      "en": "C{n}H{2*n + 2}"
+     },
+     "color": "yellow",
+     "size": 30,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 7.6,
+     "text": {
+      "en": "gas at 25 °C"
+     },
+     "visibleIf": "st && b < 25",
+     "color": "blue",
+     "size": 24,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 7.6,
+     "text": {
+      "en": "liquid at 25 °C"
+     },
+     "visibleIf": "st && b >= 25",
+     "color": "green",
+     "size": 24,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Boiling point",
+      "kn": "ಕುದಿಬಿಂದು"
+     },
+     "expr": "b",
+     "digits": 1,
+     "unit": "°C"
+    },
+    {
+     "label": {
+      "en": "Molar mass",
+      "kn": "ಮೋಲಾರ್ ದ್ರವ್ಯರಾಶಿ"
+     },
+     "expr": "12.011*n + 1.008*(2*n + 2)",
+     "digits": 1,
+     "unit": "g/mol"
+    },
+    {
+     "label": {
+      "en": "Structural isomers",
+      "kn": "ರಚನಾ ಸಮಾಂಗಿಗಳು"
+     },
+     "expr": "iso",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Which is the first alkane that is a liquid at 25 °C?",
+     "kn": "25 °C ನಲ್ಲಿ ದ್ರವವಾಗಿರುವ ಮೊದಲ ಆಲ್ಕೇನ್ ಯಾವುದು?"
+    },
+    {
+     "en": "How many structural isomers does C₆H₁₄ have?",
+     "kn": "C₆H₁₄ ಗೆ ಎಷ್ಟು ರಚನಾ ಸಮಾಂಗಿಗಳು?"
+    },
+    {
+     "en": "By how much does the boiling point rise per CH₂ for C5 to C10?",
+     "kn": "C5 ರಿಂದ C10 ವರೆಗೆ ಪ್ರತಿ CH₂ ಗೆ ಕುದಿಬಿಂದು ಎಷ್ಟು ಏರುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

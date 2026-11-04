@@ -448,6 +448,422 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "SN1 and SN2",
+    "kn": "SN1 ಮತ್ತು SN2"
+   },
+   "narration": {
+    "en": "SN2 happens in one step: the nucleophile attacks from the side opposite the halogen and the other three groups flip over like an umbrella (inversion); rate = k[RX][Nu⁻]. SN1 goes through a flat carbocation, so rate = k[RX] and the nucleophile can attack either face (racemisation).",
+    "kn": "SN2 ಒಂದೇ ಹಂತ: ನ್ಯೂಕ್ಲಿಯೋಫೈಲ್ ಹ್ಯಾಲೋಜನ್‌ನ ಎದುರು ಬದಿಯಿಂದ ದಾಳಿ ಮಾಡುತ್ತದೆ, ಉಳಿದ ಗುಂಪುಗಳು ಛತ್ರಿಯಂತೆ ತಿರುಗುತ್ತವೆ; ದರ = k[RX][Nu⁻]. SN1 ಸಮತಲ ಕಾರ್ಬೊಕ್ಯಾಟಯಾನ್ ಮೂಲಕ; ದರ = k[RX], ಎರಡೂ ಮುಖದಿಂದ ದಾಳಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "SN2 happens in one step: the nucleophile attacks from the side opposite the halogen and the other three groups flip over like an umbrella (inversion); rate = k[RX][Nu⁻]. SN1 goes through a flat carbocation, so rate = k[RX] and the nucleophile can attack either face (racemisation).",
+    "kn": "SN2 ಒಂದೇ ಹಂತ: ನ್ಯೂಕ್ಲಿಯೋಫೈಲ್ ಹ್ಯಾಲೋಜನ್‌ನ ಎದುರು ಬದಿಯಿಂದ ದಾಳಿ ಮಾಡುತ್ತದೆ, ಉಳಿದ ಗುಂಪುಗಳು ಛತ್ರಿಯಂತೆ ತಿರುಗುತ್ತವೆ; ದರ = k[RX][Nu⁻]. SN1 ಸಮತಲ ಕಾರ್ಬೊಕ್ಯಾಟಯಾನ್ ಮೂಲಕ; ದರ = k[RX], ಎರಡೂ ಮುಖದಿಂದ ದಾಳಿ."
+   },
+   "sliders": [
+    {
+     "name": "nu",
+     "label": {
+      "en": "[Nu⁻]"
+     },
+     "min": 0.1,
+     "max": 2,
+     "step": 0.1,
+     "value": 1,
+     "unit": "mol/L"
+    },
+    {
+     "name": "rx",
+     "label": {
+      "en": "[RX]"
+     },
+     "min": 0.1,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.5,
+     "unit": "mol/L"
+    }
+   ],
+   "choices": [
+    {
+     "name": "sub",
+     "label": {
+      "en": "Substrate",
+      "kn": "ಉಪಸ್ತರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "CH₃Br"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "1° (CH₃CH₂Br)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "2° ((CH₃)₂CHBr)"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "3° ((CH₃)₃CBr)"
+       },
+       "value": 4
+      }
+     ],
+     "value": 2
+    },
+    {
+     "name": "mech",
+     "label": {
+      "en": "Mechanism shown",
+      "kn": "ಕ್ರಿಯಾವಿಧಾನ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "SN1"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "SN2"
+       },
+       "value": 2
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run",
+      "kn": "ಚಲಾಯಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 4.5
+   },
+   "vars": [
+    {
+     "name": "p",
+     "expr": "smoothstep(0.3, 3.3, t)"
+    },
+    {
+     "name": "p1",
+     "expr": "smoothstep(0.3, 1.8, t)"
+    },
+    {
+     "name": "p2",
+     "expr": "smoothstep(2.5, 4.2, t)"
+    },
+    {
+     "name": "gam",
+     "expr": "if(mech == 2, 70.5 + 39*p, 70.5 + 19.5*p1)"
+    },
+    {
+     "name": "xx",
+     "expr": "if(mech == 2, 2 + 4*p, 2 + 3*p1)"
+    },
+    {
+     "name": "xy",
+     "expr": "if(mech == 2, 0, 2.2*p1)"
+    },
+    {
+     "name": "xb",
+     "expr": "if(mech == 2, p < 0.6, p1 < 0.4)"
+    },
+    {
+     "name": "nux",
+     "expr": "if(mech == 2, -6 + 4*p, -6 + 4*p2)"
+    },
+    {
+     "name": "nux2",
+     "expr": "6 - 4*p2"
+    },
+    {
+     "name": "nuo",
+     "expr": "if(mech == 1 && t > 2.5, 0.5, 1)"
+    },
+    {
+     "name": "k2",
+     "expr": "((sub == 1)*(30) + (sub == 2)*(1) + (sub == 3)*(0.02) + (sub == 4)*(0.0001))"
+    },
+    {
+     "name": "k1",
+     "expr": "((sub == 1)*(1) + (sub == 2)*(1) + (sub == 3)*(12) + (sub == 4)*(1200000.0))"
+    }
+   ],
+   "view": {
+    "x": [
+     -7,
+     7
+    ],
+    "y": [
+     -4,
+     4
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": "nux",
+     "y": 0,
+     "r": 0.45,
+     "color": "green",
+     "opacity": "nuo"
+    },
+    {
+     "shape": "text",
+     "x": "nux",
+     "y": 0,
+     "text": {
+      "en": "Nu"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "circle",
+     "x": "nux2",
+     "y": 0,
+     "r": 0.45,
+     "visibleIf": "mech == 1 && t > 2.5",
+     "color": "green",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": "nux2",
+     "y": 0,
+     "text": {
+      "en": "Nu"
+     },
+     "visibleIf": "mech == 1 && t > 2.5",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "xx",
+     "y2": "xy",
+     "visibleIf": "xb",
+     "color": "white",
+     "dashed": true,
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "xx",
+     "y": "xy",
+     "r": 0.5,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": "xx",
+     "y": "xy",
+     "text": {
+      "en": "X"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "-1.6*cos(rad(gam))",
+     "y2": "1.6*sin(rad(gam))",
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "-1.6*cos(rad(gam))",
+     "y": "1.6*sin(rad(gam))",
+     "r": 0.32,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "-1.6*cos(rad(gam))",
+     "y2": "-1.6*sin(rad(gam))",
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "-1.6*cos(rad(gam))",
+     "y": "-1.6*sin(rad(gam))",
+     "r": 0.32,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "-1.1*cos(rad(gam))",
+     "y2": -0.5,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "-1.1*cos(rad(gam))",
+     "y": -0.5,
+     "r": 0.26,
+     "color": "blue",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "nux",
+     "y2": 0,
+     "visibleIf": "mech == 2 && p > 0.05 && p < 0.95",
+     "color": "green",
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 0.4,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 0,
+     "text": {
+      "en": "C"
+     },
+     "color": "blue",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 3.4,
+     "text": {
+      "en": "SN2: one step, attack from the back, inversion"
+     },
+     "visibleIf": "mech == 2",
+     "color": "yellow",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 3.4,
+     "text": {
+      "en": "SN1: X⁻ leaves first, then Nu attacks either face"
+     },
+     "visibleIf": "mech == 1",
+     "color": "yellow",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -3.4,
+     "text": {
+      "en": "this substrate prefers SN2"
+     },
+     "visibleIf": "sub <= 2",
+     "color": "green",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -3.4,
+     "text": {
+      "en": "this substrate can go either way"
+     },
+     "visibleIf": "sub == 3",
+     "color": "green",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -3.4,
+     "text": {
+      "en": "this substrate prefers SN1"
+     },
+     "visibleIf": "sub == 4",
+     "color": "green",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -2.6,
+     "text": {
+      "en": "planar carbocation"
+     },
+     "visibleIf": "mech == 1 && t > 1.6 && t < 2.6",
+     "color": "orange",
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "SN2 rate, relative k₂[RX][Nu⁻]"
+     },
+     "expr": "k2*rx*nu",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "SN1 rate, relative k₁[RX]"
+     },
+     "expr": "k1*rx",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double [Nu⁻]. Which rate changes, SN1 or SN2?",
+     "kn": "[Nu⁻] ದ್ವಿಗುಣ ಮಾಡಿ. ಯಾವ ದರ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Compare the SN2 rates of methyl and tertiary bromides. Why so different?",
+     "kn": "ಮೀಥೈಲ್ ಮತ್ತು ತೃತೀಯ ಬ್ರೋಮೈಡ್‌ಗಳ SN2 ದರ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Play SN1 slowly. Why is the product a racemic mixture?",
+     "kn": "SN1 ನಿಧಾನವಾಗಿ ಚಲಾಯಿಸಿ. ಉತ್ಪನ್ನ ರೇಸಿಮಿಕ್ ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

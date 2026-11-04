@@ -325,6 +325,236 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Average and instantaneous rate",
+    "kn": "ಸರಾಸರಿ ಮತ್ತು ತತ್‌ಕ್ಷಣದ ದರ"
+   },
+   "narration": {
+    "en": "The curve is [R] against time for R → P. Drag the two points on the time axis. The secant between them gives the average rate; the tangent at the first point gives the instantaneous rate, −d[R]/dt.",
+    "kn": "ವಕ್ರ R → P ಗೆ [R] ಮತ್ತು ಸಮಯ. ಸಮಯ ಅಕ್ಷದ ಮೇಲಿನ ಎರಡು ಬಿಂದುಗಳನ್ನು ಎಳೆಯಿರಿ. ಅವುಗಳ ನಡುವಿನ ಛೇದಕ ಸರಾಸರಿ ದರ; ಮೊದಲ ಬಿಂದುವಿನ ಸ್ಪರ್ಶಕ ತತ್‌ಕ್ಷಣದ ದರ −d[R]/dt."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The curve is [R] against time for R → P. Drag the two points on the time axis. The secant between them gives the average rate; the tangent at the first point gives the instantaneous rate, −d[R]/dt.",
+    "kn": "ವಕ್ರ R → P ಗೆ [R] ಮತ್ತು ಸಮಯ. ಸಮಯ ಅಕ್ಷದ ಮೇಲಿನ ಎರಡು ಬಿಂದುಗಳನ್ನು ಎಳೆಯಿರಿ. ಅವುಗಳ ನಡುವಿನ ಛೇದಕ ಸರಾಸರಿ ದರ; ಮೊದಲ ಬಿಂದುವಿನ ಸ್ಪರ್ಶಕ ತತ್‌ಕ್ಷಣದ ದರ −d[R]/dt."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Rate constant k",
+      "kn": "ದರ ಸ್ಥಿರಾಂಕ"
+     },
+     "min": 0.05,
+     "max": 0.5,
+     "step": 0.01,
+     "value": 0.1,
+     "unit": "per s"
+    },
+    {
+     "name": "R0",
+     "label": {
+      "en": "Starting [R]₀",
+      "kn": "ಆರಂಭಿಕ [R]"
+     },
+     "min": 0.5,
+     "max": 2,
+     "step": 0.1,
+     "value": 1.5,
+     "unit": "mol/L"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sec",
+     "label": {
+      "en": "Show average-rate secant",
+      "kn": "ಛೇದಕ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "A",
+     "label": "t₁",
+     "x": 4,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       0,
+       30
+      ],
+      "y": [
+       0,
+       0
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    },
+    {
+     "name": "Bp",
+     "label": "t₂",
+     "x": 14,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       0,
+       30
+      ],
+      "y": [
+       0,
+       0
+      ]
+     },
+     "snap": 0.5,
+     "color": "green"
+    }
+   ],
+   "vars": [
+    {
+     "name": "ra",
+     "expr": "R0*exp(-k*A_x)"
+    },
+    {
+     "name": "rb",
+     "expr": "R0*exp(-k*Bp_x)"
+    },
+    {
+     "name": "inst",
+     "expr": "k*ra"
+    },
+    {
+     "name": "avg",
+     "expr": "if(abs(Bp_x - A_x) > 0.01, -(rb - ra)/(Bp_x - A_x), inst)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -0.15,
+     2.2
+    ],
+    "axes": true,
+    "xLabel": "t (s)",
+    "yLabel": "[R] (mol/L)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "color": "white",
+     "fn": "R0*exp(-k*x)",
+     "from": 0,
+     "to": 30,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "max(A_x - 6, 0)",
+     "y1": "ra + inst*(A_x - max(A_x - 6, 0))",
+     "x2": "min(A_x + 6, 30)",
+     "y2": "ra - inst*(min(A_x + 6, 30) - A_x)",
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "A_x",
+     "y1": "ra",
+     "x2": "Bp_x",
+     "y2": "rb",
+     "visibleIf": "sec",
+     "color": "green",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "A_x",
+     "y1": 0,
+     "x2": "A_x",
+     "y2": "ra",
+     "color": "yellow",
+     "opacity": 0.5,
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": "Bp_x",
+     "y1": 0,
+     "x2": "Bp_x",
+     "y2": "rb",
+     "color": "green",
+     "opacity": 0.5,
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "x": "A_x",
+     "y": "ra",
+     "r": 0.3,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "Bp_x",
+     "y": "rb",
+     "r": 0.3,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Instantaneous rate at t₁"
+     },
+     "expr": "inst",
+     "digits": 4,
+     "unit": "mol L⁻¹ s⁻¹"
+    },
+    {
+     "label": {
+      "en": "Average rate t₁ to t₂"
+     },
+     "expr": "avg",
+     "digits": 4,
+     "unit": "mol L⁻¹ s⁻¹"
+    },
+    {
+     "label": {
+      "en": "[R] at t₁"
+     },
+     "expr": "ra",
+     "digits": 3,
+     "unit": "mol/L"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Bring the two points close together. What does the average rate approach?",
+     "kn": "ಎರಡು ಬಿಂದುಗಳನ್ನು ಹತ್ತಿರ ತನ್ನಿ. ಸರಾಸರಿ ದರ ಯಾವುದನ್ನು ಸಮೀಪಿಸುತ್ತದೆ?"
+    },
+    {
+     "en": "Why is the reaction fastest at the start?",
+     "kn": "ಆರಂಭದಲ್ಲಿ ಕ್ರಿಯೆ ಏಕೆ ಅತಿ ವೇಗ?"
+    },
+    {
+     "en": "Double [R]₀. What happens to the instantaneous rate at t = 0?",
+     "kn": "[R]₀ ದ್ವಿಗುಣಗೊಳಿಸಿ. t = 0 ನಲ್ಲಿ ದರ ಏನಾಗುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

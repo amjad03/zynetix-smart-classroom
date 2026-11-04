@@ -322,6 +322,329 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Work of expansion: reversible or not",
+    "kn": "ವಿಸ್ತರಣೆಯ ಕಾರ್ಯ: ಉತ್ಕ್ರಮಣೀಯ ಅಥವಾ ಅಲ್ಲ"
+   },
+   "narration": {
+    "en": "1 mol of an ideal gas at constant temperature goes from Vᵢ to the final volume you drag. The work is the area under the pressure line: reversibly w = −nRT ln(V_f/Vᵢ); in one step against the final pressure w = −p_ext ΔV, a smaller area.",
+    "kn": "1 mol ಆದರ್ಶ ಅನಿಲ ಸ್ಥಿರ ತಾಪದಲ್ಲಿ Vᵢ ಯಿಂದ ನೀವು ಎಳೆಯುವ ಅಂತಿಮ ಘನಫಲಕ್ಕೆ. ಕಾರ್ಯ ಒತ್ತಡ ರೇಖೆಯ ಕೆಳಗಿನ ವಿಸ್ತೀರ್ಣ: ಉತ್ಕ್ರಮಣೀಯವಾಗಿ w = −nRT ln(V_f/Vᵢ); ಒಂದೇ ಹಂತದಲ್ಲಿ w = −p_ext ΔV."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "1 mol of an ideal gas at constant temperature goes from Vᵢ to the final volume you drag. The work is the area under the pressure line: reversibly w = −nRT ln(V_f/Vᵢ); in one step against the final pressure w = −p_ext ΔV, a smaller area.",
+    "kn": "1 mol ಆದರ್ಶ ಅನಿಲ ಸ್ಥಿರ ತಾಪದಲ್ಲಿ Vᵢ ಯಿಂದ ನೀವು ಎಳೆಯುವ ಅಂತಿಮ ಘನಫಲಕ್ಕೆ. ಕಾರ್ಯ ಒತ್ತಡ ರೇಖೆಯ ಕೆಳಗಿನ ವಿಸ್ತೀರ್ಣ: ಉತ್ಕ್ರಮಣೀಯವಾಗಿ w = −nRT ln(V_f/Vᵢ); ಒಂದೇ ಹಂತದಲ್ಲಿ w = −p_ext ΔV."
+   },
+   "sliders": [
+    {
+     "name": "T",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪಮಾನ"
+     },
+     "min": 200,
+     "max": 500,
+     "step": 10,
+     "value": 300,
+     "unit": "K"
+    },
+    {
+     "name": "Vi",
+     "label": {
+      "en": "Initial volume Vᵢ",
+      "kn": "ಆರಂಭಿಕ ಘನಫಲ"
+     },
+     "min": 5,
+     "max": 25,
+     "step": 1,
+     "value": 10,
+     "unit": "L"
+    }
+   ],
+   "choices": [
+    {
+     "name": "proc",
+     "label": {
+      "en": "Process",
+      "kn": "ಪ್ರಕ್ರಿಯೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Reversible"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "One step (irreversible)"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "handles": [
+    {
+     "name": "V",
+     "label": "V final",
+     "x": 20,
+     "y": 1,
+     "axis": "x",
+     "box": {
+      "x": [
+       2,
+       48
+      ],
+      "y": [
+       1,
+       1
+      ]
+     },
+     "snap": 1,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "pin",
+     "expr": "0.08314*T/Vi"
+    },
+    {
+     "name": "pf",
+     "expr": "0.08314*T/V_x"
+    },
+    {
+     "name": "wrev",
+     "expr": "-8.314*T*ln(V_x/Vi)"
+    },
+    {
+     "name": "wirr",
+     "expr": "-pf*(V_x - Vi)*100"
+    },
+    {
+     "name": "w",
+     "expr": "if(proc == 1, wrev, wirr)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     50
+    ],
+    "y": [
+     0,
+     22
+    ],
+    "axes": true,
+    "xLabel": "V (L)",
+    "yLabel": "p (bar)"
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       "Vi",
+       0
+      ],
+      [
+       "Vi + (V_x - Vi)*0/19",
+       "0.08314*T/(Vi + (V_x - Vi)*0/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*1/19",
+       "0.08314*T/(Vi + (V_x - Vi)*1/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*2/19",
+       "0.08314*T/(Vi + (V_x - Vi)*2/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*3/19",
+       "0.08314*T/(Vi + (V_x - Vi)*3/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*4/19",
+       "0.08314*T/(Vi + (V_x - Vi)*4/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*5/19",
+       "0.08314*T/(Vi + (V_x - Vi)*5/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*6/19",
+       "0.08314*T/(Vi + (V_x - Vi)*6/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*7/19",
+       "0.08314*T/(Vi + (V_x - Vi)*7/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*8/19",
+       "0.08314*T/(Vi + (V_x - Vi)*8/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*9/19",
+       "0.08314*T/(Vi + (V_x - Vi)*9/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*10/19",
+       "0.08314*T/(Vi + (V_x - Vi)*10/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*11/19",
+       "0.08314*T/(Vi + (V_x - Vi)*11/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*12/19",
+       "0.08314*T/(Vi + (V_x - Vi)*12/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*13/19",
+       "0.08314*T/(Vi + (V_x - Vi)*13/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*14/19",
+       "0.08314*T/(Vi + (V_x - Vi)*14/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*15/19",
+       "0.08314*T/(Vi + (V_x - Vi)*15/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*16/19",
+       "0.08314*T/(Vi + (V_x - Vi)*16/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*17/19",
+       "0.08314*T/(Vi + (V_x - Vi)*17/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*18/19",
+       "0.08314*T/(Vi + (V_x - Vi)*18/19)"
+      ],
+      [
+       "Vi + (V_x - Vi)*19/19",
+       "0.08314*T/(Vi + (V_x - Vi)*19/19)"
+      ],
+      [
+       "V_x",
+       0
+      ]
+     ],
+     "visibleIf": "proc == 1",
+     "color": "blue",
+     "opacity": 0.45
+    },
+    {
+     "shape": "rect",
+     "x": "min(Vi, V_x)",
+     "y": 0,
+     "w": "abs(V_x - Vi)",
+     "h": "pf",
+     "visibleIf": "proc == 2",
+     "color": "orange",
+     "opacity": 0.45
+    },
+    {
+     "shape": "path",
+     "color": "white",
+     "fn": "0.08314*T/x",
+     "from": 2,
+     "to": 50,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "Vi",
+     "y": "pin",
+     "r": 0.5,
+     "color": "green"
+    },
+    {
+     "shape": "circle",
+     "x": "V_x",
+     "y": "pf",
+     "r": 0.5,
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": "V_x",
+     "y1": 0,
+     "x2": "V_x",
+     "y2": "pf",
+     "color": "red",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 20,
+     "text": {
+      "en": "w = {w:0} J"
+     },
+     "color": "yellow",
+     "size": 30
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Work w (this process)",
+      "kn": "ಕಾರ್ಯ"
+     },
+     "expr": "w",
+     "digits": 0,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "Reversible w"
+     },
+     "expr": "wrev",
+     "digits": 0,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "One-step w"
+     },
+     "expr": "wirr",
+     "digits": 0,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "Final pressure"
+     },
+     "expr": "pf",
+     "digits": 3,
+     "unit": "bar"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Expand from 10 L to 20 L at 300 K both ways. Which does more work?",
+     "kn": "300 K ನಲ್ಲಿ 10 L ರಿಂದ 20 L ಗೆ ಎರಡೂ ರೀತಿ. ಯಾವುದು ಹೆಚ್ಚು ಕಾರ್ಯ?"
+    },
+    {
+     "en": "Drag the final volume below Vᵢ (compression). What is the sign of w now?",
+     "kn": "ಅಂತಿಮ ಘನಫಲ Vᵢ ಗಿಂತ ಕಡಿಮೆ ಮಾಡಿ. w ನ ಚಿಹ್ನೆ?"
+    },
+    {
+     "en": "Double the temperature. How does the reversible work change?",
+     "kn": "ತಾಪ ದ್ವಿಗುಣ ಮಾಡಿ. ಉತ್ಕ್ರಮಣೀಯ ಕಾರ್ಯ ಹೇಗೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

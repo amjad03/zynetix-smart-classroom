@@ -221,6 +221,236 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Matter waves and uncertainty",
+    "kn": "ದ್ರವ್ಯ ತರಂಗಗಳು ಮತ್ತು ಅನಿಶ್ಚಿತತೆ"
+   },
+   "narration": {
+    "en": "A moving particle has a wavelength λ = h/mv. For an electron it is about the size of an atom; for a proton it is far smaller. Squeezing the position spread Δx widens the velocity spread: Δx·Δv ≥ h/4πm.",
+    "kn": "ಚಲಿಸುವ ಕಣಕ್ಕೆ λ = h/mv ತರಂಗಾಂತರ. ಇಲೆಕ್ಟ್ರಾನ್‌ಗೆ ಅದು ಪರಮಾಣು ಗಾತ್ರದಷ್ಟು; ಪ್ರೋಟಾನ್‌ಗೆ ತುಂಬಾ ಚಿಕ್ಕದು. Δx ಕಡಿಮೆ ಮಾಡಿದರೆ Δv ಹೆಚ್ಚುತ್ತದೆ: Δx·Δv ≥ h/4πm."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A moving particle has a wavelength λ = h/mv. For an electron it is about the size of an atom; for a proton it is far smaller. Squeezing the position spread Δx widens the velocity spread: Δx·Δv ≥ h/4πm.",
+    "kn": "ಚಲಿಸುವ ಕಣಕ್ಕೆ λ = h/mv ತರಂಗಾಂತರ. ಇಲೆಕ್ಟ್ರಾನ್‌ಗೆ ಅದು ಪರಮಾಣು ಗಾತ್ರದಷ್ಟು; ಪ್ರೋಟಾನ್‌ಗೆ ತುಂಬಾ ಚಿಕ್ಕದು. Δx ಕಡಿಮೆ ಮಾಡಿದರೆ Δv ಹೆಚ್ಚುತ್ತದೆ: Δx·Δv ≥ h/4πm."
+   },
+   "sliders": [
+    {
+     "name": "v",
+     "label": {
+      "en": "Speed",
+      "kn": "ವೇಗ"
+     },
+     "min": 0.1,
+     "max": 5,
+     "step": 0.1,
+     "value": 1,
+     "unit": "× 10⁶ m/s"
+    },
+    {
+     "name": "dx",
+     "label": {
+      "en": "Position spread Δx",
+      "kn": "ಸ್ಥಾನ ಅನಿಶ್ಚಿತತೆ"
+     },
+     "min": 10,
+     "max": 500,
+     "step": 10,
+     "value": 100,
+     "unit": "pm"
+    }
+   ],
+   "choices": [
+    {
+     "name": "pt",
+     "label": {
+      "en": "Particle",
+      "kn": "ಕಣ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Electron"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Proton"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "m",
+     "expr": "if(pt == 1, 9.109e-31, 1.673e-27)"
+    },
+    {
+     "name": "lam",
+     "expr": "6.626e-34/(m*v*1e6)*1e12"
+    },
+    {
+     "name": "dv",
+     "expr": "6.626e-34/(4*pi*m*dx*1e-12)"
+    },
+    {
+     "name": "wv",
+     "expr": "dv/1e6*150"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     1000
+    ],
+    "y": [
+     -0.5,
+     9
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "wave",
+     "fn": "7 + 1.2*sin(2*pi*(x - 60*t)/lam)",
+     "visibleIf": "lam > 25",
+     "color": "blue",
+     "from": 0,
+     "to": 1000,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 500,
+     "y": 7,
+     "text": {
+      "en": "λ = {lam:4} pm: too small to draw"
+     },
+     "visibleIf": "lam <= 25",
+     "color": "blue",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 500,
+     "y": 8.7,
+     "text": {
+      "en": "matter wave, λ = {lam:1} pm"
+     },
+     "visibleIf": "lam > 25",
+     "color": "blue",
+     "size": 22
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 1,
+     "x2": 1000,
+     "y2": 1,
+     "color": "white"
+    },
+    {
+     "shape": "path",
+     "color": "yellow",
+     "fn": "1 + 3*exp(-(x - 250)^2/(2*dx^2))",
+     "from": 0,
+     "to": 500,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 250,
+     "y": 4.6,
+     "text": {
+      "en": "position spread Δx"
+     },
+     "color": "yellow",
+     "size": 22
+    },
+    {
+     "shape": "path",
+     "color": "orange",
+     "fn": "1 + 3*exp(-(x - 750)^2/(2*max(wv, 4)^2))",
+     "from": 500,
+     "to": 1000,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 750,
+     "y": 4.6,
+     "text": {
+      "en": "velocity spread Δv"
+     },
+     "color": "orange",
+     "size": 22
+    },
+    {
+     "shape": "line",
+     "x1": 500,
+     "y1": 0.5,
+     "x2": 500,
+     "y2": 4.4,
+     "color": "white",
+     "opacity": 0.5,
+     "dashed": true
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "de Broglie wavelength",
+      "kn": "ಡಿ ಬ್ರೋಗ್ಲಿ ತರಂಗಾಂತರ"
+     },
+     "expr": "lam",
+     "digits": 3,
+     "unit": "pm"
+    },
+    {
+     "label": {
+      "en": "Minimum Δv",
+      "kn": "ಕನಿಷ್ಠ Δv"
+     },
+     "expr": "dv/1000",
+     "digits": 1,
+     "unit": "km/s"
+    },
+    {
+     "label": {
+      "en": "Δv compared with v"
+     },
+     "expr": "dv/(v*1e6)",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Double the electron's speed. What happens to λ?",
+     "kn": "ಇಲೆಕ್ಟ್ರಾನ್ ವೇಗ ದ್ವಿಗುಣಗೊಳಿಸಿ. λ ಏನಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Squeeze Δx for an electron to 10 pm (smaller than an atom). How big is Δv?",
+     "kn": "ಇಲೆಕ್ಟ್ರಾನ್‌ಗೆ Δx = 10 pm ಮಾಡಿ. Δv ಎಷ್ಟು?"
+    },
+    {
+     "en": "Why can we ignore these effects for a cricket ball?",
+     "kn": "ಕ್ರಿಕೆಟ್ ಚೆಂಡಿಗೆ ಇವನ್ನು ಏಕೆ ಕಡೆಗಣಿಸಬಹುದು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

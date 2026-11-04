@@ -798,6 +798,230 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "ΔG = ΔH − TΔS",
+    "kn": "ΔG = ΔH − TΔS"
+   },
+   "narration": {
+    "en": "Set ΔH and ΔS and drag the temperature. A process is spontaneous when ΔG is negative. When ΔH and ΔS have the same sign, the sign of ΔG changes at T = ΔH/ΔS.",
+    "kn": "ΔH, ΔS ಹೊಂದಿಸಿ ತಾಪ ಎಳೆಯಿರಿ. ΔG ಋಣವಾದಾಗ ಪ್ರಕ್ರಿಯೆ ಸ್ವಯಂಪ್ರೇರಿತ. ΔH, ΔS ಒಂದೇ ಚಿಹ್ನೆಯಾದರೆ T = ΔH/ΔS ನಲ್ಲಿ ΔG ಚಿಹ್ನೆ ಬದಲಾಗುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Set ΔH and ΔS and drag the temperature. A process is spontaneous when ΔG is negative. When ΔH and ΔS have the same sign, the sign of ΔG changes at T = ΔH/ΔS.",
+    "kn": "ΔH, ΔS ಹೊಂದಿಸಿ ತಾಪ ಎಳೆಯಿರಿ. ΔG ಋಣವಾದಾಗ ಪ್ರಕ್ರಿಯೆ ಸ್ವಯಂಪ್ರೇರಿತ. ΔH, ΔS ಒಂದೇ ಚಿಹ್ನೆಯಾದರೆ T = ΔH/ΔS ನಲ್ಲಿ ΔG ಚಿಹ್ನೆ ಬದಲಾಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "dH",
+     "label": {
+      "en": "ΔH"
+     },
+     "min": -200,
+     "max": 200,
+     "step": 2,
+     "value": 6,
+     "unit": "kJ/mol"
+    },
+    {
+     "name": "dS",
+     "label": {
+      "en": "ΔS"
+     },
+     "min": -200,
+     "max": 200,
+     "step": 2,
+     "value": 22,
+     "unit": "J/(K mol)"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Ice melts",
+      "kn": "ಮಂಜು ಕರಗುವಿಕೆ"
+     },
+     "set": {
+      "dH": 6,
+      "dS": 22
+     }
+    },
+    {
+     "label": {
+      "en": "CaCO₃ decomposes"
+     },
+     "set": {
+      "dH": 178,
+      "dS": 160
+     }
+    },
+    {
+     "label": {
+      "en": "N₂ + 3H₂ → 2NH₃"
+     },
+     "set": {
+      "dH": -92,
+      "dS": -198
+     }
+    }
+   ],
+   "handles": [
+    {
+     "name": "T",
+     "label": "T",
+     "x": 300,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       50,
+       1500
+      ],
+      "y": [
+       0,
+       0
+      ]
+     },
+     "snap": 10,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "dG",
+     "expr": "dH - T_x*dS/1000"
+    },
+    {
+     "name": "Tc",
+     "expr": "if(abs(dS) > 0, 1000*dH/dS, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     1550
+    ],
+    "y": [
+     -260,
+     260
+    ],
+    "axes": true,
+    "xLabel": "T (K)",
+    "yLabel": "ΔG (kJ/mol)"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": -260,
+     "w": 1550,
+     "h": 260,
+     "color": "green",
+     "opacity": 0.08
+    },
+    {
+     "shape": "text",
+     "x": 1450,
+     "y": -230,
+     "text": {
+      "en": "spontaneous (ΔG < 0)"
+     },
+     "color": "green",
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "path",
+     "color": "yellow",
+     "fn": "dH - x*dS/1000",
+     "from": 0,
+     "to": 1550,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "T_x",
+     "y1": 0,
+     "x2": "T_x",
+     "y2": "clamp(dG, -260, 260)",
+     "color": "white",
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "x": "T_x",
+     "y": "clamp(dG, -260, 260)",
+     "r": 14,
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": "Tc",
+     "y1": -30,
+     "x2": "Tc",
+     "y2": 30,
+     "visibleIf": "Tc > 0 && Tc < 1550",
+     "color": "orange",
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "x": "Tc",
+     "y": 50,
+     "text": {
+      "en": "T = {Tc:0} K"
+     },
+     "visibleIf": "Tc > 0 && Tc < 1550",
+     "color": "orange",
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "ΔG at this T"
+     },
+     "expr": "dG",
+     "digits": 1,
+     "unit": "kJ/mol"
+    },
+    {
+     "label": {
+      "en": "Temperature T"
+     },
+     "expr": "T_x",
+     "digits": 0,
+     "unit": "K"
+    },
+    {
+     "label": {
+      "en": "Sign change at ΔH/ΔS"
+     },
+     "expr": "Tc",
+     "digits": 0,
+     "unit": "K"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Press \"Ice melts\". Above which temperature is melting spontaneous?",
+     "kn": "\"ಮಂಜು ಕರಗುವಿಕೆ\" ಒತ್ತಿ. ಯಾವ ತಾಪದ ಮೇಲೆ ಕರಗುವಿಕೆ ಸ್ವಯಂಪ್ರೇರಿತ?"
+    },
+    {
+     "en": "Make ΔH negative and ΔS positive. Is there any temperature where it is not spontaneous?",
+     "kn": "ΔH ಋಣ, ΔS ಧನ ಮಾಡಿ. ಸ್ವಯಂಪ್ರೇರಿತವಲ್ಲದ ತಾಪ ಇದೆಯೇ?"
+    },
+    {
+     "en": "For the ammonia synthesis, why do low temperatures favour it?",
+     "kn": "ಅಮೋನಿಯಾ ಸಂಶ್ಲೇಷಣೆಗೆ ಕಡಿಮೆ ತಾಪ ಏಕೆ ಅನುಕೂಲ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

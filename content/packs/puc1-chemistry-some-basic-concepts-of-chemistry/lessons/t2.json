@@ -505,6 +505,229 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Accuracy and precision",
+    "kn": "ನಿಖರತೆ ಮತ್ತು ಶುದ್ಧತೆ"
+   },
+   "narration": {
+    "en": "A student weighs a 2.00 g sample ten times. A systematic error shifts every reading the same way (poor accuracy); a random error scatters them (poor precision). Precise readings agree with each other; accurate readings agree with the true value.",
+    "kn": "ಒಬ್ಬ ವಿದ್ಯಾರ್ಥಿ 2.00 g ಮಾದರಿಯನ್ನು ಹತ್ತು ಬಾರಿ ತೂಗುತ್ತಾನೆ. ವ್ಯವಸ್ಥಿತ ದೋಷ ಎಲ್ಲಾ ಓದುಗಳನ್ನು ಒಂದೇ ಕಡೆ ಸರಿಸುತ್ತದೆ; ಯಾದೃಚ್ಛಿಕ ದೋಷ ಅವುಗಳನ್ನು ಹರಡುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A student weighs a 2.00 g sample ten times. A systematic error shifts every reading the same way (poor accuracy); a random error scatters them (poor precision). Precise readings agree with each other; accurate readings agree with the true value.",
+    "kn": "ಒಬ್ಬ ವಿದ್ಯಾರ್ಥಿ 2.00 g ಮಾದರಿಯನ್ನು ಹತ್ತು ಬಾರಿ ತೂಗುತ್ತಾನೆ. ವ್ಯವಸ್ಥಿತ ದೋಷ ಎಲ್ಲಾ ಓದುಗಳನ್ನು ಒಂದೇ ಕಡೆ ಸರಿಸುತ್ತದೆ; ಯಾದೃಚ್ಛಿಕ ದೋಷ ಅವುಗಳನ್ನು ಹರಡುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "bias",
+     "label": {
+      "en": "Systematic error",
+      "kn": "ವ್ಯವಸ್ಥಿತ ದೋಷ"
+     },
+     "min": -0.2,
+     "max": 0.2,
+     "step": 0.01,
+     "value": 0.1,
+     "unit": "g"
+    },
+    {
+     "name": "spread",
+     "label": {
+      "en": "Random error (up to ±)",
+      "kn": "ಯಾದೃಚ್ಛಿಕ ದೋಷ"
+     },
+     "min": 0,
+     "max": 0.2,
+     "step": 0.01,
+     "value": 0.02,
+     "unit": "g"
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 1000
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Take 10 new readings",
+      "kn": "ಹೊಸ 10 ಓದುಗಳು"
+     },
+     "icon": "next",
+     "set": {
+      "seed": "seed + 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "mean",
+     "expr": "2 + bias + spread*((2*rand(0 + 10*seed) - 1) + (2*rand(1 + 10*seed) - 1) + (2*rand(2 + 10*seed) - 1) + (2*rand(3 + 10*seed) - 1) + (2*rand(4 + 10*seed) - 1) + (2*rand(5 + 10*seed) - 1) + (2*rand(6 + 10*seed) - 1) + (2*rand(7 + 10*seed) - 1) + (2*rand(8 + 10*seed) - 1) + (2*rand(9 + 10*seed) - 1))/10"
+    },
+    {
+     "name": "hi",
+     "expr": "max((2*rand(0 + 10*seed) - 1), (2*rand(1 + 10*seed) - 1), (2*rand(2 + 10*seed) - 1), (2*rand(3 + 10*seed) - 1), (2*rand(4 + 10*seed) - 1), (2*rand(5 + 10*seed) - 1), (2*rand(6 + 10*seed) - 1), (2*rand(7 + 10*seed) - 1), (2*rand(8 + 10*seed) - 1), (2*rand(9 + 10*seed) - 1))"
+    },
+    {
+     "name": "lo",
+     "expr": "min((2*rand(0 + 10*seed) - 1), (2*rand(1 + 10*seed) - 1), (2*rand(2 + 10*seed) - 1), (2*rand(3 + 10*seed) - 1), (2*rand(4 + 10*seed) - 1), (2*rand(5 + 10*seed) - 1), (2*rand(6 + 10*seed) - 1), (2*rand(7 + 10*seed) - 1), (2*rand(8 + 10*seed) - 1), (2*rand(9 + 10*seed) - 1))"
+    },
+    {
+     "name": "rng",
+     "expr": "spread*(hi - lo)"
+    }
+   ],
+   "view": {
+    "x": [
+     1.65,
+     2.35
+    ],
+    "y": [
+     -0.5,
+     3.4
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1.7,
+     "y1": 0.3,
+     "x2": 2.3,
+     "y2": 0.3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1.7,
+     "y": -0.1,
+     "text": {
+      "en": "1.70"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": -0.1,
+     "text": {
+      "en": "2.00"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 2.3,
+     "y": -0.1,
+     "text": {
+      "en": "2.30 g"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 2.0,
+     "y1": 0.2,
+     "x2": 2.0,
+     "y2": 2.9,
+     "color": "green",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 2.0,
+     "y": 3.15,
+     "text": {
+      "en": "true value"
+     },
+     "color": "green",
+     "size": 22
+    },
+    {
+     "shape": "line",
+     "x1": "mean",
+     "y1": 0.2,
+     "x2": "mean",
+     "y2": 2.9,
+     "color": "orange",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "mean",
+     "y": 2.75,
+     "text": {
+      "en": "mean"
+     },
+     "color": "orange",
+     "size": 20
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "x": "2 + bias + spread*(2*rand(i + 10*seed) - 1)",
+     "y": "0.7 + 1.8*rand(i + 10*seed + 500)",
+     "r": 0.012,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mean of 10 readings",
+      "kn": "ಸರಾಸರಿ"
+     },
+     "expr": "mean",
+     "digits": 3,
+     "unit": "g"
+    },
+    {
+     "label": {
+      "en": "Spread (largest − smallest)",
+      "kn": "ಹರಡುವಿಕೆ"
+     },
+     "expr": "rng",
+     "digits": 3,
+     "unit": "g"
+    },
+    {
+     "label": {
+      "en": "Error of the mean",
+      "kn": "ಸರಾಸರಿಯ ದೋಷ"
+     },
+     "expr": "mean - 2",
+     "digits": 3,
+     "unit": "g"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make the readings precise but not accurate.",
+     "kn": "ಓದುಗಳನ್ನು ಶುದ್ಧ ಆದರೆ ನಿಖರವಲ್ಲದಂತೆ ಮಾಡಿ."
+    },
+    {
+     "en": "Make them accurate (mean close to 2.00 g) but not precise.",
+     "kn": "ನಿಖರ (ಸರಾಸರಿ 2.00 g ಹತ್ತಿರ) ಆದರೆ ಶುದ್ಧವಲ್ಲದಂತೆ ಮಾಡಿ."
+    },
+    {
+     "en": "Take new readings several times. Which error does averaging reduce?",
+     "kn": "ಹಲವು ಬಾರಿ ಹೊಸ ಓದು ತೆಗೆದುಕೊಳ್ಳಿ. ಸರಾಸರಿ ಯಾವ ದೋಷ ಕಡಿಮೆ ಮಾಡುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

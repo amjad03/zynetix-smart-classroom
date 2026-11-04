@@ -496,6 +496,161 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Rutherford's gold foil experiment",
+    "kn": "ರುದರ್‌ಫರ್ಡ್‌ನ ಚಿನ್ನದ ಹಾಳೆ ಪ್ರಯೋಗ"
+   },
+   "narration": {
+    "en": "Alpha particles fly at a gold nucleus. Most pass far from it and go almost straight; the few that come close are pushed away at large angles, and a head-on one bounces back. In the plum-pudding model nothing would bounce back.",
+    "kn": "ಆಲ್ಫಾ ಕಣಗಳು ಚಿನ್ನದ ನ್ಯೂಕ್ಲಿಯಸ್ ಕಡೆ ಹಾರುತ್ತವೆ. ಹೆಚ್ಚಿನವು ದೂರದಿಂದ ಬಹುತೇಕ ನೇರವಾಗಿ ಹೋಗುತ್ತವೆ; ಹತ್ತಿರ ಬಂದ ಕೆಲವು ದೊಡ್ಡ ಕೋನದಲ್ಲಿ ತಿರುಗುತ್ತವೆ, ನೇರವಾಗಿ ಬಂದದ್ದು ಹಿಂತಿರುಗುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Alpha particles fly at a gold nucleus. Most pass far from it and go almost straight; the few that come close are pushed away at large angles, and a head-on one bounces back. In the plum-pudding model nothing would bounce back.",
+    "kn": "ಆಲ್ಫಾ ಕಣಗಳು ಚಿನ್ನದ ನ್ಯೂಕ್ಲಿಯಸ್ ಕಡೆ ಹಾರುತ್ತವೆ. ಹೆಚ್ಚಿನವು ದೂರದಿಂದ ಬಹುತೇಕ ನೇರವಾಗಿ ಹೋಗುತ್ತವೆ; ಹತ್ತಿರ ಬಂದ ಕೆಲವು ದೊಡ್ಡ ಕೋನದಲ್ಲಿ ತಿರುಗುತ್ತವೆ, ನೇರವಾಗಿ ಬಂದದ್ದು ಹಿಂತಿರುಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "E",
+     "label": {
+      "en": "Alpha particle energy",
+      "kn": "ಆಲ್ಫಾ ಕಣ ಶಕ್ತಿ"
+     },
+     "min": 2,
+     "max": 10,
+     "step": 0.5,
+     "value": 5,
+     "unit": "MeV"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "thom",
+     "label": {
+      "en": "Plum-pudding (Thomson) model",
+      "kn": "ಥಾಮ್ಸನ್ ಮಾದರಿ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 30,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "d",
+     "expr": "227.5/E"
+    },
+    {
+     "name": "v",
+     "expr": "200*sqrt(E)"
+    },
+    {
+     "name": "frac",
+     "expr": "100*d/2000"
+    }
+   ],
+   "view": {
+    "x": [
+     -1200,
+     1200
+    ],
+    "y": [
+     -800,
+     800
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": "if(thom, 330, 22)",
+     "color": "red",
+     "opacity": "if(thom, 0.25, 1)"
+    },
+    {
+     "shape": "particles",
+     "count": 80,
+     "x": "if((-1300 - 2200*rand(i + 50) + mod(v*t, 6000)) < 0, (-1300 - 2200*rand(i + 50) + mod(v*t, 6000)), (-1300 - 2200*rand(i + 50) + mod(v*t, 6000))*cos((sign((1000*(2*rand(i) - 1)))*if(thom, 0.002, pi - 2*atan2(2*abs((1000*(2*rand(i) - 1))), d)))))",
+     "y": "if((-1300 - 2200*rand(i + 50) + mod(v*t, 6000)) < 0, (1000*(2*rand(i) - 1)), (1000*(2*rand(i) - 1)) + (-1300 - 2200*rand(i + 50) + mod(v*t, 6000))*sin((sign((1000*(2*rand(i) - 1)))*if(thom, 0.002, pi - 2*atan2(2*abs((1000*(2*rand(i) - 1))), d)))))",
+     "r": 9,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -720,
+     "text": {
+      "en": "gold nucleus (size exaggerated)"
+     },
+     "visibleIf": "thom == 0",
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": -720,
+     "text": {
+      "en": "spread-out positive charge"
+     },
+     "visibleIf": "thom",
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "arrow",
+     "x": -1150,
+     "y": 650,
+     "dx": 300,
+     "dy": 0,
+     "color": "yellow",
+     "label": "α beam"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Closest approach (head-on)",
+      "kn": "ಅತಿ ಸಮೀಪದ ದೂರ"
+     },
+     "expr": "d",
+     "digits": 1,
+     "unit": "fm"
+    },
+    {
+     "label": {
+      "en": "Turned back by more than 90°"
+     },
+     "expr": "if(thom, 0, frac)",
+     "digits": 2,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "What fraction of the particles is turned back by more than 90°?",
+     "kn": "90° ಕ್ಕಿಂತ ಹೆಚ್ಚು ಹಿಂತಿರುಗುವ ಕಣಗಳ ಭಾಗ ಎಷ್ಟು?"
+    },
+    {
+     "en": "Give the alpha particles more energy. How does the distance of closest approach change?",
+     "kn": "ಆಲ್ಫಾ ಕಣಗಳಿಗೆ ಹೆಚ್ಚು ಶಕ್ತಿ ಕೊಡಿ. ಅತಿ ಸಮೀಪದ ದೂರ ಹೇಗೆ ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Switch to the plum-pudding model. What would Rutherford have seen?",
+     "kn": "ಪ್ಲಮ್-ಪುಡ್ಡಿಂಗ್ ಮಾದರಿಗೆ ಬದಲಿಸಿ. ರುದರ್‌ಫರ್ಡ್ ಏನು ನೋಡುತ್ತಿದ್ದರು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

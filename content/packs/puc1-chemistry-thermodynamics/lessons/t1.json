@@ -537,6 +537,286 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The first law: ΔU = q + w",
+    "kn": "ಮೊದಲ ನಿಯಮ: ΔU = q + w"
+   },
+   "narration": {
+    "en": "Heat q flowing into the gas and work w done on it both raise its internal energy: ΔU = q + w (positive when energy enters the system). An adiabatic wall stops heat; an isolated system exchanges neither heat nor work.",
+    "kn": "ಅನಿಲಕ್ಕೆ ಹರಿಯುವ ಉಷ್ಣ q ಮತ್ತು ಅದರ ಮೇಲೆ ಮಾಡಿದ ಕಾರ್ಯ w ಎರಡೂ ಆಂತರಿಕ ಶಕ್ತಿ ಹೆಚ್ಚಿಸುತ್ತವೆ: ΔU = q + w. ಅಡಿಯಾಬ್ಯಾಟಿಕ್ ಗೋಡೆ ಉಷ್ಣ ತಡೆಯುತ್ತದೆ; ಪ್ರತ್ಯೇಕ ವ್ಯವಸ್ಥೆ ಏನನ್ನೂ ವಿನಿಮಯ ಮಾಡುವುದಿಲ್ಲ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Heat q flowing into the gas and work w done on it both raise its internal energy: ΔU = q + w (positive when energy enters the system). An adiabatic wall stops heat; an isolated system exchanges neither heat nor work.",
+    "kn": "ಅನಿಲಕ್ಕೆ ಹರಿಯುವ ಉಷ್ಣ q ಮತ್ತು ಅದರ ಮೇಲೆ ಮಾಡಿದ ಕಾರ್ಯ w ಎರಡೂ ಆಂತರಿಕ ಶಕ್ತಿ ಹೆಚ್ಚಿಸುತ್ತವೆ: ΔU = q + w. ಅಡಿಯಾಬ್ಯಾಟಿಕ್ ಗೋಡೆ ಉಷ್ಣ ತಡೆಯುತ್ತದೆ; ಪ್ರತ್ಯೇಕ ವ್ಯವಸ್ಥೆ ಏನನ್ನೂ ವಿನಿಮಯ ಮಾಡುವುದಿಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "q",
+     "label": {
+      "en": "Heat given to the gas, q",
+      "kn": "ಉಷ್ಣ q"
+     },
+     "min": -500,
+     "max": 500,
+     "step": 25,
+     "value": 200,
+     "unit": "J"
+    },
+    {
+     "name": "w",
+     "label": {
+      "en": "Work done on the gas, w",
+      "kn": "ಕಾರ್ಯ w"
+     },
+     "min": -500,
+     "max": 500,
+     "step": 25,
+     "value": 0,
+     "unit": "J"
+    }
+   ],
+   "choices": [
+    {
+     "name": "sys",
+     "label": {
+      "en": "Walls",
+      "kn": "ಗೋಡೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Closed (heat and work)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Isolated"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Adiabatic (work only)"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "qe",
+     "expr": "if(sys == 1, q, 0)"
+    },
+    {
+     "name": "we",
+     "expr": "if(sys == 2, 0, w)"
+    },
+    {
+     "name": "dU",
+     "expr": "qe + we"
+    },
+    {
+     "name": "sp",
+     "expr": "1.6*sqrt((1000 + dU)/1000)"
+    },
+    {
+     "name": "top",
+     "expr": "6 - we/250"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     14
+    ],
+    "y": [
+     -1.8,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0,
+     "w": 6,
+     "h": "top",
+     "fill": false,
+     "width": "if(sys == 1, 4, 14)",
+     "color": {
+      "by": "(sys - 1)/2",
+      "scale": [
+       "white",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 0.8,
+     "y": "top",
+     "w": 6.4,
+     "h": 0.4,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": "top + 0.4",
+     "x2": 4,
+     "y2": "top + 2",
+     "color": "orange",
+     "width": 8
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "bounce(1.2 + 5.6*rand(i) + sp*t*cos(2*pi*rand(i + 300)), 1.2, 6.8)",
+     "y": "bounce(0.2 + 3.6*rand(i + 150) + sp*t*sin(2*pi*rand(i + 300)), 0.2, top - 0.2)",
+     "r": 0.13,
+     "color": {
+      "by": "clamp((dU + 1000)/2000, 0, 1)",
+      "scale": [
+       "blue",
+       "yellow",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "arrow",
+     "x": 4,
+     "y": -1.5,
+     "dx": 0,
+     "dy": 1.3,
+     "visibleIf": "qe > 0",
+     "color": "red",
+     "label": "q in"
+    },
+    {
+     "shape": "arrow",
+     "x": 4,
+     "y": -0.2,
+     "dx": 0,
+     "dy": -1.3,
+     "visibleIf": "qe < 0",
+     "color": "blue",
+     "label": "q out"
+    },
+    {
+     "shape": "arrow",
+     "x": 5.5,
+     "y": "top + 2.2",
+     "dx": 0,
+     "dy": -1.6,
+     "visibleIf": "we > 0",
+     "color": "green",
+     "label": "w on gas"
+    },
+    {
+     "shape": "arrow",
+     "x": 5.5,
+     "y": "top + 0.6",
+     "dx": 0,
+     "dy": 1.6,
+     "visibleIf": "we < 0",
+     "color": "green",
+     "label": "w by gas"
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 0,
+     "w": 1.5,
+     "h": "(1000 + dU)/250",
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 0,
+     "w": 1.5,
+     "h": 4,
+     "color": "white",
+     "fill": false,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 10.75,
+     "y": -0.5,
+     "text": {
+      "en": "U"
+     },
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 10.75,
+     "y": "(1000 + dU)/250 + 0.5",
+     "text": {
+      "en": "ΔU = {dU} J"
+     },
+     "color": "white",
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "q"
+     },
+     "expr": "qe",
+     "digits": 0,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "w"
+     },
+     "expr": "we",
+     "digits": 0,
+     "unit": "J"
+    },
+    {
+     "label": {
+      "en": "ΔU = q + w"
+     },
+     "expr": "dU",
+     "digits": 0,
+     "unit": "J"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Give 300 J of heat while the gas does 100 J of work (w = −100 J). What is ΔU?",
+     "kn": "300 J ಉಷ್ಣ ಕೊಡಿ, ಅನಿಲ 100 J ಕಾರ್ಯ ಮಾಡಲಿ (w = −100 J). ΔU ಎಷ್ಟು?"
+    },
+    {
+     "en": "Make the walls adiabatic and compress the gas. Where does the energy go?",
+     "kn": "ಗೋಡೆ ಅಡಿಯಾಬ್ಯಾಟಿಕ್ ಮಾಡಿ ಅನಿಲ ಸಂಕುಚಿಸಿ. ಶಕ್ತಿ ಎಲ್ಲಿಗೆ?"
+    },
+    {
+     "en": "Find a q and w that leave ΔU = 0.",
+     "kn": "ΔU = 0 ಆಗುವ q, w ಹುಡುಕಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

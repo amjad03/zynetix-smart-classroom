@@ -512,6 +512,278 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Temperature, activation energy and rate",
+    "kn": "ತಾಪ, ಸಕ್ರಿಯಗೊಳಿಸುವ ಶಕ್ತಿ ಮತ್ತು ದರ"
+   },
+   "narration": {
+    "en": "The curve shows how molecular energies are spread at temperature T. Only collisions with energy above Ea react; that fraction is about e^(−Ea/RT). A small rise in T fattens the tail a lot, so k = A e^(−Ea/RT) grows quickly.",
+    "kn": "ವಕ್ರ T ತಾಪದಲ್ಲಿ ಅಣು ಶಕ್ತಿಗಳ ಹರಡುವಿಕೆ ತೋರಿಸುತ್ತದೆ. Ea ಗಿಂತ ಹೆಚ್ಚು ಶಕ್ತಿಯ ಘರ್ಷಣೆ ಮಾತ್ರ ಕ್ರಿಯಿಸುತ್ತದೆ; ಆ ಭಾಗ ಸುಮಾರು e^(−Ea/RT). ತಾಪ ಸ್ವಲ್ಪ ಏರಿದರೂ k = A e^(−Ea/RT) ವೇಗವಾಗಿ ಹೆಚ್ಚುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The curve shows how molecular energies are spread at temperature T. Only collisions with energy above Ea react; that fraction is about e^(−Ea/RT). A small rise in T fattens the tail a lot, so k = A e^(−Ea/RT) grows quickly.",
+    "kn": "ವಕ್ರ T ತಾಪದಲ್ಲಿ ಅಣು ಶಕ್ತಿಗಳ ಹರಡುವಿಕೆ ತೋರಿಸುತ್ತದೆ. Ea ಗಿಂತ ಹೆಚ್ಚು ಶಕ್ತಿಯ ಘರ್ಷಣೆ ಮಾತ್ರ ಕ್ರಿಯಿಸುತ್ತದೆ; ಆ ಭಾಗ ಸುಮಾರು e^(−Ea/RT). ತಾಪ ಸ್ವಲ್ಪ ಏರಿದರೂ k = A e^(−Ea/RT) ವೇಗವಾಗಿ ಹೆಚ್ಚುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "T",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪಮಾನ"
+     },
+     "min": 250,
+     "max": 500,
+     "step": 10,
+     "value": 300,
+     "unit": "K"
+    },
+    {
+     "name": "Ea",
+     "label": {
+      "en": "Activation energy Ea",
+      "kn": "ಸಕ್ರಿಯಗೊಳಿಸುವ ಶಕ್ತಿ"
+     },
+     "min": 5,
+     "max": 100,
+     "step": 5,
+     "value": 15,
+     "unit": "kJ/mol"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "hot",
+     "label": {
+      "en": "Also show T + 10 K",
+      "kn": "T + 10 K ಸಹ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "RT",
+     "expr": "0.008314*T"
+    },
+    {
+     "name": "fr",
+     "expr": "exp(-Ea/RT)"
+    },
+    {
+     "name": "ratio",
+     "expr": "exp(Ea/0.008314*(1/T - 1/(T + 10)))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     0.3
+    ],
+    "axes": true,
+    "xLabel": "energy (kJ/mol)",
+    "yLabel": "fraction of molecules"
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       "Ea",
+       0
+      ],
+      [
+       "Ea + (30 - Ea)*0/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*0/18)*exp(-(Ea + (30 - Ea)*0/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*1/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*1/18)*exp(-(Ea + (30 - Ea)*1/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*2/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*2/18)*exp(-(Ea + (30 - Ea)*2/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*3/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*3/18)*exp(-(Ea + (30 - Ea)*3/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*4/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*4/18)*exp(-(Ea + (30 - Ea)*4/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*5/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*5/18)*exp(-(Ea + (30 - Ea)*5/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*6/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*6/18)*exp(-(Ea + (30 - Ea)*6/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*7/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*7/18)*exp(-(Ea + (30 - Ea)*7/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*8/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*8/18)*exp(-(Ea + (30 - Ea)*8/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*9/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*9/18)*exp(-(Ea + (30 - Ea)*9/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*10/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*10/18)*exp(-(Ea + (30 - Ea)*10/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*11/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*11/18)*exp(-(Ea + (30 - Ea)*11/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*12/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*12/18)*exp(-(Ea + (30 - Ea)*12/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*13/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*13/18)*exp(-(Ea + (30 - Ea)*13/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*14/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*14/18)*exp(-(Ea + (30 - Ea)*14/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*15/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*15/18)*exp(-(Ea + (30 - Ea)*15/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*16/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*16/18)*exp(-(Ea + (30 - Ea)*16/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*17/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*17/18)*exp(-(Ea + (30 - Ea)*17/18)/RT)"
+      ],
+      [
+       "Ea + (30 - Ea)*18/18",
+       "2/sqrt(pi)*pow(RT, -1.5)*sqrt(Ea + (30 - Ea)*18/18)*exp(-(Ea + (30 - Ea)*18/18)/RT)"
+      ],
+      [
+       30,
+       0
+      ]
+     ],
+     "visibleIf": "Ea < 30",
+     "color": "orange",
+     "opacity": 0.5
+    },
+    {
+     "shape": "path",
+     "color": "blue",
+     "fn": "2/sqrt(pi)*pow(RT, -1.5)*sqrt(max(x, 0))*exp(-x/RT)",
+     "from": 0,
+     "to": 30,
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "visibleIf": "hot",
+     "color": "red",
+     "fn": "2/sqrt(pi)*pow((0.008314*(T + 10)), -1.5)*sqrt(max(x, 0))*exp(-x/(0.008314*(T + 10)))",
+     "from": 0,
+     "to": 30,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "min(Ea, 29.8)",
+     "y1": 0,
+     "x2": "min(Ea, 29.8)",
+     "y2": 0.27,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": "min(Ea, 29.8)",
+     "y": 0.285,
+     "text": {
+      "en": "Ea"
+     },
+     "color": "yellow",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": 0.26,
+     "text": {
+      "en": "Ea is off the chart →"
+     },
+     "visibleIf": "Ea >= 30",
+     "color": "yellow",
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 0.2,
+     "text": {
+      "en": "blue T, red T + 10 K"
+     },
+     "color": "white",
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Fraction with E ≥ Ea, log₁₀"
+     },
+     "expr": "log(fr)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "k(T + 10)/k(T)"
+     },
+     "expr": "ratio",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "RT"
+     },
+     "expr": "RT",
+     "digits": 3,
+     "unit": "kJ/mol"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With Ea = 50 kJ/mol, by what factor does k rise from 300 K to 310 K?",
+     "kn": "Ea = 50 kJ/mol ಆದಾಗ 300 K ರಿಂದ 310 K ಗೆ k ಎಷ್ಟು ಪಟ್ಟು?"
+    },
+    {
+     "en": "Lower Ea into the chart. How does the shaded fraction change with T?",
+     "kn": "Ea ಕಡಿಮೆ ಮಾಡಿ. ಛಾಯೆ ಭಾಗ T ಯೊಂದಿಗೆ ಹೇಗೆ?"
+    },
+    {
+     "en": "Does a higher Ea make the reaction more or less sensitive to temperature?",
+     "kn": "ಹೆಚ್ಚು Ea ತಾಪಕ್ಕೆ ಹೆಚ್ಚು ಸಂವೇದನಾಶೀಲವೇ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

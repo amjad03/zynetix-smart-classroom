@@ -396,6 +396,301 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Le Chatelier's principle",
+    "kn": "ಲೆ ಷಾಟೆಲಿಯರ್ ತತ್ವ"
+   },
+   "narration": {
+    "en": "A ⇌ B is at equilibrium. Add A or B and watch the system use up part of what you added until Q is back to K. Changing the temperature changes K itself: up for an endothermic reaction, down for an exothermic one.",
+    "kn": "A ⇌ B ಸಮತೋಲನದಲ್ಲಿದೆ. A ಅಥವಾ B ಸೇರಿಸಿ: ವ್ಯವಸ್ಥೆ ಸೇರಿಸಿದ್ದರಲ್ಲಿ ಸ್ವಲ್ಪ ಬಳಸಿ Q ಮತ್ತೆ K ಆಗುತ್ತದೆ. ತಾಪ ಬದಲಿಸಿದರೆ K ಬದಲಾಗುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A ⇌ B is at equilibrium. Add A or B and watch the system use up part of what you added until Q is back to K. Changing the temperature changes K itself: up for an endothermic reaction, down for an exothermic one.",
+    "kn": "A ⇌ B ಸಮತೋಲನದಲ್ಲಿದೆ. A ಅಥವಾ B ಸೇರಿಸಿ: ವ್ಯವಸ್ಥೆ ಸೇರಿಸಿದ್ದರಲ್ಲಿ ಸ್ವಲ್ಪ ಬಳಸಿ Q ಮತ್ತೆ K ಆಗುತ್ತದೆ. ತಾಪ ಬದಲಿಸಿದರೆ K ಬದಲಾಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "T",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪಮಾನ"
+     },
+     "min": 250,
+     "max": 450,
+     "step": 5,
+     "value": 300,
+     "unit": "K"
+    }
+   ],
+   "choices": [
+    {
+     "name": "dH",
+     "label": {
+      "en": "Forward reaction",
+      "kn": "ಮುಂದಿನ ಕ್ರಿಯೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Exothermic (ΔH = −20 kJ)"
+       },
+       "value": -20
+      },
+      {
+       "label": {
+        "en": "Endothermic (ΔH = +20 kJ)"
+       },
+       "value": 20
+      }
+     ],
+     "value": -20
+    }
+   ],
+   "counters": [
+    {
+     "name": "cA",
+     "value": 0,
+     "min": 0,
+     "max": 6
+    },
+    {
+     "name": "cB",
+     "value": 0,
+     "min": 0,
+     "max": 6
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Add A",
+      "kn": "A ಸೇರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "cA": "cA + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Add B",
+      "kn": "B ಸೇರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "cB": "cB + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again"
+     },
+     "icon": "reset",
+     "set": {
+      "cA": 0,
+      "cB": 0
+     },
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "dt": 0.01
+   },
+   "vars": [
+    {
+     "name": "K",
+     "expr": "2*exp(-dH*1000/8.314*(1/T - 1/300))"
+    },
+    {
+     "name": "kb",
+     "expr": "0.3"
+    },
+    {
+     "name": "kf",
+     "expr": "K*kb"
+    },
+    {
+     "name": "Q",
+     "expr": "B/A"
+    }
+   ],
+   "state": [
+    {
+     "name": "fa",
+     "init": "cA",
+     "rate": "10*(cA - fa)"
+    },
+    {
+     "name": "fb",
+     "init": "cB",
+     "rate": "10*(cB - fb)"
+    },
+    {
+     "name": "A",
+     "init": "2/(1 + 2*exp(-dH*1000/8.314*(1/T - 1/300)))",
+     "rate": "-kf*A + kb*B + 5*(cA - fa)"
+    },
+    {
+     "name": "B",
+     "init": "2 - 2/(1 + 2*exp(-dH*1000/8.314*(1/T - 1/300)))",
+     "rate": "kf*A - kb*B + 5*(cB - fb)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.6,
+     20
+    ],
+    "y": [
+     -0.9,
+     7.6
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 13,
+     "y2": 0,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 0,
+     "y2": 7,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": -0.5,
+     "text": {
+      "en": "time (0 to 60 s)"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "trail",
+     "x": "t*13/60",
+     "y": "0.8*A",
+     "length": 2000,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "trail",
+     "x": "t*13/60",
+     "y": "0.8*B",
+     "length": 2000,
+     "color": "red",
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": 14.5,
+     "y": 0,
+     "w": 1.5,
+     "h": "0.8*A",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 17,
+     "y": 0,
+     "w": 1.5,
+     "h": "0.8*B",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 15.25,
+     "y": -0.5,
+     "text": {
+      "en": "[A]"
+     },
+     "color": "blue",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 17.75,
+     "y": -0.5,
+     "text": {
+      "en": "[B]"
+     },
+     "color": "red",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 16.5,
+     "y": 7.2,
+     "text": {
+      "en": "Q = {Q:2}   K = {K:2}"
+     },
+     "color": "white",
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "[A]"
+     },
+     "expr": "A",
+     "digits": 2,
+     "unit": "mol/L"
+    },
+    {
+     "label": {
+      "en": "[B]"
+     },
+     "expr": "B",
+     "digits": 2,
+     "unit": "mol/L"
+    },
+    {
+     "label": {
+      "en": "Q = [B]/[A]"
+     },
+     "expr": "Q",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "K"
+     },
+     "expr": "K",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Press \"Add A\" twice. Which way does the equilibrium shift? Is K changed?",
+     "kn": "\"A ಸೇರಿಸಿ\" ಎರಡು ಬಾರಿ ಒತ್ತಿ. ಸಮತೋಲನ ಯಾವ ಕಡೆ? K ಬದಲಾಯಿತೇ?"
+    },
+    {
+     "en": "For the exothermic reaction, heat to 400 K. Does [B] go up or down?",
+     "kn": "ಉಷ್ಣವಿಮೋಚಕ ಕ್ರಿಯೆಗೆ 400 K ಗೆ ಬಿಸಿ ಮಾಡಿ. [B] ಏರುತ್ತದೆಯೇ?"
+    },
+    {
+     "en": "Repeat with the endothermic reaction.",
+     "kn": "ಉಷ್ಣಗ್ರಾಹಕ ಕ್ರಿಯೆಯೊಂದಿಗೆ ಪುನರಾವರ್ತಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

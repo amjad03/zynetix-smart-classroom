@@ -473,6 +473,537 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Electrode processes in a cell",
+    "kn": "ಕೋಶದಲ್ಲಿ ವಿದ್ಯುದ್ವಾರ ಪ್ರಕ್ರಿಯೆಗಳು"
+   },
+   "narration": {
+    "en": "Pick two metals in their own 1 M salt solutions. Electrons leave the metal with the lower standard electrode potential (the anode, where oxidation happens). Oppose the cell with an external voltage larger than E°cell and the reactions run backwards: electrolysis.",
+    "kn": "ಎರಡು ಲೋಹಗಳನ್ನು ಅವುಗಳ 1 M ಲವಣ ದ್ರಾವಣದಲ್ಲಿ ಆರಿಸಿ. ಕಡಿಮೆ ಮಾನಕ ವಿದ್ಯುದ್ವಾರ ವಿಭವದ ಲೋಹದಿಂದ ಇಲೆಕ್ಟ್ರಾನ್ ಹೊರಡುತ್ತವೆ (ಆನೋಡ್, ಉತ್ಕರ್ಷಣ). E°cell ಗಿಂತ ಹೆಚ್ಚು ಬಾಹ್ಯ ವೋಲ್ಟೇಜ್ ಕೊಟ್ಟರೆ ಕ್ರಿಯೆ ಹಿಮ್ಮುಖ: ವಿದ್ಯುದ್ವಿಭಜನೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Pick two metals in their own 1 M salt solutions. Electrons leave the metal with the lower standard electrode potential (the anode, where oxidation happens). Oppose the cell with an external voltage larger than E°cell and the reactions run backwards: electrolysis.",
+    "kn": "ಎರಡು ಲೋಹಗಳನ್ನು ಅವುಗಳ 1 M ಲವಣ ದ್ರಾವಣದಲ್ಲಿ ಆರಿಸಿ. ಕಡಿಮೆ ಮಾನಕ ವಿದ್ಯುದ್ವಾರ ವಿಭವದ ಲೋಹದಿಂದ ಇಲೆಕ್ಟ್ರಾನ್ ಹೊರಡುತ್ತವೆ (ಆನೋಡ್, ಉತ್ಕರ್ಷಣ). E°cell ಗಿಂತ ಹೆಚ್ಚು ಬಾಹ್ಯ ವೋಲ್ಟೇಜ್ ಕೊಟ್ಟರೆ ಕ್ರಿಯೆ ಹಿಮ್ಮುಖ: ವಿದ್ಯುದ್ವಿಭಜನೆ."
+   },
+   "sliders": [
+    {
+     "name": "Vx",
+     "label": {
+      "en": "External opposing voltage",
+      "kn": "ಬಾಹ್ಯ ವಿರೋಧಿ ವೋಲ್ಟೇಜ್"
+     },
+     "min": 0,
+     "max": 3.5,
+     "step": 0.1,
+     "value": 0,
+     "unit": "V"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sb",
+     "label": {
+      "en": "Salt bridge in place",
+      "kn": "ಲವಣ ಸೇತುವೆ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "Lm",
+     "label": {
+      "en": "Left electrode",
+      "kn": "ಎಡ ವಿದ್ಯುದ್ವಾರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Mg"
+       },
+       "value": -2.37
+      },
+      {
+       "label": {
+        "en": "Zn"
+       },
+       "value": -0.76
+      },
+      {
+       "label": {
+        "en": "Fe"
+       },
+       "value": -0.44
+      },
+      {
+       "label": {
+        "en": "Cu"
+       },
+       "value": 0.34
+      },
+      {
+       "label": {
+        "en": "Ag"
+       },
+       "value": 0.8
+      }
+     ],
+     "value": -0.76
+    },
+    {
+     "name": "Rm",
+     "label": {
+      "en": "Right electrode",
+      "kn": "ಬಲ ವಿದ್ಯುದ್ವಾರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Mg"
+       },
+       "value": -2.37
+      },
+      {
+       "label": {
+        "en": "Zn"
+       },
+       "value": -0.76
+      },
+      {
+       "label": {
+        "en": "Fe"
+       },
+       "value": -0.44
+      },
+      {
+       "label": {
+        "en": "Cu"
+       },
+       "value": 0.34
+      },
+      {
+       "label": {
+        "en": "Ag"
+       },
+       "value": 0.8
+      }
+     ],
+     "value": 0.34
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true,
+    "dt": 0.02
+   },
+   "vars": [
+    {
+     "name": "E",
+     "expr": "Rm - Lm"
+    },
+    {
+     "name": "cur",
+     "expr": "if(sb, sign(E)*(abs(E) - Vx)/0.5, 0)"
+    }
+   ],
+   "state": [
+    {
+     "name": "ph",
+     "init": 0,
+     "rate": "cur"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     -0.6,
+     10.8
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 0.5,
+     "w": 3.5,
+     "h": 4,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": 8,
+     "y": 0.5,
+     "w": 3.5,
+     "h": 4,
+     "color": "blue",
+     "opacity": 0.25
+    },
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 0.5,
+     "w": 3.5,
+     "h": 4,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 8,
+     "y": 0.5,
+     "w": 3.5,
+     "h": 4,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 1.8,
+     "y": 1,
+     "w": 1,
+     "h": 5,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 9.2,
+     "y": 1,
+     "w": 1,
+     "h": 5,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 2.3,
+     "y1": 6,
+     "x2": 2.3,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 2.3,
+     "y1": 8,
+     "x2": 9.7,
+     "y2": 8,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 9.7,
+     "y1": 8,
+     "x2": 9.7,
+     "y2": 6,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 3.2,
+     "y1": 3.5,
+     "x2": 3.2,
+     "y2": 5.2,
+     "visibleIf": "sb",
+     "color": "green",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 3.2,
+     "y1": 5.2,
+     "x2": 8.8,
+     "y2": 5.2,
+     "visibleIf": "sb",
+     "color": "green",
+     "width": 8
+    },
+    {
+     "shape": "line",
+     "x1": 8.8,
+     "y1": 5.2,
+     "x2": 8.8,
+     "y2": 3.5,
+     "visibleIf": "sb",
+     "color": "green",
+     "width": 8
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 4.7,
+     "text": {
+      "en": "salt bridge"
+     },
+     "visibleIf": "sb",
+     "color": "green",
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 5.2,
+     "y": 7.4,
+     "w": 1.6,
+     "h": 1.2,
+     "visibleIf": "Vx > 0",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 8,
+     "text": {
+      "en": "{Vx:1} V"
+     },
+     "visibleIf": "Vx > 0",
+     "color": "blue",
+     "size": 20
+    },
+    {
+     "shape": "particles",
+     "count": 14,
+     "x": "if(mod(i/14 + 0.08*ph, 1)*13.4 < 3, 2.3, if(mod(i/14 + 0.08*ph, 1)*13.4 < 10.4, 2.3 + (mod(i/14 + 0.08*ph, 1)*13.4 - 3), 9.7))",
+     "y": "if(mod(i/14 + 0.08*ph, 1)*13.4 < 3, 5 + mod(i/14 + 0.08*ph, 1)*13.4, if(mod(i/14 + 0.08*ph, 1)*13.4 < 10.4, 8, 8 - (mod(i/14 + 0.08*ph, 1)*13.4 - 10.4)))",
+     "r": 0.16,
+     "visibleIf": "abs(cur) > 0.001",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 2.3,
+     "y": 0,
+     "text": {
+      "en": "Mg"
+     },
+     "visibleIf": "Lm == -2.37",
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 9.7,
+     "y": 0,
+     "text": {
+      "en": "Mg"
+     },
+     "visibleIf": "Rm == -2.37",
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 2.3,
+     "y": 0,
+     "text": {
+      "en": "Zn"
+     },
+     "visibleIf": "Lm == -0.76",
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 9.7,
+     "y": 0,
+     "text": {
+      "en": "Zn"
+     },
+     "visibleIf": "Rm == -0.76",
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 2.3,
+     "y": 0,
+     "text": {
+      "en": "Fe"
+     },
+     "visibleIf": "Lm == -0.44",
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 9.7,
+     "y": 0,
+     "text": {
+      "en": "Fe"
+     },
+     "visibleIf": "Rm == -0.44",
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 2.3,
+     "y": 0,
+     "text": {
+      "en": "Cu"
+     },
+     "visibleIf": "Lm == 0.34",
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 9.7,
+     "y": 0,
+     "text": {
+      "en": "Cu"
+     },
+     "visibleIf": "Rm == 0.34",
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 2.3,
+     "y": 0,
+     "text": {
+      "en": "Ag"
+     },
+     "visibleIf": "Lm == 0.8",
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 9.7,
+     "y": 0,
+     "text": {
+      "en": "Ag"
+     },
+     "visibleIf": "Rm == 0.8",
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 2.3,
+     "y": 9.3,
+     "text": {
+      "en": "anode (oxidation)"
+     },
+     "visibleIf": "cur > 0.001",
+     "color": "orange",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 9.7,
+     "y": 9.3,
+     "text": {
+      "en": "cathode (reduction)"
+     },
+     "visibleIf": "cur > 0.001",
+     "color": "green",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 2.3,
+     "y": 9.3,
+     "text": {
+      "en": "cathode (reduction)"
+     },
+     "visibleIf": "cur < -0.001",
+     "color": "green",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 9.7,
+     "y": 9.3,
+     "text": {
+      "en": "anode (oxidation)"
+     },
+     "visibleIf": "cur < -0.001",
+     "color": "orange",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 10.2,
+     "text": {
+      "en": "galvanic cell"
+     },
+     "visibleIf": "sb && abs(E) > Vx",
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 10.2,
+     "text": {
+      "en": "electrolytic cell (driven backwards)"
+     },
+     "visibleIf": "sb && abs(E) < Vx",
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 10.2,
+     "text": {
+      "en": "no current"
+     },
+     "visibleIf": "sb == 0 || abs(E) == Vx",
+     "color": "white",
+     "size": 26
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "E°cell = E°right − E°left"
+     },
+     "expr": "E",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Current (model, 0.5 Ω)"
+     },
+     "expr": "cur",
+     "digits": 2,
+     "unit": "A"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Zn and Cu: which way do the electrons flow? What is E°cell?",
+     "kn": "Zn ಮತ್ತು Cu: ಇಲೆಕ್ಟ್ರಾನ್ ಯಾವ ಕಡೆ? E°cell ಎಷ್ಟು?"
+    },
+    {
+     "en": "Raise the external voltage above 1.10 V. What happens to the anode and cathode?",
+     "kn": "ಬಾಹ್ಯ ವೋಲ್ಟೇಜ್ 1.10 V ಮೀರಿಸಿ. ಆನೋಡ್, ಕ್ಯಾಥೋಡ್ ಏನಾಗುತ್ತವೆ?"
+    },
+    {
+     "en": "Remove the salt bridge. Why does the current stop?",
+     "kn": "ಲವಣ ಸೇತುವೆ ತೆಗೆಯಿರಿ. ವಿದ್ಯುತ್ ಏಕೆ ನಿಲ್ಲುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

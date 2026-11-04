@@ -400,6 +400,259 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Zinc in copper sulphate",
+    "kn": "ತಾಮ್ರದ ಸಲ್ಫೇಟ್‌ನಲ್ಲಿ ಸತು"
+   },
+   "narration": {
+    "en": "A zinc rod in blue CuSO₄ solution: each Zn atom gives 2 electrons to a Cu²⁺ ion. Zinc is oxidised and dissolves as colourless Zn²⁺; copper is reduced and deposits on the rod, so the blue colour fades. Copper in ZnSO₄ does nothing.",
+    "kn": "ನೀಲಿ CuSO₄ ದ್ರಾವಣದಲ್ಲಿ ಸತುವಿನ ಕಡ್ಡಿ: ಪ್ರತಿ Zn ಪರಮಾಣು Cu²⁺ ಗೆ 2 ಇಲೆಕ್ಟ್ರಾನ್ ಕೊಡುತ್ತದೆ. ಸತು ಉತ್ಕರ್ಷಣಗೊಂಡು ಕರಗುತ್ತದೆ, ತಾಮ್ರ ಅಪಕರ್ಷಣಗೊಂಡು ಕಡ್ಡಿಯ ಮೇಲೆ ಸಂಗ್ರಹವಾಗುತ್ತದೆ; ನೀಲಿ ಬಣ್ಣ ಮಾಸುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A zinc rod in blue CuSO₄ solution: each Zn atom gives 2 electrons to a Cu²⁺ ion. Zinc is oxidised and dissolves as colourless Zn²⁺; copper is reduced and deposits on the rod, so the blue colour fades. Copper in ZnSO₄ does nothing.",
+    "kn": "ನೀಲಿ CuSO₄ ದ್ರಾವಣದಲ್ಲಿ ಸತುವಿನ ಕಡ್ಡಿ: ಪ್ರತಿ Zn ಪರಮಾಣು Cu²⁺ ಗೆ 2 ಇಲೆಕ್ಟ್ರಾನ್ ಕೊಡುತ್ತದೆ. ಸತು ಉತ್ಕರ್ಷಣಗೊಂಡು ಕರಗುತ್ತದೆ, ತಾಮ್ರ ಅಪಕರ್ಷಣಗೊಂಡು ಕಡ್ಡಿಯ ಮೇಲೆ ಸಂಗ್ರಹವಾಗುತ್ತದೆ; ನೀಲಿ ಬಣ್ಣ ಮಾಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "c0",
+     "label": {
+      "en": "Starting concentration",
+      "kn": "ಪ್ರಾರಂಭಿಕ ಸಾರತೆ"
+     },
+     "min": 0.1,
+     "max": 1.0,
+     "step": 0.05,
+     "value": 0.5,
+     "unit": "mol/L"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "el",
+     "label": {
+      "en": "Show electron transfer",
+      "kn": "ಇಲೆಕ್ಟ್ರಾನ್ ವರ್ಗಾವಣೆ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "sys",
+     "label": {
+      "en": "Set-up",
+      "kn": "ವ್ಯವಸ್ಥೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Zn rod in CuSO₄"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Cu rod in ZnSO₄"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60
+   },
+   "vars": [
+    {
+     "name": "k",
+     "expr": "if(sys == 1, 0.08, 0)"
+    },
+    {
+     "name": "cu",
+     "expr": "if(sys == 1, c0*exp(-k*t), 0)"
+    },
+    {
+     "name": "zn",
+     "expr": "if(sys == 1, c0 - cu, c0)"
+    },
+    {
+     "name": "ncu",
+     "expr": "round(60*cu)"
+    },
+    {
+     "name": "nzn",
+     "expr": "round(60*zn)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     0,
+     9
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0.5,
+     "w": 10,
+     "h": 6.5,
+     "color": "blue",
+     "opacity": "if(sys == 1, 0.7*cu, 0)"
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0.5,
+     "w": 10,
+     "h": 7.5,
+     "color": "white",
+     "fill": false,
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": 5.5,
+     "y": 1.5,
+     "w": 1,
+     "h": 7,
+     "visibleIf": "sys == 1",
+     "color": "white",
+     "opacity": 0.8
+    },
+    {
+     "shape": "rect",
+     "x": 5.5,
+     "y": 1.5,
+     "w": 1,
+     "h": 7,
+     "visibleIf": "sys == 2",
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": "5.5 - 0.5*(c0 - cu)",
+     "y": 1.5,
+     "w": "1 + (c0 - cu)",
+     "h": 5.5,
+     "visibleIf": "sys == 1",
+     "color": "orange",
+     "opacity": "min(1, 2*(c0 - cu))"
+    },
+    {
+     "shape": "particles",
+     "count": 60,
+     "x": "bounce(1.3 + 9.4*rand(i) + 0.7*t*cos(2*pi*rand(i + 300)), 1.3, 10.7)",
+     "y": "bounce(0.8 + 5.9*rand(i + 150) + 0.7*t*sin(2*pi*rand(i + 300)), 0.8, 6.7)",
+     "r": 0.14,
+     "visibleIf": "i < ncu",
+     "color": "blue"
+    },
+    {
+     "shape": "particles",
+     "count": 60,
+     "x": "bounce(1.3 + 9.4*rand(i + 600) + 0.7*t*cos(2*pi*rand(i + 900)), 1.3, 10.7)",
+     "y": "bounce(0.8 + 5.9*rand(i + 750) + 0.7*t*sin(2*pi*rand(i + 900)), 0.8, 6.7)",
+     "r": 0.14,
+     "visibleIf": "i < nzn",
+     "color": "white"
+    },
+    {
+     "shape": "arrow",
+     "x": 5.4,
+     "y": 5,
+     "dx": -1.6,
+     "dy": 0,
+     "visibleIf": "el && sys == 1 && cu > 0.02",
+     "color": "yellow",
+     "label": "2e⁻"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 8.7,
+     "text": {
+      "en": "Zn → Zn²⁺ + 2e⁻ ;  Cu²⁺ + 2e⁻ → Cu"
+     },
+     "visibleIf": "sys == 1",
+     "color": "yellow",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 8.7,
+     "text": {
+      "en": "No reaction: Cu cannot reduce Zn²⁺"
+     },
+     "visibleIf": "sys == 2",
+     "color": "yellow",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 2.6,
+     "y": 7.4,
+     "text": {
+      "en": "blue: Cu²⁺   white: Zn²⁺"
+     },
+     "color": "white",
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "[Cu²⁺]"
+     },
+     "expr": "cu",
+     "digits": 3,
+     "unit": "mol/L"
+    },
+    {
+     "label": {
+      "en": "[Zn²⁺]"
+     },
+     "expr": "zn",
+     "digits": 3,
+     "unit": "mol/L"
+    },
+    {
+     "label": {
+      "en": "Copper deposited per litre"
+     },
+     "expr": "63.55*(zn - if(sys == 1, 0, c0))",
+     "digits": 2,
+     "unit": "g"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Play with zinc in CuSO₄. Which ion count goes down and which goes up?",
+     "kn": "CuSO₄ ನಲ್ಲಿ ಸತು ಚಲಾಯಿಸಿ. ಯಾವ ಅಯಾನು ಕಡಿಮೆ, ಯಾವುದು ಹೆಚ್ಚು?"
+    },
+    {
+     "en": "Swap to a copper rod in ZnSO₄. Why is there no reaction?",
+     "kn": "ZnSO₄ ನಲ್ಲಿ ತಾಮ್ರದ ಕಡ್ಡಿಗೆ ಬದಲಿಸಿ. ಕ್ರಿಯೆ ಏಕೆ ಇಲ್ಲ?"
+    },
+    {
+     "en": "Which species is the oxidising agent?",
+     "kn": "ಉತ್ಕರ್ಷಣಕಾರಿ ಯಾವುದು?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

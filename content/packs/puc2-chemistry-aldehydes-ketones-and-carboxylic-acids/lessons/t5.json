@@ -374,6 +374,316 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Acid strength and pH",
+    "kn": "ಆಮ್ಲ ಬಲ ಮತ್ತು pH"
+   },
+   "narration": {
+    "en": "Each acid is half ionised when pH = pKa. Electron-withdrawing groups (Cl, NO₂) stabilise the carboxylate ion and lower pKa; carboxylic acids are much stronger than phenol.",
+    "kn": "pH = pKa ಆದಾಗ ಪ್ರತಿ ಆಮ್ಲ ಅರ್ಧ ಅಯಾನೀಕೃತ. ಇಲೆಕ್ಟ್ರಾನ್ ಸೆಳೆಯುವ ಗುಂಪುಗಳು (Cl, NO₂) ಕಾರ್ಬಾಕ್ಸಿಲೇಟ್ ಅಯಾನನ್ನು ಸ್ಥಿರಗೊಳಿಸಿ pKa ಇಳಿಸುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Each acid is half ionised when pH = pKa. Electron-withdrawing groups (Cl, NO₂) stabilise the carboxylate ion and lower pKa; carboxylic acids are much stronger than phenol.",
+    "kn": "pH = pKa ಆದಾಗ ಪ್ರತಿ ಆಮ್ಲ ಅರ್ಧ ಅಯಾನೀಕೃತ. ಇಲೆಕ್ಟ್ರಾನ್ ಸೆಳೆಯುವ ಗುಂಪುಗಳು (Cl, NO₂) ಕಾರ್ಬಾಕ್ಸಿಲೇಟ್ ಅಯಾನನ್ನು ಸ್ಥಿರಗೊಳಿಸಿ pKa ಇಳಿಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "pH",
+     "label": {
+      "en": "pH of the solution",
+      "kn": "ದ್ರಾವಣದ pH"
+     },
+     "min": 0,
+     "max": 14,
+     "step": 0.25,
+     "value": 7
+    }
+   ],
+   "toggles": [
+    {
+     "name": "crv",
+     "label": {
+      "en": "Show the curve",
+      "kn": "ವಕ್ರ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "cmp",
+     "label": {
+      "en": "Acid",
+      "kn": "ಸಂಯುಕ್ತ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Ethanoic acid"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Methanoic acid"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Chloroethanoic acid"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "Benzoic acid"
+       },
+       "value": 4
+      },
+      {
+       "label": {
+        "en": "4-Nitrobenzoic acid"
+       },
+       "value": 5
+      },
+      {
+       "label": {
+        "en": "Phenol"
+       },
+       "value": 6
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Add acid (pH − 1)"
+     },
+     "icon": "add",
+     "set": {
+      "pH": "pH - 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Add alkali (pH + 1)"
+     },
+     "icon": "add",
+     "set": {
+      "pH": "pH + 1"
+     }
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "pK",
+     "expr": "((cmp == 1)*(4.76) + (cmp == 2)*(3.75) + (cmp == 3)*(2.86) + (cmp == 4)*(4.19) + (cmp == 5)*(3.41) + (cmp == 6)*(10.0))"
+    },
+    {
+     "name": "f",
+     "expr": "1/(1 + pow(10, pK - pH))"
+    },
+    {
+     "name": "nI",
+     "expr": "round(40*f)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     23
+    ],
+    "y": [
+     -0.8,
+     8
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0.5,
+     "w": 7,
+     "h": 6.5,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "bounce(0.3 + 6.4*rand(i) + 0.5*t*cos(2*pi*rand(i + 300)), 0.3, 6.7)",
+     "y": "bounce(0.8 + 5.9*rand(i + 150) + 0.5*t*sin(2*pi*rand(i + 300)), 0.8, 6.7)",
+     "r": 0.2,
+     "visibleIf": "i < nI",
+     "color": "orange"
+    },
+    {
+     "shape": "particles",
+     "count": 40,
+     "x": "bounce(0.3 + 6.4*rand(i) + 0.5*t*cos(2*pi*rand(i + 300)), 0.3, 6.7)",
+     "y": "bounce(0.8 + 5.9*rand(i + 150) + 0.5*t*sin(2*pi*rand(i + 300)), 0.8, 6.7)",
+     "r": 0.2,
+     "visibleIf": "i >= nI",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 7.5,
+     "text": {
+      "en": "orange ionised (RCOO⁻), blue un-ionised"
+     },
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 8.5,
+     "y1": 1,
+     "x2": 22.5,
+     "y2": 1,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 8.5,
+     "y1": 1,
+     "x2": 8.5,
+     "y2": 6.5,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8.5,
+     "y": 0.4,
+     "text": {
+      "en": "0"
+     },
+     "color": "white",
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 0.4,
+     "text": {
+      "en": "pH 7"
+     },
+     "color": "white",
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 22.5,
+     "y": 0.4,
+     "text": {
+      "en": "14"
+     },
+     "color": "white",
+     "size": 18
+    },
+    {
+     "shape": "path",
+     "visibleIf": "crv",
+     "color": "green",
+     "fn": "1 + 5*(1/(1 + pow(10, pK - ((x - 8.5)))))",
+     "from": 8.5,
+     "to": 22.5,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": "8.5 + pK",
+     "y1": 1,
+     "x2": "8.5 + pK",
+     "y2": 6,
+     "visibleIf": "crv && pK <= 14",
+     "color": "orange",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": "8.5 + pK",
+     "y": 6.6,
+     "text": {
+      "en": "pKa {pK:2}"
+     },
+     "visibleIf": "crv && pK <= 14",
+     "color": "orange",
+     "size": 20
+    },
+    {
+     "shape": "circle",
+     "x": "8.5 + pH",
+     "y": "1 + 5*f",
+     "r": 0.22,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 7.4,
+     "text": {
+      "en": "fraction ionised (RCOO⁻)"
+     },
+     "color": "green",
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Fraction ionised (RCOO⁻)"
+     },
+     "expr": "f*100",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "pKa"
+     },
+     "expr": "pK",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "pH"
+     },
+     "expr": "pH",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "At pH 4.76, what fraction of ethanoic acid is ionised?",
+     "kn": "pH 4.76 ನಲ್ಲಿ ಎಥನೋಯಿಕ್ ಆಮ್ಲದ ಎಷ್ಟು ಭಾಗ ಅಯಾನೀಕೃತ?"
+    },
+    {
+     "en": "Why is methanoic acid stronger than ethanoic acid?",
+     "kn": "ಮೆಥನೋಯಿಕ್ ಆಮ್ಲ ಎಥನೋಯಿಕ್‌ಗಿಂತ ಏಕೆ ಬಲ?"
+    },
+    {
+     "en": "Compare benzoic acid with 4-nitrobenzoic acid.",
+     "kn": "ಬೆಂಜೋಯಿಕ್ ಮತ್ತು 4-ನೈಟ್ರೋಬೆಂಜೋಯಿಕ್ ಆಮ್ಲ ಹೋಲಿಸಿ."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

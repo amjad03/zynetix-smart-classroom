@@ -560,6 +560,643 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Filling orbitals: Aufbau, Pauli and Hund",
+    "kn": "ಕಕ್ಷಕ ತುಂಬುವಿಕೆ: ಆಫ್‌ಬಾ, ಪೌಲಿ, ಹುಂಡ್"
+   },
+   "narration": {
+    "en": "Add electrons one at a time. They enter subshells in order of energy (1s 2s 2p 3s 3p 4s 3d 4p), at most two per orbital with opposite spins, and spread out singly over equal orbitals before pairing. Watch Cr (24) and Cu (29).",
+    "kn": "ಒಂದೊಂದೇ ಇಲೆಕ್ಟ್ರಾನ್ ಸೇರಿಸಿ. ಅವು ಶಕ್ತಿಯ ಕ್ರಮದಲ್ಲಿ ಉಪಕವಚ ಪ್ರವೇಶಿಸುತ್ತವೆ, ಪ್ರತಿ ಕಕ್ಷಕದಲ್ಲಿ ವಿರುದ್ಧ ಸ್ಪಿನ್‌ನ ಗರಿಷ್ಠ ಎರಡು, ಮತ್ತು ಜೋಡಿಯಾಗುವ ಮೊದಲು ಒಂಟಿಯಾಗಿ ಹರಡುತ್ತವೆ. Cr (24), Cu (29) ಗಮನಿಸಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Add electrons one at a time. They enter subshells in order of energy (1s 2s 2p 3s 3p 4s 3d 4p), at most two per orbital with opposite spins, and spread out singly over equal orbitals before pairing. Watch Cr (24) and Cu (29).",
+    "kn": "ಒಂದೊಂದೇ ಇಲೆಕ್ಟ್ರಾನ್ ಸೇರಿಸಿ. ಅವು ಶಕ್ತಿಯ ಕ್ರಮದಲ್ಲಿ ಉಪಕವಚ ಪ್ರವೇಶಿಸುತ್ತವೆ, ಪ್ರತಿ ಕಕ್ಷಕದಲ್ಲಿ ವಿರುದ್ಧ ಸ್ಪಿನ್‌ನ ಗರಿಷ್ಠ ಎರಡು, ಮತ್ತು ಜೋಡಿಯಾಗುವ ಮೊದಲು ಒಂಟಿಯಾಗಿ ಹರಡುತ್ತವೆ. Cr (24), Cu (29) ಗಮನಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "Z",
+     "label": {
+      "en": "Atomic number",
+      "kn": "ಪರಮಾಣು ಸಂಖ್ಯೆ"
+     },
+     "min": 1,
+     "max": 36,
+     "step": 1,
+     "value": 8
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Add an electron",
+      "kn": "ಇಲೆಕ್ಟ್ರಾನ್ ಸೇರಿಸಿ"
+     },
+     "icon": "add",
+     "set": {
+      "Z": "Z + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Remove an electron"
+     },
+     "icon": "remove",
+     "set": {
+      "Z": "Z - 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "ex",
+     "expr": "Z == 24 || Z == 29"
+    },
+    {
+     "name": "e1s",
+     "expr": "clamp(Z - 0, 0, 2)"
+    },
+    {
+     "name": "e2s",
+     "expr": "clamp(Z - 2, 0, 2)"
+    },
+    {
+     "name": "e2p",
+     "expr": "clamp(Z - 4, 0, 6)"
+    },
+    {
+     "name": "e3s",
+     "expr": "clamp(Z - 10, 0, 2)"
+    },
+    {
+     "name": "e3p",
+     "expr": "clamp(Z - 12, 0, 6)"
+    },
+    {
+     "name": "e4s",
+     "expr": "clamp(Z - 18, 0, 2) - ex"
+    },
+    {
+     "name": "e3d",
+     "expr": "clamp(Z - 20, 0, 10) + ex"
+    },
+    {
+     "name": "e4p",
+     "expr": "clamp(Z - 30, 0, 6)"
+    },
+    {
+     "name": "unp",
+     "expr": "if(e1s <= 1, e1s, 2 - e1s) + if(e2s <= 1, e2s, 2 - e2s) + if(e2p <= 3, e2p, 6 - e2p) + if(e3s <= 1, e3s, 2 - e3s) + if(e3p <= 3, e3p, 6 - e3p) + if(e4s <= 1, e4s, 2 - e4s) + if(e3d <= 5, e3d, 10 - e3d) + if(e4p <= 3, e4p, 6 - e4p)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     9.4
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 0.5,
+     "w": 1,
+     "h": 0.8,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 1.6,
+     "y": 0.9,
+     "text": {
+      "en": "1s"
+     },
+     "color": "white",
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 0.9,
+     "text": {
+      "en": "{e1s}"
+     },
+     "color": "yellow",
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "particles",
+     "count": 2,
+     "x": "2.5 + mod(i, 1) + if(floor(i/1), 0.18, -0.18)",
+     "y": 0.9,
+     "r": 0.13,
+     "visibleIf": "i < e1s",
+     "color": {
+      "by": "floor(i/1)",
+      "scale": [
+       "yellow",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 1.5,
+     "w": 1,
+     "h": 0.8,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 1.6,
+     "y": 1.9,
+     "text": {
+      "en": "2s"
+     },
+     "color": "white",
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 1.9,
+     "text": {
+      "en": "{e2s}"
+     },
+     "color": "yellow",
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "particles",
+     "count": 2,
+     "x": "2.5 + mod(i, 1) + if(floor(i/1), 0.18, -0.18)",
+     "y": 1.9,
+     "r": 0.13,
+     "visibleIf": "i < e2s",
+     "color": {
+      "by": "floor(i/1)",
+      "scale": [
+       "yellow",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 2.5,
+     "w": 3,
+     "h": 0.8,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 2.5,
+     "x2": 3,
+     "y2": 3.3,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": 2.5,
+     "x2": 4,
+     "y2": 3.3,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 1.6,
+     "y": 2.9,
+     "text": {
+      "en": "2p"
+     },
+     "color": "white",
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 2.9,
+     "text": {
+      "en": "{e2p}"
+     },
+     "color": "yellow",
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "particles",
+     "count": 6,
+     "x": "2.5 + mod(i, 3) + if(floor(i/3), 0.18, -0.18)",
+     "y": 2.9,
+     "r": 0.13,
+     "visibleIf": "i < e2p",
+     "color": {
+      "by": "floor(i/3)",
+      "scale": [
+       "yellow",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 3.5,
+     "w": 1,
+     "h": 0.8,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 1.6,
+     "y": 3.9,
+     "text": {
+      "en": "3s"
+     },
+     "color": "white",
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 3.9,
+     "text": {
+      "en": "{e3s}"
+     },
+     "color": "yellow",
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "particles",
+     "count": 2,
+     "x": "2.5 + mod(i, 1) + if(floor(i/1), 0.18, -0.18)",
+     "y": 3.9,
+     "r": 0.13,
+     "visibleIf": "i < e3s",
+     "color": {
+      "by": "floor(i/1)",
+      "scale": [
+       "yellow",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 4.5,
+     "w": 3,
+     "h": 0.8,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 4.5,
+     "x2": 3,
+     "y2": 5.3,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": 4.5,
+     "x2": 4,
+     "y2": 5.3,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 1.6,
+     "y": 4.9,
+     "text": {
+      "en": "3p"
+     },
+     "color": "white",
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 4.9,
+     "text": {
+      "en": "{e3p}"
+     },
+     "color": "yellow",
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "particles",
+     "count": 6,
+     "x": "2.5 + mod(i, 3) + if(floor(i/3), 0.18, -0.18)",
+     "y": 4.9,
+     "r": 0.13,
+     "visibleIf": "i < e3p",
+     "color": {
+      "by": "floor(i/3)",
+      "scale": [
+       "yellow",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 5.5,
+     "w": 1,
+     "h": 0.8,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 1.6,
+     "y": 5.9,
+     "text": {
+      "en": "4s"
+     },
+     "color": "white",
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 5.9,
+     "text": {
+      "en": "{e4s}"
+     },
+     "color": "yellow",
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "particles",
+     "count": 2,
+     "x": "2.5 + mod(i, 1) + if(floor(i/1), 0.18, -0.18)",
+     "y": 5.9,
+     "r": 0.13,
+     "visibleIf": "i < e4s",
+     "color": {
+      "by": "floor(i/1)",
+      "scale": [
+       "yellow",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 6.5,
+     "w": 5,
+     "h": 0.8,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 6.5,
+     "x2": 3,
+     "y2": 7.3,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": 6.5,
+     "x2": 4,
+     "y2": 7.3,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 6.5,
+     "x2": 5,
+     "y2": 7.3,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 6.5,
+     "x2": 6,
+     "y2": 7.3,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 1.6,
+     "y": 6.9,
+     "text": {
+      "en": "3d"
+     },
+     "color": "white",
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 6.9,
+     "text": {
+      "en": "{e3d}"
+     },
+     "color": "yellow",
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "x": "2.5 + mod(i, 5) + if(floor(i/5), 0.18, -0.18)",
+     "y": 6.9,
+     "r": 0.13,
+     "visibleIf": "i < e3d",
+     "color": {
+      "by": "floor(i/5)",
+      "scale": [
+       "yellow",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 7.5,
+     "w": 3,
+     "h": 0.8,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 7.5,
+     "x2": 3,
+     "y2": 8.3,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": 7.5,
+     "x2": 4,
+     "y2": 8.3,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 1.6,
+     "y": 7.9,
+     "text": {
+      "en": "4p"
+     },
+     "color": "white",
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 7.9,
+     "text": {
+      "en": "{e4p}"
+     },
+     "color": "yellow",
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "particles",
+     "count": 6,
+     "x": "2.5 + mod(i, 3) + if(floor(i/3), 0.18, -0.18)",
+     "y": 7.9,
+     "r": 0.13,
+     "visibleIf": "i < e4p",
+     "color": {
+      "by": "floor(i/3)",
+      "scale": [
+       "yellow",
+       "blue"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 8.9,
+     "text": {
+      "en": "Z = {Z}"
+     },
+     "color": "white",
+     "size": 30
+    },
+    {
+     "shape": "text",
+     "x": 9.6,
+     "y": 7.0,
+     "text": {
+      "en": "Cr and Cu: half-filled or full 3d is extra stable"
+     },
+     "visibleIf": "ex",
+     "color": "orange",
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 9.6,
+     "y": 0.1,
+     "text": {
+      "en": "yellow spin up, blue spin down"
+     },
+     "color": "white",
+     "size": 18,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Unpaired electrons",
+      "kn": "ಜೋಡಿಯಾಗದ ಇಲೆಕ್ಟ್ರಾನ್"
+     },
+     "expr": "unp",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Electrons placed"
+     },
+     "expr": "e1s + e2s + e2p + e3s + e3p + e4s + e3d + e4p",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Nitrogen (Z = 7): how many unpaired electrons? Why?",
+     "kn": "ನೈಟ್ರೋಜನ್ (Z = 7): ಎಷ್ಟು ಜೋಡಿಯಾಗದ ಇಲೆಕ್ಟ್ರಾನ್? ಏಕೆ?"
+    },
+    {
+     "en": "Why does 4s fill before 3d (Z = 19, 20)?",
+     "kn": "3d ಗಿಂತ ಮೊದಲು 4s ಏಕೆ ತುಂಬುತ್ತದೆ?"
+    },
+    {
+     "en": "Compare Z = 23, 24 and 25. What is special about chromium?",
+     "kn": "Z = 23, 24, 25 ಹೋಲಿಸಿ. ಕ್ರೋಮಿಯಂ ವಿಶೇಷ ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

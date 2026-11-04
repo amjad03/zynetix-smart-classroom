@@ -356,6 +356,217 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Molar conductivity and dilution",
+    "kn": "ಮೋಲಾರ್ ವಾಹಕತೆ ಮತ್ತು ದುರ್ಬಲೀಕರಣ"
+   },
+   "narration": {
+    "en": "Molar conductivity Λm rises on dilution. For a strong electrolyte such as KCl it rises gently and linearly with √c (Kohlrausch: Λm = Λ°m − A√c). For a weak electrolyte such as ethanoic acid it shoots up at low c, because the degree of dissociation α grows.",
+    "kn": "ದುರ್ಬಲೀಕರಣದಲ್ಲಿ Λm ಏರುತ್ತದೆ. KCl ನಂಥ ಪ್ರಬಲ ವಿದ್ಯುದ್ವಿಭಾಜ್ಯಕ್ಕೆ √c ಯೊಂದಿಗೆ ರೇಖೀಯವಾಗಿ ಸ್ವಲ್ಪ; ಎಥನೋಯಿಕ್ ಆಮ್ಲದಂಥ ದುರ್ಬಲಕ್ಕೆ ಕಡಿಮೆ c ಯಲ್ಲಿ ತೀವ್ರವಾಗಿ, ಏಕೆಂದರೆ α ಹೆಚ್ಚುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Molar conductivity Λm rises on dilution. For a strong electrolyte such as KCl it rises gently and linearly with √c (Kohlrausch: Λm = Λ°m − A√c). For a weak electrolyte such as ethanoic acid it shoots up at low c, because the degree of dissociation α grows.",
+    "kn": "ದುರ್ಬಲೀಕರಣದಲ್ಲಿ Λm ಏರುತ್ತದೆ. KCl ನಂಥ ಪ್ರಬಲ ವಿದ್ಯುದ್ವಿಭಾಜ್ಯಕ್ಕೆ √c ಯೊಂದಿಗೆ ರೇಖೀಯವಾಗಿ ಸ್ವಲ್ಪ; ಎಥನೋಯಿಕ್ ಆಮ್ಲದಂಥ ದುರ್ಬಲಕ್ಕೆ ಕಡಿಮೆ c ಯಲ್ಲಿ ತೀವ್ರವಾಗಿ, ಏಕೆಂದರೆ α ಹೆಚ್ಚುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "c",
+     "label": {
+      "en": "Concentration",
+      "kn": "ಸಾರತೆ"
+     },
+     "min": 0.001,
+     "max": 0.05,
+     "step": 0.001,
+     "value": 0.01,
+     "unit": "mol/L"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "both",
+     "label": {
+      "en": "Show both curves",
+      "kn": "ಎರಡೂ ವಕ್ರ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "el",
+     "label": {
+      "en": "Electrolyte",
+      "kn": "ವಿದ್ಯುದ್ವಿಭಾಜ್ಯ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "KCl (strong)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "CH₃COOH (weak)"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "al",
+     "expr": "if(el == 1, 1, (-1.8e-5 + sqrt(3.24e-10 + 7.2e-5*c))/(2*c))"
+    },
+    {
+     "name": "Lm",
+     "expr": "if(el == 1, 150.0 - 87.46*sqrt(c), 390.5*al)"
+    },
+    {
+     "name": "kap",
+     "expr": "Lm*c/1000"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     0.25
+    ],
+    "y": [
+     0,
+     420
+    ],
+    "axes": true,
+    "xLabel": "√c (mol/L)^½",
+    "yLabel": "Λm (S cm² mol⁻¹)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "both || el == 1",
+     "color": "blue",
+     "fn": "150.0 - 87.46*x",
+     "from": 0,
+     "to": 0.25,
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "visibleIf": "both || el == 2",
+     "color": "orange",
+     "fn": "390.5*(-1.8e-5 + sqrt(3.24e-10 + 7.2e-5*x^2))/(2*x^2)",
+     "from": 0.02,
+     "to": 0.25,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 390.5,
+     "x2": 0.03,
+     "y2": 390.5,
+     "visibleIf": "both || el == 2",
+     "color": "orange",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 0.035,
+     "y": 390.5,
+     "text": {
+      "en": "Λ°m = 390.5 (from Kohlrausch's law)"
+     },
+     "visibleIf": "both || el == 2",
+     "color": "orange",
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "circle",
+     "x": "sqrt(c)",
+     "y": "Lm",
+     "r": 0.004,
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": "sqrt(c)",
+     "y1": 0,
+     "x2": "sqrt(c)",
+     "y2": "Lm",
+     "color": "red",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 0.2,
+     "y": 160,
+     "text": {
+      "en": "KCl"
+     },
+     "color": "blue",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 0.2,
+     "y": 40,
+     "text": {
+      "en": "CH₃COOH"
+     },
+     "color": "orange",
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Molar conductivity Λm"
+     },
+     "expr": "Lm",
+     "digits": 1,
+     "unit": "S cm² mol⁻¹"
+    },
+    {
+     "label": {
+      "en": "Degree of dissociation α"
+     },
+     "expr": "al",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Conductivity κ"
+     },
+     "expr": "kap*1e6",
+     "digits": 0,
+     "unit": "µS/cm"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why can Λ°m of KCl be found by extending the line to c = 0, but not for ethanoic acid?",
+     "kn": "KCl ನ Λ°m ರೇಖೆ ವಿಸ್ತರಿಸಿ ಸಿಗುತ್ತದೆ, ಎಥನೋಯಿಕ್ ಆಮ್ಲಕ್ಕೆ ಏಕೆ ಇಲ್ಲ?"
+    },
+    {
+     "en": "At 0.001 M, what fraction of ethanoic acid is dissociated?",
+     "kn": "0.001 M ನಲ್ಲಿ ಎಥನೋಯಿಕ್ ಆಮ್ಲದ α ಎಷ್ಟು?"
+    },
+    {
+     "en": "Conductivity κ falls on dilution while Λm rises. Why?",
+     "kn": "ದುರ್ಬಲೀಕರಣದಲ್ಲಿ κ ಇಳಿಯುತ್ತದೆ, Λm ಏರುತ್ತದೆ. ಏಕೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -408,6 +408,314 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Boiling point up, freezing point down",
+    "kn": "ಕುದಿಬಿಂದು ಏರಿಕೆ, ಘನೀಭವನ ಬಿಂದು ಇಳಿಕೆ"
+   },
+   "narration": {
+    "en": "A non-volatile solute lowers the vapour pressure, so the solution boils higher (ΔTb = i Kb m) and freezes lower (ΔTf = i Kf m). The change depends only on the number of solute particles, not on what they are.",
+    "kn": "ಬಾಷ್ಪಶೀಲವಲ್ಲದ ದ್ರಾವ್ಯ ಆವಿ ಒತ್ತಡ ಇಳಿಸುತ್ತದೆ; ದ್ರಾವಣ ಹೆಚ್ಚು ತಾಪದಲ್ಲಿ ಕುದಿಯುತ್ತದೆ (ΔTb = i Kb m), ಕಡಿಮೆ ತಾಪದಲ್ಲಿ ಘನೀಭವಿಸುತ್ತದೆ (ΔTf = i Kf m). ಕಣಗಳ ಸಂಖ್ಯೆ ಮಾತ್ರ ಮುಖ್ಯ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A non-volatile solute lowers the vapour pressure, so the solution boils higher (ΔTb = i Kb m) and freezes lower (ΔTf = i Kf m). The change depends only on the number of solute particles, not on what they are.",
+    "kn": "ಬಾಷ್ಪಶೀಲವಲ್ಲದ ದ್ರಾವ್ಯ ಆವಿ ಒತ್ತಡ ಇಳಿಸುತ್ತದೆ; ದ್ರಾವಣ ಹೆಚ್ಚು ತಾಪದಲ್ಲಿ ಕುದಿಯುತ್ತದೆ (ΔTb = i Kb m), ಕಡಿಮೆ ತಾಪದಲ್ಲಿ ಘನೀಭವಿಸುತ್ತದೆ (ΔTf = i Kf m). ಕಣಗಳ ಸಂಖ್ಯೆ ಮಾತ್ರ ಮುಖ್ಯ."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Molality",
+      "kn": "ಮೋಲಾಲಿಟಿ"
+     },
+     "min": 0,
+     "max": 2,
+     "step": 0.05,
+     "value": 0.5,
+     "unit": "mol/kg"
+    }
+   ],
+   "choices": [
+    {
+     "name": "sv",
+     "label": {
+      "en": "Solvent",
+      "kn": "ದ್ರಾವಕ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Water"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Benzene"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    },
+    {
+     "name": "vf",
+     "label": {
+      "en": "van 't Hoff factor i"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "1 (glucose, urea)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "2 (e.g. NaCl in water)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "3 (e.g. CaCl₂ in water)"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "Kb",
+     "expr": "if(sv == 1, 0.52, 2.53)"
+    },
+    {
+     "name": "Kf",
+     "expr": "if(sv == 1, 1.86, 5.12)"
+    },
+    {
+     "name": "Tb0",
+     "expr": "if(sv == 1, 373.15, 353.3)"
+    },
+    {
+     "name": "Tf0",
+     "expr": "if(sv == 1, 273.15, 278.6)"
+    },
+    {
+     "name": "dTb",
+     "expr": "vf*Kb*m"
+    },
+    {
+     "name": "dTf",
+     "expr": "vf*Kf*m"
+    },
+    {
+     "name": "np",
+     "expr": "round(10*vf*m)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     -1,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0,
+     "w": 1,
+     "h": 9,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 1.15,
+     "y": 0,
+     "w": 0.7,
+     "h": "4 + 0.15*dTb",
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": 0.6,
+     "y1": 4,
+     "x2": 2.4,
+     "y2": 4,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 2.6,
+     "y": 4,
+     "text": {
+      "en": "solvent b.p."
+     },
+     "color": "white",
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 2.6,
+     "y": "4 + 0.15*dTb",
+     "text": {
+      "en": "+{dTb:2} K"
+     },
+     "color": "red",
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 13,
+     "y": 0,
+     "w": 1,
+     "h": 9,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "rect",
+     "x": 13.15,
+     "y": 0,
+     "w": 0.7,
+     "h": "6 - 0.15*dTf",
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 12.6,
+     "y1": 6,
+     "x2": 14.4,
+     "y2": 6,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 12.4,
+     "y": 6,
+     "text": {
+      "en": "solvent f.p."
+     },
+     "color": "white",
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 12.4,
+     "y": "6 - 0.15*dTf",
+     "text": {
+      "en": "−{dTf:2} K"
+     },
+     "color": "blue",
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "rect",
+     "x": 5,
+     "y": 0.5,
+     "w": 6,
+     "h": 5,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 60,
+     "x": "bounce(5.2 + 5.6*rand(i) + 0.5*t*cos(2*pi*rand(i + 300)), 5.2, 10.8)",
+     "y": "bounce(0.7 + 4.6*rand(i + 150) + 0.5*t*sin(2*pi*rand(i + 300)), 0.7, 5.3)",
+     "r": 0.13,
+     "visibleIf": "i < np",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 6.2,
+     "text": {
+      "en": "solute particles"
+     },
+     "color": "orange",
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Boiling point",
+      "kn": "ಕುದಿಬಿಂದು"
+     },
+     "expr": "Tb0 + dTb",
+     "digits": 2,
+     "unit": "K"
+    },
+    {
+     "label": {
+      "en": "Freezing point",
+      "kn": "ಘನೀಭವನ ಬಿಂದು"
+     },
+     "expr": "Tf0 - dTf",
+     "digits": 2,
+     "unit": "K"
+    },
+    {
+     "label": {
+      "en": "ΔTb"
+     },
+     "expr": "dTb",
+     "digits": 2,
+     "unit": "K"
+    },
+    {
+     "label": {
+      "en": "ΔTf"
+     },
+     "expr": "dTf",
+     "digits": 2,
+     "unit": "K"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "1 mol/kg glucose in water: find ΔTb and ΔTf.",
+     "kn": "ನೀರಿನಲ್ಲಿ 1 mol/kg ಗ್ಲೂಕೋಸ್: ΔTb, ΔTf ಹುಡುಕಿ."
+    },
+    {
+     "en": "Same molality of NaCl (i = 2). What changes?",
+     "kn": "ಅದೇ ಮೋಲಾಲಿಟಿಯ NaCl (i = 2). ಏನು ಬದಲಾಗುತ್ತದೆ?"
+    },
+    {
+     "en": "Why are Kb and Kf larger for benzene than for water?",
+     "kn": "ಬೆಂಜೀನ್‌ಗೆ Kb, Kf ನೀರಿಗಿಂತ ಏಕೆ ಹೆಚ್ಚು?"
+    }
+   ]
+  },
+  {
    "id": "sim-osmosis-diffusion",
    "type": "simulation",
    "source": "animation",

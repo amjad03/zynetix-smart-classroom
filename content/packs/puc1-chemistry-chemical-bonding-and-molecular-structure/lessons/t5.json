@@ -653,6 +653,551 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Molecular orbital diagram",
+    "kn": "ಆಣ್ವಿಕ ಕಕ್ಷೀಯ ರೇಖಾಚಿತ್ರ"
+   },
+   "narration": {
+    "en": "Choose a molecule and add or remove electrons to make ions. Electrons fill the MOs from the bottom, one into each of two equal π orbitals first. Bond order = (bonding − antibonding)/2.",
+    "kn": "ಅಣು ಆರಿಸಿ, ಇಲೆಕ್ಟ್ರಾನ್ ಸೇರಿಸಿ ಅಥವಾ ತೆಗೆದು ಅಯಾನು ಮಾಡಿ. ಇಲೆಕ್ಟ್ರಾನ್‌ಗಳು ಕೆಳಗಿನಿಂದ ತುಂಬುತ್ತವೆ. ಬಂಧ ಕ್ರಮಾಂಕ = (ಬಂಧಕ − ಪ್ರತಿಬಂಧಕ)/2."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Choose a molecule and add or remove electrons to make ions. Electrons fill the MOs from the bottom, one into each of two equal π orbitals first. Bond order = (bonding − antibonding)/2.",
+    "kn": "ಅಣು ಆರಿಸಿ, ಇಲೆಕ್ಟ್ರಾನ್ ಸೇರಿಸಿ ಅಥವಾ ತೆಗೆದು ಅಯಾನು ಮಾಡಿ. ಇಲೆಕ್ಟ್ರಾನ್‌ಗಳು ಕೆಳಗಿನಿಂದ ತುಂಬುತ್ತವೆ. ಬಂಧ ಕ್ರಮಾಂಕ = (ಬಂಧಕ − ಪ್ರತಿಬಂಧಕ)/2."
+   },
+   "sliders": [
+    {
+     "name": "q",
+     "label": {
+      "en": "Charge on the molecule",
+      "kn": "ಅಣುವಿನ ವಿದ್ಯುದಾವೇಶ"
+     },
+     "min": -2,
+     "max": 2,
+     "step": 1,
+     "value": 0
+    }
+   ],
+   "choices": [
+    {
+     "name": "base",
+     "label": {
+      "en": "Molecule",
+      "kn": "ಅಣು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Li₂"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "B₂"
+       },
+       "value": 6
+      },
+      {
+       "label": {
+        "en": "C₂"
+       },
+       "value": 8
+      },
+      {
+       "label": {
+        "en": "N₂"
+       },
+       "value": 10
+      },
+      {
+       "label": {
+        "en": "O₂"
+       },
+       "value": 12
+      },
+      {
+       "label": {
+        "en": "F₂"
+       },
+       "value": 14
+      }
+     ],
+     "value": 12
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Add an electron"
+     },
+     "icon": "add",
+     "set": {
+      "q": "q - 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Remove an electron"
+     },
+     "icon": "remove",
+     "set": {
+      "q": "q + 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "nm",
+     "expr": "clamp(base - q, 0, 16)"
+    },
+    {
+     "name": "hv",
+     "expr": "base >= 12"
+    },
+    {
+     "name": "e_s",
+     "expr": "clamp(nm, 0, 2)"
+    },
+    {
+     "name": "e_ss",
+     "expr": "clamp(nm - 2, 0, 2)"
+    },
+    {
+     "name": "e_pi",
+     "expr": "if(hv, clamp(nm - 6, 0, 4), clamp(nm - 4, 0, 4))"
+    },
+    {
+     "name": "e_sp",
+     "expr": "if(hv, clamp(nm - 4, 0, 2), clamp(nm - 8, 0, 2))"
+    },
+    {
+     "name": "e_pis",
+     "expr": "clamp(nm - 10, 0, 4)"
+    },
+    {
+     "name": "e_sps",
+     "expr": "clamp(nm - 14, 0, 2)"
+    },
+    {
+     "name": "bo",
+     "expr": "(e_s + e_pi + e_sp - e_ss - e_pis - e_sps)/2"
+    },
+    {
+     "name": "unp",
+     "expr": "if(e_pi <= 2, e_pi, 4 - e_pi) + if(e_pis <= 2, e_pis, 4 - e_pis) + (e_sp == 1) + (e_s == 1) + (e_ss == 1) + (e_sps == 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     9
+    ],
+    "y": [
+     0.4,
+     7.6
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 7.2,
+     "text": {
+      "en": "{nm} valence electrons"
+     },
+     "color": "white",
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 4.3,
+     "y1": 1.0,
+     "x2": 5.7,
+     "y2": 1.0,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 6.0,
+     "y": 1.0,
+     "text": {
+      "en": "σ2s"
+     },
+     "color": "white",
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "arrow",
+     "x": 4.8,
+     "y": "1.0 - 0.25",
+     "dx": 0,
+     "dy": 0.5,
+     "visibleIf": "e_s >= 1",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 5.2,
+     "y": "1.0 + 0.25",
+     "dx": 0,
+     "dy": -0.5,
+     "visibleIf": "e_s >= 2",
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 4.3,
+     "y1": 2.0,
+     "x2": 5.7,
+     "y2": 2.0,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 6.0,
+     "y": 2.0,
+     "text": {
+      "en": "σ*2s"
+     },
+     "color": "white",
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "arrow",
+     "x": 4.8,
+     "y": "2.0 - 0.25",
+     "dx": 0,
+     "dy": 0.5,
+     "visibleIf": "e_ss >= 1",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 5.2,
+     "y": "2.0 + 0.25",
+     "dx": 0,
+     "dy": -0.5,
+     "visibleIf": "e_ss >= 2",
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 4.3,
+     "y1": "if(hv, 3.2, 4.2)",
+     "x2": 5.7,
+     "y2": "if(hv, 3.2, 4.2)",
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 6.0,
+     "y": "if(hv, 3.2, 4.2)",
+     "text": {
+      "en": "σ2p"
+     },
+     "color": "white",
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "arrow",
+     "x": 4.8,
+     "y": "if(hv, 3.2, 4.2) - 0.25",
+     "dx": 0,
+     "dy": 0.5,
+     "visibleIf": "e_sp >= 1",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 5.2,
+     "y": "if(hv, 3.2, 4.2) + 0.25",
+     "dx": 0,
+     "dy": -0.5,
+     "visibleIf": "e_sp >= 2",
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 4.3,
+     "y1": 6.4,
+     "x2": 5.7,
+     "y2": 6.4,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 6.0,
+     "y": 6.4,
+     "text": {
+      "en": "σ*2p"
+     },
+     "color": "white",
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "arrow",
+     "x": 4.8,
+     "y": "6.4 - 0.25",
+     "dx": 0,
+     "dy": 0.5,
+     "visibleIf": "e_sps >= 1",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 5.2,
+     "y": "6.4 + 0.25",
+     "dx": 0,
+     "dy": -0.5,
+     "visibleIf": "e_sps >= 2",
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 3.0,
+     "y1": "if(hv, 4.0, 3.4)",
+     "x2": 4.4,
+     "y2": "if(hv, 4.0, 3.4)",
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 5.6,
+     "y1": "if(hv, 4.0, 3.4)",
+     "x2": 7.0,
+     "y2": "if(hv, 4.0, 3.4)",
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 7.3,
+     "y": "if(hv, 4.0, 3.4)",
+     "text": {
+      "en": "π2p"
+     },
+     "color": "white",
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "arrow",
+     "x": 3.5,
+     "y": "if(hv, 4.0, 3.4) - 0.25",
+     "dx": 0,
+     "dy": 0.5,
+     "visibleIf": "e_pi >= 1",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 6.1,
+     "y": "if(hv, 4.0, 3.4) - 0.25",
+     "dx": 0,
+     "dy": 0.5,
+     "visibleIf": "e_pi >= 2",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 3.9,
+     "y": "if(hv, 4.0, 3.4) + 0.25",
+     "dx": 0,
+     "dy": -0.5,
+     "visibleIf": "e_pi >= 3",
+     "color": "blue"
+    },
+    {
+     "shape": "arrow",
+     "x": 6.5,
+     "y": "if(hv, 4.0, 3.4) + 0.25",
+     "dx": 0,
+     "dy": -0.5,
+     "visibleIf": "e_pi >= 4",
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 3.0,
+     "y1": 5.4,
+     "x2": 4.4,
+     "y2": 5.4,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 5.6,
+     "y1": 5.4,
+     "x2": 7.0,
+     "y2": 5.4,
+     "color": "white",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 7.3,
+     "y": 5.4,
+     "text": {
+      "en": "π*2p"
+     },
+     "color": "white",
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "arrow",
+     "x": 3.5,
+     "y": "5.4 - 0.25",
+     "dx": 0,
+     "dy": 0.5,
+     "visibleIf": "e_pis >= 1",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 6.1,
+     "y": "5.4 - 0.25",
+     "dx": 0,
+     "dy": 0.5,
+     "visibleIf": "e_pis >= 2",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 3.9,
+     "y": "5.4 + 0.25",
+     "dx": 0,
+     "dy": -0.5,
+     "visibleIf": "e_pis >= 3",
+     "color": "blue"
+    },
+    {
+     "shape": "arrow",
+     "x": 6.5,
+     "y": "5.4 + 0.25",
+     "dx": 0,
+     "dy": -0.5,
+     "visibleIf": "e_pis >= 4",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 6.4,
+     "text": {
+      "en": "Bond order {bo:1}"
+     },
+     "color": "green",
+     "size": 30,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 5.6,
+     "text": {
+      "en": "Paramagnetic"
+     },
+     "visibleIf": "unp > 0",
+     "color": "orange",
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 5.6,
+     "text": {
+      "en": "Diamagnetic"
+     },
+     "visibleIf": "unp == 0",
+     "color": "blue",
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 4.8,
+     "text": {
+      "en": "σ2p above π2p"
+     },
+     "visibleIf": "hv == 0",
+     "color": "white",
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0.4,
+     "y": 4.8,
+     "text": {
+      "en": "σ2p below π2p"
+     },
+     "visibleIf": "hv == 1",
+     "color": "white",
+     "size": 22,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Bond order",
+      "kn": "ಬಂಧ ಕ್ರಮಾಂಕ"
+     },
+     "expr": "bo",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Unpaired electrons",
+      "kn": "ಜೋಡಿಯಾಗದ ಇಲೆಕ್ಟ್ರಾನ್"
+     },
+     "expr": "unp",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Valence electrons"
+     },
+     "expr": "nm",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Why is O₂ paramagnetic though it has an even number of electrons?",
+     "kn": "ಸಮ ಸಂಖ್ಯೆಯ ಇಲೆಕ್ಟ್ರಾನ್ ಇದ್ದರೂ O₂ ಏಕೆ ಅನುಕಾಂತೀಯ?"
+    },
+    {
+     "en": "Make O₂⁺, O₂⁻ and O₂²⁻. Put them in order of bond order.",
+     "kn": "O₂⁺, O₂⁻, O₂²⁻ ಮಾಡಿ ಬಂಧ ಕ್ರಮಾಂಕದಂತೆ ಜೋಡಿಸಿ."
+    },
+    {
+     "en": "Which molecule here has the highest bond order?",
+     "kn": "ಯಾವ ಅಣುವಿಗೆ ಅತಿ ಹೆಚ್ಚು ಬಂಧ ಕ್ರಮಾಂಕ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

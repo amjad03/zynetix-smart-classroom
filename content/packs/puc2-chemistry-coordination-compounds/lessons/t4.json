@@ -1718,6 +1718,349 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Valence bond theory: high and low spin",
+    "kn": "ವೇಲೆನ್ಸ್ ಬಂಧ ಸಿದ್ಧಾಂತ: ಉನ್ನತ, ಕಡಿಮೆ ಸ್ಪಿನ್"
+   },
+   "narration": {
+    "en": "Set the number of 3d electrons of the metal ion. A strong-field ligand such as CN⁻ pairs the electrons up to free two 3d orbitals for d²sp³ bonding (inner orbital, low spin); a weak-field ligand such as F⁻ uses 4d orbitals (sp³d², outer orbital, high spin).",
+    "kn": "ಲೋಹ ಅಯಾನಿನ 3d ಇಲೆಕ್ಟ್ರಾನ್ ಸಂಖ್ಯೆ ಹೊಂದಿಸಿ. CN⁻ ನಂಥ ಪ್ರಬಲ ಕ್ಷೇತ್ರ ಲಿಗಂಡ್ ಇಲೆಕ್ಟ್ರಾನ್ ಜೋಡಿಸಿ d²sp³ (ಒಳ ಕಕ್ಷಕ) ಗೆ ಎರಡು 3d ಕಕ್ಷಕ ಬಿಡುತ್ತದೆ; F⁻ ನಂಥ ದುರ್ಬಲ ಲಿಗಂಡ್ sp³d² (ಹೊರ ಕಕ್ಷಕ) ಬಳಸುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Set the number of 3d electrons of the metal ion. A strong-field ligand such as CN⁻ pairs the electrons up to free two 3d orbitals for d²sp³ bonding (inner orbital, low spin); a weak-field ligand such as F⁻ uses 4d orbitals (sp³d², outer orbital, high spin).",
+    "kn": "ಲೋಹ ಅಯಾನಿನ 3d ಇಲೆಕ್ಟ್ರಾನ್ ಸಂಖ್ಯೆ ಹೊಂದಿಸಿ. CN⁻ ನಂಥ ಪ್ರಬಲ ಕ್ಷೇತ್ರ ಲಿಗಂಡ್ ಇಲೆಕ್ಟ್ರಾನ್ ಜೋಡಿಸಿ d²sp³ (ಒಳ ಕಕ್ಷಕ) ಗೆ ಎರಡು 3d ಕಕ್ಷಕ ಬಿಡುತ್ತದೆ; F⁻ ನಂಥ ದುರ್ಬಲ ಲಿಗಂಡ್ sp³d² (ಹೊರ ಕಕ್ಷಕ) ಬಳಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Number of 3d electrons",
+      "kn": "3d ಇಲೆಕ್ಟ್ರಾನ್ ಸಂಖ್ಯೆ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sf",
+     "label": {
+      "en": "Strong-field ligand (forces pairing)",
+      "kn": "ಪ್ರಬಲ ಕ್ಷೇತ್ರ ಲಿಗಂಡ್"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "[Fe(CN)₆]³⁻"
+     },
+     "set": {
+      "n": 5,
+      "sf": 1
+     }
+    },
+    {
+     "label": {
+      "en": "[FeF₆]³⁻"
+     },
+     "set": {
+      "n": 5,
+      "sf": 0
+     }
+    },
+    {
+     "label": {
+      "en": "[Co(NH₃)₆]³⁺"
+     },
+     "set": {
+      "n": 6,
+      "sf": 1
+     }
+    },
+    {
+     "label": {
+      "en": "[CoF₆]³⁻"
+     },
+     "set": {
+      "n": 6,
+      "sf": 0
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "unp",
+     "expr": "if(sf, if(n <= 3, n, if(n <= 6, 6 - n, if(n <= 8, n - 6, 10 - n))), if(n <= 5, n, 10 - n))"
+    },
+    {
+     "name": "mu",
+     "expr": "sqrt(unp*(unp + 2))"
+    },
+    {
+     "name": "inner",
+     "expr": "n <= 3 || (sf && n <= 6)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     1,
+     7.8
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 7.3,
+     "text": {
+      "en": "3d orbitals of the metal ion"
+     },
+     "color": "white",
+     "size": 24
+    },
+    {
+     "shape": "rect",
+     "x": 1.5,
+     "y": 5,
+     "w": 1.2,
+     "h": 1.2,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "arrow",
+     "x": 1.9,
+     "y": 5.25,
+     "dx": 0,
+     "dy": 0.7,
+     "visibleIf": "if(sf, (n >= 1), n >= 1)",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 2.3,
+     "y": 5.95,
+     "dx": 0,
+     "dy": -0.7,
+     "visibleIf": "if(sf, (n >= 4), n >= 6)",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 2.9,
+     "y": 5,
+     "w": 1.2,
+     "h": 1.2,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "arrow",
+     "x": 3.3,
+     "y": 5.25,
+     "dx": 0,
+     "dy": 0.7,
+     "visibleIf": "if(sf, (n >= 2), n >= 2)",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 3.7,
+     "y": 5.95,
+     "dx": 0,
+     "dy": -0.7,
+     "visibleIf": "if(sf, (n >= 5), n >= 7)",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 4.3,
+     "y": 5,
+     "w": 1.2,
+     "h": 1.2,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "arrow",
+     "x": 4.7,
+     "y": 5.25,
+     "dx": 0,
+     "dy": 0.7,
+     "visibleIf": "if(sf, (n >= 3), n >= 3)",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 5.1,
+     "y": 5.95,
+     "dx": 0,
+     "dy": -0.7,
+     "visibleIf": "if(sf, (n >= 6), n >= 8)",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 5.699999999999999,
+     "y": 5,
+     "w": 1.2,
+     "h": 1.2,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "arrow",
+     "x": 6.1,
+     "y": 5.25,
+     "dx": 0,
+     "dy": 0.7,
+     "visibleIf": "if(sf, (n >= 7), n >= 4)",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 6.499999999999999,
+     "y": 5.95,
+     "dx": 0,
+     "dy": -0.7,
+     "visibleIf": "if(sf, (n >= 9), n >= 9)",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 7.1,
+     "y": 5,
+     "w": 1.2,
+     "h": 1.2,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "arrow",
+     "x": 7.5,
+     "y": 5.25,
+     "dx": 0,
+     "dy": 0.7,
+     "visibleIf": "if(sf, (n >= 8), n >= 5)",
+     "color": "yellow"
+    },
+    {
+     "shape": "arrow",
+     "x": 7.8999999999999995,
+     "y": 5.95,
+     "dx": 0,
+     "dy": -0.7,
+     "visibleIf": "if(sf, (n >= 10), n >= 10)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 3.8,
+     "text": {
+      "en": "inner-orbital complex: d²sp³ (low spin)"
+     },
+     "visibleIf": "inner",
+     "color": "green",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 3.8,
+     "text": {
+      "en": "outer-orbital complex: sp³d² (high spin)"
+     },
+     "visibleIf": "inner == 0",
+     "color": "orange",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 2.6,
+     "text": {
+      "en": "μ = √(n(n + 2)) = {mu:2} BM"
+     },
+     "color": "white",
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 1.6,
+     "text": {
+      "en": "paramagnetic"
+     },
+     "visibleIf": "unp > 0",
+     "color": "orange",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 1.6,
+     "text": {
+      "en": "diamagnetic"
+     },
+     "visibleIf": "unp == 0",
+     "color": "blue",
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Unpaired electrons",
+      "kn": "ಜೋಡಿಯಾಗದ ಇಲೆಕ್ಟ್ರಾನ್"
+     },
+     "expr": "unp",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Spin-only magnetic moment",
+      "kn": "ಕಾಂತೀಯ ಭ್ರಾಮಕ"
+     },
+     "expr": "mu",
+     "digits": 2,
+     "unit": "BM"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Compare [Fe(CN)₆]³⁻ and [FeF₆]³⁻ (both Fe³⁺, 3d⁵). How many unpaired electrons each?",
+     "kn": "[Fe(CN)₆]³⁻ ಮತ್ತು [FeF₆]³⁻ ಹೋಲಿಸಿ."
+    },
+    {
+     "en": "Why is [Co(NH₃)₆]³⁺ diamagnetic?",
+     "kn": "[Co(NH₃)₆]³⁺ ಏಕೆ ಪ್ರತಿಕಾಂತೀಯ?"
+    },
+    {
+     "en": "For which d counts does the ligand make no difference to the number of unpaired electrons?",
+     "kn": "ಯಾವ d ಸಂಖ್ಯೆಗಳಿಗೆ ಲಿಗಂಡ್ ವ್ಯತ್ಯಾಸ ಮಾಡುವುದಿಲ್ಲ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

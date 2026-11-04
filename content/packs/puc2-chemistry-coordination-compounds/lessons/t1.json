@@ -666,6 +666,272 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Werner's cobalt ammines",
+    "kn": "ವರ್ನರ್‌ನ ಕೋಬಾಲ್ಟ್ ಅಮೀನ್‌ಗಳು"
+   },
+   "narration": {
+    "en": "Add excess AgNO₃ to a solution of each complex. Only chloride ions outside the coordination sphere (ionisable, secondary valence not used) precipitate as AgCl; chlorides bound to cobalt stay in solution.",
+    "kn": "ಪ್ರತಿ ಸಂಕೀರ್ಣದ ದ್ರಾವಣಕ್ಕೆ ಹೆಚ್ಚು AgNO₃ ಸೇರಿಸಿ. ಸಮನ್ವಯ ವಲಯದ ಹೊರಗಿನ ಕ್ಲೋರೈಡ್‌ಗಳು ಮಾತ್ರ AgCl ಆಗಿ ಅವಕ್ಷೇಪಿಸುತ್ತವೆ; ಕೋಬಾಲ್ಟ್‌ಗೆ ಬಂಧಿತವು ದ್ರಾವಣದಲ್ಲೇ ಉಳಿಯುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Add excess AgNO₃ to a solution of each complex. Only chloride ions outside the coordination sphere (ionisable, secondary valence not used) precipitate as AgCl; chlorides bound to cobalt stay in solution.",
+    "kn": "ಪ್ರತಿ ಸಂಕೀರ್ಣದ ದ್ರಾವಣಕ್ಕೆ ಹೆಚ್ಚು AgNO₃ ಸೇರಿಸಿ. ಸಮನ್ವಯ ವಲಯದ ಹೊರಗಿನ ಕ್ಲೋರೈಡ್‌ಗಳು ಮಾತ್ರ AgCl ಆಗಿ ಅವಕ್ಷೇಪಿಸುತ್ತವೆ; ಕೋಬಾಲ್ಟ್‌ಗೆ ಬಂಧಿತವು ದ್ರಾವಣದಲ್ಲೇ ಉಳಿಯುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "mol",
+     "label": {
+      "en": "Amount of complex",
+      "kn": "ಸಂಕೀರ್ಣದ ಪ್ರಮಾಣ"
+     },
+     "min": 0.1,
+     "max": 1.0,
+     "step": 0.05,
+     "value": 0.5,
+     "unit": "mol"
+    }
+   ],
+   "choices": [
+    {
+     "name": "cx",
+     "label": {
+      "en": "Complex",
+      "kn": "ಸಂಕೀರ್ಣ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "CoCl₃·6NH₃ (yellow)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "CoCl₃·5NH₃ (purple)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "CoCl₃·4NH₃ (green)"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Add excess AgNO₃",
+      "kn": "AgNO₃ ಸೇರಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 4
+   },
+   "vars": [
+    {
+     "name": "ncl",
+     "expr": "4 - cx"
+    },
+    {
+     "name": "pr",
+     "expr": "min(t/2, 1)"
+    },
+    {
+     "name": "ppt",
+     "expr": "mol*ncl*pr"
+    },
+    {
+     "name": "nfree",
+     "expr": "round(4*ncl*(1 - pr))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     14
+    ],
+    "y": [
+     -0.6,
+     9
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0.5,
+     "w": 7,
+     "h": 6,
+     "visibleIf": "cx == 1",
+     "color": "yellow",
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0.5,
+     "w": 7,
+     "h": 6,
+     "visibleIf": "cx == 2",
+     "color": "blue",
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0.5,
+     "w": 7,
+     "h": 6,
+     "visibleIf": "cx == 3",
+     "color": "green",
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 0.5,
+     "w": 7,
+     "h": 7,
+     "color": "white",
+     "fill": false,
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": 1.1,
+     "y": 0.5,
+     "w": 6.8,
+     "h": "ppt*1.2",
+     "color": "white"
+    },
+    {
+     "shape": "particles",
+     "count": 12,
+     "x": "1.5 + 6*rand(i)",
+     "y": "2.2 + 4*rand(i + 30)",
+     "r": 0.15,
+     "visibleIf": "i < nfree",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 7.9,
+     "text": {
+      "en": "[Co(NH₃)₆]Cl₃"
+     },
+     "visibleIf": "cx == 1",
+     "color": "white",
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 7.9,
+     "text": {
+      "en": "[CoCl(NH₃)₅]Cl₂"
+     },
+     "visibleIf": "cx == 2",
+     "color": "white",
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 7.9,
+     "text": {
+      "en": "[CoCl₂(NH₃)₄]Cl"
+     },
+     "visibleIf": "cx == 3",
+     "color": "white",
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 6,
+     "text": {
+      "en": "free Cl⁻ per formula: {ncl}"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 5,
+     "text": {
+      "en": "ions per formula: {ncl + 1}"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 3,
+     "text": {
+      "en": "AgCl: {ppt:2} mol"
+     },
+     "color": "yellow",
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "AgCl precipitated"
+     },
+     "expr": "ppt",
+     "digits": 2,
+     "unit": "mol"
+    },
+    {
+     "label": {
+      "en": "Mass of AgCl"
+     },
+     "expr": "143.32*ppt",
+     "digits": 1,
+     "unit": "g"
+    },
+    {
+     "label": {
+      "en": "Ions per formula unit"
+     },
+     "expr": "ncl + 1",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "How many moles of AgCl does 1 mol of CoCl₃·6NH₃ give? What does that tell us?",
+     "kn": "1 mol CoCl₃·6NH₃ ಎಷ್ಟು ಮೋಲ್ AgCl ಕೊಡುತ್ತದೆ?"
+    },
+    {
+     "en": "Write the formula of CoCl₃·4NH₃ that fits its result.",
+     "kn": "CoCl₃·4NH₃ ನ ಫಲಿತಾಂಶಕ್ಕೆ ಹೊಂದುವ ಸೂತ್ರ ಬರೆಯಿರಿ."
+    },
+    {
+     "en": "Which complex gives the most ions in solution?",
+     "kn": "ಯಾವ ಸಂಕೀರ್ಣ ದ್ರಾವಣದಲ್ಲಿ ಹೆಚ್ಚು ಅಯಾನು ಕೊಡುತ್ತದೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -450,6 +450,225 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Limiting reagent",
+    "kn": "ಮಿತಿಗೊಳಿಸುವ ಕಾರಕ"
+   },
+   "narration": {
+    "en": "N₂ + 3H₂ → 2NH₃. Choose the moles of each gas and press React. The reaction stops when one reactant is used up: that is the limiting reagent, and it alone decides how much ammonia forms.",
+    "kn": "N₂ + 3H₂ → 2NH₃. ಪ್ರತಿ ಅನಿಲದ ಮೋಲ್ ಆರಿಸಿ ಕ್ರಿಯೆ ಒತ್ತಿ. ಒಂದು ಕಾರಕ ಮುಗಿದಾಗ ಕ್ರಿಯೆ ನಿಲ್ಲುತ್ತದೆ: ಅದೇ ಮಿತಿಗೊಳಿಸುವ ಕಾರಕ, ಅಮೋನಿಯಾ ಪ್ರಮಾಣ ಅದರಿಂದಲೇ ನಿರ್ಧಾರ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "N₂ + 3H₂ → 2NH₃. Choose the moles of each gas and press React. The reaction stops when one reactant is used up: that is the limiting reagent, and it alone decides how much ammonia forms.",
+    "kn": "N₂ + 3H₂ → 2NH₃. ಪ್ರತಿ ಅನಿಲದ ಮೋಲ್ ಆರಿಸಿ ಕ್ರಿಯೆ ಒತ್ತಿ. ಒಂದು ಕಾರಕ ಮುಗಿದಾಗ ಕ್ರಿಯೆ ನಿಲ್ಲುತ್ತದೆ: ಅದೇ ಮಿತಿಗೊಳಿಸುವ ಕಾರಕ, ಅಮೋನಿಯಾ ಪ್ರಮಾಣ ಅದರಿಂದಲೇ ನಿರ್ಧಾರ."
+   },
+   "sliders": [
+    {
+     "name": "nN",
+     "label": {
+      "en": "N₂"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 2,
+     "unit": "mol"
+    },
+    {
+     "name": "nH",
+     "label": {
+      "en": "H₂"
+     },
+     "min": 1,
+     "max": 30,
+     "step": 1,
+     "value": 3,
+     "unit": "mol"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "React",
+      "kn": "ಕ್ರಿಯೆ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 4
+   },
+   "vars": [
+    {
+     "name": "xm",
+     "expr": "min(nN, nH/3)"
+    },
+    {
+     "name": "xi",
+     "expr": "xm*min(t/3, 1)"
+    },
+    {
+     "name": "N2",
+     "expr": "nN - xi"
+    },
+    {
+     "name": "H2",
+     "expr": "nH - 3*xi"
+    },
+    {
+     "name": "NH3",
+     "expr": "2*xi"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     15
+    ],
+    "y": [
+     -0.8,
+     9
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.3,
+     "y": 0.3,
+     "w": 14.4,
+     "h": 7.4,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 10,
+     "x": "0.6 + 13.6*rand(i + 0)",
+     "y": "0.6 + 6.8*rand(i + 50)",
+     "r": 0.22,
+     "visibleIf": "i < round(N2)",
+     "color": "blue"
+    },
+    {
+     "shape": "particles",
+     "count": 30,
+     "x": "0.6 + 13.6*rand(i + 100)",
+     "y": "0.6 + 6.8*rand(i + 150)",
+     "r": 0.13,
+     "visibleIf": "i < round(H2)",
+     "color": "white"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "0.6 + 13.6*rand(i + 200)",
+     "y": "0.6 + 6.8*rand(i + 250)",
+     "r": 0.18,
+     "visibleIf": "i < round(NH3)",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 8.3,
+     "text": {
+      "en": "blue N₂   white H₂   green NH₃   (1 dot = 1 mol)"
+     },
+     "color": "white",
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": -0.4,
+     "text": {
+      "en": "H₂ is the limiting reagent"
+     },
+     "visibleIf": "nH < 3*nN",
+     "color": "yellow",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": -0.4,
+     "text": {
+      "en": "N₂ is the limiting reagent"
+     },
+     "visibleIf": "nH > 3*nN",
+     "color": "yellow",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": -0.4,
+     "text": {
+      "en": "exact ratio: nothing left over"
+     },
+     "visibleIf": "nH == 3*nN",
+     "color": "yellow",
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "NH₃ formed"
+     },
+     "expr": "NH3",
+     "digits": 2,
+     "unit": "mol"
+    },
+    {
+     "label": {
+      "en": "Mass of NH₃"
+     },
+     "expr": "17.03*NH3",
+     "digits": 1,
+     "unit": "g"
+    },
+    {
+     "label": {
+      "en": "N₂ left"
+     },
+     "expr": "N2",
+     "digits": 2,
+     "unit": "mol"
+    },
+    {
+     "label": {
+      "en": "H₂ left"
+     },
+     "expr": "H2",
+     "digits": 2,
+     "unit": "mol"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Use 2 mol N₂ and 3 mol H₂. Which is limiting? How much NH₃ forms?",
+     "kn": "2 mol N₂, 3 mol H₂. ಯಾವುದು ಮಿತಿ? ಎಷ್ಟು NH₃?"
+    },
+    {
+     "en": "Find amounts where nothing is left over.",
+     "kn": "ಏನೂ ಉಳಿಯದ ಪ್ರಮಾಣ ಹುಡುಕಿ."
+    },
+    {
+     "en": "What mass of NH₃ do 5 mol N₂ and 30 mol H₂ give?",
+     "kn": "5 mol N₂, 30 mol H₂ ಎಷ್ಟು ದ್ರವ್ಯರಾಶಿ NH₃ ಕೊಡುತ್ತವೆ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

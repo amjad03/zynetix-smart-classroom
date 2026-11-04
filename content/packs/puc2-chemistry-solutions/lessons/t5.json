@@ -311,6 +311,237 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Abnormal molar mass: van 't Hoff factor",
+    "kn": "ಅಸಾಮಾನ್ಯ ಮೋಲಾರ್ ದ್ರವ್ಯರಾಶಿ: ವಾನ್ಟ್ ಹಾಫ್ ಅಂಶ"
+   },
+   "narration": {
+    "en": "Colligative properties count particles. If a solute dissociates (NaCl → Na⁺ + Cl⁻) there are more particles, i > 1 and the molar mass found is too small; if it associates (ethanoic acid dimers in benzene) i < 1 and the molar mass found is too large.",
+    "kn": "ಸಂಯೋಗಾತ್ಮಕ ಗುಣಗಳು ಕಣಗಳನ್ನು ಎಣಿಸುತ್ತವೆ. ವಿಘಟನೆಯಲ್ಲಿ ಕಣಗಳು ಹೆಚ್ಚು, i > 1, ಕಂಡ ಮೋಲಾರ್ ದ್ರವ್ಯರಾಶಿ ಕಡಿಮೆ; ಸಂಯೋಜನೆಯಲ್ಲಿ (ಬೆಂಜೀನ್‌ನಲ್ಲಿ ಎಥನೋಯಿಕ್ ಆಮ್ಲ ದ್ವಿಅಣು) i < 1, ಕಂಡ ಮೋಲಾರ್ ದ್ರವ್ಯರಾಶಿ ಹೆಚ್ಚು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Colligative properties count particles. If a solute dissociates (NaCl → Na⁺ + Cl⁻) there are more particles, i > 1 and the molar mass found is too small; if it associates (ethanoic acid dimers in benzene) i < 1 and the molar mass found is too large.",
+    "kn": "ಸಂಯೋಗಾತ್ಮಕ ಗುಣಗಳು ಕಣಗಳನ್ನು ಎಣಿಸುತ್ತವೆ. ವಿಘಟನೆಯಲ್ಲಿ ಕಣಗಳು ಹೆಚ್ಚು, i > 1, ಕಂಡ ಮೋಲಾರ್ ದ್ರವ್ಯರಾಶಿ ಕಡಿಮೆ; ಸಂಯೋಜನೆಯಲ್ಲಿ (ಬೆಂಜೀನ್‌ನಲ್ಲಿ ಎಥನೋಯಿಕ್ ಆಮ್ಲ ದ್ವಿಅಣು) i < 1, ಕಂಡ ಮೋಲಾರ್ ದ್ರವ್ಯರಾಶಿ ಹೆಚ್ಚು."
+   },
+   "sliders": [
+    {
+     "name": "al",
+     "label": {
+      "en": "Degree of dissociation or association α",
+      "kn": "ವಿಘಟನೆ/ಸಂಯೋಜನೆ ಮಟ್ಟ α"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 0.05,
+     "value": 1
+    }
+   ],
+   "choices": [
+    {
+     "name": "ty",
+     "label": {
+      "en": "Solute",
+      "kn": "ದ್ರಾವ್ಯ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "NaCl in water (n = 2)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "K₂SO₄ in water (n = 3)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "CH₃COOH in benzene (dimer)"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "vh",
+     "expr": "if(ty == 1, 1 + al, if(ty == 2, 1 + 2*al, 1 - al/2))"
+    },
+    {
+     "name": "M",
+     "expr": "((ty == 1)*(58.44) + (ty == 2)*(174.26) + (ty == 3)*(60.05))"
+    },
+    {
+     "name": "Mobs",
+     "expr": "M/vh"
+    },
+    {
+     "name": "nd",
+     "expr": "round(20*al)"
+    },
+    {
+     "name": "dd",
+     "expr": "round(10*al)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     8.8
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.2,
+     "y": 0.2,
+     "w": 9.6,
+     "h": 7.6,
+     "color": "white",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "1 + 2*mod(i, 5)",
+     "y": "1 + 2*floor(i/5)",
+     "r": 0.35,
+     "visibleIf": "ty <= 2 && i >= nd",
+     "color": "white"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "1 + 2*mod(i, 5) - 0.45",
+     "y": "1 + 2*floor(i/5)",
+     "r": 0.28,
+     "visibleIf": "ty <= 2 && i < nd",
+     "color": "blue"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "1 + 2*mod(i, 5) + 0.45",
+     "y": "1 + 2*floor(i/5)",
+     "r": 0.32,
+     "visibleIf": "ty <= 2 && i < nd",
+     "color": "orange"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "1 + 2*mod(i, 5) - 0.45",
+     "y": "1 + 2*floor(i/5) + 0.6",
+     "r": 0.28,
+     "visibleIf": "ty == 2 && i < nd",
+     "color": "blue"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "1 + 2*mod(i, 5) - 0.3",
+     "y": "1 + 2*floor(i/5)",
+     "r": 0.3,
+     "visibleIf": "ty == 3 && i < dd",
+     "color": "green"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "1 + 2*mod(i, 5) + 0.3",
+     "y": "1 + 2*floor(i/5)",
+     "r": 0.3,
+     "visibleIf": "ty == 3 && i < dd",
+     "color": "green"
+    },
+    {
+     "shape": "particles",
+     "count": 20,
+     "x": "1 + 2*mod(i, 5)",
+     "y": "1 + 2*floor(i/5)",
+     "r": 0.3,
+     "visibleIf": "ty == 3 && i >= dd && i < 20 - dd",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 8.4,
+     "text": {
+      "en": "white: formula units, blue/orange: ions"
+     },
+     "visibleIf": "ty <= 2",
+     "color": "white",
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 8.4,
+     "text": {
+      "en": "20 molecules; touching pairs are (CH₃COOH)₂ dimers"
+     },
+     "visibleIf": "ty == 3",
+     "color": "white",
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "van 't Hoff factor i"
+     },
+     "expr": "vh",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "True molar mass"
+     },
+     "expr": "M",
+     "digits": 2,
+     "unit": "g/mol"
+    },
+    {
+     "label": {
+      "en": "Molar mass from colligative data"
+     },
+     "expr": "Mobs",
+     "digits": 2,
+     "unit": "g/mol"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Fully dissociate K₂SO₄. What is i?",
+     "kn": "K₂SO₄ ಸಂಪೂರ್ಣ ವಿಘಟಿಸಿ. i ಎಷ್ಟು?"
+    },
+    {
+     "en": "Ethanoic acid fully dimerised in benzene: what molar mass would freezing-point data give?",
+     "kn": "ಬೆಂಜೀನ್‌ನಲ್ಲಿ ಸಂಪೂರ್ಣ ದ್ವಿಅಣು: ಮೋಲಾರ್ ದ್ರವ್ಯರಾಶಿ ಎಷ್ಟು ಕಾಣುತ್ತದೆ?"
+    },
+    {
+     "en": "NaCl that is 90% dissociated: find i.",
+     "kn": "90% ವಿಘಟಿತ NaCl: i ಹುಡುಕಿ."
+    }
+   ]
+  },
+  {
    "id": "3d-crystal_lattices",
    "type": "3d_model",
    "modelId": "crystal_lattices",
