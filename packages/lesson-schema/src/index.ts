@@ -22,7 +22,7 @@ export const Subject = z.enum([
   // Science
   'physics', 'chemistry', 'maths', 'biology', 'computer_science', 'electronics', 'statistics',
   // Commerce
-  'accountancy', 'business_studies', 'economics',
+  'accountancy', 'business_studies', 'economics', 'commerce',
   // Language
   'english',
 ]);
@@ -34,10 +34,10 @@ export type Year = z.infer<typeof Year>;
 
 /** Board exams (PUC = Karnataka II PUC, CBSE = CBSE Class 12) and entrance exams. */
 /** JEE = JEE Main; JEE_ADV = JEE Advanced. */
-export const Exam = z.enum(['PUC', 'CBSE', 'KCET', 'COMEDK', 'NEET', 'JEE', 'JEE_ADV', 'CUET']);
+export const Exam = z.enum(['PUC', 'CBSE', 'ISC', 'KCET', 'COMEDK', 'NEET', 'JEE', 'JEE_ADV', 'CUET']);
 
 /** The curriculum a college follows. Both use NCERT books for most subjects; scope and exam pattern differ. */
-export const Board = z.enum(['kar_pu', 'cbse']);
+export const Board = z.enum(['kar_pu', 'cbse', 'isc']);
 export type Board = z.infer<typeof Board>;
 const boards = z.array(Board).min(1).optional();
 export type Exam = z.infer<typeof Exam>;
