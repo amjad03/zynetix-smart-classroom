@@ -587,6 +587,268 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Reflexive, symmetric, transitive?",
+    "kn": "ಸ್ವವಾಚಕ, ಸಮಮಿತ, ಸಂಕ್ರಾಮಕ?"
+   },
+   "narration": {
+    "en": "A = {1, 2, 3, 4, 5, 6}. Each dot is a pair (a, b) of A × A; yellow dots are in the relation R. Reflexive: the whole diagonal is yellow. Symmetric: the picture is a mirror image across the diagonal.",
+    "kn": "A = {1, 2, 3, 4, 5, 6}. ಪ್ರತಿ ಚುಕ್ಕೆ A × A ಯ ಜೋಡಿ (a, b); ಹಳದಿ ಚುಕ್ಕೆಗಳು R ನಲ್ಲಿವೆ. ಸ್ವವಾಚಕ: ಇಡೀ ಕರ್ಣ ಹಳದಿ. ಸಮಮಿತ: ಚಿತ್ರ ಕರ್ಣದ ಆಚೀಚೆ ಪ್ರತಿಬಿಂಬ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A = {1, 2, 3, 4, 5, 6}. Each dot is a pair (a, b) of A × A; yellow dots are in the relation R. Reflexive: the whole diagonal is yellow. Symmetric: the picture is a mirror image across the diagonal.",
+    "kn": "A = {1, 2, 3, 4, 5, 6}. ಪ್ರತಿ ಚುಕ್ಕೆ A × A ಯ ಜೋಡಿ (a, b); ಹಳದಿ ಚುಕ್ಕೆಗಳು R ನಲ್ಲಿವೆ. ಸ್ವವಾಚಕ: ಇಡೀ ಕರ್ಣ ಹಳದಿ. ಸಮಮಿತ: ಚಿತ್ರ ಕರ್ಣದ ಆಚೀಚೆ ಪ್ರತಿಬಿಂಬ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "k"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 1,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "diag",
+     "label": {
+      "en": "Show the diagonal",
+      "kn": "ಕರ್ಣ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "rc",
+     "label": {
+      "en": "a R b when",
+      "kn": "a R b ಯಾವಾಗ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "a ≤ b"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "a < b"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "|a − b| ≤ k"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "k divides a − b"
+       },
+       "value": 4
+      }
+     ],
+     "value": 3
+    }
+   ],
+   "vars": [
+    {
+     "name": "nR",
+     "expr": "if(rc == 1, 21, if(rc == 2, 15, if(rc == 3, 6 + 2*((1 <= k)*5 + (2 <= k)*4 + (3 <= k)*3 + (4 <= k)*2 + (5 <= k)*1), 6 + 2*((mod(1, k) == 0)*5 + (mod(2, k) == 0)*4 + (mod(3, k) == 0)*3 + (mod(4, k) == 0)*2 + (mod(5, k) == 0)*1))))"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     14
+    ],
+    "y": [
+     -0.3,
+     7.3
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "visibleIf": "diag",
+     "color": "white",
+     "opacity": 0.5,
+     "x1": 0.5,
+     "y1": 0.5,
+     "x2": 6.5,
+     "y2": 6.5,
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "particles",
+     "color": "white",
+     "opacity": 0.25,
+     "count": 36,
+     "x": "(1 + mod(i, 6))",
+     "y": "(1 + floor(i/6))",
+     "r": 0.15
+    },
+    {
+     "shape": "particles",
+     "visibleIf": "if(rc == 1, (1 + mod(i, 6)) <= (1 + floor(i/6)), if(rc == 2, (1 + mod(i, 6)) < (1 + floor(i/6)), if(rc == 3, abs((1 + mod(i, 6)) - (1 + floor(i/6))) <= k, mod((1 + mod(i, 6)) - (1 + floor(i/6)), k) == 0)))",
+     "color": "yellow",
+     "count": 36,
+     "x": "(1 + mod(i, 6))",
+     "y": "(1 + floor(i/6))",
+     "r": 0.27
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 3.5,
+     "y": 7.0,
+     "text": {
+      "en": "a →"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 0.2,
+     "y": 3.5,
+     "text": {
+      "en": "b ↑"
+     },
+     "size": 22,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 7.5,
+     "y": 6.3,
+     "text": {
+      "en": "R has {nR:0} pairs"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "rc != 2",
+     "color": "green",
+     "x": 7.5,
+     "y": 5.2,
+     "text": {
+      "en": "reflexive ✓"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "rc == 2",
+     "color": "red",
+     "x": 7.5,
+     "y": 5.2,
+     "text": {
+      "en": "reflexive ✗"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "rc >= 3",
+     "color": "green",
+     "x": 7.5,
+     "y": 4.2,
+     "text": {
+      "en": "symmetric ✓"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "rc <= 2",
+     "color": "red",
+     "x": 7.5,
+     "y": 4.2,
+     "text": {
+      "en": "symmetric ✗"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "rc != 3 || k >= 5",
+     "color": "green",
+     "x": 7.5,
+     "y": 3.2,
+     "text": {
+      "en": "transitive ✓"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "rc == 3 && k < 5",
+     "color": "red",
+     "x": 7.5,
+     "y": 3.2,
+     "text": {
+      "en": "transitive ✗"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "rc == 4 || (rc == 3 && k >= 5)",
+     "color": "yellow",
+     "x": 7.5,
+     "y": 1.8,
+     "text": {
+      "en": "equivalence relation"
+     },
+     "size": 28,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Pairs in R"
+     },
+     "expr": "nR",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "For a < b, why is the diagonal empty?"
+    },
+    {
+     "en": "For |a − b| ≤ 1, find a, b, c with aRb and bRc but not aRc."
+    },
+    {
+     "en": "Which choice of relation and k gives an equivalence relation?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

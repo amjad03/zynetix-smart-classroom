@@ -232,6 +232,287 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Flip over the diagonal",
+    "kn": "ಕರ್ಣದ ಮೇಲೆ ತಿರುಗಿಸಿ"
+   },
+   "narration": {
+    "en": "Press Transpose: a₁₂ and a₂₁ swap places across the leading diagonal, giving A′. Every A is P + Q with P = (A + A′)/2 symmetric and Q = (A − A′)/2 skew-symmetric.",
+    "kn": "ಸ್ಥಾನಾಂತರ ಒತ್ತಿ: a₁₂ ಮತ್ತು a₂₁ ಮುಖ್ಯ ಕರ್ಣದ ಆಚೀಚೆ ಸ್ಥಾನ ಬದಲಿಸಿ A′ ಆಗುತ್ತದೆ. ಪ್ರತಿ A = P + Q; P = (A + A′)/2 ಸಮಮಿತ, Q = (A − A′)/2 ವಿಷಮ-ಸಮಮಿತ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Press Transpose: a₁₂ and a₂₁ swap places across the leading diagonal, giving A′. Every A is P + Q with P = (A + A′)/2 symmetric and Q = (A − A′)/2 skew-symmetric.",
+    "kn": "ಸ್ಥಾನಾಂತರ ಒತ್ತಿ: a₁₂ ಮತ್ತು a₂₁ ಮುಖ್ಯ ಕರ್ಣದ ಆಚೀಚೆ ಸ್ಥಾನ ಬದಲಿಸಿ A′ ಆಗುತ್ತದೆ. ಪ್ರತಿ A = P + Q; P = (A + A′)/2 ಸಮಮಿತ, Q = (A − A′)/2 ವಿಷಮ-ಸಮಮಿತ."
+   },
+   "sliders": [
+    {
+     "name": "a11",
+     "label": {
+      "en": "a₁₁"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 0.5,
+     "value": 1
+    },
+    {
+     "name": "a22",
+     "label": {
+      "en": "a₂₂"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 0.5,
+     "value": 4
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "a₁₂"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 0.5,
+     "value": 2
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "a₂₁"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 0.5,
+     "value": -3
+    }
+   ],
+   "toggles": [
+    {
+     "name": "parts",
+     "label": {
+      "en": "Symmetric and skew parts",
+      "kn": "ಸಮಮಿತ ಮತ್ತು ವಿಷಮ ಭಾಗಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Transpose",
+      "kn": "ಸ್ಥಾನಾಂತರ"
+     },
+     "icon": "flip",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 2
+   },
+   "vars": [
+    {
+     "name": "s",
+     "expr": "smoothstep(0, 1.5, t)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     1,
+     8.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "color": "white",
+     "opacity": 0.4,
+     "x1": 1.2,
+     "y1": 7.2,
+     "x2": 5.3,
+     "y2": 2.8,
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "color": "white",
+     "x1": 1.2,
+     "y1": 3,
+     "x2": 1.2,
+     "y2": 7,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "color": "white",
+     "x1": 5.3,
+     "y1": 3,
+     "x2": 5.3,
+     "y2": 7,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "visibleIf": "s < 0.5",
+     "color": "yellow",
+     "x": 3.2,
+     "y": 7.8,
+     "text": {
+      "en": "A"
+     },
+     "size": 32
+    },
+    {
+     "shape": "text",
+     "visibleIf": "s >= 0.5",
+     "color": "green",
+     "x": 3.2,
+     "y": 7.8,
+     "text": {
+      "en": "A′"
+     },
+     "size": 32
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 2.2,
+     "y": 6,
+     "text": {
+      "en": "{a11:1}"
+     },
+     "size": 34
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 4.3,
+     "y": 4,
+     "text": {
+      "en": "{a22:1}"
+     },
+     "size": 34
+    },
+    {
+     "shape": "text",
+     "color": "orange",
+     "x": "4.3 - 2.1*s",
+     "y": "6 - 2*s",
+     "text": {
+      "en": "{b:1}"
+     },
+     "size": 34
+    },
+    {
+     "shape": "text",
+     "color": "blue",
+     "x": "2.2 + 2.1*s",
+     "y": "4 + 2*s",
+     "text": {
+      "en": "{c:1}"
+     },
+     "size": 34
+    },
+    {
+     "shape": "text",
+     "visibleIf": "parts",
+     "color": "green",
+     "x": 7,
+     "y": 7.4,
+     "text": {
+      "en": "P = [ {a11:1}  {(b + c)/2:2} ; {(b + c)/2:2}  {a22:1} ]"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "parts",
+     "color": "red",
+     "x": 7,
+     "y": 6.4,
+     "text": {
+      "en": "Q = [ 0  {(b - c)/2:2} ; {(c - b)/2:2}  0 ]"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "b == c",
+     "color": "green",
+     "x": 7,
+     "y": 4.6,
+     "text": {
+      "en": "A′ = A: symmetric"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "b == -c && a11 == 0 && a22 == 0 && b != c",
+     "color": "red",
+     "x": 7,
+     "y": 4.6,
+     "text": {
+      "en": "A′ = −A: skew-symmetric"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "b == 0 && c == 0 && a11 == 0 && a22 == 0",
+     "color": "white",
+     "x": 7,
+     "y": 3.6,
+     "text": {
+      "en": "both: only the zero matrix"
+     },
+     "size": 24,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Off-diagonal of P"
+     },
+     "expr": "(b + c)/2",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Off-diagonal of Q"
+     },
+     "expr": "(b - c)/2",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make A symmetric. What happens when you transpose it?"
+    },
+    {
+     "en": "Make A skew-symmetric. What must the diagonal entries be?"
+    },
+    {
+     "en": "Check that P + Q gives back A."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

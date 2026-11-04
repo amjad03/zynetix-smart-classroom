@@ -249,6 +249,216 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Cup or cap? The second derivative",
+    "kn": "ಬಟ್ಟಲೋ ಟೊಪ್ಪಿಯೋ? ಎರಡನೇ ಅವಕಲಜ"
+   },
+   "narration": {
+    "en": "f(x) = x³ − kx. Drag P. The orange parabola has the same value, slope and f″ as the curve at P: it opens down when f″ < 0 and up when f″ > 0. Where f′ = 0 that decides maximum or minimum.",
+    "kn": "f(x) = x³ − kx. P ಎಳೆಯಿರಿ. ಕಿತ್ತಳೆ ಪರವಲಯಕ್ಕೆ P ಯಲ್ಲಿ ವಕ್ರರೇಖೆಯಂತೆಯೇ ಬೆಲೆ, ಇಳಿಜಾರು, f″ ಇವೆ: f″ < 0 ಆದರೆ ಕೆಳಮುಖ, f″ > 0 ಆದರೆ ಮೇಲ್ಮುಖ. f′ = 0 ಇರುವಲ್ಲಿ ಇದು ಗರಿಷ್ಠ/ಕನಿಷ್ಠ ತೀರ್ಮಾನಿಸುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "f(x) = x³ − kx. Drag P. The orange parabola has the same value, slope and f″ as the curve at P: it opens down when f″ < 0 and up when f″ > 0. Where f′ = 0 that decides maximum or minimum.",
+    "kn": "f(x) = x³ − kx. P ಎಳೆಯಿರಿ. ಕಿತ್ತಳೆ ಪರವಲಯಕ್ಕೆ P ಯಲ್ಲಿ ವಕ್ರರೇಖೆಯಂತೆಯೇ ಬೆಲೆ, ಇಳಿಜಾರು, f″ ಇವೆ: f″ < 0 ಆದರೆ ಕೆಳಮುಖ, f″ > 0 ಆದರೆ ಮೇಲ್ಮುಖ. f′ = 0 ಇರುವಲ್ಲಿ ಇದು ಗರಿಷ್ಠ/ಕನಿಷ್ಠ ತೀರ್ಮಾನಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "k in f(x) = x³ − kx"
+     },
+     "min": 0,
+     "max": 6,
+     "step": 0.25,
+     "value": 3
+    }
+   ],
+   "toggles": [
+    {
+     "name": "par",
+     "label": {
+      "en": "Bending parabola",
+      "kn": "ಬಾಗುವ ಪರವಲಯ"
+     },
+     "value": true
+    },
+    {
+     "name": "tang",
+     "label": {
+      "en": "Tangent",
+      "kn": "ಸ್ಪರ್ಶಕ"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "P",
+     "x": -1,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       -2.5,
+       2.5
+      ],
+      "y": [
+       -1,
+       1
+      ]
+     },
+     "snap": 0.05,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "p",
+     "expr": "P_x"
+    },
+    {
+     "name": "fv",
+     "expr": "p^3 - k*p"
+    },
+    {
+     "name": "f1",
+     "expr": "3*p^2 - k"
+    },
+    {
+     "name": "f2",
+     "expr": "6*p"
+    }
+   ],
+   "view": {
+    "x": [
+     -2.7,
+     2.7
+    ],
+    "y": [
+     -8,
+     8
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "color": "yellow",
+     "fn": "x^3 - k*x",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "visibleIf": "tang",
+     "color": "green",
+     "opacity": 0.8,
+     "fn": "fv + f1*(x - p)",
+     "from": "p - 1.2",
+     "to": "p + 1.2",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "visibleIf": "par",
+     "color": "orange",
+     "fn": "fv + f1*(x - p) + f2/2*(x - p)^2",
+     "from": "p - 1",
+     "to": "p + 1",
+     "width": 5
+    },
+    {
+     "shape": "circle",
+     "color": "white",
+     "x": "p",
+     "y": "fv",
+     "r": 0.06
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -2.6,
+     "y": 7.2,
+     "text": {
+      "en": "f′ = {f1:2}   f″ = {f2:2}"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "abs(f1) < 0.15 && f2 < 0",
+     "color": "red",
+     "x": -2.6,
+     "y": 5.9,
+     "text": {
+      "en": "f′ = 0, f″ < 0: local maximum"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "abs(f1) < 0.15 && f2 > 0",
+     "color": "blue",
+     "x": -2.6,
+     "y": 5.9,
+     "text": {
+      "en": "f′ = 0, f″ > 0: local minimum"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "abs(f1) < 0.15 && f2 == 0",
+     "color": "orange",
+     "x": -2.6,
+     "y": 5.9,
+     "text": {
+      "en": "f′ = 0, f″ = 0: the test fails"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "f′(x) at P"
+     },
+     "expr": "f1",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "f″(x) at P"
+     },
+     "expr": "f2",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With k = 3, put P at x = −1 and at x = 1. Which is the maximum?"
+    },
+    {
+     "en": "Set k = 0 and P at 0. f′ = f″ = 0: does the test decide anything?"
+    },
+    {
+     "en": "For k = 12 (off the slider), where would the turning points be? Check with x = ±√(k/3)."
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

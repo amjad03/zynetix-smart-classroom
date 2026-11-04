@@ -271,6 +271,268 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Walking along r = a + λb",
+    "kn": "r = a + λb ಉದ್ದಕ್ಕೂ ನಡಿಗೆ"
+   },
+   "narration": {
+    "en": "The line passes through A(2, −1, 1) parallel to b. Each λ gives one point P with position vector a + λb. Move λ and read the coordinates; they satisfy the Cartesian form (x − 2)/b₁ = (y + 1)/b₂ = (z − 1)/b₃ = λ.",
+    "kn": "ರೇಖೆ A(2, −1, 1) ಮೂಲಕ b ಗೆ ಸಮಾಂತರ. ಪ್ರತಿ λ ಗೆ ಒಂದು ಬಿಂದು P, ಸ್ಥಾನ ಸದಿಶ a + λb. λ ಸರಿಸಿ ನಿರ್ದೇಶಾಂಕಗಳನ್ನು ಓದಿ; ಅವು (x − 2)/b₁ = (y + 1)/b₂ = (z − 1)/b₃ = λ ಪಾಲಿಸುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The line passes through A(2, −1, 1) parallel to b. Each λ gives one point P with position vector a + λb. Move λ and read the coordinates; they satisfy the Cartesian form (x − 2)/b₁ = (y + 1)/b₂ = (z − 1)/b₃ = λ.",
+    "kn": "ರೇಖೆ A(2, −1, 1) ಮೂಲಕ b ಗೆ ಸಮಾಂತರ. ಪ್ರತಿ λ ಗೆ ಒಂದು ಬಿಂದು P, ಸ್ಥಾನ ಸದಿಶ a + λb. λ ಸರಿಸಿ ನಿರ್ದೇಶಾಂಕಗಳನ್ನು ಓದಿ; ಅವು (x − 2)/b₁ = (y + 1)/b₂ = (z − 1)/b₃ = λ ಪಾಲಿಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "lam",
+     "label": {
+      "en": "λ"
+     },
+     "min": -2,
+     "max": 2,
+     "step": 0.1,
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "vecs",
+     "label": {
+      "en": "Show a and λb",
+      "kn": "a ಮತ್ತು λb"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "bc",
+     "label": {
+      "en": "Direction b",
+      "kn": "ದಿಕ್ಕು b"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "(1, 2, 2)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "(3, −1, 1)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "(0, 1, −1)"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "bx",
+     "expr": "if(bc == 1, 1, if(bc == 2, 3, 0))"
+    },
+    {
+     "name": "by",
+     "expr": "if(bc == 1, 2, if(bc == 2, -1, 1))"
+    },
+    {
+     "name": "bz",
+     "expr": "if(bc == 1, 2, if(bc == 2, 1, -1))"
+    },
+    {
+     "name": "qx",
+     "expr": "2 + lam*bx"
+    },
+    {
+     "name": "qy",
+     "expr": "-1 + lam*by"
+    },
+    {
+     "name": "qz",
+     "expr": "1 + lam*bz"
+    }
+   ],
+   "view": {
+    "x": [
+     -9,
+     9
+    ],
+    "y": [
+     -5,
+     5.1
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "arrow",
+     "color": "white",
+     "opacity": 0.6,
+     "x": 0,
+     "y": 0,
+     "dx": -1.6,
+     "dy": -1.4,
+     "label": "x",
+     "width": 2
+    },
+    {
+     "shape": "arrow",
+     "color": "white",
+     "opacity": 0.6,
+     "x": 0,
+     "y": 0,
+     "dx": 4.0,
+     "dy": 0.0,
+     "label": "y",
+     "width": 2
+    },
+    {
+     "shape": "arrow",
+     "color": "white",
+     "opacity": 0.6,
+     "x": 0,
+     "y": 0,
+     "dx": 0.0,
+     "dy": 4.0,
+     "label": "z",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "color": "blue",
+     "x1": "(-1 - 3*by) - 0.4*(2 - 3*bx)",
+     "y1": "(1 - 3*bz) - 0.35*(2 - 3*bx)",
+     "x2": "(-1 + 3*by) - 0.4*(2 + 3*bx)",
+     "y2": "(1 + 3*bz) - 0.35*(2 + 3*bx)",
+     "width": 3
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "vecs",
+     "color": "green",
+     "x": 0,
+     "y": 0,
+     "dx": -1.8,
+     "dy": 0.3,
+     "label": "a",
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "vecs && lam != 0",
+     "color": "orange",
+     "x": -1.8,
+     "y": 0.3,
+     "dx": "(lam*by) - 0.4*(lam*bx)",
+     "dy": "(lam*bz) - 0.35*(lam*bx)",
+     "label": "λb",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "color": "yellow",
+     "x": "(qy) - 0.4*(qx)",
+     "y": "(qz) - 0.35*(qx)",
+     "r": 0.22
+    },
+    {
+     "shape": "text",
+     "color": "yellow",
+     "x": -8.8,
+     "y": 4.6,
+     "text": {
+      "en": "P = ({qx:1}, {qy:1}, {qz:1})"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "bc == 1",
+     "color": "white",
+     "x": -8.8,
+     "y": 3.8,
+     "text": {
+      "en": "(x − 2)/1 = (y + 1)/2 = (z − 1)/2"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "bc == 2",
+     "color": "white",
+     "x": -8.8,
+     "y": 3.8,
+     "text": {
+      "en": "(x − 2)/3 = (y + 1)/(−1) = (z − 1)/1"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "bc == 3",
+     "color": "white",
+     "x": -8.8,
+     "y": 3.8,
+     "text": {
+      "en": "x = 2,  (y + 1)/1 = (z − 1)/(−1)"
+     },
+     "size": 22,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "x"
+     },
+     "expr": "qx",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "y"
+     },
+     "expr": "qy",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "z"
+     },
+     "expr": "qz",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set λ = 0. Where is P?"
+    },
+    {
+     "en": "With b = (1, 2, 2) and λ = 1, check P = (3, 1, 3)."
+    },
+    {
+     "en": "For b = (0, 1, −1), why must x stay 2 all along the line?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

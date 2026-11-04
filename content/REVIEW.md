@@ -662,3 +662,10 @@ No text is reproduced. Check these plot details against the texts:
 - **Sorts that follow NCERT:** STI curability, and the order of splicing before capping and tailing.
 - **Diagrams:** the pBR322 map and the reproductive-system diagrams are schematic.
 - **Kannada:** needs a native-speaker review.
+
+## Maths 2nd PUC simulations (61 lessons)
+
+- **3D scenes:** drawn at one fixed tilt.
+- **Probability draws:** the sequence repeats after Clear.
+- **Matrices t1:** the "most specific type" pairing may be debatable.
+- **Kannada:** needs a native-speaker review.

@@ -323,6 +323,258 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Two dice: given that…",
+    "kn": "ಎರಡು ದಾಳಗಳು: … ಆಗಿದೆ ಎಂದಾಗ"
+   },
+   "narration": {
+    "en": "The 36 outcomes of two dice. E: the sum is at least k. Once F is known to have happened (blue), only the F outcomes count: P(E|F) = n(E ∩ F)/n(F), the yellow dots out of the blue ones.",
+    "kn": "ಎರಡು ದಾಳಗಳ 36 ಫಲಿತಾಂಶಗಳು. E: ಮೊತ್ತ ಕನಿಷ್ಠ k. F ಸಂಭವಿಸಿದೆ ಎಂದು ತಿಳಿದ ಮೇಲೆ (ನೀಲಿ) F ಫಲಿತಾಂಶಗಳು ಮಾತ್ರ ಎಣಿಕೆ: P(E|F) = n(E ∩ F)/n(F), ನೀಲಿಗಳಲ್ಲಿ ಹಳದಿ ಚುಕ್ಕೆಗಳು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The 36 outcomes of two dice. E: the sum is at least k. Once F is known to have happened (blue), only the F outcomes count: P(E|F) = n(E ∩ F)/n(F), the yellow dots out of the blue ones.",
+    "kn": "ಎರಡು ದಾಳಗಳ 36 ಫಲಿತಾಂಶಗಳು. E: ಮೊತ್ತ ಕನಿಷ್ಠ k. F ಸಂಭವಿಸಿದೆ ಎಂದು ತಿಳಿದ ಮೇಲೆ (ನೀಲಿ) F ಫಲಿತಾಂಶಗಳು ಮಾತ್ರ ಎಣಿಕೆ: P(E|F) = n(E ∩ F)/n(F), ನೀಲಿಗಳಲ್ಲಿ ಹಳದಿ ಚುಕ್ಕೆಗಳು."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "E: sum at least k"
+     },
+     "min": 2,
+     "max": 12,
+     "step": 1,
+     "value": 9
+    }
+   ],
+   "toggles": [
+    {
+     "name": "shE",
+     "label": {
+      "en": "Show E outside F (orange)",
+      "kn": "F ಹೊರಗಿನ E"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "Fc",
+     "label": {
+      "en": "Event F",
+      "kn": "ಘಟನೆ F"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "First die even"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "At least one 6"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "A double"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "nF",
+     "expr": "if(Fc == 1, 18, if(Fc == 2, 11, 6))"
+    },
+    {
+     "name": "nE",
+     "expr": "(2 >= k)*1 + (3 >= k)*2 + (4 >= k)*3 + (5 >= k)*4 + (6 >= k)*5 + (7 >= k)*6 + (8 >= k)*5 + (9 >= k)*4 + (10 >= k)*3 + (11 >= k)*2 + (12 >= k)*1"
+    },
+    {
+     "name": "nEF",
+     "expr": "if(Fc == 1, clamp(9 - k, 0, 6) + clamp(11 - k, 0, 6) + clamp(13 - k, 0, 6), if(Fc == 2, (7 >= k) + (8 >= k) + (9 >= k) + (10 >= k) + (11 >= k) + (12 >= k) + (7 >= k) + (8 >= k) + (9 >= k) + (10 >= k) + (11 >= k), (2 >= k) + (4 >= k) + (6 >= k) + (8 >= k) + (10 >= k) + (12 >= k)))"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.3,
+     13.5
+    ],
+    "y": [
+     -0.3,
+     7.5
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "color": "white",
+     "opacity": 0.25,
+     "count": 36,
+     "x": "(1 + mod(i, 6))",
+     "y": "(1 + floor(i/6))",
+     "r": 0.17
+    },
+    {
+     "shape": "particles",
+     "visibleIf": "if(Fc == 1, mod((1 + mod(i, 6)), 2) == 0, if(Fc == 2, (1 + mod(i, 6)) == 6 || (1 + floor(i/6)) == 6, (1 + mod(i, 6)) == (1 + floor(i/6))))",
+     "color": "blue",
+     "count": 36,
+     "x": "(1 + mod(i, 6))",
+     "y": "(1 + floor(i/6))",
+     "r": 0.3
+    },
+    {
+     "shape": "particles",
+     "visibleIf": "shE && ((1 + mod(i, 6)) + (1 + floor(i/6)) >= k) && !(if(Fc == 1, mod((1 + mod(i, 6)), 2) == 0, if(Fc == 2, (1 + mod(i, 6)) == 6 || (1 + floor(i/6)) == 6, (1 + mod(i, 6)) == (1 + floor(i/6)))))",
+     "color": "orange",
+     "opacity": 0.7,
+     "count": 36,
+     "x": "(1 + mod(i, 6))",
+     "y": "(1 + floor(i/6))",
+     "r": 0.15
+    },
+    {
+     "shape": "particles",
+     "visibleIf": "((1 + mod(i, 6)) + (1 + floor(i/6)) >= k) && (if(Fc == 1, mod((1 + mod(i, 6)), 2) == 0, if(Fc == 2, (1 + mod(i, 6)) == 6 || (1 + floor(i/6)) == 6, (1 + mod(i, 6)) == (1 + floor(i/6)))))",
+     "color": "yellow",
+     "count": 36,
+     "x": "(1 + mod(i, 6))",
+     "y": "(1 + floor(i/6))",
+     "r": 0.22
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 3.5,
+     "y": 7.1,
+     "text": {
+      "en": "first die →"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -0.1,
+     "y": 3.5,
+     "text": {
+      "en": "second ↑"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "blue",
+     "x": 7.3,
+     "y": 6.4,
+     "text": {
+      "en": "n(F) = {nF:0}"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "yellow",
+     "x": 7.3,
+     "y": 5.5,
+     "text": {
+      "en": "n(E ∩ F) = {nEF:0}"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "orange",
+     "x": 7.3,
+     "y": 4.6,
+     "text": {
+      "en": "n(E) = {nE:0}"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 7.3,
+     "y": 3.4,
+     "text": {
+      "en": "P(E|F) = {nEF:0}/{nF:0} = {nEF/nF:3}"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 7.3,
+     "y": 2.5,
+     "text": {
+      "en": "P(E) = {nE:0}/36 = {nE/36:3}"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "P(F)"
+     },
+     "expr": "nF/36",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "P(E ∩ F)"
+     },
+     "expr": "nEF/36",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "P(E|F)"
+     },
+     "expr": "nEF/nF",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "P(E)"
+     },
+     "expr": "nE/36",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With k = 9 and F = first die even, count the yellow dots. Is P(E|F) = 6/18?"
+    },
+    {
+     "en": "Which F makes P(E|F) bigger than P(E)? Why?"
+    },
+    {
+     "en": "Set k = 2. What is P(E|F) for every F, and why?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

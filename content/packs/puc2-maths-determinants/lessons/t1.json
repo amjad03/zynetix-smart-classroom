@@ -257,6 +257,264 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Column operations and area",
+    "kn": "ಕಂಬಸಾಲು ಕ್ರಿಯೆಗಳು ಮತ್ತು ವಿಸ್ತೀರ್ಣ"
+   },
+   "narration": {
+    "en": "The columns of A are the arrows C1 and C2; |A| is the signed area of their parallelogram. Adding k × C2 to C1 shears it but keeps the area. Swapping the columns flips the sign.",
+    "kn": "A ಯ ಕಂಬಸಾಲುಗಳು C1, C2 ಬಾಣಗಳು; |A| ಅವುಗಳ ಸಮಾಂತರ ಚತುರ್ಭುಜದ ಚಿಹ್ನೆಸಹಿತ ವಿಸ್ತೀರ್ಣ. C1 ಗೆ k × C2 ಸೇರಿಸಿದರೆ ಆಕಾರ ಓರೆಯಾಗುತ್ತದೆ, ವಿಸ್ತೀರ್ಣ ಬದಲಾಗುವುದಿಲ್ಲ. ಕಂಬಸಾಲು ಅದಲುಬದಲು ಮಾಡಿದರೆ ಚಿಹ್ನೆ ಬದಲಾಗುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The columns of A are the arrows C1 and C2; |A| is the signed area of their parallelogram. Adding k × C2 to C1 shears it but keeps the area. Swapping the columns flips the sign.",
+    "kn": "A ಯ ಕಂಬಸಾಲುಗಳು C1, C2 ಬಾಣಗಳು; |A| ಅವುಗಳ ಸಮಾಂತರ ಚತುರ್ಭುಜದ ಚಿಹ್ನೆಸಹಿತ ವಿಸ್ತೀರ್ಣ. C1 ಗೆ k × C2 ಸೇರಿಸಿದರೆ ಆಕಾರ ಓರೆಯಾಗುತ್ತದೆ, ವಿಸ್ತೀರ್ಣ ಬದಲಾಗುವುದಿಲ್ಲ. ಕಂಬಸಾಲು ಅದಲುಬದಲು ಮಾಡಿದರೆ ಚಿಹ್ನೆ ಬದಲಾಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "k in C1 → C1 + k·C2"
+     },
+     "min": -1,
+     "max": 1,
+     "step": 0.25,
+     "value": 0
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sw",
+     "label": {
+      "en": "Swap the columns",
+      "kn": "ಕಂಬಸಾಲು ಅದಲುಬದಲು"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "U",
+     "label": "C1",
+     "x": 3,
+     "y": 1,
+     "box": {
+      "x": [
+       -3,
+       3
+      ],
+      "y": [
+       -3,
+       3
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    },
+    {
+     "name": "V",
+     "label": "C2",
+     "x": 1,
+     "y": 2,
+     "box": {
+      "x": [
+       -3,
+       3
+      ],
+      "y": [
+       -3,
+       3
+      ]
+     },
+     "snap": 0.5,
+     "color": "green"
+    }
+   ],
+   "vars": [
+    {
+     "name": "ux",
+     "expr": "U_x + k*V_x"
+    },
+    {
+     "name": "uy",
+     "expr": "U_y + k*V_y"
+    },
+    {
+     "name": "c1x",
+     "expr": "if(sw, V_x, ux)"
+    },
+    {
+     "name": "c1y",
+     "expr": "if(sw, V_y, uy)"
+    },
+    {
+     "name": "c2x",
+     "expr": "if(sw, ux, V_x)"
+    },
+    {
+     "name": "c2y",
+     "expr": "if(sw, uy, V_y)"
+    },
+    {
+     "name": "det",
+     "expr": "c1x*c2y - c2x*c1y"
+    }
+   ],
+   "view": {
+    "x": [
+     -16,
+     16
+    ],
+    "y": [
+     -9.5,
+     9.5
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "color": "white",
+     "opacity": 0.5,
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "U_x",
+       "U_y"
+      ],
+      [
+       "U_x + V_x",
+       "U_y + V_y"
+      ],
+      [
+       "V_x",
+       "V_y"
+      ]
+     ],
+     "fill": false,
+     "width": 2
+    },
+    {
+     "shape": "polygon",
+     "color": {
+      "by": "step(0, det)",
+      "scale": [
+       "red",
+       "blue"
+      ]
+     },
+     "opacity": 0.45,
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "c1x",
+       "c1y"
+      ],
+      [
+       "c1x + c2x",
+       "c1y + c2y"
+      ],
+      [
+       "c2x",
+       "c2y"
+      ]
+     ]
+    },
+    {
+     "shape": "arrow",
+     "color": "yellow",
+     "x": 0,
+     "y": 0,
+     "dx": "c1x",
+     "dy": "c1y",
+     "label": "C1",
+     "width": 5
+    },
+    {
+     "shape": "arrow",
+     "color": "green",
+     "x": 0,
+     "y": 0,
+     "dx": "c2x",
+     "dy": "c2y",
+     "label": "C2",
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -15.5,
+     "y": 8.6,
+     "text": {
+      "en": "A = [ {c1x:2}  {c2x:2} ; {c1y:2}  {c2y:2} ]"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "orange",
+     "x": -15.5,
+     "y": 7.2,
+     "text": {
+      "en": "|A| = {det:2}"
+     },
+     "size": 30,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -15.5,
+     "y": 5.9,
+     "text": {
+      "en": "blue: |A| > 0 (anticlockwise)   red: |A| < 0"
+     },
+     "size": 22,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "|A| now"
+     },
+     "expr": "det",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "|A| before the operation"
+     },
+     "expr": "U_x*V_y - V_x*U_y",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Move k from −1 to 1. Does |A| change at all?"
+    },
+    {
+     "en": "Turn on Swap. What happens to the sign of |A|?"
+    },
+    {
+     "en": "Drag the handles so that C1 and C2 lie on one line. What is |A|?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

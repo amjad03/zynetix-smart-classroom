@@ -177,6 +177,291 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Apply A, then undo it",
+    "kn": "A ಅನ್ವಯಿಸಿ, ನಂತರ ರದ್ದು ಮಾಡಿ"
+   },
+   "narration": {
+    "en": "Press the button: the shape is moved by A, then A⁻¹ brings every point back, because A⁻¹A = I. If |A| = 0, A flattens the plane onto a line and nothing can undo it: A has no inverse.",
+    "kn": "ಗುಂಡಿ ಒತ್ತಿ: ಆಕೃತಿ A ಯಿಂದ ಸರಿಯುತ್ತದೆ, ನಂತರ A⁻¹A = I ಆದ್ದರಿಂದ A⁻¹ ಪ್ರತಿ ಬಿಂದುವನ್ನು ಮರಳಿ ತರುತ್ತದೆ. |A| = 0 ಆದರೆ A ಸಮತಲವನ್ನು ರೇಖೆಗೆ ಚಪ್ಪಟೆ ಮಾಡುತ್ತದೆ; ಯಾವುದೂ ರದ್ದು ಮಾಡಲಾರದು: ವಿಲೋಮವಿಲ್ಲ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Press the button: the shape is moved by A, then A⁻¹ brings every point back, because A⁻¹A = I. If |A| = 0, A flattens the plane onto a line and nothing can undo it: A has no inverse.",
+    "kn": "ಗುಂಡಿ ಒತ್ತಿ: ಆಕೃತಿ A ಯಿಂದ ಸರಿಯುತ್ತದೆ, ನಂತರ A⁻¹A = I ಆದ್ದರಿಂದ A⁻¹ ಪ್ರತಿ ಬಿಂದುವನ್ನು ಮರಳಿ ತರುತ್ತದೆ. |A| = 0 ಆದರೆ A ಸಮತಲವನ್ನು ರೇಖೆಗೆ ಚಪ್ಪಟೆ ಮಾಡುತ್ತದೆ; ಯಾವುದೂ ರದ್ದು ಮಾಡಲಾರದು: ವಿಲೋಮವಿಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "a"
+     },
+     "min": -2,
+     "max": 2,
+     "step": 0.25,
+     "value": 1.5
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "b"
+     },
+     "min": -2,
+     "max": 2,
+     "step": 0.25,
+     "value": 0.5
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "c"
+     },
+     "min": -2,
+     "max": 2,
+     "step": 0.25,
+     "value": -0.5
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "d"
+     },
+     "min": -2,
+     "max": 2,
+     "step": 0.25,
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "inv",
+     "label": {
+      "en": "Show A⁻¹",
+      "kn": "A⁻¹ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Apply A, then A⁻¹",
+      "kn": "A, ನಂತರ A⁻¹"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 4
+   },
+   "vars": [
+    {
+     "name": "det",
+     "expr": "a*d - b*c"
+    },
+    {
+     "name": "s1",
+     "expr": "smoothstep(0, 1.5, t)"
+    },
+    {
+     "name": "s2",
+     "expr": "if(det != 0, smoothstep(2, 3.5, t), 0)"
+    },
+    {
+     "name": "n11",
+     "expr": "(1 - s2)*(1 - s1 + s1*a) + s2"
+    },
+    {
+     "name": "n12",
+     "expr": "(1 - s2)*s1*b"
+    },
+    {
+     "name": "n21",
+     "expr": "(1 - s2)*s1*c"
+    },
+    {
+     "name": "n22",
+     "expr": "(1 - s2)*(1 - s1 + s1*d) + s2"
+    }
+   ],
+   "view": {
+    "x": [
+     -7.5,
+     7.5
+    ],
+    "y": [
+     -4.3,
+     4.3
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "color": "white",
+     "opacity": 0.25,
+     "points": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.25,
+       0.0
+      ],
+      [
+       0.25,
+       0.5
+      ],
+      [
+       0.6,
+       0.5
+      ],
+      [
+       0.6,
+       0.75
+      ],
+      [
+       0.25,
+       0.75
+      ],
+      [
+       0.25,
+       1.0
+      ],
+      [
+       0.75,
+       1.0
+      ],
+      [
+       0.75,
+       1.25
+      ],
+      [
+       0.0,
+       1.25
+      ]
+     ]
+    },
+    {
+     "shape": "polygon",
+     "color": {
+      "by": "step(0, det)",
+      "scale": [
+       "red",
+       "yellow"
+      ]
+     },
+     "opacity": 0.6,
+     "points": [
+      [
+       "n11*0.0 + n12*0.0",
+       "n21*0.0 + n22*0.0"
+      ],
+      [
+       "n11*0.25 + n12*0.0",
+       "n21*0.25 + n22*0.0"
+      ],
+      [
+       "n11*0.25 + n12*0.5",
+       "n21*0.25 + n22*0.5"
+      ],
+      [
+       "n11*0.6 + n12*0.5",
+       "n21*0.6 + n22*0.5"
+      ],
+      [
+       "n11*0.6 + n12*0.75",
+       "n21*0.6 + n22*0.75"
+      ],
+      [
+       "n11*0.25 + n12*0.75",
+       "n21*0.25 + n22*0.75"
+      ],
+      [
+       "n11*0.25 + n12*1.0",
+       "n21*0.25 + n22*1.0"
+      ],
+      [
+       "n11*0.75 + n12*1.0",
+       "n21*0.75 + n22*1.0"
+      ],
+      [
+       "n11*0.75 + n12*1.25",
+       "n21*0.75 + n22*1.25"
+      ],
+      [
+       "n11*0.0 + n12*1.25",
+       "n21*0.0 + n22*1.25"
+      ]
+     ]
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -7.3,
+     "y": 3.8,
+     "text": {
+      "en": "A = [ {a:2}  {b:2} ; {c:2}  {d:2} ]   |A| = {det:3}"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "det != 0 && inv",
+     "color": "green",
+     "x": -7.3,
+     "y": 3.0,
+     "text": {
+      "en": "A⁻¹ = [ {d/det:2}  {-b/det:2} ; {-c/det:2}  {a/det:2} ]"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "det == 0",
+     "color": "red",
+     "x": -7.3,
+     "y": 3.0,
+     "text": {
+      "en": "|A| = 0: A squashes the plane, no inverse"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "|A|"
+     },
+     "expr": "det",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make |A| = 0 (try a = 1, b = 2, c = 0.5, d = 1). What happens to the shape?"
+    },
+    {
+     "en": "Check A⁻¹ = (1/|A|)[d −b; −c a] against the readout."
+    },
+    {
+     "en": "Make |A| negative. What happens to the letter F?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

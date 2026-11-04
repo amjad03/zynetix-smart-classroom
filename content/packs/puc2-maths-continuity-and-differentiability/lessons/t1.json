@@ -223,6 +223,242 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Close in on x = 2",
+    "kn": "x = 2 ರ ಕಡೆಗೆ"
+   },
+   "narration": {
+    "en": "Two dots walk towards x = 2 from the left and from the right. f is continuous at 2 only if both limits and the value f(2) agree. Set f(2) with the slider.",
+    "kn": "ಎಡ ಮತ್ತು ಬಲದಿಂದ ಎರಡು ಚುಕ್ಕೆಗಳು x = 2 ಕಡೆಗೆ ಸಾಗುತ್ತವೆ. ಎರಡೂ ಮಿತಿಗಳು ಮತ್ತು f(2) ಸಮವಾದರೆ ಮಾತ್ರ f, 2 ರಲ್ಲಿ ಸಂತತ. ಸ್ಲೈಡರ್‌ನಿಂದ f(2) ಹೊಂದಿಸಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Two dots walk towards x = 2 from the left and from the right. f is continuous at 2 only if both limits and the value f(2) agree. Set f(2) with the slider.",
+    "kn": "ಎಡ ಮತ್ತು ಬಲದಿಂದ ಎರಡು ಚುಕ್ಕೆಗಳು x = 2 ಕಡೆಗೆ ಸಾಗುತ್ತವೆ. ಎರಡೂ ಮಿತಿಗಳು ಮತ್ತು f(2) ಸಮವಾದರೆ ಮಾತ್ರ f, 2 ರಲ್ಲಿ ಸಂತತ. ಸ್ಲೈಡರ್‌ನಿಂದ f(2) ಹೊಂದಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "v",
+     "label": {
+      "en": "Value f(2)"
+     },
+     "min": 0,
+     "max": 8,
+     "step": 0.5,
+     "value": 2
+    }
+   ],
+   "choices": [
+    {
+     "name": "fc",
+     "label": {
+      "en": "Function",
+      "kn": "ಫಲನ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Hole"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Jump"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Approach x = 2",
+      "kn": "x = 2 ಕಡೆಗೆ"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 8
+   },
+   "vars": [
+    {
+     "name": "dd",
+     "expr": "2*0.6^t"
+    },
+    {
+     "name": "xl",
+     "expr": "2 - dd"
+    },
+    {
+     "name": "xr",
+     "expr": "2 + dd"
+    },
+    {
+     "name": "fr",
+     "expr": "if(fc == 1, xr + 2, v*xr/2)"
+    },
+    {
+     "name": "R",
+     "expr": "if(fc == 1, 4, v)"
+    },
+    {
+     "name": "cont",
+     "expr": "v == 4 && R == 4"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.3,
+     4.5
+    ],
+    "y": [
+     -0.5,
+     9
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "color": "yellow",
+     "fn": "x + 2",
+     "from": 0,
+     "to": 2,
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "color": "yellow",
+     "fn": "if(fc == 1, x + 2, v*x/2)",
+     "from": 2,
+     "to": 4.4,
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "color": "white",
+     "x": 2,
+     "y": 4,
+     "r": 0.09,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "fc == 2",
+     "color": "white",
+     "x": 2,
+     "y": "R",
+     "r": 0.09,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "color": "orange",
+     "x": 2,
+     "y": "v",
+     "r": 0.08
+    },
+    {
+     "shape": "circle",
+     "color": "blue",
+     "x": "xl",
+     "y": "xl + 2",
+     "r": 0.07
+    },
+    {
+     "shape": "circle",
+     "color": "green",
+     "x": "xr",
+     "y": "fr",
+     "r": 0.07
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 0.1,
+     "y": 8.5,
+     "text": {
+      "en": "left limit = 4    right limit = {R:1}    f(2) = {v:1}"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "cont",
+     "color": "green",
+     "x": 0.1,
+     "y": 7.6,
+     "text": {
+      "en": "continuous at x = 2"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "!cont",
+     "color": "red",
+     "x": 0.1,
+     "y": 7.6,
+     "text": {
+      "en": "not continuous at x = 2"
+     },
+     "size": 28,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Left-hand limit"
+     },
+     "expr": "4",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Right-hand limit"
+     },
+     "expr": "R",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "f(2)"
+     },
+     "expr": "v",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Hole: f(x) = (x² − 4)/(x − 2) for x ≠ 2. Which value of f(2) fills the hole?"
+    },
+    {
+     "en": "Jump: the right piece is f(2)·x/2. Which f(2) makes the jump disappear?"
+    },
+    {
+     "en": "Press Approach and read both limits as the dots close in."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

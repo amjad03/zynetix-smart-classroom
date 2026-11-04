@@ -267,6 +267,236 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Corners have no derivative",
+    "kn": "ಮೂಲೆಗಳಿಗೆ ಅವಕಲಜವಿಲ್ಲ"
+   },
+   "narration": {
+    "en": "The right-hand quotient (f(h) − f(0))/h and the left-hand quotient (f(0) − f(−h))/h are the slopes of the two chords. Shrink h: f is differentiable at 0 only if both settle on the same number.",
+    "kn": "ಬಲ ಭಾಗಲಬ್ಧ (f(h) − f(0))/h ಮತ್ತು ಎಡ ಭಾಗಲಬ್ಧ (f(0) − f(−h))/h ಎರಡು ಜ್ಯಾಗಳ ಇಳಿಜಾರುಗಳು. h ಕುಗ್ಗಿಸಿ: ಎರಡೂ ಒಂದೇ ಸಂಖ್ಯೆಗೆ ಬಂದರೆ ಮಾತ್ರ f, 0 ರಲ್ಲಿ ಅವಕಲನೀಯ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The right-hand quotient (f(h) − f(0))/h and the left-hand quotient (f(0) − f(−h))/h are the slopes of the two chords. Shrink h: f is differentiable at 0 only if both settle on the same number.",
+    "kn": "ಬಲ ಭಾಗಲಬ್ಧ (f(h) − f(0))/h ಮತ್ತು ಎಡ ಭಾಗಲಬ್ಧ (f(0) − f(−h))/h ಎರಡು ಜ್ಯಾಗಳ ಇಳಿಜಾರುಗಳು. h ಕುಗ್ಗಿಸಿ: ಎರಡೂ ಒಂದೇ ಸಂಖ್ಯೆಗೆ ಬಂದರೆ ಮಾತ್ರ f, 0 ರಲ್ಲಿ ಅವಕಲನೀಯ."
+   },
+   "sliders": [
+    {
+     "name": "h",
+     "label": {
+      "en": "h"
+     },
+     "min": 0.05,
+     "max": 2,
+     "step": 0.05,
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "tg",
+     "label": {
+      "en": "Tangent at 0",
+      "kn": "0 ರಲ್ಲಿ ಸ್ಪರ್ಶಕ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "fc",
+     "label": {
+      "en": "f(x)"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "|x|"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "x²"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "x|x|"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Halve h",
+      "kn": "h ಅರ್ಧ ಮಾಡಿ"
+     },
+     "icon": "next",
+     "set": {
+      "h": "max(h/2, 0.05)"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "rd",
+     "expr": "(if(fc == 1, abs(h), if(fc == 2, (h)^2, (h)*abs(h))))/h"
+    },
+    {
+     "name": "ld",
+     "expr": "(0 - if(fc == 1, abs(-h), if(fc == 2, (-h)^2, (-h)*abs(-h))))/h"
+    }
+   ],
+   "view": {
+    "x": [
+     -2.3,
+     2.3
+    ],
+    "y": [
+     -4.3,
+     4.3
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "color": "yellow",
+     "fn": "if(fc == 1, abs(x), if(fc == 2, (x)^2, (x)*abs(x)))",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "color": "green",
+     "x1": 0,
+     "y1": 0,
+     "x2": 2.2,
+     "y2": "2.2*rd",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "color": "blue",
+     "x1": -2.2,
+     "y1": "-2.2*ld",
+     "x2": 0,
+     "y2": 0,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "tg && fc != 1",
+     "color": "white",
+     "x1": -2.2,
+     "y1": 0,
+     "x2": 2.2,
+     "y2": 0,
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "color": "green",
+     "x": "h",
+     "y": "if(fc == 1, abs(h), if(fc == 2, (h)^2, (h)*abs(h)))",
+     "r": 0.07
+    },
+    {
+     "shape": "circle",
+     "color": "blue",
+     "x": "-h",
+     "y": "if(fc == 1, abs(-h), if(fc == 2, (-h)^2, (-h)*abs(-h)))",
+     "r": 0.07
+    },
+    {
+     "shape": "text",
+     "color": "green",
+     "x": -2.2,
+     "y": 3.9,
+     "text": {
+      "en": "right quotient = {rd:3}"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "blue",
+     "x": -2.2,
+     "y": 3.2,
+     "text": {
+      "en": "left quotient = {ld:3}"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "tg && fc == 1",
+     "color": "red",
+     "x": 0.3,
+     "y": -3.6,
+     "text": {
+      "en": "corner: no single tangent at 0"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "tg && fc != 1",
+     "color": "white",
+     "x": 0.3,
+     "y": -3.6,
+     "text": {
+      "en": "tangent at 0: y = 0, f′(0) = 0"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Right-hand quotient"
+     },
+     "expr": "rd",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Left-hand quotient"
+     },
+     "expr": "ld",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "For |x|, what do the two quotients approach? Is |x| differentiable at 0?"
+    },
+    {
+     "en": "For x², halve h again and again. What do both quotients approach?"
+    },
+    {
+     "en": "x|x| looks bent but is smooth at 0. Check that both quotients equal h."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

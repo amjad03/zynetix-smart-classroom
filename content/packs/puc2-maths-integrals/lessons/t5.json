@@ -256,6 +256,316 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The area function and its slope",
+    "kn": "ವಿಸ್ತೀರ್ಣ ಫಲನ ಮತ್ತು ಅದರ ಇಳಿಜಾರು"
+   },
+   "narration": {
+    "en": "Sweep the right edge from a to x. The green trail is the area A(x) collected so far. Its slope is always f(x), and A(x) = F(x) − F(a): the fundamental theorem.",
+    "kn": "ಬಲ ಅಂಚನ್ನು a ಇಂದ x ವರೆಗೆ ಸರಿಸಿ. ಹಸಿರು ಜಾಡು ಇಲ್ಲಿಯವರೆಗಿನ ವಿಸ್ತೀರ್ಣ A(x). ಅದರ ಇಳಿಜಾರು ಯಾವಾಗಲೂ f(x), ಮತ್ತು A(x) = F(x) − F(a): ಮೂಲಭೂತ ಪ್ರಮೇಯ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Sweep the right edge from a to x. The green trail is the area A(x) collected so far. Its slope is always f(x), and A(x) = F(x) − F(a): the fundamental theorem.",
+    "kn": "ಬಲ ಅಂಚನ್ನು a ಇಂದ x ವರೆಗೆ ಸರಿಸಿ. ಹಸಿರು ಜಾಡು ಇಲ್ಲಿಯವರೆಗಿನ ವಿಸ್ತೀರ್ಣ A(x). ಅದರ ಇಳಿಜಾರು ಯಾವಾಗಲೂ f(x), ಮತ್ತು A(x) = F(x) − F(a): ಮೂಲಭೂತ ಪ್ರಮೇಯ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Lower limit a"
+     },
+     "min": -2,
+     "max": 1,
+     "step": 0.1,
+     "value": -1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "tr",
+     "label": {
+      "en": "Graph of A(x)",
+      "kn": "A(x) ನಕ್ಷೆ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "fc",
+     "label": {
+      "en": "f(x)"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "cos x"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "x/2"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "1 − x²/4"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Sweep",
+      "kn": "ಸರಿಸಿ"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 3.5,
+    "dt": 0.01
+   },
+   "vars": [
+    {
+     "name": "X",
+     "expr": "a + t"
+    },
+    {
+     "name": "fX",
+     "expr": "if(fc == 1, cos(X), if(fc == 2, (X)/2, 1 - (X)^2/4))"
+    },
+    {
+     "name": "FT",
+     "expr": "if(fc == 1, sin(X), if(fc == 2, (X)^2/4, (X) - (X)^3/12)) - if(fc == 1, sin(a), if(fc == 2, (a)^2/4, (a) - (a)^3/12))"
+    }
+   ],
+   "state": [
+    {
+     "name": "Ac",
+     "init": 0,
+     "rate": "fX"
+    }
+   ],
+   "view": {
+    "x": [
+     -2.3,
+     4.7
+    ],
+    "y": [
+     -5.5,
+     5.5
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "color": "blue",
+     "opacity": 0.4,
+     "points": [
+      [
+       "a",
+       0
+      ],
+      [
+       "a + (X - a)*0/20",
+       "if(fc == 1, cos(a + (X - a)*0/20), if(fc == 2, (a + (X - a)*0/20)/2, 1 - (a + (X - a)*0/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*1/20",
+       "if(fc == 1, cos(a + (X - a)*1/20), if(fc == 2, (a + (X - a)*1/20)/2, 1 - (a + (X - a)*1/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*2/20",
+       "if(fc == 1, cos(a + (X - a)*2/20), if(fc == 2, (a + (X - a)*2/20)/2, 1 - (a + (X - a)*2/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*3/20",
+       "if(fc == 1, cos(a + (X - a)*3/20), if(fc == 2, (a + (X - a)*3/20)/2, 1 - (a + (X - a)*3/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*4/20",
+       "if(fc == 1, cos(a + (X - a)*4/20), if(fc == 2, (a + (X - a)*4/20)/2, 1 - (a + (X - a)*4/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*5/20",
+       "if(fc == 1, cos(a + (X - a)*5/20), if(fc == 2, (a + (X - a)*5/20)/2, 1 - (a + (X - a)*5/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*6/20",
+       "if(fc == 1, cos(a + (X - a)*6/20), if(fc == 2, (a + (X - a)*6/20)/2, 1 - (a + (X - a)*6/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*7/20",
+       "if(fc == 1, cos(a + (X - a)*7/20), if(fc == 2, (a + (X - a)*7/20)/2, 1 - (a + (X - a)*7/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*8/20",
+       "if(fc == 1, cos(a + (X - a)*8/20), if(fc == 2, (a + (X - a)*8/20)/2, 1 - (a + (X - a)*8/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*9/20",
+       "if(fc == 1, cos(a + (X - a)*9/20), if(fc == 2, (a + (X - a)*9/20)/2, 1 - (a + (X - a)*9/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*10/20",
+       "if(fc == 1, cos(a + (X - a)*10/20), if(fc == 2, (a + (X - a)*10/20)/2, 1 - (a + (X - a)*10/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*11/20",
+       "if(fc == 1, cos(a + (X - a)*11/20), if(fc == 2, (a + (X - a)*11/20)/2, 1 - (a + (X - a)*11/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*12/20",
+       "if(fc == 1, cos(a + (X - a)*12/20), if(fc == 2, (a + (X - a)*12/20)/2, 1 - (a + (X - a)*12/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*13/20",
+       "if(fc == 1, cos(a + (X - a)*13/20), if(fc == 2, (a + (X - a)*13/20)/2, 1 - (a + (X - a)*13/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*14/20",
+       "if(fc == 1, cos(a + (X - a)*14/20), if(fc == 2, (a + (X - a)*14/20)/2, 1 - (a + (X - a)*14/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*15/20",
+       "if(fc == 1, cos(a + (X - a)*15/20), if(fc == 2, (a + (X - a)*15/20)/2, 1 - (a + (X - a)*15/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*16/20",
+       "if(fc == 1, cos(a + (X - a)*16/20), if(fc == 2, (a + (X - a)*16/20)/2, 1 - (a + (X - a)*16/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*17/20",
+       "if(fc == 1, cos(a + (X - a)*17/20), if(fc == 2, (a + (X - a)*17/20)/2, 1 - (a + (X - a)*17/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*18/20",
+       "if(fc == 1, cos(a + (X - a)*18/20), if(fc == 2, (a + (X - a)*18/20)/2, 1 - (a + (X - a)*18/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*19/20",
+       "if(fc == 1, cos(a + (X - a)*19/20), if(fc == 2, (a + (X - a)*19/20)/2, 1 - (a + (X - a)*19/20)^2/4))"
+      ],
+      [
+       "a + (X - a)*20/20",
+       "if(fc == 1, cos(a + (X - a)*20/20), if(fc == 2, (a + (X - a)*20/20)/2, 1 - (a + (X - a)*20/20)^2/4))"
+      ],
+      [
+       "X",
+       0
+      ]
+     ]
+    },
+    {
+     "shape": "path",
+     "color": "yellow",
+     "fn": "if(fc == 1, cos(x), if(fc == 2, (x)/2, 1 - (x)^2/4))",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "color": "white",
+     "opacity": 0.6,
+     "x1": "a",
+     "y1": -5.5,
+     "x2": "a",
+     "y2": 5.5,
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "trail",
+     "visibleIf": "tr",
+     "color": "green",
+     "x": "X",
+     "y": "Ac",
+     "length": 600,
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "tr",
+     "color": "orange",
+     "x": "X",
+     "y": "Ac",
+     "dx": 0.5,
+     "dy": "0.5*fX",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "tr",
+     "color": "green",
+     "x": "X",
+     "y": "Ac",
+     "r": 0.07
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -2.2,
+     "y": 5,
+     "text": {
+      "en": "A(x) = {Ac:3}   F(x) − F(a) = {FT:3}"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Area collected A(x)"
+     },
+     "expr": "Ac",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "F(x) − F(a)"
+     },
+     "expr": "FT",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "f(x)"
+     },
+     "expr": "fX",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Where f(x) is below the axis, does A(x) go up or down?"
+    },
+    {
+     "en": "Pause anywhere: compare the collected area with F(x) − F(a)."
+    },
+    {
+     "en": "Where does A(x) have a maximum? What is f there?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -196,6 +196,359 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Building the adjoint",
+    "kn": "ಸಹಜೋಡಿ ರಚನೆ"
+   },
+   "narration": {
+    "en": "Press Form adj A. For a 2 × 2 matrix, a and d change places and b and c change sign. Then A · adj A works out to |A| I, so A⁻¹ = adj A / |A| when |A| ≠ 0.",
+    "kn": "adj A ರಚಿಸಿ ಒತ್ತಿ. 2 × 2 ಮಾತೃಕೆಯಲ್ಲಿ a, d ಸ್ಥಾನ ಬದಲಿಸುತ್ತವೆ; b, c ಚಿಹ್ನೆ ಬದಲಿಸುತ್ತವೆ. ಆಗ A · adj A = |A| I, ಆದ್ದರಿಂದ |A| ≠ 0 ಆದಾಗ A⁻¹ = adj A / |A|."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Press Form adj A. For a 2 × 2 matrix, a and d change places and b and c change sign. Then A · adj A works out to |A| I, so A⁻¹ = adj A / |A| when |A| ≠ 0.",
+    "kn": "adj A ರಚಿಸಿ ಒತ್ತಿ. 2 × 2 ಮಾತೃಕೆಯಲ್ಲಿ a, d ಸ್ಥಾನ ಬದಲಿಸುತ್ತವೆ; b, c ಚಿಹ್ನೆ ಬದಲಿಸುತ್ತವೆ. ಆಗ A · adj A = |A| I, ಆದ್ದರಿಂದ |A| ≠ 0 ಆದಾಗ A⁻¹ = adj A / |A|."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "a"
+     },
+     "min": -4,
+     "max": 4,
+     "step": 1,
+     "value": 3
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "b"
+     },
+     "min": -4,
+     "max": 4,
+     "step": 1,
+     "value": 1
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "c"
+     },
+     "min": -4,
+     "max": 4,
+     "step": 1,
+     "value": 2
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "d"
+     },
+     "min": -4,
+     "max": 4,
+     "step": 1,
+     "value": 4
+    }
+   ],
+   "toggles": [
+    {
+     "name": "prod",
+     "label": {
+      "en": "Show A · adj A",
+      "kn": "A · adj A ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Form adj A",
+      "kn": "adj A ರಚಿಸಿ"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 2.5
+   },
+   "vars": [
+    {
+     "name": "s",
+     "expr": "smoothstep(0, 2, t)"
+    },
+    {
+     "name": "det",
+     "expr": "a*d - b*c"
+    },
+    {
+     "name": "p11",
+     "expr": "a*d + b*(-c)"
+    },
+    {
+     "name": "p12",
+     "expr": "a*(-b) + b*a"
+    },
+    {
+     "name": "p21",
+     "expr": "c*d + d*(-c)"
+    },
+    {
+     "name": "p22",
+     "expr": "c*(-b) + d*a"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     0,
+     9
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "color": "yellow",
+     "x": 1.2,
+     "y": 8.3,
+     "text": {
+      "en": "A"
+     },
+     "size": 32
+    },
+    {
+     "shape": "text",
+     "visibleIf": "t > 1",
+     "color": "green",
+     "x": 10,
+     "y": 8.3,
+     "text": {
+      "en": "adj A"
+     },
+     "size": 32
+    },
+    {
+     "shape": "line",
+     "color": "white",
+     "x1": 1.4,
+     "y1": 3.3,
+     "x2": 1.4,
+     "y2": 6.9,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "color": "white",
+     "x1": 5.6,
+     "y1": 3.3,
+     "x2": 5.6,
+     "y2": 6.9,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "t > 1",
+     "color": "white",
+     "x1": 8.1,
+     "y1": 3.3,
+     "x2": 8.1,
+     "y2": 6.9,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "t > 1",
+     "color": "white",
+     "x1": 11.9,
+     "y1": 3.3,
+     "x2": 11.9,
+     "y2": 6.9,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "color": "yellow",
+     "x": "2.5 + 8.5*s",
+     "y": "6 - 2*s",
+     "text": {
+      "en": "{a:1}"
+     },
+     "size": 36
+    },
+    {
+     "shape": "text",
+     "color": "yellow",
+     "x": "4.5 + 4.5*s",
+     "y": "4 + 2*s",
+     "text": {
+      "en": "{d:1}"
+     },
+     "size": 36
+    },
+    {
+     "shape": "text",
+     "visibleIf": "s < 0.5",
+     "color": "white",
+     "x": "4.5 + 6.5*s",
+     "y": 6,
+     "text": {
+      "en": "{b:1}"
+     },
+     "size": 36
+    },
+    {
+     "shape": "text",
+     "visibleIf": "s >= 0.5",
+     "color": "red",
+     "x": "4.5 + 6.5*s",
+     "y": 6,
+     "text": {
+      "en": "{-b:1}"
+     },
+     "size": 36
+    },
+    {
+     "shape": "text",
+     "visibleIf": "s < 0.5",
+     "color": "white",
+     "x": "2.5 + 6.5*s",
+     "y": 4,
+     "text": {
+      "en": "{c:1}"
+     },
+     "size": 36
+    },
+    {
+     "shape": "text",
+     "visibleIf": "s >= 0.5",
+     "color": "red",
+     "x": "2.5 + 6.5*s",
+     "y": 4,
+     "text": {
+      "en": "{-c:1}"
+     },
+     "size": 36
+    },
+    {
+     "shape": "text",
+     "visibleIf": "t > 0",
+     "color": "yellow",
+     "x": "2.5",
+     "y": "6",
+     "text": {
+      "en": "{a:1}"
+     },
+     "size": 36
+    },
+    {
+     "shape": "text",
+     "visibleIf": "t > 0",
+     "color": "white",
+     "x": "4.5",
+     "y": "6",
+     "text": {
+      "en": "{b:1}"
+     },
+     "size": 36
+    },
+    {
+     "shape": "text",
+     "visibleIf": "t > 0",
+     "color": "white",
+     "x": "2.5",
+     "y": "4",
+     "text": {
+      "en": "{c:1}"
+     },
+     "size": 36
+    },
+    {
+     "shape": "text",
+     "visibleIf": "t > 0",
+     "color": "yellow",
+     "x": "4.5",
+     "y": "4",
+     "text": {
+      "en": "{d:1}"
+     },
+     "size": 36
+    },
+    {
+     "shape": "text",
+     "visibleIf": "prod",
+     "color": "orange",
+     "x": 1,
+     "y": 2,
+     "text": {
+      "en": "A · adj A = [ {p11:1}  {p12:1} ; {p21:1}  {p22:1} ] = |A| I"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "det == 0",
+     "color": "red",
+     "x": 1,
+     "y": 0.8,
+     "text": {
+      "en": "|A| = 0: no inverse"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "det != 0",
+     "color": "green",
+     "x": 1,
+     "y": 0.8,
+     "text": {
+      "en": "A⁻¹ = adj A / {det:1}"
+     },
+     "size": 28,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "|A|"
+     },
+     "expr": "det",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "|adj A|"
+     },
+     "expr": "d*a - (-b)*(-c)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Watch which entries move and which only change sign."
+    },
+    {
+     "en": "Turn on A · adj A. Are the off-diagonal entries always 0?"
+    },
+    {
+     "en": "Make |A| = 0. Is there still an adjoint? Is there an inverse?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

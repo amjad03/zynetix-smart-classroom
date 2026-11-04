@@ -282,6 +282,367 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The furniture dealer's plan",
+    "kn": "ಪೀಠೋಪಕರಣ ವ್ಯಾಪಾರಿಯ ಯೋಜನೆ"
+   },
+   "narration": {
+    "en": "A table costs ₹2500 and a chair ₹500; the dealer has ₹50000 and space for 60 pieces. Profit is ₹250 a table and ₹75 a chair. Try plans: the bars turn red when a constraint is broken.",
+    "kn": "ಮೇಜು ₹2500, ಕುರ್ಚಿ ₹500; ವ್ಯಾಪಾರಿಯ ಬಳಿ ₹50000 ಮತ್ತು 60 ವಸ್ತುಗಳ ಜಾಗ. ಲಾಭ ಮೇಜಿಗೆ ₹250, ಕುರ್ಚಿಗೆ ₹75. ಯೋಜನೆಗಳನ್ನು ಪ್ರಯತ್ನಿಸಿ: ನಿರ್ಬಂಧ ಮುರಿದಾಗ ಪಟ್ಟಿ ಕೆಂಪಾಗುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A table costs ₹2500 and a chair ₹500; the dealer has ₹50000 and space for 60 pieces. Profit is ₹250 a table and ₹75 a chair. Try plans: the bars turn red when a constraint is broken.",
+    "kn": "ಮೇಜು ₹2500, ಕುರ್ಚಿ ₹500; ವ್ಯಾಪಾರಿಯ ಬಳಿ ₹50000 ಮತ್ತು 60 ವಸ್ತುಗಳ ಜಾಗ. ಲಾಭ ಮೇಜಿಗೆ ₹250, ಕುರ್ಚಿಗೆ ₹75. ಯೋಜನೆಗಳನ್ನು ಪ್ರಯತ್ನಿಸಿ: ನಿರ್ಬಂಧ ಮುರಿದಾಗ ಪಟ್ಟಿ ಕೆಂಪಾಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "xt",
+     "label": {
+      "en": "Tables x"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "yc",
+     "label": {
+      "en": "Chairs y"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 2,
+     "value": 20
+    }
+   ],
+   "toggles": [
+    {
+     "name": "grph",
+     "label": {
+      "en": "Plan as a point (x, y)",
+      "kn": "ಯೋಜನೆಯನ್ನು ಬಿಂದುವಾಗಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "cost",
+     "expr": "2500*xt + 500*yc"
+    },
+    {
+     "name": "sp",
+     "expr": "xt + yc"
+    },
+    {
+     "name": "Z",
+     "expr": "250*xt + 75*yc"
+    },
+    {
+     "name": "ok",
+     "expr": "cost <= 50000 && sp <= 60"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     32
+    ],
+    "y": [
+     0,
+     18
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 1,
+     "y": 16.8,
+     "text": {
+      "en": "Money used"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "color": "white",
+     "opacity": 0.2,
+     "x": 1,
+     "y": 14.6,
+     "w": 12,
+     "h": 1.4
+    },
+    {
+     "shape": "rect",
+     "color": {
+      "by": "cost > 50000",
+      "scale": [
+       "green",
+       "red"
+      ]
+     },
+     "x": 1,
+     "y": 14.6,
+     "w": "10*min(cost/50000, 1.2)",
+     "h": 1.4
+    },
+    {
+     "shape": "line",
+     "color": "white",
+     "x1": 11,
+     "y1": 14.2,
+     "x2": 11,
+     "y2": 16.4,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 1,
+     "y": 13.6,
+     "text": {
+      "en": "₹{cost:0} of ₹50000"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 1,
+     "y": 11.6,
+     "text": {
+      "en": "Space used"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "color": "white",
+     "opacity": 0.2,
+     "x": 1,
+     "y": 9.4,
+     "w": 12,
+     "h": 1.4
+    },
+    {
+     "shape": "rect",
+     "color": {
+      "by": "sp > 60",
+      "scale": [
+       "green",
+       "red"
+      ]
+     },
+     "x": 1,
+     "y": 9.4,
+     "w": "10*min(sp/60, 1.2)",
+     "h": 1.4
+    },
+    {
+     "shape": "line",
+     "color": "white",
+     "x1": 11,
+     "y1": 9,
+     "x2": 11,
+     "y2": 11.2,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 1,
+     "y": 8.4,
+     "text": {
+      "en": "{sp:0} of 60 pieces"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "yellow",
+     "x": 1,
+     "y": 5.6,
+     "text": {
+      "en": "Profit Z = 250x + 75y = ₹{Z:0}"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "ok",
+     "color": "green",
+     "x": 1,
+     "y": 4.2,
+     "text": {
+      "en": "feasible plan"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "!ok",
+     "color": "red",
+     "x": 1,
+     "y": 4.2,
+     "text": {
+      "en": "not allowed"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "polygon",
+     "visibleIf": "grph",
+     "color": "green",
+     "opacity": 0.3,
+     "points": [
+      [
+       17.0,
+       1.0
+      ],
+      [
+       27.0,
+       1.0
+      ],
+      [
+       22.0,
+       14.5
+      ],
+      [
+       17.0,
+       17.2
+      ]
+     ]
+    },
+    {
+     "shape": "line",
+     "visibleIf": "grph",
+     "color": "white",
+     "x1": 17.0,
+     "y1": 1.0,
+     "x2": 31.5,
+     "y2": 1.0,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "grph",
+     "color": "white",
+     "x1": 17.0,
+     "y1": 1.0,
+     "x2": 17.0,
+     "y2": 17.74,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "grph",
+     "color": "blue",
+     "x1": 27.0,
+     "y1": 1.0,
+     "x2": 21.0,
+     "y2": 17.2,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "grph",
+     "color": "orange",
+     "x1": 17.0,
+     "y1": 17.2,
+     "x2": 31.0,
+     "y2": 9.64,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "visibleIf": "grph",
+     "color": "white",
+     "x": 24.0,
+     "y": 0.055,
+     "text": {
+      "en": "tables x"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "visibleIf": "grph",
+     "color": "white",
+     "x": 15.75,
+     "y": 17.74,
+     "text": {
+      "en": "chairs y"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "grph",
+     "color": {
+      "by": "ok",
+      "scale": [
+       "red",
+       "yellow"
+      ]
+     },
+     "x": "17 + 0.5*xt",
+     "y": "1 + 0.27*yc",
+     "r": 0.35
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Money used"
+     },
+     "expr": "cost",
+     "unit": "₹",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Pieces"
+     },
+     "expr": "sp",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Profit Z"
+     },
+     "expr": "Z",
+     "unit": "₹",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Write the two constraints: 2500x + 500y ≤ 50000 and x + y ≤ 60."
+    },
+    {
+     "en": "Find a plan that uses all the money and all the space. What is Z there?"
+    },
+    {
+     "en": "Can you beat Z = ₹6250 without breaking a constraint?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

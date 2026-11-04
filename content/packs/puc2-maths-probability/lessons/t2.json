@@ -321,6 +321,278 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Two balls from a bag",
+    "kn": "ಚೀಲದಿಂದ ಎರಡು ಚೆಂಡುಗಳು"
+   },
+   "narration": {
+    "en": "Draw two balls without putting the first back. P(both red) = P(R₁) · P(R₂|R₁) = r/N × (r − 1)/(N − 1). Draw many times and compare the observed fraction with this; then try with replacement, where the draws are independent.",
+    "kn": "ಮೊದಲ ಚೆಂಡು ಮರಳಿ ಹಾಕದೆ ಎರಡು ಚೆಂಡು ತೆಗೆಯಿರಿ. P(ಎರಡೂ ಕೆಂಪು) = P(R₁) · P(R₂|R₁) = r/N × (r − 1)/(N − 1). ಹಲವು ಬಾರಿ ತೆಗೆದು ಗಮನಿಸಿದ ಭಿನ್ನರಾಶಿ ಹೋಲಿಸಿ; ನಂತರ ಮರಳಿ ಹಾಕುವ ರೀತಿ (ಸ್ವತಂತ್ರ ಘಟನೆಗಳು) ಪ್ರಯತ್ನಿಸಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Draw two balls without putting the first back. P(both red) = P(R₁) · P(R₂|R₁) = r/N × (r − 1)/(N − 1). Draw many times and compare the observed fraction with this; then try with replacement, where the draws are independent.",
+    "kn": "ಮೊದಲ ಚೆಂಡು ಮರಳಿ ಹಾಕದೆ ಎರಡು ಚೆಂಡು ತೆಗೆಯಿರಿ. P(ಎರಡೂ ಕೆಂಪು) = P(R₁) · P(R₂|R₁) = r/N × (r − 1)/(N − 1). ಹಲವು ಬಾರಿ ತೆಗೆದು ಗಮನಿಸಿದ ಭಿನ್ನರಾಶಿ ಹೋಲಿಸಿ; ನಂತರ ಮರಳಿ ಹಾಕುವ ರೀತಿ (ಸ್ವತಂತ್ರ ಘಟನೆಗಳು) ಪ್ರಯತ್ನಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Red balls"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 4
+    },
+    {
+     "name": "bl",
+     "label": {
+      "en": "Blue balls"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 1,
+     "value": 6
+    }
+   ],
+   "toggles": [
+    {
+     "name": "rep",
+     "label": {
+      "en": "With replacement",
+      "kn": "ಮರಳಿ ಹಾಕಿ"
+     },
+     "value": false
+    }
+   ],
+   "counters": [
+    {
+     "name": "n",
+     "value": 0,
+     "min": 0
+    },
+    {
+     "name": "hits",
+     "value": 0,
+     "min": 0
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Draw a pair",
+      "kn": "ಜೋಡಿ ತೆಗೆಯಿರಿ"
+     },
+     "icon": "next",
+     "set": {
+      "n": "n + 1",
+      "hits": "hits + ((rand(n + 1) < r/(r + bl)) && (rand(n + 1 + 5000) < if(rep, r/(r + bl), (r - (rand(n + 1) < r/(r + bl)))/((r + bl) - 1))))"
+     }
+    },
+    {
+     "label": {
+      "en": "Draw 10 pairs",
+      "kn": "10 ಜೋಡಿ"
+     },
+     "icon": "add",
+     "set": {
+      "n": "n + 10",
+      "hits": "hits + ((rand(n + 1) < r/(r + bl)) && (rand(n + 1 + 5000) < if(rep, r/(r + bl), (r - (rand(n + 1) < r/(r + bl)))/((r + bl) - 1)))) + ((rand(n + 2) < r/(r + bl)) && (rand(n + 2 + 5000) < if(rep, r/(r + bl), (r - (rand(n + 2) < r/(r + bl)))/((r + bl) - 1)))) + ((rand(n + 3) < r/(r + bl)) && (rand(n + 3 + 5000) < if(rep, r/(r + bl), (r - (rand(n + 3) < r/(r + bl)))/((r + bl) - 1)))) + ((rand(n + 4) < r/(r + bl)) && (rand(n + 4 + 5000) < if(rep, r/(r + bl), (r - (rand(n + 4) < r/(r + bl)))/((r + bl) - 1)))) + ((rand(n + 5) < r/(r + bl)) && (rand(n + 5 + 5000) < if(rep, r/(r + bl), (r - (rand(n + 5) < r/(r + bl)))/((r + bl) - 1)))) + ((rand(n + 6) < r/(r + bl)) && (rand(n + 6 + 5000) < if(rep, r/(r + bl), (r - (rand(n + 6) < r/(r + bl)))/((r + bl) - 1)))) + ((rand(n + 7) < r/(r + bl)) && (rand(n + 7 + 5000) < if(rep, r/(r + bl), (r - (rand(n + 7) < r/(r + bl)))/((r + bl) - 1)))) + ((rand(n + 8) < r/(r + bl)) && (rand(n + 8 + 5000) < if(rep, r/(r + bl), (r - (rand(n + 8) < r/(r + bl)))/((r + bl) - 1)))) + ((rand(n + 9) < r/(r + bl)) && (rand(n + 9 + 5000) < if(rep, r/(r + bl), (r - (rand(n + 9) < r/(r + bl)))/((r + bl) - 1)))) + ((rand(n + 10) < r/(r + bl)) && (rand(n + 10 + 5000) < if(rep, r/(r + bl), (r - (rand(n + 10) < r/(r + bl)))/((r + bl) - 1))))"
+     }
+    },
+    {
+     "label": {
+      "en": "Clear the tally",
+      "kn": "ಎಣಿಕೆ ಅಳಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "n": "0",
+      "hits": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "p1",
+     "expr": "r/(r + bl)"
+    },
+    {
+     "name": "p2",
+     "expr": "if(rep, r/(r + bl), (r - 1)/((r + bl) - 1))"
+    },
+    {
+     "name": "pe",
+     "expr": "p1*p2"
+    },
+    {
+     "name": "obs",
+     "expr": "if(n > 0, hits/n, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     12
+    ],
+    "y": [
+     0,
+     6.75
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "color": "white",
+     "opacity": 0.15,
+     "x": 0.3,
+     "y": 0.3,
+     "w": 4.9,
+     "h": 4.2
+    },
+    {
+     "shape": "particles",
+     "visibleIf": "i < r",
+     "color": "red",
+     "count": 20,
+     "x": "0.8 + 0.9*mod(i, 5)",
+     "y": "0.8 + 0.9*floor(i/5)",
+     "r": 0.33
+    },
+    {
+     "shape": "particles",
+     "visibleIf": "i >= r && i < (r + bl)",
+     "color": "blue",
+     "count": 20,
+     "x": "0.8 + 0.9*mod(i, 5)",
+     "y": "0.8 + 0.9*floor(i/5)",
+     "r": 0.33
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 2.75,
+     "y": 5,
+     "text": {
+      "en": "bag: {r:0} red, {bl:0} blue"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "visibleIf": "n > 0",
+     "color": "white",
+     "x": 8.5,
+     "y": 6.2,
+     "text": {
+      "en": "last draw"
+     },
+     "size": 24
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "n > 0",
+     "color": {
+      "by": "(rand(n) < r/(r + bl))",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     },
+     "x": 7.6,
+     "y": 5.2,
+     "r": 0.45
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "n > 0",
+     "color": {
+      "by": "(rand(n + 5000) < if(rep, r/(r + bl), (r - (rand(n) < r/(r + bl)))/((r + bl) - 1)))",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     },
+     "x": 9.4,
+     "y": 5.2,
+     "r": 0.45
+    },
+    {
+     "shape": "text",
+     "color": "yellow",
+     "x": 6,
+     "y": 3.6,
+     "text": {
+      "en": "P = {p1:3} × {p2:3} = {pe:4}"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 6,
+     "y": 2.6,
+     "text": {
+      "en": "both red in {hits:0} of {n:0} draws"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "green",
+     "x": 6,
+     "y": 1.6,
+     "text": {
+      "en": "observed fraction = {obs:3}"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "P(both red), exact"
+     },
+     "expr": "pe",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "Observed fraction"
+     },
+     "expr": "obs",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Pairs drawn"
+     },
+     "expr": "n",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With 4 red and 6 blue, draw 200 pairs. Is the fraction near 0.133?"
+    },
+    {
+     "en": "Switch on 'with replacement' and clear the tally. Does it move to 0.16?"
+    },
+    {
+     "en": "With only 1 red ball and no replacement, what is P(both red)?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

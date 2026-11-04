@@ -277,6 +277,249 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Dot product and projection",
+    "kn": "ಬಿಂದು ಗುಣಲಬ್ಧ ಮತ್ತು ಪ್ರಕ್ಷೇಪ"
+   },
+   "narration": {
+    "en": "a·b = |a||b| cos θ. The projection of a on b is a·b/|b|, the length of a's shadow on b's line. Stretch b with k: a·b grows, but the projection stays the same.",
+    "kn": "a·b = |a||b| cos θ. b ಮೇಲೆ a ಯ ಪ್ರಕ್ಷೇಪ a·b/|b|, b ರೇಖೆಯ ಮೇಲೆ a ಯ ನೆರಳಿನ ಉದ್ದ. k ಇಂದ b ಹಿಗ್ಗಿಸಿ: a·b ಹೆಚ್ಚುತ್ತದೆ, ಪ್ರಕ್ಷೇಪ ಬದಲಾಗುವುದಿಲ್ಲ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "a·b = |a||b| cos θ. The projection of a on b is a·b/|b|, the length of a's shadow on b's line. Stretch b with k: a·b grows, but the projection stays the same.",
+    "kn": "a·b = |a||b| cos θ. b ಮೇಲೆ a ಯ ಪ್ರಕ್ಷೇಪ a·b/|b|, b ರೇಖೆಯ ಮೇಲೆ a ಯ ನೆರಳಿನ ಉದ್ದ. k ಇಂದ b ಹಿಗ್ಗಿಸಿ: a·b ಹೆಚ್ಚುತ್ತದೆ, ಪ್ರಕ್ಷೇಪ ಬದಲಾಗುವುದಿಲ್ಲ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "Stretch b by k"
+     },
+     "min": 0.5,
+     "max": 3,
+     "step": 0.25,
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "pj",
+     "label": {
+      "en": "Show the projection",
+      "kn": "ಪ್ರಕ್ಷೇಪ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "A",
+     "label": "a",
+     "x": 4,
+     "y": 1,
+     "box": {
+      "x": [
+       -6,
+       6
+      ],
+      "y": [
+       -4,
+       4
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    },
+    {
+     "name": "B",
+     "label": "b",
+     "x": 2,
+     "y": 1.5,
+     "box": {
+      "x": [
+       -3,
+       3
+      ],
+      "y": [
+       -1.8,
+       1.8
+      ]
+     },
+     "snap": 0.5,
+     "color": "green"
+    }
+   ],
+   "vars": [
+    {
+     "name": "bx",
+     "expr": "k*B_x"
+    },
+    {
+     "name": "by",
+     "expr": "k*B_y"
+    },
+    {
+     "name": "bl",
+     "expr": "max(hypot(bx, by), 1e-9)"
+    },
+    {
+     "name": "al",
+     "expr": "max(hypot(A_x, A_y), 1e-9)"
+    },
+    {
+     "name": "dot",
+     "expr": "A_x*bx + A_y*by"
+    },
+    {
+     "name": "pr",
+     "expr": "dot/bl"
+    },
+    {
+     "name": "fx",
+     "expr": "pr*bx/bl"
+    },
+    {
+     "name": "fy",
+     "expr": "pr*by/bl"
+    },
+    {
+     "name": "th",
+     "expr": "deg(acos(clamp(dot/(al*bl), -1, 1)))"
+    }
+   ],
+   "view": {
+    "x": [
+     -10,
+     10
+    ],
+    "y": [
+     -5.6,
+     5.6
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "color": "white",
+     "opacity": 0.35,
+     "x1": "-10*bx/bl",
+     "y1": "-10*by/bl",
+     "x2": "10*bx/bl",
+     "y2": "10*by/bl",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "pj",
+     "color": "white",
+     "opacity": 0.6,
+     "x1": "A_x",
+     "y1": "A_y",
+     "x2": "fx",
+     "y2": "fy",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "visibleIf": "pj",
+     "color": "orange",
+     "opacity": 0.7,
+     "x1": 0,
+     "y1": 0,
+     "x2": "fx",
+     "y2": "fy",
+     "width": 9
+    },
+    {
+     "shape": "arrow",
+     "color": "green",
+     "x": 0,
+     "y": 0,
+     "dx": "bx",
+     "dy": "by",
+     "label": "b",
+     "width": 5
+    },
+    {
+     "shape": "arrow",
+     "color": "yellow",
+     "x": 0,
+     "y": 0,
+     "dx": "A_x",
+     "dy": "A_y",
+     "label": "a",
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -9.7,
+     "y": 5.1,
+     "text": {
+      "en": "a·b = {dot:2}   θ = {th:1}°"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "orange",
+     "x": -9.7,
+     "y": 4.3,
+     "text": {
+      "en": "projection of a on b = {pr:3}"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "a·b"
+     },
+     "expr": "dot",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Projection a·b/|b|"
+     },
+     "expr": "pr",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Angle θ"
+     },
+     "expr": "th",
+     "unit": "°",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make a·b = 0. What angle do a and b make?"
+    },
+    {
+     "en": "Make θ obtuse. What is the sign of the projection?"
+    },
+    {
+     "en": "Change k. Which readout changes and which does not?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

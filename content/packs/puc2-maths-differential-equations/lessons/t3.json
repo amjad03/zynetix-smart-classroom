@@ -207,6 +207,224 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A cooling cup of tea",
+    "kn": "ತಣ್ಣಗಾಗುವ ಚಹಾ"
+   },
+   "narration": {
+    "en": "dT/dt = −k(T − Tₛ) separates to dT/(T − Tₛ) = −k dt, giving T = Tₛ + (T₀ − Tₛ)e^(−kt). The yellow trail is the equation stepped forward; the dashed curve is the formula.",
+    "kn": "dT/dt = −k(T − Tₛ) ಅನ್ನು dT/(T − Tₛ) = −k dt ಎಂದು ಬೇರ್ಪಡಿಸಿದರೆ T = Tₛ + (T₀ − Tₛ)e^(−kt). ಹಳದಿ ಜಾಡು ಸಮೀಕರಣದಿಂದ ಹಂತಹಂತವಾಗಿ; ಚುಕ್ಕೆ ವಕ್ರರೇಖೆ ಸೂತ್ರದಿಂದ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "dT/dt = −k(T − Tₛ) separates to dT/(T − Tₛ) = −k dt, giving T = Tₛ + (T₀ − Tₛ)e^(−kt). The yellow trail is the equation stepped forward; the dashed curve is the formula.",
+    "kn": "dT/dt = −k(T − Tₛ) ಅನ್ನು dT/(T − Tₛ) = −k dt ಎಂದು ಬೇರ್ಪಡಿಸಿದರೆ T = Tₛ + (T₀ − Tₛ)e^(−kt). ಹಳದಿ ಜಾಡು ಸಮೀಕರಣದಿಂದ ಹಂತಹಂತವಾಗಿ; ಚುಕ್ಕೆ ವಕ್ರರೇಖೆ ಸೂತ್ರದಿಂದ."
+   },
+   "sliders": [
+    {
+     "name": "T0",
+     "label": {
+      "en": "Starting temperature"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 2,
+     "value": 90,
+     "unit": "°C"
+    },
+    {
+     "name": "k",
+     "label": {
+      "en": "Cooling constant k"
+     },
+     "min": 0.02,
+     "max": 0.2,
+     "step": 0.01,
+     "value": 0.1,
+     "unit": "/min"
+    },
+    {
+     "name": "Ts",
+     "label": {
+      "en": "Room temperature"
+     },
+     "min": 15,
+     "max": 35,
+     "step": 1,
+     "value": 25,
+     "unit": "°C"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ex",
+     "label": {
+      "en": "Show the formula curve",
+      "kn": "ಸೂತ್ರದ ವಕ್ರರೇಖೆ"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Start cooling",
+      "kn": "ತಣಿಸಲು ಆರಂಭಿಸಿ"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "dt": 0.1,
+    "unit": "min"
+   },
+   "vars": [
+    {
+     "name": "Tex",
+     "expr": "Ts + (T0 - Ts)*exp(-k*t)"
+    }
+   ],
+   "state": [
+    {
+     "name": "T",
+     "init": "T0",
+     "rate": "-k*(T - Ts)"
+    }
+   ],
+   "view": {
+    "x": [
+     -14,
+     62
+    ],
+    "y": [
+     -5,
+     105
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "t (min)",
+    "yLabel": "T (°C)"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "color": "blue",
+     "opacity": 0.7,
+     "x1": 0,
+     "y1": "Ts",
+     "x2": 60,
+     "y2": "Ts",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "visibleIf": "ex",
+     "color": "green",
+     "fn": "Ts + (T0 - Ts)*exp(-k*x)",
+     "from": 0,
+     "to": 60,
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "trail",
+     "color": "yellow",
+     "x": "t",
+     "y": "T",
+     "length": 700,
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "color": "orange",
+     "x": "t",
+     "y": "T",
+     "r": 0.7
+    },
+    {
+     "shape": "icon",
+     "color": {
+      "by": "clamp((T - 15)/85, 0, 1)",
+      "scale": [
+       "blue",
+       "yellow",
+       "red"
+      ]
+     },
+     "icon": "beaker",
+     "x": -7,
+     "y": 45,
+     "size": 10,
+     "on": 0.7
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -7,
+     "y": 58,
+     "text": {
+      "en": "{T:1} °C"
+     },
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "color": "blue",
+     "x": 55,
+     "y": "Ts + 4",
+     "text": {
+      "en": "room"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "T stepped from the equation"
+     },
+     "expr": "T",
+     "unit": "°C",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "T from the formula"
+     },
+     "expr": "Tex",
+     "unit": "°C",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Time to halve T − Tₛ"
+     },
+     "expr": "ln(2)/k",
+     "unit": "min",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Does the trail sit exactly on the dashed formula curve?"
+    },
+    {
+     "en": "Double k. How does the time to halve the gap T − Tₛ change?"
+    },
+    {
+     "en": "Start colder than the room (T₀ < Tₛ, e.g. 20 °C in a 35 °C room). What happens?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

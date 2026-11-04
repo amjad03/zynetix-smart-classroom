@@ -323,6 +323,241 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The cross product stands up",
+    "kn": "ಅಡ್ಡ ಗುಣಲಬ್ಧ ಲಂಬವಾಗಿ ನಿಲ್ಲುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "a and b lie flat in the xy-plane. a × b is perpendicular to both, with length |a||b| sin θ (the parallelogram's area) and direction by the right-hand rule. b × a points the other way.",
+    "kn": "a, b xy-ಸಮತಲದಲ್ಲಿವೆ. a × b ಎರಡಕ್ಕೂ ಲಂಬ, ಉದ್ದ |a||b| sin θ (ಸಮಾಂತರ ಚತುರ್ಭುಜದ ವಿಸ್ತೀರ್ಣ), ದಿಕ್ಕು ಬಲಗೈ ನಿಯಮದಂತೆ. b × a ವಿರುದ್ಧ ದಿಕ್ಕು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "a and b lie flat in the xy-plane. a × b is perpendicular to both, with length |a||b| sin θ (the parallelogram's area) and direction by the right-hand rule. b × a points the other way.",
+    "kn": "a, b xy-ಸಮತಲದಲ್ಲಿವೆ. a × b ಎರಡಕ್ಕೂ ಲಂಬ, ಉದ್ದ |a||b| sin θ (ಸಮಾಂತರ ಚತುರ್ಭುಜದ ವಿಸ್ತೀರ್ಣ), ದಿಕ್ಕು ಬಲಗೈ ನಿಯಮದಂತೆ. b × a ವಿರುದ್ಧ ದಿಕ್ಕು."
+   },
+   "sliders": [
+    {
+     "name": "th",
+     "label": {
+      "en": "Angle θ from a to b"
+     },
+     "min": 0,
+     "max": 360,
+     "step": 10,
+     "value": 60,
+     "unit": "°"
+    },
+    {
+     "name": "bm",
+     "label": {
+      "en": "|b|"
+     },
+     "min": 0.5,
+     "max": 2,
+     "step": 0.1,
+     "value": 1.5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ba",
+     "label": {
+      "en": "Show b × a",
+      "kn": "b × a ತೋರಿಸಿ"
+     },
+     "value": false
+    },
+    {
+     "name": "par",
+     "label": {
+      "en": "Parallelogram",
+      "kn": "ಸಮಾಂತರ ಚತುರ್ಭುಜ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "bx",
+     "expr": "-bm*sin(rad(th))"
+    },
+    {
+     "name": "by",
+     "expr": "bm*cos(rad(th))"
+    },
+    {
+     "name": "cz",
+     "expr": "-2*bx"
+    }
+   ],
+   "view": {
+    "x": [
+     -7.2,
+     7.2
+    ],
+    "y": [
+     -4.6,
+     4.6
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "arrow",
+     "color": "white",
+     "opacity": 0.6,
+     "x": 0,
+     "y": 0,
+     "dx": -1.0,
+     "dy": -0.875,
+     "label": "x",
+     "width": 2
+    },
+    {
+     "shape": "arrow",
+     "color": "white",
+     "opacity": 0.6,
+     "x": 0,
+     "y": 0,
+     "dx": 2.5,
+     "dy": 0.0,
+     "label": "y",
+     "width": 2
+    },
+    {
+     "shape": "arrow",
+     "color": "white",
+     "opacity": 0.6,
+     "x": 0,
+     "y": 0,
+     "dx": 0.0,
+     "dy": 2.5,
+     "label": "z",
+     "width": 2
+    },
+    {
+     "shape": "polygon",
+     "visibleIf": "par",
+     "color": "blue",
+     "opacity": 0.3,
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "(2) - 0.4*(0)",
+       "(0) - 0.35*(0)"
+      ],
+      [
+       "(2 + by) - 0.4*(bx)",
+       "(0) - 0.35*(bx)"
+      ],
+      [
+       "(by) - 0.4*(bx)",
+       "(0) - 0.35*(bx)"
+      ]
+     ]
+    },
+    {
+     "shape": "arrow",
+     "color": "yellow",
+     "x": 0,
+     "y": 0,
+     "dx": 2,
+     "dy": 0,
+     "label": "a",
+     "width": 5
+    },
+    {
+     "shape": "arrow",
+     "color": "green",
+     "x": 0,
+     "y": 0,
+     "dx": "(by) - 0.4*(bx)",
+     "dy": "(0) - 0.35*(bx)",
+     "label": "b",
+     "width": 5
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "abs(cz) > 0.01",
+     "color": "orange",
+     "x": 0,
+     "y": 0,
+     "dx": 0,
+     "dy": "cz",
+     "label": "a × b",
+     "width": 6
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "ba && abs(cz) > 0.01",
+     "color": "red",
+     "x": 0.15,
+     "y": 0,
+     "dx": 0,
+     "dy": "-cz",
+     "label": "b × a",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "color": "orange",
+     "x": -7,
+     "y": 4.1,
+     "text": {
+      "en": "a × b = (0, 0, {cz:2})"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -7,
+     "y": 3.3,
+     "text": {
+      "en": "|a||b| sin θ = {2*bm*sin(rad(th)):2}"
+     },
+     "size": 24,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "z-component of a × b"
+     },
+     "expr": "cz",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Area |a × b|"
+     },
+     "expr": "abs(cz)",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn θ past 180°. Which way does a × b point now?"
+    },
+    {
+     "en": "At which angles is a × b the zero vector?"
+    },
+    {
+     "en": "Show b × a. Is it always the exact opposite of a × b?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

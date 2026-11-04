@@ -291,6 +291,486 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The area of an ellipse",
+    "kn": "ದೀರ್ಘವೃತ್ತದ ವಿಸ್ತೀರ್ಣ"
+   },
+   "narration": {
+    "en": "Sweep a vertical strip across the first quadrant of x²/a² + y²/b² = 1. The quarter area is πab/4, so the whole ellipse has area πab. A circle is the case a = b.",
+    "kn": "x²/a² + y²/b² = 1 ರ ಮೊದಲ ಚತುರ್ಥದಲ್ಲಿ ಲಂಬ ಪಟ್ಟಿಯನ್ನು ಸರಿಸಿ. ಕಾಲು ಭಾಗದ ವಿಸ್ತೀರ್ಣ πab/4, ಆದ್ದರಿಂದ ಇಡೀ ದೀರ್ಘವೃತ್ತದ ವಿಸ್ತೀರ್ಣ πab. a = b ಆದಾಗ ವೃತ್ತ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Sweep a vertical strip across the first quadrant of x²/a² + y²/b² = 1. The quarter area is πab/4, so the whole ellipse has area πab. A circle is the case a = b.",
+    "kn": "x²/a² + y²/b² = 1 ರ ಮೊದಲ ಚತುರ್ಥದಲ್ಲಿ ಲಂಬ ಪಟ್ಟಿಯನ್ನು ಸರಿಸಿ. ಕಾಲು ಭಾಗದ ವಿಸ್ತೀರ್ಣ πab/4, ಆದ್ದರಿಂದ ಇಡೀ ದೀರ್ಘವೃತ್ತದ ವಿಸ್ತೀರ್ಣ πab. a = b ಆದಾಗ ವೃತ್ತ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Semi-axis a"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 0.25,
+     "value": 3
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "Semi-axis b"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 0.25,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "circ",
+     "label": {
+      "en": "Circle of radius a",
+      "kn": "a ತ್ರಿಜ್ಯದ ವೃತ್ತ"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Sweep",
+      "kn": "ಸರಿಸಿ"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 4
+   },
+   "vars": [
+    {
+     "name": "xs",
+     "expr": "a*t/4"
+    },
+    {
+     "name": "Aq",
+     "expr": "b/a*(xs/2*sqrt(max(a^2 - xs^2, 0)) + a^2/2*asin(clamp(xs/a, -1, 1)))"
+    },
+    {
+     "name": "Tot",
+     "expr": "pi*a*b"
+    }
+   ],
+   "view": {
+    "x": [
+     -10,
+     10
+    ],
+    "y": [
+     -5.6,
+     5.6
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x",
+    "yLabel": "y",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "visibleIf": "circ",
+     "color": "white",
+     "opacity": 0.5,
+     "x": 0,
+     "y": 0,
+     "r": "a",
+     "fill": false,
+     "width": 2
+    },
+    {
+     "shape": "polygon",
+     "color": "green",
+     "opacity": 0.45,
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "xs*0/24",
+       "b/a*sqrt(max(a^2 - (xs*0/24)^2, 0))"
+      ],
+      [
+       "xs*1/24",
+       "b/a*sqrt(max(a^2 - (xs*1/24)^2, 0))"
+      ],
+      [
+       "xs*2/24",
+       "b/a*sqrt(max(a^2 - (xs*2/24)^2, 0))"
+      ],
+      [
+       "xs*3/24",
+       "b/a*sqrt(max(a^2 - (xs*3/24)^2, 0))"
+      ],
+      [
+       "xs*4/24",
+       "b/a*sqrt(max(a^2 - (xs*4/24)^2, 0))"
+      ],
+      [
+       "xs*5/24",
+       "b/a*sqrt(max(a^2 - (xs*5/24)^2, 0))"
+      ],
+      [
+       "xs*6/24",
+       "b/a*sqrt(max(a^2 - (xs*6/24)^2, 0))"
+      ],
+      [
+       "xs*7/24",
+       "b/a*sqrt(max(a^2 - (xs*7/24)^2, 0))"
+      ],
+      [
+       "xs*8/24",
+       "b/a*sqrt(max(a^2 - (xs*8/24)^2, 0))"
+      ],
+      [
+       "xs*9/24",
+       "b/a*sqrt(max(a^2 - (xs*9/24)^2, 0))"
+      ],
+      [
+       "xs*10/24",
+       "b/a*sqrt(max(a^2 - (xs*10/24)^2, 0))"
+      ],
+      [
+       "xs*11/24",
+       "b/a*sqrt(max(a^2 - (xs*11/24)^2, 0))"
+      ],
+      [
+       "xs*12/24",
+       "b/a*sqrt(max(a^2 - (xs*12/24)^2, 0))"
+      ],
+      [
+       "xs*13/24",
+       "b/a*sqrt(max(a^2 - (xs*13/24)^2, 0))"
+      ],
+      [
+       "xs*14/24",
+       "b/a*sqrt(max(a^2 - (xs*14/24)^2, 0))"
+      ],
+      [
+       "xs*15/24",
+       "b/a*sqrt(max(a^2 - (xs*15/24)^2, 0))"
+      ],
+      [
+       "xs*16/24",
+       "b/a*sqrt(max(a^2 - (xs*16/24)^2, 0))"
+      ],
+      [
+       "xs*17/24",
+       "b/a*sqrt(max(a^2 - (xs*17/24)^2, 0))"
+      ],
+      [
+       "xs*18/24",
+       "b/a*sqrt(max(a^2 - (xs*18/24)^2, 0))"
+      ],
+      [
+       "xs*19/24",
+       "b/a*sqrt(max(a^2 - (xs*19/24)^2, 0))"
+      ],
+      [
+       "xs*20/24",
+       "b/a*sqrt(max(a^2 - (xs*20/24)^2, 0))"
+      ],
+      [
+       "xs*21/24",
+       "b/a*sqrt(max(a^2 - (xs*21/24)^2, 0))"
+      ],
+      [
+       "xs*22/24",
+       "b/a*sqrt(max(a^2 - (xs*22/24)^2, 0))"
+      ],
+      [
+       "xs*23/24",
+       "b/a*sqrt(max(a^2 - (xs*23/24)^2, 0))"
+      ],
+      [
+       "xs*24/24",
+       "b/a*sqrt(max(a^2 - (xs*24/24)^2, 0))"
+      ],
+      [
+       "xs",
+       0
+      ]
+     ]
+    },
+    {
+     "shape": "path",
+     "color": "yellow",
+     "points": [
+      [
+       "a*1.0000",
+       "b*0.0000"
+      ],
+      [
+       "a*0.9914",
+       "b*0.1305"
+      ],
+      [
+       "a*0.9659",
+       "b*0.2588"
+      ],
+      [
+       "a*0.9239",
+       "b*0.3827"
+      ],
+      [
+       "a*0.8660",
+       "b*0.5000"
+      ],
+      [
+       "a*0.7934",
+       "b*0.6088"
+      ],
+      [
+       "a*0.7071",
+       "b*0.7071"
+      ],
+      [
+       "a*0.6088",
+       "b*0.7934"
+      ],
+      [
+       "a*0.5000",
+       "b*0.8660"
+      ],
+      [
+       "a*0.3827",
+       "b*0.9239"
+      ],
+      [
+       "a*0.2588",
+       "b*0.9659"
+      ],
+      [
+       "a*0.1305",
+       "b*0.9914"
+      ],
+      [
+       "a*0.0000",
+       "b*1.0000"
+      ],
+      [
+       "a*-0.1305",
+       "b*0.9914"
+      ],
+      [
+       "a*-0.2588",
+       "b*0.9659"
+      ],
+      [
+       "a*-0.3827",
+       "b*0.9239"
+      ],
+      [
+       "a*-0.5000",
+       "b*0.8660"
+      ],
+      [
+       "a*-0.6088",
+       "b*0.7934"
+      ],
+      [
+       "a*-0.7071",
+       "b*0.7071"
+      ],
+      [
+       "a*-0.7934",
+       "b*0.6088"
+      ],
+      [
+       "a*-0.8660",
+       "b*0.5000"
+      ],
+      [
+       "a*-0.9239",
+       "b*0.3827"
+      ],
+      [
+       "a*-0.9659",
+       "b*0.2588"
+      ],
+      [
+       "a*-0.9914",
+       "b*0.1305"
+      ],
+      [
+       "a*-1.0000",
+       "b*0.0000"
+      ],
+      [
+       "a*-0.9914",
+       "b*-0.1305"
+      ],
+      [
+       "a*-0.9659",
+       "b*-0.2588"
+      ],
+      [
+       "a*-0.9239",
+       "b*-0.3827"
+      ],
+      [
+       "a*-0.8660",
+       "b*-0.5000"
+      ],
+      [
+       "a*-0.7934",
+       "b*-0.6088"
+      ],
+      [
+       "a*-0.7071",
+       "b*-0.7071"
+      ],
+      [
+       "a*-0.6088",
+       "b*-0.7934"
+      ],
+      [
+       "a*-0.5000",
+       "b*-0.8660"
+      ],
+      [
+       "a*-0.3827",
+       "b*-0.9239"
+      ],
+      [
+       "a*-0.2588",
+       "b*-0.9659"
+      ],
+      [
+       "a*-0.1305",
+       "b*-0.9914"
+      ],
+      [
+       "a*-0.0000",
+       "b*-1.0000"
+      ],
+      [
+       "a*0.1305",
+       "b*-0.9914"
+      ],
+      [
+       "a*0.2588",
+       "b*-0.9659"
+      ],
+      [
+       "a*0.3827",
+       "b*-0.9239"
+      ],
+      [
+       "a*0.5000",
+       "b*-0.8660"
+      ],
+      [
+       "a*0.6088",
+       "b*-0.7934"
+      ],
+      [
+       "a*0.7071",
+       "b*-0.7071"
+      ],
+      [
+       "a*0.7934",
+       "b*-0.6088"
+      ],
+      [
+       "a*0.8660",
+       "b*-0.5000"
+      ],
+      [
+       "a*0.9239",
+       "b*-0.3827"
+      ],
+      [
+       "a*0.9659",
+       "b*-0.2588"
+      ],
+      [
+       "a*0.9914",
+       "b*-0.1305"
+      ]
+     ],
+     "closed": true,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "color": "orange",
+     "x1": "xs",
+     "y1": 0,
+     "x2": "xs",
+     "y2": "b/a*sqrt(max(a^2 - xs^2, 0))",
+     "width": 5
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -9.7,
+     "y": 5.1,
+     "text": {
+      "en": "quarter swept = {Aq:3}"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "green",
+     "x": -9.7,
+     "y": 4.2,
+     "text": {
+      "en": "4 × quarter = πab = {Tot:3}"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Quarter area swept"
+     },
+     "expr": "Aq",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Ellipse area πab"
+     },
+     "expr": "Tot",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With a = 3 and b = 2, sweep and check the quarter area 3π/2 ≈ 4.71."
+    },
+    {
+     "en": "Set b = a. Does the area become πa²?"
+    },
+    {
+     "en": "Halve b. What happens to the area, and why?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

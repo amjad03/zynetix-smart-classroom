@@ -231,6 +231,392 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Same slope along every ray",
+    "kn": "ಪ್ರತಿ ಕಿರಣದಲ್ಲೂ ಒಂದೇ ಇಳಿಜಾರು"
+   },
+   "narration": {
+    "en": "In a homogeneous equation dy/dx = g(y/x), the slope depends only on v = y/x. Every point on a ray from the origin has the same v, so the same slope. Drag P and stretch it to λP.",
+    "kn": "ಸಮಘಾತೀಯ ಸಮೀಕರಣ dy/dx = g(y/x) ಯಲ್ಲಿ ಇಳಿಜಾರು v = y/x ಮೇಲೆ ಮಾತ್ರ ಅವಲಂಬಿತ. ಮೂಲಬಿಂದುವಿನಿಂದ ಹೊರಡುವ ಕಿರಣದ ಪ್ರತಿ ಬಿಂದುವಿಗೂ ಒಂದೇ v, ಒಂದೇ ಇಳಿಜಾರು. P ಎಳೆದು λP ಗೆ ಹಿಗ್ಗಿಸಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "In a homogeneous equation dy/dx = g(y/x), the slope depends only on v = y/x. Every point on a ray from the origin has the same v, so the same slope. Drag P and stretch it to λP.",
+    "kn": "ಸಮಘಾತೀಯ ಸಮೀಕರಣ dy/dx = g(y/x) ಯಲ್ಲಿ ಇಳಿಜಾರು v = y/x ಮೇಲೆ ಮಾತ್ರ ಅವಲಂಬಿತ. ಮೂಲಬಿಂದುವಿನಿಂದ ಹೊರಡುವ ಕಿರಣದ ಪ್ರತಿ ಬಿಂದುವಿಗೂ ಒಂದೇ v, ಒಂದೇ ಇಳಿಜಾರು. P ಎಳೆದು λP ಗೆ ಹಿಗ್ಗಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "lam",
+     "label": {
+      "en": "λ"
+     },
+     "min": 0.25,
+     "max": 3,
+     "step": 0.25,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fld",
+     "label": {
+      "en": "Slope field",
+      "kn": "ಇಳಿಜಾರು ಕ್ಷೇತ್ರ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "gq",
+     "label": {
+      "en": "Equation",
+      "kn": "ಸಮೀಕರಣ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "dy/dx = (x + y)/x"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "dy/dx = (x − y)/(x + y)"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "P",
+     "x": 2,
+     "y": 1,
+     "box": {
+      "x": [
+       0.5,
+       4
+      ],
+      "y": [
+       -2,
+       2
+      ]
+     },
+     "snap": 0.25,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "v",
+     "expr": "P_y/P_x"
+    },
+    {
+     "name": "sp",
+     "expr": "clamp(if(gq == 1, 1 + v, (1 - v)/if(abs(1 + v) < 1e-9, 1e-9, 1 + v)), -1000, 1000)"
+    },
+    {
+     "name": "ang",
+     "expr": "atan(sp)"
+    },
+    {
+     "name": "sq",
+     "expr": "clamp(if(gq == 1, 1 + (lam*P_y)/(lam*P_x), (1 - (lam*P_y)/(lam*P_x))/if(abs(1 + (lam*P_y)/(lam*P_x)) < 1e-9, 1e-9, 1 + (lam*P_y)/(lam*P_x))), -1000, 1000)"
+    }
+   ],
+   "view": {
+    "x": [
+     -1,
+     12.5
+    ],
+    "y": [
+     -6.5,
+     6.5
+    ],
+    "axes": true,
+    "xLabel": "x",
+    "yLabel": "y",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,1.36,1.33)",
+     "y1": "if(gq==1,-4.68,-4.69)",
+     "x2": "if(gq==1,1.64,1.67)",
+     "y2": "if(gq==1,-5.32,-5.31)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,1.17,1.45)",
+     "y1": "if(gq==1,-1.89,-1.65)",
+     "x2": "if(gq==1,1.83,1.55)",
+     "y2": "if(gq==1,-2.11,-2.35)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,1.36,1.15)",
+     "y1": "if(gq==1,1.68,2.05)",
+     "x2": "if(gq==1,1.64,1.85)",
+     "y2": "if(gq==1,2.32,1.95)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,1.42,1.19)",
+     "y1": "if(gq==1,4.66,5.17)",
+     "x2": "if(gq==1,1.58,1.81)",
+     "y2": "if(gq==1,5.34,4.83)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,4.15,4.48)",
+     "y1": "if(gq==1,-4.96,-4.65)",
+     "x2": "if(gq==1,4.85,4.52)",
+     "y2": "if(gq==1,-5.04,-5.35)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,4.19,4.37)",
+     "y1": "if(gq==1,-2.17,-2.33)",
+     "x2": "if(gq==1,4.81,4.63)",
+     "y2": "if(gq==1,-1.83,-1.67)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,4.30,4.17)",
+     "y1": "if(gq==1,1.71,1.87)",
+     "x2": "if(gq==1,4.70,4.83)",
+     "y2": "if(gq==1,2.29,2.13)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,4.35,4.15)",
+     "y1": "if(gq==1,4.68,5.02)",
+     "x2": "if(gq==1,4.65,4.85)",
+     "y2": "if(gq==1,5.32,4.98)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,8.18,8.41)",
+     "y1": "if(gq==1,-5.13,-5.34)",
+     "x2": "if(gq==1,8.82,8.59)",
+     "y2": "if(gq==1,-4.87,-4.66)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,8.22,8.32)",
+     "y1": "if(gq==1,-2.21,-2.30)",
+     "x2": "if(gq==1,8.78,8.68)",
+     "y2": "if(gq==1,-1.79,-1.70)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,8.28,8.20)",
+     "y1": "if(gq==1,1.73,1.82)",
+     "x2": "if(gq==1,8.72,8.80)",
+     "y2": "if(gq==1,2.27,2.18)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,8.31,8.16)",
+     "y1": "if(gq==1,4.70,4.91)",
+     "x2": "if(gq==1,8.69,8.84)",
+     "y2": "if(gq==1,5.30,5.09)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,11.70,11.87)",
+     "y1": "if(gq==1,-5.18,-5.32)",
+     "x2": "if(gq==1,12.30,12.13)",
+     "y2": "if(gq==1,-4.82,-4.68)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,11.73,11.80)",
+     "y1": "if(gq==1,-2.22,-2.28)",
+     "x2": "if(gq==1,12.27,12.20)",
+     "y2": "if(gq==1,-1.78,-1.72)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,11.77,11.72)",
+     "y1": "if(gq==1,1.73,1.80)",
+     "x2": "if(gq==1,12.23,12.28)",
+     "y2": "if(gq==1,2.27,2.20)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "fld",
+     "color": "white",
+     "opacity": 0.45,
+     "x1": "if(gq==1,11.80,11.68)",
+     "y1": "if(gq==1,4.71,4.87)",
+     "x2": "if(gq==1,12.20,12.32)",
+     "y2": "if(gq==1,5.29,5.13)",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "color": "white",
+     "opacity": 0.5,
+     "x1": 0,
+     "y1": 0,
+     "x2": "12*P_x/hypot(P_x, P_y)",
+     "y2": "12*P_y/hypot(P_x, P_y)",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "color": "yellow",
+     "x1": "P_x - 0.8*cos(ang)",
+     "y1": "P_y - 0.8*sin(ang)",
+     "x2": "P_x + 0.8*cos(ang)",
+     "y2": "P_y + 0.8*sin(ang)",
+     "width": 6
+    },
+    {
+     "shape": "line",
+     "color": "green",
+     "x1": "lam*P_x - 0.8*cos(ang)",
+     "y1": "lam*P_y - 0.8*sin(ang)",
+     "x2": "lam*P_x + 0.8*cos(ang)",
+     "y2": "lam*P_y + 0.8*sin(ang)",
+     "width": 6
+    },
+    {
+     "shape": "circle",
+     "color": "green",
+     "x": "lam*P_x",
+     "y": "lam*P_y",
+     "r": 0.15
+    },
+    {
+     "shape": "text",
+     "color": "green",
+     "x": "lam*P_x",
+     "y": "lam*P_y + 0.6",
+     "text": {
+      "en": "λP"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 12.3,
+     "y": 6,
+     "text": {
+      "en": "v = y/x = {v:2}   slope = {sp:3}"
+     },
+     "size": 26,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "v = y/x at P"
+     },
+     "expr": "v",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Slope at P"
+     },
+     "expr": "sp",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Slope at λP"
+     },
+     "expr": "sq",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Change λ. Do the yellow and green slope marks stay parallel?"
+    },
+    {
+     "en": "Look along the x-axis (v = 0) in the field. Is every mark the same?"
+    },
+    {
+     "en": "This is why the substitution y = vx works: what does it turn the equation into?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

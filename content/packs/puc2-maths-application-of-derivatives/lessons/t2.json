@@ -267,6 +267,219 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Green means increasing",
+    "kn": "ಹಸಿರು ಎಂದರೆ ಏರುತ್ತಿರುವ"
+   },
+   "narration": {
+    "en": "f(x) = kx + sin x, so f′(x) = k + cos x. Drag the point along the x-axis: the tangent is green where f′ > 0 (f increasing) and red where f′ < 0 (f decreasing).",
+    "kn": "f(x) = kx + sin x, ಆದ್ದರಿಂದ f′(x) = k + cos x. ಬಿಂದುವನ್ನು x-ಅಕ್ಷದಲ್ಲಿ ಎಳೆಯಿರಿ: f′ > 0 ಇರುವಲ್ಲಿ ಸ್ಪರ್ಶಕ ಹಸಿರು (ಏರುವ), f′ < 0 ಇರುವಲ್ಲಿ ಕೆಂಪು (ಇಳಿಯುವ)."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "f(x) = kx + sin x, so f′(x) = k + cos x. Drag the point along the x-axis: the tangent is green where f′ > 0 (f increasing) and red where f′ < 0 (f decreasing).",
+    "kn": "f(x) = kx + sin x, ಆದ್ದರಿಂದ f′(x) = k + cos x. ಬಿಂದುವನ್ನು x-ಅಕ್ಷದಲ್ಲಿ ಎಳೆಯಿರಿ: f′ > 0 ಇರುವಲ್ಲಿ ಸ್ಪರ್ಶಕ ಹಸಿರು (ಏರುವ), f′ < 0 ಇರುವಲ್ಲಿ ಕೆಂಪು (ಇಳಿಯುವ)."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "k in f(x) = kx + sin x"
+     },
+     "min": 0,
+     "max": 2,
+     "step": 0.1,
+     "value": 0.5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "dshow",
+     "label": {
+      "en": "Show f′(x)",
+      "kn": "f′(x) ತೋರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "drag",
+     "x": 1,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       -6.5,
+       6.5
+      ],
+      "y": [
+       -1,
+       1
+      ]
+     },
+     "snap": 0.05,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "p",
+     "expr": "P_x"
+    },
+    {
+     "name": "fp",
+     "expr": "k + cos(p)"
+    },
+    {
+     "name": "fv",
+     "expr": "k*p + sin(p)"
+    }
+   ],
+   "view": {
+    "x": [
+     -7,
+     7
+    ],
+    "y": [
+     -15,
+     15
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "dshow",
+     "color": "green",
+     "opacity": 0.7,
+     "fn": "k + cos(x)",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "color": "yellow",
+     "fn": "k*x + sin(x)",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "color": "white",
+     "opacity": 0.5,
+     "x1": "p",
+     "y1": 0,
+     "x2": "p",
+     "y2": "fv",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "color": {
+      "by": "step(0, fp)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "x1": "p - 2",
+     "y1": "fv - 2*fp",
+     "x2": "p + 2",
+     "y2": "fv + 2*fp",
+     "width": 6
+    },
+    {
+     "shape": "circle",
+     "color": "orange",
+     "x": "p",
+     "y": "fv",
+     "r": 0.18
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -6.8,
+     "y": 13.5,
+     "text": {
+      "en": "f′({p:2}) = {fp:2}"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "fp > 0",
+     "color": "green",
+     "x": -6.8,
+     "y": 11.3,
+     "text": {
+      "en": "increasing here"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "fp < 0",
+     "color": "red",
+     "x": -6.8,
+     "y": 11.3,
+     "text": {
+      "en": "decreasing here"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "k >= 1",
+     "color": "green",
+     "x": 0,
+     "y": -13.5,
+     "text": {
+      "en": "k ≥ 1: f′(x) = k + cos x ≥ 0 for every x, so f is increasing on R"
+     },
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "f′(x) at the point"
+     },
+     "expr": "fp",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "f(x) at the point"
+     },
+     "expr": "fv",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With k = 0, find where sin x stops rising and starts falling (x = π/2 ≈ 1.57)."
+    },
+    {
+     "en": "Raise k slowly. At what k does the red disappear for good?"
+    },
+    {
+     "en": "Turn on f′(x). Where the green tangent turns red, what is f′?"
+    }
+   ]
+  },
+  {
    "id": "sim-lab.graph-plotter",
    "type": "simulation",
    "source": "kinetix_sim",

@@ -301,6 +301,302 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Is there a best corner at all?",
+    "kn": "ಅತ್ಯುತ್ತಮ ಮೂಲೆ ಇದೆಯೇ?"
+   },
+   "narration": {
+    "en": "Region x + 3y ≥ 3, x + y ≥ 2, x, y ≥ 0 is unbounded, with corners (3, 0), (1.5, 0.5), (0, 2). The best corner value m is the answer only if the half-plane ax + by < m (for a minimum) misses the region.",
+    "kn": "x + 3y ≥ 3, x + y ≥ 2, x, y ≥ 0 ಪ್ರದೇಶ ಅಪರಿಮಿತ; ಮೂಲೆಗಳು (3, 0), (1.5, 0.5), (0, 2). ಉತ್ತಮ ಮೂಲೆ ಬೆಲೆ m ಉತ್ತರವಾಗುವುದು ax + by < m (ಕನಿಷ್ಠಕ್ಕೆ) ಅರ್ಧಸಮತಲ ಪ್ರದೇಶವನ್ನು ಮುಟ್ಟದಿದ್ದರೆ ಮಾತ್ರ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Region x + 3y ≥ 3, x + y ≥ 2, x, y ≥ 0 is unbounded, with corners (3, 0), (1.5, 0.5), (0, 2). The best corner value m is the answer only if the half-plane ax + by < m (for a minimum) misses the region.",
+    "kn": "x + 3y ≥ 3, x + y ≥ 2, x, y ≥ 0 ಪ್ರದೇಶ ಅಪರಿಮಿತ; ಮೂಲೆಗಳು (3, 0), (1.5, 0.5), (0, 2). ಉತ್ತಮ ಮೂಲೆ ಬೆಲೆ m ಉತ್ತರವಾಗುವುದು ax + by < m (ಕನಿಷ್ಠಕ್ಕೆ) ಅರ್ಧಸಮತಲ ಪ್ರದೇಶವನ್ನು ಮುಟ್ಟದಿದ್ದರೆ ಮಾತ್ರ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "a in Z = ax + by"
+     },
+     "min": -2,
+     "max": 4,
+     "step": 0.5,
+     "value": 1
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "b in Z = ax + by"
+     },
+     "min": -2,
+     "max": 4,
+     "step": 0.5,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "hp",
+     "label": {
+      "en": "Arrow to better Z",
+      "kn": "ಉತ್ತಮ Z ದಿಕ್ಕಿನ ಬಾಣ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "goal",
+     "label": {
+      "en": "Goal",
+      "kn": "ಗುರಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Minimise"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Maximise"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "z1",
+     "expr": "3*a"
+    },
+    {
+     "name": "z2",
+     "expr": "1.5*a + 0.5*b"
+    },
+    {
+     "name": "z3",
+     "expr": "2*b"
+    },
+    {
+     "name": "val",
+     "expr": "if(goal == 1, min(z1, z2, z3), max(z1, z2, z3))"
+    },
+    {
+     "name": "xs",
+     "expr": "if(val == z2, 1.5, if(val == z1, 3, 0))"
+    },
+    {
+     "name": "ys",
+     "expr": "if(val == z2, 0.5, if(val == z1, 0, 2))"
+    },
+    {
+     "name": "ok",
+     "expr": "if(goal == 1, a >= 0 && b >= 0, a <= 0 && b <= 0)"
+    },
+    {
+     "name": "dirn",
+     "expr": "if(goal == 1, -1, 1)"
+    },
+    {
+     "name": "nn",
+     "expr": "hypot(a, b)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     9
+    ],
+    "y": [
+     -0.5,
+     5.5
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x",
+    "yLabel": "y",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "color": "green",
+     "opacity": 0.3,
+     "points": [
+      [
+       3,
+       0
+      ],
+      [
+       9,
+       0
+      ],
+      [
+       9,
+       5.5
+      ],
+      [
+       0,
+       5.5
+      ],
+      [
+       0,
+       2
+      ],
+      [
+       1.5,
+       0.5
+      ]
+     ]
+    },
+    {
+     "shape": "path",
+     "color": "blue",
+     "opacity": 0.6,
+     "fn": "(3 - x)/3",
+     "from": 0,
+     "to": 3,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "color": "blue",
+     "opacity": 0.6,
+     "fn": "2 - x",
+     "from": 0,
+     "to": 2,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "visibleIf": "b != 0",
+     "color": "orange",
+     "fn": "(val - a*x)/b",
+     "from": -0.5,
+     "to": 9,
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "visibleIf": "b == 0 && a != 0",
+     "color": "orange",
+     "x1": "val/a",
+     "y1": -0.5,
+     "x2": "val/a",
+     "y2": 5.5,
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "hp && nn > 0",
+     "color": "red",
+     "x": "xs",
+     "y": "ys",
+     "dx": "dirn*1.5*a/nn",
+     "dy": "dirn*1.5*b/nn",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "color": "yellow",
+     "x": "xs",
+     "y": "ys",
+     "r": 0.15
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 8.9,
+     "y": 5.1,
+     "text": {
+      "en": "best corner value = {val:2} at ({xs:1}, {ys:1})"
+     },
+     "size": 24,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "ok && goal == 1",
+     "color": "green",
+     "x": 8.9,
+     "y": 4.5,
+     "text": {
+      "en": "this is the minimum"
+     },
+     "size": 26,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "ok && goal == 2",
+     "color": "green",
+     "x": 8.9,
+     "y": 4.5,
+     "text": {
+      "en": "this is the maximum"
+     },
+     "size": 26,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "!ok && goal == 1",
+     "color": "red",
+     "x": 8.9,
+     "y": 4.5,
+     "text": {
+      "en": "no minimum: ax + by < {val:1} meets the region"
+     },
+     "size": 24,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "!ok && goal == 2",
+     "color": "red",
+     "x": 8.9,
+     "y": 4.5,
+     "text": {
+      "en": "no maximum: ax + by > {val:1} meets the region"
+     },
+     "size": 24,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Best corner value"
+     },
+     "expr": "val",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Minimise Z = x + 2y. Which corner gives the minimum 2.5?"
+    },
+    {
+     "en": "Now try to maximise the same Z. Why is there no maximum?"
+    },
+    {
+     "en": "Make a negative and minimise. Which way does the arrow escape?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

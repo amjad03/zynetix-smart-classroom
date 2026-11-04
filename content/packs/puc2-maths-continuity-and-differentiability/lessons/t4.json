@@ -210,6 +210,201 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Tangents to exponentials and logs",
+    "kn": "ಘಾತೀಯ ಮತ್ತು ಲಘುಗಣಕಗಳ ಸ್ಪರ್ಶಕಗಳು"
+   },
+   "narration": {
+    "en": "Drag P. For aˣ the slope is aˣ log a; for logₐ x it is 1/(x log a); for xˣ take logs first: log y = x log x, so y′ = xˣ(1 + log x).",
+    "kn": "P ಎಳೆಯಿರಿ. aˣ ಗೆ ಇಳಿಜಾರು aˣ log a; logₐ x ಗೆ 1/(x log a); xˣ ಗೆ ಮೊದಲು ಲಘುಗಣಕ: log y = x log x, ಆದ್ದರಿಂದ y′ = xˣ(1 + log x)."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drag P. For aˣ the slope is aˣ log a; for logₐ x it is 1/(x log a); for xˣ take logs first: log y = x log x, so y′ = xˣ(1 + log x).",
+    "kn": "P ಎಳೆಯಿರಿ. aˣ ಗೆ ಇಳಿಜಾರು aˣ log a; logₐ x ಗೆ 1/(x log a); xˣ ಗೆ ಮೊದಲು ಲಘುಗಣಕ: log y = x log x, ಆದ್ದರಿಂದ y′ = xˣ(1 + log x)."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "Base a"
+     },
+     "min": 1.5,
+     "max": 4,
+     "step": 0.1,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "tg",
+     "label": {
+      "en": "Tangent",
+      "kn": "ಸ್ಪರ್ಶಕ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "fc",
+     "label": {
+      "en": "f(x)"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "aˣ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "logₐ x"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "xˣ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "P",
+     "x": 1,
+     "y": 0,
+     "axis": "x",
+     "box": {
+      "x": [
+       0.2,
+       2.5
+      ],
+      "y": [
+       -1,
+       1
+      ]
+     },
+     "snap": 0.05,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "p",
+     "expr": "P_x"
+    },
+    {
+     "name": "fv",
+     "expr": "if(fc == 1, a^(p), if(fc == 2, ln(p)/ln(a), (p)^(p)))"
+    },
+    {
+     "name": "dv",
+     "expr": "if(fc == 1, a^(p)*ln(a), if(fc == 2, 1/((p)*ln(a)), (p)^(p)*(1 + ln(p))))"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.2,
+     2.7
+    ],
+    "y": [
+     -3,
+     13
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "color": "yellow",
+     "fn": "if(fc == 1, a^(x), if(fc == 2, ln(x)/ln(a), (x)^(x)))",
+     "from": 0.1,
+     "to": 2.65,
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "visibleIf": "tg",
+     "color": "green",
+     "fn": "fv + dv*(x - p)",
+     "from": "p - 0.6",
+     "to": "p + 0.6",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "color": "orange",
+     "x": "p",
+     "y": "fv",
+     "r": 0.04
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -0.1,
+     "y": 12.2,
+     "text": {
+      "en": "f(x) = {fv:3}   f′(x) = {dv:3}"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "fc == 3",
+     "color": "white",
+     "x": -0.1,
+     "y": 10.9,
+     "text": {
+      "en": "y = xˣ: log y = x log x, y′/y = 1 + log x"
+     },
+     "size": 24,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "f(x) at P"
+     },
+     "expr": "fv",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "f′(x) at P"
+     },
+     "expr": "dv",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "For aˣ, set a = 2.7 (close to e). Is the slope almost equal to the height?"
+    },
+    {
+     "en": "For xˣ, find where the tangent is flat (x = 1/e ≈ 0.37)."
+    },
+    {
+     "en": "For logₐ x, which point has slope exactly 1/log a?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -451,6 +451,443 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Sorting into equivalence classes",
+    "kn": "ಸಮಾನತಾ ವರ್ಗಗಳಾಗಿ ವಿಂಗಡಣೆ"
+   },
+   "narration": {
+    "en": "a R b when m divides a − b is an equivalence relation on the integers. Press Sort: the numbers 0 to 23 fall into m columns, the equivalence classes [0], [1], …, [m − 1]. Every number lands in exactly one class.",
+    "kn": "m, a − b ಯನ್ನು ಭಾಗಿಸಿದಾಗ a R b ಪೂರ್ಣಾಂಕಗಳ ಮೇಲೆ ಸಮಾನತಾ ಸಂಬಂಧ. ವಿಂಗಡಿಸಿ ಒತ್ತಿ: 0 ಇಂದ 23 ರವರೆಗಿನ ಸಂಖ್ಯೆಗಳು m ಕಂಬಸಾಲುಗಳಿಗೆ ಬೀಳುತ್ತವೆ, ಅವೇ ಸಮಾನತಾ ವರ್ಗಗಳು. ಪ್ರತಿ ಸಂಖ್ಯೆ ಒಂದೇ ವರ್ಗದಲ್ಲಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "a R b when m divides a − b is an equivalence relation on the integers. Press Sort: the numbers 0 to 23 fall into m columns, the equivalence classes [0], [1], …, [m − 1]. Every number lands in exactly one class.",
+    "kn": "m, a − b ಯನ್ನು ಭಾಗಿಸಿದಾಗ a R b ಪೂರ್ಣಾಂಕಗಳ ಮೇಲೆ ಸಮಾನತಾ ಸಂಬಂಧ. ವಿಂಗಡಿಸಿ ಒತ್ತಿ: 0 ಇಂದ 23 ರವರೆಗಿನ ಸಂಖ್ಯೆಗಳು m ಕಂಬಸಾಲುಗಳಿಗೆ ಬೀಳುತ್ತವೆ, ಅವೇ ಸಮಾನತಾ ವರ್ಗಗಳು. ಪ್ರತಿ ಸಂಖ್ಯೆ ಒಂದೇ ವರ್ಗದಲ್ಲಿ."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "m"
+     },
+     "min": 2,
+     "max": 6,
+     "step": 1,
+     "value": 3
+    },
+    {
+     "name": "c",
+     "label": {
+      "en": "c"
+     },
+     "min": 0,
+     "max": 23,
+     "step": 1,
+     "value": 7
+    }
+   ],
+   "toggles": [
+    {
+     "name": "hl",
+     "label": {
+      "en": "Highlight the class of c",
+      "kn": "c ಯ ವರ್ಗ"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Sort into classes",
+      "kn": "ವರ್ಗಗಳಾಗಿ ವಿಂಗಡಿಸಿ"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 2
+   },
+   "vars": [
+    {
+     "name": "s",
+     "expr": "smoothstep(0, 1.5, t)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     15
+    ],
+    "y": [
+     0,
+     10
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "visibleIf": "hl && mod(i - c, m) == 0",
+     "color": "yellow",
+     "opacity": 0.45,
+     "count": 24,
+     "x": "(1 - s)*(1 + 1.15*mod(i, 12)) + s*(1 + 2*mod(i, m))",
+     "y": "(1 - s)*if(i < 12, 9.2, 8.4) + s*(7.6 - 0.6*floor(i/m))",
+     "r": 0.38
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*1.00 + s*(1 + 2*mod(0, m))",
+     "y": "(1 - s)*9.2 + s*(7.6 - 0.6*floor(0/m))",
+     "text": {
+      "en": "0"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*2.15 + s*(1 + 2*mod(1, m))",
+     "y": "(1 - s)*9.2 + s*(7.6 - 0.6*floor(1/m))",
+     "text": {
+      "en": "1"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*3.30 + s*(1 + 2*mod(2, m))",
+     "y": "(1 - s)*9.2 + s*(7.6 - 0.6*floor(2/m))",
+     "text": {
+      "en": "2"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*4.45 + s*(1 + 2*mod(3, m))",
+     "y": "(1 - s)*9.2 + s*(7.6 - 0.6*floor(3/m))",
+     "text": {
+      "en": "3"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*5.60 + s*(1 + 2*mod(4, m))",
+     "y": "(1 - s)*9.2 + s*(7.6 - 0.6*floor(4/m))",
+     "text": {
+      "en": "4"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*6.75 + s*(1 + 2*mod(5, m))",
+     "y": "(1 - s)*9.2 + s*(7.6 - 0.6*floor(5/m))",
+     "text": {
+      "en": "5"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*7.90 + s*(1 + 2*mod(6, m))",
+     "y": "(1 - s)*9.2 + s*(7.6 - 0.6*floor(6/m))",
+     "text": {
+      "en": "6"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*9.05 + s*(1 + 2*mod(7, m))",
+     "y": "(1 - s)*9.2 + s*(7.6 - 0.6*floor(7/m))",
+     "text": {
+      "en": "7"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*10.20 + s*(1 + 2*mod(8, m))",
+     "y": "(1 - s)*9.2 + s*(7.6 - 0.6*floor(8/m))",
+     "text": {
+      "en": "8"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*11.35 + s*(1 + 2*mod(9, m))",
+     "y": "(1 - s)*9.2 + s*(7.6 - 0.6*floor(9/m))",
+     "text": {
+      "en": "9"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*12.50 + s*(1 + 2*mod(10, m))",
+     "y": "(1 - s)*9.2 + s*(7.6 - 0.6*floor(10/m))",
+     "text": {
+      "en": "10"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*13.65 + s*(1 + 2*mod(11, m))",
+     "y": "(1 - s)*9.2 + s*(7.6 - 0.6*floor(11/m))",
+     "text": {
+      "en": "11"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*1.00 + s*(1 + 2*mod(12, m))",
+     "y": "(1 - s)*8.4 + s*(7.6 - 0.6*floor(12/m))",
+     "text": {
+      "en": "12"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*2.15 + s*(1 + 2*mod(13, m))",
+     "y": "(1 - s)*8.4 + s*(7.6 - 0.6*floor(13/m))",
+     "text": {
+      "en": "13"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*3.30 + s*(1 + 2*mod(14, m))",
+     "y": "(1 - s)*8.4 + s*(7.6 - 0.6*floor(14/m))",
+     "text": {
+      "en": "14"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*4.45 + s*(1 + 2*mod(15, m))",
+     "y": "(1 - s)*8.4 + s*(7.6 - 0.6*floor(15/m))",
+     "text": {
+      "en": "15"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*5.60 + s*(1 + 2*mod(16, m))",
+     "y": "(1 - s)*8.4 + s*(7.6 - 0.6*floor(16/m))",
+     "text": {
+      "en": "16"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*6.75 + s*(1 + 2*mod(17, m))",
+     "y": "(1 - s)*8.4 + s*(7.6 - 0.6*floor(17/m))",
+     "text": {
+      "en": "17"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*7.90 + s*(1 + 2*mod(18, m))",
+     "y": "(1 - s)*8.4 + s*(7.6 - 0.6*floor(18/m))",
+     "text": {
+      "en": "18"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*9.05 + s*(1 + 2*mod(19, m))",
+     "y": "(1 - s)*8.4 + s*(7.6 - 0.6*floor(19/m))",
+     "text": {
+      "en": "19"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*10.20 + s*(1 + 2*mod(20, m))",
+     "y": "(1 - s)*8.4 + s*(7.6 - 0.6*floor(20/m))",
+     "text": {
+      "en": "20"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*11.35 + s*(1 + 2*mod(21, m))",
+     "y": "(1 - s)*8.4 + s*(7.6 - 0.6*floor(21/m))",
+     "text": {
+      "en": "21"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*12.50 + s*(1 + 2*mod(22, m))",
+     "y": "(1 - s)*8.4 + s*(7.6 - 0.6*floor(22/m))",
+     "text": {
+      "en": "22"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "(1 - s)*13.65 + s*(1 + 2*mod(23, m))",
+     "y": "(1 - s)*8.4 + s*(7.6 - 0.6*floor(23/m))",
+     "text": {
+      "en": "23"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "visibleIf": "s > 0.5 && 0 < m",
+     "color": "orange",
+     "x": 1,
+     "y": 8.3,
+     "text": {
+      "en": "[0]"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "visibleIf": "s > 0.5 && 1 < m",
+     "color": "orange",
+     "x": 3,
+     "y": 8.3,
+     "text": {
+      "en": "[1]"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "visibleIf": "s > 0.5 && 2 < m",
+     "color": "orange",
+     "x": 5,
+     "y": 8.3,
+     "text": {
+      "en": "[2]"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "visibleIf": "s > 0.5 && 3 < m",
+     "color": "orange",
+     "x": 7,
+     "y": 8.3,
+     "text": {
+      "en": "[3]"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "visibleIf": "s > 0.5 && 4 < m",
+     "color": "orange",
+     "x": 9,
+     "y": 8.3,
+     "text": {
+      "en": "[4]"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "visibleIf": "s > 0.5 && 5 < m",
+     "color": "orange",
+     "x": 11,
+     "y": 8.3,
+     "text": {
+      "en": "[5]"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "yellow",
+     "x": 14.8,
+     "y": 1.2,
+     "text": {
+      "en": "class of {c:0} is [{mod(c, m):0}]"
+     },
+     "size": 26,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Class of c"
+     },
+     "expr": "mod(c, m)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Members from 0 to 23"
+     },
+     "expr": "floor((23 - mod(c, m))/m) + 1",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With m = 2, what are the two classes called?"
+    },
+    {
+     "en": "Pick c = 7 and m = 3. Which numbers are related to 7?"
+    },
+    {
+     "en": "Why can two different classes never share a number?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

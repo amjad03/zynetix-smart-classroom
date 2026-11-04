@@ -292,6 +292,207 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Bayes with 200 people",
+    "kn": "200 ಜನರೊಂದಿಗೆ ಬೇಯ್ಸ್"
+   },
+   "narration": {
+    "en": "Red dots have the disease, blue are healthy; ringed dots test positive. P(ill | positive) = P(ill)P(+|ill) / [P(ill)P(+|ill) + P(healthy)P(+|healthy)]: the red ringed dots out of all ringed dots.",
+    "kn": "ಕೆಂಪು ಚುಕ್ಕೆಗಳಿಗೆ ರೋಗ, ನೀಲಿ ಆರೋಗ್ಯವಂತರು; ಉಂಗುರವಿರುವವು ಪರೀಕ್ಷೆಯಲ್ಲಿ ಧನಾತ್ಮಕ. P(ರೋಗ | ಧನ) = P(ರೋಗ)P(+|ರೋಗ) / [P(ರೋಗ)P(+|ರೋಗ) + P(ಆರೋಗ್ಯ)P(+|ಆರೋಗ್ಯ)]: ಎಲ್ಲ ಉಂಗುರಗಳಲ್ಲಿ ಕೆಂಪು ಉಂಗುರಗಳು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Red dots have the disease, blue are healthy; ringed dots test positive. P(ill | positive) = P(ill)P(+|ill) / [P(ill)P(+|ill) + P(healthy)P(+|healthy)]: the red ringed dots out of all ringed dots.",
+    "kn": "ಕೆಂಪು ಚುಕ್ಕೆಗಳಿಗೆ ರೋಗ, ನೀಲಿ ಆರೋಗ್ಯವಂತರು; ಉಂಗುರವಿರುವವು ಪರೀಕ್ಷೆಯಲ್ಲಿ ಧನಾತ್ಮಕ. P(ರೋಗ | ಧನ) = P(ರೋಗ)P(+|ರೋಗ) / [P(ರೋಗ)P(+|ರೋಗ) + P(ಆರೋಗ್ಯ)P(+|ಆರೋಗ್ಯ)]: ಎಲ್ಲ ಉಂಗುರಗಳಲ್ಲಿ ಕೆಂಪು ಉಂಗುರಗಳು."
+   },
+   "sliders": [
+    {
+     "name": "p",
+     "label": {
+      "en": "P(ill)"
+     },
+     "min": 0.01,
+     "max": 0.3,
+     "step": 0.01,
+     "value": 0.1
+    },
+    {
+     "name": "se",
+     "label": {
+      "en": "P(+ | ill)"
+     },
+     "min": 0.5,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.9
+    },
+    {
+     "name": "fp",
+     "label": {
+      "en": "P(+ | healthy)"
+     },
+     "min": 0,
+     "max": 0.2,
+     "step": 0.01,
+     "value": 0.05
+    }
+   ],
+   "toggles": [
+    {
+     "name": "dim",
+     "label": {
+      "en": "Shrink the negatives",
+      "kn": "ಋಣಾತ್ಮಕಗಳನ್ನು ಕುಗ್ಗಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "nI",
+     "expr": "round(200*p)"
+    },
+    {
+     "name": "nIP",
+     "expr": "round(nI*se)"
+    },
+    {
+     "name": "nHP",
+     "expr": "round((200 - nI)*fp)"
+    },
+    {
+     "name": "bay",
+     "expr": "p*se/(p*se + (1 - p)*fp)"
+    },
+    {
+     "name": "cnt",
+     "expr": "if(nIP + nHP > 0, nIP/(nIP + nHP), 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     7.5
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "visibleIf": "(i < nIP || (i >= nI && i < nI + nHP))",
+     "color": "white",
+     "count": 200,
+     "x": "0.6 + 0.6*mod(i, 20)",
+     "y": "0.7 + 0.6*floor(i/20)",
+     "r": 0.27
+    },
+    {
+     "shape": "particles",
+     "color": {
+      "by": "i < nI",
+      "scale": [
+       "blue",
+       "red"
+      ]
+     },
+     "count": 200,
+     "x": "0.6 + 0.6*mod(i, 20)",
+     "y": "0.7 + 0.6*floor(i/20)",
+     "r": "if((i < nIP || (i >= nI && i < nI + nHP)), 0.21, if(dim, 0.07, 0.21))"
+    },
+    {
+     "shape": "text",
+     "color": "red",
+     "x": 12.8,
+     "y": 6.8,
+     "text": {
+      "en": "ill: {nI:0}   ill and +: {nIP:0}"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "blue",
+     "x": 12.8,
+     "y": 6.0,
+     "text": {
+      "en": "healthy but +: {nHP:0}"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 12.8,
+     "y": 4.8,
+     "text": {
+      "en": "of the {nIP + nHP:0} positives,"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 12.8,
+     "y": 4.1,
+     "text": {
+      "en": "{nIP:0} are ill: {cnt:3}"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "yellow",
+     "x": 12.8,
+     "y": 2.8,
+     "text": {
+      "en": "Bayes: {bay:3}"
+     },
+     "size": 28,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "P(ill | positive) by Bayes"
+     },
+     "expr": "bay",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "From the counts"
+     },
+     "expr": "cnt",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set the disease rate to 1%. Even with a good test, why are most positives healthy?"
+    },
+    {
+     "en": "Make false positives 0. What is P(ill | positive) now?"
+    },
+    {
+     "en": "Raise the disease rate to 30%. How does the answer change?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

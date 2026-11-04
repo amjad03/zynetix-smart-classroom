@@ -223,6 +223,371 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "AB or BA?",
+    "kn": "AB ಅಥವಾ BA?"
+   },
+   "narration": {
+    "en": "A rotates by α; B stretches across by s. (AB)v = A(Bv): stretch first, then rotate. (BA)v: rotate first, then stretch. The two images of the letter F usually differ, so AB ≠ BA.",
+    "kn": "A, α ಕೋನ ತಿರುಗಿಸುತ್ತದೆ; B ಅಡ್ಡಲಾಗಿ s ಪಟ್ಟು ಹಿಗ್ಗಿಸುತ್ತದೆ. (AB)v = A(Bv): ಮೊದಲು ಹಿಗ್ಗಿಸಿ, ನಂತರ ತಿರುಗಿಸಿ. (BA)v: ಮೊದಲು ತಿರುಗಿಸಿ, ನಂತರ ಹಿಗ್ಗಿಸಿ. F ಅಕ್ಷರದ ಎರಡು ಬಿಂಬಗಳು ಸಾಮಾನ್ಯವಾಗಿ ಬೇರೆ, ಆದ್ದರಿಂದ AB ≠ BA."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "A rotates by α; B stretches across by s. (AB)v = A(Bv): stretch first, then rotate. (BA)v: rotate first, then stretch. The two images of the letter F usually differ, so AB ≠ BA.",
+    "kn": "A, α ಕೋನ ತಿರುಗಿಸುತ್ತದೆ; B ಅಡ್ಡಲಾಗಿ s ಪಟ್ಟು ಹಿಗ್ಗಿಸುತ್ತದೆ. (AB)v = A(Bv): ಮೊದಲು ಹಿಗ್ಗಿಸಿ, ನಂತರ ತಿರುಗಿಸಿ. (BA)v: ಮೊದಲು ತಿರುಗಿಸಿ, ನಂತರ ಹಿಗ್ಗಿಸಿ. F ಅಕ್ಷರದ ಎರಡು ಬಿಂಬಗಳು ಸಾಮಾನ್ಯವಾಗಿ ಬೇರೆ, ಆದ್ದರಿಂದ AB ≠ BA."
+   },
+   "sliders": [
+    {
+     "name": "al",
+     "label": {
+      "en": "A: rotate by α"
+     },
+     "min": 0,
+     "max": 180,
+     "step": 5,
+     "value": 90,
+     "unit": "°"
+    },
+    {
+     "name": "s",
+     "label": {
+      "en": "B: stretch x by s"
+     },
+     "min": 0.5,
+     "max": 3,
+     "step": 0.1,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ot",
+     "label": {
+      "en": "Other order (dashed)",
+      "kn": "ಇನ್ನೊಂದು ಕ್ರಮ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "ord",
+     "label": {
+      "en": "Product",
+      "kn": "ಗುಣಲಬ್ಧ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "AB"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "BA"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "cs",
+     "expr": "cos(rad(al))"
+    },
+    {
+     "name": "sn",
+     "expr": "sin(rad(al))"
+    },
+    {
+     "name": "m11",
+     "expr": "s*cs"
+    },
+    {
+     "name": "m12",
+     "expr": "if(ord == 1, -sn, -s*sn)"
+    },
+    {
+     "name": "m21",
+     "expr": "if(ord == 1, s*sn, sn)"
+    },
+    {
+     "name": "m22",
+     "expr": "cs"
+    },
+    {
+     "name": "o11",
+     "expr": "s*cs"
+    },
+    {
+     "name": "o12",
+     "expr": "if(ord == 1, -s*sn, -sn)"
+    },
+    {
+     "name": "o21",
+     "expr": "if(ord == 1, sn, s*sn)"
+    },
+    {
+     "name": "o22",
+     "expr": "cs"
+    }
+   ],
+   "view": {
+    "x": [
+     -9.3,
+     9.3
+    ],
+    "y": [
+     -5.2,
+     5.2
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "color": "white",
+     "opacity": 0.25,
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       0.5,
+       0
+      ],
+      [
+       0.5,
+       1
+      ],
+      [
+       1.2,
+       1
+      ],
+      [
+       1.2,
+       1.5
+      ],
+      [
+       0.5,
+       1.5
+      ],
+      [
+       0.5,
+       2
+      ],
+      [
+       1.5,
+       2
+      ],
+      [
+       1.5,
+       2.5
+      ],
+      [
+       0,
+       2.5
+      ]
+     ]
+    },
+    {
+     "shape": "polygon",
+     "visibleIf": "ot",
+     "color": "blue",
+     "points": [
+      [
+       "o11*0 + o12*0",
+       "o21*0 + o22*0"
+      ],
+      [
+       "o11*0.5 + o12*0",
+       "o21*0.5 + o22*0"
+      ],
+      [
+       "o11*0.5 + o12*1",
+       "o21*0.5 + o22*1"
+      ],
+      [
+       "o11*1.2 + o12*1",
+       "o21*1.2 + o22*1"
+      ],
+      [
+       "o11*1.2 + o12*1.5",
+       "o21*1.2 + o22*1.5"
+      ],
+      [
+       "o11*0.5 + o12*1.5",
+       "o21*0.5 + o22*1.5"
+      ],
+      [
+       "o11*0.5 + o12*2",
+       "o21*0.5 + o22*2"
+      ],
+      [
+       "o11*1.5 + o12*2",
+       "o21*1.5 + o22*2"
+      ],
+      [
+       "o11*1.5 + o12*2.5",
+       "o21*1.5 + o22*2.5"
+      ],
+      [
+       "o11*0 + o12*2.5",
+       "o21*0 + o22*2.5"
+      ]
+     ],
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "polygon",
+     "color": "yellow",
+     "opacity": 0.6,
+     "points": [
+      [
+       "m11*0 + m12*0",
+       "m21*0 + m22*0"
+      ],
+      [
+       "m11*0.5 + m12*0",
+       "m21*0.5 + m22*0"
+      ],
+      [
+       "m11*0.5 + m12*1",
+       "m21*0.5 + m22*1"
+      ],
+      [
+       "m11*1.2 + m12*1",
+       "m21*1.2 + m22*1"
+      ],
+      [
+       "m11*1.2 + m12*1.5",
+       "m21*1.2 + m22*1.5"
+      ],
+      [
+       "m11*0.5 + m12*1.5",
+       "m21*0.5 + m22*1.5"
+      ],
+      [
+       "m11*0.5 + m12*2",
+       "m21*0.5 + m22*2"
+      ],
+      [
+       "m11*1.5 + m12*2",
+       "m21*1.5 + m22*2"
+      ],
+      [
+       "m11*1.5 + m12*2.5",
+       "m21*1.5 + m22*2.5"
+      ],
+      [
+       "m11*0 + m12*2.5",
+       "m21*0 + m22*2.5"
+      ]
+     ]
+    },
+    {
+     "shape": "text",
+     "visibleIf": "ord == 1",
+     "color": "yellow",
+     "x": -9,
+     "y": 4.6,
+     "text": {
+      "en": "AB = [ {m11:2}  {m12:2} ; {m21:2}  {m22:2} ]"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "ord == 2",
+     "color": "yellow",
+     "x": -9,
+     "y": 4.6,
+     "text": {
+      "en": "BA = [ {m11:2}  {m12:2} ; {m21:2}  {m22:2} ]"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "s == 1 || abs(sn) < 1e-9",
+     "color": "green",
+     "x": -9,
+     "y": 3.8,
+     "text": {
+      "en": "AB = BA here"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "!(s == 1 || abs(sn) < 1e-9)",
+     "color": "red",
+     "x": -9,
+     "y": 3.8,
+     "text": {
+      "en": "AB ≠ BA"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Row 1, column 1"
+     },
+     "expr": "m11",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Row 1, column 2"
+     },
+     "expr": "m12",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Row 2, column 1"
+     },
+     "expr": "m21",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Row 2, column 2"
+     },
+     "expr": "m22",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With α = 90° and s = 2, compare the yellow and dashed images."
+    },
+    {
+     "en": "Find settings where AB = BA. (Try s = 1, or α = 180°.)"
+    },
+    {
+     "en": "Multiply the matrices on paper and check the readouts."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

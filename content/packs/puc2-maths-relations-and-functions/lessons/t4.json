@@ -309,6 +309,393 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "g ∘ f versus f ∘ g",
+    "kn": "g ∘ f ಮತ್ತು f ∘ g"
+   },
+   "narration": {
+    "en": "f(x) = 2x + 1 and g(x) = x². (g ∘ f)(x) = g(f(x)) runs x through f first, then g; (f ∘ g)(x) runs g first. Press Run and follow the dot through both machines.",
+    "kn": "f(x) = 2x + 1, g(x) = x². (g ∘ f)(x) = g(f(x)): ಮೊದಲು f, ನಂತರ g; (f ∘ g)(x): ಮೊದಲು g. ಓಡಿಸಿ ಒತ್ತಿ, ಚುಕ್ಕೆಯನ್ನು ಎರಡೂ ಯಂತ್ರಗಳ ಮೂಲಕ ಅನುಸರಿಸಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "f(x) = 2x + 1 and g(x) = x². (g ∘ f)(x) = g(f(x)) runs x through f first, then g; (f ∘ g)(x) runs g first. Press Run and follow the dot through both machines.",
+    "kn": "f(x) = 2x + 1, g(x) = x². (g ∘ f)(x) = g(f(x)): ಮೊದಲು f, ನಂತರ g; (f ∘ g)(x): ಮೊದಲು g. ಓಡಿಸಿ ಒತ್ತಿ, ಚುಕ್ಕೆಯನ್ನು ಎರಡೂ ಯಂತ್ರಗಳ ಮೂಲಕ ಅನುಸರಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "x0",
+     "label": {
+      "en": "x"
+     },
+     "min": -2,
+     "max": 2,
+     "step": 0.1,
+     "value": 1.5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "both",
+     "label": {
+      "en": "Show the other order's answer",
+      "kn": "ಇನ್ನೊಂದು ಕ್ರಮದ ಉತ್ತರ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "ord",
+     "label": {
+      "en": "Composition",
+      "kn": "ಸಂಯೋಜನೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "g ∘ f"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "f ∘ g"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run",
+      "kn": "ಓಡಿಸಿ"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 3
+   },
+   "vars": [
+    {
+     "name": "s1",
+     "expr": "smoothstep(0, 1, t)"
+    },
+    {
+     "name": "s2",
+     "expr": "smoothstep(1.5, 2.5, t)"
+    },
+    {
+     "name": "mid",
+     "expr": "if(ord == 1, 2*x0 + 1, x0^2)"
+    },
+    {
+     "name": "out",
+     "expr": "if(ord == 1, mid^2, 2*mid + 1)"
+    },
+    {
+     "name": "other",
+     "expr": "if(ord == 1, 2*x0^2 + 1, (2*x0 + 1)^2)"
+    },
+    {
+     "name": "pos",
+     "expr": "(1 - s2)*((1 - s1)*x0 + s1*mid) + s2*out"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     17
+    ],
+    "y": [
+     0.6,
+     8
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "color": "white",
+     "opacity": 0.6,
+     "x1": "1 + 0.55*((-3) + 3)",
+     "y1": 7,
+     "x2": "1 + 0.55*((25) + 3)",
+     "y2": 7,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 2.65,
+     "y": 6.5,
+     "text": {
+      "en": "0"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 8.15,
+     "y": 6.5,
+     "text": {
+      "en": "10"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 13.65,
+     "y": 6.5,
+     "text": {
+      "en": "20"
+     },
+     "size": 18
+    },
+    {
+     "shape": "line",
+     "color": "white",
+     "opacity": 0.6,
+     "x1": "1 + 0.55*((-3) + 3)",
+     "y1": 4.25,
+     "x2": "1 + 0.55*((25) + 3)",
+     "y2": 4.25,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 2.65,
+     "y": 3.75,
+     "text": {
+      "en": "0"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 8.15,
+     "y": 3.75,
+     "text": {
+      "en": "10"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 13.65,
+     "y": 3.75,
+     "text": {
+      "en": "20"
+     },
+     "size": 18
+    },
+    {
+     "shape": "line",
+     "color": "white",
+     "opacity": 0.6,
+     "x1": "1 + 0.55*((-3) + 3)",
+     "y1": 1.5,
+     "x2": "1 + 0.55*((25) + 3)",
+     "y2": 1.5,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 2.65,
+     "y": 1.0,
+     "text": {
+      "en": "0"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 8.15,
+     "y": 1.0,
+     "text": {
+      "en": "10"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 13.65,
+     "y": 1.0,
+     "text": {
+      "en": "20"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "color": "blue",
+     "opacity": 0.3,
+     "x": 13.5,
+     "y": 5.1,
+     "w": 3.3,
+     "h": 1.1
+    },
+    {
+     "shape": "rect",
+     "color": "green",
+     "opacity": 0.3,
+     "x": 13.5,
+     "y": 2.35,
+     "w": 3.3,
+     "h": 1.1
+    },
+    {
+     "shape": "text",
+     "visibleIf": "ord == 1",
+     "color": "white",
+     "x": 15.15,
+     "y": 5.65,
+     "text": {
+      "en": "f: 2x + 1"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "visibleIf": "ord == 2",
+     "color": "white",
+     "x": 15.15,
+     "y": 5.65,
+     "text": {
+      "en": "g: x²"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "visibleIf": "ord == 1",
+     "color": "white",
+     "x": 15.15,
+     "y": 2.9,
+     "text": {
+      "en": "g: x²"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "visibleIf": "ord == 2",
+     "color": "white",
+     "x": 15.15,
+     "y": 2.9,
+     "text": {
+      "en": "f: 2x + 1"
+     },
+     "size": 22
+    },
+    {
+     "shape": "circle",
+     "color": "orange",
+     "x": "1 + 0.55*((pos) + 3)",
+     "y": "7 - 2.75*s1 - 2.75*s2",
+     "r": 0.22
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 0.3,
+     "y": 7.6,
+     "text": {
+      "en": "x = {x0:1}"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "t > 1",
+     "color": "white",
+     "x": 0.3,
+     "y": 3.0,
+     "text": {
+      "en": "{mid:2}"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "t > 2.4",
+     "color": "orange",
+     "x": 0.3,
+     "y": 0.9,
+     "text": {
+      "en": "{out:2}"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "both",
+     "color": "white",
+     "x": 10,
+     "y": 7.6,
+     "text": {
+      "en": "other order gives {other:2}"
+     },
+     "size": 22,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "After the first machine"
+     },
+     "expr": "mid",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Output"
+     },
+     "expr": "out",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Other order"
+     },
+     "expr": "other",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With x = 1.5, compare (g ∘ f)(x) = 16 and (f ∘ g)(x) = 5.5."
+    },
+    {
+     "en": "Is there an x where both orders give the same answer? (Solve (2x + 1)² = 2x² + 1.)"
+    },
+    {
+     "en": "Set x = 0. Which order gives 1 and which gives 1 too?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

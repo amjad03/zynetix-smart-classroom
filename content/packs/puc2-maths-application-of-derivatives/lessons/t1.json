@@ -259,6 +259,216 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "A ripple spreading in a pond",
+    "kn": "ಕೊಳದಲ್ಲಿ ಹರಡುವ ಅಲೆ"
+   },
+   "narration": {
+    "en": "Drop a stone. The radius grows at a steady rate dr/dt, yet the area grows faster and faster: dA/dt = 2πr · dr/dt. The yellow graph is dA/dt against time.",
+    "kn": "ಕಲ್ಲು ಹಾಕಿ. ತ್ರಿಜ್ಯ ಸ್ಥಿರ ದರ dr/dt ಯಲ್ಲಿ ಬೆಳೆಯುತ್ತದೆ, ಆದರೆ ವಿಸ್ತೀರ್ಣ ಹೆಚ್ಚು ಹೆಚ್ಚು ವೇಗವಾಗಿ ಬೆಳೆಯುತ್ತದೆ: dA/dt = 2πr · dr/dt. ಹಳದಿ ನಕ್ಷೆ ಸಮಯದೊಂದಿಗೆ dA/dt."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Drop a stone. The radius grows at a steady rate dr/dt, yet the area grows faster and faster: dA/dt = 2πr · dr/dt. The yellow graph is dA/dt against time.",
+    "kn": "ಕಲ್ಲು ಹಾಕಿ. ತ್ರಿಜ್ಯ ಸ್ಥಿರ ದರ dr/dt ಯಲ್ಲಿ ಬೆಳೆಯುತ್ತದೆ, ಆದರೆ ವಿಸ್ತೀರ್ಣ ಹೆಚ್ಚು ಹೆಚ್ಚು ವೇಗವಾಗಿ ಬೆಳೆಯುತ್ತದೆ: dA/dt = 2πr · dr/dt. ಹಳದಿ ನಕ್ಷೆ ಸಮಯದೊಂದಿಗೆ dA/dt."
+   },
+   "sliders": [
+    {
+     "name": "v",
+     "label": {
+      "en": "Rate dr/dt",
+      "kn": "ದರ dr/dt"
+     },
+     "min": 0.5,
+     "max": 5,
+     "step": 0.25,
+     "value": 5,
+     "unit": "cm/s"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ring",
+     "label": {
+      "en": "Ring added in the last second",
+      "kn": "ಕೊನೆಯ ಸೆಕೆಂಡಿನ ಉಂಗುರ"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Drop the stone",
+      "kn": "ಕಲ್ಲು ಹಾಕಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 10
+   },
+   "vars": [
+    {
+     "name": "r",
+     "expr": "v*t"
+    },
+    {
+     "name": "A",
+     "expr": "pi*r^2"
+    },
+    {
+     "name": "dA",
+     "expr": "2*pi*r*v"
+    }
+   ],
+   "view": {
+    "x": [
+     -60,
+     120
+    ],
+    "y": [
+     -55,
+     55
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "visibleIf": "ring && t >= 1",
+     "color": "blue",
+     "opacity": 0.4,
+     "x": 0,
+     "y": 0,
+     "r": "max(r - v, 0)",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "color": "blue",
+     "x": 0,
+     "y": 0,
+     "r": "r",
+     "fill": false,
+     "width": 5
+    },
+    {
+     "shape": "circle",
+     "color": "orange",
+     "x": 0,
+     "y": 0,
+     "r": 1.5
+    },
+    {
+     "shape": "line",
+     "color": "white",
+     "opacity": 0.7,
+     "x1": 65,
+     "y1": -45,
+     "x2": 116,
+     "y2": -45,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "color": "white",
+     "opacity": 0.7,
+     "x1": 65,
+     "y1": -45,
+     "x2": 65,
+     "y2": 46,
+     "width": 2
+    },
+    {
+     "shape": "trail",
+     "color": "yellow",
+     "x": "65 + 5*t",
+     "y": "-45 + dA/18",
+     "length": 600,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 90,
+     "y": 50,
+     "text": {
+      "en": "dA/dt (cm²/s)"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": 90,
+     "y": -52,
+     "text": {
+      "en": "time t (s): 0 to 10"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -58,
+     "y": 50,
+     "text": {
+      "en": "r = {r:1} cm"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -58,
+     "y": -50,
+     "text": {
+      "en": "A = πr² = {A:0} cm²"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Radius r"
+     },
+     "expr": "r",
+     "unit": "cm",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "dA/dt = 2πr·dr/dt"
+     },
+     "expr": "dA",
+     "unit": "cm²/s",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set dr/dt = 5 cm/s and pause when r = 8 cm (t = 1.6 s). Is dA/dt = 80π ≈ 251 cm²/s?"
+    },
+    {
+     "en": "Why is the yellow graph a straight line through the origin?"
+    },
+    {
+     "en": "Double dr/dt. At the same time t, by what factor does dA/dt grow?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

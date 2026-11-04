@@ -429,6 +429,330 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Is the game worth playing?",
+    "kn": "ಆಟ ಆಡುವುದು ಲಾಭವೇ?"
+   },
+   "narration": {
+    "en": "Roll a die: win ₹W on a six, lose ₹L otherwise. X is the gain, with P(X = W) = 1/6 and P(X = −L) = 5/6. E(X) = W/6 − 5L/6 is the long-run average gain per roll; roll many times and watch the average approach it.",
+    "kn": "ದಾಳ ಎಸೆಯಿರಿ: ಆರು ಬಂದರೆ ₹W ಗೆಲುವು, ಇಲ್ಲದಿದ್ದರೆ ₹L ನಷ್ಟ. X ಲಾಭ; P(X = W) = 1/6, P(X = −L) = 5/6. E(X) = W/6 − 5L/6 ದೀರ್ಘಾವಧಿ ಸರಾಸರಿ; ಹಲವು ಬಾರಿ ಎಸೆದು ಸರಾಸರಿ ಅದರತ್ತ ಸಾಗುವುದನ್ನು ನೋಡಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Roll a die: win ₹W on a six, lose ₹L otherwise. X is the gain, with P(X = W) = 1/6 and P(X = −L) = 5/6. E(X) = W/6 − 5L/6 is the long-run average gain per roll; roll many times and watch the average approach it.",
+    "kn": "ದಾಳ ಎಸೆಯಿರಿ: ಆರು ಬಂದರೆ ₹W ಗೆಲುವು, ಇಲ್ಲದಿದ್ದರೆ ₹L ನಷ್ಟ. X ಲಾಭ; P(X = W) = 1/6, P(X = −L) = 5/6. E(X) = W/6 − 5L/6 ದೀರ್ಘಾವಧಿ ಸರಾಸರಿ; ಹಲವು ಬಾರಿ ಎಸೆದು ಸರಾಸರಿ ಅದರತ್ತ ಸಾಗುವುದನ್ನು ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "W",
+     "label": {
+      "en": "Win on a six, W"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "₹"
+    },
+    {
+     "name": "L",
+     "label": {
+      "en": "Loss otherwise, L"
+     },
+     "min": 0,
+     "max": 10,
+     "step": 0.5,
+     "value": 2,
+     "unit": "₹"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "bars",
+     "label": {
+      "en": "Show the distribution",
+      "kn": "ವಿತರಣೆ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "counters": [
+    {
+     "name": "n",
+     "value": 0,
+     "min": 0
+    },
+    {
+     "name": "tot",
+     "value": 0
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Roll once",
+      "kn": "ಒಮ್ಮೆ ಎಸೆಯಿರಿ"
+     },
+     "icon": "next",
+     "set": {
+      "n": "n + 1",
+      "tot": "tot + if(floor(6*rand(n + 1)) == 5, W, -L)"
+     }
+    },
+    {
+     "label": {
+      "en": "Roll 20 times",
+      "kn": "20 ಬಾರಿ"
+     },
+     "icon": "add",
+     "set": {
+      "n": "n + 20",
+      "tot": "tot + if(floor(6*rand(n + 1)) == 5, W, -L) + if(floor(6*rand(n + 2)) == 5, W, -L) + if(floor(6*rand(n + 3)) == 5, W, -L) + if(floor(6*rand(n + 4)) == 5, W, -L) + if(floor(6*rand(n + 5)) == 5, W, -L) + if(floor(6*rand(n + 6)) == 5, W, -L) + if(floor(6*rand(n + 7)) == 5, W, -L) + if(floor(6*rand(n + 8)) == 5, W, -L) + if(floor(6*rand(n + 9)) == 5, W, -L) + if(floor(6*rand(n + 10)) == 5, W, -L) + if(floor(6*rand(n + 11)) == 5, W, -L) + if(floor(6*rand(n + 12)) == 5, W, -L) + if(floor(6*rand(n + 13)) == 5, W, -L) + if(floor(6*rand(n + 14)) == 5, W, -L) + if(floor(6*rand(n + 15)) == 5, W, -L) + if(floor(6*rand(n + 16)) == 5, W, -L) + if(floor(6*rand(n + 17)) == 5, W, -L) + if(floor(6*rand(n + 18)) == 5, W, -L) + if(floor(6*rand(n + 19)) == 5, W, -L) + if(floor(6*rand(n + 20)) == 5, W, -L)"
+     }
+    },
+    {
+     "label": {
+      "en": "Clear",
+      "kn": "ಅಳಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "n": "0",
+      "tot": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "mu",
+     "expr": "W/6 - 5*L/6"
+    },
+    {
+     "name": "ex2",
+     "expr": "W^2/6 + 5*L^2/6"
+    },
+    {
+     "name": "avg",
+     "expr": "if(n > 0, tot/n, 0)"
+    },
+    {
+     "name": "face",
+     "expr": "1 + floor(6*rand(n))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     16
+    ],
+    "y": [
+     0,
+     9
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "color": "white",
+     "x1": "6 + 0.3*(-10)",
+     "y1": 1.5,
+     "x2": "6 + 0.3*(20)",
+     "y2": 1.5,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "6 + 0.3*(-10)",
+     "y": 1,
+     "text": {
+      "en": "−10"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "6 + 0.3*(0)",
+     "y": 1,
+     "text": {
+      "en": "0"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "6 + 0.3*(10)",
+     "y": 1,
+     "text": {
+      "en": "10"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": "6 + 0.3*(20)",
+     "y": 1,
+     "text": {
+      "en": "20"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "bars",
+     "color": "red",
+     "opacity": 0.7,
+     "x": "6 + 0.3*(-L) - 0.3",
+     "y": 1.5,
+     "w": 0.6,
+     "h": "5*5/6"
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "bars",
+     "color": "green",
+     "opacity": 0.7,
+     "x": "6 + 0.3*(W) - 0.3",
+     "y": 1.5,
+     "w": 0.6,
+     "h": "5/6"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "bars",
+     "color": "white",
+     "x": "6 + 0.3*(-L)",
+     "y": "1.5 + 25/6 + 0.4",
+     "text": {
+      "en": "5/6"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "visibleIf": "bars",
+     "color": "white",
+     "x": "6 + 0.3*(W)",
+     "y": "1.5 + 5/6 + 0.4",
+     "text": {
+      "en": "1/6"
+     },
+     "size": 22
+    },
+    {
+     "shape": "line",
+     "color": "yellow",
+     "x1": "6 + 0.3*(mu)",
+     "y1": 1.2,
+     "x2": "6 + 0.3*(mu)",
+     "y2": 7,
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "color": "yellow",
+     "x": "6 + 0.3*(mu)",
+     "y": 7.4,
+     "text": {
+      "en": "E(X) = {mu:2}"
+     },
+     "size": 24
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "n > 0",
+     "color": "orange",
+     "x": "6 + 0.3*(clamp(avg, -10, 20))",
+     "y": 1.5,
+     "r": 0.25
+    },
+    {
+     "shape": "rect",
+     "visibleIf": "n > 0",
+     "color": "white",
+     "x": 0.6,
+     "y": 6.2,
+     "w": 1.6,
+     "h": 1.6,
+     "fill": false,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "visibleIf": "n > 0",
+     "color": "white",
+     "x": 1.4,
+     "y": 7,
+     "text": {
+      "en": "{face:0}"
+     },
+     "size": 40
+    },
+    {
+     "shape": "text",
+     "color": "orange",
+     "x": 0.6,
+     "y": 5.4,
+     "text": {
+      "en": "average gain so far ₹{avg:2}"
+     },
+     "size": 22,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "E(X)"
+     },
+     "expr": "mu",
+     "unit": "₹",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Var(X)"
+     },
+     "expr": "ex2 - mu^2",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Average so far"
+     },
+     "expr": "avg",
+     "unit": "₹",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Rolls"
+     },
+     "expr": "n",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With W = 10 and L = 2, E(X) = 0: a fair game. Roll 200 times. Where is the average?"
+    },
+    {
+     "en": "Find W that makes the game favourable when L = 3."
+    },
+    {
+     "en": "Check Var(X) = E(X²) − [E(X)]² from the two bars."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

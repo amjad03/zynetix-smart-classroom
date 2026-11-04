@@ -220,6 +220,227 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Draw F from its slope",
+    "kn": "ಇಳಿಜಾರಿನಿಂದ F ಬರೆಯಿರಿ"
+   },
+   "narration": {
+    "en": "Press Trace. The pen starts at height C and always moves with slope f(x), so it draws an antiderivative F. A different start gives the same curve shifted up or down: F(x) + C.",
+    "kn": "ಗುರುತಿಸಿ ಒತ್ತಿ. ಪೆನ್ C ಎತ್ತರದಿಂದ ಆರಂಭಿಸಿ ಯಾವಾಗಲೂ f(x) ಇಳಿಜಾರಿನಲ್ಲಿ ಸಾಗುತ್ತದೆ, ಆದ್ದರಿಂದ ಪ್ರತ್ಯವಕಲಜ F ಬರೆಯುತ್ತದೆ. ಬೇರೆ ಆರಂಭ ಅದೇ ವಕ್ರರೇಖೆಯನ್ನು ಮೇಲೆ/ಕೆಳಗೆ ಸರಿಸುತ್ತದೆ: F(x) + C."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Press Trace. The pen starts at height C and always moves with slope f(x), so it draws an antiderivative F. A different start gives the same curve shifted up or down: F(x) + C.",
+    "kn": "ಗುರುತಿಸಿ ಒತ್ತಿ. ಪೆನ್ C ಎತ್ತರದಿಂದ ಆರಂಭಿಸಿ ಯಾವಾಗಲೂ f(x) ಇಳಿಜಾರಿನಲ್ಲಿ ಸಾಗುತ್ತದೆ, ಆದ್ದರಿಂದ ಪ್ರತ್ಯವಕಲಜ F ಬರೆಯುತ್ತದೆ. ಬೇರೆ ಆರಂಭ ಅದೇ ವಕ್ರರೇಖೆಯನ್ನು ಮೇಲೆ/ಕೆಳಗೆ ಸರಿಸುತ್ತದೆ: F(x) + C."
+   },
+   "sliders": [
+    {
+     "name": "C",
+     "label": {
+      "en": "Starting constant C"
+     },
+     "min": -3,
+     "max": 3,
+     "step": 0.25,
+     "value": 0
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fam",
+     "label": {
+      "en": "Other members of the family",
+      "kn": "ಕುಟುಂಬದ ಇತರ ಸದಸ್ಯರು"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "fc",
+     "label": {
+      "en": "f(x)"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "2x"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "cos x"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "1 − x²"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Trace F",
+      "kn": "F ಗುರುತಿಸಿ"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 6,
+    "dt": 0.01
+   },
+   "vars": [
+    {
+     "name": "xx",
+     "expr": "-3 + t"
+    },
+    {
+     "name": "fx",
+     "expr": "if(fc == 1, 2*(xx), if(fc == 2, cos(xx), 1 - (xx)^2))"
+    }
+   ],
+   "state": [
+    {
+     "name": "F",
+     "init": "if(fc == 1, 9, if(fc == 2, sin(-3), 6)) + C",
+     "rate": "fx"
+    }
+   ],
+   "view": {
+    "x": [
+     -3.3,
+     3.3
+    ],
+    "y": [
+     -9.5,
+     13
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "fam",
+     "color": "white",
+     "opacity": 0.3,
+     "fn": "if(fc == 1, (x)^2, if(fc == 2, sin(x), (x) - (x)^3/3)) + C - 3",
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "visibleIf": "fam",
+     "color": "white",
+     "opacity": 0.3,
+     "fn": "if(fc == 1, (x)^2, if(fc == 2, sin(x), (x) - (x)^3/3)) + C + 3",
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "color": "blue",
+     "opacity": 0.8,
+     "fn": "if(fc == 1, 2*(x), if(fc == 2, cos(x), 1 - (x)^2))",
+     "width": 3
+    },
+    {
+     "shape": "trail",
+     "color": "yellow",
+     "x": "xx",
+     "y": "F",
+     "length": 800,
+     "width": 5
+    },
+    {
+     "shape": "arrow",
+     "color": "orange",
+     "x": "xx",
+     "y": "F",
+     "dx": 0.5,
+     "dy": "0.5*fx",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "color": "orange",
+     "x": "xx",
+     "y": "F",
+     "r": 0.07
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -3.2,
+     "y": 12.2,
+     "text": {
+      "en": "blue: f(x)   yellow: F(x) + C"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "orange",
+     "x": -3.2,
+     "y": 11,
+     "text": {
+      "en": "slope now = f({xx:2}) = {fx:2}"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "F traced by the pen"
+     },
+     "expr": "F",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Formula F(x) + C"
+     },
+     "expr": "if(fc == 1, (xx)^2, if(fc == 2, sin(xx), (xx) - (xx)^3/3)) + C",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "f(x) = slope"
+     },
+     "expr": "fx",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Trace with C = 0 and C = 2. Are the two curves the same shape?"
+    },
+    {
+     "en": "Where f(x) = 0 (the blue curve crosses the axis), what does the pen do?"
+    },
+    {
+     "en": "For f(x) = 1 − x², where does F have its turning points?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

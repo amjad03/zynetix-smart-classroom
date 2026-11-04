@@ -360,6 +360,285 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Slide the profit line",
+    "kn": "ಲಾಭದ ರೇಖೆ ಸರಿಸಿ"
+   },
+   "narration": {
+    "en": "Region: x + 2y ≤ 10, 3x + y ≤ 15, x, y ≥ 0, with corners (0, 0), (5, 0), (4, 3), (0, 5). The line ax + by = k slides outwards as k grows; the last corner it touches gives the maximum of Z = ax + by.",
+    "kn": "ಪ್ರದೇಶ: x + 2y ≤ 10, 3x + y ≤ 15, x, y ≥ 0; ಮೂಲೆಗಳು (0, 0), (5, 0), (4, 3), (0, 5). k ಹೆಚ್ಚಿದಂತೆ ax + by = k ರೇಖೆ ಹೊರಕ್ಕೆ ಸರಿಯುತ್ತದೆ; ಕೊನೆಯದಾಗಿ ಮುಟ್ಟುವ ಮೂಲೆ Z = ax + by ಯ ಗರಿಷ್ಠ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Region: x + 2y ≤ 10, 3x + y ≤ 15, x, y ≥ 0, with corners (0, 0), (5, 0), (4, 3), (0, 5). The line ax + by = k slides outwards as k grows; the last corner it touches gives the maximum of Z = ax + by.",
+    "kn": "ಪ್ರದೇಶ: x + 2y ≤ 10, 3x + y ≤ 15, x, y ≥ 0; ಮೂಲೆಗಳು (0, 0), (5, 0), (4, 3), (0, 5). k ಹೆಚ್ಚಿದಂತೆ ax + by = k ರೇಖೆ ಹೊರಕ್ಕೆ ಸರಿಯುತ್ತದೆ; ಕೊನೆಯದಾಗಿ ಮುಟ್ಟುವ ಮೂಲೆ Z = ax + by ಯ ಗರಿಷ್ಠ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "a in Z = ax + by"
+     },
+     "min": 0,
+     "max": 6,
+     "step": 0.5,
+     "value": 3
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "b in Z = ax + by"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 0.5,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "vals",
+     "label": {
+      "en": "Z at the corners",
+      "kn": "ಮೂಲೆಗಳಲ್ಲಿ Z"
+     },
+     "value": true
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Slide the Z-line",
+      "kn": "Z-ರೇಖೆ ಸರಿಸಿ"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 4
+   },
+   "vars": [
+    {
+     "name": "zA",
+     "expr": "5*a"
+    },
+    {
+     "name": "zB",
+     "expr": "4*a + 3*b"
+    },
+    {
+     "name": "zC",
+     "expr": "5*b"
+    },
+    {
+     "name": "M",
+     "expr": "max(zA, zB, zC)"
+    },
+    {
+     "name": "k",
+     "expr": "M*min(t/3, 1)"
+    },
+    {
+     "name": "xb",
+     "expr": "if(M == zB, 4, if(M == zA, 5, 0))"
+    },
+    {
+     "name": "yb",
+     "expr": "if(M == zB, 3, if(M == zA, 0, 5))"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     9
+    ],
+    "y": [
+     -0.5,
+     5.6
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x",
+    "yLabel": "y",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "color": "green",
+     "opacity": 0.35,
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       4,
+       3
+      ],
+      [
+       0,
+       5
+      ]
+     ]
+    },
+    {
+     "shape": "path",
+     "color": "blue",
+     "opacity": 0.6,
+     "fn": "(10 - x)/2",
+     "from": 0,
+     "to": 9,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "color": "blue",
+     "opacity": 0.6,
+     "fn": "15 - 3*x",
+     "from": 3.2,
+     "to": 5,
+     "width": 2
+    },
+    {
+     "shape": "path",
+     "color": "orange",
+     "fn": "(k - a*x)/b",
+     "from": -0.5,
+     "to": 9,
+     "dashed": true,
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "t >= 3",
+     "color": "yellow",
+     "x": "xb",
+     "y": "yb",
+     "r": 0.22
+    },
+    {
+     "shape": "text",
+     "visibleIf": "vals",
+     "color": "white",
+     "x": 5,
+     "y": -0.3,
+     "text": {
+      "en": "Z = {zA:1}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "visibleIf": "vals",
+     "color": "white",
+     "x": 4.3,
+     "y": 3.3,
+     "text": {
+      "en": "Z = {zB:1}"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "vals",
+     "color": "white",
+     "x": 0.2,
+     "y": 5.3,
+     "text": {
+      "en": "Z = {zC:1}"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "vals",
+     "color": "white",
+     "x": 0.3,
+     "y": 0.3,
+     "text": {
+      "en": "Z = 0"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "color": "orange",
+     "x": 8.9,
+     "y": 5.2,
+     "text": {
+      "en": "k = {k:2}"
+     },
+     "size": 28,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "t >= 3",
+     "color": "yellow",
+     "x": 8.9,
+     "y": 4.5,
+     "text": {
+      "en": "maximum Z = {M:2} at ({xb:0}, {yb:0})"
+     },
+     "size": 26,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "t >= 3 && M == zB && (M == zA || M == zC)",
+     "color": "yellow",
+     "x": 8.9,
+     "y": 3.8,
+     "text": {
+      "en": "two corners tie: the whole edge is optimal"
+     },
+     "size": 22,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Z on the line now (k)"
+     },
+     "expr": "k",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Largest corner value"
+     },
+     "expr": "M",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With Z = 3x + 2y, which corner wins? Check Z = 18 at (4, 3)."
+    },
+    {
+     "en": "Make b large compared with a. Which corner wins now?"
+    },
+    {
+     "en": "Find a and b where two corners tie. What does the line lie along then?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

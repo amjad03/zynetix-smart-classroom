@@ -284,6 +284,223 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "One, none or infinitely many",
+    "kn": "ಒಂದು, ಯಾವುದೂ ಇಲ್ಲ ಅಥವಾ ಅನಂತ"
+   },
+   "narration": {
+    "en": "Solve ax + y = c₁ and x + 2y = c₂ as AX = B. If |A| = 2a − 1 ≠ 0 the lines cross once at X = A⁻¹B. If |A| = 0 they are parallel: no solution when (adj A)B ≠ O, the same line when (adj A)B = O.",
+    "kn": "ax + y = c₁, x + 2y = c₂ ಅನ್ನು AX = B ಆಗಿ ಬಿಡಿಸಿ. |A| = 2a − 1 ≠ 0 ಆದರೆ ರೇಖೆಗಳು ಒಮ್ಮೆ ಛೇದಿಸುತ್ತವೆ, X = A⁻¹B. |A| = 0 ಆದರೆ ಸಮಾಂತರ: (adj A)B ≠ O ಆದರೆ ಪರಿಹಾರವಿಲ್ಲ, (adj A)B = O ಆದರೆ ಅದೇ ರೇಖೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Solve ax + y = c₁ and x + 2y = c₂ as AX = B. If |A| = 2a − 1 ≠ 0 the lines cross once at X = A⁻¹B. If |A| = 0 they are parallel: no solution when (adj A)B ≠ O, the same line when (adj A)B = O.",
+    "kn": "ax + y = c₁, x + 2y = c₂ ಅನ್ನು AX = B ಆಗಿ ಬಿಡಿಸಿ. |A| = 2a − 1 ≠ 0 ಆದರೆ ರೇಖೆಗಳು ಒಮ್ಮೆ ಛೇದಿಸುತ್ತವೆ, X = A⁻¹B. |A| = 0 ಆದರೆ ಸಮಾಂತರ: (adj A)B ≠ O ಆದರೆ ಪರಿಹಾರವಿಲ್ಲ, (adj A)B = O ಆದರೆ ಅದೇ ರೇಖೆ."
+   },
+   "sliders": [
+    {
+     "name": "a",
+     "label": {
+      "en": "a"
+     },
+     "min": -1,
+     "max": 3,
+     "step": 0.25,
+     "value": 1
+    },
+    {
+     "name": "c1",
+     "label": {
+      "en": "c₁"
+     },
+     "min": -4,
+     "max": 8,
+     "step": 0.5,
+     "value": 3
+    },
+    {
+     "name": "c2",
+     "label": {
+      "en": "c₂"
+     },
+     "min": -4,
+     "max": 8,
+     "step": 0.5,
+     "value": 5
+    }
+   ],
+   "toggles": [
+    {
+     "name": "steps",
+     "label": {
+      "en": "Show (adj A)B",
+      "kn": "(adj A)B ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "det",
+     "expr": "2*a - 1"
+    },
+    {
+     "name": "sing",
+     "expr": "det == 0"
+    },
+    {
+     "name": "ab1",
+     "expr": "2*c1 - c2"
+    },
+    {
+     "name": "ab2",
+     "expr": "-c1 + a*c2"
+    },
+    {
+     "name": "xs",
+     "expr": "if(sing, 0, ab1/det)"
+    },
+    {
+     "name": "ys",
+     "expr": "if(sing, 0, ab2/det)"
+    }
+   ],
+   "view": {
+    "x": [
+     -10,
+     10
+    ],
+    "y": [
+     -7,
+     7
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "color": "yellow",
+     "fn": "c1 - a*x",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "color": "green",
+     "fn": "(c2 - x)/2",
+     "width": 4,
+     "dashed": true
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "!sing",
+     "color": "orange",
+     "x": "clamp(xs, -50, 50)",
+     "y": "clamp(ys, -50, 50)",
+     "r": 0.25
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -9.7,
+     "y": 6.4,
+     "text": {
+      "en": "|A| = 2a − 1 = {det:2}"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "steps",
+     "color": "white",
+     "x": -9.7,
+     "y": 5.4,
+     "text": {
+      "en": "(adj A)B = ({ab1:2}, {ab2:2})"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "!sing",
+     "color": "green",
+     "x": -9.7,
+     "y": 4.4,
+     "text": {
+      "en": "unique solution x = {xs:2}, y = {ys:2}"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "sing && c2 != 2*c1",
+     "color": "red",
+     "x": -9.7,
+     "y": 4.4,
+     "text": {
+      "en": "|A| = 0, (adj A)B ≠ O: no solution"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "sing && c2 == 2*c1",
+     "color": "orange",
+     "x": -9.7,
+     "y": 4.4,
+     "text": {
+      "en": "|A| = 0, (adj A)B = O: infinitely many solutions"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "|A|"
+     },
+     "expr": "det",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "x"
+     },
+     "expr": "xs",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "y"
+     },
+     "expr": "ys",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set a = 0.5. Can you make the two lines one line? (Try c₂ = 2c₁.)"
+    },
+    {
+     "en": "With a = 0.5 and c₂ ≠ 2c₁, what does (adj A)B look like?"
+    },
+    {
+     "en": "Move a close to 0.5 but not equal. Where does the crossing point go?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

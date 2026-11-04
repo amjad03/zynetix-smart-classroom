@@ -322,6 +322,278 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Walk over the hills",
+    "kn": "ಬೆಟ್ಟಗಳ ಮೇಲೆ ನಡಿಗೆ"
+   },
+   "narration": {
+    "en": "f(x) = x⁴/4 − cx²/2, so f′(x) = x(x² − c). Press Walk. Where f′ changes from + to − the walker tops a local maximum; from − to + it is at the bottom of a local minimum.",
+    "kn": "f(x) = x⁴/4 − cx²/2, f′(x) = x(x² − c). ನಡೆ ಒತ್ತಿ. f′ ಚಿಹ್ನೆ + ಇಂದ − ಗೆ ಬದಲಾದಲ್ಲಿ ಸ್ಥಳೀಯ ಗರಿಷ್ಠ; − ಇಂದ + ಗೆ ಬದಲಾದಲ್ಲಿ ಸ್ಥಳೀಯ ಕನಿಷ್ಠ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "f(x) = x⁴/4 − cx²/2, so f′(x) = x(x² − c). Press Walk. Where f′ changes from + to − the walker tops a local maximum; from − to + it is at the bottom of a local minimum.",
+    "kn": "f(x) = x⁴/4 − cx²/2, f′(x) = x(x² − c). ನಡೆ ಒತ್ತಿ. f′ ಚಿಹ್ನೆ + ಇಂದ − ಗೆ ಬದಲಾದಲ್ಲಿ ಸ್ಥಳೀಯ ಗರಿಷ್ಠ; − ಇಂದ + ಗೆ ಬದಲಾದಲ್ಲಿ ಸ್ಥಳೀಯ ಕನಿಷ್ಠ."
+   },
+   "sliders": [
+    {
+     "name": "c",
+     "label": {
+      "en": "c"
+     },
+     "min": -1,
+     "max": 4,
+     "step": 0.25,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "marks",
+     "label": {
+      "en": "Mark turning points",
+      "kn": "ತಿರುವು ಬಿಂದುಗಳು"
+     },
+     "value": true
+    },
+    {
+     "name": "dsh",
+     "label": {
+      "en": "Show f′(x)",
+      "kn": "f′(x) ತೋರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Walk",
+      "kn": "ನಡೆ"
+     },
+     "icon": "play",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 5
+   },
+   "vars": [
+    {
+     "name": "w",
+     "expr": "-2.5 + t"
+    },
+    {
+     "name": "fw",
+     "expr": "w^4/4 - c*w^2/2"
+    },
+    {
+     "name": "fpw",
+     "expr": "w^3 - c*w"
+    },
+    {
+     "name": "rc",
+     "expr": "sqrt(max(c, 0))"
+    }
+   ],
+   "view": {
+    "x": [
+     -2.8,
+     2.8
+    ],
+    "y": [
+     -5,
+     15
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x",
+    "yLabel": "y"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "visibleIf": "dsh",
+     "color": "green",
+     "opacity": 0.7,
+     "fn": "x^3 - c*x",
+     "dashed": true,
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "color": "yellow",
+     "fn": "x^4/4 - c*x^2/2",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "marks && c > 0",
+     "color": "red",
+     "x": 0,
+     "y": 0,
+     "r": 0.07
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "marks && c > 0",
+     "color": "blue",
+     "x": "rc",
+     "y": "-c^2/4",
+     "r": 0.07
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "marks && c > 0",
+     "color": "blue",
+     "x": "-rc",
+     "y": "-c^2/4",
+     "r": 0.07
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "marks && c <= 0",
+     "color": "blue",
+     "x": 0,
+     "y": 0,
+     "r": 0.07
+    },
+    {
+     "shape": "text",
+     "visibleIf": "marks && c > 0",
+     "color": "red",
+     "x": 0,
+     "y": 1.0,
+     "text": {
+      "en": "local max"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "visibleIf": "marks && c > 0",
+     "color": "blue",
+     "x": "rc",
+     "y": "-c^2/4 - 1",
+     "text": {
+      "en": "local min"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "visibleIf": "marks && c > 0",
+     "color": "blue",
+     "x": "-rc",
+     "y": "-c^2/4 - 1",
+     "text": {
+      "en": "local min"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "visibleIf": "marks && c <= 0",
+     "color": "blue",
+     "x": 0,
+     "y": -1,
+     "text": {
+      "en": "local min"
+     },
+     "size": 22
+    },
+    {
+     "shape": "arrow",
+     "color": {
+      "by": "step(0, fpw)",
+      "scale": [
+       "red",
+       "green"
+      ]
+     },
+     "x": "w",
+     "y": "fw",
+     "dx": 0.35,
+     "dy": "clamp(0.35*fpw, -3, 3)",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "color": "orange",
+     "x": "w",
+     "y": "fw",
+     "r": 0.1
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -2.7,
+     "y": 14,
+     "text": {
+      "en": "f′(x) = {fpw:2}"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "fpw > 0",
+     "color": "green",
+     "x": -2.7,
+     "y": 12.4,
+     "text": {
+      "en": "rising"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "fpw < 0",
+     "color": "red",
+     "x": -2.7,
+     "y": 12.4,
+     "text": {
+      "en": "falling"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "x"
+     },
+     "expr": "w",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "f′(x)"
+     },
+     "expr": "fpw",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With c = 4, where are the two minima? Check that f′ = 0 at x = ±2."
+    },
+    {
+     "en": "Make c negative. How many turning points are left?"
+    },
+    {
+     "en": "Turn on f′(x): read off the sign change at each turning point."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

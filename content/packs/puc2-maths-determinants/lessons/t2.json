@@ -247,6 +247,249 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Area of a triangle by determinant",
+    "kn": "ನಿರ್ಧಾರಕದಿಂದ ತ್ರಿಭುಜದ ವಿಸ್ತೀರ್ಣ"
+   },
+   "narration": {
+    "en": "Area = ½ |x₁(y₂ − y₃) + x₂(y₃ − y₁) + x₃(y₁ − y₂)|. Drag A and B and slide C = (k, 0). When the determinant is 0 the three points are collinear.",
+    "kn": "ವಿಸ್ತೀರ್ಣ = ½ |x₁(y₂ − y₃) + x₂(y₃ − y₁) + x₃(y₁ − y₂)|. A, B ಎಳೆಯಿರಿ, C = (k, 0) ಸರಿಸಿ. ನಿರ್ಧಾರಕ 0 ಆದರೆ ಮೂರು ಬಿಂದುಗಳು ಏಕರೇಖೀಯ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "Area = ½ |x₁(y₂ − y₃) + x₂(y₃ − y₁) + x₃(y₁ − y₂)|. Drag A and B and slide C = (k, 0). When the determinant is 0 the three points are collinear.",
+    "kn": "ವಿಸ್ತೀರ್ಣ = ½ |x₁(y₂ − y₃) + x₂(y₃ − y₁) + x₃(y₁ − y₂)|. A, B ಎಳೆಯಿರಿ, C = (k, 0) ಸರಿಸಿ. ನಿರ್ಧಾರಕ 0 ಆದರೆ ಮೂರು ಬಿಂದುಗಳು ಏಕರೇಖೀಯ."
+   },
+   "sliders": [
+    {
+     "name": "k",
+     "label": {
+      "en": "C = (k, 0)"
+     },
+     "min": -2,
+     "max": 10,
+     "step": 0.5,
+     "value": 2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "terms",
+     "label": {
+      "en": "Show the expansion",
+      "kn": "ವಿಸ್ತರಣೆ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "A",
+     "label": "A",
+     "x": 4,
+     "y": 0,
+     "box": {
+      "x": [
+       -6,
+       10
+      ],
+      "y": [
+       -4,
+       6
+      ]
+     },
+     "snap": 0.5,
+     "color": "yellow"
+    },
+    {
+     "name": "B",
+     "label": "B",
+     "x": 0,
+     "y": 2,
+     "box": {
+      "x": [
+       -6,
+       10
+      ],
+      "y": [
+       -4,
+       6
+      ]
+     },
+     "snap": 0.5,
+     "color": "green"
+    }
+   ],
+   "vars": [
+    {
+     "name": "D",
+     "expr": "A_x*(B_y - 0) + B_x*(0 - A_y) + k*(A_y - B_y)"
+    },
+    {
+     "name": "ar",
+     "expr": "abs(D)/2"
+    }
+   ],
+   "view": {
+    "x": [
+     -7.5,
+     11.5
+    ],
+    "y": [
+     -4.5,
+     6.2
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "color": "orange",
+     "opacity": 0.4,
+     "points": [
+      [
+       "A_x",
+       "A_y"
+      ],
+      [
+       "B_x",
+       "B_y"
+      ],
+      [
+       "k",
+       0
+      ]
+     ]
+    },
+    {
+     "shape": "polygon",
+     "color": "orange",
+     "points": [
+      [
+       "A_x",
+       "A_y"
+      ],
+      [
+       "B_x",
+       "B_y"
+      ],
+      [
+       "k",
+       0
+      ]
+     ],
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "color": "blue",
+     "x": "k",
+     "y": 0,
+     "r": 0.2
+    },
+    {
+     "shape": "text",
+     "color": "yellow",
+     "x": "A_x + 0.6",
+     "y": "A_y + 0.6",
+     "text": {
+      "en": "A"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "color": "green",
+     "x": "B_x + 0.6",
+     "y": "B_y + 0.6",
+     "text": {
+      "en": "B"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "color": "blue",
+     "x": "k",
+     "y": -0.8,
+     "text": {
+      "en": "C"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "color": "white",
+     "x": -7.2,
+     "y": 5.6,
+     "text": {
+      "en": "determinant = {D:2}   area = {ar:2}"
+     },
+     "size": 28,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "terms",
+     "color": "white",
+     "x": -7.2,
+     "y": 4.6,
+     "text": {
+      "en": "{A_x:1}({B_y:1} − 0) + {B_x:1}(0 − {A_y:1}) + {k:1}({A_y:1} − {B_y:1})"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "D == 0",
+     "color": "red",
+     "x": -7.2,
+     "y": 3.7,
+     "text": {
+      "en": "area 0: A, B and C are collinear"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Area Δ = ½|det|"
+     },
+     "expr": "ar",
+     "unit": "sq. units",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Determinant"
+     },
+     "expr": "D",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With A(4, 0) and B(0, 2), find every k that gives area 4 (k = 0 or 8)."
+    },
+    {
+     "en": "Make the area zero. What do you notice about A, B and C?"
+    },
+    {
+     "en": "Why must we take the absolute value of the determinant?"
+    }
+   ]
+  },
+  {
    "id": "int1",
    "type": "interactive",
    "title": {

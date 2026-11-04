@@ -319,6 +319,247 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "The section formula",
+    "kn": "ವಿಭಾಗ ಸೂತ್ರ"
+   },
+   "narration": {
+    "en": "R divides PQ internally in the ratio m : n when R = (mQ + nP)/(m + n), and externally when R = (mQ − nP)/(m − n). Drag P and Q and change the ratio.",
+    "kn": "R, PQ ಯನ್ನು m : n ಅನುಪಾತದಲ್ಲಿ ಒಳಗಿನಿಂದ ವಿಭಾಗಿಸಿದರೆ R = (mQ + nP)/(m + n); ಹೊರಗಿನಿಂದ ಆದರೆ R = (mQ − nP)/(m − n). P, Q ಎಳೆದು ಅನುಪಾತ ಬದಲಿಸಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "R divides PQ internally in the ratio m : n when R = (mQ + nP)/(m + n), and externally when R = (mQ − nP)/(m − n). Drag P and Q and change the ratio.",
+    "kn": "R, PQ ಯನ್ನು m : n ಅನುಪಾತದಲ್ಲಿ ಒಳಗಿನಿಂದ ವಿಭಾಗಿಸಿದರೆ R = (mQ + nP)/(m + n); ಹೊರಗಿನಿಂದ ಆದರೆ R = (mQ − nP)/(m − n). P, Q ಎಳೆದು ಅನುಪಾತ ಬದಲಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "m"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 0.5,
+     "value": 2
+    },
+    {
+     "name": "n",
+     "label": {
+      "en": "n"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 0.5,
+     "value": 1
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ext",
+     "label": {
+      "en": "External division",
+      "kn": "ಬಾಹ್ಯ ವಿಭಾಗ"
+     },
+     "value": false
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "P",
+     "x": -4,
+     "y": -1,
+     "box": {
+      "x": [
+       -8,
+       8
+      ],
+      "y": [
+       -4.5,
+       4.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "blue"
+    },
+    {
+     "name": "Q",
+     "label": "Q",
+     "x": 4,
+     "y": 3,
+     "box": {
+      "x": [
+       -8,
+       8
+      ],
+      "y": [
+       -4.5,
+       4.5
+      ]
+     },
+     "snap": 0.5,
+     "color": "green"
+    }
+   ],
+   "vars": [
+    {
+     "name": "rx",
+     "expr": "(m*Q_x + n*P_x)/(m + n)"
+    },
+    {
+     "name": "ry",
+     "expr": "(m*Q_y + n*P_y)/(m + n)"
+    },
+    {
+     "name": "ex",
+     "expr": "if(m == n, 0, (m*Q_x - n*P_x)/(m - n))"
+    },
+    {
+     "name": "ey",
+     "expr": "if(m == n, 0, (m*Q_y - n*P_y)/(m - n))"
+    }
+   ],
+   "view": {
+    "x": [
+     -16,
+     16
+    ],
+    "y": [
+     -9,
+     9
+    ],
+    "axes": true,
+    "grid": true,
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "color": "white",
+     "opacity": 0.4,
+     "x1": "P_x - 3*(Q_x - P_x)",
+     "y1": "P_y - 3*(Q_y - P_y)",
+     "x2": "P_x + 4*(Q_x - P_x)",
+     "y2": "P_y + 4*(Q_y - P_y)",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "color": "yellow",
+     "x1": "P_x",
+     "y1": "P_y",
+     "x2": "Q_x",
+     "y2": "Q_y",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "!ext",
+     "color": "orange",
+     "x": "rx",
+     "y": "ry",
+     "r": 0.35
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "ext && m != n",
+     "color": "red",
+     "x": "ex",
+     "y": "ey",
+     "r": 0.35
+    },
+    {
+     "shape": "text",
+     "color": "blue",
+     "x": "P_x",
+     "y": "P_y - 0.9",
+     "text": {
+      "en": "P"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "color": "green",
+     "x": "Q_x",
+     "y": "Q_y + 0.9",
+     "text": {
+      "en": "Q"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "visibleIf": "!ext",
+     "color": "orange",
+     "x": -15.5,
+     "y": 8.3,
+     "text": {
+      "en": "internal R = ({rx:2}, {ry:2})"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "ext && m != n",
+     "color": "red",
+     "x": -15.5,
+     "y": 8.3,
+     "text": {
+      "en": "external R = ({ex:2}, {ey:2})"
+     },
+     "size": 26,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "ext && m == n",
+     "color": "red",
+     "x": -15.5,
+     "y": 8.3,
+     "text": {
+      "en": "m = n: no point divides PQ externally"
+     },
+     "size": 26,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "R, x"
+     },
+     "expr": "if(ext, ex, rx)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "R, y"
+     },
+     "expr": "if(ext, ey, ry)",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With P(−4, −1), Q(4, 3) and 2 : 1, check R = (4/3, 5/3)."
+    },
+    {
+     "en": "Set m = n. Where is R? What happens to the external point?"
+    },
+    {
+     "en": "Turn on external division with m = 2, n = 1. Is R beyond Q?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

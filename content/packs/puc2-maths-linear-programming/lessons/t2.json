@@ -325,6 +325,268 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "title": {
+    "en": "Inside or outside the region?",
+    "kn": "ಪ್ರದೇಶದ ಒಳಗೋ ಹೊರಗೋ?"
+   },
+   "narration": {
+    "en": "The feasible region of 2x + y ≤ p, x + 2y ≤ q, x ≥ 0, y ≥ 0 is shaded. Drag P: it turns yellow inside, red outside. Change p and q and watch the corner points move.",
+    "kn": "2x + y ≤ p, x + 2y ≤ q, x ≥ 0, y ≥ 0 ರ ಸಾಧ್ಯ ಪ್ರದೇಶ ಬಣ್ಣಿಸಲಾಗಿದೆ. P ಎಳೆಯಿರಿ: ಒಳಗೆ ಹಳದಿ, ಹೊರಗೆ ಕೆಂಪು. p, q ಬದಲಿಸಿ ಮೂಲೆ ಬಿಂದುಗಳು ಸರಿಯುವುದನ್ನು ನೋಡಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "kind": "scene",
+   "caption": {
+    "en": "The feasible region of 2x + y ≤ p, x + 2y ≤ q, x ≥ 0, y ≥ 0 is shaded. Drag P: it turns yellow inside, red outside. Change p and q and watch the corner points move.",
+    "kn": "2x + y ≤ p, x + 2y ≤ q, x ≥ 0, y ≥ 0 ರ ಸಾಧ್ಯ ಪ್ರದೇಶ ಬಣ್ಣಿಸಲಾಗಿದೆ. P ಎಳೆಯಿರಿ: ಒಳಗೆ ಹಳದಿ, ಹೊರಗೆ ಕೆಂಪು. p, q ಬದಲಿಸಿ ಮೂಲೆ ಬಿಂದುಗಳು ಸರಿಯುವುದನ್ನು ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "p",
+     "label": {
+      "en": "p in 2x + y ≤ p"
+     },
+     "min": 6,
+     "max": 10,
+     "step": 0.25,
+     "value": 8
+    },
+    {
+     "name": "q",
+     "label": {
+      "en": "q in x + 2y ≤ q"
+     },
+     "min": 6,
+     "max": 10,
+     "step": 0.25,
+     "value": 7
+    }
+   ],
+   "toggles": [
+    {
+     "name": "crn",
+     "label": {
+      "en": "Label the corner points",
+      "kn": "ಮೂಲೆ ಬಿಂದುಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "handles": [
+    {
+     "name": "P",
+     "label": "P",
+     "x": 1,
+     "y": 1,
+     "box": {
+      "x": [
+       0,
+       6
+      ],
+      "y": [
+       0,
+       5.5
+      ]
+     },
+     "snap": 0.25,
+     "color": "yellow"
+    }
+   ],
+   "vars": [
+    {
+     "name": "Bx",
+     "expr": "(2*p - q)/3"
+    },
+    {
+     "name": "By",
+     "expr": "(2*q - p)/3"
+    },
+    {
+     "name": "feas",
+     "expr": "2*P_x + P_y <= p && P_x + 2*P_y <= q"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.5,
+     10.5
+    ],
+    "y": [
+     -0.5,
+     5.7
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x",
+    "yLabel": "y",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "color": "green",
+     "opacity": 0.35,
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "p/2",
+       0
+      ],
+      [
+       "Bx",
+       "By"
+      ],
+      [
+       0,
+       "q/2"
+      ]
+     ]
+    },
+    {
+     "shape": "path",
+     "color": "blue",
+     "fn": "p - 2*x",
+     "from": "max(0, (p - 5.7)/2)",
+     "to": "p/2",
+     "width": 3
+    },
+    {
+     "shape": "path",
+     "color": "orange",
+     "fn": "(q - x)/2",
+     "from": 0,
+     "to": "q",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "color": {
+      "by": "feas",
+      "scale": [
+       "red",
+       "yellow"
+      ]
+     },
+     "x": "P_x",
+     "y": "P_y",
+     "r": 0.18
+    },
+    {
+     "shape": "text",
+     "color": "blue",
+     "x": 10.3,
+     "y": 5.3,
+     "text": {
+      "en": "2x + y = {2*P_x + P_y:2}  (≤ {p:2})"
+     },
+     "size": 26,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "color": "orange",
+     "x": 10.3,
+     "y": 4.6,
+     "text": {
+      "en": "x + 2y = {P_x + 2*P_y:2}  (≤ {q:2})"
+     },
+     "size": 26,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "feas",
+     "color": "yellow",
+     "x": 10.3,
+     "y": 3.9,
+     "text": {
+      "en": "P is feasible"
+     },
+     "size": 26,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "!feas",
+     "color": "red",
+     "x": 10.3,
+     "y": 3.9,
+     "text": {
+      "en": "P breaks a constraint"
+     },
+     "size": 26,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "crn",
+     "color": "white",
+     "x": "p/2",
+     "y": -0.35,
+     "text": {
+      "en": "({p/2:2}, 0)"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "visibleIf": "crn",
+     "color": "white",
+     "x": "Bx + 0.3",
+     "y": "By + 0.3",
+     "text": {
+      "en": "({Bx:2}, {By:2})"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "visibleIf": "crn",
+     "color": "white",
+     "x": 0.15,
+     "y": "q/2 + 0.3",
+     "text": {
+      "en": "(0, {q/2:2})"
+     },
+     "size": 22,
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "2x + y at P"
+     },
+     "expr": "2*P_x + P_y",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "x + 2y at P"
+     },
+     "expr": "P_x + 2*P_y",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Put P on a boundary line. Which constraint becomes an equality?"
+    },
+    {
+     "en": "Find the corner where the two lines meet by solving the equations. Does it match the label?"
+    },
+    {
+     "en": "Test the origin in both inequalities. Why is it inside?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
