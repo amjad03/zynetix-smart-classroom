@@ -53,10 +53,11 @@ Only use ids from this file. Generated from Zynetix Board (amjad03/Kinetix) at 6
 | gears | Engineering | Meshing gears turn in opposite directions. A gear with twice the teeth turns half as fast but with twice the t |  |
 | solids | Maths | Turn each solid, unfold it into its net with "Take apart", and cut it to see its cross-sections. | cube, cuboid, pyramid, prism, cylinder, cone, sphere |
 
-## virtual_lab → `labId` (Class 11/12 and UG labs; `lab.*` ids are also usable as simulation source kinetix_sim)
+## virtual_lab → `labId` (all 116 Kinetix catalogue labs, Class 6 to PG; `lab.*` ids are also usable as simulation source kinetix_sim)
 
 | labId | subject | levels | aim |
 |---|---|---|---|
+| ohms-law | Physics | 10 | To study how the current (I) through a resistor depends on the potential difference (V) across it, and to find its resis |
 | resistors | Physics | 10,12 | To find the equivalent resistance of two resistors joined in series and in parallel. |
 | glass-slab | Physics | 10,12 | To trace the path of a ray of light through a rectangular glass slab for different angles of incidence, and to measure t |
 | lens-mirror | Physics | 10,12 | To find the focal length of a convex lens and of a concave mirror by forming sharp images of an object on a screen, and  |
@@ -153,6 +154,25 @@ Only use ids from this file. Generated from Zynetix Board (amjad03/Kinetix) at 6
 | fibre-microscopy | Forensics | 11,12,ug | To identify textile fibres under the microscope and compare a questioned fibre with known ones. |
 | footprint-stature | Forensics | 8,9,10,ug | To find the ratio of height to foot length and use it to estimate a person’s height from a footprint. |
 | ballistics-trajectory | Forensics | 11,12,ug | To find the angle of a bullet’s path from two holes and estimate the height of the gun at the shooter’s position. |
+| buoyancy | Physics | 8,9 | To show that an object immersed in a liquid loses weight equal to the weight of the liquid it displaces, and to see why  |
+| indicators | Chemistry | 7,10 | To sort common substances into acidic, basic and neutral using indicators, and to find their approximate pH with univers |
+| displacement | Chemistry | 8,10 | To arrange aluminium, zinc, iron and copper in order of reactivity by placing each metal in solutions of the salts of th |
+| conductors | Physics | 6,7 | To find out which materials allow electricity to pass through them (conductors) and which do not (insulators), using a s |
+| magnets | Physics | 6,10 | To find which materials are magnetic, to show that like poles repel and unlike poles attract, and to see the pattern of  |
+| shadows | Physics | 6,7 | To sort objects into transparent, translucent and opaque, and to study how the size of a shadow depends on the distance  |
+| heating-curve | Chemistry | 6,9 | To find the melting point of ice and the boiling point of water, and to see that the temperature stays constant while th |
+| reactions | Chemistry | 7,10 | To carry out combination, decomposition, displacement and double displacement reactions, and to identify each type from  |
+| starch-test | Biology | 7,10 | To show that light and chlorophyll are needed for photosynthesis, by testing leaves for starch. |
+| triangle-angles | Mathematics | 7,9 | To verify that the three angles of any triangle add up to 180°, and that an exterior angle equals the sum of the two int |
+| separation | Chemistry | 6,9 | To separate sand and water, salt and water, iron filings and sulphur, and oil and water, and to choose the right method  |
+| rusting | Chemistry | 7,8 | To show that iron rusts only when both air (oxygen) and water are present, and that salt water speeds up rusting. |
+| germination | Biology | 6,8 | To show that seeds need water, air and a suitable temperature to germinate. |
+| pinhole | Physics | 6,7 | To show that light travels in straight lines, and to find how the size of a pinhole image depends on the distance of the |
+| mirror-reflection | Physics | 7,10 | To verify that the angle of reflection equals the angle of incidence for a plane mirror, and to compare reflection from  |
+| pythagoras | Mathematics | 7,10 | To verify that in a right-angled triangle the square on the hypotenuse equals the sum of the squares on the other two si |
+| circle-pi | Mathematics | 7,10 | To find the ratio of the circumference of a circle to its diameter by measuring round objects. |
+| lever | Physics | 9,10 | To verify the principle of moments using a metre rule balanced on a knife edge. |
+| electromagnet | Physics | 7,10 | To study how the strength of an electromagnet depends on the number of turns, the current and the core. |
 
 ## simulation, source `kinetix_sim` → `simId` (+ preset)
 
