@@ -48,6 +48,16 @@ class BoardConfig extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// How big the interface is drawn: normal (phones, tablets, desks), large, or classroom
+  /// (a 75" board read from the back bench). The layouts are designed at classroom size and the
+  /// whole app is scaled, so every screen keeps its proportions at any size.
+  String get displaySize => _p.getString('displaySize') ?? 'normal';
+  double get uiScale => switch (displaySize) { 'classroom' => 1.0, 'large' => 0.7, _ => 0.5 };
+  Future<void> setDisplaySize(String v) async {
+    await _p.setString('displaySize', v);
+    notifyListeners();
+  }
+
   Future<void> setKiosk(bool on) async {
     await _p.setBool('kiosk', on);
     notifyListeners();

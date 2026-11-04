@@ -10,6 +10,7 @@ import 'core/config.dart';
 import 'core/kiosk.dart';
 import 'core/services.dart';
 import 'core/theme.dart';
+import 'core/ui_scale.dart';
 import 'engine/narrator.dart';
 import 'engine/pack_store.dart';
 import 'engine/session_log.dart';
@@ -18,7 +19,6 @@ import 'features/self_learning.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   final dir = await getApplicationSupportDirectory();
   final key = parseTrustedKey(await rootBundle.loadString('assets/packs/trusted-key.json'));
@@ -92,6 +92,10 @@ class _ZynetixBoardAppState extends State<ZynetixBoardApp> {
           debugShowCheckedModeBanner: false,
           theme: zynetixTheme(),
           home: widget.home,
+          builder: (context, child) => ListenableBuilder(
+            listenable: widget.services.config,
+            builder: (context, _) => UiScale(scale: widget.services.config.uiScale, child: child!),
+          ),
         ),
       );
 }

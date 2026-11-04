@@ -7,6 +7,7 @@ import 'package:kinetix_cs/kinetix_cs.dart';
 import 'package:kinetix_labs/kinetix_labs.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../core/ui_scale.dart';
 import '../engine/model.dart';
 
 /// The interactive pieces reused from Zynetix Board (amjad03/Kinetix). Behind an interface so
@@ -111,7 +112,7 @@ class _PackPageViewState extends State<PackPageView> {
   }
 
   @override
-  Widget build(BuildContext context) => _c == null ? const Center(child: CircularProgressIndicator()) : WebViewWidget(controller: _c!);
+  Widget build(BuildContext context) => _c == null ? const Center(child: CircularProgressIndicator()) : Unscaled(child: WebViewWidget(controller: _c!));
 }
 
 /// Test double: a labelled box per embed.
