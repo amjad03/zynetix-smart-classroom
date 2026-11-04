@@ -6,6 +6,7 @@ import 'package:zynetix_board/features/exam_practice.dart';
 import 'package:zynetix_board/features/insight/analysis.dart' show Exam;
 import 'package:zynetix_board/engine/session_log.dart';
 import 'package:zynetix_board/features/participation.dart';
+import 'package:zynetix_board/features/player.dart';
 import 'package:zynetix_board/features/teacher_mode.dart';
 import 'dart:io';
 
@@ -58,8 +59,6 @@ void main() {
     final s = await testServices(prefs: {'board': 'isc', 'lang': 'kn', 'subjects': ['accountancy', 'commerce', 'economics', 'english']});
     expect(s.config.lang, Lang.en, reason: 'ISC is taught in English only');
     expect(s.config.kannadaOffered, isFalse);
-    // Until the ISC Commerce syllabus is in the seed, give the board one chapter of it.
-    s.syllabus['commerce'] ??= {'puc1': [Chapter(id: 'puc1-commerce-01-x', subject: 'commerce', year: 'puc1', number: 1, title: const L10n('Trade'), topics: const [], boards: const ['isc'])]};
     await pumpBoard(t, s);
     expect(find.byKey(const ValueKey('lang-kn')), findsNothing);
     await pumpBoard(t, s, home: const TeacherModeScreen());
@@ -67,6 +66,41 @@ void main() {
     expect(find.text('Commerce'), findsOneWidget);
     expect(find.byIcon(subjectIcon('commerce')), findsOneWidget);
     expect(find.text('1st PUC'), findsNothing);
+  });
+
+  testWidgets('ISC-only chapters from the seed: Commerce lists its Class XI and XII chapters and a lesson opens in English', (t) async {
+    final s = await testServices(prefs: {'board': 'isc', 'lang': 'kn', 'subjects': ['commerce', 'accountancy', 'english']});
+    expect(s.subjects, contains('commerce'));
+    for (final y in const ['puc1', 'puc2']) {
+      final chapters = s.chapters('commerce', y);
+      expect(chapters, isNotEmpty, reason: 'ISC Commerce $y');
+      expect(chapters.every((c) => c.forBoard('isc') && !c.forBoard('kar_pu') && !c.forBoard('cbse')), isTrue);
+      expect(chapters.where((c) => s.store.byChapter(c.id) != null), isNotEmpty, reason: 'Commerce $y has packs');
+    }
+    // ISC-only English chapters are on an ISC board, and CBSE's English chapters are not.
+    final english = s.chapters('english', 'puc1');
+    expect(english, isNotEmpty);
+    expect(english.every((c) => c.forBoard('isc') && !c.forBoard('cbse')), isTrue);
+
+    await pumpBoard(t, s, home: const TeacherModeScreen());
+    expect(find.text('Class XI'), findsOneWidget);
+    expect(find.text('Class XII'), findsOneWidget);
+    expect(find.text('Commerce'), findsOneWidget);
+    expect(find.textContaining('PUC'), findsNothing);
+    final ch = s.chapters('commerce', 'puc1').firstWhere((c) => s.store.byChapter(c.id) != null);
+    final pack = s.store.byChapter(ch.id)!;
+    final topic = pack.chapter.topicsFor('isc').firstWhere((t) => pack.lessons.containsKey(t.id));
+    final start = find.byKey(ValueKey('start:${topic.id}'));
+    await t.scrollUntilVisible(start, 200, scrollable: find.byType(Scrollable).last);
+    await t.tap(start);
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    expect(find.byType(LessonPlayerScreen), findsOneWidget);
+    expect(find.text(pack.lessons[topic.id]!.title.t(Lang.en)), findsWidgets);
+    expect(find.textContaining('Commerce  ›  Class XI  ›  '), findsOneWidget, reason: 'the lesson crumbs name the subject and the ISC year');
+    expect(find.byKey(const ValueKey('lang')), findsNothing, reason: 'no Kannada switch on an ISC board');
+    expect(find.textContaining('ಕನ್ನಡ'), findsNothing);
+    expect(t.takeException(), isNull);
   });
 
   testWidgets('a case-based question shows its passage above the stem', (t) async {
