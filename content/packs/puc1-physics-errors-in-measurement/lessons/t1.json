@@ -1,0 +1,530 @@
+{
+ "id": "puc1-physics-17-errors-in-measurement.t1.lesson",
+ "chapterId": "puc1-physics-17-errors-in-measurement",
+ "topicId": "puc1-physics-17-errors-in-measurement.t1",
+ "title": {
+  "en": "Accuracy, precision and kinds of errors"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Darts and measurements"
+   },
+   "hook": {
+    "en": "Four friends throw darts. One hits the bull every time; one hits the same wrong spot every time; one scatters darts all round the bull; one scatters them all over the board. Measurements behave the same way."
+   },
+   "objectives": [
+    {
+     "en": "Tell accuracy from precision"
+    },
+    {
+     "en": "Name systematic, random and gross errors"
+    },
+    {
+     "en": "Use least count and zero error correctly"
+    }
+   ],
+   "narration": {
+    "en": "Four friends throw darts. One hits the bull every time; one hits the same wrong spot every time; one scatters darts all round the bull; one scatters them all over the board. Measurements behave the same way."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Accuracy and precision"
+   },
+   "body": {
+    "en": "Accuracy is how close a measurement is to the true value. Precision is how closely repeated measurements agree, and how fine a step (the least count) the instrument can show. A metre scale reads to 1 mm, a vernier calliper to 0.1 mm and a screw gauge to 0.01 mm. Good measurements are both accurate and precise."
+   },
+   "points": [
+    {
+     "en": "Accuracy: closeness to the true value"
+    },
+    {
+     "en": "Precision: closeness of readings to each other"
+    },
+    {
+     "en": "Least count limits the precision"
+    }
+   ],
+   "narration": {
+    "en": "Accuracy is how close a measurement is to the true value. Precision is how closely repeated measurements agree, and how fine a step (the least count) the instrument can show. A metre scale reads to 1 mm, a vernier calliper to 0.1 mm and a screw gauge to 0.01 mm. Good measurements are both accurate and precise."
+   },
+   "formula": "LC_{vernier} = 1\\,MSD - 1\\,VSD"
+  },
+  {
+   "id": "scene-target",
+   "type": "interactive",
+   "title": {
+    "en": "Accuracy and precision on a target"
+   },
+   "narration": {
+    "en": "Each dot is one reading. Move the offset to add a systematic error. Increase the scatter to add random error. Try to make readings that are precise but not accurate."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Each dot is one reading. The offset moves the centre of the readings away from the true value (a systematic error); the scatter spreads them out (random error). Press New readings for another set."
+   },
+   "sliders": [
+    {
+     "name": "bias",
+     "label": {
+      "en": "Systematic offset"
+     },
+     "min": 0,
+     "max": 4,
+     "step": 0.25,
+     "value": 0
+    },
+    {
+     "name": "sd",
+     "label": {
+      "en": "Random scatter"
+     },
+     "min": 0.1,
+     "max": 2,
+     "step": 0.1,
+     "value": 0.4
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 1000
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New readings"
+     },
+     "icon": "next",
+     "set": {
+      "seed": "seed + 1"
+     }
+    }
+   ],
+   "view": {
+    "x": [
+     -6,
+     6
+    ],
+    "y": [
+     -6,
+     6
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 5,
+     "fill": false,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 3,
+     "fill": false,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 1,
+     "fill": false,
+     "color": "red",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 0.15,
+     "color": "red"
+    },
+    {
+     "shape": "particles",
+     "count": 25,
+     "r": 0.18,
+     "color": "yellow",
+     "x": "clamp(bias + sd*sqrt(-2*ln(1 - 0.98*rand(i + 50*seed)))*cos(2*pi*rand(i + 50*seed + 500)), -5.8, 5.8)",
+     "y": "clamp(bias*0.5 + sd*sqrt(-2*ln(1 - 0.98*rand(i + 50*seed)))*sin(2*pi*rand(i + 50*seed + 500)), -5.8, 5.8)"
+    },
+    {
+     "shape": "label",
+     "x": -5.8,
+     "y": 5.5,
+     "text": {
+      "en": "red ring: true value"
+     },
+     "size": 22,
+     "align": "left",
+     "color": "red"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Systematic error (offset)"
+     },
+     "expr": "hypot(bias, bias*0.5)",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Random scatter"
+     },
+     "expr": "sd",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make the readings precise but not accurate."
+    },
+    {
+     "en": "Make them accurate on average but not precise."
+    },
+    {
+     "en": "Which slider does averaging many readings help with?"
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Kinds of errors"
+   },
+   "body": {
+    "en": "Systematic errors push every reading the same way: a zero error, a wrongly calibrated scale, parallax from always looking at an angle, a thermometer that is not in thermal contact. They are found and removed by correction, not by averaging. Random errors come from small unpredictable changes and scatter readings both ways; averaging many readings reduces them. Gross errors are mistakes (a misread scale, a wrong entry) and the readings are discarded."
+   },
+   "points": [
+    {
+     "en": "Systematic: same direction; correct it"
+    },
+    {
+     "en": "Random: both directions; average many readings"
+    },
+    {
+     "en": "Least count error: half the least count or one least count"
+    }
+   ],
+   "narration": {
+    "en": "Systematic errors push every reading the same way: a zero error, a wrongly calibrated scale, parallax from always looking at an angle, a thermometer that is not in thermal contact. They are found and removed by correction, not by averaging. Random errors come from small unpredictable changes and scatter readings both ways; averaging many readings reduces them. Gross errors are mistakes (a misread scale, a wrong entry) and the readings are discarded."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Zero error of a screw gauge"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Close the jaws. If the zero of the circular scale is below the reference line, every reading is too large."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Zero error correction"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "line",
+       "from": [
+        10,
+        25
+       ],
+       "to": [
+        60,
+        25
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        62,
+        24
+       ],
+       "text": {
+        "en": "reference line"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "line",
+       "from": [
+        40,
+        15
+       ],
+       "to": [
+        40,
+        40
+       ],
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        42,
+        32
+       ],
+       "text": {
+        "en": "zero is 4 divisions below"
+       },
+       "size": 3,
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Zero error is plus 4 times the least count, 0.04 millimetre. Subtract it from every reading."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        10,
+        46
+       ],
+       "tex": "\\text{true} = \\text{observed} - (\\text{zero error})",
+       "size": 4,
+       "color": "white"
+      },
+      {
+       "kind": "math",
+       "at": [
+        10,
+        54
+       ],
+       "tex": "= 2.38 - (+0.04) = 2.34\\,\\text{mm}",
+       "size": 4,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lab-youngs-modulus",
+   "type": "virtual_lab",
+   "labId": "youngs-modulus",
+   "aim": {
+    "en": "To use precise instruments (screw gauge, vernier) and see how each measurement's least count limits the result."
+   },
+   "narration": {
+    "en": "Optional lab: the Young's modulus bench uses a screw gauge for the wire and a vernier for the extension, the two most precise readings of school physics."
+   },
+   "seconds": 180,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A vernier calliper has 20 vernier divisions equal to 19 main-scale divisions of 1 mm. With the jaws closed, the vernier zero is to the right of the main zero and the 5th vernier line coincides. A rod gives main-scale reading 23 mm and the 12th vernier line coincides. Find the corrected length."
+   },
+   "steps": [
+    {
+     "en": "Least count = 1 − 19/20 = 0.05 mm."
+    },
+    {
+     "en": "Zero error = +5 × 0.05 = +0.25 mm."
+    },
+    {
+     "en": "Observed = 23 + 12 × 0.05 = 23.60 mm; corrected = 23.60 − 0.25 = 23.35 mm."
+    }
+   ],
+   "answer": {
+    "en": "23.35 mm"
+   },
+   "narration": {
+    "en": "Let us solve this together. A vernier calliper has 20 vernier divisions equal to 19 main-scale divisions of 1 mm. With the jaws closed, the vernier zero is to the right of the main zero and the 5th vernier line coincides. A rod gives main-scale reading 23 mm and the 12th vernier line coincides. Find the corrected length."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Average or correct?"
+   },
+   "body": {
+    "en": "Ask: does the error always push the same way? If yes, it is systematic: find it and correct it. If no, it is random: take many readings and average."
+   },
+   "narration": {
+    "en": "Average or correct?. Ask: does the error always push the same way? If yes, it is systematic: find it and correct it. If no, it is random: take many readings and average."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Same way: correct. Both ways: average."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "sort",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Sort each error by its kind."
+   },
+   "buckets": [
+    {
+     "id": "sys",
+     "label": {
+      "en": "Systematic"
+     }
+    },
+    {
+     "id": "rand",
+     "label": {
+      "en": "Random"
+     }
+    },
+    {
+     "id": "gross",
+     "label": {
+      "en": "Gross (a mistake)"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "Zero error of a screw gauge"
+     },
+     "answer": "sys"
+    },
+    {
+     "text": {
+      "en": "A stopwatch that runs slow"
+     },
+     "answer": "sys"
+    },
+    {
+     "text": {
+      "en": "Reaction time varying from trial to trial"
+     },
+     "answer": "rand"
+    },
+    {
+     "text": {
+      "en": "Small draughts disturbing a balance pan"
+     },
+     "answer": "rand"
+    },
+    {
+     "text": {
+      "en": "Writing 7.3 instead of 3.7"
+     },
+     "answer": "gross"
+    },
+    {
+     "text": {
+      "en": "Reading the wrong scale of a meter"
+     },
+     "answer": "gross"
+    },
+    {
+     "text": {
+      "en": "Always reading the meniscus from above"
+     },
+     "answer": "sys"
+    }
+   ],
+   "narration": {
+    "en": "Sort each error by its kind."
+   },
+   "questionId": "act.isc-errors-kinds",
+   "explanation": {
+    "en": "Systematic errors have a cause that acts the same way each time; random errors vary unpredictably; gross errors are human mistakes."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1p17-q01",
+    "1p17-q02",
+    "1p17-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "1p17-q04",
+    "1p17-q05"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Accuracy: close to the true value; precision: close to each other and to a fine least count."
+    },
+    {
+     "en": "Systematic errors are corrected; random errors are reduced by averaging; gross errors are discarded."
+    },
+    {
+     "en": "Correct reading = observed − zero error (with its sign)."
+    }
+   ],
+   "homework": [
+    {
+     "en": "A screw gauge has a least count of 0.01 mm and a zero error of −0.03 mm. A wire reads 1.47 mm. Find the true diameter. (Answer: 1.50 mm)"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1p17-q04"
+   ],
+   "narration": {
+    "en": "Recap. Accuracy: close to the true value; precision: close to each other and to a fine least count. Systematic errors are corrected; random errors are reduced by averaging; gross errors are discarded. Correct reading = observed − zero error (with its sign)."
+   }
+  }
+ ]
+}

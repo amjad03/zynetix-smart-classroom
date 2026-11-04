@@ -1,0 +1,620 @@
+{
+ "id": "puc2-physics-16-radioactivity.t2.lesson",
+ "chapterId": "puc2-physics-16-radioactivity",
+ "topicId": "puc2-physics-16-radioactivity.t2",
+ "title": {
+  "en": "Law of radioactive decay, half-life and mean life"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Popcorn in a pan"
+   },
+   "hook": {
+    "en": "Nobody can say which kernel will pop next, yet a full pan pops in a predictable way. Single nuclei decay at random, but a large number decay by a precise law."
+   },
+   "objectives": [
+    {
+     "en": "State the law of radioactive decay"
+    },
+    {
+     "en": "Use N = N₀e^(−λt), half-life and mean life"
+    },
+    {
+     "en": "Work with activity in becquerel"
+    }
+   ],
+   "narration": {
+    "en": "Nobody can say which kernel will pop next, yet a full pan pops in a predictable way. Single nuclei decay at random, but a large number decay by a precise law."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "The decay law"
+   },
+   "body": {
+    "en": "The rate of decay is proportional to the number of undecayed nuclei: $dN/dt = -\\lambda N$, where λ is the decay constant. Integrating, $N = N_0 e^{-\\lambda t}$. The activity $R = \\lambda N = R_0 e^{-\\lambda t}$ is measured in becquerel (1 Bq = 1 decay per second; 1 Ci = 3.7 × 10¹⁰ Bq). The half-life is $T_{1/2} = \\ln 2/\\lambda \\approx 0.693/\\lambda$ and the mean life is $\\tau = 1/\\lambda \\approx 1.44\\,T_{1/2}$."
+   },
+   "points": [
+    {
+     "en": "N = N₀ e^(−λt)"
+    },
+    {
+     "en": "After n half-lives, N = N₀/2ⁿ"
+    },
+    {
+     "en": "τ = 1/λ = T½ / ln 2"
+    }
+   ],
+   "narration": {
+    "en": "The rate of decay is proportional to the number of undecayed nuclei: $dN/dt = -\\lambda N$, where λ is the decay constant. Integrating, $N = N_0 e^{-\\lambda t}$. The activity $R = \\lambda N = R_0 e^{-\\lambda t}$ is measured in becquerel (1 Bq = 1 decay per second; 1 Ci = 3.7 × 10¹⁰ Bq). The half-life is $T_{1/2} = \\ln 2/\\lambda \\approx 0.693/\\lambda$ and the mean life is $\\tau = 1/\\lambda \\approx 1.44\\,T_{1/2}$."
+   },
+   "formula": "N = N_0\\,e^{-\\lambda t}"
+  },
+  {
+   "id": "scene-half-life",
+   "type": "interactive",
+   "title": {
+    "en": "Watch a sample decay"
+   },
+   "narration": {
+    "en": "Each dot decays at a random moment, yet the fraction left follows the dashed curve. Every half-life, half of what is left decays."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Each dot is a nucleus; it turns dim when it decays. The yellow curve traces the fraction left. Set the half-life and press Play."
+   },
+   "sliders": [
+    {
+     "name": "Th",
+     "label": {
+      "en": "Half-life"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 4,
+     "unit": "s"
+    }
+   ],
+   "time": {
+    "max": 30
+   },
+   "vars": [
+    {
+     "name": "lam",
+     "expr": "ln(2)/Th"
+    },
+    {
+     "name": "frac",
+     "expr": "exp(-lam*t)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     34
+    ],
+    "y": [
+     -1,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 200,
+     "r": 0.17,
+     "color": "yellow",
+     "visibleIf": "t < -ln(1 - rand(i))/lam",
+     "x": "0.5 + mod(i, 20)*0.5",
+     "y": "0.6 + floor(i/20)*1.0"
+    },
+    {
+     "shape": "particles",
+     "count": 200,
+     "r": 0.12,
+     "color": "blue",
+     "opacity": 0.35,
+     "visibleIf": "t >= -ln(1 - rand(i))/lam",
+     "x": "0.5 + mod(i, 20)*0.5",
+     "y": "0.6 + floor(i/20)*1.0"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 0,
+     "x2": 33,
+     "y2": 0,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 0,
+     "x2": 12,
+     "y2": 10,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 22.5,
+     "y": -0.7,
+     "text": {
+      "en": "time →"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 10.4,
+     "text": {
+      "en": "N/N₀"
+     },
+     "size": 22,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "path",
+     "fn": "10*exp(-ln(2)*(x - 12)*1.5/Th)",
+     "from": 12,
+     "to": 33,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": "12 + Th/1.5",
+     "y1": 0,
+     "x2": "12 + Th/1.5",
+     "y2": 5,
+     "color": "green",
+     "dashed": true,
+     "visibleIf": "Th/1.5 < 21"
+    },
+    {
+     "shape": "text",
+     "x": "12 + Th/1.5",
+     "y": 5.5,
+     "text": {
+      "en": "T½"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "green",
+     "visibleIf": "Th/1.5 < 21"
+    },
+    {
+     "shape": "trail",
+     "x": "12 + t/1.5",
+     "y": "10*frac",
+     "color": "yellow",
+     "width": 4,
+     "length": 1000
+    },
+    {
+     "shape": "label",
+     "x": 33,
+     "y": 10.4,
+     "text": {
+      "en": "t = {t:1} s   N/N₀ = {frac:3}"
+     },
+     "size": 24,
+     "align": "right",
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Decay constant λ"
+     },
+     "expr": "lam",
+     "digits": 3,
+     "unit": "1/s"
+    },
+    {
+     "label": {
+      "en": "Mean life τ"
+     },
+     "expr": "1/lam",
+     "digits": 2,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Fraction left"
+     },
+     "expr": "frac",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Pause at one half-life. About how many of the 200 dots are left?"
+    },
+    {
+     "en": "Pause at two and at three half-lives. What fractions do you see?"
+    },
+    {
+     "en": "Double the half-life. How does the curve change?"
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "From the law to the half-life"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "The rate of decay is proportional to the number present."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Decay law"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        10,
+        14
+       ],
+       "tex": "\\frac{dN}{dt} = -\\lambda N \\;\\Rightarrow\\; N = N_0 e^{-\\lambda t}",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Put N equal to half of N zero to find the half-life."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        10,
+        26
+       ],
+       "tex": "\\tfrac12 = e^{-\\lambda T_{1/2}} \\;\\Rightarrow\\; T_{1/2} = \\frac{\\ln 2}{\\lambda}",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The graph halves in every half-life."
+     },
+     "draw": [
+      {
+       "kind": "axes",
+       "from": [
+        55,
+        30
+       ],
+       "to": [
+        95,
+        56
+       ],
+       "x": [
+        0,
+        4
+       ],
+       "y": [
+        0,
+        1
+       ],
+       "color": "white",
+       "xLabel": "t / T½",
+       "yLabel": "N/N₀"
+      },
+      {
+       "kind": "plot",
+       "fn": "exp(-0.693*x)",
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A sample has a half-life of 3 h. What fraction is left after 12 h, and after 4 h?"
+   },
+   "steps": [
+    {
+     "en": "12 h = 4 half-lives: N/N₀ = 1/16."
+    },
+    {
+     "en": "4 h: N/N₀ = e^(−0.693 × 4/3) = 2^(−4/3) ≈ 0.397."
+    }
+   ],
+   "answer": {
+    "en": "1/16 after 12 h; about 0.40 after 4 h"
+   },
+   "narration": {
+    "en": "Let us solve this together. A sample has a half-life of 3 h. What fraction is left after 12 h, and after 4 h?"
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "The half-life of a nuclide is 1386 s. Find λ, the mean life and the time for 75% of a sample to decay."
+   },
+   "steps": [
+    {
+     "en": "λ = 0.693/1386 = 5.0 × 10⁻⁴ s⁻¹."
+    },
+    {
+     "en": "τ = 1/λ = 2000 s."
+    },
+    {
+     "en": "75% decayed means 1/4 left: 2 half-lives = 2772 s."
+    }
+   ],
+   "answer": {
+    "en": "λ = 5 × 10⁻⁴ s⁻¹, τ = 2000 s, t = 2772 s"
+   },
+   "narration": {
+    "en": "Let us solve this together. The half-life of a nuclide is 1386 s. Find λ, the mean life and the time for 75% of a sample to decay."
+   }
+  },
+  {
+   "id": "challenge-half-life",
+   "type": "challenge",
+   "title": {
+    "en": "Challenge: find the half-life"
+   },
+   "narration": {
+    "en": "After twelve seconds one eighth of the sample is left. What is the half-life?"
+   },
+   "kind": "scene",
+   "prompt": {
+    "en": "After 12 s, exactly one-eighth of a sample is left. Set the half-life and lock in."
+   },
+   "sliders": [
+    {
+     "name": "Th",
+     "label": {
+      "en": "Half-life"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 8,
+     "unit": "s"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     13
+    ],
+    "y": [
+     0,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 13,
+     "y2": 0,
+     "color": "white"
+    },
+    {
+     "shape": "path",
+     "fn": "10*exp(-ln(2)*x/Th)",
+     "from": 0,
+     "to": 13,
+     "color": "yellow",
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 0,
+     "x2": 12,
+     "y2": 10,
+     "color": "green",
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 10.4,
+     "text": {
+      "en": "t = 12 s"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "green"
+    }
+   ],
+   "goal": "exp(-ln(2)*12/Th)",
+   "goalLabel": {
+    "en": "Fraction left after 12 s"
+   },
+   "target": 0.125,
+   "tolerance": 0.01,
+   "solution": {
+    "Th": 4
+   },
+   "explanation": {
+    "en": "1/8 = (1/2)³: 12 s is three half-lives, so T½ = 4 s."
+   },
+   "hint": {
+    "en": "One-eighth is (1/2) × (1/2) × (1/2)."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Halving in your head"
+   },
+   "body": {
+    "en": "Count half-lives: 1/2, 1/4, 1/8, 1/16, 1/32 after 1 to 5 half-lives. 1/10 left takes about 3.3 half-lives; 1/100 about 6.6; 1/1000 about 10."
+   },
+   "narration": {
+    "en": "Halving in your head. Count half-lives: 1/2, 1/4, 1/8, 1/16, 1/32 after 1 to 5 half-lives. 1/10 left takes about 3.3 half-lives; 1/100 about 6.6; 1/1000 about 10."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Ten half-lives: one in a thousand."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Match each quantity with its meaning or formula."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "Decay constant λ"
+     },
+     "right": {
+      "en": "Fraction of nuclei decaying per second"
+     }
+    },
+    {
+     "left": {
+      "en": "Half-life T½"
+     },
+     "right": {
+      "en": "ln 2 / λ"
+     }
+    },
+    {
+     "left": {
+      "en": "Mean life τ"
+     },
+     "right": {
+      "en": "1/λ"
+     }
+    },
+    {
+     "left": {
+      "en": "Activity R"
+     },
+     "right": {
+      "en": "λN, in becquerel"
+     }
+    },
+    {
+     "left": {
+      "en": "1 curie"
+     },
+     "right": {
+      "en": "3.7 × 10¹⁰ Bq"
+     }
+    },
+    {
+     "left": {
+      "en": "After n half-lives"
+     },
+     "right": {
+      "en": "N₀ / 2ⁿ left"
+     }
+    }
+   ],
+   "narration": {
+    "en": "Match each quantity with its meaning or formula."
+   },
+   "questionId": "act.isc-decay-match"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2p16-q06",
+    "2p16-q07",
+    "2p16-q08"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "2p16-q09",
+    "2p16-q10"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "dN/dt = −λN gives N = N₀e^(−λt) and R = λN."
+    },
+    {
+     "en": "T½ = 0.693/λ; τ = 1/λ = 1.44 T½."
+    },
+    {
+     "en": "After n half-lives, N₀/2ⁿ remains; 1 Bq = 1 decay per second."
+    }
+   ],
+   "homework": [
+    {
+     "en": "A sample of activity 6400 Bq has a half-life of 2 days. What is its activity after 10 days? (Answer: 200 Bq)"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2p16-q09"
+   ],
+   "narration": {
+    "en": "Recap. dN/dt = −λN gives N = N₀e^(−λt) and R = λN. T½ = 0.693/λ; τ = 1/λ = 1.44 T½. After n half-lives, N₀/2ⁿ remains; 1 Bq = 1 decay per second."
+   }
+  }
+ ]
+}

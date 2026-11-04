@@ -1,0 +1,468 @@
+{
+ "id": "puc1-maths-16-correlation-analysis.t2.lesson",
+ "chapterId": "puc1-maths-16-correlation-analysis",
+ "topicId": "puc1-maths-16-correlation-analysis.t2",
+ "title": {
+  "en": "Spearman's rank correlation"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Two judges, one contest"
+   },
+   "hook": {
+    "en": "Two judges rank ten dancers. Do they broadly agree? Their marks may be on different scales, but their rankings can be compared directly."
+   },
+   "objectives": [
+    {
+     "en": "Compute Spearman's rank correlation"
+    },
+    {
+     "en": "Handle the case of reversed rankings"
+    },
+    {
+     "en": "Know when rank correlation is the right tool"
+    }
+   ],
+   "narration": {
+    "en": "Two judges rank ten dancers. Do they broadly agree? Their marks may be on different scales, but their rankings can be compared directly."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Rank correlation"
+   },
+   "body": {
+    "en": "When items can only be ranked (beauty, honesty, preference), or when ranks are easier to compare, use Spearman's rank correlation: give each item its rank in each series, find the difference d of the two ranks, and $R = 1 - \\dfrac{6\\sum d^2}{n(n^2 - 1)}$. Like r, it lies between −1 (rankings reversed) and +1 (identical rankings). Always check that Σd = 0."
+   },
+   "points": [
+    {
+     "en": "d = difference of the two ranks"
+    },
+    {
+     "en": "R = 1 − 6Σd²/(n(n² − 1))"
+    },
+    {
+     "en": "Σd = 0 is a check"
+    }
+   ],
+   "narration": {
+    "en": "When items can only be ranked (beauty, honesty, preference), or when ranks are easier to compare, use Spearman's rank correlation: give each item its rank in each series, find the difference d of the two ranks, and $R = 1 - \\dfrac{6\\sum d^2}{n(n^2 - 1)}$. Like r, it lies between −1 (rankings reversed) and +1 (identical rankings). Always check that Σd = 0."
+   },
+   "formula": "R = 1 - \\frac{6\\sum d^2}{n(n^2 - 1)}"
+  },
+  {
+   "id": "scene-rank",
+   "type": "interactive",
+   "title": {
+    "en": "From Σd² to R"
+   },
+   "narration": {
+    "en": "Move Σd² from zero upward. R falls from plus one. At the largest possible Σd², the rankings are reversed and R is minus one."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Choose the number of items and Σd². The needle shows R on a scale from −1 to +1. Σd² can range from 0 (identical rankings) to n(n² − 1)/3 (reversed)."
+   },
+   "sliders": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Number of items n"
+     },
+     "min": 3,
+     "max": 12,
+     "step": 1,
+     "value": 5
+    },
+    {
+     "name": "D",
+     "label": {
+      "en": "Sum of squared rank differences Σd²"
+     },
+     "min": 0,
+     "max": 572,
+     "step": 2,
+     "value": 10
+    }
+   ],
+   "vars": [
+    {
+     "name": "Dm",
+     "expr": "n*(n^2 - 1)/3"
+    },
+    {
+     "name": "R",
+     "expr": "clamp(1 - 6*min(D, Dm)/(n*(n^2 - 1)), -1, 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     -1.3,
+     1.3
+    ],
+    "y": [
+     -0.3,
+     1.3
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "sqrt(max(1 - x^2, 0))",
+     "from": -1,
+     "to": 1,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": -1,
+     "y": -0.15,
+     "text": {
+      "en": "−1"
+     },
+     "size": 24,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 0,
+     "y": 1.12,
+     "text": {
+      "en": "0"
+     },
+     "size": 24,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": -0.15,
+     "text": {
+      "en": "+1"
+     },
+     "size": 24,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "sin(rad(90*R))",
+     "y2": "cos(rad(90*R))",
+     "color": {
+      "by": "(R + 1)/2",
+      "scale": [
+       "red",
+       "yellow",
+       "green"
+      ]
+     },
+     "width": 6
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": 0.05,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 0.45,
+     "text": {
+      "en": "R = {R:3}"
+     },
+     "size": 28,
+     "align": "center",
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": -0.2,
+     "text": {
+      "en": "Σd² is capped at {Dm:0} for this n"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white",
+     "visibleIf": "D > Dm"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Spearman R"
+     },
+     "expr": "R",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Largest possible Σd²"
+     },
+     "expr": "Dm",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With n = 5, which Σd² gives R = 0?"
+    },
+    {
+     "en": "What is the largest possible Σd² for n = 5? What is R then?"
+    },
+    {
+     "en": "For n = 10, what Σd² gives R = 0.8?"
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Ranks from two judges"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Five dancers A to E. Write each judge's ranks."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Spearman's R"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        13
+       ],
+       "text": {
+        "en": "        A  B  C  D  E"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19
+       ],
+       "text": {
+        "en": "Judge 1: 1  2  3  4  5"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        25
+       ],
+       "text": {
+        "en": "Judge 2: 2  1  4  3  5"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "d is the difference; square and add."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        32
+       ],
+       "text": {
+        "en": "d:  −1  1  −1  1  0     Σd² = 4"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Put n = 5."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        5,
+        44
+       ],
+       "tex": "R = 1 - \\frac{6\\times 4}{5(25 - 1)} = 1 - 0.2 = 0.8",
+       "size": 4,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Marks of 6 students in Maths and Physics: (40, 42), (55, 50), (35, 38), (60, 58), (45, 40), (70, 66). Find Spearman's R."
+   },
+   "steps": [
+    {
+     "en": "Maths ranks (highest = 1): 5, 3, 6, 2, 4, 1. Physics ranks: 4, 3, 6, 2, 5, 1."
+    },
+    {
+     "en": "d = 1, 0, 0, 0, −1, 0; Σd² = 2."
+    },
+    {
+     "en": "R = 1 − 6 × 2/(6 × 35) = 1 − 12/210 ≈ 0.94."
+    }
+   ],
+   "answer": {
+    "en": "R ≈ 0.94"
+   },
+   "narration": {
+    "en": "Let us solve this together. Marks of 6 students in Maths and Physics: (40, 42), (55, 50), (35, 38), (60, 58), (45, 40), (70, 66). Find Spearman's R."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Quick checks"
+   },
+   "body": {
+    "en": "Σd must be 0. For n items, Σd² goes from 0 (R = 1) to n(n² − 1)/3 (R = −1); halfway, n(n² − 1)/6, gives R = 0."
+   },
+   "narration": {
+    "en": "Quick checks. Σd must be 0. For n items, Σd² goes from 0 (R = 1) to n(n² − 1)/3 (R = −1); halfway, n(n² − 1)/6, gives R = 0."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Sum of d is zero; halfway is zero."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "order",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Put the steps of finding Spearman's R in order."
+   },
+   "steps": [
+    {
+     "en": "Rank the items in the first series."
+    },
+    {
+     "en": "Rank the same items in the second series."
+    },
+    {
+     "en": "Find d, the difference of the two ranks of each item, and check Σd = 0."
+    },
+    {
+     "en": "Square each d and add to get Σd²."
+    },
+    {
+     "en": "Use R = 1 − 6Σd²/(n(n² − 1))."
+    },
+    {
+     "en": "Interpret R between −1 and 1."
+    }
+   ],
+   "narration": {
+    "en": "Put the steps of finding Spearman's R in order."
+   },
+   "questionId": "act.isc-spearman-order"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1m16-q06",
+    "1m16-q07",
+    "1m16-q08"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "1m16-q09",
+    "1m16-q10"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Spearman's R = 1 − 6Σd²/(n(n² − 1)), using rank differences d."
+    },
+    {
+     "en": "R = 1 for identical rankings and −1 for reversed ones."
+    },
+    {
+     "en": "It suits qualities that can be ranked but not measured."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Ten items have Σd² = 66. Find R. (Answer: 0.6)"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1m16-q10"
+   ],
+   "narration": {
+    "en": "Recap. Spearman's R = 1 − 6Σd²/(n(n² − 1)), using rank differences d. R = 1 for identical rankings and −1 for reversed ones. It suits qualities that can be ranked but not measured."
+   }
+  }
+ ]
+}

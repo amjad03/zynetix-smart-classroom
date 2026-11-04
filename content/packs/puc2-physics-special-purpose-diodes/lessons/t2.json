@@ -1,0 +1,577 @@
+{
+ "id": "puc2-physics-17-special-purpose-diodes.t2.lesson",
+ "chapterId": "puc2-physics-17-special-purpose-diodes",
+ "topicId": "puc2-physics-17-special-purpose-diodes.t2",
+ "title": {
+  "en": "Optoelectronic junction devices: LED, photodiode and solar cell"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Diodes that shine and diodes that see"
+   },
+   "hook": {
+    "en": "The torch in a phone, the sensor that switches on street lights at dusk, and the panels on a rooftop are all p-n junctions. They turn electricity into light, or light into electricity."
+   },
+   "objectives": [
+    {
+     "en": "Explain how an LED, a photodiode and a solar cell work"
+    },
+    {
+     "en": "Relate the band gap to the colour of an LED"
+    },
+    {
+     "en": "Read the I–V curve of a solar cell"
+    }
+   ],
+   "narration": {
+    "en": "The torch in a phone, the sensor that switches on street lights at dusk, and the panels on a rooftop are all p-n junctions. They turn electricity into light, or light into electricity."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Light in, light out"
+   },
+   "body": {
+    "en": "In an LED, a forward-biased junction of a direct band gap semiconductor (such as GaAsP) lets electrons and holes recombine and emit photons of energy close to the band gap: $\\lambda \\approx hc/E_g$. A photodiode is reverse biased; light of energy above $E_g$ creates electron–hole pairs near the junction, and the reverse current rises in proportion to the light intensity. A solar cell is an unbiased junction with a large area: the junction field separates the pairs made by sunlight and drives a current through a load, giving an emf of about 0.5–0.6 V for silicon."
+   },
+   "points": [
+    {
+     "en": "LED: forward bias, λ ≈ hc/E_g"
+    },
+    {
+     "en": "Photodiode: reverse bias, current ∝ intensity"
+    },
+    {
+     "en": "Solar cell: no bias, generates an emf"
+    }
+   ],
+   "narration": {
+    "en": "In an LED, a forward-biased junction of a direct band gap semiconductor (such as GaAsP) lets electrons and holes recombine and emit photons of energy close to the band gap: $\\lambda \\approx hc/E_g$. A photodiode is reverse biased; light of energy above $E_g$ creates electron–hole pairs near the junction, and the reverse current rises in proportion to the light intensity. A solar cell is an unbiased junction with a large area: the junction field separates the pairs made by sunlight and drives a current through a load, giving an emf of about 0.5–0.6 V for silicon."
+   },
+   "formula": "\\lambda \\approx \\frac{hc}{E_g} = \\frac{1240\\,\\text{eV nm}}{E_g}"
+  },
+  {
+   "id": "scene-solar-cell",
+   "type": "interactive",
+   "title": {
+    "en": "The I–V curve of a solar cell"
+   },
+   "narration": {
+    "en": "Change the sunlight. The short-circuit current grows in proportion to the light; the open-circuit voltage grows only slowly. Move the operating point to make the orange rectangle as big as you can."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Set the sunlight and the operating voltage (chosen by the load). The yellow curve is the cell's I–V curve in the fourth-quadrant form drawn upright; the orange rectangle's area is the power delivered."
+   },
+   "sliders": [
+    {
+     "name": "G",
+     "label": {
+      "en": "Sunlight"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 50,
+     "value": 1000,
+     "unit": "W/m²"
+    },
+    {
+     "name": "V",
+     "label": {
+      "en": "Operating voltage"
+     },
+     "min": 0,
+     "max": 0.5,
+     "step": 0.01,
+     "value": 0.3,
+     "unit": "V"
+    }
+   ],
+   "vars": [
+    {
+     "name": "Isc",
+     "expr": "30*G/1000"
+    },
+    {
+     "name": "I",
+     "expr": "max(Isc - 1e-6*(exp(V/0.026) - 1), 0)"
+    },
+    {
+     "name": "Voc",
+     "expr": "0.026*ln(Isc/1e-6 + 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     0.55
+    ],
+    "y": [
+     -2,
+     34
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "voltage (V)",
+    "yLabel": "current (mA)"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": "V",
+     "h": "I",
+     "color": "orange",
+     "opacity": 0.35
+    },
+    {
+     "shape": "path",
+     "fn": "Isc - 1e-6*(exp(x/0.026) - 1)",
+     "from": 0,
+     "to": "Voc",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "V",
+     "y": "I",
+     "r": 0.008,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 0.53,
+     "y": 32,
+     "text": {
+      "en": "P = {V*I:2} mW"
+     },
+     "size": 26,
+     "align": "right",
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Short-circuit current"
+     },
+     "expr": "Isc",
+     "digits": 1,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "Open-circuit voltage"
+     },
+     "expr": "Voc",
+     "digits": 3,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Power to the load"
+     },
+     "expr": "V*I",
+     "digits": 2,
+     "unit": "mW"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Halve the sunlight. What happens to the short-circuit current and to the open-circuit voltage?"
+    },
+    {
+     "en": "Find the operating voltage that gives the most power at 1000 W/m²."
+    },
+    {
+     "en": "Why would a cell with a smaller band gap give a smaller voltage?"
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Band gap and colour"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A photon from an LED carries about the band gap energy."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "LED colour from the band gap"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        10,
+        15
+       ],
+       "tex": "\\lambda\\,(\\text{nm}) \\approx \\frac{1240}{E_g\\,(\\text{eV})}",
+       "size": 5,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Gallium arsenide, 1.4 electron volts, gives about 890 nanometres: infrared, as in a TV remote."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        10,
+        30
+       ],
+       "text": {
+        "en": "GaAs: 1.4 eV → ≈ 890 nm (infrared)"
+       },
+       "size": 3,
+       "color": "red"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A gap of 2 electron volts gives 620 nanometres, red-orange; about 2.7 electron volts gives blue."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        10,
+        38
+       ],
+       "text": {
+        "en": "2.0 eV → 620 nm (red-orange)"
+       },
+       "size": 3,
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10,
+        46
+       ],
+       "text": {
+        "en": "2.7 eV → ≈ 460 nm (blue)"
+       },
+       "size": 3,
+       "color": "blue"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lab-led-characteristics",
+   "type": "virtual_lab",
+   "labId": "led-characteristics",
+   "aim": {
+    "en": "To draw the forward I–V characteristics of LEDs of different colours and relate the turn-on voltage to the colour."
+   },
+   "narration": {
+    "en": "Virtual lab: find the turn-on voltage of red, green and blue LEDs. The bluer the light, the larger the voltage needed."
+   },
+   "seconds": 180,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A photodiode is made of a semiconductor with a band gap of 2.8 eV. Can it detect light of wavelength 600 nm?"
+   },
+   "steps": [
+    {
+     "en": "Photon energy at 600 nm = 1240/600 ≈ 2.07 eV."
+    },
+    {
+     "en": "2.07 eV < 2.8 eV, so the photons cannot create electron–hole pairs."
+    }
+   ],
+   "answer": {
+    "en": "No: it detects only λ below about 1240/2.8 ≈ 443 nm"
+   },
+   "narration": {
+    "en": "Let us solve this together. A photodiode is made of a semiconductor with a band gap of 2.8 eV. Can it detect light of wavelength 600 nm?"
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "A solar cell gives 30 mA at short circuit and 0.45 V on open circuit. Under load it works at 0.38 V and 27.8 mA. Find the power delivered and the fill factor P/(V_oc I_sc)."
+   },
+   "steps": [
+    {
+     "en": "P = 0.38 × 27.8 ≈ 10.6 mW."
+    },
+    {
+     "en": "V_oc I_sc = 0.45 × 30 = 13.5 mW."
+    },
+    {
+     "en": "Fill factor = 10.6/13.5 ≈ 0.78."
+    }
+   ],
+   "answer": {
+    "en": "About 10.6 mW; fill factor ≈ 0.78"
+   },
+   "narration": {
+    "en": "Let us solve this together. A solar cell gives 30 mA at short circuit and 0.45 V on open circuit. Under load it works at 0.38 V and 27.8 mA. Find the power delivered and the fill factor P/(V_oc I_sc)."
+   }
+  },
+  {
+   "id": "challenge-mpp",
+   "type": "challenge",
+   "title": {
+    "en": "Challenge: the most power"
+   },
+   "narration": {
+    "en": "At full sunlight, find the operating voltage that gives the solar cell its greatest power."
+   },
+   "kind": "scene",
+   "prompt": {
+    "en": "At full sunlight (1000 W/m²), choose the operating voltage at which the solar cell delivers the most power. The power is hidden: reason from the curve, then lock in."
+   },
+   "sliders": [
+    {
+     "name": "V",
+     "label": {
+      "en": "Operating voltage"
+     },
+     "min": 0,
+     "max": 0.44,
+     "step": 0.01,
+     "value": 0.2,
+     "unit": "V"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     0.5
+    ],
+    "y": [
+     -2,
+     34
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "voltage (V)",
+    "yLabel": "current (mA)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "30 - 1e-6*(exp(x/0.026) - 1)",
+     "from": 0,
+     "to": 0.447,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": "V",
+     "y1": 0,
+     "x2": "V",
+     "y2": 33,
+     "color": "orange",
+     "dashed": true
+    }
+   ],
+   "goal": "V*(30 - 1e-6*(exp(V/0.026) - 1))",
+   "goalLabel": {
+    "en": "Power"
+   },
+   "target": 10.55,
+   "tolerance": 0.05,
+   "solution": {
+    "V": 0.38
+   },
+   "explanation": {
+    "en": "The power V × I is greatest at the knee of the curve, about 0.38 V, where it is about 10.5 mW."
+   },
+   "goalUnit": "mW",
+   "hint": {
+    "en": "Near the open-circuit voltage the current collapses; at low voltage the power is small. Look for the knee."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Which bias?"
+   },
+   "body": {
+    "en": "Light out (LED): forward. Light measured (photodiode): reverse. Light to power (solar cell): no bias at all. Colour from the gap: λ(nm) = 1240/E_g(eV)."
+   },
+   "narration": {
+    "en": "Which bias?. Light out (LED): forward. Light measured (photodiode): reverse. Light to power (solar cell): no bias at all. Colour from the gap: λ(nm) = 1240/E_g(eV)."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Emit forward, detect reverse, generate unbiased."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "sort",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Sort each statement to the device it describes."
+   },
+   "buckets": [
+    {
+     "id": "led",
+     "label": {
+      "en": "LED"
+     }
+    },
+    {
+     "id": "pd",
+     "label": {
+      "en": "Photodiode"
+     }
+    },
+    {
+     "id": "sc",
+     "label": {
+      "en": "Solar cell"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "Forward biased; emits light"
+     },
+     "answer": "led"
+    },
+    {
+     "text": {
+      "en": "Colour set by the band gap"
+     },
+     "answer": "led"
+    },
+    {
+     "text": {
+      "en": "Reverse biased; current rises with light"
+     },
+     "answer": "pd"
+    },
+    {
+     "text": {
+      "en": "Used to switch on street lights at dusk"
+     },
+     "answer": "pd"
+    },
+    {
+     "text": {
+      "en": "No external bias; drives a load"
+     },
+     "answer": "sc"
+    },
+    {
+     "text": {
+      "en": "Large junction area facing the Sun"
+     },
+     "answer": "sc"
+    },
+    {
+     "text": {
+      "en": "Open-circuit voltage about 0.5 V for silicon"
+     },
+     "answer": "sc"
+    }
+   ],
+   "narration": {
+    "en": "Sort each statement to the device it describes."
+   },
+   "questionId": "act.isc-opto-sort"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2p17-q06",
+    "2p17-q07",
+    "2p17-q08"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "2p17-q09",
+    "2p17-q10"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "LED: forward bias; photons of energy ≈ E_g, λ ≈ 1240/E_g nm."
+    },
+    {
+     "en": "Photodiode: reverse bias; the photocurrent is proportional to intensity."
+    },
+    {
+     "en": "Solar cell: unbiased junction; the junction field separates light-made pairs and gives an emf; best power at the knee of its I–V curve."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Find the band gap of an LED emitting 500 nm light. (Answer: about 2.48 eV)"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2p17-q09"
+   ],
+   "narration": {
+    "en": "Recap. LED: forward bias; photons of energy ≈ E_g, λ ≈ 1240/E_g nm. Photodiode: reverse bias; the photocurrent is proportional to intensity. Solar cell: unbiased junction; the junction field separates light-made pairs and gives an emf; best power at the knee of its I–V curve."
+   }
+  }
+ ]
+}

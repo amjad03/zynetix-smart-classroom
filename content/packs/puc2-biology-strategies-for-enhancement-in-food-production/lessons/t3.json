@@ -1,0 +1,598 @@
+{
+ "id": "puc2-biology-14-strategies-for-enhancement-in-food-production.t3.lesson",
+ "chapterId": "puc2-biology-14-strategies-for-enhancement-in-food-production",
+ "topicId": "puc2-biology-14-strategies-for-enhancement-in-food-production.t3",
+ "title": {
+  "en": "Single cell protein and plant tissue culture"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Food from a fermenter"
+   },
+   "hook": {
+    "en": "About a quarter of a kilogram of a fast-growing bacterium, given cheap methanol and air, can in principle make tonnes of protein a day. Meanwhile, a single tiny piece of a banana plant can give thousands of identical plantlets in a lab."
+   },
+   "objectives": [
+    {
+     "en": "Explain single cell protein (SCP)"
+    },
+    {
+     "en": "Describe plant tissue culture and micropropagation"
+    },
+    {
+     "en": "Explain somatic hybridisation"
+    }
+   ],
+   "narration": {
+    "en": "About a quarter of a kilogram of a fast-growing bacterium, given cheap methanol and air, can in principle make tonnes of protein a day. Meanwhile, a single tiny piece of a banana plant can give thousands of identical plantlets in a lab."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Single cell protein"
+   },
+   "body": {
+    "en": "Growing enough meat and milk takes a lot of land and fodder. Single cell protein is microbial biomass (algae such as Spirulina, bacteria such as Methylophilus methylotrophus, yeasts and fungi) grown on cheap materials like potato-processing waste, straw, molasses, animal manure or sewage. Microbes double their mass in hours, are rich in protein, minerals, fats and vitamins, and help reduce pollution by using wastes."
+   },
+   "points": [
+    {
+     "en": "Microbial biomass as protein food"
+    },
+    {
+     "en": "Grows fast on cheap wastes"
+    },
+    {
+     "en": "Spirulina, Methylophilus, yeasts"
+    }
+   ],
+   "narration": {
+    "en": "Growing enough meat and milk takes a lot of land and fodder. Single cell protein is microbial biomass (algae such as Spirulina, bacteria such as Methylophilus methylotrophus, yeasts and fungi) grown on cheap materials like potato-processing waste, straw, molasses, animal manure or sewage. Microbes double their mass in hours, are rich in protein, minerals, fats and vitamins, and help reduce pollution by using wastes."
+   }
+  },
+  {
+   "id": "scene-scp",
+   "type": "interactive",
+   "title": {
+    "en": "Microbes versus a calf"
+   },
+   "narration": {
+    "en": "Press play. The yellow line is the microbial biomass on a log scale, doubling again and again; the white line is a growing calf. Within a day, a few hundred grams of microbes outgrow the calf."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Microbial biomass doubles every few hours while a 250 kg calf adds about a kilogram a day. The scale is logarithmic: each step up is ten times more. Set the doubling time and the starting mass and press Play."
+   },
+   "sliders": [
+    {
+     "name": "td",
+     "label": {
+      "en": "Doubling time"
+     },
+     "min": 1,
+     "max": 6,
+     "step": 0.5,
+     "value": 2,
+     "unit": "h"
+    },
+    {
+     "name": "m0",
+     "label": {
+      "en": "Starting mass"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 50,
+     "value": 250,
+     "unit": "g"
+    }
+   ],
+   "time": {
+    "max": 24,
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2,
+    "unit": "h"
+   },
+   "vars": [
+    {
+     "name": "mb",
+     "expr": "m0*2^(t/td)/1000"
+    },
+    {
+     "name": "mc",
+     "expr": "250 + t/24"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     24
+    ],
+    "y": [
+     -2,
+     7
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "time (h)",
+    "yLabel": "log₁₀ of mass (kg)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "log(m0/1000) + x/td*log(2)",
+     "from": 0,
+     "to": "max(t, 0.01)",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "log(250 + x/24)",
+     "from": 0,
+     "to": "max(t, 0.01)",
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "label",
+     "x": 0.5,
+     "y": 6.5,
+     "text": {
+      "en": "microbes: {mb:1} kg"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 0.5,
+     "y": 5.7,
+     "text": {
+      "en": "calf: {mc:1} kg"
+     },
+     "size": 24,
+     "align": "left",
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": 12,
+     "y": -1.4,
+     "text": {
+      "en": "each grid step up = 10 times more"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Microbial biomass"
+     },
+     "expr": "mb",
+     "digits": 1,
+     "unit": "kg"
+    },
+    {
+     "label": {
+      "en": "Doublings so far"
+     },
+     "expr": "t/td",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With a 2 h doubling time and 250 g at the start, how much is there after 24 h?"
+    },
+    {
+     "en": "Make the doubling time 4 h. How much less is made?"
+    },
+    {
+     "en": "Why can't growth continue like this for ever in a real fermenter?"
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Plant tissue culture"
+   },
+   "body": {
+    "en": "Because plant cells are totipotent, a small piece of a plant (an explant) grown aseptically on a nutrient medium (sugar, salts, vitamins, amino acids and growth regulators such as auxins and cytokinins) can regenerate whole plants. Micropropagation produces thousands of genetically identical plants (somaclones) quickly; it is used for tomato, banana and apple. Meristem culture gives virus-free plants. In somatic hybridisation, cell walls are digested to give protoplasts, protoplasts of two plants are fused, and the hybrid is grown into a plant, such as the pomato."
+   },
+   "points": [
+    {
+     "en": "Totipotency + explant + sterile medium"
+    },
+    {
+     "en": "Micropropagation: many identical plants fast"
+    },
+    {
+     "en": "Meristem culture: virus-free; protoplast fusion: somatic hybrids"
+    }
+   ],
+   "narration": {
+    "en": "Because plant cells are totipotent, a small piece of a plant (an explant) grown aseptically on a nutrient medium (sugar, salts, vitamins, amino acids and growth regulators such as auxins and cytokinins) can regenerate whole plants. Micropropagation produces thousands of genetically identical plants (somaclones) quickly; it is used for tomato, banana and apple. Meristem culture gives virus-free plants. In somatic hybridisation, cell walls are digested to give protoplasts, protoplasts of two plants are fused, and the hybrid is grown into a plant, such as the pomato."
+   }
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Micropropagation"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A small explant is sterilised and placed on a medium with auxin and cytokinin."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Tissue culture"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        5,
+        20
+       ],
+       "to": [
+        20,
+        40
+       ],
+       "color": "white",
+       "fill": false
+      },
+      {
+       "kind": "text",
+       "at": [
+        6,
+        44
+       ],
+       "text": {
+        "en": "explant"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        12,
+        30
+       ],
+       "r": 3,
+       "color": "green",
+       "fill": true
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "It forms an undifferentiated mass, the callus, and then shoots and roots."
+     },
+     "draw": [
+      {
+       "kind": "arrow",
+       "from": [
+        22,
+        30
+       ],
+       "to": [
+        32,
+        30
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "circle",
+       "at": [
+        40,
+        30
+       ],
+       "r": 6,
+       "color": "yellow",
+       "fill": true
+      },
+      {
+       "kind": "text",
+       "at": [
+        35,
+        44
+       ],
+       "text": {
+        "en": "callus"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        48,
+        30
+       ],
+       "to": [
+        58,
+        30
+       ],
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Plantlets are hardened and moved to soil: thousands of identical plants."
+     },
+     "draw": [
+      {
+       "kind": "line",
+       "from": [
+        65,
+        40
+       ],
+       "to": [
+        65,
+        22
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "line",
+       "from": [
+        72,
+        40
+       ],
+       "to": [
+        72,
+        22
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "line",
+       "from": [
+        79,
+        40
+       ],
+       "to": [
+        79,
+        22
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "line",
+       "from": [
+        86,
+        40
+       ],
+       "to": [
+        86,
+        22
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        64,
+        44
+       ],
+       "text": {
+        "en": "somaclones"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "anim-mitosis",
+   "type": "simulation",
+   "source": "animation",
+   "simId": "mitosis",
+   "caption": {
+    "en": "Optional: every cell of a micropropagated plant comes from mitosis, so all the plantlets are genetically identical to the explant."
+   },
+   "tryThis": [],
+   "narration": {
+    "en": "Optional: every cell of a micropropagated plant comes from mitosis, so all the plantlets are genetically identical to the explant."
+   },
+   "seconds": 90,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A banana grower needs 10 000 disease-free, uniform plants within months. Which method should be used, and from which part of the plant?"
+   },
+   "steps": [
+    {
+     "en": "Micropropagation gives thousands of identical plants quickly."
+    },
+    {
+     "en": "Using the meristem (shoot tip) as the explant gives virus-free plants."
+    },
+    {
+     "en": "So: meristem culture followed by micropropagation."
+    }
+   ],
+   "answer": {
+    "en": "Meristem culture and micropropagation"
+   },
+   "narration": {
+    "en": "Let us solve this together. A banana grower needs 10 000 disease-free, uniform plants within months. Which method should be used, and from which part of the plant?"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Doubling arithmetic"
+   },
+   "body": {
+    "en": "10 doublings ≈ ×1000 (2¹⁰ = 1024). A microbe doubling every 2 h multiplies about a thousand times in 20 h."
+   },
+   "narration": {
+    "en": "Doubling arithmetic. 10 doublings ≈ ×1000 (2¹⁰ = 1024). A microbe doubling every 2 h multiplies about a thousand times in 20 h."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Ten doublings, a thousandfold."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Match each term with its meaning."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "Totipotency"
+     },
+     "right": {
+      "en": "A single cell can grow into a whole plant"
+     }
+    },
+    {
+     "left": {
+      "en": "Explant"
+     },
+     "right": {
+      "en": "The piece of plant used to start a culture"
+     }
+    },
+    {
+     "left": {
+      "en": "Somaclones"
+     },
+     "right": {
+      "en": "Genetically identical plants from tissue culture"
+     }
+    },
+    {
+     "left": {
+      "en": "Meristem culture"
+     },
+     "right": {
+      "en": "Gives virus-free plants"
+     }
+    },
+    {
+     "left": {
+      "en": "Protoplast"
+     },
+     "right": {
+      "en": "A plant cell without its cell wall"
+     }
+    },
+    {
+     "left": {
+      "en": "SCP"
+     },
+     "right": {
+      "en": "Microbial biomass used as protein food"
+     }
+    }
+   ],
+   "narration": {
+    "en": "Match each term with its meaning."
+   },
+   "questionId": "act.isc-tissue-culture"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2b14-q11",
+    "2b14-q12",
+    "2b14-q13"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "2b14-q14",
+    "2b14-q15"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "SCP is protein-rich microbial biomass grown fast on cheap wastes."
+    },
+    {
+     "en": "Tissue culture uses totipotency: explant, sterile medium, callus, plantlets."
+    },
+    {
+     "en": "Micropropagation gives somaclones; meristem culture gives virus-free plants; protoplast fusion gives somatic hybrids."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Explain why plants obtained by micropropagation are genetically identical."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2b14-q15"
+   ],
+   "narration": {
+    "en": "Recap. SCP is protein-rich microbial biomass grown fast on cheap wastes. Tissue culture uses totipotency: explant, sterile medium, callus, plantlets. Micropropagation gives somaclones; meristem culture gives virus-free plants; protoplast fusion gives somatic hybrids."
+   }
+  }
+ ]
+}

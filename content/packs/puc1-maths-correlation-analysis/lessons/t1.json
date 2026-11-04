@@ -1,0 +1,450 @@
+{
+ "id": "puc1-maths-16-correlation-analysis.t1.lesson",
+ "chapterId": "puc1-maths-16-correlation-analysis",
+ "topicId": "puc1-maths-16-correlation-analysis.t1",
+ "title": {
+  "en": "Scatter diagrams and Karl Pearson's coefficient of correlation"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Height and weight"
+   },
+   "hook": {
+    "en": "Taller students tend to be heavier, but not always. Correlation measures how strongly two quantities move together, from −1 to +1."
+   },
+   "objectives": [
+    {
+     "en": "Read a scatter diagram"
+    },
+    {
+     "en": "Compute Karl Pearson's coefficient r"
+    },
+    {
+     "en": "Know the properties of r"
+    }
+   ],
+   "narration": {
+    "en": "Taller students tend to be heavier, but not always. Correlation measures how strongly two quantities move together, from −1 to +1."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Scatter diagrams and r"
+   },
+   "body": {
+    "en": "Plotting pairs (x, y) as points gives a scatter diagram. If y tends to rise with x the correlation is positive; if it falls, negative; if there is no linear trend, zero. Karl Pearson's coefficient is $r = \\dfrac{\\sum (x - \\bar x)(y - \\bar y)}{\\sqrt{\\sum (x - \\bar x)^2\\,\\sum (y - \\bar y)^2}} = \\dfrac{\\text{cov}(x, y)}{\\sigma_x\\sigma_y}$. It lies between −1 and 1, has no unit, and does not change with change of origin or scale."
+   },
+   "points": [
+    {
+     "en": "r = cov(x, y)/(σx σy)"
+    },
+    {
+     "en": "−1 ≤ r ≤ 1; ±1 is a perfect line"
+    },
+    {
+     "en": "Unaffected by change of origin and scale"
+    }
+   ],
+   "narration": {
+    "en": "Plotting pairs (x, y) as points gives a scatter diagram. If y tends to rise with x the correlation is positive; if it falls, negative; if there is no linear trend, zero. Karl Pearson's coefficient is $r = \\dfrac{\\sum (x - \\bar x)(y - \\bar y)}{\\sqrt{\\sum (x - \\bar x)^2\\,\\sum (y - \\bar y)^2}} = \\dfrac{\\text{cov}(x, y)}{\\sigma_x\\sigma_y}$. It lies between −1 and 1, has no unit, and does not change with change of origin or scale."
+   },
+   "formula": "r = \\frac{\\sum dx\\,dy}{\\sqrt{\\sum dx^2 \\sum dy^2}}"
+  },
+  {
+   "id": "scene-scatter",
+   "type": "interactive",
+   "title": {
+    "en": "Shape of a scatter diagram"
+   },
+   "narration": {
+    "en": "Move the slider. Positive values tilt the cloud upward, negative ones downward. The closer r is to plus or minus one, the thinner the cloud."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Set the correlation and watch the cloud of 60 points change from a round blob (r = 0) to a straight line (r = ±1). Press New sample for another random set."
+   },
+   "sliders": [
+    {
+     "name": "rho",
+     "label": {
+      "en": "Correlation r"
+     },
+     "min": -1,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.6
+    }
+   ],
+   "counters": [
+    {
+     "name": "seed",
+     "value": 0,
+     "min": 0,
+     "max": 1000
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "New sample"
+     },
+     "icon": "next",
+     "set": {
+      "seed": "seed + 1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "k",
+     "expr": "sqrt(max(1 - rho^2, 0))"
+    }
+   ],
+   "view": {
+    "x": [
+     -3.5,
+     3.5
+    ],
+    "y": [
+     -3.5,
+     3.5
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "x (standardised)",
+    "yLabel": "y (standardised)",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "particles",
+     "count": 60,
+     "r": 0.07,
+     "color": "yellow",
+     "x": "clamp(sqrt(-2*ln(1 - 0.97*rand(i + 100*seed)))*cos(2*pi*rand(i + 100*seed + 1000)), -3.3, 3.3)",
+     "y": "clamp(rho*sqrt(-2*ln(1 - 0.97*rand(i + 100*seed)))*cos(2*pi*rand(i + 100*seed + 1000)) + k*sqrt(-2*ln(1 - 0.97*rand(i + 100*seed + 2000)))*cos(2*pi*rand(i + 100*seed + 3000)), -3.3, 3.3)"
+    },
+    {
+     "shape": "path",
+     "fn": "rho*x",
+     "color": "orange",
+     "dashed": true,
+     "width": 2
+    },
+    {
+     "shape": "label",
+     "x": 3.3,
+     "y": 3.2,
+     "text": {
+      "en": "r = {rho:2}"
+     },
+     "size": 26,
+     "align": "right",
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Correlation r"
+     },
+     "expr": "rho",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Share of variation explained r²"
+     },
+     "expr": "rho^2",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set r = 0. Is there any trend?"
+    },
+    {
+     "en": "Compare r = 0.9 with r = −0.9."
+    },
+    {
+     "en": "At what value does the cloud first look clearly tilted?"
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Working out r"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Make a table of deviations from the means."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Karl Pearson's r"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        13
+       ],
+       "text": {
+        "en": "x: 1 2 3 4 5   (mean 3)"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        19
+       ],
+       "text": {
+        "en": "y: 2 4 5 4 5   (mean 4)"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Deviations dx are minus 2 to 2; dy are minus 2, 0, 1, 0, 1."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        27
+       ],
+       "text": {
+        "en": "dx: −2 −1 0 1 2     dy: −2 0 1 0 1"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        5,
+        33
+       ],
+       "text": {
+        "en": "Σdx dy = 4 + 0 + 0 + 0 + 2 = 6"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Sum of squares: dx squared adds to 10, dy squared to 6."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        5,
+        39
+       ],
+       "text": {
+        "en": "Σdx² = 10,  Σdy² = 6"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "math",
+       "at": [
+        5,
+        48
+       ],
+       "tex": "r = \\frac{6}{\\sqrt{10 \\times 6}} = \\frac{6}{7.75} \\approx 0.77",
+       "size": 4,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Find r for x: 1, 2, 3, 4, 5 and y: 2, 4, 5, 4, 5."
+   },
+   "steps": [
+    {
+     "en": "x̄ = 3, ȳ = 4; dx = −2, −1, 0, 1, 2; dy = −2, 0, 1, 0, 1."
+    },
+    {
+     "en": "Σdx dy = 6; Σdx² = 10; Σdy² = 6."
+    },
+    {
+     "en": "r = 6/√60 ≈ 0.77."
+    }
+   ],
+   "answer": {
+    "en": "r ≈ 0.77 (high positive)"
+   },
+   "narration": {
+    "en": "Let us solve this together. Find r for x: 1, 2, 3, 4, 5 and y: 2, 4, 5, 4, 5."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Check the sign first"
+   },
+   "body": {
+    "en": "Before computing, look at the scatter: rising cloud → r positive, falling → negative. If your answer has the wrong sign or |r| > 1, recheck the sums."
+   },
+   "narration": {
+    "en": "Check the sign first. Before computing, look at the scatter: rising cloud → r positive, falling → negative. If your answer has the wrong sign or |r| > 1, recheck the sums."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Look before you calculate."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Match each scatter description with the most likely r."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "All points on a rising straight line"
+     },
+     "right": {
+      "en": "r = +1"
+     }
+    },
+    {
+     "left": {
+      "en": "Points close to a falling line"
+     },
+     "right": {
+      "en": "r ≈ −0.9"
+     }
+    },
+    {
+     "left": {
+      "en": "A round, shapeless cloud"
+     },
+     "right": {
+      "en": "r ≈ 0"
+     }
+    },
+    {
+     "left": {
+      "en": "A loosely rising cloud"
+     },
+     "right": {
+      "en": "r ≈ +0.5"
+     }
+    },
+    {
+     "left": {
+      "en": "All points on a falling straight line"
+     },
+     "right": {
+      "en": "r = −1"
+     }
+    }
+   ],
+   "narration": {
+    "en": "Match each scatter description with the most likely r."
+   },
+   "questionId": "act.isc-scatter-r"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1m16-q01",
+    "1m16-q02",
+    "1m16-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "1m16-q04",
+    "1m16-q05"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A scatter diagram shows the direction and strength of a relation."
+    },
+    {
+     "en": "Karl Pearson's r = Σdx dy/√(Σdx² Σdy²), between −1 and 1."
+    },
+    {
+     "en": "r does not change with origin or scale and measures only linear association."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Find r for x: 2, 4, 6, 8 and y: 3, 7, 5, 9. (Answer: 0.8)"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1m16-q04"
+   ],
+   "narration": {
+    "en": "Recap. A scatter diagram shows the direction and strength of a relation. Karl Pearson's r = Σdx dy/√(Σdx² Σdy²), between −1 and 1. r does not change with origin or scale and measures only linear association."
+   }
+  }
+ ]
+}

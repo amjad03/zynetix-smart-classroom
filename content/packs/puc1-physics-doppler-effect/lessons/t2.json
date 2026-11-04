@@ -1,0 +1,651 @@
+{
+ "id": "puc1-physics-16-doppler-effect.t2.lesson",
+ "chapterId": "puc1-physics-16-doppler-effect",
+ "topicId": "puc1-physics-16-doppler-effect.t2",
+ "title": {
+  "en": "Doppler effect: a moving listener, the general formula and uses"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Racing towards a siren"
+   },
+   "hook": {
+    "en": "Drive towards a factory siren and its note rises; drive away and it falls. This time the source is still. You are running into the waves."
+   },
+   "objectives": [
+    {
+     "en": "Find f′ for a moving listener"
+    },
+    {
+     "en": "Combine both motions in one formula"
+    },
+    {
+     "en": "Describe uses: radar, ultrasound, astronomy"
+    }
+   ],
+   "narration": {
+    "en": "Drive towards a factory siren and its note rises; drive away and it falls. This time the source is still. You are running into the waves."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "A moving listener meets more crests"
+   },
+   "body": {
+    "en": "When the source is still, the wavelength is unchanged, $\\lambda = v/f$. A listener moving towards it at $v_o$ meets crests at the relative speed $v + v_o$, so $f' = f\\,\\dfrac{v + v_o}{v}$. Moving away: $f' = f\\,\\dfrac{v - v_o}{v}$. With both moving along the line joining them: $f' = f\\,\\dfrac{v \\pm v_o}{v \\mp v_s}$ (upper signs for approach). If the medium (wind) moves at $w$ from source to listener, replace $v$ by $v + w$."
+   },
+   "points": [
+    {
+     "en": "Listener moving: same λ, more crests per second"
+    },
+    {
+     "en": "General: f′ = f (v ± v_o)/(v ∓ v_s)"
+    },
+    {
+     "en": "Only velocity components along the line joining them count"
+    }
+   ],
+   "narration": {
+    "en": "When the source is still, the wavelength is unchanged, $\\lambda = v/f$. A listener moving towards it at $v_o$ meets crests at the relative speed $v + v_o$, so $f' = f\\,\\dfrac{v + v_o}{v}$. Moving away: $f' = f\\,\\dfrac{v - v_o}{v}$. With both moving along the line joining them: $f' = f\\,\\dfrac{v \\pm v_o}{v \\mp v_s}$ (upper signs for approach). If the medium (wind) moves at $w$ from source to listener, replace $v$ by $v + w$."
+   },
+   "formula": "f' = f\\,\\frac{v \\pm v_o}{v \\mp v_s}"
+  },
+  {
+   "id": "scene-doppler-both",
+   "type": "interactive",
+   "title": {
+    "en": "Source and listener in motion"
+   },
+   "narration": {
+    "en": "Set the speeds and directions of the source and the listener. The circles are crests from the source. Watch how fast the listener meets them."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Choose whether the source and the listener move towards or away from each other and set their speeds. The readout uses the general formula with v = 340 m/s."
+   },
+   "sliders": [
+    {
+     "name": "vs",
+     "label": {
+      "en": "Source speed"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 2,
+     "value": 34,
+     "unit": "m/s"
+    },
+    {
+     "name": "vo",
+     "label": {
+      "en": "Listener speed"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 2,
+     "value": 0,
+     "unit": "m/s"
+    }
+   ],
+   "choices": [
+    {
+     "name": "ds",
+     "label": {
+      "en": "Source moves"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "towards"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "away"
+       },
+       "value": -1
+      }
+     ],
+     "value": 1
+    },
+    {
+     "name": "dl",
+     "label": {
+      "en": "Listener moves"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "towards"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "away"
+       },
+       "value": -1
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 10,
+    "loop": true,
+    "autoplay": true
+   },
+   "vars": [
+    {
+     "name": "k",
+     "expr": "10/340"
+    },
+    {
+     "name": "xs",
+     "expr": "ds*vs*k*t"
+    },
+    {
+     "name": "xo",
+     "expr": "120 - dl*vo*k*t"
+    },
+    {
+     "name": "fr",
+     "expr": "(340 + dl*vo)/(340 - ds*vs)"
+    }
+   ],
+   "view": {
+    "x": [
+     -40,
+     160
+    ],
+    "y": [
+     -50,
+     50
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "visibleIf": "t > 0",
+     "x": "ds*vs*k*0",
+     "y": 0,
+     "r": "10*(t - 0)",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "t > 1",
+     "x": "ds*vs*k*1",
+     "y": 0,
+     "r": "10*(t - 1)",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "t > 2",
+     "x": "ds*vs*k*2",
+     "y": 0,
+     "r": "10*(t - 2)",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "t > 3",
+     "x": "ds*vs*k*3",
+     "y": 0,
+     "r": "10*(t - 3)",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "t > 4",
+     "x": "ds*vs*k*4",
+     "y": 0,
+     "r": "10*(t - 4)",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "t > 5",
+     "x": "ds*vs*k*5",
+     "y": 0,
+     "r": "10*(t - 5)",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "t > 6",
+     "x": "ds*vs*k*6",
+     "y": 0,
+     "r": "10*(t - 6)",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "t > 7",
+     "x": "ds*vs*k*7",
+     "y": 0,
+     "r": "10*(t - 7)",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "t > 8",
+     "x": "ds*vs*k*8",
+     "y": 0,
+     "r": "10*(t - 8)",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "visibleIf": "t > 9",
+     "x": "ds*vs*k*9",
+     "y": 0,
+     "r": "10*(t - 9)",
+     "fill": false,
+     "color": "blue",
+     "width": 2,
+     "opacity": 0.8
+    },
+    {
+     "shape": "circle",
+     "x": "xs",
+     "y": 0,
+     "r": 2.5,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": "xs",
+     "y": -6,
+     "text": {
+      "en": "source"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "circle",
+     "x": "xo",
+     "y": 0,
+     "r": 2.5,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": "xo",
+     "y": -6,
+     "text": {
+      "en": "listener"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": 155,
+     "y": 44,
+     "text": {
+      "en": "f'/f = {fr:3}"
+     },
+     "size": 26,
+     "align": "right",
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "f' for a 500 Hz source"
+     },
+     "expr": "500*fr",
+     "digits": 0,
+     "unit": "Hz"
+    },
+    {
+     "label": {
+      "en": "f'/f"
+     },
+     "expr": "fr",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Move only the listener at 34 m/s towards the source. Compare with moving only the source at 34 m/s."
+    },
+    {
+     "en": "Move both towards each other. Is the rise the sum of the two separate rises?"
+    },
+    {
+     "en": "Make both move away. What happens to the pitch?"
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "One formula for both motions"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Start from the source at rest and the listener at rest: f prime equals f."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "General Doppler formula"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        10,
+        15
+       ],
+       "tex": "f' = f\\,\\frac{v + v_o}{v - v_s}",
+       "size": 5,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Top: the listener. Towards the source adds v o. Bottom: the source. Towards the listener subtracts v s."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        10,
+        30
+       ],
+       "text": {
+        "en": "top: listener towards → +v_o, away → −v_o"
+       },
+       "size": 3,
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10,
+        36
+       ],
+       "text": {
+        "en": "bottom: source towards → −v_s, away → +v_s"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Check: if v s equals v o and both move the same way, the factors cancel and f prime is f."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        10,
+        48
+       ],
+       "tex": "v_o = v_s:\\; f' = f\\frac{v - u}{v - u} = f",
+       "size": 4,
+       "color": "blue"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Uses of the Doppler effect"
+   },
+   "body": {
+    "en": "A police radar sends waves at a car and measures the shift of the echo; the car acts first as a moving listener and then as a moving source, so the shift is about twice that for one motion. Doppler ultrasound measures the speed of blood in the heart. Bats judge their prey from the shift of their echoes. Light from galaxies moving away is shifted to longer wavelengths (red shift)."
+   },
+   "points": [
+    {
+     "en": "Echo from a moving reflector: two shifts"
+    },
+    {
+     "en": "Doppler ultrasound and speed guns"
+    },
+    {
+     "en": "Red shift of receding galaxies"
+    }
+   ],
+   "narration": {
+    "en": "A police radar sends waves at a car and measures the shift of the echo; the car acts first as a moving listener and then as a moving source, so the shift is about twice that for one motion. Doppler ultrasound measures the speed of blood in the heart. Bats judge their prey from the shift of their echoes. Light from galaxies moving away is shifted to longer wavelengths (red shift)."
+   }
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A car moving at 30 m/s approaches a stationary siren of 660 Hz. What frequency does the driver hear? (v = 330 m/s)"
+   },
+   "steps": [
+    {
+     "en": "The listener moves towards a still source: f' = f (v + v_o)/v."
+    },
+    {
+     "en": "f' = 660 × 360/330 = 720 Hz."
+    }
+   ],
+   "answer": {
+    "en": "720 Hz"
+   },
+   "narration": {
+    "en": "Let us solve this together. A car moving at 30 m/s approaches a stationary siren of 660 Hz. What frequency does the driver hear? (v = 330 m/s)"
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "A car sounding a 400 Hz horn moves at 20 m/s towards a wall. What is the frequency of the echo heard by the driver? (v = 340 m/s)"
+   },
+   "steps": [
+    {
+     "en": "The wall hears f₁ = 400 × 340/(340 − 20) = 425 Hz."
+    },
+    {
+     "en": "The wall re-emits 425 Hz; the driver moves towards it: f₂ = 425 × (340 + 20)/340 = 450 Hz."
+    },
+    {
+     "en": "In one step: f₂ = f (v + u)/(v − u) = 400 × 360/320."
+    }
+   ],
+   "answer": {
+    "en": "450 Hz"
+   },
+   "narration": {
+    "en": "Let us solve this together. A car sounding a 400 Hz horn moves at 20 m/s towards a wall. What is the frequency of the echo heard by the driver? (v = 340 m/s)"
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Echo shortcut"
+   },
+   "body": {
+    "en": "For an echo from a fixed wall when you move at u: f_echo = f (v + u)/(v − u). For small u, the shift is about 2u/v of f."
+   },
+   "narration": {
+    "en": "Echo shortcut. For an echo from a fixed wall when you move at u: f_echo = f (v + u)/(v − u). For small u, the shift is about 2u/v of f."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Echo: double the shift."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Match each situation with its formula (v = speed of sound)."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "Source approaches a still listener"
+     },
+     "right": {
+      "en": "f' = f v/(v − v_s)"
+     }
+    },
+    {
+     "left": {
+      "en": "Source recedes from a still listener"
+     },
+     "right": {
+      "en": "f' = f v/(v + v_s)"
+     }
+    },
+    {
+     "left": {
+      "en": "Listener approaches a still source"
+     },
+     "right": {
+      "en": "f' = f (v + v_o)/v"
+     }
+    },
+    {
+     "left": {
+      "en": "Listener recedes from a still source"
+     },
+     "right": {
+      "en": "f' = f (v − v_o)/v"
+     }
+    },
+    {
+     "left": {
+      "en": "Echo heard by a car moving at u towards a wall"
+     },
+     "right": {
+      "en": "f' = f (v + u)/(v − u)"
+     }
+    }
+   ],
+   "narration": {
+    "en": "Match each situation with its formula (v = speed of sound)."
+   },
+   "questionId": "act.isc-doppler-formulas"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1p16-q06",
+    "1p16-q07",
+    "1p16-q08"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "1p16-q09",
+    "1p16-q10"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Listener moving: λ is unchanged; f′ = f (v ± v_o)/v."
+    },
+    {
+     "en": "General: f′ = f (v ± v_o)/(v ∓ v_s), upper signs for approach; only components along the line count."
+    },
+    {
+     "en": "Uses: radar speed guns, Doppler ultrasound, bats, red shift."
+    }
+   ],
+   "homework": [
+    {
+     "en": "A listener moves away from a 500 Hz source at 34 m/s while the source is still (v = 340 m/s). Find f′. (Answer: 450 Hz)"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1p16-q09"
+   ],
+   "narration": {
+    "en": "Recap. Listener moving: λ is unchanged; f′ = f (v ± v_o)/v. General: f′ = f (v ± v_o)/(v ∓ v_s), upper signs for approach; only components along the line count. Uses: radar speed guns, Doppler ultrasound, bats, red shift."
+   }
+  }
+ ]
+}

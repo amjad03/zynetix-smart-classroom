@@ -1,0 +1,674 @@
+{
+ "id": "puc1-biology-20-transport-in-plants.t4.lesson",
+ "chapterId": "puc1-biology-20-transport-in-plants",
+ "topicId": "puc1-biology-20-transport-in-plants.t4",
+ "title": {
+  "en": "Transpiration and the opening and closing of stomata"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "A tree that sweats"
+   },
+   "hook": {
+    "en": "A large tree can lose a few hundred litres of water a day through tiny pores in its leaves. It seems wasteful, yet the same pores let in the carbon dioxide the plant must have."
+   },
+   "objectives": [
+    {
+     "en": "Define transpiration and its types"
+    },
+    {
+     "en": "Explain how stomata open and close"
+    },
+    {
+     "en": "List factors affecting transpiration and its significance"
+    }
+   ],
+   "narration": {
+    "en": "A large tree can lose a few hundred litres of water a day through tiny pores in its leaves. It seems wasteful, yet the same pores let in the carbon dioxide the plant must have."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Transpiration and stomata"
+   },
+   "body": {
+    "en": "Transpiration is the loss of water vapour from the aerial parts of a plant, mostly through stomata (also some through the cuticle and lenticels). Each stoma has two guard cells. When K⁺ ions move in, water follows by osmosis, the guard cells become turgid and, because their inner walls are thick and the cellulose microfibrils run radially, they bow outward and open the pore. When they lose K⁺ and water, the pore closes. Stomata usually open by day and close at night; ABA closes them in water stress."
+   },
+   "points": [
+    {
+     "en": "Guard cells turgid → stoma open"
+    },
+    {
+     "en": "Thick inner walls and radial microfibrils make them bow"
+    },
+    {
+     "en": "ABA closes stomata in drought"
+    }
+   ],
+   "narration": {
+    "en": "Transpiration is the loss of water vapour from the aerial parts of a plant, mostly through stomata (also some through the cuticle and lenticels). Each stoma has two guard cells. When K⁺ ions move in, water follows by osmosis, the guard cells become turgid and, because their inner walls are thick and the cellulose microfibrils run radially, they bow outward and open the pore. When they lose K⁺ and water, the pore closes. Stomata usually open by day and close at night; ABA closes them in water stress."
+   }
+  },
+  {
+   "id": "scene-stomata",
+   "type": "interactive",
+   "title": {
+    "en": "Open and close a stoma"
+   },
+   "narration": {
+    "en": "More light opens the pore; water stress and ABA close it. A wide pore lets CO₂ in but also lets water out: the plant must balance the two."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Set the light and the water supply. The guard cells take up K⁺ and water in light, and lose them when water is short. The pore width sets the rate of transpiration and of CO₂ uptake."
+   },
+   "sliders": [
+    {
+     "name": "light",
+     "label": {
+      "en": "Light"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 70,
+     "unit": "%"
+    },
+    {
+     "name": "water",
+     "label": {
+      "en": "Water supply"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 80,
+     "unit": "%"
+    },
+    {
+     "name": "hum",
+     "label": {
+      "en": "Air humidity"
+     },
+     "min": 10,
+     "max": 95,
+     "step": 5,
+     "value": 50,
+     "unit": "%"
+    }
+   ],
+   "vars": [
+    {
+     "name": "a",
+     "expr": "clamp(light/100*smoothstep(15, 60, water), 0, 1)"
+    },
+    {
+     "name": "tr",
+     "expr": "a*(100 - hum)/90*10"
+    },
+    {
+     "name": "co2",
+     "expr": "a*10"
+    }
+   ],
+   "view": {
+    "x": [
+     -6,
+     6
+    ],
+    "y": [
+     -4,
+     4
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       "-0.3 - a*0.9",
+       3
+      ],
+      [
+       "-2.2 - a*0.6",
+       2.2
+      ],
+      [
+       "-2.8 - a*0.6",
+       0
+      ],
+      [
+       "-2.2 - a*0.6",
+       -2.2
+      ],
+      [
+       "-0.3 - a*0.9",
+       -3
+      ],
+      [
+       "-0.2 - a*0.9",
+       -1.5
+      ],
+      [
+       "-0.1 - a*1.2",
+       0
+      ],
+      [
+       "-0.2 - a*0.9",
+       1.5
+      ]
+     ],
+     "color": "green"
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       "0.3 + a*0.9",
+       3
+      ],
+      [
+       "2.2 + a*0.6",
+       2.2
+      ],
+      [
+       "2.8 + a*0.6",
+       0
+      ],
+      [
+       "2.2 + a*0.6",
+       -2.2
+      ],
+      [
+       "0.3 + a*0.9",
+       -3
+      ],
+      [
+       "0.2 + a*0.9",
+       -1.5
+      ],
+      [
+       "0.1 + a*1.2",
+       0
+      ],
+      [
+       "0.2 + a*0.9",
+       1.5
+      ]
+     ],
+     "color": "green"
+    },
+    {
+     "shape": "particles",
+     "count": 12,
+     "r": 0.12,
+     "color": "yellow",
+     "visibleIf": "a > 0.05",
+     "x": "-2.4 + 0.4*rand(i)",
+     "y": "-1.5 + 3*rand(i + 50)"
+    },
+    {
+     "shape": "particles",
+     "count": 12,
+     "r": 0.12,
+     "color": "yellow",
+     "visibleIf": "a > 0.05",
+     "x": "2.0 + 0.4*rand(i + 20)",
+     "y": "-1.5 + 3*rand(i + 70)"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "a > 0.05",
+     "x": 0,
+     "y": 0,
+     "dx": 0,
+     "dy": "tr*0.35 + 0.01",
+     "color": "blue",
+     "label": "H₂O"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "a > 0.05",
+     "x": -4.5,
+     "y": 3,
+     "dx": 0,
+     "dy": "-co2*0.25 - 0.01",
+     "color": "white",
+     "label": "CO₂"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": -3.6,
+     "text": {
+      "en": "K⁺ (yellow) in guard cells: pore {a*100:0}% open"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Pore opening"
+     },
+     "expr": "a*100",
+     "digits": 0,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Transpiration (relative)"
+     },
+     "expr": "tr",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "CO₂ uptake (relative)"
+     },
+     "expr": "co2",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn the light to zero. What happens to the pore?"
+    },
+    {
+     "en": "Bright light but very dry soil: does the stoma open?"
+    },
+    {
+     "en": "Raise the humidity. Why does transpiration fall even with an open pore?"
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Why guard cells bow apart"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "A guard cell's inner wall, beside the pore, is thick and stiff; the outer wall is thin."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Opening of a stoma"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         40,
+         12
+        ],
+        [
+         30,
+         22
+        ],
+        [
+         30,
+         38
+        ],
+        [
+         40,
+         48
+        ]
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         60,
+         12
+        ],
+        [
+         70,
+         22
+        ],
+        [
+         70,
+         38
+        ],
+        [
+         60,
+         48
+        ]
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        46,
+        30
+       ],
+       "text": {
+        "en": "pore"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Water enters; the thin outer wall stretches more, so each cell bends outward and the pore widens."
+     },
+     "draw": [
+      {
+       "kind": "path",
+       "points": [
+        [
+         38,
+         12
+        ],
+        [
+         24,
+         22
+        ],
+        [
+         24,
+         38
+        ],
+        [
+         38,
+         48
+        ]
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "path",
+       "points": [
+        [
+         62,
+         12
+        ],
+        [
+         76,
+         22
+        ],
+        [
+         76,
+         38
+        ],
+        [
+         62,
+         48
+        ]
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        30,
+        30
+       ],
+       "to": [
+        20,
+        30
+       ],
+       "color": "blue"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        70,
+        30
+       ],
+       "to": [
+        80,
+        30
+       ],
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Radial cellulose microfibrils also help: they let the cell lengthen and pull the inner wall outward."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        10,
+        55
+       ],
+       "text": {
+        "en": "K⁺ in → water in → turgid → open"
+       },
+       "size": 4,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Factors and significance"
+   },
+   "body": {
+    "en": "External factors: light (opens stomata), temperature (faster evaporation), humidity (slows it), wind (removes the humid layer and speeds it). Internal factors: number and distribution of stomata, the proportion open, water status, canopy and leaf structure. Transpiration creates the pull for water and mineral uptake, cools leaves by evaporation, and keeps cells turgid. It is the price of photosynthesis: stomata open for CO₂ and lose water. C₄ plants fix CO₂ more efficiently and lose about half as much water per unit of CO₂ fixed."
+   },
+   "points": [
+    {
+     "en": "Light, temperature, wind: faster"
+    },
+    {
+     "en": "Humidity: slower"
+    },
+    {
+     "en": "Benefits: pull, cooling, mineral transport"
+    }
+   ],
+   "narration": {
+    "en": "External factors: light (opens stomata), temperature (faster evaporation), humidity (slows it), wind (removes the humid layer and speeds it). Internal factors: number and distribution of stomata, the proportion open, water status, canopy and leaf structure. Transpiration creates the pull for water and mineral uptake, cools leaves by evaporation, and keeps cells turgid. It is the price of photosynthesis: stomata open for CO₂ and lose water. C₄ plants fix CO₂ more efficiently and lose about half as much water per unit of CO₂ fixed."
+   }
+  },
+  {
+   "id": "lab-stomatal-index",
+   "type": "virtual_lab",
+   "labId": "stomatal-index",
+   "aim": {
+    "en": "To find the stomatal index of the upper and lower surfaces of a leaf."
+   },
+   "narration": {
+    "en": "Virtual lab: count stomata and epidermal cells on both surfaces of a leaf and work out the stomatal index S/(S + E) × 100."
+   },
+   "seconds": 180,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "In a leaf peel, 20 stomata and 180 epidermal cells are seen in one field of view. Find the stomatal index."
+   },
+   "steps": [
+    {
+     "en": "Stomatal index = S/(S + E) × 100."
+    },
+    {
+     "en": "= 20/(20 + 180) × 100 = 10."
+    }
+   ],
+   "answer": {
+    "en": "10%"
+   },
+   "narration": {
+    "en": "Let us solve this together. In a leaf peel, 20 stomata and 180 epidermal cells are seen in one field of view. Find the stomatal index."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Potassium opens the door"
+   },
+   "body": {
+    "en": "K⁺ in → water in → guard cells turgid → stoma open. K⁺ out (ABA, dark, drought) → water out → stoma closed."
+   },
+   "narration": {
+    "en": "Potassium opens the door. K⁺ in → water in → guard cells turgid → stoma open. K⁺ out (ABA, dark, drought) → water out → stoma closed."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "K⁺ in, door open."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "sort",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Does each change speed up or slow down transpiration?"
+   },
+   "buckets": [
+    {
+     "id": "up",
+     "label": {
+      "en": "Speeds it up"
+     }
+    },
+    {
+     "id": "down",
+     "label": {
+      "en": "Slows it down"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "Bright sunlight"
+     },
+     "answer": "up"
+    },
+    {
+     "text": {
+      "en": "A windy day"
+     },
+     "answer": "up"
+    },
+    {
+     "text": {
+      "en": "High air humidity"
+     },
+     "answer": "down"
+    },
+    {
+     "text": {
+      "en": "Warmer air"
+     },
+     "answer": "up"
+    },
+    {
+     "text": {
+      "en": "Release of ABA in drought"
+     },
+     "answer": "down"
+    },
+    {
+     "text": {
+      "en": "Leaf covered with petroleum jelly on the lower side"
+     },
+     "answer": "down"
+    }
+   ],
+   "narration": {
+    "en": "Does each change speed up or slow down transpiration?"
+   },
+   "questionId": "act.isc-transpiration-factors"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1b20-q16",
+    "1b20-q17",
+    "1b20-q18"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "1b20-q19",
+    "1b20-q20"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Transpiration is water loss as vapour, mostly through stomata."
+    },
+    {
+     "en": "K⁺ uptake makes guard cells turgid; their thick inner walls make them bow apart and open the pore; ABA closes it."
+    },
+    {
+     "en": "Light, heat and wind speed transpiration; humidity slows it; it drives the transpiration pull and cools the leaf."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Explain why a potted plant covered with a polythene bag shows droplets inside the bag after a few hours."
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1b20-q19"
+   ],
+   "narration": {
+    "en": "Recap. Transpiration is water loss as vapour, mostly through stomata. K⁺ uptake makes guard cells turgid; their thick inner walls make them bow apart and open the pore; ABA closes it. Light, heat and wind speed transpiration; humidity slows it; it drives the transpiration pull and cools the leaf."
+   }
+  }
+ ]
+}

@@ -1,0 +1,643 @@
+{
+ "id": "puc1-biology-20-transport-in-plants.t2.lesson",
+ "chapterId": "puc1-biology-20-transport-in-plants",
+ "topicId": "puc1-biology-20-transport-in-plants.t2",
+ "title": {
+  "en": "Plant–water relations: water potential, osmosis, plasmolysis and imbibition"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Why a wilted plant revives"
+   },
+   "hook": {
+    "en": "Water a drooping balsam plant and in an hour its leaves stand up again. Each cell has filled with water and pressed against its wall like a pumped-up tyre."
+   },
+   "objectives": [
+    {
+     "en": "Define water potential and its components"
+    },
+    {
+     "en": "Predict the direction of osmosis"
+    },
+    {
+     "en": "Explain plasmolysis, deplasmolysis and imbibition"
+    }
+   ],
+   "narration": {
+    "en": "Water a drooping balsam plant and in an hour its leaves stand up again. Each cell has filled with water and pressed against its wall like a pumped-up tyre."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Water potential"
+   },
+   "body": {
+    "en": "Water potential ψw measures the free energy of water; water always moves from higher to lower ψw. Pure water at atmospheric pressure has ψw = 0. Solutes lower it: the solute potential ψs is negative. Pressure raises it: the pressure potential ψp is usually positive in a turgid cell, as the wall pushes back. So $\\psi_w = \\psi_s + \\psi_p$, in pascals (usually MPa). Osmosis is the diffusion of water across a selectively permeable membrane from higher to lower water potential."
+   },
+   "points": [
+    {
+     "en": "ψw (pure water) = 0"
+    },
+    {
+     "en": "ψw = ψs + ψp"
+    },
+    {
+     "en": "Water flows from higher to lower ψw"
+    }
+   ],
+   "narration": {
+    "en": "Water potential ψw measures the free energy of water; water always moves from higher to lower ψw. Pure water at atmospheric pressure has ψw = 0. Solutes lower it: the solute potential ψs is negative. Pressure raises it: the pressure potential ψp is usually positive in a turgid cell, as the wall pushes back. So $\\psi_w = \\psi_s + \\psi_p$, in pascals (usually MPa). Osmosis is the diffusion of water across a selectively permeable membrane from higher to lower water potential."
+   },
+   "formula": "\\psi_w = \\psi_s + \\psi_p"
+  },
+  {
+   "id": "scene-plasmolysis",
+   "type": "interactive",
+   "title": {
+    "en": "A cell in a solution"
+   },
+   "narration": {
+    "en": "Choose the outside solution. In pure water the cell swells until the wall pushes back. In a strong solution the protoplast shrinks away from the wall: plasmolysis."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Set the water potential of the outside solution and press Play. Water flows in or out until the cell's water potential equals the outside value. Watch the protoplast pull away from the wall in a strong solution."
+   },
+   "sliders": [
+    {
+     "name": "pout",
+     "label": {
+      "en": "Water potential of the solution"
+     },
+     "min": -1.5,
+     "max": 0,
+     "step": 0.1,
+     "value": 0,
+     "unit": "MPa"
+    }
+   ],
+   "time": {
+    "max": 20,
+    "dt": 0.01
+   },
+   "state": [
+    {
+     "name": "v",
+     "init": 1,
+     "rate": "0.6*(pout - (-0.8/v + if(v > 1, 4*(v - 1), 0)))"
+    }
+   ],
+   "vars": [
+    {
+     "name": "ps",
+     "expr": "-0.8/v"
+    },
+    {
+     "name": "pp",
+     "expr": "if(v > 1, 4*(v - 1), 0)"
+    },
+    {
+     "name": "pw",
+     "expr": "ps + pp"
+    },
+    {
+     "name": "s",
+     "expr": "sqrt(v)"
+    },
+    {
+     "name": "ws",
+     "expr": "sqrt(max(v, 1))"
+    }
+   ],
+   "view": {
+    "x": [
+     -6,
+     6
+    ],
+    "y": [
+     -4,
+     4
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -6,
+     "y": -4,
+     "w": 12,
+     "h": 8,
+     "color": "blue",
+     "opacity": "0.1 - pout*0.15"
+    },
+    {
+     "shape": "rect",
+     "x": "-3.2*ws",
+     "y": "-2.2*ws",
+     "w": "6.4*ws",
+     "h": "4.4*ws",
+     "fill": false,
+     "color": "green",
+     "width": 6
+    },
+    {
+     "shape": "rect",
+     "x": "-3*s",
+     "y": "-2*s",
+     "w": "6*s",
+     "h": "4*s",
+     "color": "green",
+     "opacity": 0.45
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 0,
+     "r": "1.2*s",
+     "color": "blue",
+     "opacity": 0.5
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 3.6,
+     "text": {
+      "en": "turgid"
+     },
+     "size": 24,
+     "align": "center",
+     "color": "green",
+     "visibleIf": "v > 1.02"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 3.6,
+     "text": {
+      "en": "flaccid"
+     },
+     "size": 24,
+     "align": "center",
+     "color": "yellow",
+     "visibleIf": "v <= 1.02 && v > 0.95"
+    },
+    {
+     "shape": "label",
+     "x": 0,
+     "y": 3.6,
+     "text": {
+      "en": "plasmolysed"
+     },
+     "size": 24,
+     "align": "center",
+     "color": "red",
+     "visibleIf": "v <= 0.95"
+    },
+    {
+     "shape": "text",
+     "x": 5.8,
+     "y": -3.6,
+     "text": {
+      "en": "t = {t:1}"
+     },
+     "size": 22,
+     "align": "right",
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "ψs of the cell"
+     },
+     "expr": "ps",
+     "digits": 2,
+     "unit": "MPa"
+    },
+    {
+     "label": {
+      "en": "ψp of the cell"
+     },
+     "expr": "pp",
+     "digits": 2,
+     "unit": "MPa"
+    },
+    {
+     "label": {
+      "en": "ψw of the cell"
+     },
+     "expr": "pw",
+     "digits": 2,
+     "unit": "MPa"
+    },
+    {
+     "label": {
+      "en": "Relative volume"
+     },
+     "expr": "v",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Put the cell in pure water (0 MPa). What stops it swelling further?"
+    },
+    {
+     "en": "Make the solution −1.2 MPa. Describe what happens to the protoplast."
+    },
+    {
+     "en": "Find the outside value at which the protoplast just touches the wall with no pressure (incipient plasmolysis)."
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Which way will water move?"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Work out the water potential of each cell: add the solute and pressure potentials."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Direction of osmosis"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        10,
+        15
+       ],
+       "to": [
+        35,
+        40
+       ],
+       "color": "green",
+       "fill": false
+      },
+      {
+       "kind": "text",
+       "at": [
+        12,
+        18
+       ],
+       "text": {
+        "en": "Cell A"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        12,
+        26
+       ],
+       "text": {
+        "en": "ψs = −0.9"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        12,
+        32
+       ],
+       "text": {
+        "en": "ψp = +0.5"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "rect",
+       "from": [
+        60,
+        15
+       ],
+       "to": [
+        85,
+        40
+       ],
+       "color": "green",
+       "fill": false
+      },
+      {
+       "kind": "text",
+       "at": [
+        62,
+        18
+       ],
+       "text": {
+        "en": "Cell B"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        62,
+        26
+       ],
+       "text": {
+        "en": "ψs = −0.6"
+       },
+       "size": 3,
+       "color": "white"
+      },
+      {
+       "kind": "text",
+       "at": [
+        62,
+        32
+       ],
+       "text": {
+        "en": "ψp = +0.4"
+       },
+       "size": 3,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "A is minus 0.4; B is minus 0.2 megapascals. B is higher, so water moves from B to A."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        12,
+        45
+       ],
+       "text": {
+        "en": "ψw = −0.4 MPa"
+       },
+       "size": 3,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        62,
+        45
+       ],
+       "text": {
+        "en": "ψw = −0.2 MPa"
+       },
+       "size": 3,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        58,
+        28
+       ],
+       "to": [
+        37,
+        28
+       ],
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        40,
+        52
+       ],
+       "text": {
+        "en": "water: B → A"
+       },
+       "size": 4,
+       "color": "blue"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Plasmolysis and imbibition"
+   },
+   "body": {
+    "en": "In a hypertonic solution (lower ψw outside), a cell loses water; the protoplast shrinks away from the wall: plasmolysis. At the point where it just stops pressing on the wall (incipient plasmolysis), ψp = 0. In a hypotonic solution water enters and the cell becomes turgid; the wall stops it bursting. Placing a plasmolysed cell in water reverses the change (deplasmolysis). Imbibition is a special diffusion in which dry colloids (seeds, wood) absorb water and swell, producing a large pressure; it needs a water potential gradient and an affinity between the imbibant and the liquid."
+   },
+   "points": [
+    {
+     "en": "Hypertonic → plasmolysis; hypotonic → turgid"
+    },
+    {
+     "en": "Incipient plasmolysis: ψp = 0"
+    },
+    {
+     "en": "Imbibition: swelling of dry colloids"
+    }
+   ],
+   "narration": {
+    "en": "In a hypertonic solution (lower ψw outside), a cell loses water; the protoplast shrinks away from the wall: plasmolysis. At the point where it just stops pressing on the wall (incipient plasmolysis), ψp = 0. In a hypotonic solution water enters and the cell becomes turgid; the wall stops it bursting. Placing a plasmolysed cell in water reverses the change (deplasmolysis). Imbibition is a special diffusion in which dry colloids (seeds, wood) absorb water and swell, producing a large pressure; it needs a water potential gradient and an affinity between the imbibant and the liquid."
+   }
+  },
+  {
+   "id": "lab-osmosis",
+   "type": "virtual_lab",
+   "labId": "osmosis",
+   "aim": {
+    "en": "To show endosmosis and exosmosis using raisins, and to find which way water moves across a membrane."
+   },
+   "narration": {
+    "en": "Virtual lab: soak raisins in water and in strong sugar solution. Which swell and which shrink? Explain with water potential."
+   },
+   "seconds": 180,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A cell with ψs = −1.0 MPa and ψp = 0.4 MPa is put in a solution of ψ = −0.8 MPa. Will it gain or lose water? Describe what follows."
+   },
+   "steps": [
+    {
+     "en": "ψw of the cell = −1.0 + 0.4 = −0.6 MPa."
+    },
+    {
+     "en": "The solution (−0.8) is lower, so water leaves the cell."
+    },
+    {
+     "en": "The cell loses turgor (ψp falls) until its ψw equals −0.8 MPa; it may approach incipient plasmolysis."
+    }
+   ],
+   "answer": {
+    "en": "It loses water"
+   },
+   "narration": {
+    "en": "Let us solve this together. A cell with ψs = −1.0 MPa and ψp = 0.4 MPa is put in a solution of ψ = −0.8 MPa. Will it gain or lose water? Describe what follows."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Downhill for water"
+   },
+   "body": {
+    "en": "Think of ψw as a height: water always runs downhill. Solutes dig a hole (more negative); pressure builds a hill (more positive)."
+   },
+   "narration": {
+    "en": "Downhill for water. Think of ψw as a height: water always runs downhill. Solutes dig a hole (more negative); pressure builds a hill (more positive)."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Solutes pull it down, pressure pushes it up."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Match the term with its meaning."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "Water potential of pure water"
+     },
+     "right": {
+      "en": "Zero"
+     }
+    },
+    {
+     "left": {
+      "en": "Solute potential"
+     },
+     "right": {
+      "en": "Always negative"
+     }
+    },
+    {
+     "left": {
+      "en": "Pressure potential of a turgid cell"
+     },
+     "right": {
+      "en": "Positive"
+     }
+    },
+    {
+     "left": {
+      "en": "Hypertonic solution"
+     },
+     "right": {
+      "en": "Lower water potential than the cell sap"
+     }
+    },
+    {
+     "left": {
+      "en": "Plasmolysis"
+     },
+     "right": {
+      "en": "Protoplast shrinks away from the wall"
+     }
+    },
+    {
+     "left": {
+      "en": "Imbibition"
+     },
+     "right": {
+      "en": "Dry seeds absorb water and swell"
+     }
+    }
+   ],
+   "narration": {
+    "en": "Match the term with its meaning."
+   },
+   "questionId": "act.isc-water-relations"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1b20-q06",
+    "1b20-q07",
+    "1b20-q08"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "1b20-q09",
+    "1b20-q10"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "ψw = ψs + ψp; pure water has ψw = 0 and solutes make ψs negative."
+    },
+    {
+     "en": "Water moves by osmosis from higher to lower ψw."
+    },
+    {
+     "en": "Hypertonic solutions plasmolyse cells; imbibition swells dry colloids."
+    }
+   ],
+   "homework": [
+    {
+     "en": "Two cells: X (ψs −1.2, ψp 0.6 MPa) and Y (ψs −0.7, ψp 0.2 MPa). Which way does water move? (Answer: ψX = −0.6, ψY = −0.5 MPa, so water moves from Y to X)"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1b20-q10"
+   ],
+   "narration": {
+    "en": "Recap. ψw = ψs + ψp; pure water has ψw = 0 and solutes make ψs negative. Water moves by osmosis from higher to lower ψw. Hypertonic solutions plasmolyse cells; imbibition swells dry colloids."
+   }
+  }
+ ]
+}

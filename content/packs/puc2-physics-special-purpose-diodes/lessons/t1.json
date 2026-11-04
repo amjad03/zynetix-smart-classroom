@@ -1,0 +1,753 @@
+{
+ "id": "puc2-physics-17-special-purpose-diodes.t1.lesson",
+ "chapterId": "puc2-physics-17-special-purpose-diodes",
+ "topicId": "puc2-physics-17-special-purpose-diodes.t1",
+ "title": {
+  "en": "Zener diode as a voltage regulator"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "A steady voltage from an unsteady supply"
+   },
+   "hook": {
+    "en": "Mains voltage and battery voltage rise and fall, but a phone charger or a radio needs a steady supply. A single diode, run backwards, can hold a voltage steady."
+   },
+   "objectives": [
+    {
+     "en": "Describe a Zener diode and its I–V characteristic"
+    },
+    {
+     "en": "Explain voltage regulation"
+    },
+    {
+     "en": "Work out currents in a Zener regulator"
+    }
+   ],
+   "narration": {
+    "en": "Mains voltage and battery voltage rise and fall, but a phone charger or a radio needs a steady supply. A single diode, run backwards, can hold a voltage steady."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Breakdown on purpose"
+   },
+   "body": {
+    "en": "A Zener diode is a heavily doped p-n junction designed to work in reverse breakdown. Its depletion layer is very thin, so a reverse voltage of only a few volts makes a field strong enough (about $10^6$ V/m or more) to pull electrons from their bonds. Beyond the breakdown voltage $V_Z$, the reverse current can change a lot while the voltage stays almost constant. In forward bias it behaves like an ordinary diode."
+   },
+   "points": [
+    {
+     "en": "Heavily doped, thin depletion layer"
+    },
+    {
+     "en": "Used in reverse bias, in breakdown"
+    },
+    {
+     "en": "Voltage stays ≈ V_Z over a wide current range"
+    }
+   ],
+   "narration": {
+    "en": "A Zener diode is a heavily doped p-n junction designed to work in reverse breakdown. Its depletion layer is very thin, so a reverse voltage of only a few volts makes a field strong enough (about $10^6$ V/m or more) to pull electrons from their bonds. Beyond the breakdown voltage $V_Z$, the reverse current can change a lot while the voltage stays almost constant. In forward bias it behaves like an ordinary diode."
+   }
+  },
+  {
+   "id": "scene-zener",
+   "type": "interactive",
+   "title": {
+    "en": "A Zener regulator"
+   },
+   "narration": {
+    "en": "Raise the input voltage. Below the Zener voltage the output simply follows the input divider. Above it, the output stays flat and the extra current flows through the Zener."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "The input passes through a series resistor R; the Zener and the load share the output. Change the input voltage and the load: once the input is high enough, the output stays at V_Z."
+   },
+   "sliders": [
+    {
+     "name": "Vin",
+     "label": {
+      "en": "Input voltage"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 0.5,
+     "value": 12,
+     "unit": "V"
+    },
+    {
+     "name": "R",
+     "label": {
+      "en": "Series resistor"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 10,
+     "value": 200,
+     "unit": "Ω"
+    },
+    {
+     "name": "RL",
+     "label": {
+      "en": "Load resistance"
+     },
+     "min": 100,
+     "max": 2000,
+     "step": 50,
+     "value": 1000,
+     "unit": "Ω"
+    }
+   ],
+   "choices": [
+    {
+     "name": "Vz",
+     "label": {
+      "en": "Zener voltage"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "5.1 V"
+       },
+       "value": 5.1
+      },
+      {
+       "label": {
+        "en": "6.2 V"
+       },
+       "value": 6.2
+      },
+      {
+       "label": {
+        "en": "9.1 V"
+       },
+       "value": 9.1
+      }
+     ],
+     "value": 6.2
+    }
+   ],
+   "vars": [
+    {
+     "name": "Vo",
+     "expr": "Vin*RL/(R + RL)"
+    },
+    {
+     "name": "reg",
+     "expr": "Vo >= Vz"
+    },
+    {
+     "name": "VL",
+     "expr": "if(reg, Vz, Vo)"
+    },
+    {
+     "name": "I",
+     "expr": "(Vin - VL)/R*1000"
+    },
+    {
+     "name": "IL",
+     "expr": "VL/RL*1000"
+    },
+    {
+     "name": "Iz",
+     "expr": "I - IL"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     21
+    ],
+    "y": [
+     -1,
+     14
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "input voltage (V)",
+    "yLabel": "output voltage (V)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "min(x*RL/(R + RL), Vz)",
+     "from": 0,
+     "to": 20,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "path",
+     "fn": "x",
+     "from": 0,
+     "to": 13,
+     "color": "white",
+     "dashed": true,
+     "opacity": 0.4
+    },
+    {
+     "shape": "circle",
+     "x": "Vin",
+     "y": "VL",
+     "r": 0.3,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": "Vin",
+     "y1": 0,
+     "x2": "Vin",
+     "y2": "VL",
+     "color": "orange",
+     "dashed": true
+    },
+    {
+     "shape": "label",
+     "x": 14,
+     "y": 12.8,
+     "text": {
+      "en": "Zener current = {Iz:1} mA"
+     },
+     "size": 24,
+     "align": "center",
+     "color": "green",
+     "visibleIf": "reg"
+    },
+    {
+     "shape": "label",
+     "x": 14,
+     "y": 12.8,
+     "text": {
+      "en": "below V_Z: not regulating"
+     },
+     "size": 24,
+     "align": "center",
+     "color": "red",
+     "visibleIf": "!reg"
+    },
+    {
+     "shape": "label",
+     "x": 14,
+     "y": 11.2,
+     "text": {
+      "en": "load current = {IL:1} mA"
+     },
+     "size": 24,
+     "align": "center",
+     "color": "white"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Output voltage"
+     },
+     "expr": "VL",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Current in R"
+     },
+     "expr": "I",
+     "digits": 1,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "Zener current"
+     },
+     "expr": "Iz",
+     "digits": 1,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "Load current"
+     },
+     "expr": "IL",
+     "digits": 1,
+     "unit": "mA"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise the input from 4 V to 20 V. Where does the output stop rising?"
+    },
+    {
+     "en": "Lower the load resistance. When does regulation fail?"
+    },
+    {
+     "en": "Watch the Zener current as the input rises."
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Currents in a Zener regulator"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "The current in the series resistor is the input minus V Z, divided by R."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Zener regulator"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "math",
+       "at": [
+        10,
+        15
+       ],
+       "tex": "I = \\frac{V_{in} - V_Z}{R}",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The load sees V Z, so its current is V Z over R L."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        10,
+        27
+       ],
+       "tex": "I_L = \\frac{V_Z}{R_L}",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The Zener takes the rest. Regulation needs I Z to stay positive and below the rated maximum."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        10,
+        39
+       ],
+       "tex": "I_Z = I - I_L",
+       "size": 4,
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        10,
+        50
+       ],
+       "text": {
+        "en": "Regulation holds while I_Z > 0"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lab-zener-diode",
+   "type": "virtual_lab",
+   "labId": "zener-diode",
+   "aim": {
+    "en": "To draw the reverse characteristic of a Zener diode and find its breakdown voltage."
+   },
+   "narration": {
+    "en": "Virtual lab: increase the reverse voltage step by step, note the current, and find the voltage at which the current shoots up: the Zener breakdown voltage."
+   },
+   "seconds": 180,
+   "optional": true
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A 5 V Zener regulator is fed from 9 V through a 100 Ω resistor and drives a 500 Ω load. Find the currents. What is the least load resistance for which it still regulates?"
+   },
+   "steps": [
+    {
+     "en": "I = (9 − 5)/100 = 40 mA; I_L = 5/500 = 10 mA; I_Z = 30 mA."
+    },
+    {
+     "en": "Regulation fails when I_L reaches I = 40 mA."
+    },
+    {
+     "en": "R_L(min) = 5 V/40 mA = 125 Ω."
+    }
+   ],
+   "answer": {
+    "en": "I = 40 mA, I_L = 10 mA, I_Z = 30 mA; R_L ≥ 125 Ω"
+   },
+   "narration": {
+    "en": "Let us solve this together. A 5 V Zener regulator is fed from 9 V through a 100 Ω resistor and drives a 500 Ω load. Find the currents. What is the least load resistance for which it still regulates?"
+   }
+  },
+  {
+   "id": "challenge-zener",
+   "type": "challenge",
+   "title": {
+    "en": "Challenge: 20 mA through the Zener"
+   },
+   "narration": {
+    "en": "The input is twelve volts, the Zener is six volts and the load is six hundred ohms. Choose the series resistor for twenty milliamperes of Zener current."
+   },
+   "kind": "scene",
+   "prompt": {
+    "en": "Input 12 V, Zener 6 V, load 600 Ω. Choose the series resistor so that the Zener current is 20 mA. Lock in to check."
+   },
+   "sliders": [
+    {
+     "name": "R",
+     "label": {
+      "en": "Series resistor"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 10,
+     "value": 100,
+     "unit": "Ω"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     10
+    ],
+    "y": [
+     0,
+     6
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "icon",
+     "icon": "battery",
+     "x": 1.5,
+     "y": 3,
+     "size": 1.6,
+     "angle": 90
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 5,
+     "text": {
+      "en": "12 V"
+     },
+     "size": 24,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 4,
+     "y": 5,
+     "size": 2
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 5.7,
+     "text": {
+      "en": "R = {R:0} Ω"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 1.5,
+     "y1": 5,
+     "x2": 3,
+     "y2": 5,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 5,
+     "x2": 8.5,
+     "y2": 5,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       5.6,
+       3.3
+      ],
+      [
+       6.4,
+       3.3
+      ],
+      [
+       6,
+       2.6
+      ]
+     ],
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 5.6,
+     "y1": 2.6,
+     "x2": 6.4,
+     "y2": 2.6,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.9,
+     "text": {
+      "en": "Z 6 V"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 5,
+     "x2": 6,
+     "y2": 3.3,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 8.5,
+     "y": 3,
+     "size": 1.6,
+     "angle": 90
+    },
+    {
+     "shape": "text",
+     "x": 9.3,
+     "y": 3,
+     "text": {
+      "en": "600 Ω"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 1.5,
+     "y1": 1,
+     "x2": 8.5,
+     "y2": 1,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 2.6,
+     "x2": 6,
+     "y2": 1,
+     "color": "white",
+     "width": 2
+    }
+   ],
+   "goal": "(12 - 6)/R*1000 - 10",
+   "goalLabel": {
+    "en": "Zener current"
+   },
+   "target": 20,
+   "tolerance": 0.5,
+   "solution": {
+    "R": 200
+   },
+   "explanation": {
+    "en": "Load current = 6/600 = 10 mA, so I = 30 mA and R = 6 V/30 mA = 200 Ω."
+   },
+   "goalUnit": "mA",
+   "hint": {
+    "en": "I_Z = I − I_L with I = (V_in − V_Z)/R."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Two tests for a regulator"
+   },
+   "body": {
+    "en": "First check that the open-circuit output V_in R_L/(R + R_L) is at least V_Z; only then is the Zener in breakdown. Then I_Z = (V_in − V_Z)/R − V_Z/R_L."
+   },
+   "narration": {
+    "en": "Two tests for a regulator. First check that the open-circuit output V_in R_L/(R + R_L) is at least V_Z; only then is the Zener in breakdown. Then I_Z = (V_in − V_Z)/R − V_Z/R_L."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Divider first, then subtract."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "fill",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Complete the description of a Zener regulator."
+   },
+   "passage": {
+    "en": "A Zener diode is __1__ doped and is used in __2__ bias. In breakdown, its voltage stays nearly __3__ while its current changes. Any rise in input voltage appears across the __4__."
+   },
+   "blanks": [
+    {
+     "options": [
+      {
+       "en": "heavily"
+      },
+      {
+       "en": "lightly"
+      }
+     ],
+     "answer": 0
+    },
+    {
+     "options": [
+      {
+       "en": "reverse"
+      },
+      {
+       "en": "forward"
+      }
+     ],
+     "answer": 0
+    },
+    {
+     "options": [
+      {
+       "en": "constant"
+      },
+      {
+       "en": "zero"
+      },
+      {
+       "en": "doubled"
+      }
+     ],
+     "answer": 0
+    },
+    {
+     "options": [
+      {
+       "en": "series resistor"
+      },
+      {
+       "en": "load"
+      },
+      {
+       "en": "Zener diode"
+      }
+     ],
+     "answer": 0
+    }
+   ],
+   "narration": {
+    "en": "Complete the description of a Zener regulator."
+   },
+   "questionId": "act.isc-zener-fill"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "2p17-q01",
+    "2p17-q02",
+    "2p17-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "2p17-q04",
+    "2p17-q05"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "A Zener is a heavily doped diode used in reverse breakdown, where its voltage stays ≈ V_Z."
+    },
+    {
+     "en": "In a regulator: I = (V_in − V_Z)/R, I_L = V_Z/R_L, I_Z = I − I_L."
+    },
+    {
+     "en": "The series resistor limits the current and drops the excess voltage."
+    }
+   ],
+   "homework": [
+    {
+     "en": "A 9 V Zener is fed from 15 V through 300 Ω and drives a 900 Ω load. Find I_Z. (Answer: 10 mA)"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "2p17-q04"
+   ],
+   "narration": {
+    "en": "Recap. A Zener is a heavily doped diode used in reverse breakdown, where its voltage stays ≈ V_Z. In a regulator: I = (V_in − V_Z)/R, I_L = V_Z/R_L, I_Z = I − I_L. The series resistor limits the current and drops the excess voltage."
+   }
+  }
+ ]
+}

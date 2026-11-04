@@ -1,0 +1,737 @@
+{
+ "id": "puc1-physics-15-relative-velocity.t1.lesson",
+ "chapterId": "puc1-physics-15-relative-velocity",
+ "topicId": "puc1-physics-15-relative-velocity.t1",
+ "title": {
+  "en": "Relative velocity in one dimension"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Who is moving?"
+   },
+   "hook": {
+    "en": "Sitting in a train, you see the train on the next track glide backwards, though both are leaving the station. Velocity always depends on who is watching."
+   },
+   "objectives": [
+    {
+     "en": "Define relative velocity"
+    },
+    {
+     "en": "Find the relative velocity of two bodies on a straight line"
+    },
+    {
+     "en": "Solve chase and meeting problems"
+    }
+   ],
+   "narration": {
+    "en": "Sitting in a train, you see the train on the next track glide backwards, though both are leaving the station. Velocity always depends on who is watching."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Velocity of B as seen from A"
+   },
+   "body": {
+    "en": "If A moves with velocity $v_A$ and B with $v_B$ along the same line, B seen from A moves with $v_{BA} = v_B - v_A$. Likewise A seen from B moves with $v_{AB} = v_A - v_B = -v_{BA}$. Signs give direction: choose one direction as positive and keep to it."
+   },
+   "points": [
+    {
+     "en": "Same direction: subtract the speeds"
+    },
+    {
+     "en": "Opposite directions: add the speeds"
+    },
+    {
+     "en": "v_AB = −v_BA"
+    }
+   ],
+   "narration": {
+    "en": "If A moves with velocity $v_A$ and B with $v_B$ along the same line, B seen from A moves with $v_{BA} = v_B - v_A$. Likewise A seen from B moves with $v_{AB} = v_A - v_B = -v_{BA}$. Signs give direction: choose one direction as positive and keep to it."
+   },
+   "formula": "v_{BA} = v_B - v_A"
+  },
+  {
+   "id": "scene-cars",
+   "type": "interactive",
+   "title": {
+    "en": "Two cars on a road"
+   },
+   "narration": {
+    "en": "Set the speeds of car A and car B and the starting gap. Press play. Then turn on the view from car A: car A stands still and car B moves at the relative velocity."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Set the two velocities and the starting gap, then press Play. Switch on \"Seen from car A\" to watch car B as the driver of car A sees it."
+   },
+   "sliders": [
+    {
+     "name": "vA",
+     "label": {
+      "en": "Velocity of car A"
+     },
+     "min": 0,
+     "max": 25,
+     "step": 1,
+     "value": 20,
+     "unit": "m/s"
+    },
+    {
+     "name": "vB",
+     "label": {
+      "en": "Velocity of car B"
+     },
+     "min": -15,
+     "max": 25,
+     "step": 1,
+     "value": 10,
+     "unit": "m/s"
+    },
+    {
+     "name": "d",
+     "label": {
+      "en": "Starting gap"
+     },
+     "min": 0,
+     "max": 100,
+     "step": 5,
+     "value": 60,
+     "unit": "m"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "rel",
+     "label": {
+      "en": "Seen from car A"
+     },
+     "value": false
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Start"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 8,
+    "stopWhen": "met"
+   },
+   "vars": [
+    {
+     "name": "xA",
+     "expr": "vA*t"
+    },
+    {
+     "name": "xB",
+     "expr": "d + vB*t"
+    },
+    {
+     "name": "met",
+     "expr": "t > 0 && xA >= xB"
+    },
+    {
+     "name": "sA",
+     "expr": "if(rel, 0, xA)"
+    },
+    {
+     "name": "sB",
+     "expr": "if(rel, xB - xA, xB)"
+    }
+   ],
+   "view": {
+    "x": [
+     -130,
+     310
+    ],
+    "y": [
+     0,
+     10
+    ],
+    "axes": true,
+    "xLabel": "x (m)"
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": -130,
+     "y1": 3,
+     "x2": 310,
+     "y2": 3,
+     "color": "white",
+     "opacity": 0.4
+    },
+    {
+     "shape": "line",
+     "x1": -130,
+     "y1": 6.5,
+     "x2": 310,
+     "y2": 6.5,
+     "color": "white",
+     "opacity": 0.4
+    },
+    {
+     "shape": "rect",
+     "x": "sA - 6",
+     "y": 1.5,
+     "w": 12,
+     "h": 1.6,
+     "color": "blue"
+    },
+    {
+     "shape": "label",
+     "x": "sA",
+     "y": 0.8,
+     "text": {
+      "en": "A"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": "sB - 6",
+     "y": 5,
+     "w": 12,
+     "h": 1.6,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": "sB",
+     "y": 4.3,
+     "text": {
+      "en": "B"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "arrow",
+     "visibleIf": "!rel",
+     "x": "sA",
+     "y": 2.3,
+     "dx": "vA*2",
+     "dy": 0,
+     "color": "blue",
+     "label": "vA"
+    },
+    {
+     "shape": "arrow",
+     "x": "sB",
+     "y": 5.8,
+     "dx": "if(rel, vB - vA, vB)*2",
+     "dy": 0,
+     "color": "orange",
+     "label": "vB"
+    },
+    {
+     "shape": "text",
+     "x": 305,
+     "y": 9.2,
+     "text": {
+      "en": "t = {t:1} s   gap = {xB - xA:0} m"
+     },
+     "size": 26,
+     "align": "right",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": -125,
+     "y": 9.2,
+     "text": {
+      "en": "Seen from car A"
+     },
+     "size": 26,
+     "align": "left",
+     "color": "yellow",
+     "visibleIf": "rel"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "v_BA = v_B − v_A"
+     },
+     "expr": "vB - vA",
+     "digits": 0,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Gap now"
+     },
+     "expr": "xB - xA",
+     "digits": 1,
+     "unit": "m"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make the two velocities equal. What does the driver of A see?"
+    },
+    {
+     "en": "Give B a negative velocity. How fast does the gap close now?"
+    },
+    {
+     "en": "Find when A catches B and check it with gap ÷ (v_A − v_B)."
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Relative velocity on a line"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Choose a positive direction. Write each velocity with its sign."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Relative velocity on a line"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "line",
+       "from": [
+        5,
+        20
+       ],
+       "to": [
+        95,
+        20
+       ],
+       "color": "white"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        10,
+        15
+       ],
+       "to": [
+        30,
+        15
+       ],
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        12,
+        10
+       ],
+       "text": {
+        "en": "v_A = +20 m/s"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        60,
+        25
+       ],
+       "to": [
+        75,
+        25
+       ],
+       "color": "orange"
+      },
+      {
+       "kind": "text",
+       "at": [
+        60,
+        28
+       ],
+       "text": {
+        "en": "v_B = +10 m/s"
+       },
+       "size": 3,
+       "color": "orange"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Subtract the watcher's velocity from the other body's velocity."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        10,
+        38
+       ],
+       "tex": "v_{BA} = v_B - v_A = 10 - 20 = -10\\,\\text{m/s}",
+       "size": 4,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The negative sign says A sees B coming back towards it at 10 metres per second."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        10,
+        48
+       ],
+       "text": {
+        "en": "From A, B seems to move backwards at 10 m/s"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "Car B is 60 m ahead of car A. A moves at 20 m/s and B at 10 m/s in the same direction. When does A catch B, and how far has A moved?"
+   },
+   "steps": [
+    {
+     "en": "Relative velocity of A with respect to B: 20 − 10 = 10 m/s."
+    },
+    {
+     "en": "The gap of 60 m closes at 10 m/s: t = 60/10 = 6 s."
+    },
+    {
+     "en": "Distance moved by A = 20 × 6 = 120 m."
+    }
+   ],
+   "answer": {
+    "en": "After 6 s, when A has moved 120 m"
+   },
+   "narration": {
+    "en": "Let us solve this together. Car B is 60 m ahead of car A. A moves at 20 m/s and B at 10 m/s in the same direction. When does A catch B, and how far has A moved?"
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "Two trains 200 m and 150 m long move towards each other on parallel tracks at 54 km/h and 72 km/h. How long do they take to cross each other completely?"
+   },
+   "steps": [
+    {
+     "en": "Relative speed = 54 + 72 = 126 km/h = 35 m/s."
+    },
+    {
+     "en": "To cross completely, the relative distance is the sum of the lengths: 350 m."
+    },
+    {
+     "en": "t = 350/35 = 10 s."
+    }
+   ],
+   "answer": {
+    "en": "10 s"
+   },
+   "narration": {
+    "en": "Let us solve this together. Two trains 200 m and 150 m long move towards each other on parallel tracks at 54 km/h and 72 km/h. How long do they take to cross each other completely?"
+   }
+  },
+  {
+   "id": "challenge-catch",
+   "type": "challenge",
+   "title": {
+    "en": "Challenge: catch it in 6 seconds"
+   },
+   "narration": {
+    "en": "Car B is sixty metres ahead and moves at ten metres per second. What speed must car A have to catch it in exactly six seconds?"
+   },
+   "kind": "scene",
+   "prompt": {
+    "en": "Car B starts 60 m ahead and keeps 10 m/s. Choose the speed of car A so that it draws level with B exactly 6 s after the start. Lock in to run the race."
+   },
+   "sliders": [
+    {
+     "name": "vA",
+     "label": {
+      "en": "Velocity of car A"
+     },
+     "min": 10,
+     "max": 30,
+     "step": 1,
+     "value": 12,
+     "unit": "m/s"
+    }
+   ],
+   "time": {
+    "max": 10,
+    "stopWhen": "met"
+   },
+   "vars": [
+    {
+     "name": "xA",
+     "expr": "vA*t"
+    },
+    {
+     "name": "xB",
+     "expr": "60 + 10*t"
+    },
+    {
+     "name": "met",
+     "expr": "t > 0 && xA >= xB"
+    }
+   ],
+   "view": {
+    "x": [
+     -10,
+     320
+    ],
+    "y": [
+     0,
+     10
+    ],
+    "axes": true,
+    "xLabel": "x (m)"
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": "xA - 6",
+     "y": 1.5,
+     "w": 12,
+     "h": 1.6,
+     "color": "blue"
+    },
+    {
+     "shape": "label",
+     "x": "xA",
+     "y": 0.8,
+     "text": {
+      "en": "A"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": "xB - 6",
+     "y": 5,
+     "w": 12,
+     "h": 1.6,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": "xB",
+     "y": 4.3,
+     "text": {
+      "en": "B"
+     },
+     "size": 22,
+     "align": "center",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 315,
+     "y": 9.2,
+     "text": {
+      "en": "t = {t:1} s"
+     },
+     "size": 26,
+     "align": "right",
+     "color": "white"
+    }
+   ],
+   "goal": "t",
+   "goalLabel": {
+    "en": "Time to catch"
+   },
+   "target": 6,
+   "tolerance": 0.3,
+   "solution": {
+    "vA": 20
+   },
+   "explanation": {
+    "en": "The gap of 60 m must close in 6 s, so v_A − 10 = 10 m/s and v_A = 20 m/s."
+   },
+   "goalUnit": "s",
+   "hint": {
+    "en": "The gap closes at the relative velocity v_A − v_B."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Stop the watcher"
+   },
+   "body": {
+    "en": "To find B as seen from A, imagine giving both bodies an extra velocity −v_A. A stops, and B is left with v_B − v_A. Chase problems then become: gap ÷ relative speed."
+   },
+   "narration": {
+    "en": "Stop the watcher. To find B as seen from A, imagine giving both bodies an extra velocity −v_A. A stops, and B is left with v_B − v_A. Chase problems then become: gap ÷ relative speed."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Freeze the watcher, subtract its velocity."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "sort",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Is the relative speed found by adding or by subtracting the two speeds?"
+   },
+   "buckets": [
+    {
+     "id": "add",
+     "label": {
+      "en": "Add the speeds"
+     }
+    },
+    {
+     "id": "sub",
+     "label": {
+      "en": "Subtract the speeds"
+     }
+    }
+   ],
+   "items": [
+    {
+     "text": {
+      "en": "Two trains approach each other on parallel tracks"
+     },
+     "answer": "add"
+    },
+    {
+     "text": {
+      "en": "A bus overtakes a scooter"
+     },
+     "answer": "sub"
+    },
+    {
+     "text": {
+      "en": "Two runners run away from each other"
+     },
+     "answer": "add"
+    },
+    {
+     "text": {
+      "en": "A police jeep chases a thief's car"
+     },
+     "answer": "sub"
+    },
+    {
+     "text": {
+      "en": "A boy walks forward inside a moving train, seen from the train"
+     },
+     "answer": "sub"
+    },
+    {
+     "text": {
+      "en": "Two cars meet head-on at a crossing"
+     },
+     "answer": "add"
+    }
+   ],
+   "narration": {
+    "en": "Is the relative speed found by adding or by subtracting the two speeds?"
+   },
+   "questionId": "act.isc-relvel-1d-sort",
+   "explanation": {
+    "en": "Opposite directions: the gap changes by the sum of the speeds. Same direction: by the difference."
+   }
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1p15-q01",
+    "1p15-q02",
+    "1p15-q03"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "1p15-q04",
+    "1p15-q05"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "Velocity of B relative to A is v_BA = v_B − v_A."
+    },
+    {
+     "en": "Same direction: subtract speeds; opposite directions: add them."
+    },
+    {
+     "en": "Meeting or overtaking time = gap ÷ relative speed."
+    }
+   ],
+   "homework": [
+    {
+     "en": "A train 120 m long at 20 m/s overtakes a man walking at 2 m/s in the same direction. How long does it take to pass him? (Answer: 6.67 s)"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1p15-q04"
+   ],
+   "narration": {
+    "en": "Recap. Velocity of B relative to A is v_BA = v_B − v_A. Same direction: subtract speeds; opposite directions: add them. Meeting or overtaking time = gap ÷ relative speed."
+   }
+  }
+ ]
+}

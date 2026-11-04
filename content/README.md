@@ -10,6 +10,8 @@
 
 All 106 chapters have packs: 539 topics, 539 lessons and 2,625 exam-pattern questions.
 
+**ISC (CISCE) Science:** the 106 Physics, Chemistry, Maths and Biology chapters are also tagged for the `isc` board, and 10 ISC-only chapters (topics not in the rationalised NCERT books, such as Doppler effect, potentiometer, radioactivity, transport in plants and mathematical reasoning) have English-only packs with ISC-pattern questions. See the "ISC Science" section of REVIEW.md.
+
 - Every topic has a lesson with an intro, concepts, a worked example, a class quiz and a recap, plus pyq, trick, 3D, simulation and lab blocks where they fit.
 - The packs reuse 3D models, labs, animations and sims from Zynetix Board (Kinetix), plus 13 offline PhET sims.
 - `content/REVIEW.md` lists, chapter by chapter, the facts, syllabus-scope assumptions and Kannada terms a subject teacher should check.

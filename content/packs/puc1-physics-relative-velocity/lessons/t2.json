@@ -1,0 +1,787 @@
+{
+ "id": "puc1-physics-15-relative-velocity.t2.lesson",
+ "chapterId": "puc1-physics-15-relative-velocity",
+ "topicId": "puc1-physics-15-relative-velocity.t2",
+ "title": {
+  "en": "Relative velocity in a plane: rain and river problems"
+ },
+ "minutes": 40,
+ "blocks": [
+  {
+   "id": "intro",
+   "type": "intro",
+   "heading": {
+    "en": "Holding an umbrella on a bicycle"
+   },
+   "hook": {
+    "en": "On a still, rainy day the rain falls straight down, yet a cyclist has to tilt the umbrella forward. The faster she rides, the more she tilts it."
+   },
+   "objectives": [
+    {
+     "en": "Find relative velocity as a vector difference"
+    },
+    {
+     "en": "Solve rain–umbrella problems"
+    },
+    {
+     "en": "Find the least time and the shortest path to cross a river"
+    }
+   ],
+   "narration": {
+    "en": "On a still, rainy day the rain falls straight down, yet a cyclist has to tilt the umbrella forward. The faster she rides, the more she tilts it."
+   }
+  },
+  {
+   "id": "concept1",
+   "type": "concept",
+   "title": {
+    "en": "Relative velocity is a vector difference"
+   },
+   "body": {
+    "en": "In two dimensions $\\vec v_{BA} = \\vec v_B - \\vec v_A$: add $-\\vec v_A$ to $\\vec v_B$ by the triangle law. For rain falling at $v_r$ and a cyclist at $v_c$, the rain seems to come from the front at an angle θ to the vertical with $\\tan\\theta = v_c/v_r$, so the umbrella is tilted forward by θ."
+   },
+   "points": [
+    {
+     "en": "v_BA = v_B − v_A (vectors)"
+    },
+    {
+     "en": "Rain: tan θ = v_cyclist / v_rain, tilt forward"
+    },
+    {
+     "en": "Magnitude √(v_r² + v_c²) when they are perpendicular"
+    }
+   ],
+   "narration": {
+    "en": "In two dimensions $\\vec v_{BA} = \\vec v_B - \\vec v_A$: add $-\\vec v_A$ to $\\vec v_B$ by the triangle law. For rain falling at $v_r$ and a cyclist at $v_c$, the rain seems to come from the front at an angle θ to the vertical with $\\tan\\theta = v_c/v_r$, so the umbrella is tilted forward by θ."
+   },
+   "formula": "\\vec v_{BA} = \\vec v_B - \\vec v_A"
+  },
+  {
+   "id": "concept2",
+   "type": "concept",
+   "title": {
+    "en": "Crossing a river"
+   },
+   "body": {
+    "en": "A boat moves at $v_b$ relative to the water; the water flows at $v_r$. Its velocity over the ground is the vector sum. Heading straight across gives the least time $t = d/v_b$ with drift $v_r d/v_b$. Heading upstream at θ with $\\sin\\theta = v_r/v_b$ gives the shortest path (straight across), taking $t = d/\\sqrt{v_b^2 - v_r^2}$; this is possible only if $v_b > v_r$."
+   },
+   "points": [
+    {
+     "en": "Least time: head straight across"
+    },
+    {
+     "en": "Shortest path: sin θ = v_r / v_b upstream"
+    },
+    {
+     "en": "Drift = (v_r − v_b sin θ) × time"
+    }
+   ],
+   "narration": {
+    "en": "A boat moves at $v_b$ relative to the water; the water flows at $v_r$. Its velocity over the ground is the vector sum. Heading straight across gives the least time $t = d/v_b$ with drift $v_r d/v_b$. Heading upstream at θ with $\\sin\\theta = v_r/v_b$ gives the shortest path (straight across), taking $t = d/\\sqrt{v_b^2 - v_r^2}$; this is possible only if $v_b > v_r$."
+   },
+   "formula": "t_{min} = \\frac{d}{v_b}"
+  },
+  {
+   "id": "scene-river",
+   "type": "interactive",
+   "title": {
+    "en": "Steer a boat across a river"
+   },
+   "narration": {
+    "en": "Choose the boat speed, the river speed and the heading. Press cross. The yellow track shows the path over the ground; the label shows how far downstream the boat lands."
+   },
+   "seconds": 120,
+   "kind": "scene",
+   "caption": {
+    "en": "Set the boat's speed in still water, the river speed and the heading (degrees upstream from straight across). Press Cross and watch the drift."
+   },
+   "sliders": [
+    {
+     "name": "vb",
+     "label": {
+      "en": "Boat speed in still water"
+     },
+     "min": 2,
+     "max": 6,
+     "step": 0.5,
+     "value": 4,
+     "unit": "m/s"
+    },
+    {
+     "name": "vr",
+     "label": {
+      "en": "River speed"
+     },
+     "min": 0,
+     "max": 4,
+     "step": 0.5,
+     "value": 3,
+     "unit": "m/s"
+    },
+    {
+     "name": "th",
+     "label": {
+      "en": "Heading upstream"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 1,
+     "value": 0,
+     "unit": "°"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Cross"
+     },
+     "icon": "launch",
+     "reset": true,
+     "play": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "stopWhen": "crossed",
+    "speeds": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "speed": 2
+   },
+   "vars": [
+    {
+     "name": "ux",
+     "expr": "vr - vb*sin(rad(th))"
+    },
+    {
+     "name": "uy",
+     "expr": "vb*cos(rad(th))"
+    },
+    {
+     "name": "px",
+     "expr": "ux*min(t, 50/uy)"
+    },
+    {
+     "name": "py",
+     "expr": "min(uy*t, 50)"
+    },
+    {
+     "name": "crossed",
+     "expr": "t > 0 && uy*t >= 50"
+    },
+    {
+     "name": "T",
+     "expr": "50/uy"
+    },
+    {
+     "name": "drift",
+     "expr": "ux*50/uy"
+    }
+   ],
+   "view": {
+    "x": [
+     -100,
+     120
+    ],
+    "y": [
+     -8,
+     62
+    ],
+    "axes": true,
+    "grid": true,
+    "xLabel": "downstream (m)",
+    "yLabel": "across (m)",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -100,
+     "y": 0,
+     "w": 220,
+     "h": 50,
+     "color": "blue",
+     "opacity": 0.18
+    },
+    {
+     "shape": "arrow",
+     "x": -90,
+     "y": 25,
+     "dx": "vr*5",
+     "dy": 0,
+     "color": "blue",
+     "label": "river"
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": 0,
+     "y2": 50,
+     "dashed": true,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "trail",
+     "x": "px",
+     "y": "py",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "x": "px",
+     "y": "py",
+     "dx": "-vb*sin(rad(th))*4",
+     "dy": "uy*4",
+     "color": "green",
+     "label": "heading"
+    },
+    {
+     "shape": "arrow",
+     "x": "px",
+     "y": "py",
+     "dx": "ux*4",
+     "dy": "uy*4",
+     "color": "orange",
+     "label": "ground"
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 2,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": "px",
+     "y": 56,
+     "text": {
+      "en": "lands {drift:1} m downstream"
+     },
+     "size": 24,
+     "align": "center",
+     "color": "white",
+     "visibleIf": "crossed"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Crossing time"
+     },
+     "expr": "T",
+     "digits": 1,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Drift"
+     },
+     "expr": "drift",
+     "digits": 1,
+     "unit": "m"
+    },
+    {
+     "label": {
+      "en": "Speed over ground"
+     },
+     "expr": "hypot(ux, uy)",
+     "digits": 2,
+     "unit": "m/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Head straight across (0°). Note the time and the drift."
+    },
+    {
+     "en": "With river 3 m/s and boat 5 m/s, find the heading that lands the boat directly opposite."
+    },
+    {
+     "en": "Make the river faster than the boat. Can you still land directly opposite?"
+    }
+   ]
+  },
+  {
+   "id": "wb1",
+   "type": "whiteboard",
+   "title": {
+    "en": "Rain and the umbrella"
+   },
+   "steps": [
+    {
+     "say": {
+      "en": "Rain falls straight down at v r. The cyclist moves forward at v c."
+     },
+     "draw": [
+      {
+       "kind": "text",
+       "at": [
+        3,
+        3
+       ],
+       "text": {
+        "en": "Rain seen by a cyclist"
+       },
+       "size": 5,
+       "color": "yellow"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        20,
+        12
+       ],
+       "to": [
+        20,
+        42
+       ],
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        22,
+        25
+       ],
+       "text": {
+        "en": "v_rain"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        40,
+        50
+       ],
+       "to": [
+        65,
+        50
+       ],
+       "color": "green"
+      },
+      {
+       "kind": "text",
+       "at": [
+        45,
+        53
+       ],
+       "text": {
+        "en": "v_cyclist"
+       },
+       "size": 3,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "Rain relative to the cyclist is v rain minus v cyclist: add the cyclist's velocity reversed."
+     },
+     "draw": [
+      {
+       "kind": "arrow",
+       "from": [
+        70,
+        12
+       ],
+       "to": [
+        70,
+        42
+       ],
+       "color": "blue"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        70,
+        42
+       ],
+       "to": [
+        50,
+        42
+       ],
+       "color": "red"
+      },
+      {
+       "kind": "arrow",
+       "from": [
+        70,
+        12
+       ],
+       "to": [
+        50,
+        42
+       ],
+       "color": "yellow"
+      },
+      {
+       "kind": "text",
+       "at": [
+        72,
+        30
+       ],
+       "text": {
+        "en": "v_r"
+       },
+       "size": 3,
+       "color": "blue"
+      },
+      {
+       "kind": "text",
+       "at": [
+        52,
+        44
+       ],
+       "text": {
+        "en": "−v_c"
+       },
+       "size": 3,
+       "color": "red"
+      },
+      {
+       "kind": "text",
+       "at": [
+        46,
+        24
+       ],
+       "text": {
+        "en": "v_rain,cyclist"
+       },
+       "size": 3,
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "say": {
+      "en": "The rain seems to come from the front, at theta to the vertical, with tan theta equal to v c over v r. Tilt the umbrella forward by theta."
+     },
+     "draw": [
+      {
+       "kind": "math",
+       "at": [
+        8,
+        56
+       ],
+       "tex": "\\tan\\theta = \\frac{v_c}{v_r}",
+       "size": 4,
+       "color": "yellow"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ex1",
+   "type": "example",
+   "problem": {
+    "en": "A river 400 m wide flows at 3 m/s. A boat moves at 5 m/s in still water. Find (a) the least crossing time and the drift, (b) the heading and time for the shortest path."
+   },
+   "steps": [
+    {
+     "en": "(a) Head straight across: t = 400/5 = 80 s; drift = 3 × 80 = 240 m."
+    },
+    {
+     "en": "(b) sin θ = 3/5, so θ ≈ 37° upstream from straight across."
+    },
+    {
+     "en": "Speed across = √(25 − 9) = 4 m/s; t = 400/4 = 100 s."
+    }
+   ],
+   "answer": {
+    "en": "(a) 80 s, 240 m downstream; (b) 37° upstream, 100 s"
+   },
+   "narration": {
+    "en": "Let us solve this together. A river 400 m wide flows at 3 m/s. A boat moves at 5 m/s in still water. Find (a) the least crossing time and the drift, (b) the heading and time for the shortest path."
+   }
+  },
+  {
+   "id": "ex2",
+   "type": "example",
+   "problem": {
+    "en": "Rain falls vertically at 4 m/s. A woman walks east at 3 m/s. Find the velocity of the rain relative to her."
+   },
+   "steps": [
+    {
+     "en": "v_rw = v_r − v_w = (0, −4) − (3, 0) = (−3, −4) m/s."
+    },
+    {
+     "en": "Magnitude = √(9 + 16) = 5 m/s."
+    },
+    {
+     "en": "tan θ = 3/4 from the vertical: the rain seems to come from the east, in front of her."
+    }
+   ],
+   "answer": {
+    "en": "5 m/s at tan⁻¹(3/4) ≈ 37° to the vertical, from the front"
+   },
+   "narration": {
+    "en": "Let us solve this together. Rain falls vertically at 4 m/s. A woman walks east at 3 m/s. Find the velocity of the rain relative to her."
+   }
+  },
+  {
+   "id": "challenge-opposite",
+   "type": "challenge",
+   "title": {
+    "en": "Challenge: land directly opposite"
+   },
+   "narration": {
+    "en": "The river flows at three metres per second and the boat moves at five. Choose the upstream heading that lands the boat directly opposite."
+   },
+   "kind": "scene",
+   "prompt": {
+    "en": "The river flows at 3 m/s and the boat moves at 5 m/s in still water. Choose the heading so the boat lands at the point directly opposite (drift 0). Lock in to cross."
+   },
+   "sliders": [
+    {
+     "name": "th",
+     "label": {
+      "en": "Heading upstream"
+     },
+     "min": 0,
+     "max": 60,
+     "step": 1,
+     "value": 0,
+     "unit": "°"
+    }
+   ],
+   "time": {
+    "max": 30,
+    "stopWhen": "crossed",
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2
+   },
+   "vars": [
+    {
+     "name": "ux",
+     "expr": "3 - 5*sin(rad(th))"
+    },
+    {
+     "name": "uy",
+     "expr": "5*cos(rad(th))"
+    },
+    {
+     "name": "px",
+     "expr": "ux*min(t, 50/uy)"
+    },
+    {
+     "name": "py",
+     "expr": "min(uy*t, 50)"
+    },
+    {
+     "name": "crossed",
+     "expr": "t > 0 && uy*t >= 50"
+    }
+   ],
+   "view": {
+    "x": [
+     -60,
+     60
+    ],
+    "y": [
+     -5,
+     60
+    ],
+    "axes": true,
+    "xLabel": "downstream (m)",
+    "yLabel": "across (m)",
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": -60,
+     "y": 0,
+     "w": 120,
+     "h": 50,
+     "color": "blue",
+     "opacity": 0.18
+    },
+    {
+     "shape": "circle",
+     "x": 0,
+     "y": 50,
+     "r": 2.5,
+     "color": "green",
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "trail",
+     "x": "px",
+     "y": "py",
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "px",
+     "y": "py",
+     "r": 1.8,
+     "color": "orange"
+    }
+   ],
+   "goal": "px",
+   "goalLabel": {
+    "en": "Drift downstream"
+   },
+   "target": 0,
+   "tolerance": 2,
+   "solution": {
+    "th": 37
+   },
+   "explanation": {
+    "en": "sin θ = v_r / v_b = 3/5, so θ ≈ 37°. The upstream part of the boat's velocity cancels the river."
+   },
+   "goalUnit": "m",
+   "hint": {
+    "en": "The boat's upstream component v_b sin θ must equal the river speed."
+   }
+  },
+  {
+   "id": "trick",
+   "type": "trick",
+   "heading": {
+    "en": "Two river answers"
+   },
+   "body": {
+    "en": "Least time: point the boat straight across and let the river carry it. Shortest path: point it upstream so v_b sin θ = v_r. If v_r > v_b, no heading reaches the opposite point."
+   },
+   "narration": {
+    "en": "Two river answers. Least time: point the boat straight across and let the river carry it. Shortest path: point it upstream so v_b sin θ = v_r. If v_r > v_b, no heading reaches the opposite point."
+   },
+   "optional": true,
+   "seconds": 90,
+   "mnemonic": {
+    "en": "Time: straight across. Path: sine = river/boat."
+   }
+  },
+  {
+   "id": "act1",
+   "type": "activity",
+   "kind": "match",
+   "title": {
+    "en": "Activity"
+   },
+   "prompt": {
+    "en": "Match each situation with the right idea."
+   },
+   "pairs": [
+    {
+     "left": {
+      "en": "Umbrella tilt for a cyclist in vertical rain"
+     },
+     "right": {
+      "en": "tan θ = v_cyclist / v_rain"
+     }
+    },
+    {
+     "left": {
+      "en": "Least time to cross a river"
+     },
+     "right": {
+      "en": "Head straight across: t = d / v_b"
+     }
+    },
+    {
+     "left": {
+      "en": "Shortest path across a river"
+     },
+     "right": {
+      "en": "Head upstream with sin θ = v_r / v_b"
+     }
+    },
+    {
+     "left": {
+      "en": "Drift when heading straight across"
+     },
+     "right": {
+      "en": "v_r × d / v_b"
+     }
+    },
+    {
+     "left": {
+      "en": "Velocity of B seen from A"
+     },
+     "right": {
+      "en": "v_B − v_A as vectors"
+     }
+    }
+   ],
+   "narration": {
+    "en": "Match each situation with the right idea."
+   },
+   "questionId": "act.isc-relvel-2d-match"
+  },
+  {
+   "id": "quiz",
+   "type": "class_quiz",
+   "questionIds": [
+    "1p15-q06",
+    "1p15-q07",
+    "1p15-q08"
+   ],
+   "mode": "monitor",
+   "secondsPerQuestion": 45,
+   "narration": {
+    "en": "Class quiz. Discuss, raise hands, and the monitor taps the class answer."
+   }
+  },
+  {
+   "id": "isc",
+   "type": "pyq",
+   "title": {
+    "en": "ISC board pattern"
+   },
+   "questionIds": [
+    "1p15-q09",
+    "1p15-q10"
+   ],
+   "exams": [
+    "ISC"
+   ],
+   "narration": {
+    "en": "ISC board pattern questions on this topic. Try them on your own before we discuss."
+   }
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "points": [
+    {
+     "en": "In a plane, v_BA = v_B − v_A is found with vectors."
+    },
+    {
+     "en": "Rain–umbrella: tilt forward by θ with tan θ = v_c / v_r."
+    },
+    {
+     "en": "River: least time straight across (t = d/v_b); shortest path upstream with sin θ = v_r/v_b, t = d/√(v_b² − v_r²)."
+    }
+   ],
+   "homework": [
+    {
+     "en": "A man can swim at 4 km/h in still water across a river 1 km wide flowing at 2 km/h. Find the time for the shortest path. (Answer: about 17.3 min)"
+    }
+   ],
+   "homeworkQuestionIds": [
+    "1p15-q09"
+   ],
+   "narration": {
+    "en": "Recap. In a plane, v_BA = v_B − v_A is found with vectors. Rain–umbrella: tilt forward by θ with tan θ = v_c / v_r. River: least time straight across (t = d/v_b); shortest path upstream with sin θ = v_r/v_b, t = d/√(v_b² − v_r²)."
+   }
+  }
+ ]
+}

@@ -326,6 +326,8 @@ export function check(dir: string): string[] {
     const qt = src.chapter.topics.find((t) => t.id === q.topicId);
     if (q.exams.includes('CBSE') && qt?.boards && !qt.boards.includes('cbse')) problems.push(`${q.id}: tagged CBSE but its topic is not in the CBSE syllabus`);
     if (q.exams.includes('CBSE') && !src.chapter.boards.includes('cbse')) problems.push(`${q.id}: tagged CBSE but the chapter is not in the CBSE syllabus`);
+    if (q.exams.includes('ISC') && qt?.boards && !qt.boards.includes('isc')) problems.push(`${q.id}: tagged ISC but its topic is not in the ISC syllabus`);
+    if (q.exams.includes('ISC') && !src.chapter.boards.includes('isc')) problems.push(`${q.id}: tagged ISC but the chapter is not in the ISC syllabus`);
   }
   const ids = src.questions.map((q) => q.id);
   if (new Set(ids).size !== ids.length) problems.push('duplicate question ids');
