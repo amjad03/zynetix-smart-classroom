@@ -547,7 +547,8 @@ class _RailScrollState extends State<RailScroll> {
       ScrollNotification(:final metrics) => metrics,
       _ => null,
     };
-    if (m == null || m.axis != Axis.vertical) return false;
+    // Only the rail's own scroll view, not one inside a panel or a lab.
+    if (m == null || m.axis != Axis.vertical || (n is ViewportNotificationMixin && n.depth > 0)) return false;
     final more = m.extentAfter > 1, scrolled = m.extentBefore > 1;
     if (more != _more || scrolled != _scrolled) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -592,6 +593,111 @@ class _RailScrollState extends State<RailScroll> {
         crossAxisMargin: 6,
         mainAxisMargin: 12,
         child: list,
+      ),
+    );
+  }
+}
+
+/// A Kinetix lab (or player) on the stage. A lab lays out its own side panel (readouts, controls,
+/// its aim) that scrolls by itself when the stage is shorter than the panel, and nothing said so:
+/// the panel just ended mid-card at the stage's edge. The lab keeps the stage's size (its circuit
+/// and graph stay in view); when a scroll view inside it has more below, its bottom edge fades
+/// and a round "more" button sits there, which scrolls it on (as does dragging it), so every
+/// control is reachable on a board and on a phone.
+class LabFrame extends StatefulWidget {
+  const LabFrame({super.key, required this.child});
+  final Widget child;
+  @override
+  State<LabFrame> createState() => _LabFrameState();
+}
+
+class _LabFrameState extends State<LabFrame> {
+  /// The lab's scroll view that has more below (its panel), and where it is in this frame.
+  ScrollPosition? _pos;
+  Rect? _rect;
+  bool _scheduled = false;
+
+  bool _onScroll(Notification n) {
+    if (n is! ScrollNotification && n is! ScrollMetricsNotification) return false;
+    if (!_scheduled) {
+      _scheduled = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scheduled = false;
+        if (mounted) _measure();
+      });
+    }
+    return false;
+  }
+
+  /// Finds the tallest vertical scroll view inside the lab that is not at its end.
+  void _measure() {
+    final frame = context.findRenderObject() as RenderBox?;
+    if (frame == null || !frame.hasSize) return;
+    ScrollPosition? best;
+    Rect? bestRect;
+    void visit(Element e) {
+      if (e is StatefulElement && e.state is ScrollableState) {
+        final st = e.state as ScrollableState;
+        final p = st.position;
+        final box = e.findRenderObject();
+        if (p.axis == Axis.vertical && p.hasContentDimensions && p.extentAfter > 1 && box is RenderBox && box.hasSize && box.attached) {
+          final r = box.localToGlobal(Offset.zero, ancestor: frame) & box.size;
+          if (bestRect == null || r.height > bestRect!.height) {
+            best = p;
+            bestRect = r;
+          }
+        }
+      }
+      e.visitChildren(visit);
+    }
+
+    (context as Element).visitChildren(visit);
+    if (best != _pos || bestRect != _rect) {
+      setState(() {
+        _pos = best;
+        _rect = bestRect;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final r = _rect, p = _pos;
+    const fade = 120.0;
+    return NotificationListener<Notification>(
+      onNotification: _onScroll,
+      child: Stack(
+        children: [
+          Positioned.fill(child: widget.child),
+          if (r != null && p != null) ...[
+            Positioned(
+              left: r.left,
+              width: r.width,
+              top: r.bottom - fade,
+              height: fade,
+              child: const IgnorePointer(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0x00141A1D), Color(0xE6141A1D)])),
+                ),
+              ),
+            ),
+            Positioned(
+              left: r.left,
+              width: r.width,
+              top: r.bottom - 88,
+              height: 72,
+              child: Center(
+                child: StageButton(
+                  key: const ValueKey('labMore'),
+                  icon: Icons.keyboard_double_arrow_down,
+                  tooltip: 'More',
+                  size: 72,
+                  onPressed: () => p.animateTo((p.pixels + p.viewportDimension * 0.7).clamp(0.0, p.maxScrollExtent), duration: const Duration(milliseconds: 350), curve: Curves.easeOutCubic),
+                ),
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }

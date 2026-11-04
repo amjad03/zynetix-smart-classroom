@@ -106,7 +106,7 @@ class BlockView extends StatelessWidget {
       ),
       // Kinetix labs and players draw their own title and controls: no heading over them.
       BlockType.simulation => staged(
-        embeds.simulation(b, c.pack, l),
+        b.s('source') == 'phet' ? embeds.simulation(b, c.pack, l) : LabFrame(child: embeds.simulation(b, c.pack, l)),
         title: b.s('source') == 'phet' ? (b.title?.t(l) ?? blockName(b.type, l)) : null,
         hint: b.s('source') == 'phet' ? tr('simHint', l) : null,
         rail: [
@@ -115,7 +115,7 @@ class BlockView extends StatelessWidget {
         ],
       ),
       BlockType.virtualLab => staged(
-        embeds.lab(b.s('labId')!, b.s('preset'), l),
+        LabFrame(child: embeds.lab(b.s('labId')!, b.s('preset'), l)),
         title: null,
         hint: null,
         rail: [
