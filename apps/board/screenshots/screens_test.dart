@@ -71,8 +71,8 @@ class ShotEmbeds extends KinetixEmbeds {
       : super.simulation(b, pack, lang);
 }
 
-Future<Services> shotServices({List<String> taught = const []}) async {
-  final s = await testServices(prefs: {'taught': taught, 'collegeName': 'Govt. PU College, Malleshwaram', 'sectionLabel': '1st PUC · A · PCMB'});
+Future<Services> shotServices({List<String> taught = const [], Map<String, Object> prefs = const {}}) async {
+  final s = await testServices(prefs: {'taught': taught, 'collegeName': 'Govt. PU College, Malleshwaram', 'sectionLabel': '1st PUC · A · PCMB', ...prefs});
   return Services(config: s.config, store: s.store, outbox: s.outbox, narrator: s.narrator, syllabus: s.syllabus, embeds: ShotEmbeds(), clock: () => DateTime(2026, 11, 4, 10, 5));
 }
 
@@ -222,9 +222,34 @@ void main() {
     await t.pump(const Duration(seconds: 1));
     await shot(t, '17-quiz-numeric-keypad');
   });
+
+  // Real content from the packs: a CBSE commerce section, an Accountancy whiteboard, an Economics interactive.
+  const commerce = {'board': 'cbse', 'year': 'puc2', 'sectionLabel': 'Class 12 · B · Commerce', 'subjects': ['accountancy', 'business_studies', 'economics', 'english']};
+
+  testWidgets('18 teacher mode cbse commerce', (t) async {
+    await pumpBoard(t, await shotServices(prefs: commerce), home: const TeacherModeScreen());
+    await shot(t, '18-teacher-mode-cbse-commerce');
+  });
+
+  Future<void> realBlock(WidgetTester t, String topicId, String blockId, String name, {int steps = 0}) async {
+    final s = await shotServices(prefs: commerce);
+    final hit = s.lessonFor(topicId)!;
+    final b = hit.lesson.blocks.firstWhere((b) => b.id == blockId);
+    await pumpBoard(t, s, home: LessonPlayerScreen(pack: hit.pack, lesson: lessonWith(hit.pack, [b])));
+    await t.pump(const Duration(seconds: 3));
+    for (var i = 0; i < steps; i++) {
+      await t.tap(find.byKey(const ValueKey('wbNext')));
+      await t.pump(const Duration(seconds: 3));
+    }
+    await shot(t, name);
+  }
+
+  testWidgets('19 accountancy whiteboard', (t) => realBlock(t, 'puc2-accountancy-09-accounting-ratios.t2', 'wb1', '19-accountancy-whiteboard', steps: 3));
+  testWidgets('20 economics interactive', (t) => realBlock(t, 'puc2-economics-02-theory-of-consumer-behaviour.t3', 'int1', '20-economics-interactive'));
 }
 
 int _index(WidgetTester t) {
   final txt = (find.textContaining(RegExp(r'^\d+ / \d+$')).evaluate().first.widget as Text).data!;
   return int.parse(txt.split(' / ').first) - 1;
+
 }

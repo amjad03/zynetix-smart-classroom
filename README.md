@@ -1,8 +1,11 @@
 # Zynetix Smart Classroom
 
 Zynetix School (formerly Quest Academy) on classroom smartboards for Karnataka PU colleges.
-It covers NCERT 1st and 2nd PUC Physics, Chemistry, Maths and Biology, with a competitive
-layer for KCET, COMEDK, NEET and JEE.
+It covers all 270 chapters of 1st and 2nd PUC (Class 11 and 12) for Karnataka PU and CBSE:
+Physics, Chemistry, Maths, Biology, Computer Science, Electronics, Statistics, Accountancy,
+Business Studies, Economics and English. Every lesson has a step-by-step whiteboard explanation,
+with interactives, 3D models, simulations and virtual labs where they fit, and practice for
+KCET, COMEDK, NEET, JEE Main, JEE Advanced and CUET.
 
 | Path | What it is | Tech |
 |---|---|---|
@@ -40,7 +43,8 @@ Board screens are 1920×1080 and rendered with the app's own fonts (`apps/board/
 | ![Self-Learning period](apps/board/screenshots/png/11-self-learning.png) | ![Teacher PIN](apps/board/screenshots/png/12-teacher-pin.png) |
 | ![Smartboard with the Insert panel](apps/board/screenshots/png/13-smartboard-insert.png) | ![Whiteboard block, step by step](apps/board/screenshots/png/14-player-whiteboard.png) |
 | ![Function-plot interactive](apps/board/screenshots/png/15-player-interactive-plot.png) | ![Exam Practice](apps/board/screenshots/png/16-exam-practice.png) |
-| ![Numeric question with keypad](apps/board/screenshots/png/17-quiz-numeric-keypad.png) | |
+| ![Numeric question with keypad](apps/board/screenshots/png/17-quiz-numeric-keypad.png) | ![Teacher Mode, CBSE Class 12 Commerce](apps/board/screenshots/png/18-teacher-mode-cbse-commerce.png) |
+| ![Accountancy whiteboard: liquidity ratios](apps/board/screenshots/png/19-accountancy-whiteboard.png) | ![Economics interactive: budget line](apps/board/screenshots/png/20-economics-interactive.png) |
 
 | College Admin | Content CMS |
 |---|---|
@@ -74,7 +78,7 @@ Tests:
 |---|---|
 | lesson-schema | 4 (vitest) |
 | pack-builder | 5 (vitest) |
-| api | 9 end-to-end tests against PostgreSQL (jest) |
+| api | 10 end-to-end tests against PostgreSQL (jest) |
 | cms | 6 (vitest) |
 | board | 45 (flutter test) |
 
