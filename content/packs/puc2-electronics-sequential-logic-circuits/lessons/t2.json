@@ -939,6 +939,511 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Clocked flip-flops: SR, D, JK and T",
+    "kn": "ಗಡಿಯಾರಿತ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್‌ಗಳು: SR, D, JK, T"
+   },
+   "narration": {
+    "en": "Choose a flip-flop, set its inputs, then press Clock. The output changes only on a clock pulse. D copies D; JK holds (00), resets (01), sets (10) or toggles (11): Q(next) = JQ̄ + K̄Q; T toggles when T = 1.",
+    "kn": "ಫ್ಲಿಪ್-ಫ್ಲಾಪ್ ಆರಿಸಿ, ಒಳಹರಿವು ಹೊಂದಿಸಿ, ಗಡಿಯಾರ ಒತ್ತಿ. ಗಡಿಯಾರ ಸ್ಪಂದನದಲ್ಲಿ ಮಾತ್ರ ನಿರ್ಗಮ ಬದಲಾಗುತ್ತದೆ. D ನಕಲು; JK ಹಿಡಿ/ರೀಸೆಟ್/ಸೆಟ್/ಟಾಗಲ್; T = 1 ಟಾಗಲ್."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Choose a flip-flop, set its inputs, then press Clock. The output changes only on a clock pulse. D copies D; JK holds (00), resets (01), sets (10) or toggles (11): Q(next) = JQ̄ + K̄Q; T toggles when T = 1.",
+    "kn": "ಫ್ಲಿಪ್-ಫ್ಲಾಪ್ ಆರಿಸಿ, ಒಳಹರಿವು ಹೊಂದಿಸಿ, ಗಡಿಯಾರ ಒತ್ತಿ. ಗಡಿಯಾರ ಸ್ಪಂದನದಲ್ಲಿ ಮಾತ್ರ ನಿರ್ಗಮ ಬದಲಾಗುತ್ತದೆ. D ನಕಲು; JK ಹಿಡಿ/ರೀಸೆಟ್/ಸೆಟ್/ಟಾಗಲ್; T = 1 ಟಾಗಲ್."
+   },
+   "sliders": [],
+   "choices": [
+    {
+     "name": "ty",
+     "label": {
+      "en": "Flip-flop",
+      "kn": "ಫ್ಲಿಪ್-ಫ್ಲಾಪ್"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "SR"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "D"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "JK"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "T"
+       },
+       "value": 4
+      }
+     ],
+     "value": 3
+    }
+   ],
+   "counters": [
+    {
+     "name": "J",
+     "value": 1,
+     "min": 0,
+     "max": 1
+    },
+    {
+     "name": "K",
+     "value": 1,
+     "min": 0,
+     "max": 1
+    },
+    {
+     "name": "h",
+     "value": 0,
+     "min": 0,
+     "max": 255
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Flip J / S / D / T",
+      "kn": "J/S/D/T ಬದಲಿಸಿ"
+     },
+     "icon": "flip",
+     "set": {
+      "J": "1 - J"
+     }
+    },
+    {
+     "label": {
+      "en": "Flip K / R",
+      "kn": "K/R ಬದಲಿಸಿ"
+     },
+     "icon": "flip",
+     "set": {
+      "K": "1 - K"
+     }
+    },
+    {
+     "label": {
+      "en": "Clock pulse",
+      "kn": "ಗಡಿಯಾರ ಸ್ಪಂದನ"
+     },
+     "icon": "next",
+     "set": {
+      "h": "mod(2*h + if(ty == 1, if(J && K, mod(h, 2), if(J, 1, if(K, 0, mod(h, 2)))), if(ty == 2, J, if(ty == 3, J*(1 - mod(h, 2)) + (1 - K)*mod(h, 2), mod(J + mod(h, 2), 2)))), 256)"
+     }
+    },
+    {
+     "label": {
+      "en": "Clear",
+      "kn": "ಅಳಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "h": "0"
+     }
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 9.3,
+     "text": {
+      "en": "S = {J}",
+      "kn": "S = {J}"
+     },
+     "size": 24,
+     "align": "left",
+     "visibleIf": "ty == 1"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 7.3,
+     "text": {
+      "en": "R = {K}"
+     },
+     "size": 24,
+     "align": "left",
+     "visibleIf": "ty == 1"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 9.3,
+     "text": {
+      "en": "D = {J}"
+     },
+     "size": 24,
+     "align": "left",
+     "visibleIf": "ty == 2"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 9.3,
+     "text": {
+      "en": "J = {J}"
+     },
+     "size": 24,
+     "align": "left",
+     "visibleIf": "ty == 3"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 7.3,
+     "text": {
+      "en": "K = {K}"
+     },
+     "size": 24,
+     "align": "left",
+     "visibleIf": "ty == 3"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 9.3,
+     "text": {
+      "en": "T = {J}"
+     },
+     "size": 24,
+     "align": "left",
+     "visibleIf": "ty == 4"
+    },
+    {
+     "shape": "rect",
+     "x": 6,
+     "y": 6,
+     "w": 5,
+     "h": 4.5,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 8.5,
+     "y": 8,
+     "text": {
+      "en": "FF",
+      "kn": "FF"
+     },
+     "size": 26
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       6,
+       6.5
+      ],
+      [
+       6.7,
+       6.9
+      ],
+      [
+       6,
+       7.3
+      ]
+     ],
+     "fill": false,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 6.4,
+     "y": 5.5,
+     "text": {
+      "en": "CLK"
+     },
+     "size": 16
+    },
+    {
+     "shape": "circle",
+     "x": 13,
+     "y": 9.3,
+     "r": 0.8,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 13,
+     "y": 9.3,
+     "r": 0.6400000000000001,
+     "color": "yellow",
+     "visibleIf": "(mod(h, 2))"
+    },
+    {
+     "shape": "text",
+     "x": 14.3,
+     "y": 9.1,
+     "text": {
+      "en": "Q = {mod(h, 2)}"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "circle",
+     "x": 13,
+     "y": 7.2,
+     "r": 0.8,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 13,
+     "y": 7.2,
+     "r": 0.6400000000000001,
+     "color": "blue",
+     "visibleIf": "(1 - mod(h, 2))"
+    },
+    {
+     "shape": "text",
+     "x": 14.3,
+     "y": 7.0,
+     "text": {
+      "en": "Q̄"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "label",
+     "x": 24,
+     "y": 9.3,
+     "text": {
+      "en": "next Q = {if(ty == 1, if(J && K, mod(h, 2), if(J, 1, if(K, 0, mod(h, 2)))), if(ty == 2, J, if(ty == 3, J*(1 - mod(h, 2)) + (1 - K)*mod(h, 2), mod(J + mod(h, 2), 2))))}",
+      "kn": "ಮುಂದಿನ Q = {if(ty == 1, if(J && K, mod(h, 2), if(J, 1, if(K, 0, mod(h, 2)))), if(ty == 2, J, if(ty == 3, J*(1 - mod(h, 2)) + (1 - K)*mod(h, 2), mod(J + mod(h, 2), 2))))}"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 24,
+     "y": 7.3,
+     "text": {
+      "en": "S = R = 1 not allowed",
+      "kn": "S = R = 1 ಅಮಾನ್ಯ"
+     },
+     "size": 18,
+     "color": "red",
+     "visibleIf": "ty == 1 && J && K"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 4.2,
+     "text": {
+      "en": "Q over the last 8 clocks (newest on the right)",
+      "kn": "ಕೊನೆಯ 8 ಗಡಿಯಾರದ Q (ಹೊಸದು ಬಲಕ್ಕೆ)"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 1,
+     "x2": 28,
+     "y2": 1,
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "rect",
+     "x": 25.0,
+     "y": 1,
+     "w": 3.2,
+     "h": "2*mod(floor((h)/1), 2)",
+     "color": "yellow",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 25.0,
+     "y1": 0.6,
+     "x2": 25.0,
+     "y2": 3.4,
+     "width": 1,
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": 21.8,
+     "y": 1,
+     "w": 3.2,
+     "h": "2*mod(floor((h)/2), 2)",
+     "color": "yellow",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 21.8,
+     "y1": 0.6,
+     "x2": 21.8,
+     "y2": 3.4,
+     "width": 1,
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": 18.6,
+     "y": 1,
+     "w": 3.2,
+     "h": "2*mod(floor((h)/4), 2)",
+     "color": "yellow",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 18.6,
+     "y1": 0.6,
+     "x2": 18.6,
+     "y2": 3.4,
+     "width": 1,
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": 15.399999999999999,
+     "y": 1,
+     "w": 3.2,
+     "h": "2*mod(floor((h)/8), 2)",
+     "color": "yellow",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 15.399999999999999,
+     "y1": 0.6,
+     "x2": 15.399999999999999,
+     "y2": 3.4,
+     "width": 1,
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": 12.2,
+     "y": 1,
+     "w": 3.2,
+     "h": "2*mod(floor((h)/16), 2)",
+     "color": "yellow",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 12.2,
+     "y1": 0.6,
+     "x2": 12.2,
+     "y2": 3.4,
+     "width": 1,
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": 9.0,
+     "y": 1,
+     "w": 3.2,
+     "h": "2*mod(floor((h)/32), 2)",
+     "color": "yellow",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 9.0,
+     "y1": 0.6,
+     "x2": 9.0,
+     "y2": 3.4,
+     "width": 1,
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": 5.799999999999997,
+     "y": 1,
+     "w": 3.2,
+     "h": "2*mod(floor((h)/64), 2)",
+     "color": "yellow",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 5.799999999999997,
+     "y1": 0.6,
+     "x2": 5.799999999999997,
+     "y2": 3.4,
+     "width": 1,
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": 2.599999999999998,
+     "y": 1,
+     "w": 3.2,
+     "h": "2*mod(floor((h)/128), 2)",
+     "color": "yellow",
+     "opacity": 0.7
+    },
+    {
+     "shape": "line",
+     "x1": 2.599999999999998,
+     "y1": 0.6,
+     "x2": 2.599999999999998,
+     "y2": 3.4,
+     "width": 1,
+     "opacity": 0.3
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Q now"
+     },
+     "expr": "mod(h, 2)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Choose JK with J = K = 1 and clock several times. What pattern does Q make?"
+    },
+    {
+     "en": "Choose D. Change D without clocking. Does Q change?"
+    },
+    {
+     "en": "Choose T with T = 1. How does the frequency of Q compare with the clock?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -447,6 +447,365 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Counting the time of a delay loop",
+    "kn": "ವಿಳಂಬ ಕುಣಿಕೆಯ ಸಮಯ ಎಣಿಕೆ"
+   },
+   "narration": {
+    "en": "MVI C loads the count once (7 T). Each pass through the loop runs DCR C (4 T) and JNZ (10 T when it jumps back, 7 T on the last pass). Step through the loop and watch C fall and the T-states add up to 14N + 4.",
+    "kn": "MVI C ಒಮ್ಮೆ ಎಣಿಕೆ ತುಂಬುತ್ತದೆ (7 T). ಪ್ರತಿ ಕುಣಿಕೆಯಲ್ಲಿ DCR C (4 T) ಮತ್ತು JNZ (ಹಿಂದೆ ಜಿಗಿದರೆ 10 T, ಕೊನೆಯಲ್ಲಿ 7 T). ಒಟ್ಟು 14N + 4."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "MVI C loads the count once (7 T). Each pass through the loop runs DCR C (4 T) and JNZ (10 T when it jumps back, 7 T on the last pass). Step through the loop and watch C fall and the T-states add up to 14N + 4.",
+    "kn": "MVI C ಒಮ್ಮೆ ಎಣಿಕೆ ತುಂಬುತ್ತದೆ (7 T). ಪ್ರತಿ ಕುಣಿಕೆಯಲ್ಲಿ DCR C (4 T) ಮತ್ತು JNZ (ಹಿಂದೆ ಜಿಗಿದರೆ 10 T, ಕೊನೆಯಲ್ಲಿ 7 T). ಒಟ್ಟು 14N + 4."
+   },
+   "sliders": [
+    {
+     "name": "N",
+     "label": {
+      "en": "Count N loaded into C",
+      "kn": "C ಗೆ ತುಂಬುವ ಎಣಿಕೆ N"
+     },
+     "min": 1,
+     "max": 255,
+     "step": 1,
+     "value": 3
+    }
+   ],
+   "choices": [
+    {
+     "name": "fc",
+     "label": {
+      "en": "Clock",
+      "kn": "ಗಡಿಯಾರ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "1 MHz"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "2 MHz"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "3 MHz"
+       },
+       "value": 3
+      }
+     ],
+     "value": 3
+    }
+   ],
+   "counters": [
+    {
+     "name": "k",
+     "value": 0,
+     "min": 0,
+     "max": 255
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Run one loop",
+      "kn": "ಒಂದು ಕುಣಿಕೆ"
+     },
+     "icon": "next",
+     "set": {
+      "k": "min(k + 1, N)"
+     }
+    },
+    {
+     "label": {
+      "en": "Run to the end",
+      "kn": "ಕೊನೆಯವರೆಗೆ"
+     },
+     "icon": "play",
+     "set": {
+      "k": "N"
+     }
+    },
+    {
+     "label": {
+      "en": "Start again",
+      "kn": "ಮತ್ತೆ ಆರಂಭಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "k": "0"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "kk",
+     "expr": "min(k, N)"
+    },
+    {
+     "name": "Tso",
+     "expr": "if(kk < N, 7 + 14*kk, 14*N + 4)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     10.4
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 1.5,
+     "w": 13,
+     "h": 8.5,
+     "fill": false,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 8.8,
+     "text": {
+      "en": "MVI C, N"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 13.5,
+     "y": 8.8,
+     "text": {
+      "en": "7 T"
+     },
+     "size": 18,
+     "align": "right",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 7.000000000000001,
+     "text": {
+      "en": "LOOP: DCR C"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 13.5,
+     "y": 7.000000000000001,
+     "text": {
+      "en": "4 T"
+     },
+     "size": 18,
+     "align": "right",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 5.200000000000001,
+     "text": {
+      "en": "JNZ LOOP"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 13.5,
+     "y": 5.200000000000001,
+     "text": {
+      "en": "10 T / 7 T"
+     },
+     "size": 18,
+     "align": "right",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 3.4000000000000004,
+     "text": {
+      "en": "HLT"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 13.5,
+     "y": 3.4000000000000004,
+     "text": {
+      "en": "5 T"
+     },
+     "size": 18,
+     "align": "right",
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "x": 0.2,
+     "y": "if(k == 0, 8.8, if(k < N, 5.2, 3.4))",
+     "dx": 1.6,
+     "dy": 0,
+     "color": "yellow",
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": 17,
+     "y": 6.5,
+     "w": 5,
+     "h": 2.6,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 19.5,
+     "y": 8.3,
+     "text": {
+      "en": "Register C",
+      "kn": "ರಿಜಿಸ್ಟರ್ C"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 19.5,
+     "y": 7.0,
+     "text": {
+      "en": "{N - k}"
+     },
+     "size": 34,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 23.5,
+     "y": 6.5,
+     "w": 6,
+     "h": 2.6,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 26.5,
+     "y": 8.3,
+     "text": {
+      "en": "T-states so far",
+      "kn": "ಇಲ್ಲಿಯವರೆಗಿನ T"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.5,
+     "y": 7.0,
+     "text": {
+      "en": "{Tso}"
+     },
+     "size": 34,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 17,
+     "y": 3.2,
+     "w": 12.5,
+     "h": 1.2,
+     "fill": false,
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "x": 17,
+     "y": 3.2,
+     "w": "12.5*k/N",
+     "h": 1.2,
+     "color": "green",
+     "opacity": 0.7
+    },
+    {
+     "shape": "text",
+     "x": 23.25,
+     "y": 2.4,
+     "text": {
+      "en": "loops done {k} of {N}",
+      "kn": "ಮುಗಿದ ಕುಣಿಕೆ {k} / {N}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "label",
+     "x": 23.25,
+     "y": 0.8,
+     "text": {
+      "en": "Total delay 14N + 4 = {14*N + 4} T = {(14*N + 4)/fc:1} µs",
+      "kn": "ಒಟ್ಟು ವಿಳಂಬ {(14*N + 4)/fc:1} µs"
+     },
+     "size": 20,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "T-states so far"
+     },
+     "expr": "Tso",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Time so far"
+     },
+     "expr": "Tso/fc",
+     "digits": 2,
+     "unit": "µs"
+    },
+    {
+     "label": {
+      "en": "One T-state"
+     },
+     "expr": "1000/fc",
+     "digits": 0,
+     "unit": "ns"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set N = 3 and step through. Check the total is 14 × 3 + 4 = 46 T-states."
+    },
+    {
+     "en": "Set N = 255 (FFH) at 3 MHz. Is the delay about 1.19 ms?"
+    },
+    {
+     "en": "What count N gives a delay of about 0.5 ms at 3 MHz?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

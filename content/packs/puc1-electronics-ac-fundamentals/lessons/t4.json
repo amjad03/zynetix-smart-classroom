@@ -717,6 +717,290 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Impedance triangle of a series circuit",
+    "kn": "ಸರಣಿ ಮಂಡಲದ ಪ್ರತಿಬಾಧಾ ತ್ರಿಕೋನ"
+   },
+   "narration": {
+    "en": "R is drawn along the current; the net reactance XL − XC is drawn at 90°. The slanting side is the impedance Z and the angle between R and Z is the phase angle φ. The supply is 100 V RMS.",
+    "kn": "R ಅನ್ನು ಪ್ರವಾಹದ ದಿಕ್ಕಿನಲ್ಲಿ, XL − XC ಅನ್ನು 90° ನಲ್ಲಿ ಎಳೆಯಲಾಗಿದೆ. ಓರೆ ಬದಿ ಪ್ರತಿಬಾಧೆ Z, R ಮತ್ತು Z ನಡುವಿನ ಕೋನ φ. ಸರಬರಾಜು 100 V RMS."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "R is drawn along the current; the net reactance XL − XC is drawn at 90°. The slanting side is the impedance Z and the angle between R and Z is the phase angle φ. The supply is 100 V RMS.",
+    "kn": "R ಅನ್ನು ಪ್ರವಾಹದ ದಿಕ್ಕಿನಲ್ಲಿ, XL − XC ಅನ್ನು 90° ನಲ್ಲಿ ಎಳೆಯಲಾಗಿದೆ. ಓರೆ ಬದಿ ಪ್ರತಿಬಾಧೆ Z, R ಮತ್ತು Z ನಡುವಿನ ಕೋನ φ. ಸರಬರಾಜು 100 V RMS."
+   },
+   "sliders": [
+    {
+     "name": "R",
+     "label": {
+      "en": "Resistance R",
+      "kn": "ರೋಧ"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 10,
+     "value": 60,
+     "unit": "Ω"
+    },
+    {
+     "name": "L",
+     "label": {
+      "en": "Inductance L",
+      "kn": "ಪ್ರೇರಕತೆ"
+     },
+     "min": 0,
+     "max": 300,
+     "step": 10,
+     "value": 200,
+     "unit": "mH"
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "Capacitance C",
+      "kn": "ಧಾರಕತೆ"
+     },
+     "min": 20,
+     "max": 400,
+     "step": 10,
+     "value": 100,
+     "unit": "µF"
+    },
+    {
+     "name": "f",
+     "label": {
+      "en": "Frequency",
+      "kn": "ಆವೃತ್ತಿ"
+     },
+     "min": 25,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "Hz"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sep",
+     "label": {
+      "en": "Show XL and XC separately",
+      "kn": "XL ಮತ್ತು XC ಪ್ರತ್ಯೇಕ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "cl",
+     "label": {
+      "en": "Circuit",
+      "kn": "ಮಂಡಲ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "RL"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "RC"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "RLC"
+       },
+       "value": 3
+      }
+     ],
+     "value": 3
+    }
+   ],
+   "vars": [
+    {
+     "name": "XL",
+     "expr": "if(cl == 2, 0, 2*pi*f*L/1000)"
+    },
+    {
+     "name": "XC",
+     "expr": "if(cl == 1, 0, 1e6/(2*pi*f*C))"
+    },
+    {
+     "name": "X",
+     "expr": "XL - XC"
+    },
+    {
+     "name": "Z",
+     "expr": "sqrt(R^2 + X^2)"
+    },
+    {
+     "name": "I",
+     "expr": "100/Z"
+    },
+    {
+     "name": "phi",
+     "expr": "deg(atan2(X, R))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     26
+    ],
+    "y": [
+     -9,
+     9
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 0,
+     "x2": 25,
+     "y2": 0,
+     "color": "white",
+     "width": 1,
+     "opacity": 0.4
+    },
+    {
+     "shape": "arrow",
+     "x": 3,
+     "y": 0,
+     "dx": "0.05*R",
+     "dy": 0,
+     "color": "yellow",
+     "width": 5,
+     "label": "R"
+    },
+    {
+     "shape": "arrow",
+     "x": "3 + 0.05*R",
+     "y": 0,
+     "dx": 0,
+     "dy": "0.05*XL",
+     "color": "green",
+     "width": 3,
+     "label": "XL",
+     "visibleIf": "sep && cl != 2"
+    },
+    {
+     "shape": "arrow",
+     "x": "3 + 0.05*R + 0.6",
+     "y": "0.05*XL*sep",
+     "dx": 0,
+     "dy": "-0.05*XC",
+     "color": "blue",
+     "width": 3,
+     "label": "XC",
+     "visibleIf": "sep && cl != 1"
+    },
+    {
+     "shape": "arrow",
+     "x": "3 + 0.05*R",
+     "y": 0,
+     "dx": 0,
+     "dy": "0.05*X",
+     "color": "orange",
+     "width": 5,
+     "label": "XL−XC",
+     "visibleIf": "!sep && abs(X) > 0.5"
+    },
+    {
+     "shape": "arrow",
+     "x": 3,
+     "y": 0,
+     "dx": "0.05*R",
+     "dy": "0.05*X",
+     "color": "red",
+     "width": 5,
+     "label": "Z"
+    },
+    {
+     "shape": "text",
+     "x": "3 + 1.6*cos(atan2(X, R)/2)",
+     "y": "1.6*sin(atan2(X, R)/2)",
+     "text": {
+      "en": "φ"
+     },
+     "size": 24,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 14,
+     "y": 8,
+     "text": {
+      "en": "{phi:1}°  "
+     },
+     "size": 24,
+     "color": "red"
+    },
+    {
+     "shape": "label",
+     "x": 14,
+     "y": -8,
+     "text": {
+      "en": "Z = {Z:1} Ω   I = {I:2} A"
+     },
+     "size": 24
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Impedance Z"
+     },
+     "expr": "Z",
+     "digits": 1,
+     "unit": "Ω"
+    },
+    {
+     "label": {
+      "en": "Phase angle φ (+ means current lags)"
+     },
+     "expr": "phi",
+     "digits": 1,
+     "unit": "°"
+    },
+    {
+     "label": {
+      "en": "Power factor cos φ"
+     },
+     "expr": "R/Z",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "True power P = I²R"
+     },
+     "expr": "I^2*R",
+     "digits": 1,
+     "unit": "W"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Pick RL and raise L. Does the current lead or lag? What happens to the power factor?"
+    },
+    {
+     "en": "Pick RLC and adjust C until the triangle becomes flat. What are Z and the power factor now?"
+    },
+    {
+     "en": "Raise the frequency in the RC circuit. Why does Z fall?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

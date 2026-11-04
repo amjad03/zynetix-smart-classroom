@@ -502,6 +502,457 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Capacitors in series and in parallel",
+    "kn": "ಸರಣಿ ಮತ್ತು ಸಮಾಂತರ ಧಾರಕಗಳು"
+   },
+   "narration": {
+    "en": "In parallel the capacitances add and each capacitor has the full voltage. In series the same charge sits on each capacitor, the voltage divides (more across the smaller one) and the total is less than the smallest. The bars show the charge on each.",
+    "kn": "ಸಮಾಂತರದಲ್ಲಿ ಧಾರಕತೆಗಳು ಕೂಡುತ್ತವೆ, ಪ್ರತಿಯೊಂದಕ್ಕೆ ಪೂರ್ಣ ವೋಲ್ಟೇಜ್. ಸರಣಿಯಲ್ಲಿ ಪ್ರತಿಯೊಂದರಲ್ಲಿ ಒಂದೇ ಆವೇಶ, ಚಿಕ್ಕದರ ಮೇಲೆ ಹೆಚ್ಚು ವೋಲ್ಟೇಜ್. ಪಟ್ಟಿಗಳು ಆವೇಶ ತೋರಿಸುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "In parallel the capacitances add and each capacitor has the full voltage. In series the same charge sits on each capacitor, the voltage divides (more across the smaller one) and the total is less than the smallest. The bars show the charge on each.",
+    "kn": "ಸಮಾಂತರದಲ್ಲಿ ಧಾರಕತೆಗಳು ಕೂಡುತ್ತವೆ, ಪ್ರತಿಯೊಂದಕ್ಕೆ ಪೂರ್ಣ ವೋಲ್ಟೇಜ್. ಸರಣಿಯಲ್ಲಿ ಪ್ರತಿಯೊಂದರಲ್ಲಿ ಒಂದೇ ಆವೇಶ, ಚಿಕ್ಕದರ ಮೇಲೆ ಹೆಚ್ಚು ವೋಲ್ಟೇಜ್. ಪಟ್ಟಿಗಳು ಆವೇಶ ತೋರಿಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "C1",
+     "label": {
+      "en": "C1",
+      "kn": "C1"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "µF"
+    },
+    {
+     "name": "C2",
+     "label": {
+      "en": "C2",
+      "kn": "C2"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 5,
+     "unit": "µF"
+    },
+    {
+     "name": "V",
+     "label": {
+      "en": "Battery",
+      "kn": "ಬ್ಯಾಟರಿ"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 12,
+     "unit": "V"
+    }
+   ],
+   "choices": [
+    {
+     "name": "mode",
+     "label": {
+      "en": "Connection",
+      "kn": "ಜೋಡಣೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Series",
+        "kn": "ಸರಣಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Parallel",
+        "kn": "ಸಮಾಂತರ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "Ceq",
+     "expr": "if(mode == 1, C1*C2/(C1 + C2), C1 + C2)"
+    },
+    {
+     "name": "Q",
+     "expr": "Ceq*V"
+    },
+    {
+     "name": "Q1",
+     "expr": "if(mode == 1, Q, C1*V)"
+    },
+    {
+     "name": "Q2",
+     "expr": "if(mode == 1, Q, C2*V)"
+    },
+    {
+     "name": "V1",
+     "expr": "Q1/C1"
+    },
+    {
+     "name": "V2",
+     "expr": "Q2/C2"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 2,
+     "x2": 2,
+     "y2": 4.6,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "battery",
+     "x": 2,
+     "y": 5.5,
+     "size": 2,
+     "angle": 90
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 6.4,
+     "x2": 2,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 6.6,
+     "text": {
+      "en": "+"
+     },
+     "size": 28,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 0.6,
+     "y": 8.2,
+     "text": {
+      "en": "{V} V"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 9,
+     "x2": 5,
+     "y2": 9,
+     "visibleIf": "mode == 1",
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "capacitor",
+     "x": 6,
+     "y": 9,
+     "size": 2,
+     "color": "blue",
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "line",
+     "x1": 7,
+     "y1": 9,
+     "x2": 10,
+     "y2": 9,
+     "visibleIf": "mode == 1",
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "capacitor",
+     "x": 11,
+     "y": 9,
+     "size": 2,
+     "color": "orange",
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 9,
+     "x2": 14,
+     "y2": 9,
+     "visibleIf": "mode == 1",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 9,
+     "x2": 14,
+     "y2": 2,
+     "visibleIf": "mode == 1",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 2,
+     "x2": 2,
+     "y2": 2,
+     "visibleIf": "mode == 1",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 10.4,
+     "text": {
+      "en": "C1"
+     },
+     "size": 22,
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 10.4,
+     "text": {
+      "en": "C2"
+     },
+     "size": 22,
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 9,
+     "x2": 14,
+     "y2": 9,
+     "visibleIf": "mode == 2",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 9,
+     "x2": 8,
+     "y2": 6.5,
+     "visibleIf": "mode == 2",
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "capacitor",
+     "x": 8,
+     "y": 5.5,
+     "size": 2,
+     "angle": 90,
+     "color": "blue",
+     "visibleIf": "mode == 2"
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 4.5,
+     "x2": 8,
+     "y2": 2,
+     "visibleIf": "mode == 2",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 9,
+     "x2": 14,
+     "y2": 6.5,
+     "visibleIf": "mode == 2",
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "capacitor",
+     "x": 14,
+     "y": 5.5,
+     "size": 2,
+     "angle": 90,
+     "color": "orange",
+     "visibleIf": "mode == 2"
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 4.5,
+     "x2": 14,
+     "y2": 2,
+     "visibleIf": "mode == 2",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 2,
+     "x2": 2,
+     "y2": 2,
+     "visibleIf": "mode == 2",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 9.2,
+     "y": 5.5,
+     "text": {
+      "en": "C1"
+     },
+     "size": 22,
+     "align": "left",
+     "visibleIf": "mode == 2"
+    },
+    {
+     "shape": "text",
+     "x": 15.2,
+     "y": 5.5,
+     "text": {
+      "en": "C2"
+     },
+     "size": 22,
+     "align": "left",
+     "visibleIf": "mode == 2"
+    },
+    {
+     "shape": "line",
+     "x1": 17,
+     "y1": 1.5,
+     "x2": 29,
+     "y2": 1.5,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 23,
+     "y": 10.8,
+     "text": {
+      "en": "Charge (µC)",
+      "kn": "ಆವೇಶ (µC)"
+     },
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": 18.5,
+     "y": 1.5,
+     "w": 3,
+     "h": "Q1/50",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 24.5,
+     "y": 1.5,
+     "w": 3,
+     "h": "Q2/50",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": "min(1.9 + Q1/50, 10.2)",
+     "text": {
+      "en": "{Q1:0}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 26,
+     "y": "min(1.9 + Q2/50, 10.2)",
+     "text": {
+      "en": "{Q2:0}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 0.8,
+     "text": {
+      "en": "C1: {V1:1} V"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 26,
+     "y": 0.8,
+     "text": {
+      "en": "C2: {V2:1} V"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Equivalent capacitance"
+     },
+     "expr": "Ceq",
+     "digits": 2,
+     "unit": "µF"
+    },
+    {
+     "label": {
+      "en": "Total charge"
+     },
+     "expr": "Q",
+     "digits": 1,
+     "unit": "µC"
+    },
+    {
+     "label": {
+      "en": "Energy stored ½CV²"
+     },
+     "expr": "0.5*Ceq*V^2",
+     "digits": 0,
+     "unit": "µJ"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "In series, set C1 = 10 µF and C2 = 10 µF. Is the total 5 µF?"
+    },
+    {
+     "en": "In series, make C2 much smaller than C1. Which capacitor takes most of the voltage?"
+    },
+    {
+     "en": "Switch to parallel. Which capacitor now stores more charge, and why?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

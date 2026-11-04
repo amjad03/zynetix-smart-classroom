@@ -564,6 +564,298 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Ground, sky and space waves",
+    "kn": "ನೆಲ, ಆಕಾಶ ಮತ್ತು ಅಂತರಿಕ್ಷ ತರಂಗಗಳು"
+   },
+   "narration": {
+    "en": "Ground waves (MF) hug the earth for a few hundred km. HF sky waves are bent back by the ionosphere (F layer here at 300 km) if f is below the maximum usable frequency MUF = fc / sin θ for elevation θ; they come down far from the transmitter. Above about 30 MHz waves pass through, so VHF and UHF use line-of-sight space waves.",
+    "kn": "ನೆಲ ತರಂಗಗಳು (MF) ಭೂಮಿಯ ಹತ್ತಿರ ಚಲಿಸುತ್ತವೆ. HF ಆಕಾಶ ತರಂಗಗಳು f, MUF = fc / sin θ ಗಿಂತ ಕಡಿಮೆ ಇದ್ದರೆ ಅಯಾನುಗೋಳದಿಂದ ಹಿಂದಿರುಗುತ್ತವೆ. 30 MHz ಮೇಲೆ ತರಂಗಗಳು ದಾಟಿ ಹೋಗುತ್ತವೆ; VHF/UHF ದೃಷ್ಟಿ-ರೇಖೆ ತರಂಗ ಬಳಸುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Ground waves (MF) hug the earth for a few hundred km. HF sky waves are bent back by the ionosphere (F layer here at 300 km) if f is below the maximum usable frequency MUF = fc / sin θ for elevation θ; they come down far from the transmitter. Above about 30 MHz waves pass through, so VHF and UHF use line-of-sight space waves.",
+    "kn": "ನೆಲ ತರಂಗಗಳು (MF) ಭೂಮಿಯ ಹತ್ತಿರ ಚಲಿಸುತ್ತವೆ. HF ಆಕಾಶ ತರಂಗಗಳು f, MUF = fc / sin θ ಗಿಂತ ಕಡಿಮೆ ಇದ್ದರೆ ಅಯಾನುಗೋಳದಿಂದ ಹಿಂದಿರುಗುತ್ತವೆ. 30 MHz ಮೇಲೆ ತರಂಗಗಳು ದಾಟಿ ಹೋಗುತ್ತವೆ; VHF/UHF ದೃಷ್ಟಿ-ರೇಖೆ ತರಂಗ ಬಳಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "f",
+     "label": {
+      "en": "Frequency f",
+      "kn": "ಆವೃತ್ತಿ f"
+     },
+     "min": 1,
+     "max": 50,
+     "step": 1,
+     "value": 10,
+     "unit": "MHz"
+    },
+    {
+     "name": "th",
+     "label": {
+      "en": "Elevation angle θ",
+      "kn": "ಏರಿಕೆ ಕೋನ θ"
+     },
+     "min": 10,
+     "max": 85,
+     "step": 5,
+     "value": 45,
+     "unit": "°"
+    },
+    {
+     "name": "fc",
+     "label": {
+      "en": "Critical frequency fc",
+      "kn": "ನಿರ್ಣಾಯಕ ಆವೃತ್ತಿ fc"
+     },
+     "min": 3,
+     "max": 12,
+     "step": 0.5,
+     "value": 8,
+     "unit": "MHz"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ang",
+     "label": {
+      "en": "Show the angle",
+      "kn": "ಕೋನ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "muf",
+     "expr": "fc/sin(rad(th))"
+    },
+    {
+     "name": "refl",
+     "expr": "f <= muf"
+    },
+    {
+     "name": "skip",
+     "expr": "2*300/tan(rad(th))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 30,
+     "h": 1,
+     "color": "green",
+     "opacity": 0.4
+    },
+    {
+     "shape": "rect",
+     "x": 0,
+     "y": "(1 + 300/40) - 0.3",
+     "w": 30,
+     "h": 1.4,
+     "color": "blue",
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": "(1 + 300/40) + 1.3",
+     "text": {
+      "en": "ionosphere (F layer)",
+      "kn": "ಅಯಾನುಗೋಳ (F ಪದರ)"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 1,
+     "x2": 1,
+     "y2": 2.2,
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 1,
+     "y": 2.3,
+     "r": 0.15,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 1,
+     "x2": "(1 + 300/tan(rad(th))/100)",
+     "y2": "(1 + 300/40)",
+     "color": "yellow",
+     "width": 3,
+     "visibleIf": "f > 3"
+    },
+    {
+     "shape": "line",
+     "x1": "(1 + 300/tan(rad(th))/100)",
+     "y1": "(1 + 300/40)",
+     "x2": "1 + 2*((1 + 300/tan(rad(th))/100) - 1)",
+     "y2": 1,
+     "color": "yellow",
+     "width": 3,
+     "visibleIf": "refl && f > 3"
+    },
+    {
+     "shape": "line",
+     "x1": "(1 + 300/tan(rad(th))/100)",
+     "y1": "(1 + 300/40)",
+     "x2": "1 + 2*((1 + 300/tan(rad(th))/100) - 1)",
+     "y2": "1 + 2*300/40",
+     "color": "yellow",
+     "width": 2,
+     "dashed": true,
+     "visibleIf": "!refl && f > 3"
+    },
+    {
+     "shape": "text",
+     "x": 3.2,
+     "y": 1.6,
+     "text": {
+      "en": "θ = {th}°"
+     },
+     "size": 18,
+     "color": "yellow",
+     "align": "left",
+     "visibleIf": "ang && f > 3"
+    },
+    {
+     "shape": "label",
+     "x": "1 + ((1 + 300/tan(rad(th))/100) - 1)",
+     "y": "(1 + 300/40) - 1.0",
+     "text": {
+      "en": "MUF {muf:1} MHz"
+     },
+     "size": 16,
+     "color": "blue",
+     "visibleIf": "ang && f > 3"
+    },
+    {
+     "shape": "path",
+     "points": [
+      [
+       1,
+       1.25
+      ],
+      [
+       3.5,
+       1.25
+      ]
+     ],
+     "color": "orange",
+     "width": 6,
+     "visibleIf": "f <= 3"
+    },
+    {
+     "shape": "label",
+     "x": 4.5,
+     "y": 2.6,
+     "text": {
+      "en": "ground wave",
+      "kn": "ನೆಲ ತರಂಗ"
+     },
+     "size": 18,
+     "color": "orange",
+     "visibleIf": "f <= 3"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 0.5,
+     "text": {
+      "en": "returns to earth {skip:0} km away",
+      "kn": "{skip:0} km ದೂರದಲ್ಲಿ ಹಿಂದಿರುಗುತ್ತದೆ"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "refl && f > 3"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 10.8,
+     "text": {
+      "en": "passes through: use space waves",
+      "kn": "ದಾಟಿ ಹೋಗುತ್ತದೆ: ಅಂತರಿಕ್ಷ ತರಂಗ"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "!refl && f > 3"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 10.8,
+     "text": {
+      "en": "reflected back to earth",
+      "kn": "ಭೂಮಿಗೆ ಹಿಂದಿರುಗಿದೆ"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "refl && f > 3"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "MUF = fc / sin θ"
+     },
+     "expr": "muf",
+     "digits": 1,
+     "unit": "MHz"
+    },
+    {
+     "label": {
+      "en": "Distance to where it returns (flat earth)"
+     },
+     "expr": "skip",
+     "digits": 0,
+     "unit": "km"
+    },
+    {
+     "label": {
+      "en": "Line-of-sight range of a 100 m tower √(2Rh)"
+     },
+     "expr": "sqrt(2*6400*0.1)",
+     "digits": 1,
+     "unit": "km"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set f = 10 MHz and fc = 6 MHz. Above what elevation does the wave escape into space?"
+    },
+    {
+     "en": "Lower the elevation angle. Does the wave come down nearer or farther? The nearest point that sky waves reach is the skip distance."
+    },
+    {
+     "en": "Set f = 1 MHz. Which kind of wave carries the signal?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

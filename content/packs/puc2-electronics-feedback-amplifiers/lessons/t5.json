@@ -971,6 +971,220 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The emitter follower",
+    "kn": "ಉತ್ಸರ್ಜಕ ಅನುಸರಕ"
+   },
+   "narration": {
+    "en": "The whole output across RE is fed back in series with the input (100% voltage-series feedback). So the output follows the input almost exactly, in phase, with Av = (1 + hfe)RE / (hie + (1 + hfe)RE), slightly below 1. The input impedance is high and the output impedance is low (hie = 1 kΩ, source 1 kΩ).",
+    "kn": "RE ಮೇಲಿನ ಸಂಪೂರ್ಣ ನಿರ್ಗಮ ಒಳಹರಿವಿನೊಂದಿಗೆ ಸರಣಿಯಲ್ಲಿ ಹಿಂತಿರುಗುತ್ತದೆ. ನಿರ್ಗಮ ಒಳಹರಿವನ್ನು ಅದೇ ಹಂತದಲ್ಲಿ ಅನುಸರಿಸುತ್ತದೆ, Av 1 ಕ್ಕಿಂತ ಸ್ವಲ್ಪ ಕಡಿಮೆ. ಒಳ ಪ್ರತಿಬಾಧೆ ಹೆಚ್ಚು, ಹೊರ ಪ್ರತಿಬಾಧೆ ಕಡಿಮೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The whole output across RE is fed back in series with the input (100% voltage-series feedback). So the output follows the input almost exactly, in phase, with Av = (1 + hfe)RE / (hie + (1 + hfe)RE), slightly below 1. The input impedance is high and the output impedance is low (hie = 1 kΩ, source 1 kΩ).",
+    "kn": "RE ಮೇಲಿನ ಸಂಪೂರ್ಣ ನಿರ್ಗಮ ಒಳಹರಿವಿನೊಂದಿಗೆ ಸರಣಿಯಲ್ಲಿ ಹಿಂತಿರುಗುತ್ತದೆ. ನಿರ್ಗಮ ಒಳಹರಿವನ್ನು ಅದೇ ಹಂತದಲ್ಲಿ ಅನುಸರಿಸುತ್ತದೆ, Av 1 ಕ್ಕಿಂತ ಸ್ವಲ್ಪ ಕಡಿಮೆ. ಒಳ ಪ್ರತಿಬಾಧೆ ಹೆಚ್ಚು, ಹೊರ ಪ್ರತಿಬಾಧೆ ಕಡಿಮೆ."
+   },
+   "sliders": [
+    {
+     "name": "hfe",
+     "label": {
+      "en": "Current gain hfe",
+      "kn": "ಪ್ರವಾಹ ಲಾಭ hfe"
+     },
+     "min": 20,
+     "max": 300,
+     "step": 10,
+     "value": 100
+    },
+    {
+     "name": "RE",
+     "label": {
+      "en": "Emitter resistor RE",
+      "kn": "ಉತ್ಸರ್ಜಕ ರೋಧ RE"
+     },
+     "min": 0.05,
+     "max": 5,
+     "step": 0.05,
+     "value": 2,
+     "unit": "kΩ"
+    },
+    {
+     "name": "vin",
+     "label": {
+      "en": "Input peak",
+      "kn": "ಒಳಹರಿವಿನ ಶಿಖರ"
+     },
+     "min": 0.2,
+     "max": 2,
+     "step": 0.1,
+     "value": 2,
+     "unit": "V"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "showin",
+     "label": {
+      "en": "Show the input wave",
+      "kn": "ಒಳಹರಿವಿನ ತರಂಗ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 40,
+    "unit": "ms",
+    "loop": true,
+    "speeds": [
+     0.25,
+     0.5,
+     1,
+     2
+    ],
+    "speed": 0.5
+   },
+   "vars": [
+    {
+     "name": "Av",
+     "expr": "(1 + hfe)*RE/(1 + (1 + hfe)*RE)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -5.5,
+     6
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 0,
+     "x2": 29.5,
+     "y2": 0,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": -5,
+     "x2": 1,
+     "y2": 5.2,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": -0.7,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "wave",
+     "fn": "2*vin*sin(2*pi*(x - 1)/0.7/20)",
+     "color": "yellow",
+     "width": 6,
+     "opacity": 0.6,
+     "visibleIf": "showin",
+     "from": 1,
+     "to": 29
+    },
+    {
+     "shape": "wave",
+     "fn": "2*vin*Av*sin(2*pi*(x - 1)/0.7/20)",
+     "color": "orange",
+     "width": 3,
+     "from": 1,
+     "to": 29
+    },
+    {
+     "shape": "circle",
+     "x": "1 + 0.7*t",
+     "y": "2*vin*Av*sin(2*pi*t/20)",
+     "r": 0.25,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 5.4,
+     "text": {
+      "en": "input (yellow)",
+      "kn": "ಒಳಹರಿವು"
+     },
+     "size": 20,
+     "color": "yellow",
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 5.4,
+     "text": {
+      "en": "output across RE (orange)",
+      "kn": "RE ಮೇಲಿನ ನಿರ್ಗಮ"
+     },
+     "size": 20,
+     "color": "orange",
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Voltage gain Av"
+     },
+     "expr": "Av",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "Input impedance hie + (1 + hfe)RE"
+     },
+     "expr": "1 + (1 + hfe)*RE",
+     "digits": 1,
+     "unit": "kΩ"
+    },
+    {
+     "label": {
+      "en": "Output impedance ≈ (Rs + hie)/(1 + hfe)"
+     },
+     "expr": "2000/(1 + hfe)",
+     "digits": 1,
+     "unit": "Ω"
+    },
+    {
+     "label": {
+      "en": "Current gain 1 + hfe"
+     },
+     "expr": "1 + hfe",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Play and compare the two waves. Are they in phase?"
+    },
+    {
+     "en": "Make RE very small. Why does Av fall below 1 more noticeably?"
+    },
+    {
+     "en": "Raise hfe. What happens to the input impedance?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

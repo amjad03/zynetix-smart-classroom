@@ -524,6 +524,161 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Scanning a TV picture",
+    "kn": "ಟಿವಿ ಚಿತ್ರದ ಕ್ರಮವೀಕ್ಷಣೆ"
+   },
+   "narration": {
+    "en": "The picture is scanned line by line, left to right and top to bottom; the thin diagonal is the fast flyback, blanked in a real set. With interlacing, the odd lines are scanned first (one field) and then the even lines (the next field), so the screen is refreshed twice per frame and flicker is reduced. India (CCIR-B/PAL): 625 lines, 25 frames and 50 fields per second.",
+    "kn": "ಚಿತ್ರವನ್ನು ಸಾಲು ಸಾಲಾಗಿ, ಎಡದಿಂದ ಬಲಕ್ಕೆ, ಮೇಲಿನಿಂದ ಕೆಳಕ್ಕೆ ಕ್ರಮವೀಕ್ಷಿಸಲಾಗುತ್ತದೆ. ಅಂತರ್ಜೋಡಣೆಯಲ್ಲಿ ಮೊದಲು ಬೆಸ ಸಾಲುಗಳು, ನಂತರ ಸಮ ಸಾಲುಗಳು; ಮಿನುಗು ಕಡಿಮೆ. ಭಾರತ: 625 ಸಾಲು, 25 ಚೌಕಟ್ಟು, 50 ಕ್ಷೇತ್ರ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The picture is scanned line by line, left to right and top to bottom; the thin diagonal is the fast flyback, blanked in a real set. With interlacing, the odd lines are scanned first (one field) and then the even lines (the next field), so the screen is refreshed twice per frame and flicker is reduced. India (CCIR-B/PAL): 625 lines, 25 frames and 50 fields per second.",
+    "kn": "ಚಿತ್ರವನ್ನು ಸಾಲು ಸಾಲಾಗಿ, ಎಡದಿಂದ ಬಲಕ್ಕೆ, ಮೇಲಿನಿಂದ ಕೆಳಕ್ಕೆ ಕ್ರಮವೀಕ್ಷಿಸಲಾಗುತ್ತದೆ. ಅಂತರ್ಜೋಡಣೆಯಲ್ಲಿ ಮೊದಲು ಬೆಸ ಸಾಲುಗಳು, ನಂತರ ಸಮ ಸಾಲುಗಳು; ಮಿನುಗು ಕಡಿಮೆ. ಭಾರತ: 625 ಸಾಲು, 25 ಚೌಕಟ್ಟು, 50 ಕ್ಷೇತ್ರ."
+   },
+   "sliders": [
+    {
+     "name": "N",
+     "label": {
+      "en": "Lines in this demo (real: 625)",
+      "kn": "ಪ್ರದರ್ಶನದ ಸಾಲುಗಳು"
+     },
+     "min": 6,
+     "max": 20,
+     "step": 2,
+     "value": 10
+    }
+   ],
+   "toggles": [
+    {
+     "name": "il",
+     "label": {
+      "en": "Interlaced scanning",
+      "kn": "ಅಂತರ್ಜೋಡಿತ ಕ್ರಮವೀಕ್ಷಣೆ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 40,
+    "unit": "line",
+    "loop": true,
+    "speeds": [
+     1,
+     2,
+     4
+    ],
+    "speed": 2
+   },
+   "vars": [
+    {
+     "name": "li",
+     "expr": "if(il, if(mod(floor(t), N) < N/2, 2*mod(floor(t), N), 2*(mod(floor(t), N) - N/2) + 1), mod(floor(t), N))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1.5,
+     "y": 0.5,
+     "w": 27,
+     "h": 10,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "trail",
+     "x": "2 + 26*mod(t, 1)",
+     "y": "10 - 9*(li + 0.5)/N",
+     "length": 1200,
+     "color": "yellow",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "2 + 26*mod(t, 1)",
+     "y": "10 - 9*(li + 0.5)/N",
+     "r": 0.25,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 11.1,
+     "text": {
+      "en": "field {1 + floor(mod(floor(t), N)/(N/2))}  line {li + 1}",
+      "kn": "ಕ್ಷೇತ್ರ {1 + floor(mod(floor(t), N)/(N/2))}  ಸಾಲು {li + 1}"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "il"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 11.1,
+     "text": {
+      "en": "line {li + 1}",
+      "kn": "ಸಾಲು {li + 1}"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "!il"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Line frequency 625 × 25"
+     },
+     "expr": "625*25",
+     "digits": 0,
+     "unit": "Hz"
+    },
+    {
+     "label": {
+      "en": "Time per line"
+     },
+     "expr": "1e6/15625",
+     "digits": 0,
+     "unit": "µs"
+    },
+    {
+     "label": {
+      "en": "Fields per second"
+     },
+     "expr": "50",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn interlacing off and play. In what order are the lines drawn?"
+    },
+    {
+     "en": "Turn interlacing on. Which lines are drawn in the first field?"
+    },
+    {
+     "en": "Check the line frequency: 625 lines × 25 frames = ? lines per second."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

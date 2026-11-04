@@ -571,6 +571,498 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Transistor as a switch and an amplifier",
+    "kn": "ಸ್ವಿಚ್ ಮತ್ತು ವರ್ಧಕವಾಗಿ ಟ್ರಾನ್ಸಿಸ್ಟರ್"
+   },
+   "narration": {
+    "en": "VCC = 9 V and the lamp is a 1 kΩ load. Raise the input: below 0.7 V the transistor is cut off (lamp off, VCE = 9 V); with enough base current it saturates (lamp fully on, VCE ≈ 0.2 V). In between, a small input wiggle gives a large, inverted output swing.",
+    "kn": "VCC = 9 V, ದೀಪ 1 kΩ ಭಾರ. ಒಳಹರಿವು 0.7 V ಗಿಂತ ಕಡಿಮೆ ಇದ್ದರೆ ಕಡಿತ (ದೀಪ ಆರಿದೆ); ಸಾಕಷ್ಟು ಆಧಾರ ಪ್ರವಾಹದಲ್ಲಿ ಸಂತೃಪ್ತಿ (ದೀಪ ಪೂರ್ಣ ಉರಿಯುತ್ತದೆ). ಮಧ್ಯೆ ಸಣ್ಣ ಒಳಹರಿವಿನ ಬದಲಾವಣೆ ದೊಡ್ಡ ತಲೆಕೆಳಗಾದ ನಿರ್ಗಮ ಕೊಡುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "VCC = 9 V and the lamp is a 1 kΩ load. Raise the input: below 0.7 V the transistor is cut off (lamp off, VCE = 9 V); with enough base current it saturates (lamp fully on, VCE ≈ 0.2 V). In between, a small input wiggle gives a large, inverted output swing.",
+    "kn": "VCC = 9 V, ದೀಪ 1 kΩ ಭಾರ. ಒಳಹರಿವು 0.7 V ಗಿಂತ ಕಡಿಮೆ ಇದ್ದರೆ ಕಡಿತ (ದೀಪ ಆರಿದೆ); ಸಾಕಷ್ಟು ಆಧಾರ ಪ್ರವಾಹದಲ್ಲಿ ಸಂತೃಪ್ತಿ (ದೀಪ ಪೂರ್ಣ ಉರಿಯುತ್ತದೆ). ಮಧ್ಯೆ ಸಣ್ಣ ಒಳಹರಿವಿನ ಬದಲಾವಣೆ ದೊಡ್ಡ ತಲೆಕೆಳಗಾದ ನಿರ್ಗಮ ಕೊಡುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "Vin",
+     "label": {
+      "en": "Input voltage",
+      "kn": "ಒಳಹರಿವಿನ ವೋಲ್ಟೇಜ್"
+     },
+     "min": 0,
+     "max": 5,
+     "step": 0.1,
+     "value": 1.2,
+     "unit": "V"
+    },
+    {
+     "name": "RB",
+     "label": {
+      "en": "Base resistor RB",
+      "kn": "ಆಧಾರ ರೋಧ"
+     },
+     "min": 5,
+     "max": 50,
+     "step": 5,
+     "value": 10,
+     "unit": "kΩ"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ac",
+     "label": {
+      "en": "Add a small AC signal",
+      "kn": "ಸಣ್ಣ AC ಸಂಕೇತ ಸೇರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "beta",
+     "label": {
+      "en": "Current gain β",
+      "kn": "ಪ್ರವಾಹ ಲಾಭ β"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "50"
+       },
+       "value": 50
+      },
+      {
+       "label": {
+        "en": "100"
+       },
+       "value": 100
+      },
+      {
+       "label": {
+        "en": "200"
+       },
+       "value": 200
+      }
+     ],
+     "value": 100
+    }
+   ],
+   "vars": [
+    {
+     "name": "IBm",
+     "expr": "max(Vin - 0.7, 0)/RB"
+    },
+    {
+     "name": "Ic",
+     "expr": "min(beta*IBm, 8.8)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     32
+    ],
+    "y": [
+     0,
+     12
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 2,
+     "x2": 2,
+     "y2": 4,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "battery",
+     "x": 2,
+     "y": 5,
+     "size": 2,
+     "angle": 90
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 6,
+     "x2": 2,
+     "y2": 7,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 7,
+     "x2": 3.6,
+     "y2": 7,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 5.6,
+     "y": 7,
+     "size": 3
+    },
+    {
+     "shape": "text",
+     "x": 5.6,
+     "y": 8.0,
+     "text": {
+      "en": "RB = {RB} kΩ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 7.6,
+     "y1": 7,
+     "x2": 9.5,
+     "y2": 7,
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 11.8,
+     "y": 7,
+     "r": 1.7,
+     "fill": false,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 11.0,
+     "y1": 6.0,
+     "x2": 11.0,
+     "y2": 8.0,
+     "width": 6,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 9.5,
+     "y1": 7,
+     "x2": 11.0,
+     "y2": 7,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 11.0,
+     "y1": 7.4,
+     "x2": 12.7,
+     "y2": 8.3,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 12.7,
+     "y1": 8.3,
+     "x2": 12.7,
+     "y2": 9.2,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 11.0,
+     "y1": 6.6,
+     "x2": 12.7,
+     "y2": 5.7,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 12.7,
+     "y1": 5.7,
+     "x2": 12.7,
+     "y2": 4.8,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "arrow",
+     "x": 11.6,
+     "y": 6.34,
+     "dx": 0.9,
+     "dy": -0.48,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 12.7,
+     "y1": 9.2,
+     "x2": 12.7,
+     "y2": 9.6,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "bulb",
+     "x": 12.7,
+     "y": 10.3,
+     "size": 1.4,
+     "on": "Ic/8.8",
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 12.7,
+     "y1": 11,
+     "x2": 12.7,
+     "y2": 11.5,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 12.7,
+     "y1": 11.5,
+     "x2": 16,
+     "y2": 11.5,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 16,
+     "y1": 11.5,
+     "x2": 16,
+     "y2": 7.5,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "battery",
+     "x": 16,
+     "y": 6.5,
+     "size": 2,
+     "angle": 90
+    },
+    {
+     "shape": "text",
+     "x": 17.2,
+     "y": 6.5,
+     "text": {
+      "en": "9 V"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 16,
+     "y1": 5.5,
+     "x2": 16,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 16,
+     "y1": 2,
+     "x2": 2,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 12.7,
+     "y1": 4.8,
+     "x2": 12.7,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 0.6,
+     "y": 5,
+     "text": {
+      "en": "Vin"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 19,
+     "y1": 6.5,
+     "x2": 31,
+     "y2": 6.5,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 19,
+     "y1": 6.5,
+     "x2": 19,
+     "y2": 10.5,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 31,
+     "y": 5.9,
+     "text": {
+      "en": "t"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 19.2,
+     "y": 10.85,
+     "text": {
+      "en": "vin"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 19,
+     "y1": 0.5,
+     "x2": 31,
+     "y2": 0.5,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 19,
+     "y1": 0.5,
+     "x2": 19,
+     "y2": 4.5,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 31,
+     "y": -0.09999999999999998,
+     "text": {
+      "en": "one cycle"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 19.2,
+     "y": 4.85,
+     "text": {
+      "en": "VCE"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "path",
+     "fn": "(6.5 + 0.8*(((Vin + ac*0.15*sin(2*pi*(0 + 0.0833333*(x - 19))))) - (0)))",
+     "color": "yellow",
+     "width": 3,
+     "from": 19,
+     "to": 31
+    },
+    {
+     "shape": "path",
+     "fn": "(0.5 + 0.444444*(((9 - min(beta*max((Vin + ac*0.15*sin(2*pi*(0 + 0.0833333*(x - 19)))) - 0.7, 0)/RB, 8.8))) - (0)))",
+     "color": "orange",
+     "width": 4,
+     "from": 19,
+     "to": 31
+    },
+    {
+     "shape": "label",
+     "x": 7,
+     "y": 0.9,
+     "text": {
+      "en": "Cut-off: switch OFF",
+      "kn": "ಕಡಿತ: ಸ್ವಿಚ್ ಆಫ್"
+     },
+     "size": 22,
+     "color": "blue",
+     "visibleIf": "Vin <= 0.7"
+    },
+    {
+     "shape": "label",
+     "x": 7,
+     "y": 0.9,
+     "text": {
+      "en": "Active: amplifier",
+      "kn": "ಸಕ್ರಿಯ: ವರ್ಧಕ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "Vin > 0.7 && beta*(Vin - 0.7)/RB < 8.8"
+    },
+    {
+     "shape": "label",
+     "x": 7,
+     "y": 0.9,
+     "text": {
+      "en": "Saturation: switch ON",
+      "kn": "ಸಂತೃಪ್ತಿ: ಸ್ವಿಚ್ ಆನ್"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "beta*(Vin - 0.7)/RB >= 8.8"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Base current IB"
+     },
+     "expr": "IBm*1000",
+     "digits": 0,
+     "unit": "µA"
+    },
+    {
+     "label": {
+      "en": "Collector current IC"
+     },
+     "expr": "Ic",
+     "digits": 2,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "VCE = 9 − IC × 1 kΩ"
+     },
+     "expr": "9 - Ic",
+     "digits": 2,
+     "unit": "V"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Find the smallest input that turns the lamp fully on for β = 100. Check: IB(sat) = 8.8 mA / β."
+    },
+    {
+     "en": "Turn on the small AC signal and set the input to about 1.2 V. Compare the output wave with the input wave."
+    },
+    {
+     "en": "With the AC signal on, move the input to 0.7 V and then to 2 V. Why is the output clipped?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

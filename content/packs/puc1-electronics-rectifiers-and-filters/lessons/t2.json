@@ -844,6 +844,492 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Centre-tap full-wave rectifier",
+    "kn": "ಮಧ್ಯ-ತುದಿ ಪೂರ್ಣ ತರಂಗ ಏಕದಿಶಕಾರಿ"
+   },
+   "narration": {
+    "en": "D1 conducts in one half cycle and D2 in the other, and both send current the same way through the load, so both halves appear at the output. Vdc = 2Vm/π (Vm is the peak of each half winding) and the ripple is at 100 Hz, but each diode must stand 2Vm.",
+    "kn": "ಒಂದು ಅರ್ಧದಲ್ಲಿ D1, ಇನ್ನೊಂದರಲ್ಲಿ D2 ವಾಹಕ; ಎರಡೂ ಭಾರದಲ್ಲಿ ಒಂದೇ ದಿಕ್ಕಿನಲ್ಲಿ ಪ್ರವಾಹ ಕಳುಹಿಸುತ್ತವೆ. Vdc = 2Vm/π, ಏರಿಳಿತ 100 Hz, ಆದರೆ ಪ್ರತಿ ಡಯೋಡ್ 2Vm ಸಹಿಸಬೇಕು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "D1 conducts in one half cycle and D2 in the other, and both send current the same way through the load, so both halves appear at the output. Vdc = 2Vm/π (Vm is the peak of each half winding) and the ripple is at 100 Hz, but each diode must stand 2Vm.",
+    "kn": "ಒಂದು ಅರ್ಧದಲ್ಲಿ D1, ಇನ್ನೊಂದರಲ್ಲಿ D2 ವಾಹಕ; ಎರಡೂ ಭಾರದಲ್ಲಿ ಒಂದೇ ದಿಕ್ಕಿನಲ್ಲಿ ಪ್ರವಾಹ ಕಳುಹಿಸುತ್ತವೆ. Vdc = 2Vm/π, ಏರಿಳಿತ 100 Hz, ಆದರೆ ಪ್ರತಿ ಡಯೋಡ್ 2Vm ಸಹಿಸಬೇಕು."
+   },
+   "sliders": [
+    {
+     "name": "Vm",
+     "label": {
+      "en": "Peak of each half winding Vm",
+      "kn": "ಪ್ರತಿ ಅರ್ಧ ಸುರುಳಿಯ ಶಿಖರ"
+     },
+     "min": 2,
+     "max": 30,
+     "step": 1,
+     "value": 20,
+     "unit": "V"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "si",
+     "label": {
+      "en": "Silicon diode drop 0.7 V",
+      "kn": "ಸಿಲಿಕಾನ್ ಡಯೋಡ್ 0.7 V ಇಳಿಕೆ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 40,
+    "unit": "ms",
+    "loop": true,
+    "speeds": [
+     0.1,
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.25
+   },
+   "vars": [
+    {
+     "name": "vd",
+     "expr": "if(si, 0.7, 0)"
+    },
+    {
+     "name": "Vdc",
+     "expr": "2*(Vm - vd)/pi"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     31
+    ],
+    "y": [
+     0,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "spring",
+     "x1": 2.2,
+     "y1": 3,
+     "x2": 2.2,
+     "y2": 9,
+     "coils": 8,
+     "width": 3
+    },
+    {
+     "shape": "spring",
+     "x1": 3.4,
+     "y1": 3,
+     "x2": 3.4,
+     "y2": 9,
+     "coils": 8,
+     "width": 3
+    },
+    {
+     "shape": "line",
+     "x1": 2.7,
+     "y1": 2.8,
+     "x2": 2.7,
+     "y2": 9.2,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 2.9,
+     "y1": 2.8,
+     "x2": 2.9,
+     "y2": 9.2,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 1.2,
+     "y": 6,
+     "text": {
+      "en": "~"
+     },
+     "size": 34
+    },
+    {
+     "shape": "line",
+     "x1": 3.4,
+     "y1": 9,
+     "x2": 6,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       6.4,
+       9.66
+      ],
+      [
+       6.4,
+       8.34
+      ],
+      [
+       7.54,
+       9.0
+      ]
+     ],
+     "color": {
+      "by": "(Vm*sin(2*pi*t/20) > vd) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 7.54,
+     "y1": 9.72,
+     "x2": 7.54,
+     "y2": 8.28,
+     "width": 4,
+     "color": {
+      "by": "(Vm*sin(2*pi*t/20) > vd) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 7,
+     "y": 10.2,
+     "text": {
+      "en": "D1"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 3.4,
+     "y1": 3,
+     "x2": 6,
+     "y2": 3,
+     "width": 4
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       6.4,
+       3.66
+      ],
+      [
+       6.4,
+       2.34
+      ],
+      [
+       7.54,
+       3.0
+      ]
+     ],
+     "color": {
+      "by": "(Vm*sin(2*pi*t/20) < -vd) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "line",
+     "x1": 7.54,
+     "y1": 3.72,
+     "x2": 7.54,
+     "y2": 2.28,
+     "width": 4,
+     "color": {
+      "by": "(Vm*sin(2*pi*t/20) < -vd) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 7,
+     "y": 1.8,
+     "text": {
+      "en": "D2"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 8,
+     "y1": 9,
+     "x2": 10,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 9,
+     "x2": 10,
+     "y2": 3,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 3,
+     "x2": 8,
+     "y2": 3,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 6,
+     "x2": 12,
+     "y2": 6,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 6,
+     "x2": 12,
+     "y2": 5.4,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 12,
+     "y": 4.4,
+     "size": 2,
+     "angle": 90,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 12.9,
+     "y": 4.4,
+     "text": {
+      "en": "RL"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 3.4,
+     "x2": 12,
+     "y2": 1.0,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 1.0,
+     "x2": 4.5,
+     "y2": 1.0,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 4.5,
+     "y1": 1.0,
+     "x2": 4.5,
+     "y2": 6,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 4.5,
+     "y1": 6,
+     "x2": 3.4,
+     "y2": 6,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 4.9,
+     "y": 6.4,
+     "text": {
+      "en": "CT"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 15,
+     "y1": 7.6,
+     "x2": 30.5,
+     "y2": 7.6,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": 7.0,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 10.5,
+     "text": {
+      "en": "input (secondary)",
+      "kn": "ಒಳಹರಿವು"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "wave",
+     "fn": "7.6 + 0.08*Vm*sin(2*pi*((x - 15)/0.3875)/20)",
+     "color": "yellow",
+     "width": 3,
+     "from": 15,
+     "to": 30.5
+    },
+    {
+     "shape": "circle",
+     "x": "15 + 0.3875*t",
+     "y": "7.6 + 0.08*Vm*sin(2*pi*t/20)",
+     "r": 0.2,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 15,
+     "y1": 1.5,
+     "x2": 30.5,
+     "y2": 1.5,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": 0.9,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 4.4,
+     "text": {
+      "en": "output across RL",
+      "kn": "ಭಾರದ ಮೇಲಿನ ನಿರ್ಗಮ"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "wave",
+     "fn": "1.5 + 0.08*max(abs(Vm*sin(2*pi*((x - 15)/0.3875)/20)) - vd, 0)",
+     "color": "orange",
+     "width": 4,
+     "from": 15,
+     "to": 30.5
+    },
+    {
+     "shape": "circle",
+     "x": "15 + 0.3875*t",
+     "y": "1.5 + 0.08*max(abs(Vm*sin(2*pi*t/20)) - vd, 0)",
+     "r": 0.2,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 15,
+     "y1": "1.5 + 0.08*Vdc",
+     "x2": 30.5,
+     "y2": "1.5 + 0.08*Vdc",
+     "dashed": true,
+     "color": "green",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": "1.5 + 0.08*Vdc + 0.35",
+     "text": {
+      "en": "Vdc"
+     },
+     "size": 18,
+     "color": "green",
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Vdc"
+     },
+     "expr": "Vdc",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "PIV of each diode"
+     },
+     "expr": "2*Vm",
+     "digits": 1,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Ripple factor"
+     },
+     "expr": "0.482",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Ripple frequency"
+     },
+     "expr": "100",
+     "digits": 0,
+     "unit": "Hz"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Play slowly. Which diode lights in the first half cycle, and which in the second?"
+    },
+    {
+     "en": "Compare Vdc with the half-wave rectifier for the same Vm."
+    },
+    {
+     "en": "Why must each diode stand twice the peak voltage?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

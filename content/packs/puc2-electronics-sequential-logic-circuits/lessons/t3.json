@@ -891,6 +891,489 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "4-bit shift register",
+    "kn": "4-ಬಿಟ್ ಸ್ಥಳಾಂತರ ರಿಜಿಸ್ಟರ್"
+   },
+   "narration": {
+    "en": "Each clock pulse moves every bit one flip-flop along and takes the serial input into the first one (SISO/SIPO). Four clocks load a 4-bit word. In a ring counter the last output is fed back to the first, so a single 1 circulates.",
+    "kn": "ಪ್ರತಿ ಗಡಿಯಾರ ಸ್ಪಂದನ ಪ್ರತಿ ಬಿಟ್ ಅನ್ನು ಒಂದು ಫ್ಲಿಪ್-ಫ್ಲಾಪ್ ಮುಂದೆ ಸರಿಸುತ್ತದೆ ಮತ್ತು ಸರಣಿ ಒಳಹರಿವನ್ನು ಮೊದಲದಕ್ಕೆ ತೆಗೆದುಕೊಳ್ಳುತ್ತದೆ. ರಿಂಗ್ ಕೌಂಟರ್‌ನಲ್ಲಿ ಒಂದು 1 ಸುತ್ತುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Each clock pulse moves every bit one flip-flop along and takes the serial input into the first one (SISO/SIPO). Four clocks load a 4-bit word. In a ring counter the last output is fed back to the first, so a single 1 circulates.",
+    "kn": "ಪ್ರತಿ ಗಡಿಯಾರ ಸ್ಪಂದನ ಪ್ರತಿ ಬಿಟ್ ಅನ್ನು ಒಂದು ಫ್ಲಿಪ್-ಫ್ಲಾಪ್ ಮುಂದೆ ಸರಿಸುತ್ತದೆ ಮತ್ತು ಸರಣಿ ಒಳಹರಿವನ್ನು ಮೊದಲದಕ್ಕೆ ತೆಗೆದುಕೊಳ್ಳುತ್ತದೆ. ರಿಂಗ್ ಕೌಂಟರ್‌ನಲ್ಲಿ ಒಂದು 1 ಸುತ್ತುತ್ತದೆ."
+   },
+   "sliders": [],
+   "choices": [
+    {
+     "name": "md",
+     "label": {
+      "en": "Mode",
+      "kn": "ವಿಧಾನ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Shift right",
+        "kn": "ಬಲಕ್ಕೆ ಸರಿಸು"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Shift left",
+        "kn": "ಎಡಕ್ಕೆ ಸರಿಸು"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Ring counter",
+        "kn": "ರಿಂಗ್ ಕೌಂಟರ್"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "counters": [
+    {
+     "name": "reg",
+     "value": 0,
+     "min": 0,
+     "max": 15
+    },
+    {
+     "name": "Din",
+     "value": 1,
+     "min": 0,
+     "max": 1
+    },
+    {
+     "name": "n",
+     "value": 0,
+     "min": 0,
+     "max": 999
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Flip serial input D",
+      "kn": "D ಬದಲಿಸಿ"
+     },
+     "icon": "flip",
+     "set": {
+      "Din": "1 - Din"
+     }
+    },
+    {
+     "label": {
+      "en": "Clock pulse",
+      "kn": "ಗಡಿಯಾರ ಸ್ಪಂದನ"
+     },
+     "icon": "next",
+     "set": {
+      "reg": "if(md == 1, Din*8 + floor(reg/2), if(md == 2, mod(2*reg, 16) + Din, mod(reg, 2)*8 + floor(reg/2)))",
+      "n": "n + 1"
+     }
+    },
+    {
+     "label": {
+      "en": "Clear",
+      "kn": "ಅಳಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "reg": "0",
+      "n": "0"
+     }
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 8.8,
+     "text": {
+      "en": "Serial in",
+      "kn": "ಸರಣಿ ಒಳಹರಿವು"
+     },
+     "size": 18,
+     "align": "left",
+     "visibleIf": "md != 3"
+    },
+    {
+     "shape": "circle",
+     "x": 2.5,
+     "y": 7.2,
+     "r": 0.7,
+     "fill": false,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "md != 3"
+    },
+    {
+     "shape": "circle",
+     "x": 2.5,
+     "y": 7.2,
+     "r": 0.5599999999999999,
+     "color": "green",
+     "visibleIf": "(Din) && (md != 3)"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 5.8,
+     "text": {
+      "en": "D = {Din}"
+     },
+     "size": 18,
+     "visibleIf": "md != 3"
+    },
+    {
+     "shape": "rect",
+     "x": 4.7,
+     "y": 5.6,
+     "w": 3.6,
+     "h": 3.2,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 6.8,
+     "text": {
+      "en": "FF0"
+     },
+     "size": 18
+    },
+    {
+     "shape": "circle",
+     "x": 6.5,
+     "y": 3.4,
+     "r": 0.8,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 6.5,
+     "y": 3.4,
+     "r": 0.6400000000000001,
+     "color": "yellow",
+     "visibleIf": "(mod(floor((reg)/8), 2))"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 1.9,
+     "text": {
+      "en": "Q0 = {mod(floor((reg)/8), 2)}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": 8.3,
+     "y": 7.2,
+     "dx": 1.4,
+     "dy": 0,
+     "width": 3,
+     "visibleIf": "md != 2"
+    },
+    {
+     "shape": "arrow",
+     "x": 9.7,
+     "y": 7.6,
+     "dx": -1.4,
+     "dy": 0,
+     "width": 3,
+     "visibleIf": "md == 2"
+    },
+    {
+     "shape": "rect",
+     "x": 9.7,
+     "y": 5.6,
+     "w": 3.6,
+     "h": 3.2,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 6.8,
+     "text": {
+      "en": "FF1"
+     },
+     "size": 18
+    },
+    {
+     "shape": "circle",
+     "x": 11.5,
+     "y": 3.4,
+     "r": 0.8,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 11.5,
+     "y": 3.4,
+     "r": 0.6400000000000001,
+     "color": "yellow",
+     "visibleIf": "(mod(floor((reg)/4), 2))"
+    },
+    {
+     "shape": "text",
+     "x": 11.5,
+     "y": 1.9,
+     "text": {
+      "en": "Q1 = {mod(floor((reg)/4), 2)}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": 13.3,
+     "y": 7.2,
+     "dx": 1.4,
+     "dy": 0,
+     "width": 3,
+     "visibleIf": "md != 2"
+    },
+    {
+     "shape": "arrow",
+     "x": 14.7,
+     "y": 7.6,
+     "dx": -1.4,
+     "dy": 0,
+     "width": 3,
+     "visibleIf": "md == 2"
+    },
+    {
+     "shape": "rect",
+     "x": 14.7,
+     "y": 5.6,
+     "w": 3.6,
+     "h": 3.2,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 16.5,
+     "y": 6.8,
+     "text": {
+      "en": "FF2"
+     },
+     "size": 18
+    },
+    {
+     "shape": "circle",
+     "x": 16.5,
+     "y": 3.4,
+     "r": 0.8,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 16.5,
+     "y": 3.4,
+     "r": 0.6400000000000001,
+     "color": "yellow",
+     "visibleIf": "(mod(floor((reg)/2), 2))"
+    },
+    {
+     "shape": "text",
+     "x": 16.5,
+     "y": 1.9,
+     "text": {
+      "en": "Q2 = {mod(floor((reg)/2), 2)}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": 18.3,
+     "y": 7.2,
+     "dx": 1.4,
+     "dy": 0,
+     "width": 3,
+     "visibleIf": "md != 2"
+    },
+    {
+     "shape": "arrow",
+     "x": 19.7,
+     "y": 7.6,
+     "dx": -1.4,
+     "dy": 0,
+     "width": 3,
+     "visibleIf": "md == 2"
+    },
+    {
+     "shape": "rect",
+     "x": 19.7,
+     "y": 5.6,
+     "w": 3.6,
+     "h": 3.2,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 21.5,
+     "y": 6.8,
+     "text": {
+      "en": "FF3"
+     },
+     "size": 18
+    },
+    {
+     "shape": "circle",
+     "x": 21.5,
+     "y": 3.4,
+     "r": 0.8,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 21.5,
+     "y": 3.4,
+     "r": 0.6400000000000001,
+     "color": "yellow",
+     "visibleIf": "(mod(floor((reg)/1), 2))"
+    },
+    {
+     "shape": "text",
+     "x": 21.5,
+     "y": 1.9,
+     "text": {
+      "en": "Q3 = {mod(floor((reg)/1), 2)}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": 3.3,
+     "y": 7.2,
+     "dx": 1.4,
+     "dy": 0,
+     "width": 3,
+     "visibleIf": "md == 1"
+    },
+    {
+     "shape": "arrow",
+     "x": 25.5,
+     "y": 7.6,
+     "dx": -1.4,
+     "dy": 0,
+     "width": 3,
+     "visibleIf": "md == 2"
+    },
+    {
+     "shape": "text",
+     "x": 27,
+     "y": 7.6,
+     "text": {
+      "en": "D"
+     },
+     "size": 18,
+     "visibleIf": "md == 2"
+    },
+    {
+     "shape": "path",
+     "points": [
+      [
+       21.5,
+       8.8
+      ],
+      [
+       21.5,
+       10
+      ],
+      [
+       3.5,
+       10
+      ],
+      [
+       3.5,
+       7.2
+      ],
+      [
+       4.6,
+       7.2
+      ]
+     ],
+     "color": "orange",
+     "width": 3,
+     "visibleIf": "md == 3"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 0.5,
+     "text": {
+      "en": "parallel output {reg}   clocks {n}",
+      "kn": "ಸಮಾಂತರ ನಿರ್ಗಮ {reg}   ಗಡಿಯಾರ {n}"
+     },
+     "size": 20,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Stored word (decimal)"
+     },
+     "expr": "reg",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Serial output"
+     },
+     "expr": "mod(floor((reg)/1), 2)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Load 1011 serially: set D and clock four times. Does it appear on Q0–Q3?"
+    },
+    {
+     "en": "How many clocks does it take for a bit to go from the input to Q3?"
+    },
+    {
+     "en": "Load a single 1, then switch to ring counter and keep clocking."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

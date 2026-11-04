@@ -411,6 +411,417 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Positive and negative feedback",
+    "kn": "ಧನ ಮತ್ತು ಋಣ ಪ್ರತಿಪೋಷಣೆ"
+   },
+   "narration": {
+    "en": "A fraction β of the output is fed back to the input mixer. Negative feedback subtracts it, so the gain falls to Af = A/(1 + Aβ). Positive feedback adds it, so the gain rises to A/(1 − Aβ); when Aβ reaches 1 the circuit oscillates.",
+    "kn": "ನಿರ್ಗಮದ β ಭಾಗವನ್ನು ಒಳಹರಿವಿಗೆ ಹಿಂತಿರುಗಿಸಲಾಗುತ್ತದೆ. ಋಣ ಪ್ರತಿಪೋಷಣೆ ಕಳೆಯುತ್ತದೆ: Af = A/(1 + Aβ). ಧನ ಪ್ರತಿಪೋಷಣೆ ಸೇರಿಸುತ್ತದೆ: A/(1 − Aβ); Aβ = 1 ಆದಾಗ ಆಂದೋಲನ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A fraction β of the output is fed back to the input mixer. Negative feedback subtracts it, so the gain falls to Af = A/(1 + Aβ). Positive feedback adds it, so the gain rises to A/(1 − Aβ); when Aβ reaches 1 the circuit oscillates.",
+    "kn": "ನಿರ್ಗಮದ β ಭಾಗವನ್ನು ಒಳಹರಿವಿಗೆ ಹಿಂತಿರುಗಿಸಲಾಗುತ್ತದೆ. ಋಣ ಪ್ರತಿಪೋಷಣೆ ಕಳೆಯುತ್ತದೆ: Af = A/(1 + Aβ). ಧನ ಪ್ರತಿಪೋಷಣೆ ಸೇರಿಸುತ್ತದೆ: A/(1 − Aβ); Aβ = 1 ಆದಾಗ ಆಂದೋಲನ."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Open-loop gain A",
+      "kn": "ಮುಕ್ತ ಕುಣಿಕೆ ಲಾಭ A"
+     },
+     "min": 10,
+     "max": 1000,
+     "step": 10,
+     "value": 500
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "Feedback ratio β",
+      "kn": "ಪ್ರತಿಪೋಷಣಾ ಅನುಪಾತ β"
+     },
+     "min": 0,
+     "max": 0.2,
+     "step": 0.005,
+     "value": 0.1
+    }
+   ],
+   "choices": [
+    {
+     "name": "neg",
+     "label": {
+      "en": "Feedback",
+      "kn": "ಪ್ರತಿಪೋಷಣೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Negative",
+        "kn": "ಋಣ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Positive",
+        "kn": "ಧನ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "Ab",
+     "expr": "A*b"
+    },
+    {
+     "name": "ok",
+     "expr": "neg == 1 || Ab < 0.999"
+    },
+    {
+     "name": "Af",
+     "expr": "if(neg == 1, A/(1 + Ab), if(Ab < 0.999, A/(1 - Ab), 0))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -0.2,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 1.2,
+     "y": 7.4,
+     "text": {
+      "en": "vs"
+     },
+     "size": 24
+    },
+    {
+     "shape": "arrow",
+     "x": 2,
+     "y": 7,
+     "dx": 2.2,
+     "dy": 0,
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 5,
+     "y": 7,
+     "r": 0.8,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 6.75,
+     "text": {
+      "en": "Σ"
+     },
+     "size": 26
+    },
+    {
+     "shape": "text",
+     "x": 4.1,
+     "y": 5.7,
+     "text": {
+      "en": "−"
+     },
+     "size": 30,
+     "color": "orange",
+     "visibleIf": "neg == 1"
+    },
+    {
+     "shape": "text",
+     "x": 4.1,
+     "y": 5.7,
+     "text": {
+      "en": "+"
+     },
+     "size": 30,
+     "color": "orange",
+     "visibleIf": "!(neg == 1)"
+    },
+    {
+     "shape": "arrow",
+     "x": 5.8,
+     "y": 7,
+     "dx": 2.2,
+     "dy": 0,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 6.9,
+     "y": 7.5,
+     "text": {
+      "en": "vi"
+     },
+     "size": 20
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       8,
+       9
+      ],
+      [
+       8,
+       5
+      ],
+      [
+       12,
+       7
+      ]
+     ],
+     "fill": false,
+     "width": 3,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 9.3,
+     "y": 6.75,
+     "text": {
+      "en": "A"
+     },
+     "size": 26,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 7,
+     "x2": 16,
+     "y2": 7,
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "x": 16,
+     "y": 7,
+     "dx": 1.6,
+     "dy": 0,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 18.4,
+     "y": 7.3,
+     "text": {
+      "en": "vo"
+     },
+     "size": 24
+    },
+    {
+     "shape": "line",
+     "x1": 15,
+     "y1": 7,
+     "x2": 15,
+     "y2": 3,
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": 9,
+     "y": 2.1,
+     "w": 3.8,
+     "h": 1.8,
+     "fill": false,
+     "width": 3,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 10.9,
+     "y": 2.75,
+     "text": {
+      "en": "β"
+     },
+     "size": 26,
+     "color": "green"
+    },
+    {
+     "shape": "line",
+     "x1": 15,
+     "y1": 3,
+     "x2": 12.8,
+     "y2": 3,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 9,
+     "y1": 3,
+     "x2": 5,
+     "y2": 3,
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "x": 5,
+     "y": 3,
+     "dx": 0,
+     "dy": 3.2,
+     "width": 3,
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 5.6,
+     "y": 4.4,
+     "text": {
+      "en": "vf"
+     },
+     "size": 20,
+     "color": "green",
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 21,
+     "y": 1,
+     "w": 2.5,
+     "h": "min(9*A/1000, 9.5)",
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 22.25,
+     "y": 0.4,
+     "text": {
+      "en": "A"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 25.5,
+     "y": 1,
+     "w": 2.5,
+     "h": "min(9*Af/1000, 9.5)",
+     "color": "yellow",
+     "visibleIf": "ok"
+    },
+    {
+     "shape": "text",
+     "x": 26.75,
+     "y": 0.4,
+     "text": {
+      "en": "Af"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 22.25,
+     "y": "min(1.4 + 9*A/1000, 10.2)",
+     "text": {
+      "en": "{A}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.75,
+     "y": "min(1.4 + 9*Af/1000, 10.2)",
+     "text": {
+      "en": "{Af:1}"
+     },
+     "size": 18,
+     "visibleIf": "ok"
+    },
+    {
+     "shape": "label",
+     "x": 10,
+     "y": 10.2,
+     "text": {
+      "en": "Aβ ≥ 1 with positive feedback: it oscillates!",
+      "kn": "Aβ ≥ 1 ಧನ ಪ್ರತಿಪೋಷಣೆ: ಆಂದೋಲನ!"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "!ok"
+    },
+    {
+     "shape": "label",
+     "x": 10,
+     "y": 10.2,
+     "text": {
+      "en": "Af = A / (1 + Aβ) = {Af:1}",
+      "kn": "Af = A / (1 + Aβ) = {Af:1}"
+     },
+     "size": 22,
+     "color": "yellow",
+     "visibleIf": "ok && neg == 1"
+    },
+    {
+     "shape": "label",
+     "x": 10,
+     "y": 10.2,
+     "text": {
+      "en": "Af = A / (1 − Aβ) = {Af:1}",
+      "kn": "Af = A / (1 − Aβ) = {Af:1}"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "ok && neg == 2"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Loop gain Aβ"
+     },
+     "expr": "Ab",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Gain with feedback Af"
+     },
+     "expr": "Af",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "1/β"
+     },
+     "expr": "if(b > 0, 1/b, 0)",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With negative feedback, A = 500 and β = 0.1, find Af. Is it close to 1/β?"
+    },
+    {
+     "en": "Switch to positive feedback and slowly raise β. When does the circuit start to oscillate?"
+    },
+    {
+     "en": "Set β = 0. What is Af?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -839,6 +839,681 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "8085 machine cycles and T-states",
+    "kn": "8085 ಯಂತ್ರ ಆವರ್ತಗಳು ಮತ್ತು T-ಸ್ಥಿತಿಗಳು"
+   },
+   "narration": {
+    "en": "The 8085 divides the crystal frequency by 2; one clock period is a T-state. Each machine cycle starts with ALE high while AD7–AD0 carries the low address byte; then the same lines carry data while RD is low. An opcode fetch (OF) takes 4 T-states and a memory read (MR) 3.",
+    "kn": "8085 ಸ್ಫಟಿಕ ಆವೃತ್ತಿಯನ್ನು 2 ರಿಂದ ಭಾಗಿಸುತ್ತದೆ; ಒಂದು ಗಡಿಯಾರ ಅವಧಿ ಒಂದು T-ಸ್ಥಿತಿ. ಪ್ರತಿ ಯಂತ್ರ ಆವರ್ತ ALE ಎತ್ತರದೊಂದಿಗೆ ಆರಂಭ; AD7–AD0 ಮೊದಲು ವಿಳಾಸ, ನಂತರ ದತ್ತ ಒಯ್ಯುತ್ತದೆ. OF 4 T, MR 3 T."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The 8085 divides the crystal frequency by 2; one clock period is a T-state. Each machine cycle starts with ALE high while AD7–AD0 carries the low address byte; then the same lines carry data while RD is low. An opcode fetch (OF) takes 4 T-states and a memory read (MR) 3.",
+    "kn": "8085 ಸ್ಫಟಿಕ ಆವೃತ್ತಿಯನ್ನು 2 ರಿಂದ ಭಾಗಿಸುತ್ತದೆ; ಒಂದು ಗಡಿಯಾರ ಅವಧಿ ಒಂದು T-ಸ್ಥಿತಿ. ಪ್ರತಿ ಯಂತ್ರ ಆವರ್ತ ALE ಎತ್ತರದೊಂದಿಗೆ ಆರಂಭ; AD7–AD0 ಮೊದಲು ವಿಳಾಸ, ನಂತರ ದತ್ತ ಒಯ್ಯುತ್ತದೆ. OF 4 T, MR 3 T."
+   },
+   "sliders": [
+    {
+     "name": "fx",
+     "label": {
+      "en": "Crystal frequency",
+      "kn": "ಸ್ಫಟಿಕ ಆವೃತ್ತಿ"
+     },
+     "min": 2,
+     "max": 6,
+     "step": 0.5,
+     "value": 6,
+     "unit": "MHz"
+    }
+   ],
+   "choices": [
+    {
+     "name": "ins",
+     "label": {
+      "en": "Instruction",
+      "kn": "ಸೂಚನೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "MOV A, B"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "MVI A, 32H"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "LDA 2050H"
+       },
+       "value": 3
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "time": {
+    "max": 13,
+    "unit": "T",
+    "loop": true,
+    "speeds": [
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.5
+   },
+   "vars": [
+    {
+     "name": "nT",
+     "expr": "if(ins == 1, 4, if(ins == 2, 7, 13))"
+    },
+    {
+     "name": "Tns",
+     "expr": "1000/(fx/2)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     10.4
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 0.3,
+     "y": 9.2,
+     "text": {
+      "en": "CLK"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0.3,
+     "y": 7.4,
+     "text": {
+      "en": "ALE"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0.3,
+     "y": 5.4,
+     "text": {
+      "en": "AD7–0"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 0.3,
+     "y": 3.4,
+     "text": {
+      "en": "RD̄"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "wave",
+     "fn": "9.2 + 0.5*sign(sin(2*pi*(x - 3)/2.0))*(x < (3 + 2.0*(nT)))",
+     "color": "white",
+     "width": 2,
+     "from": 3,
+     "to": 29
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(0))",
+     "y": 7.0,
+     "w": 1.0,
+     "h": 0.9,
+     "color": "yellow",
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 0"
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(0))",
+     "y": 4.95,
+     "w": 2.0,
+     "h": 0.9,
+     "color": "orange",
+     "opacity": 0.6,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 0"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(0 + 0.5))",
+     "y": 5.2,
+     "text": {
+      "en": "A"
+     },
+     "size": 16,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 0"
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(0 + 1))",
+     "y": 4.95,
+     "w": 4.0,
+     "h": 0.9,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 0"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(0 + 2))",
+     "y": 5.2,
+     "text": {
+      "en": "data"
+     },
+     "size": 16,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 0"
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(0 + 1))",
+     "y": 2.9499999999999997,
+     "w": 4.0,
+     "h": 0.9,
+     "color": "blue",
+     "opacity": 0.6,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 0"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(0 + 2))",
+     "y": 1.8,
+     "text": {
+      "en": "OF"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 0"
+    },
+    {
+     "shape": "line",
+     "x1": "(3 + 2.0*(0))",
+     "y1": 1.2,
+     "x2": "(3 + 2.0*(0))",
+     "y2": 10,
+     "width": 1,
+     "opacity": 0.4,
+     "dashed": true,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 0"
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(4))",
+     "y": 7.0,
+     "w": 1.0,
+     "h": 0.9,
+     "color": "yellow",
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 1"
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(4))",
+     "y": 4.95,
+     "w": 2.0,
+     "h": 0.9,
+     "color": "orange",
+     "opacity": 0.6,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 1"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(4 + 0.5))",
+     "y": 5.2,
+     "text": {
+      "en": "A"
+     },
+     "size": 16,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 1"
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(4 + 1))",
+     "y": 4.95,
+     "w": 4.0,
+     "h": 0.9,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 1"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(4 + 2))",
+     "y": 5.2,
+     "text": {
+      "en": "data"
+     },
+     "size": 16,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 1"
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(4 + 1))",
+     "y": 2.9499999999999997,
+     "w": 4.0,
+     "h": 0.9,
+     "color": "blue",
+     "opacity": 0.6,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 1"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(4 + 1.5))",
+     "y": 1.8,
+     "text": {
+      "en": "MR"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 1"
+    },
+    {
+     "shape": "line",
+     "x1": "(3 + 2.0*(4))",
+     "y1": 1.2,
+     "x2": "(3 + 2.0*(4))",
+     "y2": 10,
+     "width": 1,
+     "opacity": 0.4,
+     "dashed": true,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 1"
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(7))",
+     "y": 7.0,
+     "w": 1.0,
+     "h": 0.9,
+     "color": "yellow",
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 2"
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(7))",
+     "y": 4.95,
+     "w": 2.0,
+     "h": 0.9,
+     "color": "orange",
+     "opacity": 0.6,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 2"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(7 + 0.5))",
+     "y": 5.2,
+     "text": {
+      "en": "A"
+     },
+     "size": 16,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 2"
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(7 + 1))",
+     "y": 4.95,
+     "w": 4.0,
+     "h": 0.9,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 2"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(7 + 2))",
+     "y": 5.2,
+     "text": {
+      "en": "data"
+     },
+     "size": 16,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 2"
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(7 + 1))",
+     "y": 2.9499999999999997,
+     "w": 4.0,
+     "h": 0.9,
+     "color": "blue",
+     "opacity": 0.6,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 2"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(7 + 1.5))",
+     "y": 1.8,
+     "text": {
+      "en": "MR"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 2"
+    },
+    {
+     "shape": "line",
+     "x1": "(3 + 2.0*(7))",
+     "y1": 1.2,
+     "x2": "(3 + 2.0*(7))",
+     "y2": 10,
+     "width": 1,
+     "opacity": 0.4,
+     "dashed": true,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 2"
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(10))",
+     "y": 7.0,
+     "w": 1.0,
+     "h": 0.9,
+     "color": "yellow",
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 3"
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(10))",
+     "y": 4.95,
+     "w": 2.0,
+     "h": 0.9,
+     "color": "orange",
+     "opacity": 0.6,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 3"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(10 + 0.5))",
+     "y": 5.2,
+     "text": {
+      "en": "A"
+     },
+     "size": 16,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 3"
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(10 + 1))",
+     "y": 4.95,
+     "w": 4.0,
+     "h": 0.9,
+     "color": "green",
+     "opacity": 0.5,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 3"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(10 + 2))",
+     "y": 5.2,
+     "text": {
+      "en": "data"
+     },
+     "size": 16,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 3"
+    },
+    {
+     "shape": "rect",
+     "x": "(3 + 2.0*(10 + 1))",
+     "y": 2.9499999999999997,
+     "w": 4.0,
+     "h": 0.9,
+     "color": "blue",
+     "opacity": 0.6,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 3"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(10 + 1.5))",
+     "y": 1.8,
+     "text": {
+      "en": "MR"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 3"
+    },
+    {
+     "shape": "line",
+     "x1": "(3 + 2.0*(10))",
+     "y1": 1.2,
+     "x2": "(3 + 2.0*(10))",
+     "y2": 10,
+     "width": 1,
+     "opacity": 0.4,
+     "dashed": true,
+     "visibleIf": "if(ins == 1, 1, if(ins == 2, 2, 4)) > 3"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(0 + 0.5))",
+     "y": 0.6,
+     "text": {
+      "en": "T1"
+     },
+     "size": 12,
+     "opacity": 0.7,
+     "visibleIf": "0 < nT"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(1 + 0.5))",
+     "y": 0.6,
+     "text": {
+      "en": "T2"
+     },
+     "size": 12,
+     "opacity": 0.7,
+     "visibleIf": "1 < nT"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(2 + 0.5))",
+     "y": 0.6,
+     "text": {
+      "en": "T3"
+     },
+     "size": 12,
+     "opacity": 0.7,
+     "visibleIf": "2 < nT"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(3 + 0.5))",
+     "y": 0.6,
+     "text": {
+      "en": "T4"
+     },
+     "size": 12,
+     "opacity": 0.7,
+     "visibleIf": "3 < nT"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(4 + 0.5))",
+     "y": 0.6,
+     "text": {
+      "en": "T5"
+     },
+     "size": 12,
+     "opacity": 0.7,
+     "visibleIf": "4 < nT"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(5 + 0.5))",
+     "y": 0.6,
+     "text": {
+      "en": "T6"
+     },
+     "size": 12,
+     "opacity": 0.7,
+     "visibleIf": "5 < nT"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(6 + 0.5))",
+     "y": 0.6,
+     "text": {
+      "en": "T7"
+     },
+     "size": 12,
+     "opacity": 0.7,
+     "visibleIf": "6 < nT"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(7 + 0.5))",
+     "y": 0.6,
+     "text": {
+      "en": "T8"
+     },
+     "size": 12,
+     "opacity": 0.7,
+     "visibleIf": "7 < nT"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(8 + 0.5))",
+     "y": 0.6,
+     "text": {
+      "en": "T9"
+     },
+     "size": 12,
+     "opacity": 0.7,
+     "visibleIf": "8 < nT"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(9 + 0.5))",
+     "y": 0.6,
+     "text": {
+      "en": "T10"
+     },
+     "size": 12,
+     "opacity": 0.7,
+     "visibleIf": "9 < nT"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(10 + 0.5))",
+     "y": 0.6,
+     "text": {
+      "en": "T11"
+     },
+     "size": 12,
+     "opacity": 0.7,
+     "visibleIf": "10 < nT"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(11 + 0.5))",
+     "y": 0.6,
+     "text": {
+      "en": "T12"
+     },
+     "size": 12,
+     "opacity": 0.7,
+     "visibleIf": "11 < nT"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(12 + 0.5))",
+     "y": 0.6,
+     "text": {
+      "en": "T13"
+     },
+     "size": 12,
+     "opacity": 0.7,
+     "visibleIf": "12 < nT"
+    },
+    {
+     "shape": "text",
+     "x": "(3 + 2.0*(13 + 0.5))",
+     "y": 0.6,
+     "text": {
+      "en": "T14"
+     },
+     "size": 12,
+     "opacity": 0.7,
+     "visibleIf": "13 < nT"
+    },
+    {
+     "shape": "line",
+     "x1": "(3 + 2.0*(t))",
+     "y1": 1.2,
+     "x2": "(3 + 2.0*(t))",
+     "y2": 10,
+     "color": "red",
+     "width": 3
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Operating clock"
+     },
+     "expr": "fx/2",
+     "digits": 2,
+     "unit": "MHz"
+    },
+    {
+     "label": {
+      "en": "One T-state"
+     },
+     "expr": "Tns",
+     "digits": 1,
+     "unit": "ns"
+    },
+    {
+     "label": {
+      "en": "T-states for the instruction"
+     },
+     "expr": "nT",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Instruction time"
+     },
+     "expr": "nT*Tns/1000",
+     "digits": 3,
+     "unit": "µs"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Pick MVI A, 32H. Why does it need an opcode fetch and one memory read?"
+    },
+    {
+     "en": "Pick LDA 2050H and count the T-states. Check that it is 13."
+    },
+    {
+     "en": "With a 6 MHz crystal, how long is one T-state?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

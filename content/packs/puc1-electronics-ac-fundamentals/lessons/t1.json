@@ -250,6 +250,305 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "A rotating phasor makes a sine wave",
+    "kn": "ತಿರುಗುವ ಫೇಸರ್ ಸೈನ್ ತರಂಗವನ್ನು ರಚಿಸುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "The arrow (phasor) turns at ω = 2πf. Its height at each instant is the voltage v = Vm sin ωt, traced on the graph. Turn on the second wave and shift its phase to see lead and lag.",
+    "kn": "ಬಾಣ (ಫೇಸರ್) ω = 2πf ವೇಗದಲ್ಲಿ ತಿರುಗುತ್ತದೆ. ಪ್ರತಿ ಕ್ಷಣದ ಅದರ ಎತ್ತರವೇ v = Vm sin ωt. ಎರಡನೇ ತರಂಗದ ಹಂತ ಬದಲಿಸಿ ಮುನ್ನಡೆ ಮತ್ತು ಹಿನ್ನಡೆ ನೋಡಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The arrow (phasor) turns at ω = 2πf. Its height at each instant is the voltage v = Vm sin ωt, traced on the graph. Turn on the second wave and shift its phase to see lead and lag.",
+    "kn": "ಬಾಣ (ಫೇಸರ್) ω = 2πf ವೇಗದಲ್ಲಿ ತಿರುಗುತ್ತದೆ. ಪ್ರತಿ ಕ್ಷಣದ ಅದರ ಎತ್ತರವೇ v = Vm sin ωt. ಎರಡನೇ ತರಂಗದ ಹಂತ ಬದಲಿಸಿ ಮುನ್ನಡೆ ಮತ್ತು ಹಿನ್ನಡೆ ನೋಡಿ."
+   },
+   "sliders": [
+    {
+     "name": "Vm",
+     "label": {
+      "en": "Peak voltage Vm",
+      "kn": "ಶಿಖರ ವೋಲ್ಟೇಜ್"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 8,
+     "unit": "V"
+    },
+    {
+     "name": "f",
+     "label": {
+      "en": "Frequency f",
+      "kn": "ಆವೃತ್ತಿ"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 50,
+     "unit": "Hz"
+    },
+    {
+     "name": "phi",
+     "label": {
+      "en": "Phase of wave 2",
+      "kn": "ಎರಡನೇ ತರಂಗದ ಹಂತ"
+     },
+     "min": -180,
+     "max": 180,
+     "step": 15,
+     "value": 90,
+     "unit": "°"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "two",
+     "label": {
+      "en": "Second wave",
+      "kn": "ಎರಡನೇ ತರಂಗ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 40,
+    "unit": "ms",
+    "speeds": [
+     0.25,
+     0.5,
+     1,
+     2,
+     4
+    ],
+    "speed": 1,
+    "loop": true
+   },
+   "vars": [
+    {
+     "name": "w",
+     "expr": "2*pi*f/1000"
+    },
+    {
+     "name": "th",
+     "expr": "w*t"
+    },
+    {
+     "name": "v1",
+     "expr": "Vm*sin(th)"
+    },
+    {
+     "name": "v2",
+     "expr": "Vm*sin(th + rad(phi))"
+    },
+    {
+     "name": "Tms",
+     "expr": "1000/f"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     32
+    ],
+    "y": [
+     -6.2,
+     6.6
+    ],
+    "equal": true
+   },
+   "shapes": [
+    {
+     "shape": "circle",
+     "x": 5.5,
+     "y": 0,
+     "r": "0.5*Vm",
+     "fill": false,
+     "color": "white",
+     "width": 2,
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": 0,
+     "x2": 10.5,
+     "y2": 0,
+     "color": "white",
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "arrow",
+     "x": 5.5,
+     "y": 0,
+     "dx": "0.5*Vm*cos(th)",
+     "dy": "0.5*Vm*sin(th)",
+     "color": "yellow",
+     "width": 5,
+     "label": "v1"
+    },
+    {
+     "shape": "arrow",
+     "x": 5.5,
+     "y": 0,
+     "dx": "0.5*Vm*cos(th + rad(phi))",
+     "dy": "0.5*Vm*sin(th + rad(phi))",
+     "color": "orange",
+     "width": 4,
+     "label": "v2",
+     "visibleIf": "two"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 0,
+     "x2": 31.6,
+     "y2": 0,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": -5.5,
+     "x2": 12,
+     "y2": 5.8,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 31.6,
+     "y": -0.7,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 12.3,
+     "y": 6.1,
+     "text": {
+      "en": "v (V)"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "wave",
+     "fn": "0.5*Vm*sin(w*(x - 12)/0.4875)",
+     "color": "yellow",
+     "from": 12,
+     "to": 31.5
+    },
+    {
+     "shape": "wave",
+     "fn": "0.5*Vm*sin(w*(x - 12)/0.4875 + rad(phi))",
+     "color": "orange",
+     "visibleIf": "two",
+     "from": 12,
+     "to": 31.5
+    },
+    {
+     "shape": "line",
+     "x1": "5.5 + 0.5*Vm*cos(th)",
+     "y1": "0.5*v1",
+     "x2": "12 + 0.4875*t",
+     "y2": "0.5*v1",
+     "dashed": true,
+     "color": "yellow",
+     "width": 1,
+     "opacity": 0.6
+    },
+    {
+     "shape": "circle",
+     "x": "12 + 0.4875*t",
+     "y": "0.5*v1",
+     "r": 0.25,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "12 + 0.4875*t",
+     "y": "0.5*v2",
+     "r": 0.22,
+     "color": "orange",
+     "visibleIf": "two"
+    },
+    {
+     "shape": "line",
+     "x1": "12 + 0.4875*Tms",
+     "y1": -0.4,
+     "x2": "12 + 0.4875*Tms",
+     "y2": 0.4,
+     "color": "green",
+     "width": 3,
+     "visibleIf": "Tms <= 40"
+    },
+    {
+     "shape": "text",
+     "x": "12 + 0.4875*Tms",
+     "y": -1.1,
+     "text": {
+      "en": "T"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "Tms <= 40"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Period T = 1/f"
+     },
+     "expr": "Tms",
+     "digits": 1,
+     "unit": "ms"
+    },
+    {
+     "label": {
+      "en": "Angular frequency ω"
+     },
+     "expr": "2*pi*f",
+     "digits": 0,
+     "unit": "rad/s"
+    },
+    {
+     "label": {
+      "en": "v1 now"
+     },
+     "expr": "v1",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "v2 now"
+     },
+     "expr": "if(two, v2, 0)",
+     "digits": 2,
+     "unit": "V"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set f = 50 Hz. Play and check that one turn takes T = 20 ms."
+    },
+    {
+     "en": "Turn on the second wave and set φ = +90°. Which wave reaches its peak first?"
+    },
+    {
+     "en": "Double the frequency. What happens to the period and to ω?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

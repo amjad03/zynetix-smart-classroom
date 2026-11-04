@@ -954,6 +954,579 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "4-bit parallel adder / subtractor",
+    "kn": "4-ಬಿಟ್ ಸಮಾಂತರ ಸಂಕಲಕ / ವ್ಯವಕಲಕ"
+   },
+   "narration": {
+    "en": "Four full adders are chained: each carry-out (orange) is the next carry-in, so the carry ripples from the LSB to the MSB. With M = 1, XOR gates invert B and Cin = 1, so the circuit adds the 2's complement of B: it subtracts. Then C4 = 1 means the answer is positive.",
+    "kn": "ನಾಲ್ಕು ಪೂರ್ಣ ಸಂಕಲಕಗಳ ಸರಪಳಿ: ಪ್ರತಿ ಕ್ಯಾರಿ ಮುಂದಿನದಕ್ಕೆ ಹರಿಯುತ್ತದೆ. M = 1 ಆದಾಗ B ತಿರುಗಿಸಿ Cin = 1, ಅಂದರೆ B ಯ 2 ರ ಪೂರಕ ಸೇರಿಸಿ ವ್ಯವಕಲನ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Four full adders are chained: each carry-out (orange) is the next carry-in, so the carry ripples from the LSB to the MSB. With M = 1, XOR gates invert B and Cin = 1, so the circuit adds the 2's complement of B: it subtracts. Then C4 = 1 means the answer is positive.",
+    "kn": "ನಾಲ್ಕು ಪೂರ್ಣ ಸಂಕಲಕಗಳ ಸರಪಳಿ: ಪ್ರತಿ ಕ್ಯಾರಿ ಮುಂದಿನದಕ್ಕೆ ಹರಿಯುತ್ತದೆ. M = 1 ಆದಾಗ B ತಿರುಗಿಸಿ Cin = 1, ಅಂದರೆ B ಯ 2 ರ ಪೂರಕ ಸೇರಿಸಿ ವ್ಯವಕಲನ."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "A",
+      "kn": "A"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 11
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "B",
+      "kn": "B"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 6
+    }
+   ],
+   "toggles": [
+    {
+     "name": "M",
+     "label": {
+      "en": "Subtract (M = 1)",
+      "kn": "ಕಳೆ (M = 1)"
+     },
+     "value": false
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -0.4,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 10.2,
+     "text": {
+      "en": "A = {A} = {mod(floor((A)/8), 2)}{mod(floor((A)/4), 2)}{mod(floor((A)/2), 2)}{mod(floor((A)/1), 2)}"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 9.0,
+     "text": {
+      "en": "B = {B} = {mod(floor((B)/8), 2)}{mod(floor((B)/4), 2)}{mod(floor((B)/2), 2)}{mod(floor((B)/1), 2)}"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 17,
+     "y": 10.2,
+     "text": {
+      "en": "Mode: add (M = 0)",
+      "kn": "ವಿಧಾನ: ಕೂಡಿಸು"
+     },
+     "size": 22,
+     "align": "left",
+     "color": "green",
+     "visibleIf": "!M"
+    },
+    {
+     "shape": "text",
+     "x": 17,
+     "y": 10.2,
+     "text": {
+      "en": "Mode: subtract (M = 1: B inverted, Cin = 1)",
+      "kn": "ವಿಧಾನ: ಕಳೆ"
+     },
+     "size": 22,
+     "align": "left",
+     "color": "orange",
+     "visibleIf": "M"
+    },
+    {
+     "shape": "rect",
+     "x": 22,
+     "y": 4.2,
+     "w": 4,
+     "h": 2.6,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 5.2,
+     "text": {
+      "en": "FA"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 23,
+     "y": 7.4,
+     "text": {
+      "en": "A0={mod(floor((A)/1), 2)}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 25,
+     "y": 7.4,
+     "text": {
+      "en": "B0={mod(floor(((if(M, 15 - B, B)))/1), 2)}"
+     },
+     "size": 18,
+     "color": {
+      "by": "M",
+      "scale": [
+       "white",
+       "orange"
+      ]
+     }
+    },
+    {
+     "shape": "circle",
+     "x": 24,
+     "y": 2.4,
+     "r": 0.6,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 24,
+     "y": 2.4,
+     "r": 0.48,
+     "color": "yellow",
+     "visibleIf": "(mod(floor(((A + (if(M, 15 - B, B)) + M))/1), 2))"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 1.0,
+     "text": {
+      "en": "S0"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 26.6,
+     "y": 5.9,
+     "text": {
+      "en": "{M}"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "x": 27.6,
+     "y": 5.5,
+     "dx": -1.4,
+     "dy": 0,
+     "width": 2,
+     "color": {
+      "by": "(M) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 16,
+     "y": 4.2,
+     "w": 4,
+     "h": 2.6,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": 5.2,
+     "text": {
+      "en": "FA"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 17,
+     "y": 7.4,
+     "text": {
+      "en": "A1={mod(floor((A)/2), 2)}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 19,
+     "y": 7.4,
+     "text": {
+      "en": "B1={mod(floor(((if(M, 15 - B, B)))/2), 2)}"
+     },
+     "size": 18,
+     "color": {
+      "by": "M",
+      "scale": [
+       "white",
+       "orange"
+      ]
+     }
+    },
+    {
+     "shape": "circle",
+     "x": 18,
+     "y": 2.4,
+     "r": 0.6,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 18,
+     "y": 2.4,
+     "r": 0.48,
+     "color": "yellow",
+     "visibleIf": "(mod(floor(((A + (if(M, 15 - B, B)) + M))/2), 2))"
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": 1.0,
+     "text": {
+      "en": "S1"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 20.6,
+     "y": 5.9,
+     "text": {
+      "en": "{floor((mod(A, 2) + mod((if(M, 15 - B, B)), 2) + M)/2)}"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "x": 21.6,
+     "y": 5.5,
+     "dx": -1.4,
+     "dy": 0,
+     "width": 2,
+     "color": {
+      "by": "(floor((mod(A, 2) + mod((if(M, 15 - B, B)), 2) + M)/2)) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 4.2,
+     "w": 4,
+     "h": 2.6,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 5.2,
+     "text": {
+      "en": "FA"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 7.4,
+     "text": {
+      "en": "A2={mod(floor((A)/4), 2)}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 7.4,
+     "text": {
+      "en": "B2={mod(floor(((if(M, 15 - B, B)))/4), 2)}"
+     },
+     "size": 18,
+     "color": {
+      "by": "M",
+      "scale": [
+       "white",
+       "orange"
+      ]
+     }
+    },
+    {
+     "shape": "circle",
+     "x": 12,
+     "y": 2.4,
+     "r": 0.6,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 12,
+     "y": 2.4,
+     "r": 0.48,
+     "color": "yellow",
+     "visibleIf": "(mod(floor(((A + (if(M, 15 - B, B)) + M))/4), 2))"
+    },
+    {
+     "shape": "text",
+     "x": 12,
+     "y": 1.0,
+     "text": {
+      "en": "S2"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 14.6,
+     "y": 5.9,
+     "text": {
+      "en": "{floor((mod(A, 4) + mod((if(M, 15 - B, B)), 4) + M)/4)}"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "x": 15.6,
+     "y": 5.5,
+     "dx": -1.4,
+     "dy": 0,
+     "width": 2,
+     "color": {
+      "by": "(floor((mod(A, 4) + mod((if(M, 15 - B, B)), 4) + M)/4)) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "rect",
+     "x": 4,
+     "y": 4.2,
+     "w": 4,
+     "h": 2.6,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 5.2,
+     "text": {
+      "en": "FA"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 7.4,
+     "text": {
+      "en": "A3={mod(floor((A)/8), 2)}"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 7,
+     "y": 7.4,
+     "text": {
+      "en": "B3={mod(floor(((if(M, 15 - B, B)))/8), 2)}"
+     },
+     "size": 18,
+     "color": {
+      "by": "M",
+      "scale": [
+       "white",
+       "orange"
+      ]
+     }
+    },
+    {
+     "shape": "circle",
+     "x": 6,
+     "y": 2.4,
+     "r": 0.6,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 6,
+     "y": 2.4,
+     "r": 0.48,
+     "color": "yellow",
+     "visibleIf": "(mod(floor(((A + (if(M, 15 - B, B)) + M))/8), 2))"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 1.0,
+     "text": {
+      "en": "S3"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 8.6,
+     "y": 5.9,
+     "text": {
+      "en": "{floor((mod(A, 8) + mod((if(M, 15 - B, B)), 8) + M)/8)}"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "x": 9.6,
+     "y": 5.5,
+     "dx": -1.4,
+     "dy": 0,
+     "width": 2,
+     "color": {
+      "by": "(floor((mod(A, 8) + mod((if(M, 15 - B, B)), 8) + M)/8)) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "circle",
+     "x": 2.5,
+     "y": 2.4,
+     "r": 0.6,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 2.5,
+     "y": 2.4,
+     "r": 0.48,
+     "color": "green",
+     "visibleIf": "((A + (if(M, 15 - B, B)) + M) >= 16)"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 1.0,
+     "text": {
+      "en": "C4"
+     },
+     "size": 18
+    },
+    {
+     "shape": "arrow",
+     "x": 4.4,
+     "y": 5.5,
+     "dx": -1.6,
+     "dy": 0,
+     "width": 2,
+     "color": {
+      "by": "((A + (if(M, 15 - B, B)) + M) >= 16) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     }
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 0.4,
+     "text": {
+      "en": "Result = {mod((A + (if(M, 15 - B, B)) + M), 16)}  (carry {floor((A + (if(M, 15 - B, B)) + M)/16)})",
+      "kn": "ಫಲಿತಾಂಶ = {mod((A + (if(M, 15 - B, B)) + M), 16)}"
+     },
+     "size": 20,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "4-bit result"
+     },
+     "expr": "mod((A + (if(M, 15 - B, B)) + M), 16)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Carry C4"
+     },
+     "expr": "floor((A + (if(M, 15 - B, B)) + M)/16)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "True answer"
+     },
+     "expr": "if(M, A - B, A + B)",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Add 7 + 9. Follow the carry through all four stages."
+    },
+    {
+     "en": "Turn on subtract and find 9 − 7. What does C4 = 1 tell you?"
+    },
+    {
+     "en": "Now find 7 − 9. Read the 4-bit result as a 2's complement number."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -448,6 +448,315 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Transistor action: where the electrons go",
+    "kn": "ಟ್ರಾನ್ಸಿಸ್ಟರ್ ಕ್ರಿಯೆ: ಎಲೆಕ್ಟ್ರಾನ್‌ಗಳು ಎಲ್ಲಿಗೆ ಹೋಗುತ್ತವೆ"
+   },
+   "narration": {
+    "en": "Electrons injected by the forward-biased emitter cross the thin base. Only about 1 in (1 + β) recombines there (orange, leaving as base current); the rest are swept into the collector. So IE = IB + IC and IC = β IB.",
+    "kn": "ಮುನ್ನಡೆ ಬಯಾಸ್‌ನ ಉತ್ಸರ್ಜಕ ಕಳುಹಿಸಿದ ಎಲೆಕ್ಟ್ರಾನ್‌ಗಳು ತೆಳು ಆಧಾರ ದಾಟುತ್ತವೆ. ಸುಮಾರು (1 + β) ರಲ್ಲಿ ಒಂದು ಮಾತ್ರ ಅಲ್ಲಿ ಪುನಸ್ಸಂಯೋಜನೆಯಾಗುತ್ತದೆ; ಉಳಿದವು ಸಂಗ್ರಾಹಕ ಸೇರುತ್ತವೆ. IE = IB + IC, IC = β IB."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Electrons injected by the forward-biased emitter cross the thin base. Only about 1 in (1 + β) recombines there (orange, leaving as base current); the rest are swept into the collector. So IE = IB + IC and IC = β IB.",
+    "kn": "ಮುನ್ನಡೆ ಬಯಾಸ್‌ನ ಉತ್ಸರ್ಜಕ ಕಳುಹಿಸಿದ ಎಲೆಕ್ಟ್ರಾನ್‌ಗಳು ತೆಳು ಆಧಾರ ದಾಟುತ್ತವೆ. ಸುಮಾರು (1 + β) ರಲ್ಲಿ ಒಂದು ಮಾತ್ರ ಅಲ್ಲಿ ಪುನಸ್ಸಂಯೋಜನೆಯಾಗುತ್ತದೆ; ಉಳಿದವು ಸಂಗ್ರಾಹಕ ಸೇರುತ್ತವೆ. IE = IB + IC, IC = β IB."
+   },
+   "sliders": [
+    {
+     "name": "IB",
+     "label": {
+      "en": "Base current IB",
+      "kn": "ಆಧಾರ ಪ್ರವಾಹ"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 40,
+     "unit": "µA"
+    },
+    {
+     "name": "beta",
+     "label": {
+      "en": "Current gain β",
+      "kn": "ಪ್ರವಾಹ ಲಾಭ β"
+     },
+     "min": 50,
+     "max": 250,
+     "step": 10,
+     "value": 100
+    }
+   ],
+   "toggles": [
+    {
+     "name": "cur",
+     "label": {
+      "en": "Show currents",
+      "kn": "ಪ್ರವಾಹಗಳನ್ನು ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "loop": true,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "IC",
+     "expr": "beta*IB/1000"
+    },
+    {
+     "name": "IE",
+     "expr": "IC + IB/1000"
+    },
+    {
+     "name": "fr",
+     "expr": "1/(1 + beta)"
+    },
+    {
+     "name": "n",
+     "expr": "clamp(60 + 8*IE, 60, 300)"
+    },
+    {
+     "name": "sp",
+     "expr": "3"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -1,
+     12
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 2,
+     "w": 9,
+     "h": 6,
+     "color": "blue",
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 2,
+     "w": 2.5,
+     "h": 6,
+     "color": "red",
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": 12.5,
+     "y": 2,
+     "w": 11.5,
+     "h": 6,
+     "color": "blue",
+     "opacity": 0.3
+    },
+    {
+     "shape": "text",
+     "x": 5.5,
+     "y": 8.8,
+     "text": {
+      "en": "Emitter N",
+      "kn": "ಉತ್ಸರ್ಜಕ N"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 11.25,
+     "y": 8.8,
+     "text": {
+      "en": "Base P",
+      "kn": "ಆಧಾರ P"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 18,
+     "y": 8.8,
+     "text": {
+      "en": "Collector N",
+      "kn": "ಸಂಗ್ರಾಹಕ N"
+     },
+     "size": 22
+    },
+    {
+     "shape": "line",
+     "x1": 11.25,
+     "y1": 2,
+     "x2": 11.25,
+     "y2": -0.5,
+     "width": 4
+    },
+    {
+     "shape": "particles",
+     "count": 300,
+     "x": "if(mod(i, round(1 + beta)) == 0, min(1 + 0.8*mod(30*rand(i) + sp*t, 30), 11.25), 1 + 0.8*mod(30*rand(i) + sp*t, 30))",
+     "y": "if(mod(i, round(1 + beta)) == 0 && 1 + 0.8*mod(30*rand(i) + sp*t, 30) > 11.25, 2.4 + 5*rand(i + 150) - (1 + 0.8*mod(30*rand(i) + sp*t, 30) - 11.25)*1.4, 2.4 + 5*rand(i + 150))",
+     "r": 0.17,
+     "color": {
+      "by": "if(mod(i, round(1 + beta)) == 0, 1, 0)",
+      "scale": [
+       "yellow",
+       "orange"
+      ]
+     },
+     "visibleIf": "i < n && (1 + 0.8*mod(30*rand(i) + sp*t, 30) < 11.25 || !(mod(i, round(1 + beta)) == 0) || 2.4 + 5*rand(i + 150) - (1 + 0.8*mod(30*rand(i) + sp*t, 30) - 11.25)*1.4 > -0.8)"
+    },
+    {
+     "shape": "arrow",
+     "x": 1,
+     "y": 10.6,
+     "dx": -1,
+     "dy": 0,
+     "color": "green",
+     "width": 4,
+     "visibleIf": "cur"
+    },
+    {
+     "shape": "text",
+     "x": 2.6,
+     "y": 10.3,
+     "text": {
+      "en": "IE = {IE:2} mA"
+     },
+     "size": 22,
+     "color": "green",
+     "align": "left",
+     "visibleIf": "cur"
+    },
+    {
+     "shape": "arrow",
+     "x": 25.5,
+     "y": 10.6,
+     "dx": -1.4,
+     "dy": 0,
+     "color": "green",
+     "width": 4,
+     "visibleIf": "cur"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 10.3,
+     "text": {
+      "en": "IC = {IC:2} mA"
+     },
+     "size": 22,
+     "color": "green",
+     "align": "right",
+     "visibleIf": "cur"
+    },
+    {
+     "shape": "arrow",
+     "x": 12.3,
+     "y": -0.6,
+     "dx": 0,
+     "dy": 1.2,
+     "color": "green",
+     "width": 4,
+     "visibleIf": "cur"
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": -0.3,
+     "text": {
+      "en": "IB = {IB} µA"
+     },
+     "size": 22,
+     "color": "green",
+     "align": "left",
+     "visibleIf": "cur"
+    },
+    {
+     "shape": "text",
+     "x": 26.6,
+     "y": 5,
+     "text": {
+      "en": "electrons →",
+      "kn": "ಎಲೆಕ್ಟ್ರಾನ್ →"
+     },
+     "size": 20,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 26.6,
+     "y": 3.8,
+     "text": {
+      "en": "(current ←)",
+      "kn": "(ಪ್ರವಾಹ ←)"
+     },
+     "size": 20,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Collector current IC = β IB"
+     },
+     "expr": "IC",
+     "digits": 2,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "Emitter current IE = IB + IC"
+     },
+     "expr": "IE",
+     "digits": 3,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "α = IC / IE"
+     },
+     "expr": "IC/IE",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "Recombine in the base: 1 in"
+     },
+     "expr": "1 + beta",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set β = 50. Count roughly how many orange electrons drop out at the base."
+    },
+    {
+     "en": "Double IB. How do IC and IE change? Does α change?"
+    },
+    {
+     "en": "Raise β from 50 to 250. Why does α get closer to 1?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

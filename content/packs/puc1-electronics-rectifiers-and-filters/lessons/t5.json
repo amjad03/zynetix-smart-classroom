@@ -1192,6 +1192,391 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Blocks of a regulated power supply",
+    "kn": "ನಿಯಂತ್ರಿತ ವಿದ್ಯುತ್ ಸರಬರಾಜಿನ ಭಾಗಗಳು"
+   },
+   "narration": {
+    "en": "A 230 V : 12 V transformer, a bridge rectifier, a 2200 µF filter and a 7805 regulator feed the load. Change the mains voltage and the load current. With the regulator the output stays at 5 V as long as its input stays at least 2 V above the output.",
+    "kn": "230 V : 12 V ಪರಿವರ್ತಕ, ಸೇತುವೆ ಏಕದಿಶಕಾರಿ, 2200 µF ಶೋಧಕ ಮತ್ತು 7805 ನಿಯಂತ್ರಕ ಭಾರಕ್ಕೆ ಶಕ್ತಿ ನೀಡುತ್ತವೆ. ಮುಖ್ಯ ವೋಲ್ಟೇಜ್ ಮತ್ತು ಭಾರ ಪ್ರವಾಹ ಬದಲಿಸಿ. ನಿಯಂತ್ರಕದೊಂದಿಗೆ ನಿರ್ಗಮ 5 V ನಲ್ಲೇ ಉಳಿಯುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A 230 V : 12 V transformer, a bridge rectifier, a 2200 µF filter and a 7805 regulator feed the load. Change the mains voltage and the load current. With the regulator the output stays at 5 V as long as its input stays at least 2 V above the output.",
+    "kn": "230 V : 12 V ಪರಿವರ್ತಕ, ಸೇತುವೆ ಏಕದಿಶಕಾರಿ, 2200 µF ಶೋಧಕ ಮತ್ತು 7805 ನಿಯಂತ್ರಕ ಭಾರಕ್ಕೆ ಶಕ್ತಿ ನೀಡುತ್ತವೆ. ಮುಖ್ಯ ವೋಲ್ಟೇಜ್ ಮತ್ತು ಭಾರ ಪ್ರವಾಹ ಬದಲಿಸಿ. ನಿಯಂತ್ರಕದೊಂದಿಗೆ ನಿರ್ಗಮ 5 V ನಲ್ಲೇ ಉಳಿಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "Vac",
+     "label": {
+      "en": "Mains voltage",
+      "kn": "ಮುಖ್ಯ ವೋಲ್ಟೇಜ್"
+     },
+     "min": 190,
+     "max": 260,
+     "step": 5,
+     "value": 230,
+     "unit": "V"
+    },
+    {
+     "name": "IL",
+     "label": {
+      "en": "Load current",
+      "kn": "ಭಾರ ಪ್ರವಾಹ"
+     },
+     "min": 0.1,
+     "max": 2,
+     "step": 0.1,
+     "value": 0.5,
+     "unit": "A"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "reg",
+     "label": {
+      "en": "7805 regulator",
+      "kn": "7805 ನಿಯಂತ್ರಕ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "Vs",
+     "expr": "Vac*12/230"
+    },
+    {
+     "name": "Vpk",
+     "expr": "Vs*sqrt(2) - 1.4"
+    },
+    {
+     "name": "Vr",
+     "expr": "IL/(2*50*0.0022)"
+    },
+    {
+     "name": "Vmin",
+     "expr": "Vpk - Vr"
+    },
+    {
+     "name": "Vout",
+     "expr": "if(reg, if(Vmin >= 7, 5, max(Vmin - 2, 0)), Vpk - Vr/2)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.3999999999999999,
+     "y": 7.2,
+     "w": 5.2,
+     "h": 2.2,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 8.0,
+     "text": {
+      "en": "Transformer",
+      "kn": "ಪರಿವರ್ತಕ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 6.4,
+     "y": 7.2,
+     "w": 5.2,
+     "h": 2.2,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 8.0,
+     "text": {
+      "en": "Rectifier",
+      "kn": "ಏಕದಿಶಕಾರಿ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 12.4,
+     "y": 7.2,
+     "w": 5.2,
+     "h": 2.2,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 8.0,
+     "text": {
+      "en": "Filter",
+      "kn": "ಶೋಧಕ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 18.4,
+     "y": 7.2,
+     "w": 5.2,
+     "h": 2.2,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 21,
+     "y": 8.0,
+     "text": {
+      "en": "Regulator 7805",
+      "kn": "ನಿಯಂತ್ರಕ 7805"
+     },
+     "size": 20
+    },
+    {
+     "shape": "rect",
+     "x": 24.4,
+     "y": 7.2,
+     "w": 5.2,
+     "h": 2.2,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 27,
+     "y": 8.0,
+     "text": {
+      "en": "Load",
+      "kn": "ಭಾರ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "arrow",
+     "x": 5.6,
+     "y": 8.3,
+     "dx": 0.7999999999999998,
+     "dy": 0,
+     "width": 3
+    },
+    {
+     "shape": "arrow",
+     "x": 11.6,
+     "y": 8.3,
+     "dx": 0.7999999999999998,
+     "dy": 0,
+     "width": 3
+    },
+    {
+     "shape": "arrow",
+     "x": 17.6,
+     "y": 8.3,
+     "dx": 0.7999999999999998,
+     "dy": 0,
+     "width": 3
+    },
+    {
+     "shape": "arrow",
+     "x": 23.6,
+     "y": 8.3,
+     "dx": 0.7999999999999998,
+     "dy": 0,
+     "width": 3
+    },
+    {
+     "shape": "wave",
+     "fn": "4 + 0.15*12*sin(2*pi*(x - 0.4)/2.6)",
+     "color": "yellow",
+     "width": 3,
+     "from": 0.4,
+     "to": 5.6
+    },
+    {
+     "shape": "wave",
+     "fn": "2.2 + 0.15*Vpk*abs(sin(pi*(x - 6.4)/2.6))",
+     "color": "yellow",
+     "width": 3,
+     "from": 6.4,
+     "to": 11.6
+    },
+    {
+     "shape": "wave",
+     "fn": "2.2 + 0.15*(Vpk - Vr*mod((x - 12.4)/2.6, 1))",
+     "color": "orange",
+     "width": 3,
+     "from": 12.4,
+     "to": 17.6
+    },
+    {
+     "shape": "wave",
+     "fn": "2.2 + 0.15*Vout",
+     "color": "green",
+     "width": 4,
+     "from": 18.4,
+     "to": 23.6
+    },
+    {
+     "shape": "line",
+     "x1": 0.4,
+     "y1": 2.2,
+     "x2": 29.6,
+     "y2": 2.2,
+     "width": 1,
+     "opacity": 0.4
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 6.3,
+     "text": {
+      "en": "{Vs:1} V rms"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 6.3,
+     "text": {
+      "en": "peak {Vpk:1} V",
+      "kn": "ಶಿಖರ {Vpk:1} V"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 6.3,
+     "text": {
+      "en": "ripple {Vr:1} V",
+      "kn": "ಏರಿಳಿತ {Vr:1} V"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 21,
+     "y": 6.3,
+     "text": {
+      "en": "{Vout:2} V"
+     },
+     "size": 18,
+     "color": "green"
+    },
+    {
+     "shape": "icon",
+     "icon": "bulb",
+     "x": 27,
+     "y": 4,
+     "size": 2.2,
+     "on": "Vout/5",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 27,
+     "y": 2.6,
+     "text": {
+      "en": "{IL} A"
+     },
+     "size": 18
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 10.4,
+     "text": {
+      "en": "Mains {Vac} V a.c.",
+      "kn": "ಮುಖ್ಯ ಸರಬರಾಜು {Vac} V"
+     },
+     "size": 22
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 0.6,
+     "text": {
+      "en": "Regulator off: output follows the filter",
+      "kn": "ನಿಯಂತ್ರಕ ಆಫ್: ನಿರ್ಗಮ ಶೋಧಕವನ್ನು ಅನುಸರಿಸುತ್ತದೆ"
+     },
+     "size": 20,
+     "color": "orange",
+     "visibleIf": "!reg"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 0.6,
+     "text": {
+      "en": "Dropout! Input less than 2 V above the output",
+      "kn": "ಡ್ರಾಪ್‌ಔಟ್! ಒಳಹರಿವು ಸಾಕಾಗುವುದಿಲ್ಲ"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "reg && Vmin < 7"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Filter output (average)"
+     },
+     "expr": "Vpk - Vr/2",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Ripple peak to peak"
+     },
+     "expr": "Vr",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Output to the load"
+     },
+     "expr": "Vout",
+     "digits": 2,
+     "unit": "V"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn the regulator off and raise the load current. What happens to the output and the ripple?"
+    },
+    {
+     "en": "Turn it on and vary the mains from 190 V to 260 V. Does the output change?"
+    },
+    {
+     "en": "Find the load current at which the 7805 drops out when the mains is at 190 V."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

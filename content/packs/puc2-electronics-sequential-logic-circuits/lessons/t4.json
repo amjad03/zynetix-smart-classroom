@@ -967,6 +967,338 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Ripple counter and MOD-N counting",
+    "kn": "ರಿಪಲ್ ಕೌಂಟರ್ ಮತ್ತು MOD-N"
+   },
+   "narration": {
+    "en": "Only Q0 gets the clock; each later flip-flop toggles when the one before it falls from 1 to 0, so the outputs count in binary and each halves the frequency. A MOD-N counter is cleared the moment the count reaches N. Turn on the delay view to see how the change ripples later and later through the stages.",
+    "kn": "Q0 ಗೆ ಮಾತ್ರ ಗಡಿಯಾರ; ಮುಂದಿನ ಪ್ರತಿ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್ ಹಿಂದಿನದು 1 ರಿಂದ 0 ಗೆ ಇಳಿದಾಗ ಟಾಗಲ್ ಆಗುತ್ತದೆ. MOD-N ಕೌಂಟರ್ ಎಣಿಕೆ N ತಲುಪಿದ ಕ್ಷಣ ಅಳಿಸಲಾಗುತ್ತದೆ. ವಿಳಂಬ ನೋಟದಲ್ಲಿ ತರಂಗ ಹರಡುವುದನ್ನು ನೋಡಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Only Q0 gets the clock; each later flip-flop toggles when the one before it falls from 1 to 0, so the outputs count in binary and each halves the frequency. A MOD-N counter is cleared the moment the count reaches N. Turn on the delay view to see how the change ripples later and later through the stages.",
+    "kn": "Q0 ಗೆ ಮಾತ್ರ ಗಡಿಯಾರ; ಮುಂದಿನ ಪ್ರತಿ ಫ್ಲಿಪ್-ಫ್ಲಾಪ್ ಹಿಂದಿನದು 1 ರಿಂದ 0 ಗೆ ಇಳಿದಾಗ ಟಾಗಲ್ ಆಗುತ್ತದೆ. MOD-N ಕೌಂಟರ್ ಎಣಿಕೆ N ತಲುಪಿದ ಕ್ಷಣ ಅಳಿಸಲಾಗುತ್ತದೆ. ವಿಳಂಬ ನೋಟದಲ್ಲಿ ತರಂಗ ಹರಡುವುದನ್ನು ನೋಡಿ."
+   },
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "dl",
+     "label": {
+      "en": "Show ripple delay",
+      "kn": "ರಿಪಲ್ ವಿಳಂಬ ತೋರಿಸಿ"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "M",
+     "label": {
+      "en": "Counter",
+      "kn": "ಕೌಂಟರ್"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "MOD-16"
+       },
+       "value": 16
+      },
+      {
+       "label": {
+        "en": "MOD-10"
+       },
+       "value": 10
+      },
+      {
+       "label": {
+        "en": "MOD-8"
+       },
+       "value": 8
+      },
+      {
+       "label": {
+        "en": "MOD-6"
+       },
+       "value": 6
+      },
+      {
+       "label": {
+        "en": "MOD-5"
+       },
+       "value": 5
+      }
+     ],
+     "value": 16
+    }
+   ],
+   "counters": [
+    {
+     "name": "n",
+     "value": 0,
+     "min": 0,
+     "max": 15
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Clock pulse",
+      "kn": "ಗಡಿಯಾರ ಸ್ಪಂದನ"
+     },
+     "icon": "next",
+     "set": {
+      "n": "mod(n + 1, M)"
+     }
+    },
+    {
+     "label": {
+      "en": "Clear",
+      "kn": "ಅಳಿಸಿ"
+     },
+     "icon": "reset",
+     "set": {
+      "n": "0"
+     }
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 10.5,
+     "text": {
+      "en": "clock pulses →",
+      "kn": "ಗಡಿಯಾರ ಸ್ಪಂದನಗಳು →"
+     },
+     "size": 16,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 1.2,
+     "y": 8.700000000000001,
+     "text": {
+      "en": "Q0"
+     },
+     "size": 18,
+     "align": "left",
+     "visibleIf": "M > 1"
+    },
+    {
+     "shape": "wave",
+     "fn": "8.3 + 1.0*mod(floor(mod(floor((x - 3)/1.6 - 0*if(dl, 0.15, 0)), M)/1), 2)",
+     "color": "yellow",
+     "width": 3,
+     "visibleIf": "M > 1",
+     "from": 3,
+     "to": 28.6
+    },
+    {
+     "shape": "text",
+     "x": 1.2,
+     "y": 6.9,
+     "text": {
+      "en": "Q1"
+     },
+     "size": 18,
+     "align": "left",
+     "visibleIf": "M > 2"
+    },
+    {
+     "shape": "wave",
+     "fn": "6.5 + 1.0*mod(floor(mod(floor((x - 3)/1.6 - 1*if(dl, 0.15, 0)), M)/2), 2)",
+     "color": "yellow",
+     "width": 3,
+     "visibleIf": "M > 2",
+     "from": 3,
+     "to": 28.6
+    },
+    {
+     "shape": "text",
+     "x": 1.2,
+     "y": 5.1000000000000005,
+     "text": {
+      "en": "Q2"
+     },
+     "size": 18,
+     "align": "left",
+     "visibleIf": "M > 4"
+    },
+    {
+     "shape": "wave",
+     "fn": "4.7 + 1.0*mod(floor(mod(floor((x - 3)/1.6 - 2*if(dl, 0.15, 0)), M)/4), 2)",
+     "color": "yellow",
+     "width": 3,
+     "visibleIf": "M > 4",
+     "from": 3,
+     "to": 28.6
+    },
+    {
+     "shape": "text",
+     "x": 1.2,
+     "y": 3.2999999999999994,
+     "text": {
+      "en": "Q3"
+     },
+     "size": 18,
+     "align": "left",
+     "visibleIf": "M > 8"
+    },
+    {
+     "shape": "wave",
+     "fn": "2.8999999999999995 + 1.0*mod(floor(mod(floor((x - 3)/1.6 - 3*if(dl, 0.15, 0)), M)/8), 2)",
+     "color": "yellow",
+     "width": 3,
+     "visibleIf": "M > 8",
+     "from": 3,
+     "to": 28.6
+    },
+    {
+     "shape": "rect",
+     "x": "3 + 1.6*n",
+     "y": 2.0999999999999996,
+     "w": 1.6,
+     "h": 7.6,
+     "color": "green",
+     "opacity": 0.2
+    },
+    {
+     "shape": "circle",
+     "x": 24,
+     "y": 1.2,
+     "r": 0.6,
+     "fill": false,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "M > 1"
+    },
+    {
+     "shape": "circle",
+     "x": 24,
+     "y": 1.2,
+     "r": 0.48,
+     "color": "yellow",
+     "visibleIf": "(mod(floor((n)/1), 2)) && (M > 1)"
+    },
+    {
+     "shape": "circle",
+     "x": 19,
+     "y": 1.2,
+     "r": 0.6,
+     "fill": false,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "M > 2"
+    },
+    {
+     "shape": "circle",
+     "x": 19,
+     "y": 1.2,
+     "r": 0.48,
+     "color": "yellow",
+     "visibleIf": "(mod(floor((n)/2), 2)) && (M > 2)"
+    },
+    {
+     "shape": "circle",
+     "x": 14,
+     "y": 1.2,
+     "r": 0.6,
+     "fill": false,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "M > 4"
+    },
+    {
+     "shape": "circle",
+     "x": 14,
+     "y": 1.2,
+     "r": 0.48,
+     "color": "yellow",
+     "visibleIf": "(mod(floor((n)/4), 2)) && (M > 4)"
+    },
+    {
+     "shape": "circle",
+     "x": 9,
+     "y": 1.2,
+     "r": 0.6,
+     "fill": false,
+     "color": "white",
+     "width": 3,
+     "visibleIf": "M > 8"
+    },
+    {
+     "shape": "circle",
+     "x": 9,
+     "y": 1.2,
+     "r": 0.48,
+     "color": "yellow",
+     "visibleIf": "(mod(floor((n)/8), 2)) && (M > 8)"
+    },
+    {
+     "shape": "label",
+     "x": 4.5,
+     "y": 1.2,
+     "text": {
+      "en": "count {n}",
+      "kn": "ಎಣಿಕೆ {n}"
+     },
+     "size": 22,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Count"
+     },
+     "expr": "n",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Flip-flops needed"
+     },
+     "expr": "ceil(log(M)/log(2) - 1e-9)",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Output frequency of the last stage"
+     },
+     "expr": "1/M",
+     "digits": 3,
+     "unit": "× clock"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Choose MOD-16 and clock through. How many clocks before Q3 goes high?"
+    },
+    {
+     "en": "Choose MOD-10 (decade). Which count is never shown, and why?"
+    },
+    {
+     "en": "Turn on the delay view. Why is a ripple counter slow for many stages?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

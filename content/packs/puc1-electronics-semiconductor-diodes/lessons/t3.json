@@ -595,6 +595,459 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Zener diode voltage regulator",
+    "kn": "ಜೀನರ್ ಡಯೋಡ್ ವೋಲ್ಟೇಜ್ ನಿಯಂತ್ರಕ"
+   },
+   "narration": {
+    "en": "A 5.1 V Zener, reverse biased, sits across the load with a series resistor R. While it is in breakdown the output stays at 5.1 V: the Zener takes whatever current the load does not need, IZ = IS − IL. If the input is too low, or the load too heavy, the Zener stops regulating.",
+    "kn": "5.1 V ಜೀನರ್ ಹಿಮ್ಮುಖ ಬಯಾಸ್‌ನಲ್ಲಿ ಭಾರಕ್ಕೆ ಸಮಾಂತರವಾಗಿದೆ. ಭಂಗದಲ್ಲಿರುವವರೆಗೆ ನಿರ್ಗಮ 5.1 V; IZ = IS − IL. ಒಳಹರಿವು ಕಡಿಮೆಯಾದರೆ ಅಥವಾ ಭಾರ ಹೆಚ್ಚಾದರೆ ನಿಯಂತ್ರಣ ನಿಲ್ಲುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A 5.1 V Zener, reverse biased, sits across the load with a series resistor R. While it is in breakdown the output stays at 5.1 V: the Zener takes whatever current the load does not need, IZ = IS − IL. If the input is too low, or the load too heavy, the Zener stops regulating.",
+    "kn": "5.1 V ಜೀನರ್ ಹಿಮ್ಮುಖ ಬಯಾಸ್‌ನಲ್ಲಿ ಭಾರಕ್ಕೆ ಸಮಾಂತರವಾಗಿದೆ. ಭಂಗದಲ್ಲಿರುವವರೆಗೆ ನಿರ್ಗಮ 5.1 V; IZ = IS − IL. ಒಳಹರಿವು ಕಡಿಮೆಯಾದರೆ ಅಥವಾ ಭಾರ ಹೆಚ್ಚಾದರೆ ನಿಯಂತ್ರಣ ನಿಲ್ಲುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "Vin",
+     "label": {
+      "en": "Input voltage",
+      "kn": "ಒಳಹರಿವಿನ ವೋಲ್ಟೇಜ್"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 0.5,
+     "value": 12,
+     "unit": "V"
+    },
+    {
+     "name": "R",
+     "label": {
+      "en": "Series resistor R",
+      "kn": "ಸರಣಿ ರೋಧ R"
+     },
+     "min": 100,
+     "max": 1000,
+     "step": 50,
+     "value": 220,
+     "unit": "Ω"
+    },
+    {
+     "name": "RL",
+     "label": {
+      "en": "Load RL",
+      "kn": "ಭಾರ RL"
+     },
+     "min": 100,
+     "max": 2000,
+     "step": 100,
+     "value": 1000,
+     "unit": "Ω"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "zen",
+     "label": {
+      "en": "Zener connected",
+      "kn": "ಜೀನರ್ ಜೋಡಣೆ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "Voc",
+     "expr": "Vin*RL/(R + RL)"
+    },
+    {
+     "name": "on",
+     "expr": "zen && Voc > 5.1"
+    },
+    {
+     "name": "Vo",
+     "expr": "if(on, 5.1, Voc)"
+    },
+    {
+     "name": "IS",
+     "expr": "(Vin - Vo)/R*1000"
+    },
+    {
+     "name": "IL",
+     "expr": "Vo/RL*1000"
+    },
+    {
+     "name": "Iz",
+     "expr": "IS - IL"
+    },
+    {
+     "name": "Pz",
+     "expr": "5.1*Iz/1000"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 2,
+     "x2": 2,
+     "y2": 4.6,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "battery",
+     "x": 2,
+     "y": 5.5,
+     "size": 2,
+     "angle": 90
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 6.4,
+     "x2": 2,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 9,
+     "x2": 4.5,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 6.6,
+     "text": {
+      "en": "+"
+     },
+     "size": 28,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 8.2,
+     "text": {
+      "en": "Vin"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 6,
+     "y": 9,
+     "size": 3
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 10.1,
+     "text": {
+      "en": "R = {R} Ω"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 7.5,
+     "y1": 9,
+     "x2": 16,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 9,
+     "x2": 11,
+     "y2": 6.3,
+     "visibleIf": "zen",
+     "width": 4
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       10.23,
+       4.8
+      ],
+      [
+       11.77,
+       4.8
+      ],
+      [
+       11.0,
+       6.13
+      ]
+     ],
+     "color": {
+      "by": "on",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "zen"
+    },
+    {
+     "shape": "line",
+     "x1": 10.16,
+     "y1": 6.13,
+     "x2": 11.84,
+     "y2": 6.13,
+     "width": 4,
+     "color": {
+      "by": "on",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "zen"
+    },
+    {
+     "shape": "line",
+     "x1": 10.3,
+     "y1": 6.2,
+     "x2": 10.0,
+     "y2": 5.9,
+     "width": 4,
+     "color": {
+      "by": "on",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "zen"
+    },
+    {
+     "shape": "line",
+     "x1": 11.7,
+     "y1": 6.2,
+     "x2": 12.0,
+     "y2": 6.5,
+     "width": 4,
+     "color": {
+      "by": "on",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "zen"
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 4.8,
+     "x2": 11,
+     "y2": 2,
+     "visibleIf": "zen",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 12.2,
+     "y": 5.5,
+     "text": {
+      "en": "VZ = 5.1 V"
+     },
+     "size": 18,
+     "align": "left",
+     "visibleIf": "zen"
+    },
+    {
+     "shape": "line",
+     "x1": 16,
+     "y1": 9,
+     "x2": 16,
+     "y2": 7,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 16,
+     "y": 5.5,
+     "size": 3,
+     "angle": 90,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 16,
+     "y1": 4,
+     "x2": 16,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 16,
+     "y1": 2,
+     "x2": 2,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 17.2,
+     "y": 5.5,
+     "text": {
+      "en": "RL = {RL} Ω"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "arrow",
+     "x": 8.4,
+     "y": 9.7,
+     "dx": 1.6,
+     "dy": 0,
+     "color": "green",
+     "width": 3,
+     "label": "IS"
+    },
+    {
+     "shape": "arrow",
+     "x": 11.8,
+     "y": 8.3,
+     "dx": 0,
+     "dy": -1.2,
+     "color": "green",
+     "width": 3,
+     "label": "IZ",
+     "visibleIf": "on"
+    },
+    {
+     "shape": "arrow",
+     "x": 16.8,
+     "y": 8.5,
+     "dx": 0,
+     "dy": -1.2,
+     "color": "green",
+     "width": 3,
+     "label": "IL"
+    },
+    {
+     "shape": "label",
+     "x": 24,
+     "y": 9,
+     "text": {
+      "en": "Output {Vo:2} V",
+      "kn": "ನಿರ್ಗಮ {Vo:2} V"
+     },
+     "size": 26,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 24,
+     "y": 6.5,
+     "text": {
+      "en": "Regulating",
+      "kn": "ನಿಯಂತ್ರಿಸುತ್ತಿದೆ"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "on"
+    },
+    {
+     "shape": "label",
+     "x": 24,
+     "y": 6.5,
+     "text": {
+      "en": "Not regulating",
+      "kn": "ನಿಯಂತ್ರಿಸುತ್ತಿಲ್ಲ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "!on"
+    },
+    {
+     "shape": "label",
+     "x": 24,
+     "y": 4.2,
+     "text": {
+      "en": "Zener power {Pz:2} W: too hot!",
+      "kn": "ಜೀನರ್ ಶಕ್ತಿ {Pz:2} W: ಅತಿ ಬಿಸಿ!"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "Pz > 0.5"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Series current IS"
+     },
+     "expr": "IS",
+     "digits": 1,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "Load current IL"
+     },
+     "expr": "IL",
+     "digits": 1,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "Zener current IZ"
+     },
+     "expr": "Iz",
+     "digits": 1,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "Zener power"
+     },
+     "expr": "Pz",
+     "digits": 3,
+     "unit": "W"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise the input from 6 V to 15 V. How do the output and the Zener current change?"
+    },
+    {
+     "en": "Lower RL. At what load does the output start to fall below 5.1 V?"
+    },
+    {
+     "en": "Disconnect the Zener and vary RL. How does the output behave without it?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -767,6 +767,217 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Diode detector: choosing RC",
+    "kn": "ಡಯೋಡ್ ಶೋಧಕ: RC ಆಯ್ಕೆ"
+   },
+   "narration": {
+    "en": "The diode lets the capacitor charge to each carrier peak; between peaks it discharges through R. With RC much longer than the carrier period (0.05 ms) but shorter than the message allows, the output follows the envelope. Too small an RC leaves carrier ripple; too large and the output cannot fall fast enough (diagonal clipping).",
+    "kn": "ಡಯೋಡ್ ಧಾರಕವನ್ನು ಪ್ರತಿ ವಾಹಕ ಶಿಖರಕ್ಕೆ ಆವೇಶಗೊಳಿಸುತ್ತದೆ; ನಡುವೆ R ಮೂಲಕ ವಿಸರ್ಜಿಸುತ್ತದೆ. ಸರಿಯಾದ RC ಯಲ್ಲಿ ನಿರ್ಗಮ ಆವರಣವನ್ನು ಅನುಸರಿಸುತ್ತದೆ. ತುಂಬಾ ಸಣ್ಣ RC ಏರಿಳಿತ, ತುಂಬಾ ದೊಡ್ಡ RC ಕರ್ಣ ಕ್ಲಿಪ್ಪಿಂಗ್."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The diode lets the capacitor charge to each carrier peak; between peaks it discharges through R. With RC much longer than the carrier period (0.05 ms) but shorter than the message allows, the output follows the envelope. Too small an RC leaves carrier ripple; too large and the output cannot fall fast enough (diagonal clipping).",
+    "kn": "ಡಯೋಡ್ ಧಾರಕವನ್ನು ಪ್ರತಿ ವಾಹಕ ಶಿಖರಕ್ಕೆ ಆವೇಶಗೊಳಿಸುತ್ತದೆ; ನಡುವೆ R ಮೂಲಕ ವಿಸರ್ಜಿಸುತ್ತದೆ. ಸರಿಯಾದ RC ಯಲ್ಲಿ ನಿರ್ಗಮ ಆವರಣವನ್ನು ಅನುಸರಿಸುತ್ತದೆ. ತುಂಬಾ ಸಣ್ಣ RC ಏರಿಳಿತ, ತುಂಬಾ ದೊಡ್ಡ RC ಕರ್ಣ ಕ್ಲಿಪ್ಪಿಂಗ್."
+   },
+   "sliders": [
+    {
+     "name": "RC",
+     "label": {
+      "en": "Time constant RC",
+      "kn": "ಕಾಲ ಸ್ಥಿರಾಂಕ RC"
+     },
+     "min": 0.02,
+     "max": 1,
+     "step": 0.02,
+     "value": 0.18,
+     "unit": "ms"
+    },
+    {
+     "name": "m",
+     "label": {
+      "en": "Modulation index m",
+      "kn": "ಮಾಡ್ಯುಲೇಷನ್ ಸೂಚ್ಯಂಕ m"
+     },
+     "min": 0.1,
+     "max": 0.9,
+     "step": 0.1,
+     "value": 0.6
+    }
+   ],
+   "toggles": [
+    {
+     "name": "showin",
+     "label": {
+      "en": "Show the AM input",
+      "kn": "AM ಒಳಹರಿವು ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 2,
+    "unit": "ms",
+    "dt": 0.001,
+    "speeds": [
+     0.05,
+     0.1,
+     0.25
+    ],
+    "speed": 0.1
+   },
+   "vars": [
+    {
+     "name": "vam",
+     "expr": "2*(1 + m*sin(2*pi*t))*sin(2*pi*20*t)"
+    },
+    {
+     "name": "lim",
+     "expr": "sqrt(1 - m^2)/(2*pi*1*m)"
+    }
+   ],
+   "state": [
+    {
+     "name": "vo",
+     "init": 0,
+     "rate": "if(vam > vo, (vam - vo)/0.01, 0) - vo/RC"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -4.6,
+     7.4
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 0,
+     "x2": 29.5,
+     "y2": 0,
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": -0.6,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "shape": "trail",
+     "x": "1 + 14*t",
+     "y": "1.1*vam",
+     "length": 2000,
+     "color": "yellow",
+     "width": 1,
+     "opacity": 0.6,
+     "visibleIf": "showin"
+    },
+    {
+     "shape": "trail",
+     "x": "1 + 14*t",
+     "y": "1.1*vo",
+     "length": 2000,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "1 + 14*t",
+     "y": "1.1*vo",
+     "r": 0.2,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 6.8,
+     "text": {
+      "en": "Carrier ripple: RC too small",
+      "kn": "ವಾಹಕ ಏರಿಳಿತ: RC ಸಣ್ಣದು"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "RC < 0.15"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 6.8,
+     "text": {
+      "en": "Diagonal clipping: RC too large",
+      "kn": "ಕರ್ಣ ಕ್ಲಿಪ್ಪಿಂಗ್: RC ದೊಡ್ಡದು"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "RC > lim && RC >= 0.15"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 6.8,
+     "text": {
+      "en": "Good: output follows the envelope",
+      "kn": "ಸರಿ: ನಿರ್ಗಮ ಆವರಣ ಅನುಸರಿಸುತ್ತದೆ"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "RC >= 0.15 && RC <= lim"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Carrier period"
+     },
+     "expr": "0.05",
+     "digits": 2,
+     "unit": "ms"
+    },
+    {
+     "label": {
+      "en": "Largest RC to avoid clipping √(1 − m²)/(ωm m)"
+     },
+     "expr": "lim",
+     "digits": 3,
+     "unit": "ms"
+    },
+    {
+     "label": {
+      "en": "Output now"
+     },
+     "expr": "vo",
+     "digits": 2,
+     "unit": "V"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set RC = 0.04 ms and play. What does the output look like?"
+    },
+    {
+     "en": "Set RC = 1 ms. Why can the output no longer follow the falling envelope?"
+    },
+    {
+     "en": "Find an RC between the two that follows the envelope well, and compare it with the limit shown."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

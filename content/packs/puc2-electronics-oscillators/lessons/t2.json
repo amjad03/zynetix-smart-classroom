@@ -962,6 +962,421 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Hartley and Colpitts tanks",
+    "kn": "ಹಾರ್ಟ್ಲಿ ಮತ್ತು ಕೋಲ್ಪಿಟ್ಸ್ ಟ್ಯಾಂಕ್‌ಗಳು"
+   },
+   "narration": {
+    "en": "Hartley: a tapped coil (L1, L2) with one capacitor, LT = L1 + L2 + 2M. Colpitts: one coil with a split capacitor, CT = C1C2/(C1 + C2). In both, f = 1/(2π√(LT CT)) and the tap (or the capacitor junction) is at AC ground, so the two ends are 180° apart for feedback.",
+    "kn": "ಹಾರ್ಟ್ಲಿ: ಟ್ಯಾಪ್ ಸುರುಳಿ (L1, L2) ಮತ್ತು ಒಂದು ಧಾರಕ, LT = L1 + L2 + 2M. ಕೋಲ್ಪಿಟ್ಸ್: ಒಂದು ಸುರುಳಿ ಮತ್ತು ವಿಭಜಿತ ಧಾರಕ, CT = C1C2/(C1 + C2). f = 1/(2π√(LT CT))."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Hartley: a tapped coil (L1, L2) with one capacitor, LT = L1 + L2 + 2M. Colpitts: one coil with a split capacitor, CT = C1C2/(C1 + C2). In both, f = 1/(2π√(LT CT)) and the tap (or the capacitor junction) is at AC ground, so the two ends are 180° apart for feedback.",
+    "kn": "ಹಾರ್ಟ್ಲಿ: ಟ್ಯಾಪ್ ಸುರುಳಿ (L1, L2) ಮತ್ತು ಒಂದು ಧಾರಕ, LT = L1 + L2 + 2M. ಕೋಲ್ಪಿಟ್ಸ್: ಒಂದು ಸುರುಳಿ ಮತ್ತು ವಿಭಜಿತ ಧಾರಕ, CT = C1C2/(C1 + C2). f = 1/(2π√(LT CT))."
+   },
+   "sliders": [
+    {
+     "name": "L1",
+     "label": {
+      "en": "L1",
+      "kn": "L1"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 10,
+     "value": 50,
+     "unit": "µH"
+    },
+    {
+     "name": "L2",
+     "label": {
+      "en": "L2 (Hartley)",
+      "kn": "L2 (ಹಾರ್ಟ್ಲಿ)"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 10,
+     "value": 50,
+     "unit": "µH"
+    },
+    {
+     "name": "C1",
+     "label": {
+      "en": "C1",
+      "kn": "C1"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "nF"
+    },
+    {
+     "name": "C2",
+     "label": {
+      "en": "C2 (Colpitts)",
+      "kn": "C2 (ಕೋಲ್ಪಿಟ್ಸ್)"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "nF"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "mut",
+     "label": {
+      "en": "Hartley coils coupled, k = 0.5",
+      "kn": "ಹಾರ್ಟ್ಲಿ ಜೋಡಣೆ k = 0.5"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "ty",
+     "label": {
+      "en": "Oscillator",
+      "kn": "ಆಂದೋಲಕ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Hartley",
+        "kn": "ಹಾರ್ಟ್ಲಿ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Colpitts",
+        "kn": "ಕೋಲ್ಪಿಟ್ಸ್"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 26,
+    "unit": "µs",
+    "loop": true,
+    "speeds": [
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.5
+   },
+   "vars": [
+    {
+     "name": "LT",
+     "expr": "if(ty == 1, L1 + L2 + 2*if(mut, 0.5, 0)*sqrt(L1*L2), L1)"
+    },
+    {
+     "name": "CT",
+     "expr": "if(ty == 1, C1, C1*C2/(C1 + C2))"
+    },
+    {
+     "name": "f0",
+     "expr": "1/(2*pi*sqrt(LT*1e-6*CT*1e-9))/1000"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -5,
+     7
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "spring",
+     "x1": 3,
+     "y1": 0.3,
+     "x2": 3,
+     "y2": 2.8,
+     "coils": 5,
+     "color": "orange",
+     "width": 4,
+     "visibleIf": "ty == 1"
+    },
+    {
+     "shape": "spring",
+     "x1": 3,
+     "y1": -2.8,
+     "x2": 3,
+     "y2": -0.3,
+     "coils": 5,
+     "color": "orange",
+     "width": 4,
+     "visibleIf": "ty == 1"
+    },
+    {
+     "shape": "text",
+     "x": 1.6,
+     "y": 1.6,
+     "text": {
+      "en": "L1"
+     },
+     "size": 20,
+     "visibleIf": "ty == 1"
+    },
+    {
+     "shape": "text",
+     "x": 1.6,
+     "y": -1.6,
+     "text": {
+      "en": "L2"
+     },
+     "size": 20,
+     "visibleIf": "ty == 1"
+    },
+    {
+     "shape": "icon",
+     "icon": "capacitor",
+     "x": 7,
+     "y": 0,
+     "size": 2.2,
+     "angle": 90,
+     "color": "blue",
+     "visibleIf": "ty == 1"
+    },
+    {
+     "shape": "text",
+     "x": 8.2,
+     "y": 0,
+     "text": {
+      "en": "C1"
+     },
+     "size": 20,
+     "align": "left",
+     "visibleIf": "ty == 1"
+    },
+    {
+     "shape": "spring",
+     "x1": 7,
+     "y1": -2.8,
+     "x2": 7,
+     "y2": 2.8,
+     "coils": 8,
+     "color": "orange",
+     "width": 4,
+     "visibleIf": "ty == 2"
+    },
+    {
+     "shape": "text",
+     "x": 8.2,
+     "y": 0,
+     "text": {
+      "en": "L1"
+     },
+     "size": 20,
+     "align": "left",
+     "visibleIf": "ty == 2"
+    },
+    {
+     "shape": "icon",
+     "icon": "capacitor",
+     "x": 3,
+     "y": 1.5,
+     "size": 2,
+     "angle": 90,
+     "color": "blue",
+     "visibleIf": "ty == 2"
+    },
+    {
+     "shape": "icon",
+     "icon": "capacitor",
+     "x": 3,
+     "y": -1.5,
+     "size": 2,
+     "angle": 90,
+     "color": "blue",
+     "visibleIf": "ty == 2"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 1.5,
+     "text": {
+      "en": "C1"
+     },
+     "size": 20,
+     "visibleIf": "ty == 2"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": -1.5,
+     "text": {
+      "en": "C2"
+     },
+     "size": 20,
+     "visibleIf": "ty == 2"
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 2.8,
+     "x2": 3,
+     "y2": 3.5,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 3.5,
+     "x2": 7,
+     "y2": 3.5,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 7,
+     "y1": 3.5,
+     "x2": 7,
+     "y2": 2.8,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": -2.8,
+     "x2": 3,
+     "y2": -3.5,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": -3.5,
+     "x2": 7,
+     "y2": -3.5,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 7,
+     "y1": -3.5,
+     "x2": 7,
+     "y2": -2.8,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 0,
+     "x2": 1,
+     "y2": 0,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 0.6,
+     "y": -0.8,
+     "text": {
+      "en": "AC ground",
+      "kn": "AC ನೆಲ"
+     },
+     "size": 14,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 0,
+     "x2": 29.5,
+     "y2": 0,
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": -0.6,
+     "text": {
+      "en": "t (µs)"
+     },
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "shape": "wave",
+     "fn": "3*sin(2*pi*f0*(x - 11)/0.7/1000)",
+     "color": "yellow",
+     "width": 3,
+     "from": 11,
+     "to": 29.5
+    },
+    {
+     "shape": "circle",
+     "x": "11 + 0.7*mod(t, 26)",
+     "y": "3*sin(2*pi*f0*mod(t, 26)/1000)",
+     "r": 0.2,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 20,
+     "y": 5.6,
+     "text": {
+      "en": "f = {f0:1} kHz"
+     },
+     "size": 24,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Tank inductance LT"
+     },
+     "expr": "LT",
+     "digits": 1,
+     "unit": "µH"
+    },
+    {
+     "label": {
+      "en": "Tank capacitance CT"
+     },
+     "expr": "CT",
+     "digits": 2,
+     "unit": "nF"
+    },
+    {
+     "label": {
+      "en": "Frequency"
+     },
+     "expr": "f0",
+     "digits": 2,
+     "unit": "kHz"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Hartley with L1 = L2 = 50 µH and C1 = 10 nF: work out f and check it."
+    },
+    {
+     "en": "Turn on mutual coupling. Does the frequency go up or down?"
+    },
+    {
+     "en": "Colpitts with C1 = C2: is CT half of one capacitor?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

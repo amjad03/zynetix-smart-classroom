@@ -1624,6 +1624,307 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Capacitor filter on a full-wave rectifier",
+    "kn": "ಪೂರ್ಣ ತರಂಗ ಏಕದಿಶಕಾರಿಯ ಧಾರಕ ಶೋಧಕ"
+   },
+   "narration": {
+    "en": "The capacitor charges to the peak at every pulse and then discharges slowly through RL until the next pulse, leaving a small saw-tooth ripple. A larger C or RL (larger time constant) gives less ripple: r = 1/(4√3 f C RL).",
+    "kn": "ಪ್ರತಿ ಸ್ಪಂದನದಲ್ಲಿ ಧಾರಕ ಶಿಖರಕ್ಕೆ ಆವೇಶಗೊಂಡು ನಂತರ RL ಮೂಲಕ ನಿಧಾನವಾಗಿ ವಿಸರ್ಜಿಸುತ್ತದೆ; ಸಣ್ಣ ಗರಗಸ ಏರಿಳಿತ ಉಳಿಯುತ್ತದೆ. ದೊಡ್ಡ C ಅಥವಾ RL ಕಡಿಮೆ ಏರಿಳಿತ ಕೊಡುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The capacitor charges to the peak at every pulse and then discharges slowly through RL until the next pulse, leaving a small saw-tooth ripple. A larger C or RL (larger time constant) gives less ripple: r = 1/(4√3 f C RL).",
+    "kn": "ಪ್ರತಿ ಸ್ಪಂದನದಲ್ಲಿ ಧಾರಕ ಶಿಖರಕ್ಕೆ ಆವೇಶಗೊಂಡು ನಂತರ RL ಮೂಲಕ ನಿಧಾನವಾಗಿ ವಿಸರ್ಜಿಸುತ್ತದೆ; ಸಣ್ಣ ಗರಗಸ ಏರಿಳಿತ ಉಳಿಯುತ್ತದೆ. ದೊಡ್ಡ C ಅಥವಾ RL ಕಡಿಮೆ ಏರಿಳಿತ ಕೊಡುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "C",
+     "label": {
+      "en": "Filter capacitor C",
+      "kn": "ಶೋಧಕ ಧಾರಕ"
+     },
+     "min": 100,
+     "max": 2200,
+     "step": 100,
+     "value": 470,
+     "unit": "µF"
+    },
+    {
+     "name": "RL",
+     "label": {
+      "en": "Load RL",
+      "kn": "ಭಾರ RL"
+     },
+     "min": 100,
+     "max": 2000,
+     "step": 100,
+     "value": 500,
+     "unit": "Ω"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "filt",
+     "label": {
+      "en": "Capacitor filter",
+      "kn": "ಧಾರಕ ಶೋಧಕ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 60,
+    "unit": "ms",
+    "dt": 0.01,
+    "speeds": [
+     0.1,
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.25
+   },
+   "vars": [
+    {
+     "name": "Vm",
+     "expr": "17"
+    },
+    {
+     "name": "vo",
+     "expr": "if(filt, Vc, Vm*abs(sin(2*pi*t/20)))"
+    }
+   ],
+   "state": [
+    {
+     "name": "Vc",
+     "init": 0,
+     "rate": "(max(Vm*abs(sin(2*pi*t/20)) - Vc, 0)/2 - Vc/RL)*1000/C"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     31
+    ],
+    "y": [
+     -0.5,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 4,
+     "w": 4,
+     "h": 3,
+     "fill": false,
+     "width": 3
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 5.2,
+     "text": {
+      "en": "rectifier",
+      "kn": "ಏಕದಿಶಕಾರಿ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "line",
+     "x1": 4.5,
+     "y1": 6.5,
+     "x2": 11,
+     "y2": 6.5,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 4.5,
+     "y1": 4.5,
+     "x2": 11,
+     "y2": 4.5,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 7.5,
+     "y1": 6.5,
+     "x2": 7.5,
+     "y2": 6.0,
+     "visibleIf": "filt",
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "capacitor",
+     "x": 7.5,
+     "y": 5.5,
+     "size": 1.6,
+     "angle": 90,
+     "color": "blue",
+     "visibleIf": "filt"
+    },
+    {
+     "shape": "line",
+     "x1": 7.5,
+     "y1": 5.0,
+     "x2": 7.5,
+     "y2": 4.5,
+     "visibleIf": "filt",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 7.5,
+     "y": 7.4,
+     "text": {
+      "en": "C = {C} µF"
+     },
+     "size": 18,
+     "color": "blue",
+     "visibleIf": "filt"
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 6.5,
+     "x2": 11,
+     "y2": 6.3,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 11,
+     "y": 5.5,
+     "size": 1.6,
+     "angle": 90,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 4.7,
+     "x2": 11,
+     "y2": 4.5,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 11.8,
+     "y": 5.5,
+     "text": {
+      "en": "RL"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 0.5,
+     "x2": 30.5,
+     "y2": 0.5,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 0.5,
+     "x2": 14,
+     "y2": 10.5,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": -0.1,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 14.3,
+     "y": 10.7,
+     "text": {
+      "en": "v (V)"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "trail",
+     "x": "14 + 16.5*t/60",
+     "y": "0.5 + 0.5*Vm*abs(sin(2*pi*t/20))",
+     "length": 2000,
+     "color": "yellow",
+     "width": 2,
+     "opacity": 0.6
+    },
+    {
+     "shape": "trail",
+     "x": "14 + 16.5*t/60",
+     "y": "0.5 + 0.5*vo",
+     "length": 2000,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "14 + 16.5*t/60",
+     "y": "0.5 + 0.5*vo",
+     "r": 0.2,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Output now"
+     },
+     "expr": "vo",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Ripple factor 1/(4√3 f C RL)"
+     },
+     "expr": "if(filt, 1e6/(4*sqrt(3)*50*C*RL), 0.482)",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Ripple p-p ≈ Vm / (2 f C RL)"
+     },
+     "expr": "if(filt, 17e6/(100*C*RL), 17)",
+     "digits": 2,
+     "unit": "V"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Turn the filter off and on. How does the output change?"
+    },
+    {
+     "en": "With the filter on, halve RL (a heavier load). What happens to the ripple?"
+    },
+    {
+     "en": "Find a C that keeps the ripple factor below 0.05 for RL = 500 Ω."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

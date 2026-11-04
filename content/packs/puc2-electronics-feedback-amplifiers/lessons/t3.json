@@ -261,6 +261,234 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Feedback widens the bandwidth",
+    "kn": "ಪ್ರತಿಪೋಷಣೆ ಪಟ್ಟಿಅಗಲ ಹೆಚ್ಚಿಸುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "The grey curve is the amplifier without feedback (fL = 100 Hz, fH = 10 kHz). With negative feedback (yellow) the mid-band gain falls by 1 + Aβ, but fH rises and fL falls by the same factor, so the gain × bandwidth stays about the same.",
+    "kn": "ಬೂದು ವಕ್ರ ಪ್ರತಿಪೋಷಣೆ ಇಲ್ಲದ ವರ್ಧಕ (fL = 100 Hz, fH = 10 kHz). ಋಣ ಪ್ರತಿಪೋಷಣೆಯೊಂದಿಗೆ ಲಾಭ 1 + Aβ ಪಟ್ಟು ಕಡಿಮೆ, ಆದರೆ fH ಅಷ್ಟೇ ಪಟ್ಟು ಏರುತ್ತದೆ, fL ಇಳಿಯುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The grey curve is the amplifier without feedback (fL = 100 Hz, fH = 10 kHz). With negative feedback (yellow) the mid-band gain falls by 1 + Aβ, but fH rises and fL falls by the same factor, so the gain × bandwidth stays about the same.",
+    "kn": "ಬೂದು ವಕ್ರ ಪ್ರತಿಪೋಷಣೆ ಇಲ್ಲದ ವರ್ಧಕ (fL = 100 Hz, fH = 10 kHz). ಋಣ ಪ್ರತಿಪೋಷಣೆಯೊಂದಿಗೆ ಲಾಭ 1 + Aβ ಪಟ್ಟು ಕಡಿಮೆ, ಆದರೆ fH ಅಷ್ಟೇ ಪಟ್ಟು ಏರುತ್ತದೆ, fL ಇಳಿಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Open-loop gain A",
+      "kn": "ಮುಕ್ತ ಕುಣಿಕೆ ಲಾಭ A"
+     },
+     "min": 100,
+     "max": 2000,
+     "step": 100,
+     "value": 1000
+    },
+    {
+     "name": "b",
+     "label": {
+      "en": "Feedback ratio β",
+      "kn": "ಪ್ರತಿಪೋಷಣಾ ಅನುಪಾತ β"
+     },
+     "min": 0.001,
+     "max": 0.05,
+     "step": 0.001,
+     "value": 0.01
+    }
+   ],
+   "toggles": [
+    {
+     "name": "fb",
+     "label": {
+      "en": "Negative feedback",
+      "kn": "ಋಣ ಪ್ರತಿಪೋಷಣೆ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "D",
+     "expr": "1 + A*b"
+    },
+    {
+     "name": "Af",
+     "expr": "A/D"
+    },
+    {
+     "name": "fHf",
+     "expr": "10000*D"
+    },
+    {
+     "name": "fLf",
+     "expr": "100/D"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.3,
+     7.3
+    ],
+    "y": [
+     -8,
+     70
+    ],
+    "axes": true,
+    "xLabel": "log10 f (Hz)",
+    "yLabel": "gain (dB)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "20*log(A/sqrt((1 + (100/pow(10, x))^2)*(1 + (pow(10, x)/10000)^2)))",
+     "color": "white",
+     "width": 3,
+     "opacity": 0.5,
+     "from": 0,
+     "to": 7
+    },
+    {
+     "shape": "path",
+     "fn": "20*log(Af/sqrt((1 + (fLf/pow(10, x))^2)*(1 + (pow(10, x)/fHf)^2)))",
+     "color": "yellow",
+     "width": 4,
+     "visibleIf": "fb",
+     "from": 0,
+     "to": 7
+    },
+    {
+     "shape": "line",
+     "x1": "log(fLf)",
+     "y1": -5,
+     "x2": "log(fLf)",
+     "y2": "20*log(Af) - 3",
+     "dashed": true,
+     "color": "green",
+     "width": 2,
+     "visibleIf": "fb"
+    },
+    {
+     "shape": "line",
+     "x1": "log(fHf)",
+     "y1": -5,
+     "x2": "log(fHf)",
+     "y2": "20*log(Af) - 3",
+     "dashed": true,
+     "color": "green",
+     "width": 2,
+     "visibleIf": "fb"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": -5,
+     "x2": 2,
+     "y2": "20*log(A) - 3",
+     "dashed": true,
+     "color": "white",
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 4,
+     "y1": -5,
+     "x2": 4,
+     "y2": "20*log(A) - 3",
+     "dashed": true,
+     "color": "white",
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": -6.5,
+     "text": {
+      "en": "10 Hz"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": -6.5,
+     "text": {
+      "en": "1 kHz"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -6.5,
+     "text": {
+      "en": "100 kHz"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 7,
+     "y": -6.5,
+     "text": {
+      "en": "10 MHz"
+     },
+     "size": 16
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Gain with feedback"
+     },
+     "expr": "Af",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Upper cut-off fHf"
+     },
+     "expr": "fHf/1000",
+     "digits": 1,
+     "unit": "kHz"
+    },
+    {
+     "label": {
+      "en": "Lower cut-off fLf"
+     },
+     "expr": "fLf",
+     "digits": 2,
+     "unit": "Hz"
+    },
+    {
+     "label": {
+      "en": "Gain × bandwidth"
+     },
+     "expr": "Af*(fHf - fLf)/1e6",
+     "digits": 2,
+     "unit": "MHz"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set β = 0.01 with A = 1000. By what factor does the bandwidth grow?"
+    },
+    {
+     "en": "Check that gain × bandwidth is nearly the same with and without feedback."
+    },
+    {
+     "en": "Raise β. What do you trade for a wider bandwidth?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

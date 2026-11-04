@@ -670,6 +670,271 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Inverting, non-inverting and voltage follower",
+    "kn": "ತಿರುಗಿಸುವ, ತಿರುಗಿಸದ ಮತ್ತು ವೋಲ್ಟೇಜ್ ಅನುಸರಕ"
+   },
+   "narration": {
+    "en": "Choose a circuit. Inverting: Av = −Rf/R1 (output upside down). Non-inverting: Av = 1 + Rf/R1. Follower: Av = 1 with a very high input impedance. The output cannot go beyond about ±13 V, so a large gain clips the wave.",
+    "kn": "ಮಂಡಲ ಆರಿಸಿ. ತಿರುಗಿಸುವ: Av = −Rf/R1. ತಿರುಗಿಸದ: Av = 1 + Rf/R1. ಅನುಸರಕ: Av = 1. ನಿರ್ಗಮ ±13 V ಮೀರುವುದಿಲ್ಲ, ಹೆಚ್ಚಿನ ಲಾಭ ತರಂಗವನ್ನು ಕತ್ತರಿಸುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Choose a circuit. Inverting: Av = −Rf/R1 (output upside down). Non-inverting: Av = 1 + Rf/R1. Follower: Av = 1 with a very high input impedance. The output cannot go beyond about ±13 V, so a large gain clips the wave.",
+    "kn": "ಮಂಡಲ ಆರಿಸಿ. ತಿರುಗಿಸುವ: Av = −Rf/R1. ತಿರುಗಿಸದ: Av = 1 + Rf/R1. ಅನುಸರಕ: Av = 1. ನಿರ್ಗಮ ±13 V ಮೀರುವುದಿಲ್ಲ, ಹೆಚ್ಚಿನ ಲಾಭ ತರಂಗವನ್ನು ಕತ್ತರಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "R1",
+     "label": {
+      "en": "R1",
+      "kn": "R1"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 10,
+     "unit": "kΩ"
+    },
+    {
+     "name": "Rf",
+     "label": {
+      "en": "Rf",
+      "kn": "Rf"
+     },
+     "min": 0,
+     "max": 200,
+     "step": 5,
+     "value": 100,
+     "unit": "kΩ"
+    },
+    {
+     "name": "vi",
+     "label": {
+      "en": "Input peak",
+      "kn": "ಒಳಹರಿವಿನ ಶಿಖರ"
+     },
+     "min": 0.1,
+     "max": 5,
+     "step": 0.1,
+     "value": 1,
+     "unit": "V"
+    }
+   ],
+   "choices": [
+    {
+     "name": "cf",
+     "label": {
+      "en": "Circuit",
+      "kn": "ಮಂಡಲ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Inverting",
+        "kn": "ತಿರುಗಿಸುವ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Non-inverting",
+        "kn": "ತಿರುಗಿಸದ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Voltage follower",
+        "kn": "ಅನುಸರಕ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 40,
+    "unit": "ms",
+    "loop": true,
+    "speeds": [
+     0.25,
+     0.5,
+     1,
+     2
+    ],
+    "speed": 0.5
+   },
+   "vars": [
+    {
+     "name": "Av",
+     "expr": "if(cf == 1, -Rf/R1, if(cf == 2, 1 + Rf/R1, 1))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -7,
+     7.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 0,
+     "x2": 29.5,
+     "y2": 0,
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 3.9,
+     "x2": 29.5,
+     "y2": 3.9,
+     "dashed": true,
+     "color": "red",
+     "width": 1,
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": -3.9,
+     "x2": 29.5,
+     "y2": -3.9,
+     "dashed": true,
+     "color": "red",
+     "width": 1,
+     "opacity": 0.6
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": 4.3,
+     "text": {
+      "en": "+13 V"
+     },
+     "size": 16,
+     "color": "red",
+     "align": "right"
+    },
+    {
+     "shape": "wave",
+     "fn": "0.3*vi*sin(2*pi*(x - 1)/0.7/10)",
+     "color": "yellow",
+     "width": 3,
+     "from": 1,
+     "to": 29.5
+    },
+    {
+     "shape": "wave",
+     "fn": "0.3*clamp(Av*vi*sin(2*pi*(x - 1)/0.7/10), -13, 13)",
+     "color": "orange",
+     "width": 4,
+     "from": 1,
+     "to": 29.5
+    },
+    {
+     "shape": "circle",
+     "x": "1 + 0.7*mod(t, 40)",
+     "y": "0.3*clamp(Av*vi*sin(2*pi*t/10), -13, 13)",
+     "r": 0.22,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": 6.4,
+     "text": {
+      "en": "input",
+      "kn": "ಒಳಹರಿವು"
+     },
+     "size": 18,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 14,
+     "y": 6.4,
+     "text": {
+      "en": "output",
+      "kn": "ನಿರ್ಗಮ"
+     },
+     "size": 18,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 23,
+     "y": 6.4,
+     "text": {
+      "en": "Av = {Av:2}"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": -6.3,
+     "text": {
+      "en": "Clipping!",
+      "kn": "ಕತ್ತರಿಸುತ್ತಿದೆ!"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "abs(Av*vi) > 13"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Voltage gain Av"
+     },
+     "expr": "Av",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Output peak"
+     },
+     "expr": "min(abs(Av*vi), 13)",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Input impedance"
+     },
+     "expr": "if(cf == 1, R1, 1e6)",
+     "digits": 0,
+     "unit": "kΩ"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Inverting with R1 = 10 kΩ and Rf = 100 kΩ: check the gain and the phase."
+    },
+    {
+     "en": "Switch to non-inverting with the same resistors. Why is the gain 11 and not 10?"
+    },
+    {
+     "en": "Raise the input until the output clips. At what input does it start?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

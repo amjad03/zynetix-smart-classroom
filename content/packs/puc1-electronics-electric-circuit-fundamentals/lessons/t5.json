@@ -504,6 +504,437 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Thevenin's equivalent",
+    "kn": "ಥೆವೆನಿನ್ ಸಮಾನ ಮಂಡಲ"
+   },
+   "narration": {
+    "en": "The network E, R1, R2 feeds a load RL at terminals A and B. Turn on the Thevenin view: the network becomes a single source Vth (the open-circuit voltage) in series with Rth (R1 and R2 in parallel, with E shorted). The load current is the same either way.",
+    "kn": "E, R1, R2 ಜಾಲ A, B ತುದಿಗಳಲ್ಲಿ RL ಗೆ ಪ್ರವಾಹ ನೀಡುತ್ತದೆ. ಥೆವೆನಿನ್ ನೋಟ ಆನ್ ಮಾಡಿ: ಜಾಲ Vth ಮೂಲ ಮತ್ತು Rth ಸರಣಿಯಾಗುತ್ತದೆ. ಭಾರ ಪ್ರವಾಹ ಎರಡರಲ್ಲೂ ಒಂದೇ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The network E, R1, R2 feeds a load RL at terminals A and B. Turn on the Thevenin view: the network becomes a single source Vth (the open-circuit voltage) in series with Rth (R1 and R2 in parallel, with E shorted). The load current is the same either way.",
+    "kn": "E, R1, R2 ಜಾಲ A, B ತುದಿಗಳಲ್ಲಿ RL ಗೆ ಪ್ರವಾಹ ನೀಡುತ್ತದೆ. ಥೆವೆನಿನ್ ನೋಟ ಆನ್ ಮಾಡಿ: ಜಾಲ Vth ಮೂಲ ಮತ್ತು Rth ಸರಣಿಯಾಗುತ್ತದೆ. ಭಾರ ಪ್ರವಾಹ ಎರಡರಲ್ಲೂ ಒಂದೇ."
+   },
+   "sliders": [
+    {
+     "name": "E",
+     "label": {
+      "en": "Source E",
+      "kn": "ಮೂಲ E"
+     },
+     "min": 2,
+     "max": 24,
+     "step": 1,
+     "value": 12,
+     "unit": "V"
+    },
+    {
+     "name": "R1",
+     "label": {
+      "en": "R1",
+      "kn": "R1"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 4,
+     "unit": "Ω"
+    },
+    {
+     "name": "R2",
+     "label": {
+      "en": "R2",
+      "kn": "R2"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 12,
+     "unit": "Ω"
+    },
+    {
+     "name": "RL",
+     "label": {
+      "en": "Load RL",
+      "kn": "ಭಾರ RL"
+     },
+     "min": 1,
+     "max": 30,
+     "step": 1,
+     "value": 6,
+     "unit": "Ω"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "th",
+     "label": {
+      "en": "Thevenin view",
+      "kn": "ಥೆವೆನಿನ್ ನೋಟ"
+     },
+     "value": false
+    }
+   ],
+   "vars": [
+    {
+     "name": "Vth",
+     "expr": "E*R2/(R1 + R2)"
+    },
+    {
+     "name": "Rth",
+     "expr": "R1*R2/(R1 + R2)"
+    },
+    {
+     "name": "Rp",
+     "expr": "R2*RL/(R2 + RL)"
+    },
+    {
+     "name": "ILo",
+     "expr": "E*Rp/(R1 + Rp)/RL"
+    },
+    {
+     "name": "IL",
+     "expr": "Vth/(Rth + RL)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     22
+    ],
+    "y": [
+     0,
+     12
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 2,
+     "x2": 2,
+     "y2": 4.6,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "battery",
+     "x": 2,
+     "y": 5.5,
+     "size": 2,
+     "angle": 90
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 6.4,
+     "x2": 2,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 9,
+     "x2": 4.5,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 6.6,
+     "text": {
+      "en": "+"
+     },
+     "size": 28,
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 8.2,
+     "text": {
+      "en": "E = {E} V"
+     },
+     "size": 20,
+     "align": "left",
+     "visibleIf": "!th"
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 8.2,
+     "text": {
+      "en": "Vth = {Vth:2} V"
+     },
+     "size": 20,
+     "align": "left",
+     "color": "yellow",
+     "visibleIf": "th"
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 6,
+     "y": 9,
+     "size": 3,
+     "visibleIf": "!th"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 10.1,
+     "text": {
+      "en": "R1 = {R1} Ω"
+     },
+     "size": 20,
+     "visibleIf": "!th"
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 6,
+     "y": 9,
+     "size": 3,
+     "color": "yellow",
+     "visibleIf": "th"
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": 10.1,
+     "text": {
+      "en": "Rth = {Rth:2} Ω"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "th"
+    },
+    {
+     "shape": "line",
+     "x1": 7.5,
+     "y1": 9,
+     "x2": 14,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 9,
+     "x2": 10,
+     "y2": 7,
+     "visibleIf": "!th",
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 10,
+     "y": 5.5,
+     "size": 3,
+     "angle": 90,
+     "visibleIf": "!th"
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 4,
+     "x2": 10,
+     "y2": 2,
+     "visibleIf": "!th",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 11.1,
+     "y": 5.5,
+     "text": {
+      "en": "R2 = {R2} Ω"
+     },
+     "size": 20,
+     "align": "left",
+     "visibleIf": "!th"
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 2,
+     "x2": 2,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 14,
+     "y": 9,
+     "r": 0.25,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": 14,
+     "y": 2,
+     "r": 0.25,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 9.8,
+     "text": {
+      "en": "A"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 1.0,
+     "text": {
+      "en": "B"
+     },
+     "size": 24
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 9,
+     "x2": 18,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 18,
+     "y1": 9,
+     "x2": 18,
+     "y2": 7,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 18,
+     "y": 5.5,
+     "size": 3,
+     "angle": 90,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 18,
+     "y1": 4,
+     "x2": 18,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 18,
+     "y1": 2,
+     "x2": 14,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 19.1,
+     "y": 5.5,
+     "text": {
+      "en": "RL = {RL} Ω"
+     },
+     "size": 20,
+     "align": "left",
+     "color": "orange"
+    },
+    {
+     "shape": "arrow",
+     "x": 15,
+     "y": 9.7,
+     "dx": 2,
+     "dy": 0,
+     "color": "green",
+     "width": 4,
+     "label": "IL"
+    },
+    {
+     "shape": "rect",
+     "x": 0.3,
+     "y": 1.2,
+     "w": 12.5,
+     "h": 10,
+     "fill": false,
+     "width": 2,
+     "color": "yellow",
+     "opacity": 0.5,
+     "visibleIf": "th"
+    },
+    {
+     "shape": "label",
+     "x": 11,
+     "y": 11.3,
+     "text": {
+      "en": "IL = {IL:3} A"
+     },
+     "size": 24,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Vth (open-circuit voltage)"
+     },
+     "expr": "Vth",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Rth (sources shorted)"
+     },
+     "expr": "Rth",
+     "digits": 2,
+     "unit": "Ω"
+    },
+    {
+     "label": {
+      "en": "IL in the real network"
+     },
+     "expr": "ILo",
+     "digits": 3,
+     "unit": "A"
+    },
+    {
+     "label": {
+      "en": "IL from Vth and Rth"
+     },
+     "expr": "IL",
+     "digits": 3,
+     "unit": "A"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Note IL, then switch to the Thevenin view. Is IL the same?"
+    },
+    {
+     "en": "Change RL several times. Does Vth or Rth change? Why not?"
+    },
+    {
+     "en": "Make R2 very large. What do Vth and Rth tend to?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

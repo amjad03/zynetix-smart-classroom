@@ -1066,6 +1066,221 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "RC differentiator and integrator",
+    "kn": "RC ಅವಕಲಕ ಮತ್ತು ಸಮಾಕಲಕ"
+   },
+   "narration": {
+    "en": "A ±5 V square wave of period T = 2 ms drives a series RC circuit. Output across R: with RC ≪ T you get sharp spikes at each edge (differentiator). Output across C: with RC ≫ T you get a small triangle (integrator). In between, the output shows the exponential charging.",
+    "kn": "±5 V, T = 2 ms ಚೌಕ ತರಂಗ ಸರಣಿ RC ಗೆ. R ಮೇಲಿನ ನಿರ್ಗಮ: RC ≪ T ಆದಾಗ ಅಂಚುಗಳಲ್ಲಿ ಚೂಪು ಸ್ಪಂದನ (ಅವಕಲಕ). C ಮೇಲಿನ ನಿರ್ಗಮ: RC ≫ T ಆದಾಗ ಸಣ್ಣ ತ್ರಿಕೋನ (ಸಮಾಕಲಕ)."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A ±5 V square wave of period T = 2 ms drives a series RC circuit. Output across R: with RC ≪ T you get sharp spikes at each edge (differentiator). Output across C: with RC ≫ T you get a small triangle (integrator). In between, the output shows the exponential charging.",
+    "kn": "±5 V, T = 2 ms ಚೌಕ ತರಂಗ ಸರಣಿ RC ಗೆ. R ಮೇಲಿನ ನಿರ್ಗಮ: RC ≪ T ಆದಾಗ ಅಂಚುಗಳಲ್ಲಿ ಚೂಪು ಸ್ಪಂದನ (ಅವಕಲಕ). C ಮೇಲಿನ ನಿರ್ಗಮ: RC ≫ T ಆದಾಗ ಸಣ್ಣ ತ್ರಿಕೋನ (ಸಮಾಕಲಕ)."
+   },
+   "sliders": [
+    {
+     "name": "RC",
+     "label": {
+      "en": "Time constant RC",
+      "kn": "ಕಾಲ ಸ್ಥಿರಾಂಕ RC"
+     },
+     "min": 0.1,
+     "max": 10,
+     "step": 0.1,
+     "value": 0.2,
+     "unit": "ms"
+    }
+   ],
+   "choices": [
+    {
+     "name": "oc",
+     "label": {
+      "en": "Output across",
+      "kn": "ನಿರ್ಗಮ ಎಲ್ಲಿಂದ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "R (differentiator)",
+        "kn": "R (ಅವಕಲಕ)"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "C (integrator)",
+        "kn": "C (ಸಮಾಕಲಕ)"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 10,
+    "unit": "ms",
+    "dt": 0.002,
+    "speeds": [
+     0.1,
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.25
+   },
+   "vars": [
+    {
+     "name": "vin",
+     "expr": "if(mod(t, 2) < 1, 5, -5)"
+    },
+    {
+     "name": "vo",
+     "expr": "if(oc == 1, vin - vc, vc)"
+    }
+   ],
+   "state": [
+    {
+     "name": "vc",
+     "init": 0,
+     "rate": "(if(mod(t, 2) < 1, 5, -5) - vc)/RC"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -7.5,
+     7.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 0,
+     "x2": 29.5,
+     "y2": 0,
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": -0.6,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "shape": "trail",
+     "x": "1 + 2.8*t",
+     "y": "0.6*vin",
+     "length": 2000,
+     "color": "white",
+     "width": 2,
+     "opacity": 0.5
+    },
+    {
+     "shape": "trail",
+     "x": "1 + 2.8*t",
+     "y": "0.6*vo",
+     "length": 2000,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "1 + 2.8*t",
+     "y": "0.6*vo",
+     "r": 0.2,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": 6.8,
+     "text": {
+      "en": "input square wave",
+      "kn": "ಒಳಹರಿವಿನ ಚೌಕ ತರಂಗ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "label",
+     "x": 22,
+     "y": 6.8,
+     "text": {
+      "en": "output across R",
+      "kn": "R ಮೇಲಿನ ನಿರ್ಗಮ"
+     },
+     "size": 18,
+     "color": "orange",
+     "visibleIf": "oc == 1"
+    },
+    {
+     "shape": "label",
+     "x": 22,
+     "y": 6.8,
+     "text": {
+      "en": "output across C",
+      "kn": "C ಮೇಲಿನ ನಿರ್ಗಮ"
+     },
+     "size": 18,
+     "color": "orange",
+     "visibleIf": "oc == 2"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": -6.8,
+     "text": {
+      "en": "RC / T = {RC/2:2}"
+     },
+     "size": 20,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Output now"
+     },
+     "expr": "vo",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "RC / T"
+     },
+     "expr": "RC/2",
+     "digits": 2
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Output across R with RC = 0.1 ms: what do the spikes look like?"
+    },
+    {
+     "en": "Output across C with RC = 10 ms: why is the triangle so small?"
+    },
+    {
+     "en": "Set RC = T/2 = 1 ms and compare both outputs."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

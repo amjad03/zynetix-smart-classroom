@@ -1308,6 +1308,582 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "NAND, NOR, XOR and XNOR",
+    "kn": "NAND, NOR, XOR ಮತ್ತು XNOR"
+   },
+   "narration": {
+    "en": "Pick a gate and try all four input combinations. NAND is 0 only when both inputs are 1; NOR is 1 only when both are 0; XOR is 1 when the inputs differ; XNOR is 1 when they are equal.",
+    "kn": "ಗೇಟ್ ಆರಿಸಿ ನಾಲ್ಕೂ ಒಳಹರಿವಿನ ಸಂಯೋಜನೆಗಳನ್ನು ಪ್ರಯತ್ನಿಸಿ. NAND ಎರಡೂ 1 ಆದಾಗ ಮಾತ್ರ 0; NOR ಎರಡೂ 0 ಆದಾಗ ಮಾತ್ರ 1; XOR ಒಳಹರಿವುಗಳು ಬೇರೆ ಆದಾಗ 1; XNOR ಸಮ ಆದಾಗ 1."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Pick a gate and try all four input combinations. NAND is 0 only when both inputs are 1; NOR is 1 only when both are 0; XOR is 1 when the inputs differ; XNOR is 1 when they are equal.",
+    "kn": "ಗೇಟ್ ಆರಿಸಿ ನಾಲ್ಕೂ ಒಳಹರಿವಿನ ಸಂಯೋಜನೆಗಳನ್ನು ಪ್ರಯತ್ನಿಸಿ. NAND ಎರಡೂ 1 ಆದಾಗ ಮಾತ್ರ 0; NOR ಎರಡೂ 0 ಆದಾಗ ಮಾತ್ರ 1; XOR ಒಳಹರಿವುಗಳು ಬೇರೆ ಆದಾಗ 1; XNOR ಸಮ ಆದಾಗ 1."
+   },
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Input A",
+      "kn": "ಒಳಹರಿವು A"
+     },
+     "value": true
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "Input B",
+      "kn": "ಒಳಹರಿವು B"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "g",
+     "label": {
+      "en": "Gate",
+      "kn": "ಗೇಟ್"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "NAND"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "NOR"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "XOR"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "XNOR"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "nt",
+     "expr": "99"
+    },
+    {
+     "name": "Y",
+     "expr": "(g == 1)*(1 - (A)*(B)) + (g == 2)*(1 - max(A, B)) + (g == 3)*(mod(A + B, 2)) + (g == 4)*(1 - mod(A + B, 2))"
+    },
+    {
+     "name": "bub",
+     "expr": "g == 1 || g == 2 || g == 4"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     31
+    ],
+    "y": [
+     0,
+     11.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "icon",
+     "icon": "switch",
+     "x": 2.5,
+     "y": 8,
+     "size": 2.4,
+     "on": "A"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 9.3,
+     "text": {
+      "en": "A = {A}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "icon",
+     "icon": "switch",
+     "x": 2.5,
+     "y": 3,
+     "size": 2.4,
+     "on": "B",
+     "visibleIf": "g != nt"
+    },
+    {
+     "shape": "text",
+     "x": 2.5,
+     "y": 4.3,
+     "text": {
+      "en": "B = {B}"
+     },
+     "size": 22,
+     "visibleIf": "g != nt"
+    },
+    {
+     "shape": "line",
+     "x1": 3.7,
+     "y1": 8,
+     "x2": 7,
+     "y2": 8,
+     "color": {
+      "by": "(A) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 7,
+     "y1": 8,
+     "x2": 7,
+     "y2": 6.3,
+     "color": {
+      "by": "(A) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 7,
+     "y1": 6.3,
+     "x2": 8.3,
+     "y2": 6.3,
+     "color": {
+      "by": "(A) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 3.7,
+     "y1": 3,
+     "x2": 7,
+     "y2": 3,
+     "color": {
+      "by": "(B) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "g != nt",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 7,
+     "y1": 3,
+     "x2": 7,
+     "y2": 4.7,
+     "color": {
+      "by": "(B) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "g != nt",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 7,
+     "y1": 4.7,
+     "x2": 8.3,
+     "y2": 4.7,
+     "color": {
+      "by": "(B) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "g != nt",
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": 8.3,
+     "y": 4.2,
+     "w": 3.4,
+     "h": 2.6,
+     "fill": false,
+     "width": 3,
+     "visibleIf": "g == 1",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.2,
+     "text": {
+      "en": "NAND"
+     },
+     "size": 22,
+     "visibleIf": "g == 1",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.3,
+     "y": 4.2,
+     "w": 3.4,
+     "h": 2.6,
+     "fill": false,
+     "width": 3,
+     "visibleIf": "g == 2",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.2,
+     "text": {
+      "en": "NOR"
+     },
+     "size": 22,
+     "visibleIf": "g == 2",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.3,
+     "y": 4.2,
+     "w": 3.4,
+     "h": 2.6,
+     "fill": false,
+     "width": 3,
+     "visibleIf": "g == 3",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.2,
+     "text": {
+      "en": "XOR"
+     },
+     "size": 22,
+     "visibleIf": "g == 3",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 8.3,
+     "y": 4.2,
+     "w": 3.4,
+     "h": 2.6,
+     "fill": false,
+     "width": 3,
+     "visibleIf": "g == 4",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 5.2,
+     "text": {
+      "en": "XNOR"
+     },
+     "size": 22,
+     "visibleIf": "g == 4",
+     "color": "white"
+    },
+    {
+     "shape": "circle",
+     "x": 11.9,
+     "y": 5.5,
+     "r": 0.22,
+     "fill": false,
+     "width": 3,
+     "visibleIf": "bub"
+    },
+    {
+     "shape": "line",
+     "x1": 12.1,
+     "y1": 5.5,
+     "x2": 15,
+     "y2": 5.5,
+     "color": {
+      "by": "(Y) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 16,
+     "y": 5.5,
+     "r": 0.9,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 16,
+     "y": 5.5,
+     "r": 0.7200000000000001,
+     "color": "yellow",
+     "visibleIf": "(Y)"
+    },
+    {
+     "shape": "text",
+     "x": 16,
+     "y": 4.05,
+     "text": {
+      "en": "Y = {Y}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 26,
+     "y": 10.4,
+     "text": {
+      "en": "Truth table",
+      "kn": "ಸತ್ಯ ಕೋಷ್ಟಕ"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 23.5,
+     "y": 9.3,
+     "text": {
+      "en": "A"
+     },
+     "size": 22,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 25.5,
+     "y": 9.3,
+     "text": {
+      "en": "B"
+     },
+     "size": 22,
+     "color": "orange",
+     "visibleIf": "g != nt"
+    },
+    {
+     "shape": "text",
+     "x": 28.5,
+     "y": 9.3,
+     "text": {
+      "en": "Y"
+     },
+     "size": 22,
+     "color": "orange"
+    },
+    {
+     "shape": "rect",
+     "x": 22.4,
+     "y": 7.449999999999999,
+     "w": 7.4,
+     "h": 1.2,
+     "color": "yellow",
+     "opacity": 0.25,
+     "visibleIf": "A == 0 && (B == 0 || g == nt)"
+    },
+    {
+     "shape": "text",
+     "x": 23.5,
+     "y": 7.799999999999999,
+     "text": {
+      "en": "0"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 25.5,
+     "y": 7.799999999999999,
+     "text": {
+      "en": "0"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 28.5,
+     "y": 7.799999999999999,
+     "text": {
+      "en": "{(g == 1)*(1 - (0)*(0)) + (g == 2)*(1 - max(0, 0)) + (g == 3)*(mod(0 + 0, 2)) + (g == 4)*(1 - mod(0 + 0, 2))}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": 22.4,
+     "y": 6.1499999999999995,
+     "w": 7.4,
+     "h": 1.2,
+     "color": "yellow",
+     "opacity": 0.25,
+     "visibleIf": "A == 0 && (B == 1 || g == nt)"
+    },
+    {
+     "shape": "text",
+     "x": 23.5,
+     "y": 6.499999999999999,
+     "text": {
+      "en": "0"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 25.5,
+     "y": 6.499999999999999,
+     "text": {
+      "en": "1"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 28.5,
+     "y": 6.499999999999999,
+     "text": {
+      "en": "{(g == 1)*(1 - (0)*(1)) + (g == 2)*(1 - max(0, 1)) + (g == 3)*(mod(0 + 1, 2)) + (g == 4)*(1 - mod(0 + 1, 2))}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": 22.4,
+     "y": 4.85,
+     "w": 7.4,
+     "h": 1.2,
+     "color": "yellow",
+     "opacity": 0.25,
+     "visibleIf": "A == 1 && (B == 0 || g == nt)"
+    },
+    {
+     "shape": "text",
+     "x": 23.5,
+     "y": 5.199999999999999,
+     "text": {
+      "en": "1"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 25.5,
+     "y": 5.199999999999999,
+     "text": {
+      "en": "0"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 28.5,
+     "y": 5.199999999999999,
+     "text": {
+      "en": "{(g == 1)*(1 - (1)*(0)) + (g == 2)*(1 - max(1, 0)) + (g == 3)*(mod(1 + 0, 2)) + (g == 4)*(1 - mod(1 + 0, 2))}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "rect",
+     "x": 22.4,
+     "y": 3.549999999999999,
+     "w": 7.4,
+     "h": 1.2,
+     "color": "yellow",
+     "opacity": 0.25,
+     "visibleIf": "A == 1 && (B == 1 || g == nt)"
+    },
+    {
+     "shape": "text",
+     "x": 23.5,
+     "y": 3.899999999999999,
+     "text": {
+      "en": "1"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 25.5,
+     "y": 3.899999999999999,
+     "text": {
+      "en": "1"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 28.5,
+     "y": 3.899999999999999,
+     "text": {
+      "en": "{(g == 1)*(1 - (1)*(1)) + (g == 2)*(1 - max(1, 1)) + (g == 3)*(mod(1 + 1, 2)) + (g == 4)*(1 - mod(1 + 1, 2))}"
+     },
+     "size": 22
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Output Y"
+     },
+     "expr": "Y",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Compare the NAND column with an AND table. What is the link?"
+    },
+    {
+     "en": "Which gate could tell you whether two bits are equal?"
+    },
+    {
+     "en": "Pick XOR. Hold B = 1 and flip A. What does the gate do to A?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

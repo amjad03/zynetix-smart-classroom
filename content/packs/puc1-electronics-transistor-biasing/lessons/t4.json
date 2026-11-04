@@ -446,6 +446,402 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Collector-to-base bias",
+    "kn": "ಸಂಗ್ರಾಹಕ-ಆಧಾರ ಬಯಾಸ್"
+   },
+   "narration": {
+    "en": "RB now goes from the collector to the base. If IC tries to rise, VCE falls, so the base current falls and pulls IC back: negative feedback. IB = (VCC − 0.7)/(RB + (1 + β)RC). Change β and compare the shift in IC with a fixed-bias circuit using the same RB.",
+    "kn": "RB ಈಗ ಸಂಗ್ರಾಹಕದಿಂದ ಆಧಾರಕ್ಕೆ. IC ಏರಲು ಯತ್ನಿಸಿದರೆ VCE ಇಳಿಯುತ್ತದೆ, IB ಕಡಿಮೆಯಾಗಿ IC ಹಿಂದೆಳೆಯುತ್ತದೆ: ಋಣ ಪ್ರತಿಪೋಷಣೆ. β ಬದಲಿಸಿ ಸ್ಥಿರ ಬಯಾಸ್‌ನೊಂದಿಗೆ ಹೋಲಿಸಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "RB now goes from the collector to the base. If IC tries to rise, VCE falls, so the base current falls and pulls IC back: negative feedback. IB = (VCC − 0.7)/(RB + (1 + β)RC). Change β and compare the shift in IC with a fixed-bias circuit using the same RB.",
+    "kn": "RB ಈಗ ಸಂಗ್ರಾಹಕದಿಂದ ಆಧಾರಕ್ಕೆ. IC ಏರಲು ಯತ್ನಿಸಿದರೆ VCE ಇಳಿಯುತ್ತದೆ, IB ಕಡಿಮೆಯಾಗಿ IC ಹಿಂದೆಳೆಯುತ್ತದೆ: ಋಣ ಪ್ರತಿಪೋಷಣೆ. β ಬದಲಿಸಿ ಸ್ಥಿರ ಬಯಾಸ್‌ನೊಂದಿಗೆ ಹೋಲಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "RB",
+     "label": {
+      "en": "Feedback resistor RB",
+      "kn": "ಪ್ರತಿಪೋಷಣಾ ರೋಧ RB"
+     },
+     "min": 50,
+     "max": 500,
+     "step": 10,
+     "value": 470,
+     "unit": "kΩ"
+    },
+    {
+     "name": "RC",
+     "label": {
+      "en": "Collector resistor RC",
+      "kn": "ಸಂಗ್ರಾಹಕ ರೋಧ RC"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 0.5,
+     "value": 2,
+     "unit": "kΩ"
+    }
+   ],
+   "choices": [
+    {
+     "name": "beta",
+     "label": {
+      "en": "β of the transistor",
+      "kn": "ಟ್ರಾನ್ಸಿಸ್ಟರ್‌ನ β"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "50"
+       },
+       "value": 50
+      },
+      {
+       "label": {
+        "en": "100"
+       },
+       "value": 100
+      },
+      {
+       "label": {
+        "en": "200"
+       },
+       "value": 200
+      }
+     ],
+     "value": 100
+    }
+   ],
+   "vars": [
+    {
+     "name": "VCC",
+     "expr": "12"
+    },
+    {
+     "name": "IB",
+     "expr": "(VCC - 0.7)/(RB + (1 + beta)*RC)*1000"
+    },
+    {
+     "name": "Ic",
+     "expr": "beta*IB/1000"
+    },
+    {
+     "name": "Vce",
+     "expr": "VCC - (Ic + IB/1000)*RC"
+    },
+    {
+     "name": "Icf",
+     "expr": "min(beta*(VCC - 0.7)/RB, (VCC - 0.2)/RC)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 10.5,
+     "x2": 16,
+     "y2": 10.5,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 16.3,
+     "y": 10.5,
+     "text": {
+      "en": "VCC = {VCC} V"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 11.2,
+     "y1": 10.5,
+     "x2": 11.2,
+     "y2": 9.6,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 11.2,
+     "y": 8.6,
+     "size": 2,
+     "angle": 90
+    },
+    {
+     "shape": "text",
+     "x": 12.1,
+     "y": 8.6,
+     "text": {
+      "en": "RC"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 11.2,
+     "y1": 7.6,
+     "x2": 11.2,
+     "y2": 7.7,
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 10.3,
+     "y": 5.5,
+     "r": 1.7,
+     "fill": false,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 9.5,
+     "y1": 4.5,
+     "x2": 9.5,
+     "y2": 6.5,
+     "width": 6,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 8.0,
+     "y1": 5.5,
+     "x2": 9.5,
+     "y2": 5.5,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 9.5,
+     "y1": 5.9,
+     "x2": 11.2,
+     "y2": 6.8,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 11.2,
+     "y1": 6.8,
+     "x2": 11.2,
+     "y2": 7.7,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 9.5,
+     "y1": 5.1,
+     "x2": 11.2,
+     "y2": 4.2,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 11.2,
+     "y1": 4.2,
+     "x2": 11.2,
+     "y2": 3.3,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "arrow",
+     "x": 10.1,
+     "y": 4.84,
+     "dx": 0.9,
+     "dy": -0.48,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 11.2,
+     "y1": 3.3,
+     "x2": 11.2,
+     "y2": 3.2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 1,
+     "x2": 16,
+     "y2": 1,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 16.3,
+     "y": 1,
+     "text": {
+      "en": "0 V"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 11.2,
+     "y1": 7.7,
+     "x2": 7,
+     "y2": 7.7,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 7,
+     "y1": 7.7,
+     "x2": 7,
+     "y2": 7.2,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 7,
+     "y": 6.3,
+     "size": 1.8,
+     "angle": 90
+    },
+    {
+     "shape": "text",
+     "x": 6.3,
+     "y": 6.4,
+     "text": {
+      "en": "RB"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 7,
+     "y1": 5.5,
+     "x2": 8,
+     "y2": 5.5,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 11.2,
+     "y1": 3.2,
+     "x2": 11.2,
+     "y2": 1,
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "x": 7.6,
+     "y": 6.2,
+     "dx": 0.6,
+     "dy": 0,
+     "color": "green",
+     "width": 3,
+     "label": "IB"
+    },
+    {
+     "shape": "label",
+     "x": 23,
+     "y": 9.5,
+     "text": {
+      "en": "IB = {IB:1} µA"
+     },
+     "size": 24
+    },
+    {
+     "shape": "label",
+     "x": 23,
+     "y": 7.5,
+     "text": {
+      "en": "IC = {Ic:2} mA"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 23,
+     "y": 5.5,
+     "text": {
+      "en": "VCE = {Vce:2} V"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 23,
+     "y": 3.2,
+     "text": {
+      "en": "Fixed bias, same RB: IC = {Icf:2} mA",
+      "kn": "ಸ್ಥಿರ ಬಯಾಸ್: IC = {Icf:2} mA"
+     },
+     "size": 20,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "IC (collector-to-base)"
+     },
+     "expr": "Ic",
+     "digits": 3,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "VCE"
+     },
+     "expr": "Vce",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "IC (fixed bias, same RB)"
+     },
+     "expr": "Icf",
+     "digits": 3,
+     "unit": "mA"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With RB = 470 kΩ, switch β from 100 to 200. By what factor does IC change?"
+    },
+    {
+     "en": "Compare with the fixed-bias readout for the same change. Which is more stable?"
+    },
+    {
+     "en": "Can this circuit ever saturate the transistor? Try small RB values."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

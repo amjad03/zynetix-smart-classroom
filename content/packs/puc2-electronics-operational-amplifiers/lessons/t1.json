@@ -540,6 +540,333 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Differential and common-mode gain",
+    "kn": "ಭೇದಾತ್ಮಕ ಮತ್ತು ಸಾಮಾನ್ಯ-ವಿಧ ಲಾಭ"
+   },
+   "narration": {
+    "en": "A differential amplifier amplifies Vd = V1 − V2 by Ad and, ideally, ignores the common-mode part Vc = (V1 + V2)/2. In practice a little gets through: Ac = Ad/CMRR. The output is Vo = Ad Vd + Ac Vc.",
+    "kn": "ಭೇದಾತ್ಮಕ ವರ್ಧಕ Vd = V1 − V2 ಅನ್ನು Ad ಪಟ್ಟು ವರ್ಧಿಸುತ್ತದೆ, ಸಾಮಾನ್ಯ ಭಾಗ Vc = (V1 + V2)/2 ಅನ್ನು ಬಹುತೇಕ ತಿರಸ್ಕರಿಸುತ್ತದೆ. Ac = Ad/CMRR. Vo = Ad Vd + Ac Vc."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A differential amplifier amplifies Vd = V1 − V2 by Ad and, ideally, ignores the common-mode part Vc = (V1 + V2)/2. In practice a little gets through: Ac = Ad/CMRR. The output is Vo = Ad Vd + Ac Vc.",
+    "kn": "ಭೇದಾತ್ಮಕ ವರ್ಧಕ Vd = V1 − V2 ಅನ್ನು Ad ಪಟ್ಟು ವರ್ಧಿಸುತ್ತದೆ, ಸಾಮಾನ್ಯ ಭಾಗ Vc = (V1 + V2)/2 ಅನ್ನು ಬಹುತೇಕ ತಿರಸ್ಕರಿಸುತ್ತದೆ. Ac = Ad/CMRR. Vo = Ad Vd + Ac Vc."
+   },
+   "sliders": [
+    {
+     "name": "V1",
+     "label": {
+      "en": "Input V1",
+      "kn": "ಒಳಹರಿವು V1"
+     },
+     "min": -50,
+     "max": 50,
+     "step": 5,
+     "value": 30,
+     "unit": "mV"
+    },
+    {
+     "name": "V2",
+     "label": {
+      "en": "Input V2",
+      "kn": "ಒಳಹರಿವು V2"
+     },
+     "min": -50,
+     "max": 50,
+     "step": 5,
+     "value": 10,
+     "unit": "mV"
+    },
+    {
+     "name": "Ad",
+     "label": {
+      "en": "Differential gain Ad",
+      "kn": "ಭೇದಾತ್ಮಕ ಲಾಭ Ad"
+     },
+     "min": 50,
+     "max": 250,
+     "step": 10,
+     "value": 100
+    }
+   ],
+   "choices": [
+    {
+     "name": "cm",
+     "label": {
+      "en": "CMRR",
+      "kn": "CMRR"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "40 dB"
+       },
+       "value": 40
+      },
+      {
+       "label": {
+        "en": "60 dB"
+       },
+       "value": 60
+      },
+      {
+       "label": {
+        "en": "80 dB"
+       },
+       "value": 80
+      }
+     ],
+     "value": 40
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Same on both",
+      "kn": "ಎರಡಕ್ಕೂ ಒಂದೇ"
+     },
+     "icon": "flip",
+     "set": {
+      "V2": "V1"
+     }
+    }
+   ],
+   "vars": [
+    {
+     "name": "Vd",
+     "expr": "V1 - V2"
+    },
+    {
+     "name": "Vc",
+     "expr": "(V1 + V2)/2"
+    },
+    {
+     "name": "Ac",
+     "expr": "Ad/pow(10, cm/20)"
+    },
+    {
+     "name": "Vo",
+     "expr": "(Ad*Vd + Ac*Vc)/1000"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -0.5,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       9,
+       8.1
+      ],
+      [
+       9,
+       2.9
+      ],
+      [
+       12.9,
+       5.5
+      ]
+     ],
+     "fill": false,
+     "width": 3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.65,
+     "y": 6.24,
+     "text": {
+      "en": "−"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 9.65,
+     "y": 4.16,
+     "text": {
+      "en": "+"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 6.5,
+     "x2": 9,
+     "y2": 6.5,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 4.5,
+     "x2": 9,
+     "y2": 4.5,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 12.9,
+     "y1": 5.5,
+     "x2": 15,
+     "y2": 5.5,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 6.5,
+     "text": {
+      "en": "V2"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 4.5,
+     "text": {
+      "en": "V1"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 7.6,
+     "text": {
+      "en": "{V2} mV"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 3.4,
+     "text": {
+      "en": "{V1} mV"
+     },
+     "size": 18
+    },
+    {
+     "shape": "line",
+     "x1": 17,
+     "y1": 5.5,
+     "x2": 29,
+     "y2": 5.5,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 23,
+     "y": 10.4,
+     "text": {
+      "en": "output contributions (V)",
+      "kn": "ನಿರ್ಗಮ ಭಾಗಗಳು (V)"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 18,
+     "y": 5.5,
+     "w": 3,
+     "h": "clamp(0.4*Ad*Vd/1000, -5, 5)",
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 19.5,
+     "y": 0.3,
+     "text": {
+      "en": "Ad Vd"
+     },
+     "size": 18
+    },
+    {
+     "shape": "rect",
+     "x": 22.5,
+     "y": 5.5,
+     "w": 3,
+     "h": "clamp(0.4*Ac*Vc/1000, -5, 5)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 24,
+     "y": 0.3,
+     "text": {
+      "en": "Ac Vc"
+     },
+     "size": 18
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": 10.2,
+     "text": {
+      "en": "Vd = {Vd} mV   Vc = {Vc} mV"
+     },
+     "size": 20
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": 0.7,
+     "text": {
+      "en": "Vo = {Vo:3} V"
+     },
+     "size": 24,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Common-mode gain Ac"
+     },
+     "expr": "Ac",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "Output Vo"
+     },
+     "expr": "Vo",
+     "digits": 4,
+     "unit": "V"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Press \"Same on both\". What is Vo, and where does it come from?"
+    },
+    {
+     "en": "With the same inputs, change CMRR from 40 dB to 80 dB. How does the output change?"
+    },
+    {
+     "en": "Set V1 = 30 mV and V2 = 10 mV. Split Vo into its differential and common-mode parts."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

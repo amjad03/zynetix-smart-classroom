@@ -346,6 +346,321 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Reading a 3½-digit DMM",
+    "kn": "3½ ಅಂಕಿ DMM ಓದುವುದು"
+   },
+   "narration": {
+    "en": "Set an input voltage and pick a range. The display shows at most 1999 counts; one count is the resolution (range ÷ 2000). If the input is above the range the display shows only a 1 (overload). The lowest range that does not overload gives the most digits.",
+    "kn": "ಒಳಹರಿವಿನ ವೋಲ್ಟೇಜ್ ಮತ್ತು ವ್ಯಾಪ್ತಿ ಆರಿಸಿ. ಪ್ರದರ್ಶನ ಗರಿಷ್ಠ 1999 ಎಣಿಕೆ; ಒಂದು ಎಣಿಕೆ = ವಿಭೇದನ. ಒಳಹರಿವು ವ್ಯಾಪ್ತಿ ಮೀರಿದರೆ 1 ಮಾತ್ರ ಕಾಣುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Set an input voltage and pick a range. The display shows at most 1999 counts; one count is the resolution (range ÷ 2000). If the input is above the range the display shows only a 1 (overload). The lowest range that does not overload gives the most digits.",
+    "kn": "ಒಳಹರಿವಿನ ವೋಲ್ಟೇಜ್ ಮತ್ತು ವ್ಯಾಪ್ತಿ ಆರಿಸಿ. ಪ್ರದರ್ಶನ ಗರಿಷ್ಠ 1999 ಎಣಿಕೆ; ಒಂದು ಎಣಿಕೆ = ವಿಭೇದನ. ಒಳಹರಿವು ವ್ಯಾಪ್ತಿ ಮೀರಿದರೆ 1 ಮಾತ್ರ ಕಾಣುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "Vc",
+     "label": {
+      "en": "Supply (coarse)",
+      "kn": "ಸರಬರಾಜು (ಸ್ಥೂಲ)"
+     },
+     "min": 0,
+     "max": 30,
+     "step": 0.5,
+     "value": 1.5,
+     "unit": "V"
+    },
+    {
+     "name": "Vf",
+     "label": {
+      "en": "Supply (fine)",
+      "kn": "ಸರಬರಾಜು (ಸೂಕ್ಷ್ಮ)"
+     },
+     "min": 0,
+     "max": 0.49,
+     "step": 0.01,
+     "value": 0.03,
+     "unit": "V"
+    }
+   ],
+   "choices": [
+    {
+     "name": "r",
+     "label": {
+      "en": "Range",
+      "kn": "ವ್ಯಾಪ್ತಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "200 mV"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "2 V"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "20 V"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "200 V"
+       },
+       "value": 4
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "vars": [
+    {
+     "name": "Vx",
+     "expr": "Vc + Vf"
+    },
+    {
+     "name": "R",
+     "expr": "if(r == 1, 0.2, if(r == 2, 2, if(r == 3, 20, 200)))"
+    },
+    {
+     "name": "res",
+     "expr": "R/2000"
+    },
+    {
+     "name": "cnt",
+     "expr": "round(Vx/res)"
+    },
+    {
+     "name": "disp",
+     "expr": "cnt*res*if(r == 1, 1000, 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     1,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 3,
+     "w": 16,
+     "h": 6,
+     "fill": false,
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": 3,
+     "y": 4.2,
+     "w": 14,
+     "h": 3.6,
+     "color": "green",
+     "opacity": 0.15
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 5.5,
+     "text": {
+      "en": "{disp:1}"
+     },
+     "size": 60,
+     "color": "green",
+     "align": "right",
+     "visibleIf": "r == 1 && cnt <= 1999"
+    },
+    {
+     "shape": "text",
+     "x": 16.6,
+     "y": 4.5,
+     "text": {
+      "en": "mV"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "r == 1"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 5.5,
+     "text": {
+      "en": "{disp:3}"
+     },
+     "size": 60,
+     "color": "green",
+     "align": "right",
+     "visibleIf": "r == 2 && cnt <= 1999"
+    },
+    {
+     "shape": "text",
+     "x": 16.6,
+     "y": 4.5,
+     "text": {
+      "en": "V"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "r == 2"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 5.5,
+     "text": {
+      "en": "{disp:2}"
+     },
+     "size": 60,
+     "color": "green",
+     "align": "right",
+     "visibleIf": "r == 3 && cnt <= 1999"
+    },
+    {
+     "shape": "text",
+     "x": 16.6,
+     "y": 4.5,
+     "text": {
+      "en": "V"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "r == 3"
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 5.5,
+     "text": {
+      "en": "{disp:1}"
+     },
+     "size": 60,
+     "color": "green",
+     "align": "right",
+     "visibleIf": "r == 4 && cnt <= 1999"
+    },
+    {
+     "shape": "text",
+     "x": 16.6,
+     "y": 4.5,
+     "text": {
+      "en": "V"
+     },
+     "size": 26,
+     "color": "green",
+     "visibleIf": "r == 4"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 5.5,
+     "text": {
+      "en": "1"
+     },
+     "size": 60,
+     "color": "red",
+     "visibleIf": "cnt > 1999"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 4.6,
+     "text": {
+      "en": "overload",
+      "kn": "ಮಿತಿ ಮೀರಿದೆ"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "cnt > 1999"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 10.0,
+     "text": {
+      "en": "3½-digit DMM (1999 counts)",
+      "kn": "3½ ಅಂಕಿ DMM (1999 ಎಣಿಕೆ)"
+     },
+     "size": 24
+    },
+    {
+     "shape": "rect",
+     "x": 21,
+     "y": 3,
+     "w": 8,
+     "h": 6,
+     "fill": false,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 25,
+     "y": 8.0,
+     "text": {
+      "en": "Input",
+      "kn": "ಒಳಹರಿವು"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 25,
+     "y": 5.6,
+     "text": {
+      "en": "{Vx:3} V"
+     },
+     "size": 34,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Resolution (one count)"
+     },
+     "expr": "res*if(r == 1, 1000, 1)",
+     "digits": 4,
+     "unit": "mV or V"
+    },
+    {
+     "label": {
+      "en": "Counts"
+     },
+     "expr": "cnt",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set 1.53 V. Read it on the 2 V, 20 V and 200 V ranges. Which shows the most digits?"
+    },
+    {
+     "en": "Set 25 V and choose the 20 V range. What does the display show?"
+    },
+    {
+     "en": "Set 0.12 V. Which range gives a reading to 0.1 mV?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

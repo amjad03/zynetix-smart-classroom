@@ -1241,6 +1241,304 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Astable multivibrator",
+    "kn": "ಅಸ್ಥಿರ ಬಹುಕಂಪಕ"
+   },
+   "narration": {
+    "en": "Two transistors switch each other on and off through the coupling capacitors, so the circuit has no stable state and makes a square wave by itself. Each half-period is about 0.69 RC of the base resistor and capacitor concerned, so T = 0.69(R1C1 + R2C2). The LEDs show which transistor is ON.",
+    "kn": "ಎರಡು ಟ್ರಾನ್ಸಿಸ್ಟರ್‌ಗಳು ಜೋಡಣಾ ಧಾರಕಗಳ ಮೂಲಕ ಪರಸ್ಪರ ಆನ್/ಆಫ್ ಮಾಡುತ್ತವೆ; ಸ್ಥಿರ ಸ್ಥಿತಿ ಇಲ್ಲ, ಸ್ವತಃ ಚೌಕ ತರಂಗ. T = 0.69(R1C1 + R2C2). LED ಗಳು ಯಾವ ಟ್ರಾನ್ಸಿಸ್ಟರ್ ಆನ್ ಎಂದು ತೋರಿಸುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Two transistors switch each other on and off through the coupling capacitors, so the circuit has no stable state and makes a square wave by itself. Each half-period is about 0.69 RC of the base resistor and capacitor concerned, so T = 0.69(R1C1 + R2C2). The LEDs show which transistor is ON.",
+    "kn": "ಎರಡು ಟ್ರಾನ್ಸಿಸ್ಟರ್‌ಗಳು ಜೋಡಣಾ ಧಾರಕಗಳ ಮೂಲಕ ಪರಸ್ಪರ ಆನ್/ಆಫ್ ಮಾಡುತ್ತವೆ; ಸ್ಥಿರ ಸ್ಥಿತಿ ಇಲ್ಲ, ಸ್ವತಃ ಚೌಕ ತರಂಗ. T = 0.69(R1C1 + R2C2). LED ಗಳು ಯಾವ ಟ್ರಾನ್ಸಿಸ್ಟರ್ ಆನ್ ಎಂದು ತೋರಿಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "R1",
+     "label": {
+      "en": "R1",
+      "kn": "R1"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 47,
+     "unit": "kΩ"
+    },
+    {
+     "name": "C1",
+     "label": {
+      "en": "C1",
+      "kn": "C1"
+     },
+     "min": 1,
+     "max": 22,
+     "step": 1,
+     "value": 10,
+     "unit": "µF"
+    },
+    {
+     "name": "R2",
+     "label": {
+      "en": "R2",
+      "kn": "R2"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 47,
+     "unit": "kΩ"
+    },
+    {
+     "name": "C2",
+     "label": {
+      "en": "C2",
+      "kn": "C2"
+     },
+     "min": 1,
+     "max": 22,
+     "step": 1,
+     "value": 10,
+     "unit": "µF"
+    }
+   ],
+   "buttons": [
+    {
+     "label": {
+      "en": "Make symmetric",
+      "kn": "ಸಮಮಿತಿ ಮಾಡಿ"
+     },
+     "icon": "flip",
+     "set": {
+      "R2": "R1",
+      "C2": "C1"
+     }
+    }
+   ],
+   "time": {
+    "max": 20,
+    "unit": "s",
+    "loop": true,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "t1",
+     "expr": "0.69*R1*C1/1000"
+    },
+    {
+     "name": "t2",
+     "expr": "0.69*R2*C2/1000"
+    },
+    {
+     "name": "T",
+     "expr": "t1 + t2"
+    },
+    {
+     "name": "q1",
+     "expr": "mod(t, T) < t1"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -0.5,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "icon",
+     "icon": "bulb",
+     "x": 4,
+     "y": 8,
+     "size": 2.2,
+     "on": "q1",
+     "color": "red"
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": 9.8,
+     "text": {
+      "en": "Q1 ON",
+      "kn": "Q1 ಆನ್"
+     },
+     "size": 18,
+     "color": "red",
+     "visibleIf": "q1"
+    },
+    {
+     "shape": "icon",
+     "icon": "bulb",
+     "x": 9,
+     "y": 8,
+     "size": 2.2,
+     "on": "1 - q1",
+     "color": "green"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 9.8,
+     "text": {
+      "en": "Q2 ON",
+      "kn": "Q2 ಆನ್"
+     },
+     "size": 18,
+     "color": "green",
+     "visibleIf": "!q1"
+    },
+    {
+     "shape": "line",
+     "x1": 13,
+     "y1": 6,
+     "x2": 29.5,
+     "y2": 6,
+     "width": 1,
+     "opacity": 0.4
+    },
+    {
+     "shape": "line",
+     "x1": 13,
+     "y1": 1,
+     "x2": 29.5,
+     "y2": 1,
+     "width": 1,
+     "opacity": 0.4
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 9.2,
+     "text": {
+      "en": "Q1 collector",
+      "kn": "Q1 ಸಂಗ್ರಾಹಕ"
+     },
+     "size": 16,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 4.2,
+     "text": {
+      "en": "Q2 collector",
+      "kn": "Q2 ಸಂಗ್ರಾಹಕ"
+     },
+     "size": 16,
+     "align": "left"
+    },
+    {
+     "shape": "wave",
+     "fn": "6 + 2.5*if(mod(floor(t/6)*6 + (x - 13)/4.333333333333333, T) < t1, 0, 1)",
+     "color": "red",
+     "width": 3,
+     "from": 13,
+     "to": 29.5
+    },
+    {
+     "shape": "wave",
+     "fn": "1 + 2.5*if(mod(floor(t/6)*6 + (x - 13)/4.333333333333333, T) < t1, 1, 0)",
+     "color": "green",
+     "width": 3,
+     "from": 13,
+     "to": 29.5
+    },
+    {
+     "shape": "line",
+     "x1": "13 + 4.333333333333333*mod(t, 6)",
+     "y1": 0.5,
+     "x2": "13 + 4.333333333333333*mod(t, 6)",
+     "y2": 9,
+     "color": "white",
+     "width": 1,
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": 0.2,
+     "text": {
+      "en": "t (s)"
+     },
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "shape": "label",
+     "x": 6.5,
+     "y": 3.5,
+     "text": {
+      "en": "T = {T:2} s"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 6.5,
+     "y": 1.5,
+     "text": {
+      "en": "f = {1/T:2} Hz"
+     },
+     "size": 22,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Half-period 0.69 R1C1 (Q1 ON)"
+     },
+     "expr": "t1",
+     "digits": 3,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Half-period 0.69 R2C2 (Q2 ON)"
+     },
+     "expr": "t2",
+     "digits": 3,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Period T"
+     },
+     "expr": "T",
+     "digits": 3,
+     "unit": "s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Make the circuit symmetric. Is T = 1.38 RC?"
+    },
+    {
+     "en": "Double C1 only. Which half of the wave gets longer?"
+    },
+    {
+     "en": "Find values that flash the LEDs about once a second."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -527,6 +527,228 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Diode clippers",
+    "kn": "ಡಯೋಡ್ ಕ್ಲಿಪ್ಪರ್‌ಗಳು"
+   },
+   "narration": {
+    "en": "A shunt diode with a bias battery VB starts to conduct when the input passes VB + Vγ, so everything beyond that level is cut off while the rest of the wave passes unchanged. Two biased diodes facing opposite ways clip both peaks.",
+    "kn": "ಬಯಾಸ್ VB ಇರುವ ಷಂಟ್ ಡಯೋಡ್ ಒಳಹರಿವು VB + Vγ ದಾಟಿದಾಗ ವಾಹಕವಾಗುತ್ತದೆ; ಆ ಮಟ್ಟದ ಮೇಲಿನ ಭಾಗ ಕತ್ತರಿಸಲ್ಪಡುತ್ತದೆ. ವಿರುದ್ಧ ದಿಕ್ಕಿನ ಎರಡು ಡಯೋಡ್‌ಗಳು ಎರಡೂ ಶಿಖರ ಕತ್ತರಿಸುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A shunt diode with a bias battery VB starts to conduct when the input passes VB + Vγ, so everything beyond that level is cut off while the rest of the wave passes unchanged. Two biased diodes facing opposite ways clip both peaks.",
+    "kn": "ಬಯಾಸ್ VB ಇರುವ ಷಂಟ್ ಡಯೋಡ್ ಒಳಹರಿವು VB + Vγ ದಾಟಿದಾಗ ವಾಹಕವಾಗುತ್ತದೆ; ಆ ಮಟ್ಟದ ಮೇಲಿನ ಭಾಗ ಕತ್ತರಿಸಲ್ಪಡುತ್ತದೆ. ವಿರುದ್ಧ ದಿಕ್ಕಿನ ಎರಡು ಡಯೋಡ್‌ಗಳು ಎರಡೂ ಶಿಖರ ಕತ್ತರಿಸುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "Vm",
+     "label": {
+      "en": "Input peak",
+      "kn": "ಒಳಹರಿವಿನ ಶಿಖರ"
+     },
+     "min": 2,
+     "max": 10,
+     "step": 0.5,
+     "value": 8,
+     "unit": "V"
+    },
+    {
+     "name": "VB",
+     "label": {
+      "en": "Bias battery VB",
+      "kn": "ಬಯಾಸ್ VB"
+     },
+     "min": 0,
+     "max": 6,
+     "step": 0.5,
+     "value": 3,
+     "unit": "V"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "si",
+     "label": {
+      "en": "Silicon diode Vγ = 0.7 V",
+      "kn": "ಸಿಲಿಕಾನ್ Vγ = 0.7 V"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "ty",
+     "label": {
+      "en": "Clipper",
+      "kn": "ಕ್ಲಿಪ್ಪರ್"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Positive",
+        "kn": "ಧನ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Negative",
+        "kn": "ಋಣ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Both peaks",
+        "kn": "ಎರಡೂ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 40,
+    "unit": "ms",
+    "loop": true,
+    "speeds": [
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.5
+   },
+   "vars": [
+    {
+     "name": "vg",
+     "expr": "if(si, 0.7, 0)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -7,
+     7.4
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 0,
+     "x2": 29.5,
+     "y2": 0,
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": -0.6,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "shape": "wave",
+     "fn": "0.6*Vm*sin(2*pi*((x - 1)/0.7)/20)",
+     "color": "white",
+     "width": 2,
+     "opacity": 0.5,
+     "from": 1,
+     "to": 29.5
+    },
+    {
+     "shape": "wave",
+     "fn": "0.6*if(ty == 1, min(Vm*sin(2*pi*((x - 1)/0.7)/20), VB + vg), if(ty == 2, max(Vm*sin(2*pi*((x - 1)/0.7)/20), -(VB + vg)), clamp(Vm*sin(2*pi*((x - 1)/0.7)/20), -(VB + vg), VB + vg)))",
+     "color": "orange",
+     "width": 4,
+     "from": 1,
+     "to": 29.5
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": "0.6*(VB + vg)",
+     "x2": 29.5,
+     "y2": "0.6*(VB + vg)",
+     "dashed": true,
+     "color": "green",
+     "width": 1,
+     "visibleIf": "ty != 2"
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": "-0.6*(VB + vg)",
+     "x2": 29.5,
+     "y2": "-0.6*(VB + vg)",
+     "dashed": true,
+     "color": "green",
+     "width": 1,
+     "visibleIf": "ty != 1"
+    },
+    {
+     "shape": "circle",
+     "x": "1 + 0.7*t",
+     "y": "0.6*if(ty == 1, min(Vm*sin(2*pi*t/20), VB + vg), if(ty == 2, max(Vm*sin(2*pi*t/20), -(VB + vg)), clamp(Vm*sin(2*pi*t/20), -(VB + vg), VB + vg)))",
+     "r": 0.2,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 22,
+     "y": 6.9,
+     "text": {
+      "en": "clip level {VB + vg:1} V",
+      "kn": "ಕತ್ತರಿಸುವ ಮಟ್ಟ {VB + vg:1} V"
+     },
+     "size": 20,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Clipping level"
+     },
+     "expr": "VB + vg",
+     "digits": 1,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Output peak"
+     },
+     "expr": "min(Vm, VB + vg)",
+     "digits": 1,
+     "unit": "V"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Positive clipper with VB = 3 V: at what level is the output cut?"
+    },
+    {
+     "en": "Turn off the 0.7 V drop. How much does the clipping level change?"
+    },
+    {
+     "en": "Choose the two-level clipper and lower VB. What shape does the output approach?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

@@ -651,6 +651,338 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "The LC tank and the Barkhausen criterion",
+    "kn": "LC ಟ್ಯಾಂಕ್ ಮತ್ತು ಬಾರ್ಕ್‌ಹೌಸೆನ್ ನಿಯಮ"
+   },
+   "narration": {
+    "en": "A charged capacitor discharges through the coil; energy swings between the electric field of C (blue bar) and the magnetic field of L (orange bar) at f = 1/(2π√LC). Resistance turns some energy into heat each cycle, so the oscillation dies out, unless an amplifier with positive feedback (loop gain Aβ = 1, phase 360°) puts the lost energy back.",
+    "kn": "ಆವೇಶಿತ ಧಾರಕ ಸುರುಳಿಯ ಮೂಲಕ ವಿಸರ್ಜಿಸುತ್ತದೆ; ಶಕ್ತಿ C ಯ ವಿದ್ಯುತ್ ಕ್ಷೇತ್ರ ಮತ್ತು L ನ ಕಾಂತ ಕ್ಷೇತ್ರದ ನಡುವೆ ತೂಗಾಡುತ್ತದೆ. ರೋಧದಿಂದ ಆಂದೋಲನ ಕುಗ್ಗುತ್ತದೆ; Aβ = 1 ಇರುವ ವರ್ಧಕ ನಷ್ಟವನ್ನು ತುಂಬುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A charged capacitor discharges through the coil; energy swings between the electric field of C (blue bar) and the magnetic field of L (orange bar) at f = 1/(2π√LC). Resistance turns some energy into heat each cycle, so the oscillation dies out, unless an amplifier with positive feedback (loop gain Aβ = 1, phase 360°) puts the lost energy back.",
+    "kn": "ಆವೇಶಿತ ಧಾರಕ ಸುರುಳಿಯ ಮೂಲಕ ವಿಸರ್ಜಿಸುತ್ತದೆ; ಶಕ್ತಿ C ಯ ವಿದ್ಯುತ್ ಕ್ಷೇತ್ರ ಮತ್ತು L ನ ಕಾಂತ ಕ್ಷೇತ್ರದ ನಡುವೆ ತೂಗಾಡುತ್ತದೆ. ರೋಧದಿಂದ ಆಂದೋಲನ ಕುಗ್ಗುತ್ತದೆ; Aβ = 1 ಇರುವ ವರ್ಧಕ ನಷ್ಟವನ್ನು ತುಂಬುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "L",
+     "label": {
+      "en": "Inductance L",
+      "kn": "ಪ್ರೇರಕತೆ"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "mH"
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "Capacitance C",
+      "kn": "ಧಾರಕತೆ"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "µF"
+    },
+    {
+     "name": "R",
+     "label": {
+      "en": "Loss resistance R",
+      "kn": "ನಷ್ಟ ರೋಧ"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 1,
+     "value": 5,
+     "unit": "Ω"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "amp",
+     "label": {
+      "en": "Amplifier with positive feedback",
+      "kn": "ಧನ ಪ್ರತಿಪೋಷಣೆಯ ವರ್ಧಕ"
+     },
+     "value": false
+    }
+   ],
+   "time": {
+    "max": 20,
+    "unit": "ms",
+    "dt": 0.002,
+    "speeds": [
+     0.05,
+     0.1,
+     0.25,
+     0.5
+    ],
+    "speed": 0.1
+   },
+   "vars": [
+    {
+     "name": "Ec",
+     "expr": "0.5*C*v^2"
+    },
+    {
+     "name": "El",
+     "expr": "0.5*L*i^2/1000"
+    },
+    {
+     "name": "E0",
+     "expr": "0.5*C*25"
+    }
+   ],
+   "state": [
+    {
+     "name": "v",
+     "init": 5,
+     "rate": "-i/C"
+    },
+    {
+     "name": "i",
+     "init": 0,
+     "rate": "1000*(v - R*i/1000*(1 - amp))/L"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -6,
+     6.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "icon",
+     "icon": "capacitor",
+     "x": 2.5,
+     "y": 0.5,
+     "size": 2.4,
+     "angle": 90,
+     "color": "blue"
+    },
+    {
+     "shape": "spring",
+     "x1": 6,
+     "y1": -1.5,
+     "x2": 6,
+     "y2": 2.5,
+     "coils": 6,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 2.5,
+     "y1": 1.7,
+     "x2": 2.5,
+     "y2": 3.2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 2.5,
+     "y1": 3.2,
+     "x2": 6,
+     "y2": 3.2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 3.2,
+     "x2": 6,
+     "y2": 2.5,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 2.5,
+     "y1": -0.7,
+     "x2": 2.5,
+     "y2": -2.4,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 2.5,
+     "y1": -2.4,
+     "x2": 6,
+     "y2": -2.4,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": -2.4,
+     "x2": 6,
+     "y2": -1.5,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 1.2,
+     "y": 0.5,
+     "text": {
+      "en": "C"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 7,
+     "y": 0.5,
+     "text": {
+      "en": "L"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "rect",
+     "x": 1.5,
+     "y": -5.5,
+     "w": 1.6,
+     "h": "clamp(3*Ec/E0, 0, 3.2)",
+     "color": "blue"
+    },
+    {
+     "shape": "rect",
+     "x": 4.8,
+     "y": -5.5,
+     "w": 1.6,
+     "h": "clamp(3*El/E0, 0, 3.2)",
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 2.3,
+     "y": -5.9,
+     "text": {
+      "en": "E_C"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 5.6,
+     "y": -5.9,
+     "text": {
+      "en": "E_L"
+     },
+     "size": 16
+    },
+    {
+     "shape": "label",
+     "x": 4.2,
+     "y": 5.2,
+     "text": {
+      "en": "Amplifier on: Aβ = 1",
+      "kn": "ವರ್ಧಕ ಆನ್: Aβ = 1"
+     },
+     "size": 18,
+     "color": "green",
+     "visibleIf": "amp"
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 0,
+     "x2": 29.5,
+     "y2": 0,
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": -0.6,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "shape": "trail",
+     "x": "10 + 0.97*t",
+     "y": "0.9*v",
+     "length": 2000,
+     "color": "blue",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "10 + 0.97*t",
+     "y": "0.9*v",
+     "r": 0.2,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 10.3,
+     "y": 5.3,
+     "text": {
+      "en": "capacitor voltage",
+      "kn": "ಧಾರಕ ವೋಲ್ಟೇಜ್"
+     },
+     "size": 18,
+     "color": "blue",
+     "align": "left"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Frequency 1/(2π√LC)"
+     },
+     "expr": "1/(2*pi*sqrt(L*C*1e-9))",
+     "digits": 0,
+     "unit": "Hz"
+    },
+    {
+     "label": {
+      "en": "Energy in C"
+     },
+     "expr": "Ec",
+     "digits": 1,
+     "unit": "µJ"
+    },
+    {
+     "label": {
+      "en": "Energy in L"
+     },
+     "expr": "El",
+     "digits": 1,
+     "unit": "µJ"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set R = 0. Does the oscillation keep its size?"
+    },
+    {
+     "en": "Raise R to 10 Ω. How quickly does it die out? Now turn the amplifier on."
+    },
+    {
+     "en": "Make C four times larger. What happens to the frequency?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

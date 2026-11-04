@@ -869,6 +869,525 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Summing amplifier and subtractor",
+    "kn": "ಸಂಕಲನ ವರ್ಧಕ ಮತ್ತು ವ್ಯವಕಲಕ"
+   },
+   "narration": {
+    "en": "Summing: three inputs through 10 kΩ resistors meet at the virtual ground, so Vo = −(Rf/10 kΩ)(V1 + V2 + V3). Subtractor: with matched resistors, Vo = (Rf/10 kΩ)(V2 − V1). The output is limited to about ±13 V.",
+    "kn": "ಸಂಕಲನ: ಮೂರು ಒಳಹರಿವುಗಳು 10 kΩ ಮೂಲಕ ಕಾಲ್ಪನಿಕ ನೆಲದಲ್ಲಿ ಸೇರುತ್ತವೆ: Vo = −(Rf/10 kΩ)(V1 + V2 + V3). ವ್ಯವಕಲಕ: Vo = (Rf/10 kΩ)(V2 − V1)."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Summing: three inputs through 10 kΩ resistors meet at the virtual ground, so Vo = −(Rf/10 kΩ)(V1 + V2 + V3). Subtractor: with matched resistors, Vo = (Rf/10 kΩ)(V2 − V1). The output is limited to about ±13 V.",
+    "kn": "ಸಂಕಲನ: ಮೂರು ಒಳಹರಿವುಗಳು 10 kΩ ಮೂಲಕ ಕಾಲ್ಪನಿಕ ನೆಲದಲ್ಲಿ ಸೇರುತ್ತವೆ: Vo = −(Rf/10 kΩ)(V1 + V2 + V3). ವ್ಯವಕಲಕ: Vo = (Rf/10 kΩ)(V2 − V1)."
+   },
+   "sliders": [
+    {
+     "name": "V1",
+     "label": {
+      "en": "V1",
+      "kn": "V1"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 0.5,
+     "value": 1,
+     "unit": "V"
+    },
+    {
+     "name": "V2",
+     "label": {
+      "en": "V2",
+      "kn": "V2"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 0.5,
+     "value": 2,
+     "unit": "V"
+    },
+    {
+     "name": "V3",
+     "label": {
+      "en": "V3 (summing only)",
+      "kn": "V3 (ಸಂಕಲನ)"
+     },
+     "min": -5,
+     "max": 5,
+     "step": 0.5,
+     "value": 3,
+     "unit": "V"
+    },
+    {
+     "name": "Rf",
+     "label": {
+      "en": "Feedback Rf",
+      "kn": "ಪ್ರತಿಪೋಷಣೆ Rf"
+     },
+     "min": 2.5,
+     "max": 50,
+     "step": 0.5,
+     "value": 10,
+     "unit": "kΩ"
+    }
+   ],
+   "choices": [
+    {
+     "name": "mode",
+     "label": {
+      "en": "Circuit",
+      "kn": "ಮಂಡಲ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Summing",
+        "kn": "ಸಂಕಲನ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Subtractor",
+        "kn": "ವ್ಯವಕಲಕ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "Vraw",
+     "expr": "if(mode == 1, -Rf/10*(V1 + V2 + V3), Rf/10*(V2 - V1))"
+    },
+    {
+     "name": "Vo",
+     "expr": "clamp(Vraw, -13, 13)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       13,
+       8.3
+      ],
+      [
+       13,
+       2.7
+      ],
+      [
+       17.2,
+       5.5
+      ]
+     ],
+     "fill": false,
+     "width": 3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.7,
+     "y": 6.32,
+     "text": {
+      "en": "−"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 13.7,
+     "y": 4.08,
+     "text": {
+      "en": "+"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 17.2,
+     "y1": 5.5,
+     "x2": 19,
+     "y2": 5.5,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 19.4,
+     "y": 5.5,
+     "text": {
+      "en": "Vo"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 9,
+     "x2": 4,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 5.5,
+     "y": 9,
+     "size": 2.4
+    },
+    {
+     "shape": "line",
+     "x1": 6.7,
+     "y1": 9,
+     "x2": 11,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 9,
+     "x2": 11,
+     "y2": 6.9,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 6.9,
+     "x2": 13,
+     "y2": 6.9,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 9,
+     "text": {
+      "en": "V1"
+     },
+     "size": 20
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 7.3,
+     "x2": 4,
+     "y2": 7.3,
+     "visibleIf": "mode == 1",
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 5.5,
+     "y": 7.3,
+     "size": 2.4,
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "line",
+     "x1": 6.7,
+     "y1": 7.3,
+     "x2": 11,
+     "y2": 7.3,
+     "visibleIf": "mode == 1",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 7.3,
+     "text": {
+      "en": "V2"
+     },
+     "size": 20,
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 5.6,
+     "x2": 4,
+     "y2": 5.6,
+     "visibleIf": "mode == 1",
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 5.5,
+     "y": 5.6,
+     "size": 2.4,
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "line",
+     "x1": 6.7,
+     "y1": 5.6,
+     "x2": 11,
+     "y2": 5.6,
+     "visibleIf": "mode == 1",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 5.6,
+     "x2": 11,
+     "y2": 6.9,
+     "visibleIf": "mode == 1",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 5.6,
+     "text": {
+      "en": "V3"
+     },
+     "size": 20,
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "line",
+     "x1": 13,
+     "y1": 4.1,
+     "x2": 11.8,
+     "y2": 4.1,
+     "visibleIf": "mode == 1",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 11.8,
+     "y1": 4.1,
+     "x2": 11.8,
+     "y2": 2.5,
+     "visibleIf": "mode == 1",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 11.8,
+     "y": 1.9,
+     "text": {
+      "en": "0 V"
+     },
+     "size": 16,
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 3,
+     "x2": 4,
+     "y2": 3,
+     "visibleIf": "mode == 2",
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 5.5,
+     "y": 3,
+     "size": 2.4,
+     "visibleIf": "mode == 2"
+    },
+    {
+     "shape": "line",
+     "x1": 6.7,
+     "y1": 3,
+     "x2": 11.5,
+     "y2": 3,
+     "visibleIf": "mode == 2",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 11.5,
+     "y1": 3,
+     "x2": 11.5,
+     "y2": 4.1,
+     "visibleIf": "mode == 2",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 11.5,
+     "y1": 4.1,
+     "x2": 13,
+     "y2": 4.1,
+     "visibleIf": "mode == 2",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 3,
+     "text": {
+      "en": "V2"
+     },
+     "size": 20,
+     "visibleIf": "mode == 2"
+    },
+    {
+     "shape": "line",
+     "x1": 10,
+     "y1": 3,
+     "x2": 10,
+     "y2": 2,
+     "visibleIf": "mode == 2",
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 10,
+     "y": 1.2,
+     "size": 1.4,
+     "angle": 90,
+     "visibleIf": "mode == 2"
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 9,
+     "x2": 11,
+     "y2": 10.3,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 10.3,
+     "x2": 14,
+     "y2": 10.3,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 15.5,
+     "y": 10.3,
+     "size": 2.4,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 16.7,
+     "y1": 10.3,
+     "x2": 18,
+     "y2": 10.3,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 18,
+     "y1": 10.3,
+     "x2": 18,
+     "y2": 5.5,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 15.5,
+     "y": 9.3,
+     "text": {
+      "en": "Rf = {Rf} kΩ"
+     },
+     "size": 16,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 8.5,
+     "text": {
+      "en": "Vo = −(Rf/10)(V1 + V2 + V3)",
+      "kn": "Vo = −(Rf/10)(V1 + V2 + V3)"
+     },
+     "size": 18,
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 8.5,
+     "text": {
+      "en": "Vo = (Rf/10)(V2 − V1)",
+      "kn": "Vo = (Rf/10)(V2 − V1)"
+     },
+     "size": 18,
+     "visibleIf": "mode == 2"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 5.5,
+     "text": {
+      "en": "Vo = {Vo:2} V"
+     },
+     "size": 26,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 3,
+     "text": {
+      "en": "Saturated at the supply limit",
+      "kn": "ಸರಬರಾಜು ಮಿತಿಯಲ್ಲಿ ಸಂತೃಪ್ತಿ"
+     },
+     "size": 18,
+     "color": "red",
+     "visibleIf": "abs(Vraw) > 13"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Output Vo"
+     },
+     "expr": "Vo",
+     "digits": 2,
+     "unit": "V"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Summing with Rf = 10 kΩ: set 1 V, 2 V and 3 V. Is the output −6 V?"
+    },
+    {
+     "en": "Make Rf = 3.3 kΩ ≈ 10 kΩ/3. What does the circuit now compute?"
+    },
+    {
+     "en": "Switch to the subtractor and give both inputs the same value. What is the output?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

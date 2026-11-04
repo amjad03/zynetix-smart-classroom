@@ -286,6 +286,285 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Peak, average and RMS",
+    "kn": "ಶಿಖರ, ಸರಾಸರಿ ಮತ್ತು RMS"
+   },
+   "narration": {
+    "en": "Pick a waveform and its peak. The green line is the RMS (heating) value and the orange line the half-cycle average. For a sine, RMS = 0.707 Vm and average = 0.637 Vm.",
+    "kn": "ತರಂಗ ಮತ್ತು ಶಿಖರ ಆಯ್ಕೆಮಾಡಿ. ಹಸಿರು ರೇಖೆ RMS ಮೌಲ್ಯ, ಕಿತ್ತಳೆ ರೇಖೆ ಅರ್ಧ ಆವರ್ತದ ಸರಾಸರಿ. ಸೈನ್ ತರಂಗಕ್ಕೆ RMS = 0.707 Vm, ಸರಾಸರಿ = 0.637 Vm."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Pick a waveform and its peak. The green line is the RMS (heating) value and the orange line the half-cycle average. For a sine, RMS = 0.707 Vm and average = 0.637 Vm.",
+    "kn": "ತರಂಗ ಮತ್ತು ಶಿಖರ ಆಯ್ಕೆಮಾಡಿ. ಹಸಿರು ರೇಖೆ RMS ಮೌಲ್ಯ, ಕಿತ್ತಳೆ ರೇಖೆ ಅರ್ಧ ಆವರ್ತದ ಸರಾಸರಿ. ಸೈನ್ ತರಂಗಕ್ಕೆ RMS = 0.707 Vm, ಸರಾಸರಿ = 0.637 Vm."
+   },
+   "sliders": [
+    {
+     "name": "Vm",
+     "label": {
+      "en": "Peak value Vm",
+      "kn": "ಶಿಖರ ಮೌಲ್ಯ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 10,
+     "unit": "V"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "showr",
+     "label": {
+      "en": "RMS line",
+      "kn": "RMS ರೇಖೆ"
+     },
+     "value": true
+    },
+    {
+     "name": "showa",
+     "label": {
+      "en": "Average line",
+      "kn": "ಸರಾಸರಿ ರೇಖೆ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "wf",
+     "label": {
+      "en": "Waveform",
+      "kn": "ತರಂಗ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Sine",
+        "kn": "ಸೈನ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Square",
+        "kn": "ಚೌಕ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Triangle",
+        "kn": "ತ್ರಿಕೋನ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 20,
+    "unit": "ms",
+    "loop": true,
+    "speeds": [
+     0.25,
+     0.5,
+     1,
+     2
+    ],
+    "speed": 0.5
+   },
+   "vars": [
+    {
+     "name": "v",
+     "expr": "Vm*if(wf == 1, sin(2*pi*t/20), if(wf == 2, sign(sin(2*pi*t/20)), 2/pi*asin(sin(2*pi*t/20))))"
+    },
+    {
+     "name": "Vav",
+     "expr": "Vm*if(wf == 1, 2/pi, if(wf == 2, 1, 0.5))"
+    },
+    {
+     "name": "Vrms",
+     "expr": "Vm*if(wf == 1, 1/sqrt(2), if(wf == 2, 1, 1/sqrt(3)))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     32
+    ],
+    "y": [
+     -6,
+     6.4
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 0,
+     "x2": 30.5,
+     "y2": 0,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": -5.6,
+     "x2": 2,
+     "y2": 5.8,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 30.5,
+     "y": -0.7,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 2.3,
+     "y": 6.0,
+     "text": {
+      "en": "v (V)"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "wave",
+     "fn": "0.5*Vm*if(wf == 1, sin(2*pi*((x - 2)/1.4)/20), if(wf == 2, sign(sin(2*pi*((x - 2)/1.4)/20)), 2/pi*asin(sin(2*pi*((x - 2)/1.4)/20))))",
+     "color": "yellow",
+     "width": 4,
+     "from": 2,
+     "to": 30
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": "0.5*Vm",
+     "x2": 30,
+     "y2": "0.5*Vm",
+     "dashed": true,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 30.4,
+     "y": "0.5*Vm",
+     "text": {
+      "en": "Vm"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": "0.5*Vrms",
+     "x2": 30,
+     "y2": "0.5*Vrms",
+     "color": "green",
+     "width": 3,
+     "visibleIf": "showr"
+    },
+    {
+     "shape": "text",
+     "x": 30.4,
+     "y": "0.5*Vrms - 0.2",
+     "text": {
+      "en": "RMS"
+     },
+     "size": 20,
+     "color": "green",
+     "align": "left",
+     "visibleIf": "showr"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": "0.5*Vav",
+     "x2": 16,
+     "y2": "0.5*Vav",
+     "color": "orange",
+     "width": 3,
+     "visibleIf": "showa"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": "0.5*Vav - 0.6",
+     "text": {
+      "en": "average (half cycle)"
+     },
+     "size": 20,
+     "color": "orange",
+     "visibleIf": "showa"
+    },
+    {
+     "shape": "circle",
+     "x": "2 + 1.4*t",
+     "y": "0.5*v",
+     "r": 0.25,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "RMS value"
+     },
+     "expr": "Vrms",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Average (half cycle)"
+     },
+     "expr": "Vav",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Form factor RMS/avg"
+     },
+     "expr": "Vrms/Vav",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Crest factor peak/RMS"
+     },
+     "expr": "Vm/Vrms",
+     "digits": 3
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "For a sine wave of peak 10 V, read the RMS value. Why does a 230 V meter mean a 325 V peak?"
+    },
+    {
+     "en": "Switch to the square wave. Why are peak, average and RMS all equal?"
+    },
+    {
+     "en": "Compare the crest factor of sine and triangle waves."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

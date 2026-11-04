@@ -545,6 +545,472 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Open-loop gain and the virtual ground",
+    "kn": "ಮುಕ್ತ ಕುಣಿಕೆ ಲಾಭ ಮತ್ತು ಕಾಲ್ಪನಿಕ ನೆಲ"
+   },
+   "narration": {
+    "en": "Open loop, a 741 has A ≈ 2 × 10⁵, so a difference of only ±65 µV drives the output into saturation (about ±13 V on ±15 V supplies). With negative feedback (an inverting amplifier of gain −10) the output stays in range and the − input sits only microvolts from 0 V: a virtual ground.",
+    "kn": "ಮುಕ್ತ ಕುಣಿಕೆಯಲ್ಲಿ A ≈ 2 × 10⁵; ±65 µV ವ್ಯತ್ಯಾಸವೇ ನಿರ್ಗಮವನ್ನು ±13 V ಸಂತೃಪ್ತಿಗೆ ಒಯ್ಯುತ್ತದೆ. ಋಣ ಪ್ರತಿಪೋಷಣೆಯೊಂದಿಗೆ (−10 ಲಾಭ) − ತುದಿ 0 V ಗೆ ಕೆಲವೇ µV ದೂರದಲ್ಲಿರುತ್ತದೆ: ಕಾಲ್ಪನಿಕ ನೆಲ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Open loop, a 741 has A ≈ 2 × 10⁵, so a difference of only ±65 µV drives the output into saturation (about ±13 V on ±15 V supplies). With negative feedback (an inverting amplifier of gain −10) the output stays in range and the − input sits only microvolts from 0 V: a virtual ground.",
+    "kn": "ಮುಕ್ತ ಕುಣಿಕೆಯಲ್ಲಿ A ≈ 2 × 10⁵; ±65 µV ವ್ಯತ್ಯಾಸವೇ ನಿರ್ಗಮವನ್ನು ±13 V ಸಂತೃಪ್ತಿಗೆ ಒಯ್ಯುತ್ತದೆ. ಋಣ ಪ್ರತಿಪೋಷಣೆಯೊಂದಿಗೆ (−10 ಲಾಭ) − ತುದಿ 0 V ಗೆ ಕೆಲವೇ µV ದೂರದಲ್ಲಿರುತ್ತದೆ: ಕಾಲ್ಪನಿಕ ನೆಲ."
+   },
+   "sliders": [
+    {
+     "name": "Vd",
+     "label": {
+      "en": "Open loop: Vd = V+ − V−",
+      "kn": "ಮುಕ್ತ ಕುಣಿಕೆ: Vd"
+     },
+     "min": -150,
+     "max": 150,
+     "step": 5,
+     "value": 30,
+     "unit": "µV"
+    },
+    {
+     "name": "Vin",
+     "label": {
+      "en": "With feedback: Vin",
+      "kn": "ಪ್ರತಿಪೋಷಣೆ: Vin"
+     },
+     "min": -1.5,
+     "max": 1.5,
+     "step": 0.1,
+     "value": 0.5,
+     "unit": "V"
+    }
+   ],
+   "choices": [
+    {
+     "name": "mode",
+     "label": {
+      "en": "Circuit",
+      "kn": "ಮಂಡಲ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Open loop",
+        "kn": "ಮುಕ್ತ ಕುಣಿಕೆ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Inverting, gain −10",
+        "kn": "ತಿರುಗಿಸುವ, −10"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "Vmv",
+     "expr": "(100*Vin/110)/(1 + 2e5/11)"
+    },
+    {
+     "name": "Vm",
+     "expr": "1e6*Vmv"
+    },
+    {
+     "name": "Vo",
+     "expr": "if(mode == 1, clamp(2e5*Vd*1e-6, -13, 13), clamp(-2e5*Vmv, -13, 13))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -0.5,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 16,
+     "y1": 5.5,
+     "x2": 29.5,
+     "y2": 5.5,
+     "width": 2,
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "line",
+     "x1": 22.5,
+     "y1": 1,
+     "x2": 22.5,
+     "y2": 10,
+     "width": 2,
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "path",
+     "fn": "5.5 + 0.3*clamp(2e5*(x - 22.5)/0.0433333*1e-6, -13, 13)",
+     "color": "yellow",
+     "width": 3,
+     "visibleIf": "mode == 1",
+     "from": 16,
+     "to": 29
+    },
+    {
+     "shape": "circle",
+     "x": "22.5 + 0.0433333*Vd",
+     "y": "5.5 + 0.3*Vo",
+     "r": 0.25,
+     "color": "orange",
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": 4.8,
+     "text": {
+      "en": "Vd (µV)"
+     },
+     "size": 16,
+     "align": "right",
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "text",
+     "x": 22.8,
+     "y": 10.3,
+     "text": {
+      "en": "Vo (V)"
+     },
+     "size": 16,
+     "align": "left",
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "line",
+     "x1": 16,
+     "y1": "5.5 + 0.3*13",
+     "x2": 29,
+     "y2": "5.5 + 0.3*13",
+     "dashed": true,
+     "color": "red",
+     "width": 1,
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "line",
+     "x1": 16,
+     "y1": "5.5 - 0.3*13",
+     "x2": 29,
+     "y2": "5.5 - 0.3*13",
+     "dashed": true,
+     "color": "red",
+     "width": 1,
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "text",
+     "x": 16.2,
+     "y": "5.5 + 0.3*13 + 0.4",
+     "text": {
+      "en": "+13 V"
+     },
+     "size": 16,
+     "color": "red",
+     "align": "left",
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "polygon",
+     "points": [
+      [
+       6,
+       8.1
+      ],
+      [
+       6,
+       2.9
+      ],
+      [
+       9.9,
+       5.5
+      ]
+     ],
+     "fill": false,
+     "width": 3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.65,
+     "y": 6.24,
+     "text": {
+      "en": "−"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 6.65,
+     "y": 4.16,
+     "text": {
+      "en": "+"
+     },
+     "size": 26,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 4.5,
+     "x2": 6,
+     "y2": 4.5,
+     "visibleIf": "mode == 1",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 6.5,
+     "x2": 6,
+     "y2": 6.5,
+     "visibleIf": "mode == 1",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 5.5,
+     "text": {
+      "en": "Vd"
+     },
+     "size": 22,
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 6.5,
+     "x2": 2,
+     "y2": 6.5,
+     "visibleIf": "!(mode == 1)",
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 3.5,
+     "y": 6.5,
+     "size": 2,
+     "visibleIf": "!(mode == 1)"
+    },
+    {
+     "shape": "line",
+     "x1": 4.5,
+     "y1": 6.5,
+     "x2": 6,
+     "y2": 6.5,
+     "visibleIf": "!(mode == 1)",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 5.2,
+     "y1": 6.5,
+     "x2": 5.2,
+     "y2": 9,
+     "visibleIf": "!(mode == 1)",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 5.2,
+     "y1": 9,
+     "x2": 7.5,
+     "y2": 9,
+     "visibleIf": "!(mode == 1)",
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 9,
+     "y": 9,
+     "size": 2.4,
+     "visibleIf": "!(mode == 1)"
+    },
+    {
+     "shape": "line",
+     "x1": 10.2,
+     "y1": 9,
+     "x2": 11.5,
+     "y2": 9,
+     "visibleIf": "!(mode == 1)",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 11.5,
+     "y1": 9,
+     "x2": 11.5,
+     "y2": 5.5,
+     "visibleIf": "!(mode == 1)",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 4.5,
+     "x2": 5,
+     "y2": 4.5,
+     "visibleIf": "!(mode == 1)",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 4.5,
+     "x2": 5,
+     "y2": 3,
+     "visibleIf": "!(mode == 1)",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 3.5,
+     "y": 7.5,
+     "text": {
+      "en": "10 kΩ"
+     },
+     "size": 16,
+     "visibleIf": "!(mode == 1)"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 10,
+     "text": {
+      "en": "100 kΩ"
+     },
+     "size": 16,
+     "visibleIf": "!(mode == 1)"
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 6.5,
+     "text": {
+      "en": "Vin"
+     },
+     "size": 18,
+     "visibleIf": "!(mode == 1)"
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 2.4,
+     "text": {
+      "en": "0 V"
+     },
+     "size": 16,
+     "visibleIf": "!(mode == 1)"
+    },
+    {
+     "shape": "line",
+     "x1": 9.9,
+     "y1": 5.5,
+     "x2": 13,
+     "y2": 5.5,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 13.4,
+     "y": 5.5,
+     "text": {
+      "en": "Vo"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "label",
+     "x": 20,
+     "y": 8.5,
+     "text": {
+      "en": "V− = {Vm:1} µV (virtual ground)",
+      "kn": "V− = {Vm:1} µV (ಕಾಲ್ಪನಿಕ ನೆಲ)"
+     },
+     "size": 22,
+     "color": "green",
+     "visibleIf": "!(mode == 1)"
+    },
+    {
+     "shape": "label",
+     "x": 20,
+     "y": 6,
+     "text": {
+      "en": "Vo = {Vo:2} V"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "!(mode == 1)"
+    },
+    {
+     "shape": "label",
+     "x": 20,
+     "y": 0.4,
+     "text": {
+      "en": "Saturated!",
+      "kn": "ಸಂತೃಪ್ತಿ!"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "mode == 1 && abs(Vo) >= 13"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Output Vo"
+     },
+     "expr": "Vo",
+     "digits": 3,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Voltage at the − input (feedback)"
+     },
+     "expr": "if(mode == 2, Vm, 0)",
+     "digits": 1,
+     "unit": "µV"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Open loop: what input difference just saturates the output?"
+    },
+    {
+     "en": "Switch to feedback and set Vin = 1 V. How far is the − input from 0 V?"
+    },
+    {
+     "en": "Why can we treat V+ and V− as equal in feedback circuits?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

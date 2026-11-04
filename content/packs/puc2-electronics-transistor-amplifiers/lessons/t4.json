@@ -452,6 +452,377 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Cascading stages",
+    "kn": "ಹಂತಗಳ ಸರಣಿ ಜೋಡಣೆ"
+   },
+   "narration": {
+    "en": "The overall voltage gain of cascaded stages is the product A1 × A2 × A3, and in decibels the stage gains simply add. Each stage gain must be taken with the next stage connected, because its input resistance loads the stage before it.",
+    "kn": "ಸರಣಿ ಹಂತಗಳ ಒಟ್ಟು ವೋಲ್ಟೇಜ್ ಲಾಭ A1 × A2 × A3; ಡೆಸಿಬೆಲ್‌ನಲ್ಲಿ ಹಂತ ಲಾಭಗಳು ಕೂಡುತ್ತವೆ. ಮುಂದಿನ ಹಂತ ಜೋಡಿಸಿದಾಗಿನ ಲಾಭ ತೆಗೆದುಕೊಳ್ಳಬೇಕು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The overall voltage gain of cascaded stages is the product A1 × A2 × A3, and in decibels the stage gains simply add. Each stage gain must be taken with the next stage connected, because its input resistance loads the stage before it.",
+    "kn": "ಸರಣಿ ಹಂತಗಳ ಒಟ್ಟು ವೋಲ್ಟೇಜ್ ಲಾಭ A1 × A2 × A3; ಡೆಸಿಬೆಲ್‌ನಲ್ಲಿ ಹಂತ ಲಾಭಗಳು ಕೂಡುತ್ತವೆ. ಮುಂದಿನ ಹಂತ ಜೋಡಿಸಿದಾಗಿನ ಲಾಭ ತೆಗೆದುಕೊಳ್ಳಬೇಕು."
+   },
+   "sliders": [
+    {
+     "name": "A1",
+     "label": {
+      "en": "Stage 1 gain",
+      "kn": "ಹಂತ 1 ಲಾಭ"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 10
+    },
+    {
+     "name": "A2",
+     "label": {
+      "en": "Stage 2 gain",
+      "kn": "ಹಂತ 2 ಲಾಭ"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 10
+    },
+    {
+     "name": "A3",
+     "label": {
+      "en": "Stage 3 gain",
+      "kn": "ಹಂತ 3 ಲಾಭ"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 10
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ld",
+     "label": {
+      "en": "Loading by the next stage (−20 %)",
+      "kn": "ಮುಂದಿನ ಹಂತದ ಭಾರ (−20 %)"
+     },
+     "value": false
+    }
+   ],
+   "choices": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Stages",
+      "kn": "ಹಂತಗಳು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "1"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "2"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "3"
+       },
+       "value": 3
+      }
+     ],
+     "value": 3
+    }
+   ],
+   "vars": [
+    {
+     "name": "a1",
+     "expr": "A1*if(ld && n > 1, 0.8, 1)"
+    },
+    {
+     "name": "a2",
+     "expr": "if(n > 1, A2*if(ld && n > 2, 0.8, 1), 1)"
+    },
+    {
+     "name": "a3",
+     "expr": "if(n > 2, A3, 1)"
+    },
+    {
+     "name": "g1",
+     "expr": "20*log(a1)"
+    },
+    {
+     "name": "g2",
+     "expr": "if(n > 1, 20*log(a2), 0)"
+    },
+    {
+     "name": "g3",
+     "expr": "if(n > 2, 20*log(a3), 0)"
+    },
+    {
+     "name": "Atot",
+     "expr": "a1*a2*a3"
+    },
+    {
+     "name": "Gtot",
+     "expr": "g1 + g2 + g3"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -0.5,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 2.0,
+     "y": 6.5,
+     "w": 5,
+     "h": 3,
+     "fill": false,
+     "width": 3,
+     "visibleIf": "n > 0"
+    },
+    {
+     "shape": "rect",
+     "x": 8.5,
+     "y": 6.5,
+     "w": 5,
+     "h": 3,
+     "fill": false,
+     "width": 3,
+     "visibleIf": "n > 1"
+    },
+    {
+     "shape": "rect",
+     "x": 15.0,
+     "y": 6.5,
+     "w": 5,
+     "h": 3,
+     "fill": false,
+     "width": 3,
+     "visibleIf": "n > 2"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 7.6,
+     "text": {
+      "en": "A1"
+     },
+     "size": 24,
+     "visibleIf": "n > 0"
+    },
+    {
+     "shape": "text",
+     "x": 11.0,
+     "y": 7.6,
+     "text": {
+      "en": "A2"
+     },
+     "size": 24,
+     "visibleIf": "n > 1"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 7.6,
+     "text": {
+      "en": "A3"
+     },
+     "size": 24,
+     "visibleIf": "n > 2"
+    },
+    {
+     "shape": "arrow",
+     "x": 7.0,
+     "y": 8,
+     "dx": 1.5,
+     "dy": 0,
+     "width": 3,
+     "visibleIf": "n > 1"
+    },
+    {
+     "shape": "arrow",
+     "x": 13.5,
+     "y": 8,
+     "dx": 1.5,
+     "dy": 0,
+     "width": 3,
+     "visibleIf": "n > 2"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 10.1,
+     "text": {
+      "en": "{a1:1}"
+     },
+     "size": 18,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 10.1,
+     "text": {
+      "en": "{a2:1}"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "n > 1"
+    },
+    {
+     "shape": "text",
+     "x": 17.5,
+     "y": 10.1,
+     "text": {
+      "en": "{a3:1}"
+     },
+     "size": 18,
+     "color": "yellow",
+     "visibleIf": "n > 2"
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 1,
+     "x2": 28,
+     "y2": 1,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 5.2,
+     "text": {
+      "en": "dB"
+     },
+     "size": 16
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 1,
+     "w": "0.2*g1",
+     "h": 2,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": "2 + 0.2*g1",
+     "y": 1,
+     "w": "0.2*g2",
+     "h": 2,
+     "color": "orange",
+     "visibleIf": "n > 1"
+    },
+    {
+     "shape": "rect",
+     "x": "2 + 0.2*(g1 + g2)",
+     "y": 1,
+     "w": "0.2*g3",
+     "h": 2,
+     "color": "green",
+     "visibleIf": "n > 2"
+    },
+    {
+     "shape": "text",
+     "x": "2 + 0.1*g1",
+     "y": 3.6,
+     "text": {
+      "en": "{g1:1}"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": "2 + 0.2*g1 + 0.1*g2",
+     "y": 3.6,
+     "text": {
+      "en": "{g2:1}"
+     },
+     "size": 16,
+     "visibleIf": "n > 1"
+    },
+    {
+     "shape": "text",
+     "x": "2 + 0.2*(g1 + g2) + 0.1*g3",
+     "y": 3.6,
+     "text": {
+      "en": "{g3:1}"
+     },
+     "size": 16,
+     "visibleIf": "n > 2"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 8,
+     "text": {
+      "en": "total {Atot:0}",
+      "kn": "ಒಟ್ಟು {Atot:0}"
+     },
+     "size": 24,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 5.5,
+     "text": {
+      "en": "{Gtot:1} dB"
+     },
+     "size": 24,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Overall gain"
+     },
+     "expr": "Atot",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Overall gain in dB"
+     },
+     "expr": "Gtot",
+     "digits": 1,
+     "unit": "dB"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Three stages of gain 10: is the total 1000 and 60 dB?"
+    },
+    {
+     "en": "Turn on loading. How much does the total fall?"
+    },
+    {
+     "en": "Find stage gains that give exactly 80 dB with two stages."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

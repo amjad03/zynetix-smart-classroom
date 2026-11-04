@@ -635,6 +635,255 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Wien bridge oscillator: gain of 3",
+    "kn": "ವೀನ್ ಸೇತುವೆ ಆಂದೋಲಕ: ಲಾಭ 3"
+   },
+   "narration": {
+    "en": "At f0 = 1/(2πRC) the lead-lag network has zero phase shift and passes 1/3 of the signal, so the non-inverting amplifier needs a gain 1 + Rf/R1 of at least 3. Press play: a small signal grows if the gain is above 3, dies if below 3. A stabiliser (diodes or a lamp) holds the amplitude steady; without it the output grows until it hits the supply limit.",
+    "kn": "f0 = 1/(2πRC) ನಲ್ಲಿ ಜಾಲದ ಹಂತ ಸ್ಥಳಾಂತರ ಶೂನ್ಯ, ಅದು 1/3 ಹಾಯಿಸುತ್ತದೆ; ವರ್ಧಕ ಲಾಭ 1 + Rf/R1 ಕನಿಷ್ಠ 3. ಲಾಭ 3 ಕ್ಕಿಂತ ಹೆಚ್ಚಿದ್ದರೆ ಸಣ್ಣ ಶಬ್ದ ಬೆಳೆಯುತ್ತದೆ, ಕಡಿಮೆಯಿದ್ದರೆ ಸಾಯುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "At f0 = 1/(2πRC) the lead-lag network has zero phase shift and passes 1/3 of the signal, so the non-inverting amplifier needs a gain 1 + Rf/R1 of at least 3. Press play: a small signal grows if the gain is above 3, dies if below 3. A stabiliser (diodes or a lamp) holds the amplitude steady; without it the output grows until it hits the supply limit.",
+    "kn": "f0 = 1/(2πRC) ನಲ್ಲಿ ಜಾಲದ ಹಂತ ಸ್ಥಳಾಂತರ ಶೂನ್ಯ, ಅದು 1/3 ಹಾಯಿಸುತ್ತದೆ; ವರ್ಧಕ ಲಾಭ 1 + Rf/R1 ಕನಿಷ್ಠ 3. ಲಾಭ 3 ಕ್ಕಿಂತ ಹೆಚ್ಚಿದ್ದರೆ ಸಣ್ಣ ಶಬ್ದ ಬೆಳೆಯುತ್ತದೆ, ಕಡಿಮೆಯಿದ್ದರೆ ಸಾಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "R",
+     "label": {
+      "en": "R",
+      "kn": "R"
+     },
+     "min": 5,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "kΩ"
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "C",
+      "kn": "C"
+     },
+     "min": 10,
+     "max": 40,
+     "step": 2,
+     "value": 16,
+     "unit": "nF"
+    },
+    {
+     "name": "k",
+     "label": {
+      "en": "Rf / R1",
+      "kn": "Rf / R1"
+     },
+     "min": 1.5,
+     "max": 2.6,
+     "step": 0.05,
+     "value": 2.2
+    }
+   ],
+   "toggles": [
+    {
+     "name": "lim",
+     "label": {
+      "en": "Amplitude stabiliser (diodes)",
+      "kn": "ವೈಶಾಲ್ಯ ಸ್ಥಿರಕಾರಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 20,
+    "unit": "ms",
+    "dt": 0.005,
+    "speeds": [
+     0.05,
+     0.1,
+     0.25,
+     0.5
+    ],
+    "speed": 0.1
+   },
+   "vars": [
+    {
+     "name": "G",
+     "expr": "1 + k"
+    },
+    {
+     "name": "RC",
+     "expr": "R*C/1000"
+    },
+    {
+     "name": "f0",
+     "expr": "1/(2*pi*RC)"
+    }
+   ],
+   "state": [
+    {
+     "name": "Aa",
+     "init": 0.3,
+     "rate": "(G - 3)/(2*RC)*Aa*(1 - if(G > 3, (Aa/if(lim, 5, 13))^2, 0))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -7,
+     7.4
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 0,
+     "x2": 29.5,
+     "y2": 0,
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": -0.6,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 5.8500000000000005,
+     "x2": 29.5,
+     "y2": 5.8500000000000005,
+     "dashed": true,
+     "color": "red",
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": -5.8500000000000005,
+     "x2": 29.5,
+     "y2": -5.8500000000000005,
+     "dashed": true,
+     "color": "red",
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "trail",
+     "x": "1 + 1.4*t",
+     "y": "0.45*Aa*sin(2*pi*f0*t)",
+     "length": 2000,
+     "color": "yellow",
+     "width": 2
+    },
+    {
+     "shape": "circle",
+     "x": "1 + 1.4*t",
+     "y": "0.45*Aa*sin(2*pi*f0*t)",
+     "r": 0.2,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": 6.8,
+     "text": {
+      "en": "gain = 1 + Rf/R1 = {G:2}"
+     },
+     "size": 22,
+     "color": "green"
+    },
+    {
+     "shape": "label",
+     "x": 22,
+     "y": 6.8,
+     "text": {
+      "en": "growing",
+      "kn": "ಬೆಳೆಯುತ್ತಿದೆ"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "G > 3.001"
+    },
+    {
+     "shape": "label",
+     "x": 22,
+     "y": 6.8,
+     "text": {
+      "en": "dying away",
+      "kn": "ಸಾಯುತ್ತಿದೆ"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "G < 2.999"
+    },
+    {
+     "shape": "label",
+     "x": 22,
+     "y": 6.8,
+     "text": {
+      "en": "just sustained",
+      "kn": "ಸ್ಥಿರ"
+     },
+     "size": 20,
+     "color": "yellow",
+     "visibleIf": "abs(G - 3) <= 0.001"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "f0 = 1/(2πRC)"
+     },
+     "expr": "f0",
+     "digits": 3,
+     "unit": "kHz"
+    },
+    {
+     "label": {
+      "en": "Amplifier gain"
+     },
+     "expr": "G",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Amplitude now"
+     },
+     "expr": "Aa",
+     "digits": 2,
+     "unit": "V"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set Rf/R1 = 2.2 and play. What happens to the oscillation?"
+    },
+    {
+     "en": "Set Rf/R1 = 1.8 and play again. Why does it die away?"
+    },
+    {
+     "en": "Change R or C. How does f0 change?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

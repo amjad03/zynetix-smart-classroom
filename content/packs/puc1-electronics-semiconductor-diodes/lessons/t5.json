@@ -333,6 +333,285 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Varactor diode: a voltage-tuned capacitor",
+    "kn": "ವ್ಯಾರಾಕ್ಟರ್ ಡಯೋಡ್: ವೋಲ್ಟೇಜ್ ನಿಯಂತ್ರಿತ ಧಾರಕ"
+   },
+   "narration": {
+    "en": "A reverse-biased junction is a capacitor: the depletion layer is the dielectric. More reverse voltage widens it, so the capacitance falls (C ∝ 1/√(1 + VR/0.7) for an abrupt junction). In an LC tank with L = 100 µH this tunes the resonant frequency.",
+    "kn": "ಹಿಮ್ಮುಖ ಬಯಾಸ್ ಸಂಧಿ ಧಾರಕದಂತೆ: ಕ್ಷೀಣ ಪದರ ಪರಾವಿದ್ಯುತ್. ಹೆಚ್ಚು ಹಿಮ್ಮುಖ ವೋಲ್ಟೇಜ್ ಪದರ ಅಗಲಿಸುತ್ತದೆ, ಧಾರಕತೆ ಕಡಿಮೆ. L = 100 µH ಜೊತೆ ಅನುನಾದ ಆವೃತ್ತಿ ಬದಲಾಗುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A reverse-biased junction is a capacitor: the depletion layer is the dielectric. More reverse voltage widens it, so the capacitance falls (C ∝ 1/√(1 + VR/0.7) for an abrupt junction). In an LC tank with L = 100 µH this tunes the resonant frequency.",
+    "kn": "ಹಿಮ್ಮುಖ ಬಯಾಸ್ ಸಂಧಿ ಧಾರಕದಂತೆ: ಕ್ಷೀಣ ಪದರ ಪರಾವಿದ್ಯುತ್. ಹೆಚ್ಚು ಹಿಮ್ಮುಖ ವೋಲ್ಟೇಜ್ ಪದರ ಅಗಲಿಸುತ್ತದೆ, ಧಾರಕತೆ ಕಡಿಮೆ. L = 100 µH ಜೊತೆ ಅನುನಾದ ಆವೃತ್ತಿ ಬದಲಾಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "VR",
+     "label": {
+      "en": "Reverse voltage VR",
+      "kn": "ಹಿಮ್ಮುಖ ವೋಲ್ಟೇಜ್"
+     },
+     "min": 0,
+     "max": 20,
+     "step": 0.5,
+     "value": 4,
+     "unit": "V"
+    }
+   ],
+   "choices": [
+    {
+     "name": "n",
+     "label": {
+      "en": "Junction",
+      "kn": "ಸಂಧಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Abrupt (n = 1/2)",
+        "kn": "ತೀಕ್ಷ್ಣ (1/2)"
+       },
+       "value": 0.5
+      },
+      {
+       "label": {
+        "en": "Graded (n = 1/3)",
+        "kn": "ಕ್ರಮೇಣ (1/3)"
+       },
+       "value": 0.3333
+      }
+     ],
+     "value": 0.5
+    }
+   ],
+   "vars": [
+    {
+     "name": "Cj",
+     "expr": "100/pow(1 + VR/0.7, n)"
+    },
+    {
+     "name": "W",
+     "expr": "2*pow(1 + VR/0.7, n)"
+    },
+    {
+     "name": "f0",
+     "expr": "1/(2*pi*sqrt(100e-6*Cj*1e-12))/1e6"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 3,
+     "w": 6,
+     "h": 5,
+     "color": "red",
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": 7,
+     "y": 3,
+     "w": 6,
+     "h": 5,
+     "color": "blue",
+     "opacity": 0.3
+    },
+    {
+     "shape": "rect",
+     "x": "7 - W/2",
+     "y": 3,
+     "w": "W",
+     "h": 5,
+     "color": "white",
+     "opacity": 0.25
+    },
+    {
+     "shape": "line",
+     "x1": "7 - W/2",
+     "y1": 3,
+     "x2": "7 - W/2",
+     "y2": 8,
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": "7 + W/2",
+     "y1": 3,
+     "x2": "7 + W/2",
+     "y2": 8,
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 8.6,
+     "text": {
+      "en": "p"
+     },
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 8.6,
+     "text": {
+      "en": "n"
+     },
+     "size": 28
+    },
+    {
+     "shape": "text",
+     "x": 7,
+     "y": 9.6,
+     "text": {
+      "en": "depletion layer",
+      "kn": "ಕ್ಷೀಣ ಪದರ"
+     },
+     "size": 20
+    },
+    {
+     "shape": "text",
+     "x": 7,
+     "y": 2.0,
+     "text": {
+      "en": "W = {W/2:2} (relative)"
+     },
+     "size": 18
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": 1.0,
+     "text": {
+      "en": "−"
+     },
+     "size": 30,
+     "color": "blue"
+    },
+    {
+     "shape": "text",
+     "x": 13,
+     "y": 1.0,
+     "text": {
+      "en": "+"
+     },
+     "size": 30,
+     "color": "red"
+    },
+    {
+     "shape": "line",
+     "x1": 16,
+     "y1": 1.2,
+     "x2": 29.5,
+     "y2": 1.2,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 16,
+     "y1": 1.2,
+     "x2": 16,
+     "y2": 9.7,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": 0.6,
+     "text": {
+      "en": "VR (V)"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 16.2,
+     "y": 10.049999999999999,
+     "text": {
+      "en": "C (pF)"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "path",
+     "fn": "(1.2 + 0.0772727*((100/pow(1 + (0 + 1.48148*(x - 16))/0.7, n)) - (0)))",
+     "color": "yellow",
+     "width": 3,
+     "from": 16.0,
+     "to": 29.5
+    },
+    {
+     "shape": "circle",
+     "x": "(16 + 0.675*((VR) - (0)))",
+     "y": "(1.2 + 0.0772727*((Cj) - (0)))",
+     "r": 0.25,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 22.7,
+     "y": 10.4,
+     "text": {
+      "en": "f0 = {f0:2} MHz"
+     },
+     "size": 22,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Junction capacitance"
+     },
+     "expr": "Cj",
+     "digits": 1,
+     "unit": "pF"
+    },
+    {
+     "label": {
+      "en": "Resonant frequency with 100 µH"
+     },
+     "expr": "f0",
+     "digits": 3,
+     "unit": "MHz"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Raise the reverse voltage. Watch the depletion layer and the capacitance."
+    },
+    {
+     "en": "How much must VR rise to halve the capacitance of the abrupt junction?"
+    },
+    {
+     "en": "Compare abrupt and graded junctions. Which one tunes over a wider range?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

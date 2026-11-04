@@ -884,6 +884,651 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Half adder and full adder",
+    "kn": "ಅರ್ಧ ಸಂಕಲಕ ಮತ್ತು ಪೂರ್ಣ ಸಂಕಲಕ"
+   },
+   "narration": {
+    "en": "A half adder adds two bits: S = A ⊕ B, C = AB. Turn on the full adder to add a carry-in too: it is two half adders and an OR gate, with S = A ⊕ B ⊕ Cin and Cout = AB + Cin(A ⊕ B). The orange numbers are the signals inside.",
+    "kn": "ಅರ್ಧ ಸಂಕಲಕ ಎರಡು ಬಿಟ್ ಕೂಡಿಸುತ್ತದೆ: S = A ⊕ B, C = AB. ಪೂರ್ಣ ಸಂಕಲಕ ಕ್ಯಾರಿ-ಇನ್ ಕೂಡ ಸೇರಿಸುತ್ತದೆ: ಎರಡು ಅರ್ಧ ಸಂಕಲಕ ಮತ್ತು ಒಂದು OR ಗೇಟ್."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "A half adder adds two bits: S = A ⊕ B, C = AB. Turn on the full adder to add a carry-in too: it is two half adders and an OR gate, with S = A ⊕ B ⊕ Cin and Cout = AB + Cin(A ⊕ B). The orange numbers are the signals inside.",
+    "kn": "ಅರ್ಧ ಸಂಕಲಕ ಎರಡು ಬಿಟ್ ಕೂಡಿಸುತ್ತದೆ: S = A ⊕ B, C = AB. ಪೂರ್ಣ ಸಂಕಲಕ ಕ್ಯಾರಿ-ಇನ್ ಕೂಡ ಸೇರಿಸುತ್ತದೆ: ಎರಡು ಅರ್ಧ ಸಂಕಲಕ ಮತ್ತು ಒಂದು OR ಗೇಟ್."
+   },
+   "sliders": [],
+   "toggles": [
+    {
+     "name": "A",
+     "label": {
+      "en": "Input A",
+      "kn": "ಒಳಹರಿವು A"
+     },
+     "value": true
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "Input B",
+      "kn": "ಒಳಹರಿವು B"
+     },
+     "value": true
+    },
+    {
+     "name": "Ci",
+     "label": {
+      "en": "Carry in",
+      "kn": "ಕ್ಯಾರಿ ಇನ್"
+     },
+     "value": false
+    },
+    {
+     "name": "fa",
+     "label": {
+      "en": "Full adder",
+      "kn": "ಪೂರ್ಣ ಸಂಕಲಕ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "x1",
+     "expr": "mod(A + B, 2)"
+    },
+    {
+     "name": "a1",
+     "expr": "A*B"
+    },
+    {
+     "name": "a2",
+     "expr": "x1*Ci*fa"
+    },
+    {
+     "name": "S",
+     "expr": "if(fa, mod(x1 + Ci, 2), x1)"
+    },
+    {
+     "name": "Co",
+     "expr": "max(a1, a2)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 9.6,
+     "text": {
+      "en": "A = {A}"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 7.6,
+     "text": {
+      "en": "B = {B}"
+     },
+     "size": 22,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 1.5,
+     "y": 2.4,
+     "text": {
+      "en": "Cin = {Ci}"
+     },
+     "size": 22,
+     "align": "left",
+     "visibleIf": "fa"
+    },
+    {
+     "shape": "line",
+     "x1": 4.5,
+     "y1": 9.4,
+     "x2": 6.4,
+     "y2": 9.4,
+     "color": {
+      "by": "(A) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 4.5,
+     "y1": 7.4,
+     "x2": 6.4,
+     "y2": 7.4,
+     "color": {
+      "by": "(B) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 5.2,
+     "y1": 9.4,
+     "x2": 5.2,
+     "y2": 5.2,
+     "color": {
+      "by": "(A) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 5.2,
+     "y1": 5.2,
+     "x2": 6.4,
+     "y2": 5.2,
+     "color": {
+      "by": "(A) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 5.8,
+     "y1": 7.4,
+     "x2": 5.8,
+     "y2": 3.8,
+     "color": {
+      "by": "(B) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 5.8,
+     "y1": 3.8,
+     "x2": 6.4,
+     "y2": 3.8,
+     "color": {
+      "by": "(B) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": 6.5,
+     "y": 7.2,
+     "w": 3,
+     "h": 2.4,
+     "fill": false,
+     "width": 3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 8.1,
+     "text": {
+      "en": "XOR"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 6.5,
+     "y": 3.4,
+     "w": 3,
+     "h": 2.2,
+     "fill": false,
+     "width": 3,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 4.2,
+     "text": {
+      "en": "AND"
+     },
+     "size": 22,
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 10.7,
+     "y": 8.9,
+     "text": {
+      "en": "{x1}"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 10.7,
+     "y": 5.0,
+     "text": {
+      "en": "{a1}"
+     },
+     "size": 20,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 9.5,
+     "y1": 8.4,
+     "x2": 25,
+     "y2": 8.4,
+     "color": {
+      "by": "(x1) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "!fa",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 9.5,
+     "y1": 4.5,
+     "x2": 25,
+     "y2": 4.5,
+     "color": {
+      "by": "(a1) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "!fa",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 9.5,
+     "y1": 8.4,
+     "x2": 13.5,
+     "y2": 8.4,
+     "color": {
+      "by": "(x1) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "fa",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 4.5,
+     "y1": 2.2,
+     "x2": 12.5,
+     "y2": 2.2,
+     "color": {
+      "by": "(Ci) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "fa",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 12.5,
+     "y1": 2.2,
+     "x2": 12.5,
+     "y2": 7.6,
+     "color": {
+      "by": "(Ci) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "fa",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 12.5,
+     "y1": 7.6,
+     "x2": 13.5,
+     "y2": 7.6,
+     "color": {
+      "by": "(Ci) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "fa",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 11.8,
+     "y1": 8.4,
+     "x2": 11.8,
+     "y2": 6.4,
+     "color": {
+      "by": "(x1) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "fa",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 11.8,
+     "y1": 6.4,
+     "x2": 13.5,
+     "y2": 6.4,
+     "color": {
+      "by": "(x1) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "fa",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 12.5,
+     "y1": 5.6,
+     "x2": 13.5,
+     "y2": 5.6,
+     "color": {
+      "by": "(Ci) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "fa",
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": 13.5,
+     "y": 7.699999999999999,
+     "w": 3,
+     "h": 1.8,
+     "fill": false,
+     "width": 3,
+     "visibleIf": "fa",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 8.299999999999999,
+     "text": {
+      "en": "XOR"
+     },
+     "size": 22,
+     "visibleIf": "fa",
+     "color": "white"
+    },
+    {
+     "shape": "rect",
+     "x": 13.5,
+     "y": 5.2,
+     "w": 3,
+     "h": 1.6,
+     "fill": false,
+     "width": 3,
+     "visibleIf": "fa",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 5.7,
+     "text": {
+      "en": "AND"
+     },
+     "size": 22,
+     "visibleIf": "fa",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 17.6,
+     "y": 6.5,
+     "text": {
+      "en": "{a2}"
+     },
+     "size": 20,
+     "color": "orange",
+     "visibleIf": "fa"
+    },
+    {
+     "shape": "line",
+     "x1": 16.5,
+     "y1": 8.6,
+     "x2": 25,
+     "y2": 8.6,
+     "color": {
+      "by": "(S) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "fa",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 16.5,
+     "y1": 6.0,
+     "x2": 19,
+     "y2": 6.0,
+     "color": {
+      "by": "(a2) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "fa",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 9.5,
+     "y1": 4.5,
+     "x2": 19,
+     "y2": 4.5,
+     "color": {
+      "by": "(a1) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "fa",
+     "width": 4
+    },
+    {
+     "shape": "rect",
+     "x": 19.0,
+     "y": 4.1,
+     "w": 3,
+     "h": 2.2,
+     "fill": false,
+     "width": 3,
+     "visibleIf": "fa",
+     "color": "white"
+    },
+    {
+     "shape": "text",
+     "x": 20.5,
+     "y": 4.9,
+     "text": {
+      "en": "OR"
+     },
+     "size": 22,
+     "visibleIf": "fa",
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 22,
+     "y1": 5.2,
+     "x2": 25,
+     "y2": 5.2,
+     "color": {
+      "by": "(Co) != 0",
+      "scale": [
+       "white",
+       "yellow"
+      ]
+     },
+     "visibleIf": "fa",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 26.2,
+     "y": 8.5,
+     "r": 0.8,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 26.2,
+     "y": 8.5,
+     "r": 0.6400000000000001,
+     "color": "yellow",
+     "visibleIf": "(S)"
+    },
+    {
+     "shape": "text",
+     "x": 26.2,
+     "y": 7.15,
+     "text": {
+      "en": "Sum S = {S}"
+     },
+     "size": 22
+    },
+    {
+     "shape": "circle",
+     "x": 26.2,
+     "y": 4.9,
+     "r": 0.8,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 26.2,
+     "y": 4.9,
+     "r": 0.6400000000000001,
+     "color": "yellow",
+     "visibleIf": "(Co)"
+    },
+    {
+     "shape": "text",
+     "x": 26.2,
+     "y": 3.4,
+     "text": {
+      "en": "Carry = {Co}",
+      "kn": "ಕ್ಯಾರಿ = {Co}"
+     },
+     "size": 20
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 0.8,
+     "text": {
+      "en": "{A} + {B} + {Ci*fa} = {2*Co + S} (binary {Co}{S})",
+      "kn": "{A} + {B} + {Ci*fa} = {2*Co + S} (ದ್ವಿಮಾನ {Co}{S})"
+     },
+     "size": 22,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Sum S"
+     },
+     "expr": "S",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "Carry out"
+     },
+     "expr": "Co",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "In half-adder mode, which input setting gives a carry?"
+    },
+    {
+     "en": "Turn on the full adder and set all three inputs to 1. Why are both outputs 1?"
+    },
+    {
+     "en": "Check that the outputs always equal the number of 1s at the input, written in binary."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

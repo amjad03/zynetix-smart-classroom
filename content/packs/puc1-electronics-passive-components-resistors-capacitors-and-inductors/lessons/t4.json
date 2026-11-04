@@ -454,6 +454,468 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Charging and discharging through R",
+    "kn": "R ಮೂಲಕ ಆವೇಶ ಮತ್ತು ವಿಸರ್ಜನೆ"
+   },
+   "narration": {
+    "en": "Play to charge the capacitor. The capacitor voltage (blue) rises as V(1 − e^(−t/RC)) while the resistor voltage (orange), which is i × R, dies away. Flip the switch to discharge: the current reverses. The dashed lines mark τ, 2τ … 5τ.",
+    "kn": "ಧಾರಕವನ್ನು ಆವೇಶಗೊಳಿಸಲು ಪ್ರಾರಂಭಿಸಿ. ಧಾರಕ ವೋಲ್ಟೇಜ್ (ನೀಲಿ) V(1 − e^(−t/RC)) ಆಗಿ ಏರುತ್ತದೆ, ರೋಧಕ ವೋಲ್ಟೇಜ್ (ಕಿತ್ತಳೆ) ಕುಗ್ಗುತ್ತದೆ. ಸ್ವಿಚ್ ಬದಲಿಸಿದರೆ ವಿಸರ್ಜನೆ, ಪ್ರವಾಹ ತಿರುಗುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Play to charge the capacitor. The capacitor voltage (blue) rises as V(1 − e^(−t/RC)) while the resistor voltage (orange), which is i × R, dies away. Flip the switch to discharge: the current reverses. The dashed lines mark τ, 2τ … 5τ.",
+    "kn": "ಧಾರಕವನ್ನು ಆವೇಶಗೊಳಿಸಲು ಪ್ರಾರಂಭಿಸಿ. ಧಾರಕ ವೋಲ್ಟೇಜ್ (ನೀಲಿ) V(1 − e^(−t/RC)) ಆಗಿ ಏರುತ್ತದೆ, ರೋಧಕ ವೋಲ್ಟೇಜ್ (ಕಿತ್ತಳೆ) ಕುಗ್ಗುತ್ತದೆ. ಸ್ವಿಚ್ ಬದಲಿಸಿದರೆ ವಿಸರ್ಜನೆ, ಪ್ರವಾಹ ತಿರುಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "R",
+     "label": {
+      "en": "Resistance",
+      "kn": "ರೋಧ"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 10,
+     "value": 50,
+     "unit": "kΩ"
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "Capacitance",
+      "kn": "ಧಾರಕತೆ"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 10,
+     "value": 40,
+     "unit": "µF"
+    },
+    {
+     "name": "E",
+     "label": {
+      "en": "Battery",
+      "kn": "ಬ್ಯಾಟರಿ"
+     },
+     "min": 2,
+     "max": 12,
+     "step": 1,
+     "value": 10,
+     "unit": "V"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "ch",
+     "label": {
+      "en": "Switch on charge",
+      "kn": "ಆವೇಶ ಸ್ಥಿತಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 25,
+    "dt": 0.01,
+    "speeds": [
+     0.5,
+     1,
+     2,
+     4
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "tau",
+     "expr": "R*C/1000"
+    },
+    {
+     "name": "Vr",
+     "expr": "if(ch, E, 0) - Vc"
+    },
+    {
+     "name": "I",
+     "expr": "Vr/R"
+    }
+   ],
+   "state": [
+    {
+     "name": "Vc",
+     "init": 0,
+     "rate": "(if(ch, E, 0) - Vc)/tau"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30.5
+    ],
+    "y": [
+     0,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1.5,
+     "y1": 2,
+     "x2": 1.5,
+     "y2": 4.6,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "battery",
+     "x": 1.5,
+     "y": 5.5,
+     "size": 2,
+     "angle": 90
+    },
+    {
+     "shape": "line",
+     "x1": 1.5,
+     "y1": 6.4,
+     "x2": 1.5,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 1.5,
+     "y1": 9,
+     "x2": 3,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 6.6,
+     "text": {
+      "en": "+"
+     },
+     "size": 28,
+     "color": "red"
+    },
+    {
+     "shape": "icon",
+     "icon": "switch",
+     "x": 4.5,
+     "y": 9,
+     "size": 3,
+     "on": "ch"
+    },
+    {
+     "shape": "text",
+     "x": 4.5,
+     "y": 10.2,
+     "text": {
+      "en": "charge",
+      "kn": "ಆವೇಶ"
+     },
+     "size": 18
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 9,
+     "x2": 7.2,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 8.7,
+     "y": 9,
+     "size": 3,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": 10.2,
+     "y1": 9,
+     "x2": 11,
+     "y2": 9,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 9,
+     "x2": 11,
+     "y2": 6.5,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "capacitor",
+     "x": 11,
+     "y": 5.5,
+     "size": 2,
+     "angle": 90,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 4.5,
+     "x2": 11,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 11,
+     "y1": 2,
+     "x2": 1.5,
+     "y2": 2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 9,
+     "x2": 6,
+     "y2": 7.6,
+     "visibleIf": "!ch",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 6.3,
+     "y": 7.2,
+     "text": {
+      "en": "short to discharge",
+      "kn": "ವಿಸರ್ಜನೆ ಮಾರ್ಗ"
+     },
+     "size": 16,
+     "align": "left",
+     "visibleIf": "!ch"
+    },
+    {
+     "shape": "line",
+     "x1": 6,
+     "y1": 7.6,
+     "x2": 6,
+     "y2": 2,
+     "visibleIf": "!ch",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 13,
+     "y1": 1.2,
+     "x2": 30,
+     "y2": 1.2,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 13,
+     "y1": 1.2,
+     "x2": 13,
+     "y2": 9.7,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 30,
+     "y": 0.6,
+     "text": {
+      "en": "t (s)"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 13.2,
+     "y": 10.049999999999999,
+     "text": {
+      "en": "V"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 13.0,
+     "y1": 5.45,
+     "x2": 30.0,
+     "y2": 5.45,
+     "width": 1,
+     "opacity": 0.6
+    },
+    {
+     "shape": "line",
+     "x1": "(13 + 0.68*((1*tau) - (0)))",
+     "y1": 1.5542,
+     "x2": "(13 + 0.68*((1*tau) - (0)))",
+     "y2": 9.3458,
+     "dashed": true,
+     "color": "green",
+     "width": 1,
+     "opacity": 0.6,
+     "visibleIf": "1*tau <= 25"
+    },
+    {
+     "shape": "line",
+     "x1": "(13 + 0.68*((2*tau) - (0)))",
+     "y1": 1.5542,
+     "x2": "(13 + 0.68*((2*tau) - (0)))",
+     "y2": 9.3458,
+     "dashed": true,
+     "color": "green",
+     "width": 1,
+     "opacity": 0.6,
+     "visibleIf": "2*tau <= 25"
+    },
+    {
+     "shape": "line",
+     "x1": "(13 + 0.68*((3*tau) - (0)))",
+     "y1": 1.5542,
+     "x2": "(13 + 0.68*((3*tau) - (0)))",
+     "y2": 9.3458,
+     "dashed": true,
+     "color": "green",
+     "width": 1,
+     "opacity": 0.6,
+     "visibleIf": "3*tau <= 25"
+    },
+    {
+     "shape": "line",
+     "x1": "(13 + 0.68*((4*tau) - (0)))",
+     "y1": 1.5542,
+     "x2": "(13 + 0.68*((4*tau) - (0)))",
+     "y2": 9.3458,
+     "dashed": true,
+     "color": "green",
+     "width": 1,
+     "opacity": 0.6,
+     "visibleIf": "4*tau <= 25"
+    },
+    {
+     "shape": "line",
+     "x1": "(13 + 0.68*((5*tau) - (0)))",
+     "y1": 1.5542,
+     "x2": "(13 + 0.68*((5*tau) - (0)))",
+     "y2": 9.3458,
+     "dashed": true,
+     "color": "green",
+     "width": 1,
+     "opacity": 0.6,
+     "visibleIf": "5*tau <= 25"
+    },
+    {
+     "shape": "text",
+     "x": "(13 + 0.68*((tau) - (0)))",
+     "y": 0.9542,
+     "text": {
+      "en": "τ"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "tau <= 25"
+    },
+    {
+     "shape": "line",
+     "x1": 13.0,
+     "y1": "(1.2 + 0.354167*((E) - (-12)))",
+     "x2": 30.0,
+     "y2": "(1.2 + 0.354167*((E) - (-12)))",
+     "dashed": true,
+     "color": "white",
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "trail",
+     "x": "(13 + 0.68*((t) - (0)))",
+     "y": "(1.2 + 0.354167*((Vc) - (-12)))",
+     "length": 2000,
+     "color": "blue",
+     "width": 4
+    },
+    {
+     "shape": "trail",
+     "x": "(13 + 0.68*((t) - (0)))",
+     "y": "(1.2 + 0.354167*((Vr) - (-12)))",
+     "length": 2000,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "(13 + 0.68*((t) - (0)))",
+     "y": "(1.2 + 0.354167*((Vc) - (-12)))",
+     "r": 0.2,
+     "color": "blue"
+    },
+    {
+     "shape": "circle",
+     "x": "(13 + 0.68*((t) - (0)))",
+     "y": "(1.2 + 0.354167*((Vr) - (-12)))",
+     "r": 0.18,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Time constant τ = RC"
+     },
+     "expr": "tau",
+     "digits": 2,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Capacitor voltage"
+     },
+     "expr": "Vc",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Current"
+     },
+     "expr": "1000*I",
+     "digits": 0,
+     "unit": "µA"
+    },
+    {
+     "label": {
+      "en": "Percent of E"
+     },
+     "expr": "100*Vc/E",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Read the capacitor voltage at the first dashed line (t = RC). Is it 63 % of V?"
+    },
+    {
+     "en": "After 5τ, how full is the capacitor?"
+    },
+    {
+     "en": "Flip to discharge when full. What is the voltage after one more τ?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

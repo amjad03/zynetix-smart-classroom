@@ -494,6 +494,229 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Drift and diffusion",
+    "kn": "ಅಪವಾಹ ಮತ್ತು ಪ್ರಸರಣ"
+   },
+   "narration": {
+    "en": "Drift: in a field carriers move with an average velocity vd = µE on top of their random thermal motion; electrons go against the field and holes along it. Diffusion: with no field, carriers crowded in one place spread out towards where there are fewer.",
+    "kn": "ಅಪವಾಹ: ಕ್ಷೇತ್ರದಲ್ಲಿ ವಾಹಕಗಳು vd = µE ಸರಾಸರಿ ವೇಗದಲ್ಲಿ ಚಲಿಸುತ್ತವೆ; ಎಲೆಕ್ಟ್ರಾನ್ ಕ್ಷೇತ್ರದ ವಿರುದ್ಧ, ರಂಧ್ರ ಕ್ಷೇತ್ರದ ದಿಕ್ಕಿನಲ್ಲಿ. ಪ್ರಸರಣ: ಕ್ಷೇತ್ರವಿಲ್ಲದೆ ದಟ್ಟ ಭಾಗದಿಂದ ವಿರಳ ಭಾಗಕ್ಕೆ ಹರಡುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Drift: in a field carriers move with an average velocity vd = µE on top of their random thermal motion; electrons go against the field and holes along it. Diffusion: with no field, carriers crowded in one place spread out towards where there are fewer.",
+    "kn": "ಅಪವಾಹ: ಕ್ಷೇತ್ರದಲ್ಲಿ ವಾಹಕಗಳು vd = µE ಸರಾಸರಿ ವೇಗದಲ್ಲಿ ಚಲಿಸುತ್ತವೆ; ಎಲೆಕ್ಟ್ರಾನ್ ಕ್ಷೇತ್ರದ ವಿರುದ್ಧ, ರಂಧ್ರ ಕ್ಷೇತ್ರದ ದಿಕ್ಕಿನಲ್ಲಿ. ಪ್ರಸರಣ: ಕ್ಷೇತ್ರವಿಲ್ಲದೆ ದಟ್ಟ ಭಾಗದಿಂದ ವಿರಳ ಭಾಗಕ್ಕೆ ಹರಡುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "E",
+     "label": {
+      "en": "Electric field E",
+      "kn": "ವಿದ್ಯುತ್ ಕ್ಷೇತ್ರ E"
+     },
+     "min": 0,
+     "max": 1000,
+     "step": 50,
+     "value": 400,
+     "unit": "V/m"
+    }
+   ],
+   "choices": [
+    {
+     "name": "car",
+     "label": {
+      "en": "Carrier",
+      "kn": "ವಾಹಕ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Electrons",
+        "kn": "ಎಲೆಕ್ಟ್ರಾನ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Holes",
+        "kn": "ರಂಧ್ರ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    },
+    {
+     "name": "mode",
+     "label": {
+      "en": "Process",
+      "kn": "ಪ್ರಕ್ರಿಯೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Drift",
+        "kn": "ಅಪವಾಹ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Diffusion",
+        "kn": "ಪ್ರಸರಣ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 10,
+    "loop": true,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "mu",
+     "expr": "if(car == 1, 0.135, 0.048)"
+    },
+    {
+     "name": "drift",
+     "expr": "-1"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     0,
+     10.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.3,
+     "y": 0.3,
+     "w": 19.4,
+     "h": 8.4,
+     "fill": false,
+     "width": 2
+    },
+    {
+     "shape": "particles",
+     "count": 60,
+     "x": "bounce(0.6 + 18.8*rand(i) + 0.9*sin(3*t + 6*rand(i + 50)) + drift*(1 - 2*(car == 2))*E*mu*t/150, 0.6, 19.4)",
+     "y": "bounce(0.8 + 7.6*rand(i + 150) + 0.9*cos(3*t + 6*rand(i + 90)), 0.6, 8.4)",
+     "r": 0.2,
+     "color": {
+      "by": "car - 1",
+      "scale": [
+       "yellow",
+       "white"
+      ]
+     },
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "particles",
+     "count": 60,
+     "x": "bounce(1.5 + (rand(i) + rand(i + 60) + rand(i + 120) - 1.5)*(0.8 + 3*sqrt(t)), 0.6, 19.4)",
+     "y": "bounce(0.8 + 7.6*rand(i + 150) + 0.5*cos(3*t + 6*rand(i + 90)), 0.6, 8.4)",
+     "r": 0.2,
+     "color": {
+      "by": "car - 1",
+      "scale": [
+       "yellow",
+       "white"
+      ]
+     },
+     "visibleIf": "mode == 2"
+    },
+    {
+     "shape": "arrow",
+     "x": 14,
+     "y": 9.6,
+     "dx": 4,
+     "dy": 0,
+     "color": "green",
+     "width": 4,
+     "label": "E",
+     "visibleIf": "mode == 1 && E > 0"
+    },
+    {
+     "shape": "arrow",
+     "x": 3,
+     "y": 9.6,
+     "dx": 3,
+     "dy": 0,
+     "color": "orange",
+     "width": 4,
+     "label": "diffusion",
+     "visibleIf": "mode == 2"
+    },
+    {
+     "shape": "label",
+     "x": 8,
+     "y": 9.6,
+     "text": {
+      "en": "vd = µE = {mu*E:1} m/s"
+     },
+     "size": 22,
+     "visibleIf": "mode == 1"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mobility µ (silicon)"
+     },
+     "expr": "mu",
+     "digits": 3,
+     "unit": "m²/V s"
+    },
+    {
+     "label": {
+      "en": "Drift velocity"
+     },
+     "expr": "mu*E",
+     "digits": 1,
+     "unit": "m/s"
+    },
+    {
+     "label": {
+      "en": "Diffusion constant D = µkT/e (300 K)"
+     },
+     "expr": "mu*0.02585*10000",
+     "digits": 1,
+     "unit": "cm²/s"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "In drift mode, double E. What happens to the drift velocity?"
+    },
+    {
+     "en": "Compare electrons and holes at the same field. Which is faster in silicon?"
+    },
+    {
+     "en": "Switch to diffusion and play. Where do the carriers go?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

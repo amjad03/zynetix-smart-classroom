@@ -730,3 +730,10 @@ No text is reproduced. Check these plot details against the texts:
 - **Data to check:** mercury surface tension 0.4355 N/m (from recollection of NCERT; the real value is about 0.47) and contact angle 140 deg; copper Y 120 GPa; specific heat of ice 2100 J/kg K; the conductivity and expansion values.
 - **Illustrative (labelled):** the mean free path walk, the stress-strain shape, slowed beats.
 - **Kannada:** needs a native-speaker review.
+
+## Electronics simulations (105 lessons)
+
+- **Possible inconsistency in an existing lesson:** in puc2 wave-shaping t4, the concept text says C1 charges through R2, but the formula given is T = 0.69(R1C1 + R2C2). The scene follows the formula.
+- **Illustrative values:** diode Is, LED Vf approximately Eg, mobilities, depletion width, the crystal and varactor values, stability factors.
+- **Class efficiencies:** AB about 70% and C about 90%, labelled approximate.
+- **Kannada:** partial; needs a native-speaker review.

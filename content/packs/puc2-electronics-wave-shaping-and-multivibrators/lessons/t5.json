@@ -1385,6 +1385,289 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "555 timer as an astable",
+    "kn": "555 ಟೈಮರ್ ಅಸ್ಥಿರವಾಗಿ"
+   },
+   "narration": {
+    "en": "C charges through RA + RB from VCC/3 to 2VCC/3 (output high for tH = 0.693(RA + RB)C), then discharges through RB into pin 7 back to VCC/3 (output low for tL = 0.693 RB C). So f = 1.44/((RA + 2RB)C) and the duty cycle is always above 50 %. VCC = 9 V here.",
+    "kn": "C, RA + RB ಮೂಲಕ VCC/3 ರಿಂದ 2VCC/3 ವರೆಗೆ ಆವೇಶಗೊಳ್ಳುತ್ತದೆ (ನಿರ್ಗಮ ಎತ್ತರ, tH = 0.693(RA + RB)C), ನಂತರ RB ಮೂಲಕ ವಿಸರ್ಜಿಸುತ್ತದೆ (tL = 0.693 RB C). f = 1.44/((RA + 2RB)C). VCC = 9 V."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "C charges through RA + RB from VCC/3 to 2VCC/3 (output high for tH = 0.693(RA + RB)C), then discharges through RB into pin 7 back to VCC/3 (output low for tL = 0.693 RB C). So f = 1.44/((RA + 2RB)C) and the duty cycle is always above 50 %. VCC = 9 V here.",
+    "kn": "C, RA + RB ಮೂಲಕ VCC/3 ರಿಂದ 2VCC/3 ವರೆಗೆ ಆವೇಶಗೊಳ್ಳುತ್ತದೆ (ನಿರ್ಗಮ ಎತ್ತರ, tH = 0.693(RA + RB)C), ನಂತರ RB ಮೂಲಕ ವಿಸರ್ಜಿಸುತ್ತದೆ (tL = 0.693 RB C). f = 1.44/((RA + 2RB)C). VCC = 9 V."
+   },
+   "sliders": [
+    {
+     "name": "RA",
+     "label": {
+      "en": "RA",
+      "kn": "RA"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 10,
+     "unit": "kΩ"
+    },
+    {
+     "name": "RB",
+     "label": {
+      "en": "RB",
+      "kn": "RB"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 10,
+     "unit": "kΩ"
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "C",
+      "kn": "C"
+     },
+     "min": 1,
+     "max": 22,
+     "step": 1,
+     "value": 10,
+     "unit": "µF"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "thr",
+     "label": {
+      "en": "Show the 1/3 and 2/3 VCC levels",
+      "kn": "1/3, 2/3 VCC ಮಟ್ಟ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "time": {
+    "max": 20,
+    "unit": "s",
+    "loop": true,
+    "speeds": [
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.5
+   },
+   "vars": [
+    {
+     "name": "t1",
+     "expr": "(RA + RB)*C/1000"
+    },
+    {
+     "name": "t2",
+     "expr": "RB*C/1000"
+    },
+    {
+     "name": "tH",
+     "expr": "0.693*t1"
+    },
+    {
+     "name": "tL",
+     "expr": "0.693*t2"
+    },
+    {
+     "name": "T",
+     "expr": "tH + tL"
+    },
+    {
+     "name": "p",
+     "expr": "mod(t, T)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -0.5,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 1,
+     "x2": 29.5,
+     "y2": 1,
+     "width": 1,
+     "opacity": 0.4
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 6,
+     "x2": 29.5,
+     "y2": 6,
+     "width": 1,
+     "opacity": 0.4
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 7.35,
+     "x2": 29.5,
+     "y2": 7.35,
+     "dashed": true,
+     "color": "green",
+     "width": 1,
+     "visibleIf": "thr"
+    },
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 8.7,
+     "x2": 29.5,
+     "y2": 8.7,
+     "dashed": true,
+     "color": "red",
+     "width": 1,
+     "visibleIf": "thr"
+    },
+    {
+     "shape": "text",
+     "x": 2.8,
+     "y": 7.35,
+     "text": {
+      "en": "3 V"
+     },
+     "size": 14,
+     "color": "green",
+     "align": "right",
+     "visibleIf": "thr"
+    },
+    {
+     "shape": "text",
+     "x": 2.8,
+     "y": 8.7,
+     "text": {
+      "en": "6 V"
+     },
+     "size": 14,
+     "color": "red",
+     "align": "right",
+     "visibleIf": "thr"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 10.5,
+     "text": {
+      "en": "capacitor voltage",
+      "kn": "ಧಾರಕ ವೋಲ್ಟೇಜ್"
+     },
+     "size": 16,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 4.6,
+     "text": {
+      "en": "output (pin 3)",
+      "kn": "ನಿರ್ಗಮ (ಪಿನ್ 3)"
+     },
+     "size": 16,
+     "align": "left"
+    },
+    {
+     "shape": "wave",
+     "fn": "6 + 0.45*if(mod(floor(t/2)*2 + (x - 3)/13.0, T) < tH, 9 - 6*exp(-mod(floor(t/2)*2 + (x - 3)/13.0, T)/t1), 6*exp(-(mod(floor(t/2)*2 + (x - 3)/13.0, T) - tH)/t2))",
+     "color": "blue",
+     "width": 3,
+     "from": 3,
+     "to": 29.5
+    },
+    {
+     "shape": "wave",
+     "fn": "1 + 3*if(mod(floor(t/2)*2 + (x - 3)/13.0, T) < tH, 1, 0)",
+     "color": "yellow",
+     "width": 3,
+     "from": 3,
+     "to": 29.5
+    },
+    {
+     "shape": "line",
+     "x1": "3 + 13.0*mod(t, 2)",
+     "y1": 0.5,
+     "x2": "3 + 13.0*mod(t, 2)",
+     "y2": 10,
+     "color": "white",
+     "width": 1,
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": 0.2,
+     "text": {
+      "en": "t (s)"
+     },
+     "size": 16,
+     "align": "right"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "High time tH"
+     },
+     "expr": "tH",
+     "digits": 3,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Low time tL"
+     },
+     "expr": "tL",
+     "digits": 3,
+     "unit": "s"
+    },
+    {
+     "label": {
+      "en": "Frequency 1.44/((RA + 2RB)C)"
+     },
+     "expr": "1.44/((RA + 2*RB)*C/1000)",
+     "digits": 2,
+     "unit": "Hz"
+    },
+    {
+     "label": {
+      "en": "Duty cycle"
+     },
+     "expr": "100*tH/T",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "With RA = RB = 10 kΩ and C = 10 µF, check f and the duty cycle."
+    },
+    {
+     "en": "Make RB much bigger than RA. What happens to the duty cycle?"
+    },
+    {
+     "en": "Why can the duty cycle of this circuit never go below 50 %?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

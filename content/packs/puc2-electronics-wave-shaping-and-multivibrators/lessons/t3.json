@@ -534,6 +534,215 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Diode clampers",
+    "kn": "ಡಯೋಡ್ ಕ್ಲ್ಯಾಂಪರ್‌ಗಳು"
+   },
+   "narration": {
+    "en": "Play. In a positive clamper the diode conducts at the first negative peak and charges C to about Vm − 0.7 V; after that the diode is off and the whole wave is lifted by that DC level, from −0.7 V to about 2Vm. If RL C is not much longer than the period, C leaks between peaks and the wave sags.",
+    "kn": "ಪ್ರಾರಂಭಿಸಿ. ಧನ ಕ್ಲ್ಯಾಂಪರ್‌ನಲ್ಲಿ ಮೊದಲ ಋಣ ಶಿಖರದಲ್ಲಿ ಡಯೋಡ್ ವಾಹಕವಾಗಿ C ಯನ್ನು Vm − 0.7 V ಗೆ ಆವೇಶಗೊಳಿಸುತ್ತದೆ; ನಂತರ ತರಂಗ ಆಕಾರ ಬದಲಾಗದೆ ಮೇಲಕ್ಕೆ ಸರಿಯುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Play. In a positive clamper the diode conducts at the first negative peak and charges C to about Vm − 0.7 V; after that the diode is off and the whole wave is lifted by that DC level, from −0.7 V to about 2Vm. If RL C is not much longer than the period, C leaks between peaks and the wave sags.",
+    "kn": "ಪ್ರಾರಂಭಿಸಿ. ಧನ ಕ್ಲ್ಯಾಂಪರ್‌ನಲ್ಲಿ ಮೊದಲ ಋಣ ಶಿಖರದಲ್ಲಿ ಡಯೋಡ್ ವಾಹಕವಾಗಿ C ಯನ್ನು Vm − 0.7 V ಗೆ ಆವೇಶಗೊಳಿಸುತ್ತದೆ; ನಂತರ ತರಂಗ ಆಕಾರ ಬದಲಾಗದೆ ಮೇಲಕ್ಕೆ ಸರಿಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "Vm",
+     "label": {
+      "en": "Input peak",
+      "kn": "ಒಳಹರಿವಿನ ಶಿಖರ"
+     },
+     "min": 2,
+     "max": 9,
+     "step": 0.5,
+     "value": 6,
+     "unit": "V"
+    },
+    {
+     "name": "RLC",
+     "label": {
+      "en": "Time constant RL C",
+      "kn": "ಕಾಲ ಸ್ಥಿರಾಂಕ RL C"
+     },
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "value": 50,
+     "unit": "ms"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "si",
+     "label": {
+      "en": "Silicon diode 0.7 V",
+      "kn": "ಸಿಲಿಕಾನ್ 0.7 V"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "ty",
+     "label": {
+      "en": "Clamper",
+      "kn": "ಕ್ಲ್ಯಾಂಪರ್"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Positive",
+        "kn": "ಧನ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Negative",
+        "kn": "ಋಣ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 10,
+    "unit": "ms",
+    "dt": 0.002,
+    "speeds": [
+     0.1,
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.25
+   },
+   "vars": [
+    {
+     "name": "vg",
+     "expr": "if(si, 0.7, 0)"
+    },
+    {
+     "name": "vin",
+     "expr": "Vm*sin(2*pi*t/2)"
+    },
+    {
+     "name": "vo",
+     "expr": "vin + vc"
+    }
+   ],
+   "state": [
+    {
+     "name": "vc",
+     "init": 0,
+     "rate": "if(ty == 1, if(vo < -vg, (-vg - vo)/0.02, 0), if(vo > vg, (vg - vo)/0.02, 0)) - vc/RLC"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -11,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 0,
+     "x2": 29.5,
+     "y2": 0,
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": -1,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "shape": "trail",
+     "x": "1 + 2.8*t",
+     "y": "0.5*vin",
+     "length": 2000,
+     "color": "white",
+     "width": 2,
+     "opacity": 0.5
+    },
+    {
+     "shape": "trail",
+     "x": "1 + 2.8*t",
+     "y": "0.5*vo",
+     "length": 2000,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": "1 + 2.8*t",
+     "y": "0.5*vo",
+     "r": 0.25,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 10,
+     "text": {
+      "en": "capacitor holds {abs(vc):2} V",
+      "kn": "ಧಾರಕದಲ್ಲಿ {abs(vc):2} V"
+     },
+     "size": 20,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Output now"
+     },
+     "expr": "vo",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Expected range (positive)"
+     },
+     "expr": "2*Vm - vg",
+     "digits": 1,
+     "unit": "V"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Play with a positive clamper. What happens during the first cycle?"
+    },
+    {
+     "en": "Switch to a negative clamper. Where does the wave sit now?"
+    },
+    {
+     "en": "Lower RL C to 1 ms. Why does the output sag?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

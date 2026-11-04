@@ -275,6 +275,214 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Static and dynamic resistance; diode models",
+    "kn": "ಸ್ಥಿರ ಮತ್ತು ಚಲನಶೀಲ ರೋಧ; ಡಯೋಡ್ ಮಾದರಿಗಳು"
+   },
+   "narration": {
+    "en": "Pick an operating current on the silicon curve. The static resistance is V/I (slope of the line from the origin); the dynamic resistance is ΔV/ΔI (the tangent), about 26 mV / I at room temperature. Overlay a diode model to see how close it is.",
+    "kn": "ಸಿಲಿಕಾನ್ ವಕ್ರದ ಮೇಲೆ ಕಾರ್ಯ ಪ್ರವಾಹ ಆರಿಸಿ. ಸ್ಥಿರ ರೋಧ V/I; ಚಲನಶೀಲ ರೋಧ ΔV/ΔI (ಸ್ಪರ್ಶಕ), ಸುಮಾರು 26 mV / I. ಡಯೋಡ್ ಮಾದರಿ ಹೋಲಿಸಿ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Pick an operating current on the silicon curve. The static resistance is V/I (slope of the line from the origin); the dynamic resistance is ΔV/ΔI (the tangent), about 26 mV / I at room temperature. Overlay a diode model to see how close it is.",
+    "kn": "ಸಿಲಿಕಾನ್ ವಕ್ರದ ಮೇಲೆ ಕಾರ್ಯ ಪ್ರವಾಹ ಆರಿಸಿ. ಸ್ಥಿರ ರೋಧ V/I; ಚಲನಶೀಲ ರೋಧ ΔV/ΔI (ಸ್ಪರ್ಶಕ), ಸುಮಾರು 26 mV / I. ಡಯೋಡ್ ಮಾದರಿ ಹೋಲಿಸಿ."
+   },
+   "sliders": [
+    {
+     "name": "Iq",
+     "label": {
+      "en": "Operating current",
+      "kn": "ಕಾರ್ಯ ಪ್ರವಾಹ"
+     },
+     "min": 0.5,
+     "max": 20,
+     "step": 0.5,
+     "value": 5,
+     "unit": "mA"
+    }
+   ],
+   "choices": [
+    {
+     "name": "mdl",
+     "label": {
+      "en": "Model",
+      "kn": "ಮಾದರಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Ideal switch",
+        "kn": "ಆದರ್ಶ ಸ್ವಿಚ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Constant 0.7 V drop",
+        "kn": "ಸ್ಥಿರ 0.7 V"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "0.6 V + 10 Ω",
+        "kn": "0.6 V + 10 Ω"
+       },
+       "value": 3
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "vars": [
+    {
+     "name": "Vq",
+     "expr": "0.026*ln(Iq/1e-11 + 1)"
+    }
+   ],
+   "view": {
+    "x": [
+     -0.05,
+     1.05
+    ],
+    "y": [
+     -2,
+     26
+    ],
+    "axes": true,
+    "xLabel": "V (V)",
+    "yLabel": "I (mA)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "clamp(1e-11*(exp(x/0.026) - 1), 0, 25)",
+     "color": "yellow",
+     "width": 4,
+     "from": 0,
+     "to": 1
+    },
+    {
+     "shape": "path",
+     "fn": "clamp((x - 0.7)*1e6, 0, 25)",
+     "color": "green",
+     "width": 3,
+     "dashed": true,
+     "visibleIf": "mdl == 2",
+     "from": 0,
+     "to": 1
+    },
+    {
+     "shape": "path",
+     "fn": "clamp((x - 0.6)/0.01, 0, 25)",
+     "color": "green",
+     "width": 3,
+     "dashed": true,
+     "visibleIf": "mdl == 3",
+     "from": 0,
+     "to": 1
+    },
+    {
+     "shape": "path",
+     "fn": "clamp(x*1e6, 0, 25)",
+     "color": "green",
+     "width": 3,
+     "dashed": true,
+     "visibleIf": "mdl == 1",
+     "from": 0,
+     "to": 1
+    },
+    {
+     "shape": "line",
+     "x1": 0,
+     "y1": 0,
+     "x2": "Vq",
+     "y2": "Iq",
+     "color": "blue",
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "line",
+     "x1": "Vq - 0.1",
+     "y1": "Iq - 0.1*Iq/0.026",
+     "x2": "Vq + 0.1",
+     "y2": "Iq + 0.1*Iq/0.026",
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": "Vq",
+     "y": "Iq",
+     "r": 0.012,
+     "color": "white"
+    },
+    {
+     "shape": "label",
+     "x": 0.3,
+     "y": 20,
+     "text": {
+      "en": "R = V/I = {Vq*1000/Iq:1} Ω"
+     },
+     "size": 22,
+     "color": "blue"
+    },
+    {
+     "shape": "label",
+     "x": 0.3,
+     "y": 16.5,
+     "text": {
+      "en": "r = 26 mV / I = {26/Iq:2} Ω"
+     },
+     "size": 22,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Voltage at that current"
+     },
+     "expr": "Vq",
+     "digits": 3,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Static resistance V/I"
+     },
+     "expr": "Vq*1000/Iq",
+     "digits": 1,
+     "unit": "Ω"
+    },
+    {
+     "label": {
+      "en": "Dynamic resistance"
+     },
+     "expr": "26/Iq",
+     "digits": 2,
+     "unit": "Ω"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set 1 mA and then 10 mA. How does the dynamic resistance change?"
+    },
+    {
+     "en": "Why is the static resistance always larger than the dynamic resistance here?"
+    },
+    {
+     "en": "Overlay the constant-drop model. Where does it fit the real curve badly?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

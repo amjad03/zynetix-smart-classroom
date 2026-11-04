@@ -1682,6 +1682,210 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Power amplifier classes",
+    "kn": "ಶಕ್ತಿ ವರ್ಧಕ ವರ್ಗಗಳು"
+   },
+   "narration": {
+    "en": "The class is set by the bias, which decides for how much of the input cycle collector current flows (yellow). Class A conducts for 360°, class B for 180° (a push-pull pair shares the halves, orange is the second transistor), class AB a little more than 180° to remove crossover distortion, and class C less than 180°.",
+    "kn": "ಬಯಾಸ್ ವರ್ಗವನ್ನು ನಿರ್ಧರಿಸುತ್ತದೆ: ಇನ್‌ಪುಟ್ ಆವರ್ತದ ಎಷ್ಟು ಭಾಗದಲ್ಲಿ ಸಂಗ್ರಾಹಕ ಪ್ರವಾಹ ಹರಿಯುತ್ತದೆ. A 360°, B 180° (ಪುಶ್-ಪುಲ್ ಜೋಡಿ), AB 180° ಗಿಂತ ಸ್ವಲ್ಪ ಹೆಚ್ಚು, C 180° ಗಿಂತ ಕಡಿಮೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The class is set by the bias, which decides for how much of the input cycle collector current flows (yellow). Class A conducts for 360°, class B for 180° (a push-pull pair shares the halves, orange is the second transistor), class AB a little more than 180° to remove crossover distortion, and class C less than 180°.",
+    "kn": "ಬಯಾಸ್ ವರ್ಗವನ್ನು ನಿರ್ಧರಿಸುತ್ತದೆ: ಇನ್‌ಪುಟ್ ಆವರ್ತದ ಎಷ್ಟು ಭಾಗದಲ್ಲಿ ಸಂಗ್ರಾಹಕ ಪ್ರವಾಹ ಹರಿಯುತ್ತದೆ. A 360°, B 180° (ಪುಶ್-ಪುಲ್ ಜೋಡಿ), AB 180° ಗಿಂತ ಸ್ವಲ್ಪ ಹೆಚ್ಚು, C 180° ಗಿಂತ ಕಡಿಮೆ."
+   },
+   "sliders": [
+    {
+     "name": "Ip",
+     "label": {
+      "en": "Input drive (peak)",
+      "kn": "ಒಳಹರಿವಿನ ಶಿಖರ"
+     },
+     "min": 1,
+     "max": 2,
+     "step": 0.1,
+     "value": 1.8
+    }
+   ],
+   "choices": [
+    {
+     "name": "cl",
+     "label": {
+      "en": "Class",
+      "kn": "ವರ್ಗ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "A"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "B (push-pull)"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "AB"
+       },
+       "value": 3
+      },
+      {
+       "label": {
+        "en": "C"
+       },
+       "value": 4
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 40,
+    "unit": "ms",
+    "loop": true,
+    "speeds": [
+     0.25,
+     0.5,
+     1
+    ],
+    "speed": 0.5
+   },
+   "vars": [
+    {
+     "name": "ang",
+     "expr": "if(cl == 1, 360, if(cl == 2, 180, if(cl == 3, round(180 + 2*deg(asin(0.15/Ip))), round(180 - 2*deg(asin(0.9/Ip))))))"
+    },
+    {
+     "name": "eff",
+     "expr": "if(cl == 1, 25, if(cl == 2, 78.5, if(cl == 3, 70, 90)))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -2.5,
+     6.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 0,
+     "x2": 29.5,
+     "y2": 0,
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": -0.6,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "shape": "wave",
+     "fn": "4.5 + 0.8*sin(2*pi*((x - 1)/0.7)/20)",
+     "color": "white",
+     "width": 2,
+     "opacity": 0.6,
+     "from": 1,
+     "to": 29.5
+    },
+    {
+     "shape": "text",
+     "x": 1.2,
+     "y": 5.8,
+     "text": {
+      "en": "input",
+      "kn": "ಒಳಹರಿವು"
+     },
+     "size": 16,
+     "align": "left"
+    },
+    {
+     "shape": "wave",
+     "fn": "1.2*if(cl == 1, 1 + 0.5*Ip*sin(2*pi*((x - 1)/0.7)/20), if(cl == 2, max(Ip*sin(2*pi*((x - 1)/0.7)/20), 0), if(cl == 3, max(0.15 + Ip*sin(2*pi*((x - 1)/0.7)/20), 0), max(Ip*sin(2*pi*((x - 1)/0.7)/20) - 0.9, 0))))",
+     "color": "yellow",
+     "width": 4,
+     "from": 1,
+     "to": 29.5
+    },
+    {
+     "shape": "wave",
+     "fn": "-1.2*if(cl == 2, max(-Ip*sin(2*pi*((x - 1)/0.7)/20), 0), max(0.15 - Ip*sin(2*pi*((x - 1)/0.7)/20), 0))",
+     "color": "orange",
+     "width": 4,
+     "visibleIf": "cl == 2 || cl == 3",
+     "from": 1,
+     "to": 29.5
+    },
+    {
+     "shape": "circle",
+     "x": "1 + 0.7*t",
+     "y": "1.2*if(cl == 1, 1 + 0.5*Ip*sin(2*pi*t/20), if(cl == 2, max(Ip*sin(2*pi*t/20), 0), if(cl == 3, max(0.15 + Ip*sin(2*pi*t/20), 0), max(Ip*sin(2*pi*t/20) - 0.9, 0))))",
+     "r": 0.2,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": -2.0,
+     "text": {
+      "en": "conduction angle {ang}°   maximum efficiency {eff}%",
+      "kn": "ವಾಹಕ ಕೋನ {ang}°   ಗರಿಷ್ಠ ದಕ್ಷತೆ {eff}%"
+     },
+     "size": 20,
+     "color": "green"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Conduction angle"
+     },
+     "expr": "ang",
+     "digits": 0,
+     "unit": "°"
+    },
+    {
+     "label": {
+      "en": "Maximum collector efficiency (approx. for AB and C)"
+     },
+     "expr": "eff",
+     "digits": 1,
+     "unit": "%"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Pick class A. Why does current flow even with no signal, and why does that waste power?"
+    },
+    {
+     "en": "Pick class B. Where in the cycle would crossover distortion appear?"
+    },
+    {
+     "en": "Pick class C and raise the drive. How does the conduction angle change, and why is class C used only with a tuned load?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

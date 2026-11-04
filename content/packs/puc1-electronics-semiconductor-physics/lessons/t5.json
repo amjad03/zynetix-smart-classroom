@@ -570,6 +570,246 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "How a p-n junction forms",
+    "kn": "p-n ಸಂಧಿ ಹೇಗೆ ರೂಪುಗೊಳ್ಳುತ್ತದೆ"
+   },
+   "narration": {
+    "en": "Press play. Holes diffuse from p to n and electrons from n to p, recombining near the junction. They leave fixed negative ions on the p side and positive ions on the n side: the depletion layer. Its field and barrier potential grow until drift balances diffusion.",
+    "kn": "ಪ್ರಾರಂಭಿಸಿ. ರಂಧ್ರಗಳು p ಯಿಂದ n ಗೆ, ಎಲೆಕ್ಟ್ರಾನ್‌ಗಳು n ನಿಂದ p ಗೆ ಪ್ರಸರಿಸಿ ಸಂಧಿಯ ಬಳಿ ಸೇರುತ್ತವೆ. ಸ್ಥಿರ ಅಯಾನುಗಳು ಉಳಿದು ಕ್ಷೀಣ ಪದರ ಆಗುತ್ತದೆ. ಅಪವಾಹ ಪ್ರಸರಣವನ್ನು ಸಮತೋಲನ ಮಾಡುವವರೆಗೆ ತಡೆ ವಿಭವ ಬೆಳೆಯುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Press play. Holes diffuse from p to n and electrons from n to p, recombining near the junction. They leave fixed negative ions on the p side and positive ions on the n side: the depletion layer. Its field and barrier potential grow until drift balances diffusion.",
+    "kn": "ಪ್ರಾರಂಭಿಸಿ. ರಂಧ್ರಗಳು p ಯಿಂದ n ಗೆ, ಎಲೆಕ್ಟ್ರಾನ್‌ಗಳು n ನಿಂದ p ಗೆ ಪ್ರಸರಿಸಿ ಸಂಧಿಯ ಬಳಿ ಸೇರುತ್ತವೆ. ಸ್ಥಿರ ಅಯಾನುಗಳು ಉಳಿದು ಕ್ಷೀಣ ಪದರ ಆಗುತ್ತದೆ. ಅಪವಾಹ ಪ್ರಸರಣವನ್ನು ಸಮತೋಲನ ಮಾಡುವವರೆಗೆ ತಡೆ ವಿಭವ ಬೆಳೆಯುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "dop",
+     "label": {
+      "en": "Doping level (relative)",
+      "kn": "ಅಪದ್ರವ್ಯ ಮಟ್ಟ"
+     },
+     "min": 1,
+     "max": 10,
+     "step": 0.5,
+     "value": 1
+    }
+   ],
+   "choices": [
+    {
+     "name": "mat",
+     "label": {
+      "en": "Material",
+      "kn": "ವಸ್ತು"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Silicon",
+        "kn": "ಸಿಲಿಕಾನ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Germanium",
+        "kn": "ಜರ್ಮೇನಿಯಂ"
+       },
+       "value": 2
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "time": {
+    "max": 8,
+    "speeds": [
+     0.5,
+     1,
+     2
+    ],
+    "speed": 1
+   },
+   "vars": [
+    {
+     "name": "V0",
+     "expr": "if(mat == 1, 0.7, 0.3)"
+    },
+    {
+     "name": "s",
+     "expr": "1 - exp(-t/1.5)"
+    },
+    {
+     "name": "wum",
+     "expr": "0.8*sqrt(V0/0.7)/sqrt(dop)"
+    },
+    {
+     "name": "W",
+     "expr": "4*wum*s"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     20
+    ],
+    "y": [
+     -1.2,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 0.5,
+     "y": 1,
+     "w": 9.5,
+     "h": 7,
+     "color": "red",
+     "opacity": 0.2
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 1,
+     "w": 9.5,
+     "h": 7,
+     "color": "blue",
+     "opacity": 0.2
+    },
+    {
+     "shape": "rect",
+     "x": "10 - W/2",
+     "y": 1,
+     "w": "W",
+     "h": 7,
+     "color": "white",
+     "opacity": 0.12
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": 8.7,
+     "text": {
+      "en": "p"
+     },
+     "size": 30
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 8.7,
+     "text": {
+      "en": "n"
+     },
+     "size": 30
+    },
+    {
+     "shape": "particles",
+     "count": 27,
+     "x": "10 - W/2*(mod(i, 9) + 0.5)/9",
+     "y": "2.2 + 2.3*floor(i/9)",
+     "r": 0.2,
+     "color": "blue",
+     "visibleIf": "W > 0.2"
+    },
+    {
+     "shape": "particles",
+     "count": 27,
+     "x": "10 + W/2*(mod(i, 9) + 0.5)/9",
+     "y": "2.2 + 2.3*floor(i/9)",
+     "r": 0.2,
+     "color": "red",
+     "visibleIf": "W > 0.2"
+    },
+    {
+     "shape": "text",
+     "x": 10,
+     "y": 9.9,
+     "text": {
+      "en": "− ions | + ions",
+      "kn": "− ಅಯಾನು | + ಅಯಾನು"
+     },
+     "size": 18,
+     "visibleIf": "W > 1"
+    },
+    {
+     "shape": "particles",
+     "count": 50,
+     "x": "0.8 + 9*rand(i)",
+     "y": "1.3 + 6.4*rand(i + 100)",
+     "r": 0.17,
+     "color": "white",
+     "visibleIf": "0.8 + 9*rand(i) < 10 - W/2"
+    },
+    {
+     "shape": "particles",
+     "count": 50,
+     "x": "10.2 + 9*rand(i + 200)",
+     "y": "1.3 + 6.4*rand(i + 300)",
+     "r": 0.17,
+     "color": "yellow",
+     "visibleIf": "10.2 + 9*rand(i + 200) > 10 + W/2"
+    },
+    {
+     "shape": "arrow",
+     "x": "10 + W/2",
+     "y": 9.6,
+     "dx": "-W",
+     "dy": 0,
+     "color": "green",
+     "width": 4,
+     "label": "E",
+     "visibleIf": "W > 0.6"
+    },
+    {
+     "shape": "label",
+     "x": 10,
+     "y": -0.4,
+     "text": {
+      "en": "barrier {V0*s:2} V   width {wum*s:2} µm",
+      "kn": "ತಡೆ {V0*s:2} V   ಅಗಲ {wum*s:2} µm"
+     },
+     "size": 22,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Barrier potential now"
+     },
+     "expr": "V0*s",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "Depletion width now"
+     },
+     "expr": "wum*s",
+     "digits": 2,
+     "unit": "µm"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Play and watch the region around the junction. What is left there?"
+    },
+    {
+     "en": "Compare silicon and germanium. Which has the larger barrier potential?"
+    },
+    {
+     "en": "Raise the doping level. Is the depletion layer wider or narrower?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

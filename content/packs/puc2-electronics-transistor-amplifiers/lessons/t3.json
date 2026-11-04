@@ -315,6 +315,289 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Frequency response and bandwidth",
+    "kn": "ಆವೃತ್ತಿ ಪ್ರತಿಕ್ರಿಯೆ ಮತ್ತು ಪಟ್ಟಿಅಗಲ"
+   },
+   "narration": {
+    "en": "At low frequencies the coupling capacitor (here in series with 2 kΩ) drops part of the signal, so fL = 1/(2π × 2 kΩ × C); at high frequencies stray and transistor capacitances cut the gain above fH. Between them is the flat mid band. The bandwidth is fH − fL, measured 3 dB down. Drag the marker to read the gain.",
+    "kn": "ಕಡಿಮೆ ಆವೃತ್ತಿಯಲ್ಲಿ ಜೋಡಣಾ ಧಾರಕ ಸಂಕೇತದ ಭಾಗ ಕಳೆಯುತ್ತದೆ, fL = 1/(2π × 2 kΩ × C); ಹೆಚ್ಚಿನ ಆವೃತ್ತಿಯಲ್ಲಿ fH ಮೇಲೆ ಲಾಭ ಕುಗ್ಗುತ್ತದೆ. ಪಟ್ಟಿಅಗಲ fH − fL, 3 dB ಕೆಳಗೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "At low frequencies the coupling capacitor (here in series with 2 kΩ) drops part of the signal, so fL = 1/(2π × 2 kΩ × C); at high frequencies stray and transistor capacitances cut the gain above fH. Between them is the flat mid band. The bandwidth is fH − fL, measured 3 dB down. Drag the marker to read the gain.",
+    "kn": "ಕಡಿಮೆ ಆವೃತ್ತಿಯಲ್ಲಿ ಜೋಡಣಾ ಧಾರಕ ಸಂಕೇತದ ಭಾಗ ಕಳೆಯುತ್ತದೆ, fL = 1/(2π × 2 kΩ × C); ಹೆಚ್ಚಿನ ಆವೃತ್ತಿಯಲ್ಲಿ fH ಮೇಲೆ ಲಾಭ ಕುಗ್ಗುತ್ತದೆ. ಪಟ್ಟಿಅಗಲ fH − fL, 3 dB ಕೆಳಗೆ."
+   },
+   "sliders": [
+    {
+     "name": "Cc",
+     "label": {
+      "en": "Coupling capacitor C",
+      "kn": "ಜೋಡಣಾ ಧಾರಕ"
+     },
+     "min": 0.5,
+     "max": 20,
+     "step": 0.5,
+     "value": 5,
+     "unit": "µF"
+    },
+    {
+     "name": "fH",
+     "label": {
+      "en": "Upper cut-off fH",
+      "kn": "ಮೇಲಿನ ಕಡಿತ fH"
+     },
+     "min": 10,
+     "max": 500,
+     "step": 10,
+     "value": 50,
+     "unit": "kHz"
+    },
+    {
+     "name": "Am",
+     "label": {
+      "en": "Mid-band gain",
+      "kn": "ಮಧ್ಯ ಪಟ್ಟಿ ಲಾಭ"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 10,
+     "value": 100
+    }
+   ],
+   "handles": [
+    {
+     "name": "M",
+     "x": 3,
+     "y": -1.5,
+     "color": "yellow",
+     "label": "f",
+     "line": [
+      [
+       0.8,
+       -1.5
+      ],
+      [
+       6.4,
+       -1.5
+      ]
+     ]
+    }
+   ],
+   "vars": [
+    {
+     "name": "fL",
+     "expr": "1/(2*pi*2000*Cc*1e-6)"
+    },
+    {
+     "name": "gm",
+     "expr": "20*log(Am/sqrt((1 + (fL/pow(10, M_x))^2)*(1 + (pow(10, M_x)/(fH*1000))^2)))"
+    }
+   ],
+   "view": {
+    "x": [
+     0.6,
+     6.6
+    ],
+    "y": [
+     -8,
+     50
+    ],
+    "axes": true,
+    "xLabel": "log10 f (Hz)",
+    "yLabel": "gain (dB)"
+   },
+   "shapes": [
+    {
+     "shape": "path",
+     "fn": "20*log(Am/sqrt((1 + (fL/pow(10, x))^2)*(1 + (pow(10, x)/(fH*1000))^2)))",
+     "color": "yellow",
+     "width": 4,
+     "from": 0.7,
+     "to": 6.5
+    },
+    {
+     "shape": "line",
+     "x1": 0.7,
+     "y1": "20*log(Am) - 3",
+     "x2": 6.5,
+     "y2": "20*log(Am) - 3",
+     "dashed": true,
+     "color": "green",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": "20*log(Am) - 1.5",
+     "text": {
+      "en": "−3 dB"
+     },
+     "size": 16,
+     "color": "green",
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": "log(fL)",
+     "y1": -5,
+     "x2": "log(fL)",
+     "y2": "20*log(Am) - 3",
+     "dashed": true,
+     "color": "white",
+     "width": 1
+    },
+    {
+     "shape": "line",
+     "x1": "log(fH*1000)",
+     "y1": -5,
+     "x2": "log(fH*1000)",
+     "y2": "20*log(Am) - 3",
+     "dashed": true,
+     "color": "white",
+     "width": 1
+    },
+    {
+     "shape": "text",
+     "x": "log(fL)",
+     "y": -6.5,
+     "text": {
+      "en": "fL"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": "log(fH*1000)",
+     "y": -6.5,
+     "text": {
+      "en": "fH"
+     },
+     "size": 16
+    },
+    {
+     "shape": "circle",
+     "x": "M_x",
+     "y": "gm",
+     "r": 0.06,
+     "color": "orange"
+    },
+    {
+     "shape": "line",
+     "x1": "M_x",
+     "y1": -5,
+     "x2": "M_x",
+     "y2": "gm",
+     "color": "orange",
+     "width": 2,
+     "dashed": true
+    },
+    {
+     "shape": "text",
+     "x": 1,
+     "y": -3,
+     "text": {
+      "en": "10"
+     },
+     "size": 14
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": -3,
+     "text": {
+      "en": "100"
+     },
+     "size": 14
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": -3,
+     "text": {
+      "en": "1k"
+     },
+     "size": 14
+    },
+    {
+     "shape": "text",
+     "x": 4,
+     "y": -3,
+     "text": {
+      "en": "10k"
+     },
+     "size": 14
+    },
+    {
+     "shape": "text",
+     "x": 5,
+     "y": -3,
+     "text": {
+      "en": "100k"
+     },
+     "size": 14
+    },
+    {
+     "shape": "text",
+     "x": 6,
+     "y": -3,
+     "text": {
+      "en": "1M"
+     },
+     "size": 14
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Lower cut-off fL"
+     },
+     "expr": "fL",
+     "digits": 1,
+     "unit": "Hz"
+    },
+    {
+     "label": {
+      "en": "Bandwidth fH − fL"
+     },
+     "expr": "fH - fL/1000",
+     "digits": 2,
+     "unit": "kHz"
+    },
+    {
+     "label": {
+      "en": "Frequency at the marker"
+     },
+     "expr": "pow(10, M_x)",
+     "digits": 0,
+     "unit": "Hz"
+    },
+    {
+     "label": {
+      "en": "Gain at the marker"
+     },
+     "expr": "gm",
+     "digits": 1,
+     "unit": "dB"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Drag the marker to fL. Is the gain 3 dB below the mid band?"
+    },
+    {
+     "en": "Make the coupling capacitor ten times larger. What happens to fL?"
+    },
+    {
+     "en": "Why is the gain at fL also called a half-power point?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

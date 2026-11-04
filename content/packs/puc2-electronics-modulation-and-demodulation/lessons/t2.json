@@ -414,6 +414,313 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Amplitude modulation",
+    "kn": "ವೈಶಾಲ್ಯ ಮಾಡ್ಯುಲೇಷನ್"
+   },
+   "narration": {
+    "en": "The carrier amplitude follows the message: v = Vc(1 + m sin ωm t) sin ωc t, with modulation index m = Vm/Vc. The spectrum has the carrier and two side frequencies fc ± fm, each of amplitude mVc/2, so the bandwidth is 2fm. Above m = 1 the wave is over-modulated and distorted.",
+    "kn": "ವಾಹಕದ ವೈಶಾಲ್ಯ ಸಂದೇಶವನ್ನು ಅನುಸರಿಸುತ್ತದೆ: v = Vc(1 + m sin ωm t) sin ωc t, m = Vm/Vc. ವರ್ಣಪಟಲದಲ್ಲಿ ವಾಹಕ ಮತ್ತು fc ± fm ಪಾರ್ಶ್ವ ಆವೃತ್ತಿಗಳು; ಪಟ್ಟಿಅಗಲ 2fm. m > 1 ಅತಿ ಮಾಡ್ಯುಲೇಷನ್."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The carrier amplitude follows the message: v = Vc(1 + m sin ωm t) sin ωc t, with modulation index m = Vm/Vc. The spectrum has the carrier and two side frequencies fc ± fm, each of amplitude mVc/2, so the bandwidth is 2fm. Above m = 1 the wave is over-modulated and distorted.",
+    "kn": "ವಾಹಕದ ವೈಶಾಲ್ಯ ಸಂದೇಶವನ್ನು ಅನುಸರಿಸುತ್ತದೆ: v = Vc(1 + m sin ωm t) sin ωc t, m = Vm/Vc. ವರ್ಣಪಟಲದಲ್ಲಿ ವಾಹಕ ಮತ್ತು fc ± fm ಪಾರ್ಶ್ವ ಆವೃತ್ತಿಗಳು; ಪಟ್ಟಿಅಗಲ 2fm. m > 1 ಅತಿ ಮಾಡ್ಯುಲೇಷನ್."
+   },
+   "sliders": [
+    {
+     "name": "m",
+     "label": {
+      "en": "Modulation index m",
+      "kn": "ಮಾಡ್ಯುಲೇಷನ್ ಸೂಚ್ಯಂಕ m"
+     },
+     "min": 0,
+     "max": 1.5,
+     "step": 0.05,
+     "value": 0.5
+    },
+    {
+     "name": "fm",
+     "label": {
+      "en": "Message frequency",
+      "kn": "ಸಂದೇಶ ಆವೃತ್ತಿ"
+     },
+     "min": 1,
+     "max": 3,
+     "step": 0.5,
+     "value": 1,
+     "unit": "kHz"
+    },
+    {
+     "name": "Vc",
+     "label": {
+      "en": "Carrier amplitude",
+      "kn": "ವಾಹಕ ವೈಶಾಲ್ಯ"
+     },
+     "min": 1,
+     "max": 3,
+     "step": 0.25,
+     "value": 2.5,
+     "unit": "V"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "showe",
+     "label": {
+      "en": "Show envelope",
+      "kn": "ಆವರಣ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "fc",
+     "label": {
+      "en": "Carrier frequency",
+      "kn": "ವಾಹಕ ಆವೃತ್ತಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "20 kHz"
+       },
+       "value": 20
+      },
+      {
+       "label": {
+        "en": "40 kHz"
+       },
+       "value": 40
+      }
+     ],
+     "value": 20
+    }
+   ],
+   "time": {
+    "max": 2,
+    "unit": "ms",
+    "loop": true,
+    "autoplay": true,
+    "speeds": [
+     0.05,
+     0.1,
+     0.25
+    ],
+    "speed": 0.1
+   },
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -6.5,
+     6.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1.0,
+     "y1": 0,
+     "x2": 29.0,
+     "y2": 0,
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 29.0,
+     "y": -0.6,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "shape": "wave",
+     "fn": "0.8*Vc*(1 + m*sin(2*pi*fm*((x - 1.0)/14 + t)))*sin(2*pi*fc*((x - 1.0)/14 + t))",
+     "color": "yellow",
+     "width": 2,
+     "from": 1.0,
+     "to": 19.5
+    },
+    {
+     "shape": "wave",
+     "fn": "0.8*Vc*(1 + m*sin(2*pi*fm*((x - 1.0)/14 + t)))",
+     "color": "orange",
+     "width": 3,
+     "visibleIf": "showe",
+     "from": 1.0,
+     "to": 19.5
+    },
+    {
+     "shape": "wave",
+     "fn": "-0.8*Vc*(1 + m*sin(2*pi*fm*((x - 1.0)/14 + t)))",
+     "color": "orange",
+     "width": 3,
+     "visibleIf": "showe",
+     "from": 1.0,
+     "to": 19.5
+    },
+    {
+     "shape": "line",
+     "x1": 21,
+     "y1": -5,
+     "x2": 29.5,
+     "y2": -5,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 25.25,
+     "y": -6.2,
+     "text": {
+      "en": "spectrum (kHz)",
+      "kn": "ವರ್ಣಪಟಲ (kHz)"
+     },
+     "size": 16
+    },
+    {
+     "shape": "line",
+     "x1": 25.25,
+     "y1": -5,
+     "x2": 25.25,
+     "y2": "-5 + 0.8*Vc",
+     "color": "yellow",
+     "width": 8
+    },
+    {
+     "shape": "text",
+     "x": 25.25,
+     "y": -5.6,
+     "text": {
+      "en": "{fc}"
+     },
+     "size": 14
+    },
+    {
+     "shape": "line",
+     "x1": "25.25 - 0.5*fm",
+     "y1": -5,
+     "x2": "25.25 - 0.5*fm",
+     "y2": "-5 + 0.8*m*Vc/2",
+     "color": "green",
+     "width": 8
+    },
+    {
+     "shape": "text",
+     "x": "25.25 - 0.5*fm",
+     "y": -5.6,
+     "text": {
+      "en": "{fc - fm}"
+     },
+     "size": 14
+    },
+    {
+     "shape": "line",
+     "x1": "25.25 + 0.5*fm",
+     "y1": -5,
+     "x2": "25.25 + 0.5*fm",
+     "y2": "-5 + 0.8*m*Vc/2",
+     "color": "green",
+     "width": 8
+    },
+    {
+     "shape": "text",
+     "x": "25.25 + 0.5*fm",
+     "y": -5.6,
+     "text": {
+      "en": "{fc + fm}"
+     },
+     "size": 14
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 5.5,
+     "text": {
+      "en": "Over-modulated!",
+      "kn": "ಅತಿ ಮಾಡ್ಯುಲೇಷನ್!"
+     },
+     "size": 22,
+     "color": "red",
+     "visibleIf": "m > 1"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 3.8,
+     "text": {
+      "en": "Vmax {Vc*(1 + m):2} V"
+     },
+     "size": 18,
+     "color": "orange"
+    },
+    {
+     "shape": "label",
+     "x": 25,
+     "y": 2.4,
+     "text": {
+      "en": "Vmin {Vc*(1 - m):2} V"
+     },
+     "size": 18,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Total power / carrier power"
+     },
+     "expr": "1 + m^2/2",
+     "digits": 3
+    },
+    {
+     "label": {
+      "en": "Power in sidebands"
+     },
+     "expr": "100*(m^2/2)/(1 + m^2/2)",
+     "digits": 1,
+     "unit": "%"
+    },
+    {
+     "label": {
+      "en": "Bandwidth 2fm"
+     },
+     "expr": "2*fm",
+     "digits": 1,
+     "unit": "kHz"
+    },
+    {
+     "label": {
+      "en": "Side-frequency amplitude mVc/2"
+     },
+     "expr": "m*Vc/2",
+     "digits": 2,
+     "unit": "V"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set m = 0.5. Read Vmax and Vmin and check m = (Vmax − Vmin)/(Vmax + Vmin)."
+    },
+    {
+     "en": "Raise m to 1. How much of the total power is now in the sidebands?"
+    },
+    {
+     "en": "Push m above 1. What goes wrong with the envelope?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

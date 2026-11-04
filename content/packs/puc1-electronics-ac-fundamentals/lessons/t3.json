@@ -467,6 +467,344 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "AC through R, L and C",
+    "kn": "R, L ಮತ್ತು C ಮೂಲಕ AC"
+   },
+   "narration": {
+    "en": "Pick an element. The yellow curve is the voltage, the blue curve the current (scaled to fit). In R they are in phase; in L the current lags by 90°; in C it leads by 90°. The right graph shows how the opposition changes with frequency.",
+    "kn": "ಘಟಕ ಆಯ್ಕೆಮಾಡಿ. ಹಳದಿ ವೋಲ್ಟೇಜ್, ನೀಲಿ ಪ್ರವಾಹ. R ನಲ್ಲಿ ಒಂದೇ ಹಂತ; L ನಲ್ಲಿ ಪ್ರವಾಹ 90° ಹಿಂದೆ; C ನಲ್ಲಿ 90° ಮುಂದೆ. ಬಲ ಗ್ರಾಫ್ ಆವೃತ್ತಿಯೊಂದಿಗೆ ಪ್ರತಿರೋಧದ ಬದಲಾವಣೆ ತೋರಿಸುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Pick an element. The yellow curve is the voltage, the blue curve the current (scaled to fit). In R they are in phase; in L the current lags by 90°; in C it leads by 90°. The right graph shows how the opposition changes with frequency.",
+    "kn": "ಘಟಕ ಆಯ್ಕೆಮಾಡಿ. ಹಳದಿ ವೋಲ್ಟೇಜ್, ನೀಲಿ ಪ್ರವಾಹ. R ನಲ್ಲಿ ಒಂದೇ ಹಂತ; L ನಲ್ಲಿ ಪ್ರವಾಹ 90° ಹಿಂದೆ; C ನಲ್ಲಿ 90° ಮುಂದೆ. ಬಲ ಗ್ರಾಫ್ ಆವೃತ್ತಿಯೊಂದಿಗೆ ಪ್ರತಿರೋಧದ ಬದಲಾವಣೆ ತೋರಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "f",
+     "label": {
+      "en": "Frequency",
+      "kn": "ಆವೃತ್ತಿ"
+     },
+     "min": 25,
+     "max": 200,
+     "step": 5,
+     "value": 50,
+     "unit": "Hz"
+    },
+    {
+     "name": "R",
+     "label": {
+      "en": "Resistance R",
+      "kn": "ರೋಧ"
+     },
+     "min": 20,
+     "max": 200,
+     "step": 10,
+     "value": 100,
+     "unit": "Ω"
+    },
+    {
+     "name": "L",
+     "label": {
+      "en": "Inductance L",
+      "kn": "ಪ್ರೇರಕತೆ"
+     },
+     "min": 20,
+     "max": 500,
+     "step": 20,
+     "value": 100,
+     "unit": "mH"
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "Capacitance C",
+      "kn": "ಧಾರಕತೆ"
+     },
+     "min": 10,
+     "max": 200,
+     "step": 10,
+     "value": 100,
+     "unit": "µF"
+    }
+   ],
+   "choices": [
+    {
+     "name": "el",
+     "label": {
+      "en": "Element",
+      "kn": "ಘಟಕ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Resistor",
+        "kn": "ರೋಧಕ"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Inductor",
+        "kn": "ಪ್ರೇರಕ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Capacitor",
+        "kn": "ಧಾರಕ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 2
+    }
+   ],
+   "time": {
+    "max": 40,
+    "unit": "ms",
+    "speeds": [
+     0.25,
+     0.5,
+     1,
+     2,
+     4
+    ],
+    "speed": 1,
+    "loop": true
+   },
+   "vars": [
+    {
+     "name": "X",
+     "expr": "if(el == 1, R, if(el == 2, 2*pi*f*L/1000, 1e6/(2*pi*f*C)))"
+    },
+    {
+     "name": "Im",
+     "expr": "10/X"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     34
+    ],
+    "y": [
+     -6,
+     6.6
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 0,
+     "x2": 19.2,
+     "y2": 0,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": -5.5,
+     "x2": 1,
+     "y2": 5.8,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 19.2,
+     "y": -0.7,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "wave",
+     "fn": "4*sin(2*pi*f*(x - 1)/0.45/1000)",
+     "color": "yellow",
+     "width": 4,
+     "from": 1,
+     "to": 19
+    },
+    {
+     "shape": "wave",
+     "fn": "3*sin(2*pi*f*(x - 1)/0.45/1000 + if(el == 1, 0, if(el == 2, -pi/2, pi/2)))",
+     "color": "blue",
+     "width": 4,
+     "from": 1,
+     "to": 19
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 5.6,
+     "text": {
+      "en": "v"
+     },
+     "color": "yellow",
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 3,
+     "y": 5.6,
+     "text": {
+      "en": "i"
+     },
+     "color": "blue",
+     "size": 24
+    },
+    {
+     "shape": "circle",
+     "x": "1 + 0.45*t",
+     "y": "4*sin(2*pi*f*t/1000)",
+     "r": 0.22,
+     "color": "yellow"
+    },
+    {
+     "shape": "circle",
+     "x": "1 + 0.45*t",
+     "y": "3*sin(2*pi*f*t/1000 + if(el == 1, 0, if(el == 2, -pi/2, pi/2)))",
+     "r": 0.22,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 22,
+     "y1": -5,
+     "x2": 33.2,
+     "y2": -5,
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 22,
+     "y1": -5,
+     "x2": 22,
+     "y2": 5.5,
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 33.2,
+     "y": -5.7,
+     "text": {
+      "en": "f (Hz)"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 22.2,
+     "y": 5.9,
+     "text": {
+      "en": "X (Ω)"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "path",
+     "fn": "(-5 + 0.025*((min(R, 400)) - (0)))",
+     "color": "white",
+     "visibleIf": "el == 1",
+     "width": 3,
+     "from": 22.0,
+     "to": 33.0
+    },
+    {
+     "shape": "path",
+     "fn": "(-5 + 0.025*((min(2*pi*(0 + 18.1818*(x - 22))*L/1000, 400)) - (0)))",
+     "color": "white",
+     "visibleIf": "el == 2",
+     "width": 3,
+     "from": 22.0,
+     "to": 33.0
+    },
+    {
+     "shape": "path",
+     "fn": "(-5 + 0.025*((min(1e6/(2*pi*max((0 + 18.1818*(x - 22)), 1)*C), 400)) - (0)))",
+     "color": "white",
+     "visibleIf": "el == 3",
+     "width": 3,
+     "from": 22.22,
+     "to": 33.0
+    },
+    {
+     "shape": "circle",
+     "x": "(22 + 0.055*((f) - (0)))",
+     "y": "(-5 + 0.025*((min(X, 400)) - (0)))",
+     "r": 0.3,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 27.5,
+     "y": 5.9,
+     "text": {
+      "en": "{X:1} Ω"
+     },
+     "size": 22,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Opposition R or X (Ω)"
+     },
+     "expr": "X",
+     "digits": 1,
+     "unit": "Ω"
+    },
+    {
+     "label": {
+      "en": "Peak current (Vm = 10 V)"
+     },
+     "expr": "Im",
+     "digits": 3,
+     "unit": "A"
+    },
+    {
+     "label": {
+      "en": "Phase of i relative to v"
+     },
+     "expr": "if(el == 1, 0, if(el == 2, -90, 90))",
+     "digits": 0,
+     "unit": "°"
+    },
+    {
+     "label": {
+      "en": "Average power"
+     },
+     "expr": "if(el == 1, 10*Im/2, 0)",
+     "digits": 2,
+     "unit": "W"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Choose the inductor and double the frequency. What happens to XL and to the current?"
+    },
+    {
+     "en": "Choose the capacitor. Does the current peak before or after the voltage?"
+    },
+    {
+     "en": "Compare the average power taken by R, L and C."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

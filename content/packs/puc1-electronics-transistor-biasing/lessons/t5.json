@@ -525,6 +525,474 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Voltage divider bias",
+    "kn": "ವೋಲ್ಟೇಜ್ ವಿಭಾಜಕ ಬಯಾಸ್"
+   },
+   "narration": {
+    "en": "R1 and R2 fix the base voltage, so the emitter voltage VE = VB − 0.7 and IE = VE/RE hardly depend on β. If IC rises, the drop across RE rises and VBE falls, pulling IC back. VCC = 12 V and RC = 2 kΩ.",
+    "kn": "R1, R2 ಆಧಾರ ವೋಲ್ಟೇಜ್ ನಿಗದಿ ಮಾಡುತ್ತವೆ; VE = VB − 0.7, IE = VE/RE, β ಮೇಲೆ ಅಷ್ಟು ಅವಲಂಬಿಸುವುದಿಲ್ಲ. IC ಏರಿದರೆ RE ಮೇಲಿನ ಇಳಿಕೆ ಹೆಚ್ಚಿ VBE ಕಡಿಮೆಯಾಗುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "R1 and R2 fix the base voltage, so the emitter voltage VE = VB − 0.7 and IE = VE/RE hardly depend on β. If IC rises, the drop across RE rises and VBE falls, pulling IC back. VCC = 12 V and RC = 2 kΩ.",
+    "kn": "R1, R2 ಆಧಾರ ವೋಲ್ಟೇಜ್ ನಿಗದಿ ಮಾಡುತ್ತವೆ; VE = VB − 0.7, IE = VE/RE, β ಮೇಲೆ ಅಷ್ಟು ಅವಲಂಬಿಸುವುದಿಲ್ಲ. IC ಏರಿದರೆ RE ಮೇಲಿನ ಇಳಿಕೆ ಹೆಚ್ಚಿ VBE ಕಡಿಮೆಯಾಗುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "R1",
+     "label": {
+      "en": "R1",
+      "kn": "R1"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 47,
+     "unit": "kΩ"
+    },
+    {
+     "name": "R2",
+     "label": {
+      "en": "R2",
+      "kn": "R2"
+     },
+     "min": 2,
+     "max": 30,
+     "step": 1,
+     "value": 10,
+     "unit": "kΩ"
+    },
+    {
+     "name": "RE",
+     "label": {
+      "en": "Emitter resistor RE",
+      "kn": "ಉತ್ಸರ್ಜಕ ರೋಧ RE"
+     },
+     "min": 0.2,
+     "max": 3,
+     "step": 0.1,
+     "value": 1,
+     "unit": "kΩ"
+    }
+   ],
+   "choices": [
+    {
+     "name": "beta",
+     "label": {
+      "en": "β of the transistor",
+      "kn": "ಟ್ರಾನ್ಸಿಸ್ಟರ್‌ನ β"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "50"
+       },
+       "value": 50
+      },
+      {
+       "label": {
+        "en": "100"
+       },
+       "value": 100
+      },
+      {
+       "label": {
+        "en": "200"
+       },
+       "value": 200
+      }
+     ],
+     "value": 100
+    }
+   ],
+   "vars": [
+    {
+     "name": "VCC",
+     "expr": "12"
+    },
+    {
+     "name": "VB",
+     "expr": "VCC*R2/(R1 + R2)"
+    },
+    {
+     "name": "Rth",
+     "expr": "R1*R2/(R1 + R2)"
+    },
+    {
+     "name": "IB",
+     "expr": "max(VB - 0.7, 0)/(Rth + (1 + beta)*RE)"
+    },
+    {
+     "name": "Ic",
+     "expr": "min(beta*IB, (VCC - 0.2)/(2 + RE))"
+    },
+    {
+     "name": "Ie",
+     "expr": "Ic + IB"
+    },
+    {
+     "name": "Vce",
+     "expr": "VCC - Ic*2 - Ie*RE"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11.5
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 3,
+     "y1": 10.5,
+     "x2": 16,
+     "y2": 10.5,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 16.3,
+     "y": 10.5,
+     "text": {
+      "en": "VCC = {VCC} V"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 11.2,
+     "y1": 10.5,
+     "x2": 11.2,
+     "y2": 9.6,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 11.2,
+     "y": 8.6,
+     "size": 2,
+     "angle": 90
+    },
+    {
+     "shape": "text",
+     "x": 12.1,
+     "y": 8.6,
+     "text": {
+      "en": "RC"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 11.2,
+     "y1": 7.6,
+     "x2": 11.2,
+     "y2": 7.7,
+     "width": 4
+    },
+    {
+     "shape": "circle",
+     "x": 10.3,
+     "y": 5.5,
+     "r": 1.7,
+     "fill": false,
+     "width": 2,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 9.5,
+     "y1": 4.5,
+     "x2": 9.5,
+     "y2": 6.5,
+     "width": 6,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 8.0,
+     "y1": 5.5,
+     "x2": 9.5,
+     "y2": 5.5,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 9.5,
+     "y1": 5.9,
+     "x2": 11.2,
+     "y2": 6.8,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 11.2,
+     "y1": 6.8,
+     "x2": 11.2,
+     "y2": 7.7,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 9.5,
+     "y1": 5.1,
+     "x2": 11.2,
+     "y2": 4.2,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 11.2,
+     "y1": 4.2,
+     "x2": 11.2,
+     "y2": 3.3,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "arrow",
+     "x": 10.1,
+     "y": 4.84,
+     "dx": 0.9,
+     "dy": -0.48,
+     "width": 4,
+     "color": "white"
+    },
+    {
+     "shape": "line",
+     "x1": 11.2,
+     "y1": 3.3,
+     "x2": 11.2,
+     "y2": 3.2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 2,
+     "y1": 1,
+     "x2": 16,
+     "y2": 1,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 16.3,
+     "y": 1,
+     "text": {
+      "en": "0 V"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 10.5,
+     "x2": 5,
+     "y2": 9.4,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 5,
+     "y": 8.4,
+     "size": 2,
+     "angle": 90
+    },
+    {
+     "shape": "text",
+     "x": 4.2,
+     "y": 8.4,
+     "text": {
+      "en": "R1"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 7.4,
+     "x2": 5,
+     "y2": 5.5,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 5.5,
+     "x2": 8,
+     "y2": 5.5,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 5.5,
+     "x2": 5,
+     "y2": 4.4,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 5,
+     "y": 3.4,
+     "size": 2,
+     "angle": 90
+    },
+    {
+     "shape": "text",
+     "x": 4.2,
+     "y": 3.4,
+     "text": {
+      "en": "R2"
+     },
+     "size": 18,
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 5,
+     "y1": 2.4,
+     "x2": 5,
+     "y2": 1,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 11.2,
+     "y": 2.3,
+     "size": 1.6,
+     "angle": 90,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 12.1,
+     "y": 2.3,
+     "text": {
+      "en": "RE"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 11.2,
+     "y1": 1.5,
+     "x2": 11.2,
+     "y2": 1,
+     "width": 4
+    },
+    {
+     "shape": "label",
+     "x": 23,
+     "y": 10,
+     "text": {
+      "en": "VB = {VB:2} V"
+     },
+     "size": 22
+    },
+    {
+     "shape": "label",
+     "x": 23,
+     "y": 8.2,
+     "text": {
+      "en": "VE = {Ie*RE:2} V"
+     },
+     "size": 22
+    },
+    {
+     "shape": "label",
+     "x": 23,
+     "y": 6.4,
+     "text": {
+      "en": "IC = {Ic:3} mA"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 23,
+     "y": 4.6,
+     "text": {
+      "en": "VCE = {Vce:2} V"
+     },
+     "size": 24,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 23,
+     "y": 2.6,
+     "text": {
+      "en": "estimate (VB − 0.7)/RE = {(VB - 0.7)/RE:3} mA",
+      "kn": "ಅಂದಾಜು = {(VB - 0.7)/RE:3} mA"
+     },
+     "size": 18,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "IC"
+     },
+     "expr": "Ic",
+     "digits": 3,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "VCE"
+     },
+     "expr": "Vce",
+     "digits": 2,
+     "unit": "V"
+    },
+    {
+     "label": {
+      "en": "IB"
+     },
+     "expr": "1000*IB",
+     "digits": 2,
+     "unit": "µA"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Switch β from 50 to 200. How much does IC change?"
+    },
+    {
+     "en": "Compare IC with the quick estimate (VB − 0.7)/RE. When is the estimate good?"
+    },
+    {
+     "en": "Make RE very small. Does the circuit stay as stable?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

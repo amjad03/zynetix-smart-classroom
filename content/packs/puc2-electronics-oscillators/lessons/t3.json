@@ -715,6 +715,421 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "RC phase-shift network",
+    "kn": "RC ಹಂತ-ಸ್ಥಳಾಂತರ ಜಾಲ"
+   },
+   "narration": {
+    "en": "Three RC sections shift the phase of the signal. At exactly one frequency, f0 = 1/(2π√6 RC), the total shift is 180°, which, with the 180° of the inverting amplifier, makes 360°. There the network passes only 1/29 of the signal, so the amplifier gain must be at least 29.",
+    "kn": "ಮೂರು RC ಭಾಗಗಳು ಹಂತವನ್ನು ಬದಲಿಸುತ್ತವೆ. f0 = 1/(2π√6 RC) ನಲ್ಲಿ ಒಟ್ಟು 180°; ವರ್ಧಕದ 180° ಸೇರಿ 360°. ಅಲ್ಲಿ ಜಾಲ 1/29 ಮಾತ್ರ ಹಾಯಿಸುತ್ತದೆ, ಆದ್ದರಿಂದ ಲಾಭ ಕನಿಷ್ಠ 29."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Three RC sections shift the phase of the signal. At exactly one frequency, f0 = 1/(2π√6 RC), the total shift is 180°, which, with the 180° of the inverting amplifier, makes 360°. There the network passes only 1/29 of the signal, so the amplifier gain must be at least 29.",
+    "kn": "ಮೂರು RC ಭಾಗಗಳು ಹಂತವನ್ನು ಬದಲಿಸುತ್ತವೆ. f0 = 1/(2π√6 RC) ನಲ್ಲಿ ಒಟ್ಟು 180°; ವರ್ಧಕದ 180° ಸೇರಿ 360°. ಅಲ್ಲಿ ಜಾಲ 1/29 ಮಾತ್ರ ಹಾಯಿಸುತ್ತದೆ, ಆದ್ದರಿಂದ ಲಾಭ ಕನಿಷ್ಠ 29."
+   },
+   "sliders": [
+    {
+     "name": "R",
+     "label": {
+      "en": "R",
+      "kn": "R"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "kΩ"
+    },
+    {
+     "name": "C",
+     "label": {
+      "en": "C",
+      "kn": "C"
+     },
+     "min": 1,
+     "max": 20,
+     "step": 1,
+     "value": 10,
+     "unit": "nF"
+    }
+   ],
+   "handles": [
+    {
+     "name": "F",
+     "x": 17.8,
+     "y": 0.8,
+     "color": "yellow",
+     "label": "f / f0",
+     "line": [
+      [
+       16.1667,
+       0.8
+      ],
+      [
+       29.0,
+       0.8
+      ]
+     ]
+    }
+   ],
+   "vars": [
+    {
+     "name": "r",
+     "expr": "(F_x - 15)*3/14"
+    },
+    {
+     "name": "al",
+     "expr": "sqrt(6)/r"
+    },
+    {
+     "name": "re",
+     "expr": "1 - 5*al^2"
+    },
+    {
+     "name": "im",
+     "expr": "6*al - al^3"
+    },
+    {
+     "name": "phnow",
+     "expr": "mod(deg(atan2(im, re)), 360)"
+    },
+    {
+     "name": "f0",
+     "expr": "1/(2*pi*sqrt(6)*R*C*1e-6)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "icon",
+     "icon": "capacitor",
+     "x": 2.2,
+     "y": 8,
+     "size": 1.6,
+     "color": "blue"
+    },
+    {
+     "shape": "icon",
+     "icon": "capacitor",
+     "x": 6.2,
+     "y": 8,
+     "size": 1.6,
+     "color": "blue"
+    },
+    {
+     "shape": "icon",
+     "icon": "capacitor",
+     "x": 10.2,
+     "y": 8,
+     "size": 1.6,
+     "color": "blue"
+    },
+    {
+     "shape": "line",
+     "x1": 3.0,
+     "y1": 8,
+     "x2": 5.4,
+     "y2": 8,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 7.0,
+     "y1": 8,
+     "x2": 9.4,
+     "y2": 8,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 11.0,
+     "y1": 8,
+     "x2": 13.4,
+     "y2": 8,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": 8,
+     "x2": 1.4,
+     "y2": 8,
+     "width": 4
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 4.4,
+     "y": 6.3,
+     "size": 1.8,
+     "angle": 90
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 8.4,
+     "y": 6.3,
+     "size": 1.8,
+     "angle": 90
+    },
+    {
+     "shape": "icon",
+     "icon": "resistor",
+     "x": 12.4,
+     "y": 6.3,
+     "size": 1.8,
+     "angle": 90
+    },
+    {
+     "shape": "line",
+     "x1": 4.4,
+     "y1": 8,
+     "x2": 4.4,
+     "y2": 7.2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 8.4,
+     "y1": 8,
+     "x2": 8.4,
+     "y2": 7.2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 12.4,
+     "y1": 8,
+     "x2": 12.4,
+     "y2": 7.2,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 4.4,
+     "y1": 5.4,
+     "x2": 4.4,
+     "y2": 4.6,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 8.4,
+     "y1": 5.4,
+     "x2": 8.4,
+     "y2": 4.6,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 12.4,
+     "y1": 5.4,
+     "x2": 12.4,
+     "y2": 4.6,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 0.5,
+     "y1": 4.6,
+     "x2": 12.4,
+     "y2": 4.6,
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": 0.5,
+     "y": 8.6,
+     "text": {
+      "en": "in"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 12.6,
+     "y": 8.6,
+     "text": {
+      "en": "out"
+     },
+     "size": 18,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 3.4,
+     "text": {
+      "en": "R = {R} kΩ, C = {C} nF"
+     },
+     "size": 18
+    },
+    {
+     "shape": "label",
+     "x": 6.5,
+     "y": 1.6,
+     "text": {
+      "en": "phase shift {phnow:1}°",
+      "kn": "ಹಂತ ಸ್ಥಳಾಂತರ {phnow:1}°"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "line",
+     "x1": 15,
+     "y1": 1.5,
+     "x2": 29,
+     "y2": 1.5,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 15,
+     "y1": 1.5,
+     "x2": 15,
+     "y2": 9.5,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 29,
+     "y": 0.9,
+     "text": {
+      "en": "f / f0"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 15.2,
+     "y": 9.85,
+     "text": {
+      "en": "phase (°)"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 15.0,
+     "y1": 5.5,
+     "x2": 29.0,
+     "y2": 5.5,
+     "dashed": true,
+     "color": "green",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 14.8,
+     "y": 5.5,
+     "text": {
+      "en": "180"
+     },
+     "size": 16,
+     "color": "green",
+     "align": "right"
+    },
+    {
+     "shape": "line",
+     "x1": 19.6667,
+     "y1": 1.5,
+     "x2": 19.6667,
+     "y2": 9.5,
+     "dashed": true,
+     "color": "white",
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 19.6667,
+     "y": 0.9,
+     "text": {
+      "en": "1"
+     },
+     "size": 16
+    },
+    {
+     "shape": "path",
+     "fn": "(1.5 + 0.0444444*((mod(deg(atan2(6*(sqrt(6)/(0 + 0.214286*(x - 15))) - (sqrt(6)/(0 + 0.214286*(x - 15)))^3, 1 - 5*(sqrt(6)/(0 + 0.214286*(x - 15)))^2)), 360)) - (90)))",
+     "color": "yellow",
+     "width": 3,
+     "from": 15.9333,
+     "to": 29.0
+    },
+    {
+     "shape": "circle",
+     "x": "(15 + 4.66667*((r) - (0)))",
+     "y": "(1.5 + 0.0444444*((phnow) - (90)))",
+     "r": 0.25,
+     "color": "orange"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "f0 = 1/(2π√6 RC)"
+     },
+     "expr": "f0",
+     "digits": 0,
+     "unit": "Hz"
+    },
+    {
+     "label": {
+      "en": "Test frequency"
+     },
+     "expr": "r*f0",
+     "digits": 0,
+     "unit": "Hz"
+    },
+    {
+     "label": {
+      "en": "Network gain |β|"
+     },
+     "expr": "1/sqrt(re^2 + im^2)",
+     "digits": 4
+    },
+    {
+     "label": {
+      "en": "Gain needed 1/|β|"
+     },
+     "expr": "sqrt(re^2 + im^2)",
+     "digits": 1
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Drag the test frequency marker until the phase shift is 180°. Is f/f0 = 1?"
+    },
+    {
+     "en": "At f0, check that the network gain is 1/29 ≈ 0.034."
+    },
+    {
+     "en": "Double C. What happens to f0?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

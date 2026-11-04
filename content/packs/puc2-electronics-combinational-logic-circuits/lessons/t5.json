@@ -536,6 +536,417 @@
    }
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "4-bit magnitude comparator",
+    "kn": "4-ಬಿಟ್ ಪರಿಮಾಣ ಹೋಲಿಕೆ"
+   },
+   "narration": {
+    "en": "The comparator looks at the bits from the MSB down. xi = 1 when bit i of A and B are equal. The first bit where they differ (red box) decides: if A has the 1 there, A > B. If every xi is 1, A = B.",
+    "kn": "ಹೋಲಿಕೆ MSB ಯಿಂದ ಕೆಳಗೆ ಬಿಟ್‌ಗಳನ್ನು ನೋಡುತ್ತದೆ. ಸಮ ಬಿಟ್‌ಗೆ xi = 1. ಮೊದಲ ಭಿನ್ನ ಬಿಟ್ (ಕೆಂಪು ಪೆಟ್ಟಿಗೆ) ನಿರ್ಧರಿಸುತ್ತದೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The comparator looks at the bits from the MSB down. xi = 1 when bit i of A and B are equal. The first bit where they differ (red box) decides: if A has the 1 there, A > B. If every xi is 1, A = B.",
+    "kn": "ಹೋಲಿಕೆ MSB ಯಿಂದ ಕೆಳಗೆ ಬಿಟ್‌ಗಳನ್ನು ನೋಡುತ್ತದೆ. ಸಮ ಬಿಟ್‌ಗೆ xi = 1. ಮೊದಲ ಭಿನ್ನ ಬಿಟ್ (ಕೆಂಪು ಪೆಟ್ಟಿಗೆ) ನಿರ್ಧರಿಸುತ್ತದೆ."
+   },
+   "sliders": [
+    {
+     "name": "A",
+     "label": {
+      "en": "A",
+      "kn": "A"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 9
+    },
+    {
+     "name": "B",
+     "label": {
+      "en": "B",
+      "kn": "B"
+     },
+     "min": 0,
+     "max": 15,
+     "step": 1,
+     "value": 7
+    }
+   ],
+   "toggles": [
+    {
+     "name": "sx",
+     "label": {
+      "en": "Show equality bits xi",
+      "kn": "xi ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "fd",
+     "expr": "if(mod(floor((A)/8), 2) != mod(floor((B)/8), 2), 3, if(mod(floor((A)/4), 2) != mod(floor((B)/4), 2), 2, if(mod(floor((A)/2), 2) != mod(floor((B)/2), 2), 1, if(mod(floor((A)/1), 2) != mod(floor((B)/1), 2), 0, -1))))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 9.4,
+     "text": {
+      "en": "A = {A}"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 2,
+     "y": 7.4,
+     "text": {
+      "en": "B = {B}"
+     },
+     "size": 24,
+     "align": "left"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 9.4,
+     "text": {
+      "en": "{mod(floor((A)/1), 2)}"
+     },
+     "size": 32
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 7.4,
+     "text": {
+      "en": "{mod(floor((B)/1), 2)}"
+     },
+     "size": 32
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 10.6,
+     "text": {
+      "en": "bit 0"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 5.6,
+     "text": {
+      "en": "x0={if(mod(floor((A)/1), 2) == mod(floor((B)/1), 2), 1, 0)}"
+     },
+     "size": 18,
+     "color": "orange",
+     "visibleIf": "sx"
+    },
+    {
+     "shape": "rect",
+     "x": 19,
+     "y": 6.6,
+     "w": 2,
+     "h": 3.6,
+     "fill": false,
+     "width": 3,
+     "color": "red",
+     "visibleIf": "fd == 0"
+    },
+    {
+     "shape": "text",
+     "x": 17,
+     "y": 9.4,
+     "text": {
+      "en": "{mod(floor((A)/2), 2)}"
+     },
+     "size": 32
+    },
+    {
+     "shape": "text",
+     "x": 17,
+     "y": 7.4,
+     "text": {
+      "en": "{mod(floor((B)/2), 2)}"
+     },
+     "size": 32
+    },
+    {
+     "shape": "text",
+     "x": 17,
+     "y": 10.6,
+     "text": {
+      "en": "bit 1"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 17,
+     "y": 5.6,
+     "text": {
+      "en": "x1={if(mod(floor((A)/2), 2) == mod(floor((B)/2), 2), 1, 0)}"
+     },
+     "size": 18,
+     "color": "orange",
+     "visibleIf": "sx"
+    },
+    {
+     "shape": "rect",
+     "x": 16,
+     "y": 6.6,
+     "w": 2,
+     "h": 3.6,
+     "fill": false,
+     "width": 3,
+     "color": "red",
+     "visibleIf": "fd == 1"
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 9.4,
+     "text": {
+      "en": "{mod(floor((A)/4), 2)}"
+     },
+     "size": 32
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 7.4,
+     "text": {
+      "en": "{mod(floor((B)/4), 2)}"
+     },
+     "size": 32
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 10.6,
+     "text": {
+      "en": "bit 2"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 14,
+     "y": 5.6,
+     "text": {
+      "en": "x2={if(mod(floor((A)/4), 2) == mod(floor((B)/4), 2), 1, 0)}"
+     },
+     "size": 18,
+     "color": "orange",
+     "visibleIf": "sx"
+    },
+    {
+     "shape": "rect",
+     "x": 13,
+     "y": 6.6,
+     "w": 2,
+     "h": 3.6,
+     "fill": false,
+     "width": 3,
+     "color": "red",
+     "visibleIf": "fd == 2"
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 9.4,
+     "text": {
+      "en": "{mod(floor((A)/8), 2)}"
+     },
+     "size": 32
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 7.4,
+     "text": {
+      "en": "{mod(floor((B)/8), 2)}"
+     },
+     "size": 32
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 10.6,
+     "text": {
+      "en": "bit 3"
+     },
+     "size": 16
+    },
+    {
+     "shape": "text",
+     "x": 11,
+     "y": 5.6,
+     "text": {
+      "en": "x3={if(mod(floor((A)/8), 2) == mod(floor((B)/8), 2), 1, 0)}"
+     },
+     "size": 18,
+     "color": "orange",
+     "visibleIf": "sx"
+    },
+    {
+     "shape": "rect",
+     "x": 10,
+     "y": 6.6,
+     "w": 2,
+     "h": 3.6,
+     "fill": false,
+     "width": 3,
+     "color": "red",
+     "visibleIf": "fd == 3"
+    },
+    {
+     "shape": "circle",
+     "x": 9,
+     "y": 2.5,
+     "r": 0.9,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 9,
+     "y": 2.5,
+     "r": 0.7200000000000001,
+     "color": "green",
+     "visibleIf": "(A > B)"
+    },
+    {
+     "shape": "text",
+     "x": 9,
+     "y": 1.05,
+     "text": {
+      "en": "A > B"
+     },
+     "size": 22
+    },
+    {
+     "shape": "circle",
+     "x": 15,
+     "y": 2.5,
+     "r": 0.9,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 15,
+     "y": 2.5,
+     "r": 0.7200000000000001,
+     "color": "yellow",
+     "visibleIf": "(A == B)"
+    },
+    {
+     "shape": "text",
+     "x": 15,
+     "y": 1.05,
+     "text": {
+      "en": "A = B"
+     },
+     "size": 22
+    },
+    {
+     "shape": "circle",
+     "x": 21,
+     "y": 2.5,
+     "r": 0.9,
+     "fill": false,
+     "color": "white",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 21,
+     "y": 2.5,
+     "r": 0.7200000000000001,
+     "color": "blue",
+     "visibleIf": "(A < B)"
+    },
+    {
+     "shape": "text",
+     "x": 21,
+     "y": 1.05,
+     "text": {
+      "en": "A < B"
+     },
+     "size": 22
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 4.5,
+     "text": {
+      "en": "decided at bit {fd} (first difference from the MSB)",
+      "kn": "ಬಿಟ್ {fd} ನಲ್ಲಿ ನಿರ್ಧಾರ"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "fd >= 0"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "A > B"
+     },
+     "expr": "A > B",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "A = B"
+     },
+     "expr": "A == B",
+     "digits": 0
+    },
+    {
+     "label": {
+      "en": "A < B"
+     },
+     "expr": "A < B",
+     "digits": 0
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Compare 9 and 7. Which bit decides, even though 7 has more 1s?"
+    },
+    {
+     "en": "Set A = B. Which output lights and what are all the xi?"
+    },
+    {
+     "en": "Compare 12 and 13. Why is the decision made only at bit 0?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

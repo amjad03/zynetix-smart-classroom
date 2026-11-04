@@ -325,6 +325,291 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Temperature, leakage and stability factor",
+    "kn": "ತಾಪ, ಸೋರಿಕೆ ಮತ್ತು ಸ್ಥಿರತಾ ಗುಣಾಂಕ"
+   },
+   "narration": {
+    "en": "The leakage current ICO doubles for every 10 °C rise. The collector current changes by ΔIC = S × ΔICO, where S is the stability factor of the bias circuit. Here IC is 2 mA at 25 °C, VCC = 12 V and RC + RE = 3 kΩ, with a germanium-like ICO of 1 µA at 25 °C. (Collector-to-base: RB = 200 kΩ, RC = 2 kΩ; divider: RTH/RE = 10; β = 100.)",
+    "kn": "ಪ್ರತಿ 10 °C ಏರಿಕೆಗೆ ಸೋರಿಕೆ ಪ್ರವಾಹ ICO ದ್ವಿಗುಣ. ΔIC = S × ΔICO; S ಬಯಾಸ್ ಮಂಡಲದ ಸ್ಥಿರತಾ ಗುಣಾಂಕ. 25 °C ನಲ್ಲಿ IC = 2 mA."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The leakage current ICO doubles for every 10 °C rise. The collector current changes by ΔIC = S × ΔICO, where S is the stability factor of the bias circuit. Here IC is 2 mA at 25 °C, VCC = 12 V and RC + RE = 3 kΩ, with a germanium-like ICO of 1 µA at 25 °C. (Collector-to-base: RB = 200 kΩ, RC = 2 kΩ; divider: RTH/RE = 10; β = 100.)",
+    "kn": "ಪ್ರತಿ 10 °C ಏರಿಕೆಗೆ ಸೋರಿಕೆ ಪ್ರವಾಹ ICO ದ್ವಿಗುಣ. ΔIC = S × ΔICO; S ಬಯಾಸ್ ಮಂಡಲದ ಸ್ಥಿರತಾ ಗುಣಾಂಕ. 25 °C ನಲ್ಲಿ IC = 2 mA."
+   },
+   "sliders": [
+    {
+     "name": "T",
+     "label": {
+      "en": "Temperature",
+      "kn": "ತಾಪಮಾನ"
+     },
+     "min": 25,
+     "max": 85,
+     "step": 5,
+     "value": 25,
+     "unit": "°C"
+    }
+   ],
+   "choices": [
+    {
+     "name": "bias",
+     "label": {
+      "en": "Bias circuit",
+      "kn": "ಬಯಾಸ್ ಮಂಡಲ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Fixed bias, S = 1 + β",
+        "kn": "ಸ್ಥಿರ ಬಯಾಸ್"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Collector-to-base",
+        "kn": "ಸಂಗ್ರಾಹಕ-ಆಧಾರ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Voltage divider",
+        "kn": "ವೋಲ್ಟೇಜ್ ವಿಭಾಜಕ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "Ico",
+     "expr": "pow(2, (T - 25)/10)"
+    },
+    {
+     "name": "S",
+     "expr": "if(bias == 1, 101, if(bias == 2, 50.7, 10))"
+    },
+    {
+     "name": "dIc",
+     "expr": "S*(Ico - 1)/1000"
+    },
+    {
+     "name": "Ic",
+     "expr": "min(2 + dIc, 11.8/3)"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 9.2,
+     "text": {
+      "en": "ICO = {Ico:1} µA"
+     },
+     "size": 24,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 7.6,
+     "text": {
+      "en": "S = {S:1}"
+     },
+     "size": 24
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 6.0,
+     "text": {
+      "en": "ΔIC = S ΔICO = {dIc:2} mA"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 1.5,
+     "w": 9,
+     "h": 3,
+     "fill": false,
+     "width": 2
+    },
+    {
+     "shape": "rect",
+     "x": 2,
+     "y": 1.5,
+     "w": "clamp(9*(T - 25)/60, 0, 9)",
+     "h": 3,
+     "color": {
+      "by": "(T - 25)/60",
+      "scale": [
+       "yellow",
+       "orange",
+       "red"
+      ]
+     }
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 2.7,
+     "text": {
+      "en": "{T} °C"
+     },
+     "size": 24
+    },
+    {
+     "shape": "label",
+     "x": 6.5,
+     "y": 0.6,
+     "text": {
+      "en": "Thermal runaway risk!",
+      "kn": "ಉಷ್ಣ ಓಟದ ಅಪಾಯ!"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "Ic >= 3.9"
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 1.2,
+     "x2": 29.5,
+     "y2": 1.2,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 1.2,
+     "x2": 14,
+     "y2": 10.0,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": 0.6,
+     "text": {
+      "en": "VCE (V)"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 14.2,
+     "y": 10.35,
+     "text": {
+      "en": "IC (mA)"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "line",
+     "x1": 29.5,
+     "y1": 1.2,
+     "x2": 14.0,
+     "y2": 9.0222,
+     "color": "orange",
+     "width": 3
+    },
+    {
+     "shape": "circle",
+     "x": 21.75,
+     "y": 5.1111,
+     "r": 0.25,
+     "color": "white",
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 21.75,
+     "y": 4.511100000000001,
+     "text": {
+      "en": "25 °C"
+     },
+     "size": 16
+    },
+    {
+     "shape": "circle",
+     "x": "(14 + 1.29167*((12 - 3*Ic) - (0)))",
+     "y": "(1.2 + 1.95556*((Ic) - (0)))",
+     "r": 0.3,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Leakage ICO"
+     },
+     "expr": "Ico",
+     "digits": 1,
+     "unit": "µA"
+    },
+    {
+     "label": {
+      "en": "Stability factor S"
+     },
+     "expr": "S",
+     "digits": 1
+    },
+    {
+     "label": {
+      "en": "Collector current"
+     },
+     "expr": "Ic",
+     "digits": 2,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "VCE"
+     },
+     "expr": "12 - 3*Ic",
+     "digits": 2,
+     "unit": "V"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Heat the fixed-bias circuit to 75 °C. Where does the Q-point go?"
+    },
+    {
+     "en": "Repeat with voltage-divider bias. How much smaller is the shift?"
+    },
+    {
+     "en": "Why can a large shift lead to thermal runaway?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

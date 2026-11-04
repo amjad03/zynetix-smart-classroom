@@ -746,6 +746,393 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Combining inductors",
+    "kn": "ಪ್ರೇರಕಗಳ ಸಂಯೋಜನೆ"
+   },
+   "narration": {
+    "en": "Two coils in series, close together, share magnetic flux: the mutual inductance is M = k√(L1 L2). If their fluxes add (aiding) the total is L1 + L2 + 2M; if they oppose it is L1 + L2 − 2M. Far-apart coils (k = 0) combine like resistors.",
+    "kn": "ಹತ್ತಿರದ ಎರಡು ಸರಣಿ ಸುರುಳಿಗಳು ಕಾಂತ ಹರಿವು ಹಂಚಿಕೊಳ್ಳುತ್ತವೆ: M = k√(L1 L2). ನೆರವಾದರೆ L1 + L2 + 2M, ವಿರೋಧಿಸಿದರೆ L1 + L2 − 2M. ದೂರದ ಸುರುಳಿಗಳು (k = 0) ರೋಧಕಗಳಂತೆ ಸೇರುತ್ತವೆ."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "Two coils in series, close together, share magnetic flux: the mutual inductance is M = k√(L1 L2). If their fluxes add (aiding) the total is L1 + L2 + 2M; if they oppose it is L1 + L2 − 2M. Far-apart coils (k = 0) combine like resistors.",
+    "kn": "ಹತ್ತಿರದ ಎರಡು ಸರಣಿ ಸುರುಳಿಗಳು ಕಾಂತ ಹರಿವು ಹಂಚಿಕೊಳ್ಳುತ್ತವೆ: M = k√(L1 L2). ನೆರವಾದರೆ L1 + L2 + 2M, ವಿರೋಧಿಸಿದರೆ L1 + L2 − 2M. ದೂರದ ಸುರುಳಿಗಳು (k = 0) ರೋಧಕಗಳಂತೆ ಸೇರುತ್ತವೆ."
+   },
+   "sliders": [
+    {
+     "name": "L1",
+     "label": {
+      "en": "L1",
+      "kn": "L1"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 40,
+     "unit": "mH"
+    },
+    {
+     "name": "L2",
+     "label": {
+      "en": "L2",
+      "kn": "L2"
+     },
+     "min": 10,
+     "max": 100,
+     "step": 5,
+     "value": 40,
+     "unit": "mH"
+    },
+    {
+     "name": "k",
+     "label": {
+      "en": "Coupling coefficient k",
+      "kn": "ಜೋಡಣಾ ಗುಣಾಂಕ k"
+     },
+     "min": 0,
+     "max": 1,
+     "step": 0.05,
+     "value": 0.5
+    }
+   ],
+   "choices": [
+    {
+     "name": "mode",
+     "label": {
+      "en": "Connection",
+      "kn": "ಜೋಡಣೆ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "Series aiding",
+        "kn": "ಸರಣಿ ನೆರವು"
+       },
+       "value": 1
+      },
+      {
+       "label": {
+        "en": "Series opposing",
+        "kn": "ಸರಣಿ ವಿರೋಧ"
+       },
+       "value": 2
+      },
+      {
+       "label": {
+        "en": "Parallel, far apart",
+        "kn": "ಸಮಾಂತರ, ದೂರ"
+       },
+       "value": 3
+      }
+     ],
+     "value": 1
+    }
+   ],
+   "vars": [
+    {
+     "name": "M",
+     "expr": "k*sqrt(L1*L2)"
+    },
+    {
+     "name": "Lt",
+     "expr": "if(mode == 1, L1 + L2 + 2*M, if(mode == 2, L1 + L2 - 2*M, L1*L2/(L1 + L2)))"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "spring",
+     "x1": 4,
+     "y1": 6,
+     "x2": 12,
+     "y2": 6,
+     "coils": 8,
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "spring",
+     "x1": 16,
+     "y1": 6,
+     "x2": 24,
+     "y2": 6,
+     "coils": 8,
+     "color": "blue",
+     "width": 4,
+     "visibleIf": "!(mode == 3)"
+    },
+    {
+     "shape": "text",
+     "x": 8,
+     "y": 8.4,
+     "text": {
+      "en": "L1 = {L1} mH"
+     },
+     "size": 22,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 8.4,
+     "text": {
+      "en": "L2 = {L2} mH"
+     },
+     "size": 22,
+     "color": "blue",
+     "visibleIf": "!(mode == 3)"
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 6,
+     "x2": 4,
+     "y2": 6,
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 6,
+     "x2": 16,
+     "y2": 6,
+     "visibleIf": "!(mode == 3)",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 24,
+     "y1": 6,
+     "x2": 27,
+     "y2": 6,
+     "visibleIf": "!(mode == 3)",
+     "width": 4
+    },
+    {
+     "shape": "arrow",
+     "x": 5,
+     "y": 3.6,
+     "dx": 6,
+     "dy": 0,
+     "color": "orange",
+     "width": 4,
+     "label": "Φ1",
+     "visibleIf": "!(mode == 3)"
+    },
+    {
+     "shape": "arrow",
+     "x": 17,
+     "y": 3.6,
+     "dx": 6,
+     "dy": 0,
+     "color": "blue",
+     "width": 4,
+     "label": "Φ2",
+     "visibleIf": "mode == 1"
+    },
+    {
+     "shape": "arrow",
+     "x": 23,
+     "y": 3.6,
+     "dx": -6,
+     "dy": 0,
+     "color": "blue",
+     "width": 4,
+     "label": "Φ2",
+     "visibleIf": "mode == 2"
+    },
+    {
+     "shape": "path",
+     "points": [
+      [
+       12,
+       4.5
+      ],
+      [
+       14,
+       "clamp(4.5 - 3*k, 1.5, 4.5)"
+      ],
+      [
+       16,
+       4.5
+      ]
+     ],
+     "dashed": true,
+     "color": "yellow",
+     "width": 3,
+     "visibleIf": "k > 0 && !(mode == 3)"
+    },
+    {
+     "shape": "spring",
+     "x1": 16,
+     "y1": 3,
+     "x2": 24,
+     "y2": 3,
+     "coils": 8,
+     "color": "blue",
+     "width": 4,
+     "visibleIf": "mode == 3"
+    },
+    {
+     "shape": "text",
+     "x": 20,
+     "y": 1.4,
+     "text": {
+      "en": "L2 = {L2} mH"
+     },
+     "size": 22,
+     "color": "blue",
+     "visibleIf": "mode == 3"
+    },
+    {
+     "shape": "line",
+     "x1": 12,
+     "y1": 6,
+     "x2": 14,
+     "y2": 6,
+     "visibleIf": "mode == 3",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 6,
+     "x2": 14,
+     "y2": 3,
+     "visibleIf": "mode == 3",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 3,
+     "x2": 16,
+     "y2": 3,
+     "visibleIf": "mode == 3",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 24,
+     "y1": 3,
+     "x2": 26,
+     "y2": 3,
+     "visibleIf": "mode == 3",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 26,
+     "y1": 3,
+     "x2": 26,
+     "y2": 6,
+     "visibleIf": "mode == 3",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 26,
+     "y1": 6,
+     "x2": 27,
+     "y2": 6,
+     "visibleIf": "mode == 3",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 6,
+     "x2": 1,
+     "y2": 9.5,
+     "visibleIf": "mode == 3",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 1,
+     "y1": 9.5,
+     "x2": 26,
+     "y2": 9.5,
+     "visibleIf": "mode == 3",
+     "width": 4
+    },
+    {
+     "shape": "line",
+     "x1": 26,
+     "y1": 9.5,
+     "x2": 26,
+     "y2": 6,
+     "visibleIf": "mode == 3",
+     "width": 4
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 10.3,
+     "text": {
+      "en": "M = {M:1} mH      L total = {Lt:1} mH"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "!(mode == 3)"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": 0.9,
+     "text": {
+      "en": "L total = {Lt:1} mH"
+     },
+     "size": 24,
+     "color": "yellow",
+     "visibleIf": "mode == 3"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Mutual inductance M"
+     },
+     "expr": "if(mode == 3, 0, M)",
+     "digits": 2,
+     "unit": "mH"
+    },
+    {
+     "label": {
+      "en": "Total inductance"
+     },
+     "expr": "Lt",
+     "digits": 2,
+     "unit": "mH"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set k = 0. Is the series total just L1 + L2?"
+    },
+    {
+     "en": "Set k = 1 with L1 = L2 and choose opposing. Why does the total become zero?"
+    },
+    {
+     "en": "Choose parallel with L1 = L2. Is the result half of one coil?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

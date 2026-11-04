@@ -466,6 +466,212 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "Frequency modulation",
+    "kn": "ಆವೃತ್ತಿ ಮಾಡ್ಯುಲೇಷನ್"
+   },
+   "narration": {
+    "en": "In FM the carrier amplitude stays constant while its frequency swings by up to ±Δf with the message: the waves crowd together where the message is high and spread out where it is low. The modulation index is mf = Δf/fm and Carson's rule gives the bandwidth ≈ 2(Δf + fm).",
+    "kn": "FM ನಲ್ಲಿ ವೈಶಾಲ್ಯ ಸ್ಥಿರ; ಆವೃತ್ತಿ ಸಂದೇಶದೊಂದಿಗೆ ±Δf ವರೆಗೆ ಬದಲಾಗುತ್ತದೆ. ಸಂದೇಶ ಎತ್ತರವಿರುವಲ್ಲಿ ತರಂಗಗಳು ದಟ್ಟ. mf = Δf/fm; ಪಟ್ಟಿಅಗಲ ≈ 2(Δf + fm)."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "In FM the carrier amplitude stays constant while its frequency swings by up to ±Δf with the message: the waves crowd together where the message is high and spread out where it is low. The modulation index is mf = Δf/fm and Carson's rule gives the bandwidth ≈ 2(Δf + fm).",
+    "kn": "FM ನಲ್ಲಿ ವೈಶಾಲ್ಯ ಸ್ಥಿರ; ಆವೃತ್ತಿ ಸಂದೇಶದೊಂದಿಗೆ ±Δf ವರೆಗೆ ಬದಲಾಗುತ್ತದೆ. ಸಂದೇಶ ಎತ್ತರವಿರುವಲ್ಲಿ ತರಂಗಗಳು ದಟ್ಟ. mf = Δf/fm; ಪಟ್ಟಿಅಗಲ ≈ 2(Δf + fm)."
+   },
+   "sliders": [
+    {
+     "name": "df",
+     "label": {
+      "en": "Frequency deviation Δf",
+      "kn": "ಆವೃತ್ತಿ ವಿಚಲನ Δf"
+     },
+     "min": 0,
+     "max": 12,
+     "step": 0.5,
+     "value": 8,
+     "unit": "kHz"
+    },
+    {
+     "name": "fm",
+     "label": {
+      "en": "Message frequency fm",
+      "kn": "ಸಂದೇಶ ಆವೃತ್ತಿ fm"
+     },
+     "min": 0.5,
+     "max": 3,
+     "step": 0.5,
+     "value": 1,
+     "unit": "kHz"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "msg",
+     "label": {
+      "en": "Show message",
+      "kn": "ಸಂದೇಶ ತೋರಿಸಿ"
+     },
+     "value": true
+    }
+   ],
+   "choices": [
+    {
+     "name": "fc",
+     "label": {
+      "en": "Carrier frequency",
+      "kn": "ವಾಹಕ ಆವೃತ್ತಿ"
+     },
+     "options": [
+      {
+       "label": {
+        "en": "15 kHz"
+       },
+       "value": 15
+      },
+      {
+       "label": {
+        "en": "20 kHz"
+       },
+       "value": 20
+      }
+     ],
+     "value": 20
+    }
+   ],
+   "time": {
+    "max": 2,
+    "unit": "ms",
+    "loop": true,
+    "autoplay": true,
+    "speeds": [
+     0.05,
+     0.1,
+     0.25
+    ],
+    "speed": 0.1
+   },
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     -5.5,
+     6.2
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "line",
+     "x1": 1.0,
+     "y1": 0,
+     "x2": 29.0,
+     "y2": 0,
+     "width": 1,
+     "opacity": 0.5
+    },
+    {
+     "shape": "text",
+     "x": 29.0,
+     "y": -0.6,
+     "text": {
+      "en": "t (ms)"
+     },
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "shape": "wave",
+     "fn": "3*sin(2*pi*fc*((x - 1.0)/14 + t) + df/fm*sin(2*pi*fm*((x - 1.0)/14 + t)))",
+     "color": "yellow",
+     "width": 2,
+     "from": 1.0,
+     "to": 29.0
+    },
+    {
+     "shape": "wave",
+     "fn": "4.3 + 0.9*cos(2*pi*fm*((x - 1.0)/14 + t))",
+     "color": "green",
+     "width": 3,
+     "visibleIf": "msg",
+     "from": 1.0,
+     "to": 29.0
+    },
+    {
+     "shape": "text",
+     "x": 1.0,
+     "y": 5.8,
+     "text": {
+      "en": "message",
+      "kn": "ಸಂದೇಶ"
+     },
+     "size": 18,
+     "color": "green",
+     "align": "left",
+     "visibleIf": "msg"
+    },
+    {
+     "shape": "label",
+     "x": 15,
+     "y": -4.8,
+     "text": {
+      "en": "instantaneous frequency {fc} ± {df} kHz",
+      "kn": "ತತ್ಕ್ಷಣ ಆವೃತ್ತಿ {fc} ± {df} kHz"
+     },
+     "size": 20
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Modulation index mf = Δf/fm"
+     },
+     "expr": "df/fm",
+     "digits": 2
+    },
+    {
+     "label": {
+      "en": "Carson bandwidth 2(Δf + fm)"
+     },
+     "expr": "2*(df + fm)",
+     "digits": 1,
+     "unit": "kHz"
+    },
+    {
+     "label": {
+      "en": "Highest carrier frequency"
+     },
+     "expr": "fc + df",
+     "digits": 1,
+     "unit": "kHz"
+    },
+    {
+     "label": {
+      "en": "Lowest carrier frequency"
+     },
+     "expr": "fc - df",
+     "digits": 1,
+     "unit": "kHz"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set Δf = 0. What is left?"
+    },
+    {
+     "en": "Raise Δf. Where is the carrier frequency highest compared with the message?"
+    },
+    {
+     "en": "Find mf and the Carson bandwidth for Δf = 10 kHz and fm = 2 kHz."
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {

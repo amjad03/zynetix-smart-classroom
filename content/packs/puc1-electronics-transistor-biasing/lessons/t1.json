@@ -303,6 +303,353 @@
    ]
   },
   {
+   "id": "sim1",
+   "type": "interactive",
+   "kind": "scene",
+   "title": {
+    "en": "DC load line and Q-point",
+    "kn": "DC ಭಾರ ರೇಖೆ ಮತ್ತು Q-ಬಿಂದು"
+   },
+   "narration": {
+    "en": "The load line VCE = VCC − IC RC joins the cut-off point (VCC, 0) and the saturation point (0, VCC/RC). The Q-point is where it crosses the output curve for the chosen base current (β = 100). For the largest undistorted swing the Q-point should sit near the middle.",
+    "kn": "ಭಾರ ರೇಖೆ VCE = VCC − IC RC, (VCC, 0) ಮತ್ತು (0, VCC/RC) ಬಿಂದುಗಳನ್ನು ಜೋಡಿಸುತ್ತದೆ. ಆರಿಸಿದ ಆಧಾರ ಪ್ರವಾಹದ ವಕ್ರವನ್ನು ಅದು ದಾಟುವ ಬಿಂದು Q. ವಿರೂಪವಿಲ್ಲದ ಗರಿಷ್ಠ ಸ್ವಿಂಗ್‌ಗೆ Q ಮಧ್ಯದಲ್ಲಿರಬೇಕು."
+   },
+   "seconds": 150,
+   "optional": true,
+   "caption": {
+    "en": "The load line VCE = VCC − IC RC joins the cut-off point (VCC, 0) and the saturation point (0, VCC/RC). The Q-point is where it crosses the output curve for the chosen base current (β = 100). For the largest undistorted swing the Q-point should sit near the middle.",
+    "kn": "ಭಾರ ರೇಖೆ VCE = VCC − IC RC, (VCC, 0) ಮತ್ತು (0, VCC/RC) ಬಿಂದುಗಳನ್ನು ಜೋಡಿಸುತ್ತದೆ. ಆರಿಸಿದ ಆಧಾರ ಪ್ರವಾಹದ ವಕ್ರವನ್ನು ಅದು ದಾಟುವ ಬಿಂದು Q. ವಿರೂಪವಿಲ್ಲದ ಗರಿಷ್ಠ ಸ್ವಿಂಗ್‌ಗೆ Q ಮಧ್ಯದಲ್ಲಿರಬೇಕು."
+   },
+   "sliders": [
+    {
+     "name": "VCC",
+     "label": {
+      "en": "Supply VCC",
+      "kn": "ಸರಬರಾಜು VCC"
+     },
+     "min": 6,
+     "max": 15,
+     "step": 1,
+     "value": 12,
+     "unit": "V"
+    },
+    {
+     "name": "RC",
+     "label": {
+      "en": "Collector resistor RC",
+      "kn": "ಸಂಗ್ರಾಹಕ ರೋಧ RC"
+     },
+     "min": 1,
+     "max": 5,
+     "step": 0.5,
+     "value": 2,
+     "unit": "kΩ"
+    },
+    {
+     "name": "IB",
+     "label": {
+      "en": "Base current IB",
+      "kn": "ಆಧಾರ ಪ್ರವಾಹ IB"
+     },
+     "min": 0,
+     "max": 120,
+     "step": 5,
+     "value": 30,
+     "unit": "µA"
+    }
+   ],
+   "toggles": [
+    {
+     "name": "curves",
+     "label": {
+      "en": "Output curves (β = 100)",
+      "kn": "ನಿರ್ಗಮ ವಕ್ರಗಳು"
+     },
+     "value": true
+    }
+   ],
+   "vars": [
+    {
+     "name": "Ic",
+     "expr": "min(100*IB/1000, (VCC - 0.2)/RC)"
+    },
+    {
+     "name": "Vce",
+     "expr": "VCC - Ic*RC"
+    }
+   ],
+   "view": {
+    "x": [
+     0,
+     30
+    ],
+    "y": [
+     0,
+     11
+    ]
+   },
+   "shapes": [
+    {
+     "shape": "rect",
+     "x": 1,
+     "y": 1.2,
+     "w": 11,
+     "h": 8.8,
+     "fill": false,
+     "width": 2,
+     "opacity": 0.4
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 9.0,
+     "text": {
+      "en": "Q-point",
+      "kn": "Q-ಬಿಂದು"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 7.2,
+     "text": {
+      "en": "IB = {IB} µA"
+     },
+     "size": 22
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 5.6,
+     "text": {
+      "en": "IC = {Ic:2} mA"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "text",
+     "x": 6.5,
+     "y": 4.0,
+     "text": {
+      "en": "VCE = {Vce:2} V"
+     },
+     "size": 22,
+     "color": "yellow"
+    },
+    {
+     "shape": "label",
+     "x": 6.5,
+     "y": 2.2,
+     "text": {
+      "en": "Active region",
+      "kn": "ಸಕ್ರಿಯ"
+     },
+     "size": 20,
+     "color": "green",
+     "visibleIf": "Vce > 0.3 && IB > 0"
+    },
+    {
+     "shape": "label",
+     "x": 6.5,
+     "y": 2.2,
+     "text": {
+      "en": "Saturation",
+      "kn": "ಸಂತೃಪ್ತಿ"
+     },
+     "size": 20,
+     "color": "red",
+     "visibleIf": "Vce <= 0.3"
+    },
+    {
+     "shape": "label",
+     "x": 6.5,
+     "y": 2.2,
+     "text": {
+      "en": "Cut-off",
+      "kn": "ಕಡಿತ"
+     },
+     "size": 20,
+     "color": "blue",
+     "visibleIf": "IB == 0"
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 1.2,
+     "x2": 29.5,
+     "y2": 1.2,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "line",
+     "x1": 14,
+     "y1": 1.2,
+     "x2": 14,
+     "y2": 10.0,
+     "color": "white",
+     "width": 2
+    },
+    {
+     "shape": "text",
+     "x": 29.5,
+     "y": 0.6,
+     "text": {
+      "en": "VCE (V)"
+     },
+     "size": 20,
+     "align": "right"
+    },
+    {
+     "shape": "text",
+     "x": 14.2,
+     "y": 10.35,
+     "text": {
+      "en": "IC (mA)"
+     },
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "shape": "path",
+     "fn": "(1.2 + 0.586667*((min(100*20/1000*(1 - exp(-(0 + 0.967742*(x - 14))/0.15)), 15)) - (0)))",
+     "color": "white",
+     "width": 2,
+     "opacity": 0.4,
+     "visibleIf": "curves",
+     "from": 14.0,
+     "to": 29.5
+    },
+    {
+     "shape": "path",
+     "fn": "(1.2 + 0.586667*((min(100*40/1000*(1 - exp(-(0 + 0.967742*(x - 14))/0.15)), 15)) - (0)))",
+     "color": "white",
+     "width": 2,
+     "opacity": 0.4,
+     "visibleIf": "curves",
+     "from": 14.0,
+     "to": 29.5
+    },
+    {
+     "shape": "path",
+     "fn": "(1.2 + 0.586667*((min(100*60/1000*(1 - exp(-(0 + 0.967742*(x - 14))/0.15)), 15)) - (0)))",
+     "color": "white",
+     "width": 2,
+     "opacity": 0.4,
+     "visibleIf": "curves",
+     "from": 14.0,
+     "to": 29.5
+    },
+    {
+     "shape": "path",
+     "fn": "(1.2 + 0.586667*((min(100*80/1000*(1 - exp(-(0 + 0.967742*(x - 14))/0.15)), 15)) - (0)))",
+     "color": "white",
+     "width": 2,
+     "opacity": 0.4,
+     "visibleIf": "curves",
+     "from": 14.0,
+     "to": 29.5
+    },
+    {
+     "shape": "path",
+     "fn": "(1.2 + 0.586667*((min(100*100/1000*(1 - exp(-(0 + 0.967742*(x - 14))/0.15)), 15)) - (0)))",
+     "color": "white",
+     "width": 2,
+     "opacity": 0.4,
+     "visibleIf": "curves",
+     "from": 14.0,
+     "to": 29.5
+    },
+    {
+     "shape": "path",
+     "fn": "(1.2 + 0.586667*((min(100*120/1000*(1 - exp(-(0 + 0.967742*(x - 14))/0.15)), 15)) - (0)))",
+     "color": "white",
+     "width": 2,
+     "opacity": 0.4,
+     "visibleIf": "curves",
+     "from": 14.0,
+     "to": 29.5
+    },
+    {
+     "shape": "line",
+     "x1": "(14 + 1.03333*((VCC) - (0)))",
+     "y1": 1.2,
+     "x2": 14.0,
+     "y2": "(1.2 + 0.586667*((min(VCC/RC, 15)) - (0)))",
+     "color": "orange",
+     "width": 4
+    },
+    {
+     "shape": "text",
+     "x": "(14 + 1.03333*((VCC) - (0)))",
+     "y": 0.6499999999999999,
+     "text": {
+      "en": "{VCC}"
+     },
+     "size": 18,
+     "color": "orange"
+    },
+    {
+     "shape": "text",
+     "x": 13.7,
+     "y": "(1.2 + 0.586667*((min(VCC/RC, 15)) - (0)))",
+     "text": {
+      "en": "{VCC/RC:1}"
+     },
+     "size": 18,
+     "color": "orange",
+     "align": "right"
+    },
+    {
+     "shape": "circle",
+     "x": "(14 + 1.03333*((Vce) - (0)))",
+     "y": "(1.2 + 0.586667*((Ic) - (0)))",
+     "r": 0.3,
+     "color": "yellow"
+    }
+   ],
+   "readouts": [
+    {
+     "label": {
+      "en": "Saturation current VCC/RC"
+     },
+     "expr": "VCC/RC",
+     "digits": 2,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "IC at Q"
+     },
+     "expr": "Ic",
+     "digits": 2,
+     "unit": "mA"
+    },
+    {
+     "label": {
+      "en": "VCE at Q"
+     },
+     "expr": "Vce",
+     "digits": 2,
+     "unit": "V"
+    }
+   ],
+   "tryThis": [
+    {
+     "en": "Set VCC = 12 V and RC = 2 kΩ. Which base current puts Q in the middle of the load line?"
+    },
+    {
+     "en": "Raise RC. How do the load line and Q move?"
+    },
+    {
+     "en": "Increase IB until Q reaches the saturation end. What is VCE there?"
+    }
+   ]
+  },
+  {
    "id": "concept2",
    "type": "concept",
    "title": {
