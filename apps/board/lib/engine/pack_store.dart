@@ -46,27 +46,8 @@ class PackStore {
 
   /// Verifies and installs a .zpack. Returns false when the same or a newer version is installed.
   Future<bool> install(Uint8List bytes) async {
-    final Archive zip;
-    try {
-      zip = ZipDecoder().decodeBytes(bytes);
-    } catch (_) {
-      throw PackError('not a pack file');
-    }
-    Uint8List? read(String name) {
-      final f = zip.findFile(name);
-      return f == null ? null : Uint8List.fromList(f.readBytes()!);
-    }
-
-    final manifestBytes = read('manifest.json'), sig = read('manifest.sig');
-    if (manifestBytes == null || sig == null) throw PackError('manifest or signature missing');
-    final manifest = jsonDecode(utf8.decode(manifestBytes)) as Map<String, dynamic>;
-    final key = trustedKeys[manifest['keyId']];
-    if (key == null) throw PackError('signed with an unknown key ${manifest['keyId']}');
-    final ok = await Ed25519().verify(
-      manifestBytes,
-      signature: Signature(sig, publicKey: SimplePublicKey(key, type: KeyPairType.ed25519)),
-    );
-    if (!ok) throw PackError('signature does not match');
+    final (:manifest, :read) = await openSignedZip(bytes, trustedKeys);
+    if (manifest['kind'] != null) throw PackError('not a content pack (${manifest['kind']})');
 
     final id = manifest['id'] as String, version = manifest['version'] as String;
     final current = installed()[id];
@@ -74,16 +55,7 @@ class PackStore {
 
     final dir = Directory('${root.path}/$id/$version');
     if (dir.existsSync()) dir.deleteSync(recursive: true);
-    for (final f in (manifest['files'] as List).cast<Map<String, dynamic>>()) {
-      final path = f['path'] as String;
-      if (path.contains('..') || path.startsWith('/')) throw PackError('bad path $path');
-      final data = read(path);
-      if (data == null) throw PackError('$path missing');
-      if (c.sha256.convert(data).toString() != f['sha256']) throw PackError('$path is corrupted');
-      final out = File('${dir.path}/$path');
-      out.parent.createSync(recursive: true);
-      out.writeAsBytesSync(data);
-    }
+    writeVerifiedFiles(manifest, read, dir);
     final idx = installed()..[id] = version;
     final tmp = File('${_index.path}.tmp')..writeAsStringSync(jsonEncode(idx));
     tmp.renameSync(_index.path);
@@ -124,6 +96,48 @@ class PackStore {
       questions: {for (final q in qs) (q['id'] as String): Question.fromJson(q as Map<String, dynamic>)},
       mediaDir: '$dir/media',
     );
+  }
+}
+
+/// Opens a signed zip (a content or audio pack): checks manifest.sig, Ed25519 over the exact
+/// manifest bytes, against [trustedKeys]. The manifest lists the SHA-256 of every other file, so
+/// [writeVerifiedFiles] then checks each file as it is written.
+Future<({Map<String, dynamic> manifest, Uint8List? Function(String) read})> openSignedZip(Uint8List bytes, Map<String, List<int>> trustedKeys) async {
+  final Archive zip;
+  try {
+    zip = ZipDecoder().decodeBytes(bytes);
+  } catch (_) {
+    throw PackError('not a pack file');
+  }
+  Uint8List? read(String name) {
+    final f = zip.findFile(name);
+    return f == null ? null : Uint8List.fromList(f.readBytes()!);
+  }
+
+  final manifestBytes = read('manifest.json'), sig = read('manifest.sig');
+  if (manifestBytes == null || sig == null) throw PackError('manifest or signature missing');
+  final manifest = jsonDecode(utf8.decode(manifestBytes)) as Map<String, dynamic>;
+  final key = trustedKeys[manifest['keyId']];
+  if (key == null) throw PackError('signed with an unknown key ${manifest['keyId']}');
+  final ok = await Ed25519().verify(
+    manifestBytes,
+    signature: Signature(sig, publicKey: SimplePublicKey(key, type: KeyPairType.ed25519)),
+  );
+  if (!ok) throw PackError('signature does not match');
+  return (manifest: manifest, read: read);
+}
+
+/// Writes every file the manifest lists into [dir], refusing a bad path or a changed file.
+void writeVerifiedFiles(Map<String, dynamic> manifest, Uint8List? Function(String) read, Directory dir) {
+  for (final f in (manifest['files'] as List).cast<Map<String, dynamic>>()) {
+    final path = f['path'] as String;
+    if (path.contains('..') || path.startsWith('/')) throw PackError('bad path $path');
+    final data = read(path);
+    if (data == null) throw PackError('$path missing');
+    if (c.sha256.convert(data).toString() != f['sha256']) throw PackError('$path is corrupted');
+    final out = File('${dir.path}/$path');
+    out.parent.createSync(recursive: true);
+    out.writeAsBytesSync(data);
   }
 }
 

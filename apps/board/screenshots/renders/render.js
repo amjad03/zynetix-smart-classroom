@@ -1,5 +1,5 @@
 // Renders the real Kinetix 3D viewer page (kinetix_3d/assets/viewer3d: three.js + the model's GLB)
-// in headless Chromium, for the v4 screenshots only (the test engine cannot run a WebView).
+// in headless Chromium, for the v4 and v5 screenshots only (the test engine cannot run a WebView).
 // Run from apps/board:  node screenshots/renders/render.js
 // Needs Node with the `playwright` package and its Chromium.
 const http = require('http');
@@ -14,6 +14,8 @@ const types = { html: 'text/html', js: 'text/javascript', json: 'application/jso
 // [file name, model id, variant, CSS width, CSS height, extra commands]
 const shots = [
   ['3d-hybridisation-sp3', 'hybridisation', 'sp3', 1360, 720, [{ cmd: 'labels', mode: 'all' }]],
+  // Units and measurement t1: the measuring cylinder picked (the block's "Try this").
+  ['3d-lab_apparatus-default', 'lab_apparatus', null, 1360, 720, [{ cmd: 'pick', part: 'measuring_cylinder' }]],
 ];
 
 const server = http.createServer((req, res) => {
@@ -38,7 +40,7 @@ const server = http.createServer((req, res) => {
     });
     await page.goto(`http://127.0.0.1:${port}/index.html?model=${model}&lang=en`);
     await page.waitForFunction(() => window.__kx.some((e) => e.event === 'ready' || e.event === 'loaded' || e.event === 'error'), null, { timeout: 60000 });
-    for (const c of [{ cmd: 'variant', id: variant }, ...extra]) {
+    for (const c of [...(variant ? [{ cmd: 'variant', id: variant }] : []), ...extra]) {
       await page.evaluate((c) => window.kx.cmd(c), c);
     }
     // The board's stage colour behind the model (the page paints its own dark grey otherwise).

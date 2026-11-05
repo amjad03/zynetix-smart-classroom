@@ -2,11 +2,11 @@
  * Builds signed content packs (.zpack) from content/packs/<id>/ (see docs/architecture.md).
  * Used by the CLI for the seed packs and by the API when the CMS publishes a pack.
  */
-import { createHash, createPrivateKey, createPublicKey, generateKeyPairSync, sign, KeyObject } from 'node:crypto';
+import { createHash, createPrivateKey, createPublicKey, generateKeyPairSync, sign, verify, KeyObject } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
-import { zipSync } from 'fflate';
-import { Chapter, Lesson, PackManifest, Question, SCHEMA_VERSION, checkQuestionRefs } from '@zynetix/lesson-schema';
+import { unzipSync, zipSync } from 'fflate';
+import { AudioClip, AudioPackManifest, Chapter, Lesson, PackManifest, Question, SCHEMA_VERSION, checkQuestionRefs, clipId, revealSteps } from '@zynetix/lesson-schema';
 
 export interface PackSource {
   id: string;
@@ -30,9 +30,13 @@ export function validate(src: PackSource): string[] {
   for (const l of src.lessons) {
     if (l.chapterId !== src.chapter.id) problems.push(`${l.id}: chapterId ${l.chapterId} is not ${src.chapter.id}`);
     if (!topicIds.has(l.topicId)) problems.push(`${l.id}: topic ${l.topicId} is not in the syllabus`);
-    for (const b of l.blocks)
+    for (const b of l.blocks) {
       if (b.type === 'simulation' && b.source === 'phet' && !src.media[`media/phet/${b.simId}.html`])
         problems.push(`${l.id}/${b.id}: media/phet/${b.simId}.html is missing`);
+      // Video-style narration: one line for each step the board reveals.
+      if (b.voice && b.voice.length !== revealSteps(b, src.questions))
+        problems.push(`${l.id}/${b.id}: ${b.voice.length} voice lines for ${revealSteps(b, src.questions)} steps`);
+    }
   }
   problems.push(...checkQuestionRefs(src.lessons, src.questions).map((m) => `missing question ${m}`));
   return problems;
@@ -112,4 +116,98 @@ export function readSource(contentRoot: string, dir: string): PackSource {
   };
   walk(join(root, 'media'));
   return { id: meta.id, version: meta.version, chapter, lessons, questions, media };
+}
+
+// ---------------------------------------------------------------- narration audio packs
+
+/** The first 16 hex of SHA-256 of a voice line: lets the board tell a clip made for older text. */
+export const lineSha = (text: string) => sha256(new TextEncoder().encode(text)).slice(0, 16);
+
+export interface AudioSource {
+  /** The content pack this narrates. */
+  packId: string;
+  chapterId: string;
+  lang: 'en' | 'kn';
+  version: string;
+  voice: AudioPackManifest['voice'];
+  /** Clip metadata (file is the path inside the pack, audio/…) and its bytes. */
+  clips: { clip: AudioClip; bytes: Uint8Array }[];
+}
+
+export const audioPackId = (packId: string, lang: string) => `${packId}-audio-${lang}`;
+
+/**
+ * Builds a signed audio pack, the same way as a content pack: manifest.json lists the SHA-256 of
+ * every clip and manifest.sig is Ed25519 over the manifest bytes. Opus is already compressed, so
+ * the zip only stores.
+ */
+export function buildAudioPack(src: AudioSource, key: SigningKey, now = new Date()): { bytes: Uint8Array; manifest: AudioPackManifest } {
+  const files: Record<string, Uint8Array> = Object.fromEntries(src.clips.map((c) => [c.clip.file, c.bytes]));
+  const manifest = AudioPackManifest.parse({
+    schemaVersion: SCHEMA_VERSION,
+    kind: 'audio',
+    id: audioPackId(src.packId, src.lang),
+    packId: src.packId,
+    chapterId: src.chapterId,
+    lang: src.lang,
+    version: src.version,
+    createdAt: now.toISOString(),
+    keyId: key.keyId,
+    voice: src.voice,
+    clips: src.clips.map((c) => c.clip),
+    files: Object.entries(files).map(([path, b]) => ({ path, sha256: sha256(b), bytes: b.length })),
+  });
+  const manifestBytes = json(manifest);
+  const sig = sign(null, manifestBytes, key.privateKey);
+  const bytes = zipSync({ 'manifest.json': [manifestBytes, { level: 6 }], 'manifest.sig': new Uint8Array(sig), ...files }, { level: 0 });
+  return { bytes, manifest };
+}
+
+/** Checks rendered clips against the lessons: every voice line has a clip saying today's text. */
+export function checkAudio(src: PackSource, clips: AudioClip[]): string[] {
+  const have = new Map(clips.map((c) => [`${c.lessonId}/${c.clip}`, c]));
+  const problems: string[] = [];
+  for (const l of src.lessons)
+    for (const b of l.blocks)
+      for (const [i, v] of (b.voice ?? []).entries()) {
+        const c = have.get(`${l.id}/${clipId(b, i + 1)}`);
+        if (!c) problems.push(`${l.id}/${b.id}.${i + 1}: no clip`);
+        else if (c.sha !== lineSha(v.say.en) && c.sha !== lineSha(v.say.kn ?? '')) problems.push(`${l.id}/${b.id}.${i + 1}: clip is for older text`);
+      }
+  return problems;
+}
+
+/**
+ * Reads tools/voice output for one pack and language: content/audio/<dir>/<lang>/clips.json
+ * ({version, voice, clips: AudioClip[]}) and the clip files beside it.
+ */
+export function readAudioSource(contentRoot: string, dir: string, lang: 'en' | 'kn'): AudioSource | undefined {
+  const root = join(contentRoot, 'audio', dir, lang);
+  if (!existsSync(join(root, 'clips.json'))) return undefined;
+  const pack = JSON.parse(readFileSync(join(contentRoot, 'packs', dir, 'pack.json'), 'utf8')) as { id: string; chapterId: string };
+  const j = JSON.parse(readFileSync(join(root, 'clips.json'), 'utf8')) as { version: string; voice: AudioPackManifest['voice']; clips: AudioClip[] };
+  return {
+    packId: pack.id,
+    chapterId: pack.chapterId,
+    lang,
+    version: j.version,
+    voice: j.voice,
+    clips: j.clips.map((c) => ({ clip: AudioClip.parse(c), bytes: new Uint8Array(readFileSync(join(root, c.file))) })),
+  };
+}
+
+/** Opens an audio pack and checks it: the signature against [publicKey], then every file's hash. */
+export function verifyAudioPack(bytes: Uint8Array, publicKey: KeyObject): AudioPackManifest {
+  let files: Record<string, Uint8Array>;
+  try {
+    files = unzipSync(bytes);
+  } catch {
+    throw new Error('not a zip');
+  }
+  const m = files['manifest.json'], sig = files['manifest.sig'];
+  if (!m || !sig) throw new Error('manifest or signature missing');
+  if (!verify(null, m, publicKey, sig)) throw new Error('signature does not match');
+  const manifest = AudioPackManifest.parse(JSON.parse(new TextDecoder().decode(m)));
+  for (const f of manifest.files) if (!files[f.path] || sha256(files[f.path]) !== f.sha256) throw new Error(`${f.path} is missing or corrupted`);
+  return manifest;
 }

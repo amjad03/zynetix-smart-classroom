@@ -3,15 +3,20 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../core/config.dart';
+import 'model.dart';
 import 'pack_store.dart';
 import 'session_log.dart';
+import 'voice.dart';
 
 /// Talks to services/api when there is a connection. Everything it does is optional: the board
 /// teaches from what it has. Logs are only removed from the outbox once the API has them.
 class SyncClient {
-  SyncClient({required this.config, required this.store, required this.outbox, http.Client? client}) : _http = client ?? http.Client();
+  SyncClient({required this.config, required this.store, required this.outbox, this.voice, http.Client? client}) : _http = client ?? http.Client();
   final BoardConfig config;
   final PackStore store;
+
+  /// Narration audio packs (null on a board built without voice).
+  final VoiceStore? voice;
   final Outbox outbox;
   final http.Client _http;
 
@@ -34,7 +39,7 @@ class SyncClient {
   Future<int> sync() async {
     if (!config.activated) return 0;
     final pending = outbox.pending();
-    final r = await _http.post(Uri.parse('${config.apiBase}/v1/board/sync'), headers: _auth, body: jsonEncode({'installed': store.installed(), 'outbox': pending}));
+    final r = await _http.post(Uri.parse('${config.apiBase}/v1/board/sync'), headers: _auth, body: jsonEncode({'installed': store.installed(), 'installedAudio': ?voice?.installed(), 'outbox': pending}));
     if (r.statusCode != 201) throw SyncError('sync failed (${r.statusCode})');
     final j = jsonDecode(r.body) as Map<String, dynamic>;
     // Rejected logs can never be accepted (a newer schema, a bug): drop them too, so they don't block the queue.
@@ -46,7 +51,52 @@ class SyncClient {
       final res = await _http.get(Uri.parse(p['url'] as String));
       if (res.statusCode == 200 && await store.install(res.bodyBytes)) installed++;
     }
+    // Newer versions of the chapter voices this board already has.
+    for (final a in ((j['audio'] as List?) ?? const []).cast<Map<String, dynamic>>()) {
+      final res = await _http.get(Uri.parse(a['url'] as String));
+      if (res.statusCode == 200) await voice?.install(res.bodyBytes);
+    }
+    // Voices the teacher asked for while offline ("Download voice"), now that there is a connection.
+    for (final w in config.voiceWanted) {
+      final [packId, lang] = w.split('|');
+      try {
+        await downloadVoice(packId, lang == 'kn' ? Lang.kn : Lang.en);
+      } catch (_) {}
+    }
     return installed;
+  }
+
+  /// Downloads a chapter's narration (one signed audio pack per chapter and language, a few MB)
+  /// once, over the college Wi-Fi; afterwards it plays offline. True when a newer one was installed.
+  /// Offline, the request is remembered and the next sync fetches it.
+  Future<bool> downloadVoice(String packId, Lang lang) async {
+    final v = voice;
+    if (v == null) return false;
+    final want = '$packId|${lang.name}';
+    try {
+      if (!config.activated) throw SyncError('this board is not activated');
+      final r = await _http.get(Uri.parse('${config.apiBase}/v1/board/audio/$packId/${lang.name}'), headers: _auth);
+      if (r.statusCode == 404) throw SyncError('no voice for this chapter yet');
+      if (r.statusCode != 200) throw SyncError('voice download failed (${r.statusCode})');
+      final j = jsonDecode(r.body) as Map<String, dynamic>;
+      final have = v.installed()[j['id']];
+      if (have != null && PackStore.compareVersions(have, j['version'] as String) >= 0) {
+        await config.setVoiceWanted(want, false);
+        return false;
+      }
+      final res = await _http.get(Uri.parse(j['url'] as String));
+      if (res.statusCode != 200) throw SyncError('voice download failed (${res.statusCode})');
+      final ok = await v.install(res.bodyBytes);
+      await config.setVoiceWanted(want, false);
+      return ok;
+    } on SyncError catch (e) {
+      if (!e.message.startsWith('no voice')) await config.setVoiceWanted(want, true);
+      rethrow;
+    } catch (e) {
+      await config.setVoiceWanted(want, true);
+      if (e is PackError) rethrow;
+      throw SyncError('no connection: the voice downloads at the next sync');
+    }
   }
 
   Future<void> _applyConfig(Map<String, dynamic> c) => config.apply({

@@ -4,7 +4,7 @@ import { zodToJsonSchema } from 'zod-to-json-schema';
 import * as s from '../dist/index.js';
 
 mkdirSync(new URL('../schema/', import.meta.url), { recursive: true });
-for (const name of ['Lesson', 'Block', 'Question', 'Chapter', 'PackManifest', 'SessionLog']) {
+for (const name of ['Lesson', 'Block', 'Question', 'Chapter', 'PackManifest', 'AudioPackManifest', 'SessionLog']) {
   const json = zodToJsonSchema(s[name], { name, $refStrategy: 'none' });
   writeFileSync(new URL(`../schema/${name}.schema.json`, import.meta.url), JSON.stringify(json, null, 2) + '\n');
 }

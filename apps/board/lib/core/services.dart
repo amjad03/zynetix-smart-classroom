@@ -9,7 +9,9 @@ import '../engine/model.dart';
 import '../engine/narrator.dart';
 import '../engine/pack_store.dart';
 import '../engine/session_log.dart';
+import '../engine/auto_play.dart';
 import '../engine/sync.dart';
+import '../engine/voice.dart';
 import 'config.dart';
 
 /// Everything the screens need, created once at start-up (main.dart) or by a test.
@@ -22,9 +24,12 @@ class Services {
     required this.syllabus,
     required this.embeds,
     this.licenceKey = const [],
+    this.voice,
+    VoicePlayer Function()? voicePlayer,
     DateTime Function()? clock,
     MasteryStore? mastery,
-  }) : clock = clock ?? DateTime.now,
+  }) : voicePlayer = voicePlayer ?? SilentVoicePlayer.new,
+       clock = clock ?? DateTime.now,
        mastery = mastery ?? MasteryStore(now: clock);
 
   /// What this section knows, per topic and per roll number (lib/engine/mastery.dart).
@@ -35,6 +40,12 @@ class Services {
   final Outbox outbox;
   final Narrator narrator;
 
+  /// Downloaded chapter voices (narration audio packs); null: lessons are silent.
+  final VoiceStore? voice;
+
+  /// A new narration player for a lesson (just_audio on the board).
+  final VoicePlayer Function() voicePlayer;
+
   /// subject → year → chapters (the whole NCERT tree, including chapters with no pack yet).
   final Map<String, Map<String, List<Chapter>>> syllabus;
   final Embeds embeds;
@@ -44,7 +55,7 @@ class Services {
 
   Future<LicenceStatus> licence() => Licence.check(token: config.licenceToken, publicKey: licenceKey, now: clock());
   final DateTime Function() clock;
-  late final SyncClient sync = SyncClient(config: config, store: store, outbox: outbox);
+  late final SyncClient sync = SyncClient(config: config, store: store, outbox: outbox, voice: voice);
 
   /// Subjects shown on this board: the section's subjects that have a syllabus, in its order.
   List<String> get subjects => [

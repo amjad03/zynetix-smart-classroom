@@ -97,6 +97,21 @@ class BoardConfig extends ChangeNotifier {
 
   ScheduledPeriod? scheduledNow(DateTime now) => schedule.where((p) => p.isNow(now)).firstOrNull;
 
+  /// How lessons play: `auto` (like a video, with the chapter's voice) or `manual` (tap Next).
+  String get playMode => _p.getString('playMode') ?? 'auto';
+  Future<void> setPlayMode(String v) async {
+    await _p.setString('playMode', v);
+    notifyListeners();
+  }
+
+  /// Chapter voices asked for while offline (`packId|lang`): the next sync downloads them.
+  List<String> get voiceWanted => _p.getStringList('voiceWanted') ?? const [];
+  Future<void> setVoiceWanted(String key, bool on) async {
+    final cur = voiceWanted;
+    if (cur.contains(key) == on) return;
+    await _p.setStringList('voiceWanted', on ? [...cur, key] : [for (final k in cur) if (k != key) k]);
+  }
+
   /// Last-known progress: topic ids taught in this section (drives the Continue card).
   List<String> get taught => _p.getStringList('taught') ?? const [];
   Future<void> markTaught(String topicId) async {

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -15,6 +16,8 @@ import 'engine/mastery.dart';
 import 'engine/narrator.dart';
 import 'engine/pack_store.dart';
 import 'engine/session_log.dart';
+import 'engine/voice.dart';
+import 'engine/voice_player.dart';
 import 'features/home.dart';
 import 'features/self_learning.dart';
 
@@ -24,6 +27,10 @@ Future<void> main() async {
   final dir = await getApplicationSupportDirectory();
   final key = parseTrustedKey(await rootBundle.loadString('assets/packs/trusted-key.json'));
   final store = PackStore(Directory('${dir.path}/packs'), trustedKeys: {key.key: key.value})..loadAll();
+  // Chapter voices are signed like packs. Debug builds also trust the dev key, so test audio
+  // packs (tools/pack-builder build-audio) play; release builds trust the production key only.
+  final dev = kReleaseMode ? null : parseTrustedKey(await rootBundle.loadString('assets/keys/dev-pack-key.json'));
+  final voice = VoiceStore(Directory('${dir.path}/voice'), trustedKeys: {key.key: key.value, if (dev != null) dev.key: dev.value})..loadAll();
   await Services.installSeedPacks(store, rootBundle);
   final config = await BoardConfig.load();
   final services = Services(
@@ -31,6 +38,8 @@ Future<void> main() async {
     store: store,
     outbox: Outbox(File('${dir.path}/outbox.jsonl')),
     narrator: DeviceNarrator(),
+    voice: voice,
+    voicePlayer: JustAudioVoicePlayer.new,
     syllabus: await Services.loadSyllabus(rootBundle),
     embeds: KinetixEmbeds(),
     licenceKey: parseTrustedKey(await rootBundle.loadString('assets/keys/licence-key.json')).value,

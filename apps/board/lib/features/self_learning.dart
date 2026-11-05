@@ -6,6 +6,7 @@ import '../blocks/block_view.dart';
 import '../core/services.dart';
 import '../core/strings.dart';
 import '../core/theme.dart';
+import '../engine/auto_play.dart';
 import '../engine/lesson_controller.dart';
 import '../engine/model.dart';
 import '../engine/period.dart';
@@ -93,7 +94,11 @@ class SelfLearningScreenState extends State<SelfLearningScreen> {
     recorder: SessionRecorder(outbox: s.outbox, sectionId: s.config.sectionId, mode: 'self_learning', pack: widget.pack, lesson: widget.lesson, now: s.clock, mastery: s.mastery),
   );
   late final ClassRoom room = ClassRoom(rollCount: s.config.rollCount);
-  late final PeriodRunner runner = PeriodRunner(c: c, plan: plan, periodSeconds: widget.periodSeconds, autoTick: widget.autoTick);
+  // With the chapter's voice downloaded, each block plays step by step from its clips.
+  late final AutoPlayer? voice = s.voice?.track(widget.pack, lesson, c.lang) == null
+      ? null
+      : AutoPlayer(c: c, player: s.voicePlayer(), trackFor: (l) => s.voice?.track(widget.pack, lesson, l), teacher: false, advanceBlocks: false);
+  late final PeriodRunner runner = PeriodRunner(c: c, plan: plan, periodSeconds: widget.periodSeconds, autoTick: widget.autoTick, voice: voice);
 
   @override
   void didChangeDependencies() {
@@ -106,6 +111,8 @@ class SelfLearningScreenState extends State<SelfLearningScreen> {
   @override
   void dispose() {
     runner.dispose();
+    voice?.dispose();
+    voice?.player.dispose();
     c.dispose();
     super.dispose();
   }

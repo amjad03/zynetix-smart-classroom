@@ -7,9 +7,11 @@ import '../blocks/block_view.dart';
 import '../core/services.dart';
 import '../core/strings.dart';
 import '../core/theme.dart';
+import '../engine/auto_play.dart';
 import '../engine/lesson_controller.dart';
 import '../engine/model.dart';
 import '../engine/session_log.dart';
+import '../engine/sync.dart' show SyncError;
 import 'insight/reteach.dart' show teacherQuizDone;
 import 'participation.dart';
 import 'smartboard.dart';
@@ -34,6 +36,43 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
     recorder: SessionRecorder(outbox: s.outbox, sectionId: s.config.sectionId, mode: 'teacher', pack: widget.pack, lesson: widget.lesson, now: s.clock, mastery: s.mastery),
   );
   late final ClassRoom room = ClassRoom(rollCount: s.config.rollCount);
+
+  /// Video-style narration: plays each step's clip and moves on (Auto), or waits for Next (Manual).
+  /// With no voice downloaded the lesson starts in Manual and stays silent.
+  late final bool voiced = c.lesson.blocks.any((b) => b.raw['voice'] is List);
+  late final AutoPlayer auto = AutoPlayer(
+    c: c,
+    player: s.voicePlayer(),
+    trackFor: (l) => s.voice?.track(widget.pack, c.lesson, l),
+    mode: s.config.playMode == 'auto' && s.voice?.track(widget.pack, c.lesson, c.lang) != null ? PlayMode.auto : PlayMode.manual,
+  );
+  bool _downloading = false;
+
+  Future<void> _downloadVoice() async {
+    setState(() => _downloading = true);
+    String? error;
+    try {
+      await s.sync.downloadVoice(widget.pack.id, c.lang);
+    } on SyncError catch (e) {
+      error = e.message;
+    } catch (e) {
+      error = '$e';
+    }
+    if (!mounted) return;
+    setState(() => _downloading = false);
+    if (s.voice?.track(widget.pack, c.lesson, c.lang) != null) {
+      auto.reload();
+      auto.setMode(PlayMode.auto);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error ?? tr('voiceMissing', c.lang))));
+    }
+  }
+
+  void _toggleMode() {
+    final m = auto.mode == PlayMode.auto ? PlayMode.manual : PlayMode.auto;
+    auto.setMode(m);
+    s.config.setPlayMode(m.name);
+  }
   final ink = InkController(
     style: const InkStyle(tool: InkTool.pen, color: Z.vermillion, width: 6),
   );
@@ -46,6 +85,7 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
     if (!_listening) {
       _listening = true;
       c.addListener(_onChange);
+      if (voiced) auto.start();
     }
   }
 
@@ -60,6 +100,8 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
   @override
   void dispose() {
     if (!_done) c.finish(completed: false);
+    auto.dispose();
+    auto.player.dispose();
     c.dispose();
     ink.dispose();
     super.dispose();
@@ -115,7 +157,7 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-      listenable: c,
+      listenable: Listenable.merge([c, auto]),
       builder: (context, _) {
         final l = c.lang, text = Theme.of(context).textTheme;
         final narrow = context.narrow, pad = narrow ? 20.0 : 32.0;
@@ -146,6 +188,15 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
                         ZProgress(value: c.progress, width: 280),
                       ] else
                         Text('${c.index + 1}/${c.blocks.length}', key: const ValueKey('stepOf'), style: zText(28, FontWeight.w500).copyWith(color: Z.muted)),
+                      // No voice for this chapter in this language yet: one small chip to fetch it.
+                      if (voiced && !auto.hasVoice && s.voice != null)
+                        ZSmallButton(
+                          key: const ValueKey('downloadVoice'),
+                          icon: _downloading ? Icons.downloading : Icons.download_outlined,
+                          label: tr(_downloading ? 'voiceDownloading' : 'downloadVoice', l),
+                          iconOnly: phone,
+                          onPressed: _downloading ? null : _downloadVoice,
+                        ),
                       if (!phone) SmartboardButton(onOpen: _boardOpened, onClose: _boardClosed),
                       if (!phone && s.config.kannadaOffered) ZSmallButton(key: const ValueKey('lang'), label: l == Lang.en ? 'ಕನ್ನಡ' : 'English', onPressed: () => c.setLang(l == Lang.en ? Lang.kn : Lang.en)),
                       ZIconSquare(key: const ValueKey('close'), icon: Icons.close, tooltip: tr('closeLesson', l), onPressed: () => Navigator.pop(context)),
@@ -159,6 +210,9 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
                           child: BlockView(c: c, embeds: s.embeds, room: room, onFinished: () => teacherQuizDone(context, c)),
                         ),
                         if (c.pen) ...[Positioned.fill(child: InkCanvas(controller: ink, transparent: true)), Positioned(right: 24, top: 24, child: _PenPalette(ink: ink))],
+                        // Auto stops on a step that asks the class something; Next (or an answer) carries on.
+                        if (voiced && auto.mode == PlayMode.auto && auto.waiting && !c.paused)
+                          Positioned(right: 24, bottom: 24, child: IgnorePointer(child: _Pill(key: const ValueKey('yourTurn'), icon: Icons.front_hand_outlined, text: tr('yourTurn', l)))),
                         if (c.paused)
                           Positioned.fill(
                             child: GestureDetector(
@@ -174,7 +228,7 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
                     ),
                   ),
                   SizedBox(height: pad),
-                  _Controls(c: c, onQuiz: _quickQuiz, onFinish: _finish),
+                  _Controls(c: c, auto: voiced ? auto : null, onQuiz: _quickQuiz, onFinish: _finish, onMode: _toggleMode),
                 ],
               ),
             ),
@@ -188,15 +242,19 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
 /// The footer panel: Back, Pause, Pen, Read aloud, Quick quiz, and the primary Next (named for
 /// the block it goes to).
 class _Controls extends StatelessWidget {
-  const _Controls({required this.c, required this.onQuiz, required this.onFinish});
+  const _Controls({required this.c, required this.auto, required this.onQuiz, required this.onFinish, required this.onMode});
   final LessonController c;
-  final VoidCallback onQuiz, onFinish;
+
+  /// The narration player, when the lesson is narrated (Auto/Manual switch).
+  final AutoPlayer? auto;
+  final VoidCallback onQuiz, onFinish, onMode;
 
   @override
   Widget build(BuildContext context) {
     final l = c.lang, narrow = context.narrow;
     final phone = narrow && context.portrait && MediaQuery.sizeOf(context).width < 1000;
     final gap = SizedBox(width: narrow ? 12 : 20);
+    final playing = auto?.mode == PlayMode.auto;
     Widget square(Key key, IconData icon, String label, VoidCallback? onPressed, {bool on = false}) => Tooltip(
       message: label,
       child: SizedBox.square(
@@ -217,7 +275,7 @@ class _Controls extends StatelessWidget {
       decoration: BoxDecoration(color: Z.panel, borderRadius: BorderRadius.circular(Z.panelRadius)),
       child: Row(
         children: [
-          BigButton(collapse: true, key: const ValueKey('back'), icon: Icons.arrow_back, label: tr('back', l), filled: false, onPressed: c.isFirst ? null : c.back),
+          BigButton(collapse: true, key: const ValueKey('back'), icon: Icons.arrow_back, label: tr('back', l), filled: false, onPressed: c.isFirst ? null : (playing ? auto!.back : c.back)),
           if (!phone) ...[
             gap,
             // Paused, it says so: a labelled Resume.
@@ -226,9 +284,14 @@ class _Controls extends StatelessWidget {
             else
               square(const ValueKey('pause'), Icons.pause, tr('pause', l), () => c.setPaused(true)),
           ],
+          if (auto != null) ...[
+            gap,
+            // Auto (plays like a video) or Manual (tap Next); filled while Auto is on.
+            square(const ValueKey('mode'), playing ? Icons.smart_display_outlined : Icons.touch_app_outlined, tr(playing ? 'autoPlay' : 'manualPlay', l), onMode, on: playing),
+          ],
           gap,
           square(const ValueKey('pen'), Icons.edit_outlined, tr('pen', l), c.togglePen, on: c.pen),
-          if (c.canReadAloud) ...[
+          if (c.canReadAloud && !(auto?.hasVoice ?? false)) ...[
             gap,
             square(const ValueKey('read'), c.speaking ? Icons.volume_up : Icons.volume_up_outlined, tr('readAloud', l), c.speaking ? null : c.readAloud, on: c.speaking),
           ],
@@ -290,6 +353,26 @@ class _PenPalette extends StatelessWidget {
           IconButton(iconSize: 56, icon: const Icon(Icons.delete_sweep_outlined), onPressed: ink.clear),
         ],
       ),
+    ),
+  );
+}
+
+/// A small dark label over the stage ("Your turn · Next continues").
+class _Pill extends StatelessWidget {
+  const _Pill({super.key, required this.icon, required this.text});
+  final IconData icon;
+  final String text;
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+    decoration: BoxDecoration(color: Z.ink.withValues(alpha: 0.88), borderRadius: BorderRadius.circular(999)),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 36, color: Z.yellow),
+        const SizedBox(width: 14),
+        Text(text, style: zText(28, FontWeight.w500).copyWith(color: Colors.white)),
+      ],
     ),
   );
 }

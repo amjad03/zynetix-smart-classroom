@@ -1,6 +1,7 @@
 import { BadRequestException, Body, ConflictException, Controller, Delete, Get, Inject, NotFoundException, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
-import { Chapter, Exam, Lesson, Question } from '@zynetix/lesson-schema';
-import { buildPack } from '@zynetix/pack-builder';
+import { AudioPackManifest, Chapter, Exam, Lesson, Question } from '@zynetix/lesson-schema';
+import { buildPack, verifyAudioPack } from '@zynetix/pack-builder';
+import { createPublicKey } from 'node:crypto';
 import { z } from 'zod';
 import { CurrentStaff, Roles, Staff, StaffGuard } from './auth';
 import { DB, Db } from './db/db';
@@ -9,6 +10,7 @@ import { cmpVersion } from './board.controller';
 
 const NewPack = z.object({ id: z.string().regex(/^[a-z0-9][a-z0-9._-]*$/), chapterId: z.string() }).strict();
 const Media = z.object({ path: z.string().regex(/^media\/[A-Za-z0-9_\-./]+$/).refine((p) => !p.includes('..')), base64: z.string().max(30_000_000) }).strict();
+const AudioUpload = z.object({ base64: z.string().max(60_000_000), notes: z.string().max(500).optional() }).strict();
 const Publish = z.object({ bump: z.enum(['major', 'minor', 'patch']).default('minor'), notes: z.string().max(500).optional() }).strict();
 
 /** Content CMS: question bank, block editor drafts, media and versioned pack publishing. */
@@ -113,6 +115,26 @@ export class CmsController {
     return { path: b.path };
   }
 
+  /**
+   * Publishes a chapter's narration (an audio pack from tools/voice + pack-builder build-audio,
+   * signed with the pack key). The API checks the signature and every clip before boards see it.
+   */
+  @Post('packs/:id/audio')
+  async audio(@Param('id') id: string, @Body(new Zod(AudioUpload)) b: z.infer<typeof AudioUpload>, @CurrentStaff() s: Staff) {
+    if (!(await this.db.one('SELECT 1 FROM pack WHERE id = $1', [id]))) throw new NotFoundException();
+    const bytes = new Uint8Array(Buffer.from(b.base64, 'base64'));
+    let m;
+    try {
+      m = verifyAudioPack(bytes, createPublicKey(this.keys.pack.privateKey));
+    } catch (e) {
+      throw new BadRequestException({ code: 'audio_invalid', message: (e as Error).message });
+    }
+    if (m.packId !== id) throw new BadRequestException({ code: 'audio_pack_mismatch', packId: m.packId });
+    if (await this.db.one('SELECT 1 FROM audio_pack_version WHERE pack_id = $1 AND lang = $2 AND version = $3', [id, m.lang, m.version]))
+      throw new ConflictException({ code: 'audio_version_exists', version: m.version });
+    return insertAudioPack(this.db, this.storage, bytes, m, s.email);
+  }
+
   /** Freezes the drafts into a new signed version. Boards pick it up on their next sync. */
   @Post('packs/:id/versions')
   async publish(@Param('id') id: string, @Body(new Zod(Publish)) b: z.infer<typeof Publish>, @CurrentStaff() s: Staff) {
@@ -140,4 +162,14 @@ export class CmsController {
     ]);
     return { id, version, bytes: built.bytes.length, lessons: lessons.length, questions: questions.length };
   }
+}
+
+/** Stores a verified audio pack and lists it for boards. */
+export async function insertAudioPack(db: Db, storage: Storage, bytes: Uint8Array, m: AudioPackManifest, by: string) {
+  const key = `packs/audio/${m.id}-${m.version}.zpack`;
+  await storage.put(key, bytes, 'application/zip');
+  const seconds = Math.round(m.clips.reduce((a, c) => a + c.ms, 0) / 1000);
+  await db.q(`INSERT INTO audio_pack_version(pack_id, lang, version, storage_key, sha256, bytes, clips, seconds, voice, published_by)
+    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`, [m.packId, m.lang, m.version, key, sha256(bytes), bytes.length, m.clips.length, seconds, JSON.stringify(m.voice), by]);
+  return { id: m.id, version: m.version, clips: m.clips.length, seconds, bytes: bytes.length };
 }

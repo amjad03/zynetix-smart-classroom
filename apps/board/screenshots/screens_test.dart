@@ -2,6 +2,8 @@
 // Run: flutter test --update-goldens screenshots/
 // The WebView pieces (3D models, PhET pages) cannot render in the test engine and show a labelled
 // card instead; everything else, including Kinetix labs, is the real widget.
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/gestures.dart';
@@ -11,7 +13,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kinetix_ui/kinetix_ui.dart';
 import 'package:zynetix_board/blocks/embeds.dart';
 import 'package:zynetix_board/core/services.dart';
+import 'package:zynetix_board/engine/auto_play.dart';
 import 'package:zynetix_board/engine/model.dart';
+import 'package:zynetix_board/engine/pack_store.dart';
+import 'package:zynetix_board/engine/voice.dart';
 import 'package:zynetix_board/engine/session_log.dart';
 import 'package:zynetix_board/features/exam_practice.dart';
 import 'package:zynetix_board/features/participation.dart';
@@ -476,6 +481,9 @@ void main() {
   //   flutter test --update-goldens screenshots/screens_test.dart --plain-name v5-lesson
   group('v5-lesson', () {
     const topic = 'puc1-physics-01-units-and-measurement.t1';
+    // The 3D step shows the real Kinetix render (screenshots/renders/3d-lab_apparatus-default.png).
+    setUp(() => ShotEmbeds.realRenders = true);
+    tearDown(() => ShotEmbeds.realRenders = false);
 
     Future<void> pumpAt(WidgetTester t, Services s, Size size, Widget home) async {
       t.view.physicalSize = size;
@@ -534,9 +542,11 @@ void main() {
       ('08-remember-this', null),
       ('09-pause-think-unit', (t, b, p) async => tapKey(t, 'think-0')),
       ('10-base-seven', null),
-      ('11-derived', null),
-      ('12-pause-think-temperature', (t, b, p) async => tapKey(t, 'think-1')),
-      ('13-sort-base-derived', (t, b, p) async {
+      ('11-lab-pendulum', null),
+      ('12-derived', null),
+      ('13-3d-lab-apparatus', null),
+      ('14-pause-think-temperature', (t, b, p) async => tapKey(t, 'think-1')),
+      ('15-sort-base-derived', (t, b, p) async {
         for (final (item, bucket) in [(0, 'base'), (6, 'derived'), (1, 'base'), (9, 'derived'), (4, 'base')]) {
           final chip = find.byKey(ValueKey('item-$item'));
           if (chip.evaluate().isEmpty) continue;
@@ -546,7 +556,7 @@ void main() {
           await t.pump();
         }
       }),
-      ('14-scalar-vector-push', (t, b, p) async {
+      ('16-scalar-vector-push', (t, b, p) async {
         await tapKey(t, 'choice-d-1');
         final push = find.byKey(const ValueKey('button-0'));
         if (push.evaluate().isNotEmpty) await t.tap(push.first);
@@ -554,15 +564,15 @@ void main() {
           await t.pump(const Duration(milliseconds: 100));
         }
       }),
-      ('15-worked-example', null),
-      ('16-exam-trap', null),
-      ('17-exam-pattern', (t, b, p) async {
+      ('17-worked-example', null),
+      ('18-exam-trap', null),
+      ('19-exam-pattern', (t, b, p) async {
         await tapKey(t, 'solve-0');
         for (var k = 2; k < b.revealSteps(p); k++) {
           await tapKey(t, 'next');
         }
       }),
-      ('18-recall-next', (t, b, p) async => tapKey(t, 'recall-0')),
+      ('20-recall-next', (t, b, p) async => tapKey(t, 'recall-0')),
     ];
     for (final (i, (name, then)) in steps.indexed) {
       testWidgets('$name board', (t) => step(t, i, name, 'board', then: then));
@@ -573,8 +583,80 @@ void main() {
     testWidgets('05-measuring-bench phone', (t) => step(t, 4, '05-measuring-bench', 'phone', size: phone, display: 'normal'));
     testWidgets('09-pause-think-unit phone', (t) => step(t, 8, '09-pause-think-unit', 'phone', size: phone, display: 'normal', then: (t, b, p) async => tapKey(t, 'think-0')));
     // Kannada: the same lesson, every field translated.
-    for (final i in [2, 4, 16]) {
+    for (final i in [2, 4, 10, 12, 18]) {
       testWidgets('${steps[i].$1} board kn', (t) => step(t, i, steps[i].$1, 'board-kn', then: steps[i].$2, lang: 'kn'));
+    }
+  });
+
+  // The lesson playing in Auto with its chapter voice, one frame per reveal step, for the demo
+  // video (tools/voice/demo.py joins the frames with the clips):
+  //   flutter test --update-goldens screenshots/screens_test.dart --plain-name v5-demo
+  // Frames and timeline.json go to build/demo/<lang>/. Needs content/dist/audio/…zpack (build-audio).
+  group('v5-demo', () {
+    const topic = 'puc1-physics-01-units-and-measurement.t1';
+    setUp(() => ShotEmbeds.realRenders = true);
+    tearDown(() => ShotEmbeds.realRenders = false);
+    for (final lang in ['en', 'kn']) {
+      testWidgets('demo $lang', (t) async {
+        final zpack = Directory('../../content/dist/audio').listSync().whereType<File>().where((f) => f.path.contains('units-and-measurement-audio-$lang-')).toList()..sort((a, b) => a.path.compareTo(b.path));
+        if (zpack.isEmpty) return markTestSkipped('no $lang audio pack: run tools/voice/render.py and build-audio first');
+        final base = await shotServices(prefs: {'displaySize': 'classroom', 'rollCount': 48, 'lang': lang});
+        final dev = parseTrustedKey(File('assets/keys/dev-pack-key.json').readAsStringSync());
+        final voice = VoiceStore(Directory.systemTemp.createTempSync('demo-voice'), trustedKeys: {dev.key: dev.value});
+        await t.runAsync(() async => voice.install(zpack.last.readAsBytesSync()));
+        final player = DemoPlayer();
+        final s = Services(config: base.config, store: base.store, outbox: base.outbox, narrator: base.narrator, syllabus: base.syllabus, embeds: ShotEmbeds(), clock: base.clock, voice: voice, voicePlayer: () => player);
+        final pack = sourcePack(s.lessonFor(topic)!.pack, 'puc1-physics-units-and-measurement');
+        final lesson = pack.lessons[topic]!;
+        final lines = [for (final b in lesson.blocks) for (var k = 1; k <= ((b.raw['voice'] as List?)?.length ?? 0); k++) (b, k)];
+        final clips = voice.track(pack, lesson, lang == 'kn' ? Lang.kn : Lang.en)!;
+        // Kannada may be partial (a slow CPU voice): the demo stops at the first line with no clip.
+        final n = lines.indexWhere((e) => clips.clip(e.$1, e.$2) == null);
+        final total = n < 0 ? lines.length : n;
+        t.view.physicalSize = const Size(1920, 1080);
+        t.view.devicePixelRatio = 1;
+        addTearDown(t.view.reset);
+        await t.pumpWidget(ZynetixBoardApp(services: s, home: LessonPlayerScreen(pack: pack, lesson: lesson)));
+        await t.pump();
+        final frames = <Map<String, Object>>[];
+        final out = Directory('build/demo/$lang')..createSync(recursive: true);
+        for (final f in out.listSync().whereType<File>()) {
+          f.deleteSync();
+        }
+        for (var i = 0; i < total; i++) {
+          for (var k = 0; k < 40 && player.current == null; k++) {
+            await t.pump(const Duration(milliseconds: 100));
+          }
+          final clip = player.current!;
+          // The step's cards and bubbles fade in as the clip starts.
+          await t.pump(const Duration(milliseconds: 500));
+          await t.runAsync(() async {
+            for (final e in find.byType(Image).evaluate()) {
+              await precacheImage((e.widget as Image).image, e);
+            }
+          });
+          await t.pump(const Duration(milliseconds: 400));
+          final name = (i + 1).toString().padLeft(3, '0');
+          await expectLater(find.byType(MaterialApp), matchesGoldenFile('../build/demo/$lang/$name.png'));
+          final (b, step) = lines[i];
+          player.finish();
+          await t.pump(const Duration(milliseconds: 750)); // the gap after a line
+          final waits = find.byKey(const ValueKey('yourTurn')).evaluate().isNotEmpty;
+          // The teacher's moment: the same step with its "Your turn" label.
+          if (waits) await expectLater(find.byType(MaterialApp), matchesGoldenFile('../build/demo/$lang/${name}w.png'));
+          frames.add({'png': '$name.png', if (waits) 'wait': '${name}w.png', 'clip': clip.path, 'ms': clip.ms, 'block': b.id, 'step': step, 'waits': waits});
+          if (i + 1 < total && waits) {
+            await t.pump(const Duration(milliseconds: 300));
+            // The teacher's turn: the class answers, or Next after trying the lab or the model.
+            final answer = b.style == 'pause' ? find.byKey(ValueKey('think-${b.raw['questionIds'] is List ? (pack.questions[b.ids('questionIds').first]!.answer) : 0}')) : b.style == 'solve' ? find.byKey(ValueKey('solve-${pack.questions[b.ids('questionIds').first]!.answer}')) : find.byKey(const ValueKey('next'));
+            await t.tap(answer.evaluate().isEmpty ? find.byKey(const ValueKey('next')) : answer.first, warnIfMissed: false);
+            await t.pump(const Duration(milliseconds: 100));
+          }
+        }
+        File('${out.path}/timeline.json').writeAsStringSync('${const JsonEncoder.withIndent(' ').convert({'lang': lang, 'gapMs': 700, 'frames': frames})}\n');
+        await t.pumpWidget(const SizedBox());
+        await t.pump(const Duration(seconds: 1));
+      });
     }
   });
 
@@ -603,4 +685,33 @@ int _index(WidgetTester t) {
   final txt = (find.byKey(const ValueKey('stepOf')).evaluate().first.widget as Text).data!;
   return int.parse(RegExp(r'\d+').firstMatch(txt)!.group(0)!) - 1;
 
+}
+
+/// The demo's player: each clip "plays" until the harness has taken its frame.
+class DemoPlayer implements VoicePlayer {
+  VoiceClip? current;
+  Completer<bool>? _c;
+  @override
+  Future<bool> play(VoiceClip clip) {
+    current = clip;
+    return (_c = Completer<bool>()).future;
+  }
+
+  void finish() {
+    current = null;
+    if (!(_c?.isCompleted ?? true)) _c!.complete(true);
+  }
+
+  @override
+  Future<void> pause() async {}
+  @override
+  Future<void> resume() async {}
+  @override
+  Future<void> stop() async {
+    current = null;
+    if (!(_c?.isCompleted ?? true)) _c!.complete(false);
+  }
+
+  @override
+  Future<void> dispose() async {}
 }

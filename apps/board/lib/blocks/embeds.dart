@@ -63,6 +63,9 @@ class KinetixEmbeds implements Embeds {
           builder: (ctx) => Localizations.override(
             context: ctx,
             locale: Locale(lang.name),
+            // The board ships no Material strings for Kannada: the lab's chips and dialogs keep
+            // the default (English) ones instead of failing under a kn locale.
+            delegates: const [_AnyLocale<MaterialLocalizations>(DefaultMaterialLocalizations.load), _AnyLocale<WidgetsLocalizations>(DefaultWidgetsLocalizations.load)],
             child: LabView(id: labId, preset: preset),
           ),
         );
@@ -149,4 +152,16 @@ class PlaceholderEmbeds implements Embeds {
   Widget simulation(Block b, InstalledPack pack, Lang lang) => _box('sim:${b.s('source')}:${b.s('simId')}');
   @override
   Widget lab(String labId, String? preset, Lang lang) => _box('lab:$labId');
+}
+
+/// Default localizations for any locale (see [KinetixEmbeds.lab]).
+class _AnyLocale<T> extends LocalizationsDelegate<T> {
+  const _AnyLocale(this._load);
+  final Future<T> Function(Locale) _load;
+  @override
+  bool isSupported(Locale locale) => true;
+  @override
+  Future<T> load(Locale locale) => _load(locale);
+  @override
+  bool shouldReload(_AnyLocale<T> old) => false;
 }

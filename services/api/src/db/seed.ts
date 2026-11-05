@@ -7,7 +7,8 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import * as bcrypt from 'bcryptjs';
-import { buildPack, readSource, validate } from '@zynetix/pack-builder';
+import { buildAudioPack, buildPack, readAudioSource, readSource, validate } from '@zynetix/pack-builder';
+import { insertAudioPack } from '../cms.controller';
 import { Chapter } from '@zynetix/lesson-schema';
 import { Db } from './db';
 import { migrate } from './migrate';
@@ -67,6 +68,13 @@ export async function seed(db: Db, storage: Storage, packKey: Parameters<typeof 
       await storage.put(key, bytes);
       await db.q('INSERT INTO pack_version(pack_id, version, storage_key, sha256, bytes, notes, published_by) VALUES ($1,$2,$3,$4,$5,$6,$7)',
         [src.id, src.version, key, sha256(bytes), bytes.length, 'Seed', 'seed']);
+    }
+    // Rendered narration (content/audio/<dir>/<lang>, from tools/voice), signed with the same key.
+    for (const lang of ['en', 'kn'] as const) {
+      const audio = readAudioSource(content, dir, lang);
+      if (!audio || (await db.one('SELECT 1 FROM audio_pack_version WHERE pack_id = $1 AND lang = $2', [src.id, lang]))) continue;
+      const { bytes, manifest } = buildAudioPack(audio, packKey);
+      await insertAudioPack(db, storage, bytes, manifest, 'seed');
     }
   }
 

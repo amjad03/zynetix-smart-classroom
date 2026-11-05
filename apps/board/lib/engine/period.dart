@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 
+import 'auto_play.dart';
 import 'lesson_controller.dart';
 import 'model.dart';
 
@@ -125,12 +126,17 @@ abstract final class PeriodPlanner {
 /// aloud, waits its time, waits for quizzes to finish, then shows the homework until the period
 /// ends. [tick] is public so tests can run a whole period instantly.
 class PeriodRunner extends ChangeNotifier {
-  PeriodRunner({required this.c, required this.plan, required this.periodSeconds, this.autoTick = true});
+  PeriodRunner({required this.c, required this.plan, required this.periodSeconds, this.autoTick = true, this.voice});
 
   final LessonController c;
   final PeriodPlan plan;
   final int periodSeconds;
   final bool autoTick;
+
+  /// The chapter's voice (an [AutoPlayer] with teacher false, advanceBlocks false): narrated
+  /// blocks play step by step and move on when their narration ends, not after a fixed time.
+  final AutoPlayer? voice;
+  bool get _voiced => voice != null && current.block.raw['voice'] is List;
 
   int step = 0, elapsed = 0, periodElapsed = 0;
   bool narrationDone = false, quizDone = false, paused = false, homework = false, over = false;
@@ -142,7 +148,9 @@ class PeriodRunner extends ChangeNotifier {
   int get secondsLeft => max(0, periodSeconds - periodElapsed);
 
   void start() {
+    if (voice != null) c.voiceDriven = true;
     _enter(0);
+    voice?.start();
     if (autoTick) _timer = Timer.periodic(const Duration(seconds: 1), (_) => tick());
   }
 
@@ -158,12 +166,19 @@ class PeriodRunner extends ChangeNotifier {
 
   Future<void> _speak() async {
     final token = ++_narrationToken;
+    if (_voiced) return; // the AutoPlayer follows the controller to this block
     final n = current.block.narration;
     if (n != null && !paused) await c.speak(n);
     if (token == _narrationToken) narrationDone = true;
   }
 
   bool get _stepDone {
+    final b = current.block;
+    // A narrated block is done when its last step has been said; a running quiz still finishes.
+    if (_voiced) {
+      final runsQuiz = (b.type == BlockType.classQuiz && b.style != 'pause') || (b.type == BlockType.pyq && b.style != 'solve');
+      return voice!.blockDone && (!runsQuiz || quizDone || elapsed >= current.seconds + 30);
+    }
     final isQuiz = current.phase == Phase.quiz;
     if (isQuiz) return quizDone || elapsed >= current.seconds + 30;
     return narrationDone && elapsed >= current.seconds;

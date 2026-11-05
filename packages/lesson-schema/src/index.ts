@@ -113,8 +113,26 @@ export const Card = z
   .strict();
 export type Card = z.infer<typeof Card>;
 
+/**
+ * Video-style narration: one line per reveal step, spoken as that card or step appears (the
+ * first line on arrival, then one per Next). Rendered offline into the chapter's audio pack
+ * (tools/voice); the board plays each clip and shows its step when the clip starts.
+ */
+export const VoiceLine = z
+  .object({
+    say: L10n,
+    /** The clip's id in the audio pack; `<blockId>.<step>` when absent. */
+    clip: id.optional(),
+    /** Rendered length per language in milliseconds (written by tools/voice), for planning and silent timing. */
+    ms: z.object({ en: z.number().int().min(0).optional(), kn: z.number().int().min(0).optional() }).strict().optional(),
+  })
+  .strict();
+export type VoiceLine = z.infer<typeof VoiceLine>;
+
 const base = {
   id,
+  /** One narration line per reveal step (see [VoiceLine]); its length must match the block's steps. */
+  voice: z.array(VoiceLine).min(1).max(40).optional(),
   title: L10n.optional(),
   /** A character says one line here (a speech bubble with their avatar). */
   speaker: Speaker.optional(),
@@ -155,7 +173,11 @@ export const ConceptBlock = z
 
 /** A Kinetix 3D teaching model (packages/kinetix_3d: heart, molecules, atoms…). */
 export const Model3dBlock = z
-  .object({ ...base, type: z.literal('3d_model'), modelId: id, variant: z.string().optional(), sceneId: z.string().optional(), caption: L10n })
+  .object({
+    ...base, type: z.literal('3d_model'), modelId: id, variant: z.string().optional(), sceneId: z.string().optional(), caption: L10n,
+    /** What to try on the model, shown beside it. */
+    tryThis: z.array(L10n).max(4).optional(),
+  })
   .strict();
 
 /**
@@ -178,7 +200,9 @@ export const SimulationBlock = z
   .strict();
 
 /** A Kinetix virtual lab bench (packages/kinetix_labs, 116 labs). */
-export const VirtualLabBlock = z.object({ ...base, type: z.literal('virtual_lab'), labId: z.string().min(1), preset: z.string().optional(), aim: L10n }).strict();
+export const VirtualLabBlock = z
+  .object({ ...base, type: z.literal('virtual_lab'), labId: z.string().min(1), preset: z.string().optional(), aim: L10n, tryThis: z.array(L10n).max(4).optional() })
+  .strict();
 
 export const ExampleBlock = z
   .object({ ...base, type: z.literal('example'), problem: L10n, steps: z.array(L10n).min(1), answer: L10n })
@@ -626,6 +650,62 @@ export const SessionLog = z
   })
   .strict();
 export type SessionLog = z.infer<typeof SessionLog>;
+
+// ---------------------------------------------------------------- narration audio packs
+
+/**
+ * How many steps the board walks a block through (mirrors Block.revealSteps in the board's
+ * model.dart): step 1 is what shows on arrival, each Next shows one more.
+ */
+export function revealSteps(b: Block, questions: Question[] = []): number {
+  if (b.type === 'class_quiz' && b.style === 'pause') return 2 * b.questionIds.length;
+  if (b.type === 'pyq' && b.style === 'solve') {
+    const q = questions.find((x) => x.id === b.questionIds[0]);
+    return 1 + (q?.solution?.length ? q.solution.length : 1);
+  }
+  if (!b.reveal) return 1;
+  const n =
+    b.type === 'intro' ? (b.cards?.length ?? 0)
+    : b.type === 'concept' ? (b.hero ? 1 : 0) + (b.cards?.length ?? 0) + b.points.length
+    : b.type === 'example' ? b.steps.length + 2
+    : b.type === 'recap' ? b.points.length + (b.next ? 1 : 0)
+    : 1;
+  return Math.max(1, n);
+}
+
+/** The clip id of a block's step: its VoiceLine's `clip`, else `<blockId>.<step>`. */
+export const clipId = (b: Pick<Block, 'id' | 'voice'>, step: number) => b.voice?.[step - 1]?.clip ?? `${b.id}.${step}`;
+
+/** One rendered narration clip. `sha` is the first 16 hex of SHA-256 of the line it says, so a board can tell a stale clip. */
+export const AudioClip = z
+  .object({ lessonId: id, blockId: id, step: z.number().int().min(1), clip: id, file: z.string().min(1), ms: z.number().int().min(0), sha: z.string().regex(/^[0-9a-f]{16}$/) })
+  .strict();
+export type AudioClip = z.infer<typeof AudioClip>;
+
+/**
+ * A chapter's narration in one language, downloaded once over Wi-Fi and played offline:
+ * `<packId>-audio-<lang>-<version>.zpack`, a zip of manifest.json + manifest.sig + audio/…,
+ * signed exactly like a content pack (Ed25519 over the manifest bytes; the manifest hashes every file).
+ */
+export const AudioPackManifest = z
+  .object({
+    schemaVersion: z.literal(SCHEMA_VERSION),
+    kind: z.literal('audio'),
+    /** `<packId>-audio-<lang>`. */
+    id,
+    packId: id,
+    chapterId: id,
+    lang: z.enum(['en', 'kn']),
+    version: z.string().regex(/^\d+\.\d+\.\d+$/),
+    createdAt: z.string(),
+    keyId: z.string(),
+    /** The TTS model and voice, and their licence (only voices licensed for commercial use). */
+    voice: z.object({ model: z.string().min(1), voice: z.string().optional(), licence: z.string().min(1) }).strict(),
+    clips: z.array(AudioClip).min(1),
+    files: z.array(PackFile).min(1),
+  })
+  .strict();
+export type AudioPackManifest = z.infer<typeof AudioPackManifest>;
 
 /** Looks up a question by id; throws if a lesson refers to a missing one. */
 export function checkQuestionRefs(lessons: Lesson[], questions: Question[]): string[] {

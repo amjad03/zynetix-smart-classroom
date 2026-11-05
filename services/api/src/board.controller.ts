@@ -8,7 +8,14 @@ import { leagueConfig } from './outcomes.controller';
 import { KEYS, Keys, STORAGE, Storage, Zod, sha256, signLicence, token } from './infra';
 
 const Activate = z.object({ code: z.string().min(6).max(12), name: z.string().min(1).max(60), pin: z.string().regex(/^\d{4,6}$/) }).strict();
-const Sync = z.object({ installed: z.record(z.string()).default({}), outbox: z.array(z.unknown()).max(500).default([]) }).strict();
+const Sync = z
+  .object({
+    installed: z.record(z.string()).default({}),
+    /** Audio packs on the board (`<packId>-audio-<lang>` → version): sync offers newer ones. */
+    installedAudio: z.record(z.string()).default({}),
+    outbox: z.array(z.unknown()).max(500).default([]),
+  })
+  .strict();
 
 const GRACE_DAYS = 30;
 const apiBase = (req: Request) => process.env.PUBLIC_API_URL ?? `${req.protocol}://${req.get('host')}`;
@@ -62,11 +69,12 @@ export class BoardController {
     const licence = config.licence as { validUntil: string };
     const lapsed = new Date(licence.validUntil).getTime() + GRACE_DAYS * 864e5 < Date.now();
     const packs = lapsed ? [] : await this.packUpdates(d, b.installed, apiBase(req));
+    const audio = lapsed ? [] : await this.audioUpdates(d, b.installedAudio, apiBase(req));
     const schedule = await this.db.q(
       `SELECT to_char(date,'YYYY-MM-DD') AS date, start_time AS start, end_time AS end, topic_id AS "topicId" FROM self_learning_booking
        WHERE section_id = $1 AND date BETWEEN current_date AND current_date + 7 ORDER BY date, start_time`, [d.sectionId]);
     const timetable = await this.db.q('SELECT day, period, start_time AS start, end_time AS end, subject FROM timetable_slot WHERE section_id = $1 ORDER BY day, period', [d.sectionId]);
-    return { accepted, rejected, packs, schedule, timetable, config, licenceLapsed: lapsed };
+    return { accepted, rejected, packs, audio, schedule, timetable, config, licenceLapsed: lapsed };
   }
 
   /**
@@ -98,6 +106,48 @@ export class BoardController {
           [l.id, i, d.sectionId, a.questionId, topicId, chapterId, subjects.get(chapterId) ?? q?.subject ?? null, a.roll ?? null, a.team ?? null, a.mode, a.source ?? a.mode, a.correct, at]);
       }
     });
+  }
+
+  /**
+   * A chapter's narration in one language: the newest signed audio pack, downloaded once (over
+   * the college Wi-Fi) when the teacher taps "Download voice", then played offline.
+   */
+  @Get('board/audio/:packId/:lang')
+  @UseGuards(DeviceGuard)
+  async audio(@CurrentDevice() d: Device, @Param('packId') packId: string, @Param('lang') lang: string, @Req() req: Request) {
+    if (lang !== 'en' && lang !== 'kn') throw new NotFoundException();
+    const [r] = await this.audioRows(d, [packId], lang);
+    if (!r) throw new NotFoundException({ code: 'no_voice' });
+    return this.audioOffer(r, apiBase(req));
+  }
+
+  /** Audio packs for this section's chapters, newest version per pack and language. */
+  private audioRows(d: Device, packIds: string[], lang?: string) {
+    return this.db.q(
+      `SELECT DISTINCT ON (a.pack_id, a.lang) a.pack_id, a.lang, a.version, a.sha256, a.bytes, a.clips, a.seconds, a.voice, a.storage_key
+       FROM audio_pack_version a JOIN pack p ON p.id = a.pack_id JOIN chapter c ON c.id = p.chapter_id JOIN section s ON s.id = $1
+       WHERE a.pack_id = ANY($2) AND ($3::text IS NULL OR a.lang = $3) AND c.subject = ANY(s.subjects) AND s.board = ANY(c.boards)
+       ORDER BY a.pack_id, a.lang, string_to_array(a.version, '.')::int[] DESC`, [d.sectionId, packIds, lang ?? null]);
+  }
+
+  private async audioOffer(r: any, base: string) {
+    return {
+      id: `${r.pack_id}-audio-${r.lang}`, packId: r.pack_id, lang: r.lang, version: r.version, sha256: r.sha256, bytes: r.bytes,
+      clips: r.clips, seconds: r.seconds, voice: r.voice, url: await this.storage.url(r.storage_key, base),
+    };
+  }
+
+  /** Newer versions of the audio packs a board already has (it only gets those it asked for). */
+  private async audioUpdates(d: Device, installed: Record<string, string>, base: string) {
+    const ids = Object.keys(installed).map((k) => k.replace(/-audio-(en|kn)$/, ''));
+    if (!ids.length) return [];
+    const out = [];
+    for (const r of await this.audioRows(d, ids)) {
+      const have = installed[`${r.pack_id}-audio-${r.lang}`];
+      if (!have || cmpVersion(have, r.version) >= 0) continue;
+      out.push(await this.audioOffer(r, base));
+    }
+    return out;
   }
 
   /** Local-storage downloads (dev). In production the board gets pre-signed S3 URLs instead. */

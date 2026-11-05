@@ -9,7 +9,8 @@ import { unzipSync } from 'fflate';
 import { AppModule } from '../src/app.module';
 import { DB, Db } from '../src/db/db';
 import { seed } from '../src/db/seed';
-import { KEYS, LocalStorage, STORAGE } from '../src/infra';
+import { KEYS, LocalStorage, STORAGE, sha256 } from '../src/infra';
+import { buildAudioPack } from '@zynetix/pack-builder';
 
 const DB_URL = process.env.TEST_DATABASE_URL ?? 'postgres://zynetix:zynetix@localhost:5432/zynetix_test';
 const packKey = { keyId: 'test', privateKey: generateKeyPairSync('ed25519').privateKey };
@@ -196,6 +197,39 @@ describe('Zynetix API', () => {
   const motion = 'puc1-physics-02-motion-in-a-straight-line';
   const ans = (q: string, roll: number | undefined, correct: boolean, extra: Record<string, unknown> = {}) =>
     ({ questionId: q, mode: roll ? 'roll_call' : 'monitor', ...(roll ? { roll } : {}), chosen: correct ? 0 : 1, correct, at: new Date().toISOString(), ...extra });
+
+  it('chapter voice: an editor publishes a signed audio pack; the board downloads it once and sync offers newer ones', async () => {
+    const packId = 'puc1-physics-units-and-measurement';
+    const audio = (version: string, key = packKey) => buildAudioPack({
+      packId, chapterId: 'puc1-physics-01-units-and-measurement', lang: 'en', version,
+      voice: { model: 'hexgrad/Kokoro-82M', voice: 'am_michael', licence: 'Apache-2.0' },
+      clips: [{ clip: { lessonId: 'puc1-physics-01-units-and-measurement.t1.lesson', blockId: 'hook', step: 1, clip: 'hook.1', file: 'audio/t1/hook.1.opus', ms: 4200, sha: '0123456789abcdef' }, bytes: new TextEncoder().encode('OggS…') }],
+    }, key).bytes;
+    // The seed publishes any voice rendered in content/audio: start from none.
+    await db.q('DELETE FROM audio_pack_version');
+    // Before any voice is published the board gets a 404 and lessons stay silent.
+    await http.get(`/v1/board/audio/${packId}/en`).auth(device, { type: 'bearer' }).expect(404);
+    await http.get(`/v1/board/audio/${packId}/en`).expect(401);
+    // A pack signed with another key, or for another chapter, is refused.
+    const stranger = { keyId: 'x', privateKey: generateKeyPairSync('ed25519').privateKey };
+    await http.post(`/v1/cms/packs/${packId}/audio`).auth(editor, { type: 'bearer' }).send({ base64: Buffer.from(audio('1.0.0', stranger)).toString('base64') }).expect(400);
+    await http.post('/v1/cms/packs/puc2-chemistry-solutions/audio').auth(editor, { type: 'bearer' }).send({ base64: Buffer.from(audio('1.0.0')).toString('base64') }).expect(400);
+    const up = await http.post(`/v1/cms/packs/${packId}/audio`).auth(editor, { type: 'bearer' }).send({ base64: Buffer.from(audio('1.0.0')).toString('base64') }).expect(201);
+    expect(up.body).toMatchObject({ id: `${packId}-audio-en`, version: '1.0.0', clips: 1, seconds: 4 });
+    const r = await http.get(`/v1/board/audio/${packId}/en`).auth(device, { type: 'bearer' }).expect(200);
+    expect(r.body).toMatchObject({ id: `${packId}-audio-en`, lang: 'en', version: '1.0.0', voice: { licence: 'Apache-2.0' } });
+    await http.get(`/v1/board/audio/${packId}/kn`).auth(device, { type: 'bearer' }).expect(404);
+    const file = await http.get(new URL(r.body.url).pathname).buffer(true).parse((res, cb) => { const b: Buffer[] = []; res.on('data', (c: Buffer) => b.push(c)); res.on('end', () => cb(null, Buffer.concat(b))); }).expect(200);
+    const files = unzipSync(new Uint8Array(file.body));
+    expect(verify(null, files['manifest.json'], createPublicKey(packKey.privateKey), Buffer.from(files['manifest.sig']))).toBe(true);
+    expect(sha256(new Uint8Array(file.body))).toBe(r.body.sha256);
+    // Sync offers a newer version only of voices the board has.
+    await http.post(`/v1/cms/packs/${packId}/audio`).auth(editor, { type: 'bearer' }).send({ base64: Buffer.from(audio('1.0.1')).toString('base64') }).expect(201);
+    const none = await http.post('/v1/board/sync').auth(device, { type: 'bearer' }).send({}).expect(201);
+    expect(none.body.audio).toEqual([]);
+    const s = await http.post('/v1/board/sync').auth(device, { type: 'bearer' }).send({ installedAudio: { [`${packId}-audio-en`]: '1.0.0' } }).expect(201);
+    expect(s.body.audio.map((a: { version: string }) => a.version)).toEqual(['1.0.1']);
+  });
 
   it('sync stores each answer once, with its topic; old logs without topic/source get them from the question bank', async () => {
     const old = log({ answers: [ans('mot-q04', 3, true)] }); // an older board: no topicId/chapterId/source

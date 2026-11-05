@@ -61,9 +61,15 @@ class BlockView extends StatelessWidget {
       rail: rail,
     );
     String caption(String key) => b.f(key).t(l);
+    // "Try this" beside a sim, a 3D model or a lab, and the character's line under it.
+    final tryThis = [
+      if (b.list('tryThis').isNotEmpty) RailPanel(title: tr('tryThis', l), gap: 20, children: bullets(b.list('tryThis'), icon: Icons.touch_app_outlined, style: zText(28, FontWeight.w400).copyWith(color: Z.ink2, height: 1.5))),
+      if (b.speaker != null) SpeechBubble(speaker: b.speaker!, lang: l),
+    ];
 
     // One idea at a time: what the controller has revealed (Self-Learning walks it by itself).
-    Widget stepped(Widget Function(int shown, ValueChanged<int> reveal) build) => auto
+    // With a chapter voice, the narration reveals the steps (lib/engine/auto_play.dart).
+    Widget stepped(Widget Function(int shown, ValueChanged<int> reveal) build) => auto && !c.voiceDriven
         ? AutoReveal(key: ValueKey('auto:${b.id}'), total: b.revealSteps(c.pack), builder: build)
         : build(c.revealed, c.revealTo);
     final styled = b.cards.isNotEmpty || b.raw['hero'] is Map || b.reveal || b.speaker != null;
@@ -89,7 +95,7 @@ class BlockView extends StatelessWidget {
         ),
       ),
       BlockType.recap when b.style == 'recall' => stepped((shown, reveal) => RecallView(key: ValueKey('recall:${b.id}'), block: b, lang: l, shown: shown, onTap: () => reveal(shown + 1))),
-      BlockType.example when b.reveal && !auto => ExampleView(key: ValueKey(b.id), block: b, lang: l, shown: c.revealed - 1, onShowNext: c.revealMore),
+      BlockType.example when b.reveal && (!auto || c.voiceDriven) => ExampleView(key: ValueKey(b.id), block: b, lang: l, shown: c.revealed - 1, onShowNext: c.revealMore),
       _ => null,
     };
     if (special != null) return KeyedSubtree(key: ValueKey('block:${b.id}'), child: special);
@@ -135,6 +141,7 @@ class BlockView extends StatelessWidget {
         hint: tr('model3dHint', l),
         rail: [
           RailPanel(title: tr('about', l), children: [RailNote(caption('caption'))]),
+          ...tryThis,
         ],
       ),
       // Kinetix labs and players draw their own title and controls: no heading over them.
@@ -144,7 +151,7 @@ class BlockView extends StatelessWidget {
         hint: b.s('source') == 'phet' ? tr('simHint', l) : null,
         rail: [
           RailPanel(title: tr('about', l), children: [RailNote(caption('caption'))]),
-          if (b.list('tryThis').isNotEmpty) RailPanel(title: tr('tryThis', l), gap: 20, children: bullets(b.list('tryThis'), icon: Icons.touch_app_outlined, style: zText(28, FontWeight.w400).copyWith(color: Z.ink2, height: 1.5))),
+          ...tryThis,
         ],
       ),
       BlockType.virtualLab => staged(
@@ -153,6 +160,7 @@ class BlockView extends StatelessWidget {
         hint: null,
         rail: [
           RailPanel(title: tr('aim', l), children: [RailNote(caption('aim'))]),
+          ...tryThis,
         ],
       ),
       BlockType.example => ExampleView(key: ValueKey(b.id), block: b, lang: l, auto: auto),

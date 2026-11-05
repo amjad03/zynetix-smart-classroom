@@ -106,6 +106,9 @@ class LessonController extends ChangeNotifier {
     narrator.stop();
   }
 
+  /// Self-Learning with a chapter voice: the narration reveals each step (AutoPlayer), not a timer.
+  bool voiceDriven = false;
+
   /// Teacher Mode: once the teacher has asked for Read aloud, whiteboard steps read their lines
   /// as they appear. A step's line is what the 🔊 button reads on a block with no narration.
   bool readAloudOn = false;
