@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/widgets.dart';
 
 /// Draws the app at [scale]: the screens are laid out on a canvas of (screen size / scale)
@@ -68,11 +70,12 @@ class _Scope extends InheritedWidget {
   bool updateShouldNotify(_Scope old) => old.scale != scale;
 }
 
-/// Shows [child] (a Kinetix lab, player or 3D viewer, designed in ordinary app pixels) at its
+/// Shows [child] (a Kinetix lab, player or 3D viewer, designed in ordinary app pixels) near its
 /// design size inside a [UiScale]. The board lays screens out at two canvas units per design
 /// pixel, so a Kinetix widget placed straight on the canvas came out at half size: 7–10 px lab
-/// text and 3D labels on a classroom board. Here it gets one design pixel per two canvas units,
-/// so on a classroom board it reads a third larger than on a laptop, like the board's own type.
+/// text and 3D labels on a classroom board. Here it is magnified up to two canvas units per
+/// pixel, as far as the space allows: it always keeps at least [minSize] logical pixels to lay
+/// out in (its code editors and lab benches need that much), so on a phone it stays as it was.
 class DesignPixels extends StatelessWidget {
   const DesignPixels({super.key, required this.child});
   final Widget child;
@@ -80,14 +83,21 @@ class DesignPixels extends StatelessWidget {
   /// Canvas units per design pixel (see `AppConfig.uiScale`).
   static const unitsPerPixel = 2.0;
 
+  /// The least room a Kinetix widget is given, in its own pixels.
+  static const minSize = Size(1000, 680);
+
+  /// The magnification for a box of [box] canvas units: 1 to [unitsPerPixel].
+  static double factorFor(Size box) => math.min(unitsPerPixel, math.min(box.width / minSize.width, box.height / minSize.height)).clamp(1.0, unitsPerPixel);
+
   @override
   Widget build(BuildContext context) {
     if (UiScale.of(context) == 1) return child;
     final mq = MediaQuery.of(context);
-    const k = unitsPerPixel;
     return LayoutBuilder(
       builder: (context, c) {
         if (!c.hasBoundedWidth || !c.hasBoundedHeight) return child;
+        final k = factorFor(c.biggest);
+        if (k <= 1.001) return child;
         return FittedBox(
           fit: BoxFit.fill,
           alignment: Alignment.topLeft,
