@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 
+import '../engine/model.dart' show glyphSafe;
+
 /// Text with inline `$…$` LaTeX, as written in concept blocks. With [accent], `*word*` is a
 /// keyword drawn in that colour (lesson cards, rules and speech bubbles; never code, where `*`
 /// is multiplication). [align] centres a rule.
@@ -25,7 +27,7 @@ class MathText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final s = style ?? Theme.of(context).textTheme.bodyLarge!;
-    final parts = text.split(r'$');
+    final parts = glyphSafe(text).split(r'$');
     // A formula wider than the line scrolls sideways inside its own box instead of overflowing.
     return LayoutBuilder(builder: (context, box) => Text.rich(
       textAlign: align,

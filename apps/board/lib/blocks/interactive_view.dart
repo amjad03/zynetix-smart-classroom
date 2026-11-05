@@ -114,6 +114,43 @@ class InteractiveViewState extends State<InteractiveView> with SingleTickerProvi
     return v is List && v.length == 2 ? [(v[0] as num).toDouble(), (v[1] as num).toDouble()] : null;
   }
 
+  List<double>? _fnY;
+
+  /// The y range of a function plot: the block's, widened (once, at the starting control values,
+  /// so the axes do not jump while a slider moves) when the curves at the start leave it, or
+  /// fitted to them when the block gives none. Curves that blow up (tan, 1/x) do not count.
+  List<double> functionY(List<double> xr) => _fnY ??= () {
+    final given = _range('y');
+    final ys = <double>[];
+    final env = Map.of(rt.env);
+    for (final f in (raw['fns'] as List?) ?? const []) {
+      if (f is! Map) continue;
+      final e = _expr(f['fn'] as String? ?? '');
+      if (e == null) continue;
+      for (var i = 0; i <= 120; i++) {
+        final y = e(env..['x'] = xr[0] + (xr[1] - xr[0]) * i / 120);
+        if (y.isFinite) ys.add(y);
+      }
+    }
+    if (ys.length < 10) return given ?? const [-10.0, 10.0];
+    ys.sort();
+    // The 2nd–98th percentile: an asymptote's spike does not set the scale.
+    var lo = ys[(ys.length * 0.02).floor()], hi = ys[((ys.length - 1) * 0.98).ceil()];
+    if (given != null) {
+      final span = given[1] - given[0];
+      final out = lo < given[0] - span * 0.02 || hi > given[1] + span * 0.02;
+      if (!out) return given;
+      lo = math.min(lo, given[0]);
+      hi = math.max(hi, given[1]);
+    }
+    if (hi - lo < 1e-9) {
+      lo -= 1;
+      hi += 1;
+    }
+    final pad = (hi - lo) * 0.08, step = niceStep(hi - lo + 2 * pad);
+    return [((lo - pad) / step).floorToDouble() * step, ((hi + pad) / step).ceilToDouble() * step];
+  }();
+
   /// Read-outs: the block's, or sin/cos/tan for a unit circle that has none.
   List<({String label, String value, String? unit})> readouts() {
     final l = widget.lang;
@@ -384,9 +421,9 @@ class _RailSlider extends StatelessWidget {
             if (marks.length < 2) marks..clear()..addAll([spec.min, spec.max]);
             const inset = 24.0;
             final w = box.maxWidth.isFinite ? box.maxWidth : 400.0;
-            final style = zText(26, FontWeight.w400).copyWith(color: Z.faint);
+            final style = zText(28, FontWeight.w400).copyWith(color: Z.faint);
             return SizedBox(
-              height: 36,
+              height: 40,
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
@@ -414,7 +451,9 @@ class _ChartPainter extends CustomPainter {
   Map<String, double> get snapshot => s.rt.env;
 
   Map<String, dynamic> get raw => s.raw;
-  static const font = 30.0;
+  /// Stage text, in canvas units: never under 32 (the back bench must read it).
+  static const font = 34.0;
+  static const minText = 32.0;
 
   Paint _stroke(Color c, [double w = 6]) => Paint()
     ..color = c
@@ -427,7 +466,7 @@ class _ChartPainter extends CustomPainter {
     final tp = TextPainter(
       text: TextSpan(
         text: t,
-        style: zText(size, weight).copyWith(color: color),
+        style: zText(math.max(size, minText), weight).copyWith(color: color),
       ),
       textDirection: TextDirection.ltr,
     )..layout();
@@ -453,12 +492,15 @@ class _ChartPainter extends CustomPainter {
     }
   }
 
-  Rect _plotBox(Rect box) => Rect.fromLTRB(box.left + 90, box.top + 40, box.right - 30, box.bottom - 70);
+  /// Axis names; their tick numbers are drawn at 0.8 of this, the 32-unit minimum.
+  static const axisFont = 40.0;
+
+  Rect _plotBox(Rect box) => Rect.fromLTRB(box.left + 120, box.top + 48, box.right - 36, box.bottom - 84);
 
   void _functions(Canvas canvas, Rect box) {
-    final xr = s._range('x') ?? [-10, 10], yr = s._range('y') ?? [-10, 10];
+    final xr = s._range('x') ?? [-10, 10], yr = s.functionY(xr);
     final pb = _plotBox(box);
-    paintAxes(canvas, pb, xr, yr, Colors.white70, strokeWidth: 3, font: font, xLabel: raw['xLabel'] as String? ?? 'x', yLabel: raw['yLabel'] as String? ?? 'y', grid: true);
+    paintAxes(canvas, pb, xr, yr, Colors.white70, strokeWidth: 3, font: axisFont, xLabel: raw['xLabel'] as String? ?? 'x', yLabel: raw['yLabel'] as String? ?? 'y', grid: true);
     final fns = (raw['fns'] as List?) ?? const [];
     var legendY = pb.top + 10;
     for (final (i, f) in fns.indexed) {
@@ -470,9 +512,9 @@ class _ChartPainter extends CustomPainter {
         paintFunction(canvas, pb, xr, yr, (x) => e(vars..['x'] = x), _stroke(color));
       }
       final label = f['label'] as String? ?? 'y = ${f['fn']}';
-      canvas.drawLine(Offset(pb.right - 300, legendY + 16), Offset(pb.right - 250, legendY + 16), _stroke(color));
-      _text(canvas, label, Offset(pb.right - 240, legendY + 16), color: color, align: Alignment.centerLeft);
-      legendY += 44;
+      canvas.drawLine(Offset(pb.right - 340, legendY + 18), Offset(pb.right - 290, legendY + 18), _stroke(color));
+      _text(canvas, label, Offset(pb.right - 280, legendY + 18), color: color, align: Alignment.centerLeft);
+      legendY += 50;
     }
     // Targets: a flag on its pole at each mark (a challenge's landing point, for example).
     for (final m in (raw['marks'] as List?) ?? const []) {
@@ -507,7 +549,7 @@ class _ChartPainter extends CustomPainter {
     final pb0 = _plotBox(box);
     final k = math.min(pb0.width / (xr[1] - xr[0]), pb0.height / (yr[1] - yr[0]));
     final pb = Rect.fromCenter(center: pb0.center, width: k * (xr[1] - xr[0]), height: k * (yr[1] - yr[0]));
-    paintAxes(canvas, pb, xr, yr, Colors.white60, strokeWidth: 3, font: font, xLabel: raw['xLabel'] as String? ?? 'x', yLabel: raw['yLabel'] as String? ?? 'y', grid: true);
+    paintAxes(canvas, pb, xr, yr, Colors.white60, strokeWidth: 3, font: axisFont, xLabel: raw['xLabel'] as String? ?? 'x', yLabel: raw['yLabel'] as String? ?? 'y', grid: true);
     Offset map(Offset v) => Offset(pb.left + (v.dx - xr[0]) * k, pb.bottom - (v.dy - yr[0]) * k);
     final o = map(Offset.zero);
     if (vs.length == 2) {
@@ -540,10 +582,12 @@ class _ChartPainter extends CustomPainter {
     final data = _data;
     if (data.isEmpty) return;
     final top = data.map((e) => e.$2.isFinite ? e.$2 : 0).fold(0.0, math.max);
-    final yr = s._range('y') ?? [0, top <= 0 ? 1 : top * 1.15];
+    // The block's range, unless a bar would be cut off at the top.
+    final given = s._range('y');
+    final yr = given != null && top <= given[1] ? given : [given?[0] ?? 0.0, top <= 0 ? 1.0 : top * 1.15];
     final pb = _plotBox(box);
     // Categories along x: no numeric ticks or vertical grid under the bars.
-    paintAxes(canvas, pb, [0, 1], yr, Colors.white70, strokeWidth: 3, font: 30, yLabel: raw['yLabel'] as String?, grid: true, xTicks: false);
+    paintAxes(canvas, pb, [0, 1], yr, Colors.white70, strokeWidth: 3, font: axisFont, yLabel: raw['yLabel'] as String?, grid: true, xTicks: false);
     final slot = pb.width / data.length;
     for (final (i, (label, v)) in data.indexed) {
       final val = v.isFinite ? v.clamp(yr[0], yr[1]) : 0.0;
@@ -574,7 +618,7 @@ class _ChartPainter extends CustomPainter {
       final mid = start + sweep / 2;
       if (sweep > 0.25) _text(canvas, '${(v / total * 100).toStringAsFixed(0)}%', c + Offset(math.cos(mid), math.sin(mid)) * radius * 0.62, size: 32, color: Colors.black87, weight: FontWeight.w800);
       // Legend.
-      final ly = box.top + 40 + i * 56.0;
+      final ly = box.top + 44 + i * 60.0;
       canvas.drawRRect(RRect.fromRectAndRadius(Rect.fromLTWH(c.dx + radius + 60, ly - 16, 32, 32), const Radius.circular(6)), Paint()..color = col);
       _text(canvas, '$label: ${tickLabel(_round(v))}', Offset(c.dx + radius + 108, ly), size: 30, align: Alignment.centerLeft);
       start += sweep;
@@ -590,7 +634,7 @@ class _ChartPainter extends CustomPainter {
     canvas.drawLine(Offset(c.dx, c.dy - r - 40), Offset(c.dx, c.dy + r + 40), axis);
     canvas.drawCircle(c, r, _stroke(Colors.white70, 4));
     for (final (t, s) in [(r, '1'), (-r, '−1')]) {
-      _text(canvas, s, Offset(c.dx + t, c.dy + 24), size: 24, color: Colors.white70);
+      _text(canvas, s, Offset(c.dx + t, c.dy + 30), size: minText, color: Colors.white70);
     }
     final p = c + Offset(math.cos(th), -math.sin(th)) * r;
     // tan: the tangent at (1, 0) up to where the radius line meets it.
@@ -605,7 +649,7 @@ class _ChartPainter extends CustomPainter {
     canvas.drawLine(Offset(p.dx, c.dy), p, _stroke(inkColor('red'), 7)); // sin
     canvas.drawLine(c, Offset(p.dx, c.dy), _stroke(inkColor('blue'), 7)); // cos
     canvas.drawArc(Rect.fromCircle(center: c, radius: 56), 0, -th, false, _stroke(Z.accent, 4));
-    _text(canvas, 'θ = ${tickLabel(_round(s._theta))}°', c + Offset(math.cos(-th / 2), math.sin(-th / 2)) * 100, color: Z.accent, size: 28);
+    _text(canvas, 'θ = ${tickLabel(_round(s._theta))}°', c + Offset(math.cos(-th / 2), math.sin(-th / 2)) * 100, color: Z.accent, size: minText);
     canvas.drawCircle(p, 14, Paint()..color = Z.accent);
     _text(canvas, 'sin θ', Offset(p.dx + (math.cos(th) >= 0 ? 52 : -52), (p.dy + c.dy) / 2), color: inkColor('red'));
     _text(canvas, 'cos θ', Offset((p.dx + c.dx) / 2, c.dy + (math.sin(th) >= 0 ? 28 : -28)), color: inkColor('blue'));
@@ -631,7 +675,7 @@ class _ChartPainter extends CustomPainter {
     final step = niceStep(xr[1] - xr[0], 12);
     for (var x = (xr[0] / step).ceil() * step; x <= xr[1] + 1e-9; x += step) {
       canvas.drawLine(Offset(map(x), y - 14), Offset(map(x), y + 14), line);
-      _text(canvas, tickLabel(_round(x)), Offset(map(x), y + 40), size: 26, color: Colors.white70);
+      _text(canvas, tickLabel(_round(x)), Offset(map(x), y + 44), size: minText, color: Colors.white70);
     }
     if (raw['xLabel'] is String) _text(canvas, raw['xLabel'] as String, Offset(right, y + 84), align: Alignment.centerRight);
     for (final (i, (name, v)) in pts.indexed) {

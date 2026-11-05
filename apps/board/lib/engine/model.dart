@@ -13,8 +13,13 @@ class L10n {
   static L10n? maybe(Object? v) => v is Map ? of(v) : null;
   static List<L10n> list(Object? v) => [for (final e in (v as List?) ?? const []) of(e)];
 
-  String t(Lang lang) => lang == Lang.kn && (kn?.isNotEmpty ?? false) ? kn! : en;
+  String t(Lang lang) => glyphSafe(lang == Lang.kn && (kn?.isNotEmpty ?? false) ? kn! : en);
 }
+
+/// Text the board's fonts can draw. A combining double overline (U+033F, as in X̿, the mean of
+/// sample means) has no glyph in Inter or Noto Sans Kannada and showed as a box: it becomes two
+/// stacked combining macrons (U+0304), which Inter places one above the other (its mkmk feature).
+String glyphSafe(String s) => s.contains('\u033F') ? s.replaceAll('\u033F', '\u0304\u0304') : s;
 
 enum BlockType {
   intro('intro'),

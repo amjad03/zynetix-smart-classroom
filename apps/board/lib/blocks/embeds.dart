@@ -21,16 +21,20 @@ abstract class Embeds {
 
 class KinetixEmbeds implements Embeds {
   @override
-  Widget model3d(Block b, Lang lang) => Model3dViewer(modelId: b.s('modelId')!, variant: b.s('variant'), sceneId: b.s('sceneId'), lang: lang.name, showTitle: false);
+  // Kinetix widgets are drawn at their design size ([DesignPixels]), not at half size on the
+  // board's canvas: readable lab text, 3D labels and viewer controls.
+  Widget model3d(Block b, Lang lang) => DesignPixels(
+    child: Model3dViewer(modelId: b.s('modelId')!, variant: b.s('variant'), sceneId: b.s('sceneId'), lang: lang.name, showTitle: false),
+  );
 
   @override
   Widget simulation(Block b, InstalledPack pack, Lang lang) => switch (b.s('source')) {
     'phet' => PackPageView(file: File('${pack.mediaDir}/phet/${b.s('simId')}.html')),
     'animation' => switch (animationById(b.s('simId')!)) {
-      final a? => AnimationPlayer(animation: a, lang: lang == Lang.kn ? AnimLang.kn : AnimLang.en),
+      final a? => DesignPixels(child: AnimationPlayer(animation: a, lang: lang == Lang.kn ? AnimLang.kn : AnimLang.en)),
       null => _missing(b.s('simId')!),
     },
-    'kinetix_cs' => csSim(b.s('simId')!),
+    'kinetix_cs' => DesignPixels(child: csSim(b.s('simId')!)),
     _ => lab(b.s('simId')!, b.s('preset'), lang),
   };
 
@@ -66,7 +70,7 @@ class KinetixEmbeds implements Embeds {
             // The board ships no Material strings for Kannada: the lab's chips and dialogs keep
             // the default (English) ones instead of failing under a kn locale.
             delegates: const [_AnyLocale<MaterialLocalizations>(DefaultMaterialLocalizations.load), _AnyLocale<WidgetsLocalizations>(DefaultWidgetsLocalizations.load)],
-            child: LabView(id: labId, preset: preset),
+            child: DesignPixels(child: LabView(id: labId, preset: preset)),
           ),
         );
 

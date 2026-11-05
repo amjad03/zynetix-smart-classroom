@@ -13,7 +13,8 @@ import 'play_model.dart';
 /// for axis labels when there are axes, and equal scales on both axes when [equal].
 class SceneFrame {
   SceneFrame(Size size, this.view, {bool axes = false, bool equal = false}) {
-    final pad = axes ? const EdgeInsets.fromLTRB(64, 16, 24, 48) : const EdgeInsets.all(12);
+    // Room for the axis numbers (32 units at least, see [minSceneText]) left of and under the plot.
+    final pad = axes ? const EdgeInsets.fromLTRB(104, 24, 28, 68) : const EdgeInsets.all(12);
     var box = pad.deflateRect(Offset.zero & size);
     if (box.width < 10 || box.height < 10) box = Offset.zero & size;
     final (x0, x1, y0, y1) = view;
@@ -172,7 +173,7 @@ void paintSceneFrame(Canvas canvas, SceneFrame frame, Map<String, dynamic> viewR
   final (x0, x1, y0, y1) = frame.view;
   if (viewRaw['axes'] == true || viewRaw['grid'] == true) {
     if (viewRaw['axes'] == true) {
-      paintAxes(canvas, frame.rect, [x0, x1], [y0, y1], const Color(0xFF4A5459), strokeWidth: 3, font: sceneText(30, frame), xLabel: viewRaw['xLabel'] as String?, yLabel: viewRaw['yLabel'] as String?, grid: viewRaw['grid'] == true, gridColor: const Color(0xFF20282C), labelColor: const Color(0xFF8E979C));
+      paintAxes(canvas, frame.rect, [x0, x1], [y0, y1], const Color(0xFF4A5459), strokeWidth: 3, font: sceneText(minSceneText / 0.8, frame), xLabel: viewRaw['xLabel'] as String?, yLabel: viewRaw['yLabel'] as String?, grid: viewRaw['grid'] == true, gridColor: const Color(0xFF20282C), labelColor: const Color(0xFF8E979C));
     } else {
       // Grid alone: faint lines at whole units (or a nicer step).
       final g = Paint()

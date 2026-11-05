@@ -67,3 +67,47 @@ class _Scope extends InheritedWidget {
   @override
   bool updateShouldNotify(_Scope old) => old.scale != scale;
 }
+
+/// Shows [child] (a Kinetix lab, player or 3D viewer, designed in ordinary app pixels) at its
+/// design size inside a [UiScale]. The board lays screens out at two canvas units per design
+/// pixel, so a Kinetix widget placed straight on the canvas came out at half size: 7–10 px lab
+/// text and 3D labels on a classroom board. Here it gets one design pixel per two canvas units,
+/// so on a classroom board it reads a third larger than on a laptop, like the board's own type.
+class DesignPixels extends StatelessWidget {
+  const DesignPixels({super.key, required this.child});
+  final Widget child;
+
+  /// Canvas units per design pixel (see `AppConfig.uiScale`).
+  static const unitsPerPixel = 2.0;
+
+  @override
+  Widget build(BuildContext context) {
+    if (UiScale.of(context) == 1) return child;
+    final mq = MediaQuery.of(context);
+    const k = unitsPerPixel;
+    return LayoutBuilder(
+      builder: (context, c) {
+        if (!c.hasBoundedWidth || !c.hasBoundedHeight) return child;
+        return FittedBox(
+          fit: BoxFit.fill,
+          alignment: Alignment.topLeft,
+          child: SizedBox(
+            width: c.maxWidth / k,
+            height: c.maxHeight / k,
+            child: MediaQuery(
+              data: mq.copyWith(
+                size: mq.size / k,
+                devicePixelRatio: mq.devicePixelRatio * k,
+                padding: mq.padding / k,
+                viewPadding: mq.viewPadding / k,
+                viewInsets: mq.viewInsets / k,
+                systemGestureInsets: mq.systemGestureInsets / k,
+              ),
+              child: child,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
