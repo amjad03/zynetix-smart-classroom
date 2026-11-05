@@ -137,6 +137,8 @@ const _s = <String, (String, String)>{
   'solveFirst': ('Solve it first. Next shows the solution, one step at a time.', 'ಮೊದಲು ಬಿಡಿಸಿ. ಮುಂದೆ ಒತ್ತಿದರೆ ಪರಿಹಾರ ಒಂದೊಂದೇ ಹಂತವಾಗಿ ಬರುತ್ತದೆ.'),
   'recallTitle': ('Can you answer these without help?', 'ಇವುಗಳಿಗೆ ಸಹಾಯವಿಲ್ಲದೆ ಉತ್ತರಿಸಬಲ್ಲಿರಾ?'),
   'tapToCheck': ('Tap a question to check the answer', 'ಉತ್ತರ ನೋಡಲು ಪ್ರಶ್ನೆ ಒತ್ತಿ'),
+  'recallKeyIdeas': ('Say each one before it appears.', 'ಪ್ರತಿಯೊಂದೂ ಕಾಣುವ ಮೊದಲೇ ಹೇಳಿ ನೋಡಿ.'),
+  'recallIdeasTitle': ('Recall the key ideas', 'ಮುಖ್ಯ ಅಂಶಗಳನ್ನು ನೆನಪಿಸಿಕೊಳ್ಳಿ'),
   'block.intro': ('Introduction', 'ಪರಿಚಯ'),
   'block.rule': ('Remember this', 'ಇದನ್ನು ನೆನಪಿಡಿ'),
   'originalQ': ('Original question', 'ಹೊಸ ಪ್ರಶ್ನೆ'),

@@ -563,6 +563,7 @@ class SteppedConcept extends StatelessWidget {
                     MathText(heading, accent: Z.primary, style: zTitle(t.heading).copyWith(height: 1.2)),
                     SizedBox(height: t.narrow ? 16 : 28),
                     MathText(body, accent: Z.primary, style: zText(t.lead, FontWeight.w400).copyWith(color: Z.ink2, height: 1.45)),
+                    if (b.s('formula') != null) ...[SizedBox(height: t.narrow ? 24 : 36), Formula(b.s('formula')!)],
                   ])),
                   SizedBox(height: t.narrow ? 28 : 48),
                   ...pointsW,
@@ -603,6 +604,13 @@ class RuleCard extends StatelessWidget {
             constraints: const BoxConstraints(maxWidth: 1800),
             child: MathText(block.f('body').t(l), accent: Z.primary, align: TextAlign.center, style: zText(t.body, FontWeight.w400).copyWith(color: Z.ink2, height: 1.45)),
           ),
+          if (block.maybe('mnemonic') != null) ...[
+            SizedBox(height: t.narrow ? 20 : 36),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1800),
+              child: MathText(block.maybe('mnemonic')!.t(l), accent: Z.primary, align: TextAlign.center, style: zText(t.body, FontWeight.w600).copyWith(color: Z.primary, fontStyle: FontStyle.italic, height: 1.4)),
+            ),
+          ],
         ],
       ),
     );
@@ -943,8 +951,10 @@ class _RecallViewState extends State<RecallView> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(tr('recallTitle', l), style: zTitle(t.heading)),
-          if (answers.isNotEmpty) ...[const SizedBox(height: 8), Text(tr('tapToCheck', l), style: zText(t.cardText, FontWeight.w400).copyWith(color: Z.muted))],
+          // Questions with answers to tap, or (no answers) the key ideas to recall one by one.
+          Text(tr(answers.isNotEmpty ? 'recallTitle' : 'recallIdeasTitle', l), style: zTitle(t.heading)),
+          const SizedBox(height: 8),
+          Text(tr(answers.isNotEmpty ? 'tapToCheck' : 'recallKeyIdeas', l), style: zText(t.cardText, FontWeight.w400).copyWith(color: Z.muted)),
           SizedBox(height: t.narrow ? 28 : 48),
           for (var i = 0; i < points.length; i++) ...[
             if (i > 0) SizedBox(height: t.narrow ? 14 : 22),
