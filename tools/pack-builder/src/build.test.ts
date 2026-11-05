@@ -2,7 +2,7 @@ import { generateKeyPairSync, verify, createPublicKey } from 'node:crypto';
 import { resolve } from 'node:path';
 import { unzipSync, zipSync } from 'fflate';
 import { describe, expect, it } from 'vitest';
-import { buildAudioPack, buildPack, checkAudio, lineSha, readSource, validate, verifyAudioPack } from './build';
+import { addToAudioIndex, buildAudioPack, buildPack, checkAudio, lineSha, readSource, validate, verifyAudioPack } from './build';
 import { revealSteps } from '@zynetix/lesson-schema';
 
 const content = resolve(__dirname, '../../../content');
@@ -71,5 +71,18 @@ describe('video-style narration', () => {
     const other = generateKeyPairSync('ed25519').publicKey;
     expect(() => verifyAudioPack(zipSync(files), createPublicKey(key.privateKey))).toThrow(/corrupted/);
     expect(() => verifyAudioPack(bytes, other)).toThrow(/signature/);
+  });
+  it('adds verified audio packs to a signed CDN index, replacing an older version', () => {
+    const clip = (v: string) => ({ clip: { lessonId: 'x.t1.lesson', blockId: 'hook', step: 1, clip: 'hook.1', file: 'audio/t1/hook.1.opus', ms: 1200, sha: lineSha('hi') }, bytes: new TextEncoder().encode(v) });
+    const pack = (version: string) => buildAudioPack({ packId: 'x', chapterId: 'x', lang: 'en', version, voice: { model: 'hexgrad/Kokoro-82M', voice: 'am_michael', licence: 'Apache-2.0' }, clips: [clip(version)] }, key).bytes;
+    const a = addToAudioIndex(undefined, pack('1.0.0'), 'x-audio-en-1.0.0.zpack', key);
+    expect(verify(null, a.bytes, createPublicKey(key.privateKey), a.sig)).toBe(true);
+    const b = addToAudioIndex(JSON.parse(new TextDecoder().decode(a.bytes)), pack('1.0.1'), 'x-audio-en-1.0.1.zpack', key);
+    const idx = JSON.parse(new TextDecoder().decode(b.bytes));
+    expect(idx.packs).toHaveLength(1);
+    expect(idx.packs[0]).toMatchObject({ packId: 'x', lang: 'en', version: '1.0.1', url: 'x-audio-en-1.0.1.zpack', clips: 1, ms: 1200 });
+    expect(b.replaced?.url).toBe('x-audio-en-1.0.0.zpack');
+    const stranger = { keyId: 'test', privateKey: generateKeyPairSync('ed25519').privateKey };
+    expect(() => addToAudioIndex(undefined, pack('1.0.0'), 'p.zpack', stranger)).toThrow(/signature/);
   });
 });

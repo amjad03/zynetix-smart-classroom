@@ -9,6 +9,9 @@ the rendered length of each line back into the lesson (voice[].ms.<lang>). Clips
 has not changed are kept, so re-running after an edit only renders what changed. Then build the
 signed audio pack:  pnpm --filter @zynetix/pack-builder build-audio <packDir> <lang>
 
+English runs on onnxruntime when KOKORO_ONNX_DIR is set (see Kokoro below); render_all.py renders
+and publishes every chapter that way.
+
 Voices (free, and licensed for commercial use; never a CC-BY-NC model such as facebook/mms-tts-kan):
   en  Kokoro-82M (hexgrad/Kokoro-82M, Apache-2.0), voice am_michael
   kn  Indic Parler-TTS (ai4bharat/indic-parler-tts, Apache-2.0), speaker Suresh
@@ -75,24 +78,55 @@ def reveal_steps(b, questions):
     return max(1, n)
 
 
+def _espeak_setup():
+    import misaki.espeak  # noqa: F401  (sets up espeak-ng for words not in its dictionary)
+    from phonemizer.backend.espeak.wrapper import EspeakWrapper
+    # espeakng-loader's bundled library looks for its data at a build path; the system
+    # espeak-ng (apt install libespeak-ng1 espeak-ng-data) works when it is there.
+    lib = Path('/usr/lib/x86_64-linux-gnu/libespeak-ng.so.1')
+    if lib.exists():
+        EspeakWrapper.set_library(str(lib))
+        EspeakWrapper.set_data_path(str(lib.parent / 'espeak-ng-data'))
+
+
 class Kokoro:
+    """Kokoro-82M. With KOKORO_ONNX_DIR (kokoro-v1.0.onnx + voices-v1.0.bin from
+    github.com/thewh1teagle/kokoro-onnx, the same Apache-2.0 weights exported to ONNX) it runs on
+    onnxruntime: no torch, about 0.58 s of compute per second of audio on one CPU thread, so run a
+    few chapters side by side (VOICE_THREADS threads each). The text goes through the same misaki
+    G2P and the same style row as the torch KPipeline, so the voice is the same."""
+
     def __init__(self, voice):
-        import misaki.espeak  # noqa: F401  (sets up espeak-ng for words not in its dictionary)
-        from phonemizer.backend.espeak.wrapper import EspeakWrapper
-        # espeakng-loader's bundled library looks for its data at a build path; the system
-        # espeak-ng (apt install libespeak-ng1 espeak-ng-data) works when it is there.
-        lib = Path('/usr/lib/x86_64-linux-gnu/libespeak-ng.so.1')
-        if lib.exists():
-            EspeakWrapper.set_library(str(lib))
-            EspeakWrapper.set_data_path(str(lib.parent / 'espeak-ng-data'))
-        from kokoro import KPipeline
-        self.pipe = KPipeline(lang_code='a', repo_id='hexgrad/Kokoro-82M')
-        self.voice = voice
-        self.sr = 24000
+        _espeak_setup()
+        self.voice, self.sr, self.speed = voice, 24000, 0.94
+        d = os.environ.get('KOKORO_ONNX_DIR')
+        if d:
+            import onnxruntime as rt
+            from kokoro_onnx import Kokoro as KO
+            from misaki import en, espeak
+            o = rt.SessionOptions()
+            o.intra_op_num_threads = int(os.environ.get('VOICE_THREADS', '1'))
+            o.inter_op_num_threads = 1
+            sess = rt.InferenceSession(str(Path(d) / 'kokoro-v1.0.onnx'), o, providers=['CPUExecutionProvider'])
+            self.ko = KO.from_session(sess, str(Path(d) / 'voices-v1.0.bin'))
+            self.style = self.ko.get_voice_style(voice)
+            self.g2p = en.G2P(trf=False, british=False, fallback=espeak.EspeakFallback(british=False), unk='')
+            self.pipe = None
+        else:
+            from kokoro import KPipeline
+            self.pipe = KPipeline(lang_code='a', repo_id='hexgrad/Kokoro-82M')
 
     def say(self, text):
         import numpy as np
-        parts = [a for _, _, a in self.pipe(text, voice=self.voice, speed=0.94, split_pattern=r'\n+')]
+        if self.pipe is None:
+            from kokoro_onnx.chunker import split_phonemes
+            parts = []
+            for para in [t for t in text.split('\n') if t.strip()]:
+                ps, _ = self.g2p(para)
+                for chunk in split_phonemes(ps, 510):
+                    parts.append(self.ko._create_audio(chunk, self.style, self.speed)[0])
+            return np.concatenate(parts)
+        parts = [a for _, _, a in self.pipe(text, voice=self.voice, speed=self.speed, split_pattern=r'\n+')]
         return np.concatenate([p.numpy() if hasattr(p, 'numpy') else p for p in parts])
 
 
@@ -169,6 +203,7 @@ def main():
 
     tts = None
     clips, rendered, stats = [], 0, []
+    ms_of = {}
     for f in files:
         lesson = json.loads(f.read_text())
         changed = False
@@ -203,12 +238,25 @@ def main():
                     print(f'{lesson["id"]}/{cid}: {ms / 1000:.1f} s audio in {secs:.1f} s ({(out / rel).stat().st_size / 1024:.1f} KB)', flush=True)
                     clip = {'lessonId': lesson['id'], 'blockId': b['id'], 'step': i, 'clip': cid, 'file': rel, 'ms': ms, 'sha': line_sha(text)}
                 clips.append(clip)
+                ms_of[(lesson['id'], cid)] = (clip['sha'], clip['ms'])
                 if line.get('ms', {}).get(a.lang) != clip['ms']:
                     line['ms'] = {**line.get('ms', {}), a.lang: clip['ms']}
                     changed = True
         if changed:
-            # The lesson keeps each line's rendered length (Self-Learning plans with it; silent steps wait it).
-            f.write_text(json.dumps(lesson, indent=1, ensure_ascii=False) + '\n')
+            # The lesson keeps each line's rendered length (Self-Learning plans with it; silent steps
+            # wait it). Re-read the file first: someone may have edited it while this chapter rendered,
+            # so only lines that still say what was rendered get their length.
+            fresh = json.loads(f.read_text())
+            dirty = False
+            for b in fresh['blocks']:
+                for i, line in enumerate(b.get('voice') or [], start=1):
+                    text = line.get('say', {}).get(a.lang)
+                    got = ms_of.get((fresh['id'], line.get('clip') or f"{b['id']}.{i}"))
+                    if text and got and got[0] == line_sha(text) and line.get('ms', {}).get(a.lang) != got[1]:
+                        line['ms'] = {**line.get('ms', {}), a.lang: got[1]}
+                        dirty = True
+            if dirty:
+                f.write_text(json.dumps(fresh, indent=1, ensure_ascii=False) + '\n')
 
     # Lessons not re-rendered this time keep their clips.
     done = {(c['lessonId'], c['clip']) for c in clips}

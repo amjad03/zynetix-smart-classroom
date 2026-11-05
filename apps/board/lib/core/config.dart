@@ -20,6 +20,10 @@ class BoardConfig extends ChangeNotifier {
   bool get activated => _p.getString('deviceToken') != null;
   String? get deviceToken => _p.getString('deviceToken');
   String get apiBase => _p.getString('apiBase') ?? 'http://10.0.2.2:4000';
+  /// Where boards without the API (not activated) download chapter voices: a signed
+  /// audio-index.json and the signed audio packs it lists (the GitHub release of the English voice).
+  static const defaultVoiceCdnBase = 'https://github.com/amjad03/zynetix-smart-classroom/releases/download/audio-en-v1';
+  String get voiceCdnBase => _p.getString('voiceCdnBase') ?? defaultVoiceCdnBase;
   String get collegeName => _p.getString('collegeName') ?? 'Zynetix PU College';
   String get sectionId => _p.getString('sectionId') ?? 'demo-1puc-a';
   String get sectionLabel => _p.getString('sectionLabel') ?? '1st PUC · A · PCMB';

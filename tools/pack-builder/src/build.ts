@@ -211,3 +211,25 @@ export function verifyAudioPack(bytes: Uint8Array, publicKey: KeyObject): AudioP
   for (const f of manifest.files) if (!files[f.path] || sha256(files[f.path]) !== f.sha256) throw new Error(`${f.path} is missing or corrupted`);
   return manifest;
 }
+
+/** One audio pack in the voice CDN's audio-index.json. `url` is relative to the index. */
+export interface AudioIndexEntry { packId: string; lang: string; id: string; version: string; url: string; sha256: string; size: number; clips: number; ms: number }
+export interface AudioIndex { format: 1; keyId: string; updatedAt: string; packs: AudioIndexEntry[] }
+
+/**
+ * Adds (or replaces) a verified audio pack in the CDN index and signs it: Ed25519 over the exact
+ * JSON bytes, which boards check against their trusted key (apps/board sync.dart verifyAudioIndex).
+ * Returns the new index bytes, its signature, and the entry it replaced (its file can be removed).
+ */
+export function addToAudioIndex(index: AudioIndex | undefined, pack: Uint8Array, url: string, key: SigningKey, now = new Date()) {
+  const m = verifyAudioPack(pack, createPublicKey(key.privateKey));
+  const entry: AudioIndexEntry = {
+    packId: m.packId, lang: m.lang, id: m.id, version: m.version, url, sha256: sha256(pack), size: pack.length,
+    clips: m.clips.length, ms: m.clips.reduce((a, c) => a + c.ms, 0),
+  };
+  const old = index?.packs.find((p) => p.id === m.id);
+  const packs = [...(index?.packs ?? []).filter((p) => p.id !== m.id), entry].sort((a, b) => a.id.localeCompare(b.id));
+  const next: AudioIndex = { format: 1, keyId: key.keyId, updatedAt: now.toISOString(), packs };
+  const bytes = new TextEncoder().encode(JSON.stringify(next, null, 1) + '\n');
+  return { bytes, sig: new Uint8Array(sign(null, bytes, key.privateKey)), entry, replaced: old && old.url !== url ? old : undefined };
+}
