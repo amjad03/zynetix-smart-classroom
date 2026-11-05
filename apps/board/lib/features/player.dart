@@ -209,7 +209,9 @@ class _Controls extends StatelessWidget {
     final next = c.isLast ? null : c.blocks[c.index + 1];
     // A block with its own primary action (Next question, Check, Lock in) keeps the only blue
     // button; the lesson's Next steps back to secondary.
-    final own = const {BlockType.classQuiz, BlockType.pyq, BlockType.activity, BlockType.challenge}.contains(c.current.type);
+    final own = const {BlockType.classQuiz, BlockType.pyq, BlockType.activity, BlockType.challenge}.contains(c.current.type) && c.current.style != 'pause' && c.current.style != 'solve';
+    // While a block still has ideas to show, Next shows the next one (no block name yet).
+    final more = !c.revealDone;
     return Container(
       padding: EdgeInsets.all(narrow ? 16 : 24),
       decoration: BoxDecoration(color: Z.panel, borderRadius: BorderRadius.circular(Z.panelRadius)),
@@ -242,18 +244,18 @@ class _Controls extends StatelessWidget {
               child: phone
                   ? SizedBox(
                       width: double.infinity,
-                      child: c.isLast
+                      child: c.isLast && !more
                           ? BigButton(key: const ValueKey('finish'), icon: Icons.done_all, label: tr('finish', l), trailingIcon: true, filled: !own, onPressed: onFinish)
                           : BigButton(key: const ValueKey('next'), icon: Icons.arrow_forward, label: tr('nextStep', l), trailingIcon: true, filled: !own, onPressed: c.next),
                     )
-                  : c.isLast
+                  : c.isLast && !more
                   ? BigButton(key: const ValueKey('finish'), icon: Icons.done_all, label: tr('finish', l), trailingIcon: true, filled: !own, onPressed: onFinish)
                   : BigButton(
                       key: const ValueKey('next'),
                       icon: Icons.arrow_forward,
                       trailingIcon: true,
                       filled: !own,
-                      label: narrow || next == null ? tr('next', l) : '${tr('next', l)}: ${blockName(next.type, l)}',
+                      label: narrow || next == null || more ? tr('next', l) : '${tr('next', l)}: ${blockLabel(next, l)}',
                       onPressed: c.next,
                     ),
             ),

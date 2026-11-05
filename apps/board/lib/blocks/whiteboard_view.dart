@@ -363,7 +363,8 @@ void _label(Canvas canvas, String s, Offset at, double size, Color color, {Align
 
 /// Axes in [box] for ranges [xr] × [yr]: the axis lines (at 0 when in range, else at the
 /// box edge), ticks with labels, and the axis names. Shared by whiteboards and interactives.
-void paintAxes(Canvas canvas, Rect box, List<double> xr, List<double> yr, Color color, {double t = 1, double strokeWidth = 3, double font = 22, String? xLabel, String? yLabel, bool grid = false, Color? gridColor, Color? labelColor}) {
+/// [xTicks] false: a category axis (bar charts): no numbers or vertical grid along x.
+void paintAxes(Canvas canvas, Rect box, List<double> xr, List<double> yr, Color color, {double t = 1, double strokeWidth = 3, double font = 22, String? xLabel, String? yLabel, bool grid = false, Color? gridColor, Color? labelColor, bool xTicks = true}) {
   Offset map(double x, double y) => Offset(box.left + (x - xr[0]) / (xr[1] - xr[0]) * box.width, box.bottom - (y - yr[0]) / (yr[1] - yr[0]) * box.height);
   final double x0 = (0.0).clamp(math.min(xr[0], xr[1]), math.max(xr[0], xr[1])), y0 = (0.0).clamp(math.min(yr[0], yr[1]), math.max(yr[0], yr[1]));
   final paint = Paint()
@@ -376,7 +377,7 @@ void paintAxes(Canvas canvas, Rect box, List<double> xr, List<double> yr, Color 
     final g = Paint()
       ..color = gridColor ?? color.withValues(alpha: 0.12 * t)
       ..strokeWidth = gridColor == null ? 1 : 2;
-    for (var x = (xr[0] / sx).ceil() * sx; x <= xr[1] + 1e-9; x += sx) {
+    for (var x = (xr[0] / sx).ceil() * sx; xTicks && x <= xr[1] + 1e-9; x += sx) {
       canvas.drawLine(map(x, yr[0]), map(x, yr[1]), g);
     }
     for (var y = (yr[0] / sy).ceil() * sy; y <= yr[1] + 1e-9; y += sy) {
@@ -393,7 +394,7 @@ void paintAxes(Canvas canvas, Rect box, List<double> xr, List<double> yr, Color 
     canvas.drawLine(b, b - dir * k - n * k * 0.6, paint);
   }
   final tick = font * 0.3, lc = labelColor ?? color.withValues(alpha: 0.85);
-  for (var x = (xr[0] / sx).ceil() * sx; x <= xr[1] + 1e-9; x += sx) {
+  for (var x = (xr[0] / sx).ceil() * sx; xTicks && x <= xr[1] + 1e-9; x += sx) {
     if (x.abs() < sx * 1e-6 || (xr[1] - x).abs() < sx * 0.3) continue;
     final at = map(x, y0);
     canvas.drawLine(at - Offset(0, tick), at + Offset(0, tick), paint);

@@ -24,9 +24,12 @@ const _series = ['yellow', 'blue', 'red', 'green', 'orange', 'white'];
 /// caption and "Try this" beside it. Time runs only while playing and while the block is on
 /// screen (the ticker is muted with its route), at most one 0.1 s jump per frame.
 class InteractiveView extends StatefulWidget {
-  const InteractiveView({super.key, required this.block, required this.lang, this.showTime = true});
+  const InteractiveView({super.key, required this.block, required this.lang, this.showTime = true, this.speaker});
   final Block block;
   final Lang lang;
+
+  /// A character's line, along the bottom of the stage.
+  final Widget? speaker;
 
   /// Show the time bar (a challenge hides it until it is over, so the class reasons first).
   final bool showTime;
@@ -45,6 +48,10 @@ class InteractiveViewState extends State<InteractiveView> with SingleTickerProvi
   late final Ticker _ticker = createTicker(_onTick);
   Duration _last = Duration.zero;
   HandleSpec? _drag;
+  bool _tryOpen = false;
+
+  /// Try this folds when it shares a landscape rail with controls and readouts.
+  bool _tryFolds(BuildContext context, bool hasControls) => !context.portrait && hasControls && ((raw['readouts'] as List?)?.isNotEmpty ?? false);
 
   List<SliderSpec> get sliders => model.sliders;
 
@@ -218,7 +225,7 @@ class InteractiveViewState extends State<InteractiveView> with SingleTickerProvi
                 listenable: rt,
                 builder: (context, _) => TimeBar(rt: rt, lang: l, buttons: buttonsInTransport),
               )
-            : null,
+            : widget.speaker,
         child: chart,
       ),
       rail: [
@@ -240,7 +247,7 @@ class InteractiveViewState extends State<InteractiveView> with SingleTickerProvi
                   );
                 },
               ),
-            if (caption.isNotEmpty) MathText(caption, style: zText(28, FontWeight.w400).copyWith(color: Z.ink2, height: 1.55)),
+            if (caption.isNotEmpty) MathText(caption, style: zText(narrow ? 28 : 33, FontWeight.w400).copyWith(color: Z.ink2, height: 1.5)),
           ],
         ),
         if (context.portrait && hasControls) RailPanel(title: tr('controls', l), gap: 24, children: [controls]),
@@ -248,17 +255,27 @@ class InteractiveViewState extends State<InteractiveView> with SingleTickerProvi
           RailPanel(
             title: tr('tryThis', l),
             gap: 20,
-            children: [
+            // Beside a stage with controls and readouts the rail is full: Try this folds to its
+            // heading (tap to open), so no panel ends cut off at the bottom of the screen.
+            trailing: _tryFolds(context, hasControls)
+                ? IconButton(
+                    key: const ValueKey('tryThisToggle'),
+                    tooltip: tr('tryThis', l),
+                    icon: Icon(_tryOpen ? Icons.expand_less : Icons.expand_more, size: 44, color: Z.muted),
+                    onPressed: () => setState(() => _tryOpen = !_tryOpen),
+                  )
+                : null,
+            children: !_tryFolds(context, hasControls) || _tryOpen ? [
               for (final p in widget.block.list('tryThis'))
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Padding(padding: EdgeInsets.only(top: 4), child: Icon(Icons.touch_app_outlined, size: 36, color: Z.primary)),
                     const SizedBox(width: 16),
-                    Expanded(child: MathText(p.t(l), style: zText(28, FontWeight.w400).copyWith(color: Z.ink2, height: 1.5))),
+                    Expanded(child: MathText(p.t(l), style: zText(narrow ? 28 : 33, FontWeight.w400).copyWith(color: Z.ink2, height: 1.45))),
                   ],
                 ),
-            ],
+            ] : const [],
           ),
       ],
     );
@@ -312,16 +329,17 @@ class _RailSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     final divisions = ((spec.max - spec.min) / spec.step).round();
     final decimals = spec.step >= 1 ? 0 : (math.log(1 / spec.step) / math.ln10).ceil().clamp(1, 4);
-    final tickDecimals = [spec.min, spec.max, (spec.max - spec.min) / 4].every((v) => (v - v.roundToDouble()).abs() < 1e-9) ? 0 : decimals;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
           children: [
-            Expanded(child: MathText(spec.label.t(lang), style: zText(30, FontWeight.w500).copyWith(color: Z.ink))),
+            Expanded(flex: 3, child: MathText(spec.label.t(lang), style: zText(33, FontWeight.w500).copyWith(color: Z.ink))),
             const SizedBox(width: 16),
-            // The value and a long unit (mol L⁻¹ s⁻¹) shrink together rather than overflow.
-            Flexible(
+            // The value and a long unit (mol L⁻¹ s⁻¹) shrink together rather than overflow, and
+            // sit at the right end of the row.
+            Expanded(
+              flex: 2,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.centerRight,
@@ -352,22 +370,36 @@ class _RailSlider extends StatelessWidget {
             ),
           ),
         ),
-        // The scale: five marks, or three when the numbers are long; each shrinks to fit.
-        Builder(
-          builder: (context) {
-            String tick(int k, int n) => tickLabel(double.parse(_fmt(spec.min + (spec.max - spec.min) * k / n, tickDecimals)));
-            final n = [for (var k = 0; k <= 4; k++) tick(k, 4)].join().length > 20 ? 2 : 4;
-            return Row(
-              children: [
-                for (var k = 0; k <= n; k++)
-                  Expanded(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: k == 0 ? Alignment.centerLeft : (k == n ? Alignment.centerRight : Alignment.center),
-                      child: Text(tick(k, n), style: zText(24, FontWeight.w400).copyWith(color: Z.faint)),
-                    ),
-                  ),
-              ],
+        // The scale: marks at round numbers (5, 10, 15… not 10, 28, 45), each under its place on
+        // the track, plus the ends when they are not round.
+        LayoutBuilder(
+          builder: (context, box) {
+            final span = spec.max - spec.min;
+            var step = niceStep(span, 4);
+            if (step < spec.step) step = spec.step;
+            final marks = <double>[];
+            for (var v = (spec.min / step).ceil() * step; v <= spec.max + step * 1e-6; v += step) {
+              marks.add(double.parse(v.toStringAsFixed(6)));
+            }
+            if (marks.length < 2) marks..clear()..addAll([spec.min, spec.max]);
+            const inset = 24.0;
+            final w = box.maxWidth.isFinite ? box.maxWidth : 400.0;
+            final style = zText(26, FontWeight.w400).copyWith(color: Z.faint);
+            return SizedBox(
+              height: 36,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  for (final v in marks)
+                    Builder(builder: (context) {
+                      final label = tickLabel(v);
+                      final tp = TextPainter(text: TextSpan(text: label, style: style), textDirection: TextDirection.ltr)..layout();
+                      final x = inset + (w - 2 * inset) * (span == 0 ? 0 : (v - spec.min) / span);
+                      final left = (x - tp.width / 2).clamp(0.0, (w - tp.width).clamp(0.0, double.infinity));
+                      return Positioned(left: left, top: 0, child: Text(label, style: style));
+                    }),
+                ],
+              ),
             );
           },
         ),
@@ -382,7 +414,7 @@ class _ChartPainter extends CustomPainter {
   Map<String, double> get snapshot => s.rt.env;
 
   Map<String, dynamic> get raw => s.raw;
-  static const font = 26.0;
+  static const font = 30.0;
 
   Paint _stroke(Color c, [double w = 6]) => Paint()
     ..color = c
@@ -421,7 +453,7 @@ class _ChartPainter extends CustomPainter {
     }
   }
 
-  Rect _plotBox(Rect box) => Rect.fromLTRB(box.left + 70, box.top + 20, box.right - 30, box.bottom - 50);
+  Rect _plotBox(Rect box) => Rect.fromLTRB(box.left + 90, box.top + 40, box.right - 30, box.bottom - 70);
 
   void _functions(Canvas canvas, Rect box) {
     final xr = s._range('x') ?? [-10, 10], yr = s._range('y') ?? [-10, 10];
@@ -510,7 +542,8 @@ class _ChartPainter extends CustomPainter {
     final top = data.map((e) => e.$2.isFinite ? e.$2 : 0).fold(0.0, math.max);
     final yr = s._range('y') ?? [0, top <= 0 ? 1 : top * 1.15];
     final pb = _plotBox(box);
-    paintAxes(canvas, pb, [0, 1], yr, Colors.white70, strokeWidth: 3, font: font, yLabel: raw['yLabel'] as String?, grid: true);
+    // Categories along x: no numeric ticks or vertical grid under the bars.
+    paintAxes(canvas, pb, [0, 1], yr, Colors.white70, strokeWidth: 3, font: 30, yLabel: raw['yLabel'] as String?, grid: true, xTicks: false);
     final slot = pb.width / data.length;
     for (final (i, (label, v)) in data.indexed) {
       final val = v.isFinite ? v.clamp(yr[0], yr[1]) : 0.0;
@@ -518,8 +551,8 @@ class _ChartPainter extends CustomPainter {
       final r = Rect.fromLTWH(pb.left + slot * i + slot * 0.18, pb.bottom - h, slot * 0.64, h);
       final c = inkColor(_series[i % _series.length]);
       canvas.drawRRect(RRect.fromRectAndCorners(r, topLeft: const Radius.circular(10), topRight: const Radius.circular(10)), Paint()..color = c.withValues(alpha: 0.85));
-      _text(canvas, v.isFinite ? tickLabel(_round(v)) : '—', Offset(r.center.dx, r.top - 22), size: 30, color: c, weight: FontWeight.w800);
-      _text(canvas, label, Offset(r.center.dx, pb.bottom + 26), size: 26);
+      _text(canvas, v.isFinite ? tickLabel(_round(v)) : '—', Offset(r.center.dx, r.top - 30), size: 40, color: c, weight: FontWeight.w800);
+      _text(canvas, label, Offset(r.center.dx, pb.bottom + 34), size: 36);
     }
   }
 

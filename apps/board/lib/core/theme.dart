@@ -61,6 +61,14 @@ abstract final class Z {
   static const wrongBg = Color(0xFFFDF0E8);
   static const highlight = Color(0xFFFFF4E0);
 
+  /// The exam-trap accent (a red stripe and the struck-out belief): a warning, not a wrong answer.
+  static const trap = Color(0xFFD13F3F);
+  static const trapBg = Color(0xFFFCEDEC);
+
+  /// The characters' rings: Diya blue, Aarav orange.
+  static const diya = primary;
+  static const aarav = Color(0xFFE8613C);
+
   /// Stars, points and trophies (rewards only).
   static const star = Color(0xFFE69F00);
 

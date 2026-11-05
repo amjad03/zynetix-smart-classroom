@@ -33,19 +33,47 @@ class LessonController extends ChangeNotifier {
   Lang get lang => _lang;
   double get progress => (_index + 1) / blocks.length;
 
-  void goTo(int i) {
+  /// One idea at a time: how much of the current block is shown (1 … [revealTotal]).
+  int _revealed = 1;
+  int get revealed => _revealed;
+  int get revealTotal => current.revealSteps(pack);
+  bool get revealDone => _revealed >= revealTotal;
+
+  /// Shows the next card or step of this block; false when all are shown.
+  bool revealMore() {
+    if (revealDone) return false;
+    _revealed++;
+    notifyListeners();
+    return true;
+  }
+
+  /// Shows this block up to step [n] (an answer tapped reveals it at once).
+  void revealTo(int n) {
+    final v = n.clamp(1, revealTotal);
+    if (v == _revealed) return;
+    _revealed = v;
+    notifyListeners();
+  }
+
+  void goTo(int i, {bool whole = false}) {
     if (i < 0 || i >= blocks.length || i == _index) return;
     stopSpeech();
     _speaking = false;
     _index = i;
+    _revealed = whole ? revealTotal : 1;
     stepLine = null;
     _pen = false; // ink belongs to one block
     recorder.shown(current.id);
     notifyListeners();
   }
 
-  void next() => goTo(_index + 1);
-  void back() => goTo(_index - 1);
+  /// Next: the next card or step of this block, then the next block.
+  void next() {
+    if (!revealMore()) goTo(_index + 1);
+  }
+
+  /// Back: the previous block, shown whole.
+  void back() => goTo(_index - 1, whole: true);
 
   void setPaused(bool p) {
     if (p == _paused) return;

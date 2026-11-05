@@ -470,6 +470,114 @@ void main() {
     }
   });
 
+  // Version 5: one lesson rebuilt to teach like the college's own videos (one idea at a time,
+  // Aarav and Diya, Remember this, Pause and think, exam trap, exam pattern, recall): every step
+  // on a 1080p board at the classroom size, and three on a phone. Run:
+  //   flutter test --update-goldens screenshots/screens_test.dart --plain-name v5-lesson
+  group('v5-lesson', () {
+    const topic = 'puc1-physics-01-units-and-measurement.t1';
+
+    Future<void> pumpAt(WidgetTester t, Services s, Size size, Widget home) async {
+      t.view.physicalSize = size;
+      t.view.devicePixelRatio = 1;
+      addTearDown(t.view.reset);
+      await t.pumpWidget(ZynetixBoardApp(services: s, home: home));
+      await t.pump();
+    }
+
+    /// Opens the lesson at [i] (0-based), with that block fully revealed, then runs [then].
+    Future<void> step(WidgetTester t, int i, String name, String tag, {Size size = const Size(1920, 1080), String display = 'classroom', Future<void> Function(WidgetTester t, Block b, InstalledPack p)? then, bool whole = true, String lang = 'en'}) async {
+      final s = await shotServices(prefs: {'displaySize': display, 'rollCount': 48, 'lang': lang});
+      // The lesson as authored in content/packs (the seed pack is re-signed at release).
+      final pack = sourcePack(s.lessonFor(topic)!.pack, 'puc1-physics-units-and-measurement');
+      final hit = (pack: pack, lesson: pack.lessons[topic]!);
+      await pumpAt(t, s, size, LessonPlayerScreen(pack: hit.pack, lesson: hit.lesson));
+      final blocks = hit.lesson.blocks;
+      for (var k = 0; k < i; k++) {
+        while (find.byKey(ValueKey('block:${blocks[k + 1].id}')).evaluate().isEmpty) {
+          await t.tap(find.byKey(const ValueKey('next')));
+          await t.pump(const Duration(milliseconds: 300));
+        }
+      }
+      final b = blocks[i];
+      final pauseLike = b.style == 'pause' || b.style == 'solve';
+      if (whole && !pauseLike) {
+        for (var k = 1; k < b.revealSteps(hit.pack); k++) {
+          await t.tap(find.byKey(const ValueKey('next')));
+          await t.pump(const Duration(milliseconds: 300));
+        }
+      }
+      if (then != null) await then(t, b, hit.pack);
+      // Decode the avatars (image decoding runs outside the test's fake clock).
+      await t.runAsync(() async {
+        for (final e in find.byType(Image).evaluate()) {
+          await precacheImage((e.widget as Image).image, e);
+        }
+      });
+      await t.pump(const Duration(milliseconds: 600));
+      await expectLater(find.byType(MaterialApp), matchesGoldenFile('v5/$name-$tag.png'));
+    }
+
+    Future<void> tapKey(WidgetTester t, String key) async {
+      await t.tap(find.byKey(ValueKey(key)));
+      await t.pump(const Duration(milliseconds: 300));
+    }
+
+    final steps = <(String, Future<void> Function(WidgetTester t, Block b, InstalledPack p)?)>[
+      ('01-hook', null),
+      ('02-number-alone', null),
+      ('03-physical-quantity', null),
+      ('04-two-parts', null),
+      ('05-measuring-bench', (t, b, p) async => tapKey(t, 'choice-u-0')),
+      ('06-n-vs-unit', null),
+      ('07-rule-steps', null),
+      ('08-remember-this', null),
+      ('09-pause-think-unit', (t, b, p) async => tapKey(t, 'think-0')),
+      ('10-base-seven', null),
+      ('11-derived', null),
+      ('12-pause-think-temperature', (t, b, p) async => tapKey(t, 'think-1')),
+      ('13-sort-base-derived', (t, b, p) async {
+        for (final (item, bucket) in [(0, 'base'), (6, 'derived'), (1, 'base'), (9, 'derived'), (4, 'base')]) {
+          final chip = find.byKey(ValueKey('item-$item'));
+          if (chip.evaluate().isEmpty) continue;
+          await t.tap(chip, warnIfMissed: false);
+          await t.pump();
+          await t.tap(find.byKey(ValueKey('bucket-$bucket')), warnIfMissed: false);
+          await t.pump();
+        }
+      }),
+      ('14-scalar-vector-push', (t, b, p) async {
+        await tapKey(t, 'choice-d-1');
+        final push = find.byKey(const ValueKey('button-0'));
+        if (push.evaluate().isNotEmpty) await t.tap(push.first);
+        for (var k = 0; k < 14; k++) {
+          await t.pump(const Duration(milliseconds: 100));
+        }
+      }),
+      ('15-worked-example', null),
+      ('16-exam-trap', null),
+      ('17-exam-pattern', (t, b, p) async {
+        await tapKey(t, 'solve-0');
+        for (var k = 2; k < b.revealSteps(p); k++) {
+          await tapKey(t, 'next');
+        }
+      }),
+      ('18-recall-next', (t, b, p) async => tapKey(t, 'recall-0')),
+    ];
+    for (final (i, (name, then)) in steps.indexed) {
+      testWidgets('$name board', (t) => step(t, i, name, 'board', then: then));
+    }
+    // Phone: three key steps.
+    const phone = Size(390, 844);
+    testWidgets('01-hook phone', (t) => step(t, 0, '01-hook', 'phone', size: phone, display: 'normal'));
+    testWidgets('05-measuring-bench phone', (t) => step(t, 4, '05-measuring-bench', 'phone', size: phone, display: 'normal'));
+    testWidgets('09-pause-think-unit phone', (t) => step(t, 8, '09-pause-think-unit', 'phone', size: phone, display: 'normal', then: (t, b, p) async => tapKey(t, 'think-0')));
+    // Kannada: the same lesson, every field translated.
+    for (final i in [2, 4, 16]) {
+      testWidgets('${steps[i].$1} board kn', (t) => step(t, i, steps[i].$1, 'board-kn', then: steps[i].$2, lang: 'kn'));
+    }
+  });
+
   testWidgets('33 accounting equation', (t) => sim(t, 'puc1-accountancy-03-recording-of-transactions-i.t2', 'sim1', '33-sim-accounting-equation'));
 }
 

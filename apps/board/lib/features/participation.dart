@@ -315,6 +315,7 @@ class _QuestionPanel extends StatelessWidget {
     final w = state.widget, l = w.lang, question = state.question, q = state.q;
     final narrow = context.narrow, portrait = context.portrait;
     final n = w.questions.length;
+    final nOptions = question.options.length.clamp(0, 4);
     final stemStyle = zTitle(narrow ? (portrait ? 34 : 38) : 52, FontWeight.w500).copyWith(height: 1.4, fontSize: question.format == 'mcq' ? null : (narrow ? 32 : 46));
     return Container(
       padding: EdgeInsets.symmetric(horizontal: narrow ? 28 : 80, vertical: narrow ? 24 : 56),
@@ -395,17 +396,17 @@ class _QuestionPanel extends StatelessWidget {
               child: portrait
                   ? Column(
                       children: [
-                        for (var i = 0; i < 4; i++) ...[
+                        for (var i = 0; i < nOptions; i++) ...[
                           Expanded(child: _OptionTile(index: i, state: state)),
-                          if (i < 3) const SizedBox(height: 12),
+                          if (i < nOptions - 1) const SizedBox(height: 12),
                         ],
                       ],
                     )
                   : Column(
                       children: [
-                        for (final row in const [
+                        for (final row in [
                           [0, 1],
-                          [2, 3],
+                          if (nOptions > 2) [2, 3],
                         ]) ...[
                           Expanded(
                             child: Row(

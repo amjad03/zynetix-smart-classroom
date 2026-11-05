@@ -58,7 +58,7 @@ export const Question = z
     chapterId: id,
     topicId: id.optional(),
     stem: L10n,
-    /** Four options, labelled A–D on the board (none for numeric questions). */
+    /** Four options, labelled A–D on the board (none for numeric questions, two for either_or: "Base or derived?"). */
     options: z.array(L10n).max(4),
     /** Index into options (0 = A). For multi_correct, the first correct option; see `answers`. */
     answer: z.number().int().min(0).max(3),
@@ -72,14 +72,17 @@ export const Question = z
     difficulty: Difficulty,
     pyq: PyqRef.optional(),
     /** mcq (default); assertion_reason (options are the 4 standard A–R choices); case_based (needs `passage`). */
-    format: z.enum(['mcq', 'assertion_reason', 'case_based', 'multi_correct', 'numeric']).default('mcq'),
+    format: z.enum(['mcq', 'assertion_reason', 'case_based', 'multi_correct', 'numeric', 'either_or']).default('mcq'),
+    /** Worked solution, one short step per line (shown step by step after an exam-pattern reveal). */
+    solution: z.array(L10n).min(1).max(8).optional(),
     /** The case or source text a case_based question is about, shown above the stem. */
     passage: L10n.optional(),
     tags: z.array(z.string()).default([]),
   })
   .strict()
   .refine((q) => q.format !== 'case_based' || !!q.passage, { message: 'case_based questions need a passage' })
-  .refine((q) => (q.format === 'numeric' ? q.numericAnswer !== undefined && q.options.length === 0 : q.options.length === 4), { message: 'numeric questions have numericAnswer and no options; others have 4 options' })
+  .refine((q) => (q.format === 'numeric' ? q.numericAnswer !== undefined && q.options.length === 0 : q.options.length === (q.format === 'either_or' ? 2 : 4)), { message: 'numeric questions have numericAnswer and no options; either_or has 2 options; others have 4' })
+  .refine((q) => q.answer < Math.max(q.options.length, 1), { message: 'answer must be one of the options' })
   .refine((q) => q.format !== 'multi_correct' || (!!q.answers && q.answers.includes(q.answer)), { message: 'multi_correct needs answers, including answer' });
 export type Question = z.infer<typeof Question>;
 
@@ -90,9 +93,36 @@ export type Question = z.infer<typeof Question>;
  * kn-IN) in Self-Learning mode and on demand in Teacher Mode; `seconds` is how long the block is
  * shown in Self-Learning when narration alone doesn't decide it (sims, labs, 3D).
  */
+/** The recurring characters of the lessons: Aarav (PCME, a JEE aspirant) and Diya. */
+export const Character = z.enum(['aarav', 'diya']);
+/** A character's line on a block: a speech bubble with their avatar. */
+export const Speaker = z.object({ who: Character, say: L10n }).strict();
+
+/** Small pictures for cards (the board maps them to its icon set). */
+export const CardIcon = z.enum([
+  'thermometer', 'scale', 'ruler', 'clock', 'speed', 'heart', 'sparkle', 'rupee', 'phone', 'cricket', 'train', 'rain', 'rocket', 'chai',
+  'shop', 'bolt', 'bulb', 'flask', 'box', 'arrow', 'check', 'cross', 'sun', 'person', 'book', 'globe', 'area', 'volume', 'weight', 'question',
+]);
+/**
+ * A card: one idea, in a line or two ("Doctor · temperature · 37 °C"). `value` and `unit` are
+ * shown big on the right (the unit in the accent colour); `tone` marks a yes/no sort.
+ * In text, `*word*` is a keyword in the accent colour (blocks with cards, speakers or styles).
+ */
+export const Card = z
+  .object({ title: L10n, text: L10n.optional(), value: z.string().max(16).optional(), unit: z.string().max(12).optional(), icon: CardIcon.optional(), tone: z.enum(['neutral', 'yes', 'no']).optional() })
+  .strict();
+export type Card = z.infer<typeof Card>;
+
 const base = {
   id,
   title: L10n.optional(),
+  /** A character says one line here (a speech bubble with their avatar). */
+  speaker: Speaker.optional(),
+  /**
+   * One idea at a time: the block's cards, points or steps appear one per Next (or tap), and
+   * Next goes on to the next block once all are shown. Self-Learning shows them in turn.
+   */
+  reveal: z.boolean().optional(),
   narration: L10n.optional(),
   seconds: z.number().int().min(5).max(1800).optional(),
   /** Self-Learning skips optional blocks first when the period is short. */
@@ -101,11 +131,26 @@ const base = {
   boards,
 };
 
-export const IntroBlock = z.object({ ...base, type: z.literal('intro'), heading: L10n, hook: L10n, objectives: z.array(L10n).default([]) }).strict();
+export const IntroBlock = z
+  .object({ ...base, type: z.literal('intro'), heading: L10n, hook: L10n, objectives: z.array(L10n).default([]), cards: z.array(Card).max(8).optional(), cardsTitle: L10n.optional() })
+  .strict();
+
+/** A measurement shown big, its two parts named: "15 cm" → magnitude n, unit u. */
+export const Hero = z.object({ value: z.string().min(1).max(16), unit: z.string().min(1).max(12), valueLabel: L10n, unitLabel: L10n, note: L10n.optional() }).strict();
 
 /** `body` is short paragraphs; `$…$` marks inline LaTeX. `formula` is a display LaTeX line. */
 export const ConceptBlock = z
-  .object({ ...base, type: z.literal('concept'), body: L10n, points: z.array(L10n).default([]), formula: z.string().optional() })
+  .object({
+    ...base,
+    type: z.literal('concept'),
+    body: L10n,
+    points: z.array(L10n).default([]),
+    formula: z.string().optional(),
+    /** Cards beside the text (the yes/no sort, the seven base quantities…), with a small heading. */
+    cards: z.array(Card).max(8).optional(),
+    cardsTitle: L10n.optional(),
+    hero: Hero.optional(),
+  })
   .strict();
 
 /** A Kinetix 3D teaching model (packages/kinetix_3d: heart, molecules, atoms…). */
@@ -143,16 +188,64 @@ export const ExampleBlock = z
 export const QuizMode = z.enum(['monitor', 'roll_call', 'team']);
 
 export const ClassQuizBlock = z
-  .object({ ...base, type: z.literal('class_quiz'), questionIds: z.array(id).min(1), mode: QuizMode.default('monitor'), secondsPerQuestion: z.number().int().min(10).max(300).default(45) })
+  .object({
+    ...base,
+    type: z.literal('class_quiz'),
+    questionIds: z.array(id).min(1),
+    mode: QuizMode.default('monitor'),
+    secondsPerQuestion: z.number().int().min(10).max(300).default(45),
+    /** `pause`: "Pause and think": tap an answer, the right one and a one-line why show at once. */
+    style: z.enum(['quiz', 'pause']).optional(),
+  })
   .strict();
 
-export const PyqBlock = z.object({ ...base, type: z.literal('pyq'), questionIds: z.array(id).min(1), exams: z.array(Exam).default([]) }).strict();
+export const PyqBlock = z
+  .object({
+    ...base,
+    type: z.literal('pyq'),
+    questionIds: z.array(id).min(1),
+    exams: z.array(Exam).default([]),
+    /** `solve`: an exam-pattern question to pause and solve; the reveal shows the question's `solution` step by step. */
+    style: z.enum(['quiz', 'solve']).optional(),
+  })
+  .strict();
 
-export const TrickBlock = z.object({ ...base, type: z.literal('trick'), heading: L10n, body: L10n, mnemonic: L10n.optional() }).strict();
+/**
+ * A tip (`tip`, the default), a one-line rule to remember (`rule`: the heading big and centred,
+ * with an optional `formula`), or an exam trap (`trap`: the `wrong` belief struck out, the
+ * `right` one, `body` says why, `exams` where it is asked).
+ */
+export const TrickBlock = z
+  .object({
+    ...base,
+    type: z.literal('trick'),
+    heading: L10n,
+    body: L10n,
+    mnemonic: L10n.optional(),
+    style: z.enum(['tip', 'rule', 'trap']).optional(),
+    formula: z.string().optional(),
+    wrong: L10n.optional(),
+    right: L10n.optional(),
+    exams: z.array(Exam).optional(),
+  })
+  .strict();
 
-/** The end of a topic. `homework` is shown at the end of a Self-Learning period. */
+/**
+ * The end of a topic. `homework` is shown at the end of a Self-Learning period.
+ * `recall`: "Can you answer these without help?": `points` are questions (`answers`, in the same
+ * order, show on a tap), and `next` teases the following topic.
+ */
 export const RecapBlock = z
-  .object({ ...base, type: z.literal('recap'), points: z.array(L10n).min(1), homework: z.array(L10n).default([]), homeworkQuestionIds: z.array(id).default([]) })
+  .object({
+    ...base,
+    type: z.literal('recap'),
+    points: z.array(L10n).min(1),
+    homework: z.array(L10n).default([]),
+    homeworkQuestionIds: z.array(id).default([]),
+    style: z.enum(['summary', 'recall']).optional(),
+    answers: z.array(L10n).max(8).optional(),
+    next: z.object({ label: L10n, title: L10n }).strict().optional(),
+  })
   .strict();
 
 // ---------------------------------------------------------------- whiteboard & interactives
@@ -460,6 +553,8 @@ export const Lesson = z
     for (const b of l.blocks) {
       if (seen.has(b.id)) ctx.addIssue({ code: 'custom', message: `duplicate block id ${b.id}` });
       seen.add(b.id);
+      if (b.type === 'trick' && b.style === 'trap' && (!b.wrong || !b.right)) ctx.addIssue({ code: 'custom', message: `${b.id}: a trap needs wrong and right` });
+      if (b.type === 'recap' && b.answers && b.answers.length !== b.points.length) ctx.addIssue({ code: 'custom', message: `${b.id}: answers must match points one to one` });
     }
   });
 export type Lesson = z.infer<typeof Lesson>;

@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 
-/// Text with inline `$…$` LaTeX, as written in concept blocks.
+/// Text with inline `$…$` LaTeX, as written in concept blocks. With [accent], `*word*` is a
+/// keyword drawn in that colour (lesson cards, rules and speech bubbles; never code, where `*`
+/// is multiplication). [align] centres a rule.
 class MathText extends StatelessWidget {
-  const MathText(this.text, {super.key, this.style});
+  const MathText(this.text, {super.key, this.style, this.accent, this.align, this.maxLines});
   final String text;
   final TextStyle? style;
+  final Color? accent;
+  final TextAlign? align;
+  final int? maxLines;
+
+  /// Plain text split into keyword (odd) and normal (even) runs.
+  static List<InlineSpan> _words(String t, Color? accent, TextStyle s) {
+    if (accent == null || !t.contains('*')) return [TextSpan(text: t)];
+    final runs = t.split('*');
+    return [
+      for (var i = 0; i < runs.length; i++)
+        if (runs[i].isNotEmpty) TextSpan(text: runs[i], style: i.isOdd ? TextStyle(color: accent, fontWeight: s.fontWeight == FontWeight.w400 ? FontWeight.w600 : s.fontWeight) : null),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +28,9 @@ class MathText extends StatelessWidget {
     final parts = text.split(r'$');
     // A formula wider than the line scrolls sideways inside its own box instead of overflowing.
     return LayoutBuilder(builder: (context, box) => Text.rich(
+      textAlign: align,
+      maxLines: maxLines,
+      overflow: maxLines == null ? null : TextOverflow.ellipsis,
       TextSpan(
         style: s,
         children: [
@@ -33,7 +51,7 @@ class MathText extends StatelessWidget {
                 ),
               )
             else
-              TextSpan(text: parts[i]),
+              ..._words(parts[i], accent, s),
         ],
       ),
     ));

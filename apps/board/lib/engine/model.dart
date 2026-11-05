@@ -73,6 +73,43 @@ class Block {
   QuizMode get quizMode => _mode(raw['mode']);
   int get secondsPerQuestion => raw['secondsPerQuestion'] as int? ?? 45;
 
+  /// The block's style (`pause`, `solve`, `rule`, `trap`, `recall`…), null for the plain one.
+  String? get style => raw['style'] as String?;
+
+  /// A character's line on this block (speech bubble with avatar).
+  Speaker? get speaker => Speaker.maybe(raw['speaker']);
+
+  /// Cards of an intro or concept.
+  List<LessonCard> get cards => [
+    for (final c in (raw['cards'] as List?) ?? const [])
+      if (c is Map) LessonCard.fromJson(c.cast<String, dynamic>()),
+  ];
+
+  /// One idea at a time: cards, points or steps appear one per Next (see [revealSteps]).
+  bool get reveal => raw['reveal'] == true;
+
+  /// How many steps Next walks through on this block before it moves on (1: shown whole).
+  /// Step 1 is what shows on arrival.
+  int revealSteps(InstalledPack? pack) {
+    switch (type) {
+      case BlockType.classQuiz when style == 'pause':
+        return 2 * ids('questionIds').length; // each question, then its answer
+      case BlockType.pyq when style == 'solve':
+        final q = pack?.questions[ids('questionIds').firstOrNull];
+        return 1 + (q?.solution.isNotEmpty == true ? q!.solution.length : 1);
+      default:
+        if (!reveal) return 1;
+    }
+    final n = switch (type) {
+      BlockType.intro => cards.length,
+      BlockType.concept => (raw['hero'] is Map ? 1 : 0) + cards.length + list('points').length,
+      BlockType.example => list('steps').length + 2, // the problem, each step, the answer
+      BlockType.recap => list('points').length + (raw['next'] is Map ? 1 : 0),
+      _ => 1,
+    };
+    return n < 1 ? 1 : n;
+  }
+
   /// Whiteboard steps, in order.
   List<BoardStep> get boardSteps => [
     for (final s in (raw['steps'] as List?) ?? const [])
@@ -84,6 +121,40 @@ class Block {
     final t = BlockType.parse(j['type'] as String? ?? '');
     return t == null ? null : Block(t, j);
   }
+}
+
+/// The lesson characters.
+enum Character { aarav, diya }
+
+/// A character's line: a speech bubble with their avatar.
+class Speaker {
+  const Speaker(this.who, this.say);
+  final Character who;
+  final L10n say;
+  static Speaker? maybe(Object? v) {
+    if (v is! Map) return null;
+    final who = Character.values.where((c) => c.name == v['who']).firstOrNull;
+    return who == null ? null : Speaker(who, L10n.of(v['say']));
+  }
+}
+
+/// A card of an intro or concept: one idea in a line or two, an optional big value and unit.
+class LessonCard {
+  const LessonCard({required this.title, this.text, this.value, this.unit, this.icon, this.tone});
+  final L10n title;
+  final L10n? text;
+  final String? value, unit, icon;
+
+  /// yes / no (a sort), or null.
+  final String? tone;
+  factory LessonCard.fromJson(Map<String, dynamic> j) => LessonCard(
+    title: L10n.of(j['title']),
+    text: L10n.maybe(j['text']),
+    value: j['value'] as String?,
+    unit: j['unit'] as String?,
+    icon: j['icon'] as String?,
+    tone: j['tone'] as String?,
+  );
 }
 
 /// One whiteboard step: what is drawn (on a 100 × 60 grid), and the line read while it appears.
@@ -143,6 +214,7 @@ class Question {
     this.pyqVerified = false,
     this.format = 'mcq',
     this.passage,
+    this.solution = const [],
   });
   final String id;
   final String? chapterId;
@@ -164,8 +236,11 @@ class Question {
   final int? pyqYear;
   final bool pyqVerified;
 
-  /// mcq, assertion_reason, case_based, multi_correct or numeric.
+  /// mcq, assertion_reason, case_based, multi_correct, numeric or either_or (two options).
   final String format;
+
+  /// Worked solution steps (exam-pattern reveal).
+  final List<L10n> solution;
   bool get isMulti => format == 'multi_correct';
   bool get isNumeric => format == 'numeric';
 
@@ -195,6 +270,7 @@ class Question {
       pyqVerified: p?['verified'] == true,
       format: j['format'] as String? ?? 'mcq',
       passage: L10n.maybe(j['passage']),
+      solution: L10n.list(j['solution']),
     );
   }
 }

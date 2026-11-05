@@ -12,6 +12,7 @@ import 'activity/activity_view.dart';
 import 'challenge_view.dart';
 import 'embeds.dart';
 import 'interactive_view.dart';
+import 'lesson_cards.dart';
 import 'math_text.dart';
 import 'whiteboard_view.dart';
 
@@ -60,6 +61,38 @@ class BlockView extends StatelessWidget {
       rail: rail,
     );
     String caption(String key) => b.f(key).t(l);
+
+    // One idea at a time: what the controller has revealed (Self-Learning walks it by itself).
+    Widget stepped(Widget Function(int shown, ValueChanged<int> reveal) build) => auto
+        ? AutoReveal(key: ValueKey('auto:${b.id}'), total: b.revealSteps(c.pack), builder: build)
+        : build(c.revealed, c.revealTo);
+    final styled = b.cards.isNotEmpty || b.raw['hero'] is Map || b.reveal || b.speaker != null;
+
+    final Widget? special = switch (b.type) {
+      BlockType.intro || BlockType.concept when styled => stepped(
+        (shown, reveal) => SteppedConcept(key: ValueKey('sc:${b.id}'), block: b, lang: l, shown: shown, lessonTitle: c.lesson.title.t(l), tag: blockLabel(b, l), onTap: () => reveal(shown + 1)),
+      ),
+      BlockType.trick when b.style == 'rule' => RuleCard(key: ValueKey('rule:${b.id}'), block: b, lang: l),
+      BlockType.trick when b.style == 'trap' => TrapCard(key: ValueKey('trap:${b.id}'), block: b, lang: l),
+      BlockType.classQuiz when b.style == 'pause' => stepped(
+        (shown, reveal) => PauseThinkView(key: ValueKey('think:${b.id}'), questions: c.pack.questionsFor(b.ids('questionIds')), lang: l, shown: shown, onReveal: reveal, recorder: c.recorder),
+      ),
+      BlockType.pyq when b.style == 'solve' && c.pack.questionsFor(b.ids('questionIds')).isNotEmpty => stepped(
+        (shown, reveal) => ExamSolveView(
+          key: ValueKey('solve:${b.id}'),
+          question: c.pack.questionsFor(b.ids('questionIds')).first,
+          exams: b.ids('exams').isEmpty ? c.pack.questionsFor(b.ids('questionIds')).first.exams : b.ids('exams'),
+          lang: l,
+          shown: shown,
+          onReveal: reveal,
+          recorder: c.recorder,
+        ),
+      ),
+      BlockType.recap when b.style == 'recall' => stepped((shown, reveal) => RecallView(key: ValueKey('recall:${b.id}'), block: b, lang: l, shown: shown, onTap: () => reveal(shown + 1))),
+      BlockType.example when b.reveal && !auto => ExampleView(key: ValueKey(b.id), block: b, lang: l, shown: c.revealed - 1, onShowNext: c.revealMore),
+      _ => null,
+    };
+    if (special != null) return KeyedSubtree(key: ValueKey('block:${b.id}'), child: special);
 
     final Widget body = switch (b.type) {
       BlockType.intro => ContentPanel(
@@ -146,7 +179,7 @@ class BlockView extends StatelessWidget {
         ),
       ),
       BlockType.whiteboard => WhiteboardView(key: ValueKey('wb:${b.id}'), c: c, block: b, auto: auto),
-      BlockType.interactive => InteractiveView(key: ValueKey('ia:${b.id}'), block: b, lang: l),
+      BlockType.interactive => InteractiveView(key: ValueKey('ia:${b.id}'), block: b, lang: l, speaker: b.speaker == null ? null : SpeechBubble(speaker: b.speaker!, lang: l, dark: true)),
       BlockType.challenge => ChallengeView(key: ValueKey('ch:${b.id}'), block: b, lang: l, room: room, recorder: c.recorder, auto: auto, onFinished: onFinished),
       BlockType.activity => ActivityView(key: ValueKey('act:${b.id}'), block: b, lang: l, recorder: c.recorder),
       BlockType.recap => ContentPanel(
@@ -187,17 +220,23 @@ class BlockView extends StatelessWidget {
 
 /// A worked example: the problem, then one step at a time (tap, or by itself in Self-Learning).
 class ExampleView extends StatefulWidget {
-  const ExampleView({super.key, required this.block, required this.lang, this.auto = false, this.stepEvery = const Duration(seconds: 8)});
+  const ExampleView({super.key, required this.block, required this.lang, this.auto = false, this.stepEvery = const Duration(seconds: 8), this.shown, this.onShowNext});
   final Block block;
   final Lang lang;
   final bool auto;
   final Duration stepEvery;
+
+  /// Steps shown, when the lesson's Next drives them (a `reveal` block); else its own button.
+  final int? shown;
+  final VoidCallback? onShowNext;
   @override
   State<ExampleView> createState() => _ExampleViewState();
 }
 
 class _ExampleViewState extends State<ExampleView> {
-  int shown = 0;
+  int _shown = 0;
+  int get shown => widget.shown ?? _shown;
+  set shown(int v) => _shown = v;
   Timer? _t;
 
   List<L10n> get steps => widget.block.list('steps');
@@ -261,7 +300,7 @@ class _ExampleViewState extends State<ExampleView> {
           else if (!widget.auto)
             Padding(
               padding: const EdgeInsets.only(top: 8),
-              child: BigButton(icon: Icons.expand_more, label: tr('showStep', l), filled: false, onPressed: () => setState(() => shown++)),
+              child: BigButton(icon: Icons.expand_more, label: tr('showStep', l), filled: false, onPressed: widget.onShowNext ?? () => setState(() => shown++)),
             ),
         ],
       ),

@@ -145,7 +145,11 @@ class ExtraControls extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (final ch in m.choices) ...[_Choice(spec: ch, value: rt.controls[ch.name] ?? ch.value, lang: lang, onChanged: (v) => rt.setControl(ch.name, v)), SizedBox(height: gap)],
+        for (final (i, ch) in m.choices.indexed) ...[
+          if (i > 0) SizedBox(height: gap),
+          _Choice(spec: ch, value: rt.controls[ch.name] ?? ch.value, lang: lang, onChanged: (v) => rt.setControl(ch.name, v)),
+        ],
+        if (m.choices.isNotEmpty && (m.toggles.isNotEmpty || showButtons)) SizedBox(height: gap),
         for (final tg in m.toggles) ...[
           ZSwitchRow(key: ValueKey('toggle-${tg.name}'), label: tg.label.t(lang), value: (rt.controls[tg.name] ?? 0) != 0, onChanged: (v) => rt.setControl(tg.name, v ? 1 : 0)),
           SizedBox(height: gap * 0.6),
@@ -182,7 +186,7 @@ class _Choice extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(spec.label.t(lang), style: zText(30, FontWeight.w500).copyWith(color: Z.ink)),
+        Text(spec.label.t(lang), style: zText(33, FontWeight.w500).copyWith(color: Z.ink)),
         const SizedBox(height: 20),
         for (final (r, row) in rows.indexed) ...[
           if (r > 0) const SizedBox(height: 12),

@@ -213,7 +213,7 @@ class ZReadout extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(label, style: zText(26, FontWeight.w400).copyWith(color: labelC), maxLines: 2, overflow: TextOverflow.ellipsis),
+          Text(label, style: zText(28, FontWeight.w400).copyWith(color: labelC), maxLines: 2, overflow: TextOverflow.ellipsis),
           const SizedBox(height: 4),
           // Value and unit as two texts (the unit smaller), so the value reads on its own.
           // A long value shrinks to fit its tile rather than being cut.
@@ -278,13 +278,14 @@ class ZSegmented<T> extends StatelessWidget {
           key: it.$3,
           behavior: HitTestBehavior.opaque,
           onTap: () => onChanged(it.$1),
+          // A long label ("centimetre (cm)") wraps to a second line instead of being cut.
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 120),
-            height: height,
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            constraints: BoxConstraints(minHeight: height),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             alignment: Alignment.center,
             decoration: BoxDecoration(color: on ? Colors.white : Colors.transparent, borderRadius: BorderRadius.circular(18), boxShadow: on ? Z.lift : null),
-            child: Text(it.$2, maxLines: 1, overflow: TextOverflow.ellipsis, style: zText(fontSize, on ? FontWeight.w600 : FontWeight.w500).copyWith(color: on ? Z.ink : Z.ink2)),
+            child: Text(it.$2, maxLines: 2, textAlign: TextAlign.center, overflow: TextOverflow.ellipsis, style: zText(fontSize, on ? FontWeight.w600 : FontWeight.w500).copyWith(color: on ? Z.ink : Z.ink2, height: 1.15)),
           ),
         ),
       );
@@ -294,11 +295,14 @@ class ZSegmented<T> extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(color: Z.segTrack, borderRadius: BorderRadius.circular(Z.radius)),
-      child: Row(
-        mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
-        children: [
-          for (final (i, it) in items.indexed) ...[if (i > 0) const SizedBox(width: 8), item(it)],
-        ],
+      child: IntrinsicHeight(
+        child: Row(
+          mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (final (i, it) in items.indexed) ...[if (i > 0) const SizedBox(width: 8), item(it)],
+          ],
+        ),
       ),
     );
   }
@@ -335,7 +339,7 @@ class ZSwitch extends StatelessWidget {
 
 /// A labelled switch row: the label on the left, the switch on the right; the whole row taps.
 class ZSwitchRow extends StatelessWidget {
-  const ZSwitchRow({super.key, required this.label, required this.value, required this.onChanged, this.onStage = false, this.fontSize = 30});
+  const ZSwitchRow({super.key, required this.label, required this.value, required this.onChanged, this.onStage = false, this.fontSize = 33});
   final String label;
   final bool value;
   final ValueChanged<bool> onChanged;
@@ -713,7 +717,7 @@ class RailPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ZPanel(
-    padding: EdgeInsets.fromLTRB(context.narrow ? 32 : 44, 40, context.narrow ? 32 : 44, 40),
+    padding: EdgeInsets.fromLTRB(context.narrow ? 32 : 44, 34, context.narrow ? 32 : 44, 34),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -729,7 +733,7 @@ class RailNote extends StatelessWidget {
   const RailNote(this.text, {super.key});
   final String text;
   @override
-  Widget build(BuildContext context) => Text(text, style: zText(28, FontWeight.w400).copyWith(color: Z.ink2, height: 1.55));
+  Widget build(BuildContext context) => Text(text, style: zText(context.narrow ? 28 : 33, FontWeight.w400).copyWith(color: Z.ink2, height: 1.5));
 }
 
 /// A white content panel that fills its space and scrolls when the content is taller.

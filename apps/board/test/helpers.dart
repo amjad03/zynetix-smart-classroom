@@ -86,3 +86,28 @@ Directory tmpDir(String prefix) {
   });
   return d;
 }
+
+/// A pack read straight from its source in content/packs (lessons and questions as authored,
+/// before signing), over [installed]'s chapter: a lesson rebuilt in the source renders in the
+/// real player before the release signs a new pack.
+InstalledPack sourcePack(InstalledPack installed, String dir) {
+  final root = '../../content/packs/$dir';
+  final lessons = <String, Lesson>{};
+  for (final f in Directory('$root/lessons').listSync().whereType<File>().where((f) => f.path.endsWith('.json'))) {
+    final l = Lesson.fromJson(jsonDecode(f.readAsStringSync()) as Map<String, dynamic>);
+    lessons[l.topicId] = l;
+  }
+  final qs = <String, Question>{
+    for (final q in (jsonDecode(File('$root/questions.json').readAsStringSync()) as List).cast<Map<String, dynamic>>()) q['id'] as String: Question.fromJson(q),
+  };
+  // The chapter as in the syllabus source (a pack takes its chapter from there when it is built).
+  var chapter = installed.chapter;
+  for (final f in Directory('../../content/syllabus').listSync().whereType<File>().where((f) => f.path.endsWith('.json'))) {
+    final list = jsonDecode(f.readAsStringSync());
+    if (list is! List) continue;
+    for (final c in list.cast<Map<String, dynamic>>()) {
+      if (c['id'] == installed.chapter.id) chapter = Chapter.fromJson(c);
+    }
+  }
+  return InstalledPack(id: installed.id, version: installed.version, chapter: chapter, lessons: lessons, questions: qs, mediaDir: installed.mediaDir);
+}

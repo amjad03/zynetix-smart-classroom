@@ -307,6 +307,7 @@ export function check(dir: string): string[] {
       if (b.type === 'interactive' || b.type === 'challenge') problems.push(...checkPlayfield(b, `${l.id}/${b.id}`));
       if (b.type === 'challenge') problems.push(...checkChallenge(b, `${l.id}/${b.id}`));
       if (b.type === 'activity') problems.push(...checkActivity(b, `${l.id}/${b.id}`));
+      if (b.type === 'pyq' && b.style === 'solve') for (const qid of b.questionIds) { const q = src.questions.find((x) => x.id === qid); if (q && !q.solution) problems.push(`${l.id}/${b.id}: ${qid} has no solution steps (style solve)`); }
       if (b.type === '3d_model' && !models.has(b.modelId)) problems.push(`${l.id}/${b.id}: unknown 3D model ${b.modelId}`);
       if (b.type === 'virtual_lab' && !labs.has(b.labId)) problems.push(`${l.id}/${b.id}: unknown lab ${b.labId}`);
       if (b.type === 'simulation') {
@@ -319,7 +320,7 @@ export function check(dir: string): string[] {
     if (q.chapterId !== src.chapter.id) problems.push(`${q.id}: chapterId ${q.chapterId}`);
     if (q.topicId && !src.chapter.topics.some((t) => t.id === q.topicId)) problems.push(`${q.id}: unknown topic ${q.topicId}`);
     if (q.pyq) problems.push(`${q.id}: do not label PYQ years (unverified)`);
-    if (q.format !== 'numeric' && new Set(q.options.map((o) => o.en.trim())).size !== 4) problems.push(`${q.id}: duplicate options`);
+    if (q.format !== 'numeric' && new Set(q.options.map((o) => o.en.trim())).size !== q.options.length) problems.push(`${q.id}: duplicate options`);
     if (q.exams.includes('JEE_ADV') && q.difficulty === 'easy') problems.push(`${q.id}: JEE Advanced questions should not be easy`);
     if (q.format === 'assertion_reason' && !/assertion/i.test(q.stem.en)) problems.push(`${q.id}: assertion_reason stem must state the Assertion (A) and Reason (R)`);
     if (q.format === 'assertion_reason' && !q.options.some((o) => /correct explanation/i.test(o.en))) problems.push(`${q.id}: assertion_reason needs the standard four A–R options`);

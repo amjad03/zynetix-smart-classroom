@@ -32,6 +32,16 @@ class SceneFrame {
   (double, double) toWorld(Offset o) => (view.$1 + (o.dx - rect.left) / sx, view.$3 + (rect.bottom - o.dy) / sy);
 }
 
+/// The smallest text a scene draws, in layout-canvas units (21 px on a 1080p board at the
+/// classroom size): labels must read from the back bench.
+const minSceneText = 32.0;
+
+/// Scene text grows with the stage: 1 at an 800-unit-high frame, up to 1.5 on a big board.
+double sceneTextScale(SceneFrame f) => (math.min(f.rect.height, f.rect.width * 0.6) / 800).clamp(1.0, 1.5);
+
+/// A scene text size: at least [minSceneText], scaled with the stage.
+double sceneText(double size, SceneFrame f) => math.max(minSceneText, size) * sceneTextScale(f);
+
 /// Text with `{expr}` or `{expr:2}` values filled in.
 final _interp = RegExp(r'\{([^{}:]+)(?::(\d))?\}');
 
@@ -149,7 +159,7 @@ class ScenePainter extends CustomPainter {
     canvas.restore();
     for (final h in rt.model.handles) {
       final x = rt.controls[h.xName] ?? h.x, y = rt.controls[h.yName] ?? h.y;
-      paintHandle(canvas, frame.toScreen(x, y), h.label, inkColor(h.color ?? 'yellow'), active: h.name == selectedHandle);
+      paintHandle(canvas, frame.toScreen(x, y), h.label, inkColor(h.color ?? 'yellow'), active: h.name == selectedHandle, font: sceneText(30, frame));
     }
   }
 
@@ -162,7 +172,7 @@ void paintSceneFrame(Canvas canvas, SceneFrame frame, Map<String, dynamic> viewR
   final (x0, x1, y0, y1) = frame.view;
   if (viewRaw['axes'] == true || viewRaw['grid'] == true) {
     if (viewRaw['axes'] == true) {
-      paintAxes(canvas, frame.rect, [x0, x1], [y0, y1], const Color(0xFF4A5459), strokeWidth: 3, font: 26, xLabel: viewRaw['xLabel'] as String?, yLabel: viewRaw['yLabel'] as String?, grid: viewRaw['grid'] == true, gridColor: const Color(0xFF20282C), labelColor: const Color(0xFF8E979C));
+      paintAxes(canvas, frame.rect, [x0, x1], [y0, y1], const Color(0xFF4A5459), strokeWidth: 3, font: sceneText(30, frame), xLabel: viewRaw['xLabel'] as String?, yLabel: viewRaw['yLabel'] as String?, grid: viewRaw['grid'] == true, gridColor: const Color(0xFF20282C), labelColor: const Color(0xFF8E979C));
     } else {
       // Grid alone: faint lines at whole units (or a nicer step).
       final g = Paint()
@@ -188,7 +198,7 @@ double _niceStep(double span) {
 }
 
 /// A draggable point: a big ring with a dot (and its label), easy to grab on a board or phone.
-void paintHandle(Canvas canvas, Offset at, String? label, Color color, {bool active = false}) {
+void paintHandle(Canvas canvas, Offset at, String? label, Color color, {bool active = false, double font = minSceneText}) {
   canvas.drawCircle(at, active ? 34 : 28, Paint()..color = color.withValues(alpha: 0.25));
   canvas.drawCircle(
     at,
@@ -199,7 +209,7 @@ void paintHandle(Canvas canvas, Offset at, String? label, Color color, {bool act
       ..strokeWidth = 4,
   );
   canvas.drawCircle(at, 9, Paint()..color = color);
-  if (label != null) _text(canvas, label, at + const Offset(0, -52), 26, color);
+  if (label != null) _text(canvas, label, at + Offset(0, -28 - font * 0.9), font, color);
 }
 
 void _text(Canvas canvas, String s, Offset at, double size, Color color, {TextAlign align = TextAlign.center, bool pill = false}) {
@@ -298,7 +308,10 @@ void paintShapes(Canvas canvas, SceneFrame frame, List<SceneShape> shapes, Vars 
         canvas.drawLine(a, b - dir * head * 0.6, _stroke(c, math.max(width, 5)));
         canvas.drawPath(Path()..addPolygon([b, b - dir * head + n * head * 0.55, b - dir * head - n * head * 0.55], true), Paint()..color = c);
         final label = s.raw['label'] as String?;
-        if (label != null) _text(canvas, label, b + dir * 22 + n * 22, 26, c);
+        if (label != null) {
+          final fs = sceneText(30, frame);
+          _text(canvas, label, b + dir * (fs * 0.8) + n * (fs * 0.8), fs, c);
+        }
       case 'path' || 'wave':
         final path = Path();
         final fn = s.fn;
@@ -348,7 +361,7 @@ void paintShapes(Canvas canvas, SceneFrame frame, List<SceneShape> shapes, Vars 
           'right' => TextAlign.right,
           _ => TextAlign.center,
         };
-        _text(canvas, s.textAt(env, lang), frame.toScreen(x, y), _ok(size) ? size.clamp(12.0, 120.0) : 30, c, align: align, pill: s.type == 'label');
+        _text(canvas, s.textAt(env, lang), frame.toScreen(x, y), sceneText(_ok(size) ? size.clamp(12.0, 120.0) : 34, frame), c, align: align, pill: s.type == 'label');
       case 'spring':
         final a = frame.toScreen(s.v('x1', env, double.nan), s.v('y1', env, double.nan)), b = frame.toScreen(s.v('x2', env, double.nan), s.v('y2', env, double.nan));
         if (![a.dx, a.dy, b.dx, b.dy].every(_ok)) continue;

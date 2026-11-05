@@ -118,7 +118,22 @@ const _s = <String, (String, String)>{
   'labHint': ('Change the setup, then record the readings', 'ಜೋಡಣೆ ಬದಲಿಸಿ, ನಂತರ ಅಳತೆಗಳನ್ನು ದಾಖಲಿಸಿ'),
   'simHint': ('Change a control and watch what happens', 'ನಿಯಂತ್ರಣ ಬದಲಿಸಿ, ಏನಾಗುತ್ತದೆ ನೋಡಿ'),
   'concept': ('Concept', 'ಪರಿಕಲ್ಪನೆ'),
+  'aarav': ('Aarav', 'ಆರವ್'),
+  'diya': ('Diya', 'ದಿಯಾ'),
+  'rememberThis': ('Remember this.', 'ಇದನ್ನು ನೆನಪಿಡಿ.'),
+  'examTrap': ('Exam trap', 'ಪರೀಕ್ಷೆಯ ಬಲೆ'),
+  'whereAsked': ('Where it is asked', 'ಎಲ್ಲಿ ಕೇಳುತ್ತಾರೆ'),
+  'pauseThink': ('Pause and think', 'ನಿಲ್ಲಿಸಿ, ಯೋಚಿಸಿ'),
+  'pauseSolve': ('Pause and solve', 'ನಿಲ್ಲಿಸಿ, ಬಿಡಿಸಿ'),
+  'tapAnswer': ('Tap the class answer', 'ತರಗತಿಯ ಉತ್ತರ ಒತ್ತಿ'),
+  'patternOf': ('{e} pattern', '{e} ಮಾದರಿ'),
+  'solution': ('Solution', 'ಪರಿಹಾರ'),
+  'solveFirst': ('Solve it first. Next shows the solution, one step at a time.', 'ಮೊದಲು ಬಿಡಿಸಿ. ಮುಂದೆ ಒತ್ತಿದರೆ ಪರಿಹಾರ ಒಂದೊಂದೇ ಹಂತವಾಗಿ ಬರುತ್ತದೆ.'),
+  'recallTitle': ('Can you answer these without help?', 'ಇವುಗಳಿಗೆ ಸಹಾಯವಿಲ್ಲದೆ ಉತ್ತರಿಸಬಲ್ಲಿರಾ?'),
+  'tapToCheck': ('Tap a question to check the answer', 'ಉತ್ತರ ನೋಡಲು ಪ್ರಶ್ನೆ ಒತ್ತಿ'),
   'block.intro': ('Introduction', 'ಪರಿಚಯ'),
+  'block.rule': ('Remember this', 'ಇದನ್ನು ನೆನಪಿಡಿ'),
+  'originalQ': ('Original question', 'ಹೊಸ ಪ್ರಶ್ನೆ'),
   'block.concept': ('Concept', 'ಪರಿಕಲ್ಪನೆ'),
   'block.3d_model': ('3D model', '3D ಮಾದರಿ'),
   'block.simulation': ('Simulation', 'ಸಿಮ್ಯುಲೇಶನ್'),
@@ -145,6 +160,15 @@ String trf(String key, Lang lang, Map<String, Object> args) {
 
 /// The name of a kind of block ("Worked example"), for "Next: …".
 String blockName(BlockType t, Lang lang) => tr('block.${t.wire}', lang);
+
+/// A block's name with its style ("Pause and think", "Exam trap"…), for "Next: …" and tags.
+String blockLabel(Block b, Lang lang) => switch (b.style) {
+  'pause' => tr('pauseThink', lang),
+  'solve' => tr('pyqPattern', lang),
+  'rule' => tr('block.rule', lang),
+  'trap' => tr('examTrap', lang),
+  _ => blockName(b.type, lang),
+};
 
 String tr(String key, Lang lang) {
   final v = _s[key];
