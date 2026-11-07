@@ -18,6 +18,18 @@ import 'package:zynetix_board/engine/model.dart';
 import 'package:zynetix_board/engine/pack_store.dart';
 import 'package:zynetix_board/engine/voice.dart';
 import 'package:zynetix_board/engine/session_log.dart';
+import 'package:zynetix_board/features/classroom/ask_ai_screen.dart';
+import 'package:zynetix_board/features/classroom/class_data.dart';
+import 'package:zynetix_board/features/classroom/class_plan_screen.dart';
+import 'package:zynetix_board/features/classroom/class_quiz_screen.dart';
+import 'package:zynetix_board/features/classroom/class_tools_hub.dart';
+import 'package:zynetix_board/features/classroom/coding_lab_screen.dart';
+import 'package:zynetix_board/features/classroom/explainer_screen.dart';
+import 'package:zynetix_board/features/classroom/formula_drill_screen.dart';
+import 'package:zynetix_board/features/classroom/mastery_heatmap_screen.dart';
+import 'package:zynetix_board/features/classroom/mock_test_screen.dart';
+import 'package:zynetix_board/features/classroom/teams_screen.dart';
+import 'package:zynetix_board/features/classroom/worksheet_export_screen.dart';
 import 'package:zynetix_board/features/exam_practice.dart';
 import 'package:zynetix_board/features/participation.dart';
 import 'package:zynetix_board/features/pin.dart';
@@ -658,6 +670,168 @@ void main() {
         await t.pump(const Duration(seconds: 1));
       });
     }
+  });
+
+  // Version 6, samples for approval: Zynetix School content (quest-academy) as whole-class modes
+  // on the board, PUC only, loaded from screenshots/fixtures/puc_class_samples.json. Board at the
+  // classroom size, a few on a phone, two in Kannada. Run:
+  //   flutter test --update-goldens screenshots/screens_test.dart --plain-name v6-class
+  group('v6-class', () {
+    late ClassSamples samples;
+    setUpAll(() async {
+      samples = ClassSamples.fromJson(jsonDecode(File('screenshots/fixtures/puc_class_samples.json').readAsStringSync()) as Map<String, dynamic>);
+      // The coding lab's monospace face (kinetix_ui's JetBrains Mono).
+      final mono = FontLoader(KxFonts.code);
+      for (final f in Directory(kx).listSync().whereType<File>().where((f) => f.path.split('/').last.startsWith('JetBrainsMono-'))) {
+        mono.addFont(Future.value(ByteData.sublistView(f.readAsBytesSync())));
+      }
+      await mono.load();
+    });
+    const board = Size(1920, 1080), phone = Size(390, 844);
+
+    Future<void> open(WidgetTester t, Widget home, {Size size = board, String lang = 'en'}) async {
+      final s = await shotServices(prefs: {'displaySize': size == board ? 'classroom' : 'normal', 'rollCount': 40, 'lang': lang});
+      t.view.physicalSize = size;
+      t.view.devicePixelRatio = 1;
+      addTearDown(t.view.reset);
+      await t.pumpWidget(ZynetixBoardApp(services: s, home: home));
+      await t.pump();
+    }
+
+    Future<void> snap(WidgetTester t, String name) async {
+      await t.pump(const Duration(milliseconds: 400));
+      await expectLater(find.byType(MaterialApp), matchesGoldenFile('v6-class/$name.png'));
+    }
+
+    Future<void> tap(WidgetTester t, String key, {int times = 1}) async {
+      for (var i = 0; i < times; i++) {
+        await t.tap(find.byKey(ValueKey(key)));
+        await t.pump(const Duration(milliseconds: 120));
+      }
+    }
+
+    testWidgets('00 home entry board', (t) async {
+      await open(t, const HomeScreen());
+      await snap(t, '00-home-entry-board');
+    });
+
+    for (final (tag, size, lang) in [('board', board, 'en'), ('board-kn', board, 'kn'), ('phone', phone, 'en')]) {
+      testWidgets('01 hub $tag', (t) async {
+        await open(t, ClassToolsHub(samples: samples), size: size, lang: lang);
+        await snap(t, '01-hub-$tag');
+      });
+    }
+
+    for (final (tag, size, lang) in [('board', board, 'en'), ('board-kn', board, 'kn'), ('phone', phone, 'en')]) {
+      testWidgets('02 explainer watch $tag', (t) async {
+        await open(t, ExplainerScreen(samples: samples, explainer: samples.explainers.first, initialStep: 1), size: size, lang: lang);
+        await snap(t, '02-explainer-watch-$tag');
+      });
+    }
+    testWidgets('02 explainer its like board', (t) async {
+      await open(t, ExplainerScreen(samples: samples, explainer: samples.explainers.first, initialStep: 1));
+      await tap(t, 'tab-like');
+      await snap(t, '02-explainer-its-like-board');
+    });
+
+    // The class answers question 1; the teacher marks rolls 1–24, then the rest, and reveals.
+    const wrong = [3, 8, 12, 17, 21, 26, 29, 34, 38], unmarked = [15, 31];
+    Future<void> markFirst(WidgetTester t) async {
+      await tap(t, 'quizMark');
+      for (var r = 1; r <= 24; r++) {
+        await tap(t, 'roll-$r', times: wrong.contains(r) ? 2 : (unmarked.contains(r) ? 0 : 1));
+      }
+    }
+
+    for (final (tag, size) in [('board', board), ('phone', phone)]) {
+      testWidgets('03 quiz $tag', (t) async {
+        await open(t, ClassQuizScreen(samples: samples), size: size);
+        if (tag == 'board') await snap(t, '03-quiz-question-board');
+        await markFirst(t);
+        await snap(t, '03-quiz-mark-$tag');
+        if (tag != 'board') return;
+        for (final r in wrong.where((r) => r > 24)) {
+          await tap(t, 'roll-$r', times: 2);
+        }
+        await tap(t, 'fillRest');
+        for (final r in unmarked) {
+          await tap(t, 'roll-$r', times: 2);
+        }
+        await tap(t, 'quizReveal');
+        await snap(t, '03-quiz-reveal-board');
+      });
+    }
+
+    testWidgets('04 mock test board', (t) async {
+      await open(t, MockTestScreen(samples: samples));
+      await snap(t, '04-mock-picker-board');
+      await tap(t, 'mockStart');
+      await t.pump(const Duration(seconds: 1968)); // 80:00 → 47:12
+      await tap(t, 'mockNext', times: 3);
+      await tap(t, 'mockFlag');
+      await tap(t, 'mockNext', times: 3);
+      await snap(t, '04-mock-running-board');
+      await tap(t, 'mockEnd');
+      final rnd = Random(3);
+      for (var r = 1; r <= 36; r++) {
+        if (r == 9 || r == 27) {
+          await tap(t, 'key-A');
+          continue;
+        }
+        for (final d in '${18 + rnd.nextInt(41)}'.split('')) {
+          await tap(t, 'key-$d');
+        }
+        await tap(t, 'key-↵');
+      }
+      await tap(t, 'key-4');
+      await snap(t, '04-mock-scores-board');
+    });
+
+    for (final (tag, size) in [('board', board), ('phone', phone)]) {
+      testWidgets('05 formula drill $tag', (t) async {
+        await open(t, FormulaDrillScreen(samples: samples), size: size);
+        await tap(t, 'drillNext', times: 3);
+        await snap(t, '05-formula-drill-$tag');
+      });
+    }
+
+    testWidgets('06 teams board', (t) async {
+      await open(t, TeamsScreen(samples: samples));
+      await snap(t, '06-teams-board');
+    });
+
+    testWidgets('07 class plan board', (t) async {
+      await open(t, ClassPlanScreen(samples: samples));
+      await snap(t, '07-class-plan-board');
+    });
+
+    testWidgets('08 mastery board', (t) async {
+      await open(t, MasteryHeatmapScreen(samples: samples));
+      await snap(t, '08-mastery-skills-board');
+      await tap(t, 'viewRolls');
+      await snap(t, '08-mastery-rolls-board');
+    });
+
+    testWidgets('09 coding lab board', (t) async {
+      await open(t, CodingLabScreen(samples: samples));
+      await snap(t, '09-coding-lab-board');
+    });
+
+    testWidgets('10 worksheet board', (t) async {
+      await open(t, WorksheetExportScreen(samples: samples));
+      await snap(t, '10-worksheet-board');
+    });
+
+    testWidgets('11 ask ai online board', (t) async {
+      await open(t, AskAiScreen(samples: samples));
+      await tap(t, 'aiHint');
+      await tap(t, 'aiAnswerBtn');
+      await snap(t, '11-ask-ai-online-board');
+    });
+    testWidgets('11 ask ai offline board', (t) async {
+      await open(t, AskAiScreen(samples: samples, online: false));
+      await snap(t, '11-ask-ai-offline-board');
+    });
   });
 
   testWidgets('33 accounting equation', (t) => sim(t, 'puc1-accountancy-03-recording-of-transactions-i.t2', 'sim1', '33-sim-accounting-equation'));

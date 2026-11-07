@@ -8,6 +8,7 @@ import '../core/theme.dart';
 import '../engine/licence.dart';
 import '../engine/model.dart';
 import 'exam_practice.dart';
+import 'classroom/class_tools_hub.dart';
 import 'game/game_hub.dart';
 import 'game/strings.dart';
 import 'insight/mastery_map.dart';
@@ -425,6 +426,7 @@ class _ToolStrip extends StatelessWidget {
       (const ValueKey('tool-phones'), Icons.phonelink_ring_outlined, ltr('phones', l), () => go(const LiveQuizScreen())),
       (const ValueKey('tool-paper'), Icons.fact_check_outlined, ltr('paperMarks', l), () => go(const PaperMarksScreen())),
       (const ValueKey('tool-worksheet'), Icons.print_outlined, it('worksheet', l), () => go(const WorksheetScreen())),
+      (const ValueKey('tool-classTools'), Icons.dashboard_customize_outlined, classToolsLabel(l), () => go(const ClassToolsHub())),
     ];
   }
 
