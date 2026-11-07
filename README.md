@@ -29,3 +29,18 @@ Default school PIN before activation: 1234 (Settings, from the teacher menu on H
 Kiosk (device owner): `adb shell dpm set-device-owner app.zynetix.board/.KioskAdminReceiver`
 
 Check downloads against `SHA256SUMS`.
+
+---
+
+# Zynetix Classroom APKs: 1.0.0
+
+Zynetix Board — Classroom edition (`in.zynetix.classroom`, "Zynetix Classroom"), version 1.0.0 (build 1), built from amjad03/kinetix `claude/classroom-edition`. **Release-signed** with the Zynetix production key (same certificate as above). It installs next to the Zynetix Board.
+
+| File | For |
+|---|---|
+| `zynetix-classroom-1.0.0-arm64-v8a.apk` | Most smartboards and tablets from the last few years (pick this if unsure) |
+| `zynetix-classroom-1.0.0-armeabi-v7a.apk` | Older 32-bit ARM boards |
+
+For PU colleges without the Zynetix ERP: no AI anywhere, works offline from the board's own timetable, teachers and classes (roll numbers only, school PIN 1234), and opens on the Simple board. Lessons: every 1st and 2nd PUC chapter bundled (step by step, Read aloud, English / Kannada, Put on board). Class tools: class quiz by roll number, mock tests (PUC and entrance patterns, print / PDF with answer key), formula drill, teams, class plan, mastery map, worksheets. Phones show the whole board scaled to fit. Android 7.0+.
+
+These two files are stored with Git LFS (each is over GitHub's 100 MB limit); the download links work the same way.
