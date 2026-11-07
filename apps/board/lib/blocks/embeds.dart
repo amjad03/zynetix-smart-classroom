@@ -10,6 +10,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../core/theme.dart';
 import '../core/ui_scale.dart';
 import '../engine/model.dart';
+import 'concept_video_view.dart' show VideoPlayerView;
 
 /// The interactive pieces reused from Zynetix Board (amjad03/Kinetix). Behind an interface so
 /// widget tests (no WebView, no GPU) swap in placeholders.
@@ -17,9 +18,15 @@ abstract class Embeds {
   Widget model3d(Block b, Lang lang);
   Widget simulation(Block b, InstalledPack pack, Lang lang);
   Widget lab(String labId, String? preset, Lang lang);
+
+  /// A concept video's player (streamed; the block checks the board is online first).
+  Widget video(VideoRef v, {int start = 0});
 }
 
 class KinetixEmbeds implements Embeds {
+  @override
+  Widget video(VideoRef v, {int start = 0}) => VideoPlayerView(video: v, start: start);
+
   @override
   // Kinetix widgets are drawn at their design size ([DesignPixels]), not at half size on the
   // board's canvas: readable lab text, 3D labels and viewer controls.
@@ -156,6 +163,8 @@ class PlaceholderEmbeds implements Embeds {
   Widget simulation(Block b, InstalledPack pack, Lang lang) => _box('sim:${b.s('source')}:${b.s('simId')}');
   @override
   Widget lab(String labId, String? preset, Lang lang) => _box('lab:$labId');
+  @override
+  Widget video(VideoRef v, {int start = 0}) => _box('video:${v.provider}:${v.id}@$start');
 }
 
 /// Default localizations for any locale (see [KinetixEmbeds.lab]).

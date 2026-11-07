@@ -39,7 +39,13 @@ enum BlockType {
   challenge('challenge'),
 
   /// A touch activity: sort, order, match, label, hotspot or fill (lib/blocks/activity/).
-  activity('activity');
+  activity('activity'),
+
+  /// A concept told four ways: misconception, watch steps, try it, story, "it's like" (lib/blocks/explainer_view.dart).
+  explainer('explainer'),
+
+  /// A concept video from the owner's channel: streamed when online, "Needs internet" offline (lib/blocks/concept_video_view.dart).
+  conceptVideo('concept_video');
 
   const BlockType(this.wire);
   final String wire;
@@ -110,6 +116,7 @@ class Block {
       BlockType.concept => (raw['hero'] is Map ? 1 : 0) + cards.length + list('points').length,
       BlockType.example => list('steps').length + 2, // the problem, each step, the answer
       BlockType.recap => list('points').length + (raw['next'] is Map ? 1 : 0),
+      BlockType.explainer => (raw['watch'] as List?)?.length ?? 0, // the watch steps, one per Next
       _ => 1,
     };
     return n < 1 ? 1 : n;
@@ -322,14 +329,71 @@ class Chapter {
   );
 }
 
+/// One formula of a chapter's formula sheet (formulas.json in a pack): a name, display LaTeX, a note.
+class SheetFormula {
+  const SheetFormula({required this.id, required this.name, required this.tex, this.note, this.topicId});
+  final String id, tex;
+  final L10n name;
+  final L10n? note;
+  final String? topicId;
+  factory SheetFormula.fromJson(Map<String, dynamic> j) => SheetFormula(
+    id: j['id'] as String? ?? '',
+    name: L10n.of(j['name']),
+    tex: j['tex'] as String? ?? '',
+    note: L10n.maybe(j['note']),
+    topicId: j['topicId'] as String?,
+  );
+
+  /// The formulas of a `formulas.json` ({chapterId, formulas: […]}); empty when absent or unreadable.
+  static List<SheetFormula> sheet(Object? j) => [
+    if (j is Map)
+      for (final f in (j['formulas'] as List?) ?? const [])
+        if (f is Map && (f['tex'] as String?)?.trim().isNotEmpty == true) SheetFormula.fromJson(f.cast<String, dynamic>()),
+  ];
+}
+
+/// A video on the owner's channel: YouTube or Google Drive, never downloaded (streamed online).
+class VideoRef {
+  const VideoRef({required this.provider, required this.id, required this.title, this.seconds, this.chapters = const []});
+  final String provider, id;
+  final L10n title;
+  final int? seconds;
+
+  /// Markers inside the video: (seconds from the start, label).
+  final List<(int, L10n)> chapters;
+
+  static VideoRef? maybe(Object? v) {
+    if (v is! Map || v['id'] is! String || !RegExp(r'^[A-Za-z0-9_-]{6,64}$').hasMatch(v['id'] as String)) return null;
+    final provider = v['provider'] == 'drive' ? 'drive' : 'youtube';
+    return VideoRef(
+      provider: provider,
+      id: v['id'] as String,
+      title: L10n.of(v['title']),
+      seconds: (v['seconds'] as num?)?.toInt(),
+      chapters: [
+        for (final c in (v['chapters'] as List?) ?? const [])
+          if (c is Map) ((c['at'] as num?)?.toInt() ?? 0, L10n.of(c['label'])),
+      ],
+    );
+  }
+
+  /// The embedded player's address (YouTube without cookies; Drive's preview player).
+  Uri embedUrl({int start = 0}) => provider == 'drive'
+      ? Uri.parse('https://drive.google.com/file/d/$id/preview')
+      : Uri.parse('https://www.youtube-nocookie.com/embed/$id?rel=0&modestbranding=1&playsinline=1${start > 0 ? '&start=$start' : ''}');
+}
+
 /// An installed pack: one chapter, its lessons and questions, and where its media lives.
 class InstalledPack {
-  InstalledPack({required this.id, required this.version, required this.chapter, required this.lessons, required this.questions, required this.mediaDir});
+  InstalledPack({required this.id, required this.version, required this.chapter, required this.lessons, required this.questions, required this.mediaDir, this.formulas = const []});
   final String id, version;
   final Chapter chapter;
   final Map<String, Lesson> lessons; // by topicId
   final Map<String, Question> questions;
   final String mediaDir;
+
+  /// The chapter's formula sheet (formulas.json), empty when the pack has none.
+  final List<SheetFormula> formulas;
 
   List<Question> questionsFor(Iterable<String> ids) => [for (final i in ids) ?questions[i]];
   List<Question> topicQuestions(String topicId) => [

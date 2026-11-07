@@ -27,13 +27,15 @@ import 'package:zynetix_board/main.dart';
 import 'helpers.dart';
 
 /// The real Kinetix labs, animations and CS players; a placeholder only for the WebView pieces
-/// (3D models, PhET pages), which the test engine cannot draw.
+/// (3D models, PhET pages, concept videos), which the test engine cannot draw.
 class SweepEmbeds extends KinetixEmbeds {
   final _stub = PlaceholderEmbeds();
   @override
   Widget model3d(Block b, Lang lang) => _stub.model3d(b, lang);
   @override
   Widget simulation(Block b, InstalledPack pack, Lang lang) => b.s('source') == 'phet' ? _stub.simulation(b, pack, lang) : super.simulation(b, pack, lang);
+  @override
+  Widget video(VideoRef v, {int start = 0}) => _stub.video(v, start: start);
 }
 
 const sizes = <String, (Size, String)>{

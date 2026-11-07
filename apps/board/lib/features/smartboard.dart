@@ -8,6 +8,7 @@ import 'package:kinetix_ink/kinetix_ink.dart' hide Lesson;
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../blocks/concept_video_view.dart';
 import '../core/apps.dart';
 import '../core/services.dart';
 import '../core/strings.dart' as strings;
@@ -399,6 +400,31 @@ class SmartboardScreenState extends State<SmartboardScreen> {
         if (board.page.elements.isNotEmpty) board.addPage();
         board.addAll(examPage(i.questions));
       case KitKind.video:
+        // A concept video plays full screen when the board is online ("Needs internet" offline).
+        if (i.block != null) {
+          final embeds = ServicesScope.of(context).embeds;
+          unawaited(
+            showDialog<void>(
+              context: context,
+              builder: (ctx) => Dialog.fullscreen(
+                backgroundColor: S.mist,
+                child: SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        IconButton(key: const ValueKey('video-close'), iconSize: 48, onPressed: () => Navigator.of(ctx).pop(), icon: const Icon(Icons.close_rounded)),
+                        Expanded(child: ConceptVideoView(block: i.block!, lang: l, embeds: embeds)),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+          return;
+        }
         _say('Concept videos need the internet. They are not on this board offline.', 'ಪರಿಕಲ್ಪನಾ ವೀಡಿಯೊಗಳಿಗೆ ಇಂಟರ್ನೆಟ್ ಬೇಕು. ಇವು ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿ ಇಲ್ಲ.');
         return;
     }

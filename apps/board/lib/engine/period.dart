@@ -49,6 +49,8 @@ abstract final class PeriodPlanner {
       BlockType.interactive => max(read, b.seconds ?? interactiveSeconds(b)),
       BlockType.activity => max(read, b.seconds ?? activitySeconds(b)),
       BlockType.challenge => max(read, b.seconds ?? challengeSeconds(b)),
+      BlockType.explainer => max(read, b.seconds ?? [for (final w in (b.raw['watch'] as List?) ?? const []) if (w is Map) readingSeconds(L10n.maybe(w['say'])) + 2].fold(30, (a, x) => a + x)),
+      BlockType.conceptVideo => max(read, b.seconds ?? (b.raw['video'] is Map ? ((b.raw['video'] as Map)['seconds'] as num?)?.toInt() : null) ?? 300),
       _ => max(read, b.seconds ?? 0),
     };
   }

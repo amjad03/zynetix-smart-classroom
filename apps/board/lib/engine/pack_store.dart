@@ -88,6 +88,12 @@ class PackStore {
       lessons[l.topicId] = l;
     }
     final qs = jsonDecode(File('$dir/questions.json').readAsStringSync()) as List;
+    // Optional: the chapter's formula sheet (packs from before the school import have none).
+    final ff = File('$dir/formulas.json');
+    List<SheetFormula> formulas = const [];
+    try {
+      if (ff.existsSync()) formulas = SheetFormula.sheet(jsonDecode(ff.readAsStringSync()));
+    } catch (_) {}
     return InstalledPack(
       id: id,
       version: version,
@@ -95,6 +101,7 @@ class PackStore {
       lessons: lessons,
       questions: {for (final q in qs) (q['id'] as String): Question.fromJson(q as Map<String, dynamic>)},
       mediaDir: '$dir/media',
+      formulas: formulas,
     );
   }
 }

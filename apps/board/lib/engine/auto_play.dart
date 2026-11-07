@@ -256,6 +256,9 @@ class AutoPlayer extends ChangeNotifier {
     BlockType.pyq when b.style == 'solve' => step == 1,
     BlockType.interactive || BlockType.activity || BlockType.challenge || BlockType.virtualLab || BlockType.model3d || BlockType.simulation || BlockType.whiteboard => true,
     BlockType.classQuiz || BlockType.pyq => true,
+    // A video plays at the teacher's pace; an explainer waits after its last watch step (Try it).
+    BlockType.conceptVideo => true,
+    BlockType.explainer => step >= b.revealSteps(pack),
     _ => false,
   };
 

@@ -75,6 +75,8 @@ List<KitItem> subjectKit(InstalledPack pack, {String board = 'kar_pu'}) {
           add(KitItem(KitKind.sim, simRef(pack.chapter.id, lesson.topicId, b.id), name ?? L10n(_pretty(b.s('simId')!)), topicId: lesson.topicId, block: b));
         case BlockType.concept:
           add(KitItem(KitKind.explainer, '${lesson.topicId}|${b.id}', name ?? lesson.title, topicId: lesson.topicId, block: b));
+        case BlockType.conceptVideo when VideoRef.maybe(b.raw['video']) != null:
+          add(KitItem(KitKind.video, 'video:${VideoRef.maybe(b.raw['video'])!.id}', VideoRef.maybe(b.raw['video'])!.title, topicId: lesson.topicId, block: b, online: true));
         default:
       }
     }
@@ -88,7 +90,8 @@ List<KitItem> subjectKit(InstalledPack pack, {String board = 'kar_pu'}) {
     add(KitItem(KitKind.exam, 'exam', L10n('$n board-exam questions', '$n ಬೋರ್ಡ್ ಪರೀಕ್ಷಾ ಪ್ರಶ್ನೆಗಳು'), questions: exam.take(6).toList()));
   }
   out.sort((a, b) => a.kind.index.compareTo(b.kind.index));
-  add(KitItem(KitKind.video, 'video', L10n('${pack.chapter.title.en} · Zynetix School', '${pack.chapter.title.t(Lang.kn)} · ಜೈನೆಟಿಕ್ಸ್ ಸ್ಕೂಲ್'), online: true));
+  // The chapter's concept videos (streamed); a placeholder card when it has none yet.
+  if (!out.any((i) => i.kind == KitKind.video)) add(KitItem(KitKind.video, 'video', L10n('${pack.chapter.title.en} · Zynetix School', '${pack.chapter.title.t(Lang.kn)} · ಜೈನೆಟಿಕ್ಸ್ ಸ್ಕೂಲ್'), online: true));
   return out;
 }
 

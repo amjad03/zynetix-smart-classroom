@@ -73,10 +73,16 @@ ClassQuestion classQuestion(Question q, L10n chapter) => ClassQuestion(
   },
 );
 
-/// The formulas a chapter's lessons write on the board (concept blocks with a formula).
+/// A chapter's formulas: its formula sheet (formulas.json, from the Zynetix School import),
+/// then the ones its lessons write on the board (concept blocks with a formula).
 FormulaSheetData formulaSheet(InstalledPack p, String board) {
   final items = <FormulaItem>[];
   final seen = <String>{};
+  final topics = {for (final t in p.chapter.topicsFor(board)) t.id};
+  for (final f in p.formulas) {
+    if ((f.topicId != null && !topics.contains(f.topicId)) || !seen.add(f.tex)) continue;
+    items.add(FormulaItem(f.name, f.tex, f.note ?? const L10n('')));
+  }
   for (final t in p.chapter.topicsFor(board)) {
     for (final b in p.lessons[t.id]?.blocks ?? const <Block>[]) {
       final tex = b.raw['formula'];
@@ -85,6 +91,43 @@ FormulaSheetData formulaSheet(InstalledPack p, String board) {
     }
   }
   return FormulaSheetData(p.chapter.title, items);
+}
+
+/// The explainers in a chapter's lessons (explainer blocks with a misconception), for the class
+/// tools' Explainers screen.
+List<ClassExplainer> chapterExplainers(InstalledPack p, String board) => [
+  for (final t in p.chapter.topicsFor(board))
+    for (final b in p.lessons[t.id]?.blocks ?? const <Block>[])
+      if (b.type == BlockType.explainer && b.forBoard(board) && b.raw['misconception'] is Map && (b.raw['watch'] as List?)?.isNotEmpty == true) classExplainer(b, p.chapter.title),
+];
+
+ClassExplainer classExplainer(Block b, L10n chapter) {
+  List<Map<String, dynamic>> maps(Object? v) => [
+    for (final e in (v as List?) ?? const [])
+      if (e is Map) e.cast<String, dynamic>(),
+  ];
+  final m = (b.raw['misconception'] as Map?) ?? const {};
+  final tryIt = (b.raw['try'] as Map?) ?? const {};
+  final like = (b.raw['analogy'] as Map?) ?? const {};
+  return ClassExplainer(
+    id: b.id,
+    title: b.f('heading'),
+    tagline: b.maybe('tagline') ?? const L10n(''),
+    chapter: chapter,
+    myth: L10n.of(m['myth']),
+    truth: L10n.of(m['truth']),
+    steps: [for (final (i, w) in maps(b.raw['watch']).indexed) ExplainerStep('${i + 1}', L10n.of(w['title']), L10n.of(w['say']))],
+    mission: L10n.of(tryIt['goal']),
+    missionSteps: [for (final st in maps(tryIt['steps'])) L10n.of(st['task'])],
+    story: [for (final f in maps(b.raw['story'])) StoryFrame(L10n.maybe(f['speech']) ?? const L10n(''), L10n.of(f['caption']))],
+    likeHeadline: L10n.of(like['headline']),
+    likePairs: [
+      for (final pr in (like['pairs'] as List?) ?? const [])
+        if (pr is List && pr.length == 2) (L10n.of(pr[0]), L10n.of(pr[1])),
+    ],
+    likeLimits: L10n.of(like['limits']),
+    examLink: const L10n(''),
+  );
 }
 
 /// The class tools' data for [subject], from the installed packs and this board's records.
@@ -172,7 +215,7 @@ ClassSamples buildSamples(Services s, ClassContent content, {String? subject}) {
   return ClassSamples(
     subject: L10n(subjectName(subj, Lang.en), subjectName(subj, Lang.kn)),
     year: L10n(yearLabel(year, board, Lang.en), yearLabel(year, board, Lang.kn)),
-    explainers: const [],
+    explainers: [for (final p in ordered.take(4)) ...chapterExplainers(p, board)].take(12).toList(),
     questions: questions,
     formulas: formulas,
     mocks: content.mocks,

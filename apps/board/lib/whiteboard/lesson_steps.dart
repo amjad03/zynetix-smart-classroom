@@ -33,6 +33,8 @@ L10n _typeName(BlockType t) => switch (t) {
   BlockType.interactive => const L10n('Try it', 'ಪ್ರಯತ್ನಿಸಿ'),
   BlockType.challenge => const L10n('Challenge', 'ಸವಾಲು'),
   BlockType.activity => const L10n('Activity', 'ಚಟುವಟಿಕೆ'),
+  BlockType.explainer => const L10n('Explainer', 'ವಿವರಣೆ'),
+  BlockType.conceptVideo => const L10n('Concept video', 'ಪರಿಕಲ್ಪನಾ ವೀಡಿಯೊ'),
 };
 
 int _defaultSeconds(BlockType t) => switch (t) {

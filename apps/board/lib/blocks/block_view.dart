@@ -10,7 +10,9 @@ import '../features/insight/reteach.dart' show reteachNow;
 import '../features/participation.dart';
 import 'activity/activity_view.dart';
 import 'challenge_view.dart';
+import 'concept_video_view.dart';
 import 'embeds.dart';
+import 'explainer_view.dart';
 import 'interactive_view.dart';
 import 'lesson_cards.dart';
 import 'math_text.dart';
@@ -94,6 +96,8 @@ class BlockView extends StatelessWidget {
           recorder: c.recorder,
         ),
       ),
+      BlockType.explainer => stepped((shown, reveal) => ExplainerView(key: ValueKey('ex:${b.id}'), block: b, lang: l, shown: shown, onReveal: reveal)),
+      BlockType.conceptVideo => ConceptVideoView(key: ValueKey('cv:${b.id}'), block: b, lang: l, embeds: embeds),
       BlockType.recap when b.style == 'recall' => stepped((shown, reveal) => RecallView(key: ValueKey('recall:${b.id}'), block: b, lang: l, shown: shown, onTap: () => reveal(shown + 1))),
       BlockType.example when b.reveal && (!auto || c.voiceDriven) => ExampleView(key: ValueKey(b.id), block: b, lang: l, shown: c.revealed - 1, onShowNext: c.revealMore),
       _ => null,
@@ -190,6 +194,8 @@ class BlockView extends StatelessWidget {
       BlockType.interactive => InteractiveView(key: ValueKey('ia:${b.id}'), block: b, lang: l, speaker: b.speaker == null ? null : SpeechBubble(speaker: b.speaker!, lang: l, dark: true)),
       BlockType.challenge => ChallengeView(key: ValueKey('ch:${b.id}'), block: b, lang: l, room: room, recorder: c.recorder, auto: auto, onFinished: onFinished),
       BlockType.activity => ActivityView(key: ValueKey('act:${b.id}'), block: b, lang: l, recorder: c.recorder),
+      // Drawn above (special); kept for an exhaustive switch.
+      BlockType.explainer || BlockType.conceptVideo => const SizedBox.shrink(),
       BlockType.recap => ContentPanel(
         tag: tr('recap', l),
         child: Column(

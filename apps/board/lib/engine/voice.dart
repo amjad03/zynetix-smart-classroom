@@ -54,6 +54,12 @@ String clipIdOf(Block b, int step) {
 /// A block step's voice line in [lang] (null when the block has no line for it).
 String? voiceLine(Block b, int step, Lang lang) {
   final v = b.raw['voice'];
+  // An explainer without voice lines reads its watch steps.
+  if (v is! List && b.type == BlockType.explainer) {
+    final w = b.raw['watch'];
+    final s = w is List && step >= 1 && step <= w.length && w[step - 1] is Map ? L10n.maybe((w[step - 1] as Map)['say'])?.t(lang) : null;
+    return (s?.isNotEmpty ?? false) ? s : null;
+  }
   if (v is! List || step < 1 || step > v.length) return null;
   final line = v[step - 1];
   if (line is! Map) return null;

@@ -109,5 +109,7 @@ InstalledPack sourcePack(InstalledPack installed, String dir) {
       if (c['id'] == installed.chapter.id) chapter = Chapter.fromJson(c);
     }
   }
-  return InstalledPack(id: installed.id, version: installed.version, chapter: chapter, lessons: lessons, questions: qs, mediaDir: installed.mediaDir);
+  final ff = File('$root/formulas.json');
+  final formulas = ff.existsSync() ? SheetFormula.sheet(jsonDecode(ff.readAsStringSync())) : const <SheetFormula>[];
+  return InstalledPack(id: installed.id, version: installed.version, chapter: chapter, lessons: lessons, questions: qs, mediaDir: installed.mediaDir, formulas: formulas);
 }

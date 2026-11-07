@@ -44,7 +44,11 @@ PhET sims are not shipped in the APK. Each pack carries only the sims its lesson
 ## Lesson model
 
 A **lesson** covers one topic and is an ordered list of **blocks**:
-`intro, concept, 3d_model, simulation, virtual_lab, example, class_quiz, pyq, trick, recap`.
+`intro, concept, 3d_model, simulation, virtual_lab, example, class_quiz, pyq, trick, recap`
+(and `whiteboard, interactive, challenge, activity`). From the Zynetix School import
+(tools/school-import): `explainer` (misconception, watch steps, try it, story, "it's like") and
+`concept_video` (the owner's own YouTube or Drive videos; streamed when online, a "Needs internet"
+card offline, never downloaded).
 Every block can have a bilingual `narration` (read aloud by device TTS, `en-IN` / `kn-IN`)
 and a `seconds` hint for Self-Learning.
 
@@ -77,7 +81,7 @@ and the board starts it on its own at the scheduled time. The timetable is cache
 
 ## Content packs
 
-A pack is a `.zpack` zip containing `manifest.json`, `manifest.sig`, `chapter.json`, `questions.json`, `lessons/*.json` and `media/**`.
+A pack is a `.zpack` zip containing `manifest.json`, `manifest.sig`, `chapter.json`, `questions.json`, `lessons/*.json` and `media/**`, and `formulas.json` (the chapter's formula sheet, for the class tools' formula drill) when it has one.
 - `manifest.json` lists the SHA-256 of every other file.
 - `manifest.sig` is an Ed25519 signature over the manifest bytes.
 - The board checks the signature against built-in public keys (identified by `keyId`) and then every hash, before it installs a pack.
