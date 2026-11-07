@@ -226,14 +226,17 @@ class _GuideTourState extends State<GuideTour> {
         left: 0, right: 0, top: 44 * k,
         child: IgnorePointer(
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Container(
-              padding: EdgeInsets.fromLTRB(28 * k, 16 * k, 36 * k, 16 * k),
-              decoration: BoxDecoration(color: const Color(0xFFFFC857), borderRadius: BorderRadius.circular(999)),
-              child: Row(children: [
-                Icon(Icons.record_voice_over_rounded, size: 44 * k, color: S.ink),
-                SizedBox(width: 16 * k),
-                Text(tr(l, 'Your first class, with a guide', 'ಮಾರ್ಗದರ್ಶಿಯೊಂದಿಗೆ ನಿಮ್ಮ ಮೊದಲ ತರಗತಿ'), style: tx(36 * k, c: S.ink, w: FontWeight.w700, h: 1.1)),
-              ]),
+            Flexible(
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 16 * k),
+                padding: EdgeInsets.fromLTRB(28 * k, 16 * k, 36 * k, 16 * k),
+                decoration: BoxDecoration(color: const Color(0xFFFFC857), borderRadius: BorderRadius.circular(999)),
+                child: Row(mainAxisSize: MainAxisSize.min, children: [
+                  Icon(Icons.record_voice_over_rounded, size: 44 * k, color: S.ink),
+                  SizedBox(width: 16 * k),
+                  Flexible(child: Text(tr(l, 'Your first class, with a guide', 'ಮಾರ್ಗದರ್ಶಿಯೊಂದಿಗೆ ನಿಮ್ಮ ಮೊದಲ ತರಗತಿ'), maxLines: 1, overflow: TextOverflow.ellipsis, style: tx(36 * k, c: S.ink, w: FontWeight.w700, h: 1.1))),
+                ]),
+              ),
             ),
           ]),
         ),

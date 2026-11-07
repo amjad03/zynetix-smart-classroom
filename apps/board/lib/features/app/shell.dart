@@ -32,30 +32,17 @@ Future<void> openSection(BuildContext context, Section s, {bool standalone = fal
   return Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => standalone ? SectionPage(section: s) : ToolsShell(initial: s)));
 }
 
-/// The board, full screen, with "What do I do now?" (whose Undo takes back the last stroke).
-Future<void> openBoard(BuildContext context) => Navigator.of(context).push(MaterialPageRoute<void>(fullscreenDialog: true, builder: (_) => const BoardPage()));
+/// The board, full screen. With [pack] it is that chapter's board (saved for the class) with the
+/// chapter's subject kit; without, the plain board. The board has its own "What do I do now?"
+/// (whose Undo takes back the last stroke).
+Future<void> openBoard(BuildContext context, {InstalledPack? pack}) =>
+    pack != null ? openSmartboard(context, pack: pack) : Navigator.of(context).push(MaterialPageRoute<void>(fullscreenDialog: true, builder: (_) => const BoardPage()));
 
 class BoardPage extends StatelessWidget {
   const BoardPage({super.key, this.embedded = false});
   final bool embedded;
   @override
-  Widget build(BuildContext context) {
-    final board = SmartboardScreen.shared;
-    return Stack(children: [
-      const Positioned.fill(child: SmartboardScreen()),
-      Positioned(
-        right: 32,
-        bottom: embedded ? 32 : 180,
-        child: HelpChip(
-          info: () => HelpInfo(
-            next: const L10n('Pick a pen colour and write. Tap Insert to add a 3D model or lab.', 'ಪೆನ್ ಬಣ್ಣ ಆರಿಸಿ ಬರೆಯಿರಿ. 3D ಮಾದರಿ ಅಥವಾ ಲ್ಯಾಬ್‌ಗೆ “ಸೇರಿಸಿ” ಒತ್ತಿ.'),
-            detail: const L10n('Close the board with the X at the top. Your pages stay until the board is switched off.', 'ಮೇಲಿನ X ಒತ್ತಿ ಬೋರ್ಡ್ ಮುಚ್ಚಿ. ನಿಮ್ಮ ಪುಟಗಳು ಉಳಿಯುತ್ತವೆ.'),
-            undo: () => board.canUndo ? LocalUndo(const L10n('Your last stroke on the board', 'ಬೋರ್ಡ್‌ನ ಕೊನೆಯ ಗೆರೆ'), board.undo) : null,
-          ),
-        ),
-      ),
-    ]);
-  }
+  Widget build(BuildContext context) => const SmartboardScreen();
 }
 
 /// The top of every place: a small line over a big title, then [trailing] and help.

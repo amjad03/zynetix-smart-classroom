@@ -323,9 +323,8 @@ Future<bool> askTeacherPin(BuildContext context, Teacher t) async {
         ZxField(fieldKey: const ValueKey('pinField'), controller: pin, label: 'PIN', obscure: true, number: true, maxLength: 6, autofocus: true),
         if (wrong) Padding(padding: const EdgeInsets.only(top: 20), child: Text(tr(l, 'That PIN is not right. Try again.', 'ಆ PIN ಸರಿಯಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.'), style: tx(34, c: S.rust, w: FontWeight.w600))),
         const SizedBox(height: 40),
-        Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+        Wrap(alignment: WrapAlignment.end, spacing: 24, runSpacing: 16, children: [
           ZxButton(tr(l, 'Cancel', 'ರದ್ದು'), bg: S.mist, fg: S.ink, onTap: () => Navigator.pop(ctx, false)),
-          const SizedBox(width: 24),
           ZxButton(tr(l, 'Open', 'ತೆರೆಯಿರಿ'), key: const ValueKey('pinOk'), bg: S.violet, onTap: () {
             if (t.checkPin(pin.text)) {
               Navigator.pop(ctx, true);
@@ -368,9 +367,8 @@ Future<Teacher?> addTeacherDialog(BuildContext context, {bool signIn = true}) as
         const SizedBox(height: 24),
         SafeLine(tr(l, 'Only your name is kept, on this board. No photo, no phone number.', 'ನಿಮ್ಮ ಹೆಸರು ಮಾತ್ರ ಈ ಬೋರ್ಡ್‌ನಲ್ಲಿ ಉಳಿಯುತ್ತದೆ. ಫೋಟೋ, ಫೋನ್ ಸಂಖ್ಯೆ ಇಲ್ಲ.'), size: 30, c: S.muted),
         const SizedBox(height: 40),
-        Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+        Wrap(alignment: WrapAlignment.end, spacing: 24, runSpacing: 16, children: [
           ZxButton(tr(l, 'Cancel', 'ರದ್ದು'), bg: S.mist, fg: S.ink, onTap: () => Navigator.pop(ctx)),
-          const SizedBox(width: 24),
           ZxButton(tr(l, 'Add', 'ಸೇರಿಸಿ'), key: const ValueKey('teacherAdd'), icon: Icons.check_rounded, bg: S.violet, onTap: () {
             if (name.text.trim().isEmpty) return;
             Navigator.pop(ctx, s.school.addTeacher(name.text, initials: initials.text, pin: pin.text));

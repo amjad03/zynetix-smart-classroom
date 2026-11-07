@@ -163,10 +163,10 @@ class _SimpleQuizScreenState extends State<SimpleQuizScreen> {
           Row(children: [
             KeyedSubtree(
               key: _show,
-              child: ZxButton(shown ? tr(l, 'Hide the answer', 'ಉತ್ತರ ಮರೆಮಾಡಿ') : tr(l, 'Show the answer', 'ಉತ್ತರ ತೋರಿಸಿ'), key: const ValueKey('showAnswer'), icon: shown ? Icons.visibility_off_rounded : Icons.visibility_rounded, bg: Colors.white, fg: S.ink, height: 120, size: 36, onTap: () => setState(() => shown = !shown)),
+              child: ZxButton(shown ? tr(l, 'Hide the answer', 'ಉತ್ತರ ಮರೆಮಾಡಿ') : tr(l, 'Show the answer', 'ಉತ್ತರ ತೋರಿಸಿ'), key: const ValueKey('showAnswer'), icon: shown ? Icons.visibility_off_rounded : Icons.visibility_rounded, bg: Colors.white, fg: S.ink, height: phone ? 100 : 120, size: phone ? 30 : 36, onTap: () => setState(() => shown = !shown)),
             ),
             const SizedBox(width: 20),
-            if (!shown) Flexible(child: Tag(tr(l, 'Answer hidden', 'ಉತ್ತರ ಮರೆಯಲ್ಲಿದೆ'), icon: Icons.lock_outline_rounded, size: 30)),
+            if (!shown && !phone) Flexible(child: Tag(tr(l, 'Answer hidden', 'ಉತ್ತರ ಮರೆಯಲ್ಲಿದೆ'), icon: Icons.lock_outline_rounded, size: 30)),
           ]),
         ]),
       );
@@ -206,13 +206,14 @@ class _SimpleQuizScreenState extends State<SimpleQuizScreen> {
         key: _done,
         child: ZxButton(tr(l, 'Done', 'ಮುಗಿಯಿತು'), key: const ValueKey('quizDone'), icon: Icons.check_rounded, bg: S.violet, height: phone ? 130 : 170, size: phone ? 40 : 52, shadow: true, onTap: _doneQuestion),
       );
+      final progress = StepProgress(step: qi + 1, of: widget.questions.length, dark: false, width: phone ? 200 : 420, size: phone ? 26 : 34, lang: l);
       final top = Row(children: [
         ZxButton(widget.practice ? tr(l, 'Back to practice', 'ಅಭ್ಯಾಸಕ್ಕೆ') : tr(l, 'Back', 'ಹಿಂದೆ'), key: const ValueKey('quizBack'), icon: Icons.arrow_back_rounded, bg: S.mist, fg: S.ink, height: phone ? 96 : 120, size: phone ? 28 : 36, onTap: () => Navigator.of(context).maybePop()),
-        const SizedBox(width: 40),
+        SizedBox(width: phone ? 20 : 40),
         if (!phone) Text(tr(l, 'Quiz the class', 'ತರಗತಿಗೆ ಪ್ರಶ್ನೆ'), style: hd(64, l: l)),
         const Spacer(),
-        StepProgress(step: qi + 1, of: widget.questions.length, dark: false, width: phone ? 200 : 420, size: phone ? 26 : 34, lang: l),
-        const SizedBox(width: 24),
+        if (phone) Flexible(flex: 4, child: progress) else progress,
+        SizedBox(width: phone ? 16 : 24),
         HelpChip(info: _help),
       ]);
       if (phone) {

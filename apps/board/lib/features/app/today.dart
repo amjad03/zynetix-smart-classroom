@@ -79,7 +79,7 @@ class TodayView extends StatelessWidget {
           const SizedBox(height: 36),
           Wrap(spacing: 20, runSpacing: 20, children: [
             KeyedSubtree(key: startKey, child: ZxButton(tr(l, 'Start class', 'ತರಗತಿ ಪ್ರಾರಂಭಿಸಿ'), key: const ValueKey('todayStart'), icon: Icons.play_arrow_rounded, bg: Colors.white, fg: S.ink, height: 130, size: 40, onTap: () => startClass(context, c))),
-            ZxButton(tr(l, 'Smartboard', 'ಸ್ಮಾರ್ಟ್‌ಬೋರ್ಡ್'), icon: Icons.draw_rounded, bg: const Color(0x26FFFFFF), height: 130, size: 40, onTap: () => openBoard(context)),
+            ZxButton(tr(l, 'Smartboard', 'ಸ್ಮಾರ್ಟ್‌ಬೋರ್ಡ್'), icon: Icons.draw_rounded, bg: const Color(0x26FFFFFF), height: 130, size: 40, onTap: () => openBoard(context, pack: c.pack)),
             if (c.minutesLeft != null) Tag(tr(l, '${c.minutesLeft} min left', 'ಇನ್ನೂ ${c.minutesLeft} ನಿಮಿಷ'), icon: Icons.timer_outlined, bg: const Color(0x26FFFFFF), fg: Colors.white, size: 30),
           ]),
         ]),

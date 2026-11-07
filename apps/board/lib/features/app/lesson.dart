@@ -12,6 +12,8 @@ import '../../engine/model.dart';
 import '../../engine/session_log.dart';
 import '../insight/reteach.dart' show teacherQuizDone;
 import '../participation.dart' show ClassRoom;
+import '../smartboard.dart' show openSmartboard;
+import '../../whiteboard/lesson_steps.dart' show plain;
 import 'help.dart';
 import 'kit.dart';
 import 'now.dart';
@@ -144,6 +146,17 @@ class _SimpleLessonScreenState extends State<SimpleLessonScreen> {
     await Navigator.of(context).pushReplacement(MaterialPageRoute<void>(builder: (_) => FinishClassScreen(recordId: record.id, period: widget.period)));
   }
 
+  /// The Smartboard on this step (a page of its own); the narration waits, and the lesson follows
+  /// the step the teacher ends on.
+  Future<void> _openBoard() async {
+    final was = c.paused;
+    c.setPaused(true);
+    await openSmartboard(context, pack: widget.pack, lesson: c.lesson, step: c.index, onStep: (i) {
+      if (mounted && i != c.index && i >= 0 && i < c.blocks.length) c.goTo(i);
+    });
+    if (mounted && !was) c.setPaused(false);
+  }
+
   HelpInfo _help() {
     final left = _minutesLeft;
     final where = L10n(
@@ -180,7 +193,7 @@ class _SimpleLessonScreenState extends State<SimpleLessonScreen> {
       final l = s.config.lang;
       if (c.lang != l) c.setLang(l);
       final phone = usePhoneLayout(context);
-      final line = (c.stepLine ?? c.current.narration)?.t(l) ?? '';
+      final line = plain((c.stepLine ?? c.current.narration)?.t(l) ?? '');
       final left = _minutesLeft;
       final (vIcon, vLabel, vTap) = _voice(l);
       final stage = Stack(children: [
@@ -233,6 +246,7 @@ class _SimpleLessonScreenState extends State<SimpleLessonScreen> {
 
       final tools = [
         tool(const ValueKey('write'), _write, tr(l, 'Write', 'ಬರೆಯಿರಿ'), Icons.edit_rounded, c.togglePen, on: c.pen),
+        if (!widget.preview) tool(const ValueKey('lessonBoard'), null, tr(l, 'Board', 'ಬೋರ್ಡ್'), Icons.draw_rounded, _openBoard),
         tool(const ValueKey('voice'), _voiceKey, vLabel, vIcon, vTap),
         tool(const ValueKey('lessonHelp'), null, tr(l, 'Help', 'ಸಹಾಯ'), Icons.question_mark_rounded, () => openHelp(context, _help())),
       ];
@@ -261,7 +275,7 @@ class _SimpleLessonScreenState extends State<SimpleLessonScreen> {
                   const SizedBox(height: 20),
                   Row(children: [for (final (i, t) in tools.indexed) ...[if (i > 0) const SizedBox(width: 12), Expanded(child: t)]]),
                   const SizedBox(height: 16),
-                  Row(children: [Expanded(child: back), const SizedBox(width: 16), Expanded(flex: 2, child: next)]),
+                  Row(children: [Expanded(flex: 2, child: back), const SizedBox(width: 16), Expanded(flex: 3, child: next)]),
                 ]),
               ),
             ),

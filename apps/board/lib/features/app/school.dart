@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -309,10 +310,12 @@ class SchoolStore extends ChangeNotifier {
     return true;
   }
 
-  /// Forgets undo steps that belong to a screen that has closed.
+  /// Forgets undo steps that belong to a screen that has closed. Screens call this from
+  /// dispose (while the tree is locked), so listeners hear of it just after the frame.
   void dropUndo(bool Function(UndoItem) where) {
+    final n = _undo.length;
     _undo.removeWhere(where);
-    notifyListeners();
+    if (_undo.length != n) scheduleMicrotask(notifyListeners);
   }
 }
 

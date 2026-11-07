@@ -44,6 +44,7 @@ import 'package:zynetix_board/features/player.dart';
 import 'package:zynetix_board/features/self_learning.dart';
 import 'package:zynetix_board/features/smartboard.dart';
 import 'package:zynetix_board/features/teacher_mode.dart';
+import 'package:zynetix_board/whiteboard/board_store.dart';
 
 import 'dart:math';
 
@@ -1032,6 +1033,127 @@ void main() {
     testWidgets('07 projector', (t) => shoot(t, WbView.projector, '07-projector-view'));
     testWidgets('08 kannada', (t) => shoot(t, WbView.simple, '08-whiteboard-kannada', lang: 'kn'));
     testWidgets('09 tablet', (t) => shoot(t, WbView.simple, '09-whiteboard-tablet', size: tablet));
+  });
+
+  // Release 2.0: the approved v8 (simple-first) and v9 (whiteboard) screens, all from the real
+  // widgets of the app, on the same sample day. v9 shots are prefixed wb-.
+  group('v10-app', () {
+    setUpAll(() async {
+      final l = FontLoader(KxFonts.kalam);
+      for (final f in Directory(kx).listSync().whereType<File>().where((f) => f.path.split('/').last.startsWith('Kalam-'))) {
+        l.addFont(Future.value(ByteData.sublistView(f.readAsBytesSync())));
+      }
+      await l.load();
+    });
+    const board = Size(1920, 1080), phone = Size(390, 844), tablet = Size(820, 1180);
+
+    Future<void> shoot(WidgetTester t, Widget Function(Services) home, String name, {Size size = board, String lang = 'en', Map<String, Object> prefs = const {}, Future<void> Function(Services)? prep, Future<void> Function()? act}) async {
+      BoardStore.instance = BoardStore();
+      final s = await shotServices(taught: gravitation, prefs: {'displaySize': size == board ? 'classroom' : 'normal', 'rollCount': 40, 'lang': lang, ...prefs});
+      await prep?.call(s);
+      t.view.physicalSize = size;
+      t.view.devicePixelRatio = 1;
+      addTearDown(t.view.reset);
+      debugDisableShadows = false;
+      await t.pumpWidget(ZynetixBoardApp(services: s, home: Builder(builder: (_) => home(s))));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 400));
+      await act?.call();
+      await t.pump(const Duration(milliseconds: 400));
+      await expectLater(find.byType(MaterialApp), matchesGoldenFile('v10-app/$name.png'));
+      debugDisableShadows = true;
+    }
+
+    Future<void> tap(WidgetTester t, String key) async {
+      await t.tap(find.byKey(ValueKey(key)).first);
+      await t.pump(const Duration(milliseconds: 300));
+      await t.pump(const Duration(milliseconds: 300));
+    }
+
+    /// A few lines of chalk-talk on the board: a boxed formula and an arrow.
+    Future<void> scribble(WidgetTester t) async {
+      final c = t.getCenter(find.byKey(const ValueKey('smartboardCanvas')));
+      Future<void> line(List<Offset> pts) async {
+        final g = await t.startGesture(c + pts.first, kind: PointerDeviceKind.stylus);
+        for (var i = 1; i < pts.length; i++) {
+          final a = pts[i - 1], b = pts[i];
+          final n = max(1, ((b - a).distance / 12).ceil());
+          for (var k = 1; k <= n; k++) {
+            await g.moveTo(c + Offset.lerp(a, b, k / n)!);
+          }
+        }
+        await g.up();
+        await t.pump();
+      }
+
+      await line([const Offset(-520, -200), const Offset(-120, -200), const Offset(-120, -80), const Offset(-520, -80), const Offset(-520, -200)]);
+      for (var i = 0; i < 4; i++) {
+        await line([Offset(-480.0 + i * 90, -170), Offset(-430.0 + i * 90, -110)]);
+      }
+      Future<void> pen(String simple) async {
+        if (find.byKey(ValueKey(simple)).evaluate().isNotEmpty) await tap(t, simple);
+      }
+
+      await pen('tool-red');
+      await line([const Offset(160, -220), const Offset(160, 40)]);
+      await line([const Offset(130, 10), const Offset(160, 40), const Offset(190, 10)]);
+      await pen('tool-blue');
+      await line([for (var a = 0; a <= 36; a++) Offset(360 + 150 * cos(a * pi / 18), 60 + 150 * sin(a * pi / 18))]);
+    }
+
+    ({InstalledPack pack, Lesson lesson}) hit(Services s) => s.lessonFor('puc1-physics-07-gravitation.t3')!;
+    Widget lesson(Services s, {int step = 1}) => SimpleLessonScreen(pack: hit(s).pack, lesson: hit(s).lesson, period: s.school.periods.firstWhere((p) => p.id == 'p2'), startStep: step);
+    InstalledPack grav(Services s) => s.store.byChapter('puc1-physics-07-gravitation')!;
+    Widget chapterBoard(Services s) => SmartboardScreen(pack: grav(s));
+    Widget lessonBoard(Services s) => SmartboardScreen(pack: hit(s).pack, lesson: hit(s).pack.lessonFor(hit(s).lesson, s.config.board), step: 2);
+
+    // v8 · the simple-first app
+    testWidgets('01 first open', (t) => shoot(t, (_) => const FirstOpenScreen(), '01-first-open-language'));
+    testWidgets('02 who', (t) => shoot(t, (_) => const WhoTodayScreen(), '02-who-is-teaching-no-pin', prep: (s) async => s.school.signIn(null)));
+    testWidgets('03 home', (t) => shoot(t, (_) => const HomeScreen(tour: false), '03-home-simple'));
+    testWidgets('04 tour', (t) => shoot(t, (_) => const HomeScreen(tour: true), '04-voice-guided-first-use'));
+    testWidgets('05 practice', (t) => shoot(t, (_) => const PracticeClassScreen(), '05-practice-class', act: () => tap(t, 'practiceNext')));
+    testWidgets('06 lesson', (t) => shoot(t, lesson, '06-lesson-simple-mode'));
+    testWidgets('07 help', (t) => shoot(t, lesson, '07-what-do-i-do-now', act: () => tap(t, 'lessonHelp')));
+    testWidgets('08 board', (t) => shoot(t, (_) => const BoardPage(), '08-simple-whiteboard'));
+    testWidgets('09 quiz', (t) => shoot(t, (s) => SimpleQuizScreen(pack: grav(s), questions: quizQuestions(grav(s), topicId: 'puc1-physics-07-gravitation.t3')), '09-quiz-tap-roll-numbers', act: () async {
+      for (final r in const [1, 2, 4, 5, 8, 9, 11, 12, 14, 17, 18, 21, 23, 26, 27, 30, 33, 36]) {
+        await tap(t, 'roll-$r');
+      }
+    }));
+    testWidgets('10 finish', (t) => shoot(t, (_) => const FinishClassScreen(recordId: 'c1'), '10-finish-class', prep: (s) async {
+      final h = hit(s);
+      s.school.addClass(ClassRecord(id: 'c1', at: DateTime(2026, 11, 4, 10, 30), subject: 'physics', topicId: h.lesson.topicId, topic: h.lesson.title, chapter: h.pack.chapter.title, stepsSeen: h.lesson.blocks.length, stepsTotal: h.lesson.blocks.length, minutes: 42, teacherId: 't1', teacherName: 'K. Meera', homework: 'Textbook questions 8.3 and 8.5', absent: const [7, 15, 22, 31], rollCount: 40));
+    }));
+    testWidgets('11 all tools', (t) => shoot(t, (_) => const HomeScreen(tour: false), '11-show-all-tools', prep: (s) async => s.school.setShowAll(true)));
+    testWidgets('12 home kn', (t) => shoot(t, (_) => const HomeScreen(tour: false), '12-home-kannada', lang: 'kn'));
+    testWidgets('13 home phone', (t) => shoot(t, (_) => const HomeScreen(tour: false), '13-home-phone', size: phone));
+    testWidgets('14 lesson kn', (t) => shoot(t, lesson, '14-lesson-kannada', lang: 'kn'));
+    testWidgets('15 lesson phone', (t) => shoot(t, lesson, '15-lesson-phone', size: phone));
+    testWidgets('16 quiz phone', (t) => shoot(t, (s) => SimpleQuizScreen(pack: grav(s), questions: quizQuestions(grav(s), topicId: 'puc1-physics-07-gravitation.t3')), '16-quiz-phone', size: phone, act: () async {
+      for (final r in const [1, 2, 4, 5]) {
+        await tap(t, 'roll-$r');
+      }
+    }));
+    testWidgets('17 all tools phone', (t) => shoot(t, (_) => const HomeScreen(tour: false), '17-show-all-tools-phone', size: phone, prep: (s) async => s.school.setShowAll(true)));
+
+    // v9 · the whiteboard
+    testWidgets('wb 01 simple', (t) => shoot(t, chapterBoard, 'wb-01-whiteboard-simple', act: () => scribble(t)));
+    testWidgets('wb 02 all tools', (t) => shoot(t, chapterBoard, 'wb-02-whiteboard-all-tools', prefs: {'smartboardAllTools': true}, act: () => scribble(t)));
+    testWidgets('wb 03 geometry', (t) => shoot(t, chapterBoard, 'wb-03-geometry-tools', prefs: {'smartboardAllTools': true}, act: () async {
+      await tap(t, 'geo-ruler');
+      await tap(t, 'geo-protractor');
+    }));
+    testWidgets('wb 04 kit', (t) => shoot(t, chapterBoard, 'wb-04-subject-kit', act: () => tap(t, 'openKit')));
+    testWidgets('wb 05 lesson page', (t) => shoot(t, lessonBoard, 'wb-05-lesson-step-as-page'));
+    testWidgets('wb 06 insert', (t) => shoot(t, chapterBoard, 'wb-06-insert-menu', act: () => tap(t, 'insert')));
+    testWidgets('wb 07 projector', (t) => shoot(t, chapterBoard, 'wb-07-projector-view', prefs: {'smartboardAllTools': true}, act: () async {
+      await scribble(t);
+      await tap(t, 'projector');
+    }));
+    testWidgets('wb 08 kannada', (t) => shoot(t, chapterBoard, 'wb-08-whiteboard-kannada', lang: 'kn', act: () => scribble(t)));
+    testWidgets('wb 09 tablet', (t) => shoot(t, chapterBoard, 'wb-09-whiteboard-tablet', size: tablet));
+    testWidgets('wb 10 phone', (t) => shoot(t, chapterBoard, 'wb-10-whiteboard-phone', size: phone));
   });
 
   testWidgets('33 accounting equation', (t) => sim(t, 'puc1-accountancy-03-recording-of-transactions-i.t2', 'sim1', '33-sim-accounting-equation'));

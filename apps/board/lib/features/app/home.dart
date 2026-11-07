@@ -179,12 +179,12 @@ class _HomeScreenState extends State<HomeScreen> {
     ]);
   }
 
-  Widget _hello(Lang l, double size, {bool all = false}) {
+  Widget _hello(Lang l, double size, {bool all = false, int lines = 1}) {
     final name = s.school.current?.firstName ?? '';
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text('${greeting(l, s.clock())}${name.isEmpty ? '' : ', $name'}', style: tx(size * .36, c: S.eyebrow, w: FontWeight.w600)),
       SizedBox(height: size * .08),
-      Text(all ? tr(l, 'What do you need today?', 'ಇಂದು ನಿಮಗೆ ಏನು ಬೇಕು?') : tr(l, 'What are you teaching today?', 'ಇಂದು ಏನು ಕಲಿಸುತ್ತಿದ್ದೀರಿ?'), maxLines: 1, overflow: TextOverflow.ellipsis, style: hd(size, l: l)),
+      Text(all ? tr(l, 'What do you need today?', 'ಇಂದು ನಿಮಗೆ ಏನು ಬೇಕು?') : tr(l, 'What are you teaching today?', 'ಇಂದು ಏನು ಕಲಿಸುತ್ತಿದ್ದೀರಿ?'), maxLines: lines, overflow: TextOverflow.ellipsis, style: hd(size, l: l)),
     ]);
   }
 
@@ -262,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 820),
               child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.end, children: [
-                _startButton(l, c),
+                _startButton(l, c, size: l == Lang.kn ? 52 : 64),
                 const SizedBox(height: 22),
                 Text(c.lastStep > 0 ? tr(l, 'Opens the lesson where you left off', 'ನೀವು ನಿಲ್ಲಿಸಿದಲ್ಲಿಂದ ಪಾಠ ತೆರೆಯುತ್ತದೆ') : tr(l, 'Opens the lesson on its first step', 'ಪಾಠ ಮೊದಲ ಹಂತದಲ್ಲಿ ತೆರೆಯುತ್ತದೆ'), maxLines: 2, overflow: TextOverflow.ellipsis, textAlign: TextAlign.right, style: tx(32, c: S.cardText)),
               ]),
@@ -362,7 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: ListView(padding: const EdgeInsets.fromLTRB(40, 36, 40, 36), children: [
         _top(l, school, phone: true),
         const SizedBox(height: 44),
-        _hello(l, 78),
+        _hello(l, 78, all: school.showAll, lines: 2),
         const SizedBox(height: 36),
         Container(
           padding: const EdgeInsets.fromLTRB(40, 40, 40, 40),
