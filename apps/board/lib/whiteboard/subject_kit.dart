@@ -87,6 +87,7 @@ List<KitItem> subjectKit(InstalledPack pack, {String board = 'kar_pu'}) {
     final n = exam.length.clamp(1, 6);
     add(KitItem(KitKind.exam, 'exam', L10n('$n board-exam questions', '$n ಬೋರ್ಡ್ ಪರೀಕ್ಷಾ ಪ್ರಶ್ನೆಗಳು'), questions: exam.take(6).toList()));
   }
+  out.sort((a, b) => a.kind.index.compareTo(b.kind.index));
   add(KitItem(KitKind.video, 'video', L10n('${pack.chapter.title.en} · Zynetix School', '${pack.chapter.title.t(Lang.kn)} · ಜೈನೆಟಿಕ್ಸ್ ಸ್ಕೂಲ್'), online: true));
   return out;
 }

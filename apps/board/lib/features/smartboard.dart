@@ -904,6 +904,8 @@ class SmartboardScreenState extends State<SmartboardScreen> {
     ),
   );
 
+  String _subject(String s) => s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
+
   String get _title => pack?.chapter.title.t(l) ?? tr(l, 'Smartboard', 'ಸ್ಮಾರ್ಟ್‌ಬೋರ್ಡ್');
 
   Widget back({double h = 130, double size = 40}) => Tap(
@@ -1339,7 +1341,7 @@ class SmartboardScreenState extends State<SmartboardScreen> {
                 tool('all-hand', tr(l, 'Move board', 'ಬೋರ್ಡ್ ಸರಿಸಿ'), Icons.pan_tool_outlined, () => board.tool = BoardTool.hand, on: t == BoardTool.hand),
               ]),
               const SizedBox(width: 18),
-              group(tr(l, 'Fix', 'ಸರಿಪಡಿಸಿ'), S.pink, [tool('all-redo', tr(l, 'Redo', 'ಮತ್ತೆ ಮಾಡು'), Icons.redo_rounded, board.canRedo ? board.redo : null)]),
+              group(tr(l, 'Bring back', 'ಮರಳಿ ತನ್ನಿ'), S.pink, [tool('all-redo', tr(l, 'Redo', 'ಮತ್ತೆ ಮಾಡು'), Icons.redo_rounded, board.canRedo ? board.redo : null)]),
             ],
           ),
           group(tr(l, 'Measure', 'ಅಳತೆ'), S.mint, [
@@ -1627,7 +1629,7 @@ class SmartboardScreenState extends State<SmartboardScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${pack?.chapter.subject ?? ''} · ${pack?.chapter.title.t(l) ?? ''}',
+                      '${_subject(pack?.chapter.subject ?? '')} · ${pack?.chapter.title.t(l) ?? ''}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: tx(34, c: S.eyebrow, w: FontWeight.w600),

@@ -55,7 +55,30 @@ List<LessonStep> lessonSteps(Lesson lesson, {String board = 'kar_pu'}) => [
 ];
 
 /// Lesson text as plain board text: inline maths markers removed.
-String plain(String s) => s.replaceAll(RegExp(r'\$\$?|\\\(|\\\)|\\\[|\\\]'), '').replaceAll(r'\times', '×').replaceAll(r'\cdot', '·').replaceAll(r'\,', ' ').trim();
+String plain(String s) {
+  var t = s.replaceAll(RegExp(r'\$\$?|\\\(|\\\)|\\\[|\\\]'), '');
+  // \frac{a}{b} → a/b, \sqrt{x} → √x, \text{m/s} → m/s (innermost first).
+  for (var i = 0; i < 4; i++) {
+    t = t
+        .replaceAllMapped(RegExp(r'\\[dt]?frac\{([^{}]*)\}\{([^{}]*)\}'), (m) => '${m[1]}/${m[2]}')
+        .replaceAllMapped(RegExp(r'\\sqrt\{([^{}]*)\}'), (m) => '√${m[1]}')
+        .replaceAllMapped(RegExp(r'\\(?:text|mathrm|mathbf|operatorname)\{([^{}]*)\}'), (m) => m[1]!);
+  }
+  const sup = {'0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻', '+': '⁺', 'n': 'ⁿ'};
+  String up(String x) => x.split('').every(sup.containsKey) ? x.split('').map((c) => sup[c]).join() : '^($x)';
+  t = t.replaceAllMapped(RegExp(r'\^\{([^{}]*)\}'), (m) => up(m[1]!)).replaceAllMapped(RegExp(r'\^([0-9n])'), (m) => up(m[1]!));
+  t = t.replaceAllMapped(RegExp(r'_\{([^{}]*)\}'), (m) => m[1]!);
+  const words = {
+    r'\approx': '≈', r'\times': '×', r'\cdot': '·', r'\le': '≤', r'\ge': '≥', r'\neq': '≠', r'\pm': '±', r'\infty': '∞', r'\propto': '∝',
+    r'\pi': 'π', r'\theta': 'θ', r'\alpha': 'α', r'\beta': 'β', r'\gamma': 'γ', r'\lambda': 'λ', r'\mu': 'μ', r'\omega': 'ω', r'\rho': 'ρ', r'\sigma': 'σ',
+    r'\Delta': 'Δ', r'\delta': 'δ', r'\to': '→', r'\rightarrow': '→', r'\degree': '°', r'\circ': '°', r'\,': ' ', r'\ ': ' ', r'\;': ' ', r'\quad': ' ',
+  };
+  final keys = words.keys.toList()..sort((a, b) => b.length.compareTo(a.length));
+  for (final k in keys) {
+    t = t.replaceAll(k, words[k]!);
+  }
+  return t.replaceAll(RegExp(r'\*\*?'), '').replaceAll(RegExp(r'[{}]'), '').replaceAll(RegExp(r' {2,}'), ' ').trim();
+}
 
 const _ink = Color(0xFF13165A), _body = Color(0xFF4A4E66), _violet = Color(0xFF5442D8);
 
