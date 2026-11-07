@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../blocks/math_text.dart';
 import '../../core/services.dart';
 import '../../core/theme.dart';
+import '../../engine/mastery.dart';
 import '../../engine/model.dart';
+import '../app/school.dart';
 import 'class_data.dart';
 import 'class_kit.dart';
 import 'strings.dart';
@@ -37,12 +39,76 @@ class _ClassQuizScreenState extends State<ClassQuizScreen> {
     if (marks.isEmpty) marks = List.filled(ServicesScope.of(context).config.rollCount, Mark.none);
   }
 
-  void _cycle(int roll) => setState(() {
-    marks = [...marks];
-    marks[roll - 1] = Mark.values[(marks[roll - 1].index + 1) % 3];
-  });
+  /// Every tap can be undone from "What do I do now?" while the quiz is open.
+  void _remember(L10n what) {
+    final before = marks, at = qi;
+    final school = ServicesScope.of(context).school;
+    school.pushUndo(what, () {
+      if (mounted && qi == at) setState(() => marks = before);
+    });
+    _undos.add(school.lastUndo!);
+  }
 
-  void _fill(Mark m, {bool onlyEmpty = false}) => setState(() => marks = [for (final x in marks) onlyEmpty && x != Mark.none ? x : m]);
+  final List<UndoItem> _undos = [];
+
+  @override
+  void dispose() {
+    final mine = _undos.toSet();
+    _school?.dropUndo(mine.contains);
+    super.dispose();
+  }
+
+  SchoolStore? _school;
+
+  void _cycle(int roll) {
+    _school = ServicesScope.of(context).school;
+    final next = Mark.values[(marks[roll - 1].index + 1) % 3];
+    _remember(L10n('Roll $roll marked ${next.name == 'none' ? 'blank' : next.name}', 'ರೋಲ್ $roll ಗುರುತು ಬದಲಾಗಿದೆ'));
+    setState(() {
+      marks = [...marks];
+      marks[roll - 1] = next;
+    });
+  }
+
+  void _fill(Mark m, {bool onlyEmpty = false}) {
+    _school = ServicesScope.of(context).school;
+    _remember(const L10n('Marked the rest of the class', 'ಉಳಿದವರನ್ನು ಗುರುತಿಸಿದ್ದು'));
+    setState(() => marks = [for (final x in marks) onlyEmpty && x != Mark.none ? x : m]);
+  }
+
+  /// Saves this question's marks by roll number (blank ones are left out) to the class's
+  /// results and mastery, gives the houses XP and keeps the class streak.
+  final Set<int> _saved = {};
+  void _save() {
+    if (_saved.contains(qi)) return;
+    _saved.add(qi);
+    final s = ServicesScope.of(context);
+    final now = s.clock();
+    final right = [for (var r = 1; r <= marks.length; r++) if (marks[r - 1] == Mark.right) r];
+    final wrong = [for (var r = 1; r <= marks.length; r++) if (marks[r - 1] == Mark.wrong) r];
+    if (right.isEmpty && wrong.isEmpty) return;
+    final hit = _questionSource(s, q.id);
+    final result = QuizResult(id: 'q${now.microsecondsSinceEpoch}', at: now, questionId: q.id, topicId: hit?.topicId ?? '', chapterId: hit?.chapterId ?? '', right: right, wrong: wrong);
+    s.school.addQuiz(result);
+    s.mastery.recordAll([
+      for (final r in right) Response(roll: r, questionId: q.id, topicId: result.topicId, chapterId: result.chapterId, correct: true, source: 'roll_call', at: now),
+      for (final r in wrong) Response(roll: r, questionId: q.id, topicId: result.topicId, chapterId: result.chapterId, correct: false, source: 'roll_call', at: now),
+    ]);
+    for (final (i, h) in s.school.houses.indexed) {
+      final xp = right.where(h.has).length * 10;
+      if (xp > 0) s.school.addXp(i, xp);
+    }
+    s.school.markStreakDay(now);
+  }
+
+  /// The pack question a class question came from (for its topic and chapter).
+  Question? _questionSource(Services s, String id) {
+    for (final p in s.store.packs) {
+      final q = p.questions[id];
+      if (q != null) return Question(id: q.id, chapterId: q.chapterId ?? p.chapter.id, topicId: q.topicId, stem: q.stem, options: q.options, answer: q.answer, exams: q.exams, difficulty: q.difficulty);
+    }
+    return null;
+  }
 
   int _count(Mark m) => marks.where((x) => x == m).length;
 
@@ -63,7 +129,10 @@ class _ClassQuizScreenState extends State<ClassQuizScreen> {
         bottomRight: [
           switch (phase) {
             QuizPhase.ask => BigButton(key: const ValueKey('quizMark'), icon: Icons.how_to_reg_outlined, label: ct('markRolls', l), onPressed: () => setState(() => phase = QuizPhase.mark)),
-            QuizPhase.mark => BigButton(key: const ValueKey('quizReveal'), icon: Icons.visibility_outlined, label: ct('reveal', l), onPressed: () => setState(() => phase = QuizPhase.reveal)),
+            QuizPhase.mark => BigButton(key: const ValueKey('quizReveal'), icon: Icons.visibility_outlined, label: ct('reveal', l), onPressed: () {
+              _save();
+              setState(() => phase = QuizPhase.reveal);
+            }),
             QuizPhase.reveal => BigButton(
               key: const ValueKey('quizNext'),
               icon: Icons.arrow_forward,

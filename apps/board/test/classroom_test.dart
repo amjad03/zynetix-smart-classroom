@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zynetix_board/features/classroom/class_data.dart';
 import 'package:zynetix_board/features/classroom/class_quiz_screen.dart';
-import 'package:zynetix_board/features/classroom/class_tools_hub.dart';
 import 'package:zynetix_board/features/classroom/explainer_screen.dart';
 
 import 'helpers.dart';
@@ -41,11 +40,10 @@ void main() {
     expect(find.text('95%'), findsOneWidget);
   });
 
-  testWidgets('the hub opens an explainer and its tabs', (t) async {
+  testWidgets('an explainer steps and its tabs', (t) async {
     final s = await testServices(prefs: {'displaySize': 'classroom'});
-    await pumpBoard(t, s, home: ClassToolsHub(samples: samples()));
-    await t.tap(find.byKey(const ValueKey('hub-explainers')));
-    await t.pumpAndSettle();
+    final data = samples();
+    await pumpBoard(t, s, home: ExplainerScreen(samples: data, explainer: data.explainers.first));
     expect(find.byType(ExplainerScreen), findsOneWidget);
     await t.tap(find.byKey(const ValueKey('exNext')));
     await t.pump();

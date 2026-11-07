@@ -18,7 +18,8 @@ import 'engine/pack_store.dart';
 import 'engine/session_log.dart';
 import 'engine/voice.dart';
 import 'engine/voice_player.dart';
-import 'features/home.dart';
+import 'features/app/school.dart';
+import 'features/app/start.dart';
 import 'features/self_learning.dart';
 
 Future<void> main() async {
@@ -44,13 +45,14 @@ Future<void> main() async {
     embeds: KinetixEmbeds(),
     licenceKey: parseTrustedKey(await rootBundle.loadString('assets/keys/licence-key.json')).value,
     mastery: MasteryStore(file: File('${dir.path}/mastery.jsonl')),
+    school: SchoolStore(file: File('${dir.path}/school.json')),
   );
   if (config.kioskOn) unawaited(Kiosk.enter());
   runApp(ZynetixBoardApp(services: services));
 }
 
 class ZynetixBoardApp extends StatefulWidget {
-  const ZynetixBoardApp({super.key, required this.services, this.home = const HomeScreen()});
+  const ZynetixBoardApp({super.key, required this.services, this.home = const StartScreen()});
   final Services services;
   final Widget home;
   @override

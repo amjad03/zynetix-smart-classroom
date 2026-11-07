@@ -12,6 +12,7 @@ import '../engine/session_log.dart';
 import '../engine/auto_play.dart';
 import '../engine/sync.dart';
 import '../engine/voice.dart';
+import '../features/app/school.dart';
 import 'config.dart';
 
 /// Everything the screens need, created once at start-up (main.dart) or by a test.
@@ -28,12 +29,17 @@ class Services {
     VoicePlayer Function()? voicePlayer,
     DateTime Function()? clock,
     MasteryStore? mastery,
-  }) : voicePlayer = voicePlayer ?? SilentVoicePlayer.new,
+    SchoolStore? school,
+  }) : school = school ?? SchoolStore(now: clock),
+       voicePlayer = voicePlayer ?? SilentVoicePlayer.new,
        clock = clock ?? DateTime.now,
        mastery = mastery ?? MasteryStore(now: clock);
 
   /// What this section knows, per topic and per roll number (lib/engine/mastery.dart).
   final MasteryStore mastery;
+
+  /// Teachers, timetable, finished classes and class-tool results (lib/features/app/school.dart).
+  final SchoolStore school;
 
   final BoardConfig config;
   final PackStore store;

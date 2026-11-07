@@ -6,7 +6,7 @@ import '../../core/services.dart';
 import '../../core/strings.dart';
 import '../../core/theme.dart';
 import '../../engine/model.dart';
-import '../home.dart' show openLesson;
+import '../player.dart' show openLesson;
 import 'boss_battle.dart';
 import 'game_stats.dart';
 import 'game_store.dart';

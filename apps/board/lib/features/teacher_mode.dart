@@ -4,7 +4,7 @@ import '../core/services.dart';
 import '../core/strings.dart';
 import '../core/theme.dart';
 import '../engine/model.dart';
-import 'home.dart';
+import 'player.dart' show openLesson;
 import 'smartboard.dart';
 
 /// Subject tabs; under each, the section's chapters with their topics already open, so a lesson

@@ -3,7 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zynetix_board/features/exam_practice.dart';
-import 'package:zynetix_board/features/home.dart';
+import 'package:zynetix_board/features/app/home.dart';
+import 'package:zynetix_board/features/app/lesson.dart';
+import 'package:zynetix_board/features/app/practice.dart';
+import 'package:zynetix_board/features/app/shell.dart';
+import 'package:zynetix_board/features/app/start.dart';
 import 'package:zynetix_board/features/pin.dart';
 import 'package:zynetix_board/features/player.dart';
 import 'package:zynetix_board/features/self_learning.dart';
@@ -58,7 +62,22 @@ void main() {
         await t.pump(const Duration(milliseconds: 500));
       }
 
-      await show('home', const HomeScreen());
+      await show('first open', const FirstOpenScreen());
+      await show('who is teaching (empty)', const WhoTodayScreen());
+      s.school.signIn(s.school.addTeacher('K. Meera').id);
+      s.school.addTeacher('S. Prakash');
+      await show('who is teaching', const WhoTodayScreen());
+      await show('home', const HomeScreen(tour: false));
+      await show('home with the guide', const HomeScreen(tour: true));
+      s.school.setShowAll(true);
+      await show('home, all tools', const HomeScreen(tour: false));
+      s.school.setShowAll(false);
+      for (final sec in Section.values.where((x) => x != Section.board)) {
+        await show('all tools: ${sec.name}', ToolsShell(initial: sec));
+      }
+      await show('practice class', const PracticeClassScreen());
+      final first = s.lessonFor(topics.first)!;
+      await show('simple lesson', SimpleLessonScreen(pack: first.pack, lesson: first.lesson));
       await show('teacher mode', const TeacherModeScreen());
       await show('exam practice', const ExamPracticeScreen());
       await show('smartboard', SmartboardScreen(controller: SmartboardScreen.newBoard()));

@@ -8,6 +8,7 @@ import '../../core/services.dart';
 import '../../core/strings.dart';
 import '../../core/theme.dart';
 import '../../engine/model.dart';
+import '../app/school.dart';
 import 'class_data.dart';
 import 'class_kit.dart';
 import 'strings.dart';
@@ -37,14 +38,14 @@ class _MockTestScreenState extends State<MockTestScreen> {
   Timer? _clock;
 
   /// Scores by roll number (null: not entered, −1: absent) and the roll being entered.
-  late List<int?> scores;
+  List<int?> scores = const [];
   int entering = 1;
   String typed = '';
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    scores = List.filled(ServicesScope.of(context).config.rollCount, null);
+    if (scores.isEmpty) scores = List.filled(ServicesScope.of(context).config.rollCount, null);
   }
 
   @override
@@ -76,6 +77,20 @@ class _MockTestScreenState extends State<MockTestScreen> {
     current = q.clamp(0, questionCount - 1);
     shown.add(current);
   });
+
+  /// Saves the entered scores by roll number (absent ones are left out) for Reports and mastery.
+  void _saveScores() {
+    final s = ServicesScope.of(context);
+    final entered = {for (var r = 1; r <= scores.length; r++) if (scores[r - 1] case final v? when v >= 0) r: v};
+    if (entered.isNotEmpty) {
+      final now = s.clock();
+      final result = TestResult(id: 't${now.microsecondsSinceEpoch}', at: now, pattern: pattern.title.en, maxMarks: maxScore, scores: entered);
+      s.school.addTest(result);
+      s.school.markStreakDay(now);
+      s.school.pushUndo(L10n('Saved the ${pattern.exam} scores', '${pattern.exam} ಅಂಕಗಳನ್ನು ಉಳಿಸಿದ್ದು'), () => s.school.removeTest(result.id));
+    }
+    Navigator.of(context).maybePop();
+  }
 
   void _end() {
     _clock?.cancel();
@@ -121,7 +136,7 @@ class _MockTestScreenState extends State<MockTestScreen> {
             BigButton(key: const ValueKey('mockEnd'), icon: Icons.stop_circle_outlined, label: ct('endTest', l), filled: false, onPressed: _end),
             BigButton(key: const ValueKey('mockNext'), icon: Icons.arrow_forward, trailingIcon: true, label: ct('next', l), onPressed: () => _go(current + 1)),
           ],
-          MockStage.scores => [BigButton(key: const ValueKey('mockSave'), icon: Icons.save_outlined, label: ct('saveScores', l), onPressed: () => Navigator.of(context).maybePop())],
+          MockStage.scores => [BigButton(key: const ValueKey('mockSave'), icon: Icons.save_outlined, label: ct('saveScores', l), onPressed: _saveScores)],
         },
         body: switch (stage) {
           MockStage.pick => _pick(context, l),

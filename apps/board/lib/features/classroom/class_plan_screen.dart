@@ -3,7 +3,11 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../core/theme.dart';
+import '../../engine/model.dart';
+import '../app/settings_view.dart' show pickExamDate;
 import 'class_data.dart';
+import 'class_quiz_screen.dart';
+import 'formula_drill_screen.dart';
 import 'class_kit.dart';
 import 'strings.dart';
 
@@ -195,8 +199,8 @@ class ClassPlanScreen extends StatelessWidget {
                   spacing: 16,
                   runSpacing: 16,
                   children: [
-                    BigButton(icon: Icons.how_to_reg_outlined, label: ct('classQuiz', l), filled: false, onPressed: () {}),
-                    BigButton(icon: Icons.functions, label: ct('formulaDrill', l), filled: false, onPressed: () {}),
+                    BigButton(icon: Icons.how_to_reg_outlined, label: ct('classQuiz', l), filled: false, onPressed: samples.questions.isEmpty ? null : () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => ClassQuizScreen(samples: samples)))),
+                    BigButton(icon: Icons.functions, label: ct('formulaDrill', l), filled: false, onPressed: samples.formulas.isEmpty ? null : () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => FormulaDrillScreen(samples: samples)))),
                   ],
                 ),
                 const SizedBox(height: 28),
@@ -263,6 +267,7 @@ class ClassPlanScreen extends StatelessWidget {
         crumbs: [samples.subject.t(l), samples.year.t(l)],
         title: ct('classPlan', l),
         trailing: [BarChip('${ct('planSaysHere', l)}: ${planned.toStringAsFixed(0)} / ${total.round()} wk')],
+        bottomRight: [BigButton(key: const ValueKey('setExamDate'), icon: Icons.event_outlined, label: l == Lang.kn ? 'ಪರೀಕ್ಷೆ ದಿನಾಂಕ' : 'Set the exam date', filled: false, onPressed: () => pickExamDate(context))],
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

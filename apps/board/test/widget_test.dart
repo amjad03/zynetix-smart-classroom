@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zynetix_board/engine/period.dart';
+import 'package:zynetix_board/features/app/lesson.dart';
+import 'package:zynetix_board/features/app/start.dart';
 import 'package:zynetix_board/features/self_learning.dart';
+import 'package:zynetix_board/features/teacher_mode.dart';
 
 import 'helpers.dart';
 
 void main() {
-  testWidgets('a lesson starts in 3 taps from Home and logs the session', (t) async {
+  testWidgets('a lesson starts in 3 taps from Teach and logs the session', (t) async {
     final s = await testServices();
-    await pumpBoard(t, s);
+    await pumpBoard(t, s, home: const _TeachEntry());
     var taps = 0;
     Future<void> tap(Finder f) async {
       await t.tap(f);
@@ -37,17 +40,23 @@ void main() {
     expect(log.toString(), isNot(contains('name')));
   });
 
-  testWidgets('Continue starts the next untaught topic in one tap', (t) async {
+  testWidgets('Start my class starts the next untaught topic in one tap', (t) async {
     final s = await testServices(prefs: {'taught': ['puc1-physics-02-motion-in-a-straight-line.t1']});
+    final m = s.school.addTeacher('K. Meera');
+    s.school
+      ..finishSetUp()
+      ..setTourDone(true)
+      ..signIn(m.id);
     await pumpBoard(t, s);
-    await t.tap(find.byKey(const ValueKey('continue')));
+    await t.tap(find.byKey(const ValueKey('startClass')));
     await t.pumpAndSettle();
-    expect(find.text('Instantaneous velocity and speed'), findsWidgets);
+    final lesson = t.widget<SimpleLessonScreen>(find.byType(SimpleLessonScreen)).lesson;
+    expect(lesson.title.en, 'Instantaneous velocity and speed');
   });
 
   testWidgets('roll-call quiz: pick a roll, the monitor taps the answer, it is logged by roll number', (t) async {
     final s = await testServices();
-    await pumpBoard(t, s);
+    await pumpBoard(t, s, home: const _TeachEntry());
     final p = s.store.byChapter('puc1-physics-02-motion-in-a-straight-line')!;
     // Topic 3's quiz is roll_call.
     await t.tap(find.byKey(const ValueKey('teacherMode')));
@@ -103,7 +112,7 @@ void main() {
     await t.pump();
     await t.tap(find.byKey(const ValueKey('pin-ok')));
     await t.pumpAndSettle();
-    expect(find.byKey(const ValueKey('teacherMode')), findsOneWidget);
+    expect(find.byType(StartScreen), findsOneWidget);
   });
 
   testWidgets('a scheduled period is offered as the Self-Learning topic', (t) async {
@@ -118,4 +127,19 @@ void main() {
     expect(find.text('Scheduled by the college'), findsOneWidget);
     expect(find.text('Colligative properties'), findsOneWidget);
   });
+}
+
+/// Teacher Mode (every chapter and topic), opened with one tap as from Teach.
+class _TeachEntry extends StatelessWidget {
+  const _TeachEntry();
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    body: Center(
+      child: FilledButton(
+        key: const ValueKey('teacherMode'),
+        onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const TeacherModeScreen())),
+        child: const Text('Teach'),
+      ),
+    ),
+  );
 }

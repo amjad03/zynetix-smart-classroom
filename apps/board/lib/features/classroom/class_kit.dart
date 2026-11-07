@@ -3,13 +3,17 @@ import 'package:flutter/material.dart';
 import '../../core/services.dart';
 import '../../core/theme.dart';
 import '../../engine/model.dart';
+import '../app/help.dart';
 
 /// The frame every whole-class mode uses: the top bar (breadcrumb, title, then [trailing], the
 /// language switch and close), the content, and an optional bottom bar like the lesson player's.
 /// Type is sized for the back bench: on a 1080p board body text is 24 px or more.
 class ClassScaffold extends StatelessWidget {
-  const ClassScaffold({super.key, required this.crumbs, required this.title, required this.body, this.trailing = const [], this.bottomLeft = const [], this.bottomRight = const []});
+  const ClassScaffold({super.key, required this.crumbs, required this.title, required this.body, this.trailing = const [], this.bottomLeft = const [], this.bottomRight = const [], this.help});
   final List<String> crumbs;
+
+  /// What "What do I do now?" says here (a general hint when null).
+  final HelpInfo Function()? help;
   final String title;
   final Widget body;
   final List<Widget> trailing, bottomLeft, bottomRight;
@@ -32,6 +36,12 @@ class ClassScaffold extends StatelessWidget {
                 title: title,
                 trailing: [
                   ...trailing,
+                  HelpChip(
+                    info: help ??
+                        () => const HelpInfo(
+                          next: L10n('Use the big buttons at the bottom. The X at the top right takes you back.', 'ಕೆಳಗಿನ ದೊಡ್ಡ ಬಟನ್‌ಗಳನ್ನು ಬಳಸಿ. ಮೇಲಿನ ಬಲಭಾಗದ X ಹಿಂದಕ್ಕೆ ಕರೆದೊಯ್ಯುತ್ತದೆ.'),
+                        ),
+                  ),
                   if (s.config.kannadaOffered)
                     ZSmallButton(
                       key: const ValueKey('classLang'),

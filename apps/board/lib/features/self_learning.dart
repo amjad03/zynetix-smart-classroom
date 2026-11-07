@@ -11,7 +11,7 @@ import '../engine/lesson_controller.dart';
 import '../engine/model.dart';
 import '../engine/period.dart';
 import '../engine/session_log.dart';
-import 'home.dart';
+import 'app/start.dart';
 import 'insight/reteach.dart' show selfLearningQuizDone;
 import 'participation.dart';
 import 'pin.dart';
@@ -121,7 +121,7 @@ class SelfLearningScreenState extends State<SelfLearningScreen> {
     if (!await askPin(context, s.config)) return;
     runner.stop();
     if (runner.homework) await s.config.markTaught(widget.lesson.topicId);
-    if (mounted) Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const HomeScreen()), (_) => false);
+    if (mounted) Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const StartScreen()), (_) => false);
   }
 
   @override

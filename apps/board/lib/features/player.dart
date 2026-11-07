@@ -16,6 +16,11 @@ import 'insight/reteach.dart' show teacherQuizDone;
 import 'participation.dart';
 import 'smartboard.dart';
 
+/// Opens the lesson player in Teacher Mode.
+void openLesson(BuildContext context, InstalledPack pack, Lesson lesson) => Navigator.of(context).push(
+  MaterialPageRoute(builder: (_) => LessonPlayerScreen(pack: pack, lesson: lesson)),
+);
+
 /// Teacher Mode lesson player: the block, and one row of big controls —
 /// Back · Pause · Next · Pen · Quiz (plus Read aloud).
 class LessonPlayerScreen extends StatefulWidget {

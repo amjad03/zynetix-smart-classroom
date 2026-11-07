@@ -5,6 +5,7 @@ import 'package:flutter_math_fork/flutter_math.dart';
 
 import '../../core/theme.dart';
 import '../../engine/model.dart';
+import '../../core/services.dart';
 import 'class_data.dart';
 import 'class_kit.dart';
 import 'strings.dart';
@@ -29,7 +30,10 @@ class _FormulaDrillScreenState extends State<FormulaDrillScreen> {
 
   void _revealNext() {
     final next = order.where((i) => !revealed.contains(i)).firstOrNull;
-    if (next != null) setState(() => revealed.add(next));
+    if (next == null) return;
+    setState(() => revealed.add(next));
+    // Remembered on the board: which formulas this class has drilled.
+    ServicesScope.of(context).school.setDrilled(data.items[next].tex, true);
   }
 
   @override

@@ -3,7 +3,11 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../core/theme.dart';
+import '../../core/services.dart';
+import '../../engine/model.dart';
+import '../app/kit.dart' show showZxDialog, ZxButton, S, tr, toast;
 import 'class_data.dart';
+import 'class_quiz_screen.dart';
 import 'class_kit.dart';
 import 'strings.dart';
 
@@ -174,8 +178,8 @@ class TeamsScreen extends StatelessWidget {
         crumbs: [samples.year.t(l), ct('hubTitle', l)],
         title: ct('teams', l),
         trailing: [if (!narrow) BarChip(ct('privacy', l), icon: Icons.shield_outlined, color: Z.correctLabel, background: Z.correctBg)],
-        bottomLeft: [BigButton(icon: Icons.add_circle_outline, label: ct('award', l), filled: false, onPressed: () {})],
-        bottomRight: [BigButton(icon: Icons.how_to_reg_outlined, label: ct('classQuiz', l), onPressed: () {})],
+        bottomLeft: [BigButton(key: const ValueKey('awardXp'), icon: Icons.add_circle_outline, label: ct('award', l), filled: false, onPressed: () => awardXp(context))],
+        bottomRight: [BigButton(icon: Icons.how_to_reg_outlined, label: ct('classQuiz', l), onPressed: samples.questions.isEmpty ? null : () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => ClassQuizScreen(samples: samples))))],
         body: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -187,4 +191,36 @@ class TeamsScreen extends StatelessWidget {
       );
     },
   );
+}
+
+/// Gives a house XP (for a good answer, homework, tidy benches); it can be undone.
+Future<void> awardXp(BuildContext context) async {
+  final s = ServicesScope.of(context);
+  final l = s.config.lang;
+  final houses = s.school.houses;
+  var house = 0;
+  final xp = await showZxDialog<int>(
+    context,
+    title: tr(l, 'Give XP to a house', 'ಮನೆಗೆ XP ನೀಡಿ'),
+    body: (ctx) => StatefulBuilder(
+      builder: (ctx, set) => Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Wrap(spacing: 16, runSpacing: 16, children: [
+          for (final (i, h) in houses.indexed)
+            ZxButton('${h.name.t(l)} · ${h.from}–${h.to}', key: ValueKey('house-$i'), bg: i == house ? S.ink : S.mist, fg: i == house ? Colors.white : S.ink, height: 110, size: 32, onTap: () => set(() => house = i)),
+        ]),
+        const SizedBox(height: 36),
+        Wrap(spacing: 16, runSpacing: 16, children: [
+          for (final v in const [10, 20, 50]) ZxButton('+$v XP', key: ValueKey('xp-$v'), icon: Icons.bolt_rounded, bg: S.violet, height: 120, size: 36, onTap: () => Navigator.pop(ctx, v)),
+        ]),
+      ]),
+    ),
+  );
+  if (xp == null) return;
+  s.school.addXp(house, xp);
+  s.school.pushUndo(L10n('$xp XP to ${houses[house].name.en}', '${houses[house].name.t(Lang.kn)}ಗೆ $xp XP'), () {
+    final hs = s.school.houses;
+    hs[house] = hs[house].copyWith(xp: (hs[house].xp - xp).clamp(0, 1 << 30));
+    s.school.setHouses(hs);
+  });
+  if (context.mounted) toast(context, tr(l, '+$xp XP to ${houses[house].name.en}', '${houses[house].name.t(l)}ಗೆ +$xp XP'));
 }

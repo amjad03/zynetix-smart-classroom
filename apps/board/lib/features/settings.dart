@@ -6,9 +6,9 @@ import '../core/theme.dart';
 import 'pin.dart';
 
 /// Hidden behind a long press on the clock and the teacher PIN: kiosk on/off and sync.
-Future<void> openSettings(BuildContext context) async {
+Future<void> openSettings(BuildContext context, {bool skipPin = false}) async {
   final s = ServicesScope.of(context);
-  if (!await askPin(context, s.config) || !context.mounted) return;
+  if (!skipPin && !await askPin(context, s.config) || !context.mounted) return;
   await showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,

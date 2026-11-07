@@ -18,11 +18,9 @@ import 'package:zynetix_board/engine/model.dart';
 import 'package:zynetix_board/engine/pack_store.dart';
 import 'package:zynetix_board/engine/voice.dart';
 import 'package:zynetix_board/engine/session_log.dart';
-import 'package:zynetix_board/features/classroom/ask_ai_screen.dart';
 import 'package:zynetix_board/features/classroom/class_data.dart';
 import 'package:zynetix_board/features/classroom/class_plan_screen.dart';
 import 'package:zynetix_board/features/classroom/class_quiz_screen.dart';
-import 'package:zynetix_board/features/classroom/class_tools_hub.dart';
 import 'package:zynetix_board/features/classroom/coding_lab_screen.dart';
 import 'package:zynetix_board/features/classroom/explainer_screen.dart';
 import 'package:zynetix_board/features/classroom/formula_drill_screen.dart';
@@ -30,12 +28,15 @@ import 'package:zynetix_board/features/classroom/mastery_heatmap_screen.dart';
 import 'package:zynetix_board/features/classroom/mock_test_screen.dart';
 import 'package:zynetix_board/features/classroom/teams_screen.dart';
 import 'package:zynetix_board/features/classroom/worksheet_export_screen.dart';
-import 'package:zynetix_board/features/combined/board_screens.dart';
-import 'package:zynetix_board/features/combined/class_screens.dart';
-import 'package:zynetix_board/features/combined/start_screens.dart';
-import 'package:zynetix_board/features/simple/class_screens.dart';
 import 'package:zynetix_board/features/simple/whiteboard_screens.dart';
-import 'package:zynetix_board/features/simple/home_screens.dart';
+import 'package:zynetix_board/features/app/home.dart';
+import 'package:zynetix_board/features/app/lesson.dart';
+import 'package:zynetix_board/features/app/practice.dart';
+import 'package:zynetix_board/features/app/quiz.dart';
+import 'package:zynetix_board/features/app/school.dart';
+import 'package:zynetix_board/features/app/shell.dart';
+import 'package:zynetix_board/features/app/start.dart';
+import 'package:zynetix_board/features/app/teach.dart';
 import 'package:zynetix_board/features/exam_practice.dart';
 import 'package:zynetix_board/features/participation.dart';
 import 'package:zynetix_board/features/pin.dart';
@@ -48,7 +49,6 @@ import 'dart:math';
 
 import 'package:zynetix_board/engine/mastery.dart';
 import 'package:zynetix_board/features/game/game_hub.dart';
-import 'package:zynetix_board/features/home.dart';
 import 'package:zynetix_board/main.dart';
 import 'package:zynetix_board/features/insight/mastery_map.dart';
 import 'package:zynetix_board/features/live/live_quiz_screen.dart';
@@ -120,8 +120,43 @@ class ShotEmbeds extends KinetixEmbeds {
 
 Future<Services> shotServices({List<String> taught = const [], Map<String, Object> prefs = const {}}) async {
   final s = await testServices(prefs: {'taught': taught, 'collegeName': 'Govt. PU College, Malleshwaram', 'sectionLabel': '1st PUC · A · PCMB', ...prefs});
-  return Services(config: s.config, store: s.store, outbox: s.outbox, narrator: s.narrator, syllabus: s.syllabus, embeds: ShotEmbeds(), clock: () => DateTime(2026, 11, 4, 10, 5));
+  DateTime clock() => DateTime(2026, 11, 4, 10, 5);
+  return Services(config: s.config, store: s.store, outbox: s.outbox, narrator: s.narrator, syllabus: s.syllabus, embeds: ShotEmbeds(), clock: clock, school: shotSchool(clock));
 }
+
+/// The school on the sample board: five teachers, Wednesday's timetable (Meera's 1st PUC A
+/// Physics is on now, 9:45–10:40), set up, with Meera signed in and the guide done.
+SchoolStore shotSchool(DateTime Function() clock) {
+  const days = [1, 2, 3, 4, 5, 6];
+  return SchoolStore(now: clock)
+    ..seed({
+      'setUp': true,
+      'tourDone': true,
+      'current': 't1',
+      'currentDay': '2026-11-04',
+      'helpContact': 'School office · Mr. Ramesh, ext. 204',
+      'teachers': [
+        {'id': 't1', 'name': 'K. Meera', 'initials': 'KM', 'colour': 0},
+        {'id': 't2', 'name': 'S. Prakash', 'initials': 'SP', 'colour': 1},
+        {'id': 't3', 'name': 'A. Farah', 'initials': 'AF', 'colour': 2},
+        {'id': 't4', 'name': 'R. Venkatesh', 'initials': 'RV', 'colour': 3},
+        {'id': 't5', 'name': 'N. Kavya', 'initials': 'NK', 'colour': 4},
+      ],
+      'periods': [
+        {'id': 'p1', 'start': '08:50', 'end': '09:40', 'subject': 'physics', 'days': days, 'teacher': 't1', 'label': '1st PUC C'},
+        {'id': 'p2', 'start': '09:45', 'end': '10:40', 'subject': 'physics', 'days': days, 'teacher': 't1', 'label': ''},
+        {'id': 'p3', 'start': '10:55', 'end': '11:50', 'subject': 'physics', 'days': days, 'teacher': 't1', 'label': '2nd PUC A'},
+        {'id': 'p4', 'start': '12:00', 'end': '12:50', 'subject': 'physics', 'days': days, 'teacher': 't1', 'label': '1st PUC B'},
+        {'id': 'p5', 'start': '09:45', 'end': '10:40', 'subject': 'chemistry', 'days': days, 'teacher': 't2', 'label': '1st PUC B'},
+        {'id': 'p6', 'start': '10:55', 'end': '11:50', 'subject': 'maths', 'days': days, 'teacher': 't3', 'label': '2nd PUC A'},
+        {'id': 'p7', 'start': '12:00', 'end': '12:50', 'subject': 'biology', 'days': days, 'teacher': 't4', 'label': '1st PUC A'},
+        {'id': 'p8', 'start': '14:00', 'end': '14:50', 'subject': 'physics', 'days': days, 'teacher': 't5', 'label': '2nd PUC C'},
+      ],
+      'progress': {'puc1-physics-07-gravitation.t3': 1},
+    });
+}
+
+const gravitation = ['puc1-physics-07-gravitation.t1', 'puc1-physics-07-gravitation.t2'];
 
 Future<void> shot(WidgetTester t, String name) async {
   await t.pump(const Duration(milliseconds: 400));
@@ -316,7 +351,7 @@ void main() {
   }
 
   testWidgets('21 home with v2 tools', (t) async {
-    await pumpBoard(t, await v2Services(), home: const HomeScreen());
+    await pumpBoard(t, await v2Services(), home: const HomeScreen(tour: false));
     await shot(t, '21-home-v2');
   });
 
@@ -421,7 +456,7 @@ void main() {
       final tag = e.key;
 
       testWidgets('a home $tag', (t) async {
-        await pumpAt(t, await v4Services(display), size, const HomeScreen());
+        await pumpAt(t, await v4Services(display), size, const HomeScreen(tour: false));
         await v4(t, 'a-home-$tag');
       });
 
@@ -717,13 +752,13 @@ void main() {
     }
 
     testWidgets('00 home entry board', (t) async {
-      await open(t, const HomeScreen());
+      await open(t, const HomeScreen(tour: false));
       await snap(t, '00-home-entry-board');
     });
 
     for (final (tag, size, lang) in [('board', board, 'en'), ('board-kn', board, 'kn'), ('phone', phone, 'en')]) {
       testWidgets('01 hub $tag', (t) async {
-        await open(t, ClassToolsHub(samples: samples), size: size, lang: lang);
+        await open(t, const ToolsShell(initial: Section.tools), size: size, lang: lang);
         await snap(t, '01-hub-$tag');
       });
     }
@@ -819,7 +854,7 @@ void main() {
     });
 
     testWidgets('09 coding lab board', (t) async {
-      await open(t, CodingLabScreen(samples: samples));
+      await open(t, CodingLabScreen(samples: samples, ran: true, line: 6));
       await snap(t, '09-coding-lab-board');
     });
 
@@ -827,70 +862,11 @@ void main() {
       await open(t, WorksheetExportScreen(samples: samples));
       await snap(t, '10-worksheet-board');
     });
-
-    testWidgets('11 ask ai online board', (t) async {
-      await open(t, AskAiScreen(samples: samples));
-      await tap(t, 'aiHint');
-      await tap(t, 'aiAnswerBtn');
-      await snap(t, '11-ask-ai-online-board');
-    });
-    testWidgets('11 ask ai offline board', (t) async {
-      await open(t, AskAiScreen(samples: samples, online: false));
-      await snap(t, '11-ask-ai-offline-board');
-    });
   });
 
-  // The combined classroom: lessons + Zynetix School class tools + the KINETIX smartboard.
+  // The combined classroom (v7 structure) in the website style: Today, Teach, lesson, Library,
+  // Class tools, quiz marking, end of class and Reports, all real screens on sample data.
   group('v7-combined', () {
-    late ClassSamples samples;
-    setUpAll(() async {
-      samples = ClassSamples.fromJson(jsonDecode(File('screenshots/fixtures/puc_class_samples.json').readAsStringSync()) as Map<String, dynamic>);
-      // The board's handwriting face (kinetix_ui's Kalam).
-      final kalam = FontLoader(KxFonts.kalam);
-      for (final f in Directory(kx).listSync().whereType<File>().where((f) => f.path.split('/').last.startsWith('Kalam-'))) {
-        kalam.addFont(Future.value(ByteData.sublistView(f.readAsBytesSync())));
-      }
-      await kalam.load();
-      final mono = FontLoader(KxFonts.code);
-      for (final f in Directory(kx).listSync().whereType<File>().where((f) => f.path.split('/').last.startsWith('JetBrainsMono-'))) {
-        mono.addFont(Future.value(ByteData.sublistView(f.readAsBytesSync())));
-      }
-      await mono.load();
-    });
-    const board = Size(1920, 1080), phone = Size(390, 844);
-
-    Future<void> shoot(WidgetTester t, Widget home, String name, {Size size = board, String lang = 'en'}) async {
-      final s = await shotServices(prefs: {'displaySize': size == board ? 'classroom' : 'normal', 'rollCount': 40, 'lang': lang});
-      t.view.physicalSize = size;
-      t.view.devicePixelRatio = 1;
-      addTearDown(t.view.reset);
-      // Soft layered shadows are part of the premium look: draw them blurred, as on the board.
-      debugDisableShadows = false;
-      await t.pumpWidget(ZynetixBoardApp(services: s, home: home));
-      await t.pump();
-      await t.pump(const Duration(milliseconds: 400));
-      await expectLater(find.byType(MaterialApp), matchesGoldenFile('v7-combined/$name.png'));
-      debugDisableShadows = true;
-    }
-
-    testWidgets('01 who is teaching', (t) => shoot(t, const WhoTeachingScreen(), '01-who-is-teaching'));
-    testWidgets('02 today', (t) => shoot(t, const TodayScreen(), '02-today'));
-    testWidgets('02 today kn', (t) => shoot(t, const TodayScreen(), '02-today-kn', lang: 'kn'));
-    testWidgets('02 today phone', (t) => shoot(t, const TodayScreen(), '02-today-phone', size: phone));
-    testWidgets('03 chapter', (t) => shoot(t, const ChapterScreen(), '03-teach-chapter'));
-    testWidgets('04 lesson video', (t) => shoot(t, const LessonVideoScreen(), '04-lesson-concept-video'));
-    testWidgets('05 smartboard', (t) => shoot(t, const CombinedBoardScreen(), '05-smartboard'));
-    testWidgets('06 library', (t) => shoot(t, const LibraryScreen(), '06-library'));
-    testWidgets('07 class tools', (t) => shoot(t, ToolsHubScreen(samples: samples), '07-class-tools'));
-    testWidgets('08 quiz marking', (t) => shoot(t, QuizMarkScreen(samples: samples), '08-quiz-roll-marking'));
-    testWidgets('08 quiz marking phone', (t) => shoot(t, QuizMarkScreen(samples: samples), '08-quiz-roll-marking-phone', size: phone));
-    testWidgets('09 end class', (t) => shoot(t, const EndClassScreen(), '09-end-class-summary'));
-    testWidgets('10 reports', (t) => shoot(t, ReportsScreen(samples: samples), '10-reports-pacing-mastery'));
-    testWidgets('11 projector', (t) => shoot(t, const ProjectorScreen(), '11-projector-view'));
-  });
-
-  // Simple-first redesign for a first-time teacher, in the Zynetix School website style.
-  group('v8-simple', () {
     setUpAll(() async {
       Future<void> fam(String name, String prefix, String dir) async {
         final l = FontLoader(name);
@@ -899,15 +875,14 @@ void main() {
         }
         await l.load();
       }
-      // The website's faces (Bricolage Grotesque, DM Sans), as static instances of its woff2s.
-      await fam('ZxDisplay', 'Bricolage-', 'screenshots/fixtures/fonts');
-      await fam('ZxText', 'DMSans-', 'screenshots/fixtures/fonts');
       await fam(KxFonts.kalam, 'Kalam-', kx);
+      await fam(KxFonts.code, 'JetBrainsMono-', kx);
     });
     const board = Size(1920, 1080), phone = Size(390, 844);
 
-    Future<void> shoot(WidgetTester t, Widget home, String name, {Size size = board, String lang = 'en'}) async {
-      final s = await shotServices(prefs: {'displaySize': size == board ? 'classroom' : 'normal', 'rollCount': 40, 'lang': lang});
+    Future<void> shoot(WidgetTester t, Widget home, String name, {Size size = board, String lang = 'en', Future<void> Function(Services)? prep}) async {
+      final s = await shotServices(taught: gravitation, prefs: {'displaySize': size == board ? 'classroom' : 'normal', 'rollCount': 40, 'lang': lang});
+      await prep?.call(s);
       t.view.physicalSize = size;
       t.view.devicePixelRatio = 1;
       addTearDown(t.view.reset);
@@ -915,23 +890,110 @@ void main() {
       await t.pumpWidget(ZynetixBoardApp(services: s, home: home));
       await t.pump();
       await t.pump(const Duration(milliseconds: 400));
+      await expectLater(find.byType(MaterialApp), matchesGoldenFile('v7-combined/$name.png'));
+      debugDisableShadows = true;
+    }
+
+    Future<void> history(Services s) async {
+      final hit = s.lessonFor('puc1-physics-07-gravitation.t2')!;
+      s.school.addClass(ClassRecord(id: 'c1', at: DateTime(2026, 11, 2, 9, 50), subject: 'physics', topicId: hit.lesson.topicId, topic: hit.lesson.title, chapter: hit.pack.chapter.title, stepsSeen: 12, stepsTotal: 12, minutes: 41, teacherId: 't1', teacherName: 'K. Meera', homework: 'Two 1 kg spheres touch, radius 5 cm each: the force between them?', absent: const [7, 15, 22, 31], rollCount: 40));
+      s.school.addQuiz(QuizResult(id: 'q1', at: DateTime(2026, 11, 2, 10, 20), questionId: 'x', topicId: hit.lesson.topicId, chapterId: hit.pack.chapter.id, right: [for (var r = 1; r <= 28; r++) r], wrong: [for (var r = 29; r <= 40; r++) r]));
+    }
+
+    testWidgets('01 who is teaching', (t) => shoot(t, const WhoTodayScreen(), '01-who-is-teaching', prep: (s) async => s.school.signIn(null)));
+    testWidgets('02 today', (t) => shoot(t, const ToolsShell(initial: Section.today), '02-today', prep: history));
+    testWidgets('02 today kn', (t) => shoot(t, const ToolsShell(initial: Section.today), '02-today-kn', lang: 'kn', prep: history));
+    testWidgets('02 today phone', (t) => shoot(t, const ToolsShell(initial: Section.today), '02-today-phone', size: phone, prep: history));
+    testWidgets('03 chapter', (t) async {
+      late Services sv;
+      await shoot(t, Builder(builder: (c) => ChapterPage(pack: sv.store.byChapter('puc1-physics-07-gravitation')!)), '03-teach-chapter', prep: (s) async => sv = s);
+    });
+    testWidgets('04 lesson', (t) async {
+      late Services sv;
+      await shoot(t, Builder(builder: (c) {
+        final hit = sv.lessonFor('puc1-physics-07-gravitation.t3')!;
+        return SimpleLessonScreen(pack: hit.pack, lesson: hit.lesson, startStep: 1);
+      }), '04-lesson-concept', prep: (s) async => sv = s);
+    });
+    testWidgets('06 library', (t) => shoot(t, const ToolsShell(initial: Section.library), '06-library'));
+    testWidgets('07 class tools', (t) => shoot(t, const ToolsShell(initial: Section.tools), '07-class-tools', prep: history));
+    testWidgets('09 end class', (t) => shoot(t, const FinishClassScreen(recordId: 'c1'), '09-end-class-summary', prep: history));
+    testWidgets('10 reports', (t) => shoot(t, const ToolsShell(initial: Section.reports), '10-reports', prep: history));
+    testWidgets('12 settings', (t) => shoot(t, const ToolsShell(initial: Section.settings), '12-settings'));
+  });
+
+  // The simple-first app for a first-time teacher, in the Zynetix School website style: the real
+  // screens on sample data (Wednesday 4 November, 10:05, Meera's 1st PUC A Physics on now).
+  group('v8-simple', () {
+    setUpAll(() async {
+      final l = FontLoader(KxFonts.kalam);
+      for (final f in Directory(kx).listSync().whereType<File>().where((f) => f.path.split('/').last.startsWith('Kalam-'))) {
+        l.addFont(Future.value(ByteData.sublistView(f.readAsBytesSync())));
+      }
+      await l.load();
+    });
+    const board = Size(1920, 1080), phone = Size(390, 844);
+
+    Future<void> shoot(WidgetTester t, Widget home, String name, {Size size = board, String lang = 'en', Future<void> Function(Services)? prep, Future<void> Function()? act}) async {
+      final s = await shotServices(taught: gravitation, prefs: {'displaySize': size == board ? 'classroom' : 'normal', 'rollCount': 40, 'lang': lang});
+      await prep?.call(s);
+      t.view.physicalSize = size;
+      t.view.devicePixelRatio = 1;
+      addTearDown(t.view.reset);
+      debugDisableShadows = false;
+      await t.pumpWidget(ZynetixBoardApp(services: s, home: home));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 400));
+      await act?.call();
+      await t.pump(const Duration(milliseconds: 400));
       await expectLater(find.byType(MaterialApp), matchesGoldenFile('v8-simple/$name.png'));
       debugDisableShadows = true;
     }
 
+    Future<void> tap(WidgetTester t, String key) async {
+      await t.tap(find.byKey(ValueKey(key)));
+      await t.pump(const Duration(milliseconds: 300));
+    }
+
+    Widget lesson(Services Function() s, {int step = 1}) => Builder(builder: (c) {
+      final hit = s().lessonFor('puc1-physics-07-gravitation.t3')!;
+      return SimpleLessonScreen(pack: hit.pack, lesson: hit.lesson, period: s().school.periods.firstWhere((p) => p.id == 'p2'), startStep: step);
+    });
+
     testWidgets('01 first open', (t) => shoot(t, const FirstOpenScreen(), '01-first-open-language'));
-    testWidgets('02 who', (t) => shoot(t, const WhoTodayScreen(), '02-who-is-teaching-no-pin'));
-    testWidgets('03 home', (t) => shoot(t, const SimpleHome(), '03-home-simple'));
-    testWidgets('04 tour', (t) => shoot(t, const SimpleHome(tour: true), '04-voice-guided-first-use'));
-    testWidgets('05 practice', (t) => shoot(t, const PracticeClassScreen(), '05-practice-class'));
-    testWidgets('06 lesson', (t) => shoot(t, const SimpleLessonScreen(), '06-lesson-simple-mode'));
-    testWidgets('07 help', (t) => shoot(t, const SimpleLessonScreen(help: true), '07-what-do-i-do-now'));
-    testWidgets('08 board', (t) => shoot(t, const SimpleBoardScreen(), '08-simple-whiteboard'));
-    testWidgets('09 quiz', (t) => shoot(t, const SimpleQuizScreen(), '09-quiz-tap-roll-numbers'));
-    testWidgets('10 finish', (t) => shoot(t, const FinishClassScreen(), '10-finish-class'));
-    testWidgets('11 all tools', (t) => shoot(t, const SimpleHome(showAll: true), '11-show-all-tools'));
-    testWidgets('12 home kn', (t) => shoot(t, const SimpleHome(), '12-home-kannada', lang: 'kn'));
-    testWidgets('13 home phone', (t) => shoot(t, const SimpleHome(), '13-home-phone', size: phone));
+    testWidgets('02 who', (t) => shoot(t, const WhoTodayScreen(), '02-who-is-teaching-no-pin', prep: (s) async => s.school.signIn(null)));
+    testWidgets('03 home', (t) => shoot(t, const HomeScreen(tour: false), '03-home-simple'));
+    testWidgets('04 tour', (t) => shoot(t, const HomeScreen(tour: true), '04-voice-guided-first-use'));
+    testWidgets('05 practice', (t) => shoot(t, const PracticeClassScreen(), '05-practice-class', act: () => tap(t, 'practiceNext')));
+    testWidgets('06 lesson', (t) async {
+      late Services sv;
+      await shoot(t, lesson(() => sv), '06-lesson-simple-mode', prep: (s) async => sv = s);
+    });
+    testWidgets('07 help', (t) async {
+      late Services sv;
+      await shoot(t, lesson(() => sv), '07-what-do-i-do-now', prep: (s) async => sv = s, act: () => tap(t, 'lessonHelp'));
+    });
+    testWidgets('08 board', (t) => shoot(t, const BoardPage(), '08-simple-whiteboard'));
+    testWidgets('09 quiz', (t) async {
+      late Services sv;
+      await shoot(t, Builder(builder: (c) {
+        final p = sv.store.byChapter('puc1-physics-07-gravitation')!;
+        return SimpleQuizScreen(pack: p, questions: quizQuestions(p, topicId: 'puc1-physics-07-gravitation.t3'));
+      }), '09-quiz-tap-roll-numbers', prep: (s) async => sv = s, act: () async {
+        for (final r in const [1, 2, 4, 5, 8, 9, 11, 12, 14, 17, 18, 21, 23, 26, 27, 30, 33, 36]) {
+          await tap(t, 'roll-$r');
+        }
+      });
+    });
+    testWidgets('10 finish', (t) async {
+      await shoot(t, const FinishClassScreen(recordId: 'c1'), '10-finish-class', prep: (s) async {
+        final hit = s.lessonFor('puc1-physics-07-gravitation.t3')!;
+        s.school.addClass(ClassRecord(id: 'c1', at: DateTime(2026, 11, 4, 10, 30), subject: 'physics', topicId: hit.lesson.topicId, topic: hit.lesson.title, chapter: hit.pack.chapter.title, stepsSeen: hit.lesson.blocks.length, stepsTotal: hit.lesson.blocks.length, minutes: 42, teacherId: 't1', teacherName: 'K. Meera', homework: 'Textbook questions 8.3 and 8.5', absent: const [7, 15, 22, 31], rollCount: 40));
+      });
+    });
+    testWidgets('11 all tools', (t) => shoot(t, const HomeScreen(tour: false), '11-show-all-tools', prep: (s) async => s.school.setShowAll(true)));
+    testWidgets('12 home kn', (t) => shoot(t, const HomeScreen(tour: false), '12-home-kannada', lang: 'kn'));
+    testWidgets('13 home phone', (t) => shoot(t, const HomeScreen(tour: false), '13-home-phone', size: phone));
   });
 
   // The whiteboard in the simple-first (v8) design.
@@ -944,8 +1006,6 @@ void main() {
         }
         await l.load();
       }
-      await fam('ZxDisplay', 'Bricolage-', 'screenshots/fixtures/fonts');
-      await fam('ZxText', 'DMSans-', 'screenshots/fixtures/fonts');
       await fam(KxFonts.kalam, 'Kalam-', kx);
     });
     const board = Size(1920, 1080), tablet = Size(820, 1180);

@@ -17,7 +17,12 @@ class JustAudioVoicePlayer implements VoicePlayer {
     await stop();
     final done = _done = Completer<bool>();
     try {
-      await _p.setFilePath(clip.path);
+      // Clips bundled in the app (the voice guide) are 'asset:<path>'.
+      if (clip.path.startsWith('asset:')) {
+        await _p.setAsset(clip.path.substring(6));
+      } else {
+        await _p.setFilePath(clip.path);
+      }
     } catch (_) {
       // A clip the device cannot decode: the step is silent, as if it had no clip.
       if (!done.isCompleted) done.complete(true);

@@ -83,7 +83,7 @@ class Tag extends StatelessWidget {
     decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(999)),
     child: Row(mainAxisSize: MainAxisSize.min, children: [
       if (icon != null) ...[Icon(icon, size: size * 1.2, color: fg), SizedBox(width: size * .35)],
-      Text(text, style: tx(size, c: fg, w: FontWeight.w500, h: 1.2)),
+      Flexible(child: Text(text, maxLines: 1, overflow: TextOverflow.ellipsis, style: tx(size, c: fg, w: FontWeight.w500, h: 1.2))),
     ]),
   );
 }
@@ -299,14 +299,15 @@ class Tick extends StatelessWidget {
 
 /// A rough little "you can't break anything" line with a shield.
 class SafeLine extends StatelessWidget {
-  const SafeLine(this.text, {super.key, this.size = 34, this.c = S.green});
+  const SafeLine(this.text, {super.key, this.size = 34, this.c = S.green, this.maxLines});
   final String text;
   final double size;
   final Color c;
+  final int? maxLines;
   @override
   Widget build(BuildContext context) => Row(mainAxisSize: MainAxisSize.min, children: [
     Icon(Icons.verified_user_rounded, size: size * 1.3, color: c),
     SizedBox(width: size * .4),
-    Flexible(child: Text(text, style: tx(size, c: c, w: FontWeight.w600, h: 1.25))),
+    Flexible(child: Text(text, maxLines: maxLines, overflow: maxLines == null ? null : TextOverflow.ellipsis, style: tx(size, c: c, w: FontWeight.w600, h: 1.25))),
   ]);
 }

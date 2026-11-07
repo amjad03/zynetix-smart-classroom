@@ -205,8 +205,7 @@ void main() {
 
     testWidgets('chapter test: pick exam → chapter test → chapter; questions are tagged; results are logged', (t) async {
       final s = await testServices();
-      await pumpBoard(t, s);
-      await t.tap(find.byKey(const ValueKey('examPractice')));
+      await pumpBoard(t, s, home: const ExamPracticeScreen());
       await t.pumpAndSettle();
       expect(find.byKey(const ValueKey('exam:PUC')), findsOneWidget);
       expect(find.byKey(const ValueKey('exam:CBSE')), findsNothing);

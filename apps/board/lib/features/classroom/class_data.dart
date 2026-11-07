@@ -1,7 +1,8 @@
 import '../../engine/model.dart';
 
 /// The data the whole-class modes show: explainers, exam questions, formula sheets, mock-test
-/// patterns, a coding sample, the class plan, teams and mastery. It is read from JSON in the
+/// patterns, a coding sample, the class plan, teams and mastery (built from the installed packs
+/// and this board's own records by lib/features/app/class_content.dart). It is read from JSON in the
 /// shape the Zynetix School content uses (src/content/... in quest-academy), so a later importer
 /// can write the same files into a content pack. Class records hold roll numbers only: no names,
 /// photos or anything else that identifies a student.
@@ -17,7 +18,6 @@ class ClassSamples {
     required this.plan,
     required this.teams,
     required this.mastery,
-    required this.askAi,
   });
 
   final L10n subject, year;
@@ -29,7 +29,6 @@ class ClassSamples {
   final ClassPlanData plan;
   final TeamsData teams;
   final MasteryData mastery;
-  final AskAiSample askAi;
 
   factory ClassSamples.fromJson(Map<String, dynamic> j) => ClassSamples(
     subject: L10n.of(j['subject']),
@@ -42,7 +41,6 @@ class ClassSamples {
     plan: ClassPlanData.fromJson(j['plan'] as Map<String, dynamic>),
     teams: TeamsData.fromJson(j['teams'] as Map<String, dynamic>),
     mastery: MasteryData.fromJson(j['mastery'] as Map<String, dynamic>),
-    askAi: AskAiSample.fromJson(j['askAi'] as Map<String, dynamic>),
   );
 }
 
@@ -261,13 +259,4 @@ class MasteryData {
     byRoll: [for (final r in (j['byRoll'] as List)) _ints(r)],
     revise: [for (final r in _maps(j['revise'])) (L10n.of(r['topic']), (r['chapter'] as num).toInt(), (r['score'] as num).toInt())],
   );
-}
-
-/// A teacher's question to ZYN-AI and its hint-first answer, with the lesson's own hints for
-/// when the board is offline.
-class AskAiSample {
-  AskAiSample(this.question, this.hints, this.answer, this.offlineHints, this.lesson);
-  final L10n question, answer, lesson;
-  final List<L10n> hints, offlineHints;
-  factory AskAiSample.fromJson(Map<String, dynamic> j) => AskAiSample(L10n.of(j['question']), L10n.list(j['hints']), L10n.of(j['answer']), L10n.list(j['offlineHints']), L10n.of(j['lesson']));
 }
