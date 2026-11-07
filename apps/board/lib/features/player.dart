@@ -197,7 +197,7 @@ class _LessonPlayerScreenState extends State<LessonPlayerScreen> {
                           iconOnly: phone,
                           onPressed: _downloading ? null : _downloadVoice,
                         ),
-                      if (!phone) SmartboardButton(onOpen: _boardOpened, onClose: _boardClosed),
+                      if (!phone) SmartboardButton(onOpen: _boardOpened, onClose: _boardClosed, pack: widget.pack, lesson: c.lesson, step: c.index),
                       if (!phone && s.config.kannadaOffered) ZSmallButton(key: const ValueKey('lang'), label: l == Lang.en ? 'ಕನ್ನಡ' : 'English', onPressed: () => c.setLang(l == Lang.en ? Lang.kn : Lang.en)),
                       ZIconSquare(key: const ValueKey('close'), icon: Icons.close, tooltip: tr('closeLesson', l), onPressed: () => Navigator.pop(context)),
                     ],

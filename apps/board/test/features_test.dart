@@ -249,23 +249,27 @@ void main() {
   });
 
   group('smartboard', () {
-    testWidgets('opens from Home, with an Insert panel; the Kinetix app button only when installed', (t) async {
+    testWidgets('opens on the simple board; Insert, pages and Close work', (t) async {
       final s = await testServices();
-      await pumpBoard(t, s);
-      await t.tap(find.byKey(const ValueKey('smartboard')));
+      await pumpBoard(
+        t,
+        s,
+        home: Scaffold(body: Builder(builder: (ctx) => TextButton(key: const ValueKey('teacherMode'), onPressed: () => openSmartboard(ctx), child: const Text('open')))),
+      );
+      await t.tap(find.byKey(const ValueKey('teacherMode')));
       await settle(t);
       expect(find.byType(SmartboardScreen), findsOneWidget);
-      final board = t.state<SmartboardScreenState>(find.byType(SmartboardScreen)).board;
+      final st = t.state<SmartboardScreenState>(find.byType(SmartboardScreen));
+      final board = st.board;
+      expect(find.byKey(const ValueKey('tool-pen')), findsOneWidget, reason: 'simple mode is the default');
       await t.tap(find.byKey(const ValueKey('insert')));
-      await t.pump(const Duration(seconds: 1));
-      expect(find.byType(InsertPanel), findsOneWidget);
+      await settle(t);
+      expect(find.byKey(const ValueKey('insert-picture')), findsOneWidget);
       expect(find.byKey(const ValueKey('openKinetix')), findsNothing);
-      await t.ensureVisible(find.byKey(const ValueKey('insertTab-4')));
-      await t.pump();
-      await t.tap(find.byKey(const ValueKey('insertTab-4')));
+      await t.tap(find.byKey(const ValueKey('closeInsert')));
       await settle(t);
       final before = board.elements.length;
-      await t.tap(find.byKey(const ValueKey('addMath')));
+      st.insertMath(r'v = u + at');
       await t.pump();
       expect(board.elements.length, before + 1);
       // A second page.
@@ -278,7 +282,7 @@ void main() {
       expect(find.byKey(const ValueKey('teacherMode')), findsOneWidget);
     });
 
-    testWidgets('the Kinetix board app button shows when the app is installed', (t) async {
+    testWidgets('the Kinetix board app button shows in Insert when the app is installed', (t) async {
       final calls = <MethodCall>[];
       t.binding.defaultBinaryMessenger.setMockMethodCallHandler(const MethodChannel('zynetix/apps'), (c) async {
         calls.add(c);
@@ -287,6 +291,7 @@ void main() {
       addTearDown(() => t.binding.defaultBinaryMessenger.setMockMethodCallHandler(const MethodChannel('zynetix/apps'), null));
       final s = await testServices();
       await pumpBoard(t, s, home: const SmartboardScreen());
+      await settle(t);
       await t.tap(find.byKey(const ValueKey('insert')));
       await settle(t);
       await t.tap(find.byKey(const ValueKey('openKinetix')));
