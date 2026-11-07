@@ -30,6 +30,9 @@ import 'package:zynetix_board/features/classroom/mastery_heatmap_screen.dart';
 import 'package:zynetix_board/features/classroom/mock_test_screen.dart';
 import 'package:zynetix_board/features/classroom/teams_screen.dart';
 import 'package:zynetix_board/features/classroom/worksheet_export_screen.dart';
+import 'package:zynetix_board/features/combined/board_screens.dart';
+import 'package:zynetix_board/features/combined/class_screens.dart';
+import 'package:zynetix_board/features/combined/start_screens.dart';
 import 'package:zynetix_board/features/exam_practice.dart';
 import 'package:zynetix_board/features/participation.dart';
 import 'package:zynetix_board/features/pin.dart';
@@ -832,6 +835,55 @@ void main() {
       await open(t, AskAiScreen(samples: samples, online: false));
       await snap(t, '11-ask-ai-offline-board');
     });
+  });
+
+  // The combined classroom: lessons + Zynetix School class tools + the KINETIX smartboard.
+  group('v7-combined', () {
+    late ClassSamples samples;
+    setUpAll(() async {
+      samples = ClassSamples.fromJson(jsonDecode(File('screenshots/fixtures/puc_class_samples.json').readAsStringSync()) as Map<String, dynamic>);
+      // The board's handwriting face (kinetix_ui's Kalam).
+      final kalam = FontLoader(KxFonts.kalam);
+      for (final f in Directory(kx).listSync().whereType<File>().where((f) => f.path.split('/').last.startsWith('Kalam-'))) {
+        kalam.addFont(Future.value(ByteData.sublistView(f.readAsBytesSync())));
+      }
+      await kalam.load();
+      final mono = FontLoader(KxFonts.code);
+      for (final f in Directory(kx).listSync().whereType<File>().where((f) => f.path.split('/').last.startsWith('JetBrainsMono-'))) {
+        mono.addFont(Future.value(ByteData.sublistView(f.readAsBytesSync())));
+      }
+      await mono.load();
+    });
+    const board = Size(1920, 1080), phone = Size(390, 844);
+
+    Future<void> shoot(WidgetTester t, Widget home, String name, {Size size = board, String lang = 'en'}) async {
+      final s = await shotServices(prefs: {'displaySize': size == board ? 'classroom' : 'normal', 'rollCount': 40, 'lang': lang});
+      t.view.physicalSize = size;
+      t.view.devicePixelRatio = 1;
+      addTearDown(t.view.reset);
+      // Soft layered shadows are part of the premium look: draw them blurred, as on the board.
+      debugDisableShadows = false;
+      await t.pumpWidget(ZynetixBoardApp(services: s, home: home));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 400));
+      await expectLater(find.byType(MaterialApp), matchesGoldenFile('v7-combined/$name.png'));
+      debugDisableShadows = true;
+    }
+
+    testWidgets('01 who is teaching', (t) => shoot(t, const WhoTeachingScreen(), '01-who-is-teaching'));
+    testWidgets('02 today', (t) => shoot(t, const TodayScreen(), '02-today'));
+    testWidgets('02 today kn', (t) => shoot(t, const TodayScreen(), '02-today-kn', lang: 'kn'));
+    testWidgets('02 today phone', (t) => shoot(t, const TodayScreen(), '02-today-phone', size: phone));
+    testWidgets('03 chapter', (t) => shoot(t, const ChapterScreen(), '03-teach-chapter'));
+    testWidgets('04 lesson video', (t) => shoot(t, const LessonVideoScreen(), '04-lesson-concept-video'));
+    testWidgets('05 smartboard', (t) => shoot(t, const CombinedBoardScreen(), '05-smartboard'));
+    testWidgets('06 library', (t) => shoot(t, const LibraryScreen(), '06-library'));
+    testWidgets('07 class tools', (t) => shoot(t, ToolsHubScreen(samples: samples), '07-class-tools'));
+    testWidgets('08 quiz marking', (t) => shoot(t, QuizMarkScreen(samples: samples), '08-quiz-roll-marking'));
+    testWidgets('08 quiz marking phone', (t) => shoot(t, QuizMarkScreen(samples: samples), '08-quiz-roll-marking-phone', size: phone));
+    testWidgets('09 end class', (t) => shoot(t, const EndClassScreen(), '09-end-class-summary'));
+    testWidgets('10 reports', (t) => shoot(t, ReportsScreen(samples: samples), '10-reports-pacing-mastery'));
+    testWidgets('11 projector', (t) => shoot(t, const ProjectorScreen(), '11-projector-view'));
   });
 
   testWidgets('33 accounting equation', (t) => sim(t, 'puc1-accountancy-03-recording-of-transactions-i.t2', 'sim1', '33-sim-accounting-equation'));
