@@ -33,6 +33,8 @@ import 'package:zynetix_board/features/classroom/worksheet_export_screen.dart';
 import 'package:zynetix_board/features/combined/board_screens.dart';
 import 'package:zynetix_board/features/combined/class_screens.dart';
 import 'package:zynetix_board/features/combined/start_screens.dart';
+import 'package:zynetix_board/features/simple/class_screens.dart';
+import 'package:zynetix_board/features/simple/home_screens.dart';
 import 'package:zynetix_board/features/exam_practice.dart';
 import 'package:zynetix_board/features/participation.dart';
 import 'package:zynetix_board/features/pin.dart';
@@ -884,6 +886,51 @@ void main() {
     testWidgets('09 end class', (t) => shoot(t, const EndClassScreen(), '09-end-class-summary'));
     testWidgets('10 reports', (t) => shoot(t, ReportsScreen(samples: samples), '10-reports-pacing-mastery'));
     testWidgets('11 projector', (t) => shoot(t, const ProjectorScreen(), '11-projector-view'));
+  });
+
+  // Simple-first redesign for a first-time teacher, in the Zynetix School website style.
+  group('v8-simple', () {
+    setUpAll(() async {
+      Future<void> fam(String name, String prefix, String dir) async {
+        final l = FontLoader(name);
+        for (final f in Directory(dir).listSync().whereType<File>().where((f) => f.path.split('/').last.startsWith(prefix))) {
+          l.addFont(Future.value(ByteData.sublistView(f.readAsBytesSync())));
+        }
+        await l.load();
+      }
+      // The website's faces (Bricolage Grotesque, DM Sans), as static instances of its woff2s.
+      await fam('ZxDisplay', 'Bricolage-', 'screenshots/fixtures/fonts');
+      await fam('ZxText', 'DMSans-', 'screenshots/fixtures/fonts');
+      await fam(KxFonts.kalam, 'Kalam-', kx);
+    });
+    const board = Size(1920, 1080), phone = Size(390, 844);
+
+    Future<void> shoot(WidgetTester t, Widget home, String name, {Size size = board, String lang = 'en'}) async {
+      final s = await shotServices(prefs: {'displaySize': size == board ? 'classroom' : 'normal', 'rollCount': 40, 'lang': lang});
+      t.view.physicalSize = size;
+      t.view.devicePixelRatio = 1;
+      addTearDown(t.view.reset);
+      debugDisableShadows = false;
+      await t.pumpWidget(ZynetixBoardApp(services: s, home: home));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 400));
+      await expectLater(find.byType(MaterialApp), matchesGoldenFile('v8-simple/$name.png'));
+      debugDisableShadows = true;
+    }
+
+    testWidgets('01 first open', (t) => shoot(t, const FirstOpenScreen(), '01-first-open-language'));
+    testWidgets('02 who', (t) => shoot(t, const WhoTodayScreen(), '02-who-is-teaching-no-pin'));
+    testWidgets('03 home', (t) => shoot(t, const SimpleHome(), '03-home-simple'));
+    testWidgets('04 tour', (t) => shoot(t, const SimpleHome(tour: true), '04-voice-guided-first-use'));
+    testWidgets('05 practice', (t) => shoot(t, const PracticeClassScreen(), '05-practice-class'));
+    testWidgets('06 lesson', (t) => shoot(t, const SimpleLessonScreen(), '06-lesson-simple-mode'));
+    testWidgets('07 help', (t) => shoot(t, const SimpleLessonScreen(help: true), '07-what-do-i-do-now'));
+    testWidgets('08 board', (t) => shoot(t, const SimpleBoardScreen(), '08-simple-whiteboard'));
+    testWidgets('09 quiz', (t) => shoot(t, const SimpleQuizScreen(), '09-quiz-tap-roll-numbers'));
+    testWidgets('10 finish', (t) => shoot(t, const FinishClassScreen(), '10-finish-class'));
+    testWidgets('11 all tools', (t) => shoot(t, const SimpleHome(showAll: true), '11-show-all-tools'));
+    testWidgets('12 home kn', (t) => shoot(t, const SimpleHome(), '12-home-kannada', lang: 'kn'));
+    testWidgets('13 home phone', (t) => shoot(t, const SimpleHome(), '13-home-phone', size: phone));
   });
 
   testWidgets('33 accounting equation', (t) => sim(t, 'puc1-accountancy-03-recording-of-transactions-i.t2', 'sim1', '33-sim-accounting-equation'));
