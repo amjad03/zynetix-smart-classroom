@@ -1,15 +1,17 @@
-# Zynetix Board APKs: production 1.6.0
+# Zynetix Board APKs: production 2.0.0
 
-Built from `main` at 9cf3e3a0. **Release-signed** with the Zynetix production key.
+Built from `main` at 2bbd2e69. **Release-signed** with the Zynetix production key.
 
 Signing certificate SHA-256: `8c4c01f3fb0ab2bb6cd6eb10ff61f6ad695507ebbc00c7ed55445897bb49306a` (CN=Zynetix Smart Classroom, O=Zynetix, Bengaluru).
 
 | File | For |
 |---|---|
-| `zynetix-board-1.6.0-arm64-v8a.apk` | Most smartboards and tablets from the last few years (pick this if unsure) |
-| `zynetix-board-1.6.0-armeabi-v7a.apk` | Older 32-bit ARM boards |
+| `zynetix-board-2.0.0-arm64-v8a.apk` | Most smartboards and tablets from the last few years (pick this if unsure) |
+| `zynetix-board-2.0.0-armeabi-v7a.apk` | Older 32-bit ARM boards |
 
 Each APK includes all 337 chapter packs (12 subjects, 1st and 2nd PUC / Class XI and XII, Karnataka PU, CBSE and ISC) as signed content packs, each with whiteboard explanations, interactives, 3D models, simulations and virtual labs, plus KCET, COMEDK, NEET, JEE Main, JEE Advanced and CUET practice. A board teaches with no internet from the first start. Installing over any earlier release-signed build keeps settings and updates every chapter.
+
+2.0.0: a new, simple-first app in the Zynetix School look. First open asks the language (English or Kannada), then "Who's teaching today?" (tap your name, no PIN unless the school turns PINs on), and Home shows your class on now from the timetable with one big "Start my class" that opens the lesson where it was left. A short voice guide runs the first time, and a practice class lets a teacher try everything without saving. The lesson has big Back and Next, Write, Board, Read aloud and Help; "What do I do now?" with Show me, Undo and Call for help is on every screen. Quiz the class by tapping the roll numbers who got it right; Finish class saves the lesson, homework and attendance (roll numbers only) to the class history. "Show all tools" reveals Today, Teach, Smartboard, Class tools (quiz, mock tests, formula drill, teams, class plan, mastery heatmap, worksheets as PDF), Library and Reports. New Smartboard: simple tools by default, all tools on demand (shapes, text, ruler, protractor, compass, set square, graph, number line, backgrounds, pages), pictures and PowerPoint slides, 3D models, labs and simulations as live objects, the chapter's subject kit, each lesson step as a page, recording, projector view and phone as remote. PUC content from Zynetix School: explainers, exam questions (NEET, JEE, KCET, COMEDK), formula sheets and mock test patterns in 160 chapters; concept videos stream only when online and are labelled "Needs internet". No AI features and no camera anywhere. Settings and teachers are behind the school PIN from the teacher menu.
 
 1.6.0: lessons now play in a video style (hook, objectives, step-by-step reveals, worked solutions, recall recaps) in every chapter; download English voice narration per chapter (voice files are still being rendered and published, so most chapters have none to download yet); auto-play keeps narration, reveals and highlights in sync; labs and 3D models show larger and get a "Try this" step; audit fixes (periodic-table group name, Zener circuit, double-overline symbol, minimum text size on charts, Kannada titles and labels on most interactives).
 
@@ -23,7 +25,7 @@ Each APK includes all 337 chapter packs (12 subjects, 1st and 2nd PUC / Class XI
 
 If a board has the earlier **debug** test build, uninstall it first; Android won't update across signing keys.
 
-Default PIN before activation: 1234. Long-press the clock for settings.
+Default school PIN before activation: 1234 (Settings, from the teacher menu on Home).
 Kiosk (device owner): `adb shell dpm set-device-owner app.zynetix.board/.KioskAdminReceiver`
 
 Check downloads against `SHA256SUMS`.
