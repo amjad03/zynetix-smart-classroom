@@ -34,6 +34,7 @@ import 'package:zynetix_board/features/combined/board_screens.dart';
 import 'package:zynetix_board/features/combined/class_screens.dart';
 import 'package:zynetix_board/features/combined/start_screens.dart';
 import 'package:zynetix_board/features/simple/class_screens.dart';
+import 'package:zynetix_board/features/simple/whiteboard_screens.dart';
 import 'package:zynetix_board/features/simple/home_screens.dart';
 import 'package:zynetix_board/features/exam_practice.dart';
 import 'package:zynetix_board/features/participation.dart';
@@ -931,6 +932,46 @@ void main() {
     testWidgets('11 all tools', (t) => shoot(t, const SimpleHome(showAll: true), '11-show-all-tools'));
     testWidgets('12 home kn', (t) => shoot(t, const SimpleHome(), '12-home-kannada', lang: 'kn'));
     testWidgets('13 home phone', (t) => shoot(t, const SimpleHome(), '13-home-phone', size: phone));
+  });
+
+  // The whiteboard in the simple-first (v8) design.
+  group('v9-whiteboard', () {
+    setUpAll(() async {
+      Future<void> fam(String name, String prefix, String dir) async {
+        final l = FontLoader(name);
+        for (final f in Directory(dir).listSync().whereType<File>().where((f) => f.path.split('/').last.startsWith(prefix))) {
+          l.addFont(Future.value(ByteData.sublistView(f.readAsBytesSync())));
+        }
+        await l.load();
+      }
+      await fam('ZxDisplay', 'Bricolage-', 'screenshots/fixtures/fonts');
+      await fam('ZxText', 'DMSans-', 'screenshots/fixtures/fonts');
+      await fam(KxFonts.kalam, 'Kalam-', kx);
+    });
+    const board = Size(1920, 1080), tablet = Size(820, 1180);
+
+    Future<void> shoot(WidgetTester t, WbView v, String name, {Size size = board, String lang = 'en'}) async {
+      final s = await shotServices(prefs: {'displaySize': size == board ? 'classroom' : 'normal', 'rollCount': 40, 'lang': lang});
+      t.view.physicalSize = size;
+      t.view.devicePixelRatio = 1;
+      addTearDown(t.view.reset);
+      debugDisableShadows = false;
+      await t.pumpWidget(ZynetixBoardApp(services: s, home: WhiteboardScreen(view: v)));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 400));
+      await expectLater(find.byType(MaterialApp), matchesGoldenFile('v9-whiteboard/$name.png'));
+      debugDisableShadows = true;
+    }
+
+    testWidgets('01 simple', (t) => shoot(t, WbView.simple, '01-whiteboard-simple'));
+    testWidgets('02 all tools', (t) => shoot(t, WbView.allTools, '02-whiteboard-all-tools'));
+    testWidgets('03 geometry', (t) => shoot(t, WbView.geometry, '03-geometry-tools'));
+    testWidgets('04 kit', (t) => shoot(t, WbView.kit, '04-subject-kit-3d-model'));
+    testWidgets('05 lesson page', (t) => shoot(t, WbView.lessonPage, '05-lesson-step-as-page'));
+    testWidgets('06 insert', (t) => shoot(t, WbView.insert, '06-insert-menu'));
+    testWidgets('07 projector', (t) => shoot(t, WbView.projector, '07-projector-view'));
+    testWidgets('08 kannada', (t) => shoot(t, WbView.simple, '08-whiteboard-kannada', lang: 'kn'));
+    testWidgets('09 tablet', (t) => shoot(t, WbView.simple, '09-whiteboard-tablet', size: tablet));
   });
 
   testWidgets('33 accounting equation', (t) => sim(t, 'puc1-accountancy-03-recording-of-transactions-i.t2', 'sim1', '33-sim-accounting-equation'));
