@@ -204,7 +204,7 @@ class _SimpleQuizScreenState extends State<SimpleQuizScreen> {
       ]);
       final done = KeyedSubtree(
         key: _done,
-        child: ZxButton(qi == widget.questions.length - 1 ? tr(l, 'Done', 'ಮುಗಿಯಿತು') : tr(l, 'Done · next question', 'ಮುಗಿಯಿತು · ಮುಂದಿನ ಪ್ರಶ್ನೆ'), key: const ValueKey('quizDone'), icon: Icons.check_rounded, bg: S.violet, height: phone ? 130 : 170, size: phone ? 40 : 52, shadow: true, onTap: _doneQuestion),
+        child: ZxButton(tr(l, 'Done', 'ಮುಗಿಯಿತು'), key: const ValueKey('quizDone'), icon: Icons.check_rounded, bg: S.violet, height: phone ? 130 : 170, size: phone ? 40 : 52, shadow: true, onTap: _doneQuestion),
       );
       final top = Row(children: [
         ZxButton(widget.practice ? tr(l, 'Back to practice', 'ಅಭ್ಯಾಸಕ್ಕೆ') : tr(l, 'Back', 'ಹಿಂದೆ'), key: const ValueKey('quizBack'), icon: Icons.arrow_back_rounded, bg: S.mist, fg: S.ink, height: phone ? 96 : 120, size: phone ? 28 : 36, onTap: () => Navigator.of(context).maybePop()),

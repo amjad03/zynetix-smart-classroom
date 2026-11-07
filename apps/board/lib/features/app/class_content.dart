@@ -198,6 +198,20 @@ MasteryData classMastery(Services s, String subject) {
   int pct(Iterable<bool> xs) => xs.isEmpty ? -1 : (100 * xs.where((x) => x).length / xs.length).round();
   const kinds = ['easy', 'medium', 'hard'];
   final weak = s.mastery.weakTopics(n: 5, where: (t) => chapters.any((p) => p.lessons.containsKey(t)));
+  final revise = [
+    for (final t in weak)
+      if (chapters.indexWhere((p) => p.lessons.containsKey(t)) case final ci when ci >= 0)
+        (chapters[ci].lessons[t]!.title, ci, ((s.mastery.classTopic(t)?.p ?? 0) * 100).round()),
+  ];
+  // Nothing weak yet: the chapter with the lowest score is the one to revise.
+  if (revise.isEmpty && chapters.isNotEmpty) {
+    final scores = [for (final p in chapters) pct([for (final x in byChapter[p.chapter.id]!) x.$2])];
+    var lo = 0;
+    for (var i = 1; i < scores.length; i++) {
+      if (scores[i] < scores[lo]) lo = i;
+    }
+    revise.add((chapters[lo].chapter.title, lo, scores[lo]));
+  }
   return MasteryData(
     chapters: [for (final p in chapters) p.chapter.title],
     skills: const [L10n('Recall', 'ನೆನಪು'), L10n('Apply', 'ಅನ್ವಯ'), L10n('Think hard', 'ಆಳ ಚಿಂತನೆ')],
@@ -207,10 +221,6 @@ MasteryData classMastery(Services s, String subject) {
     byRoll: [
       for (final p in chapters) [for (var r = 1; r <= rolls; r++) pct([for (final x in byChapter[p.chapter.id]!) if (x.$1 == r) x.$2])],
     ],
-    revise: [
-      for (final t in weak)
-        if (chapters.indexWhere((p) => p.lessons.containsKey(t)) case final ci when ci >= 0)
-          (chapters[ci].lessons[t]!.title, ci, ((s.mastery.classTopic(t)?.p ?? 0) * 100).round()),
-    ],
+    revise: revise,
   );
 }

@@ -38,7 +38,8 @@ Future<pw.ThemeData> worksheetTheme() async {
 }
 
 /// The PDF: question pages, then an answer-key page.
-Future<Uint8List> buildWorksheetPdf(Worksheet w, {pw.ThemeData? theme}) async {
+/// [withKey]: add the answer key on a page of its own after the questions.
+Future<Uint8List> buildWorksheetPdf(Worksheet w, {pw.ThemeData? theme, bool withKey = true}) async {
   final th = theme ?? await worksheetTheme();
   final doc = pw.Document(title: '${w.section} · ${w.title} · ${paperDate(w.date)}', author: 'Zynetix');
   pw.Widget header(String what) => pw.Column(
@@ -96,33 +97,35 @@ Future<Uint8List> buildWorksheetPdf(Worksheet w, {pw.ThemeData? theme}) async {
       ],
     ),
   );
-  doc.addPage(
-    pw.MultiPage(
-      theme: th,
-      pageFormat: PdfPageFormat.a4,
-      margin: const pw.EdgeInsets.all(40),
-      build: (ctx) => [
-        header('Answer key'),
-        for (final (i, q) in w.questions.indexed)
-          pw.Padding(
-            padding: const pw.EdgeInsets.only(bottom: 8),
-            child: pw.Row(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.SizedBox(width: 22, child: pw.Text('${i + 1}.', style: pw.TextStyle(fontWeight: pw.FontWeight.bold))),
-                pw.SizedBox(width: 70, child: pw.Text(answerKey(q), style: pw.TextStyle(fontWeight: pw.FontWeight.bold))),
-                pw.Expanded(
-                  child: pw.Text(
-                    [if (w.topicNames[q.topicId] != null) w.topicNames[q.topicId]!, if (q.explanation != null) plainMath(q.explanation!.en)].join(' · '),
-                    style: const pw.TextStyle(fontSize: 10),
+  if (withKey) {
+    doc.addPage(
+      pw.MultiPage(
+        theme: th,
+        pageFormat: PdfPageFormat.a4,
+        margin: const pw.EdgeInsets.all(40),
+        build: (ctx) => [
+          header('Answer key'),
+          for (final (i, q) in w.questions.indexed)
+            pw.Padding(
+              padding: const pw.EdgeInsets.only(bottom: 8),
+              child: pw.Row(
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  pw.SizedBox(width: 22, child: pw.Text('${i + 1}.', style: pw.TextStyle(fontWeight: pw.FontWeight.bold))),
+                  pw.SizedBox(width: 70, child: pw.Text(answerKey(q), style: pw.TextStyle(fontWeight: pw.FontWeight.bold))),
+                  pw.Expanded(
+                    child: pw.Text(
+                      [if (w.topicNames[q.topicId] != null) w.topicNames[q.topicId]!, if (q.explanation != null) plainMath(q.explanation!.en)].join(' · '),
+                      style: const pw.TextStyle(fontSize: 10),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
   return doc.save();
 }
 

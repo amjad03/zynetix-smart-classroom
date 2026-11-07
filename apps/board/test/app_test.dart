@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zynetix_board/features/app/class_content.dart';
 import 'package:zynetix_board/features/app/home.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:zynetix_board/engine/mastery.dart';
 import 'package:zynetix_board/engine/model.dart';
+import 'package:zynetix_board/features/insight/worksheet.dart';
 import 'package:zynetix_board/features/app/lesson.dart';
 import 'package:zynetix_board/features/app/now.dart';
 import 'package:zynetix_board/features/app/practice.dart';
@@ -181,5 +184,21 @@ void main() {
     final data = buildSamples(s, ClassContent.empty, subject: 'physics');
     expect(data.questions, isNotEmpty);
     expect(data.formulas, isNotEmpty);
+  });
+
+  testWidgets('class quiz results fill the mastery heatmap and the worksheet makes a PDF', (t) async {
+    final s = await testServices(prefs: {'displaySize': 'classroom', 'rollCount': 40});
+    final p = s.store.byChapter(grav)!;
+    final q = quizQuestions(p, topicId: '$grav.t3', n: 1).single;
+    s.mastery.recordAll([for (var r = 1; r <= 40; r++) Response(roll: r, questionId: q.id, topicId: q.topicId!, chapterId: grav, correct: r.isEven, source: 'roll_call', at: DateTime(2026))]);
+    final m = classMastery(s, 'physics');
+    expect(m.chapters.single.en, p.chapter.title.en);
+    expect(m.byRoll.single[1], 100);
+    expect(m.byRoll.single[0], 0);
+    expect(m.revise, isNotEmpty);
+    final w = Worksheet(section: 'A', date: DateTime(2026), questions: [q]);
+    final withKey = await buildWorksheetPdf(w, theme: pw.ThemeData.base());
+    final without = await buildWorksheetPdf(w, theme: pw.ThemeData.base(), withKey: false);
+    expect(withKey.length, greaterThan(without.length));
   });
 }

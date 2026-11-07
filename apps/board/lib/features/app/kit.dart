@@ -218,22 +218,33 @@ class ZxCard extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     padding: EdgeInsets.all(compact ? 36 : pad),
     decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(compact ? 40 : 56)),
-    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(
-          width: compact ? 96 : iconSize, height: compact ? 96 : iconSize,
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(compact ? 28 : 36)),
-          child: Icon(icon, size: compact ? 54 : iconSize * .56, color: S.ink),
+    // Laid out as PastelCard when it fits; when long words do not, the card clips them.
+    child: LayoutBuilder(
+      builder: (context, box) => SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: box.maxHeight.isFinite ? box.maxHeight : 0),
+          child: IntrinsicHeight(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Container(
+                  width: compact ? 96 : iconSize, height: compact ? 96 : iconSize,
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(compact ? 28 : 36)),
+                  child: Icon(icon, size: compact ? 54 : iconSize * .56, color: S.ink),
+                ),
+                const Spacer(),
+                ArrowChip(size: compact ? 68 : 84),
+              ]),
+              compact ? const SizedBox(height: 24) : const Spacer(),
+              Text(title, maxLines: 2, overflow: TextOverflow.ellipsis, style: hd(titleSize, l: lang)),
+              SizedBox(height: compact ? 8 : 14),
+              Text(sub, maxLines: subLines, overflow: TextOverflow.ellipsis, style: tx(compact ? 28 : 34, c: S.cardText)),
+              if (tags.isNotEmpty) const Spacer(),
+              if (tags.isNotEmpty) Wrap(spacing: 12, runSpacing: 12, children: [for (final t in tags) Tag(t, size: compact ? 24 : 28)]),
+            ]),
+          ),
         ),
-        const Spacer(),
-        ArrowChip(size: compact ? 68 : 84),
-      ]),
-      compact ? const SizedBox(height: 24) : const Spacer(),
-      Flexible(child: Text(title, maxLines: 2, overflow: TextOverflow.ellipsis, style: hd(titleSize, l: lang))),
-      SizedBox(height: compact ? 8 : 14),
-      Flexible(child: Text(sub, maxLines: subLines, overflow: TextOverflow.ellipsis, style: tx(compact ? 28 : 34, c: S.cardText))),
-      if (tags.isNotEmpty) const Spacer(),
-      if (tags.isNotEmpty) Flexible(child: ClipRect(child: Wrap(spacing: 12, runSpacing: 12, children: [for (final t in tags) Tag(t, size: compact ? 24 : 28)]))),
-    ]),
+      ),
+    ),
   );
 }

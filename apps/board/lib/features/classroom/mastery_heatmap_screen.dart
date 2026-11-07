@@ -77,7 +77,13 @@ class _MasteryHeatmapScreenState extends State<MasteryHeatmapScreen> {
   }
 
   Widget _skills(BuildContext context, Lang l, Widget legend) {
-    final classAvg = [for (final row in d.bySkill) (row.reduce((a, b) => a + b) / row.length).round()];
+    // Cells with no answers yet (−1) are left out of the average.
+    int avg(List<int> row) {
+      final xs = row.where((v) => v >= 0).toList();
+      return xs.isEmpty ? -1 : (xs.reduce((a, b) => a + b) / xs.length).round();
+    }
+
+    final classAvg = [for (final row in d.bySkill) avg(row)];
     final table = ZPanel(
       padding: const EdgeInsets.all(44),
       child: Column(

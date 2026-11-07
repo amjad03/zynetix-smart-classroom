@@ -266,8 +266,10 @@ class ClassPlanScreen extends StatelessWidget {
       return ClassScaffold(
         crumbs: [samples.subject.t(l), samples.year.t(l)],
         title: ct('classPlan', l),
-        trailing: [BarChip('${ct('planSaysHere', l)}: ${planned.toStringAsFixed(0)} / ${total.round()} wk')],
-        bottomRight: [BigButton(key: const ValueKey('setExamDate'), icon: Icons.event_outlined, label: l == Lang.kn ? 'ಪರೀಕ್ಷೆ ದಿನಾಂಕ' : 'Set the exam date', filled: false, onPressed: () => pickExamDate(context))],
+        trailing: [
+          BarChip('${ct('planSaysHere', l)}: ${planned.toStringAsFixed(0)} / ${total.round()} wk'),
+          GestureDetector(key: const ValueKey('setExamDate'), onTap: () => pickExamDate(context), child: BarChip(l == Lang.kn ? 'ಪರೀಕ್ಷೆ ದಿನಾಂಕ' : 'Exam date', icon: Icons.event_outlined)),
+        ],
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

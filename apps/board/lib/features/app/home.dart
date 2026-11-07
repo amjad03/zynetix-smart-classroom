@@ -281,7 +281,8 @@ class _HomeScreenState extends State<HomeScreen> {
   );
 
   Widget _all(Lang l, ClassNow c, SchoolStore school) {
-    final today = school.today(s.clock());
+    final me = school.current?.id;
+    final today = [for (final p in school.today(s.clock())) if (me == null || p.teacherId == null || p.teacherId!.isEmpty || p.teacherId == me) p];
     final mins = s.clock().hour * 60 + s.clock().minute;
     final next = today.where((p) => p.startMin > mins).firstOrNull;
     final cards = [

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:printing/printing.dart';
 
 import '../../blocks/math_text.dart';
 import '../../core/services.dart';
 import '../../core/theme.dart';
 import '../../engine/model.dart';
+import '../insight/worksheet.dart' show Worksheet, buildWorksheetPdf;
 import 'class_data.dart';
 import 'class_kit.dart';
 import 'strings.dart';
@@ -25,6 +27,37 @@ class _WorksheetExportScreenState extends State<WorksheetExportScreen> {
   late int left = widget.leftPage, right = widget.rightPage;
 
   List<ClassQuestion> get qs => widget.samples.questions;
+  bool busy = false;
+
+  /// Makes the PDF on the board (question pages, then the answer key on its own page) and
+  /// prints it or shares it. No internet needed.
+  Future<void> _out(bool share) async {
+    final s = ServicesScope.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    setState(() => busy = true);
+    try {
+      final byId = {for (final p in s.store.packs) ...p.questions};
+      final names = {for (final p in s.store.packs) for (final l in p.lessons.values) l.topicId: l.title.en};
+      final list = [
+        for (final q in qs)
+          if (byId[q.id] case final pq?)
+            Question(id: pq.id, chapterId: pq.chapterId, topicId: pq.topicId, stem: pq.stem, options: pq.options, answer: pq.answer, answers: pq.answers, numericAnswer: pq.numericAnswer, tolerance: pq.tolerance, explanation: steps ? (pq.solution.isNotEmpty ? L10n(pq.solution.map((x) => x.en).join(' ')) : pq.explanation) : null, exams: pq.exams, difficulty: pq.difficulty, format: pq.format, passage: pq.passage)
+          else
+            Question(id: q.id, topicId: null, stem: q.stem, options: q.options, answer: q.answer, explanation: steps && q.steps.isNotEmpty ? L10n(q.steps.map((x) => x.en).join(' ')) : null, exams: q.exams, difficulty: 'medium'),
+      ];
+      final w = Worksheet(section: s.config.sectionLabel, date: s.clock(), questions: list, topicNames: names);
+      final bytes = await buildWorksheetPdf(w, withKey: key);
+      if (share) {
+        await Printing.sharePdf(bytes: bytes, filename: w.fileName);
+      } else {
+        await Printing.layoutPdf(onLayout: (_) async => bytes, name: w.fileName);
+      }
+    } catch (e) {
+      messenger.showSnackBar(SnackBar(content: Text('Could not make the PDF: $e', style: zText(26))));
+    } finally {
+      if (mounted) setState(() => busy = false);
+    }
+  }
 
   /// Questions per page: five on page one (after the header), four on page two.
   List<List<int>> get pages => [
@@ -105,9 +138,9 @@ class _WorksheetExportScreenState extends State<WorksheetExportScreen> {
             const Spacer(),
             Row(
               children: [
-                Expanded(child: BigButton(key: const ValueKey('wsExport'), icon: Icons.picture_as_pdf_outlined, label: ct('exportPdf', l), filled: false, onPressed: () {})),
+                Expanded(child: BigButton(key: const ValueKey('wsExport'), icon: Icons.picture_as_pdf_outlined, label: ct('exportPdf', l), filled: false, onPressed: busy ? null : () => _out(true))),
                 const SizedBox(width: 20),
-                Expanded(child: BigButton(key: const ValueKey('wsPrint'), icon: Icons.print_outlined, label: ct('print', l), onPressed: () {})),
+                Expanded(child: BigButton(key: const ValueKey('wsPrint'), icon: Icons.print_outlined, label: ct('print', l), onPressed: busy ? null : () => _out(false))),
               ],
             ),
           ],

@@ -70,15 +70,20 @@ class SectionHeader extends StatelessWidget {
     final phone = usePhoneLayout(context);
     final head = Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
       Expanded(
+        flex: 3,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           if (crumb.isNotEmpty) Text(crumb, maxLines: 1, overflow: TextOverflow.ellipsis, style: tx(phone ? 26 : 32, c: S.muted, w: FontWeight.w500)),
           Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: hd(phone ? 64 : 96, l: l)),
         ]),
       ),
+      if (!phone && trailing.isNotEmpty) ...[
+        const SizedBox(width: 20),
+        Flexible(flex: 2, child: Wrap(spacing: 20, runSpacing: 16, alignment: WrapAlignment.end, crossAxisAlignment: WrapCrossAlignment.center, children: trailing)),
+      ],
       const SizedBox(width: 20),
       HelpChip(info: help),
     ]);
-    if (trailing.isEmpty) return head;
+    if (trailing.isEmpty || !phone) return head;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       head,
       const SizedBox(height: 20),
