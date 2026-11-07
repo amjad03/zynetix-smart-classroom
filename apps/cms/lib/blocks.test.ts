@@ -13,6 +13,8 @@ describe('block editor model', () => {
       if (t === 'example') b.steps = [{ en: 'x' }];
       if (t === 'recap') b.points = [{ en: 'x' }];
       if (b.questionIds) b.questionIds = ['q1'];
+      if (t === 'explainer') b.misconception = { myth: { en: 'x' }, truth: { en: 'y' } };
+      if (t === 'concept_video') b.video.title = { en: 'x' };
       expect(Block.safeParse(clean(b)).success, t).toBe(true);
     }
   });
@@ -27,7 +29,7 @@ describe('block editor model', () => {
     expect(parseJsonField('[1, 2]')).toEqual({ value: [1, 2] });
     expect(parseJsonField('  ')).toEqual({ value: undefined });
     expect(parseJsonField('[1,').error).toMatch(/Not valid JSON/);
-    for (const f of [...BLOCK_FIELDS.whiteboard, ...BLOCK_FIELDS.interactive, ...BLOCK_FIELDS.challenge, ...BLOCK_FIELDS.activity]) if (f.kind === 'json') expect(parseJsonField(f.example!).error, f.key).toBeUndefined();
+    for (const f of [...BLOCK_FIELDS.whiteboard, ...BLOCK_FIELDS.interactive, ...BLOCK_FIELDS.challenge, ...BLOCK_FIELDS.activity, ...BLOCK_FIELDS.explainer, ...BLOCK_FIELDS.concept_video]) if (f.kind === 'json') expect(parseJsonField(f.example!).error, f.key).toBeUndefined();
   });
   it('new block ids do not clash', () => {
     expect(newBlock('concept', ['concept1']).id).toBe('concept2');

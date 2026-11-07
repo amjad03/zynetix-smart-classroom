@@ -1,0 +1,96 @@
+{
+  "$ref": "#/definitions/FormulaSheet",
+  "definitions": {
+    "FormulaSheet": {
+      "type": "object",
+      "properties": {
+        "chapterId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "formulas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9._-]*$"
+              },
+              "topicId": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9._-]*$"
+              },
+              "name": {
+                "type": "object",
+                "properties": {
+                  "en": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "kn": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "en"
+                ],
+                "additionalProperties": false
+              },
+              "tex": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "object",
+                "properties": {
+                  "en": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "kn": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "en"
+                ],
+                "additionalProperties": false
+              },
+              "exams": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "PUC",
+                    "CBSE",
+                    "ISC",
+                    "KCET",
+                    "COMEDK",
+                    "NEET",
+                    "JEE",
+                    "JEE_ADV",
+                    "CUET"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "tex"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "chapterId",
+        "formulas"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -900,6 +900,116 @@
    ]
   },
   {
+   "id": "zs-explainer",
+   "type": "explainer",
+   "heading": {
+    "en": "Aggregate Functions, GROUP BY, HAVING and Joins"
+   },
+   "optional": true,
+   "source": "zynetix-school:computer-science/c12-cs-sql/c12-cs-sql-aggregates-joins",
+   "tagline": {
+    "en": "MAX, MIN, AVG, SUM and COUNT; grouping rows with GROUP BY and filtering groups with HAVING; Cartesian product, equi-join and natural join; and board-style output questions."
+   },
+   "misconception": {
+    "myth": {
+     "en": "SELECT Dept, SUM(Salary) FROM STAFF WHERE SUM(Salary) > 80000 GROUP BY Dept;"
+    },
+    "truth": {
+     "en": "An aggregate cannot be used in WHERE. Conditions on groups go in HAVING: ... GROUP BY Dept HAVING SUM(Salary) > 80000; WHERE works row by row before the groups exist, so there is no SUM to test yet. HAVING runs after the groups are formed."
+    }
+   },
+   "watch": [
+    {
+     "title": {
+      "en": "Key idea 1",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 1"
+     },
+     "say": {
+      "en": "MAX, MIN, AVG, SUM, COUNT return one value and ignore NULLs; COUNT(*) counts all rows."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 2",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 2"
+     },
+     "say": {
+      "en": "GROUP BY makes groups; HAVING filters groups; WHERE filters rows before grouping."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 3",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 3"
+     },
+     "say": {
+      "en": "Clause order: SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 4",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 4"
+     },
+     "say": {
+      "en": "Cartesian product: degree adds, cardinality multiplies."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 5",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 5"
+     },
+     "say": {
+      "en": "Equi-join matches on equal common columns; natural join does it automatically and shows the common column once."
+     }
+    }
+   ],
+   "reveal": true,
+   "try": {
+    "goal": {
+     "en": "MAX, MIN, AVG, SUM and COUNT; grouping rows with GROUP BY and filtering groups with HAVING; Cartesian product, equi-join and natural join; and board-style output questions."
+    },
+    "steps": [
+     {
+      "task": {
+       "en": "STAFF has 7 rows, 6 columns; DEPT has 3 rows, 3 columns. Cartesian product size?"
+      },
+      "predict": {
+       "question": {
+        "en": "STAFF has 7 rows, 6 columns; DEPT has 3 rows, 3 columns. Cartesian product size?"
+       },
+       "options": [
+        {
+         "en": "21 rows, 9 columns"
+        },
+        {
+         "en": "10 rows, 9 columns"
+        },
+        {
+         "en": "21 rows, 18 columns"
+        },
+        {
+         "en": "7 rows, 9 columns"
+        }
+       ],
+       "answer": 0,
+       "trap": 1
+      },
+      "explain": {
+       "en": "Rows multiply (7 × 3 = 21) because each row pairs with every row; columns add (6 + 3 = 9) because each result row holds both rows side by side."
+      }
+     }
+    ],
+    "takeaway": {
+     "en": "MAX, MIN, AVG, SUM, COUNT return one value and ignore NULLs; COUNT(*) counts all rows."
+    }
+   },
+   "narration": {
+    "en": "Many people think: SELECT Dept, SUM(Salary) FROM STAFF WHERE SUM(Salary) > 80000 GROUP BY Dept; Actually: An aggregate cannot be used in WHERE. Conditions on groups go in HAVING: ... GROUP BY Dept HAVING SUM(Salary) > 80000; WHERE works row by row before the groups exist, so there is no SUM to test yet. HAVING runs after the groups are formed."
+   }
+  },
+  {
    "id": "ex1",
    "type": "example",
    "problem": {

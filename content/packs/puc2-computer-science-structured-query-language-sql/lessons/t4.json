@@ -1281,6 +1281,124 @@
    ]
   },
   {
+   "id": "zs-explainer",
+   "type": "explainer",
+   "heading": {
+    "en": "SELECT Queries: WHERE, IN, BETWEEN, LIKE, NULL, ORDER BY"
+   },
+   "optional": true,
+   "source": "zynetix-school:computer-science/c12-cs-sql/c12-cs-sql-select",
+   "tagline": {
+    "en": "Retrieving data with SELECT: columns, expressions and aliases, DISTINCT, relational and logical operators, IN, BETWEEN, LIKE patterns, IS NULL and sorting with ORDER BY."
+   },
+   "misconception": {
+    "myth": {
+     "en": "To find staff with no bonus I write WHERE Bonus = NULL."
+    },
+    "truth": {
+     "en": "Write WHERE Bonus IS NULL. Any comparison with NULL using = gives unknown, so = NULL matches no rows at all. In Python x == None works, so = NULL looks natural. In SQL, NULL means \"unknown\", and an unknown cannot be equal to anything, not even another NULL."
+    }
+   },
+   "watch": [
+    {
+     "title": {
+      "en": "Key idea 1",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 1"
+     },
+     "say": {
+      "en": "SELECT cols FROM t WHERE cond ORDER BY col; with *, expressions, AS aliases and DISTINCT."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 2",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 2"
+     },
+     "say": {
+      "en": "NOT > AND > OR; use brackets to make the meaning clear."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 3",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 3"
+     },
+     "say": {
+      "en": "BETWEEN is inclusive; IN matches a list; LIKE uses % (any) and _ (one)."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 4",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 4"
+     },
+     "say": {
+      "en": "Test NULL with IS NULL / IS NOT NULL; arithmetic with NULL gives NULL."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 5",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 5"
+     },
+     "say": {
+      "en": "ORDER BY is last; ASC is the default; several sort columns are allowed."
+     }
+    }
+   ],
+   "reveal": true,
+   "try": {
+    "goal": {
+     "en": "Retrieving data with SELECT: columns, expressions and aliases, DISTINCT, relational and logical operators, IN, BETWEEN, LIKE patterns, IS NULL and sorting with ORDER BY."
+    },
+    "steps": [
+     {
+      "task": {
+       "en": "Predict first, then check.",
+       "kn": "ಮೊದಲು ಊಹಿಸಿ, ನಂತರ ಪರಿಶೀಲಿಸಿ."
+      },
+      "predict": {
+       "question": {
+        "en": "SELECT Name, Salary + Bonus AS Total FROM STAFF WHERE Dept = 'Sales'; What is Esha's Total?"
+       },
+       "options": [
+        {
+         "en": "NULL"
+        },
+        {
+         "en": "45000"
+        },
+        {
+         "en": "0"
+        },
+        {
+         "en": "Error"
+        }
+       ],
+       "answer": 0
+      },
+      "explain": {
+       "en": "Any arithmetic with NULL gives NULL. Anil's total is 45000; Esha's bonus is NULL so her total is NULL."
+      }
+     },
+     {
+      "task": {
+       "en": "Match each condition to the names it selects."
+      },
+      "explain": {
+       "en": "Bonus > 2500 is unknown for NULL bonuses, so Esha is not selected by the third condition."
+      }
+     }
+    ],
+    "takeaway": {
+     "en": "SELECT cols FROM t WHERE cond ORDER BY col; with *, expressions, AS aliases and DISTINCT."
+    }
+   },
+   "narration": {
+    "en": "Many people think: To find staff with no bonus I write WHERE Bonus = NULL. Actually: Write WHERE Bonus IS NULL. Any comparison with NULL using = gives unknown, so = NULL matches no rows at all. In Python x == None works, so = NULL looks natural. In SQL, NULL means \"unknown\", and an unknown cannot be equal to anything, not even another NULL."
+   }
+  },
+  {
    "id": "ex1",
    "type": "example",
    "problem": {

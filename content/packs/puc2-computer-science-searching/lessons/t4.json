@@ -1324,6 +1324,116 @@
    ]
   },
   {
+   "id": "zs-explainer",
+   "type": "explainer",
+   "heading": {
+    "en": "Search by Hashing"
+   },
+   "optional": true,
+   "source": "zynetix-school:computer-science/c12-cs-searching/c12-cs-search-by-hashing",
+   "tagline": {
+    "en": "How a hash function turns an element into a position in a hash table, the remainder method, searching in one step, collisions and the idea of a perfect hash function."
+   },
+   "misconception": {
+    "myth": {
+     "en": "A collision means the hash table is full."
+    },
+    "truth": {
+     "en": "A collision means two different elements are mapped to the same slot. It can happen even when most of the table is empty. In the example, slots 2, 5 and 9 are still free, yet 53 collides with 43 at slot 3. Collisions depend on the hash function and the data, not on how full the table is."
+    }
+   },
+   "watch": [
+    {
+     "title": {
+      "en": "The remainder method"
+     },
+     "say": {
+      "en": "A simple hash function for whole numbers is the remainder method: divide the element by the size of the hash table and take the remainder. h(element) = element % size_of_table For a table of size 10, the remainder is always 0 to 9, which is exactly the range of valid slot numbers. For example, h(43) = 43 % 10 = 3, so 43 is stored in slot 3."
+     }
+    },
+    {
+     "title": {
+      "en": "Collisions"
+     },
+     "say": {
+      "en": "What if we also want to store 53? h(53) = 3, but slot 3 already holds 43. When a hash function gives the same slot for two or more different elements, it is called a collision."
+     }
+    }
+   ],
+   "reveal": true,
+   "try": {
+    "goal": {
+     "en": "How a hash function turns an element into a position in a hash table, the remainder method, searching in one step, collisions and the idea of a perfect hash function."
+    },
+    "steps": [
+     {
+      "task": {
+       "en": "Predict first, then check.",
+       "kn": "ಮೊದಲು ಊಹಿಸಿ, ನಂತರ ಪರಿಶೀಲಿಸಿ."
+      },
+      "predict": {
+       "question": {
+        "en": "With h(x) = x % 7 (table size 7), which slot does 50 go to?"
+       },
+       "options": [
+        {
+         "en": "1"
+        },
+        {
+         "en": "7"
+        },
+        {
+         "en": "0"
+        },
+        {
+         "en": "5"
+        }
+       ],
+       "answer": 0
+      },
+      "explain": {
+       "en": "50 = 7 × 7 + 1, so the remainder is 1."
+      }
+     },
+     {
+      "task": {
+       "en": "Table size 10, h(x) = x % 10. Elements 21, 35, 41, 66 are inserted in that order. Which one causes a collision?"
+      },
+      "predict": {
+       "question": {
+        "en": "Table size 10, h(x) = x % 10. Elements 21, 35, 41, 66 are inserted in that order. Which one causes a collision?"
+       },
+       "options": [
+        {
+         "en": "41"
+        },
+        {
+         "en": "66"
+        },
+        {
+         "en": "35"
+        },
+        {
+         "en": "No collision occurs"
+        }
+       ],
+       "answer": 0,
+       "trap": 3
+      },
+      "explain": {
+       "en": "21 goes to slot 1, 35 to slot 5, then 41 also maps to slot 1, which is taken by 21: a collision. 66 goes to slot 6 without trouble."
+      }
+     }
+    ],
+    "takeaway": {
+     "en": "Hashing finds an element by computing its position with a hash function: about one step."
+    }
+   },
+   "narration": {
+    "en": "Many people think: A collision means the hash table is full. Actually: A collision means two different elements are mapped to the same slot. It can happen even when most of the table is empty. In the example, slots 2, 5 and 9 are still free, yet 53 collides with 43 at slot 3. Collisions depend on the hash function and the data, not on how full the table is."
+   }
+  },
+  {
    "id": "ex1",
    "type": "example",
    "problem": {

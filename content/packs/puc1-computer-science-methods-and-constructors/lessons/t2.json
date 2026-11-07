@@ -841,6 +841,145 @@
    ]
   },
   {
+   "id": "zs-explainer",
+   "type": "explainer",
+   "heading": {
+    "en": "Primitive and Object Arguments, static, this and Overloading"
+   },
+   "optional": true,
+   "source": "zynetix-school:computer-science/c11-isc-cs-methods/c11-isc-methods-arguments-static",
+   "tagline": {
+    "en": "Why a method cannot change a caller's int but can change the contents of a caller's array, static versus instance members, the this keyword, and method overloading."
+   },
+   "misconception": {
+    "myth": {
+     "en": "Arrays are passed by reference, so if a method does arr = new int[5]; the caller's array is replaced too."
+    },
+    "truth": {
+     "en": "The method has only a copy of the reference. Changing an element (arr[0] = ...) changes the shared object, but making the parameter point to a new object (arr = new ...) changes only the local copy. \"Pass by reference\" sounds as if the caller's variable itself is handed over. In Java only its value (the address) is copied, so re-pointing the copy cannot move the caller's variable."
+    }
+   },
+   "watch": [
+    {
+     "title": {
+      "en": "Key idea 1",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 1"
+     },
+     "say": {
+      "en": "Java copies every argument. A primitive copy cannot affect the caller; a reference copy reaches the same object."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 2",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 2"
+     },
+     "say": {
+      "en": "Changing an object's contents through a parameter is seen by the caller; re-pointing the parameter is not."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 3",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 3"
+     },
+     "say": {
+      "en": "A static variable has one copy per class; instance variables have one copy per object. Static methods cannot use this."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 4",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 4"
+     },
+     "say": {
+      "en": "this refers to the current object and resolves name clashes between parameters and instance variables."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 5",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 5"
+     },
+     "say": {
+      "en": "Overloaded methods share a name but differ in their parameter lists; a different return type alone is not enough."
+     }
+    }
+   ],
+   "reveal": true,
+   "try": {
+    "goal": {
+     "en": "Why a method cannot change a caller's int but can change the contents of a caller's array, static versus instance members, the this keyword, and method overloading."
+    },
+    "steps": [
+     {
+      "task": {
+       "en": "Predict first, then check.",
+       "kn": "ಮೊದಲು ಊಹಿಸಿ, ನಂತರ ಪರಿಶೀಲಿಸಿ."
+      },
+      "predict": {
+       "question": {
+        "en": "Three Student objects are created in main. How many copies of count and of marks exist?"
+       },
+       "options": [
+        {
+         "en": "1 count, 3 marks"
+        },
+        {
+         "en": "3 count, 3 marks"
+        },
+        {
+         "en": "1 count, 1 marks"
+        },
+        {
+         "en": "3 count, 1 marks"
+        }
+       ],
+       "answer": 0
+      },
+      "explain": {
+       "en": "count is static, so there is one copy for the class. marks is an instance variable, so each of the 3 objects has its own."
+      }
+     },
+     {
+      "task": {
+       "en": "What does area('A') print in Area.java?"
+      },
+      "predict": {
+       "question": {
+        "en": "What does area('A') print in Area.java?"
+       },
+       "options": [
+        {
+         "en": "Compile-time error: no area(char)"
+        },
+        {
+         "en": "4225"
+        },
+        {
+         "en": "A"
+        },
+        {
+         "en": "1.0"
+        }
+       ],
+       "answer": 1,
+       "trap": 0
+      },
+      "explain": {
+       "en": "There is no area(char), so Java widens the char to the nearest match, int. 'A' has code 65, and 65 × 65 = 4225. The other lines print 25, 12.56 and 12."
+      }
+     }
+    ],
+    "takeaway": {
+     "en": "Java copies every argument. A primitive copy cannot affect the caller; a reference copy reaches the same object."
+    }
+   },
+   "narration": {
+    "en": "Many people think: Arrays are passed by reference, so if a method does arr = new int[5]; the caller's array is replaced too. Actually: The method has only a copy of the reference. Changing an element (arr[0] = ...) changes the shared object, but making the parameter point to a new object (arr = new ...) changes only the local copy. \"Pass by reference\" sounds as if the caller's variable itself is handed over. In Java only its value (the address) is copied, so re-pointing the copy cannot move the caller's variable."
+   }
+  },
+  {
    "id": "ex1",
    "type": "example",
    "title": {

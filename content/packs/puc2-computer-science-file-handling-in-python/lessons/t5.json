@@ -467,6 +467,124 @@
    ]
   },
   {
+   "id": "zs-explainer",
+   "type": "explainer",
+   "heading": {
+    "en": "Binary Files with pickle"
+   },
+   "optional": true,
+   "source": "zynetix-school:computer-science/c12-cs-file-handling/c12-cs-binary-files-pickle",
+   "tagline": {
+    "en": "Storing whole Python objects in a binary file: pickling and unpickling with dump and load, reading to the end with EOFError, and the search, append and update programs the board asks for."
+   },
+   "misconception": {
+    "myth": {
+     "en": "I can open the pickle file with open(\"students.dat\", \"w\") and dump into it, like a text file."
+    },
+    "truth": {
+     "en": "pickle writes bytes, so the file must be opened in binary mode: \"wb\", \"ab\" or \"rb\". With \"w\", pickle.dump() raises a TypeError. Both are \"files\", so text mode seems fine. A text-mode file object accepts only str, while dump produces bytes."
+    }
+   },
+   "watch": [
+    {
+     "title": {
+      "en": "Key idea 1",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 1"
+     },
+     "say": {
+      "en": "pickle stores Python objects in binary files: dump(obj, f) writes, load(f) reads."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 2",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 2"
+     },
+     "say": {
+      "en": "Use binary modes only: wb, ab, rb (and rb+, wb+, ab+)."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 3",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 3"
+     },
+     "say": {
+      "en": "Read to the end with while True inside try, stopped by except EOFError."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 4",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 4"
+     },
+     "say": {
+      "en": "Update = read all records, change the match, write all back with wb."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 5",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 5"
+     },
+     "say": {
+      "en": "Append new records with ab so old records are kept."
+     }
+    }
+   ],
+   "reveal": true,
+   "try": {
+    "goal": {
+     "en": "Storing whole Python objects in a binary file: pickling and unpickling with dump and load, reading to the end with EOFError, and the search, append and update programs the board asks for."
+    },
+    "steps": [
+     {
+      "task": {
+       "en": "Predict first, then check.",
+       "kn": "ಮೊದಲು ಊಹಿಸಿ, ನಂತರ ಪರಿಶೀಲಿಸಿ."
+      },
+      "predict": {
+       "question": {
+        "en": "Which exception marks the end of a pickled binary file while reading?"
+       },
+       "options": [
+        {
+         "en": "EOFError"
+        },
+        {
+         "en": "IndexError"
+        },
+        {
+         "en": "StopIteration"
+        },
+        {
+         "en": "FileNotFoundError"
+        }
+       ],
+       "answer": 0
+      },
+      "explain": {
+       "en": "pickle.load() raises EOFError when there is nothing left to read."
+      }
+     },
+     {
+      "task": {
+       "en": "Order the steps to search a binary file for a record."
+      },
+      "explain": {
+       "en": "Every binary search, count or display program follows this skeleton; only the test inside the loop changes."
+      }
+     }
+    ],
+    "takeaway": {
+     "en": "pickle stores Python objects in binary files: dump(obj, f) writes, load(f) reads."
+    }
+   },
+   "narration": {
+    "en": "Many people think: I can open the pickle file with open(\"students.dat\", \"w\") and dump into it, like a text file. Actually: pickle writes bytes, so the file must be opened in binary mode: \"wb\", \"ab\" or \"rb\". With \"w\", pickle.dump() raises a TypeError. Both are \"files\", so text mode seems fine. A text-mode file object accepts only str, while dump produces bytes."
+   }
+  },
+  {
    "id": "ex1",
    "type": "example",
    "problem": {

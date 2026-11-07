@@ -1445,6 +1445,264 @@
    ]
   },
   {
+   "id": "zs-explainer-coding-big-o-search",
+   "type": "explainer",
+   "heading": {
+    "en": "Algorithms & Big-O: search smarter"
+   },
+   "tagline": {
+    "en": "Find a name page by page, or by halving — and see why one is so much faster."
+   },
+   "optional": true,
+   "source": "zynetix-school:explainer/coding-big-o-search",
+   "misconception": {
+    "myth": {
+     "en": "A slow algorithm can always be fixed by buying a faster computer."
+    },
+    "truth": {
+     "en": "A faster computer only speeds things up by a fixed amount. A better algorithm changes how the work grows, which matters far more for big inputs."
+    }
+   },
+   "watch": [
+    {
+     "title": {
+      "en": "Find Mia in the phone book"
+     },
+     "say": {
+      "en": "This phone book has 1,000 names, in A to Z order. We want to find Mia. What is the fastest way?"
+     }
+    },
+    {
+     "title": {
+      "en": "Way 1: page by page"
+     },
+     "say": {
+      "en": "Bolt could check every name from the start: Aaron, Abby, Adam… If Mia is near the end, that could take 1,000 checks!"
+     }
+    },
+    {
+     "title": {
+      "en": "Way 2: open it in the middle"
+     },
+     "say": {
+      "en": "Instead, open the book in the middle. It shows names starting with L. Mia starts with M, which comes after L, so the whole first half can be thrown away!"
+     }
+    },
+    {
+     "title": {
+      "en": "Halve, again and again"
+     },
+     "say": {
+      "en": "Open the middle of what is left, and throw half away again. 1,000, then 500, then 250… After only about 10 checks, one name is left: Mia!"
+     }
+    },
+    {
+     "title": {
+      "en": "Make the book twice as big"
+     },
+     "say": {
+      "en": "With 2,000 names, page by page could take 2,000 checks. Halving takes just one more: 11. With a million names it is only about 20!"
+     }
+    },
+    {
+     "title": {
+      "en": "Big-O: how the work grows"
+     },
+     "say": {
+      "en": "Computer scientists describe this with Big-O. Page by page is O(n): twice the names, twice the work. Halving is O(log n): twice the names, just one more step."
+     }
+    }
+   ],
+   "reveal": true,
+   "try": {
+    "goal": {
+     "en": "Find a name two ways, then see which way copes with a huge book."
+    },
+    "steps": [
+     {
+      "task": {
+       "en": "Search for Mia page by page."
+      },
+      "explain": {
+       "en": "Checking every item in turn is called linear search. Mia is on page 13, so it took 13 checks. In the worst case it checks all 16."
+      },
+      "hint": {
+       "en": "Tap the orange button and watch the counter."
+      }
+     },
+     {
+      "task": {
+       "en": "Now search by opening the middle."
+      },
+      "explain": {
+       "en": "This is binary search. It only works because the names are sorted A–Z. Each check throws away half: 16 → 8 → 4 → 2 → 1, so it found Mia in 4 checks."
+      },
+      "hint": {
+       "en": "Tap the blue button. Crossed-out pages are ruled out."
+      },
+      "predict": {
+       "question": {
+        "en": "Open the middle, throw away the half Mia can't be in, repeat. How many checks?"
+       },
+       "options": [
+        {
+         "en": "About 4"
+        },
+        {
+         "en": "About 8"
+        },
+        {
+         "en": "16, same as before"
+        }
+       ],
+       "answer": 0,
+       "trap": 2
+      }
+     },
+     {
+      "task": {
+       "en": "Double the book to 32 names."
+      },
+      "explain": {
+       "en": "Big-O describes how the work grows as the input grows. Page by page is O(n): twice the names, twice the checks. Halving is O(log n): twice the names, just one more check."
+      },
+      "hint": {
+       "en": "Tap Double the names and compare the two bars."
+      },
+      "predict": {
+       "question": {
+        "en": "Twice as many names. What happens to the halving checks?"
+       },
+       "options": [
+        {
+         "en": "They double, to about 8"
+        },
+        {
+         "en": "Just one more, about 5"
+        }
+       ],
+       "answer": 1,
+       "trap": 0
+      }
+     },
+     {
+      "task": {
+       "en": "Race them on a million names."
+      },
+      "explain": {
+       "en": "A 10× faster computer only divides the time by 10: 1,000,000 checks become 100,000. Halving needs about 20. A better algorithm (step-by-step method) beats faster hardware as the input grows."
+      },
+      "hint": {
+       "en": "Tap Start the race."
+      },
+      "predict": {
+       "question": {
+        "en": "Page by page gets a computer 10× faster. Halving stays on a normal one. Who wins?"
+       },
+       "options": [
+        {
+         "en": "Page by page — a faster computer fixes a slow method"
+        },
+        {
+         "en": "Halving, by a huge amount"
+        }
+       ],
+       "answer": 1,
+       "trap": 0
+      }
+     }
+    ],
+    "takeaway": {
+     "en": "Big-O says how an algorithm's work grows with the input: O(log n) halving barely grows, O(n) grows in step, and no faster computer makes up for the gap."
+    }
+   },
+   "story": [
+    {
+     "caption": {
+      "en": "Mia and Bolt have a phone book with 1,000 names in A–Z order."
+     },
+     "speech": {
+      "en": "We need Zack's number!"
+     }
+    },
+    {
+     "caption": {
+      "en": "Bolt checks every name, one by one. It takes ages."
+     },
+     "speech": {
+      "en": "Aaron… Abby… Adam… still going…"
+     }
+    },
+    {
+     "caption": {
+      "en": "Mia opens the middle. Z comes after M, so she throws away the whole first half."
+     },
+     "speech": {
+      "en": "M! Zack comes after M!"
+     }
+    },
+    {
+     "caption": {
+      "en": "Halving again and again, Mia finds Zack in about 10 checks."
+     },
+     "speech": {
+      "en": "Found it in 10 tries!"
+     }
+    }
+   ],
+   "analogy": {
+    "headline": {
+     "en": "Halving is like the “higher or lower?” guessing game."
+    },
+    "everyday": {
+     "en": "“I'm thinking of a number from 1 to 100”"
+    },
+    "concept": {
+     "en": "Binary search on a sorted list"
+    },
+    "pairs": [
+     [
+      {
+       "en": "Guess 50 first"
+      },
+      {
+       "en": "Look at the middle item"
+      }
+     ],
+     [
+      {
+       "en": "“Higher!”"
+      },
+      {
+       "en": "Throw away the lower half"
+      }
+     ],
+     [
+      {
+       "en": "Each guess halves what's left"
+      },
+      {
+       "en": "About log₂(n) steps — O(log n)"
+      }
+     ],
+     [
+      {
+       "en": "Guessing 1, 2, 3, 4…"
+      },
+      {
+       "en": "Linear search — O(n)"
+      }
+     ]
+    ],
+    "limits": {
+     "en": "Halving only works when the list is sorted — a jumbled list must be checked item by item (or sorted first). Big-O also ignores small details like how long each check takes: it only says how the work grows as the list grows."
+    }
+   },
+   "narration": {
+    "en": "Many people think: A slow algorithm can always be fixed by buying a faster computer. Actually: A faster computer only speeds things up by a fixed amount. A better algorithm changes how the work grows, which matters far more for big inputs."
+   }
+  },
+  {
    "id": "ex1",
    "type": "example",
    "boards": [

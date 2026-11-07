@@ -586,6 +586,145 @@
    ]
   },
   {
+   "id": "zs-explainer",
+   "type": "explainer",
+   "heading": {
+    "en": "Scope of Variables and Passing Mutable Objects"
+   },
+   "optional": true,
+   "source": "zynetix-school:computer-science/c12-cs-functions/c12-cs-scope-and-passing",
+   "tagline": {
+    "en": "Local and global scope, the global keyword, UnboundLocalError, and why a function can change a list you pass but not an int."
+   },
+   "misconception": {
+    "myth": {
+     "en": "Inside a function I can write z = z + 1 to update a global z, because the function can see globals."
+    },
+    "truth": {
+     "en": "Because z is assigned in the function, it is local there, and reading it before it has a value raises UnboundLocalError. Add global z at the top of the function, or pass z in and return the new value. Reading a global without assigning does work, so learners think updating works too. The assignment is what changes the name's scope for the whole function."
+    }
+   },
+   "watch": [
+    {
+     "title": {
+      "en": "Key idea 1",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 1"
+     },
+     "say": {
+      "en": "Global: made at top level, readable anywhere. Local: made inside a function, lives only during the call."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 2",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 2"
+     },
+     "say": {
+      "en": "Assigning to a name in a function makes it local, unless declared global."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 3",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 3"
+     },
+     "say": {
+      "en": "Using a local name before giving it a value raises UnboundLocalError."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 4",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 4"
+     },
+     "say": {
+      "en": "Changes to a list or dict in place are seen by the caller; rebinding a parameter is not."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 5",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 5"
+     },
+     "say": {
+      "en": "Default values are made once, so avoid mutable defaults."
+     }
+    }
+   ],
+   "reveal": true,
+   "try": {
+    "goal": {
+     "en": "Local and global scope, the global keyword, UnboundLocalError, and why a function can change a list you pass but not an int."
+    },
+    "steps": [
+     {
+      "task": {
+       "en": "Predict first, then check.",
+       "kn": "ಮೊದಲು ಊಹಿಸಿ, ನಂತರ ಪರಿಶೀಲಿಸಿ."
+      },
+      "predict": {
+       "question": {
+        "en": "What is printed? def total(): x = 3; x += 1; return x then x = 7 and print(total() + x)"
+       },
+       "options": [
+        {
+         "en": "11"
+        },
+        {
+         "en": "15"
+        },
+        {
+         "en": "8"
+        },
+        {
+         "en": "14"
+        }
+       ],
+       "answer": 0
+      },
+      "explain": {
+       "en": "The local x inside total() becomes 4 and is returned; the global x is still 7; 4 + 7 = 11."
+      }
+     },
+     {
+      "task": {
+       "en": "What is nums after def f(L): L = [0] and f(nums) with nums = [5, 6]?"
+      },
+      "predict": {
+       "question": {
+        "en": "What is nums after def f(L): L = [0] and f(nums) with nums = [5, 6]?"
+       },
+       "options": [
+        {
+         "en": "[5, 6]"
+        },
+        {
+         "en": "[0]"
+        },
+        {
+         "en": "[5, 6, 0]"
+        },
+        {
+         "en": "Error"
+        }
+       ],
+       "answer": 0,
+       "trap": 1
+      },
+      "explain": {
+       "en": "L = [0] only makes the local name L point at a new list. The original list is not changed in place, so nums is still [5, 6]."
+      }
+     }
+    ],
+    "takeaway": {
+     "en": "Global: made at top level, readable anywhere. Local: made inside a function, lives only during the call."
+    }
+   },
+   "narration": {
+    "en": "Many people think: Inside a function I can write z = z + 1 to update a global z, because the function can see globals. Actually: Because z is assigned in the function, it is local there, and reading it before it has a value raises UnboundLocalError. Add global z at the top of the function, or pass z in and return the new value. Reading a global without assigning does work, so learners think updating works too. The assignment is what changes the name's scope for the whole function."
+   }
+  },
+  {
    "id": "ex1",
    "type": "example",
    "problem": {

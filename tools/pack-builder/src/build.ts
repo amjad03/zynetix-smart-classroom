@@ -6,7 +6,7 @@ import { createHash, createPrivateKey, createPublicKey, generateKeyPairSync, sig
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { unzipSync, zipSync } from 'fflate';
-import { AudioClip, AudioPackManifest, Chapter, Lesson, PackManifest, Question, SCHEMA_VERSION, checkQuestionRefs, clipId, revealSteps } from '@zynetix/lesson-schema';
+import { AudioClip, AudioPackManifest, Chapter, FormulaSheet, Lesson, PackManifest, Question, SCHEMA_VERSION, checkQuestionRefs, clipId, revealSteps } from '@zynetix/lesson-schema';
 
 export interface PackSource {
   id: string;
@@ -14,6 +14,8 @@ export interface PackSource {
   chapter: Chapter;
   lessons: Lesson[];
   questions: Question[];
+  /** The chapter's formula sheet (formulas.json), when it has one. */
+  formulas?: FormulaSheet;
   /** Media files: path inside the pack (media/…) → bytes. */
   media: Record<string, Uint8Array>;
 }
@@ -39,6 +41,12 @@ export function validate(src: PackSource): string[] {
     }
   }
   problems.push(...checkQuestionRefs(src.lessons, src.questions).map((m) => `missing question ${m}`));
+  if (src.formulas) {
+    if (src.formulas.chapterId !== src.chapter.id) problems.push(`formulas.json: chapterId ${src.formulas.chapterId} is not ${src.chapter.id}`);
+    const fids = src.formulas.formulas.map((f) => f.id);
+    if (new Set(fids).size !== fids.length) problems.push('formulas.json: duplicate formula ids');
+    for (const f of src.formulas.formulas) if (f.topicId && !topicIds.has(f.topicId)) problems.push(`formulas.json: ${f.id} has unknown topic ${f.topicId}`);
+  }
   return problems;
 }
 
@@ -49,6 +57,7 @@ export function buildPack(src: PackSource, key: SigningKey, now = new Date()): {
   const files: Record<string, Uint8Array> = {
     'chapter.json': json(src.chapter),
     'questions.json': json(src.questions),
+    ...(src.formulas ? { 'formulas.json': json(src.formulas) } : {}),
     ...Object.fromEntries(src.lessons.map((l) => [`lessons/${l.topicId.split('.').pop()}.json`, json(l)])),
     ...src.media,
   };
@@ -105,6 +114,8 @@ export function readSource(contentRoot: string, dir: string): PackSource {
   if (existsSync(topicsFile)) chapter = Chapter.parse({ ...chapter, topics: JSON.parse(readFileSync(topicsFile, 'utf8')) });
   const lessons = readdirSync(join(root, 'lessons')).sort().map((f) => Lesson.parse(JSON.parse(readFileSync(join(root, 'lessons', f), 'utf8'))));
   const questions = (JSON.parse(readFileSync(join(root, 'questions.json'), 'utf8')) as unknown[]).map((q) => Question.parse(q));
+  const formulasFile = join(root, 'formulas.json');
+  const formulas = existsSync(formulasFile) ? FormulaSheet.parse(JSON.parse(readFileSync(formulasFile, 'utf8'))) : undefined;
   const media: Record<string, Uint8Array> = {};
   const walk = (d: string) => {
     if (!existsSync(d)) return;
@@ -115,7 +126,7 @@ export function readSource(contentRoot: string, dir: string): PackSource {
     }
   };
   walk(join(root, 'media'));
-  return { id: meta.id, version: meta.version, chapter, lessons, questions, media };
+  return { id: meta.id, version: meta.version, chapter, lessons, questions, formulas, media };
 }
 
 // ---------------------------------------------------------------- narration audio packs

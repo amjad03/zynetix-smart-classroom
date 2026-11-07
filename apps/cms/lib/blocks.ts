@@ -130,6 +130,21 @@ export const BLOCK_FIELDS: Record<BlockType, Field[]> = {
     { key: 'questionId', label: 'Record the first Check as this answer id (optional)', kind: 'text' },
     { key: 'explanation', label: 'Explanation (after Check / Show answer)', kind: 'l10nLong' },
   ],
+  explainer: [
+    { key: 'heading', label: 'Heading', kind: 'l10n' },
+    { key: 'tagline', label: 'Tagline', kind: 'l10n' },
+    { key: 'misconception', label: 'Misconception {myth, truth} (JSON)', kind: 'json', example: '{"myth":{"en":"Current is used up in a bulb"},"truth":{"en":"The same current flows all round the loop"}}' },
+    { key: 'watch', label: 'Watch steps [{title, say}] (JSON; Next shows one at a time with Reveal on)', kind: 'json', example: '[{"title":{"en":"A closed loop"},"say":{"en":"Charges flow only round a closed loop."}}]' },
+    { key: 'reveal', label: 'Reveal the watch steps one by one', kind: 'bool' },
+    { key: 'try', label: 'Try it {goal, steps: [{task, predict?, explain}], takeaway} (JSON)', kind: 'json', example: '{"goal":{"en":"Light the bulb"},"steps":[{"task":{"en":"Close the switch"},"explain":{"en":"The loop is complete."}}],"takeaway":{"en":"No loop, no current."}}' },
+    { key: 'story', label: 'Story frames [{caption, speech?}] (JSON)', kind: 'json', example: '[{"caption":{"en":"Diya flips the switch."},"speech":{"en":"Light!"}}]' },
+    { key: 'analogy', label: "It's like {headline, everyday?, concept?, pairs: [[everyday, concept]], limits?} (JSON)", kind: 'json', example: '{"headline":{"en":"Current is like water in a pipe"},"pairs":[[{"en":"pump"},{"en":"battery"}]]}' },
+  ],
+  concept_video: [
+    { key: 'video', label: 'Video {provider: youtube | drive, id, title, seconds?, chapters?: [{at, label}]} (JSON); streamed online, never downloaded', kind: 'json', example: '{"provider":"youtube","id":"dQw4w9WgXcQ","title":{"en":"Ohm\'s law"},"chapters":[{"at":30,"label":{"en":"V = IR"}}]}' },
+    { key: 'playlist', label: 'More videos of the chapter (JSON list of videos)', kind: 'json', example: '[]' },
+    { key: 'caption', label: 'Caption', kind: 'l10nLong' },
+  ],
 };
 
 export const fieldsFor = (t: BlockType) => [...BLOCK_FIELDS[t], ...common];
@@ -154,6 +169,8 @@ export function newBlock(type: BlockType, existing: string[]): Record<string, un
     whiteboard: { steps: [{ draw: [{ kind: 'text', at: [10, 10], text: L('Title') }] }] },
     interactive: { kind: 'function_plot', caption: L(), sliders: [{ name: 'a', label: L('a'), min: -3, max: 3, step: 0.1, value: 1 }], fns: [{ fn: 'a*x^2', color: 'yellow' }], x: [-5, 5], y: [-5, 5] },
     activity: { kind: 'order', prompt: L(), steps: [L('First'), L('Second'), L('Third')] },
+    explainer: { heading: L(), misconception: { myth: L(), truth: L() } },
+    concept_video: { video: { provider: 'youtube', id: 'VIDEO_ID_00', title: L() } },
     challenge: { kind: 'function_plot', prompt: L(), sliders: [{ name: 'a', label: L('a'), min: 0, max: 10, step: 1, value: 1 }], fns: [{ fn: 'a*x', color: 'yellow' }], x: [0, 10], y: [0, 100], goal: 'a*a', goalLabel: L('a²'), target: 25, tolerance: 0.5, solution: { a: 5 }, explanation: L() },
   };
   return { id, type, ...t[type] };

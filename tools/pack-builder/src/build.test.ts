@@ -24,6 +24,17 @@ describe.each(['puc1-physics-motion-in-a-straight-line', 'puc2-chemistry-solutio
   });
 });
 
+it('carries the chapter formula sheet and the imported explainer and video blocks', () => {
+  const src = readSource(content, 'puc2-physics-current-electricity');
+  expect(validate(src)).toEqual([]);
+  expect(src.formulas?.formulas.length).toBeGreaterThan(5);
+  const { manifest } = buildPack(src, key);
+  expect(manifest.files.map((f) => f.path)).toContain('formulas.json');
+  expect(src.lessons.flatMap((l) => l.blocks).some((b) => b.type === 'explainer')).toBe(true);
+  src.formulas!.chapterId = 'other';
+  expect(validate(src).join()).toMatch(/formulas.json/);
+});
+
 it('rejects a lesson that points at a missing question', () => {
   const src = readSource(content, 'puc2-chemistry-solutions');
   src.questions = src.questions.filter((q) => q.id !== 'sol-q01');

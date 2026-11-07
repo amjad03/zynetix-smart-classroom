@@ -573,6 +573,130 @@
    ]
   },
   {
+   "id": "zs-explainer",
+   "type": "explainer",
+   "heading": {
+    "en": "Recursive Methods in ISC Class Programs"
+   },
+   "optional": true,
+   "source": "zynetix-school:computer-science/c12-cs-java-recursion/c12-cs-recursion-programs",
+   "tagline": {
+    "en": "Writing recursive methods to a specification: reversing a number with a data member, HCF, binary conversion, reversing a string and counting vowels."
+   },
+   "misconception": {
+    "myth": {
+     "en": "In toBinary, write return (n % 2) + toBinary(n / 2); the order of the two parts does not matter."
+    },
+    "truth": {
+     "en": "Write toBinary(n / 2) + (n % 2). The remainder for the last division is the most significant bit, so it must come first. Addition of numbers is commutative, so swapping feels harmless. But + here joins Strings, and joining is not commutative: the swapped version gives \"1011\" for 13, the reverse of the correct answer."
+    }
+   },
+   "watch": [
+    {
+     "title": {
+      "en": "Key idea 1",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 1"
+     },
+     "say": {
+      "en": "Design: smallest input → base case; build the answer from a smaller answer → recursive case."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 2",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 2"
+     },
+     "say": {
+      "en": "Euclid's HCF: gcd(a, b) = gcd(b, a % b), base case b == 0."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 3",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 3"
+     },
+     "say": {
+      "en": "The order of joining in String recursion decides the order of the output."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 4",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 4"
+     },
+     "say": {
+      "en": "A recursive method may build its result in a data member, which must be reset before use."
+     }
+    },
+    {
+     "title": {
+      "en": "Key idea 5",
+      "kn": "ಮುಖ್ಯ ಅಂಶ 5"
+     },
+     "say": {
+      "en": "\"Using recursion\" means no loops inside that method."
+     }
+    }
+   ],
+   "reveal": true,
+   "try": {
+    "goal": {
+     "en": "Writing recursive methods to a specification: reversing a number with a data member, HCF, binary conversion, reversing a string and counting vowels."
+    },
+    "steps": [
+     {
+      "task": {
+       "en": "Predict first, then check.",
+       "kn": "ಮೊದಲು ಊಹಿಸಿ, ನಂತರ ಪರಿಶೀಲಿಸಿ."
+      },
+      "predict": {
+       "question": {
+        "en": "gcd(84, 36) calls itself with which arguments next?"
+       },
+       "options": [
+        {
+         "en": "gcd(36, 12)"
+        },
+        {
+         "en": "gcd(36, 48)"
+        },
+        {
+         "en": "gcd(12, 36)"
+        },
+        {
+         "en": "gcd(84, 12)"
+        }
+       ],
+       "answer": 0
+      },
+      "explain": {
+       "en": "gcd(b, a % b) = gcd(36, 84 % 36) = gcd(36, 12). Then gcd(12, 0) returns 12."
+      }
+     },
+     {
+      "task": {
+       "en": "Match each call to its result."
+      },
+      "explain": {
+       "en": "gcd: (48, 18) → (18, 12) → (12, 6) → (6, 0). Binary of 10 is 1010. Agra has A and a."
+      }
+     }
+    ],
+    "takeaway": {
+     "en": "Design: smallest input → base case; build the answer from a smaller answer → recursive case."
+    }
+   },
+   "analogy": {
+    "headline": {
+     "en": "If a method is to be written \"using recursion\", a loop inside it costs marks even when the output is right. Start the method with the base case written as an if statement; examiners look for it first."
+    },
+    "pairs": []
+   },
+   "narration": {
+    "en": "Many people think: In toBinary, write return (n % 2) + toBinary(n / 2); the order of the two parts does not matter. Actually: Write toBinary(n / 2) + (n % 2). The remainder for the last division is the most significant bit, so it must come first. Addition of numbers is commutative, so swapping feels harmless. But + here joins Strings, and joining is not commutative: the swapped version gives \"1011\" for 13, the reverse of the correct answer."
+   }
+  },
+  {
    "id": "ex1",
    "type": "example",
    "title": {

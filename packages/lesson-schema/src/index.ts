@@ -533,6 +533,72 @@ export const ActivityBlock = z
   })
   .strict();
 
+
+// ---------------------------------------------------------------- explainers & concept videos
+
+/**
+ * A concept told four ways (the Zynetix School explainers, imported by tools/school-import):
+ * - `misconception`: the usual wrong idea (`myth`) and what is true (`truth`), shown up front
+ * - `watch`: steps that build the idea one at a time (a title and the line read aloud)
+ * - `try`: a guided mission: a goal, small tasks (an optional prediction first, with the common
+ *   wrong idea among the options), and the one sentence to remember
+ * - `story`: a short comic strip, a caption (and a line said) per frame
+ * - `analogy`: "It's like…": everyday things mapped onto the idea, and where the analogy stops
+ * Every part is optional, but an explainer has at least one. With `reveal`, Next walks the watch
+ * steps one by one. `source` names where it came from (for review), never shown to the class.
+ */
+export const ExplainerPredict = z.object({ question: L10n, options: z.array(L10n).min(2).max(4), answer: z.number().int().min(0).max(3), trap: z.number().int().min(0).max(3).optional() }).strict();
+export const ExplainerBlock = z
+  .object({
+    ...base,
+    type: z.literal('explainer'),
+    heading: L10n,
+    tagline: L10n.optional(),
+    misconception: z.object({ myth: L10n, truth: L10n }).strict().optional(),
+    watch: z.array(z.object({ title: L10n, say: L10n }).strict()).max(12).optional(),
+    try: z
+      .object({
+        goal: L10n,
+        steps: z.array(z.object({ task: L10n, predict: ExplainerPredict.optional(), hint: L10n.optional(), explain: L10n }).strict()).min(1).max(8),
+        takeaway: L10n,
+      })
+      .strict()
+      .optional(),
+    story: z.array(z.object({ caption: L10n, speech: L10n.optional() }).strict()).max(8).optional(),
+    analogy: z
+      .object({ headline: L10n, everyday: L10n.optional(), concept: L10n.optional(), pairs: z.array(z.tuple([L10n, L10n])).max(8).default([]), limits: L10n.optional() })
+      .strict()
+      .optional(),
+    source: z.string().max(120).optional(),
+  })
+  .strict();
+
+/**
+ * A concept video from the owner's own channel. It streams when the board is online (an embedded
+ * player); offline the board shows a "Needs internet" card. Videos are never downloaded.
+ * `chapters` are markers inside the video (seconds from the start) the teacher can jump to.
+ */
+export const VideoRef = z
+  .object({
+    provider: z.enum(['youtube', 'drive']),
+    id: z.string().regex(/^[A-Za-z0-9_-]{6,64}$/),
+    title: L10n,
+    seconds: z.number().int().min(1).optional(),
+    chapters: z.array(z.object({ at: z.number().int().min(0), label: L10n }).strict()).max(20).optional(),
+  })
+  .strict();
+export type VideoRef = z.infer<typeof VideoRef>;
+export const ConceptVideoBlock = z
+  .object({
+    ...base,
+    type: z.literal('concept_video'),
+    video: VideoRef,
+    /** More videos of the chapter, after this one. */
+    playlist: z.array(VideoRef).max(30).optional(),
+    caption: L10n.optional(),
+  })
+  .strict();
+
 export const Block = z.discriminatedUnion('type', [
   IntroBlock,
   ConceptBlock,
@@ -548,10 +614,12 @@ export const Block = z.discriminatedUnion('type', [
   InteractiveBlock,
   ChallengeBlock,
   ActivityBlock,
+  ExplainerBlock,
+  ConceptVideoBlock,
 ]);
 export type Block = z.infer<typeof Block>;
 export type BlockType = Block['type'];
-export const BLOCK_TYPES = ['intro', 'concept', '3d_model', 'simulation', 'virtual_lab', 'example', 'class_quiz', 'pyq', 'trick', 'recap', 'whiteboard', 'interactive', 'challenge', 'activity'] as const satisfies readonly BlockType[];
+export const BLOCK_TYPES = ['intro', 'concept', '3d_model', 'simulation', 'virtual_lab', 'example', 'class_quiz', 'pyq', 'trick', 'recap', 'whiteboard', 'interactive', 'challenge', 'activity', 'explainer', 'concept_video'] as const satisfies readonly BlockType[];
 
 // ---------------------------------------------------------------- syllabus & lessons
 
@@ -579,14 +647,44 @@ export const Lesson = z
       seen.add(b.id);
       if (b.type === 'trick' && b.style === 'trap' && (!b.wrong || !b.right)) ctx.addIssue({ code: 'custom', message: `${b.id}: a trap needs wrong and right` });
       if (b.type === 'recap' && b.answers && b.answers.length !== b.points.length) ctx.addIssue({ code: 'custom', message: `${b.id}: answers must match points one to one` });
+      if (b.type === 'explainer' && !(b.misconception || b.watch?.length || b.try || b.story?.length || b.analogy)) ctx.addIssue({ code: 'custom', message: `${b.id}: an explainer needs at least one of misconception, watch, try, story, analogy` });
+      if (b.type === 'explainer' && b.try?.steps.some((st) => st.predict && st.predict.answer >= st.predict.options.length)) ctx.addIssue({ code: 'custom', message: `${b.id}: a prediction answer must be one of its options` });
+      if (b.type === 'explainer' && b.reveal && !b.watch?.length) ctx.addIssue({ code: 'custom', message: `${b.id}: reveal walks the watch steps; add watch` });
     }
   });
 export type Lesson = z.infer<typeof Lesson>;
+
+
+// ---------------------------------------------------------------- formula sheets & mock patterns
+
+/**
+ * A chapter's formula sheet (formulas.json in a pack, optional): what the class tools' formula
+ * drill covers. `tex` is display LaTeX; `topicId` ties a formula to a topic when known.
+ */
+export const Formula = z.object({ id, topicId: id.optional(), name: L10n, tex: z.string().min(1), note: L10n.optional(), exams: z.array(Exam).optional() }).strict();
+export type Formula = z.infer<typeof Formula>;
+export const FormulaSheet = z.object({ chapterId: id, formulas: z.array(Formula).min(1) }).strict();
+export type FormulaSheet = z.infer<typeof FormulaSheet>;
+
+/** An exam paper pattern for mock tests (KCET, NEET, JEE Main…): sections with marking, timing. */
+export const MockPattern = z
+  .object({
+    id,
+    exam: z.string().min(1),
+    title: L10n,
+    blurb: L10n,
+    minutes: z.number().int().min(5).max(400),
+    minutesPerSection: z.number().int().min(1).optional(),
+    sections: z.array(z.object({ subject: Subject, count: z.number().int().min(1).max(200), plus: z.number(), minus: z.number().min(0) }).strict()).min(1),
+  })
+  .strict();
+export type MockPattern = z.infer<typeof MockPattern>;
 
 // ---------------------------------------------------------------- content packs
 
 /**
  * A content pack is a zip: manifest.json, chapter.json, lessons/*.json, questions.json, media/…
+ * (and formulas.json when the chapter has a formula sheet)
  * plus manifest.sig (Ed25519 over the exact bytes of manifest.json). The manifest lists the
  * SHA-256 of every other file, so one signature covers the whole pack.
  */
@@ -669,6 +767,7 @@ export function revealSteps(b: Block, questions: Question[] = []): number {
     : b.type === 'concept' ? (b.hero ? 1 : 0) + (b.cards?.length ?? 0) + b.points.length
     : b.type === 'example' ? b.steps.length + 2
     : b.type === 'recap' ? b.points.length + (b.next ? 1 : 0)
+    : b.type === 'explainer' ? (b.watch?.length ?? 0)
     : 1;
   return Math.max(1, n);
 }
