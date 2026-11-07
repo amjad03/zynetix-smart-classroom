@@ -133,6 +133,11 @@ class _HomeScreenState extends State<HomeScreen> {
           Navigator.pop(ctx);
           openPractice(context);
         }),
+        const SizedBox(height: 24),
+        ZxButton(tr(l, 'Settings', 'ಸೆಟ್ಟಿಂಗ್ಸ್'), key: const ValueKey('menuSettings'), icon: Icons.settings_rounded, bg: S.mist, fg: S.ink, height: 140, size: 40, onTap: () {
+          Navigator.pop(ctx);
+          openSection(context, Section.settings, standalone: true);
+        }),
       ]),
     );
   }
