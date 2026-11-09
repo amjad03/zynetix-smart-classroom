@@ -32,6 +32,21 @@ Check downloads against `SHA256SUMS`.
 
 ---
 
+# Zynetix Classroom APKs: 1.1.0
+
+Zynetix Board — Classroom edition (`in.zynetix.classroom`, "Zynetix Classroom"), version 1.1.0 (versionCode 2002 arm64-v8a / 1002 armeabi-v7a), built from amjad03/kinetix `claude/classroom-edition` (ce57aae4). **Release-signed** with the Zynetix production key (same certificate as above). Installs over 1.0.0, keeping classes, marks and boards. Android 9.0+.
+
+| File | For | Size |
+|---|---|---|
+| `zynetix-classroom-1.1.0-arm64-v8a.apk` | Most smartboards and tablets from the last few years (pick this if unsure) | 90.8 MB |
+| `zynetix-classroom-1.1.0-armeabi-v7a.apk` | Older 32-bit ARM boards | 90.8 MB |
+
+1.1.0: half the download (only the sims and 3D models the lessons use; no camera, casting, speech or handwriting plugins); Settings → This board → Check for update (reads `classroom-update.json` here, checks the SHA-256) and Install from USB…, with a quiet dot on Settings when an update waits; Open Zynetix when the board starts (no device owner) and Make Zynetix the home app; Save PDF to USB / Downloads beside every Print, and Save first on boards with no print service; Python in the Computer Science lessons runs offline; a quicker start on slow panels; no Android cloud backup of the settings (the school PIN's hash).
+
+`classroom-update.json` is the update manifest the app reads. Stored with Git LFS like 1.0.0.
+
+---
+
 # Zynetix Classroom APKs: 1.0.0
 
 Zynetix Board — Classroom edition (`in.zynetix.classroom`, "Zynetix Classroom"), version 1.0.0 (build 1), built from amjad03/kinetix `claude/classroom-edition`. **Release-signed** with the Zynetix production key (same certificate as above). It installs next to the Zynetix Board.
