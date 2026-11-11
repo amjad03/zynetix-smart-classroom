@@ -32,6 +32,14 @@ Check downloads against `SHA256SUMS`.
 
 ---
 
+# Zynetix Classroom content pack: PUC PhET sims (phet-1)
+
+`zynetix-content-phet-1.zip` (51.2 MB, Git LFS): a `zynetix-content-pack` (formatVersion 1) with 47 PhET HTML5 simulations for 1st and 2nd PUC Physics, Chemistry, Biology and Maths topics that the Classroom APK does not ship, each mapped to its lesson topics. Zynetix Classroom 1.2.0+ updates from it by default (Settings → This board → Content → Update over Wi-Fi), or install it from USB. The lessons show a topic's sim as a step when the pack has it. Built by amjad03/kinetix `packages/kinetix_lessons/tool/build_phet_pack.py`.
+
+The simulations are by **PhET Interactive Simulations, University of Colorado Boulder** (https://phet.colorado.edu), licensed under CC BY 4.0, unchanged English pages; the zip carries `PHET-LICENSE.txt`.
+
+---
+
 # Zynetix Classroom APKs: 1.1.0
 
 Zynetix Board — Classroom edition (`in.zynetix.classroom`, "Zynetix Classroom"), version 1.1.0 (versionCode 2002 arm64-v8a / 1002 armeabi-v7a), built from amjad03/kinetix `claude/classroom-edition` (ce57aae4). **Release-signed** with the Zynetix production key (same certificate as above). Installs over 1.0.0, keeping classes, marks and boards. Android 9.0+.
