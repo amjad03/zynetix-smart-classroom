@@ -40,6 +40,19 @@ The simulations are by **PhET Interactive Simulations, University of Colorado Bo
 
 ---
 
+# Zynetix Classroom APKs: 1.2.0
+
+Zynetix Board — Classroom edition (`in.zynetix.classroom`, "Zynetix Classroom"), version 1.2.0 (versionCode 2003 arm64-v8a / 1003 armeabi-v7a), built from amjad03/kinetix `claude/classroom-edition`. **Release-signed** with the Zynetix production key (same certificate as above). Installs over 1.1.0, keeping classes, marks and boards. Android 9.0+.
+
+| File | For | Size |
+|---|---|---|
+| `zynetix-classroom-1.2.0-arm64-v8a.apk` | Most smartboards and tablets from the last few years (pick this if unsure) | 98.9 MB |
+| `zynetix-classroom-1.2.0-armeabi-v7a.apk` | Older 32-bit ARM boards | 99.2 MB |
+
+1.2.0: instruments in all 1070 mapped PUC interactive steps (the old step stays as the fallback); "Do the practical" virtual labs for the 85 Karnataka PUC practicals; the content address defaults to the PhET pack below (47 sims, shown in their topics' lessons). `classroom-update.json` points at 1.2.0. Stored with Git LFS.
+
+---
+
 # Zynetix Classroom APKs: 1.1.0
 
 Zynetix Board — Classroom edition (`in.zynetix.classroom`, "Zynetix Classroom"), version 1.1.0 (versionCode 2002 arm64-v8a / 1002 armeabi-v7a), built from amjad03/kinetix `claude/classroom-edition` (ce57aae4). **Release-signed** with the Zynetix production key (same certificate as above). Installs over 1.0.0, keeping classes, marks and boards. Android 9.0+.
